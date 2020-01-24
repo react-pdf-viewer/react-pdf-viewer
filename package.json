@@ -1,0 +1,29 @@
+{
+    "name": "react-pdf-viewer",
+    "version": "1.0.0",
+    "description": "A React component to view a PDF document",
+    "license": "https://react-pdf-viewer.dev/license",
+    "author": {
+        "name": "Nguyen Huu Phuoc",
+        "email": "me@phuoc.ng",
+        "url": "https://twitter.com/nghuuphuoc"
+    },
+    "homepage": "https://react-pdf-viewer.dev",
+    "scripts": {
+        "build": "npm run build:es6 && npm run build:ts",
+        "build:es6": "rm -rf dist/es6 && mkdir dist/es6 && tsc -p tsconfig-es6.json",
+        "build:ts": "rm -rf dist/ts && mkdir dist/ts && cp -rf src/* dist/ts"
+    },
+    "dependencies": {
+        "pdfjs-dist": "^2.2.228",
+        "react": "^16.12.0",
+        "react-dom": "^16.12.0"
+    },
+    "devDependencies": {
+        "@types/react": "^16.9.19",
+        "@types/react-dom": "^16.9.5",
+        "tslint": "^6.0.0",
+        "tslint-react": "^4.2.0",
+        "typescript": "^3.7.5"
+    }
+}
