@@ -1,5 +1,5 @@
 {
-    "name": "react-pdf-viewer",
+    "name": "@phuocng/react-pdf-viewer",
     "version": "1.0.0",
     "description": "A React component to view a PDF document",
     "license": "https://react-pdf-viewer.dev/license",

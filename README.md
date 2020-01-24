@@ -2,7 +2,7 @@
 A React component to view a PDF document.
 It's written in TypeScript, and powered by React hooks.
 
-![React PDF viewer](/assets/screenshot.png)
+![React PDF viewer](https://raw.githubusercontent.com/phuoc-ng/react-pdf-viewer/master/assets/screenshot.png)
 
 ## Features
 
