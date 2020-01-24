@@ -1,0 +1,15 @@
+/**
+ * A React component to view a PDF document
+ * 
+ * @see https://react-pdf-viewer.dev
+ * @license https://react-pdf-viewer.dev/license
+ * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
+ */
+
+.viewer-open-file {
+    background-color: transparent;
+    padding: 8px;
+}
+.viewer-open-file:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+}

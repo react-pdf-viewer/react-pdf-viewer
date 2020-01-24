@@ -1,0 +1,23 @@
+/**
+ * A React component to view a PDF document
+ * 
+ * @see https://react-pdf-viewer.dev
+ * @license https://react-pdf-viewer.dev/license
+ * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
+ */
+
+.viewer-spinner {
+    animation-duration: 750ms;
+    animation-name: viewer-spinner-transform;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+    transition-property: transform;
+}
+@keyframes viewer-spinner-transform {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}

@@ -1,0 +1,21 @@
+/**
+ * A React component to view a PDF document
+ * 
+ * @see https://react-pdf-viewer.dev
+ * @license https://react-pdf-viewer.dev/license
+ * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
+ */
+
+.viewer-annotation section {
+    position: absolute;
+}
+.viewer-annotation .linkAnnotation > a {
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+}
+.viewer-annotation .linkAnnotation > a:hover {
+    background: rgba(255, 255, 0, 0.2);
+}
