@@ -1,0 +1,77 @@
+{
+    "askingPassword": {
+        "requirePasswordToOpen": "This document requires a password to open",
+        "submit": "Submit"
+    },
+    "attachment": {
+        "clickToDownload": "Click to download",
+        "noAttachment": "There is no attachment"
+    },
+    "bookmark": {
+        "noBookmark": "There is no bookmark"
+    },
+    "main": {
+        "dragDropFile": "Drag and drop a PDF document here"
+    },
+    "moreActions": {
+        "documentProperties": "Document Properties",
+        "goToFirstPage": "Go to First Page",
+        "goToLastPage": "Go to Last Page",
+        "handTool": "Hand Tool",
+        "horizontalScrolling": "Horizontal Scrolling",
+        "rotateBackward": "Rotate Counterclockwise",
+        "rotateForward": "Rotate Clockwise",
+        "textSelectionTool": "Text Selection Tool",
+        "verticalScrolling": "Vertical Scrolling",
+        "wrappedScrolling": "Wrapped Scrolling"
+    },
+    "property": {
+        "author": "Author",
+        "close": "Close",
+        "creationDate": "Creation date",
+        "creator": "Creator",
+        "fileName": "File name",
+        "fileSize": "File size",
+        "keywords": "Keywords",
+        "modificationDate": "Modification date",
+        "pageCount": "Page count",
+        "pdfProducer": "PDF producer",
+        "pdfVersion": "PDF Version",
+        "subject": "Subject",
+        "title": "Title"
+    },
+    "search": {
+        "close": "Close",
+        "enterToSearch": "Enter to search",
+        "matchCase": "Match case",
+        "nextMatch": "Next match",
+        "previousMatch": "Previous match",
+        "wholeWords": "Whole words"
+    },
+    "sidebar": {
+        "attachment": "Attachment",
+        "bookmark": "Bookmark",
+        "thumbnail": "Thumbnail"
+    },
+    "toolbar": {
+        "download": "Download",
+        "fullScreen": "Full screen",
+        "moreActions": "More actions",
+        "nextPage": "Next page",
+        "openFile": "Open file",
+        "previousPage": "Previous page",
+        "search": "Search",
+        "toggleSidebar":  "Toggle sidebar",
+        "zoomIn": "Zoom in",
+        "zoomOut": "Zoom out"
+    },
+    "wrongPassword": {
+        "submit": "Submit",
+        "tryAgain": "The password is wrong. Please try again"
+    },
+    "zoom": {
+        "actualSize": "Actual size",
+        "pageFit": "Page fit",
+        "pageWidth": "Page width"
+    }
+}

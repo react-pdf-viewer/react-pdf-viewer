@@ -1,0 +1,61 @@
+/**
+ * A React component to view a PDF document
+ * 
+ * @see https://react-pdf-viewer.dev
+ * @license https://react-pdf-viewer.dev/license
+ * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
+ */
+
+import React from 'react';
+
+import { Toggle, ToggleStatus } from '../hooks/useToggle';
+import Offset from './Offset';
+import Portal from './Portal';
+import Position from './Position';
+import TooltipBody from './TooltipBody';
+
+type RenderTooltipContent = () => React.ReactNode;
+
+interface TooltipProps {
+    content: RenderTooltipContent;
+    offset: Offset;
+    position: Position;
+    target: React.ReactElement;
+}
+
+const Tooltip: React.FC<TooltipProps> = ({ content, offset, position, target }) => {
+    const targetRef = React.createRef<HTMLDivElement>();
+
+    const renderTarget = (toggle: Toggle) => {
+        const show = () => { toggle(ToggleStatus.Open); };
+        const hide = () => { toggle(ToggleStatus.Close); };
+        return (
+            <div
+                ref={targetRef}
+                onMouseEnter={show}
+                onMouseLeave={hide}
+            >
+                {target}
+            </div>
+        );
+    };
+
+    const renderContent = () => (
+        <TooltipBody
+            offset={offset}
+            position={position}
+            targetRef={targetRef}
+        >
+            {content()}
+        </TooltipBody>
+    );
+
+    return (
+        <Portal
+            target={renderTarget}
+            content={renderContent}
+        />
+    );
+};
+
+export default Tooltip;
