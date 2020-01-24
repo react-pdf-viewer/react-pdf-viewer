@@ -6,7 +6,7 @@ It's written in TypeScript, and powered by React hooks.
 
 ## Features
 
-_Basic features_
+__Basic features__
 * [x] Support password protected document
 * [x] Zooming: Support custom levels such as actual size, page fit, and page width
 * [x] Navigation between pages
@@ -23,11 +23,11 @@ _Basic features_
 * [x] Download file
 * [x] View the document properties
 
-_Customization_
+__Customization__
 * [x] The toolbar can be customized easily
 * [x] All text items can be localized in another language
 
-_Coming soon_
+__Coming soon__
 * [ ] Theming
 * [ ] Darkmode
 

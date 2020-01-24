@@ -1,6 +1,6 @@
 /**
  * A React component to view a PDF document
- * 
+ *
  * @see https://react-pdf-viewer.dev
  * @license https://react-pdf-viewer.dev/license
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
@@ -28,7 +28,8 @@ interface File {
 interface ViewerProps {
     fileUrl: string;
     localization?: LocalizationMap;
-    layout?: (isSidebarOpened: boolean,
+    layout?: (
+        isSidebarOpened: boolean,
         main: Slot,
         toolbar: RenderToolbar,
         sidebar: Slot,

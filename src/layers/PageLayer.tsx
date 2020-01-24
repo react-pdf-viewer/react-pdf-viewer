@@ -1,6 +1,6 @@
 /**
  * A React component to view a PDF document
- * 
+ *
  * @see https://react-pdf-viewer.dev
  * @license https://react-pdf-viewer.dev/license
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
@@ -77,8 +77,8 @@ const PageLayer: React.FC<PageLayerProps> = ({
         }
     };
 
-    const jumpToMatch = (pageIndex: number, top: number, left: number) => {
-        onJumpToDest(pageIndex, pageHeight - top, scale);
+    const jumpToMatch = (indexOfPage: number, top: number, left: number) => {
+        onJumpToDest(indexOfPage, pageHeight - top, scale);
     };
 
     return (
