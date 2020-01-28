@@ -1,4 +1,4 @@
-This folder demonstrates how to bundle React PDF viewer with [Webpack](https://webpack.js.org)
+This folder demonstrates how to bundle React PDF viewer with [Webpack](https://webpack.js.org) and [Typescript](https://www.typescriptlang.org)
 
 1. Install the dependencies
 
