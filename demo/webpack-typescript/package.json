@@ -4,6 +4,7 @@
     "scripts": {
         "copy": "rm -rf vendors/pdfviewer && mkdir vendors/pdfviewer && cp -rf ../../dist/ts/ vendors/pdfviewer",
         "copyasset": "cp ../../assets/pdf-open-parameters.pdf dist",
+        "typecheck": "tsc --noEmit",
         "build": "npm run copy && rm -rf dist && webpack --mode production && npm run copyasset",
         "dev": "npm run copy && webpack-dev-server && npm run copyasset"
     },

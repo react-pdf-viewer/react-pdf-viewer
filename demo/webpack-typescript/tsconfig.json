@@ -8,6 +8,10 @@
         "moduleResolution": "node",
         "resolveJsonModule": true,
         "target": "esnext",
-        "jsx": "react"
+        "jsx": "react",
+        "baseUrl": ".",
+        "paths": {
+            "pdfviewer": ["vendors/pdfviewer"]
+        }
     }
 }
