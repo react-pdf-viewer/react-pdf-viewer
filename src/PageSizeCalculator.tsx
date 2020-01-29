@@ -11,7 +11,7 @@ import React from 'react';
 import PdfJs from './PdfJs';
 import Spinner from './Spinner';
 
-interface PageSize {
+interface IPageSize {
     pageHeight: number;
     pageWidth: number;
     scale: number;
@@ -19,12 +19,12 @@ interface PageSize {
 
 interface PageSizeCalculatorProps {
     doc: PdfJs.PdfDocument;
-    render(pageSize: PageSize): React.ReactElement;
+    render(pageSize: IPageSize): React.ReactElement;
 }
 
 const PageSizeCalculator: React.FC<PageSizeCalculatorProps> = ({ doc, render }) => {
     const pagesRef = React.useRef<HTMLDivElement | null>(null);
-    const [pageSize, setPageSize] = React.useState<PageSize>({
+    const [pageSize, setPageSize] = React.useState<IPageSize>({
         pageHeight: 0,
         pageWidth: 0,
         scale: 1,
@@ -73,8 +73,5 @@ const PageSizeCalculator: React.FC<PageSizeCalculatorProps> = ({ doc, render }) 
     );
 };
 
-export {
-    PageSize,
-};
-
 export default PageSizeCalculator;
+export type PageSize = IPageSize;

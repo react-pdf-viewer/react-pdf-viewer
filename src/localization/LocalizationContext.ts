@@ -8,11 +8,9 @@
 
 import React from 'react';
 
-import LocalizationMap from './LocalizationMap';
+import { default as ILocalizationMap } from './LocalizationMap';
 
-const LocalizationContext = React.createContext<LocalizationMap>({});
+const LocalizationContext = React.createContext<ILocalizationMap>({});
 
-export {
-    LocalizationMap,
-};
 export default LocalizationContext;
+export type LocalizationMap = ILocalizationMap;

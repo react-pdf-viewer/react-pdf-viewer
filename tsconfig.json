@@ -1,6 +1,6 @@
 {
     "compilerOptions": {
-        "rootDir": "./client",
+        "rootDir": "./src",
         "esModuleInterop": true,
         "target": "esnext",
         "module": "commonjs",
@@ -11,7 +11,8 @@
         "baseUrl": "."
     },
     "exclude": [
-        "build",
+        "demo",
+        "dist",
         "node_modules"
     ]
 }
