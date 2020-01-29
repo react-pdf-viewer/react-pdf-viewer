@@ -18,15 +18,10 @@ npm run build
 npm run dev
 ~~~
 
-Visit http://localhost:8001/. You can change the port `8001` in the `devServer.port` section of the webpack setting file: 
+Visit http://localhost:8001/. You can change the port `8001` in the `src/server.js` file: 
 
 ~~~ javascript
-// webpack.config.js
+// src/server.js
 
-module.exports = {
-    ...
-    devServer: {
-        port: 8001,
-    },
-};
+const PORT = 8001;
 ~~~
