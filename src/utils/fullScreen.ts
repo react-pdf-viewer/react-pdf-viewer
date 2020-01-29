@@ -43,31 +43,41 @@ const msVendor: ApiMap = {
     RequestFullScreen: 'msRequestFullscreen',
 };
 
-const vendor: ApiMap = (
+const isBrowser = (typeof window !== 'undefined');
+
+const vendor: ApiMap = isBrowser ? (
     (Api.FullScreenEnabled in document && defaultVendor) ||
     (webkitVendor.FullScreenEnabled in document && webkitVendor) ||
     (msVendor.FullScreenEnabled in document && msVendor) ||
     defaultVendor
-);
+) : defaultVendor;
 
 const addFullScreenChangeListener = (handler: () => void) => {
-    document.addEventListener(vendor.FullScreenChange, handler);
+    if (isBrowser) {
+        document.addEventListener(vendor.FullScreenChange, handler);
+    }
 };
 
 const removeFullScreenChangeListener = (handler: () => void) => {
-    document.removeEventListener(vendor.FullScreenChange, handler);
+    if (isBrowser) {
+        document.removeEventListener(vendor.FullScreenChange, handler);
+    }
 };
 
 const exitFullScreen = (element: Element | Document): Promise<void> => {
-    return (element as any)[vendor.ExitFullScreen]();
+    return isBrowser
+            ? (element as any)[vendor.ExitFullScreen]()
+            : Promise.resolve({});
 };
 
-const getFullScreenElement = (): Element => {
-    return (document as any)[vendor.FullScreenElement];
+const getFullScreenElement = (): Element | null => {
+    return isBrowser ? (document as any)[vendor.FullScreenElement] : null;
 };
 
 const requestFullScreen = (element: Element) => {
-    (element as any)[vendor.RequestFullScreen]();
+    if (isBrowser) {
+        (element as any)[vendor.RequestFullScreen]();
+    }
 };
 
 export {
