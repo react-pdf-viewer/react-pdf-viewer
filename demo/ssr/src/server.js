@@ -19,8 +19,7 @@ const serverRenderer = (req, res, next) => {
         return res.send(
             data.replace(
                 '<div id="root"></div>',
-                `<div id="root">hello</div>`
-                // `<div id="root">${}</div>`
+                `<div id="root">${renderToString(<App/>)}</div>`
             )
         );
     });
