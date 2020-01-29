@@ -1,3 +1,6 @@
+// Ignore CSS files
+require.extensions['.css'] = () => {};
+
 require('@babel/register')({
     plugins: [
         ['module-resolver', {
