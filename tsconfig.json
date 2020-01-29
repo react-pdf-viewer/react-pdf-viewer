@@ -8,7 +8,6 @@
         "jsx": "react",
         "lib": ["dom", "es2015"],
         "resolveJsonModule": true,
-        "isolatedModules": true,
         "baseUrl": "."
     },
     "exclude": [

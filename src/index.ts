@@ -7,13 +7,13 @@
  */
 
 import Button from './Button';
-import { Toggle } from './hooks/useToggle';
+import { Toggle as ToggleType } from './hooks/useToggle';
 import Icon from './icons/Icon';
 import defaultLayout from './layouts/defaultLayout';
 import defaultToolbar from './layouts/defaultToolbar';
-import Slot from './layouts/Slot';
-import ToolbarSlot, { RenderToolbar, RenderToolbarSlot } from './layouts/ToolbarSlot';
-import LocalizationMap from './localization/LocalizationMap';
+import { default as ISlot } from './layouts/Slot';
+import { default as IToolbarSlot, RenderToolbar as RenderToolbarType, RenderToolbarSlot as RenderToolbarSlotType } from './layouts/ToolbarSlot';
+import { default as ILocalizationMap } from './localization/LocalizationMap';
 import MenuDivider from './menu/MenuDivider';
 import MenuItem from './menu/MenuItem';
 import Modal from './portal/Modal';
@@ -29,17 +29,17 @@ export {
     defaultLayout,
     defaultToolbar,
     Icon,
-    LocalizationMap,
     MenuDivider,
     MenuItem,
     Modal,
     Popover,
     Position,
-    RenderToolbar,
-    RenderToolbarSlot,
-    Slot,
-    Toggle,
-    ToolbarSlot,
     Tooltip,
     Worker,
 };
+export type LocalizationMap = ILocalizationMap;
+export type RenderToolbar = RenderToolbarType;
+export type RenderToolbarSlot = RenderToolbarSlotType;
+export type Slot = ISlot;
+export type Toggle = ToggleType;
+export type ToolbarSlot = IToolbarSlot;

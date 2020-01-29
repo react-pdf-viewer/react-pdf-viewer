@@ -25,8 +25,9 @@ interface ToolbarSlot {
     moreActionsPopover: React.ReactNode;
 }
 
-type RenderToolbarSlot = (slot: ToolbarSlot) => React.ReactElement;
-type RenderToolbar = (renderToolbar: RenderToolbarSlot) => React.ReactElement;
+type RenderToolbarSlotType = (slot: ToolbarSlot) => React.ReactElement;
+type RenderToolbarType = (renderToolbar: RenderToolbarSlot) => React.ReactElement;
 
-export { RenderToolbar, RenderToolbarSlot };
 export default ToolbarSlot;
+export type RenderToolbarSlot = RenderToolbarSlotType;
+export type RenderToolbar = RenderToolbarType;
