@@ -16,7 +16,7 @@ import NextIcon from './icons/NextIcon';
 import PreviousIcon from './icons/PreviousIcon';
 import ZoomInIcon from './icons/ZoomInIcon';
 import ZoomOutIcon from './icons/ZoomOutIcon';
-import ToolbarSlot, { RenderToolbarSlot } from './layouts/ToolbarSlot';
+import { RenderToolbarSlot } from './layouts/ToolbarSlot';
 import LocalizationContext from './localization/LocalizationContext';
 import MoreActionsPopover, { ScrollMode } from './MoreActionsPopover';
 import OpenFileButton from './open/OpenFileButton';
