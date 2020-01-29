@@ -1,6 +1,6 @@
 {
     "compilerOptions": {
-        "rootDir": "./client",
+        "rootDir": "./src",
         "esModuleInterop": true,
         "target": "esnext",
         "module": "commonjs",
@@ -8,10 +8,12 @@
         "jsx": "react",
         "lib": ["dom", "es2015"],
         "resolveJsonModule": true,
+        "isolatedModules": true,
         "baseUrl": "."
     },
     "exclude": [
-        "build",
+        "demo",
+        "dist",
         "node_modules"
     ]
 }
