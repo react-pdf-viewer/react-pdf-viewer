@@ -1,0 +1,31 @@
+{
+    "name": "react-pdf-viewer-ssr-demo",
+    "version": "1.0.0",
+    "scripts": {
+        "copy": "rm -rf vendors/pdfviewer && mkdir vendors/pdfviewer && cp -rf ../../dist/es6/ vendors/pdfviewer",
+        "copyasset": "cp ../../assets/pdf-open-parameters.pdf dist",
+        "build": "npm run copy && rm -rf dist && webpack --mode production && npm run copyasset",
+        "dev": "npm run copy && rm -rf dist && webpack --mode production && npm run copyasset && nodemon index.js",
+        "dev2": "nodemon index.js"
+    },
+    "dependencies": {
+        "pdfjs-dist": "^2.2.228",
+        "react": "^16.12.0",
+        "react-dom": "^16.12.0"
+    },
+    "devDependencies": {
+        "@babel/core": "^7.8.3",
+        "@babel/preset-env": "^7.8.3",
+        "@babel/preset-react": "^7.8.3",
+        "@babel/register": "^7.8.3",
+        "babel-loader": "^8.0.6",
+        "css-loader": "^3.4.2",
+        "express": "^4.17.1",
+        "html-webpack-plugin": "^3.2.0",
+        "mini-css-extract-plugin": "^0.9.0",
+        "nodemon": "^2.0.2",
+        "webpack": "^4.41.5",
+        "webpack-cli": "^3.3.10",
+        "webpack-dev-server": "^3.10.1"
+    }
+}
