@@ -9,6 +9,20 @@
         "url": "https://twitter.com/nghuuphuoc"
     },
     "homepage": "https://react-pdf-viewer.dev",
+    "keywords": [
+        "react",
+        "react.js",
+        "pdf",
+        "pdf.js",
+        "pdf viewer"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/phuoc-ng/react-pdf-viewer"
+    },
+    "bugs": {
+        "url": "https://github.com/phuoc-ng/react-pdf-viewer/issues"
+    },
     "scripts": {
         "build": "rm -rf dist/cjs/* && rm -rf dist/umd/* && cp README.md dist && rollup -c",
         "lint": "tslint -c tslint.json -o tslint.log -t prose 'src/**/*.{ts,tsx}'",
