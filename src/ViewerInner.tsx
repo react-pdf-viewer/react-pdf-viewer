@@ -245,7 +245,7 @@ const ViewerInner: React.FC<ViewerInnerProps> = ({ doc, fileName, layout, pageSi
                     )
                 }
                 {
-                    [...Array(numPages).keys()].map((index) => {
+                    Array(numPages).fill(0).map((_, index) => {
                         return (
                             <div
                                 key={`pagelayer-${index}`}
