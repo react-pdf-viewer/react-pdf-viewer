@@ -1,5 +1,7 @@
 import React from 'react';
-import { Worker } from 'pdfviewer';
+import { Worker } from '@phuocng/react-pdf-viewer';
+
+import '@phuocng/react-pdf-viewer/cjs/react-pdf-viewer.css';
 
 import AlwaysShowSidebar from './AlwaysShowSidebar';
 import SimpleToolbar from './SimpleToolbar';
