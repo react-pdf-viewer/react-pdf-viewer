@@ -1,0 +1,11 @@
+# CHANGELOG
+
+## v1.0.2
+
+**Bug fixes**
+- Cannot re-export a type when --isolatedModules is set to true
+- The CSS files are missing in es6 package
+
+## v1.0.0
+
+First release

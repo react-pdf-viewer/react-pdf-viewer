@@ -1,0 +1,39 @@
+{
+    "name": "@phuocng/react-pdf-viewer",
+    "version": "1.0.2",
+    "description": "A React component to view a PDF document",
+    "license": "https://react-pdf-viewer.dev/license",
+    "author": {
+        "name": "Nguyen Huu Phuoc",
+        "email": "me@phuoc.ng",
+        "url": "https://twitter.com/nghuuphuoc"
+    },
+    "homepage": "https://react-pdf-viewer.dev",
+    "keywords": [
+        "react",
+        "react.js",
+        "pdf",
+        "pdf.js",
+        "pdf viewer"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/phuoc-ng/react-pdf-viewer"
+    },
+    "bugs": {
+        "url": "https://github.com/phuoc-ng/react-pdf-viewer/issues"
+    },
+    "peerDependencies": {
+        "pdfjs-dist": "^2.2.228",
+        "react": "^16.8.0",
+        "react-dom": "^16.8.0"
+    },
+    "files": [
+        "cjs/",
+        "umd/",
+        "index.d.ts",
+        "index.js",
+        "README.md"
+    ],
+    "main": "index.js"
+}

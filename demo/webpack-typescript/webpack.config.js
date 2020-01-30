@@ -31,9 +31,6 @@ module.exports = {
     },
     resolve: {
         extensions: ['.js', '.jsx', '.ts', '.tsx'],
-        alias: {
-            'pdfviewer': path.join(__dirname, 'vendors/pdfviewer'),
-        },
     },
     devServer: {
         contentBase: path.join(__dirname, 'dist'),

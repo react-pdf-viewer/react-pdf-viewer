@@ -31,9 +31,6 @@ module.exports = {
     },
     resolve: {
         extensions: ['.js', '.jsx'],
-        alias: {
-            'pdfviewer': path.join(__dirname, 'vendors/pdfviewer'),
-        },
     },
     plugins: [
         new HtmlWebPackPlugin({

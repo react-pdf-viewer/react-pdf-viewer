@@ -28,7 +28,7 @@ const ThumbnailList: React.FC<ThumbnailListProps> = ({
     return (
         <>
             {
-                [...Array(numPages).keys()].map((index) => {
+                Array(numPages).fill(0).map((_, index) => {
                     const onClick = () => onJumpToPage(index);
                     return (
                         <div key={`thumbnail-${index}`}>

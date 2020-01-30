@@ -1,5 +1,5 @@
 import React from 'react';
-import Viewer, { defaultLayout } from 'pdfviewer';
+import Viewer, { defaultLayout } from '@phuocng/react-pdf-viewer';
 
 const SimpleToolbar = ({ fileUrl }) => {
     const renderToolbar = (toolbarSlot) => {

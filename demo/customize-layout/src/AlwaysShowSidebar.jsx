@@ -1,5 +1,5 @@
 import React from 'react';
-import Viewer from 'pdfviewer';
+import Viewer from '@phuocng/react-pdf-viewer';
 
 const AlwaysShowSidebar = ({ fileUrl }) => {
     const renderToolbar = toolbarSlot => {
