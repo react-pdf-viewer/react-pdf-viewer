@@ -39,6 +39,8 @@ export enum Position {
 export type RenderToolbarSlot = (slot: ToolbarSlot) => React.ReactElement;
 export type RenderToolbar = (renderToolbar: RenderToolbarSlot) => React.ReactElement;
 
+export const defaultToolbar: RenderToolbarSlot;
+
 export interface SlotAttr extends React.HTMLAttributes<HTMLDivElement> {
     ref?: React.MutableRefObject<HTMLDivElement | null>;
 }
@@ -150,17 +152,20 @@ export class Tooltip extends React.Component<TooltipProps> {}
 
 // Viewer
 
+export type Layout = (
+    isSidebarOpened: boolean,
+    main: Slot,
+    toolbar: RenderToolbar,
+    sidebar: Slot,
+) => React.ReactElement;
+
+export const defaultLayout: Layout;
+
 export interface ViewerProps {
     fileUrl: string;
     localization?: LocalizationMap;
-    layout?: (
-        isSidebarOpened: boolean,
-        main: Slot,
-        toolbar: RenderToolbar,
-        sidebar: Slot,
-    ) => React.ReactElement;
+    layout?: Layout;
 }
-
 export default class Viewer extends React.Component<ViewerProps> {}
 
 // Worker

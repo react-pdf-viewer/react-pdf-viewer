@@ -32,7 +32,8 @@
         "cjs/",
         "umd/",
         "index.d.ts",
-        "index.js"
+        "index.js",
+        "README.md"
     ],
     "main": "index.js"
 }
