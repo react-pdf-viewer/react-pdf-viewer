@@ -1,5 +1,7 @@
 import React from 'react';
-import Viewer, { Worker } from 'pdfviewer';
+import Viewer, { Worker } from '@phuocng/react-pdf-viewer';
+
+import '@phuocng/react-pdf-viewer/cjs/react-pdf-viewer.css';
 
 const App = () => {
     return (
