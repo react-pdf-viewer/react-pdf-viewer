@@ -16,6 +16,7 @@
     },
     "files": [
         "cjs/",
+        "umd/",
         "index.js"
     ],
     "main": "index.js"
