@@ -1,3 +1,3 @@
-dist
+dist/cjs/*
 node_modules
 tslint.log

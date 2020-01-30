@@ -10,10 +10,7 @@
     },
     "homepage": "https://react-pdf-viewer.dev",
     "scripts": {
-        "build": "npm run build:ts && npm run build:es6",
-        "copycss": "cd dist/ts && find . -name \\*.css -exec bash -c 'cp $0 ../es6/$0' {} \\;",
-        "build:es6": "rm -rf dist/es6 && mkdir dist/es6 && tsc -p tsconfig-es6.json && npm run copycss",
-        "build:ts": "rm -rf dist/ts && mkdir dist/ts && cp -rf src/* dist/ts",
+        "build": "rm -rf dist/cjs/* && rollup -c",
         "lint": "tslint -c tslint.json -o tslint.log -t prose 'src/**/*.{ts,tsx}'",
         "typecheck": "tsc --noEmit --watch"
     },
@@ -23,8 +20,12 @@
         "react-dom": "^16.12.0"
     },
     "devDependencies": {
+        "@rollup/plugin-json": "^4.0.1",
+        "@rollup/plugin-typescript": "^3.0.0",
         "@types/react": "^16.9.19",
         "@types/react-dom": "^16.9.5",
+        "rollup": "^1.30.1",
+        "rollup-plugin-css-only": "^2.0.0",
         "tslint": "^6.0.0",
         "tslint-react": "^4.2.0",
         "typescript": "^3.7.5"
