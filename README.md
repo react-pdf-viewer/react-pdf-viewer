@@ -43,13 +43,9 @@ Then it will produce two formats available in the `dist` folder:
 
 ~~~
 └─── dist
-    ├─── es6
-    └─── ts
+    ├─── cjs    // CommonJS package
+    └─── umd    // UMD package
 ~~~
-
-* The `ts` folder consists of the entire source code which is writeen in TypeScript.
-It's copied from the `src` folder.
-* The `es6` folder is transplied from the TypeScript code to ES6
 
 2. Lint:
 
