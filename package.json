@@ -10,7 +10,7 @@
     },
     "homepage": "https://react-pdf-viewer.dev",
     "scripts": {
-        "build": "npm run build:es6 && npm run build:ts",
+        "build": "npm run build:ts && npm run build:es6",
         "copycss": "cd dist/ts && find . -name \\*.css -exec bash -c 'cp $0 ../es6/$0' {} \\;",
         "build:es6": "rm -rf dist/es6 && mkdir dist/es6 && tsc -p tsconfig-es6.json && npm run copycss",
         "build:ts": "rm -rf dist/ts && mkdir dist/ts && cp -rf src/* dist/ts",
