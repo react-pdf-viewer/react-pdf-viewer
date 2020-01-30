@@ -31,11 +31,6 @@ module.exports = {
     },
     resolve: {
         extensions: ['.js', '.jsx'],
-        alias: {
-            // Fix an issue of `Invalid hook call`
-            // Webpack seems to duplicate 2 React versions
-            react: path.resolve('./node_modules/react'),
-        },
     },
     plugins: [
         new HtmlWebPackPlugin({
