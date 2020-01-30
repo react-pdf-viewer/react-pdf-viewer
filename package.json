@@ -10,7 +10,7 @@
     },
     "homepage": "https://react-pdf-viewer.dev",
     "scripts": {
-        "build": "rm -rf dist/cjs/* && rollup -c",
+        "build": "rm -rf dist/cjs/* && rm -rf dist/umd/* && rollup -c",
         "lint": "tslint -c tslint.json -o tslint.log -t prose 'src/**/*.{ts,tsx}'",
         "typecheck": "tsc --noEmit --watch"
     },

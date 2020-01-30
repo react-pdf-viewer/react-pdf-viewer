@@ -1,3 +1,4 @@
 dist/cjs/*
+dist/umd/*
 node_modules
 tslint.log

@@ -7,6 +7,38 @@ const input = './src/index.ts';
 const excludeAllExternals = id => !id.startsWith('.') && !id.startsWith('/');
 
 export default [
+    // UMD
+    {
+        input,
+        output: {
+            file: './dist/umd/react-pdf-viewer.js',
+            format: 'umd',
+            name: 'ReactPdfViewer',
+            globals: {
+                PdfJs: 'pdfjs-dist',
+                react: 'React',
+                'react-dom': 'ReactDOM',
+            },
+        },
+        external: ['pdfjs-dist', 'react', 'react-dom'],
+        plugins: [
+            json(),
+            css({
+                output: './dist/umd/react-pdf-viewer.css',
+            }),
+            typescript({
+                removeComments: true,
+                module: 'es6',
+                target: 'es5',
+                jsx: 'react',
+                allowSyntheticDefaultImports: true,
+                resolveJsonModule: true,
+                moduleResolution: 'node',
+            }),
+        ],
+    },
+
+    // CJS
     {
         input,
         output: {
