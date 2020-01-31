@@ -1,6 +1,6 @@
 # React PDF viewer
 A React component to view a PDF document.
-It's written in TypeScript, and powered by React hooks.
+It's written in TypeScript, and powered by React hooks completely.
 
 ![React PDF viewer](https://raw.githubusercontent.com/phuoc-ng/react-pdf-viewer/master/assets/screenshot.png)
 
@@ -22,6 +22,7 @@ __Basic features__
 * [x] Can open a file from local. Users can drag and drop a local file to view it
 * [x] Download file
 * [x] View the document properties
+* [x] Support SSR
 
 __Customization__
 * [x] The toolbar can be customized easily
@@ -30,6 +31,35 @@ __Customization__
 __Coming soon__
 * [ ] Theming
 * [ ] Darkmode
+
+## Usage
+
+Perform the following steps to have the simplest example. For more demos, please look at the [demo](/demo) folder.
+
+1. Install packages
+
+~~~
+$ npm install @phuocng/react-pdf-viewer
+$ npm install pdfjs-dist
+~~~
+
+2. Import CSS and components
+
+~~~ javascript
+import Viewer, { Worker } from '@phuocng/react-pdf-viewer';
+
+import '@phuocng/react-pdf-viewer/cjs/react-pdf-viewer.css';
+~~~
+
+3. Use the component
+
+~~~ javascript
+<Worker workerUrl="https://unpkg.com/pdfjs-dist@2.2.228/build/pdf.worker.min.js">
+    <div style={{ height: '750px' }}>
+        <Viewer fileUrl="/path/to/document.pdf" />
+    </div>
+</Worker>
+~~~
 
 ## Commands
 
