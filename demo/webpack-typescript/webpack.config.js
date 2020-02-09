@@ -31,6 +31,13 @@ module.exports = {
     },
     resolve: {
         extensions: ['.js', '.jsx', '.ts', '.tsx'],
+        alias: {
+            // Uncomment this when linking @phuoc-ng/react-pdf-viewer to the dist folder
+            // Fix an issue of `Invalid hook call`
+            // Webpack seems to duplicate 2 React versions
+            // See https://github.com/phuoc-ng/react-pdf-viewer/commit/0cd175bfebfe1922d9c14c5d3309f9d1eff6213f
+            // react: path.resolve('./node_modules/react'),
+        },
     },
     devServer: {
         contentBase: path.join(__dirname, 'dist'),
