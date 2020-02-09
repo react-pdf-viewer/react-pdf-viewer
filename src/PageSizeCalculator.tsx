@@ -10,6 +10,7 @@ import React from 'react';
 
 import PdfJs from './PdfJs';
 import Spinner from './Spinner';
+import { decrease } from './zoom/zoomingLevel';
 
 interface IPageSize {
     pageHeight: number;
@@ -40,7 +41,11 @@ const PageSizeCalculator: React.FC<PageSizeCalculatorProps> = ({ doc, render }) 
             if (!pagesEle) {
                 return;
             }
-            const scale = Math.min(1, pagesEle.offsetWidth / w);
+            
+            // Determine the best scale that fits the document within the container
+            const scaled = pagesEle.offsetWidth / w;
+            const scale = decrease(Math.max(1, scaled));
+
             setPageSize({
                 pageHeight: h,
                 pageWidth: w,

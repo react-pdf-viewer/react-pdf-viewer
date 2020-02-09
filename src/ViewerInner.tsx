@@ -63,8 +63,6 @@ const ViewerInner: React.FC<ViewerInnerProps> = ({ doc, fileName, layout, pageSi
 
     const { numPages } = doc;
     const { pageWidth, pageHeight } = pageSize;
-    const width = scale * pageWidth;
-    const height = scale * pageHeight;
 
     const arr = Array(numPages).fill(null);
     const pageVisibility = arr.map((_, __) => 0);
@@ -257,12 +255,12 @@ const ViewerInner: React.FC<ViewerInnerProps> = ({ doc, fileName, layout, pageSi
                                 <PageLayer
                                     doc={doc}
                                     keywordRegexp={keywordRegexp}
-                                    height={height}
+                                    height={pageHeight}
                                     match={match}
                                     pageIndex={index}
                                     rotation={rotation}
                                     scale={scale}
-                                    width={width}
+                                    width={pageWidth}
                                     onJumpToDest={jumpToDest}
                                     onPageVisibilityChanged={pageVisibilityChanged}
                                 />
@@ -299,9 +297,9 @@ const ViewerInner: React.FC<ViewerInnerProps> = ({ doc, fileName, layout, pageSi
                 <Sidebar
                     currentPage={currentPage}
                     doc={doc}
-                    height={height}
+                    height={pageHeight}
                     rotation={rotation}
-                    width={width}
+                    width={pageWidth}
                     onJumpToDest={jumpToDest}
                     onJumpToPage={jumpToPage}
                 />
