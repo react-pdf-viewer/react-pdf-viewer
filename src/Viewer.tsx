@@ -26,6 +26,9 @@ interface File {
 }
 
 interface ViewerProps {
+    // The default zoom level
+    // If it's not set, the initial zoom level will be calculated based on the dimesion of page and the container width
+    defaultScale?: number;
     fileUrl: string;
     localization?: LocalizationMap;
     layout?: (
@@ -36,7 +39,7 @@ interface ViewerProps {
     ) => React.ReactElement;
 }
 
-const Viewer: React.FC<ViewerProps> = ({ fileUrl, layout, localization }) => {
+const Viewer: React.FC<ViewerProps> = ({ defaultScale, fileUrl, layout, localization }) => {
     const [file, setFile] = React.useState<File>({
         data: fileUrl,
         name: fileUrl,
@@ -67,16 +70,21 @@ const Viewer: React.FC<ViewerProps> = ({ fileUrl, layout, localization }) => {
     };
 
     const renderDoc = (doc: PdfJs.PdfDocument) => {
-        const renderInner = (pageSize: PageSize) => (
-            <ViewerInner
-                doc={doc}
-                fileName={file.name}
-                layout={layout || layoutOption}
-                pageSize={pageSize}
-                onDownload={download}
-                onOpenFile={openFile}
-            />
-        );
+        const renderInner = (ps: PageSize) => {
+            const pageSize = ps;
+            pageSize.scale = defaultScale || ps.scale;
+
+            return (
+                <ViewerInner
+                    doc={doc}
+                    fileName={file.name}
+                    layout={layout || layoutOption}
+                    pageSize={pageSize}
+                    onDownload={download}
+                    onOpenFile={openFile}
+                />
+            );
+        };
         return (
             <PageSizeCalculator
                 doc={doc}
