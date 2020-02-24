@@ -24,7 +24,9 @@
         "url": "https://github.com/phuoc-ng/react-pdf-viewer/issues"
     },
     "scripts": {
-        "build": "rm -rf dist/cjs/* && rm -rf dist/umd/* && cp README.md dist && rollup -c",
+        "copy": "rm -rf dist/cjs/* && rm -rf dist/umd/* && cp README.md dist",
+        "build": "npm run copy && rollup -c",
+        "dev": "npm run copy && rollup -c rollup.dev.config.js -w",
         "lint": "tslint -c tslint.json -o tslint.log -t prose 'src/**/*.{ts,tsx}'",
         "typecheck": "tsc --noEmit --watch"
     },
