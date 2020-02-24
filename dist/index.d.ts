@@ -70,6 +70,7 @@ export interface ToolbarSlot {
     fullScreenButton: React.ReactNode;
     downloadButton: React.ReactNode;
     openFileButton: React.ReactNode;
+    printButton: React.ReactNode;
     moreActionsPopover: React.ReactNode;
 }
 

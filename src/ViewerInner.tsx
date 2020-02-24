@@ -214,6 +214,10 @@ const ViewerInner: React.FC<ViewerInnerProps> = ({ doc, fileName, layout, pageSi
         });
     };
 
+    const print = () => {
+        console.log('Print');
+    };
+
     return layout(
         toggleSidebar.opened,
         {
@@ -283,6 +287,7 @@ const ViewerInner: React.FC<ViewerInnerProps> = ({ doc, fileName, layout, pageSi
                 onJumpTo={jumpToPage}
                 onJumpToMatch={jumpToMatch}
                 onOpenFiles={openFiles}
+                onPrint={print}
                 onRotate={rotate}
                 onSearchFor={setKeywordRegexp}
                 onToggleDragScroll={toggleDragScroll}

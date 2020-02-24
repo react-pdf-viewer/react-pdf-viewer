@@ -77,6 +77,9 @@ const defaultToolbar: RenderToolbarSlot = (toolbarSlot: ToolbarSlot): React.Reac
                     {toolbarSlot.downloadButton}
                 </div>
                 <div style={{ padding: '0 2px' }}>
+                    {toolbarSlot.printButton}
+                </div>
+                <div style={{ padding: '0 2px' }}>
                     {toolbarSlot.moreActionsPopover}
                 </div>
             </div>
