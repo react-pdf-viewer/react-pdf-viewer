@@ -21,6 +21,7 @@ import { ScrollMode } from './MoreActionsPopover';
 import DropArea from './open/DropArea';
 import { PageSize } from './PageSizeCalculator';
 import PdfJs from './PdfJs';
+import PrintZone from './print/PrintZone';
 import Match from './search/Match';
 import Sidebar from './Sidebar';
 import Toolbar from './Toolbar';
@@ -60,6 +61,7 @@ const ViewerInner: React.FC<ViewerInnerProps> = ({ doc, fileName, layout, pageSi
     const { isFullScreen, openFullScreen, closeFullScreen } = useFullScreen(pagesRef);
     const { isDragging } = useDrop(pagesRef, (files) => openFiles(files));
     const toggleSidebar = useToggle();
+    const [printing, setPrinting] = React.useState(false);
 
     const { numPages } = doc;
     const { pageWidth, pageHeight } = pageSize;
@@ -214,9 +216,8 @@ const ViewerInner: React.FC<ViewerInnerProps> = ({ doc, fileName, layout, pageSi
         });
     };
 
-    const print = () => {
-        console.log('Print');
-    };
+    // Switch to the print mode
+    const print = () => setPrinting(true);
 
     return layout(
         toggleSidebar.opened,
@@ -230,6 +231,7 @@ const ViewerInner: React.FC<ViewerInnerProps> = ({ doc, fileName, layout, pageSi
             children: (
                 <>
                 {isDragging && <DropArea />}
+                {printing && <PrintZone doc={doc} pageHeight={pageHeight} pageWidth={pageWidth} rotation={rotation} />}
                 {
                     isFullScreen && (
                         <div

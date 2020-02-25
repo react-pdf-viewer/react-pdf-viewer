@@ -149,6 +149,9 @@ declare module 'pdfjs-dist' {
     // Render page
     interface PageRenderParams {
         canvasContext: CanvasRenderingContext2D;
+        // Should be 'print' when printing
+        intent?: string;
+        transform?: number[];
         viewport: ViewPort;
     }
     interface Page {
