@@ -21,6 +21,7 @@ import { ScrollMode } from './MoreActionsPopover';
 import DropArea from './open/DropArea';
 import { PageSize } from './PageSizeCalculator';
 import PdfJs from './PdfJs';
+import PrintProgress from './print/PrintProgress';
 import PrintZone from './print/PrintZone';
 import Match from './search/Match';
 import Sidebar from './Sidebar';
@@ -39,6 +40,7 @@ interface ViewerInnerProps {
     pageSize: PageSize;
     layout(
         isSidebarOpened: boolean,
+        container: Slot,
         main: Slot,
         toolbar: RenderToolbar,
         sidebar: Slot,
@@ -62,6 +64,7 @@ const ViewerInner: React.FC<ViewerInnerProps> = ({ doc, fileName, layout, pageSi
     const { isDragging } = useDrop(pagesRef, (files) => openFiles(files));
     const toggleSidebar = useToggle();
     const [printing, setPrinting] = React.useState(false);
+    const [numLoadedPagesForPrint, setNumLoadedPagesForPrint] = React.useState(0);
 
     const { numPages } = doc;
     const { pageWidth, pageHeight } = pageSize;
@@ -223,6 +226,14 @@ const ViewerInner: React.FC<ViewerInnerProps> = ({ doc, fileName, layout, pageSi
         toggleSidebar.opened,
         {
             attrs: {
+                style: {
+                    position: 'relative',
+                }
+            },
+            children: (printing && <PrintProgress progress={Math.floor(numLoadedPagesForPrint * 100 / numPages)} />)
+        },
+        {
+            attrs: {
                 ref: pagesRef,
                 style: {
                     position: 'relative',
@@ -231,7 +242,13 @@ const ViewerInner: React.FC<ViewerInnerProps> = ({ doc, fileName, layout, pageSi
             children: (
                 <>
                 {isDragging && <DropArea />}
-                {printing && <PrintZone doc={doc} pageHeight={pageHeight} pageWidth={pageWidth} rotation={rotation} />}
+                {printing && (
+                    <PrintZone
+                        doc={doc}
+                        pageHeight={pageHeight} pageWidth={pageWidth} rotation={rotation}
+                        onLoad={setNumLoadedPagesForPrint}
+                    />
+                )}
                 {
                     isFullScreen && (
                         <div

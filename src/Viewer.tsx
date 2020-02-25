@@ -33,6 +33,7 @@ interface ViewerProps {
     localization?: LocalizationMap;
     layout?: (
         isSidebarOpened: boolean,
+        container: Slot,
         main: Slot,
         toolbar: RenderToolbar,
         sidebar: Slot,
@@ -46,12 +47,14 @@ const Viewer: React.FC<ViewerProps> = ({ defaultScale, fileUrl, layout, localiza
     });
     const layoutOption = (
         isSidebarOpened: boolean,
+        container: Slot,
         main: Slot,
         toolbar: RenderToolbar,
         sidebar: Slot,
     ): React.ReactElement => {
         return defaultLayout(
             isSidebarOpened,
+            container,
             main,
             toolbar(defaultToolbar),
             sidebar
