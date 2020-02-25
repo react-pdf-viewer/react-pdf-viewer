@@ -8,11 +8,15 @@
 
 import React from 'react';
 
+import LocalizationContext from '../localization/LocalizationContext';
+
 interface PrintProgressProps {
     progress: number;
 }
 
 const PrintProgress: React.FC<PrintProgressProps> = ({ progress }) => {
+    const l10n = React.useContext(LocalizationContext);
+
     return (
         <div
             style={{
@@ -37,7 +41,7 @@ const PrintProgress: React.FC<PrintProgressProps> = ({ progress }) => {
                     width: '240px',
                 }}
             >
-                <div style={{ marginBottom: '8px' }}>Preparing document ...</div>
+                <div style={{ marginBottom: '8px' }}>{l10n.printProgress.preparingDocument}</div>
                 <div
                     style={{
                         backgroundColor: 'rgba(0, 0, 0, .1)',
@@ -70,7 +74,7 @@ const PrintProgress: React.FC<PrintProgressProps> = ({ progress }) => {
                         padding: '8px',
                     }}
                 >
-                    Cancel
+                    {l10n.printProgress.cancel}
                 </button>
             </div>
         </div>
