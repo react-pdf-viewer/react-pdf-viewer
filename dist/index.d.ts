@@ -155,6 +155,7 @@ export class Tooltip extends React.Component<TooltipProps> {}
 
 export type Layout = (
     isSidebarOpened: boolean,
+    container: Slot,
     main: Slot,
     toolbar: RenderToolbar,
     sidebar: Slot,
