@@ -223,12 +223,18 @@ const ViewerInner: React.FC<ViewerInnerProps> = ({ doc, fileName, layout, pageSi
     };
 
     // Switch to the print mode
-    const print = () => setPrintStatus(PrintStatus.Preparing);
+    const print = () => {
+        setPrintStatus(PrintStatus.Preparing);
+        setNumLoadedPagesForPrint(0);
+    };
     const cancelPrinting = () => {
         setPrintStatus(PrintStatus.Inactive);
         setNumLoadedPagesForPrint(0);
     };
-    const startPrinting = () => setPrintStatus(PrintStatus.Ready);
+    const startPrinting = () => {
+        setPrintStatus(PrintStatus.Ready);
+        setNumLoadedPagesForPrint(0);
+    };
 
     return layout(
         toggleSidebar.opened,
@@ -238,14 +244,29 @@ const ViewerInner: React.FC<ViewerInnerProps> = ({ doc, fileName, layout, pageSi
                     position: 'relative',
                 }
             },
-            children: (printStatus === PrintStatus.Preparing && (
-                <PrintProgress
-                    numLoadedPages={numLoadedPagesForPrint}
-                    numPages={numPages}
-                    onCancel={cancelPrinting}
-                    onStartPrinting={startPrinting}
-                />
-            ))
+            children: (
+                <>
+                {printStatus === PrintStatus.Preparing && (
+                    <PrintProgress
+                        numLoadedPages={numLoadedPagesForPrint}
+                        numPages={numPages}
+                        onCancel={cancelPrinting}
+                        onStartPrinting={startPrinting}
+                    />
+                )}
+                {(printStatus === PrintStatus.Preparing || printStatus === PrintStatus.Ready) && (
+                    <PrintZone
+                        doc={doc}
+                        pageHeight={pageHeight}
+                        pageWidth={pageWidth}
+                        printStatus={printStatus}
+                        rotation={rotation}
+                        onCancel={cancelPrinting}
+                        onLoad={setNumLoadedPagesForPrint}
+                    />
+                )}
+                </>
+            )
         },
         {
             attrs: {
@@ -257,16 +278,6 @@ const ViewerInner: React.FC<ViewerInnerProps> = ({ doc, fileName, layout, pageSi
             children: (
                 <>
                 {isDragging && <DropArea />}
-                {(printStatus === PrintStatus.Preparing || printStatus === PrintStatus.Ready) && (
-                    <PrintZone
-                        doc={doc}
-                        pageHeight={pageHeight}
-                        pageWidth={pageWidth}
-                        printStatus={printStatus}
-                        rotation={rotation}
-                        onLoad={setNumLoadedPagesForPrint}
-                    />
-                )}
                 {
                     isFullScreen && (
                         <div

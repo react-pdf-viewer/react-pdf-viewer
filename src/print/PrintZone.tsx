@@ -20,13 +20,22 @@ interface PrintZoneProps {
     pageWidth: number;
     printStatus: PrintStatus;
     rotation: number;
+    onCancel(): void;
     onLoad(numberOfPages: number): void;
 }
 
-const PrintZone: React.FC<PrintZoneProps> = ({ doc, pageHeight, pageWidth, printStatus, rotation, onLoad }) => {
+const PrintZone: React.FC<PrintZoneProps> = ({ doc, pageHeight, pageWidth, printStatus, rotation, onCancel, onLoad }) => {
     const [numLoadedPages, setNumLoadedPages] = React.useState(0);
     React.useEffect(() => {
         printStatus === PrintStatus.Ready && window.print();
+
+        // Handle the case user clicks the `Cancel` button in the print window
+        const handler = () => {
+            printStatus === PrintStatus.Ready && onCancel();
+        };
+        document.addEventListener('mousemove', handler);
+
+        return () => document.removeEventListener('mousemove', handler);
     }, [printStatus]);
 
     const { numPages } = doc;

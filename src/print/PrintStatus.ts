@@ -7,10 +7,10 @@
  */
 
 enum PrintStatus {
-    Inactive,
-    Preparing,
-    Cancelled,
-    Ready
+    Inactive = 'Inactive',
+    Preparing = 'Preparing',
+    Cancelled = 'Cancelled',
+    Ready = 'Ready',
 }
 
 export default PrintStatus;
