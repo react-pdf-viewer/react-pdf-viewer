@@ -70,6 +70,7 @@ export interface ToolbarSlot {
     fullScreenButton: React.ReactNode;
     downloadButton: React.ReactNode;
     openFileButton: React.ReactNode;
+    printButton: React.ReactNode;
     moreActionsPopover: React.ReactNode;
 }
 
@@ -154,6 +155,7 @@ export class Tooltip extends React.Component<TooltipProps> {}
 
 export type Layout = (
     isSidebarOpened: boolean,
+    container: Slot,
     main: Slot,
     toolbar: RenderToolbar,
     sidebar: Slot,

@@ -14,6 +14,7 @@ import FullScreenIcon from './icons/FullScreenIcon';
 import LeftSidebarIcon from './icons/LeftSidebarIcon';
 import NextIcon from './icons/NextIcon';
 import PreviousIcon from './icons/PreviousIcon';
+import PrintIcon from './icons/PrintIcon';
 import ZoomInIcon from './icons/ZoomInIcon';
 import ZoomOutIcon from './icons/ZoomOutIcon';
 import { RenderToolbarSlot } from './layouts/ToolbarSlot';
@@ -40,6 +41,7 @@ interface ToolbarProps {
     onJumpTo(pageIndex: number): void;
     onJumpToMatch(match: Match): void;
     onOpenFiles(files: FileList): void;
+    onPrint(): void;
     onRotate(degree: number): void;
     onSearchFor(keyword: RegExp): void;
     onToggleDragScroll(enabled: boolean): void;
@@ -52,7 +54,7 @@ const TOOLTIP_OFFSET = { left: 0, top: 8 };
 const Toolbar: React.FC<ToolbarProps> = ({
     currentPage, doc, fileName, scale,
     onChangeScrollMode, onDownload, onFullScreen, onJumpTo,
-    onJumpToMatch, onOpenFiles, onRotate, onSearchFor, onToggleDragScroll, onToggleSidebar, onZoom,
+    onJumpToMatch, onOpenFiles, onPrint, onRotate, onSearchFor, onToggleDragScroll, onToggleSidebar, onZoom,
     renderToolbar,
 }) => {
     const l10n = React.useContext(LocalizationContext);
@@ -130,6 +132,7 @@ const Toolbar: React.FC<ToolbarProps> = ({
     const renderZoomIn = () => (<div style={{ padding: '8px' }}>{l10n.toolbar.zoomIn}</div>);
     const renderFullScreen = () => (<div style={{ padding: '8px' }}>{l10n.toolbar.fullScreen}</div>);
     const renderDownload = () => (<div style={{ padding: '8px' }}>{l10n.toolbar.download}</div>);
+    const renderPrint = () => (<div style={{ padding: '8px' }}>{l10n.toolbar.print}</div>);
 
     return renderToolbar({
         currentPage,
@@ -192,6 +195,14 @@ const Toolbar: React.FC<ToolbarProps> = ({
                 position={Position.BottomCenter}
                 target={<Button onClick={gotoPreviousPage}><PreviousIcon /></Button>}
                 content={renderPreviousPage}
+                offset={TOOLTIP_OFFSET}
+            />
+        ),
+        printButton: (
+            <Tooltip
+                position={Position.BottomCenter}
+                target={<Button onClick={onPrint}><PrintIcon /></Button>}
+                content={renderPrint}
                 offset={TOOLTIP_OFFSET}
             />
         ),

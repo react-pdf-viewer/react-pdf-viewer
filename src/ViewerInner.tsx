@@ -21,6 +21,9 @@ import { ScrollMode } from './MoreActionsPopover';
 import DropArea from './open/DropArea';
 import { PageSize } from './PageSizeCalculator';
 import PdfJs from './PdfJs';
+import PrintProgress from './print/PrintProgress';
+import PrintStatus from './print/PrintStatus';
+import PrintZone from './print/PrintZone';
 import Match from './search/Match';
 import Sidebar from './Sidebar';
 import Toolbar from './Toolbar';
@@ -38,6 +41,7 @@ interface ViewerInnerProps {
     pageSize: PageSize;
     layout(
         isSidebarOpened: boolean,
+        container: Slot,
         main: Slot,
         toolbar: RenderToolbar,
         sidebar: Slot,
@@ -60,6 +64,10 @@ const ViewerInner: React.FC<ViewerInnerProps> = ({ doc, fileName, layout, pageSi
     const { isFullScreen, openFullScreen, closeFullScreen } = useFullScreen(pagesRef);
     const { isDragging } = useDrop(pagesRef, (files) => openFiles(files));
     const toggleSidebar = useToggle();
+
+    // Print status
+    const [numLoadedPagesForPrint, setNumLoadedPagesForPrint] = React.useState(0);
+    const [printStatus, setPrintStatus] = React.useState(PrintStatus.Inactive);
 
     const { numPages } = doc;
     const { pageWidth, pageHeight } = pageSize;
@@ -214,8 +222,52 @@ const ViewerInner: React.FC<ViewerInnerProps> = ({ doc, fileName, layout, pageSi
         });
     };
 
+    // Switch to the print mode
+    const print = () => {
+        setPrintStatus(PrintStatus.Preparing);
+        setNumLoadedPagesForPrint(0);
+    };
+    const cancelPrinting = () => {
+        setPrintStatus(PrintStatus.Inactive);
+        setNumLoadedPagesForPrint(0);
+    };
+    const startPrinting = () => {
+        setPrintStatus(PrintStatus.Ready);
+        setNumLoadedPagesForPrint(0);
+    };
+
     return layout(
         toggleSidebar.opened,
+        {
+            attrs: {
+                style: {
+                    position: 'relative',
+                }
+            },
+            children: (
+                <>
+                {printStatus === PrintStatus.Preparing && (
+                    <PrintProgress
+                        numLoadedPages={numLoadedPagesForPrint}
+                        numPages={numPages}
+                        onCancel={cancelPrinting}
+                        onStartPrinting={startPrinting}
+                    />
+                )}
+                {(printStatus === PrintStatus.Preparing || printStatus === PrintStatus.Ready) && (
+                    <PrintZone
+                        doc={doc}
+                        pageHeight={pageHeight}
+                        pageWidth={pageWidth}
+                        printStatus={printStatus}
+                        rotation={rotation}
+                        onCancel={cancelPrinting}
+                        onLoad={setNumLoadedPagesForPrint}
+                    />
+                )}
+                </>
+            )
+        },
         {
             attrs: {
                 ref: pagesRef,
@@ -283,6 +335,7 @@ const ViewerInner: React.FC<ViewerInnerProps> = ({ doc, fileName, layout, pageSi
                 onJumpTo={jumpToPage}
                 onJumpToMatch={jumpToMatch}
                 onOpenFiles={openFiles}
+                onPrint={print}
                 onRotate={rotate}
                 onSearchFor={setKeywordRegexp}
                 onToggleDragScroll={toggleDragScroll}

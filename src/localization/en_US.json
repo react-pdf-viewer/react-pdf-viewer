@@ -25,6 +25,10 @@
         "verticalScrolling": "Vertical Scrolling",
         "wrappedScrolling": "Wrapped Scrolling"
     },
+    "printProgress": {
+        "cancel": "Cancel",
+        "preparingDocument": "Preparing document ..."
+    },
     "property": {
         "author": "Author",
         "close": "Close",
@@ -60,6 +64,7 @@
         "nextPage": "Next page",
         "openFile": "Open file",
         "previousPage": "Previous page",
+        "print": "Print",
         "search": "Search",
         "toggleSidebar":  "Toggle sidebar",
         "zoomIn": "Zoom in",
