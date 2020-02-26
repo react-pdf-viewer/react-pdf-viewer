@@ -64,7 +64,7 @@ const ViewerInner: React.FC<ViewerInnerProps> = ({ doc, fileName, layout, pageSi
     const { isFullScreen, openFullScreen, closeFullScreen } = useFullScreen(pagesRef);
     const { isDragging } = useDrop(pagesRef, (files) => openFiles(files));
     const toggleSidebar = useToggle();
-    
+
     // Print status
     const [numLoadedPagesForPrint, setNumLoadedPagesForPrint] = React.useState(0);
     const [printStatus, setPrintStatus] = React.useState(PrintStatus.Inactive);

@@ -41,7 +41,7 @@ const PageSizeCalculator: React.FC<PageSizeCalculatorProps> = ({ doc, render }) 
             if (!pagesEle) {
                 return;
             }
-            
+
             // Determine the best scale that fits the document within the container
             const scaled = pagesEle.offsetWidth / w;
             const scale = decrease(Math.max(1, scaled));

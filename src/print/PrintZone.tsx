@@ -27,11 +27,15 @@ interface PrintZoneProps {
 const PrintZone: React.FC<PrintZoneProps> = ({ doc, pageHeight, pageWidth, printStatus, rotation, onCancel, onLoad }) => {
     const [numLoadedPages, setNumLoadedPages] = React.useState(0);
     React.useEffect(() => {
-        printStatus === PrintStatus.Ready && window.print();
+        if (printStatus === PrintStatus.Ready) {
+            window.print();
+        }
 
         // Handle the case user clicks the `Cancel` button in the print window
         const handler = () => {
-            printStatus === PrintStatus.Ready && onCancel();
+            if (printStatus === PrintStatus.Ready) {
+                onCancel();
+            }
         };
         document.addEventListener('mousemove', handler);
 
@@ -47,27 +51,29 @@ const PrintZone: React.FC<PrintZoneProps> = ({ doc, pageHeight, pageWidth, print
 
     return (
         ReactDOM.createPortal(
-            <div className='viewer-print-container'>
-                {
-                    Array(numPages).fill(0).map((_, index) => {
-                        return (
-                            <div
-                                className='viewer-print-page'
-                                key={index}
-                            >
-                                <PageThumbnailContainer
-                                    doc={doc}
-                                    pageHeight={pageHeight}
-                                    pageIndex={index}
-                                    pageWidth={pageWidth}
-                                    rotation={rotation}
-                                    onLoad={loadPage}
-                                />
-                            </div>
-                        );
-                    })
-                }
-            </div>,
+            (
+                <div className='viewer-print-container'>
+                    {
+                        Array(numPages).fill(0).map((_, index) => {
+                            return (
+                                <div
+                                    className='viewer-print-page'
+                                    key={index}
+                                >
+                                    <PageThumbnailContainer
+                                        doc={doc}
+                                        pageHeight={pageHeight}
+                                        pageIndex={index}
+                                        pageWidth={pageWidth}
+                                        rotation={rotation}
+                                        onLoad={loadPage}
+                                    />
+                                </div>
+                            );
+                        })
+                    }
+                </div>
+            ),
             document.body
         )
     );

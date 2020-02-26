@@ -21,7 +21,9 @@ const PrintProgress: React.FC<PrintProgressProps> = ({ numLoadedPages, numPages,
     const l10n = React.useContext(LocalizationContext);
     const progress = Math.floor(numLoadedPages * 100 / numPages);
     React.useEffect(() => {
-        numLoadedPages === numPages && onStartPrinting();
+        if (numLoadedPages === numPages) {
+            onStartPrinting();
+        }
     }, [numLoadedPages]);
 
     return (
