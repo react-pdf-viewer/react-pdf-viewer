@@ -11,11 +11,18 @@ import React from 'react';
 import LocalizationContext from '../localization/LocalizationContext';
 
 interface PrintProgressProps {
-    progress: number;
+    numLoadedPages: number;
+    numPages: number;
+    onCancel(): void;
+    onStartPrinting(): void;
 }
 
-const PrintProgress: React.FC<PrintProgressProps> = ({ progress }) => {
+const PrintProgress: React.FC<PrintProgressProps> = ({ numLoadedPages, numPages, onCancel, onStartPrinting }) => {
     const l10n = React.useContext(LocalizationContext);
+    const progress = Math.floor(numLoadedPages * 100 / numPages);
+    React.useEffect(() => {
+        numLoadedPages === numPages && onStartPrinting();
+    }, [numLoadedPages]);
 
     return (
         <div
@@ -73,6 +80,7 @@ const PrintProgress: React.FC<PrintProgressProps> = ({ progress }) => {
                         cursor: 'pointer',
                         padding: '8px',
                     }}
+                    onClick={onCancel}
                 >
                     {l10n.printProgress.cancel}
                 </button>

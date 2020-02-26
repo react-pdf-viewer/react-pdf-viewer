@@ -26,7 +26,6 @@ const PageThumbnail: React.FC<PageThumbnailProps> = ({
 }) => {
     const renderTask = React.useRef<PdfJs.PageRenderTask>();
     const [src, setSrc] = React.useState('');
-    console.log(pageHeight, pageWidth, thumbnailHeight, thumbnailWidth, thumbnailHeight/pageHeight);
 
     React.useEffect(() => {
         const task = renderTask.current;
