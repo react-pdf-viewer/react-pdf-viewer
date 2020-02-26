@@ -8,8 +8,6 @@
 
 .viewer-print-container {
     display: none;
-    /*height: 100%;*/
-    /*position: fixed;*/
 }
 
 @media print {
@@ -19,28 +17,5 @@
 
     .viewer-print-container {
         display: block;
-        height: 100%;
-        position: relative;
-    }
-
-    .viewer-print-page {
-        position: relative;
-        top: 0;
-        left: 0;
-        width: 1px;
-        height: 1px;
-        overflow: visible;
-        page-break-after: always;
-        page-break-inside: avoid;
-    }
-
-    .viewer-print-page img {
-        display: block;
-    }
-}
-
-@supports ((size:A4) and (size:1pt 1pt)) {
-    @page {
-        size: 612pt 792pt;
     }
 }
