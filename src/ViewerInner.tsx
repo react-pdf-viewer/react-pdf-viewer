@@ -342,6 +342,7 @@ const ViewerInner: React.FC<ViewerInnerProps> = ({ doc, fileName, layout, pageSi
                 doc={doc}
                 fileName={fileName}
                 scale={scale}
+                selectionMode={selectionMode}
                 onChangeScrollMode={changeScrollMode}
                 onChangeSelectionMode={changeSelectionMode}
                 onDownload={onDownload}

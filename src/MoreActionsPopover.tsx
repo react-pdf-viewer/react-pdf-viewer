@@ -41,6 +41,7 @@ enum ScrollMode {
 interface MoreActionsPopoverProps {
     doc: PdfJs.PdfDocument;
     fileName: string;
+    selectionMode: SelectionMode;
     onChangeScrollMode(mode: ScrollMode): void;
     onChangeSelectionMode(mode: SelectionMode): void;
     onJumpToFirstPage(): void;
@@ -51,10 +52,11 @@ interface MoreActionsPopoverProps {
 const PORTAL_OFFSET = { left: 0, top: 8 };
 
 const MoreActionsPopover: React.FC<MoreActionsPopoverProps> = ({
-    doc, fileName, onChangeScrollMode, onChangeSelectionMode, onJumpToFirstPage, onJumpToLastPage, onRotate,
+    doc, fileName, selectionMode,
+    onChangeScrollMode, onChangeSelectionMode, onJumpToFirstPage, onJumpToLastPage, onRotate,
 }) => {
     const l10n = React.useContext(LocalizationContext);
-    const [enableDragScroll, setEnableDragScroll] = React.useState(false);
+    const [enableDragScroll, setEnableDragScroll] = React.useState(selectionMode === SelectionMode.Hand);
     const [scrollMode, setScrollMode] = React.useState<ScrollMode>(ScrollMode.Vertical);
 
     const renderMoreActions = () => (<div style={{ padding: '8px' }}>{l10n.toolbar.moreActions}</div>);

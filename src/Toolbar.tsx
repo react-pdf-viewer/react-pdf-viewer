@@ -36,6 +36,7 @@ interface ToolbarProps {
     fileName: string;
     renderToolbar: RenderToolbarSlot;
     scale: number;
+    selectionMode: SelectionMode;
     onChangeScrollMode(mode: ScrollMode): void;
     onChangeSelectionMode(mode: SelectionMode): void;
     onDownload(): void;
@@ -53,7 +54,7 @@ interface ToolbarProps {
 const TOOLTIP_OFFSET = { left: 0, top: 8 };
 
 const Toolbar: React.FC<ToolbarProps> = ({
-    currentPage, doc, fileName, scale,
+    currentPage, doc, fileName, scale, selectionMode,
     onChangeScrollMode, onChangeSelectionMode, onDownload, onFullScreen, onJumpTo,
     onJumpToMatch, onOpenFiles, onPrint, onRotate, onSearchFor, onToggleSidebar, onZoom,
     renderToolbar,
@@ -172,6 +173,7 @@ const Toolbar: React.FC<ToolbarProps> = ({
             <MoreActionsPopover
                 doc={doc}
                 fileName={fileName}
+                selectionMode={selectionMode}
                 onChangeScrollMode={onChangeScrollMode}
                 onChangeSelectionMode={onChangeSelectionMode}
                 onJumpToFirstPage={jumpToFirstPage}
