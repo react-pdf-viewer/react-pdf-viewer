@@ -16,13 +16,11 @@ interface PageThumbnailProps {
     pageHeight: number;
     pageWidth: number;
     rotation: number;
-    thumbnailHeight: number;
-    thumbnailWidth: number;
     onLoad(): void;
 }
 
 const PageThumbnail: React.FC<PageThumbnailProps> = ({
-    page, pageHeight, pageWidth, rotation, thumbnailHeight, thumbnailWidth, onLoad,
+    page, pageHeight, pageWidth, rotation, onLoad,
 }) => {
     const renderTask = React.useRef<PdfJs.PageRenderTask>();
     const [src, setSrc] = React.useState('');

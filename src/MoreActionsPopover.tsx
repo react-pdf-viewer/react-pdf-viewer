@@ -30,6 +30,7 @@ import Popover from './portal/Popover';
 import Position from './portal/Position';
 import Tooltip from './portal/Tooltip';
 import PropertiesModal from './property/PropertiesModal';
+import SelectionMode from './SelectionMode';
 
 enum ScrollMode {
     Horizontal = 'Horizontal',
@@ -40,20 +41,22 @@ enum ScrollMode {
 interface MoreActionsPopoverProps {
     doc: PdfJs.PdfDocument;
     fileName: string;
+    selectionMode: SelectionMode;
     onChangeScrollMode(mode: ScrollMode): void;
+    onChangeSelectionMode(mode: SelectionMode): void;
     onJumpToFirstPage(): void;
     onJumpToLastPage(): void;
     onRotate(degree: number): void;
-    onToggleDragScroll(enabled: boolean): void;
 }
 
 const PORTAL_OFFSET = { left: 0, top: 8 };
 
 const MoreActionsPopover: React.FC<MoreActionsPopoverProps> = ({
-    doc, fileName, onChangeScrollMode, onJumpToFirstPage, onJumpToLastPage, onRotate, onToggleDragScroll,
+    doc, fileName, selectionMode,
+    onChangeScrollMode, onChangeSelectionMode, onJumpToFirstPage, onJumpToLastPage, onRotate,
 }) => {
     const l10n = React.useContext(LocalizationContext);
-    const [enableDragScroll, setEnableDragScroll] = React.useState(false);
+    const [enableDragScroll, setEnableDragScroll] = React.useState(selectionMode === SelectionMode.Hand);
     const [scrollMode, setScrollMode] = React.useState<ScrollMode>(ScrollMode.Vertical);
 
     const renderMoreActions = () => (<div style={{ padding: '8px' }}>{l10n.toolbar.moreActions}</div>);
@@ -92,12 +95,12 @@ const MoreActionsPopover: React.FC<MoreActionsPopoverProps> = ({
         const activateTextSelectionMode = () => {
             toggle();
             setEnableDragScroll(false);
-            onToggleDragScroll(false);
+            onChangeSelectionMode(SelectionMode.Text);
         };
         const activateHandMode = () => {
             toggle();
             setEnableDragScroll(true);
-            onToggleDragScroll(true);
+            onChangeSelectionMode(SelectionMode.Hand);
         };
         const activateScrollMode = (mode: ScrollMode) => {
             toggle();

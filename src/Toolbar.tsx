@@ -26,6 +26,7 @@ import Position from './portal/Position';
 import Tooltip from './portal/Tooltip';
 import Match from './search/Match';
 import SearchPopover from './search/SearchPopover';
+import SelectionMode from './SelectionMode';
 import { decrease, increase, SpecialLevel } from './zoom/zoomingLevel';
 import ZoomPopover from './zoom/ZoomPopover';
 
@@ -35,7 +36,9 @@ interface ToolbarProps {
     fileName: string;
     renderToolbar: RenderToolbarSlot;
     scale: number;
+    selectionMode: SelectionMode;
     onChangeScrollMode(mode: ScrollMode): void;
+    onChangeSelectionMode(mode: SelectionMode): void;
     onDownload(): void;
     onFullScreen(): void;
     onJumpTo(pageIndex: number): void;
@@ -44,7 +47,6 @@ interface ToolbarProps {
     onPrint(): void;
     onRotate(degree: number): void;
     onSearchFor(keyword: RegExp): void;
-    onToggleDragScroll(enabled: boolean): void;
     onToggleSidebar(): void;
     onZoom(scale: number | SpecialLevel): void;
 }
@@ -52,9 +54,9 @@ interface ToolbarProps {
 const TOOLTIP_OFFSET = { left: 0, top: 8 };
 
 const Toolbar: React.FC<ToolbarProps> = ({
-    currentPage, doc, fileName, scale,
-    onChangeScrollMode, onDownload, onFullScreen, onJumpTo,
-    onJumpToMatch, onOpenFiles, onPrint, onRotate, onSearchFor, onToggleDragScroll, onToggleSidebar, onZoom,
+    currentPage, doc, fileName, scale, selectionMode,
+    onChangeScrollMode, onChangeSelectionMode, onDownload, onFullScreen, onJumpTo,
+    onJumpToMatch, onOpenFiles, onPrint, onRotate, onSearchFor, onToggleSidebar, onZoom,
     renderToolbar,
 }) => {
     const l10n = React.useContext(LocalizationContext);
@@ -171,11 +173,12 @@ const Toolbar: React.FC<ToolbarProps> = ({
             <MoreActionsPopover
                 doc={doc}
                 fileName={fileName}
+                selectionMode={selectionMode}
                 onChangeScrollMode={onChangeScrollMode}
+                onChangeSelectionMode={onChangeSelectionMode}
                 onJumpToFirstPage={jumpToFirstPage}
                 onJumpToLastPage={jumpToLastPage}
                 onRotate={onRotate}
-                onToggleDragScroll={onToggleDragScroll}
             />
         ),
         nextPageButton: (

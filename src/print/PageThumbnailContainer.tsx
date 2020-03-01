@@ -34,15 +34,7 @@ const PageThumbnailContainer: React.FC<PageThumbnailContainerProps> = ({ doc, pa
         width: pageWidth,
     });
     const { page, height, width } = pageSize;
-
-    const scale = width / height;
     const isVertical = Math.abs(rotation) % 180 === 0;
-
-    const scaledWidth = pageWidth * scale;
-    const scaledHeight = pageHeight * scale;
-
-    const w = isVertical ? scaledWidth : scaledHeight;
-    const h = isVertical ? scaledHeight : scaledWidth;
 
     React.useEffect(() => {
         doc.getPage(pageIndex + 1).then((pdfPage) => {
@@ -65,8 +57,6 @@ const PageThumbnailContainer: React.FC<PageThumbnailContainerProps> = ({ doc, pa
                     pageHeight={isVertical ? height : width}
                     pageWidth={isVertical ? width : height}
                     rotation={rotation}
-                    thumbnailHeight={h}
-                    thumbnailWidth={w}
                     onLoad={onLoad}
                 />
             )
