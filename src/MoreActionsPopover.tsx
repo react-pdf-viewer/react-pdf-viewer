@@ -30,6 +30,7 @@ import Popover from './portal/Popover';
 import Position from './portal/Position';
 import Tooltip from './portal/Tooltip';
 import PropertiesModal from './property/PropertiesModal';
+import SelectionMode from './SelectionMode';
 
 enum ScrollMode {
     Horizontal = 'Horizontal',
@@ -41,16 +42,16 @@ interface MoreActionsPopoverProps {
     doc: PdfJs.PdfDocument;
     fileName: string;
     onChangeScrollMode(mode: ScrollMode): void;
+    onChangeSelectionMode(mode: SelectionMode): void;
     onJumpToFirstPage(): void;
     onJumpToLastPage(): void;
     onRotate(degree: number): void;
-    onToggleDragScroll(enabled: boolean): void;
 }
 
 const PORTAL_OFFSET = { left: 0, top: 8 };
 
 const MoreActionsPopover: React.FC<MoreActionsPopoverProps> = ({
-    doc, fileName, onChangeScrollMode, onJumpToFirstPage, onJumpToLastPage, onRotate, onToggleDragScroll,
+    doc, fileName, onChangeScrollMode, onChangeSelectionMode, onJumpToFirstPage, onJumpToLastPage, onRotate,
 }) => {
     const l10n = React.useContext(LocalizationContext);
     const [enableDragScroll, setEnableDragScroll] = React.useState(false);
@@ -92,12 +93,12 @@ const MoreActionsPopover: React.FC<MoreActionsPopoverProps> = ({
         const activateTextSelectionMode = () => {
             toggle();
             setEnableDragScroll(false);
-            onToggleDragScroll(false);
+            onChangeSelectionMode(SelectionMode.Text);
         };
         const activateHandMode = () => {
             toggle();
             setEnableDragScroll(true);
-            onToggleDragScroll(true);
+            onChangeSelectionMode(SelectionMode.Hand);
         };
         const activateScrollMode = (mode: ScrollMode) => {
             toggle();

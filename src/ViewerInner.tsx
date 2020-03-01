@@ -71,6 +71,10 @@ const ViewerInner: React.FC<ViewerInnerProps> = ({ doc, fileName, layout, pageSi
     const [numLoadedPagesForPrint, setNumLoadedPagesForPrint] = React.useState(0);
     const [printStatus, setPrintStatus] = React.useState(PrintStatus.Inactive);
 
+    // Manage the selection mode
+    const changeSelectionMode = (mode: SelectionMode) => {
+        toggleDragScroll(mode === SelectionMode.Hand);
+    };
     React.useEffect(() => {
         // Toggle the drag scroll if the hand tool is set initially
         if (selectionMode === SelectionMode.Hand) {
@@ -339,6 +343,7 @@ const ViewerInner: React.FC<ViewerInnerProps> = ({ doc, fileName, layout, pageSi
                 fileName={fileName}
                 scale={scale}
                 onChangeScrollMode={changeScrollMode}
+                onChangeSelectionMode={changeSelectionMode}
                 onDownload={onDownload}
                 onFullScreen={openFullScreen}
                 onJumpTo={jumpToPage}
@@ -347,7 +352,6 @@ const ViewerInner: React.FC<ViewerInnerProps> = ({ doc, fileName, layout, pageSi
                 onPrint={print}
                 onRotate={rotate}
                 onSearchFor={setKeywordRegexp}
-                onToggleDragScroll={toggleDragScroll}
                 onToggleSidebar={toggleSidebar.toggle}
                 onZoom={zoom}
                 renderToolbar={renderToolbar}
