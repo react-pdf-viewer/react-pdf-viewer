@@ -20,6 +20,7 @@ import Modal from './portal/Modal';
 import Popover from './portal/Popover';
 import Position from './portal/Position';
 import Tooltip from './portal/Tooltip';
+import SelectionMode from './SelectionMode';
 import Viewer from './Viewer';
 import Worker from './Worker';
 
@@ -34,6 +35,7 @@ export {
     Modal,
     Popover,
     Position,
+    SelectionMode,
     Tooltip,
     Worker,
 };

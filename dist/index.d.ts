@@ -74,6 +74,11 @@ export interface ToolbarSlot {
     moreActionsPopover: React.ReactNode;
 }
 
+export enum SelectionMode {
+    Hand,
+    Text,
+}
+
 // ----------
 // Components
 // ----------
@@ -169,8 +174,9 @@ export interface ViewerProps {
     // So that, the document will fit best within the container
     defaultScale?: number;
     fileUrl: string;
-    localization?: LocalizationMap;
     layout?: Layout;
+    localization?: LocalizationMap;
+    selectionMode?: SelectionMode;
 }
 export default class Viewer extends React.Component<ViewerProps> {}
 

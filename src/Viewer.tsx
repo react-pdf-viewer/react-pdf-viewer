@@ -17,6 +17,7 @@ import LocalizationMap from './localization/LocalizationMap';
 import LocalizationProvider from './localization/LocalizationProvider';
 import PageSizeCalculator, { PageSize } from './PageSizeCalculator';
 import PdfJs from './PdfJs';
+import SelectionMode from './SelectionMode';
 import downloadFile from './utils/downloadFile';
 import ViewerInner from './ViewerInner';
 
@@ -30,7 +31,6 @@ interface ViewerProps {
     // If it's not set, the initial zoom level will be calculated based on the dimesion of page and the container width
     defaultScale?: number;
     fileUrl: string;
-    localization?: LocalizationMap;
     layout?: (
         isSidebarOpened: boolean,
         container: Slot,
@@ -38,9 +38,18 @@ interface ViewerProps {
         toolbar: RenderToolbar,
         sidebar: Slot,
     ) => React.ReactElement;
+    localization?: LocalizationMap;
+    // The text selection mode
+    selectionMode: SelectionMode;
 }
 
-const Viewer: React.FC<ViewerProps> = ({ defaultScale, fileUrl, layout, localization }) => {
+const Viewer: React.FC<ViewerProps> = ({
+    defaultScale,
+    fileUrl,
+    layout,
+    localization,
+    selectionMode,
+}) => {
     const [file, setFile] = React.useState<File>({
         data: fileUrl,
         name: fileUrl,
@@ -83,6 +92,7 @@ const Viewer: React.FC<ViewerProps> = ({ defaultScale, fileUrl, layout, localiza
                     fileName={file.name}
                     layout={layout || layoutOption}
                     pageSize={pageSize}
+                    selectionMode={selectionMode}
                     onDownload={download}
                     onOpenFile={openFile}
                 />

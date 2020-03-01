@@ -25,6 +25,7 @@ import PrintProgress from './print/PrintProgress';
 import PrintStatus from './print/PrintStatus';
 import PrintZone from './print/PrintZone';
 import Match from './search/Match';
+import SelectionMode from './SelectionMode';
 import Sidebar from './Sidebar';
 import Toolbar from './Toolbar';
 import getFileExt from './utils/fileExt';
@@ -38,7 +39,6 @@ const PAGE_PADDING = 8;
 interface ViewerInnerProps {
     doc: PdfJs.PdfDocument;
     fileName: string;
-    pageSize: PageSize;
     layout(
         isSidebarOpened: boolean,
         container: Slot,
@@ -46,11 +46,13 @@ interface ViewerInnerProps {
         toolbar: RenderToolbar,
         sidebar: Slot,
     ): React.ReactElement;
+    pageSize: PageSize;
+    selectionMode: SelectionMode;
     onDownload(): void;
     onOpenFile(fileName: string, data: Uint8Array): void;
 }
 
-const ViewerInner: React.FC<ViewerInnerProps> = ({ doc, fileName, layout, pageSize, onDownload, onOpenFile }) => {
+const ViewerInner: React.FC<ViewerInnerProps> = ({ doc, fileName, layout, pageSize, selectionMode, onDownload, onOpenFile }) => {
     const pagesRef = React.useRef<HTMLDivElement | null>(null);
     const [scale, setScale] = React.useState(pageSize.scale);
     const [currentPage, setCurrentPage] = React.useState(0);
@@ -68,6 +70,13 @@ const ViewerInner: React.FC<ViewerInnerProps> = ({ doc, fileName, layout, pageSi
     // Print status
     const [numLoadedPagesForPrint, setNumLoadedPagesForPrint] = React.useState(0);
     const [printStatus, setPrintStatus] = React.useState(PrintStatus.Inactive);
+
+    React.useEffect(() => {
+        // Toggle the drag scroll if the hand tool is set initially
+        if (selectionMode === SelectionMode.Hand) {
+            toggleDragScroll(true);
+        }
+    }, []);
 
     const { numPages } = doc;
     const { pageWidth, pageHeight } = pageSize;
