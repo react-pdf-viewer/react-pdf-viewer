@@ -41,6 +41,7 @@ interface ViewerProps {
     localization?: LocalizationMap;
     // The text selection mode
     selectionMode: SelectionMode;
+    onDocumentLoad?(doc: PdfJs.PdfDocument): void;
 }
 
 const Viewer: React.FC<ViewerProps> = ({
@@ -49,6 +50,7 @@ const Viewer: React.FC<ViewerProps> = ({
     layout,
     localization,
     selectionMode = SelectionMode.Text,
+    onDocumentLoad,
 }) => {
     const [file, setFile] = React.useState<File>({
         data: fileUrl,
@@ -93,6 +95,7 @@ const Viewer: React.FC<ViewerProps> = ({
                     layout={layout || layoutOption}
                     pageSize={pageSize}
                     selectionMode={selectionMode}
+                    onDocumentLoad={onDocumentLoad}
                     onDownload={download}
                     onOpenFile={openFile}
                 />

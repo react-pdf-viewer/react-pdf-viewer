@@ -8,6 +8,16 @@
 
 import * as React from 'react';
 
+// ---------------
+// PDFjs namespace
+// ---------------
+
+export declare namespace PdfJs {
+    interface PdfDocument {
+        numPages: number;
+    }
+}
+
 // --------------------
 // Interfaces and types
 // --------------------
@@ -177,6 +187,7 @@ export interface ViewerProps {
     layout?: Layout;
     localization?: LocalizationMap;
     selectionMode?: SelectionMode;
+    onDocumentLoad?(doc: PdfJs.PdfDocument): void;
 }
 export default class Viewer extends React.Component<ViewerProps> {}
 
