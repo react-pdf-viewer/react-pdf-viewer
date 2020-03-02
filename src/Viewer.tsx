@@ -48,7 +48,7 @@ const Viewer: React.FC<ViewerProps> = ({
     fileUrl,
     layout,
     localization,
-    selectionMode,
+    selectionMode = SelectionMode.Text,
 }) => {
     const [file, setFile] = React.useState<File>({
         data: fileUrl,
