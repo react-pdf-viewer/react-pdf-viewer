@@ -48,11 +48,12 @@ interface ViewerInnerProps {
     ): React.ReactElement;
     pageSize: PageSize;
     selectionMode: SelectionMode;
+    onDocumentLoad?(doc: PdfJs.PdfDocument): void;
     onDownload(): void;
     onOpenFile(fileName: string, data: Uint8Array): void;
 }
 
-const ViewerInner: React.FC<ViewerInnerProps> = ({ doc, fileName, layout, pageSize, selectionMode, onDownload, onOpenFile }) => {
+const ViewerInner: React.FC<ViewerInnerProps> = ({ doc, fileName, layout, pageSize, selectionMode, onDocumentLoad, onDownload, onOpenFile }) => {
     const pagesRef = React.useRef<HTMLDivElement | null>(null);
     const [scale, setScale] = React.useState(pageSize.scale);
     const [currentPage, setCurrentPage] = React.useState(0);
@@ -70,6 +71,12 @@ const ViewerInner: React.FC<ViewerInnerProps> = ({ doc, fileName, layout, pageSi
     // Print status
     const [numLoadedPagesForPrint, setNumLoadedPagesForPrint] = React.useState(0);
     const [printStatus, setPrintStatus] = React.useState(PrintStatus.Inactive);
+
+    React.useEffect(() => {
+        if (onDocumentLoad) {
+            onDocumentLoad(doc);
+        }
+    }, []);
 
     // Manage the selection mode
     const changeSelectionMode = (mode: SelectionMode) => {
