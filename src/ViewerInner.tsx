@@ -48,12 +48,16 @@ interface ViewerInnerProps {
     ): React.ReactElement;
     pageSize: PageSize;
     selectionMode: SelectionMode;
-    onDocumentLoad?(doc: PdfJs.PdfDocument): void;
+    onDocumentLoad(doc: PdfJs.PdfDocument): void;
     onDownload(): void;
     onOpenFile(fileName: string, data: Uint8Array): void;
+    onZoom(doc: PdfJs.PdfDocument, scale: number): void;
 }
 
-const ViewerInner: React.FC<ViewerInnerProps> = ({ doc, fileName, layout, pageSize, selectionMode, onDocumentLoad, onDownload, onOpenFile }) => {
+const ViewerInner: React.FC<ViewerInnerProps> = ({
+    doc, fileName, layout, pageSize, selectionMode,
+    onDocumentLoad, onDownload, onOpenFile, onZoom,
+}) => {
     const pagesRef = React.useRef<HTMLDivElement | null>(null);
     const [scale, setScale] = React.useState(pageSize.scale);
     const [currentPage, setCurrentPage] = React.useState(0);
@@ -73,9 +77,7 @@ const ViewerInner: React.FC<ViewerInnerProps> = ({ doc, fileName, layout, pageSi
     const [printStatus, setPrintStatus] = React.useState(PrintStatus.Inactive);
 
     React.useEffect(() => {
-        if (onDocumentLoad) {
-            onDocumentLoad(doc);
-        }
+        onDocumentLoad(doc);
     }, []);
 
     // Manage the selection mode
@@ -102,25 +104,28 @@ const ViewerInner: React.FC<ViewerInnerProps> = ({ doc, fileName, layout, pageSi
             return;
         }
 
+        let scaled = 1;
         switch (newScale) {
             case SpecialLevel.ActualSize:
-                setScale(1);
+                scaled = 1;
                 break;
 
             case SpecialLevel.PageFit:
                 const scaleWidth = (pagesEle.offsetWidth - SCROLL_BAR_WIDTH) / pageWidth;
                 const scaleHeight = (pagesEle.offsetHeight - 2 * PAGE_PADDING) / pageHeight;
-                setScale(Math.min(scaleWidth, scaleHeight));
+                scaled = Math.min(scaleWidth, scaleHeight);
                 break;
 
             case SpecialLevel.PageWidth:
-                setScale((pagesEle.offsetWidth - SCROLL_BAR_WIDTH) / pageWidth);
+                scaled = (pagesEle.offsetWidth - SCROLL_BAR_WIDTH) / pageWidth;
                 break;
 
             default:
-                setScale(newScale);
+                scaled = newScale;
                 break;
         }
+        setScale(scaled);
+        onZoom(doc, scaled);
     };
 
     const pageVisibilityChanged = (pageIndex: number, ratio: number) => {

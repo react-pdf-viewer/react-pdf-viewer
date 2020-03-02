@@ -40,8 +40,9 @@ interface ViewerProps {
     ) => React.ReactElement;
     localization?: LocalizationMap;
     // The text selection mode
-    selectionMode: SelectionMode;
+    selectionMode?: SelectionMode;
     onDocumentLoad?(doc: PdfJs.PdfDocument): void;
+    onZoom?(doc: PdfJs.PdfDocument, scale: number): void;
 }
 
 const Viewer: React.FC<ViewerProps> = ({
@@ -50,7 +51,8 @@ const Viewer: React.FC<ViewerProps> = ({
     layout,
     localization,
     selectionMode = SelectionMode.Text,
-    onDocumentLoad,
+    onDocumentLoad = () => {/**/},
+    onZoom = () => {/**/},
 }) => {
     const [file, setFile] = React.useState<File>({
         data: fileUrl,
@@ -98,6 +100,7 @@ const Viewer: React.FC<ViewerProps> = ({
                     onDocumentLoad={onDocumentLoad}
                     onDownload={download}
                     onOpenFile={openFile}
+                    onZoom={onZoom}
                 />
             );
         };
