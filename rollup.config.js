@@ -78,7 +78,6 @@ export default [
             file: './dist/cjs/react-pdf-viewer.js',
             format: 'cjs',
         },
-        // external: excludeAllExternals,
         external: ['pdfjs-dist', 'react', 'react-dom'],
         plugins: [
             json(),
@@ -94,6 +93,32 @@ export default [
                 resolveJsonModule: true,
                 moduleResolution: 'node',
             }),
+        ],
+    },
+
+    // Minified CJS
+    {
+        input,
+        output: {
+            file: './dist/cjs/react-pdf-viewer.min.js',
+            format: 'cjs',
+        },
+        external: ['pdfjs-dist', 'react', 'react-dom'],
+        plugins: [
+            json(),
+            css({
+                output: './dist/cjs/react-pdf-viewer.css',
+            }),
+            typescript({
+                removeComments: true,
+                module: 'es6',
+                target: 'es5',
+                jsx: 'react',
+                allowSyntheticDefaultImports: true,
+                resolveJsonModule: true,
+                moduleResolution: 'node',
+            }),
+            terser(),
         ],
     }
 ];
