@@ -188,6 +188,7 @@ export interface ViewerProps {
     localization?: LocalizationMap;
     selectionMode?: SelectionMode;
     onDocumentLoad?(doc: PdfJs.PdfDocument): void;
+    onZoom?(doc: PdfJs.PdfDocument, scale: number): void;
 }
 export default class Viewer extends React.Component<ViewerProps> {}
 
