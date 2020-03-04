@@ -62,7 +62,7 @@ const MoreActionsPopover: React.FC<MoreActionsPopoverProps> = ({
     const renderMoreActions = () => (<div style={{ padding: '8px' }}>{l10n.toolbar.moreActions}</div>);
     const renderTarget = (toggle: Toggle, opened: boolean) => (
         <Tooltip
-            position={Position.BottomCenter}
+            position={Position.BottomRight}
             target={<Button onClick={toggle} isSelected={opened}><MoreIcon /></Button>}
             content={renderMoreActions}
             offset={PORTAL_OFFSET}
