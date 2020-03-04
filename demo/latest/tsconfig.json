@@ -10,5 +10,8 @@
         "target": "esnext",
         "jsx": "react",
         "baseUrl": ".",
+        "paths": {
+            "@phuocng/react-pdf-viewer": ["../../dist"]
+        }
     }
 }
