@@ -83,7 +83,9 @@ const DocumentLoader: React.FC<DocumentLoaderProps> = ({ file, render }) => {
             return (
                 <div
                     style={{
+                        alignItems: 'center',
                         display: 'flex',
+                        height: '100%',
                         justifyContent: 'center',
                         margin: '16px 0',
                         width: '100%',

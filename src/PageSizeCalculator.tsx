@@ -56,25 +56,22 @@ const PageSizeCalculator: React.FC<PageSizeCalculatorProps> = ({ doc, render }) 
 
     const { pageWidth } = pageSize;
     return (
-        <div ref={pagesRef}>
-            {
-                pageWidth === 0
-                    ? (
-                        <div
-                            style={{
-                                alignItems: 'center',
-                                display: 'flex',
-                                height: '100%',
-                                justifyContent: 'center',
-                                width: '100%',
-                            }}
-                        >
-                            <Spinner />
-                        </div>
-                    )
-                    : render(pageSize)
-            }
-        </div>
+        pageWidth === 0
+            ? (
+                <div
+                    ref={pagesRef}
+                    style={{
+                        alignItems: 'center',
+                        display: 'flex',
+                        height: '100%',
+                        justifyContent: 'center',
+                        width: '100%',
+                    }}
+                >
+                    <Spinner />
+                </div>
+            )
+            : render(pageSize)
     );
 };
 
