@@ -21,7 +21,7 @@ const Spinner: React.FC<{}> = () => {
                 stroke="rgba(0, 0, 0, 0.4)"
                 strokeDasharray={Math.PI * 2 * 9}
                 strokeLinecap="round"
-                strokeWidth="4"
+                strokeWidth="2"
             />
         </svg>
     );
