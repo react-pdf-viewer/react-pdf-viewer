@@ -4,6 +4,7 @@
 
 **Improvement**
 - Make the spinner thiner
+- Add minified CSS files
 
 **Bug fixes**
 - Tooltip for the left/right buttons don't look good in full width mode
