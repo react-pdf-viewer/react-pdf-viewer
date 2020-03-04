@@ -10,8 +10,5 @@
         "target": "esnext",
         "jsx": "react",
         "baseUrl": ".",
-        "paths": {
-            "pdfviewer": ["vendors/pdfviewer"]
-        }
     }
 }
