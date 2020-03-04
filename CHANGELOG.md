@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## v1.2.1
+
+**Improvement**
+- Make the spinner thiner
+
+**Bug fixes**
+- Tooltip for the left/right buttons don't look good in full width mode
+- The view now takes full height by default. It fixes the issue that users can't navigate between pages from the toolbar in some cases
+
 ## v1.2.0
 
 **New features**
