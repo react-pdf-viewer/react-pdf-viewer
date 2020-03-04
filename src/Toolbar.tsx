@@ -214,7 +214,7 @@ const Toolbar: React.FC<ToolbarProps> = ({
         ),
         toggleSidebarButton: (
             <Tooltip
-                position={Position.BottomCenter}
+                position={Position.BottomLeft}
                 target={(
                     <Button onClick={toggleSidebar} isSelected={isSidebarOpened}>
                         <LeftSidebarIcon />
