@@ -66,6 +66,9 @@ const AlwaysShowSidebar = ({ fileUrl }) => {
                         {toolbarSlot.downloadButton}
                     </div>
                     <div style={{ padding: '0 2px' }}>
+                        {toolbarSlot.printButton}
+                    </div>
+                    <div style={{ padding: '0 2px' }}>
                         {toolbarSlot.moreActionsPopover}
                     </div>
                 </div>
@@ -75,13 +78,15 @@ const AlwaysShowSidebar = ({ fileUrl }) => {
 
     const layout = (
         isSidebarOpened,
+        container,
         main,
         toolbar,
         sidebar,
     ) => {
         return (
             <div
-                style={{
+                {...container.attrs}
+                style={Object.assign({}, {
                     border: '1px solid rgba(0, 0, 0, .3)',
                     display: 'grid',
                     gridTemplateAreas: "'toolbar toolbar' 'sidebar main'",
@@ -90,8 +95,9 @@ const AlwaysShowSidebar = ({ fileUrl }) => {
                     height: '100%',
                     overflow: 'hidden',
                     width: '100%',
-                }}
+                }, container.attrs.style)}
             >
+                {container.children}
                 <div
                     style={{
                         alignItems: 'center',
