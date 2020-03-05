@@ -46,10 +46,10 @@ export enum Position {
     LeftBottom = 'LEFT_BOTTOM',
 }
 
-export type RenderToolbarSlot = (slot: ToolbarSlot) => React.ReactElement;
+export type RenderToolbarSlot = (toolbarSlot: ToolbarSlot) => React.ReactElement;
 export type RenderToolbar = (renderToolbar: RenderToolbarSlot) => React.ReactElement;
 
-export const defaultToolbar: RenderToolbarSlot;
+export function defaultToolbar(toolbarSlot: ToolbarSlot): RenderToolbarSlot;
 
 export interface SlotAttr extends React.HTMLAttributes<HTMLDivElement> {
     ref?: React.MutableRefObject<HTMLDivElement | null>;
@@ -81,6 +81,16 @@ export interface ToolbarSlot {
     downloadButton: React.ReactNode;
     openFileButton: React.ReactNode;
     printButton: React.ReactNode;
+    goToFirstPageButton: React.ReactNode;
+    goToLastPageButton: React.ReactNode;
+    rotateClockwiseButton: React.ReactNode;
+    rotateCounterclockwiseButton: React.ReactNode;
+    textSelectionButton: React.ReactNode;
+    handToolButton: React.ReactNode;
+    verticalScrollingButton: React.ReactNode;
+    horizontalScrollingButton: React.ReactNode;
+    wrappedScrollingButton: React.ReactNode;
+    documentPropertiesButton: React.ReactNode;
     moreActionsPopover: React.ReactNode;
 }
 
@@ -176,7 +186,13 @@ export type Layout = (
     sidebar: Slot,
 ) => React.ReactElement;
 
-export const defaultLayout: Layout;
+export function defaultLayout(
+    isSidebarOpened: boolean,
+    container: Slot,
+    main: Slot,
+    toolbar: React.ReactElement,
+    sidebar: Slot,
+): React.ReactElement;
 
 export interface ViewerProps {
     // The default zoom level

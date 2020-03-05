@@ -13,18 +13,6 @@
     "main": {
         "dragDropFile": "Drag and drop a PDF document here"
     },
-    "moreActions": {
-        "documentProperties": "Document Properties",
-        "goToFirstPage": "Go to First Page",
-        "goToLastPage": "Go to Last Page",
-        "handTool": "Hand Tool",
-        "horizontalScrolling": "Horizontal Scrolling",
-        "rotateBackward": "Rotate Counterclockwise",
-        "rotateForward": "Rotate Clockwise",
-        "textSelectionTool": "Text Selection Tool",
-        "verticalScrolling": "Vertical Scrolling",
-        "wrappedScrolling": "Wrapped Scrolling"
-    },
     "printProgress": {
         "cancel": "Cancel",
         "preparingDocument": "Preparing document ..."
@@ -58,17 +46,27 @@
         "thumbnail": "Thumbnail"
     },
     "toolbar": {
+        "documentProperties": "Document properties",
         "download": "Download",
         "fullScreen": "Full screen",
+        "goToFirstPage": "Go to first page",
+        "goToLastPage": "Go to last page",
+        "handTool": "Hand tool",
+        "horizontalScrolling": "Horizontal scrolling",
         "moreActions": "More actions",
         "nextPage": "Next page",
         "openFile": "Open file",
         "previousPage": "Previous page",
         "print": "Print",
+        "rotateBackward": "Rotate counterclockwise",
+        "rotateForward": "Rotate clockwise",
         "search": "Search",
+        "textSelectionTool": "Text selection tool",
         "toggleSidebar":  "Toggle sidebar",
+        "verticalScrolling": "Vertical scrolling",
         "zoomIn": "Zoom in",
-        "zoomOut": "Zoom out"
+        "zoomOut": "Zoom out",
+        "wrappedScrolling": "Wrapped scrolling"
     },
     "wrongPassword": {
         "submit": "Submit",
