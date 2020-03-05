@@ -2,7 +2,7 @@ import React from 'react';
 import { Worker } from '@phuocng/react-pdf-viewer';
 
 import '@phuocng/react-pdf-viewer/cjs/react-pdf-viewer.css';
-import SimpleToolbar from './SimpleToolbar';
+import CustomToolbar from './CustomToolbar';
 
 const App = () => {
     return (
@@ -12,7 +12,7 @@ const App = () => {
                     height: '750px',
                 }}
             >
-                <SimpleToolbar
+                <CustomToolbar
                     fileUrl="/pdf-open-parameters.pdf"
                 />
             </div>

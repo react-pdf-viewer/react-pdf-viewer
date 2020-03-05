@@ -15,8 +15,8 @@ import useFullScreen from './hooks/useFullScreen';
 import useToggle from './hooks/useToggle';
 import ExitFullScreenIcon from './icons/ExitFullScreenIcon';
 import PageLayer from './layers/PageLayer';
-import Slot from './layouts/Slot';
-import { RenderToolbar, RenderToolbarSlot } from './layouts/ToolbarSlot';
+import { Layout } from './layouts/Layout';
+import { RenderToolbarSlot } from './layouts/ToolbarSlot';
 import DropArea from './open/DropArea';
 import { PageSize } from './PageSizeCalculator';
 import PdfJs from './PdfJs';
@@ -39,13 +39,7 @@ const PAGE_PADDING = 8;
 interface ViewerInnerProps {
     doc: PdfJs.PdfDocument;
     fileName: string;
-    layout(
-        isSidebarOpened: boolean,
-        container: Slot,
-        main: Slot,
-        toolbar: RenderToolbar,
-        sidebar: Slot,
-    ): React.ReactElement;
+    layout: Layout;
     pageSize: PageSize;
     selectionMode: SelectionMode;
     onDocumentLoad(doc: PdfJs.PdfDocument): void;

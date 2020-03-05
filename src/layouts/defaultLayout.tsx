@@ -17,7 +17,7 @@ const defaultLayout = (
     main: Slot,
     toolbar: React.ReactElement,
     sidebar: Slot,
-): React.ReactElement => {
+) => {
     return (
         <div
             {...container.attrs}

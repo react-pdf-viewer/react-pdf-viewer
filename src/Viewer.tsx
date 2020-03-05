@@ -11,6 +11,7 @@ import React from 'react';
 import Slot from './layouts/Slot';
 import defaultLayout from './layouts/defaultLayout';
 import defaultToolbar from './layouts/defaultToolbar';
+import { Layout } from './layouts/Layout';
 import { RenderToolbar } from './layouts/ToolbarSlot';
 import DocumentLoader from './loader/DocumentLoader';
 import LocalizationMap from './localization/LocalizationMap';
@@ -31,13 +32,7 @@ interface ViewerProps {
     // If it's not set, the initial zoom level will be calculated based on the dimesion of page and the container width
     defaultScale?: number;
     fileUrl: string;
-    layout?: (
-        isSidebarOpened: boolean,
-        container: Slot,
-        main: Slot,
-        toolbar: RenderToolbar,
-        sidebar: Slot,
-    ) => React.ReactElement;
+    layout?: Layout;
     localization?: LocalizationMap;
     // The text selection mode
     selectionMode?: SelectionMode;

@@ -1,12 +1,12 @@
 import React from 'react';
-import Viewer, { defaultLayout, RenderToolbar, RenderToolbarSlot, Slot, ToolbarSlot } from '@phuocng/react-pdf-viewer';
+import Viewer, { defaultLayout, RenderToolbar, Slot, ToolbarSlot } from '@phuocng/react-pdf-viewer';
 
-interface SimpleToolbarProps {
+interface CustomToolbarProps {
     fileUrl: string;
 }
 
-const SimpleToolbar: React.FC<SimpleToolbarProps> = ({ fileUrl }) => {
-    const renderToolbar: RenderToolbarSlot = (toolbarSlot: ToolbarSlot) => {
+const CustomToolbar: React.FC<CustomToolbarProps> = ({ fileUrl }) => {
+    const renderToolbar = (toolbarSlot: ToolbarSlot) => {
         return (
             <div
                 style={{
@@ -124,4 +124,4 @@ const SimpleToolbar: React.FC<SimpleToolbarProps> = ({ fileUrl }) => {
     );
 };
 
-export default SimpleToolbar;
+export default CustomToolbar;
