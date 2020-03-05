@@ -1,13 +1,13 @@
 {
     "name": "react-pdf-viewer-webpack-demo",
-    "version": "1.0.0",
+    "version": "1.2.1",
     "scripts": {
         "copyasset": "cp ../../assets/pdf-open-parameters.pdf dist",
         "build": "rm -rf dist && mkdir dist && webpack --mode production && npm run copyasset",
         "dev": "rm -rf dist && mkdir dist && npm run copyasset && webpack-dev-server"
     },
     "dependencies": {
-        "@phuocng/react-pdf-viewer": "^1.0.2",
+        "@phuocng/react-pdf-viewer": "^1.2.1",
         "pdfjs-dist": "^2.2.228",
         "react": "^16.12.0",
         "react-dom": "^16.12.0"
