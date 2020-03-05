@@ -30,17 +30,13 @@ import Popover from './portal/Popover';
 import Position from './portal/Position';
 import Tooltip from './portal/Tooltip';
 import PropertiesModal from './property/PropertiesModal';
+import ScrollMode from './ScrollMode';
 import SelectionMode from './SelectionMode';
-
-enum ScrollMode {
-    Horizontal = 'Horizontal',
-    Vertical = 'Vertical',
-    Wrapped = 'Wrapped',
-}
 
 interface MoreActionsPopoverProps {
     doc: PdfJs.PdfDocument;
     fileName: string;
+    scrollMode: ScrollMode;
     selectionMode: SelectionMode;
     onChangeScrollMode(mode: ScrollMode): void;
     onChangeSelectionMode(mode: SelectionMode): void;
@@ -52,12 +48,10 @@ interface MoreActionsPopoverProps {
 const PORTAL_OFFSET = { left: 0, top: 8 };
 
 const MoreActionsPopover: React.FC<MoreActionsPopoverProps> = ({
-    doc, fileName, selectionMode,
+    doc, fileName, scrollMode, selectionMode,
     onChangeScrollMode, onChangeSelectionMode, onJumpToFirstPage, onJumpToLastPage, onRotate,
 }) => {
     const l10n = React.useContext(LocalizationContext);
-    const [enableDragScroll, setEnableDragScroll] = React.useState(selectionMode === SelectionMode.Hand);
-    const [scrollMode, setScrollMode] = React.useState<ScrollMode>(ScrollMode.Vertical);
 
     const renderMoreActions = () => (<div style={{ padding: '8px' }}>{l10n.toolbar.moreActions}</div>);
     const renderTarget = (toggle: Toggle, opened: boolean) => (
@@ -70,7 +64,7 @@ const MoreActionsPopover: React.FC<MoreActionsPopoverProps> = ({
     );
 
     const renderPropertyMenu = (toggle: Toggle) => (
-        <MenuItem icon={<InfoIcon />} onClick={toggle}>{l10n.moreActions.documentProperties}</MenuItem>
+        <MenuItem icon={<InfoIcon />} onClick={toggle}>{l10n.toolbar.documentProperties}</MenuItem>
     );
     const renderPropertiesModal = (toggle: Toggle) => (
         <PropertiesModal doc={doc} fileName={fileName} onToggle={toggle} />
@@ -94,17 +88,14 @@ const MoreActionsPopover: React.FC<MoreActionsPopoverProps> = ({
         };
         const activateTextSelectionMode = () => {
             toggle();
-            setEnableDragScroll(false);
             onChangeSelectionMode(SelectionMode.Text);
         };
         const activateHandMode = () => {
             toggle();
-            setEnableDragScroll(true);
             onChangeSelectionMode(SelectionMode.Hand);
         };
         const activateScrollMode = (mode: ScrollMode) => {
             toggle();
-            setScrollMode(mode);
             onChangeScrollMode(mode);
         };
         const setVerticalScrollMode = () => activateScrollMode(ScrollMode.Vertical);
@@ -121,32 +112,32 @@ const MoreActionsPopover: React.FC<MoreActionsPopoverProps> = ({
                     }}
                 >
                     <MenuItem icon={<UpArrowIcon />} onClick={jumpToFirstPage}>
-                        {l10n.moreActions.goToFirstPage}
+                        {l10n.toolbar.goToFirstPage}
                     </MenuItem>
                     <MenuItem icon={<DownArrowIcon />} onClick={jumpToLastPage}>
-                        {l10n.moreActions.goToLastPage}
+                        {l10n.toolbar.goToLastPage}
                     </MenuItem>
                     <MenuDivider />
                     <MenuItem icon={<RotateForwardIcon />} onClick={rotateForward}>
-                        {l10n.moreActions.rotateForward}
+                        {l10n.toolbar.rotateForward}
                     </MenuItem>
                     <MenuItem icon={<RotateBackwardIcon />} onClick={rotateBackward}>
-                        {l10n.moreActions.rotateBackward}
+                        {l10n.toolbar.rotateBackward}
                     </MenuItem>
                     <MenuDivider />
                     <MenuItem
-                        checked={!enableDragScroll}
+                        checked={selectionMode === SelectionMode.Text}
                         icon={<TextSelectionIcon />}
                         onClick={activateTextSelectionMode}
                     >
-                        {l10n.moreActions.textSelectionTool}
+                        {l10n.toolbar.textSelectionTool}
                     </MenuItem>
                     <MenuItem
-                        checked={enableDragScroll}
+                        checked={selectionMode === SelectionMode.Hand}
                         icon={<HandToolIcon />}
                         onClick={activateHandMode}
                     >
-                        {l10n.moreActions.handTool}
+                        {l10n.toolbar.handTool}
                     </MenuItem>
                     <MenuDivider />
                     <MenuItem
@@ -154,21 +145,21 @@ const MoreActionsPopover: React.FC<MoreActionsPopoverProps> = ({
                         icon={<VerticalScrollingIcon />}
                         onClick={setVerticalScrollMode}
                     >
-                        {l10n.moreActions.verticalScrolling}
+                        {l10n.toolbar.verticalScrolling}
                     </MenuItem>
                     <MenuItem
                         checked={scrollMode === ScrollMode.Horizontal}
                         icon={<HorizontalScrollingIcon />}
                         onClick={setHorizontalScrollMode}
                     >
-                        {l10n.moreActions.horizontalScrolling}
+                        {l10n.toolbar.horizontalScrolling}
                     </MenuItem>
                     <MenuItem
                         checked={scrollMode === ScrollMode.Wrapped}
                         icon={<WrappedScrollingIcon />}
                         onClick={setWrappedScrollMode}
                     >
-                        {l10n.moreActions.wrappedScrolling}
+                        {l10n.toolbar.wrappedScrolling}
                     </MenuItem>
                     <MenuDivider />
                     <Modal

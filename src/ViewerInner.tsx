@@ -17,7 +17,6 @@ import ExitFullScreenIcon from './icons/ExitFullScreenIcon';
 import PageLayer from './layers/PageLayer';
 import Slot from './layouts/Slot';
 import { RenderToolbar, RenderToolbarSlot } from './layouts/ToolbarSlot';
-import { ScrollMode } from './MoreActionsPopover';
 import DropArea from './open/DropArea';
 import { PageSize } from './PageSizeCalculator';
 import PdfJs from './PdfJs';
@@ -25,6 +24,7 @@ import PrintProgress from './print/PrintProgress';
 import PrintStatus from './print/PrintStatus';
 import PrintZone from './print/PrintZone';
 import Match from './search/Match';
+import ScrollMode from './ScrollMode';
 import SelectionMode from './SelectionMode';
 import Sidebar from './Sidebar';
 import Toolbar from './Toolbar';
@@ -67,6 +67,7 @@ const ViewerInner: React.FC<ViewerInnerProps> = ({
         matchIndex: -1,
         pageIndex: -1,
     });
+    const [currentMode, setCurrentMode] = React.useState<SelectionMode>(selectionMode);
     const { toggleDragScroll } = useDragScroll(pagesRef);
     const { isFullScreen, openFullScreen, closeFullScreen } = useFullScreen(pagesRef);
     const { isDragging } = useDrop(pagesRef, (files) => openFiles(files));
@@ -83,6 +84,7 @@ const ViewerInner: React.FC<ViewerInnerProps> = ({
     // Manage the selection mode
     const changeSelectionMode = (mode: SelectionMode) => {
         toggleDragScroll(mode === SelectionMode.Hand);
+        setCurrentMode(mode);
     };
     React.useEffect(() => {
         // Toggle the drag scroll if the hand tool is set initially
@@ -354,7 +356,7 @@ const ViewerInner: React.FC<ViewerInnerProps> = ({
                 doc={doc}
                 fileName={fileName}
                 scale={scale}
-                selectionMode={selectionMode}
+                selectionMode={currentMode}
                 onChangeScrollMode={changeScrollMode}
                 onChangeSelectionMode={changeSelectionMode}
                 onDownload={onDownload}

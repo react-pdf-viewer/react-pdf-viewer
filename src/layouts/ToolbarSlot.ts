@@ -23,6 +23,16 @@ interface ToolbarSlot {
     downloadButton: React.ReactNode;
     openFileButton: React.ReactNode;
     printButton: React.ReactNode;
+    goToFirstPageButton: React.ReactNode;
+    goToLastPageButton: React.ReactNode;
+    rotateClockwiseButton: React.ReactNode;
+    rotateCounterclockwiseButton: React.ReactNode;
+    textSelectionButton: React.ReactNode;
+    handToolButton: React.ReactNode;
+    verticalScrollingButton: React.ReactNode;
+    horizontalScrollingButton: React.ReactNode;
+    wrappedScrollingButton: React.ReactNode;
+    documentPropertiesButton: React.ReactNode;
     moreActionsPopover: React.ReactNode;
 }
 
