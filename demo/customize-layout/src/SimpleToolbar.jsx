@@ -45,12 +45,14 @@ const SimpleToolbar = ({ fileUrl }) => {
 
     const layout = (
         isSidebarOpened,
+        container,
         main,
         toolbar,
         sidebar,
     ) => {
         return defaultLayout(
             isSidebarOpened,
+            container,
             main,
             toolbar(renderToolbar),
             sidebar,
