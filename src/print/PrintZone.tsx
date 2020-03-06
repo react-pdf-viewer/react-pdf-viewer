@@ -9,7 +9,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import './printZone.css';
+import './printZone.less';
 import PdfJs from '../PdfJs';
 import PageThumbnailContainer from './PageThumbnailContainer';
 import PrintStatus from './PrintStatus';

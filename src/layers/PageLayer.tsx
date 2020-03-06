@@ -15,7 +15,7 @@ import Spinner from '../Spinner';
 import { SpecialLevel } from '../zoom/zoomingLevel';
 import AnnotationLayer from './AnnotationLayer';
 import CanvasLayer from './CanvasLayer';
-import './pageLayer.css';
+import './pageLayer.less';
 import TextLayer from './TextLayer';
 
 interface PageLayerProps {

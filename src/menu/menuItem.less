@@ -6,16 +6,8 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-.viewer-print-container {
-    display: none;
-}
+@import '../theme/common.less';
 
-@media print {
-    #root {
-        display: none;
-    }
-
-    .viewer-print-container {
-        display: block;
-    }
+.@{viewer-prefix}-menu-item:hover {
+    background-color: rgba(0, 0, 0, 0.1);
 }

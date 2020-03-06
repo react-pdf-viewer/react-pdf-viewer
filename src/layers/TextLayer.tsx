@@ -14,7 +14,7 @@ import calculateOffset from '../utils/calculateOffset';
 import unwrap from '../utils/unwrap';
 import wrap from '../utils/wrap';
 import WithScale from '../WithScale';
-import './textLayer.css';
+import './textLayer.less';
 
 interface TextLayerProps {
     keywordRegexp: RegExp;

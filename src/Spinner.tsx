@@ -8,7 +8,7 @@
 
 import React from 'react';
 
-import './spinner.css';
+import './spinner.less';
 
 const Spinner: React.FC<{}> = () => {
     return (

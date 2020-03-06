@@ -10,7 +10,7 @@ import React from 'react';
 
 import LocalizationContext from '../localization/LocalizationContext';
 import downloadFile from '../utils/downloadFile';
-import './attachmentList.css';
+import './attachmentList.less';
 import FileItem from './FileItem';
 
 interface AttachmentListProps {

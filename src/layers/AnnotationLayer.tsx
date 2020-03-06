@@ -12,7 +12,7 @@ import PdfJs from '../PdfJs';
 import getDestination from '../utils/getDestination';
 import WithScale from '../WithScale';
 import { SpecialLevel } from '../zoom/zoomingLevel';
-import './annotationLayer.css';
+import './annotationLayer.less';
 
 interface AnnotationLayerProps {
     doc: PdfJs.PdfDocument;

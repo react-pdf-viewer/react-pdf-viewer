@@ -6,25 +6,28 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-.viewer-text {
+@import '../theme/common.less';
+
+.@{viewer-prefix}-text {
     color: transparent;
     cursor: text;
     opacity: 0.2;
     position: absolute;
     transform-origin: 0% 0%;
     white-space: pre;
+
+    &::selection {
+        background: rgb(0, 0, 255, 0.5);
+        color: transparent;
+    }
 }
-.viewer-text::selection {
-    background: rgb(0, 0, 255, 0.5);
-    color: transparent;
-}
-.viewer-highlight {
+.@{viewer-prefix}-highlight {
     background-color: rgb(180, 0, 170);
     border-radius: 4px;
     margin: -1px;
     padding: 1px;
 }
-.viewer-highlight-selected {
+.@{viewer-prefix}-highlight-selected {
     background-color: rgb(0, 100, 0);
     border-radius: 4px;
     margin: -1px;

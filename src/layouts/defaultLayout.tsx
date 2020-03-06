@@ -9,7 +9,7 @@
 /* tslint:disable:prefer-object-spread */
 import React from 'react';
 
-import './defaultLayout.css';
+import './defaultLayout.less';
 import Slot from './Slot';
 
 const defaultLayout = (

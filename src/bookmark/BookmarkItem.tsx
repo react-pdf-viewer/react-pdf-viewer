@@ -10,7 +10,7 @@ import React from 'react';
 
 import PdfJs from '../PdfJs';
 import { SpecialLevel } from '../zoom/zoomingLevel';
-import './bookmarkItem.css';
+import './bookmarkItem.less';
 import BookmarkList from './BookmarkList';
 
 interface BookmarkItemProps {

@@ -12,7 +12,7 @@ import OpenFileIcon from '../icons/OpenFileIcon';
 import LocalizationContext from '../localization/LocalizationContext';
 import Position from '../portal/Position';
 import Tooltip from '../portal/Tooltip';
-import './openFileButton.css';
+import './openFileButton.less';
 
 interface OpenFileButtonProps {
     onOpenFiles(files: FileList): void;

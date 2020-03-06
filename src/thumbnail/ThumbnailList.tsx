@@ -10,7 +10,7 @@ import React from 'react';
 
 import PdfJs from '../PdfJs';
 import ThumbnailContainer from './ThumbnailContainer';
-import './thumbnailList.css';
+import './thumbnailList.less';
 
 interface ThumbnailListProps {
     currentPage: number;

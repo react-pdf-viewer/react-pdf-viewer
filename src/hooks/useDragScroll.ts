@@ -8,7 +8,7 @@
 
 import React from 'react';
 
-import './dragScroll.css';
+import './dragScroll.less';
 
 const GRAB_CLASS = 'viewer-grab';
 const GRABBING_CLASS = 'viewer-grabbing';

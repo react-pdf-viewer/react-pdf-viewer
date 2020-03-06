@@ -6,6 +6,13 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-.viewer-bookmark-item:hover {
-    background-color: rgba(0, 0, 0, 0.1);
+@import '../theme/common.less';
+
+.@{viewer-prefix}-open-file {
+    background-color: transparent;
+    padding: 8px;
+
+    &:hover {
+        background-color: rgba(0, 0, 0, 0.1);
+    }
 }
