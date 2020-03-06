@@ -8,6 +8,7 @@
 
 import React from 'react';
 
+import ThemeContent from './theme/ThemeContext';
 import './button.less';
 
 interface ButtonProps {
@@ -16,9 +17,11 @@ interface ButtonProps {
 }
 
 const Button: React.FC<ButtonProps> = ({ children, isSelected = false, onClick }) => {
+    const theme = React.useContext(ThemeContent);
+
     return (
         <button
-            className={isSelected ? 'viewer-button viewer-button-selected' : 'viewer-button'}
+            className={isSelected ? `${theme.prefixClass}-button ${theme.prefixClass}-button-selected` : `${theme.prefixClass}-button`}
             onClick={onClick}
         >
             {children}
