@@ -10,9 +10,11 @@ import React from 'react';
 
 import PdfJs from '../PdfJs';
 import Spinner from '../Spinner';
+import ThemeContent from '../theme/ThemeContext';
 import AskForPasswordState from './AskForPasswordState';
 import AskingPassword from './AskingPassword';
 import CompletedState from './CompletedState';
+import './documentLoader.less';
 import FailureState from './FailureState';
 import LoadingState from './LoadingState';
 import LoadingStatus, { VerifyPassword } from './LoadingStatus';
@@ -25,6 +27,7 @@ interface DocumentLoaderProps {
 }
 
 const DocumentLoader: React.FC<DocumentLoaderProps> = ({ file, render }) => {
+    const theme = React.useContext(ThemeContent);
     const [status, setStatus] = React.useState<LoadingStatus>(new LoadingState(0));
 
     React.useEffect(() => {
@@ -70,27 +73,14 @@ const DocumentLoader: React.FC<DocumentLoaderProps> = ({ file, render }) => {
             return render((status as CompletedState).doc);
         case (status instanceof FailureState):
             return (
-                <div
-                    style={{
-                        textAlign: 'center',
-                    }}
-                >
+                <div className={`${theme.prefixClass}-doc-error`}>
                     {(status as FailureState).error}
                 </div>
             );
         case (status instanceof LoadingState):
         default:
             return (
-                <div
-                    style={{
-                        alignItems: 'center',
-                        display: 'flex',
-                        height: '100%',
-                        justifyContent: 'center',
-                        margin: '16px 0',
-                        width: '100%',
-                    }}
-                >
+                <div className={`${theme.prefixClass}-doc-loading`}>
                     <Spinner />
                 </div>
             );
