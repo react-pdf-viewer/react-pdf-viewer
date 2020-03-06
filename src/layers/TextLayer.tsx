@@ -10,6 +10,7 @@ import React from 'react';
 
 import PdfJs from '../PdfJs';
 import Match from '../search/Match';
+import ThemeContent from '../theme/ThemeContext';
 import calculateOffset from '../utils/calculateOffset';
 import unwrap from '../utils/unwrap';
 import wrap from '../utils/wrap';
@@ -27,6 +28,7 @@ interface TextLayerProps {
 }
 
 const TextLayer: React.FC<TextLayerProps> = ({ keywordRegexp, match, page, pageIndex, rotation, scale, onJumpToMatch }) => {
+    const theme = React.useContext(ThemeContent);
     const containerRef = React.createRef<HTMLDivElement>();
     const renderTask = React.useRef<PdfJs.PageRenderTask>();
     const isRendered = React.useRef(false);
@@ -36,7 +38,7 @@ const TextLayer: React.FC<TextLayerProps> = ({ keywordRegexp, match, page, pageI
         if (!containerEle) {
             return;
         }
-        const spans = containerEle.querySelectorAll('span.viewer-text');
+        const spans = containerEle.querySelectorAll(`span.${theme.prefixClass}-text`);
         const numSpans = spans.length;
         for (let i = 0; i < numSpans; i++) {
             const span = spans[i];
@@ -76,7 +78,7 @@ const TextLayer: React.FC<TextLayerProps> = ({ keywordRegexp, match, page, pageI
 
                     for (let i = 0; i < numSpans; i++) {
                         const span = spans[i] as HTMLElement;
-                        span.classList.add('viewer-text');
+                        span.classList.add(`${theme.prefixClass}-text`);
                         if (keywordRegexp) {
                             highlight(span);
                         }
@@ -101,7 +103,7 @@ const TextLayer: React.FC<TextLayerProps> = ({ keywordRegexp, match, page, pageI
         }
         const endOffset = startOffset + keywordRegexp.source.length;
         const wrapper = wrap(firstChild, startOffset, endOffset);
-        wrapper.classList.add('viewer-highlight');
+        wrapper.classList.add(`${theme.prefixClass}-text-highlight`);
     };
 
     const unhighlightAll = () => {
@@ -109,7 +111,7 @@ const TextLayer: React.FC<TextLayerProps> = ({ keywordRegexp, match, page, pageI
         if (!containerEle) {
             return;
         }
-        const highlightNodes = containerEle.querySelectorAll('span.viewer-highlight');
+        const highlightNodes = containerEle.querySelectorAll(`span.${theme.prefixClass}-text-highlight`);
         const total = highlightNodes.length;
         for (let i = 0; i < total; i++) {
             unwrap(highlightNodes[i]);
@@ -122,7 +124,7 @@ const TextLayer: React.FC<TextLayerProps> = ({ keywordRegexp, match, page, pageI
             return;
         }
 
-        const spans = containerEle.querySelectorAll('span.viewer-highlight');
+        const spans = containerEle.querySelectorAll(`span.${theme.prefixClass}-text-highlight`);
         if (match.matchIndex < spans.length) {
             const span = spans[match.matchIndex] as HTMLElement;
             const { top, left } = calculateOffset(span, containerEle);
@@ -139,7 +141,7 @@ const TextLayer: React.FC<TextLayerProps> = ({ keywordRegexp, match, page, pageI
         unhighlightAll();
 
         if (keywordRegexp.source.trim()) {
-            const spans = containerEle.querySelectorAll('span.viewer-text');
+            const spans = containerEle.querySelectorAll(`span.${theme.prefixClass}-text`);
             const numSpans = spans.length;
             for (let i = 0; i < numSpans; i++) {
                 highlight(spans[i]);
@@ -155,17 +157,7 @@ const TextLayer: React.FC<TextLayerProps> = ({ keywordRegexp, match, page, pageI
 
     return (
         <WithScale callback={renderText} rotation={rotation} scale={scale}>
-            <div
-                ref={containerRef}
-                style={{
-                    height: '100%',
-                    left: 0,
-                    lineHeight: '1',
-                    position: 'absolute',
-                    top: 0,
-                    width: '100%',
-                }}
-            />
+            <div className={`${theme.prefixClass}-text-layer`} ref={containerRef} />
         </WithScale>
     );
 };

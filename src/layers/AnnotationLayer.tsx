@@ -66,7 +66,7 @@ const AnnotationLayer: React.FC<AnnotationLayerProps> = ({ doc, page, rotation, 
 
     return (
         <WithScale callback={renderAnnotation} rotation={rotation} scale={scale}>
-            <div className={`${theme.prefixClass}-annotation`} ref={containerRef} />
+            <div className={`${theme.prefixClass}-annotation-layer`} ref={containerRef} />
         </WithScale>
     );
 };

@@ -86,7 +86,7 @@ const PageLayer: React.FC<PageLayerProps> = ({
     return (
         <Observer onVisibilityChanged={visibilityChanged} threshold={intersectionThreshold}>
             <div
-                className={`${theme.prefixClass}-page`}
+                className={`${theme.prefixClass}-page-layer`}
                 style={{
                     height: `${h}px`,
                     width: `${w}px`,

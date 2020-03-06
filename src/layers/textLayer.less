@@ -8,6 +8,15 @@
 
 @import '../theme/common.less';
 
+.@{viewer-prefix}-text-layer {
+    height: 100%;
+    left: 0px;
+    line-height: 1;
+    position: absolute;
+    top: 0px;
+    width: 100%;
+}
+
 .@{viewer-prefix}-text {
     color: transparent;
     cursor: text;
@@ -20,16 +29,12 @@
         background: rgb(0, 0, 255, 0.5);
         color: transparent;
     }
+
+    &-highlight {
+        background-color: rgb(180, 0, 170);
+        border-radius: 4px;
+        margin: -1px;
+        padding: 1px;
+    }
 }
-.@{viewer-prefix}-highlight {
-    background-color: rgb(180, 0, 170);
-    border-radius: 4px;
-    margin: -1px;
-    padding: 1px;
-}
-.@{viewer-prefix}-highlight-selected {
-    background-color: rgb(0, 100, 0);
-    border-radius: 4px;
-    margin: -1px;
-    padding: 1px;
-}
+

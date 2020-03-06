@@ -46,7 +46,7 @@ const CanvasLayer: React.FC<CanvasLayerProps> = ({ height, page, rotation, scale
     return (
         <WithScale callback={renderCanvas} rotation={rotation} scale={scale}>
             <canvas
-                className={`${theme.prefixClass}-canvas`}
+                className={`${theme.prefixClass}-canvas-layer`}
                 height={height}
                 ref={canvasRef}
                 width={width}
