@@ -9,6 +9,7 @@
 import React from 'react';
 
 import PdfJs from '../PdfJs';
+import ThemeContent from '../theme/ThemeContext';
 import getDestination from '../utils/getDestination';
 import WithScale from '../WithScale';
 import { SpecialLevel } from '../zoom/zoomingLevel';
@@ -24,6 +25,7 @@ interface AnnotationLayerProps {
 
 const AnnotationLayer: React.FC<AnnotationLayerProps> = ({ doc, page, rotation, scale, onJumpToDest }) => {
     const containerRef = React.createRef<HTMLDivElement>();
+    const theme = React.useContext(ThemeContent);
 
     const renderAnnotation = () => {
         const container = containerRef.current;
@@ -64,7 +66,7 @@ const AnnotationLayer: React.FC<AnnotationLayerProps> = ({ doc, page, rotation, 
 
     return (
         <WithScale callback={renderAnnotation} rotation={rotation} scale={scale}>
-            <div className="viewer-annotation" ref={containerRef} />
+            <div className={`${theme.prefixClass}-annotation`} ref={containerRef} />
         </WithScale>
     );
 };
