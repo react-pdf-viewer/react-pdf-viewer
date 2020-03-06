@@ -9,6 +9,7 @@
 /* tslint:disable:prefer-object-spread */
 import React from 'react';
 
+import './defaultLayout.css';
 import Slot from './Slot';
 
 const defaultLayout = (
@@ -21,47 +22,20 @@ const defaultLayout = (
     return (
         <div
             {...container.attrs}
-            style={Object.assign({}, {
-                border: '1px solid rgba(0, 0, 0, .3)',
-                display: 'grid',
-                gridTemplateAreas: isSidebarOpened ? "'toolbar toolbar' 'sidebar main'" : "'toolbar' 'main'",
-                gridTemplateColumns: isSidebarOpened ? '30% 1fr' : '1fr',
-                gridTemplateRows: '40px calc(100% - 40px)',
-                height: '100%',
-                overflow: 'hidden',
-                width: '100%',
-            }, container.attrs.style)}
+            className={`viewer-container ${isSidebarOpened ? 'viewer-with-sidebar' : ''}`}
+            style={container.attrs.style}
         >
             {container.children}
-            <div
-                style={{
-                    alignItems: 'center',
-                    backgroundColor: '#EEE',
-                    borderBottom: '1px solid rgba(0, 0, 0, .1)',
-                    display: 'flex',
-                    gridArea: 'toolbar',
-                    justifyContent: 'center',
-                    padding: '4px',
-                }}
-            >
+            <div className='viewer-toolbar'>
                 {toolbar}
             </div>
-            <div
-                style={{
-                    borderRight: '1px solid rgba(0, 0, 0, 0.2)',
-                    display: isSidebarOpened ? 'flex' : 'none',
-                    gridArea: 'sidebar',
-                    justifyContent: 'center',
-                }}
-            >
+            <div className='viewer-sidebar'>
                 {sidebar.children}
             </div>
             <div
                 {...main.attrs}
-                style={Object.assign({}, {
-                    gridArea: 'main',
-                    overflow: 'scroll',
-                }, main.attrs.style)}
+                className='viewer-main'
+                style={main.attrs.style}
             >
                 {main.children}
             </div>
