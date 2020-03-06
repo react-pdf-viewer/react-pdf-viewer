@@ -1,4 +1,4 @@
-import css from 'rollup-plugin-css-only';
+import less from 'rollup-plugin-less';
 import { terser } from 'rollup-plugin-terser';
 import json from '@rollup/plugin-json';
 import typescript from '@rollup/plugin-typescript';
@@ -24,7 +24,7 @@ export default [
         external: ['pdfjs-dist', 'react', 'react-dom'],
         plugins: [
             json(),
-            css({
+            less({
                 output: './dist/umd/react-pdf-viewer.css',
             }),
             typescript({
@@ -55,7 +55,7 @@ export default [
         external: ['pdfjs-dist', 'react', 'react-dom'],
         plugins: [
             json(),
-            css({
+            less({
                 output: './dist/umd/react-pdf-viewer.css',
             }),
             typescript({
@@ -81,7 +81,7 @@ export default [
         external: ['pdfjs-dist', 'react', 'react-dom'],
         plugins: [
             json(),
-            css({
+            less({
                 output: './dist/cjs/react-pdf-viewer.css',
             }),
             typescript({
@@ -106,7 +106,7 @@ export default [
         external: ['pdfjs-dist', 'react', 'react-dom'],
         plugins: [
             json(),
-            css({
+            less({
                 output: './dist/cjs/react-pdf-viewer.css',
             }),
             typescript({
