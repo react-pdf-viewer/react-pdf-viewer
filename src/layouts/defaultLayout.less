@@ -8,7 +8,7 @@
 
 @import '../theme/common.less';
 
-.@{viewer-prefix}-container {
+.@{viewer-prefix}-layout-container {
     border: 1px solid rgba(0, 0, 0, 0.3);
     display: -ms-grid;
     display: grid;
@@ -22,7 +22,7 @@
     width: 100%;
 }
 
-.@{viewer-prefix}-toolbar {
+.@{viewer-prefix}-layout-toolbar {
     align-items: center;
     background-color: rgb(238, 238, 238);
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
@@ -36,7 +36,7 @@
     padding: 4px;
 }
 
-.@{viewer-prefix}-sidebar {
+.@{viewer-prefix}-layout-sidebar {
     border-right: 1px solid rgba(0, 0, 0, 0.2);
     display: none;
     -ms-grid-column: 1;
@@ -46,7 +46,7 @@
     justify-content: center;
 }
 
-.@{viewer-prefix}-main {
+.@{viewer-prefix}-layout-main {
     -ms-grid-column: 1;
     grid-column: 1;
     -ms-grid-row: 2;
@@ -55,17 +55,17 @@
 }
 
 /* With sidebar opened */
-.@{viewer-prefix}-with-sidebar {
-    &.@{viewer-prefix}-container {
+.@{viewer-prefix}-layout-with-sidebar {
+    &.@{viewer-prefix}-layout-container {
         -ms-grid-columns: 30% 1fr;
         grid-template-columns: 30% 1fr;
     }
 
-    .@{viewer-prefix}-sidebar {
+    .@{viewer-prefix}-layout-sidebar {
         display: flex;
     }
     
-    .@{viewer-prefix}-main {
+    .@{viewer-prefix}-layout-main {
         -ms-grid-column: 2;
         grid-column: 2;
         -ms-grid-row: 2;

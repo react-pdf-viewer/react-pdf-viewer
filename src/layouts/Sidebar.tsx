@@ -8,18 +8,21 @@
 
 import React from 'react';
 
-import AttachmentLoader from './attachment/AttachmentLoader';
-import BookmarkLoader from './bookmark/BookmarkLoader';
-import Button from './Button';
-import BookmarkIcon from './icons/BookmarkIcon';
-import FileIcon from './icons/FileIcon';
-import WrappedScrollingIcon from './icons/WrappedScrollingIcon';
-import LocalizationContext from './localization/LocalizationContext';
-import PdfJs from './PdfJs';
-import Position from './portal/Position';
-import Tooltip from './portal/Tooltip';
-import ThumbnailList from './thumbnail/ThumbnailList';
-import { SpecialLevel } from './zoom/zoomingLevel';
+import AttachmentLoader from '../attachment/AttachmentLoader';
+import BookmarkLoader from '../bookmark/BookmarkLoader';
+import Button from '../Button';
+import BookmarkIcon from '../icons/BookmarkIcon';
+import FileIcon from '../icons/FileIcon';
+import WrappedScrollingIcon from '../icons/WrappedScrollingIcon';
+import LocalizationContext from '../localization/LocalizationContext';
+import PdfJs from '../PdfJs';
+import Position from '../portal/Position';
+import Tooltip from '../portal/Tooltip';
+import ThemeContent from '../theme/ThemeContext';
+import ThumbnailList from '../thumbnail/ThumbnailList';
+import classNames from '../utils/classNames';
+import { SpecialLevel } from '../zoom/zoomingLevel';
+import './sidebar.less';
 
 interface SidebarProps {
     currentPage: number;
@@ -41,6 +44,7 @@ const TOOLTIP_OFFSET = { left: 0, top: 8 };
 
 const Sidebar: React.FC<SidebarProps> = ({ currentPage, doc, height, rotation, width, onJumpToDest, onJumpToPage }) => {
     const l10n = React.useContext(LocalizationContext);
+    const theme = React.useContext(ThemeContent);
     const [tab, setTab] = React.useState(Tab.Thumbnail);
     const clickThumbnailTab = () => setTab(Tab.Thumbnail);
     const clickBookmarkTab = () => setTab(Tab.Bookmark);
@@ -51,25 +55,9 @@ const Sidebar: React.FC<SidebarProps> = ({ currentPage, doc, height, rotation, w
     const renderThumbnailTip = () => (<div style={{ padding: '8px' }}>{l10n.sidebar.thumbnail}</div>);
 
     return (
-        <div
-            style={{
-                display: 'flex',
-                flexDirection: 'column',
-                height: '100%',
-                width: '100%',
-            }}
-        >
-            <div
-                style={{
-                    alignItems: 'center',
-                    backgroundColor: '#EEE',
-                    borderBottom: '1px solid rgba(0, 0, 0, 0.1)',
-                    display: 'flex',
-                    justifyContent: 'center',
-                    padding: '4px',
-                }}
-            >
-                <div style={{ padding: '0 2px' }}>
+        <div className={`${theme.prefixClass}-sidebar`}>
+            <div className={`${theme.prefixClass}-sidebar-tabs`}>
+                <div className={`${theme.prefixClass}-sidebar-tab`}>
                     <Tooltip
                         position={Position.BottomCenter}
                         target={(
@@ -81,7 +69,7 @@ const Sidebar: React.FC<SidebarProps> = ({ currentPage, doc, height, rotation, w
                         offset={TOOLTIP_OFFSET}
                     />
                 </div>
-                <div style={{ padding: '0 2px' }}>
+                <div className={`${theme.prefixClass}-sidebar-tab`}>
                     <Tooltip
                         position={Position.BottomCenter}
                         target={(
@@ -93,7 +81,7 @@ const Sidebar: React.FC<SidebarProps> = ({ currentPage, doc, height, rotation, w
                         offset={TOOLTIP_OFFSET}
                     />
                 </div>
-                <div style={{ padding: '0 2px' }}>
+                <div className={`${theme.prefixClass}-sidebar-tab`}>
                     <Tooltip
                         position={Position.BottomCenter}
                         target={(
@@ -107,16 +95,12 @@ const Sidebar: React.FC<SidebarProps> = ({ currentPage, doc, height, rotation, w
                 </div>
             </div>
             <div
-                style={{
-                    display: 'flex',
-                    flexDirection: 'row',
-                    flexGrow: 1,
-                    flexShrink: 1,
-                    flexWrap: 'wrap',
-                    justifyContent: 'center',
-                    overflow: 'scroll',
-                    padding: '8px 0',
-                }}
+                className={
+                    classNames({
+                        [`${theme.prefixClass}-sidebar-content`]: true,
+                        [`${theme.prefixClass}-sidebar-thumbnails`]: tab === Tab.Thumbnail,
+                    })
+                }
             >
                 {
                     tab === Tab.Thumbnail && (

@@ -9,6 +9,8 @@
 /* tslint:disable:prefer-object-spread */
 import React from 'react';
 
+import ThemeContent from '../theme/ThemeContext';
+import classNames from '../utils/classNames';
 import './defaultLayout.less';
 import Slot from './Slot';
 
@@ -19,22 +21,29 @@ const defaultLayout = (
     toolbar: React.ReactElement,
     sidebar: Slot,
 ) => {
+    const theme = React.useContext(ThemeContent);
+
     return (
         <div
             {...container.attrs}
-            className={`viewer-container ${isSidebarOpened ? 'viewer-with-sidebar' : ''}`}
+            className={
+                classNames({
+                    [`${theme.prefixClass}-layout-container`]: true,
+                    [`${theme.prefixClass}-layout-with-sidebar`]: isSidebarOpened,
+                })
+            }
             style={container.attrs.style}
         >
             {container.children}
-            <div className='viewer-toolbar'>
+            <div className={`${theme.prefixClass}-layout-toolbar`}>
                 {toolbar}
             </div>
-            <div className='viewer-sidebar'>
+            <div className={`${theme.prefixClass}-layout-sidebar`}>
                 {sidebar.children}
             </div>
             <div
                 {...main.attrs}
-                className='viewer-main'
+                className={`${theme.prefixClass}-layout-main`}
                 style={main.attrs.style}
             >
                 {main.children}
