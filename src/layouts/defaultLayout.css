@@ -1,0 +1,70 @@
+/**
+ * A React component to view a PDF document
+ *
+ * @see https://react-pdf-viewer.dev
+ * @license https://react-pdf-viewer.dev/license
+ * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
+ */
+
+.viewer-container {
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    display: -ms-grid;
+    display: grid;
+    -ms-grid-columns: 1fr;
+    grid-template-columns: 1fr;
+    -ms-grid-rows: 40px calc(100% - 40px);
+    grid-template-rows: 40px calc(100% - 40px);
+    height: 100%;
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+}
+
+.viewer-toolbar {
+    align-items: center;
+    background-color: rgb(238, 238, 238);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    -ms-grid-column: 1;
+    grid-column-start: 1;
+    -ms-grid-column-span: 2;
+    grid-column-end: 3;
+    -ms-grid-row: 1;
+    grid-row: 1;
+    justify-content: center;
+    padding: 4px;
+}
+
+.viewer-sidebar {
+    border-right: 1px solid rgba(0, 0, 0, 0.2);
+    display: none;
+    -ms-grid-column: 1;
+    grid-column: 1;
+    -ms-grid-row: 2;
+    grid-row: 2;
+    justify-content: center;
+}
+
+.viewer-main {
+    -ms-grid-column: 1;
+    grid-column: 1;
+    -ms-grid-row: 2;
+    grid-row: 2;
+    overflow: scroll;
+}
+
+/* With sidebar opened */
+.viewer-container.viewer-with-sidebar {
+    -ms-grid-columns: 30% 1fr;
+    grid-template-columns: 30% 1fr;
+}
+
+.viewer-with-sidebar .viewer-sidebar {
+    display: flex;
+}
+
+.viewer-with-sidebar .viewer-main {
+    -ms-grid-column: 2;
+    grid-column: 2;
+    -ms-grid-row: 2;
+    grid-row: 2;
+}

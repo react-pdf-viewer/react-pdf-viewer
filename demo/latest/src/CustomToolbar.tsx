@@ -25,6 +25,9 @@ const CustomToolbar: React.FC<CustomToolbarProps> = ({ fileUrl }) => {
                     }}
                 >
                     <div style={{ padding: '0 2px' }}>
+                        {toolbarSlot.toggleSidebarButton}
+                    </div>
+                    <div style={{ padding: '0 2px' }}>
                         {toolbarSlot.goToFirstPageButton}
                     </div>
                     <div style={{ padding: '0 2px' }}>
