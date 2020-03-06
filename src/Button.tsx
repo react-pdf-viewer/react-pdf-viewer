@@ -9,6 +9,7 @@
 import React from 'react';
 
 import ThemeContent from './theme/ThemeContext';
+import classNames from './utils/classNames';
 import './button.less';
 
 interface ButtonProps {
@@ -21,7 +22,12 @@ const Button: React.FC<ButtonProps> = ({ children, isSelected = false, onClick }
 
     return (
         <button
-            className={isSelected ? `${theme.prefixClass}-button ${theme.prefixClass}-button-selected` : `${theme.prefixClass}-button`}
+            className={
+                classNames({
+                    [`${theme.prefixClass}-button`]: true,
+                    [`${theme.prefixClass}-button-selected`]: isSelected,
+                })
+            }
             onClick={onClick}
         >
             {children}
