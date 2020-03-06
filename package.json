@@ -45,6 +45,7 @@
         "postcss-cli": "^7.1.0",
         "rollup": "^1.30.1",
         "rollup-plugin-less": "^1.1.2",
+        "rollup-plugin-less-modules": "^0.1.11",
         "rollup-plugin-terser": "^5.2.0",
         "tslint": "^6.0.0",
         "tslint-react": "^4.2.0",

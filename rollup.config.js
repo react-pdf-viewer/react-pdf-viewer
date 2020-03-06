@@ -1,4 +1,4 @@
-import less from 'rollup-plugin-less';
+import less from 'rollup-plugin-less-modules';
 import { terser } from 'rollup-plugin-terser';
 import json from '@rollup/plugin-json';
 import typescript from '@rollup/plugin-typescript';
