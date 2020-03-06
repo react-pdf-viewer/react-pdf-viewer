@@ -8,78 +8,57 @@
 
 import React from 'react';
 
+import ThemeContent from '../theme/ThemeContext';
+import './defaultToolbar.less';
 import ToolbarSlot, { RenderToolbarSlot } from './ToolbarSlot';
 
 const defaultToolbar: RenderToolbarSlot = (toolbarSlot: ToolbarSlot): React.ReactElement => {
+    const theme = React.useContext(ThemeContent);
+
     return (
-        <div
-            style={{
-                alignItems: 'center',
-                display: 'flex',
-                width: '100%',
-            }}
-        >
-            <div
-                style={{
-                    alignItems: 'center',
-                    display: 'flex',
-                }}
-            >
-                <div style={{ padding: '0 2px' }}>
+        <div className={`${theme.prefixClass}-toolbar`}>
+            <div className={`${theme.prefixClass}-toolbar-left`}>
+                <div className={`${theme.prefixClass}-toolbar-item`}>
                     {toolbarSlot.toggleSidebarButton}
                 </div>
-                <div style={{ padding: '0 2px' }}>
+                <div className={`${theme.prefixClass}-toolbar-item`}>
                     {toolbarSlot.searchPopover}
                 </div>
-                <div style={{ padding: '0 2px' }}>
+                <div className={`${theme.prefixClass}-toolbar-item`}>
                     {toolbarSlot.previousPageButton}
                 </div>
-                <div style={{ padding: '0 2px' }}>
+                <div className={`${theme.prefixClass}-toolbar-item`}>
                     {toolbarSlot.currentPageInput} / {toolbarSlot.numPages}
                 </div>
-                <div style={{ padding: '0 2px' }}>
+                <div className={`${theme.prefixClass}-toolbar-item`}>
                     {toolbarSlot.nextPageButton}
                 </div>
             </div>
-            <div
-                style={{
-                    alignItems: 'center',
-                    display: 'flex',
-                    flexGrow: 1,
-                    flexShrink: 1,
-                    justifyContent: 'center',
-                }}
-            >
-                <div style={{ padding: '0 2px' }}>
+            <div className={`${theme.prefixClass}-toolbar-center`}>
+                <div className={`${theme.prefixClass}-toolbar-item`}>
                     {toolbarSlot.zoomOutButton}
                 </div>
-                <div style={{ padding: '0 2px' }}>
+                <div className={`${theme.prefixClass}-toolbar-item`}>
                     {toolbarSlot.zoomPopover}
                 </div>
-                <div style={{ padding: '0 2px' }}>
+                <div className={`${theme.prefixClass}-toolbar-item`}>
                     {toolbarSlot.zoomInButton}
                 </div>
             </div>
-            <div
-                style={{
-                    alignItems: 'center',
-                    display: 'flex',
-                    marginLeft: 'auto',
-                }}
-            >
-                <div style={{ padding: '0 2px' }}>
+            <div className={`${theme.prefixClass}-toolbar-right`}>
+                <div className={`${theme.prefixClass}-toolbar-item`}>
                     {toolbarSlot.fullScreenButton}
                 </div>
-                <div style={{ padding: '0 2px' }}>
+                <div className={`${theme.prefixClass}-toolbar-item`}>
                     {toolbarSlot.openFileButton}
                 </div>
-                <div style={{ padding: '0 2px' }}>
+                <div className={`${theme.prefixClass}-toolbar-item`}>
                     {toolbarSlot.downloadButton}
                 </div>
-                <div style={{ padding: '0 2px' }}>
+                <div className={`${theme.prefixClass}-toolbar-item`}>
                     {toolbarSlot.printButton}
                 </div>
-                <div style={{ padding: '0 2px' }}>
+                <div className={`${theme.prefixClass}-toolbar-item`}>
                     {toolbarSlot.moreActionsPopover}
                 </div>
             </div>
