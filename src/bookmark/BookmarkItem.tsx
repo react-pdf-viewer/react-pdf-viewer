@@ -9,6 +9,7 @@
 import React from 'react';
 
 import PdfJs from '../PdfJs';
+import ThemeContent from '../theme/ThemeContext';
 import { SpecialLevel } from '../zoom/zoomingLevel';
 import './bookmarkItem.less';
 import BookmarkList from './BookmarkList';
@@ -22,6 +23,7 @@ interface BookmarkItemProps {
 }
 
 const BookmarkItem: React.FC<BookmarkItemProps> = ({ bookmark, depth, doc, onClick, onJumpToDest }) => {
+    const theme = React.useContext(ThemeContent);
     const toggleRef = React.createRef<HTMLSpanElement>();
     const subItemRef = React.createRef<HTMLDivElement>();
     const subItemsDisplayed = React.useRef(true);
@@ -36,7 +38,7 @@ const BookmarkItem: React.FC<BookmarkItemProps> = ({ bookmark, depth, doc, onCli
             return;
         }
         subItemsEle.style.display = subItemsDisplayed.current ? 'block' : 'none';
-        toggleEle.style.transform = subItemsDisplayed.current ? 'rotate(90deg)' : '';
+        toggleEle.classList.toggle(`${theme.prefixClass}-bookmark-toggle-expanded`);
     };
 
     const clickBookmak = () => {
@@ -53,12 +55,9 @@ const BookmarkItem: React.FC<BookmarkItemProps> = ({ bookmark, depth, doc, onCli
     return (
         <>
             <div
-                className="viewer-bookmark-item"
+                className={`${theme.prefixClass}-bookmark-item`}
                 style={{
-                    alignItems: 'center',
-                    cursor: 'pointer',
-                    display: 'flex',
-                    padding: `6px 4px 6px ${depth * 20 + 4}px`,
+                    paddingLeft: `${depth * 20 + 4}px`,
                 }}
                 onClick={clickItem}
             >
@@ -66,10 +65,7 @@ const BookmarkItem: React.FC<BookmarkItemProps> = ({ bookmark, depth, doc, onCli
                     hasSubItems && (
                         <span
                             ref={toggleRef}
-                            style={{
-                                marginRight: '4px',
-                                transform: 'rotate(90deg)',
-                            }}
+                            className={`${theme.prefixClass}-bookmark-toggle`}
                             onClick={toggleSubItems}
                         >
                             ►
@@ -77,11 +73,8 @@ const BookmarkItem: React.FC<BookmarkItemProps> = ({ bookmark, depth, doc, onCli
                     )
                 }
                 <div
+                    className={`${theme.prefixClass}-bookmark-title`}
                     onClick={clickBookmak}
-                    style={{
-                        flexGrow: 1,
-                        flexShrink: 1,
-                    }}
                 >
                     {bookmark.title}
                 </div>

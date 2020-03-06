@@ -9,9 +9,11 @@
 import React from 'react';
 
 import PdfJs from '../PdfJs';
+import ThemeContent from '../theme/ThemeContext';
 import getDestination from '../utils/getDestination';
 import { SpecialLevel } from '../zoom/zoomingLevel';
 import BookmarkItem from './BookmarkItem';
+import './bookmarkList.less';
 
 interface BookmarkListProps {
     bookmarks: PdfJs.Outline[];
@@ -21,6 +23,7 @@ interface BookmarkListProps {
 }
 
 const BookmarkList: React.FC<BookmarkListProps> = ({ bookmarks, depth = 0, doc, onJumpToDest }) => {
+    const theme = React.useContext(ThemeContent);
     const jumpToDest = (dest: PdfJs.OutlineDestinationType) => {
         getDestination(doc, dest).then((target) => {
             const { pageIndex, bottomOffset, scaleTo } = target;
@@ -29,13 +32,7 @@ const BookmarkList: React.FC<BookmarkListProps> = ({ bookmarks, depth = 0, doc, 
     };
 
     return (
-        <ul
-            style={{
-                listStyleType: 'none',
-                margin: '0',
-                padding: '0',
-            }}
-        >
+        <ul className={`${theme.prefixClass}-bookmark-list`}>
         {
             bookmarks.map((bookmark, index) => {
                 return (
