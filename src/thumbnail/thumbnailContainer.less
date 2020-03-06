@@ -8,14 +8,11 @@
 
 @import '../theme/common.less';
 
-.@{viewer-prefix}-thumbnail {
-    padding: 8px;
-
-    &:hover {
-        background-color: rgba(0, 0, 0, 0.3);
-    }
-
-    &-selected {
-        background-color: rgba(0, 0, 0, 0.3);
-    }
+.@{viewer-prefix}-thumbnail-container {
+    align-items: center;
+    box-shadow: rgba(0, 0, 0, 0.2) 2px 2px 8px 0px;
+    display: flex;
+    justify-content: center;
+    margin: 0px auto;
+    position: relative;
 }

@@ -9,6 +9,8 @@
 import React from 'react';
 
 import PdfJs from '../PdfJs';
+import ThemeContent from '../theme/ThemeContext';
+import classNames from '../utils/classNames';
 import ThumbnailContainer from './ThumbnailContainer';
 import './thumbnailList.less';
 
@@ -24,6 +26,7 @@ interface ThumbnailListProps {
 const ThumbnailList: React.FC<ThumbnailListProps> = ({
     currentPage, doc, pageHeight, pageWidth, rotation, onJumpToPage,
 }) => {
+    const theme = React.useContext(ThemeContent);
     const { numPages } = doc;
     return (
         <>
@@ -34,11 +37,11 @@ const ThumbnailList: React.FC<ThumbnailListProps> = ({
                         <div key={`thumbnail-${index}`}>
                             <div
                                 className={
-                                    currentPage === index ? 'viewer-thumbnail-selected' : 'viewer-thumbnail'
+                                    classNames({
+                                        [`${theme.prefixClass}-thumbnail`]: true,
+                                        [`${theme.prefixClass}-thumbnail-selected`]: currentPage === index,
+                                    })
                                 }
-                                style={{
-                                    padding: '8px',
-                                }}
                                 onClick={onClick}
                             >
                                 <ThumbnailContainer
