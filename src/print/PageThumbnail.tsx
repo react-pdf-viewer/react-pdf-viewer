@@ -51,10 +51,11 @@ const PageThumbnail: React.FC<PageThumbnailProps> = ({
         });
         renderTask.current.promise.then(
             (_) => {
-                canvas.toBlob((blob) => {
-                    setSrc(URL.createObjectURL(blob));
-                });
-                // setSrc(canvas.toDataURL());
+                ('toBlob' in canvas)
+                    ? canvas.toBlob((blob) => {
+                        setSrc(URL.createObjectURL(blob));
+                    })
+                    : setSrc((canvas as HTMLCanvasElement).toDataURL());
             },
             (_) => {/**/},
         );
