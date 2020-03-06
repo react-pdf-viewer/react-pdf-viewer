@@ -18,14 +18,7 @@ interface ButtonProps {
 const Button: React.FC<ButtonProps> = ({ children, isSelected = false, onClick }) => {
     return (
         <button
-            className="viewer-button"
-            style={{
-                backgroundColor: isSelected ? 'rgba(0, 0, 0, .1)' : '',
-                border: 'none',
-                borderRadius: '4px',
-                cursor: 'pointer',
-                padding: '8px',
-            }}
+            className={isSelected ? 'viewer-button viewer-button-selected' : 'viewer-button'}
             onClick={onClick}
         >
             {children}

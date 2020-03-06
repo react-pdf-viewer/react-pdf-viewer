@@ -10,8 +10,15 @@
 
 .@{viewer-prefix}-button {
     background-color: transparent;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    padding: 8px;
 
     &:hover {
+        background-color: rgba(0, 0, 0, 0.1);
+    }
+    &-selected {
         background-color: rgba(0, 0, 0, 0.1);
     }
 }
