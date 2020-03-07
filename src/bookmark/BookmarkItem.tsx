@@ -8,8 +8,8 @@
 
 import React from 'react';
 
-import PdfJs from '../PdfJs';
 import ThemeContent from '../theme/ThemeContext';
+import PdfJs from '../vendors/PdfJs';
 import { SpecialLevel } from '../zoom/zoomingLevel';
 import './bookmarkItem.less';
 import BookmarkList from './BookmarkList';

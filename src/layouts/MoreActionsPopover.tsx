@@ -25,7 +25,6 @@ import UpArrowIcon from '../icons/UpArrowIcon';
 import VerticalScrollingIcon from '../icons/VerticalScrollingIcon';
 import WrappedScrollingIcon from '../icons/WrappedScrollingIcon';
 import LocalizationContext from '../localization/LocalizationContext';
-import PdfJs from '../PdfJs';
 import Modal from '../portal/Modal';
 import Popover from '../portal/Popover';
 import Position from '../portal/Position';
@@ -33,6 +32,7 @@ import Tooltip from '../portal/Tooltip';
 import PropertiesModal from '../property/PropertiesModal';
 import ScrollMode from '../ScrollMode';
 import SelectionMode from '../SelectionMode';
+import PdfJs from '../vendors/PdfJs';
 
 interface MoreActionsPopoverProps {
     doc: PdfJs.PdfDocument;

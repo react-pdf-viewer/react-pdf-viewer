@@ -18,10 +18,10 @@ import { RenderToolbar } from './layouts/ToolbarSlot';
 import DocumentLoader from './loader/DocumentLoader';
 import LocalizationMap from './localization/LocalizationMap';
 import LocalizationProvider from './localization/LocalizationProvider';
-import PdfJs from './PdfJs';
 import SelectionMode from './SelectionMode';
 import ThemeProvider from './theme/ThemeProvider';
 import downloadFile from './utils/downloadFile';
+import PdfJs from './vendors/PdfJs';
 
 interface File {
     data: PdfJs.FileData;

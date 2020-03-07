@@ -8,12 +8,12 @@
 
 import React from 'react';
 
-import PdfJs from '../PdfJs';
 import Match from '../search/Match';
 import ThemeContent from '../theme/ThemeContext';
 import calculateOffset from '../utils/calculateOffset';
 import unwrap from '../utils/unwrap';
 import wrap from '../utils/wrap';
+import PdfJs from '../vendors/PdfJs';
 import './textLayer.less';
 import WithScale from './WithScale';
 

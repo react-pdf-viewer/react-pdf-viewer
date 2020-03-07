@@ -8,11 +8,11 @@
 
 import React from 'react';
 
-import Observer, { VisibilityChanged } from '../layouts/Observer';
-import PdfJs from '../PdfJs';
-import Match from '../search/Match';
 import Spinner from '../components/Spinner';
+import Observer, { VisibilityChanged } from '../layouts/Observer';
+import Match from '../search/Match';
 import ThemeContent from '../theme/ThemeContext';
+import PdfJs from '../vendors/PdfJs';
 import { SpecialLevel } from '../zoom/zoomingLevel';
 import AnnotationLayer from './AnnotationLayer';
 import CanvasLayer from './CanvasLayer';

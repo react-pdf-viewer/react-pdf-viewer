@@ -13,13 +13,7 @@ import useDrop from '../hooks/useDrop';
 import useFullScreen from '../hooks/useFullScreen';
 import useToggle from '../hooks/useToggle';
 import PageLayer from '../layers/PageLayer';
-import ExitFullScreen from './ExitFullScreen';
-import { Layout } from './Layout';
-import Sidebar from './Sidebar';
-import { RenderToolbarSlot } from './ToolbarSlot';
 import DropArea from '../open/DropArea';
-import { PageSize } from './PageSizeCalculator';
-import PdfJs from '../PdfJs';
 import PrintProgress from '../print/PrintProgress';
 import PrintStatus from '../print/PrintStatus';
 import PrintZone from '../print/PrintZone';
@@ -27,10 +21,17 @@ import Match from '../search/Match';
 import ScrollMode from '../ScrollMode';
 import SelectionMode from '../SelectionMode';
 import ThemeContent from '../theme/ThemeContext';
-import Toolbar from './Toolbar';
+import PdfJs from '../vendors/PdfJs';
 import getFileExt from '../utils/fileExt';
 import { SpecialLevel } from '../zoom/zoomingLevel';
+import ExitFullScreen from './ExitFullScreen';
 import './inner.less';
+import { Layout } from './Layout';
+import { PageSize } from './PageSizeCalculator';
+import Sidebar from './Sidebar';
+import Toolbar from './Toolbar';
+import { RenderToolbarSlot } from './ToolbarSlot';
+
 
 // `new RegExp('')` will treat the source as `(?:)` which is not an empty string
 const EMPTY_KEYWORD_REGEXP = new RegExp(' ');

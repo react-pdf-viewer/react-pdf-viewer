@@ -15,11 +15,11 @@ import NextIcon from '../icons/NextIcon';
 import PreviousIcon from '../icons/PreviousIcon';
 import SearchIcon from '../icons/SearchIcon';
 import LocalizationContext from '../localization/LocalizationContext';
-import ThemeContent from '../theme/ThemeContext';
-import PdfJs from '../PdfJs';
 import Popover from '../portal/Popover';
 import Position from '../portal/Position';
 import Tooltip from '../portal/Tooltip';
+import ThemeContent from '../theme/ThemeContext';
+import PdfJs from '../vendors/PdfJs';
 import Match from './Match';
 import './searchPopover.less';
 

@@ -9,7 +9,7 @@
 import React from 'react';
 
 import LocalizationContext from '../localization/LocalizationContext';
-import PdfJs from '../PdfJs';
+import PdfJs from '../vendors/PdfJs';
 import Spinner from '../components/Spinner';
 import ThemeContent from '../theme/ThemeContext';
 import { SpecialLevel } from '../zoom/zoomingLevel';

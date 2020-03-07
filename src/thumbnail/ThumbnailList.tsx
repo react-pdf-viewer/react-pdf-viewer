@@ -8,9 +8,9 @@
 
 import React from 'react';
 
-import PdfJs from '../PdfJs';
 import ThemeContent from '../theme/ThemeContext';
 import classNames from '../utils/classNames';
+import PdfJs from '../vendors/PdfJs';
 import ThumbnailContainer from './ThumbnailContainer';
 import './thumbnailList.less';
 

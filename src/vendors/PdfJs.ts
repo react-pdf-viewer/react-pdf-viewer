@@ -7,6 +7,6 @@
  */
 
 // tslint:disable-next-line
-/// <reference path="./types/PdfJs.d.ts" />
+/// <reference path="./PdfJs.d.ts" />
 import * as PdfJs from 'pdfjs-dist';
 export default PdfJs;

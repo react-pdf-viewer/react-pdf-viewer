@@ -8,10 +8,10 @@
 
 import React from 'react';
 
-import Observer, { VisibilityChanged } from '../layouts/Observer';
-import PdfJs from '../PdfJs';
 import Spinner from '../components/Spinner';
+import Observer, { VisibilityChanged } from '../layouts/Observer';
 import ThemeContent from '../theme/ThemeContext';
+import PdfJs from '../vendors/PdfJs';
 import ThumbnailItem from './ThumbnailItem';
 import './thumbnailContainer.less';
 

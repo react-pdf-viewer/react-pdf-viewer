@@ -9,7 +9,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import PdfJs from '../PdfJs';
+import PdfJs from '../vendors/PdfJs';
 import ThemeContent from '../theme/ThemeContext';
 import PageThumbnailContainer from './PageThumbnailContainer';
 import PrintStatus from './PrintStatus';

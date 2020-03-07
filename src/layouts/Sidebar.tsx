@@ -15,12 +15,12 @@ import BookmarkIcon from '../icons/BookmarkIcon';
 import FileIcon from '../icons/FileIcon';
 import WrappedScrollingIcon from '../icons/WrappedScrollingIcon';
 import LocalizationContext from '../localization/LocalizationContext';
-import PdfJs from '../PdfJs';
 import Position from '../portal/Position';
 import Tooltip from '../portal/Tooltip';
 import ThemeContent from '../theme/ThemeContext';
 import ThumbnailList from '../thumbnail/ThumbnailList';
 import classNames from '../utils/classNames';
+import PdfJs from '../vendors/PdfJs';
 import { SpecialLevel } from '../zoom/zoomingLevel';
 import './sidebar.less';
 

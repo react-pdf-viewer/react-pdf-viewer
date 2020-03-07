@@ -9,8 +9,8 @@
 import React from 'react';
 
 import Spinner from '../components/Spinner';
-import PdfJs from '../PdfJs';
 import ThemeContent from '../theme/ThemeContext';
+import PdfJs from '../vendors/PdfJs';
 import { decrease } from '../zoom/zoomingLevel';
 import './pageSizeCalculator.less';
 

@@ -8,9 +8,9 @@
 
 import React from 'react';
 
-import PdfJs from '../PdfJs';
 import Spinner from '../components/Spinner';
 import ThemeContent from '../theme/ThemeContext';
+import PdfJs from '../vendors/PdfJs';
 import AskForPasswordState from './AskForPasswordState';
 import AskingPassword from './AskingPassword';
 import CompletedState from './CompletedState';

@@ -9,7 +9,7 @@
 import React from 'react';
 
 import Spinner from '../components/Spinner';
-import PdfJs from '../PdfJs';
+import PdfJs from '../vendors/PdfJs';
 
 interface ThumbnailItemProps {
     page: PdfJs.Page;
