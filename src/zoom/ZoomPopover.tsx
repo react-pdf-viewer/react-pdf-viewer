@@ -8,11 +8,11 @@
 
 import React from 'react';
 
-import Menu from '../menu/Menu';
+import Menu from '../components/Menu';
+import MenuDivider from '../components/MenuDivider';
+import MenuItem from '../components/MenuItem';
 import { Toggle } from '../hooks/useToggle';
 import LocalizationContext from '../localization/LocalizationContext';
-import MenuDivider from '../menu/MenuDivider';
-import MenuItem from '../menu/MenuItem';
 import Popover from '../portal/Popover';
 import Position from '../portal/Position';
 import ThemeContent from '../theme/ThemeContext';

@@ -9,6 +9,9 @@
 import React from 'react';
 
 import Button from './Button';
+import Menu from './components/Menu';
+import MenuDivider from './components/MenuDivider';
+import MenuItem from './components/MenuItem';
 import { Toggle } from './hooks/useToggle';
 import DownArrowIcon from './icons/DownArrowIcon';
 import HandToolIcon from './icons/HandToolIcon';
@@ -22,9 +25,6 @@ import UpArrowIcon from './icons/UpArrowIcon';
 import VerticalScrollingIcon from './icons/VerticalScrollingIcon';
 import WrappedScrollingIcon from './icons/WrappedScrollingIcon';
 import LocalizationContext from './localization/LocalizationContext';
-import Menu from './menu/Menu';
-import MenuDivider from './menu/MenuDivider';
-import MenuItem from './menu/MenuItem';
 import PdfJs from './PdfJs';
 import Modal from './portal/Modal';
 import Popover from './portal/Popover';
