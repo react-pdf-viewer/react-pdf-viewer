@@ -9,16 +9,19 @@
 import React from 'react';
 
 import Button from '../Button';
+import PrimaryButton from '../components/PrimaryButton';
 import { Toggle } from '../hooks/useToggle';
 import NextIcon from '../icons/NextIcon';
 import PreviousIcon from '../icons/PreviousIcon';
 import SearchIcon from '../icons/SearchIcon';
 import LocalizationContext from '../localization/LocalizationContext';
+import ThemeContent from '../theme/ThemeContext';
 import PdfJs from '../PdfJs';
 import Popover from '../portal/Popover';
 import Position from '../portal/Position';
 import Tooltip from '../portal/Tooltip';
 import Match from './Match';
+import './searchPopover.less';
 
 // `new RegExp('')` will treat the source as `(?:)` which is not an empty string
 const EMPTY_KEYWORD_REGEXP = new RegExp(' ');
@@ -31,6 +34,7 @@ interface SearchPopoverProps {
 }
 
 const SearchPopover: React.FC<SearchPopoverProps> = ({ doc, onJumpToMatch, onSearchFor }) => {
+    const theme = React.useContext(ThemeContent);
     const { numPages } = doc;
     const indexArr = Array(numPages).fill(0).map((_, i) => i);
     const l10n = React.useContext(LocalizationContext);
@@ -171,78 +175,38 @@ const SearchPopover: React.FC<SearchPopoverProps> = ({ doc, onJumpToMatch, onSea
         };
 
         return (
-            <div style={{ padding: '8px' }}>
-                <div
-                    style={{
-                        alignItems: 'center',
-                        border: '1px solid rgba(0, 0, 0, 0.3)',
-                        display: 'flex',
-                        margin: '0 4px 8px 4px',
-                        position: 'relative',
-                        width: '180px',
-                    }}
-                >
+            <div className={`${theme.prefixClass}-search-popover`}>
+                <div className={`${theme.prefixClass}-search-popover-input-counter`}>
                     <input
+                        className={`${theme.prefixClass}-search-popover-input`}
                         placeholder={`${l10n.search.enterToSearch}`}
-                        style={{
-                            border: 'none',
-                            padding: '4px',
-                            width: '100%',
-                        }}
                         type="text"
                         value={keyword}
                         onChange={changeKeyword}
                         onKeyDown={keydownSearch}
                     />
-                    <div
-                        style={{
-                            alignItems: 'center',
-                            bottom: '0',
-                            display: 'flex',
-                            paddingRight: '4px',
-                            position: 'absolute',
-                            right: '0',
-                            top: '0',
-                        }}
-                    >
+                    <div className={`${theme.prefixClass}-search-popover-counter`}>
                         {currentMatch}/{found.length}
                     </div>
                 </div>
-                <label
-                    style={{
-                        alignItems: 'center',
-                        display: 'flex',
-                        marginBottom: '8px',
-                    }}
-                >
+                <label className={`${theme.prefixClass}-search-popover-label`}>
                     <input
+                        className={`${theme.prefixClass}-search-popover-label-checkbox`}
                         checked={matchCase}
-                        style={{ marginRight: '4px' }}
                         type="checkbox"
                         onChange={changeMatchCase}
                     /> {l10n.search.matchCase}
                 </label>
-                <label
-                    style={{
-                        alignItems: 'center',
-                        display: 'flex',
-                        marginBottom: '8px',
-                    }}
-                >
+                <label className={`${theme.prefixClass}-search-popover-label`}>
                     <input
+                        className={`${theme.prefixClass}-search-popover-label-checkbox`}
                         checked={wholeWords}
-                        style={{ marginRight: '4px' }}
                         type="checkbox"
                         onChange={changeWholeWords}
                     /> {l10n.search.wholeWords}
                 </label>
-                <div
-                    style={{
-                        alignItems: 'center',
-                        display: 'flex',
-                    }}
-                >
-                    <div style={{ padding: '0 4px' }}>
+                <div className={`${theme.prefixClass}-search-popover-footer`}>
+                    <div className={`${theme.prefixClass}-search-popover-footer-item`}>
                         <Tooltip
                             position={Position.BottomCenter}
                             target={<Button onClick={jumpToPreviousMatch}><PreviousIcon /></Button>}
@@ -250,7 +214,7 @@ const SearchPopover: React.FC<SearchPopoverProps> = ({ doc, onJumpToMatch, onSea
                             offset={PORTAL_OFFSET}
                         />
                     </div>
-                    <div style={{ padding: '0 4px' }}>
+                    <div className={`${theme.prefixClass}-search-popover-footer-item`}>
                         <Tooltip
                             position={Position.BottomCenter}
                             target={<Button onClick={jumpToNextMatch}><NextIcon /></Button>}
@@ -258,20 +222,11 @@ const SearchPopover: React.FC<SearchPopoverProps> = ({ doc, onJumpToMatch, onSea
                             offset={PORTAL_OFFSET}
                         />
                     </div>
-                    <button
-                        style={{
-                            backgroundColor: '#357EDD',
-                            border: 'none',
-                            borderRadius: '4px',
-                            color: '#FFF',
-                            cursor: 'pointer',
-                            marginLeft: 'auto',
-                            padding: '8px',
-                        }}
-                        onClick={close}
-                    >
-                        {l10n.search.close}
-                    </button>
+                    <div className={`${theme.prefixClass}-search-popover-footer-button`}>
+                        <PrimaryButton onClick={close}>
+                            {l10n.search.close}
+                        </PrimaryButton>
+                    </div>
                 </div>
             </div>
         );
