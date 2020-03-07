@@ -8,8 +8,8 @@
 
 import React from 'react';
 
-import ThemeContent from './theme/ThemeContext';
-import classNames from './utils/classNames';
+import ThemeContent from '../theme/ThemeContext';
+import classNames from '../utils/classNames';
 import './button.less';
 
 interface ButtonProps {

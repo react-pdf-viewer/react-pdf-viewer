@@ -8,7 +8,7 @@
 
 import React from 'react';
 
-import Button from '../Button';
+import Button from '../components/Button';
 import PrimaryButton from '../components/PrimaryButton';
 import { Toggle } from '../hooks/useToggle';
 import NextIcon from '../icons/NextIcon';

@@ -8,7 +8,7 @@
 
 import React from 'react';
 
-import Button from './Button';
+import Button from './components/Button';
 import { Toggle } from './hooks/useToggle';
 import DownArrowIcon from './icons/DownArrowIcon';
 import DownloadIcon from './icons/DownloadIcon';

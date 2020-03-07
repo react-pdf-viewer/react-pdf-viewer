@@ -10,7 +10,7 @@ import React from 'react';
 
 import AttachmentLoader from '../attachment/AttachmentLoader';
 import BookmarkLoader from '../bookmark/BookmarkLoader';
-import Button from '../Button';
+import Button from '../components/Button';
 import BookmarkIcon from '../icons/BookmarkIcon';
 import FileIcon from '../icons/FileIcon';
 import WrappedScrollingIcon from '../icons/WrappedScrollingIcon';

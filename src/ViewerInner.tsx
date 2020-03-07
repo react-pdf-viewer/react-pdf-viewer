@@ -8,7 +8,7 @@
 
 import React from 'react';
 
-import Button from './Button';
+import Button from './components/Button';
 import useDragScroll from './hooks/useDragScroll';
 import useDrop from './hooks/useDrop';
 import useFullScreen from './hooks/useFullScreen';

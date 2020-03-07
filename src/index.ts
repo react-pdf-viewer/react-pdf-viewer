@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import Button from './Button';
+import Button from './components/Button';
 import { Toggle as ToggleType } from './hooks/useToggle';
 import Icon from './icons/Icon';
 import defaultLayout from './layouts/defaultLayout';
