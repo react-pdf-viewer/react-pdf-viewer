@@ -25,7 +25,7 @@
     },
     "scripts": {
         "copy": "rm -rf dist/cjs/* && rm -rf dist/umd/* && cp README.md dist",
-        "build": "npm run copy && rollup -c && npm run mincss",
+        "build": "npm run copy && rollup -c && npm run mincss && rm -rf dist/cjs/react-pdf-viewer.less dist/cjs/react-pdf-viewer.css.map dist/umd/react-pdf-viewer.less dist/umd/react-pdf-viewer.css.map",
         "mincss": "postcss dist/cjs/react-pdf-viewer.css > dist/cjs/react-pdf-viewer.min.css && postcss dist/umd/react-pdf-viewer.css > dist/umd/react-pdf-viewer.min.css",
         "dev": "npm run copy && rollup -c rollup.dev.config.js -w",
         "lint": "tslint -c tslint.json -o tslint.log -t prose 'src/**/*.{ts,tsx}'",
