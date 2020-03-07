@@ -24,7 +24,7 @@ const ExitFullScreen: React.FC<ExitFullScreenProps> = ({ onClick }) => {
         <div className={`${theme.prefixClass}-exit-fullscreen`}>
             <div className={`${theme.prefixClass}-exit-fullscreen-inner`}>
                 <Button onClick={onClick}><ExitFullScreenIcon /></Button>
-            </div>   
+            </div>
         </div>
     );
 };
