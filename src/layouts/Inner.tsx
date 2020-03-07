@@ -43,6 +43,7 @@ const PAGE_PADDING = 8;
 interface InnerProps {
     doc: PdfJs.PdfDocument;
     file: File;
+    initialPage?: number;
     layout: Layout;
     pageSize: PageSize;
     render: RenderViewer;
@@ -53,7 +54,7 @@ interface InnerProps {
 }
 
 const Inner: React.FC<InnerProps> = ({
-    doc, file, layout, pageSize, render, selectionMode,
+    doc, file, initialPage, layout, pageSize, render, selectionMode,
     onDocumentLoad, onOpenFile, onZoom,
 }) => {
     const theme = React.useContext(ThemeContent);
@@ -79,6 +80,9 @@ const Inner: React.FC<InnerProps> = ({
 
     React.useEffect(() => {
         onDocumentLoad(doc);
+        if (initialPage) {
+            jumpToPage(initialPage);
+        }
     }, []);
 
     // Manage the selection mode
@@ -315,6 +319,7 @@ const Inner: React.FC<InnerProps> = ({
                                         doc={doc}
                                         keywordRegexp={keywordRegexp}
                                         height={pageHeight}
+                                        initialPage={initialPage}
                                         match={match}
                                         pageIndex={index}
                                         rotation={rotation}

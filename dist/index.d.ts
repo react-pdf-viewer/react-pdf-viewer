@@ -239,6 +239,8 @@ export interface ViewerProps {
     // So that, the document will fit best within the container
     defaultScale?: number;
     fileUrl: string;
+    // The page (zero-index based) that will be displayed initially
+    initialPage?: number;
     layout?: Layout;
     localization?: LocalizationMap;
     // The prefix for CSS classes
