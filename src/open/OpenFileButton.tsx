@@ -43,6 +43,7 @@ const OpenFileButton: React.FC<OpenFileButtonProps> = ({ onOpenFiles }) => {
                         className={`${theme.prefixClass}-open-file-input`}
                         multiple={false}
                         type='file'
+                        title=''
                         onChange={openFiles}
                     />
                     <OpenFileIcon />
