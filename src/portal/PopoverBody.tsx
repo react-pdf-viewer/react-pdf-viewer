@@ -10,8 +10,10 @@ import React from 'react';
 
 import useKeyUp from '../hooks/useKeyUp';
 import usePosition from '../hooks/usePosition';
+import ThemeContent from '../theme/ThemeContext';
 import Arrow from './Arrow';
 import Offset from './Offset';
+import './popoverBody.less';
 import Position from './Position';
 
 interface PopoverBodyProps {
@@ -25,25 +27,15 @@ interface PopoverBodyProps {
 const PopoverBody: React.FC<PopoverBodyProps> = ({
     children, closeOnEscape, offset, position, targetRef, onToggle,
 }) => {
+    const theme = React.useContext(ThemeContent);
     const contentRef = React.createRef<HTMLDivElement>();
 
     useKeyUp(27, () => closeOnEscape && onToggle());
     usePosition(contentRef, targetRef, position, offset);
 
     return (
-        <div
-            ref={contentRef}
-            style={{
-                background: '#FFF',
-                border: '1px solid rgba(0, 0, 0, 0.3)',
-                borderRadius: '4px',
-                left: 0,
-                position: 'absolute',
-                top: '-9999px',
-                zIndex: 9999,
-            }}
-        >
-            <Arrow position={position} styles={{ background: '#FFF' }} />
+        <div className={`${theme.prefixClass}-popover-body`} ref={contentRef}>
+            <Arrow customClassName={`${theme.prefixClass}-popover-body-arrow`} position={position} />
             {children}
         </div>
     );

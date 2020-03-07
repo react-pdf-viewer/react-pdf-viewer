@@ -15,11 +15,11 @@ import './arrow.less';
 import Position from './Position';
 
 interface ArrowProps {
+    customClassName?: string;
     position: Position;
-    styles: React.CSSProperties;
 }
 
-const Arrow: React.FC<ArrowProps> = ({ position, styles }) => {
+const Arrow: React.FC<ArrowProps> = ({ customClassName, position }) => {
     const theme = React.useContext(ThemeContent);
 
     return (
@@ -39,9 +39,9 @@ const Arrow: React.FC<ArrowProps> = ({ position, styles }) => {
                     [`${theme.prefixClass}-arrow-lt`]: position === Position.LeftTop,
                     [`${theme.prefixClass}-arrow-lc`]: position === Position.LeftCenter,
                     [`${theme.prefixClass}-arrow-lb`]: position === Position.LeftBottom,
+                    [`${customClassName}`]: customClassName !== '',
                 })
             }
-            style={Object.assign({}, styles)}
         />
     );
 };

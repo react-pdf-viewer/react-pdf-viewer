@@ -39,7 +39,7 @@ const TooltipBody: React.FC<TooltipBodyProps> = ({ children, offset, position, t
                 zIndex: 9999,
             }}
         >
-            <Arrow position={position} styles={{ background: '#000' }} />
+            <Arrow position={position} />
             {children}
         </div>
     );
