@@ -28,6 +28,13 @@ interface File {
     name: string;
 }
 
+interface RenderViewerProps {
+    viewer: React.ReactElement;
+    jumpToPage(page: number): void;
+}
+
+type RenderViewerType = (props: RenderViewerProps) => React.ReactElement;
+
 interface ViewerProps {
     // The default zoom level
     // If it's not set, the initial zoom level will be calculated based on the dimesion of page and the container width
@@ -37,6 +44,7 @@ interface ViewerProps {
     localization?: LocalizationMap;
     // The prefix for CSS classes
     prefixClass?: string;
+    render?: RenderViewerType;
     // The text selection mode
     selectionMode?: SelectionMode;
     onDocumentLoad?(doc: PdfJs.PdfDocument): void;
@@ -49,6 +57,7 @@ const Viewer: React.FC<ViewerProps> = ({
     layout,
     localization,
     prefixClass,
+    render,
     selectionMode = SelectionMode.Text,
     onDocumentLoad = () => {/**/},
     onZoom = () => {/**/},
@@ -84,7 +93,7 @@ const Viewer: React.FC<ViewerProps> = ({
         downloadFile(file.name, file.data);
     };
 
-    const renderDoc = (doc: PdfJs.PdfDocument) => {
+    const renderDoc = (renderViewer: RenderViewer) => (doc: PdfJs.PdfDocument) => {
         const renderInner = (ps: PageSize) => {
             const pageSize = ps;
             pageSize.scale = defaultScale || ps.scale;
@@ -95,6 +104,7 @@ const Viewer: React.FC<ViewerProps> = ({
                     fileName={file.name}
                     layout={layout || layoutOption}
                     pageSize={pageSize}
+                    render={renderViewer}
                     selectionMode={selectionMode}
                     onDocumentLoad={onDocumentLoad}
                     onDownload={download}
@@ -111,16 +121,18 @@ const Viewer: React.FC<ViewerProps> = ({
         );
     };
 
+    const defaultRenderer = render || (props => props.viewer);
     return (
         <ThemeProvider prefixClass={prefixClass}>
             <LocalizationProvider localization={localization}>
                 <DocumentLoader
                     file={file.data}
-                    render={renderDoc}
+                    render={renderDoc(defaultRenderer)}
                 />
             </LocalizationProvider>
         </ThemeProvider>
     );
 };
 
+export type RenderViewer = RenderViewerType;
 export default Viewer;

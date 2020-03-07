@@ -23,6 +23,7 @@ import SelectionMode from '../SelectionMode';
 import ThemeContent from '../theme/ThemeContext';
 import PdfJs from '../vendors/PdfJs';
 import getFileExt from '../utils/fileExt';
+import { RenderViewer } from '../Viewer';
 import { SpecialLevel } from '../zoom/zoomingLevel';
 import ExitFullScreen from './ExitFullScreen';
 import './inner.less';
@@ -31,7 +32,6 @@ import { PageSize } from './PageSizeCalculator';
 import Sidebar from './Sidebar';
 import Toolbar from './Toolbar';
 import { RenderToolbarSlot } from './ToolbarSlot';
-
 
 // `new RegExp('')` will treat the source as `(?:)` which is not an empty string
 const EMPTY_KEYWORD_REGEXP = new RegExp(' ');
@@ -43,6 +43,7 @@ interface InnerProps {
     fileName: string;
     layout: Layout;
     pageSize: PageSize;
+    render: RenderViewer;
     selectionMode: SelectionMode;
     onDocumentLoad(doc: PdfJs.PdfDocument): void;
     onDownload(): void;
@@ -51,7 +52,7 @@ interface InnerProps {
 }
 
 const Inner: React.FC<InnerProps> = ({
-    doc, fileName, layout, pageSize, selectionMode,
+    doc, fileName, layout, pageSize, render, selectionMode,
     onDocumentLoad, onDownload, onOpenFile, onZoom,
 }) => {
     const theme = React.useContext(ThemeContent);
@@ -249,115 +250,118 @@ const Inner: React.FC<InnerProps> = ({
         setNumLoadedPagesForPrint(0);
     };
 
-    return layout(
-        toggleSidebar.opened,
-        {
-            attrs: {
-                style: {
-                    position: 'relative',
-                }
-            },
-            children: (
-                <>
-                {printStatus === PrintStatus.Preparing && (
-                    <PrintProgress
-                        numLoadedPages={numLoadedPagesForPrint}
-                        numPages={numPages}
-                        onCancel={cancelPrinting}
-                        onStartPrinting={startPrinting}
-                    />
-                )}
-                {(printStatus === PrintStatus.Preparing || printStatus === PrintStatus.Ready) && (
-                    <PrintZone
-                        doc={doc}
-                        pageHeight={pageHeight}
-                        pageWidth={pageWidth}
-                        printStatus={printStatus}
-                        rotation={rotation}
-                        onCancel={cancelPrinting}
-                        onLoad={setNumLoadedPagesForPrint}
-                    />
-                )}
-                </>
-            )
-        },
-        {
-            attrs: {
-                ref: pagesRef,
-                style: {
-                    position: 'relative',
+    return render({
+        viewer: layout(
+            toggleSidebar.opened,
+            {
+                attrs: {
+                    style: {
+                        position: 'relative',
+                    }
                 },
+                children: (
+                    <>
+                    {printStatus === PrintStatus.Preparing && (
+                        <PrintProgress
+                            numLoadedPages={numLoadedPagesForPrint}
+                            numPages={numPages}
+                            onCancel={cancelPrinting}
+                            onStartPrinting={startPrinting}
+                        />
+                    )}
+                    {(printStatus === PrintStatus.Preparing || printStatus === PrintStatus.Ready) && (
+                        <PrintZone
+                            doc={doc}
+                            pageHeight={pageHeight}
+                            pageWidth={pageWidth}
+                            printStatus={printStatus}
+                            rotation={rotation}
+                            onCancel={cancelPrinting}
+                            onLoad={setNumLoadedPagesForPrint}
+                        />
+                    )}
+                    </>
+                )
             },
-            children: (
-                <>
-                {isDragging && <DropArea />}
-                {isFullScreen && <ExitFullScreen onClick={closeFullScreen} />}
-                {
-                    Array(numPages).fill(0).map((_, index) => {
-                        return (
-                            <div
-                                className={`${theme.prefixClass}-inner-page`}
-                                key={`pagelayer-${index}`}
-                                ref={(ref) => {
-                                    pageRefs[index].current = ref as HTMLDivElement;
-                                }}
-                            >
-                                <PageLayer
-                                    doc={doc}
-                                    keywordRegexp={keywordRegexp}
-                                    height={pageHeight}
-                                    match={match}
-                                    pageIndex={index}
-                                    rotation={rotation}
-                                    scale={scale}
-                                    width={pageWidth}
-                                    onJumpToDest={jumpToDest}
-                                    onPageVisibilityChanged={pageVisibilityChanged}
-                                />
-                            </div>
-                        );
-                    })
-                }
-                </>
-            ),
-        },
-        (renderToolbar: RenderToolbarSlot) => (
-            <Toolbar
-                currentPage={currentPage}
-                doc={doc}
-                fileName={fileName}
-                scale={scale}
-                selectionMode={currentMode}
-                onChangeScrollMode={changeScrollMode}
-                onChangeSelectionMode={changeSelectionMode}
-                onDownload={onDownload}
-                onFullScreen={openFullScreen}
-                onJumpTo={jumpToPage}
-                onJumpToMatch={jumpToMatch}
-                onOpenFiles={openFiles}
-                onPrint={print}
-                onRotate={rotate}
-                onSearchFor={setKeywordRegexp}
-                onToggleSidebar={toggleSidebar.toggle}
-                onZoom={zoom}
-                renderToolbar={renderToolbar}
-            />
-        ),
-        {
-            attrs: {},
-            children: (
-                <Sidebar
+            {
+                attrs: {
+                    ref: pagesRef,
+                    style: {
+                        position: 'relative',
+                    },
+                },
+                children: (
+                    <>
+                    {isDragging && <DropArea />}
+                    {isFullScreen && <ExitFullScreen onClick={closeFullScreen} />}
+                    {
+                        Array(numPages).fill(0).map((_, index) => {
+                            return (
+                                <div
+                                    className={`${theme.prefixClass}-inner-page`}
+                                    key={`pagelayer-${index}`}
+                                    ref={(ref) => {
+                                        pageRefs[index].current = ref as HTMLDivElement;
+                                    }}
+                                >
+                                    <PageLayer
+                                        doc={doc}
+                                        keywordRegexp={keywordRegexp}
+                                        height={pageHeight}
+                                        match={match}
+                                        pageIndex={index}
+                                        rotation={rotation}
+                                        scale={scale}
+                                        width={pageWidth}
+                                        onJumpToDest={jumpToDest}
+                                        onPageVisibilityChanged={pageVisibilityChanged}
+                                    />
+                                </div>
+                            );
+                        })
+                    }
+                    </>
+                ),
+            },
+            (renderToolbar: RenderToolbarSlot) => (
+                <Toolbar
                     currentPage={currentPage}
                     doc={doc}
-                    height={pageHeight}
-                    rotation={rotation}
-                    width={pageWidth}
-                    onJumpToDest={jumpToDest}
-                    onJumpToPage={jumpToPage}
+                    fileName={fileName}
+                    scale={scale}
+                    selectionMode={currentMode}
+                    onChangeScrollMode={changeScrollMode}
+                    onChangeSelectionMode={changeSelectionMode}
+                    onDownload={onDownload}
+                    onFullScreen={openFullScreen}
+                    onJumpTo={jumpToPage}
+                    onJumpToMatch={jumpToMatch}
+                    onOpenFiles={openFiles}
+                    onPrint={print}
+                    onRotate={rotate}
+                    onSearchFor={setKeywordRegexp}
+                    onToggleSidebar={toggleSidebar.toggle}
+                    onZoom={zoom}
+                    renderToolbar={renderToolbar}
                 />
             ),
-        },
-    );
+            {
+                attrs: {},
+                children: (
+                    <Sidebar
+                        currentPage={currentPage}
+                        doc={doc}
+                        height={pageHeight}
+                        rotation={rotation}
+                        width={pageWidth}
+                        onJumpToDest={jumpToDest}
+                        onJumpToPage={jumpToPage}
+                    />
+                ),
+            },
+        ),
+        jumpToPage,
+    });
 };
 
 export default Inner;

@@ -178,6 +178,13 @@ export class Tooltip extends React.Component<TooltipProps> {}
 
 // Viewer
 
+export interface RenderViewerProps {
+    viewer: React.ReactElement;
+    jumpToPage(page: number): void;
+}
+
+export type RenderViewer = (props: RenderViewerProps) => React.ReactElement;
+
 export type Layout = (
     isSidebarOpened: boolean,
     container: Slot,
@@ -204,6 +211,7 @@ export interface ViewerProps {
     localization?: LocalizationMap;
     // The prefix for CSS classes
     prefixClass?: string;
+    render?: RenderViewer;
     selectionMode?: SelectionMode;
     onDocumentLoad?(doc: PdfJs.PdfDocument): void;
     onZoom?(doc: PdfJs.PdfDocument, scale: number): void;
