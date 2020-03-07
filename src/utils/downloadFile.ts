@@ -10,7 +10,7 @@ import getFileName from './fileName';
 
 import PdfJs from '../vendors/PdfJs';
 
-const downloadFile = (url: string, data: PdfJs.FileData) => {
+const downloadFile = (url: string, data: PdfJs.FileData): void => {
     const blobUrl = (typeof data === 'string')
                     ? ''
                     : URL.createObjectURL(new Blob([data], { type: '' }));

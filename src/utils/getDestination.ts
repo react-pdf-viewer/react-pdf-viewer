@@ -43,8 +43,8 @@ const parse = (pageIndex: number, destArray: PdfJs.OutlineDestination): JumpToDe
 };
 
 const getDestination = (doc: PdfJs.PdfDocument, dest: PdfJs.OutlineDestinationType): Promise<JumpToDestination> => {
-    return new Promise<JumpToDestination>((res, _) => {
-        new Promise<PdfJs.OutlineDestination>((resolve, __) => {
+    return new Promise<JumpToDestination>((res) => {
+        new Promise<PdfJs.OutlineDestination>((resolve) => {
             if (typeof dest === 'string') {
                 doc.getDestination(dest).then((destArray) => {
                     resolve(destArray);

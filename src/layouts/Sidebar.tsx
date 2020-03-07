@@ -15,6 +15,7 @@ import BookmarkIcon from '../icons/BookmarkIcon';
 import FileIcon from '../icons/FileIcon';
 import WrappedScrollingIcon from '../icons/WrappedScrollingIcon';
 import LocalizationContext from '../localization/LocalizationContext';
+import LocalizationMap from '../localization/LocalizationMap';
 import Position from '../portal/Position';
 import Tooltip from '../portal/Tooltip';
 import SpecialZoomLevel from '../SpecialZoomLevel';
@@ -46,13 +47,13 @@ const Sidebar: React.FC<SidebarProps> = ({ currentPage, doc, height, rotation, w
     const l10n = React.useContext(LocalizationContext);
     const theme = React.useContext(ThemeContent);
     const [tab, setTab] = React.useState(Tab.Thumbnail);
-    const clickThumbnailTab = () => setTab(Tab.Thumbnail);
-    const clickBookmarkTab = () => setTab(Tab.Bookmark);
-    const clickAttachmentTab = () => setTab(Tab.Attachment);
+    const clickThumbnailTab = (): void => setTab(Tab.Thumbnail);
+    const clickBookmarkTab = (): void => setTab(Tab.Bookmark);
+    const clickAttachmentTab = (): void => setTab(Tab.Attachment);
 
-    const renderAttachmentTip = () => l10n.sidebar.attachment;
-    const renderBookmarkTip = () => l10n.sidebar.bookmark;
-    const renderThumbnailTip = () => l10n.sidebar.thumbnail;
+    const renderAttachmentTip = (): LocalizationMap => l10n.sidebar.attachment;
+    const renderBookmarkTip = (): LocalizationMap => l10n.sidebar.bookmark;
+    const renderThumbnailTip = (): LocalizationMap => l10n.sidebar.thumbnail;
 
     return (
         <div className={`${theme.prefixClass}-sidebar`}>

@@ -24,7 +24,7 @@ interface BookmarkListProps {
 
 const BookmarkList: React.FC<BookmarkListProps> = ({ bookmarks, depth = 0, doc, onJumpToDest }) => {
     const theme = React.useContext(ThemeContent);
-    const jumpToDest = (dest: PdfJs.OutlineDestinationType) => {
+    const jumpToDest = (dest: PdfJs.OutlineDestinationType): void => {
         getDestination(doc, dest).then((target) => {
             const { pageIndex, bottomOffset, scaleTo } = target;
             onJumpToDest(pageIndex + 1, bottomOffset, scaleTo);

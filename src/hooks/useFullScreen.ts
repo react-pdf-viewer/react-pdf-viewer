@@ -25,39 +25,40 @@ interface FullScreenHook {
 const useFullScreen = (ref: React.RefObject<HTMLDivElement>): FullScreenHook => {
     const [isFullScreen, setIsFullScreen] = React.useState(false);
 
-    React.useEffect(() => {
-        addFullScreenChangeListener(onFullScreenChange);
-        return () => {
-            removeFullScreenChangeListener(onFullScreenChange);
-        };
-    }, [ref.current]);
-
-    const closeOtherFullScreen = () => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const closeOtherFullScreen = (): Promise<any> => {
         const ele = getFullScreenElement();
         return (ele && ele !== ref.current)
                 ? exitFullScreen(ele)
                 : Promise.resolve();
     };
 
-    const openFullScreen = () => {
-        closeOtherFullScreen().then((_: any) => {
+    const openFullScreen = (): void => {
+        closeOtherFullScreen().then(() => {
             if (ref.current) {
                 requestFullScreen(ref.current);
             }
         });
     };
 
-    const closeFullScreen = () => {
+    const closeFullScreen = (): void => {
         const ele = getFullScreenElement();
         if (isFullScreen && ele && ele === ref.current) {
             exitFullScreen(document);
         }
     };
 
-    const onFullScreenChange = () => {
+    const onFullScreenChange = (): void => {
         const ele = getFullScreenElement();
         setIsFullScreen(ele === ref.current);
     };
+
+    React.useEffect(() => {
+        addFullScreenChangeListener(onFullScreenChange);
+        return (): void => {
+            removeFullScreenChangeListener(onFullScreenChange);
+        };
+    }, [ref.current]);
 
     return {
         closeFullScreen,

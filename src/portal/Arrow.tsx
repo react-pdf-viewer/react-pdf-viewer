@@ -6,7 +6,6 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-/* tslint:disable:prefer-object-spread */
 import React from 'react';
 
 import ThemeContent from '../theme/ThemeContext';

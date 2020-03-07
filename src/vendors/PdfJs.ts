@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-// tslint:disable-next-line
+// eslint-disable-next-line @typescript-eslint/triple-slash-reference
 /// <reference path="./PdfJs.d.ts" />
 import * as PdfJs from 'pdfjs-dist';
 export default PdfJs;

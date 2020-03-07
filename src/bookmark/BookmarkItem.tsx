@@ -30,7 +30,7 @@ const BookmarkItem: React.FC<BookmarkItemProps> = ({ bookmark, depth, doc, onCli
 
     const hasSubItems = bookmark.items && bookmark.items.length > 0;
 
-    const toggleSubItems = () => {
+    const toggleSubItems = (): void => {
         subItemsDisplayed.current = !subItemsDisplayed.current;
         const subItemsEle = subItemRef.current;
         const toggleEle = toggleRef.current;
@@ -41,12 +41,12 @@ const BookmarkItem: React.FC<BookmarkItemProps> = ({ bookmark, depth, doc, onCli
         toggleEle.classList.toggle(`${theme.prefixClass}-bookmark-toggle-expanded`);
     };
 
-    const clickBookmak = () => {
+    const clickBookmak = (): void => {
         if (hasSubItems) {
             onClick(bookmark.dest);
         }
     };
-    const clickItem = () => {
+    const clickItem = (): void => {
         if (!hasSubItems) {
             onClick(bookmark.dest);
         }

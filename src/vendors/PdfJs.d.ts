@@ -73,6 +73,7 @@ declare module 'pdfjs-dist' {
     type OutlineDestination = [
         OutlineRef,
         OutlineDestinationName,
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         ...any[],
     ];
     interface OutlineDestinationName {
@@ -99,6 +100,7 @@ declare module 'pdfjs-dist' {
 
     // Render task
     interface PageRenderTask {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         promise: Promise<any>;
         cancel(): void;
     }

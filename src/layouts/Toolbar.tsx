@@ -30,6 +30,7 @@ import ZoomInIcon from '../icons/ZoomInIcon';
 import ZoomOutIcon from '../icons/ZoomOutIcon';
 import { RenderToolbarSlot } from './ToolbarSlot';
 import LocalizationContext from '../localization/LocalizationContext';
+import LocalizationMap from '../localization/LocalizationMap';
 import OpenFileButton from '../open/OpenFileButton';
 import Modal from '../portal/Modal';
 import Position from '../portal/Position';
@@ -85,17 +86,17 @@ const Toolbar: React.FC<ToolbarProps> = ({
 
     const { numPages } = doc;
 
-    const zoomOut = () => {
+    const zoomOut = (): void => {
         const newLevel = decrease(scale);
         onZoom(newLevel);
     };
 
-    const zoomIn = () => {
+    const zoomIn = (): void => {
         const newLevel = increase(scale);
         onZoom(newLevel);
     };
 
-    const gotoNextPage = () => {
+    const gotoNextPage = (): void => {
         const nextPage = currentPage + 1;
         if (nextPage < numPages) {
             setEditingPage(nextPage);
@@ -103,7 +104,7 @@ const Toolbar: React.FC<ToolbarProps> = ({
         }
     };
 
-    const gotoPreviousPage = () => {
+    const gotoPreviousPage = (): void => {
         const previousPage = currentPage - 1;
         if (previousPage >= 0) {
             setEditingPage(previousPage);
@@ -111,23 +112,23 @@ const Toolbar: React.FC<ToolbarProps> = ({
         }
     };
 
-    const changePage = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const changePage = (e: React.ChangeEvent<HTMLInputElement>): void => {
         const newPage = parseInt(e.target.value, 10);
         if (newPage > 0 && newPage <= numPages) {
             setEditingPage(newPage - 1);
         }
     };
 
-    const focusPageTextbox = () => {
+    const focusPageTextbox = (): void => {
         setPageTextboxFocused(true);
         setEditingPage(currentPage);
     };
 
-    const blurPageTextbox = () => {
+    const blurPageTextbox = (): void => {
         setPageTextboxFocused(false);
     };
 
-    const keydownPage = (e: React.KeyboardEvent) => {
+    const keydownPage = (e: React.KeyboardEvent): void => {
         switch (e.keyCode) {
             // Up key is pressed
             case 38: gotoPreviousPage(); break;
@@ -139,41 +140,41 @@ const Toolbar: React.FC<ToolbarProps> = ({
         }
     };
 
-    const jumpToFirstPage = () => onJumpTo(0);
-    const jumpToLastPage = () => onJumpTo(numPages - 1);
-    const toggleSidebar = () => {
+    const jumpToFirstPage = (): void => onJumpTo(0);
+    const jumpToLastPage = (): void => onJumpTo(numPages - 1);
+    const toggleSidebar = (): void => {
         setSidebarOpened(!isSidebarOpened);
         onToggleSidebar();
     };
 
-    const rotateForward = () => onRotate(90);
-    const rotateBackward = () => onRotate(-90);
-    const activateTextSelectionMode = () => onChangeSelectionMode(SelectionMode.Text);
-    const activateHandMode = () => onChangeSelectionMode(SelectionMode.Hand);
+    const rotateForward = (): void => onRotate(90);
+    const rotateBackward = (): void => onRotate(-90);
+    const activateTextSelectionMode = (): void => onChangeSelectionMode(SelectionMode.Text);
+    const activateHandMode = (): void => onChangeSelectionMode(SelectionMode.Hand);
 
-    const setVerticalScrollMode = () => onChangeScrollMode(ScrollMode.Vertical);
-    const setHorizontalScrollMode = () => onChangeScrollMode(ScrollMode.Horizontal);
-    const setWrappedScrollMode = () => onChangeScrollMode(ScrollMode.Wrapped);
+    const setVerticalScrollMode = (): void => onChangeScrollMode(ScrollMode.Vertical);
+    const setHorizontalScrollMode = (): void => onChangeScrollMode(ScrollMode.Horizontal);
+    const setWrappedScrollMode = (): void => onChangeScrollMode(ScrollMode.Wrapped);
 
-    const renderToggle = () => l10n.toolbar.toggleSidebar;
-    const renderPreviousPage = () => l10n.toolbar.previousPage;
-    const renderNextPage = () => l10n.toolbar.nextPage;
-    const renderZoomOut = () => l10n.toolbar.zoomOut;
-    const renderZoomIn = () => l10n.toolbar.zoomIn;
-    const renderFullScreen = () => l10n.toolbar.fullScreen;
-    const renderDownload = () => l10n.toolbar.download;
-    const renderPrint = () => l10n.toolbar.print;
-    const renderGoToFirstPage = () => l10n.toolbar.goToFirstPage;
-    const renderGoToLastPage = () => l10n.toolbar.goToLastPage;
-    const renderRotateClockwise = () => l10n.toolbar.rotateForward;
-    const renderRotateCounterclockwise = () => l10n.toolbar.rotateBackward;
-    const renderTextSelection = () => l10n.toolbar.textSelectionTool;
-    const renderHandTool = () => l10n.toolbar.handTool;
-    const renderVerticalScrolling = () => l10n.toolbar.verticalScrolling;
-    const renderHorizontalScrolling = () => l10n.toolbar.horizontalScrolling;
-    const renderDocumentProperties = () => l10n.toolbar.documentProperties;
-    const renderWrappedScrolling = () => l10n.toolbar.wrappedScrolling;
-    const renderPropertyButton = (toggle: Toggle) => (
+    const renderToggle = (): LocalizationMap => l10n.toolbar.toggleSidebar;
+    const renderPreviousPage = (): LocalizationMap => l10n.toolbar.previousPage;
+    const renderNextPage = (): LocalizationMap => l10n.toolbar.nextPage;
+    const renderZoomOut = (): LocalizationMap => l10n.toolbar.zoomOut;
+    const renderZoomIn = (): LocalizationMap => l10n.toolbar.zoomIn;
+    const renderFullScreen = (): LocalizationMap => l10n.toolbar.fullScreen;
+    const renderDownload = (): LocalizationMap => l10n.toolbar.download;
+    const renderPrint = (): LocalizationMap => l10n.toolbar.print;
+    const renderGoToFirstPage = (): LocalizationMap => l10n.toolbar.goToFirstPage;
+    const renderGoToLastPage = (): LocalizationMap => l10n.toolbar.goToLastPage;
+    const renderRotateClockwise = (): LocalizationMap => l10n.toolbar.rotateForward;
+    const renderRotateCounterclockwise = (): LocalizationMap => l10n.toolbar.rotateBackward;
+    const renderTextSelection = (): LocalizationMap => l10n.toolbar.textSelectionTool;
+    const renderHandTool = (): LocalizationMap => l10n.toolbar.handTool;
+    const renderVerticalScrolling = (): LocalizationMap => l10n.toolbar.verticalScrolling;
+    const renderHorizontalScrolling = (): LocalizationMap => l10n.toolbar.horizontalScrolling;
+    const renderDocumentProperties = (): LocalizationMap => l10n.toolbar.documentProperties;
+    const renderWrappedScrolling = (): LocalizationMap => l10n.toolbar.wrappedScrolling;
+    const renderPropertyButton = (toggle: Toggle): React.ReactElement => (
         <Tooltip
             position={Position.BottomCenter}
             target={<Button onClick={toggle}><InfoIcon /></Button>}
@@ -181,7 +182,7 @@ const Toolbar: React.FC<ToolbarProps> = ({
             offset={TOOLTIP_OFFSET}
         />
     );
-    const renderPropertiesModal = (toggle: Toggle) => (
+    const renderPropertiesModal = (toggle: Toggle): React.ReactElement => (
         <PropertiesModal doc={doc} fileName={fileName} onToggle={toggle} />
     );
 

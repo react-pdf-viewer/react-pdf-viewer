@@ -26,7 +26,7 @@ const CanvasLayer: React.FC<CanvasLayerProps> = ({ height, page, rotation, scale
     const canvasRef = React.createRef<HTMLCanvasElement>();
     const renderTask = React.useRef<PdfJs.PageRenderTask>();
 
-    const renderCanvas = () => {
+    const renderCanvas = (): void => {
         const task = renderTask.current;
         if (task) {
             task.cancel();
@@ -38,8 +38,8 @@ const CanvasLayer: React.FC<CanvasLayerProps> = ({ height, page, rotation, scale
         const viewport = page.getViewport({ rotation, scale });
         renderTask.current = page.render({ canvasContext, viewport });
         renderTask.current.promise.then(
-            (_) => {/**/},
-            (_) => {/**/},
+            (): void => {/**/},
+            (): void => {/**/},
         );
     };
 

@@ -71,12 +71,51 @@ const Inner: React.FC<InnerProps> = ({
     const [currentMode, setCurrentMode] = React.useState<SelectionMode>(selectionMode);
     const { toggleDragScroll } = useDragScroll(pagesRef);
     const { isFullScreen, openFullScreen, closeFullScreen } = useFullScreen(pagesRef);
-    const { isDragging } = useDrop(pagesRef, (files) => openFiles(files));
     const toggleSidebar = useToggle();
+
+    const { numPages } = doc;
+    const { pageWidth, pageHeight } = pageSize;
+
+    const arr = Array(numPages).fill(null);
+    const pageVisibility = arr.map(() => 0);
+    const pageRefs = arr.map(() => React.useRef<HTMLDivElement>());
+
+    const openFiles = (files: FileList): void => {
+        if (files.length === 0) {
+            return;
+        }
+        const selectedFile = files[0];
+        if (getFileExt(file.name).toLowerCase() !== 'pdf') {
+            return;
+        }
+        new Promise<Uint8Array>((resolve) => {
+            const reader = new FileReader();
+            reader.readAsArrayBuffer(selectedFile);
+            reader.onload = (): void => {
+                const bytes = new Uint8Array(reader.result as ArrayBuffer);
+                resolve(bytes);
+            };
+        }).then((data) => {
+            onOpenFile(selectedFile.name, data);
+        });
+    };
+    const { isDragging } = useDrop(pagesRef, (files) => openFiles(files));
 
     // Print status
     const [numLoadedPagesForPrint, setNumLoadedPagesForPrint] = React.useState(0);
     const [printStatus, setPrintStatus] = React.useState(PrintStatus.Inactive);
+
+    const jumpToPage = (pageIndex: number): void => {
+        if (pageIndex < 0 || pageIndex >= numPages) {
+            return;
+        }
+        setCurrentPage(pageIndex);
+        const pagesContainer = pagesRef.current;
+        const targetPage = pageRefs[pageIndex].current;
+        if (pagesContainer && targetPage) {
+            pagesContainer.scrollTop = targetPage.offsetTop;
+        }
+    };
 
     React.useEffect(() => {
         onDocumentLoad(doc);
@@ -86,7 +125,7 @@ const Inner: React.FC<InnerProps> = ({
     }, []);
 
     // Manage the selection mode
-    const changeSelectionMode = (mode: SelectionMode) => {
+    const changeSelectionMode = (mode: SelectionMode): void => {
         toggleDragScroll(mode === SelectionMode.Hand);
         setCurrentMode(mode);
     };
@@ -97,18 +136,11 @@ const Inner: React.FC<InnerProps> = ({
         }
     }, []);
 
-    const { numPages } = doc;
-    const { pageWidth, pageHeight } = pageSize;
-
-    const arr = Array(numPages).fill(null);
-    const pageVisibility = arr.map((_, __) => 0);
-    const pageRefs = arr.map((_, __) => React.useRef<HTMLDivElement>());
-
-    const download = () => {
+    const download = (): void => {
         downloadFile(file.name, file.data);
     };
 
-    const zoom = (newScale: number | SpecialZoomLevel) => {
+    const zoom = (newScale: number | SpecialZoomLevel): void => {
         const pagesEle = pagesRef.current;
         if (!pagesEle) {
             return;
@@ -121,9 +153,10 @@ const Inner: React.FC<InnerProps> = ({
                 break;
 
             case SpecialZoomLevel.PageFit:
-                const scaleWidth = (pagesEle.offsetWidth - SCROLL_BAR_WIDTH) / pageWidth;
-                const scaleHeight = (pagesEle.offsetHeight - 2 * PAGE_PADDING) / pageHeight;
-                scaled = Math.min(scaleWidth, scaleHeight);
+                scaled = Math.min(
+                    (pagesEle.offsetWidth - SCROLL_BAR_WIDTH) / pageWidth,
+                    (pagesEle.offsetHeight - 2 * PAGE_PADDING) / pageHeight
+                );
                 break;
 
             case SpecialZoomLevel.PageWidth:
@@ -138,7 +171,7 @@ const Inner: React.FC<InnerProps> = ({
         onZoom(doc, scaled);
     };
 
-    const pageVisibilityChanged = (pageIndex: number, ratio: number) => {
+    const pageVisibilityChanged = (pageIndex: number, ratio: number): void => {
         pageVisibility[pageIndex] = ratio;
         const maxRatioPage = pageVisibility.reduce((maxIndex, item, index, array) => {
             return item > array[maxIndex] ? index : maxIndex;
@@ -146,24 +179,12 @@ const Inner: React.FC<InnerProps> = ({
         setCurrentPage(maxRatioPage);
     };
 
-    const jumpToPage = (pageIndex: number) => {
-        if (pageIndex < 0 || pageIndex >= numPages) {
-            return;
-        }
-        setCurrentPage(pageIndex);
-        const pagesContainer = pagesRef.current;
-        const targetPage = pageRefs[pageIndex].current;
-        if (pagesContainer && targetPage) {
-            pagesContainer.scrollTop = targetPage.offsetTop;
-        }
-    };
-
-    const rotate = (degree: number) => {
+    const rotate = (degree: number): void => {
         const updateRotation = (rotation === 360 || rotation === -360) ? degree : rotation + degree;
         setRotation(updateRotation);
     };
 
-    const changeScrollMode = (mode: ScrollMode) => {
+    const changeScrollMode = (mode: ScrollMode): void => {
         const pagesContainer = pagesRef.current;
         if (!pagesContainer) {
             return;
@@ -193,32 +214,12 @@ const Inner: React.FC<InnerProps> = ({
         setScrollMode(mode);
     };
 
-    const openFiles = (files: FileList) => {
-        if (files.length === 0) {
-            return;
-        }
-        const selectedFile = files[0];
-        if (getFileExt(file.name).toLowerCase() !== 'pdf') {
-            return;
-        }
-        new Promise<Uint8Array>((resolve, _) => {
-            const reader = new FileReader();
-            reader.readAsArrayBuffer(selectedFile);
-            reader.onload = (e) => {
-                const bytes = new Uint8Array(reader.result as ArrayBuffer);
-                resolve(bytes);
-            };
-        }).then((data) => {
-            onOpenFile(selectedFile.name, data);
-        });
-    };
-
-    const jumpToMatch = (target: Match) => {
+    const jumpToMatch = (target: Match): void => {
         jumpToPage(target.pageIndex);
         setMatch(target);
     };
 
-    const jumpToDest = (pageIndex: number, bottomOffset: number, scaleTo: number | SpecialZoomLevel) => {
+    const jumpToDest = (pageIndex: number, bottomOffset: number, scaleTo: number | SpecialZoomLevel): void => {
         const pagesContainer = pagesRef.current;
         if (!pagesContainer) {
             return;
@@ -248,15 +249,15 @@ const Inner: React.FC<InnerProps> = ({
     };
 
     // Switch to the print mode
-    const print = () => {
+    const print = (): void => {
         setPrintStatus(PrintStatus.Preparing);
         setNumLoadedPagesForPrint(0);
     };
-    const cancelPrinting = () => {
+    const cancelPrinting = (): void => {
         setPrintStatus(PrintStatus.Inactive);
         setNumLoadedPagesForPrint(0);
     };
-    const startPrinting = () => {
+    const startPrinting = (): void => {
         setPrintStatus(PrintStatus.Ready);
         setNumLoadedPagesForPrint(0);
     };
@@ -311,7 +312,7 @@ const Inner: React.FC<InnerProps> = ({
                                 <div
                                     className={`${theme.prefixClass}-inner-page`}
                                     key={`pagelayer-${index}`}
-                                    ref={(ref) => {
+                                    ref={(ref): void => {
                                         pageRefs[index].current = ref as HTMLDivElement;
                                     }}
                                 >
@@ -319,7 +320,6 @@ const Inner: React.FC<InnerProps> = ({
                                         doc={doc}
                                         keywordRegexp={keywordRegexp}
                                         height={pageHeight}
-                                        initialPage={initialPage}
                                         match={match}
                                         pageIndex={index}
                                         rotation={rotation}

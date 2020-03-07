@@ -15,7 +15,7 @@ enum ToggleStatus {
 }
 type ToggleType = (status?: ToggleStatus) => void;
 
-const useToggle = () => {
+const useToggle = (): { opened: boolean; toggle: ToggleType } => {
     const [opened, setOpened] = React.useState(false);
     const toggle: ToggleType = (status?: ToggleStatus) => {
         switch (status) {
