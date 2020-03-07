@@ -8,8 +8,11 @@
 
 import React from 'react';
 
+import PrimaryButton from '../components/PrimaryButton';
+import Separator from '../components/Separator';
 import LocalizationContext from '../localization/LocalizationContext';
 import PdfJs from '../PdfJs';
+import ThemeContent from '../theme/ThemeContext';
 import convertDate from '../utils/convertDate';
 import getFileName from '../utils/fileName';
 import getFileSize from '../utils/fileSize';
@@ -25,6 +28,7 @@ interface PropertiesModalProps {
 
 const PropertiesModal: React.FC<PropertiesModalProps> = ({ doc, fileName, onToggle }) => {
     const l10n = React.useContext(LocalizationContext);
+    const theme = React.useContext(ThemeContent);
 
     const formatDate = (input: string) => {
         const date = convertDate(input);
@@ -37,7 +41,7 @@ const PropertiesModal: React.FC<PropertiesModalProps> = ({ doc, fileName, onTogg
                 <PropertyItem label={`${l10n.property.fileName}`} value={data.fileName || getFileName(fileName)} />
                 <PropertyItem label={`${l10n.property.fileSize}`} value={getFileSize(data.length)} />
             </div>
-            <div style={{ borderBottom: '1px solid rgba(0, 0, 0, .3)' }} />
+            <Separator />
             <div style={{ padding: '0 8px '}}>
                 <PropertyItem label={`${l10n.property.title}`} value={data.info.Title} />
                 <PropertyItem label={`${l10n.property.author}`} value={data.info.Author} />
@@ -47,7 +51,7 @@ const PropertiesModal: React.FC<PropertiesModalProps> = ({ doc, fileName, onTogg
                 <PropertyItem label={`${l10n.property.creationDate}`} value={formatDate(data.info.CreationDate)} />
                 <PropertyItem label={`${l10n.property.modificationDate}`} value={formatDate(data.info.ModDate)} />
             </div>
-            <div style={{ borderBottom: '1px solid rgba(0, 0, 0, .3)' }} />
+            <Separator />
             <div style={{ padding: '0 8px '}}>
                 <PropertyItem label={`${l10n.property.pdfProducer}`} value={data.info.Producer} />
                 <PropertyItem label={`${l10n.property.pdfVersion}`} value={data.info.PDFFormatVersion} />
@@ -69,19 +73,9 @@ const PropertiesModal: React.FC<PropertiesModalProps> = ({ doc, fileName, onTogg
                     marginTop: '8px',
                 }}
             >
-                <button
-                    style={{
-                        backgroundColor: '#357EDD',
-                        border: 'none',
-                        borderRadius: '4px',
-                        color: '#FFF',
-                        cursor: 'pointer',
-                        padding: '8px',
-                    }}
-                    onClick={onToggle}
-                >
+                <PrimaryButton onClick={onToggle}>
                     {l10n.property.close}
-                </button>
+                </PrimaryButton>
             </div>
         </div>
     );
