@@ -8,6 +8,7 @@
 
 import React from 'react';
 
+import ProgressBar from '../components/ProgressBar';
 import LocalizationContext from '../localization/LocalizationContext';
 import ThemeContent from '../theme/ThemeContext';
 import './printProgress.less';
@@ -33,27 +34,8 @@ const PrintProgress: React.FC<PrintProgressProps> = ({ numLoadedPages, numPages,
         <div className={`${theme.prefixClass}-print-progress`}>
             <div className={`${theme.prefixClass}-print-progress-inner`}>
                 <div className={`${theme.prefixClass}-print-progress-message`}>{l10n.printProgress.preparingDocument}</div>
-                <div
-                    style={{
-                        backgroundColor: 'rgba(0, 0, 0, .1)',
-                        borderRadius: '9999px',
-                        marginBottom: '16px',
-                    }}
-                >
-                    <div
-                        style={{
-                            alignItems: 'center',
-                            backgroundColor: '#357EDD',
-                            borderRadius: '9999px',
-                            color: '#fff',
-                            display: 'flex',
-                            fontSize: '10px',
-                            justifyContent: 'center',
-                            width: `${progress}%`,
-                        }}
-                    >
-                        {progress}%
-                    </div>
+                <div className={`${theme.prefixClass}-print-progress-bar`}>
+                    <ProgressBar progress={progress} />
                 </div>
                 <button
                     style={{
