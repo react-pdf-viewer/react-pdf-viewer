@@ -35,18 +35,18 @@ const PrintZone: React.FC<PrintZoneProps> = ({ doc, pageHeight, pageWidth, print
         }
 
         // Handle the case user clicks the `Cancel` button in the print window
-        const handler = () => {
+        const handler = (): void => {
             if (printStatus === PrintStatus.Ready) {
                 onCancel();
             }
         };
         document.addEventListener('mousemove', handler);
 
-        return () => document.removeEventListener('mousemove', handler);
+        return (): void => document.removeEventListener('mousemove', handler);
     }, [printStatus]);
 
     const { numPages } = doc;
-    const loadPage = () => {
+    const loadPage = (): void => {
         const total = numLoadedPages + 1;
         setNumLoadedPages(total);
         onLoad(total);

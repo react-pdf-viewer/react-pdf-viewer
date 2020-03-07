@@ -15,6 +15,7 @@ import NextIcon from '../icons/NextIcon';
 import PreviousIcon from '../icons/PreviousIcon';
 import SearchIcon from '../icons/SearchIcon';
 import LocalizationContext from '../localization/LocalizationContext';
+import LocalizationMap from '../localization/LocalizationMap';
 import Popover from '../portal/Popover';
 import Position from '../portal/Position';
 import Tooltip from '../portal/Tooltip';
@@ -45,11 +46,11 @@ const SearchPopover: React.FC<SearchPopoverProps> = ({ doc, onJumpToMatch, onSea
     const [wholeWords, setWholeWords] = React.useState(false);
     const textContents = React.useRef<string[]>([]);
 
-    const changeKeyword = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const changeKeyword = (e: React.ChangeEvent<HTMLInputElement>): void => {
         setKeyword(e.target.value);
     };
 
-    const getTextContents = () => {
+    const getTextContents = (): Promise<string[]> => {
         const promises = indexArr.map((pageIndex) => {
             return doc.getPage(pageIndex + 1).then((page) => {
                 return page.getTextContent();
@@ -67,13 +68,13 @@ const SearchPopover: React.FC<SearchPopoverProps> = ({ doc, onJumpToMatch, onSea
         });
     };
 
-    const buildKeywordRegex = (keywordParam: string, matchCaseParam: boolean, wholeWordsParam: boolean) => {
+    const buildKeywordRegex = (keywordParam: string, matchCaseParam: boolean, wholeWordsParam: boolean): RegExp => {
         const source = wholeWordsParam ? ` ${keywordParam} ` : keywordParam;
         const flags = matchCaseParam ? 'g' : 'gi';
         return new RegExp(source, flags);
     };
 
-    const search = (keywordParam: string, matchCaseParam: boolean, wholeWordsParam: boolean) => {
+    const search = (keywordParam: string, matchCaseParam: boolean, wholeWordsParam: boolean): void => {
         const regexp = buildKeywordRegex(keywordParam, matchCaseParam, wholeWordsParam);
         onSearchFor(regexp);
 
@@ -106,7 +107,7 @@ const SearchPopover: React.FC<SearchPopoverProps> = ({ doc, onJumpToMatch, onSea
         });
     };
 
-    const keydownSearch = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    const keydownSearch = (e: React.KeyboardEvent<HTMLInputElement>): void => {
         // Press the Enter key
         if (e.keyCode !== 13 || !keyword) {
             return;
@@ -114,21 +115,21 @@ const SearchPopover: React.FC<SearchPopoverProps> = ({ doc, onJumpToMatch, onSea
         search(keyword, matchCase, wholeWords);
     };
 
-    const jumpToPreviousMatch = () => {
+    const jumpToPreviousMatch = (): void => {
         const prev = currentMatch - 1;
         const updated = prev > 0 ? prev : found.length;
         setCurrentMatch(updated);
         onJumpToMatch(found[updated - 1]);
     };
 
-    const jumpToNextMatch = () => {
+    const jumpToNextMatch = (): void => {
         const next = currentMatch + 1;
         const updated = next <= found.length ? next : 1;
         setCurrentMatch(updated);
         onJumpToMatch(found[updated - 1]);
     };
 
-    const changeMatchCase = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const changeMatchCase = (e: React.ChangeEvent<HTMLInputElement>): void => {
         const isChecked = e.target.checked;
         setMatchCase(isChecked);
         if (keyword) {
@@ -136,7 +137,7 @@ const SearchPopover: React.FC<SearchPopoverProps> = ({ doc, onJumpToMatch, onSea
         }
     };
 
-    const changeWholeWords = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const changeWholeWords = (e: React.ChangeEvent<HTMLInputElement>): void => {
         const isChecked = e.target.checked;
         setWholeWords(isChecked);
         if (keyword) {
@@ -144,7 +145,7 @@ const SearchPopover: React.FC<SearchPopoverProps> = ({ doc, onJumpToMatch, onSea
         }
     };
 
-    const clearKeyword = () => {
+    const clearKeyword = (): void => {
         if (!keyword) {
             // Do nothing
         }
@@ -156,8 +157,8 @@ const SearchPopover: React.FC<SearchPopoverProps> = ({ doc, onJumpToMatch, onSea
         setWholeWords(false);
     };
 
-    const renderSearch = () => l10n.toolbar.search;
-    const renderTarget = (toggle: Toggle, opened: boolean) => (
+    const renderSearch = (): LocalizationMap => l10n.toolbar.search;
+    const renderTarget = (toggle: Toggle, opened: boolean): React.ReactElement => (
         <Tooltip
             position={Position.BottomCenter}
             target={<Button onClick={toggle} isSelected={opened}><SearchIcon /></Button>}
@@ -165,11 +166,11 @@ const SearchPopover: React.FC<SearchPopoverProps> = ({ doc, onJumpToMatch, onSea
             offset={PORTAL_OFFSET}
         />
     );
-    const renderPreviousMatch = () => l10n.search.previousMatch;
-    const renderNextMatch = () => l10n.search.nextMatch;
+    const renderPreviousMatch = (): LocalizationMap => l10n.search.previousMatch;
+    const renderNextMatch = (): LocalizationMap => l10n.search.nextMatch;
 
-    const renderContent = (toggle: Toggle) => {
-        const close = () => {
+    const renderContent = (toggle: Toggle): React.ReactElement => {
+        const close = (): void => {
             toggle();
             clearKeyword();
         };

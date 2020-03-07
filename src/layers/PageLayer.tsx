@@ -22,7 +22,6 @@ import TextLayer from './TextLayer';
 interface PageLayerProps {
     doc: PdfJs.PdfDocument;
     height: number;
-    initialPage?: number;
     keywordRegexp: RegExp;
     match: Match;
     pageIndex: number;
@@ -41,7 +40,7 @@ interface PageSizeState {
 }
 
 const PageLayer: React.FC<PageLayerProps> = ({
-    doc, height, initialPage, keywordRegexp, match, pageIndex, rotation, scale, width,
+    doc, height, keywordRegexp, match, pageIndex, rotation, scale, width,
     onJumpToDest, onPageVisibilityChanged,
 }) => {
     const theme = React.useContext(ThemeContent);
@@ -62,7 +61,7 @@ const PageLayer: React.FC<PageLayerProps> = ({
     const w = isVertical ? scaledWidth : scaledHeight;
     const h = isVertical ? scaledHeight : scaledWidth;
 
-    const visibilityChanged = (params: VisibilityChanged) => {
+    const visibilityChanged = (params: VisibilityChanged): void => {
         const ratio = params.isVisible ? params.ratio : 0;
         onPageVisibilityChanged(pageIndex, ratio);
 
@@ -80,7 +79,8 @@ const PageLayer: React.FC<PageLayerProps> = ({
         }
     };
 
-    const jumpToMatch = (indexOfPage: number, top: number, left: number) => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const jumpToMatch = (indexOfPage: number, top: number, left: number): void => {
         onJumpToDest(indexOfPage, pageHeight - top, scale);
     };
 

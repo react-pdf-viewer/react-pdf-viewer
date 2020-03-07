@@ -32,7 +32,7 @@ const ThumbnailList: React.FC<ThumbnailListProps> = ({
         <>
             {
                 Array(numPages).fill(0).map((_, index) => {
-                    const onClick = () => onJumpToPage(index);
+                    const onClick = (): void => onJumpToPage(index);
                     return (
                         <div key={`thumbnail-${index}`}>
                             <div

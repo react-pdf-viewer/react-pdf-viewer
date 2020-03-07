@@ -8,11 +8,11 @@
 
 import React from 'react';
 
-const useLockScroll = () => {
+const useLockScroll = (): void => {
     React.useEffect(() => {
         const originalStyle = window.getComputedStyle(document.body).overflow;
         document.body.style.overflow = 'hidden';
-        return () => {
+        return (): void => {
             document.body.style.overflow = originalStyle;
         };
     }, []);

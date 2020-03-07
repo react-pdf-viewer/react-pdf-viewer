@@ -20,12 +20,12 @@ const LEVELS = [
     10,
 ];
 
-const increase = (currentLevel: number) => {
+const increase = (currentLevel: number): number => {
     const found = LEVELS.find((item) => item > currentLevel);
     return found || currentLevel;
 };
 
-const decrease = (currentLevel: number) => {
+const decrease = (currentLevel: number): number => {
     const found = LEVELS.findIndex((item) => item >= currentLevel);
     return found === -1 || found === 0 ? currentLevel : LEVELS[found - 1];
 };

@@ -8,14 +8,14 @@
 
 import React from 'react';
 
-interface IVisibilityChanged {
+interface VisibilityChangedProps {
     isVisible: boolean;
     ratio: number;
 }
 
 interface ObserverProps {
     threshold?: number | number[];
-    onVisibilityChanged(params: IVisibilityChanged): void;
+    onVisibilityChanged(params: VisibilityChangedProps): void;
 }
 
 const Observer: React.FC<ObserverProps> = ({ children, threshold, onVisibilityChanged }) => {
@@ -37,7 +37,7 @@ const Observer: React.FC<ObserverProps> = ({ children, threshold, onVisibilityCh
         }
         io.observe(container);
 
-        return () => {
+        return (): void => {
             io.unobserve(container);
         };
     }, []);
@@ -48,4 +48,4 @@ const Observer: React.FC<ObserverProps> = ({ children, threshold, onVisibilityCh
 };
 
 export default Observer;
-export type VisibilityChanged = IVisibilityChanged;
+export type VisibilityChanged = VisibilityChangedProps;

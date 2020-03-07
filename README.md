@@ -92,7 +92,10 @@ The bundler will watch the entire `src` folder and build the `cjs` package when 
 $ npm run lint
 ~~~
 
-It will check if the entire source code compatible with [TSLint](https://palantir.github.io/tslint/). The `tslint.log` file will let us know if there's any file which doesn't pass the checks.
+It will check if the entire source code compatible with 
+* [ESLint](https://eslint.org)
+* [eslint-plugin-react](https://github.com/yannickcr/eslint-plugin-react)
+* [typescript-eslint](https://github.com/typescript-eslint/typescript-eslint)
 
 ## License
 Purchase a Commercial License at the [official website](https://react-pdf-viewer.dev)

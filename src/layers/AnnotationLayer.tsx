@@ -27,7 +27,7 @@ const AnnotationLayer: React.FC<AnnotationLayerProps> = ({ doc, page, rotation, 
     const containerRef = React.createRef<HTMLDivElement>();
     const theme = React.useContext(ThemeContent);
 
-    const renderAnnotation = () => {
+    const renderAnnotation = (): void => {
         const container = containerRef.current;
         if (container) {
             container.innerHTML = '';

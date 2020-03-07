@@ -8,12 +8,14 @@
 
 import React from 'react';
 
-const useKeyUp = (targetKeyCode: number, handler: () => void) => {
-    const keyUpHandler = (e: KeyboardEvent) => (e.keyCode === targetKeyCode) && handler();
+const useKeyUp = (targetKeyCode: number, handler: () => void): void => {
+    const keyUpHandler = (e: KeyboardEvent): void => {
+        (e.keyCode === targetKeyCode) && handler();
+    };
 
     React.useEffect(() => {
         document.addEventListener('keyup', keyUpHandler);
-        return () => document.removeEventListener('keyup', keyUpHandler);
+        return (): void => document.removeEventListener('keyup', keyUpHandler);
     }, []);
 };
 

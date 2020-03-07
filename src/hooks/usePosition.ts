@@ -17,7 +17,7 @@ const usePosition = (
     targetRef: React.RefObject<HTMLElement>,
     position: Position,
     offset: Offset,
-) => {
+): void => {
     React.useEffect(() => {
         const targetEle = targetRef.current;
         const contentEle = contentRef.current;

@@ -20,7 +20,28 @@ const useDragScroll = (ref: React.RefObject<HTMLDivElement>): DragScrollHook => 
     const [enabled, setEnabled] = React.useState(false);
     const pos = React.useRef({ top: 0, left: 0, x: 0, y: 0 });
 
-    const onMouseDownHandler = (e: MouseEvent) => {
+    const onMouseMoveHandler = (e: MouseEvent): void => {
+        const ele = ref.current;
+        if (!ele) {
+            return;
+        }
+        ele.scrollTop = pos.current.top - (e.clientY - pos.current.y);
+        ele.scrollLeft = pos.current.left - (e.clientX - pos.current.x);
+    };
+
+    const onMouseUpHandler = (): void => {
+        const ele = ref.current;
+        if (!ele) {
+            return;
+        }
+        ele.classList.add(`${theme.prefixClass}-grab`);
+        ele.classList.remove(`${theme.prefixClass}-grabbing`);
+
+        document.removeEventListener('mousemove', onMouseMoveHandler);
+        document.removeEventListener('mouseup', onMouseUpHandler);
+    };
+
+    const onMouseDownHandler = (e: MouseEvent): void => {
         const ele = ref.current;
         if (!enabled || !ele) {
             return;
@@ -43,27 +64,6 @@ const useDragScroll = (ref: React.RefObject<HTMLDivElement>): DragScrollHook => 
         document.addEventListener('mouseup', onMouseUpHandler);
     };
 
-    const onMouseMoveHandler = (e: MouseEvent) => {
-        const ele = ref.current;
-        if (!ele) {
-            return;
-        }
-        ele.scrollTop = pos.current.top - (e.clientY - pos.current.y);
-        ele.scrollLeft = pos.current.left - (e.clientX - pos.current.x);
-    };
-
-    const onMouseUpHandler = () => {
-        const ele = ref.current;
-        if (!ele) {
-            return;
-        }
-        ele.classList.add(`${theme.prefixClass}-grab`);
-        ele.classList.remove(`${theme.prefixClass}-grabbing`);
-
-        document.removeEventListener('mousemove', onMouseMoveHandler);
-        document.removeEventListener('mouseup', onMouseUpHandler);
-    };
-
     React.useEffect(() => {
         const ele = ref.current;
         if (!ele) {
@@ -74,7 +74,7 @@ const useDragScroll = (ref: React.RefObject<HTMLDivElement>): DragScrollHook => 
             : ele.classList.remove(`${theme.prefixClass}-grab`);
         ele.addEventListener('mousedown', onMouseDownHandler);
 
-        return () => {
+        return (): void => {
             ele.removeEventListener('mousedown', onMouseDownHandler);
         };
     }, [enabled]);

@@ -25,6 +25,7 @@ import UpArrowIcon from '../icons/UpArrowIcon';
 import VerticalScrollingIcon from '../icons/VerticalScrollingIcon';
 import WrappedScrollingIcon from '../icons/WrappedScrollingIcon';
 import LocalizationContext from '../localization/LocalizationContext';
+import LocalizationMap from '../localization/LocalizationMap';
 import Modal from '../portal/Modal';
 import Popover from '../portal/Popover';
 import Position from '../portal/Position';
@@ -54,8 +55,8 @@ const MoreActionsPopover: React.FC<MoreActionsPopoverProps> = ({
 }) => {
     const l10n = React.useContext(LocalizationContext);
 
-    const renderMoreActions = () => l10n.toolbar.moreActions;
-    const renderTarget = (toggle: Toggle, opened: boolean) => (
+    const renderMoreActions = (): LocalizationMap => l10n.toolbar.moreActions;
+    const renderTarget = (toggle: Toggle, opened: boolean): React.ReactElement => (
         <Tooltip
             position={Position.BottomRight}
             target={<Button onClick={toggle} isSelected={opened}><MoreIcon /></Button>}
@@ -64,44 +65,44 @@ const MoreActionsPopover: React.FC<MoreActionsPopoverProps> = ({
         />
     );
 
-    const renderPropertyMenu = (toggle: Toggle) => (
+    const renderPropertyMenu = (toggle: Toggle): React.ReactElement => (
         <MenuItem icon={<InfoIcon />} onClick={toggle}>{l10n.toolbar.documentProperties}</MenuItem>
     );
-    const renderPropertiesModal = (toggle: Toggle) => (
+    const renderPropertiesModal = (toggle: Toggle): React.ReactElement => (
         <PropertiesModal doc={doc} fileName={fileName} onToggle={toggle} />
     );
-    const renderContent = (toggle: Toggle) => {
-        const jumpToFirstPage = () => {
+    const renderContent = (toggle: Toggle): React.ReactElement => {
+        const jumpToFirstPage = (): void => {
             toggle();
             onJumpToFirstPage();
         };
-        const jumpToLastPage = () => {
+        const jumpToLastPage = (): void => {
             toggle();
             onJumpToLastPage();
         };
-        const rotateForward = () => {
+        const rotateForward = (): void => {
             toggle();
             onRotate(90);
         };
-        const rotateBackward = () => {
+        const rotateBackward = (): void => {
             toggle();
             onRotate(-90);
         };
-        const activateTextSelectionMode = () => {
+        const activateTextSelectionMode = (): void => {
             toggle();
             onChangeSelectionMode(SelectionMode.Text);
         };
-        const activateHandMode = () => {
+        const activateHandMode = (): void => {
             toggle();
             onChangeSelectionMode(SelectionMode.Hand);
         };
-        const activateScrollMode = (mode: ScrollMode) => {
+        const activateScrollMode = (mode: ScrollMode): void => {
             toggle();
             onChangeScrollMode(mode);
         };
-        const setVerticalScrollMode = () => activateScrollMode(ScrollMode.Vertical);
-        const setHorizontalScrollMode = () => activateScrollMode(ScrollMode.Horizontal);
-        const setWrappedScrollMode = () => activateScrollMode(ScrollMode.Wrapped);
+        const setVerticalScrollMode = (): void => activateScrollMode(ScrollMode.Vertical);
+        const setHorizontalScrollMode = (): void => activateScrollMode(ScrollMode.Horizontal);
+        const setWrappedScrollMode = (): void => activateScrollMode(ScrollMode.Wrapped);
 
         return (
             <Menu>

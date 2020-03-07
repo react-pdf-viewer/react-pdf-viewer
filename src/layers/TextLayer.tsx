@@ -33,7 +33,7 @@ const TextLayer: React.FC<TextLayerProps> = ({ keywordRegexp, match, page, pageI
     const renderTask = React.useRef<PdfJs.PageRenderTask>();
     const isRendered = React.useRef(false);
 
-    const empty = () => {
+    const empty = (): void => {
         const containerEle = containerRef.current;
         if (!containerEle) {
             return;
@@ -46,7 +46,49 @@ const TextLayer: React.FC<TextLayerProps> = ({ keywordRegexp, match, page, pageI
         }
     };
 
-    const renderText = () => {
+    const highlight = (span: Element): void => {
+        const text = span.textContent;
+        if (!keywordRegexp.source.trim() || !text) {
+            return;
+        }
+
+        const startOffset = text.search(keywordRegexp);
+        const firstChild = span.firstChild;
+        if (startOffset === -1 || !firstChild) {
+            return;
+        }
+        const endOffset = startOffset + keywordRegexp.source.length;
+        const wrapper = wrap(firstChild, startOffset, endOffset);
+        wrapper.classList.add(`${theme.prefixClass}-text-highlight`);
+    };
+
+    const unhighlightAll = (): void => {
+        const containerEle = containerRef.current;
+        if (!containerEle) {
+            return;
+        }
+        const highlightNodes = containerEle.querySelectorAll(`span.${theme.prefixClass}-text-highlight`);
+        const total = highlightNodes.length;
+        for (let i = 0; i < total; i++) {
+            unwrap(highlightNodes[i]);
+        }
+    };
+
+    const scrollToMatch = (): void => {
+        const containerEle = containerRef.current;
+        if (match.pageIndex !== pageIndex || !containerEle) {
+            return;
+        }
+
+        const spans = containerEle.querySelectorAll(`span.${theme.prefixClass}-text-highlight`);
+        if (match.matchIndex < spans.length) {
+            const span = spans[match.matchIndex] as HTMLElement;
+            const { top, left } = calculateOffset(span, containerEle);
+            onJumpToMatch(pageIndex, top / scale, left / scale);
+        }
+    };
+
+    const renderText = (): void => {
         const task = renderTask.current;
         if (task) {
             task.cancel();
@@ -67,7 +109,7 @@ const TextLayer: React.FC<TextLayerProps> = ({ keywordRegexp, match, page, pageI
                 viewport,
             });
             renderTask.current.promise.then(
-                (_) => {
+                () => {
                     isRendered.current = true;
                     const spans = containerEle.childNodes;
                     const numSpans = spans.length;
@@ -85,51 +127,9 @@ const TextLayer: React.FC<TextLayerProps> = ({ keywordRegexp, match, page, pageI
                     }
                     scrollToMatch();
                 },
-                (_) => {/**/},
+                () => {/**/},
             );
         });
-    };
-
-    const highlight = (span: Element) => {
-        const text = span.textContent;
-        if (!keywordRegexp.source.trim() || !text) {
-            return;
-        }
-
-        const startOffset = text.search(keywordRegexp);
-        const firstChild = span.firstChild;
-        if (startOffset === -1 || !firstChild) {
-            return;
-        }
-        const endOffset = startOffset + keywordRegexp.source.length;
-        const wrapper = wrap(firstChild, startOffset, endOffset);
-        wrapper.classList.add(`${theme.prefixClass}-text-highlight`);
-    };
-
-    const unhighlightAll = () => {
-        const containerEle = containerRef.current;
-        if (!containerEle) {
-            return;
-        }
-        const highlightNodes = containerEle.querySelectorAll(`span.${theme.prefixClass}-text-highlight`);
-        const total = highlightNodes.length;
-        for (let i = 0; i < total; i++) {
-            unwrap(highlightNodes[i]);
-        }
-    };
-
-    const scrollToMatch = () => {
-        const containerEle = containerRef.current;
-        if (match.pageIndex !== pageIndex || !containerEle) {
-            return;
-        }
-
-        const spans = containerEle.querySelectorAll(`span.${theme.prefixClass}-text-highlight`);
-        if (match.matchIndex < spans.length) {
-            const span = spans[match.matchIndex] as HTMLElement;
-            const { top, left } = calculateOffset(span, containerEle);
-            onJumpToMatch(pageIndex, top / scale, left / scale);
-        }
     };
 
     React.useEffect(() => {

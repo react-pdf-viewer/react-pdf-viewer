@@ -13,6 +13,7 @@ import MenuDivider from '../components/MenuDivider';
 import MenuItem from '../components/MenuItem';
 import { Toggle } from '../hooks/useToggle';
 import LocalizationContext from '../localization/LocalizationContext';
+import LocalizationMap from '../localization/LocalizationMap';
 import Popover from '../portal/Popover';
 import Position from '../portal/Position';
 import SpecialZoomLevel from '../SpecialZoomLevel';
@@ -31,7 +32,7 @@ const ZoomPopover: React.FC<ZoomPopoverProps> = ({ scale, onZoom }) => {
     const l10n = React.useContext(LocalizationContext);
     const theme = React.useContext(ThemeContent);
 
-    const getSpcialLevelLabel = (level: string) => {
+    const getSpcialLevelLabel = (level: SpecialZoomLevel): LocalizationMap => {
         switch (level) {
             case SpecialZoomLevel.ActualSize: return l10n.zoom.actualSize;
             case SpecialZoomLevel.PageFit: return l10n.zoom.pageFit;
@@ -39,8 +40,8 @@ const ZoomPopover: React.FC<ZoomPopoverProps> = ({ scale, onZoom }) => {
         }
     };
 
-    const renderTarget = (toggle: Toggle) => {
-        const click = () => { toggle(); };
+    const renderTarget = (toggle: Toggle): React.ReactElement => {
+        const click = (): void => { toggle(); };
         return (
             <span className={`${theme.prefixClass}-zoom-popover-target`} onClick={click}>
                 <span className={`${theme.prefixClass}-zoom-popover-target-scale`}>{Math.round(scale * 100)}%</span>
@@ -49,12 +50,12 @@ const ZoomPopover: React.FC<ZoomPopoverProps> = ({ scale, onZoom }) => {
         );
     };
 
-    const renderContent = (toggle: Toggle) => (
+    const renderContent = (toggle: Toggle): React.ReactElement => (
         <Menu>
             {
                 Object.keys(SpecialZoomLevel).map((k) => {
                     const level = k as SpecialZoomLevel;
-                    const clickMenuItem = () => { toggle(); onZoom(level); };
+                    const clickMenuItem = (): void => { toggle(); onZoom(level); };
                     return (
                         <MenuItem key={level} onClick={clickMenuItem}>
                             {getSpcialLevelLabel(level)}
@@ -65,7 +66,7 @@ const ZoomPopover: React.FC<ZoomPopoverProps> = ({ scale, onZoom }) => {
             <MenuDivider />
             {
                 LEVELS.map((level) => {
-                    const clickMenuItem = () => { toggle(); onZoom(level); };
+                    const clickMenuItem = (): void => { toggle(); onZoom(level); };
                     return (
                         <MenuItem key={level} onClick={clickMenuItem}>
                             {`${Math.round(level * 100)}%`}

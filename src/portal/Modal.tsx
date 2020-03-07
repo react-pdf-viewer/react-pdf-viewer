@@ -21,7 +21,7 @@ interface ModalProps {
 }
 
 const Modal: React.FC<ModalProps> = ({ closeOnClickOutside, closeOnEscape, content, target }) => {
-    const renderContent = (toggle: Toggle) => (
+    const renderContent = (toggle: Toggle): React.ReactElement => (
         <ModalOverlay
             closeOnClickOutside={closeOnClickOutside}
             onClose={toggle}

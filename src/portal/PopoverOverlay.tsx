@@ -19,7 +19,7 @@ interface PopoverOverlayProps {
 const PopoverOverlay: React.FC<PopoverOverlayProps> = ({ children, closeOnClickOutside, onClose }) => {
     const theme = React.useContext(ThemeContent);
 
-    const onClick = (e: React.MouseEvent) => {
+    const onClick = (e: React.MouseEvent): void => {
         if (e.target === e.currentTarget && closeOnClickOutside) {
             onClose();
         }
@@ -31,7 +31,7 @@ const PopoverOverlay: React.FC<PopoverOverlayProps> = ({ children, closeOnClickO
             document.body.style.position = 'relative';
         }
 
-        return () => {
+        return (): void => {
             document.body.style.setProperty('overflow', originalStyle);
         };
     }, [closeOnClickOutside]);

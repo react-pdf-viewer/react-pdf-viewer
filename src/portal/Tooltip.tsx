@@ -26,9 +26,9 @@ interface TooltipProps {
 const Tooltip: React.FC<TooltipProps> = ({ content, offset, position, target }) => {
     const targetRef = React.createRef<HTMLDivElement>();
 
-    const renderTarget = (toggle: Toggle) => {
-        const show = () => { toggle(ToggleStatus.Open); };
-        const hide = () => { toggle(ToggleStatus.Close); };
+    const renderTarget = (toggle: Toggle): React.ReactElement => {
+        const show = (): void => { toggle(ToggleStatus.Open); };
+        const hide = (): void => { toggle(ToggleStatus.Close); };
         return (
             <div
                 ref={targetRef}
@@ -40,7 +40,7 @@ const Tooltip: React.FC<TooltipProps> = ({ content, offset, position, target }) 
         );
     };
 
-    const renderContent = () => (
+    const renderContent = (): React.ReactElement => (
         <TooltipBody
             offset={offset}
             position={position}

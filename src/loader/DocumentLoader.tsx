@@ -41,7 +41,7 @@ const DocumentLoader: React.FC<DocumentLoaderProps> = ({ file, render }) => {
         setStatus(new LoadingState(0));
 
         const loadingTask = PdfJs.getDocument(file);
-        loadingTask.onPassword = (verifyPassword: VerifyPassword, reason: string) => {
+        loadingTask.onPassword = (verifyPassword: VerifyPassword, reason: string): void => {
             switch (reason) {
                 case PdfJs.PasswordResponses.NEED_PASSWORD:
                     setStatus(new AskForPasswordState(verifyPassword));
@@ -58,14 +58,13 @@ const DocumentLoader: React.FC<DocumentLoaderProps> = ({ file, render }) => {
             (err) => setStatus(new FailureState(err.message || 'Cannot load document')),
         );
 
-        return () => {
+        return (): void => {
             loadingTask.destroy();
         };
     }, [file]);
 
     switch (true) {
         case (status instanceof AskForPasswordState):
-            const s = (status as AskForPasswordState);
             return <AskingPassword verifyPasswordFn={(status as AskForPasswordState).verifyPasswordFn} />;
         case (status instanceof WrongPasswordState):
             return <WrongPassword verifyPasswordFn={(status as WrongPasswordState).verifyPasswordFn} />;

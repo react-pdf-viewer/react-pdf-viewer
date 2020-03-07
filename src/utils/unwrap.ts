@@ -6,14 +6,14 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-const removeNode = (ele: Node) => {
+const removeNode = (ele: Node): void => {
     const parent = ele.parentNode;
     if (parent) {
         parent.removeChild(ele);
     }
 };
 
-const replaceNode = (replacementNode: Node, node: Node) => {
+const replaceNode = (replacementNode: Node, node: Node): void => {
     removeNode(replacementNode);
     const parent = node.parentNode;
     if (parent) {
@@ -22,7 +22,7 @@ const replaceNode = (replacementNode: Node, node: Node) => {
     removeNode(node);
 };
 
-const unwrap = (ele: Node) => {
+const unwrap = (ele: Node): void => {
     const parent = ele.parentNode;
     if (!parent) {
         return;

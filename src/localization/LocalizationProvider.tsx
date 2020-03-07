@@ -8,7 +8,7 @@
 
 import React from 'react';
 
-import en_US from './en_US.json';
+import enUs from './en_US.json';
 import LocalizationContext from './LocalizationContext';
 import LocalizationMap from './LocalizationMap';
 
@@ -17,7 +17,8 @@ interface LocalizationProviderProps {
 }
 
 const LocalizationProvider: React.FC<LocalizationProviderProps> = ({ children, localization }) => {
-    const defaultL10n = (en_US as any) as LocalizationMap;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const defaultL10n = (enUs as any) as LocalizationMap;
     const l10n = localization || defaultL10n;
 
     return (

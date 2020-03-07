@@ -31,12 +31,12 @@ const PropertiesModal: React.FC<PropertiesModalProps> = ({ doc, fileName, onTogg
     const l10n = React.useContext(LocalizationContext);
     const theme = React.useContext(ThemeContent);
 
-    const formatDate = (input: string) => {
+    const formatDate = (input: string): string => {
         const date = convertDate(input);
         return date ? `${date.toLocaleDateString()}, ${date.toLocaleTimeString()}` : '';
     };
 
-    const renderData = (data: PropertiesData) => (
+    const renderData = (data: PropertiesData): React.ReactElement => (
         <>
             <div className={`${theme.prefixClass}-properties-modal-group`}>
                 <PropertyItem label={`${l10n.property.fileName}`} value={data.fileName || getFileName(fileName)} />

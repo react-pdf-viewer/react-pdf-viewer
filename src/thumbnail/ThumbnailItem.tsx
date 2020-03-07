@@ -47,8 +47,8 @@ const ThumbnailItem: React.FC<ThumbnailItemProps> = ({
         const viewport = page.getViewport({ rotation, scale });
         renderTask.current = page.render({ canvasContext, viewport });
         renderTask.current.promise.then(
-            (_) => setSrc(canvas.toDataURL()),
-            (_) => {/**/},
+            () => setSrc(canvas.toDataURL()),
+            () => {/**/},
         );
     }, [rotation]);
 

@@ -52,13 +52,13 @@ const vendor: ApiMap = isBrowser ? (
     defaultVendor
 ) : defaultVendor;
 
-const addFullScreenChangeListener = (handler: () => void) => {
+const addFullScreenChangeListener = (handler: () => void): void => {
     if (isBrowser) {
         document.addEventListener(vendor.FullScreenChange, handler);
     }
 };
 
-const removeFullScreenChangeListener = (handler: () => void) => {
+const removeFullScreenChangeListener = (handler: () => void): void => {
     if (isBrowser) {
         document.removeEventListener(vendor.FullScreenChange, handler);
     }
@@ -66,16 +66,19 @@ const removeFullScreenChangeListener = (handler: () => void) => {
 
 const exitFullScreen = (element: Element | Document): Promise<void> => {
     return isBrowser
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             ? (element as any)[vendor.ExitFullScreen]()
             : Promise.resolve({});
 };
 
 const getFullScreenElement = (): Element | null => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     return isBrowser ? (document as any)[vendor.FullScreenElement] : null;
 };
 
-const requestFullScreen = (element: Element) => {
+const requestFullScreen = (element: Element): void => {
     if (isBrowser) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         (element as any)[vendor.RequestFullScreen]();
     }
 };

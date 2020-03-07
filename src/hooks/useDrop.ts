@@ -16,7 +16,7 @@ const useDrop = (ref: React.RefObject<HTMLDivElement>, onDrop: (files: FileList)
     const dragCount = React.useRef(0);
     const [isDragging, setDragging] = React.useState(false);
 
-    const onDropHandler = (e: DragEvent) => {
+    const onDropHandler = (e: DragEvent): void => {
         e.preventDefault();
         setDragging(false);
         dragCount.current = 0;
@@ -26,11 +26,11 @@ const useDrop = (ref: React.RefObject<HTMLDivElement>, onDrop: (files: FileList)
         }
     };
 
-    const onDragOverHandler = (e: DragEvent) => {
+    const onDragOverHandler = (e: DragEvent): void => {
         e.preventDefault();
     };
 
-    const onDragEnterHandler = (e: DragEvent) => {
+    const onDragEnterHandler = (e: DragEvent): void => {
         e.preventDefault();
         dragCount.current += 1;
         if (dragCount.current <= 1) {
@@ -38,7 +38,7 @@ const useDrop = (ref: React.RefObject<HTMLDivElement>, onDrop: (files: FileList)
         }
     };
 
-    const onDragLeaveHandler = (e: DragEvent) => {
+    const onDragLeaveHandler = (e: DragEvent): void => {
         e.preventDefault();
         dragCount.current -= 1;
         if (dragCount.current <= 0) {
@@ -57,7 +57,7 @@ const useDrop = (ref: React.RefObject<HTMLDivElement>, onDrop: (files: FileList)
         ele.addEventListener('dragenter', onDragEnterHandler);
         ele.addEventListener('dragleave', onDragLeaveHandler);
 
-        return () => {
+        return (): void => {
             ele.removeEventListener('drop', onDropHandler);
             ele.removeEventListener('dragover', onDragOverHandler);
             ele.removeEventListener('dragenter', onDragEnterHandler);

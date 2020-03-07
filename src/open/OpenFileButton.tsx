@@ -10,6 +10,7 @@ import React from 'react';
 
 import OpenFileIcon from '../icons/OpenFileIcon';
 import LocalizationContext from '../localization/LocalizationContext';
+import LocalizationMap from '../localization/LocalizationMap';
 import Position from '../portal/Position';
 import Tooltip from '../portal/Tooltip';
 import ThemeContent from '../theme/ThemeContext';
@@ -25,14 +26,14 @@ const OpenFileButton: React.FC<OpenFileButtonProps> = ({ onOpenFiles }) => {
     const l10n = React.useContext(LocalizationContext);
     const theme = React.useContext(ThemeContent);
 
-    const openFiles = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const openFiles = (e: React.ChangeEvent<HTMLInputElement>): void => {
         const files = e.target.files;
         if (files) {
             onOpenFiles(files);
         }
     };
 
-    const renderContent = () => l10n.toolbar.openFile;
+    const renderContent = (): LocalizationMap => l10n.toolbar.openFile;
 
     return (
         <Tooltip

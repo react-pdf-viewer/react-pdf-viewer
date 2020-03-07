@@ -22,13 +22,8 @@ const AskingPassword: React.FC<AskingPasswordProps> = ({ verifyPasswordFn }) => 
     const theme = React.useContext(ThemeContent);
     const [password, setPassword] = React.useState('');
 
-    const changePassword = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setPassword(e.target.value);
-    };
-
-    const submit = () => {
-        verifyPasswordFn(password);
-    };
+    const changePassword = (e: React.ChangeEvent<HTMLInputElement>): void => setPassword(e.target.value);
+    const submit = (): void => verifyPasswordFn(password);
 
     return (
         <div className={`${theme.prefixClass}-asking-password`}>

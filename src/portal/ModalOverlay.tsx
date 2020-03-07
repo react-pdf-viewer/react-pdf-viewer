@@ -19,7 +19,7 @@ interface ModalOverlayProps {
 const ModalOverlay: React.FC<ModalOverlayProps> = ({ children, closeOnClickOutside, onClose }) => {
     const theme = React.useContext(ThemeContent);
 
-    const onClick = (e: React.MouseEvent) => {
+    const onClick = (e: React.MouseEvent): void => {
         if (e.target === e.currentTarget && closeOnClickOutside) {
             onClose();
         }

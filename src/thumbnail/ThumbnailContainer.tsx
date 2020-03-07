@@ -47,7 +47,7 @@ const ThumbnailContainer: React.FC<ThumbnailContainerProps> = ({ doc, pageHeight
     const w = isVertical ? THUMBNAIL_WIDTH : (THUMBNAIL_WIDTH / scale);
     const h = isVertical ? (THUMBNAIL_WIDTH / scale) : THUMBNAIL_WIDTH;
 
-    const onVisibilityChanged = (params: VisibilityChanged) => {
+    const onVisibilityChanged = (params: VisibilityChanged): void => {
         if (params.isVisible && !isCalculated) {
             doc.getPage(pageIndex + 1).then((pdfPage) => {
                 const viewport = pdfPage.getViewport({ scale: 1 });

@@ -22,8 +22,8 @@ const AttachmentList: React.FC<AttachmentListProps> = ({ files }) => {
     const l10n = React.useContext(LocalizationContext);
     const theme = React.useContext(ThemeContent);
 
-    const renderItem = (file: FileItem) => {
-        const onClick = () => downloadFile(file.fileName, file.data);
+    const renderItem = (file: FileItem): React.ReactElement => {
+        const onClick = (): void => downloadFile(file.fileName, file.data);
         return (
             <li
                 className={`${theme.prefixClass}-attachment-item`}
