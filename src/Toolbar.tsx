@@ -40,6 +40,8 @@ import PropertiesModal from './property/PropertiesModal';
 import Match from './search/Match';
 import SearchPopover from './search/SearchPopover';
 import SelectionMode from './SelectionMode';
+import ThemeContent from './theme/ThemeContext';
+import './toolbar.less';
 import { decrease, increase, SpecialLevel } from './zoom/zoomingLevel';
 import ZoomPopover from './zoom/ZoomPopover';
 
@@ -73,6 +75,7 @@ const Toolbar: React.FC<ToolbarProps> = ({
     renderToolbar,
 }) => {
     const l10n = React.useContext(LocalizationContext);
+    const theme = React.useContext(ThemeContent);
     const [pageTextboxFocused, setPageTextboxFocused] = React.useState(false);
     const [editingPage, setEditingPage] = React.useState(currentPage);
     const [isSidebarOpened, setSidebarOpened] = React.useState(false);
@@ -188,17 +191,13 @@ const Toolbar: React.FC<ToolbarProps> = ({
         currentPage,
         currentPageInput: (
             <input
+                className={`${theme.prefixClass}-toolbar-current-page-input`}
                 type="text"
                 value={pageTextboxFocused ? (editingPage + 1) : (currentPage + 1)}
                 onChange={changePage}
                 onFocus={focusPageTextbox}
                 onBlur={blurPageTextbox}
                 onKeyDown={keydownPage}
-                style={{
-                    border: '1px solid rgba(0, 0, 0, 0.3)',
-                    padding: '4px',
-                    width: '50px',
-                }}
             />
         ),
         documentPropertiesButton: (
