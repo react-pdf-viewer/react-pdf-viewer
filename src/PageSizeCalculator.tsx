@@ -10,6 +10,8 @@ import React from 'react';
 
 import PdfJs from './PdfJs';
 import Spinner from './components/Spinner';
+import './pageSizeCalculator.less';
+import ThemeContent from './theme/ThemeContext';
 import { decrease } from './zoom/zoomingLevel';
 
 interface IPageSize {
@@ -24,6 +26,7 @@ interface PageSizeCalculatorProps {
 }
 
 const PageSizeCalculator: React.FC<PageSizeCalculatorProps> = ({ doc, render }) => {
+    const theme = React.useContext(ThemeContent);
     const pagesRef = React.useRef<HTMLDivElement | null>(null);
     const [pageSize, setPageSize] = React.useState<IPageSize>({
         pageHeight: 0,
@@ -58,16 +61,7 @@ const PageSizeCalculator: React.FC<PageSizeCalculatorProps> = ({ doc, render }) 
     return (
         pageWidth === 0
             ? (
-                <div
-                    ref={pagesRef}
-                    style={{
-                        alignItems: 'center',
-                        display: 'flex',
-                        height: '100%',
-                        justifyContent: 'center',
-                        width: '100%',
-                    }}
-                >
+                <div className={`${theme.prefixClass}-page-size-calculator`} ref={pagesRef}>
                     <Spinner />
                 </div>
             )
