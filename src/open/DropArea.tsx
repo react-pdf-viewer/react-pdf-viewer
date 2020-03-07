@@ -9,28 +9,15 @@
 import React from 'react';
 
 import LocalizationContext from '../localization/LocalizationContext';
+import ThemeContent from '../theme/ThemeContext';
+import './dropArea.less';
 
 const DropArea: React.FC<{}> = () => {
     const l10n = React.useContext(LocalizationContext);
+    const theme = React.useContext(ThemeContent);
+
     return (
-        <div
-            style={{
-                alignItems: 'center',
-                backgroundColor: '#FFF',
-                border: '2px dashed rgba(0, 0, 0, 0.3)',
-                bottom: '0',
-                display: 'flex',
-                fontSize: '24px',
-                height: '100%',
-                justifyContent: 'center',
-                left: '0',
-                position: 'absolute',
-                right: '0',
-                top: '0',
-                width: '100%',
-                zIndex: 9999,
-            }}
-        >
+        <div className={`${theme.prefixClass}-drop-area`}>
             {l10n.main.dragDropFile}
         </div>
     );
