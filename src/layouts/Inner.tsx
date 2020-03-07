@@ -8,6 +8,7 @@
 
 import React from 'react';
 
+import File from '../File';
 import useDragScroll from '../hooks/useDragScroll';
 import useDrop from '../hooks/useDrop';
 import useFullScreen from '../hooks/useFullScreen';
@@ -23,6 +24,7 @@ import SelectionMode from '../SelectionMode';
 import SpecialZoomLevel from '../SpecialZoomLevel';
 import ThemeContent from '../theme/ThemeContext';
 import PdfJs from '../vendors/PdfJs';
+import downloadFile from '../utils/downloadFile';
 import getFileExt from '../utils/fileExt';
 import { RenderViewer } from '../Viewer';
 import ExitFullScreen from './ExitFullScreen';
@@ -40,20 +42,19 @@ const PAGE_PADDING = 8;
 
 interface InnerProps {
     doc: PdfJs.PdfDocument;
-    fileName: string;
+    file: File;
     layout: Layout;
     pageSize: PageSize;
     render: RenderViewer;
     selectionMode: SelectionMode;
     onDocumentLoad(doc: PdfJs.PdfDocument): void;
-    onDownload(): void;
     onOpenFile(fileName: string, data: Uint8Array): void;
     onZoom(doc: PdfJs.PdfDocument, scale: number): void;
 }
 
 const Inner: React.FC<InnerProps> = ({
-    doc, fileName, layout, pageSize, render, selectionMode,
-    onDocumentLoad, onDownload, onOpenFile, onZoom,
+    doc, file, layout, pageSize, render, selectionMode,
+    onDocumentLoad, onOpenFile, onZoom,
 }) => {
     const theme = React.useContext(ThemeContent);
     const pagesRef = React.useRef<HTMLDivElement | null>(null);
@@ -98,6 +99,10 @@ const Inner: React.FC<InnerProps> = ({
     const arr = Array(numPages).fill(null);
     const pageVisibility = arr.map((_, __) => 0);
     const pageRefs = arr.map((_, __) => React.useRef<HTMLDivElement>());
+
+    const download = () => {
+        downloadFile(file.name, file.data);
+    };
 
     const zoom = (newScale: number | SpecialZoomLevel) => {
         const pagesEle = pagesRef.current;
@@ -188,19 +193,19 @@ const Inner: React.FC<InnerProps> = ({
         if (files.length === 0) {
             return;
         }
-        const file = files[0];
+        const selectedFile = files[0];
         if (getFileExt(file.name).toLowerCase() !== 'pdf') {
             return;
         }
         new Promise<Uint8Array>((resolve, _) => {
             const reader = new FileReader();
-            reader.readAsArrayBuffer(file);
+            reader.readAsArrayBuffer(selectedFile);
             reader.onload = (e) => {
                 const bytes = new Uint8Array(reader.result as ArrayBuffer);
                 resolve(bytes);
             };
         }).then((data) => {
-            onOpenFile(file.name, data);
+            onOpenFile(selectedFile.name, data);
         });
     };
 
@@ -329,13 +334,13 @@ const Inner: React.FC<InnerProps> = ({
                 <Toolbar
                     currentPage={currentPage}
                     doc={doc}
-                    fileName={fileName}
+                    fileName={file.name}
                     scale={scale}
                     scrollMode={scrollMode}
                     selectionMode={currentMode}
                     onChangeScrollMode={changeScrollMode}
                     onChangeSelectionMode={changeSelectionMode}
-                    onDownload={onDownload}
+                    onDownload={download}
                     onFullScreen={openFullScreen}
                     onJumpTo={jumpToPage}
                     onJumpToMatch={jumpToMatch}
@@ -364,6 +369,7 @@ const Inner: React.FC<InnerProps> = ({
             },
         ),
         doc,
+        download,
         changeScrollMode,
         changeSelectionMode,
         jumpToPage,

@@ -8,6 +8,7 @@
 
 import React from 'react';
 
+import File from './File';
 import Slot from './layouts/Slot';
 import defaultLayout from './layouts/defaultLayout';
 import defaultToolbar from './layouts/defaultToolbar';
@@ -22,17 +23,12 @@ import ScrollMode from './ScrollMode';
 import SelectionMode from './SelectionMode';
 import SpecialZoomLevel from './SpecialZoomLevel';
 import ThemeProvider from './theme/ThemeProvider';
-import downloadFile from './utils/downloadFile';
 import PdfJs from './vendors/PdfJs';
-
-interface File {
-    data: PdfJs.FileData;
-    name: string;
-}
 
 interface RenderViewerProps {
     viewer: React.ReactElement;
     doc: PdfJs.PdfDocument;
+    download(): void;
     changeScrollMode(mode: ScrollMode): void;
     changeSelectionMode(mode: SelectionMode): void;
     jumpToPage(page: number): void;
@@ -97,10 +93,6 @@ const Viewer: React.FC<ViewerProps> = ({
         });
     };
 
-    const download = () => {
-        downloadFile(file.name, file.data);
-    };
-
     const renderDoc = (renderViewer: RenderViewer) => (doc: PdfJs.PdfDocument) => {
         const renderInner = (ps: PageSize) => {
             const pageSize = ps;
@@ -109,13 +101,12 @@ const Viewer: React.FC<ViewerProps> = ({
             return (
                 <Inner
                     doc={doc}
-                    fileName={file.name}
+                    file={file}
                     layout={layout || layoutOption}
                     pageSize={pageSize}
                     render={renderViewer}
                     selectionMode={selectionMode}
                     onDocumentLoad={onDocumentLoad}
-                    onDownload={download}
                     onOpenFile={openFile}
                     onZoom={onZoom}
                 />

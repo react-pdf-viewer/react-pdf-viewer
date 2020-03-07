@@ -1,14 +1,14 @@
 import React from 'react';
 import Viewer, { PrimaryButton, RenderViewerProps, ScrollMode, SpecialZoomLevel, SelectionMode } from '@phuocng/react-pdf-viewer';
 
-interface JumpToPageProps {
+interface RenderPropsExampleProps {
     fileUrl: string;
 }
 
-const JumpToPage: React.FC<JumpToPageProps> = ({ fileUrl }) => {
+const RenderPropsExample: React.FC<RenderPropsExampleProps> = ({ fileUrl }) => {
     const render = (props: RenderViewerProps) => {
         return (
-            <div>
+            <div style={{ padding: '16px 0' }}>
                 <div style={{ height: '500px', marginBottom: '16px' }}>
                     {props.viewer}
                 </div>
@@ -41,6 +41,9 @@ const JumpToPage: React.FC<JumpToPageProps> = ({ fileUrl }) => {
                     <div style={{ marginRight: '12px' }}>
                         <PrimaryButton onClick={() => props.print()}>Print</PrimaryButton>
                     </div>
+                    <div style={{ marginRight: '12px' }}>
+                        <PrimaryButton onClick={() => props.download()}>Download</PrimaryButton>
+                    </div>
                 </div>
             </div>
         );
@@ -54,4 +57,4 @@ const JumpToPage: React.FC<JumpToPageProps> = ({ fileUrl }) => {
     );
 };
 
-export default JumpToPage;
+export default RenderPropsExample;
