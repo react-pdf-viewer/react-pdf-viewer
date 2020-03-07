@@ -12,7 +12,7 @@ const JumpToPage: React.FC<JumpToPageProps> = ({ fileUrl }) => {
                 <div style={{ height: '500px', marginBottom: '16px' }}>
                     {props.viewer}
                 </div>
-                <div style={{ alignItems: 'center', display: 'flex' }}>
+                <div style={{ alignItems: 'center', display: 'flex', marginBottom: '16px' }}>
                     <div style={{ marginRight: '12px' }}>
                         <PrimaryButton onClick={() => props.jumpToPage(2)}>Jump to page 3</PrimaryButton>
                     </div>
@@ -28,11 +28,18 @@ const JumpToPage: React.FC<JumpToPageProps> = ({ fileUrl }) => {
                     <div style={{ marginRight: '12px' }}>
                         <PrimaryButton onClick={() => props.zoom(SpecialZoomLevel.ActualSize)}>Zoom to actual size</PrimaryButton>
                     </div>
+                </div>
+                <div style={{ alignItems: 'center', display: 'flex', marginBottom: '16px' }}>
                     <div style={{ marginRight: '12px' }}>
                         <PrimaryButton onClick={() => props.changeScrollMode(ScrollMode.Wrapped)}>Switch to wrapped scrolling</PrimaryButton>
                     </div>
                     <div style={{ marginRight: '12px' }}>
                         <PrimaryButton onClick={() => props.changeSelectionMode(SelectionMode.Hand)}>Switch to hand tool</PrimaryButton>
+                    </div>
+                </div>
+                <div style={{ alignItems: 'center', display: 'flex', marginBottom: '16px' }}>
+                    <div style={{ marginRight: '12px' }}>
+                        <PrimaryButton onClick={() => props.print()}>Print</PrimaryButton>
                     </div>
                 </div>
             </div>

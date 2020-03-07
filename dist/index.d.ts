@@ -209,6 +209,7 @@ export interface RenderViewerProps {
     // Jump to given page
     // `page` is zero-index based
     jumpToPage(page: number): void;
+    print(): void;
     rotate(degree: number): void;
     zoom(level: number | SpecialZoomLevel): void;
 }
