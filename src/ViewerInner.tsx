@@ -12,6 +12,7 @@ import useDragScroll from './hooks/useDragScroll';
 import useDrop from './hooks/useDrop';
 import useFullScreen from './hooks/useFullScreen';
 import useToggle from './hooks/useToggle';
+import './viewerInner.less';
 import PageLayer from './layers/PageLayer';
 import ExitFullScreen from './layouts/ExitFullScreen';
 import { Layout } from './layouts/Layout';
@@ -26,6 +27,7 @@ import PrintZone from './print/PrintZone';
 import Match from './search/Match';
 import ScrollMode from './ScrollMode';
 import SelectionMode from './SelectionMode';
+import ThemeContent from './theme/ThemeContext';
 import Toolbar from './Toolbar';
 import getFileExt from './utils/fileExt';
 import { SpecialLevel } from './zoom/zoomingLevel';
@@ -51,6 +53,7 @@ const ViewerInner: React.FC<ViewerInnerProps> = ({
     doc, fileName, layout, pageSize, selectionMode,
     onDocumentLoad, onDownload, onOpenFile, onZoom,
 }) => {
+    const theme = React.useContext(ThemeContent);
     const pagesRef = React.useRef<HTMLDivElement | null>(null);
     const [scale, setScale] = React.useState(pageSize.scale);
     const [currentPage, setCurrentPage] = React.useState(0);
@@ -303,11 +306,11 @@ const ViewerInner: React.FC<ViewerInnerProps> = ({
                     Array(numPages).fill(0).map((_, index) => {
                         return (
                             <div
+                                className={`${theme.prefixClass}-inner-page`}
                                 key={`pagelayer-${index}`}
                                 ref={(ref) => {
                                     pageRefs[index].current = ref as HTMLDivElement;
                                 }}
-                                style={{ padding: '8px' }}
                             >
                                 <PageLayer
                                     doc={doc}
