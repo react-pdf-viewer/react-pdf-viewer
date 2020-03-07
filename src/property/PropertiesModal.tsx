@@ -18,6 +18,7 @@ import getFileName from '../utils/fileName';
 import getFileSize from '../utils/fileSize';
 import PropertiesData from './PropertiesData';
 import PropertiesLoader from './PropertiesLoader';
+import './propertiesModal.less';
 import PropertyItem from './PropertyItem';
 
 interface PropertiesModalProps {
@@ -37,12 +38,12 @@ const PropertiesModal: React.FC<PropertiesModalProps> = ({ doc, fileName, onTogg
 
     const renderData = (data: PropertiesData) => (
         <>
-            <div style={{ padding: '0 8px '}}>
+            <div className={`${theme.prefixClass}-properties-modal-group`}>
                 <PropertyItem label={`${l10n.property.fileName}`} value={data.fileName || getFileName(fileName)} />
                 <PropertyItem label={`${l10n.property.fileSize}`} value={getFileSize(data.length)} />
             </div>
             <Separator />
-            <div style={{ padding: '0 8px '}}>
+            <div className={`${theme.prefixClass}-properties-modal-group`}>
                 <PropertyItem label={`${l10n.property.title}`} value={data.info.Title} />
                 <PropertyItem label={`${l10n.property.author}`} value={data.info.Author} />
                 <PropertyItem label={`${l10n.property.subject}`} value={data.info.Subject} />
@@ -52,7 +53,7 @@ const PropertiesModal: React.FC<PropertiesModalProps> = ({ doc, fileName, onTogg
                 <PropertyItem label={`${l10n.property.modificationDate}`} value={formatDate(data.info.ModDate)} />
             </div>
             <Separator />
-            <div style={{ padding: '0 8px '}}>
+            <div className={`${theme.prefixClass}-properties-modal-group`}>
                 <PropertyItem label={`${l10n.property.pdfProducer}`} value={data.info.Producer} />
                 <PropertyItem label={`${l10n.property.pdfVersion}`} value={data.info.PDFFormatVersion} />
                 <PropertyItem label={`${l10n.property.pageCount}`} value={`${doc.numPages}`} />
@@ -61,18 +62,12 @@ const PropertiesModal: React.FC<PropertiesModalProps> = ({ doc, fileName, onTogg
     );
 
     return (
-        <div style={{ padding: '8px 0' }}>
+        <div className={`${theme.prefixClass}-properties-modal`}>
             <PropertiesLoader
                 doc={doc}
                 render={renderData}
             />
-            <div
-                style={{
-                    display: 'flex',
-                    justifyContent: 'center',
-                    marginTop: '8px',
-                }}
-            >
+            <div className={`${theme.prefixClass}-properties-modal-footer`}>
                 <PrimaryButton onClick={onToggle}>
                     {l10n.property.close}
                 </PrimaryButton>
