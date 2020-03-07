@@ -8,14 +8,13 @@
 
 import React from 'react';
 
+import ThemeContent from '../theme/ThemeContext';
+import './menuDivider.less';
+
 const MenuDivider: React.FC<{}> = () => {
+    const theme = React.useContext(ThemeContent);
     return (
-        <li
-            style={{
-                borderBottom: '1px solid rgba(0, 0, 0, 0.3)',
-                margin: '4px 0',
-            }}
-        />
+        <li className={`${theme.prefixClass}-menu-divider`} />
     );
 };
 
