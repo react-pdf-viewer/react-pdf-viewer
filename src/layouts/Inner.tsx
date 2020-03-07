@@ -18,7 +18,7 @@ import { Layout } from './Layout';
 import Sidebar from './Sidebar';
 import { RenderToolbarSlot } from './ToolbarSlot';
 import DropArea from '../open/DropArea';
-import { PageSize } from '../PageSizeCalculator';
+import { PageSize } from './PageSizeCalculator';
 import PdfJs from '../PdfJs';
 import PrintProgress from '../print/PrintProgress';
 import PrintStatus from '../print/PrintStatus';

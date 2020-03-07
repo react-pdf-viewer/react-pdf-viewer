@@ -8,11 +8,11 @@
 
 import React from 'react';
 
-import PdfJs from './PdfJs';
-import Spinner from './components/Spinner';
+import Spinner from '../components/Spinner';
+import PdfJs from '../PdfJs';
+import ThemeContent from '../theme/ThemeContext';
+import { decrease } from '../zoom/zoomingLevel';
 import './pageSizeCalculator.less';
-import ThemeContent from './theme/ThemeContext';
-import { decrease } from './zoom/zoomingLevel';
 
 interface IPageSize {
     pageHeight: number;
