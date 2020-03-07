@@ -8,13 +8,16 @@
 
 import React from 'react';
 
+import Menu from '../components/Menu';
+import MenuDivider from '../components/MenuDivider';
+import MenuItem from '../components/MenuItem';
 import { Toggle } from '../hooks/useToggle';
 import LocalizationContext from '../localization/LocalizationContext';
-import MenuDivider from '../menu/MenuDivider';
-import MenuItem from '../menu/MenuItem';
 import Popover from '../portal/Popover';
 import Position from '../portal/Position';
+import ThemeContent from '../theme/ThemeContext';
 import { SpecialLevel } from './zoomingLevel';
+import './zoomPopover.less';
 
 interface ZoomPopoverProps {
     scale: number;
@@ -26,6 +29,7 @@ const PORTAL_OFFSET = { left: 0, top: 8 };
 
 const ZoomPopover: React.FC<ZoomPopoverProps> = ({ scale, onZoom }) => {
     const l10n = React.useContext(LocalizationContext);
+    const theme = React.useContext(ThemeContent);
 
     const getSpcialLevelLabel = (level: string) => {
         switch (level) {
@@ -35,69 +39,41 @@ const ZoomPopover: React.FC<ZoomPopoverProps> = ({ scale, onZoom }) => {
         }
     };
 
-    const arrow = () => {
-        return (
-            <span
-                style={{
-                    borderColor: 'rgba(0, 0, 0, .6) transparent transparent transparent',
-                    borderStyle: 'solid',
-                    borderWidth: '8px 4px 0 4px',
-                    height: '0',
-                    width: '0',
-                }}
-            />
-        );
-    };
-
     const renderTarget = (toggle: Toggle) => {
         const click = () => { toggle(); };
         return (
-            <span
-                style={{
-                    alignItems: 'center',
-                    display: 'flex',
-                }}
-                onClick={click}
-            >
-                <span style={{ padding: '4px' }}>{Math.round(scale * 100)}%</span>
-                {arrow()}
+            <span className={`${theme.prefixClass}-zoom-popover-target`} onClick={click}>
+                <span className={`${theme.prefixClass}-zoom-popover-target-scale`}>{Math.round(scale * 100)}%</span>
+                <span className={`${theme.prefixClass}-zoom-popover-target-arrow`} />
             </span>
         );
     };
 
     const renderContent = (toggle: Toggle) => (
-        <div style={{ padding: '8px 0' }}>
-            <ul
-                style={{
-                    listStyleType: 'none',
-                    margin: '0',
-                    padding: '0',
-                }}
-            >
-                {
-                    Object.keys(SpecialLevel).map((k) => {
-                        const level = k as SpecialLevel;
-                        const clickMenuItem = () => { toggle(); onZoom(level); };
-                        return (
-                            <MenuItem key={level} onClick={clickMenuItem}>
-                                {getSpcialLevelLabel(level)}
-                            </MenuItem>
-                        );
-                    })
-                }
-                <MenuDivider />
-                {
-                    LEVELS.map((level) => {
-                        const clickMenuItem = () => { toggle(); onZoom(level); };
-                        return (
-                            <MenuItem key={level} onClick={clickMenuItem}>
-                                {`${Math.round(level * 100)}%`}
-                            </MenuItem>
-                        );
-                    })
-                }
-            </ul>
-        </div>
+        <Menu>
+            {
+                Object.keys(SpecialLevel).map((k) => {
+                    const level = k as SpecialLevel;
+                    const clickMenuItem = () => { toggle(); onZoom(level); };
+                    return (
+                        <MenuItem key={level} onClick={clickMenuItem}>
+                            {getSpcialLevelLabel(level)}
+                        </MenuItem>
+                    );
+                })
+            }
+            <MenuDivider />
+            {
+                LEVELS.map((level) => {
+                    const clickMenuItem = () => { toggle(); onZoom(level); };
+                    return (
+                        <MenuItem key={level} onClick={clickMenuItem}>
+                            {`${Math.round(level * 100)}%`}
+                        </MenuItem>
+                    );
+                })
+            }
+        </Menu>
     );
 
     return (

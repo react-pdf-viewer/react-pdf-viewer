@@ -8,8 +8,8 @@
 
 import React from 'react';
 
-import PdfJs from '../PdfJs';
-import Spinner from '../Spinner';
+import Spinner from '../components/Spinner';
+import PdfJs from '../vendors/PdfJs';
 import PageThumbnail from './PageThumbnail';
 
 interface PageThumbnailContainerProps {

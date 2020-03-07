@@ -9,10 +9,12 @@
 import React from 'react';
 
 import LocalizationContext from '../localization/LocalizationContext';
-import PdfJs from '../PdfJs';
-import Spinner from '../Spinner';
+import PdfJs from '../vendors/PdfJs';
+import Spinner from '../components/Spinner';
+import ThemeContent from '../theme/ThemeContext';
 import { SpecialLevel } from '../zoom/zoomingLevel';
 import BookmarkList from './BookmarkList';
+import './bookmarkLoaded.less';
 
 interface BookmarkLoaderProps {
     doc: PdfJs.PdfDocument;
@@ -25,6 +27,7 @@ interface BookmarkState {
 
 const BookmarkLoader: React.FC<BookmarkLoaderProps> = ({ doc, onJumpToDest }) => {
     const l10n = React.useContext(LocalizationContext);
+    const theme = React.useContext(ThemeContent);
     const [bookmarks, setBookmarks] = React.useState<BookmarkState>({
         isLoaded: false,
         items: [],
@@ -43,20 +46,16 @@ const BookmarkLoader: React.FC<BookmarkLoaderProps> = ({ doc, onJumpToDest }) =>
         !bookmarks.isLoaded
             ? <Spinner />
             : (
-                <div style={{ width: '100%' }}>
-                    {
-                        bookmarks.items.length === 0
-                            ? <div style={{ textAlign: 'center' }}>{l10n.bookmark.noBookmark}</div>
-                            : (
-                                <BookmarkList
-                                    bookmarks={bookmarks.items}
-                                    depth={0}
-                                    doc={doc}
-                                    onJumpToDest={onJumpToDest}
-                                />
-                            )
-                    }
-                </div>
+                bookmarks.items.length === 0
+                    ? <div className={`${theme.prefixClass}-bookmark-empty`}>{l10n.bookmark.noBookmark}</div>
+                    : (
+                        <BookmarkList
+                            bookmarks={bookmarks.items}
+                            depth={0}
+                            doc={doc}
+                            onJumpToDest={onJumpToDest}
+                        />
+                    )
             )
     );
 };

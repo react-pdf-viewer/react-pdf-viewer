@@ -9,8 +9,9 @@
 import React from 'react';
 
 import LocalizationContext from '../localization/LocalizationContext';
+import ThemeContent from '../theme/ThemeContext';
 import downloadFile from '../utils/downloadFile';
-import './attachmentList.css';
+import './attachmentList.less';
 import FileItem from './FileItem';
 
 interface AttachmentListProps {
@@ -19,14 +20,14 @@ interface AttachmentListProps {
 
 const AttachmentList: React.FC<AttachmentListProps> = ({ files }) => {
     const l10n = React.useContext(LocalizationContext);
+    const theme = React.useContext(ThemeContent);
 
     const renderItem = (file: FileItem) => {
         const onClick = () => downloadFile(file.fileName, file.data);
         return (
             <li
-                className="viewer-attachment-item"
+                className={`${theme.prefixClass}-attachment-item`}
                 key={`attachment-${file.fileName}`}
-                style={{ padding: '8px' }}
                 title={`${l10n.attachment.clickToDownload}`}
                 onClick={onClick}
             >
@@ -37,16 +38,9 @@ const AttachmentList: React.FC<AttachmentListProps> = ({ files }) => {
 
     return (
         files.length === 0
-            ? <div>{l10n.attachment.noAttachment}</div>
+            ? <div className={`${theme.prefixClass}-attachment-list-empty`}>{l10n.attachment.noAttachment}</div>
             : (
-                <ul
-                    style={{
-                        listStyleType: 'none',
-                        margin: '0',
-                        padding: '0',
-                        width: '100%',
-                    }}
-                >
+                <ul className={`${theme.prefixClass}-attachment-list`}>
                     {
                         files.map(renderItem)
                     }

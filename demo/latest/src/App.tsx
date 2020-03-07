@@ -1,8 +1,8 @@
 import React from 'react';
-import { Worker } from '@phuocng/react-pdf-viewer';
+import Viewer, { Worker } from '@phuocng/react-pdf-viewer';
 
 import '@phuocng/react-pdf-viewer/cjs/react-pdf-viewer.css';
-import CustomToolbar from './CustomToolbar';
+//import CustomToolbar from './CustomToolbar';
 
 const App = () => {
     return (
@@ -12,7 +12,7 @@ const App = () => {
                     height: '750px',
                 }}
             >
-                <CustomToolbar
+                <Viewer
                     fileUrl="/pdf-open-parameters.pdf"
                 />
             </div>

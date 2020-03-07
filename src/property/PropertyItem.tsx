@@ -8,24 +8,25 @@
 
 import React from 'react';
 
+import ThemeContent from '../theme/ThemeContext';
+import './propertyItem.less';
+
 interface PropertyItemProps {
     label: string;
     value: string;
 }
 
 const PropertyItem: React.FC<PropertyItemProps> = ({ label, value }) => {
+    const theme = React.useContext(ThemeContent);
+
     return (
-        <dl style={{ margin: '8px 0' }}>
-            <dt
-                style={{
-                    display: 'inline-block',
-                    paddingRight: '8px',
-                    width: '30%',
-                }}
-            >
+        <dl className={`${theme.prefixClass}-property-item`}>
+            <dt className={`${theme.prefixClass}-property-item-label`}>
                 {label}:
             </dt>
-            <dd style={{ display: 'inline-block' }}>{value || '-'}</dd>
+            <dd className={`${theme.prefixClass}-property-item-value`}>
+                {value || '-'}
+            </dd>
         </dl>
     );
 };

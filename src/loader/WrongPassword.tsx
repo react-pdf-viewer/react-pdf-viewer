@@ -9,7 +9,9 @@
 import React from 'react';
 
 import LocalizationContext from '../localization/LocalizationContext';
+import ThemeContent from '../theme/ThemeContext';
 import { VerifyPassword } from './LoadingStatus';
+import './askingPassword.less';
 
 interface WrongPasswordProps {
     verifyPasswordFn: VerifyPassword;
@@ -17,6 +19,7 @@ interface WrongPasswordProps {
 
 const WrongPassword: React.FC<WrongPasswordProps> = ({ verifyPasswordFn }) => {
     const l10n = React.useContext(LocalizationContext);
+    const theme = React.useContext(ThemeContent);
     const [password, setPassword] = React.useState('');
 
     const changePassword = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -28,38 +31,16 @@ const WrongPassword: React.FC<WrongPasswordProps> = ({ verifyPasswordFn }) => {
     };
 
     return (
-        <div
-            style={{
-                alignItems: 'center',
-                border: '1px solid rgba(0, 0, 0, .3)',
-                display: 'flex',
-                height: '100%',
-                justifyContent: 'center',
-                width: '100%',
-            }}
-        >
+        <div className={`${theme.prefixClass}-asking-password`}>
             <div>
-                <div style={{ margin: '8px 0' }}>{l10n.wrongPassword.tryAgain}:</div>
-                <input
-                    style={{
-                        border: '1px solid rgba(0, 0, 0, 0.2)',
-                        padding: '8px',
-                    }}
-                    type="password"
-                    onChange={changePassword}
-                />
-                <div style={{ margin: '8px 0' }}>
-                    <button
-                        style={{
-                            backgroundColor: '#357EDD',
-                            border: 'none',
-                            borderRadius: '4px',
-                            color: '#FFF',
-                            cursor: 'pointer',
-                            padding: '8px 16px',
-                        }}
-                        onClick={submit}
-                    >
+                <div className={`${theme.prefixClass}-asking-password-message`}>{l10n.wrongPassword.tryAgain}:</div>
+                <div className={`${theme.prefixClass}-asking-password-input-container`}>
+                    <input
+                        className={`${theme.prefixClass}-asking-password-input`}
+                        type="password"
+                        onChange={changePassword}
+                    />
+                    <button className={`${theme.prefixClass}-asking-password-button`} onClick={submit}>
                         {l10n.wrongPassword.submit}
                     </button>
                 </div>

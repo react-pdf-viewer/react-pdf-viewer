@@ -8,7 +8,7 @@
 
 import getFileName from './fileName';
 
-import PdfJs from '../PdfJs';
+import PdfJs from '../vendors/PdfJs';
 
 const downloadFile = (url: string, data: PdfJs.FileData) => {
     const blobUrl = (typeof data === 'string')

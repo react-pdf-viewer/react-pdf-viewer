@@ -8,10 +8,12 @@
 
 import React from 'react';
 
-import Observer, { VisibilityChanged } from '../Observer';
-import PdfJs from '../PdfJs';
-import Spinner from '../Spinner';
+import Spinner from '../components/Spinner';
+import Observer, { VisibilityChanged } from '../layouts/Observer';
+import ThemeContent from '../theme/ThemeContext';
+import PdfJs from '../vendors/PdfJs';
 import ThumbnailItem from './ThumbnailItem';
+import './thumbnailContainer.less';
 
 const THUMBNAIL_WIDTH = 100;
 
@@ -31,6 +33,7 @@ interface PageState {
 }
 
 const ThumbnailContainer: React.FC<ThumbnailContainerProps> = ({ doc, pageHeight, pageIndex, pageWidth, rotation }) => {
+    const theme = React.useContext(ThemeContent);
     const [pageSize, setPageSize] = React.useState<PageState>({
         height: pageHeight,
         isCalculated: false,
@@ -62,14 +65,9 @@ const ThumbnailContainer: React.FC<ThumbnailContainerProps> = ({ doc, pageHeight
     return (
         <Observer onVisibilityChanged={onVisibilityChanged}>
             <div
+                className={`${theme.prefixClass}-thumbnail-container`}
                 style={{
-                    alignItems: 'center',
-                    boxShadow: '2px 2px 8px 0 rgba(0, 0, 0, 0.2)',
-                    display: 'flex',
                     height: `${h}px`,
-                    justifyContent: 'center',
-                    margin: '0 auto',
-                    position: 'relative',
                     width: `${w}px`,
                 }}
             >

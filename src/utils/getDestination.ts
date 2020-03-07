@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import PdfJs from '../PdfJs';
+import PdfJs from '../vendors/PdfJs';
 import { SpecialLevel } from '../zoom/zoomingLevel';
 
 interface JumpToDestination {

@@ -1,0 +1,92 @@
+/**
+ * A React component to view a PDF document
+ *
+ * @see https://react-pdf-viewer.dev
+ * @license https://react-pdf-viewer.dev/license
+ * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
+ */
+
+@import '../theme/common.less';
+
+.@{viewer-prefix}-arrow {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+    border-left-color: rgba(0, 0, 0, 0.3);
+    border-right: 1px solid rgba(0, 0, 0, 0.3);
+    border-top-color: rgba(0, 0, 0, 0.3);
+    height: 10px;
+    position: absolute;
+    width: 10px;
+    z-index: 0;
+
+    &-tl {
+        bottom: 0;
+        left: 0;
+        transform: translate(50%, 50%) rotate(45deg);
+    }
+
+    &-tc {
+        bottom: 0;
+        left: 50%;
+        transform: translate(-50%, 50%) rotate(45deg);
+    }
+
+    &-tr {
+        bottom: 0;
+        right: 0;
+        transform: translate(-50%, 50%) rotate(45deg);
+    }
+
+    &-rt {
+        left: 0;
+        top: 0;
+        transform: translate(-50%, 50%) rotate(135deg);
+    }
+
+    &-rc {
+        left: 0;
+        top: 50%;
+        transform: translate(-50%, -50%) rotate(135deg);
+    }
+
+    &-rb {
+        bottom: 0;
+        left: 0;
+        transform: translate(-50%, -50%) rotate(135deg);
+    }
+
+    &-bl {
+        left: 0;
+        top: 0;
+        transform: translate(50%, -50%) rotate(225deg);
+    }
+
+    &-bc {
+        left: 50%;
+        top: 0;
+        transform: translate(-50%, -50%) rotate(225deg);
+    }
+
+    &-br {
+        right: 0;
+        top: 0;
+        transform: translate(-50%, -50%) rotate(225deg);
+    }
+
+    &-lt {
+        right: 0;
+        top: 0;
+        transform: translate(50%, 50%) rotate(315deg);
+    }
+
+    &-lc {
+        right: 0;
+        top: 50%;
+        transform: translate(50%, -50%) rotate(315deg);
+    }
+
+    &-lb {
+        bottom: 0;
+        right: 0;
+        transform: translate(50%, -50%) rotate(315deg);
+    }
+}

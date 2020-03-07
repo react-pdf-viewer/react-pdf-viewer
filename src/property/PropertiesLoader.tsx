@@ -8,9 +8,11 @@
 
 import React from 'react';
 
-import PdfJs from '../PdfJs';
-import Spinner from '../Spinner';
+import Spinner from '../components/Spinner';
+import ThemeContent from '../theme/ThemeContext';
+import PdfJs from '../vendors/PdfJs';
 import PropertiesData from './PropertiesData';
+import './propertiesLoader.less';
 
 interface PropertiesLoaderProps {
     doc: PdfJs.PdfDocument;
@@ -18,6 +20,7 @@ interface PropertiesLoaderProps {
 }
 
 const PropertiesLoader: React.FC<PropertiesLoaderProps> = ({ doc, render }) => {
+    const theme = React.useContext(ThemeContent);
     const [data, setData] = React.useState<PropertiesData>();
 
     React.useEffect(() => {
@@ -37,7 +40,7 @@ const PropertiesLoader: React.FC<PropertiesLoaderProps> = ({ doc, render }) => {
     }, []);
 
     return (
-        data ? render(data) : <div style={{ textAlign: 'center' }}><Spinner /></div>
+        data ? render(data) : <div className={`${theme.prefixClass}-properties-loader`}><Spinner /></div>
     );
 };
 

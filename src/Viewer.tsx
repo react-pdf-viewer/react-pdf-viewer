@@ -11,16 +11,17 @@ import React from 'react';
 import Slot from './layouts/Slot';
 import defaultLayout from './layouts/defaultLayout';
 import defaultToolbar from './layouts/defaultToolbar';
+import Inner from './layouts/Inner';
 import { Layout } from './layouts/Layout';
+import PageSizeCalculator, { PageSize } from './layouts/PageSizeCalculator';
 import { RenderToolbar } from './layouts/ToolbarSlot';
 import DocumentLoader from './loader/DocumentLoader';
 import LocalizationMap from './localization/LocalizationMap';
 import LocalizationProvider from './localization/LocalizationProvider';
-import PageSizeCalculator, { PageSize } from './PageSizeCalculator';
-import PdfJs from './PdfJs';
 import SelectionMode from './SelectionMode';
+import ThemeProvider from './theme/ThemeProvider';
 import downloadFile from './utils/downloadFile';
-import ViewerInner from './ViewerInner';
+import PdfJs from './vendors/PdfJs';
 
 interface File {
     data: PdfJs.FileData;
@@ -34,6 +35,8 @@ interface ViewerProps {
     fileUrl: string;
     layout?: Layout;
     localization?: LocalizationMap;
+    // The prefix for CSS classes
+    prefixClass?: string;
     // The text selection mode
     selectionMode?: SelectionMode;
     onDocumentLoad?(doc: PdfJs.PdfDocument): void;
@@ -45,6 +48,7 @@ const Viewer: React.FC<ViewerProps> = ({
     fileUrl,
     layout,
     localization,
+    prefixClass,
     selectionMode = SelectionMode.Text,
     onDocumentLoad = () => {/**/},
     onZoom = () => {/**/},
@@ -86,7 +90,7 @@ const Viewer: React.FC<ViewerProps> = ({
             pageSize.scale = defaultScale || ps.scale;
 
             return (
-                <ViewerInner
+                <Inner
                     doc={doc}
                     fileName={file.name}
                     layout={layout || layoutOption}
@@ -108,12 +112,14 @@ const Viewer: React.FC<ViewerProps> = ({
     };
 
     return (
-        <LocalizationProvider localization={localization}>
-            <DocumentLoader
-                file={file.data}
-                render={renderDoc}
-            />
-        </LocalizationProvider>
+        <ThemeProvider prefixClass={prefixClass}>
+            <LocalizationProvider localization={localization}>
+                <DocumentLoader
+                    file={file.data}
+                    render={renderDoc}
+                />
+            </LocalizationProvider>
+        </ThemeProvider>
     );
 };
 

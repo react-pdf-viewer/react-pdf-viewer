@@ -8,12 +8,17 @@
 
 import React from 'react';
 
+import ThemeContent from '../theme/ThemeContext';
+import './popoverOverlay.less';
+
 interface PopoverOverlayProps {
     closeOnClickOutside: boolean;
     onClose(): void;
 }
 
 const PopoverOverlay: React.FC<PopoverOverlayProps> = ({ children, closeOnClickOutside, onClose }) => {
+    const theme = React.useContext(ThemeContent);
+
     const onClick = (e: React.MouseEvent) => {
         if (e.target === e.currentTarget && closeOnClickOutside) {
             onClose();
@@ -34,16 +39,7 @@ const PopoverOverlay: React.FC<PopoverOverlayProps> = ({ children, closeOnClickO
     return (
         closeOnClickOutside
         ? (
-            <div
-                style={{
-                    bottom: '0',
-                    left: '0',
-                    position: 'absolute',
-                    right: '0',
-                    top: '0',
-                }}
-                onClick={onClick}
-            >
+            <div className={`${theme.prefixClass}-popover-overlay`} onClick={onClick}>
                 {children}
             </div>
         )

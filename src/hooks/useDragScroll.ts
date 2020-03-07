@@ -8,16 +8,15 @@
 
 import React from 'react';
 
-import './dragScroll.css';
-
-const GRAB_CLASS = 'viewer-grab';
-const GRABBING_CLASS = 'viewer-grabbing';
+import ThemeContent from '../theme/ThemeContext';
+import './dragScroll.less';
 
 interface DragScrollHook {
     toggleDragScroll(enabled: boolean): void;
 }
 
 const useDragScroll = (ref: React.RefObject<HTMLDivElement>): DragScrollHook => {
+    const theme = React.useContext(ThemeContent);
     const [enabled, setEnabled] = React.useState(false);
     const pos = React.useRef({ top: 0, left: 0, x: 0, y: 0 });
 
@@ -27,8 +26,8 @@ const useDragScroll = (ref: React.RefObject<HTMLDivElement>): DragScrollHook => 
             return;
         }
 
-        ele.classList.remove(GRAB_CLASS);
-        ele.classList.add(GRABBING_CLASS);
+        ele.classList.remove(`${theme.prefixClass}-grab`);
+        ele.classList.add(`${theme.prefixClass}-grabbing`);
 
         e.preventDefault();
         e.stopPropagation();
@@ -58,8 +57,8 @@ const useDragScroll = (ref: React.RefObject<HTMLDivElement>): DragScrollHook => 
         if (!ele) {
             return;
         }
-        ele.classList.add(GRAB_CLASS);
-        ele.classList.remove(GRABBING_CLASS);
+        ele.classList.add(`${theme.prefixClass}-grab`);
+        ele.classList.remove(`${theme.prefixClass}-grabbing`);
 
         document.removeEventListener('mousemove', onMouseMoveHandler);
         document.removeEventListener('mouseup', onMouseUpHandler);
@@ -71,8 +70,8 @@ const useDragScroll = (ref: React.RefObject<HTMLDivElement>): DragScrollHook => 
             return;
         }
         enabled
-            ? ele.classList.add(GRAB_CLASS)
-            : ele.classList.remove(GRAB_CLASS);
+            ? ele.classList.add(`${theme.prefixClass}-grab`)
+            : ele.classList.remove(`${theme.prefixClass}-grab`);
         ele.addEventListener('mousedown', onMouseDownHandler);
 
         return () => {

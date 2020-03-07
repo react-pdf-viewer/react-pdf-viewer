@@ -8,7 +8,7 @@
 
 import React from 'react';
 
-import PdfJs from './PdfJs';
+import PdfJs from './vendors/PdfJs';
 
 interface WorkerProps {
     workerUrl: string;

@@ -8,14 +8,15 @@
 
 import React from 'react';
 
-import Observer, { VisibilityChanged } from '../Observer';
-import PdfJs from '../PdfJs';
+import Spinner from '../components/Spinner';
+import Observer, { VisibilityChanged } from '../layouts/Observer';
 import Match from '../search/Match';
-import Spinner from '../Spinner';
+import ThemeContent from '../theme/ThemeContext';
+import PdfJs from '../vendors/PdfJs';
 import { SpecialLevel } from '../zoom/zoomingLevel';
 import AnnotationLayer from './AnnotationLayer';
 import CanvasLayer from './CanvasLayer';
-import './pageLayer.css';
+import './pageLayer.less';
 import TextLayer from './TextLayer';
 
 interface PageLayerProps {
@@ -42,6 +43,7 @@ const PageLayer: React.FC<PageLayerProps> = ({
     doc, height, keywordRegexp, match, pageIndex, rotation, scale, width,
     onJumpToDest, onPageVisibilityChanged,
 }) => {
+    const theme = React.useContext(ThemeContent);
     const [pageSize, setPageSize] = React.useState<PageSizeState>({
         isCalculated: false,
         page: null,
@@ -84,14 +86,9 @@ const PageLayer: React.FC<PageLayerProps> = ({
     return (
         <Observer onVisibilityChanged={visibilityChanged} threshold={intersectionThreshold}>
             <div
-                className="viewer-page"
+                className={`${theme.prefixClass}-page-layer`}
                 style={{
-                    alignItems: 'center',
-                    display: 'flex',
                     height: `${h}px`,
-                    justifyContent: 'center',
-                    margin: '0 auto',
-                    position: 'relative',
                     width: `${w}px`,
                 }}
             >
