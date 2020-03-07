@@ -8,13 +8,12 @@
 
 import React from 'react';
 
-import Button from './components/Button';
 import useDragScroll from './hooks/useDragScroll';
 import useDrop from './hooks/useDrop';
 import useFullScreen from './hooks/useFullScreen';
 import useToggle from './hooks/useToggle';
-import ExitFullScreenIcon from './icons/ExitFullScreenIcon';
 import PageLayer from './layers/PageLayer';
+import ExitFullScreen from './layouts/ExitFullScreen';
 import { Layout } from './layouts/Layout';
 import Sidebar from './layouts/Sidebar';
 import { RenderToolbarSlot } from './layouts/ToolbarSlot';
@@ -299,22 +298,7 @@ const ViewerInner: React.FC<ViewerInnerProps> = ({
             children: (
                 <>
                 {isDragging && <DropArea />}
-                {
-                    isFullScreen && (
-                        <div
-                            style={{
-                                bottom: 0,
-                                padding: '8px',
-                                position: 'fixed',
-                                right: 0,
-                            }}
-                        >
-                            <div style={{ backgroundColor: '#FFF' }} title="Exit full screen">
-                                <Button onClick={closeFullScreen}><ExitFullScreenIcon /></Button>
-                            </div>
-                        </div>
-                    )
-                }
+                {isFullScreen && <ExitFullScreen onClick={closeFullScreen} />}
                 {
                     Array(numPages).fill(0).map((_, index) => {
                         return (
