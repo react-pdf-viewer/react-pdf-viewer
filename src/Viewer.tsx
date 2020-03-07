@@ -11,6 +11,7 @@ import React from 'react';
 import Slot from './layouts/Slot';
 import defaultLayout from './layouts/defaultLayout';
 import defaultToolbar from './layouts/defaultToolbar';
+import Inner from './layouts/Inner';
 import { Layout } from './layouts/Layout';
 import { RenderToolbar } from './layouts/ToolbarSlot';
 import DocumentLoader from './loader/DocumentLoader';
@@ -21,7 +22,6 @@ import PdfJs from './PdfJs';
 import SelectionMode from './SelectionMode';
 import ThemeProvider from './theme/ThemeProvider';
 import downloadFile from './utils/downloadFile';
-import ViewerInner from './ViewerInner';
 
 interface File {
     data: PdfJs.FileData;
@@ -90,7 +90,7 @@ const Viewer: React.FC<ViewerProps> = ({
             pageSize.scale = defaultScale || ps.scale;
 
             return (
-                <ViewerInner
+                <Inner
                     doc={doc}
                     fileName={file.name}
                     layout={layout || layoutOption}
