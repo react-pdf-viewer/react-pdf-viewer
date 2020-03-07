@@ -38,28 +38,11 @@ const OpenFileButton: React.FC<OpenFileButtonProps> = ({ onOpenFiles }) => {
         <Tooltip
             position={Position.BottomCenter}
             target={(
-                <div
-                    className="viewer-open-file"
-                    style={{
-                        border: 'none',
-                        borderRadius: '4px',
-                        cursor: 'pointer',
-                        position: 'relative',
-                    }}
-                >
+                <div className={`${theme.prefixClass}-open-file`}>
                     <input
+                        className={`${theme.prefixClass}-open-file-input`}
                         multiple={false}
-                        style={{
-                            bottom: '0',
-                            height: '100%',
-                            left: '0',
-                            opacity: 0,
-                            position: 'absolute',
-                            right: '0',
-                            top: '0',
-                            width: '100%',
-                        }}
-                        type="file"
+                        type='file'
                         onChange={openFiles}
                     />
                     <OpenFileIcon />
