@@ -202,6 +202,8 @@ export interface ViewerProps {
     fileUrl: string;
     layout?: Layout;
     localization?: LocalizationMap;
+    // The prefix for CSS classes
+    prefixClass?: string;
     selectionMode?: SelectionMode;
     onDocumentLoad?(doc: PdfJs.PdfDocument): void;
     onZoom?(doc: PdfJs.PdfDocument, scale: number): void;

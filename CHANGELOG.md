@@ -1,5 +1,22 @@
 # CHANGELOG
 
+## v1.4.0 (not released yet)
+
+**New features**
+- Add new optional parameter to define the prefix of CSS classes
+
+~~~ javascript
+<Viewer
+    prefixClass='viewer'
+/>
+~~~
+
+**Improvement**
+- All styles are moved to external CSS files. It's possible for us to override components' styles.
+
+**Bug fixes**
+- Can't scroll and print on IE 11
+
 ## v1.3.0
 
 **New features**

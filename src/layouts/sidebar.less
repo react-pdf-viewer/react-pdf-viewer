@@ -14,6 +14,7 @@
     height: 100%;
     width: 100%;
 }
+
 .@{viewer-prefix}-sidebar-tabs {
     align-items: center;
     background-color: rgb(238, 238, 238);
@@ -22,17 +23,20 @@
     justify-content: center;
     padding: 4px;
 }
+
 .@{viewer-prefix}-sidebar-tab {
     padding: 0px 2px;
 }
+
 .@{viewer-prefix}-sidebar-content {
-    overflow: scroll;
+    flex-grow: 1;
+    flex-shrink: 1;
+    overflow: auto;
     padding: 8px 0px;
 }
+
 .@{viewer-prefix}-sidebar-thumbnails {
     display: flex;
     flex-flow: row wrap;
-    flex-grow: 1;
-    flex-shrink: 1;
     justify-content: center;
 }
