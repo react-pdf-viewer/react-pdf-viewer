@@ -22,6 +22,7 @@ import UpArrowIcon from './icons/UpArrowIcon';
 import VerticalScrollingIcon from './icons/VerticalScrollingIcon';
 import WrappedScrollingIcon from './icons/WrappedScrollingIcon';
 import LocalizationContext from './localization/LocalizationContext';
+import Menu from './menu/Menu';
 import MenuDivider from './menu/MenuDivider';
 import MenuItem from './menu/MenuItem';
 import PdfJs from './PdfJs';
@@ -104,13 +105,7 @@ const MoreActionsPopover: React.FC<MoreActionsPopoverProps> = ({
 
         return (
             <div style={{ padding: '8px 0' }}>
-                <ul
-                    style={{
-                        listStyleType: 'none',
-                        margin: 0,
-                        padding: 0,
-                    }}
-                >
+                <Menu>
                     <MenuItem icon={<UpArrowIcon />} onClick={jumpToFirstPage}>
                         {l10n.toolbar.goToFirstPage}
                     </MenuItem>
@@ -168,7 +163,7 @@ const MoreActionsPopover: React.FC<MoreActionsPopoverProps> = ({
                         closeOnClickOutside={true}
                         closeOnEscape={true}
                     />
-                </ul>
+                </Menu>
             </div>
         );
     };
