@@ -360,6 +360,8 @@ const Inner: React.FC<InnerProps> = ({
                 ),
             },
         ),
+        changeScrollMode,
+        changeSelectionMode,
         jumpToPage,
         rotate,
         zoom,

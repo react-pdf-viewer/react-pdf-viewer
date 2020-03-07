@@ -24,7 +24,9 @@ import Modal from './portal/Modal';
 import Popover from './portal/Popover';
 import Position from './portal/Position';
 import Tooltip from './portal/Tooltip';
+import ScrollMode from './ScrollMode';
 import SelectionMode from './SelectionMode';
+import SpecialZoomLevel from './SpecialZoomLevel';
 import Viewer from './Viewer';
 import Worker from './Worker';
 
@@ -41,8 +43,10 @@ export {
     Position,
     PrimaryButton,
     ProgressBar,
+    ScrollMode,
     SelectionMode,
     Separator,
+    SpecialZoomLevel,
     Spinner,
     Tooltip,
     Worker,

@@ -18,6 +18,7 @@ import { RenderToolbar } from './layouts/ToolbarSlot';
 import DocumentLoader from './loader/DocumentLoader';
 import LocalizationMap from './localization/LocalizationMap';
 import LocalizationProvider from './localization/LocalizationProvider';
+import ScrollMode from './ScrollMode';
 import SelectionMode from './SelectionMode';
 import SpecialZoomLevel from './SpecialZoomLevel';
 import ThemeProvider from './theme/ThemeProvider';
@@ -31,6 +32,8 @@ interface File {
 
 interface RenderViewerProps {
     viewer: React.ReactElement;
+    changeScrollMode(mode: ScrollMode): void;
+    changeSelectionMode(mode: SelectionMode): void;
     jumpToPage(page: number): void;
     rotate(degree: number): void;
     zoom(level: number | SpecialZoomLevel): void;

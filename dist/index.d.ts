@@ -94,9 +94,21 @@ export interface ToolbarSlot {
     moreActionsPopover: React.ReactNode;
 }
 
+export enum ScrollMode {
+    Horizontal = 'Horizontal',
+    Vertical = 'Vertical',
+    Wrapped = 'Wrapped',
+}
+
 export enum SelectionMode {
     Hand,
     Text,
+}
+
+export enum SpecialZoomLevel {
+    ActualSize = 'ActualSize',
+    PageFit = 'PageFit',
+    PageWidth = 'PageWidth',
 }
 
 // ----------
@@ -191,10 +203,13 @@ export class Tooltip extends React.Component<TooltipProps> {}
 // Viewer
 export interface RenderViewerProps {
     viewer: React.ReactElement;
+    changeScrollMode(mode: ScrollMode): void;
+    changeSelectionMode(mode: SelectionMode): void;
     // Jump to given page
     // `page` is zero-index based
     jumpToPage(page: number): void;
     rotate(degree: number): void;
+    zoom(level: number | SpecialZoomLevel): void;
 }
 
 export type RenderViewer = (props: RenderViewerProps) => React.ReactElement;
