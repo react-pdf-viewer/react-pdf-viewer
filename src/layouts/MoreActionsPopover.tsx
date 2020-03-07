@@ -8,31 +8,31 @@
 
 import React from 'react';
 
-import Button from './components/Button';
-import Menu from './components/Menu';
-import MenuDivider from './components/MenuDivider';
-import MenuItem from './components/MenuItem';
-import { Toggle } from './hooks/useToggle';
-import DownArrowIcon from './icons/DownArrowIcon';
-import HandToolIcon from './icons/HandToolIcon';
-import HorizontalScrollingIcon from './icons/HorizontalScrollingIcon';
-import InfoIcon from './icons/InfoIcon';
-import MoreIcon from './icons/MoreIcon';
-import RotateBackwardIcon from './icons/RotateBackwardIcon';
-import RotateForwardIcon from './icons/RotateForwardIcon';
-import TextSelectionIcon from './icons/TextSelectionIcon';
-import UpArrowIcon from './icons/UpArrowIcon';
-import VerticalScrollingIcon from './icons/VerticalScrollingIcon';
-import WrappedScrollingIcon from './icons/WrappedScrollingIcon';
-import LocalizationContext from './localization/LocalizationContext';
-import PdfJs from './PdfJs';
-import Modal from './portal/Modal';
-import Popover from './portal/Popover';
-import Position from './portal/Position';
-import Tooltip from './portal/Tooltip';
-import PropertiesModal from './property/PropertiesModal';
-import ScrollMode from './ScrollMode';
-import SelectionMode from './SelectionMode';
+import Button from '../components/Button';
+import Menu from '../components/Menu';
+import MenuDivider from '../components/MenuDivider';
+import MenuItem from '../components/MenuItem';
+import { Toggle } from '../hooks/useToggle';
+import DownArrowIcon from '../icons/DownArrowIcon';
+import HandToolIcon from '../icons/HandToolIcon';
+import HorizontalScrollingIcon from '../icons/HorizontalScrollingIcon';
+import InfoIcon from '../icons/InfoIcon';
+import MoreIcon from '../icons/MoreIcon';
+import RotateBackwardIcon from '../icons/RotateBackwardIcon';
+import RotateForwardIcon from '../icons/RotateForwardIcon';
+import TextSelectionIcon from '../icons/TextSelectionIcon';
+import UpArrowIcon from '../icons/UpArrowIcon';
+import VerticalScrollingIcon from '../icons/VerticalScrollingIcon';
+import WrappedScrollingIcon from '../icons/WrappedScrollingIcon';
+import LocalizationContext from '../localization/LocalizationContext';
+import PdfJs from '../PdfJs';
+import Modal from '../portal/Modal';
+import Popover from '../portal/Popover';
+import Position from '../portal/Position';
+import Tooltip from '../portal/Tooltip';
+import PropertiesModal from '../property/PropertiesModal';
+import ScrollMode from '../ScrollMode';
+import SelectionMode from '../SelectionMode';
 
 interface MoreActionsPopoverProps {
     doc: PdfJs.PdfDocument;
@@ -178,5 +178,4 @@ const MoreActionsPopover: React.FC<MoreActionsPopoverProps> = ({
     );
 };
 
-export { ScrollMode };
 export default MoreActionsPopover;

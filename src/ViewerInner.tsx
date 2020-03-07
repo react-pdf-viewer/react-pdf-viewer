@@ -28,7 +28,7 @@ import Match from './search/Match';
 import ScrollMode from './ScrollMode';
 import SelectionMode from './SelectionMode';
 import ThemeContent from './theme/ThemeContext';
-import Toolbar from './Toolbar';
+import Toolbar from './layouts/Toolbar';
 import getFileExt from './utils/fileExt';
 import { SpecialLevel } from './zoom/zoomingLevel';
 
