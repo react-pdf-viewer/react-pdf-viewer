@@ -157,39 +157,28 @@ const Inner: React.FC<InnerProps> = ({
         if (!pagesContainer) {
             return;
         }
-        let styles: { [key: string]: string; } = {};
         switch (mode) {
             case ScrollMode.Vertical:
-                styles = {
-                    'display': 'flex',
-                    'flex-direction': 'column',
-                    'flex-wrap': '',
-                    'justify-content': '',
-                };
+                pagesContainer.classList.add(`${theme.prefixClass}-inner-pages-vertical`);
+                pagesContainer.classList.remove(`${theme.prefixClass}-inner-pages-horizontal`);
+                pagesContainer.classList.remove(`${theme.prefixClass}-inner-pages-wrapped`);
                 break;
+
             case ScrollMode.Horizontal:
-                styles = {
-                    'display': 'flex',
-                    'flex-direction': 'row',
-                    'flex-wrap': '',
-                    'justify-content': '',
-                };
+                pagesContainer.classList.add(`${theme.prefixClass}-inner-pages-horizontal`);
+                pagesContainer.classList.remove(`${theme.prefixClass}-inner-pages-vertical`);
+                pagesContainer.classList.remove(`${theme.prefixClass}-inner-pages-wrapped`);
                 break;
+
             case ScrollMode.Wrapped:
-                styles = {
-                    'display': 'flex',
-                    'flex-direction': 'row',
-                    'flex-wrap': 'wrap',
-                    'justify-content': 'center',
-                };
+                pagesContainer.classList.add(`${theme.prefixClass}-inner-pages-wrapped`);
+                pagesContainer.classList.remove(`${theme.prefixClass}-inner-pages-vertical`);
+                pagesContainer.classList.remove(`${theme.prefixClass}-inner-pages-horizontal`);
                 break;
+
             default:
                 break;
         }
-
-        Object.keys(styles).forEach((k) => {
-            pagesContainer.style.setProperty(k, styles[k]);
-        });
     };
 
     const openFiles = (files: FileList) => {
