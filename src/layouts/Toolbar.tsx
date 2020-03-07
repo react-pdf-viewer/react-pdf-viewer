@@ -53,6 +53,7 @@ interface ToolbarProps {
     fileName: string;
     renderToolbar: RenderToolbarSlot;
     scale: number;
+    scrollMode: ScrollMode;
     selectionMode: SelectionMode;
     onChangeScrollMode(mode: ScrollMode): void;
     onChangeSelectionMode(mode: SelectionMode): void;
@@ -71,7 +72,7 @@ interface ToolbarProps {
 const TOOLTIP_OFFSET = { left: 0, top: 8 };
 
 const Toolbar: React.FC<ToolbarProps> = ({
-    currentPage, doc, fileName, scale, selectionMode,
+    currentPage, doc, fileName, scale, scrollMode, selectionMode,
     onChangeScrollMode, onChangeSelectionMode, onDownload, onFullScreen, onJumpTo,
     onJumpToMatch, onOpenFiles, onPrint, onRotate, onSearchFor, onToggleSidebar, onZoom,
     renderToolbar,
@@ -81,7 +82,6 @@ const Toolbar: React.FC<ToolbarProps> = ({
     const [pageTextboxFocused, setPageTextboxFocused] = React.useState(false);
     const [editingPage, setEditingPage] = React.useState(currentPage);
     const [isSidebarOpened, setSidebarOpened] = React.useState(false);
-    const [scrollMode, setScrollMode] = React.useState<ScrollMode>(ScrollMode.Vertical);
 
     const { numPages } = doc;
 
@@ -150,14 +150,10 @@ const Toolbar: React.FC<ToolbarProps> = ({
     const rotateBackward = () => onRotate(-90);
     const activateTextSelectionMode = () => onChangeSelectionMode(SelectionMode.Text);
     const activateHandMode = () => onChangeSelectionMode(SelectionMode.Hand);
-    const changeScrollMode = (mode: ScrollMode) => {
-        setScrollMode(mode);
-        onChangeScrollMode(mode);
-    };
 
-    const setVerticalScrollMode = () => changeScrollMode(ScrollMode.Vertical);
-    const setHorizontalScrollMode = () => changeScrollMode(ScrollMode.Horizontal);
-    const setWrappedScrollMode = () => changeScrollMode(ScrollMode.Wrapped);
+    const setVerticalScrollMode = () => onChangeScrollMode(ScrollMode.Vertical);
+    const setHorizontalScrollMode = () => onChangeScrollMode(ScrollMode.Horizontal);
+    const setWrappedScrollMode = () => onChangeScrollMode(ScrollMode.Wrapped);
 
     const renderToggle = () => l10n.toolbar.toggleSidebar;
     const renderPreviousPage = () => l10n.toolbar.previousPage;
@@ -268,7 +264,7 @@ const Toolbar: React.FC<ToolbarProps> = ({
                 fileName={fileName}
                 scrollMode={scrollMode}
                 selectionMode={selectionMode}
-                onChangeScrollMode={changeScrollMode}
+                onChangeScrollMode={onChangeScrollMode}
                 onChangeSelectionMode={onChangeSelectionMode}
                 onJumpToFirstPage={jumpToFirstPage}
                 onJumpToLastPage={jumpToLastPage}

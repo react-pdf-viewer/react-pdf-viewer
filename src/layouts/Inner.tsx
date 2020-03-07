@@ -65,6 +65,7 @@ const Inner: React.FC<InnerProps> = ({
         matchIndex: -1,
         pageIndex: -1,
     });
+    const [scrollMode, setScrollMode] = React.useState<ScrollMode>(ScrollMode.Vertical);
     const [currentMode, setCurrentMode] = React.useState<SelectionMode>(selectionMode);
     const { toggleDragScroll } = useDragScroll(pagesRef);
     const { isFullScreen, openFullScreen, closeFullScreen } = useFullScreen(pagesRef);
@@ -180,6 +181,7 @@ const Inner: React.FC<InnerProps> = ({
             default:
                 break;
         }
+        setScrollMode(mode);
     };
 
     const openFiles = (files: FileList) => {
@@ -329,6 +331,7 @@ const Inner: React.FC<InnerProps> = ({
                     doc={doc}
                     fileName={fileName}
                     scale={scale}
+                    scrollMode={scrollMode}
                     selectionMode={currentMode}
                     onChangeScrollMode={changeScrollMode}
                     onChangeSelectionMode={changeSelectionMode}
