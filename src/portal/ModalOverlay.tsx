@@ -8,12 +8,17 @@
 
 import React from 'react';
 
+import ThemeContent from '../theme/ThemeContext';
+import './modalOverlay.less';
+
 interface ModalOverlayProps {
     closeOnClickOutside: boolean;
     onClose(): void;
 }
 
 const ModalOverlay: React.FC<ModalOverlayProps> = ({ children, closeOnClickOutside, onClose }) => {
+    const theme = React.useContext(ThemeContent);
+
     const onClick = (e: React.MouseEvent) => {
         if (e.target === e.currentTarget && closeOnClickOutside) {
             onClose();
@@ -21,18 +26,7 @@ const ModalOverlay: React.FC<ModalOverlayProps> = ({ children, closeOnClickOutsi
     };
 
     return (
-        <div
-            style={{
-                backgroundColor: 'rgba(0, 0, 0, 0.5)',
-                bottom: 0,
-                left: 0,
-                position: 'fixed',
-                right: 0,
-                top: 0,
-                zIndex: 9999,
-            }}
-            onClick={onClick}
-        >
+        <div className={`${theme.prefixClass}-modal-overlay`} onClick={onClick}>
             {children}
         </div>
     );
