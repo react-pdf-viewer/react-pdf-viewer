@@ -44,6 +44,8 @@ interface ViewerProps {
     // If it's not set, the initial zoom level will be calculated based on the dimesion of page and the container width
     defaultScale?: number;
     fileUrl: string;
+    // The page (zero-index based) that will be displayed initially
+    initialPage?: number;
     layout?: Layout;
     localization?: LocalizationMap;
     // The prefix for CSS classes
@@ -58,6 +60,7 @@ interface ViewerProps {
 const Viewer: React.FC<ViewerProps> = ({
     defaultScale,
     fileUrl,
+    initialPage,
     layout,
     localization,
     prefixClass,
@@ -102,6 +105,7 @@ const Viewer: React.FC<ViewerProps> = ({
                 <Inner
                     doc={doc}
                     file={file}
+                    initialPage={initialPage}
                     layout={layout || layoutOption}
                     pageSize={pageSize}
                     render={renderViewer}

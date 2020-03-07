@@ -22,6 +22,7 @@ import TextLayer from './TextLayer';
 interface PageLayerProps {
     doc: PdfJs.PdfDocument;
     height: number;
+    initialPage?: number;
     keywordRegexp: RegExp;
     match: Match;
     pageIndex: number;
@@ -40,7 +41,7 @@ interface PageSizeState {
 }
 
 const PageLayer: React.FC<PageLayerProps> = ({
-    doc, height, keywordRegexp, match, pageIndex, rotation, scale, width,
+    doc, height, initialPage, keywordRegexp, match, pageIndex, rotation, scale, width,
     onJumpToDest, onPageVisibilityChanged,
 }) => {
     const theme = React.useContext(ThemeContent);

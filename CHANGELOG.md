@@ -3,6 +3,16 @@
 ## v1.4.0 (not released yet)
 
 **New features**
+- Add new optional parameter indicating the page that will be displayed initially
+
+~~~ javascript
+<Viewer
+    // The page is zero-based index
+    // We will display the third page initially
+    initialPage={2}
+/>
+~~~
+
 - Add new optional parameter to define the prefix of CSS classes
 
 ~~~ javascript
