@@ -38,7 +38,7 @@ const AttachmentList: React.FC<AttachmentListProps> = ({ files }) => {
 
     return (
         files.length === 0
-            ? <div>{l10n.attachment.noAttachment}</div>
+            ? <div className={`${theme.prefixClass}-attachment-list-empty`}>{l10n.attachment.noAttachment}</div>
             : (
                 <ul className={`${theme.prefixClass}-attachment-list`}>
                     {
