@@ -9,10 +9,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import './printZone.less';
 import PdfJs from '../PdfJs';
+import ThemeContent from '../theme/ThemeContext';
 import PageThumbnailContainer from './PageThumbnailContainer';
 import PrintStatus from './PrintStatus';
+import './printZone.less';
 
 interface PrintZoneProps {
     doc: PdfJs.PdfDocument;
@@ -25,7 +26,9 @@ interface PrintZoneProps {
 }
 
 const PrintZone: React.FC<PrintZoneProps> = ({ doc, pageHeight, pageWidth, printStatus, rotation, onCancel, onLoad }) => {
+    const theme = React.useContext(ThemeContent);
     const [numLoadedPages, setNumLoadedPages] = React.useState(0);
+
     React.useEffect(() => {
         if (printStatus === PrintStatus.Ready) {
             window.print();
@@ -52,12 +55,12 @@ const PrintZone: React.FC<PrintZoneProps> = ({ doc, pageHeight, pageWidth, print
     return (
         ReactDOM.createPortal(
             (
-                <div className='viewer-print-container'>
+                <div className={`${theme.prefixClass}-print-container`}>
                     {
                         Array(numPages).fill(0).map((_, index) => {
                             return (
                                 <div
-                                    className='viewer-print-page'
+                                    className={`${theme.prefixClass}-print-page`}
                                     key={index}
                                 >
                                     <PageThumbnailContainer
