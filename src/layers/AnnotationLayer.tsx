@@ -11,9 +11,9 @@ import React from 'react';
 import PdfJs from '../PdfJs';
 import ThemeContent from '../theme/ThemeContext';
 import getDestination from '../utils/getDestination';
-import WithScale from '../WithScale';
 import { SpecialLevel } from '../zoom/zoomingLevel';
 import './annotationLayer.less';
+import WithScale from './WithScale';
 
 interface AnnotationLayerProps {
     doc: PdfJs.PdfDocument;

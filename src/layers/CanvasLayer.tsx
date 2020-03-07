@@ -10,8 +10,8 @@ import React from 'react';
 
 import PdfJs from '../PdfJs';
 import ThemeContent from '../theme/ThemeContext';
-import WithScale from '../WithScale';
 import './canvasLayer.less';
+import WithScale from './WithScale';
 
 interface CanvasLayerProps {
     height: number;
