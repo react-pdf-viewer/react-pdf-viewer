@@ -94,9 +94,21 @@ export interface ToolbarSlot {
     moreActionsPopover: React.ReactNode;
 }
 
+export enum ScrollMode {
+    Horizontal = 'Horizontal',
+    Vertical = 'Vertical',
+    Wrapped = 'Wrapped',
+}
+
 export enum SelectionMode {
     Hand,
     Text,
+}
+
+export enum SpecialZoomLevel {
+    ActualSize = 'ActualSize',
+    PageFit = 'PageFit',
+    PageWidth = 'PageWidth',
 }
 
 // ----------
@@ -104,7 +116,6 @@ export enum SelectionMode {
 // ----------
 
 // Button
-
 export interface ButtonProps {
     isSelected?: boolean;
     onClick(): void;
@@ -113,7 +124,6 @@ export interface ButtonProps {
 export class Button extends React.Component<ButtonProps> {}
 
 // Icon
-
 export interface IconProps {
     size?: number;
 }
@@ -121,11 +131,9 @@ export interface IconProps {
 export class Icon extends React.Component<IconProps> {}
 
 // MenuDivider
-
 export class MenuDivider extends React.Component<{}> {}
 
 // MenuItem
-
 export interface MenuItemProps {
     checked?: boolean;
     icon?: React.ReactElement;
@@ -135,7 +143,6 @@ export interface MenuItemProps {
 export class MenuItem extends React.Component<MenuItemProps> {}
 
 // Modal
-
 export interface ModalProps {
     closeOnClickOutside: boolean;
     closeOnEscape: boolean;
@@ -146,7 +153,6 @@ export interface ModalProps {
 export class Modal extends React.Component<ModalProps> {}
 
 // Popover
-
 export interface PopoverProps {
     closeOnClickOutside: boolean;
     closeOnEscape: boolean;
@@ -159,12 +165,30 @@ export interface PopoverProps {
 export class Popover extends React.Component<PopoverProps> {}
 
 // Portal
-
 export type RenderContent = (toggle: Toggle) => React.ReactNode;
 export type RenderTarget = (toggle: Toggle, opened: boolean) => React.ReactNode;
 
-// Tooltip
+// Primary button
+export interface PrimaryButtonProps {
+    onClick(): void;
+}
 
+export class PrimaryButton extends React.Component<PrimaryButtonProps> {}
+
+// Progress bar
+export interface ProgressBarProps {
+    progress: number;
+}
+
+export class ProgressBar extends React.Component<ProgressBarProps> {}
+
+// Separator
+export class Separator extends React.Component<{}> {}
+
+// Spinner
+export class Spinner extends React.Component<{}> {}
+
+// Tooltip
 export type RenderTooltipContent = () => React.ReactNode;
 
 export interface TooltipProps {
@@ -177,6 +201,21 @@ export interface TooltipProps {
 export class Tooltip extends React.Component<TooltipProps> {}
 
 // Viewer
+export interface RenderViewerProps {
+    viewer: React.ReactElement;
+    doc: PdfJs.PdfDocument;
+    download(): void;
+    changeScrollMode(mode: ScrollMode): void;
+    changeSelectionMode(mode: SelectionMode): void;
+    // Jump to given page
+    // `page` is zero-index based
+    jumpToPage(page: number): void;
+    print(): void;
+    rotate(degree: number): void;
+    zoom(level: number | SpecialZoomLevel): void;
+}
+
+export type RenderViewer = (props: RenderViewerProps) => React.ReactElement;
 
 export type Layout = (
     isSidebarOpened: boolean,
@@ -204,6 +243,7 @@ export interface ViewerProps {
     localization?: LocalizationMap;
     // The prefix for CSS classes
     prefixClass?: string;
+    render?: RenderViewer;
     selectionMode?: SelectionMode;
     onDocumentLoad?(doc: PdfJs.PdfDocument): void;
     onZoom?(doc: PdfJs.PdfDocument, scale: number): void;
@@ -211,7 +251,6 @@ export interface ViewerProps {
 export default class Viewer extends React.Component<ViewerProps> {}
 
 // Worker
-
 export interface WorkerProps {
     workerUrl: string;
 }

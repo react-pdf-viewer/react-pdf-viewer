@@ -10,8 +10,8 @@ import React from 'react';
 
 import ThemeContent from '../theme/ThemeContext';
 import getDestination from '../utils/getDestination';
+import SpecialZoomLevel from '../SpecialZoomLevel';
 import PdfJs from '../vendors/PdfJs';
-import { SpecialLevel } from '../zoom/zoomingLevel';
 import './annotationLayer.less';
 import WithScale from './WithScale';
 
@@ -20,7 +20,7 @@ interface AnnotationLayerProps {
     page: PdfJs.Page;
     rotation: number;
     scale: number;
-    onJumpToDest(pageIndex: number, bottomOffset: number, scaleTo: number | SpecialLevel): void;
+    onJumpToDest(pageIndex: number, bottomOffset: number, scaleTo: number | SpecialZoomLevel): void;
 }
 
 const AnnotationLayer: React.FC<AnnotationLayerProps> = ({ doc, page, rotation, scale, onJumpToDest }) => {

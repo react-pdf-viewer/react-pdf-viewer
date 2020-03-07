@@ -20,12 +20,6 @@ const LEVELS = [
     10,
 ];
 
-enum SpecialLevel {
-    ActualSize = 'ActualSize',
-    PageFit = 'PageFit',
-    PageWidth = 'PageWidth',
-}
-
 const increase = (currentLevel: number) => {
     const found = LEVELS.find((item) => item > currentLevel);
     return found || currentLevel;
@@ -36,4 +30,4 @@ const decrease = (currentLevel: number) => {
     return found === -1 || found === 0 ? currentLevel : LEVELS[found - 1];
 };
 
-export { increase, decrease, SpecialLevel };
+export { increase, decrease };

@@ -17,11 +17,11 @@ import WrappedScrollingIcon from '../icons/WrappedScrollingIcon';
 import LocalizationContext from '../localization/LocalizationContext';
 import Position from '../portal/Position';
 import Tooltip from '../portal/Tooltip';
+import SpecialZoomLevel from '../SpecialZoomLevel';
 import ThemeContent from '../theme/ThemeContext';
 import ThumbnailList from '../thumbnail/ThumbnailList';
 import classNames from '../utils/classNames';
 import PdfJs from '../vendors/PdfJs';
-import { SpecialLevel } from '../zoom/zoomingLevel';
 import './sidebar.less';
 
 interface SidebarProps {
@@ -30,7 +30,7 @@ interface SidebarProps {
     height: number;
     rotation: number;
     width: number;
-    onJumpToDest(pageIndex: number, bottomOffset: number, scaleTo: number | SpecialLevel): void;
+    onJumpToDest(pageIndex: number, bottomOffset: number, scaleTo: number | SpecialZoomLevel): void;
     onJumpToPage(pageIndex: number): void;
 }
 

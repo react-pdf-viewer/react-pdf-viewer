@@ -9,8 +9,8 @@
 import React from 'react';
 
 import ThemeContent from '../theme/ThemeContext';
+import SpecialZoomLevel from '../SpecialZoomLevel';
 import PdfJs from '../vendors/PdfJs';
-import { SpecialLevel } from '../zoom/zoomingLevel';
 import './bookmarkItem.less';
 import BookmarkList from './BookmarkList';
 
@@ -19,7 +19,7 @@ interface BookmarkItemProps {
     depth: number;
     doc: PdfJs.PdfDocument;
     onClick(dest: PdfJs.OutlineDestinationType): void;
-    onJumpToDest(pageIndex: number, bottomOffset: number, scaleTo: number | SpecialLevel): void;
+    onJumpToDest(pageIndex: number, bottomOffset: number, scaleTo: number | SpecialZoomLevel): void;
 }
 
 const BookmarkItem: React.FC<BookmarkItemProps> = ({ bookmark, depth, doc, onClick, onJumpToDest }) => {

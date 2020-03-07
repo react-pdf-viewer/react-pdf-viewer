@@ -15,13 +15,13 @@ import { Toggle } from '../hooks/useToggle';
 import LocalizationContext from '../localization/LocalizationContext';
 import Popover from '../portal/Popover';
 import Position from '../portal/Position';
+import SpecialZoomLevel from '../SpecialZoomLevel';
 import ThemeContent from '../theme/ThemeContext';
-import { SpecialLevel } from './zoomingLevel';
 import './zoomPopover.less';
 
 interface ZoomPopoverProps {
     scale: number;
-    onZoom(scale: number | SpecialLevel): void;
+    onZoom(scale: number | SpecialZoomLevel): void;
 }
 
 const LEVELS = [0.5, 0.75, 1, 1.25, 1.5, 2, 3, 4];
@@ -33,9 +33,9 @@ const ZoomPopover: React.FC<ZoomPopoverProps> = ({ scale, onZoom }) => {
 
     const getSpcialLevelLabel = (level: string) => {
         switch (level) {
-            case SpecialLevel.ActualSize: return l10n.zoom.actualSize;
-            case SpecialLevel.PageFit: return l10n.zoom.pageFit;
-            case SpecialLevel.PageWidth: return l10n.zoom.pageWidth;
+            case SpecialZoomLevel.ActualSize: return l10n.zoom.actualSize;
+            case SpecialZoomLevel.PageFit: return l10n.zoom.pageFit;
+            case SpecialZoomLevel.PageWidth: return l10n.zoom.pageWidth;
         }
     };
 
@@ -52,8 +52,8 @@ const ZoomPopover: React.FC<ZoomPopoverProps> = ({ scale, onZoom }) => {
     const renderContent = (toggle: Toggle) => (
         <Menu>
             {
-                Object.keys(SpecialLevel).map((k) => {
-                    const level = k as SpecialLevel;
+                Object.keys(SpecialZoomLevel).map((k) => {
+                    const level = k as SpecialZoomLevel;
                     const clickMenuItem = () => { toggle(); onZoom(level); };
                     return (
                         <MenuItem key={level} onClick={clickMenuItem}>

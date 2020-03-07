@@ -8,6 +8,7 @@
 
 import React from 'react';
 
+import File from '../File';
 import useDragScroll from '../hooks/useDragScroll';
 import useDrop from '../hooks/useDrop';
 import useFullScreen from '../hooks/useFullScreen';
@@ -20,10 +21,12 @@ import PrintZone from '../print/PrintZone';
 import Match from '../search/Match';
 import ScrollMode from '../ScrollMode';
 import SelectionMode from '../SelectionMode';
+import SpecialZoomLevel from '../SpecialZoomLevel';
 import ThemeContent from '../theme/ThemeContext';
 import PdfJs from '../vendors/PdfJs';
+import downloadFile from '../utils/downloadFile';
 import getFileExt from '../utils/fileExt';
-import { SpecialLevel } from '../zoom/zoomingLevel';
+import { RenderViewer } from '../Viewer';
 import ExitFullScreen from './ExitFullScreen';
 import './inner.less';
 import { Layout } from './Layout';
@@ -32,7 +35,6 @@ import Sidebar from './Sidebar';
 import Toolbar from './Toolbar';
 import { RenderToolbarSlot } from './ToolbarSlot';
 
-
 // `new RegExp('')` will treat the source as `(?:)` which is not an empty string
 const EMPTY_KEYWORD_REGEXP = new RegExp(' ');
 const SCROLL_BAR_WIDTH = 17;
@@ -40,19 +42,19 @@ const PAGE_PADDING = 8;
 
 interface InnerProps {
     doc: PdfJs.PdfDocument;
-    fileName: string;
+    file: File;
     layout: Layout;
     pageSize: PageSize;
+    render: RenderViewer;
     selectionMode: SelectionMode;
     onDocumentLoad(doc: PdfJs.PdfDocument): void;
-    onDownload(): void;
     onOpenFile(fileName: string, data: Uint8Array): void;
     onZoom(doc: PdfJs.PdfDocument, scale: number): void;
 }
 
 const Inner: React.FC<InnerProps> = ({
-    doc, fileName, layout, pageSize, selectionMode,
-    onDocumentLoad, onDownload, onOpenFile, onZoom,
+    doc, file, layout, pageSize, render, selectionMode,
+    onDocumentLoad, onOpenFile, onZoom,
 }) => {
     const theme = React.useContext(ThemeContent);
     const pagesRef = React.useRef<HTMLDivElement | null>(null);
@@ -64,6 +66,7 @@ const Inner: React.FC<InnerProps> = ({
         matchIndex: -1,
         pageIndex: -1,
     });
+    const [scrollMode, setScrollMode] = React.useState<ScrollMode>(ScrollMode.Vertical);
     const [currentMode, setCurrentMode] = React.useState<SelectionMode>(selectionMode);
     const { toggleDragScroll } = useDragScroll(pagesRef);
     const { isFullScreen, openFullScreen, closeFullScreen } = useFullScreen(pagesRef);
@@ -97,7 +100,11 @@ const Inner: React.FC<InnerProps> = ({
     const pageVisibility = arr.map((_, __) => 0);
     const pageRefs = arr.map((_, __) => React.useRef<HTMLDivElement>());
 
-    const zoom = (newScale: number | SpecialLevel) => {
+    const download = () => {
+        downloadFile(file.name, file.data);
+    };
+
+    const zoom = (newScale: number | SpecialZoomLevel) => {
         const pagesEle = pagesRef.current;
         if (!pagesEle) {
             return;
@@ -105,17 +112,17 @@ const Inner: React.FC<InnerProps> = ({
 
         let scaled = 1;
         switch (newScale) {
-            case SpecialLevel.ActualSize:
+            case SpecialZoomLevel.ActualSize:
                 scaled = 1;
                 break;
 
-            case SpecialLevel.PageFit:
+            case SpecialZoomLevel.PageFit:
                 const scaleWidth = (pagesEle.offsetWidth - SCROLL_BAR_WIDTH) / pageWidth;
                 const scaleHeight = (pagesEle.offsetHeight - 2 * PAGE_PADDING) / pageHeight;
                 scaled = Math.min(scaleWidth, scaleHeight);
                 break;
 
-            case SpecialLevel.PageWidth:
+            case SpecialZoomLevel.PageWidth:
                 scaled = (pagesEle.offsetWidth - SCROLL_BAR_WIDTH) / pageWidth;
                 break;
 
@@ -157,58 +164,48 @@ const Inner: React.FC<InnerProps> = ({
         if (!pagesContainer) {
             return;
         }
-        let styles: { [key: string]: string; } = {};
         switch (mode) {
             case ScrollMode.Vertical:
-                styles = {
-                    'display': 'flex',
-                    'flex-direction': 'column',
-                    'flex-wrap': '',
-                    'justify-content': '',
-                };
+                pagesContainer.classList.add(`${theme.prefixClass}-inner-pages-vertical`);
+                pagesContainer.classList.remove(`${theme.prefixClass}-inner-pages-horizontal`);
+                pagesContainer.classList.remove(`${theme.prefixClass}-inner-pages-wrapped`);
                 break;
+
             case ScrollMode.Horizontal:
-                styles = {
-                    'display': 'flex',
-                    'flex-direction': 'row',
-                    'flex-wrap': '',
-                    'justify-content': '',
-                };
+                pagesContainer.classList.add(`${theme.prefixClass}-inner-pages-horizontal`);
+                pagesContainer.classList.remove(`${theme.prefixClass}-inner-pages-vertical`);
+                pagesContainer.classList.remove(`${theme.prefixClass}-inner-pages-wrapped`);
                 break;
+
             case ScrollMode.Wrapped:
-                styles = {
-                    'display': 'flex',
-                    'flex-direction': 'row',
-                    'flex-wrap': 'wrap',
-                    'justify-content': 'center',
-                };
+                pagesContainer.classList.add(`${theme.prefixClass}-inner-pages-wrapped`);
+                pagesContainer.classList.remove(`${theme.prefixClass}-inner-pages-vertical`);
+                pagesContainer.classList.remove(`${theme.prefixClass}-inner-pages-horizontal`);
                 break;
+
             default:
                 break;
         }
-
-        Object.keys(styles).forEach((k) => {
-            pagesContainer.style.setProperty(k, styles[k]);
-        });
+        setScrollMode(mode);
     };
 
     const openFiles = (files: FileList) => {
         if (files.length === 0) {
             return;
         }
-        const file = files[0];
+        const selectedFile = files[0];
         if (getFileExt(file.name).toLowerCase() !== 'pdf') {
             return;
         }
         new Promise<Uint8Array>((resolve, _) => {
             const reader = new FileReader();
-            reader.readAsArrayBuffer(file);
+            reader.readAsArrayBuffer(selectedFile);
             reader.onload = (e) => {
                 const bytes = new Uint8Array(reader.result as ArrayBuffer);
                 resolve(bytes);
             };
         }).then((data) => {
-            onOpenFile(file.name, data);
+            onOpenFile(selectedFile.name, data);
         });
     };
 
@@ -217,7 +214,7 @@ const Inner: React.FC<InnerProps> = ({
         setMatch(target);
     };
 
-    const jumpToDest = (pageIndex: number, bottomOffset: number, scaleTo: number | SpecialLevel) => {
+    const jumpToDest = (pageIndex: number, bottomOffset: number, scaleTo: number | SpecialZoomLevel) => {
         const pagesContainer = pagesRef.current;
         if (!pagesContainer) {
             return;
@@ -230,9 +227,9 @@ const Inner: React.FC<InnerProps> = ({
             let top = 0;
             const bottom = bottomOffset || 0;
             switch (scaleTo) {
-                case SpecialLevel.PageFit:
+                case SpecialZoomLevel.PageFit:
                     top = 0;
-                    zoom(SpecialLevel.PageFit);
+                    zoom(SpecialZoomLevel.PageFit);
                     break;
                 default:
                     top = (viewport.height - bottom) * scale;
@@ -260,115 +257,126 @@ const Inner: React.FC<InnerProps> = ({
         setNumLoadedPagesForPrint(0);
     };
 
-    return layout(
-        toggleSidebar.opened,
-        {
-            attrs: {
-                style: {
-                    position: 'relative',
-                }
-            },
-            children: (
-                <>
-                {printStatus === PrintStatus.Preparing && (
-                    <PrintProgress
-                        numLoadedPages={numLoadedPagesForPrint}
-                        numPages={numPages}
-                        onCancel={cancelPrinting}
-                        onStartPrinting={startPrinting}
-                    />
-                )}
-                {(printStatus === PrintStatus.Preparing || printStatus === PrintStatus.Ready) && (
-                    <PrintZone
-                        doc={doc}
-                        pageHeight={pageHeight}
-                        pageWidth={pageWidth}
-                        printStatus={printStatus}
-                        rotation={rotation}
-                        onCancel={cancelPrinting}
-                        onLoad={setNumLoadedPagesForPrint}
-                    />
-                )}
-                </>
-            )
-        },
-        {
-            attrs: {
-                ref: pagesRef,
-                style: {
-                    position: 'relative',
+    return render({
+        viewer: layout(
+            toggleSidebar.opened,
+            {
+                attrs: {
+                    style: {
+                        position: 'relative',
+                    }
                 },
+                children: (
+                    <>
+                    {printStatus === PrintStatus.Preparing && (
+                        <PrintProgress
+                            numLoadedPages={numLoadedPagesForPrint}
+                            numPages={numPages}
+                            onCancel={cancelPrinting}
+                            onStartPrinting={startPrinting}
+                        />
+                    )}
+                    {(printStatus === PrintStatus.Preparing || printStatus === PrintStatus.Ready) && (
+                        <PrintZone
+                            doc={doc}
+                            pageHeight={pageHeight}
+                            pageWidth={pageWidth}
+                            printStatus={printStatus}
+                            rotation={rotation}
+                            onCancel={cancelPrinting}
+                            onLoad={setNumLoadedPagesForPrint}
+                        />
+                    )}
+                    </>
+                )
             },
-            children: (
-                <>
-                {isDragging && <DropArea />}
-                {isFullScreen && <ExitFullScreen onClick={closeFullScreen} />}
-                {
-                    Array(numPages).fill(0).map((_, index) => {
-                        return (
-                            <div
-                                className={`${theme.prefixClass}-inner-page`}
-                                key={`pagelayer-${index}`}
-                                ref={(ref) => {
-                                    pageRefs[index].current = ref as HTMLDivElement;
-                                }}
-                            >
-                                <PageLayer
-                                    doc={doc}
-                                    keywordRegexp={keywordRegexp}
-                                    height={pageHeight}
-                                    match={match}
-                                    pageIndex={index}
-                                    rotation={rotation}
-                                    scale={scale}
-                                    width={pageWidth}
-                                    onJumpToDest={jumpToDest}
-                                    onPageVisibilityChanged={pageVisibilityChanged}
-                                />
-                            </div>
-                        );
-                    })
-                }
-                </>
-            ),
-        },
-        (renderToolbar: RenderToolbarSlot) => (
-            <Toolbar
-                currentPage={currentPage}
-                doc={doc}
-                fileName={fileName}
-                scale={scale}
-                selectionMode={currentMode}
-                onChangeScrollMode={changeScrollMode}
-                onChangeSelectionMode={changeSelectionMode}
-                onDownload={onDownload}
-                onFullScreen={openFullScreen}
-                onJumpTo={jumpToPage}
-                onJumpToMatch={jumpToMatch}
-                onOpenFiles={openFiles}
-                onPrint={print}
-                onRotate={rotate}
-                onSearchFor={setKeywordRegexp}
-                onToggleSidebar={toggleSidebar.toggle}
-                onZoom={zoom}
-                renderToolbar={renderToolbar}
-            />
-        ),
-        {
-            attrs: {},
-            children: (
-                <Sidebar
+            {
+                attrs: {
+                    ref: pagesRef,
+                    style: {
+                        position: 'relative',
+                    },
+                },
+                children: (
+                    <>
+                    {isDragging && <DropArea />}
+                    {isFullScreen && <ExitFullScreen onClick={closeFullScreen} />}
+                    {
+                        Array(numPages).fill(0).map((_, index) => {
+                            return (
+                                <div
+                                    className={`${theme.prefixClass}-inner-page`}
+                                    key={`pagelayer-${index}`}
+                                    ref={(ref) => {
+                                        pageRefs[index].current = ref as HTMLDivElement;
+                                    }}
+                                >
+                                    <PageLayer
+                                        doc={doc}
+                                        keywordRegexp={keywordRegexp}
+                                        height={pageHeight}
+                                        match={match}
+                                        pageIndex={index}
+                                        rotation={rotation}
+                                        scale={scale}
+                                        width={pageWidth}
+                                        onJumpToDest={jumpToDest}
+                                        onPageVisibilityChanged={pageVisibilityChanged}
+                                    />
+                                </div>
+                            );
+                        })
+                    }
+                    </>
+                ),
+            },
+            (renderToolbar: RenderToolbarSlot) => (
+                <Toolbar
                     currentPage={currentPage}
                     doc={doc}
-                    height={pageHeight}
-                    rotation={rotation}
-                    width={pageWidth}
-                    onJumpToDest={jumpToDest}
-                    onJumpToPage={jumpToPage}
+                    fileName={file.name}
+                    scale={scale}
+                    scrollMode={scrollMode}
+                    selectionMode={currentMode}
+                    onChangeScrollMode={changeScrollMode}
+                    onChangeSelectionMode={changeSelectionMode}
+                    onDownload={download}
+                    onFullScreen={openFullScreen}
+                    onJumpTo={jumpToPage}
+                    onJumpToMatch={jumpToMatch}
+                    onOpenFiles={openFiles}
+                    onPrint={print}
+                    onRotate={rotate}
+                    onSearchFor={setKeywordRegexp}
+                    onToggleSidebar={toggleSidebar.toggle}
+                    onZoom={zoom}
+                    renderToolbar={renderToolbar}
                 />
             ),
-        },
-    );
+            {
+                attrs: {},
+                children: (
+                    <Sidebar
+                        currentPage={currentPage}
+                        doc={doc}
+                        height={pageHeight}
+                        rotation={rotation}
+                        width={pageWidth}
+                        onJumpToDest={jumpToDest}
+                        onJumpToPage={jumpToPage}
+                    />
+                ),
+            },
+        ),
+        doc,
+        download,
+        changeScrollMode,
+        changeSelectionMode,
+        jumpToPage,
+        print,
+        rotate,
+        zoom,
+    });
 };
 
 export default Inner;
