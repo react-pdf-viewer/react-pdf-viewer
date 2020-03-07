@@ -11,7 +11,7 @@ import React from 'react';
 import ThemeContent from '../theme/ThemeContext';
 import './separator.less';
 
-const Separator: React.FC<{}> = ({ children}) => {
+const Separator: React.FC<{}> = () => {
     const theme = React.useContext(ThemeContent);
 
     return (

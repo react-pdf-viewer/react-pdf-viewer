@@ -9,7 +9,7 @@
 import React from 'react';
 
 import PdfJs from '../PdfJs';
-import Spinner from '../Spinner';
+import Spinner from '../components/Spinner';
 import ThemeContent from '../theme/ThemeContext';
 import PropertiesData from './PropertiesData';
 import './propertiesLoader.less';

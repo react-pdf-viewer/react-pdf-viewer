@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-@import './theme/common.less';
+@import '../theme/common.less';
 
 .@{viewer-prefix}-spinner {
     animation-duration: 750ms;
@@ -14,6 +14,13 @@
     animation-iteration-count: infinite;
     animation-timing-function: linear;
     transition-property: transform;
+
+    &-circle {
+        fill: none;
+        stroke: rgba(0, 0, 0, 0.4);
+        stroke-linecap: round;
+        stroke-width: 2;
+    }
 }
 @keyframes viewer-spinner-transform {
     from {

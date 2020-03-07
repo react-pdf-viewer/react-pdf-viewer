@@ -10,7 +10,7 @@ import React from 'react';
 
 import LocalizationContext from '../localization/LocalizationContext';
 import PdfJs from '../PdfJs';
-import Spinner from '../Spinner';
+import Spinner from '../components/Spinner';
 import ThemeContent from '../theme/ThemeContext';
 import { SpecialLevel } from '../zoom/zoomingLevel';
 import BookmarkList from './BookmarkList';

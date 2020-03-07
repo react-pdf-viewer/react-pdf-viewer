@@ -9,7 +9,7 @@
 import React from 'react';
 
 import PdfJs from './PdfJs';
-import Spinner from './Spinner';
+import Spinner from './components/Spinner';
 import { decrease } from './zoom/zoomingLevel';
 
 interface IPageSize {

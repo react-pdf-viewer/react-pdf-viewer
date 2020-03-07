@@ -10,7 +10,7 @@ import React from 'react';
 
 import Observer, { VisibilityChanged } from '../Observer';
 import PdfJs from '../PdfJs';
-import Spinner from '../Spinner';
+import Spinner from '../components/Spinner';
 import ThemeContent from '../theme/ThemeContext';
 import ThumbnailItem from './ThumbnailItem';
 import './thumbnailContainer.less';
