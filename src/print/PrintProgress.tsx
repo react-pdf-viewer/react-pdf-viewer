@@ -8,6 +8,7 @@
 
 import React from 'react';
 
+import PrimaryButton from '../components/PrimaryButton';
 import ProgressBar from '../components/ProgressBar';
 import LocalizationContext from '../localization/LocalizationContext';
 import ThemeContent from '../theme/ThemeContext';
@@ -37,19 +38,9 @@ const PrintProgress: React.FC<PrintProgressProps> = ({ numLoadedPages, numPages,
                 <div className={`${theme.prefixClass}-print-progress-bar`}>
                     <ProgressBar progress={progress} />
                 </div>
-                <button
-                    style={{
-                        backgroundColor: '#357EDD',
-                        border: 'none',
-                        borderRadius: '4px',
-                        color: '#FFF',
-                        cursor: 'pointer',
-                        padding: '8px',
-                    }}
-                    onClick={onCancel}
-                >
+                <PrimaryButton onClick={onCancel}>
                     {l10n.printProgress.cancel}
-                </button>
+                </PrimaryButton>
             </div>
         </div>
     );
