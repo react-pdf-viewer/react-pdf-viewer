@@ -203,6 +203,7 @@ export class Tooltip extends React.Component<TooltipProps> {}
 // Viewer
 export interface RenderViewerProps {
     viewer: React.ReactElement;
+    doc: PdfJs.PdfDocument;
     changeScrollMode(mode: ScrollMode): void;
     changeSelectionMode(mode: SelectionMode): void;
     // Jump to given page

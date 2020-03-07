@@ -363,6 +363,7 @@ const Inner: React.FC<InnerProps> = ({
                 ),
             },
         ),
+        doc,
         changeScrollMode,
         changeSelectionMode,
         jumpToPage,

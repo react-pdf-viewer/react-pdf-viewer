@@ -32,6 +32,7 @@ interface File {
 
 interface RenderViewerProps {
     viewer: React.ReactElement;
+    doc: PdfJs.PdfDocument;
     changeScrollMode(mode: ScrollMode): void;
     changeSelectionMode(mode: SelectionMode): void;
     jumpToPage(page: number): void;

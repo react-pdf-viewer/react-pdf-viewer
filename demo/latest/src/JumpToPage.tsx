@@ -17,6 +17,9 @@ const JumpToPage: React.FC<JumpToPageProps> = ({ fileUrl }) => {
                         <PrimaryButton onClick={() => props.jumpToPage(2)}>Jump to page 3</PrimaryButton>
                     </div>
                     <div style={{ marginRight: '12px' }}>
+                        <PrimaryButton onClick={() => props.jumpToPage(props.doc.numPages - 1)}>Jump to last page</PrimaryButton>
+                    </div>
+                    <div style={{ marginRight: '12px' }}>
                         <PrimaryButton onClick={() => props.rotate(90)}>Rotate +90 degrees</PrimaryButton>
                     </div>
                     <div style={{ marginRight: '12px' }}>
