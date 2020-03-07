@@ -23,6 +23,7 @@ __Basic features__
 * [x] Download file
 * [x] View the document properties
 * [x] Support SSR
+* [x] Print
 
 __Customization__
 * [x] The toolbar can be customized easily

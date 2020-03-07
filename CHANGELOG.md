@@ -19,6 +19,9 @@ import Viewer, { RenderViewerProps, ScrollMode, SpecialZoomLevel, SelectionMode 
 const render = (props: RenderViewerProps) => {
     return (
         <div>
+            <div style={{ height: '500px' }}>
+                {props.viewer}
+            </div>
             <button onClick={() => props.jumpToPage(props.doc.numPages - 1)}>Jump to last page</button>
             <button onClick={() => props.rotate(90)}>Rotate +90 degrees</button>
             <button onClick={() => props.zoom(0.5)}>Zoom to 50%</button>
