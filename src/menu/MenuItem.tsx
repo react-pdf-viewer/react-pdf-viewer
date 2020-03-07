@@ -9,6 +9,7 @@
 import React from 'react';
 
 import CheckIcon from '../icons/CheckIcon';
+import ThemeContent from '../theme/ThemeContext';
 import './menuItem.less';
 
 interface MenuItemProps {
@@ -18,34 +19,19 @@ interface MenuItemProps {
 }
 
 const MenuItem: React.FC<MenuItemProps> = ({ checked = false, children, icon = null, onClick }) => {
+    const theme = React.useContext(ThemeContent);
+
     return (
-        <li
-            className="viewer-menu-item"
-            style={{
-                alignItems: 'center',
-                display: 'flex',
-                padding: '4px 0',
-            }}
-            onClick={onClick}
-        >
-            <div
-                style={{
-                    paddingLeft: '16px',
-                    paddingRight: '8px',
-                }}
-            >
+        <li className={`${theme.prefixClass}-menu-item`} onClick={onClick}>
+            <div className={`${theme.prefixClass}-menu-item-icon`}>
                 {icon}
             </div>
-            <div
-                style={{
-                    flexGrow: 1,
-                    flexShrink: 1,
-                    paddingRight: '32px',
-                }}
-            >
+            <div className={`${theme.prefixClass}-menu-item-label`}>
                 {children}
             </div>
-            <div style={{ paddingRight: '16px' }}>{checked && <CheckIcon />}</div>
+            <div className={`${theme.prefixClass}-menu-item-check`}>
+                {checked && <CheckIcon />}
+            </div>
         </li>
     );
 };
