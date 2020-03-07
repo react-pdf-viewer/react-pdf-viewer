@@ -156,7 +156,7 @@ const SearchPopover: React.FC<SearchPopoverProps> = ({ doc, onJumpToMatch, onSea
         setWholeWords(false);
     };
 
-    const renderSearch = () => (<div style={{ padding: '8px' }}>{l10n.toolbar.search}</div>);
+    const renderSearch = () => l10n.toolbar.search;
     const renderTarget = (toggle: Toggle, opened: boolean) => (
         <Tooltip
             position={Position.BottomCenter}
@@ -165,8 +165,8 @@ const SearchPopover: React.FC<SearchPopoverProps> = ({ doc, onJumpToMatch, onSea
             offset={PORTAL_OFFSET}
         />
     );
-    const renderPreviousMatch = () => (<div style={{ padding: '8px' }}>{l10n.search.previousMatch}</div>);
-    const renderNextMatch = () => (<div style={{ padding: '8px' }}>{l10n.search.nextMatch}</div>);
+    const renderPreviousMatch = () => l10n.search.previousMatch;
+    const renderNextMatch = () => l10n.search.nextMatch;
 
     const renderContent = (toggle: Toggle) => {
         const close = () => {

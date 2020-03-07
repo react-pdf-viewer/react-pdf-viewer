@@ -30,7 +30,9 @@ const TooltipBody: React.FC<TooltipBodyProps> = ({ children, offset, position, t
     return (
         <div className={`${theme.prefixClass}-tooltip-body`} ref={contentRef}>
             <Arrow customClassName={`${theme.prefixClass}-tooltip-body-arrow`} position={position} />
-            {children}
+            <div className={`${theme.prefixClass}-tooltip-body-content`}>
+                {children}
+            </div>
         </div>
     );
 };

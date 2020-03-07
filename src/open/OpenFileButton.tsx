@@ -32,7 +32,7 @@ const OpenFileButton: React.FC<OpenFileButtonProps> = ({ onOpenFiles }) => {
         }
     };
 
-    const renderContent = () => (<div style={{ padding: '8px' }}>{l10n.toolbar.openFile}</div>);
+    const renderContent = () => l10n.toolbar.openFile;
 
     return (
         <Tooltip

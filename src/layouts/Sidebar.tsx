@@ -50,9 +50,9 @@ const Sidebar: React.FC<SidebarProps> = ({ currentPage, doc, height, rotation, w
     const clickBookmarkTab = () => setTab(Tab.Bookmark);
     const clickAttachmentTab = () => setTab(Tab.Attachment);
 
-    const renderAttachmentTip = () => (<div style={{ padding: '8px' }}>{l10n.sidebar.attachment}</div>);
-    const renderBookmarkTip = () => (<div style={{ padding: '8px' }}>{l10n.sidebar.bookmark}</div>);
-    const renderThumbnailTip = () => (<div style={{ padding: '8px' }}>{l10n.sidebar.thumbnail}</div>);
+    const renderAttachmentTip = () => l10n.sidebar.attachment;
+    const renderBookmarkTip = () => l10n.sidebar.bookmark;
+    const renderThumbnailTip = () => l10n.sidebar.thumbnail;
 
     return (
         <div className={`${theme.prefixClass}-sidebar`}>

@@ -54,7 +54,7 @@ const MoreActionsPopover: React.FC<MoreActionsPopoverProps> = ({
 }) => {
     const l10n = React.useContext(LocalizationContext);
 
-    const renderMoreActions = () => (<div style={{ padding: '8px' }}>{l10n.toolbar.moreActions}</div>);
+    const renderMoreActions = () => l10n.toolbar.moreActions;
     const renderTarget = (toggle: Toggle, opened: boolean) => (
         <Tooltip
             position={Position.BottomRight}

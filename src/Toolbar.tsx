@@ -154,24 +154,24 @@ const Toolbar: React.FC<ToolbarProps> = ({
     const setHorizontalScrollMode = () => changeScrollMode(ScrollMode.Horizontal);
     const setWrappedScrollMode = () => changeScrollMode(ScrollMode.Wrapped);
 
-    const renderToggle = () => (<div style={{ padding: '8px' }}>{l10n.toolbar.toggleSidebar}</div>);
-    const renderPreviousPage = () => (<div style={{ padding: '8px' }}>{l10n.toolbar.previousPage}</div>);
-    const renderNextPage = () => (<div style={{ padding: '8px' }}>{l10n.toolbar.nextPage}</div>);
-    const renderZoomOut = () => (<div style={{ padding: '8px' }}>{l10n.toolbar.zoomOut}</div>);
-    const renderZoomIn = () => (<div style={{ padding: '8px' }}>{l10n.toolbar.zoomIn}</div>);
-    const renderFullScreen = () => (<div style={{ padding: '8px' }}>{l10n.toolbar.fullScreen}</div>);
-    const renderDownload = () => (<div style={{ padding: '8px' }}>{l10n.toolbar.download}</div>);
-    const renderPrint = () => (<div style={{ padding: '8px' }}>{l10n.toolbar.print}</div>);
-    const renderGoToFirstPage = () => (<div style={{ padding: '8px' }}>{l10n.toolbar.goToFirstPage}</div>);
-    const renderGoToLastPage = () => (<div style={{ padding: '8px' }}>{l10n.toolbar.goToLastPage}</div>);
-    const renderRotateClockwise = () => (<div style={{ padding: '8px' }}>{l10n.toolbar.rotateForward}</div>);
-    const renderRotateCounterclockwise = () => (<div style={{ padding: '8px' }}>{l10n.toolbar.rotateBackward}</div>);
-    const renderTextSelection = () => (<div style={{ padding: '8px' }}>{l10n.toolbar.textSelectionTool}</div>);
-    const renderHandTool = () => (<div style={{ padding: '8px' }}>{l10n.toolbar.handTool}</div>);
-    const renderVerticalScrolling = () => (<div style={{ padding: '8px' }}>{l10n.toolbar.verticalScrolling}</div>);
-    const renderHorizontalScrolling = () => (<div style={{ padding: '8px' }}>{l10n.toolbar.horizontalScrolling}</div>);
-    const renderDocumentProperties = () => (<div style={{ padding: '8px' }}>{l10n.toolbar.documentProperties}</div>);
-    const renderWrappedScrolling = () => (<div style={{ padding: '8px' }}>{l10n.toolbar.wrappedScrolling}</div>);
+    const renderToggle = () => l10n.toolbar.toggleSidebar;
+    const renderPreviousPage = () => l10n.toolbar.previousPage;
+    const renderNextPage = () => l10n.toolbar.nextPage;
+    const renderZoomOut = () => l10n.toolbar.zoomOut;
+    const renderZoomIn = () => l10n.toolbar.zoomIn;
+    const renderFullScreen = () => l10n.toolbar.fullScreen;
+    const renderDownload = () => l10n.toolbar.download;
+    const renderPrint = () => l10n.toolbar.print;
+    const renderGoToFirstPage = () => l10n.toolbar.goToFirstPage;
+    const renderGoToLastPage = () => l10n.toolbar.goToLastPage;
+    const renderRotateClockwise = () => l10n.toolbar.rotateForward;
+    const renderRotateCounterclockwise = () => l10n.toolbar.rotateBackward;
+    const renderTextSelection = () => l10n.toolbar.textSelectionTool;
+    const renderHandTool = () => l10n.toolbar.handTool;
+    const renderVerticalScrolling = () => l10n.toolbar.verticalScrolling;
+    const renderHorizontalScrolling = () => l10n.toolbar.horizontalScrolling;
+    const renderDocumentProperties = () => l10n.toolbar.documentProperties;
+    const renderWrappedScrolling = () => l10n.toolbar.wrappedScrolling;
     const renderPropertyButton = (toggle: Toggle) => (
         <Tooltip
             position={Position.BottomCenter}
