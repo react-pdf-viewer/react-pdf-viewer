@@ -9,6 +9,8 @@
 import React from 'react';
 
 import LocalizationContext from '../localization/LocalizationContext';
+import ThemeContent from '../theme/ThemeContext';
+import './printProgress.less';
 
 interface PrintProgressProps {
     numLoadedPages: number;
@@ -19,6 +21,7 @@ interface PrintProgressProps {
 
 const PrintProgress: React.FC<PrintProgressProps> = ({ numLoadedPages, numPages, onCancel, onStartPrinting }) => {
     const l10n = React.useContext(LocalizationContext);
+    const theme = React.useContext(ThemeContent);
     const progress = Math.floor(numLoadedPages * 100 / numPages);
     React.useEffect(() => {
         if (numLoadedPages === numPages) {
@@ -27,30 +30,9 @@ const PrintProgress: React.FC<PrintProgressProps> = ({ numLoadedPages, numPages,
     }, [numLoadedPages]);
 
     return (
-        <div
-            style={{
-                alignItems: 'center',
-                backgroundColor: 'rgba(0, 0, 0, .2)',
-                display: 'flex',
-                height: '100%',
-                justifyContent: 'center',
-                left: 0,
-                position: 'absolute',
-                top: 0,
-                width: '100%',
-                zIndex: 9999,
-            }}
-        >
-            <div
-                style={{
-                    backgroundColor: '#fff',
-                    borderRadius: '4px',
-                    padding: '24px',
-                    textAlign: 'center',
-                    width: '240px',
-                }}
-            >
-                <div style={{ marginBottom: '8px' }}>{l10n.printProgress.preparingDocument}</div>
+        <div className={`${theme.prefixClass}-print-progress`}>
+            <div className={`${theme.prefixClass}-print-progress-inner`}>
+                <div className={`${theme.prefixClass}-print-progress-message`}>{l10n.printProgress.preparingDocument}</div>
                 <div
                     style={{
                         backgroundColor: 'rgba(0, 0, 0, .1)',
