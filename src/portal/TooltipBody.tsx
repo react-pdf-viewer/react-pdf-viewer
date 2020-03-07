@@ -9,9 +9,11 @@
 import React from 'react';
 
 import usePosition from '../hooks/usePosition';
+import ThemeContent from '../theme/ThemeContext';
 import Arrow from './Arrow';
 import Offset from './Offset';
 import Position from './Position';
+import './tooltipBody.less';
 
 interface TooltipBodyProps {
     offset: Offset;
@@ -20,26 +22,14 @@ interface TooltipBodyProps {
 }
 
 const TooltipBody: React.FC<TooltipBodyProps> = ({ children, offset, position, targetRef }) => {
+    const theme = React.useContext(ThemeContent);
     const contentRef = React.createRef<HTMLDivElement>();
 
     usePosition(contentRef, targetRef, position, offset);
 
     return (
-        <div
-            ref={contentRef}
-            style={{
-                background: '#000',
-                borderRadius: '4px',
-                color: '#FFF',
-                left: 0,
-                maxWidth: '300px',
-                position: 'absolute',
-                textAlign: 'center',
-                top: '-9999px',
-                zIndex: 9999,
-            }}
-        >
-            <Arrow position={position} />
+        <div className={`${theme.prefixClass}-tooltip-body`} ref={contentRef}>
+            <Arrow customClassName={`${theme.prefixClass}-tooltip-body-arrow`} position={position} />
             {children}
         </div>
     );
