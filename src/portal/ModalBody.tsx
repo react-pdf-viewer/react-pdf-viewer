@@ -10,6 +10,8 @@ import React from 'react';
 
 import useKeyUp from '../hooks/useKeyUp';
 import useLockScroll from '../hooks/useLockScroll';
+import ThemeContent from '../theme/ThemeContext';
+import './modalBody.less';
 
 interface ModalBodyProps {
     closeOnEscape: boolean;
@@ -17,22 +19,14 @@ interface ModalBodyProps {
 }
 
 const ModalBody: React.FC<ModalBodyProps> = ({ children, closeOnEscape, onToggle }) => {
+    const theme = React.useContext(ThemeContent);
     const contentRef = React.createRef<HTMLDivElement>();
 
     useLockScroll();
     useKeyUp(27, () => closeOnEscape && onToggle());
 
     return (
-        <div
-            ref={contentRef}
-            style={{
-                background: '#FFF',
-                border: '1px solid rgba(0, 0, 0, 0.3)',
-                borderRadius: '4px',
-                margin: '160px auto 0 auto',
-                maxWidth: '480px',
-            }}
-        >
+        <div className={`${theme.prefixClass}-modal-body`} ref={contentRef}>
             {children}
         </div>
     );
