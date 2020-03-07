@@ -50,32 +50,30 @@ const ZoomPopover: React.FC<ZoomPopoverProps> = ({ scale, onZoom }) => {
     };
 
     const renderContent = (toggle: Toggle) => (
-        <div className={`${theme.prefixClass}-zoom-popover-content`}>
-            <Menu>
-                {
-                    Object.keys(SpecialLevel).map((k) => {
-                        const level = k as SpecialLevel;
-                        const clickMenuItem = () => { toggle(); onZoom(level); };
-                        return (
-                            <MenuItem key={level} onClick={clickMenuItem}>
-                                {getSpcialLevelLabel(level)}
-                            </MenuItem>
-                        );
-                    })
-                }
-                <MenuDivider />
-                {
-                    LEVELS.map((level) => {
-                        const clickMenuItem = () => { toggle(); onZoom(level); };
-                        return (
-                            <MenuItem key={level} onClick={clickMenuItem}>
-                                {`${Math.round(level * 100)}%`}
-                            </MenuItem>
-                        );
-                    })
-                }
-            </Menu>
-        </div>
+        <Menu>
+            {
+                Object.keys(SpecialLevel).map((k) => {
+                    const level = k as SpecialLevel;
+                    const clickMenuItem = () => { toggle(); onZoom(level); };
+                    return (
+                        <MenuItem key={level} onClick={clickMenuItem}>
+                            {getSpcialLevelLabel(level)}
+                        </MenuItem>
+                    );
+                })
+            }
+            <MenuDivider />
+            {
+                LEVELS.map((level) => {
+                    const clickMenuItem = () => { toggle(); onZoom(level); };
+                    return (
+                        <MenuItem key={level} onClick={clickMenuItem}>
+                            {`${Math.round(level * 100)}%`}
+                        </MenuItem>
+                    );
+                })
+            }
+        </Menu>
     );
 
     return (

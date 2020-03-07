@@ -104,67 +104,65 @@ const MoreActionsPopover: React.FC<MoreActionsPopoverProps> = ({
         const setWrappedScrollMode = () => activateScrollMode(ScrollMode.Wrapped);
 
         return (
-            <div style={{ padding: '8px 0' }}>
-                <Menu>
-                    <MenuItem icon={<UpArrowIcon />} onClick={jumpToFirstPage}>
-                        {l10n.toolbar.goToFirstPage}
-                    </MenuItem>
-                    <MenuItem icon={<DownArrowIcon />} onClick={jumpToLastPage}>
-                        {l10n.toolbar.goToLastPage}
-                    </MenuItem>
-                    <MenuDivider />
-                    <MenuItem icon={<RotateForwardIcon />} onClick={rotateForward}>
-                        {l10n.toolbar.rotateForward}
-                    </MenuItem>
-                    <MenuItem icon={<RotateBackwardIcon />} onClick={rotateBackward}>
-                        {l10n.toolbar.rotateBackward}
-                    </MenuItem>
-                    <MenuDivider />
-                    <MenuItem
-                        checked={selectionMode === SelectionMode.Text}
-                        icon={<TextSelectionIcon />}
-                        onClick={activateTextSelectionMode}
-                    >
-                        {l10n.toolbar.textSelectionTool}
-                    </MenuItem>
-                    <MenuItem
-                        checked={selectionMode === SelectionMode.Hand}
-                        icon={<HandToolIcon />}
-                        onClick={activateHandMode}
-                    >
-                        {l10n.toolbar.handTool}
-                    </MenuItem>
-                    <MenuDivider />
-                    <MenuItem
-                        checked={scrollMode === ScrollMode.Vertical}
-                        icon={<VerticalScrollingIcon />}
-                        onClick={setVerticalScrollMode}
-                    >
-                        {l10n.toolbar.verticalScrolling}
-                    </MenuItem>
-                    <MenuItem
-                        checked={scrollMode === ScrollMode.Horizontal}
-                        icon={<HorizontalScrollingIcon />}
-                        onClick={setHorizontalScrollMode}
-                    >
-                        {l10n.toolbar.horizontalScrolling}
-                    </MenuItem>
-                    <MenuItem
-                        checked={scrollMode === ScrollMode.Wrapped}
-                        icon={<WrappedScrollingIcon />}
-                        onClick={setWrappedScrollMode}
-                    >
-                        {l10n.toolbar.wrappedScrolling}
-                    </MenuItem>
-                    <MenuDivider />
-                    <Modal
-                        target={renderPropertyMenu}
-                        content={renderPropertiesModal}
-                        closeOnClickOutside={true}
-                        closeOnEscape={true}
-                    />
-                </Menu>
-            </div>
+            <Menu>
+                <MenuItem icon={<UpArrowIcon />} onClick={jumpToFirstPage}>
+                    {l10n.toolbar.goToFirstPage}
+                </MenuItem>
+                <MenuItem icon={<DownArrowIcon />} onClick={jumpToLastPage}>
+                    {l10n.toolbar.goToLastPage}
+                </MenuItem>
+                <MenuDivider />
+                <MenuItem icon={<RotateForwardIcon />} onClick={rotateForward}>
+                    {l10n.toolbar.rotateForward}
+                </MenuItem>
+                <MenuItem icon={<RotateBackwardIcon />} onClick={rotateBackward}>
+                    {l10n.toolbar.rotateBackward}
+                </MenuItem>
+                <MenuDivider />
+                <MenuItem
+                    checked={selectionMode === SelectionMode.Text}
+                    icon={<TextSelectionIcon />}
+                    onClick={activateTextSelectionMode}
+                >
+                    {l10n.toolbar.textSelectionTool}
+                </MenuItem>
+                <MenuItem
+                    checked={selectionMode === SelectionMode.Hand}
+                    icon={<HandToolIcon />}
+                    onClick={activateHandMode}
+                >
+                    {l10n.toolbar.handTool}
+                </MenuItem>
+                <MenuDivider />
+                <MenuItem
+                    checked={scrollMode === ScrollMode.Vertical}
+                    icon={<VerticalScrollingIcon />}
+                    onClick={setVerticalScrollMode}
+                >
+                    {l10n.toolbar.verticalScrolling}
+                </MenuItem>
+                <MenuItem
+                    checked={scrollMode === ScrollMode.Horizontal}
+                    icon={<HorizontalScrollingIcon />}
+                    onClick={setHorizontalScrollMode}
+                >
+                    {l10n.toolbar.horizontalScrolling}
+                </MenuItem>
+                <MenuItem
+                    checked={scrollMode === ScrollMode.Wrapped}
+                    icon={<WrappedScrollingIcon />}
+                    onClick={setWrappedScrollMode}
+                >
+                    {l10n.toolbar.wrappedScrolling}
+                </MenuItem>
+                <MenuDivider />
+                <Modal
+                    target={renderPropertyMenu}
+                    content={renderPropertiesModal}
+                    closeOnClickOutside={true}
+                    closeOnEscape={true}
+                />
+            </Menu>
         );
     };
 
