@@ -11,6 +11,32 @@
 />
 ~~~
 
+- Add new `render` parameter that includes many functions that could be called from outside of the component:
+
+~~~ javascript
+import Viewer, { RenderViewerProps, ScrollMode, SpecialZoomLevel, SelectionMode } from '@phuocng/react-pdf-viewer';
+
+const render = (props: RenderViewerProps) => {
+    return (
+        <div>
+            <button onClick={() => props.jumpToPage(props.doc.numPages - 1)}>Jump to last page</button>
+            <button onClick={() => props.rotate(90)}>Rotate +90 degrees</button>
+            <button onClick={() => props.zoom(0.5)}>Zoom to 50%</button>
+            <button onClick={() => props.zoom(SpecialZoomLevel.ActualSize)}>Zoom to actual size</button>
+            <button onClick={() => props.changeScrollMode(ScrollMode.Wrapped)}>Switch to wrapped scrolling</button>
+            <button onClick={() => props.changeSelectionMode(SelectionMode.Hand)}>Switch to hand tool</button>
+            <button onClick={() => props.print()}>Print</button>
+            <button onClick={() => props.download()}>Download</button>
+        </div>
+    );
+};
+
+<Viewer
+    fileUrl={fileUrl}
+    render={render}
+/>
+~~~
+
 **Improvement**
 - All styles are moved to external CSS files. It's possible for us to override components' styles.
 
