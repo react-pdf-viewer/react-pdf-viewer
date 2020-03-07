@@ -8,7 +8,7 @@
 
 import React from 'react';
 
-import Observer, { VisibilityChanged } from '../Observer';
+import Observer, { VisibilityChanged } from '../layouts/Observer';
 import PdfJs from '../PdfJs';
 import Spinner from '../components/Spinner';
 import ThemeContent from '../theme/ThemeContext';
