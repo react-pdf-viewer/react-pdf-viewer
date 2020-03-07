@@ -6,13 +6,13 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
+import SpecialZoomLevel from '../SpecialZoomLevel';
 import PdfJs from '../vendors/PdfJs';
-import { SpecialLevel } from '../zoom/zoomingLevel';
 
 interface JumpToDestination {
     bottomOffset: number;
     pageIndex: number;
-    scaleTo: number | SpecialLevel;
+    scaleTo: number | SpecialZoomLevel;
 }
 
 const parse = (pageIndex: number, destArray: PdfJs.OutlineDestination): JumpToDestination => {
@@ -31,7 +31,7 @@ const parse = (pageIndex: number, destArray: PdfJs.OutlineDestination): JumpToDe
             return {
                 bottomOffset: 0,
                 pageIndex: pageIndex - 1,
-                scaleTo: SpecialLevel.PageFit,
+                scaleTo: SpecialZoomLevel.PageFit,
             };
         default:
             return {

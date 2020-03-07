@@ -8,10 +8,10 @@
 
 import React from 'react';
 
+import SpecialZoomLevel from '../SpecialZoomLevel';
 import ThemeContent from '../theme/ThemeContext';
 import getDestination from '../utils/getDestination';
 import PdfJs from '../vendors/PdfJs';
-import { SpecialLevel } from '../zoom/zoomingLevel';
 import BookmarkItem from './BookmarkItem';
 import './bookmarkList.less';
 
@@ -19,7 +19,7 @@ interface BookmarkListProps {
     bookmarks: PdfJs.Outline[];
     depth: number;
     doc: PdfJs.PdfDocument;
-    onJumpToDest(pageIndex: number, bottomOffset: number, scaleTo: number | SpecialLevel): void;
+    onJumpToDest(pageIndex: number, bottomOffset: number, scaleTo: number | SpecialZoomLevel): void;
 }
 
 const BookmarkList: React.FC<BookmarkListProps> = ({ bookmarks, depth = 0, doc, onJumpToDest }) => {

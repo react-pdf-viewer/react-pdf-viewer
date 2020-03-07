@@ -11,9 +11,9 @@ import React from 'react';
 import Spinner from '../components/Spinner';
 import Observer, { VisibilityChanged } from '../layouts/Observer';
 import Match from '../search/Match';
+import SpecialZoomLevel from '../SpecialZoomLevel';
 import ThemeContent from '../theme/ThemeContext';
 import PdfJs from '../vendors/PdfJs';
-import { SpecialLevel } from '../zoom/zoomingLevel';
 import AnnotationLayer from './AnnotationLayer';
 import CanvasLayer from './CanvasLayer';
 import './pageLayer.less';
@@ -28,7 +28,7 @@ interface PageLayerProps {
     rotation: number;
     scale: number;
     width: number;
-    onJumpToDest(pageIndex: number, bottomOffset: number, scaleTo: number | SpecialLevel): void;
+    onJumpToDest(pageIndex: number, bottomOffset: number, scaleTo: number | SpecialZoomLevel): void;
     onPageVisibilityChanged(pageIndex: number, ratio: number): void;
 }
 

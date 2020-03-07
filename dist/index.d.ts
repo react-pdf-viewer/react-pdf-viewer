@@ -191,7 +191,10 @@ export class Tooltip extends React.Component<TooltipProps> {}
 // Viewer
 export interface RenderViewerProps {
     viewer: React.ReactElement;
+    // Jump to given page
+    // `page` is zero-index based
     jumpToPage(page: number): void;
+    rotate(degree: number): void;
 }
 
 export type RenderViewer = (props: RenderViewerProps) => React.ReactElement;

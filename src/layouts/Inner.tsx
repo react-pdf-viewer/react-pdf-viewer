@@ -20,11 +20,11 @@ import PrintZone from '../print/PrintZone';
 import Match from '../search/Match';
 import ScrollMode from '../ScrollMode';
 import SelectionMode from '../SelectionMode';
+import SpecialZoomLevel from '../SpecialZoomLevel';
 import ThemeContent from '../theme/ThemeContext';
 import PdfJs from '../vendors/PdfJs';
 import getFileExt from '../utils/fileExt';
 import { RenderViewer } from '../Viewer';
-import { SpecialLevel } from '../zoom/zoomingLevel';
 import ExitFullScreen from './ExitFullScreen';
 import './inner.less';
 import { Layout } from './Layout';
@@ -98,7 +98,7 @@ const Inner: React.FC<InnerProps> = ({
     const pageVisibility = arr.map((_, __) => 0);
     const pageRefs = arr.map((_, __) => React.useRef<HTMLDivElement>());
 
-    const zoom = (newScale: number | SpecialLevel) => {
+    const zoom = (newScale: number | SpecialZoomLevel) => {
         const pagesEle = pagesRef.current;
         if (!pagesEle) {
             return;
@@ -106,17 +106,17 @@ const Inner: React.FC<InnerProps> = ({
 
         let scaled = 1;
         switch (newScale) {
-            case SpecialLevel.ActualSize:
+            case SpecialZoomLevel.ActualSize:
                 scaled = 1;
                 break;
 
-            case SpecialLevel.PageFit:
+            case SpecialZoomLevel.PageFit:
                 const scaleWidth = (pagesEle.offsetWidth - SCROLL_BAR_WIDTH) / pageWidth;
                 const scaleHeight = (pagesEle.offsetHeight - 2 * PAGE_PADDING) / pageHeight;
                 scaled = Math.min(scaleWidth, scaleHeight);
                 break;
 
-            case SpecialLevel.PageWidth:
+            case SpecialZoomLevel.PageWidth:
                 scaled = (pagesEle.offsetWidth - SCROLL_BAR_WIDTH) / pageWidth;
                 break;
 
@@ -207,7 +207,7 @@ const Inner: React.FC<InnerProps> = ({
         setMatch(target);
     };
 
-    const jumpToDest = (pageIndex: number, bottomOffset: number, scaleTo: number | SpecialLevel) => {
+    const jumpToDest = (pageIndex: number, bottomOffset: number, scaleTo: number | SpecialZoomLevel) => {
         const pagesContainer = pagesRef.current;
         if (!pagesContainer) {
             return;
@@ -220,9 +220,9 @@ const Inner: React.FC<InnerProps> = ({
             let top = 0;
             const bottom = bottomOffset || 0;
             switch (scaleTo) {
-                case SpecialLevel.PageFit:
+                case SpecialZoomLevel.PageFit:
                     top = 0;
-                    zoom(SpecialLevel.PageFit);
+                    zoom(SpecialZoomLevel.PageFit);
                     break;
                 default:
                     top = (viewport.height - bottom) * scale;
@@ -361,6 +361,8 @@ const Inner: React.FC<InnerProps> = ({
             },
         ),
         jumpToPage,
+        rotate,
+        zoom,
     });
 };
 

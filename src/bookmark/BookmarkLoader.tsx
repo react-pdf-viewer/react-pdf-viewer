@@ -9,16 +9,16 @@
 import React from 'react';
 
 import LocalizationContext from '../localization/LocalizationContext';
+import SpecialZoomLevel from '../SpecialZoomLevel';
 import PdfJs from '../vendors/PdfJs';
 import Spinner from '../components/Spinner';
 import ThemeContent from '../theme/ThemeContext';
-import { SpecialLevel } from '../zoom/zoomingLevel';
 import BookmarkList from './BookmarkList';
 import './bookmarkLoaded.less';
 
 interface BookmarkLoaderProps {
     doc: PdfJs.PdfDocument;
-    onJumpToDest(pageIndex: number, bottomOffset: number, scaleTo: number | SpecialLevel): void;
+    onJumpToDest(pageIndex: number, bottomOffset: number, scaleTo: number | SpecialZoomLevel): void;
 }
 interface BookmarkState {
     isLoaded: boolean;

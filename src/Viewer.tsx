@@ -19,6 +19,7 @@ import DocumentLoader from './loader/DocumentLoader';
 import LocalizationMap from './localization/LocalizationMap';
 import LocalizationProvider from './localization/LocalizationProvider';
 import SelectionMode from './SelectionMode';
+import SpecialZoomLevel from './SpecialZoomLevel';
 import ThemeProvider from './theme/ThemeProvider';
 import downloadFile from './utils/downloadFile';
 import PdfJs from './vendors/PdfJs';
@@ -31,6 +32,8 @@ interface File {
 interface RenderViewerProps {
     viewer: React.ReactElement;
     jumpToPage(page: number): void;
+    rotate(degree: number): void;
+    zoom(level: number | SpecialZoomLevel): void;
 }
 
 type RenderViewerType = (props: RenderViewerProps) => React.ReactElement;

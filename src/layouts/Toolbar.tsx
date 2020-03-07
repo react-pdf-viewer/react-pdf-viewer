@@ -39,9 +39,10 @@ import Match from '../search/Match';
 import SearchPopover from '../search/SearchPopover';
 import ScrollMode from '../ScrollMode';
 import SelectionMode from '../SelectionMode';
+import SpecialZoomLevel from '../SpecialZoomLevel';
 import ThemeContent from '../theme/ThemeContext';
 import PdfJs from '../vendors/PdfJs';
-import { decrease, increase, SpecialLevel } from '../zoom/zoomingLevel';
+import { decrease, increase } from '../zoom/zoomingLevel';
 import ZoomPopover from '../zoom/ZoomPopover';
 import MoreActionsPopover from './MoreActionsPopover';
 import './toolbar.less';
@@ -64,7 +65,7 @@ interface ToolbarProps {
     onRotate(degree: number): void;
     onSearchFor(keyword: RegExp): void;
     onToggleSidebar(): void;
-    onZoom(scale: number | SpecialLevel): void;
+    onZoom(scale: number | SpecialZoomLevel): void;
 }
 
 const TOOLTIP_OFFSET = { left: 0, top: 8 };
