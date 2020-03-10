@@ -15,9 +15,8 @@ import useFullScreen from '../hooks/useFullScreen';
 import useToggle from '../hooks/useToggle';
 import PageLayer from '../layers/PageLayer';
 import DropArea from '../open/DropArea';
-import PrintProgress from '../print/PrintProgress';
+import PrintContainer from '../print/PrintContainer';
 import PrintStatus from '../print/PrintStatus';
-import PrintZone from '../print/PrintZone';
 import Match from '../search/Match';
 import ScrollMode from '../ScrollMode';
 import SelectionMode from '../SelectionMode';
@@ -102,7 +101,6 @@ const Inner: React.FC<InnerProps> = ({
     const { isDragging } = useDrop(pagesRef, (files) => openFiles(files));
 
     // Print status
-    const [numLoadedPagesForPrint, setNumLoadedPagesForPrint] = React.useState(0);
     const [printStatus, setPrintStatus] = React.useState(PrintStatus.Inactive);
 
     const jumpToPage = (pageIndex: number): void => {
@@ -249,18 +247,9 @@ const Inner: React.FC<InnerProps> = ({
     };
 
     // Switch to the print mode
-    const print = (): void => {
-        setPrintStatus(PrintStatus.Preparing);
-        setNumLoadedPagesForPrint(0);
-    };
-    const cancelPrinting = (): void => {
-        setPrintStatus(PrintStatus.Inactive);
-        setNumLoadedPagesForPrint(0);
-    };
-    const startPrinting = (): void => {
-        setPrintStatus(PrintStatus.Ready);
-        setNumLoadedPagesForPrint(0);
-    };
+    const print = (): void => setPrintStatus(PrintStatus.Preparing);
+    const cancelPrinting = (): void => setPrintStatus(PrintStatus.Inactive);
+    const startPrinting = (): void => setPrintStatus(PrintStatus.Ready);
 
     return render({
         viewer: layout(
@@ -272,27 +261,15 @@ const Inner: React.FC<InnerProps> = ({
                     }
                 },
                 children: (
-                    <>
-                    {printStatus === PrintStatus.Preparing && (
-                        <PrintProgress
-                            numLoadedPages={numLoadedPagesForPrint}
-                            numPages={numPages}
-                            onCancel={cancelPrinting}
-                            onStartPrinting={startPrinting}
-                        />
-                    )}
-                    {(printStatus === PrintStatus.Preparing || printStatus === PrintStatus.Ready) && (
-                        <PrintZone
-                            doc={doc}
-                            pageHeight={pageHeight}
-                            pageWidth={pageWidth}
-                            printStatus={printStatus}
-                            rotation={rotation}
-                            onCancel={cancelPrinting}
-                            onLoad={setNumLoadedPagesForPrint}
-                        />
-                    )}
-                    </>
+                    <PrintContainer
+                        doc={doc}
+                        pageHeight={pageHeight}
+                        pageWidth={pageWidth}
+                        printStatus={printStatus}
+                        rotation={rotation}
+                        onCancel={cancelPrinting}
+                        onStartPrinting={startPrinting}
+                    />
                 )
             },
             {
