@@ -56,7 +56,7 @@ const PrintZone: React.FC<PrintZoneProps> = ({ doc, pageHeight, pageWidth, print
         ReactDOM.createPortal(
             (
                 <>
-                <div className={`${theme.prefixClass}-print-container`}>
+                <div className={`${theme.prefixClass}-print-zone`}>
                     {
                         Array(numPages).fill(0).map((_, index) => {
                             return (
