@@ -60,19 +60,15 @@ const PrintZone: React.FC<PrintZoneProps> = ({ doc, pageHeight, pageWidth, print
                     {
                         Array(numPages).fill(0).map((_, index) => {
                             return (
-                                <div
-                                    className={`${theme.prefixClass}-print-page`}
+                                <PageThumbnailContainer
                                     key={index}
-                                >
-                                    <PageThumbnailContainer
-                                        doc={doc}
-                                        pageHeight={pageHeight}
-                                        pageIndex={index}
-                                        pageWidth={pageWidth}
-                                        rotation={rotation}
-                                        onLoad={loadPage}
-                                    />
-                                </div>
+                                    doc={doc}
+                                    pageHeight={pageHeight}
+                                    pageIndex={index}
+                                    pageWidth={pageWidth}
+                                    rotation={rotation}
+                                    onLoad={loadPage}
+                                />
                             );
                         })
                     }
