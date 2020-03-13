@@ -17,6 +17,7 @@ export default [
             json(),
             less({
                 output: './dist/cjs/react-pdf-viewer.css',
+                sourcemap: false,
             }),
             typescript({
                 removeComments: true,

@@ -31,12 +31,14 @@ const PrintZone: React.FC<PrintZoneProps> = ({ doc, pageHeight, pageWidth, print
 
     React.useEffect(() => {
         if (printStatus === PrintStatus.Ready) {
+            document.body.classList.add(`${theme.prefixClass}-body-printing`);
             window.print();
         }
 
         // Handle the case user clicks the `Cancel` button in the print window
         const handler = (): void => {
             if (printStatus === PrintStatus.Ready) {
+                document.body.classList.remove(`${theme.prefixClass}-body-printing`);
                 onCancel();
             }
         };
@@ -60,19 +62,15 @@ const PrintZone: React.FC<PrintZoneProps> = ({ doc, pageHeight, pageWidth, print
                     {
                         Array(numPages).fill(0).map((_, index) => {
                             return (
-                                <div
-                                    className={`${theme.prefixClass}-print-page`}
+                                <PageThumbnailContainer
                                     key={index}
-                                >
-                                    <PageThumbnailContainer
-                                        doc={doc}
-                                        pageHeight={pageHeight}
-                                        pageIndex={index}
-                                        pageWidth={pageWidth}
-                                        rotation={rotation}
-                                        onLoad={loadPage}
-                                    />
-                                </div>
+                                    doc={doc}
+                                    pageHeight={pageHeight}
+                                    pageIndex={index}
+                                    pageWidth={pageWidth}
+                                    rotation={rotation}
+                                    onLoad={loadPage}
+                                />
                             );
                         })
                     }

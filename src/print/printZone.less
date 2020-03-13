@@ -13,11 +13,17 @@
 }
 
 @media print {
-    #root {
+    .@{viewer-prefix}-body-printing #root {
         display: none;
     }
 
     .@{viewer-prefix}-print-zone {
         display: block;
+
+        &-page-thumbnail {
+            overflow: hidden;
+            page-break-after: auto;
+            page-break-inside: avoid;
+        }
     }
 }

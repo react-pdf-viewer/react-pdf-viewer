@@ -9,6 +9,7 @@
 import React from 'react';
 
 import Spinner from '../components/Spinner';
+import ThemeContent from '../theme/ThemeContext';
 import PdfJs from '../vendors/PdfJs';
 
 interface PageThumbnailProps {
@@ -22,6 +23,7 @@ interface PageThumbnailProps {
 const PageThumbnail: React.FC<PageThumbnailProps> = ({
     page, pageHeight, pageWidth, rotation, onLoad,
 }) => {
+    const theme = React.useContext(ThemeContent);
     const renderTask = React.useRef<PdfJs.PageRenderTask>();
     const [src, setSrc] = React.useState('');
 
@@ -65,14 +67,22 @@ const PageThumbnail: React.FC<PageThumbnailProps> = ({
         !src
             ? <Spinner />
             : (
-                <img
-                    src={src}
+                <div
+                    className={`${theme.prefixClass}-print-page-thumbnail`}
                     style={{
                         height: `${Math.floor(pageHeight * 96 / 72)}px`,
                         width: `${Math.floor(pageWidth * 96 / 72)}px`,
                     }}
-                    onLoad={onLoad}
-                />
+                >
+                    <img
+                        src={src}
+                        style={{
+                            height: `${Math.floor(pageHeight * 96 / 72)}px`,
+                            width: `${Math.floor(pageWidth * 96 / 72)}px`,
+                        }}
+                        onLoad={onLoad}
+                    />
+                </div>
             )
     );
 };
