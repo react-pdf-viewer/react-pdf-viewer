@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## v1.4.0 (not released yet)
+## v1.4.0
 
 **New features**
 - Add new optional parameter indicating the page that will be displayed initially
