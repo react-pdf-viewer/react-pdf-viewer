@@ -31,12 +31,14 @@ const PrintZone: React.FC<PrintZoneProps> = ({ doc, pageHeight, pageWidth, print
 
     React.useEffect(() => {
         if (printStatus === PrintStatus.Ready) {
+            document.body.classList.add(`${theme.prefixClass}-body-printing`);
             window.print();
         }
 
         // Handle the case user clicks the `Cancel` button in the print window
         const handler = (): void => {
             if (printStatus === PrintStatus.Ready) {
+                document.body.classList.remove(`${theme.prefixClass}-body-printing`);
                 onCancel();
             }
         };

@@ -56,6 +56,7 @@ const render = (props: RenderViewerProps) => {
 **Bug fixes**
 - Can't scroll and print on IE 11
 - Printing doesn't look good if the page size isn't set
+- Blank page when print the current web page
 
 ## v1.3.0
 
