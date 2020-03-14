@@ -7,10 +7,52 @@
 
 ~~~ javascript
 <Viewer
-    fileUrl="/pdf-open-parameters.pdf"
+    fileUrl='/path/to/document.pdf'
     // The `keyword` option can be a string or a regular expression
     // keyword='PDF Library'
     keyword={new RegExp('pdf document', 'i')}
+/>
+~~~
+
+- Customize page renderer. The following code adds a simple _Draft_ watermark at the center of every page:
+
+~~~ javascript
+const renderPage: RenderPage = (props: RenderPageProps) => (
+    <>
+        {props.canvasLayer.children}
+        <div
+            style={{
+                alignItems: 'center',
+                display: 'flex',
+                height: '100%',
+                justifyContent: 'center',
+                left: 0,
+                position: 'absolute',
+                top: 0,
+                width: '100%',
+            }
+        }>
+            <div
+                style={{
+                    color: 'rgba(0, 0, 0, 0.2)',
+                    fontSize: `${8 * props.scale}rem`,
+                    fontWeight: 'bold',
+                    textTransform: 'uppercase',
+                    transform: 'rotate(-45deg)',
+                    userSelect: 'none',
+                }}
+            >
+                Draft
+            </div>
+        </div>
+        {props.annotationLayer.children}
+        {props.textLayer.children}
+    </>
+);
+
+<Viewer
+    fileUrl='/path/to/document.pdf'
+    renderPage={renderPage}
 />
 ~~~
 
@@ -59,7 +101,7 @@ const render = (props: RenderViewerProps) => {
 };
 
 <Viewer
-    fileUrl={fileUrl}
+    fileUrl='/path/to/document.pdf'
     render={render}
 />
 ~~~
@@ -108,7 +150,7 @@ Expose all the buttons from the more actions popover to the toolbar.
 import Viewer, { SelectionMode } from '@phuocng/react-pdf-viewer';
 
 <Viewer
-    fileUrl="..." 
+    fileUrl='/path/to/document.pdf'
     // By default, it will be SelectionMode.Text
     selectionMode={SelectionMode.Hand}
 />
@@ -124,7 +166,7 @@ const documentLoad = (doc: PdfJs.PdfDocument) => {
 };
 
 <Viewer
-    fileUrl="..."
+    fileUrl='/path/to/document.pdf'
     onDocumentLoad={documentLoad}
 />
 ~~~
@@ -139,7 +181,7 @@ const zoom = (doc: PdfJs.PdfDocument, scale: number) => {
 };
 
 <Viewer
-    fileUrl="/path/to/document.pdf"
+    fileUrl='/path/to/document.pdf'
     onZoom={zoom}
 />
 ~~~

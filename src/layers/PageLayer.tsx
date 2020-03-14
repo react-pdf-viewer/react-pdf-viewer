@@ -10,6 +10,7 @@ import React from 'react';
 
 import Spinner from '../components/Spinner';
 import Observer, { VisibilityChanged } from '../layouts/Observer';
+import RenderPageProps, { RenderPage } from '../layouts/RenderPage';
 import Match from '../search/Match';
 import SpecialZoomLevel from '../SpecialZoomLevel';
 import ThemeContent from '../theme/ThemeContext';
@@ -25,6 +26,7 @@ interface PageLayerProps {
     keywordRegexp: RegExp;
     match: Match;
     pageIndex: number;
+    renderPage?: RenderPage;
     rotation: number;
     scale: number;
     width: number;
@@ -40,7 +42,7 @@ interface PageSizeState {
 }
 
 const PageLayer: React.FC<PageLayerProps> = ({
-    doc, height, keywordRegexp, match, pageIndex, rotation, scale, width,
+    doc, height, keywordRegexp, match, pageIndex, renderPage, rotation, scale, width,
     onJumpToDest, onPageVisibilityChanged,
 }) => {
     const theme = React.useContext(ThemeContent);
@@ -84,6 +86,16 @@ const PageLayer: React.FC<PageLayerProps> = ({
         onJumpToDest(indexOfPage, pageHeight - top, scale);
     };
 
+    // Default page renderer
+    const defaultPageRenderer: RenderPage = (props: RenderPageProps) => (
+        <>
+            {props.canvasLayer.children}
+            {props.textLayer.children}
+            {props.annotationLayer.children}
+        </>
+    );
+    const renderPageLayer = renderPage || defaultPageRenderer;
+
     return (
         <Observer onVisibilityChanged={visibilityChanged} threshold={intersectionThreshold}>
             <div
@@ -96,27 +108,46 @@ const PageLayer: React.FC<PageLayerProps> = ({
                 {
                     !page
                         ? <Spinner />
-                        : (
-                            <>
-                                <CanvasLayer height={h} page={page} rotation={rotation} scale={scale} width={w} />
-                                <TextLayer
-                                    keywordRegexp={keywordRegexp}
-                                    match={match}
-                                    page={page}
-                                    pageIndex={pageIndex}
-                                    rotation={rotation}
-                                    scale={scale}
-                                    onJumpToMatch={jumpToMatch}
-                                />
-                                <AnnotationLayer
+                        : renderPageLayer({
+                            annotationLayer: {
+                                attrs: {},
+                                children: (
+                                    <AnnotationLayer
                                     doc={doc}
                                     page={page}
                                     rotation={rotation}
                                     scale={scale}
                                     onJumpToDest={onJumpToDest}
                                 />
-                            </>
-                        )
+                                )
+                            },
+                            canvasLayer: {
+                                attrs: {},
+                                children: (
+                                    <CanvasLayer height={h} page={page} rotation={rotation} scale={scale} width={w} />
+                                ),
+                            },
+                            doc,
+                            height: h,
+                            pageIndex,
+                            rotation,
+                            scale,
+                            textLayer: {
+                                attrs: {},
+                                children: (
+                                    <TextLayer
+                                        keywordRegexp={keywordRegexp}
+                                        match={match}
+                                        page={page}
+                                        pageIndex={pageIndex}
+                                        rotation={rotation}
+                                        scale={scale}
+                                        onJumpToMatch={jumpToMatch}
+                                    />
+                                )
+                            },
+                            width: w,
+                        })
                 }
             </div>
         </Observer>
