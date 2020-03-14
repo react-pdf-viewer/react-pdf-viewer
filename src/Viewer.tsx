@@ -46,6 +46,8 @@ interface ViewerProps {
     fileUrl: string;
     // The page (zero-index based) that will be displayed initially
     initialPage?: number;
+    // The keyword that will be highlighted in all pages
+    keyword?: string | RegExp;
     layout?: Layout;
     localization?: LocalizationMap;
     // The prefix for CSS classes
@@ -61,6 +63,7 @@ const Viewer: React.FC<ViewerProps> = ({
     defaultScale,
     fileUrl,
     initialPage,
+    keyword,
     layout,
     localization,
     prefixClass,
@@ -106,6 +109,7 @@ const Viewer: React.FC<ViewerProps> = ({
                     doc={doc}
                     file={file}
                     initialPage={initialPage}
+                    keyword={keyword}
                     layout={layout || layoutOption}
                     pageSize={pageSize}
                     render={renderViewer}

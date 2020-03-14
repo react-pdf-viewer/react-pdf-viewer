@@ -43,6 +43,7 @@ interface InnerProps {
     doc: PdfJs.PdfDocument;
     file: File;
     initialPage?: number;
+    keyword?: string | RegExp;
     layout: Layout;
     pageSize: PageSize;
     render: RenderViewer;
@@ -53,7 +54,7 @@ interface InnerProps {
 }
 
 const Inner: React.FC<InnerProps> = ({
-    doc, file, initialPage, layout, pageSize, render, selectionMode,
+    doc, file, initialPage, keyword, layout, pageSize, render, selectionMode,
     onDocumentLoad, onOpenFile, onZoom,
 }) => {
     const theme = React.useContext(ThemeContent);
@@ -61,7 +62,11 @@ const Inner: React.FC<InnerProps> = ({
     const [scale, setScale] = React.useState(pageSize.scale);
     const [currentPage, setCurrentPage] = React.useState(0);
     const [rotation, setRotation] = React.useState(0);
-    const [keywordRegexp, setKeywordRegexp] = React.useState<RegExp>(EMPTY_KEYWORD_REGEXP);
+    const [keywordRegexp, setKeywordRegexp] = React.useState<RegExp>(
+        keyword
+        ? ((typeof keyword === 'string') ? new RegExp(keyword) : keyword)
+        : EMPTY_KEYWORD_REGEXP
+    );
     const [match, setMatch] = React.useState<Match>({
         matchIndex: -1,
         pageIndex: -1,
