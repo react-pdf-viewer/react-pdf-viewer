@@ -1,5 +1,19 @@
 # CHANGELOG
 
+## v1.5.0 (not released yet)
+
+**New features**
+- Highlight given keyword in the first render
+
+~~~ javascript
+<Viewer
+    fileUrl="/pdf-open-parameters.pdf"
+    // The `keyword` option can be a string or a regular expression
+    // keyword='PDF Library'
+    keyword={new RegExp('pdf document', 'i')}
+/>
+~~~
+
 ## v1.4.0
 
 **New features**
