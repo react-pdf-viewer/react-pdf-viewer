@@ -30,6 +30,7 @@ import ExitFullScreen from './ExitFullScreen';
 import './inner.less';
 import { Layout } from './Layout';
 import { PageSize } from './PageSizeCalculator';
+import { RenderPage } from './RenderPage';
 import Sidebar from './Sidebar';
 import Toolbar from './Toolbar';
 import { RenderToolbarSlot } from './ToolbarSlot';
@@ -47,6 +48,7 @@ interface InnerProps {
     layout: Layout;
     pageSize: PageSize;
     render: RenderViewer;
+    renderPage?: RenderPage;
     selectionMode: SelectionMode;
     onDocumentLoad(doc: PdfJs.PdfDocument): void;
     onOpenFile(fileName: string, data: Uint8Array): void;
@@ -54,7 +56,7 @@ interface InnerProps {
 }
 
 const Inner: React.FC<InnerProps> = ({
-    doc, file, initialPage, keyword, layout, pageSize, render, selectionMode,
+    doc, file, initialPage, keyword, layout, pageSize, render, renderPage, selectionMode,
     onDocumentLoad, onOpenFile, onZoom,
 }) => {
     const theme = React.useContext(ThemeContent);
@@ -304,6 +306,7 @@ const Inner: React.FC<InnerProps> = ({
                                         height={pageHeight}
                                         match={match}
                                         pageIndex={index}
+                                        renderPage={renderPage}
                                         rotation={rotation}
                                         scale={scale}
                                         width={pageWidth}

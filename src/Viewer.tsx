@@ -15,6 +15,7 @@ import defaultToolbar from './layouts/defaultToolbar';
 import Inner from './layouts/Inner';
 import { Layout } from './layouts/Layout';
 import PageSizeCalculator, { PageSize } from './layouts/PageSizeCalculator';
+import { RenderPage } from './layouts/RenderPage';
 import { RenderToolbar } from './layouts/ToolbarSlot';
 import DocumentLoader from './loader/DocumentLoader';
 import LocalizationMap from './localization/LocalizationMap';
@@ -53,6 +54,7 @@ interface ViewerProps {
     // The prefix for CSS classes
     prefixClass?: string;
     render?: RenderViewerType;
+    renderPage?: RenderPage;
     // The text selection mode
     selectionMode?: SelectionMode;
     onDocumentLoad?(doc: PdfJs.PdfDocument): void;
@@ -68,6 +70,7 @@ const Viewer: React.FC<ViewerProps> = ({
     localization,
     prefixClass,
     render,
+    renderPage,
     selectionMode = SelectionMode.Text,
     onDocumentLoad = () => {/**/},
     onZoom = () => {/**/},
@@ -113,6 +116,7 @@ const Viewer: React.FC<ViewerProps> = ({
                     layout={layout || layoutOption}
                     pageSize={pageSize}
                     render={renderViewer}
+                    renderPage={renderPage}
                     selectionMode={selectionMode}
                     onDocumentLoad={onDocumentLoad}
                     onOpenFile={openFile}

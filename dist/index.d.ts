@@ -214,8 +214,20 @@ export interface RenderViewerProps {
     rotate(degree: number): void;
     zoom(level: number | SpecialZoomLevel): void;
 }
-
 export type RenderViewer = (props: RenderViewerProps) => React.ReactElement;
+
+export interface RenderPageProps {
+    annotationLayer: Slot;
+    canvasLayer: Slot;
+    doc: PdfJs.PdfDocument;
+    height: number;
+    pageIndex: number;
+    rotation: number;
+    scale: number;
+    textLayer: Slot;
+    width: number;
+}
+export type RenderPage = (props: RenderPageProps) => React.ReactElement;
 
 export type Layout = (
     isSidebarOpened: boolean,
@@ -248,6 +260,7 @@ export interface ViewerProps {
     // The prefix for CSS classes
     prefixClass?: string;
     render?: RenderViewer;
+    renderPage?: RenderPage;
     selectionMode?: SelectionMode;
     onDocumentLoad?(doc: PdfJs.PdfDocument): void;
     onZoom?(doc: PdfJs.PdfDocument, scale: number): void;
