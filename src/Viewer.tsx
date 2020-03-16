@@ -25,6 +25,7 @@ import SelectionMode from './SelectionMode';
 import SpecialZoomLevel from './SpecialZoomLevel';
 import ThemeProvider from './theme/ThemeProvider';
 import PdfJs from './vendors/PdfJs';
+import RenderError from "./types/RenderError";
 
 interface RenderViewerProps {
     viewer: React.ReactElement;
@@ -55,6 +56,8 @@ interface ViewerProps {
     prefixClass?: string;
     render?: RenderViewerType;
     renderPage?: RenderPage;
+    // Support for custom error rendering
+    renderError?: RenderError;
     // The text selection mode
     selectionMode?: SelectionMode;
     onDocumentLoad?(doc: PdfJs.PdfDocument): void;
@@ -71,6 +74,7 @@ const Viewer: React.FC<ViewerProps> = ({
     prefixClass,
     render,
     renderPage,
+    renderError,
     selectionMode = SelectionMode.Text,
     onDocumentLoad = () => {/**/},
     onZoom = () => {/**/},
@@ -139,6 +143,7 @@ const Viewer: React.FC<ViewerProps> = ({
                 <DocumentLoader
                     file={file.data}
                     render={renderDoc(defaultRenderer)}
+                    renderError={renderError}
                 />
             </LocalizationProvider>
         </ThemeProvider>

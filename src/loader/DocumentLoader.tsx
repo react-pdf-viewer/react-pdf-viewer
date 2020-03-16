@@ -20,13 +20,15 @@ import LoadingState from './LoadingState';
 import LoadingStatus, { VerifyPassword } from './LoadingStatus';
 import WrongPassword from './WrongPassword';
 import WrongPasswordState from './WrongPasswordState';
+import RenderError from "../types/RenderError";
 
 interface DocumentLoaderProps {
     file: PdfJs.FileData;
     render(doc: PdfJs.PdfDocument): React.ReactElement;
+    renderError?: RenderError;
 }
 
-const DocumentLoader: React.FC<DocumentLoaderProps> = ({ file, render }) => {
+const DocumentLoader: React.FC<DocumentLoaderProps> = ({ file, render, renderError }) => {
     const theme = React.useContext(ThemeContent);
     const [status, setStatus] = React.useState<LoadingStatus>(new LoadingState(0));
 
@@ -70,12 +72,18 @@ const DocumentLoader: React.FC<DocumentLoaderProps> = ({ file, render }) => {
             return <WrongPassword verifyPasswordFn={(status as WrongPasswordState).verifyPasswordFn} />;
         case (status instanceof CompletedState):
             return render((status as CompletedState).doc);
-        case (status instanceof FailureState):
-            return (
-                <div className={`${theme.prefixClass}-doc-error`}>
-                    {(status as FailureState).error}
-                </div>
-            );
+        case (status instanceof FailureState): {
+            const message = (status as FailureState).error;
+            if (renderError) {
+                return renderError(message);
+            } else {
+                return (
+                    <div className={`${theme.prefixClass}-doc-error`}>
+                        {message}
+                    </div>
+                );
+            }
+        }
         case (status instanceof LoadingState):
         default:
             return (
