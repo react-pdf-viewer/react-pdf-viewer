@@ -43,7 +43,7 @@ type RenderViewerType = (props: RenderViewerProps) => React.ReactElement;
 interface ViewerProps {
     // The default zoom level
     // If it's not set, the initial zoom level will be calculated based on the dimesion of page and the container width
-    defaultScale?: number;
+    defaultScale?: number | SpecialZoomLevel;
     fileUrl: string;
     // The page (zero-index based) that will be displayed initially
     initialPage?: number;
@@ -105,10 +105,10 @@ const Viewer: React.FC<ViewerProps> = ({
     const renderDoc = (renderViewer: RenderViewer) => (doc: PdfJs.PdfDocument) => {
         const renderInner = (ps: PageSize) => {
             const pageSize = ps;
-            pageSize.scale = defaultScale || ps.scale;
 
             return (
                 <Inner
+                    defaultScale={defaultScale}
                     doc={doc}
                     file={file}
                     initialPage={initialPage}

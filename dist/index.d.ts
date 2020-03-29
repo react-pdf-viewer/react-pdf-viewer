@@ -250,7 +250,7 @@ export interface ViewerProps {
     // The default zoom level
     // If it's not set, the initial zoom level will be calculated based on the dimesion of page and the container width
     // So that, the document will fit best within the container
-    defaultScale?: number;
+    defaultScale?: number | SpecialZoomLevel;
     fileUrl: string;
     // The page (zero-index based) that will be displayed initially
     initialPage?: number;
