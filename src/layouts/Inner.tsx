@@ -41,6 +41,7 @@ const SCROLL_BAR_WIDTH = 17;
 const PAGE_PADDING = 8;
 
 interface InnerProps {
+    defaultScale?: number | SpecialZoomLevel;
     doc: PdfJs.PdfDocument;
     file: File;
     initialPage?: number;
@@ -56,7 +57,7 @@ interface InnerProps {
 }
 
 const Inner: React.FC<InnerProps> = ({
-    doc, file, initialPage, keyword, layout, pageSize, render, renderPage, selectionMode,
+    defaultScale, doc, file, initialPage, keyword, layout, pageSize, render, renderPage, selectionMode,
     onDocumentLoad, onOpenFile, onZoom,
 }) => {
     const theme = React.useContext(ThemeContent);
@@ -134,12 +135,6 @@ const Inner: React.FC<InnerProps> = ({
         toggleDragScroll(mode === SelectionMode.Hand);
         setCurrentMode(mode);
     };
-    React.useEffect(() => {
-        // Toggle the drag scroll if the hand tool is set initially
-        if (selectionMode === SelectionMode.Hand) {
-            toggleDragScroll(true);
-        }
-    }, []);
 
     const download = (): void => {
         downloadFile(file.name, file.data);
@@ -175,6 +170,17 @@ const Inner: React.FC<InnerProps> = ({
         setScale(scaled);
         onZoom(doc, scaled);
     };
+
+    React.useEffect(() => {
+        // Toggle the drag scroll if the hand tool is set initially
+        if (selectionMode === SelectionMode.Hand) {
+            toggleDragScroll(true);
+        }
+        // If the default scale is set
+        if (defaultScale) {
+            zoom(defaultScale);
+        }
+    }, []);
 
     const pageVisibilityChanged = (pageIndex: number, ratio: number): void => {
         pageVisibility[pageIndex] = ratio;

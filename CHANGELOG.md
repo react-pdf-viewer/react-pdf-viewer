@@ -75,6 +75,16 @@ const renderPage: RenderPage = (props: RenderPageProps) => (
 />
 ~~~
 
+**Improvement**
+- The default scale can be a special zoom level. For example, we can fit page in the container initially:
+
+~~~ javascript
+<Viewer
+    fileUrl='/path/to/document.pdf'
+    defaultScale={SpecialZoomLevel.PageFit}
+/>
+~~~
+
 ## v1.4.0
 
 **New features**

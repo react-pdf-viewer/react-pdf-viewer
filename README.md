@@ -33,6 +33,10 @@ __Coming soon__
 * [ ] Theming
 * [ ] Darkmode
 
+## License
+
+You have to purchase a Commercial License at the [official website](https://react-pdf-viewer.dev).
+
 ## Usage
 
 Perform the following steps to have the simplest example. For more demos, please look at the [demo](/demo) folder.
@@ -97,9 +101,6 @@ It will check if the entire source code compatible with
 * [eslint-plugin-react](https://github.com/yannickcr/eslint-plugin-react)
 * [typescript-eslint](https://github.com/typescript-eslint/typescript-eslint)
 
-## License
-Purchase a Commercial License at the [official website](https://react-pdf-viewer.dev)
-
 ## About
 
 This project is developed by [Nguyen Huu Phuoc](https://twitter.com/nghuuphuoc).
@@ -111,4 +112,5 @@ You might be interesting in my projects:
 | [CSS Layout](https://csslayout.io)                | A collection of popular layouts and patterns made with CSS        |
 | [Fake Numbers](https://fakenumbers.io)            | Generate fake and valid numbers                                   |
 | [Form Validation](https://formvalidation.io)      | The best validation library for JavaScript                        |
+| [HTML DOM](https://htmldom.dev)                   | How to manage HTML DOM with vanilla JavaScript                    |
 | [React PDF Viewer](https://react-pdf-viewer.dev)  | A React component to view a PDF document                          |
