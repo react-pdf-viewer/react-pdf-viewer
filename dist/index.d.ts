@@ -251,7 +251,7 @@ export interface ViewerProps {
     // If it's not set, the initial zoom level will be calculated based on the dimesion of page and the container width
     // So that, the document will fit best within the container
     defaultScale?: number | SpecialZoomLevel;
-    fileUrl: string;
+    fileUrl: string | Uint8Array;
     // The page (zero-index based) that will be displayed initially
     initialPage?: number;
     // The keyword that will be highlighted in all pages

@@ -85,6 +85,14 @@ const renderPage: RenderPage = (props: RenderPageProps) => (
 />
 ~~~
 
+- The `fileUrl` option can be `Uint8Array`:
+
+~~~ javascript
+<Viewer
+    fileUrl={new Uint8Array([...])}
+/>
+~~~
+
 ## v1.4.0
 
 **New features**

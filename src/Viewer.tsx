@@ -44,7 +44,7 @@ interface ViewerProps {
     // The default zoom level
     // If it's not set, the initial zoom level will be calculated based on the dimesion of page and the container width
     defaultScale?: number | SpecialZoomLevel;
-    fileUrl: string;
+    fileUrl: string | Uint8Array;
     // The page (zero-index based) that will be displayed initially
     initialPage?: number;
     // The keyword that will be highlighted in all pages
@@ -77,7 +77,7 @@ const Viewer: React.FC<ViewerProps> = ({
 }) => {
     const [file, setFile] = React.useState<File>({
         data: fileUrl,
-        name: fileUrl,
+        name: (typeof fileUrl === 'string') ? fileUrl : '',
     });
     const layoutOption = (
         isSidebarOpened: boolean,
