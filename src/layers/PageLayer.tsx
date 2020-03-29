@@ -18,6 +18,7 @@ import PdfJs from '../vendors/PdfJs';
 import AnnotationLayer from './AnnotationLayer';
 import CanvasLayer from './CanvasLayer';
 import './pageLayer.less';
+import SvgLayer from './SvgLayer';
 import TextLayer from './TextLayer';
 
 interface PageLayerProps {
@@ -113,12 +114,12 @@ const PageLayer: React.FC<PageLayerProps> = ({
                                 attrs: {},
                                 children: (
                                     <AnnotationLayer
-                                    doc={doc}
-                                    page={page}
-                                    rotation={rotation}
-                                    scale={scale}
-                                    onJumpToDest={onJumpToDest}
-                                />
+                                        doc={doc}
+                                        page={page}
+                                        rotation={rotation}
+                                        scale={scale}
+                                        onJumpToDest={onJumpToDest}
+                                    />
                                 )
                             },
                             canvasLayer: {
@@ -132,6 +133,12 @@ const PageLayer: React.FC<PageLayerProps> = ({
                             pageIndex,
                             rotation,
                             scale,
+                            svgLayer: {
+                                attrs: {},
+                                children: (
+                                    <SvgLayer height={h} page={page} rotation={rotation} scale={scale} width={w} />
+                                ),
+                            },
                             textLayer: {
                                 attrs: {},
                                 children: (

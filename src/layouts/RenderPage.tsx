@@ -19,6 +19,7 @@ interface RenderPageProps {
     pageIndex: number;
     rotation: number;
     scale: number;
+    svgLayer: Slot;
     textLayer: Slot;
     width: number;
 }
