@@ -105,6 +105,15 @@ declare module 'pdfjs-dist' {
         cancel(): void;
     }
 
+    // Render SVG
+    interface SVGGraphics {
+        getSVG(operatorList: PageOperatorList, viewport: ViewPort): Promise<SVGElement>;
+    }
+    interface SVGGraphicsConstructor {
+        new(commonObjs: PageCommonObjects, objs: PageObjects): SVGGraphics;
+    }
+    let SVGGraphics: SVGGraphicsConstructor;
+
     // Render text layer
     interface RenderTextLayerParams {
         textContent: PageTextContent;
@@ -161,5 +170,14 @@ declare module 'pdfjs-dist' {
         getTextContent(): Promise<PageTextContent>;
         getViewport(params: ViewPortParams): ViewPort;
         render(params: PageRenderParams): PageRenderTask;
+        getOperatorList(): Promise<PageOperatorList>;
+        commonObjs: PageCommonObjects;
+        objs: PageObjects;
     }
+
+    /* eslint-disable @typescript-eslint/no-empty-interface */
+    interface PageCommonObjects {}
+    interface PageObjects {}
+    interface PageOperatorList {}
+    /* eslint-enable @typescript-eslint/no-empty-interface */
 }

@@ -14,6 +14,25 @@
 />
 ~~~
 
+- Add new SVG layer which can be used to replace the canvas layer
+
+~~~ javascript
+const renderPage = (props: RenderPageProps) => {
+    return (
+        <>
+            {props.svgLayer.children}
+            {props.textLayer.children}
+            {props.annotationLayer.children}
+        </>
+    );
+};
+
+<Viewer
+    fileUrl='/path/to/document.pdf'
+    renderPage={renderPage}
+/>
+~~~
+
 - Customize page renderer. The following code adds a simple _Draft_ watermark at the center of every page:
 
 ~~~ javascript
