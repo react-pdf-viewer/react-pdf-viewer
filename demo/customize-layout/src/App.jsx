@@ -8,7 +8,7 @@ import SimpleToolbar from './SimpleToolbar';
 
 const App = () => {
     return (
-        <Worker workerUrl="https://unpkg.com/pdfjs-dist@2.2.228/build/pdf.worker.min.js">
+        <Worker workerUrl="https://unpkg.com/pdfjs-dist@2.3.200/build/pdf.worker.min.js">
             <div style={{ margin: '32px 0' }}>
                 <h2>Simple toolbar</h2>
                 <div
