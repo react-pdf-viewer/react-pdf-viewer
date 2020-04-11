@@ -1,6 +1,6 @@
 {
     "name": "@phuocng/react-pdf-viewer",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "description": "A React component to view a PDF document",
     "license": "https://react-pdf-viewer.dev/license",
     "author": {
@@ -32,7 +32,7 @@
         "typecheck": "tsc --noEmit --watch"
     },
     "dependencies": {
-        "pdfjs-dist": "^2.2.228",
+        "pdfjs-dist": "^2.3.200",
         "react": "^16.12.0",
         "react-dom": "^16.12.0"
     },
