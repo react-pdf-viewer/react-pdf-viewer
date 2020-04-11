@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## v1.5.0 (not released yet)
+## v1.5.0
 
 **New features**
 - Highlight given keyword in the first render
