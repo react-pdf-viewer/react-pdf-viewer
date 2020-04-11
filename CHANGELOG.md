@@ -93,6 +93,8 @@ const renderPage: RenderPage = (props: RenderPageProps) => (
 />
 ~~~
 
+- Add styles for error message
+
 ## v1.4.0
 
 **New features**

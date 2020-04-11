@@ -73,7 +73,9 @@ const DocumentLoader: React.FC<DocumentLoaderProps> = ({ file, render }) => {
         case (status instanceof FailureState):
             return (
                 <div className={`${theme.prefixClass}-doc-error`}>
-                    {(status as FailureState).error}
+                    <div className={`${theme.prefixClass}-doc-error-text`}>
+                        {(status as FailureState).error}
+                    </div>
                 </div>
             );
         case (status instanceof LoadingState):
