@@ -9,7 +9,19 @@
 @import '../theme/common.less';
 
 .@{viewer-prefix}-doc-error {
-    text-align: center;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    height: 100%;
+
+    &-text {
+        background-color: #e53e3e;
+        border-radius: 0.25rem;
+        color: #fff;
+        line-height: 1.5;
+        max-width: 50%;
+        padding: 0.5rem;
+    }
 }
 
 .@{viewer-prefix}-doc-loading {
