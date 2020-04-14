@@ -8,6 +8,7 @@
 
 import React from 'react';
 
+import AnnotationLayer from '../annotations/AnnotationLayer';
 import Spinner from '../components/Spinner';
 import Observer, { VisibilityChanged } from '../layouts/Observer';
 import RenderPageProps, { RenderPage } from '../layouts/RenderPage';
@@ -15,7 +16,6 @@ import Match from '../search/Match';
 import SpecialZoomLevel from '../SpecialZoomLevel';
 import ThemeContent from '../theme/ThemeContext';
 import PdfJs from '../vendors/PdfJs';
-import AnnotationLayer from './AnnotationLayer';
 import CanvasLayer from './CanvasLayer';
 import './pageLayer.less';
 import SvgLayer from './SvgLayer';
@@ -116,9 +116,6 @@ const PageLayer: React.FC<PageLayerProps> = ({
                                     <AnnotationLayer
                                         doc={doc}
                                         page={page}
-                                        rotation={rotation}
-                                        scale={scale}
-                                        onJumpToDest={onJumpToDest}
                                     />
                                 )
                             },
