@@ -12,7 +12,6 @@ const ModalExample: React.FC<{}> = () => {
             className="example-modal"
             style={{
                 backgroundColor: '#fff',
-                display: 'flex',
                 flexDirection: 'column',
                 overflow: 'hidden',
 
