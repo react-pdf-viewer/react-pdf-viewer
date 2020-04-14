@@ -1,0 +1,5 @@
+@media print {
+    .viewer-body-printing .example-modal {
+        display: none;
+    }
+}
