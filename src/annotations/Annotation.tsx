@@ -18,7 +18,7 @@ interface AnnotationProps {
     viewport: PdfJs.ViewPort;
 }
 
-const Annotation: React.FC<AnnotationProps> = ({ page, rect, viewport }) => {
+const Annotation: React.FC<AnnotationProps> = ({ children, page, rect, viewport }) => {
     const theme = React.useContext(ThemeContent);
 
     const normalizeRect = (r: number[]) => [
@@ -50,6 +50,7 @@ const Annotation: React.FC<AnnotationProps> = ({ page, rect, viewport }) => {
                 width: `${width}px`,
             }}
         >
+            {children}
         </div>
     );
 };

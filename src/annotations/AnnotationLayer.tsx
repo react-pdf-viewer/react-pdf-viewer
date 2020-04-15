@@ -9,6 +9,7 @@
 import React from 'react';
 
 import ThemeContent from '../theme/ThemeContext';
+import SpecialZoomLevel from '../SpecialZoomLevel';
 import PdfJs from '../vendors/PdfJs';
 import AnnotationLoader from './AnnotationLoader';
 import AnnotationType from './AnnotationType';
@@ -19,9 +20,10 @@ interface AnnotationLayerProps {
     page: PdfJs.Page;
     rotation: number;
     scale: number;
+    onJumpToDest(pageIndex: number, bottomOffset: number, scaleTo: number | SpecialZoomLevel): void;
 }
 
-const AnnotationLayer: React.FC<AnnotationLayerProps> = ({ doc, page, rotation, scale }) => {
+const AnnotationLayer: React.FC<AnnotationLayerProps> = ({ doc, page, rotation, scale, onJumpToDest }) => {
     const theme = React.useContext(ThemeContent);
 
     const renderAnnotations = (annotations: PdfJs.Annotation[]) => {
@@ -38,9 +40,12 @@ const AnnotationLayer: React.FC<AnnotationLayerProps> = ({ doc, page, rotation, 
                             return (
                                 <Link
                                     key={annotation.id}
+                                    dest={annotation.dest}
+                                    doc={doc}
                                     page={page}
                                     rect={annotation.rect}
                                     viewport={clonedViewPort}
+                                    onJumpToDest={onJumpToDest}
                                 />
                             );
                         default:

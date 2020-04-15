@@ -118,6 +118,7 @@ const PageLayer: React.FC<PageLayerProps> = ({
                                         page={page}
                                         rotation={rotation}
                                         scale={scale}
+                                        onJumpToDest={onJumpToDest}
                                     />
                                 )
                             },
