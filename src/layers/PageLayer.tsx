@@ -116,6 +116,8 @@ const PageLayer: React.FC<PageLayerProps> = ({
                                     <AnnotationLayer
                                         doc={doc}
                                         page={page}
+                                        rotation={rotation}
+                                        scale={scale}
                                     />
                                 )
                             },

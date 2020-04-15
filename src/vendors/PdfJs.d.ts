@@ -94,6 +94,7 @@ declare module 'pdfjs-dist' {
     }
     interface ViewPort {
         height: number;
+        transform: number[];
         width: number;
         clone(params: ViewPortCloneParams): ViewPort;
     }
@@ -134,7 +135,11 @@ declare module 'pdfjs-dist' {
         intent: string;
     }
     interface Annotation {
+        annotationType: number;
         dest: string;
+        hasAppearance: boolean;
+        id: string;
+        rect: number[];
         subtype: string;    // Can be 'Link'
     }
     const AnnotationLayer: PdfAnnotationLayer;
@@ -173,6 +178,7 @@ declare module 'pdfjs-dist' {
         getOperatorList(): Promise<PageOperatorList>;
         commonObjs: PageCommonObjects;
         objs: PageObjects;
+        view: number[];
     }
 
     /* eslint-disable @typescript-eslint/no-empty-interface */
