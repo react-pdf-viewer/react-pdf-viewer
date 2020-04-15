@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## v1.6.0 (not released yet)
+
+**New features**
+The annotation layer is rewritten. Support the following type of annotations:
+- Link
+
 ## v1.5.0
 
 **New features**
