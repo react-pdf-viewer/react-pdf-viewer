@@ -28,7 +28,7 @@ const Link: React.FC<LinkProps> = ({ dest, doc, page, rect, viewport, onJumpToDe
     const theme = useContext(ThemeContent);
     const href = (typeof dest === 'string') ? `#${escape(dest)}` : `#${escape(JSON.stringify(dest))}`;
 
-    const link = (e: React.MouseEvent) => {
+    const link = (e: React.MouseEvent): void => {
         e.preventDefault();
         getDestination(doc, dest).then((target) => {
             const { pageIndex, bottomOffset, scaleTo } = target;

@@ -8,6 +8,6 @@
 
 enum AnnotationType {
     Link = 2,
-};
+}
 
 export default AnnotationType;

@@ -21,7 +21,7 @@ interface AnnotationProps {
 const Annotation: React.FC<AnnotationProps> = ({ children, page, rect, viewport }) => {
     const theme = React.useContext(ThemeContent);
 
-    const normalizeRect = (r: number[]) => [
+    const normalizeRect = (r: number[]): number[] => [
         Math.min(r[0], r[2]),
         Math.min(r[1], r[3]),
         Math.max(r[0], r[2]),
@@ -35,8 +35,8 @@ const Annotation: React.FC<AnnotationProps> = ({ children, page, rect, viewport 
         page.view[3] + page.view[1] - rect[3],
     ]);
 
-    let width = rect[2] - rect[0];
-    let height = rect[3] - rect[1];
+    const width = rect[2] - rect[0];
+    const height = rect[3] - rect[1];
 
     return (
         <div
