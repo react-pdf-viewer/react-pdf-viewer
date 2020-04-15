@@ -8,7 +8,6 @@
 
 import React from 'react';
 
-import Spinner from '../components/Spinner';
 import PdfJs from '../vendors/PdfJs';
 
 interface AnnotationLayerProps {
@@ -17,18 +16,19 @@ interface AnnotationLayerProps {
 }
 
 const AnnotationLoader: React.FC<AnnotationLayerProps> = ({ page, renderAnnotations }) => {
-    const [loading, setLoading] = React.useState(false);
+    const [loading, setLoading] = React.useState(true);
     const [annotations, setAnnotations] = React.useState<PdfJs.Annotation[]>([]);
 
     React.useEffect(() => {
         page.getAnnotations({ intent: 'display' }).then((result) => {
+            setLoading(false);
             setAnnotations(result);
         });
     }, []);
 
     return (
         loading
-            ? <Spinner />
+            ? <></>
             : renderAnnotations(annotations)
     );
 };

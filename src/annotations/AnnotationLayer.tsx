@@ -27,7 +27,6 @@ const AnnotationLayer: React.FC<AnnotationLayerProps> = ({ doc, page, rotation, 
     const theme = React.useContext(ThemeContent);
 
     const renderAnnotations = (annotations: PdfJs.Annotation[]) => {
-        console.log(annotations);
         const viewport = page.getViewport({ rotation, scale });
         const clonedViewPort = viewport.clone({ dontFlip: true });
 
