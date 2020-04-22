@@ -36,6 +36,11 @@ const CanvasLayer: React.FC<CanvasLayerProps> = ({ height, page, rotation, scale
         }
 
         const canvasEle = canvasRef.current as HTMLCanvasElement;
+        // Set the size for canvas here instead of inside `render`
+        // to avoid the black flickering
+        canvasEle.height = height * devicePixelRatio;
+        canvasEle.width = width * devicePixelRatio;
+
         const canvasContext = canvasEle.getContext('2d', { alpha: false }) as CanvasRenderingContext2D;
 
         const viewport = page.getViewport({ rotation, scale: scale * devicePixelRatio });
@@ -50,11 +55,13 @@ const CanvasLayer: React.FC<CanvasLayerProps> = ({ height, page, rotation, scale
         <WithScale callback={renderCanvas} rotation={rotation} scale={scale}>
             <div
                 className={`${theme.prefixClass}-canvas-layer`}
+                style={{
+                    height: `${height}px`,
+                    width: `${width}px`,
+                }}
             >
             <canvas
-                height={height * devicePixelRatio}
                 ref={canvasRef}
-                width={width * devicePixelRatio}
                 style={{
                     transform: `scale(${1 / devicePixelRatio})`,
                     transformOrigin: `top left`,
