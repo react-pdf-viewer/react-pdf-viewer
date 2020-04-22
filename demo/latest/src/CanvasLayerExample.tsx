@@ -18,7 +18,6 @@ const CanvasLayerExample: React.FC<CanvasLayerExampleProps> = ({ fileUrl }) => {
         <Viewer
             fileUrl={fileUrl}
             renderPage={renderPage}
-            defaultScale={1}
         />
     );
 };

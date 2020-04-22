@@ -26,6 +26,9 @@ const CanvasLayer: React.FC<CanvasLayerProps> = ({ height, page, rotation, scale
     const canvasRef = React.createRef<HTMLCanvasElement>();
     const renderTask = React.useRef<PdfJs.PageRenderTask>();
 
+    // Support high DPI screen
+    const devicePixelRatio = window.devicePixelRatio || 1;
+
     const renderCanvas = (): void => {
         const task = renderTask.current;
         if (task) {
@@ -33,9 +36,9 @@ const CanvasLayer: React.FC<CanvasLayerProps> = ({ height, page, rotation, scale
         }
 
         const canvasEle = canvasRef.current as HTMLCanvasElement;
-        const canvasContext = canvasEle.getContext('2d') as CanvasRenderingContext2D;
+        const canvasContext = canvasEle.getContext('2d', { alpha: false }) as CanvasRenderingContext2D;
 
-        const viewport = page.getViewport({ rotation, scale });
+        const viewport = page.getViewport({ rotation, scale: scale * devicePixelRatio });
         renderTask.current = page.render({ canvasContext, viewport });
         renderTask.current.promise.then(
             (): void => {/**/},
@@ -45,12 +48,19 @@ const CanvasLayer: React.FC<CanvasLayerProps> = ({ height, page, rotation, scale
 
     return (
         <WithScale callback={renderCanvas} rotation={rotation} scale={scale}>
-            <canvas
+            <div
                 className={`${theme.prefixClass}-canvas-layer`}
-                height={height}
+            >
+            <canvas
+                height={height * devicePixelRatio}
                 ref={canvasRef}
-                width={width}
+                width={width * devicePixelRatio}
+                style={{
+                    transform: `scale(${1 / devicePixelRatio})`,
+                    transformOrigin: `top left`,
+                }}
             />
+            </div>
         </WithScale>
     );
 };
