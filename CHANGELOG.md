@@ -2,9 +2,12 @@
 
 ## v1.6.0 (not released yet)
 
-**New features**
+**New feature**
 The annotation layer is rewritten. Support the following type of annotations:
 - Link
+
+**Bug fix**
+- The canvas layer is blurry
 
 ## v1.5.0
 

@@ -26,6 +26,9 @@ const CanvasLayer: React.FC<CanvasLayerProps> = ({ height, page, rotation, scale
     const canvasRef = React.createRef<HTMLCanvasElement>();
     const renderTask = React.useRef<PdfJs.PageRenderTask>();
 
+    // Support high DPI screen
+    const devicePixelRatio = window.devicePixelRatio || 1;
+
     const renderCanvas = (): void => {
         const task = renderTask.current;
         if (task) {
@@ -33,9 +36,14 @@ const CanvasLayer: React.FC<CanvasLayerProps> = ({ height, page, rotation, scale
         }
 
         const canvasEle = canvasRef.current as HTMLCanvasElement;
-        const canvasContext = canvasEle.getContext('2d') as CanvasRenderingContext2D;
+        // Set the size for canvas here instead of inside `render`
+        // to avoid the black flickering
+        canvasEle.height = height * devicePixelRatio;
+        canvasEle.width = width * devicePixelRatio;
 
-        const viewport = page.getViewport({ rotation, scale });
+        const canvasContext = canvasEle.getContext('2d', { alpha: false }) as CanvasRenderingContext2D;
+
+        const viewport = page.getViewport({ rotation, scale: scale * devicePixelRatio });
         renderTask.current = page.render({ canvasContext, viewport });
         renderTask.current.promise.then(
             (): void => {/**/},
@@ -45,12 +53,21 @@ const CanvasLayer: React.FC<CanvasLayerProps> = ({ height, page, rotation, scale
 
     return (
         <WithScale callback={renderCanvas} rotation={rotation} scale={scale}>
-            <canvas
+            <div
                 className={`${theme.prefixClass}-canvas-layer`}
-                height={height}
+                style={{
+                    height: `${height}px`,
+                    width: `${width}px`,
+                }}
+            >
+            <canvas
                 ref={canvasRef}
-                width={width}
+                style={{
+                    transform: `scale(${1 / devicePixelRatio})`,
+                    transformOrigin: `top left`,
+                }}
             />
+            </div>
         </WithScale>
     );
 };

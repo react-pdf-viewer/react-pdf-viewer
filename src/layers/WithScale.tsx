@@ -15,7 +15,7 @@ interface WithScaleProps {
 }
 
 const WithScale: React.FC<WithScaleProps> = ({ callback, children, rotation, scale }) => {
-    React.useEffect(() => {
+    React.useLayoutEffect(() => {
         callback();
     }, [rotation, scale]);
     return (<>{children}</>);
