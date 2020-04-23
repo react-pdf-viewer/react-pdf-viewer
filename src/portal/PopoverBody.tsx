@@ -8,36 +8,56 @@
 
 import React from 'react';
 
-import useKeyUp from '../hooks/useKeyUp';
-import usePosition from '../hooks/usePosition';
+import useClickOutside from '../hooks/useClickOutside';
 import ThemeContent from '../theme/ThemeContext';
+import calculatePosition from '../utils/calculatePosition';
 import Arrow from './Arrow';
 import Offset from './Offset';
 import './popoverBody.less';
 import Position from './Position';
 
 interface PopoverBodyProps {
-    closeOnEscape: boolean;
+    closeOnClickOutside: boolean;
     offset: Offset;
     position: Position;
     targetRef: React.RefObject<HTMLElement>;
-    onToggle(): void;
+    onClose(): void;
 }
 
 const PopoverBody: React.FC<PopoverBodyProps> = ({
-    children, closeOnEscape, offset, position, targetRef, onToggle,
+    children, closeOnClickOutside, offset, position, targetRef, onClose,
 }) => {
     const theme = React.useContext(ThemeContent);
     const contentRef = React.createRef<HTMLDivElement>();
+    const anchorRef = React.createRef<HTMLDivElement>();
 
-    useKeyUp(27, () => closeOnEscape && onToggle());
-    usePosition(contentRef, targetRef, position, offset);
+    useClickOutside(contentRef, onClose);
+
+    React.useLayoutEffect(() => {
+        const targetEle = targetRef.current;
+        const contentEle = contentRef.current;
+        const anchorEle = anchorRef.current;
+        if (!contentEle || !targetEle || !anchorEle) {
+            return;
+        }
+
+        const anchorRect = anchorEle.getBoundingClientRect();
+        const { top, left } = calculatePosition(contentEle, targetEle, position, offset);
+        contentEle.style.top = `${top}px`;
+        contentEle.style.left = `${left - anchorRect.left}px`;
+    }, []);
 
     return (
+        <>
+        <div
+            ref={anchorRef}
+            style={{ left: 0, position: 'absolute', top: 0 }}
+        />
         <div className={`${theme.prefixClass}-popover-body`} ref={contentRef}>
             <Arrow customClassName={`${theme.prefixClass}-popover-body-arrow`} position={position} />
             {children}
         </div>
+        </>
     );
 };
 

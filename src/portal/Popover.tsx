@@ -30,20 +30,21 @@ const Popover: React.FC<PopoverProps> = ({ closeOnClickOutside, closeOnEscape, c
     const renderTarget = (toggle: Toggle, opened: boolean): React.ReactElement => (<div ref={targetRef}>{target(toggle, opened)}</div>);
 
     const renderContent = (toggle: Toggle): React.ReactElement => (
+        <>
         <PopoverOverlay
+            closeOnEscape={closeOnEscape}
+            onClose={toggle}
+        />
+        <PopoverBody
             closeOnClickOutside={closeOnClickOutside}
+            offset={offset}
+            position={position}
+            targetRef={targetRef}
             onClose={toggle}
         >
-            <PopoverBody
-                closeOnEscape={closeOnEscape}
-                offset={offset}
-                position={position}
-                targetRef={targetRef}
-                onToggle={toggle}
-            >
-                {content(toggle)}
-            </PopoverBody>
-        </PopoverOverlay>
+            {content(toggle)}
+        </PopoverBody>
+        </>
     );
 
     return (
