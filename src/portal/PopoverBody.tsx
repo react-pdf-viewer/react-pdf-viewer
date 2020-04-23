@@ -9,8 +9,8 @@
 import React from 'react';
 
 import useClickOutside from '../hooks/useClickOutside';
+import usePosition from '../hooks/usePosition';
 import ThemeContent from '../theme/ThemeContext';
-import calculatePosition from '../utils/calculatePosition';
 import Arrow from './Arrow';
 import Offset from './Offset';
 import './popoverBody.less';
@@ -31,21 +31,8 @@ const PopoverBody: React.FC<PopoverBodyProps> = ({
     const contentRef = React.createRef<HTMLDivElement>();
     const anchorRef = React.createRef<HTMLDivElement>();
 
-    useClickOutside(contentRef, onClose);
-
-    React.useLayoutEffect(() => {
-        const targetEle = targetRef.current;
-        const contentEle = contentRef.current;
-        const anchorEle = anchorRef.current;
-        if (!contentEle || !targetEle || !anchorEle) {
-            return;
-        }
-
-        const anchorRect = anchorEle.getBoundingClientRect();
-        const { top, left } = calculatePosition(contentEle, targetEle, position, offset);
-        contentEle.style.top = `${top - anchorRect.top}px`;
-        contentEle.style.left = `${left - anchorRect.left}px`;
-    }, []);
+    useClickOutside(closeOnClickOutside, contentRef, onClose);
+    usePosition(contentRef, targetRef,anchorRef, position, offset);
 
     return (
         <>

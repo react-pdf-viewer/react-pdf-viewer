@@ -8,7 +8,7 @@
 
 import React from 'react';
 
-const useClickOutside = (targetRef: React.RefObject<HTMLElement>, onClickOutside: () => void): void => {
+const useClickOutside = (closeOnClickOutside: boolean, targetRef: React.RefObject<HTMLElement>, onClickOutside: () => void): void => {
     const clickHandler = (e: MouseEvent): void => {
         const target = targetRef.current;
         if (target && !target.contains(e.target as Node)) {
@@ -17,6 +17,10 @@ const useClickOutside = (targetRef: React.RefObject<HTMLElement>, onClickOutside
     };
 
     React.useEffect(() => {
+        if (!closeOnClickOutside) {
+            return;
+        }
+
         document.addEventListener('click', clickHandler);
         return (): void => {
             document.removeEventListener('click', clickHandler);
