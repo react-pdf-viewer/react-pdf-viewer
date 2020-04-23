@@ -15,7 +15,9 @@ const useKeyUp = (targetKeyCode: number, handler: () => void): void => {
 
     React.useEffect(() => {
         document.addEventListener('keyup', keyUpHandler);
-        return (): void => document.removeEventListener('keyup', keyUpHandler);
+        return (): void => {
+            document.removeEventListener('keyup', keyUpHandler);
+        };
     }, []);
 };
 

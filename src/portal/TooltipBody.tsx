@@ -24,16 +24,23 @@ interface TooltipBodyProps {
 const TooltipBody: React.FC<TooltipBodyProps> = ({ children, offset, position, targetRef }) => {
     const theme = React.useContext(ThemeContent);
     const contentRef = React.createRef<HTMLDivElement>();
+    const anchorRef = React.createRef<HTMLDivElement>();
 
-    usePosition(contentRef, targetRef, position, offset);
+    usePosition(contentRef, targetRef, anchorRef, position, offset);
 
     return (
-        <div className={`${theme.prefixClass}-tooltip-body`} ref={contentRef}>
-            <Arrow customClassName={`${theme.prefixClass}-tooltip-body-arrow`} position={position} />
-            <div className={`${theme.prefixClass}-tooltip-body-content`}>
-                {children}
+        <>
+            <div
+                ref={anchorRef}
+                style={{ left: 0, position: 'absolute', top: 0 }}
+            />
+            <div className={`${theme.prefixClass}-tooltip-body`} ref={contentRef}>
+                <Arrow customClassName={`${theme.prefixClass}-tooltip-body-arrow`} position={position} />
+                <div className={`${theme.prefixClass}-tooltip-body-content`}>
+                    {children}
+                </div>
             </div>
-        </div>
+        </>
     );
 };
 

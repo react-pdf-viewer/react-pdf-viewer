@@ -8,6 +8,7 @@ The annotation layer is rewritten. Support the following type of annotations:
 
 **Bug fix**
 - The canvas layer is blurry
+- The tooltip, popover positions are not correct in some cases
 
 ## v1.5.0
 

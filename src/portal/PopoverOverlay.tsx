@@ -8,42 +8,22 @@
 
 import React from 'react';
 
+import useKeyUp from '../hooks/useKeyUp';
 import ThemeContent from '../theme/ThemeContext';
 import './popoverOverlay.less';
 
 interface PopoverOverlayProps {
-    closeOnClickOutside: boolean;
+    closeOnEscape: boolean;
     onClose(): void;
 }
 
-const PopoverOverlay: React.FC<PopoverOverlayProps> = ({ children, closeOnClickOutside, onClose }) => {
+const PopoverOverlay: React.FC<PopoverOverlayProps> = ({ closeOnEscape, onClose }) => {
     const theme = React.useContext(ThemeContent);
 
-    const onClick = (e: React.MouseEvent): void => {
-        if (e.target === e.currentTarget && closeOnClickOutside) {
-            onClose();
-        }
-    };
-
-    React.useEffect(() => {
-        const originalStyle = window.getComputedStyle(document.body).position;
-        if (closeOnClickOutside) {
-            document.body.style.position = 'relative';
-        }
-
-        return (): void => {
-            document.body.style.setProperty('overflow', originalStyle);
-        };
-    }, [closeOnClickOutside]);
+    useKeyUp(27, () => closeOnEscape && onClose());
 
     return (
-        closeOnClickOutside
-        ? (
-            <div className={`${theme.prefixClass}-popover-overlay`} onClick={onClick}>
-                {children}
-            </div>
-        )
-        : <>{children}</>
+        <div className={`${theme.prefixClass}-popover-overlay`} />
     );
 };
 

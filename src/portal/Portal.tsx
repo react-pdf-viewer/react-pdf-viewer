@@ -7,7 +7,6 @@
  */
 
 import React from 'react';
-import ReactDOM from 'react-dom';
 
 import useToggle, { Toggle } from '../hooks/useToggle';
 
@@ -24,7 +23,7 @@ const Portal: React.FC<PortalProps> = ({ content, target }) => {
     return (
         <>
             {target(toggle, opened)}
-            {opened && ReactDOM.createPortal(content(toggle), document.body)}
+            {opened && content(toggle)}
         </>
     );
 };

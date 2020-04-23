@@ -75,8 +75,8 @@ const calculatePosition = (content: HTMLElement, target: HTMLElement, position: 
     }
 
     return {
-        left: left + document.body.scrollLeft + (offset.left || 0),
-        top: top + document.body.scrollTop + (offset.top || 0),
+        left: left + (offset.left || 0),
+        top: top + (offset.top || 0),
     };
 };
 

@@ -15,19 +15,22 @@ import calculatePosition from '../utils/calculatePosition';
 const usePosition = (
     contentRef: React.RefObject<HTMLElement>,
     targetRef: React.RefObject<HTMLElement>,
+    anchorRef: React.RefObject<HTMLElement>,
     position: Position,
     offset: Offset,
 ): void => {
-    React.useEffect(() => {
+    React.useLayoutEffect(() => {
         const targetEle = targetRef.current;
         const contentEle = contentRef.current;
-        if (!contentEle || !targetEle) {
+        const anchorEle = anchorRef.current;
+        if (!contentEle || !targetEle || !anchorEle) {
             return;
         }
 
+        const anchorRect = anchorEle.getBoundingClientRect();
         const { top, left } = calculatePosition(contentEle, targetEle, position, offset);
-        contentEle.style.top = `${top}px`;
-        contentEle.style.left = `${left}px`;
+        contentEle.style.top = `${top - anchorRect.top}px`;
+        contentEle.style.left = `${left - anchorRect.left}px`;
     }, []);
 };
 

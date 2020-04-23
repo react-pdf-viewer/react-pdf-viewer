@@ -11,22 +11,11 @@ import React from 'react';
 import ThemeContent from '../theme/ThemeContext';
 import './modalOverlay.less';
 
-interface ModalOverlayProps {
-    closeOnClickOutside: boolean;
-    onClose(): void;
-}
-
-const ModalOverlay: React.FC<ModalOverlayProps> = ({ children, closeOnClickOutside, onClose }) => {
+const ModalOverlay: React.FC<{}> = ({ children }) => {
     const theme = React.useContext(ThemeContent);
 
-    const onClick = (e: React.MouseEvent): void => {
-        if (e.target === e.currentTarget && closeOnClickOutside) {
-            onClose();
-        }
-    };
-
     return (
-        <div className={`${theme.prefixClass}-modal-overlay`} onClick={onClick}>
+        <div className={`${theme.prefixClass}-modal-overlay`}>
             {children}
         </div>
     );
