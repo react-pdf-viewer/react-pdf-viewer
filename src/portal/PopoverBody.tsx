@@ -43,7 +43,7 @@ const PopoverBody: React.FC<PopoverBodyProps> = ({
 
         const anchorRect = anchorEle.getBoundingClientRect();
         const { top, left } = calculatePosition(contentEle, targetEle, position, offset);
-        contentEle.style.top = `${top}px`;
+        contentEle.style.top = `${top - anchorRect.top}px`;
         contentEle.style.left = `${left - anchorRect.left}px`;
     }, []);
 

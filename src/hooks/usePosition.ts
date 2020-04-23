@@ -18,7 +18,7 @@ const usePosition = (
     position: Position,
     offset: Offset,
 ): void => {
-    React.useEffect(() => {
+    React.useLayoutEffect(() => {
         const targetEle = targetRef.current;
         const contentEle = contentRef.current;
         if (!contentEle || !targetEle) {

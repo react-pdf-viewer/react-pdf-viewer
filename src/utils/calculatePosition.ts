@@ -19,54 +19,54 @@ const calculatePosition = (content: HTMLElement, target: HTMLElement, position: 
 
     switch (position) {
         case Position.TopLeft:
-            top = -height;
+            top = targetRect.top - height;
             left = targetRect.left;
             break;
         case Position.TopCenter:
-            top = -height;
+            top = targetRect.top - height;
             left = targetRect.left + targetRect.width / 2 - width / 2;
             break;
         case Position.TopRight:
-            top = -height;
+            top = targetRect.top - height;
             left = targetRect.left + targetRect.width - width;
             break;
 
         case Position.RightTop:
-            top = 0;
+            top = targetRect.top;
             left = targetRect.left + targetRect.width;
             break;
         case Position.RightCenter:
-            top = targetRect.height / 2 - height / 2;
+            top = targetRect.top + targetRect.height / 2 - height / 2;
             left = targetRect.left + targetRect.width;
             break;
         case Position.RightBottom:
-            top = targetRect.height - height;
+            top = targetRect.top + targetRect.height - height;
             left = targetRect.left + targetRect.width;
             break;
 
         case Position.BottomLeft:
-            top = targetRect.height;
+            top = targetRect.top + targetRect.height;
             left = targetRect.left;
             break;
         case Position.BottomCenter:
-            top = targetRect.height;
+            top = targetRect.top + targetRect.height;
             left = targetRect.left + targetRect.width / 2 - width / 2;
             break;
         case Position.BottomRight:
-            top = targetRect.height;
+            top = targetRect.top + targetRect.height;
             left = targetRect.left + targetRect.width - width;
             break;
 
         case Position.LeftTop:
-            top = 0;
+            top = targetRect.top;
             left = targetRect.left - width;
             break;
         case Position.LeftCenter:
-            top = targetRect.height / 2 - height / 2;
+            top = targetRect.top + targetRect.height / 2 - height / 2;
             left = targetRect.left - width;
             break;
         case Position.LeftBottom:
-            top = targetRect.height - height;
+            top = targetRect.top + targetRect.height - height;
             left = targetRect.left - width;
             break;
 

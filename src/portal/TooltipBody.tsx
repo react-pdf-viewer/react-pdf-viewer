@@ -8,8 +8,8 @@
 
 import React from 'react';
 
-import usePosition from '../hooks/usePosition';
 import ThemeContent from '../theme/ThemeContext';
+import calculatePosition from '../utils/calculatePosition';
 import Arrow from './Arrow';
 import Offset from './Offset';
 import Position from './Position';
@@ -24,16 +24,35 @@ interface TooltipBodyProps {
 const TooltipBody: React.FC<TooltipBodyProps> = ({ children, offset, position, targetRef }) => {
     const theme = React.useContext(ThemeContent);
     const contentRef = React.createRef<HTMLDivElement>();
+    const anchorRef = React.createRef<HTMLDivElement>();
 
-    usePosition(contentRef, targetRef, position, offset);
+    React.useLayoutEffect(() => {
+        const targetEle = targetRef.current;
+        const contentEle = contentRef.current;
+        const anchorEle = anchorRef.current;
+        if (!contentEle || !targetEle || !anchorEle) {
+            return;
+        }
+
+        const anchorRect = anchorEle.getBoundingClientRect();
+        const { top, left } = calculatePosition(contentEle, targetEle, position, offset);
+        contentEle.style.top = `${top - anchorRect.top}px`;
+        contentEle.style.left = `${left - anchorRect.left}px`;
+    }, []);
 
     return (
-        <div className={`${theme.prefixClass}-tooltip-body`} ref={contentRef}>
-            <Arrow customClassName={`${theme.prefixClass}-tooltip-body-arrow`} position={position} />
-            <div className={`${theme.prefixClass}-tooltip-body-content`}>
-                {children}
+        <>
+            <div
+                ref={anchorRef}
+                style={{ left: 0, position: 'absolute', top: 0 }}
+            />
+            <div className={`${theme.prefixClass}-tooltip-body`} ref={contentRef}>
+                <Arrow customClassName={`${theme.prefixClass}-tooltip-body-arrow`} position={position} />
+                <div className={`${theme.prefixClass}-tooltip-body-content`}>
+                    {children}
+                </div>
             </div>
-        </div>
+        </>
     );
 };
 
