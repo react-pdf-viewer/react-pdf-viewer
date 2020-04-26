@@ -6,12 +6,13 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
+import LoadError from './LoadError';
 import LoadingStatus from './LoadingStatus';
 
 class FailureState extends LoadingStatus {
-    public error: string;
+    public error: LoadError;
 
-    constructor(error: string) {
+    constructor(error: LoadError) {
         super();
         this.error = error;
     }

@@ -216,6 +216,21 @@ export interface RenderViewerProps {
 }
 export type RenderViewer = (props: RenderViewerProps) => React.ReactElement;
 
+// Represents the error in case the document can't be loaded
+export interface LoadError {
+    message?: string;
+    // Some possible values for `name` are
+    // - AbortException
+    // - FormatError
+    // - InvalidPDFException
+    // - MissingPDFException
+    // - PasswordException
+    // - UnexpectedResponseException
+    // - UnknownErrorException
+    name?: string;
+}
+export type RenderError = (error: LoadError) => React.ReactElement;
+
 export interface RenderPageProps {
     annotationLayer: Slot;
     canvasLayer: Slot;
@@ -261,6 +276,7 @@ export interface ViewerProps {
     // The prefix for CSS classes
     prefixClass?: string;
     render?: RenderViewer;
+    renderError?: RenderError;
     renderPage?: RenderPage;
     selectionMode?: SelectionMode;
     onDocumentLoad?(doc: PdfJs.PdfDocument): void;

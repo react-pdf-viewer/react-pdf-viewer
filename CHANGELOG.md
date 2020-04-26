@@ -6,6 +6,35 @@
 The annotation layer is rewritten. Support the following type of annotations:
 - Link
 
+- Customize error renderer.
+
+~~~ javascript
+const renderError = (error: LoadError) => {
+    let message = '';
+    switch (error.name) {
+        case 'InvalidPDFException':
+            message = 'The document is invalid or corrupted';
+            break;
+        case 'MissingPDFException':
+            message = 'The document is missing';
+            break;
+        case 'UnexpectedResponseException':
+            message = 'Unexpected server response';
+            break;
+        default:
+            message = 'Cannot load the document';
+            break;
+    }
+
+    return (<div>{message}</div>);
+};
+
+<Viewer
+    fileUrl={fileUrl}
+    renderError={renderError}
+/>
+~~~
+
 **Bug fix**
 - The canvas layer is blurry
 - The tooltip, popover positions are not correct in some cases
