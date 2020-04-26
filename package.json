@@ -33,24 +33,24 @@
     },
     "dependencies": {
         "pdfjs-dist": "^2.3.200",
-        "react": "^16.12.0",
-        "react-dom": "^16.12.0"
+        "react": "^16.13.1",
+        "react-dom": "^16.13.1"
     },
     "devDependencies": {
-        "@rollup/plugin-json": "^4.0.1",
-        "@rollup/plugin-typescript": "^3.0.0",
-        "@types/react": "^16.9.19",
-        "@types/react-dom": "^16.9.5",
-        "@typescript-eslint/eslint-plugin": "^2.22.0",
-        "@typescript-eslint/parser": "^2.22.0",
+        "@rollup/plugin-json": "^4.0.3",
+        "@rollup/plugin-typescript": "^4.1.1",
+        "@types/react": "^16.9.34",
+        "@types/react-dom": "^16.9.6",
+        "@typescript-eslint/eslint-plugin": "^2.29.0",
+        "@typescript-eslint/parser": "^2.29.0",
         "cssnano": "^4.1.10",
         "eslint": "^6.8.0",
         "eslint-plugin-react": "^7.19.0",
         "postcss-cli": "^7.1.0",
-        "rollup": "^1.30.1",
+        "rollup": "^2.7.2",
         "rollup-plugin-less": "^1.1.2",
         "rollup-plugin-less-modules": "^0.1.11",
-        "rollup-plugin-terser": "^5.2.0",
-        "typescript": "^3.7.5"
+        "rollup-plugin-terser": "^5.3.0",
+        "typescript": "^3.8.3"
     }
 }
