@@ -17,7 +17,7 @@ import { Layout } from './layouts/Layout';
 import PageSizeCalculator, { PageSize } from './layouts/PageSizeCalculator';
 import { RenderPage } from './layouts/RenderPage';
 import { RenderToolbar } from './layouts/ToolbarSlot';
-import DocumentLoader from './loader/DocumentLoader';
+import DocumentLoader, { RenderError } from './loader/DocumentLoader';
 import LocalizationMap from './localization/LocalizationMap';
 import LocalizationProvider from './localization/LocalizationProvider';
 import ScrollMode from './ScrollMode';
@@ -54,6 +54,7 @@ interface ViewerProps {
     // The prefix for CSS classes
     prefixClass?: string;
     render?: RenderViewerType;
+    renderError?: RenderError;
     renderPage?: RenderPage;
     // The text selection mode
     selectionMode?: SelectionMode;
@@ -70,6 +71,7 @@ const Viewer: React.FC<ViewerProps> = ({
     localization,
     prefixClass,
     render,
+    renderError,
     renderPage,
     selectionMode = SelectionMode.Text,
     onDocumentLoad = () => {/**/},
@@ -139,6 +141,7 @@ const Viewer: React.FC<ViewerProps> = ({
                 <DocumentLoader
                     file={file.data}
                     render={renderDoc(defaultRenderer)}
+                    renderError={renderError}
                 />
             </LocalizationProvider>
         </ThemeProvider>

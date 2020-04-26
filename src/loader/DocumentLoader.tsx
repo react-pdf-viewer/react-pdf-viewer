@@ -16,17 +16,21 @@ import AskingPassword from './AskingPassword';
 import CompletedState from './CompletedState';
 import './documentLoader.less';
 import FailureState from './FailureState';
+import LoadError from './LoadError';
 import LoadingState from './LoadingState';
 import LoadingStatus, { VerifyPassword } from './LoadingStatus';
 import WrongPassword from './WrongPassword';
 import WrongPasswordState from './WrongPasswordState';
 
+type RenderErrorType = (error: LoadError) => React.ReactElement;
+
 interface DocumentLoaderProps {
     file: PdfJs.FileData;
+    renderError?: RenderErrorType;
     render(doc: PdfJs.PdfDocument): React.ReactElement;
 }
 
-const DocumentLoader: React.FC<DocumentLoaderProps> = ({ file, render }) => {
+const DocumentLoader: React.FC<DocumentLoaderProps> = ({ file, render, renderError }) => {
     const theme = React.useContext(ThemeContent);
     const [status, setStatus] = React.useState<LoadingStatus>(new LoadingState(0));
 
@@ -55,7 +59,10 @@ const DocumentLoader: React.FC<DocumentLoaderProps> = ({ file, render }) => {
         };
         loadingTask.promise.then(
             (doc) => setStatus(new CompletedState(doc)),
-            (err) => setStatus(new FailureState(err.message || 'Cannot load document')),
+            (err) => setStatus(new FailureState({
+                message: err.message || 'Cannot load document',
+                name: err.name,
+            })),
         );
 
         return (): void => {
@@ -71,13 +78,15 @@ const DocumentLoader: React.FC<DocumentLoaderProps> = ({ file, render }) => {
         case (status instanceof CompletedState):
             return render((status as CompletedState).doc);
         case (status instanceof FailureState):
-            return (
-                <div className={`${theme.prefixClass}-doc-error`}>
-                    <div className={`${theme.prefixClass}-doc-error-text`}>
-                        {(status as FailureState).error}
+            return renderError
+                ? renderError((status as FailureState).error)
+                : (
+                    <div className={`${theme.prefixClass}-doc-error`}>
+                        <div className={`${theme.prefixClass}-doc-error-text`}>
+                            {(status as FailureState).error.message}
+                        </div>
                     </div>
-                </div>
-            );
+                );
         case (status instanceof LoadingState):
         default:
             return (
@@ -89,3 +98,4 @@ const DocumentLoader: React.FC<DocumentLoaderProps> = ({ file, render }) => {
 };
 
 export default DocumentLoader;
+export type RenderError = RenderErrorType;
