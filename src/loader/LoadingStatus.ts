@@ -6,9 +6,8 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-type VerifyPasswordType = (password: string) => void;
+export type VerifyPassword = (password: string) => void;
 
 class LoadingStatus {}
 
 export default LoadingStatus;
-export type VerifyPassword = VerifyPasswordType;

@@ -22,11 +22,11 @@ import LoadingStatus, { VerifyPassword } from './LoadingStatus';
 import WrongPassword from './WrongPassword';
 import WrongPasswordState from './WrongPasswordState';
 
-type RenderErrorType = (error: LoadError) => React.ReactElement;
+export type RenderError = (error: LoadError) => React.ReactElement;
 
 interface DocumentLoaderProps {
     file: PdfJs.FileData;
-    renderError?: RenderErrorType;
+    renderError?: RenderError;
     render(doc: PdfJs.PdfDocument): React.ReactElement;
 }
 
@@ -98,4 +98,3 @@ const DocumentLoader: React.FC<DocumentLoaderProps> = ({ file, render, renderErr
 };
 
 export default DocumentLoader;
-export type RenderError = RenderErrorType;

@@ -24,7 +24,5 @@ interface RenderPageProps {
     width: number;
 }
 
-type RenderPageType = (props: RenderPageProps) => React.ReactElement;
-
+export type RenderPage = (props: RenderPageProps) => React.ReactElement;
 export default RenderPageProps;
-export type RenderPage = RenderPageType;
