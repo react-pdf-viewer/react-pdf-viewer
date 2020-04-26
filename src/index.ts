@@ -13,14 +13,9 @@ import PrimaryButton from './components/PrimaryButton';
 import ProgressBar from './components/ProgressBar';
 import Separator from './components/Separator';
 import Spinner from './components/Spinner';
-import { Toggle as ToggleType } from './hooks/useToggle';
 import Icon from './icons/Icon';
 import defaultLayout from './layouts/defaultLayout';
 import defaultToolbar from './layouts/defaultToolbar';
-import { default as ISlot } from './layouts/Slot';
-import { default as IToolbarSlot, RenderToolbar as RenderToolbarType, RenderToolbarSlot as RenderToolbarSlotType } from './layouts/ToolbarSlot';
-import { RenderError as RenderErrorType } from './loader/DocumentLoader';
-import { default as ILocalizationMap } from './localization/LocalizationMap';
 import Modal from './portal/Modal';
 import Popover from './portal/Popover';
 import Position from './portal/Position';
@@ -52,10 +47,3 @@ export {
     Tooltip,
     Worker,
 };
-export type LocalizationMap = ILocalizationMap;
-export type RenderError = RenderErrorType;
-export type RenderToolbar = RenderToolbarType;
-export type RenderToolbarSlot = RenderToolbarSlotType;
-export type Slot = ISlot;
-export type Toggle = ToggleType;
-export type ToolbarSlot = IToolbarSlot;

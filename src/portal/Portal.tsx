@@ -10,12 +10,12 @@ import React from 'react';
 
 import useToggle, { Toggle } from '../hooks/useToggle';
 
-type RenderContentType = (toggle: Toggle) => React.ReactNode;
-type RenderTargetType = (toggle: Toggle, opened: boolean) => React.ReactNode;
+export type RenderContent = (toggle: Toggle) => React.ReactNode;
+export type RenderTarget = (toggle: Toggle, opened: boolean) => React.ReactNode;
 
 interface PortalProps {
-    content: RenderContentType;
-    target: RenderTargetType;
+    content: RenderContent;
+    target: RenderTarget;
 }
 
 const Portal: React.FC<PortalProps> = ({ content, target }) => {
@@ -29,5 +29,3 @@ const Portal: React.FC<PortalProps> = ({ content, target }) => {
 };
 
 export default Portal;
-export type RenderContent = RenderContentType;
-export type RenderTarget = RenderTargetType;

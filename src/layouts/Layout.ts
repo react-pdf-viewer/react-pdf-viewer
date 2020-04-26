@@ -11,12 +11,10 @@ import React from 'react';
 import Slot from './Slot';
 import { RenderToolbar } from './ToolbarSlot';
 
-type LayoutType = (
+export type Layout = (
     isSidebarOpened: boolean,
     container: Slot,
     main: Slot,
     toolbar: RenderToolbar,
     sidebar: Slot,
 ) => React.ReactElement;
-
-export type Layout = LayoutType;

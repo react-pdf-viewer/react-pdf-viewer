@@ -38,7 +38,7 @@ interface RenderViewerProps {
     zoom(level: number | SpecialZoomLevel): void;
 }
 
-type RenderViewerType = (props: RenderViewerProps) => React.ReactElement;
+export type RenderViewer = (props: RenderViewerProps) => React.ReactElement;
 
 interface ViewerProps {
     // The default zoom level
@@ -53,7 +53,7 @@ interface ViewerProps {
     localization?: LocalizationMap;
     // The prefix for CSS classes
     prefixClass?: string;
-    render?: RenderViewerType;
+    render?: RenderViewer;
     renderError?: RenderError;
     renderPage?: RenderPage;
     // The text selection mode
@@ -148,5 +148,4 @@ const Viewer: React.FC<ViewerProps> = ({
     );
 };
 
-export type RenderViewer = RenderViewerType;
 export default Viewer;

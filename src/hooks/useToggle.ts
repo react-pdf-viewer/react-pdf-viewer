@@ -13,11 +13,11 @@ enum ToggleStatus {
     Open = 'Open',
     Toggle = 'Toggle',
 }
-type ToggleType = (status?: ToggleStatus) => void;
+export type Toggle = (status?: ToggleStatus) => void;
 
-const useToggle = (): { opened: boolean; toggle: ToggleType } => {
+const useToggle = (): { opened: boolean; toggle: Toggle } => {
     const [opened, setOpened] = React.useState(false);
-    const toggle: ToggleType = (status?: ToggleStatus) => {
+    const toggle: Toggle = (status?: ToggleStatus) => {
         switch (status) {
             case ToggleStatus.Close:
                 setOpened(false);
@@ -37,4 +37,3 @@ const useToggle = (): { opened: boolean; toggle: ToggleType } => {
 
 export { ToggleStatus };
 export default useToggle;
-export type Toggle = ToggleType;
