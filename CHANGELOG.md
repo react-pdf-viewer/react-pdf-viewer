@@ -2,9 +2,10 @@
 
 ## v1.6.0 (not released yet)
 
-**New feature**
-The annotation layer is rewritten. Support the following type of annotations:
-- Link
+**New features**
+
+- The annotation layer is rewritten. Support the following type of annotations:
+    * Link
 
 - Customize error renderer.
 
@@ -35,9 +36,10 @@ const renderError = (error: LoadError) => {
 />
 ~~~
 
-**Bug fix**
+**Bug fixes**
 - The canvas layer is blurry
 - The tooltip, popover positions are not correct in some cases
+- The drag zone isn't visible if the main area is scrolled
 
 ## v1.5.0
 

@@ -288,9 +288,6 @@ const Inner: React.FC<InnerProps> = ({
             {
                 attrs: {
                     ref: pagesRef,
-                    style: {
-                        position: 'relative',
-                    },
                 },
                 children: (
                     <>
