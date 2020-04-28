@@ -37,12 +37,14 @@ const Link: React.FC<LinkProps> = ({ annotation, doc, page, viewport, onJumpToDe
     };
 
     return (
-        <Annotation annotation={annotation} page={page} viewport={viewport}>
-            <a
-                className={`${theme.prefixClass}-annotation-link`} 
-                href={href}
-                onClick={link}
-            />
+        <Annotation annotation={annotation} hasPopup={false} page={page} viewport={viewport}>
+            {(_) => (
+                <a
+                    className={`${theme.prefixClass}-annotation-link`}
+                    href={href}
+                    onClick={link}
+                />
+            )}
         </Annotation>
     );
 };

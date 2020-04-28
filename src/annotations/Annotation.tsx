@@ -8,21 +8,58 @@
 
 import React from 'react';
 
-import useToggle from '../hooks/useToggle';
+import useToggle, { ToggleStatus } from '../hooks/useToggle';
 import ThemeContent from '../theme/ThemeContext';
 import PdfJs from '../vendors/PdfJs';
 import './annotation.less';
+import PopupWrapper from './PopupWrapper';
+
+export interface RenderChildrenProps {
+    isPopupOpened: boolean;
+    closePopupWhenHover: () => void;
+    openPopupWhenHover: () => void;
+    togglePopupWhenClick: () => void;
+}
 
 interface AnnotationProps {
     annotation: PdfJs.Annotation;
+    hasPopup: boolean;
     page: PdfJs.Page;
     viewport: PdfJs.ViewPort;
+    children(props: RenderChildrenProps): React.ReactElement;
 }
 
-const Annotation: React.FC<AnnotationProps> = ({ annotation, children, page, viewport }) => {
+enum TogglePopupBy {
+    Click,
+    Hover,
+}
+
+const Annotation: React.FC<AnnotationProps> = ({ annotation, children, hasPopup, page, viewport }) => {
     const theme = React.useContext(ThemeContent);
     const { rect } = annotation;
     const { opened, toggle } = useToggle();
+    const [togglePopupBy, setTooglePopupBy] = React.useState(TogglePopupBy.Hover);
+
+    const togglePopupWhenClick = () => {
+        switch (togglePopupBy) {
+            case TogglePopupBy.Click:
+                opened && setTooglePopupBy(TogglePopupBy.Hover);
+                toggle(ToggleStatus.Toggle);
+                break;
+            case TogglePopupBy.Hover:
+                setTooglePopupBy(TogglePopupBy.Click);
+                toggle(ToggleStatus.Open);
+                break;
+        }
+    };
+
+    const openPopupWhenHover = () => {
+        togglePopupBy === TogglePopupBy.Hover && toggle(ToggleStatus.Open);
+    };
+
+    const closePopupWhenHover = () => {
+        togglePopupBy === TogglePopupBy.Hover && toggle(ToggleStatus.Close);
+    };
 
     const normalizeRect = (r: number[]): number[] => [
         Math.min(r[0], r[2]),
@@ -52,9 +89,21 @@ const Annotation: React.FC<AnnotationProps> = ({ annotation, children, page, vie
                 transformOrigin: `-${bound[0]}px -${bound[1]}px`,
                 width: `${width}px`,
             }}
-            onClick={() => toggle()}
+            data-annotation-id={annotation.id}
         >
-            {children}
+            {
+                children({
+                    isPopupOpened: opened,
+                    closePopupWhenHover,
+                    openPopupWhenHover,
+                    togglePopupWhenClick,
+                })
+            }
+            {!hasPopup && opened && (
+                <PopupWrapper
+                    annotation={annotation}
+                />
+            )}
         </div>
     );
 };

@@ -147,6 +147,9 @@ declare module 'pdfjs-dist' {
         contents?: string;
         modificationDate?: string;
         title?: string;
+        // Parent annotation
+        parentId?: string;
+        parentType?: string;
     }
     const AnnotationLayer: PdfAnnotationLayer;
     interface RenderAnnotationLayerParams {
