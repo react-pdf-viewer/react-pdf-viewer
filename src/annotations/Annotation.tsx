@@ -8,18 +8,21 @@
 
 import React from 'react';
 
+import useToggle from '../hooks/useToggle';
 import ThemeContent from '../theme/ThemeContext';
 import PdfJs from '../vendors/PdfJs';
 import './annotation.less';
 
 interface AnnotationProps {
+    annotation: PdfJs.Annotation;
     page: PdfJs.Page;
-    rect: number[];
     viewport: PdfJs.ViewPort;
 }
 
-const Annotation: React.FC<AnnotationProps> = ({ children, page, rect, viewport }) => {
+const Annotation: React.FC<AnnotationProps> = ({ annotation, children, page, viewport }) => {
     const theme = React.useContext(ThemeContent);
+    const { rect } = annotation;
+    const { opened, toggle } = useToggle();
 
     const normalizeRect = (r: number[]): number[] => [
         Math.min(r[0], r[2]),
@@ -49,6 +52,7 @@ const Annotation: React.FC<AnnotationProps> = ({ children, page, rect, viewport 
                 transformOrigin: `-${bound[0]}px -${bound[1]}px`,
                 width: `${width}px`,
             }}
+            onClick={() => toggle()}
         >
             {children}
         </div>

@@ -16,16 +16,16 @@ import './link.less';
 import Annotation from './Annotation';
 
 interface LinkProps {
+    annotation: PdfJs.Annotation;
     doc: PdfJs.PdfDocument;
-    dest: PdfJs.OutlineDestinationType;
     page: PdfJs.Page;
-    rect: number[];
     viewport: PdfJs.ViewPort;
     onJumpToDest(pageIndex: number, bottomOffset: number, scaleTo: number | SpecialZoomLevel): void;
 }
 
-const Link: React.FC<LinkProps> = ({ dest, doc, page, rect, viewport, onJumpToDest }) => {
+const Link: React.FC<LinkProps> = ({ annotation, doc, page, viewport, onJumpToDest }) => {
     const theme = useContext(ThemeContent);
+    const { dest, rect } = annotation;
     const href = (typeof dest === 'string') ? `#${escape(dest)}` : `#${escape(JSON.stringify(dest))}`;
 
     const link = (e: React.MouseEvent): void => {
@@ -37,7 +37,7 @@ const Link: React.FC<LinkProps> = ({ dest, doc, page, rect, viewport, onJumpToDe
     };
 
     return (
-        <Annotation page={page} rect={rect} viewport={viewport}>
+        <Annotation annotation={annotation} page={page} viewport={viewport}>
             <a
                 className={`${theme.prefixClass}-annotation-link`} 
                 href={href}

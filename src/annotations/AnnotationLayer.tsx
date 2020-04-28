@@ -14,6 +14,7 @@ import PdfJs from '../vendors/PdfJs';
 import AnnotationLoader from './AnnotationLoader';
 import AnnotationType from './AnnotationType';
 import Link from './Link';
+import Text from './Text';
 
 interface AnnotationLayerProps {
     doc: PdfJs.PdfDocument;
@@ -34,17 +35,27 @@ const AnnotationLayer: React.FC<AnnotationLayerProps> = ({ doc, page, rotation, 
             <>
             {
                 annotations.map((annotation) => {
+                    console.log(annotation);
                     switch (annotation.annotationType) {
                         case AnnotationType.Link:
                             return (
                                 <Link
                                     key={annotation.id}
-                                    dest={annotation.dest}
+                                    annotation={annotation}
                                     doc={doc}
                                     page={page}
-                                    rect={annotation.rect}
                                     viewport={clonedViewPort}
                                     onJumpToDest={onJumpToDest}
+                                />
+                            );
+                        case AnnotationType.Text:
+                            return (
+                                <Text
+                                    key={annotation.id}
+                                    annotation={annotation}
+                                    doc={doc}
+                                    page={page}
+                                    viewport={clonedViewPort}
                                 />
                             );
                         default:
