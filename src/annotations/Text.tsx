@@ -22,7 +22,7 @@ interface TextProps {
 
 const Text: React.FC<TextProps> = ({ annotation, doc, page, viewport }) => {
     const theme = useContext(ThemeContent);
-    const hasPopup = !!annotation.hasPopup;
+    const hasPopup = annotation.hasPopup === false;
 
     return (
         <Annotation annotation={annotation} hasPopup={hasPopup} page={page} viewport={viewport}>
@@ -35,9 +35,9 @@ const Text: React.FC<TextProps> = ({ annotation, doc, page, viewport }) => {
                         top: 0,
                         width: '100%',
                     }}
-                    onMouseEnter={() => !hasPopup && props.openPopupWhenHover()}
-                    onMouseLeave={() => !hasPopup && props.closePopupWhenHover()}
-                    onClick={() => !hasPopup && props.togglePopupWhenClick()}
+                    onMouseEnter={() => hasPopup && props.openPopupWhenHover()}
+                    onMouseLeave={() => hasPopup && props.closePopupWhenHover()}
+                    onClick={() => hasPopup && props.togglePopupWhenClick()}
                 />
             )}
         </Annotation>

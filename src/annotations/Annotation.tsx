@@ -99,7 +99,7 @@ const Annotation: React.FC<AnnotationProps> = ({ annotation, children, hasPopup,
                     togglePopupWhenClick,
                 })
             }
-            {!hasPopup && opened && (
+            {hasPopup && opened && (
                 <PopupWrapper
                     annotation={annotation}
                 />
