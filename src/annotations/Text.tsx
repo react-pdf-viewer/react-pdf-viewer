@@ -23,9 +23,10 @@ interface TextProps {
 const Text: React.FC<TextProps> = ({ annotation, doc, page, viewport }) => {
     const theme = useContext(ThemeContent);
     const hasPopup = annotation.hasPopup === false;
+    const isRenderable = !!(annotation.hasPopup || annotation.title || annotation.contents);
 
     return (
-        <Annotation annotation={annotation} hasPopup={hasPopup} page={page} viewport={viewport}>
+        <Annotation annotation={annotation} hasPopup={hasPopup} isRenderable={isRenderable} page={page} viewport={viewport}>
             {(props) => (
                 <div
                     style={{

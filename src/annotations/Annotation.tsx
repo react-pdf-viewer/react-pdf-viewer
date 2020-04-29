@@ -24,6 +24,7 @@ export interface RenderChildrenProps {
 interface AnnotationProps {
     annotation: PdfJs.Annotation;
     hasPopup: boolean;
+    isRenderable: boolean;
     page: PdfJs.Page;
     viewport: PdfJs.ViewPort;
     children(props: RenderChildrenProps): React.ReactElement;
@@ -34,7 +35,7 @@ enum TogglePopupBy {
     Hover,
 }
 
-const Annotation: React.FC<AnnotationProps> = ({ annotation, children, hasPopup, page, viewport }) => {
+const Annotation: React.FC<AnnotationProps> = ({ annotation, children, hasPopup, isRenderable, page, viewport }) => {
     const theme = React.useContext(ThemeContent);
     const { rect } = annotation;
     const { opened, toggle } = useToggle();
@@ -79,6 +80,8 @@ const Annotation: React.FC<AnnotationProps> = ({ annotation, children, hasPopup,
     const height = rect[3] - rect[1];
 
     return (
+        <>
+        {isRenderable && (
         <div
             className={`${theme.prefixClass}-annotation`}
             style={{
@@ -105,6 +108,8 @@ const Annotation: React.FC<AnnotationProps> = ({ annotation, children, hasPopup,
                 />
             )}
         </div>
+        )}
+        </>
     );
 };
 

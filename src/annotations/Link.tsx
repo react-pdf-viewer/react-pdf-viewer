@@ -36,8 +36,10 @@ const Link: React.FC<LinkProps> = ({ annotation, doc, page, viewport, onJumpToDe
         });
     };
 
+    const isRenderable = !!(annotation.url || annotation.dest || annotation.action);
+
     return (
-        <Annotation annotation={annotation} hasPopup={false} page={page} viewport={viewport}>
+        <Annotation annotation={annotation} hasPopup={false} isRenderable={isRenderable} page={page} viewport={viewport}>
             {(_) => (
                 <a
                     className={`${theme.prefixClass}-annotation-link`}

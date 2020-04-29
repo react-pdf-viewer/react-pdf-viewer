@@ -141,7 +141,7 @@ declare module 'pdfjs-dist' {
         hasAppearance: boolean;
         id: string;
         rect: number[];
-        subtype: string;    // Can be 'Link'
+        subtype: string;
         // For annotation that has a popup
         hasPopup?: boolean;
         contents?: string;
@@ -150,6 +150,9 @@ declare module 'pdfjs-dist' {
         // Parent annotation
         parentId?: string;
         parentType?: string;
+        // Link
+        action?: string;
+        url?: string;
     }
     const AnnotationLayer: PdfAnnotationLayer;
     interface RenderAnnotationLayerParams {
