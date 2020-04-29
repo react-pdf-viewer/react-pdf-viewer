@@ -14,6 +14,7 @@ import PdfJs from '../vendors/PdfJs';
 import AnnotationLoader from './AnnotationLoader';
 import AnnotationType from './AnnotationType';
 import Link from './Link';
+import Popup from './Popup';
 import Text from './Text';
 
 interface AnnotationLayerProps {
@@ -46,6 +47,15 @@ const AnnotationLayer: React.FC<AnnotationLayerProps> = ({ doc, page, rotation, 
                                     page={page}
                                     viewport={clonedViewPort}
                                     onJumpToDest={onJumpToDest}
+                                />
+                            );
+                        case AnnotationType.Popup:
+                            return (
+                                <Popup
+                                    key={annotation.id}
+                                    annotation={annotation}
+                                    page={page}
+                                    viewport={clonedViewPort}
                                 />
                             );
                         case AnnotationType.Text:

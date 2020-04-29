@@ -9,6 +9,7 @@
 enum AnnotationType {
     Text = 1,
     Link = 2,
+    Popup = 16,
 }
 
 export default AnnotationType;
