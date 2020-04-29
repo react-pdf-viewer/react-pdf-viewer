@@ -10,6 +10,7 @@ import React, { useContext } from 'react';
 
 import ThemeContent from '../theme/ThemeContext';
 import PdfJs from '../vendors/PdfJs';
+import AnnotationType from './AnnotationType';
 import './popupWrapper.less';
 
 interface PopupWrapperProps {
@@ -20,7 +21,12 @@ const PopupWrapper: React.FC<PopupWrapperProps> = ({ annotation }) => {
     const theme = useContext(ThemeContent);
 
     return (
-        <div className={`${theme.prefixClass}-annotation-popup-wrapper`} >
+        <div
+            className={`${theme.prefixClass}-annotation-popup-wrapper`}
+            style={{
+                left: annotation.annotationType === AnnotationType.Popup ? '' : '100%',
+            }}
+        >
             Popup
         </div>
     );

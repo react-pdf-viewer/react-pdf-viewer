@@ -82,32 +82,32 @@ const Annotation: React.FC<AnnotationProps> = ({ annotation, children, hasPopup,
     return (
         <>
         {isRenderable && (
-        <div
-            className={`${theme.prefixClass}-annotation`}
-            style={{
-                height: `${height}px`,
-                left: `${bound[0]}px`,
-                top: `${bound[1]}px`,
-                transform: `matrix(${viewport.transform.join(',')})`,
-                transformOrigin: `-${bound[0]}px -${bound[1]}px`,
-                width: `${width}px`,
-            }}
-            data-annotation-id={annotation.id}
-        >
-            {
-                children({
-                    isPopupOpened: opened,
-                    closePopupWhenHover,
-                    openPopupWhenHover,
-                    togglePopupWhenClick,
-                })
-            }
-            {hasPopup && opened && (
-                <PopupWrapper
-                    annotation={annotation}
-                />
-            )}
-        </div>
+            <div
+                className={`${theme.prefixClass}-annotation`}
+                style={{
+                    height: `${height}px`,
+                    left: `${bound[0]}px`,
+                    top: `${bound[1]}px`,
+                    transform: `matrix(${viewport.transform.join(',')})`,
+                    transformOrigin: `-${bound[0]}px -${bound[1]}px`,
+                    width: `${width}px`,
+                }}
+                data-annotation-id={annotation.id}
+            >
+                {
+                    children({
+                        isPopupOpened: opened,
+                        closePopupWhenHover,
+                        openPopupWhenHover,
+                        togglePopupWhenClick,
+                    })
+                }
+                {hasPopup && opened && (
+                    <PopupWrapper
+                        annotation={annotation}
+                    />
+                )}
+            </div>
         )}
         </>
     );
