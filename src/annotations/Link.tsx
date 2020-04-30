@@ -20,23 +20,29 @@ interface LinkProps {
     doc: PdfJs.PdfDocument;
     page: PdfJs.Page;
     viewport: PdfJs.ViewPort;
+    onExecuteNamedAction(action: string): void;
     onJumpToDest(pageIndex: number, bottomOffset: number, scaleTo: number | SpecialZoomLevel): void;
 }
 
-const Link: React.FC<LinkProps> = ({ annotation, doc, page, viewport, onJumpToDest }) => {
+const Link: React.FC<LinkProps> = ({ annotation, doc, page, viewport, onExecuteNamedAction, onJumpToDest }) => {
     const theme = useContext(ThemeContent);
     const { dest } = annotation;
-    const href = (typeof dest === 'string') ? `#${escape(dest)}` : `#${escape(JSON.stringify(dest))}`;
+    const href = annotation.action
+        ? ''
+        : (typeof dest === 'string') ? `#${escape(dest)}` : `#${escape(JSON.stringify(dest))}`;
 
     const link = (e: React.MouseEvent): void => {
         e.preventDefault();
-        getDestination(doc, dest).then((target) => {
-            const { pageIndex, bottomOffset, scaleTo } = target;
-            onJumpToDest(pageIndex + 1, bottomOffset, scaleTo);
-        });
+        annotation.action
+            ? onExecuteNamedAction(annotation.action)
+            : getDestination(doc, dest).then((target) => {
+                const { pageIndex, bottomOffset, scaleTo } = target;
+                onJumpToDest(pageIndex + 1, bottomOffset, scaleTo);
+            });
     };
 
     const isRenderable = !!(annotation.url || annotation.dest || annotation.action);
+    console.log(annotation);
 
     return (
         <Annotation annotation={annotation} hasPopup={false} ignoreBorder={false} isRenderable={isRenderable} page={page} viewport={viewport}>
@@ -47,7 +53,7 @@ const Link: React.FC<LinkProps> = ({ annotation, doc, page, viewport, onJumpToDe
                 >
                     <a
                         className={`${theme.prefixClass}-annotation-link`}
-                        href={href}
+                        {...(href && {href})}
                         onClick={link}
                     />
                 </div>

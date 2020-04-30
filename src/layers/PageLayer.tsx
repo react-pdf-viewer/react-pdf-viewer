@@ -31,6 +31,7 @@ interface PageLayerProps {
     rotation: number;
     scale: number;
     width: number;
+    onExecuteNamedAction(action: string): void;
     onJumpToDest(pageIndex: number, bottomOffset: number, scaleTo: number | SpecialZoomLevel): void;
     onPageVisibilityChanged(pageIndex: number, ratio: number): void;
 }
@@ -44,7 +45,7 @@ interface PageSizeState {
 
 const PageLayer: React.FC<PageLayerProps> = ({
     doc, height, keywordRegexp, match, pageIndex, renderPage, rotation, scale, width,
-    onJumpToDest, onPageVisibilityChanged,
+    onExecuteNamedAction, onJumpToDest, onPageVisibilityChanged,
 }) => {
     const theme = React.useContext(ThemeContent);
     const [pageSize, setPageSize] = React.useState<PageSizeState>({
@@ -118,6 +119,7 @@ const PageLayer: React.FC<PageLayerProps> = ({
                                         page={page}
                                         rotation={rotation}
                                         scale={scale}
+                                        onExecuteNamedAction={onExecuteNamedAction}
                                         onJumpToDest={onJumpToDest}
                                     />
                                 )
