@@ -8,6 +8,7 @@
     * Free text
     * Link
     * Popup
+    * Square
     * Text
 
 - Customize error renderer.

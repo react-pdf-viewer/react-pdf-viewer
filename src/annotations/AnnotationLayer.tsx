@@ -16,6 +16,7 @@ import AnnotationType from './AnnotationType';
 import FreeText from './FreeText';
 import Link from './Link';
 import Popup from './Popup';
+import Square from './Square';
 import Text from './Text';
 
 interface AnnotationLayerProps {
@@ -64,6 +65,15 @@ const AnnotationLayer: React.FC<AnnotationLayerProps> = ({ doc, page, rotation, 
                             case AnnotationType.Popup:
                                 return (
                                     <Popup
+                                        key={annotation.id}
+                                        annotation={annotation}
+                                        page={page}
+                                        viewport={clonedViewPort}
+                                    />
+                                );
+                            case AnnotationType.Square:
+                                return (
+                                    <Square
                                         key={annotation.id}
                                         annotation={annotation}
                                         page={page}

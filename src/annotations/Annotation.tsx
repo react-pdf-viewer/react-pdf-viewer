@@ -29,13 +29,14 @@ interface RenderChildrenProps {
 interface AnnotationProps {
     annotation: PdfJs.Annotation;
     hasPopup: boolean;
+    ignoreBorder: boolean;
     isRenderable: boolean;
     page: PdfJs.Page;
     viewport: PdfJs.ViewPort;
     children(props: RenderChildrenProps): React.ReactElement;
 }
 
-const Annotation: React.FC<AnnotationProps> = ({ annotation, children, hasPopup, isRenderable, page, viewport }) => {
+const Annotation: React.FC<AnnotationProps> = ({ annotation, children, ignoreBorder, hasPopup, isRenderable, page, viewport }) => {
     const theme = React.useContext(ThemeContent);
     const { rect } = annotation;
     const { closeOnHover, opened, openOnHover, toggleOnClick } = useTogglePopup();
@@ -65,7 +66,7 @@ const Annotation: React.FC<AnnotationProps> = ({ annotation, children, hasPopup,
         borderWidth: '',
     };
 
-    if (annotation.borderStyle && annotation.borderStyle.width > 0) {
+    if (!ignoreBorder && annotation.borderStyle.width > 0) {
         // Border style
         switch (annotation.borderStyle.style) {
             case AnnotationBorderStyleType.Dashed:

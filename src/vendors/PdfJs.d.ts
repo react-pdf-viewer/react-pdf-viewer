@@ -143,7 +143,7 @@ declare module 'pdfjs-dist' {
         rect: number[];
         subtype: string;
         // Border style
-        borderStyle?: {
+        borderStyle: {
             dashArray: number[];
             horizontalCornerRadius: number;
             style: number;
