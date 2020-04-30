@@ -30,7 +30,7 @@ const PopupWrapper: React.FC<PopupWrapperProps> = ({ annotation }) => {
         <div
             className={`${theme.prefixClass}-annotation-popup-wrapper`}
             style={{
-                left: annotation.annotationType === AnnotationType.Popup ? '' : '100%',
+                top: annotation.annotationType === AnnotationType.Popup ? '' : '100%',
             }}
         >
             {(annotation.title) && (

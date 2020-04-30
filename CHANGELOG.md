@@ -49,6 +49,7 @@ const renderError = (error: LoadError) => {
 ~~~
 
 **Improvement**
+- Bookmarks support external links
 - Support external links
 
 **Bug fixes**

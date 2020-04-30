@@ -26,19 +26,17 @@ interface LinkProps {
 
 const Link: React.FC<LinkProps> = ({ annotation, doc, page, viewport, onExecuteNamedAction, onJumpToDest }) => {
     const theme = useContext(ThemeContent);
-    const { dest } = annotation;
     const link = (e: React.MouseEvent): void => {
         e.preventDefault();
         annotation.action
             ? onExecuteNamedAction(annotation.action)
-            : getDestination(doc, dest).then((target) => {
+            : getDestination(doc, annotation.dest).then((target) => {
                 const { pageIndex, bottomOffset, scaleTo } = target;
                 onJumpToDest(pageIndex + 1, bottomOffset, scaleTo);
             });
     };
 
     const isRenderable = !!(annotation.url || annotation.dest || annotation.action);
-    console.log(annotation);
     const attrs = annotation.url
         ? {
             href: annotation.url,

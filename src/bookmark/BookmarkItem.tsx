@@ -42,12 +42,12 @@ const BookmarkItem: React.FC<BookmarkItemProps> = ({ bookmark, depth, doc, onCli
     };
 
     const clickBookmak = (): void => {
-        if (hasSubItems) {
+        if (hasSubItems && bookmark.dest) {
             onClick(bookmark.dest);
         }
     };
     const clickItem = (): void => {
-        if (!hasSubItems) {
+        if (!hasSubItems && bookmark.dest) {
             onClick(bookmark.dest);
         }
     };
@@ -72,12 +72,27 @@ const BookmarkItem: React.FC<BookmarkItemProps> = ({ bookmark, depth, doc, onCli
                         </span>
                     )
                 }
-                <div
-                    className={`${theme.prefixClass}-bookmark-title`}
-                    onClick={clickBookmak}
-                >
-                    {bookmark.title}
-                </div>
+                {
+                    bookmark.url
+                    ? (
+                        <a
+                            className={`${theme.prefixClass}-bookmark-title`}
+                            href={bookmark.url}
+                            rel='noopener noreferrer nofollow'
+                            target={bookmark.newWindow ? '_blank' : ''}
+                        >
+                            {bookmark.title}
+                        </a>
+                    )
+                    : (
+                        <div
+                            className={`${theme.prefixClass}-bookmark-title`}
+                            onClick={clickBookmak}
+                        >
+                            {bookmark.title}
+                        </div>
+                    )
+                }
             </div>
             {
                 hasSubItems && (
