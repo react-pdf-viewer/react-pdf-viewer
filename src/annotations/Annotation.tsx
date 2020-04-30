@@ -8,17 +8,21 @@
 
 import React from 'react';
 
-import useToggle, { ToggleStatus } from '../hooks/useToggle';
+import Slot from '../layouts/Slot';
 import ThemeContent from '../theme/ThemeContext';
 import PdfJs from '../vendors/PdfJs';
 import './annotation.less';
 import PopupWrapper from './PopupWrapper';
+import useTogglePopup from './useTogglePopup';
 
-export interface RenderChildrenProps {
-    isPopupOpened: boolean;
-    closePopupWhenHover: () => void;
-    openPopupWhenHover: () => void;
-    togglePopupWhenClick: () => void;
+interface RenderChildrenProps {
+    popup: {
+        opened: boolean,
+        closeOnHover: () => void,
+        openOnHover: () => void,
+        toggleOnClick: () => void,
+    };
+    slot: Slot;
 }
 
 interface AnnotationProps {
@@ -30,38 +34,11 @@ interface AnnotationProps {
     children(props: RenderChildrenProps): React.ReactElement;
 }
 
-enum TogglePopupBy {
-    Click,
-    Hover,
-}
-
 const Annotation: React.FC<AnnotationProps> = ({ annotation, children, hasPopup, isRenderable, page, viewport }) => {
     const theme = React.useContext(ThemeContent);
     const { rect } = annotation;
-    const { opened, toggle } = useToggle();
-    const [togglePopupBy, setTooglePopupBy] = React.useState(TogglePopupBy.Hover);
-
-    const togglePopupWhenClick = () => {
-        switch (togglePopupBy) {
-            case TogglePopupBy.Click:
-                opened && setTooglePopupBy(TogglePopupBy.Hover);
-                toggle(ToggleStatus.Toggle);
-                break;
-            case TogglePopupBy.Hover:
-                setTooglePopupBy(TogglePopupBy.Click);
-                toggle(ToggleStatus.Open);
-                break;
-        }
-    };
-
-    const openPopupWhenHover = () => {
-        togglePopupBy === TogglePopupBy.Hover && toggle(ToggleStatus.Open);
-    };
-
-    const closePopupWhenHover = () => {
-        togglePopupBy === TogglePopupBy.Hover && toggle(ToggleStatus.Close);
-    };
-
+    const { closeOnHover, opened, openOnHover, toggleOnClick } = useTogglePopup();
+    
     const normalizeRect = (r: number[]): number[] => [
         Math.min(r[0], r[2]),
         Math.min(r[1], r[3]),
@@ -81,34 +58,39 @@ const Annotation: React.FC<AnnotationProps> = ({ annotation, children, hasPopup,
 
     return (
         <>
-        {isRenderable && (
-            <div
-                className={`${theme.prefixClass}-annotation`}
-                style={{
-                    height: `${height}px`,
-                    left: `${bound[0]}px`,
-                    top: `${bound[1]}px`,
-                    transform: `matrix(${viewport.transform.join(',')})`,
-                    transformOrigin: `-${bound[0]}px -${bound[1]}px`,
-                    width: `${width}px`,
-                }}
-                data-annotation-id={annotation.id}
-            >
-                {
-                    children({
-                        isPopupOpened: opened,
-                        closePopupWhenHover,
-                        openPopupWhenHover,
-                        togglePopupWhenClick,
-                    })
+        {
+            isRenderable &&
+            children({
+                popup: {
+                    opened,
+                    closeOnHover,
+                    openOnHover,
+                    toggleOnClick,
+                },
+                slot: {
+                    attrs: {
+                        className: `${theme.prefixClass}-annotation`,
+                        style: {
+                            height: `${height}px`,
+                            left: `${bound[0]}px`,
+                            top: `${bound[1]}px`,
+                            transform: `matrix(${viewport.transform.join(',')})`,
+                            transformOrigin: `-${bound[0]}px -${bound[1]}px`,
+                            width: `${width}px`,
+                        },
+                    },
+                    children: (
+                        <>
+                        {hasPopup && opened && (
+                            <PopupWrapper
+                                annotation={annotation}
+                            />
+                        )}
+                        </>
+                    ),
                 }
-                {hasPopup && opened && (
-                    <PopupWrapper
-                        annotation={annotation}
-                    />
-                )}
-            </div>
-        )}
+            })
+        }
         </>
     );
 };

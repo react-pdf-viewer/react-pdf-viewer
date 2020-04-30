@@ -11,6 +11,7 @@ import React, { useContext } from 'react';
 import ThemeContent from '../theme/ThemeContext';
 import PdfJs from '../vendors/PdfJs';
 import Annotation from './Annotation';
+import PopupWrapper from './PopupWrapper';
 
 interface PopupProps {
     annotation: PdfJs.Annotation;
@@ -43,8 +44,13 @@ const Popup: React.FC<PopupProps> = ({ annotation, page, viewport }) => {
 
     return (
         <Annotation annotation={annotation} hasPopup={hasPopup} isRenderable={isRenderable} page={page} viewport={viewport}>
-            {(_) => (
-                <></>
+            {(props) => (
+                <div
+                    {...props.slot.attrs}
+                    data-annotation-id={annotation.id}
+                >
+                    <PopupWrapper annotation={annotation} />
+                </div>
             )}
         </Annotation>
     );

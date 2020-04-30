@@ -12,8 +12,8 @@ import SpecialZoomLevel from '../SpecialZoomLevel';
 import ThemeContent from '../theme/ThemeContext';
 import getDestination from '../utils/getDestination';
 import PdfJs from '../vendors/PdfJs';
-import './link.less';
 import Annotation from './Annotation';
+import './link.less';
 
 interface LinkProps {
     annotation: PdfJs.Annotation;
@@ -40,12 +40,17 @@ const Link: React.FC<LinkProps> = ({ annotation, doc, page, viewport, onJumpToDe
 
     return (
         <Annotation annotation={annotation} hasPopup={false} isRenderable={isRenderable} page={page} viewport={viewport}>
-            {(_) => (
-                <a
-                    className={`${theme.prefixClass}-annotation-link`}
-                    href={href}
-                    onClick={link}
-                />
+            {(props) => (
+                <div
+                    {...props.slot.attrs}
+                    data-annotation-id={annotation.id}
+                >
+                    <a
+                        className={`${theme.prefixClass}-annotation-link`}
+                        href={href}
+                        onClick={link}
+                    />
+                </div>
             )}
         </Annotation>
     );

@@ -35,43 +35,46 @@ const AnnotationLayer: React.FC<AnnotationLayerProps> = ({ doc, page, rotation, 
         return (
             <>
             {
-                annotations.map((annotation) => {
-                    console.log(annotation);
-                    switch (annotation.annotationType) {
-                        case AnnotationType.Link:
-                            return (
-                                <Link
-                                    key={annotation.id}
-                                    annotation={annotation}
-                                    doc={doc}
-                                    page={page}
-                                    viewport={clonedViewPort}
-                                    onJumpToDest={onJumpToDest}
-                                />
-                            );
-                        case AnnotationType.Popup:
-                            return (
-                                <Popup
-                                    key={annotation.id}
-                                    annotation={annotation}
-                                    page={page}
-                                    viewport={clonedViewPort}
-                                />
-                            );
-                        case AnnotationType.Text:
-                            return (
-                                <Text
-                                    key={annotation.id}
-                                    annotation={annotation}
-                                    doc={doc}
-                                    page={page}
-                                    viewport={clonedViewPort}
-                                />
-                            );
-                        default:
-                            return <></>;
-                    }
-                })
+                annotations
+                    .filter((annotation) => !annotation.parentId)
+                    .map((annotation) => {
+                        //console.log(annotation);
+                        switch (annotation.annotationType) {
+                            case AnnotationType.Link:
+                                return (
+                                    <Link
+                                        key={annotation.id}
+                                        annotation={annotation}
+                                        doc={doc}
+                                        page={page}
+                                        viewport={clonedViewPort}
+                                        onJumpToDest={onJumpToDest}
+                                    />
+                                );
+                            case AnnotationType.Popup:
+                                return (
+                                    <Popup
+                                        key={annotation.id}
+                                        annotation={annotation}
+                                        page={page}
+                                        viewport={clonedViewPort}
+                                    />
+                                );
+                            case AnnotationType.Text:
+                                const childAnnotation = annotations.find((item) => item.parentId === annotation.id);
+                                return (
+                                    <Text
+                                        key={annotation.id}
+                                        annotation={annotation}
+                                        childAnnotation={childAnnotation}
+                                        page={page}
+                                        viewport={clonedViewPort}
+                                    />
+                                );
+                            default:
+                                return <></>;
+                        }
+                    })
             }
             </>
         );
