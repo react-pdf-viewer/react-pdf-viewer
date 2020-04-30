@@ -66,9 +66,15 @@ declare module 'pdfjs-dist' {
     // Outline
     type OutlineDestinationType = string | OutlineDestination;
     interface Outline {
-        dest: OutlineDestinationType;
+        bold?: boolean;
+        color?: number[];
+        dest?: OutlineDestinationType;
+        italic?: boolean;
         items: Outline[];
+        newWindow?: boolean;
         title: string;
+        unsafeUrl?: string;
+        url?: string;
     }
     type OutlineDestination = [
         OutlineRef,
