@@ -161,6 +161,8 @@ declare module 'pdfjs-dist' {
         // Link
         action?: string;
         url?: string;
+        // Line
+        lineCoordinates: number[];
     }
     const AnnotationLayer: PdfAnnotationLayer;
     interface RenderAnnotationLayerParams {

@@ -10,6 +10,7 @@ enum AnnotationType {
     Text = 1,
     Link = 2,
     FreeText = 3,
+    Line = 4,
     Square = 5,
     Popup = 16,
 }
