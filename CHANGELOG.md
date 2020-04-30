@@ -5,6 +5,7 @@
 **New features**
 
 - The annotation layer is rewritten. Support the following type of annotations:
+    * Circle
     * Free text
     * Line
     * Link

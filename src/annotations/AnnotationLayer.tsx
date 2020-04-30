@@ -13,6 +13,7 @@ import SpecialZoomLevel from '../SpecialZoomLevel';
 import PdfJs from '../vendors/PdfJs';
 import AnnotationLoader from './AnnotationLoader';
 import AnnotationType from './AnnotationType';
+import Circle from './Circle';
 import FreeText from './FreeText';
 import Line from './Line';
 import Link from './Link';
@@ -45,6 +46,15 @@ const AnnotationLayer: React.FC<AnnotationLayerProps> = ({ doc, page, rotation, 
                         console.log(annotation);
                         const childAnnotation = annotations.find((item) => item.parentId === annotation.id);
                         switch (annotation.annotationType) {
+                            case AnnotationType.Circle:
+                                return (
+                                    <Circle
+                                        key={annotation.id}
+                                        annotation={annotation}
+                                        page={page}
+                                        viewport={clonedViewPort}
+                                    />
+                                );
                             case AnnotationType.FreeText:
                                 return (
                                     <FreeText
