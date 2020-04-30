@@ -12,6 +12,7 @@ enum AnnotationType {
     FreeText = 3,
     Line = 4,
     Square = 5,
+    Stamp = 13,
     Popup = 16,
 }
 

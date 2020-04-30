@@ -9,6 +9,7 @@
     * Line
     * Link
     * Popup
+    * Stamp
     * Square
     * Text
 
