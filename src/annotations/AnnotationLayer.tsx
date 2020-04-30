@@ -13,6 +13,7 @@ import SpecialZoomLevel from '../SpecialZoomLevel';
 import PdfJs from '../vendors/PdfJs';
 import AnnotationLoader from './AnnotationLoader';
 import AnnotationType from './AnnotationType';
+import FreeText from './FreeText';
 import Link from './Link';
 import Popup from './Popup';
 import Text from './Text';
@@ -40,6 +41,15 @@ const AnnotationLayer: React.FC<AnnotationLayerProps> = ({ doc, page, rotation, 
                     .map((annotation) => {
                         const childAnnotation = annotations.find((item) => item.parentId === annotation.id);
                         switch (annotation.annotationType) {
+                            case AnnotationType.FreeText:
+                                return (
+                                    <FreeText
+                                        key={annotation.id}
+                                        annotation={annotation}
+                                        page={page}
+                                        viewport={clonedViewPort}
+                                    />
+                                );
                             case AnnotationType.Link:
                                 return (
                                     <Link
