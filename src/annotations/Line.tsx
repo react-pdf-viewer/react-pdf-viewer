@@ -45,12 +45,12 @@ const Line: React.FC<LineProps> = ({ annotation, page, viewport }) => {
                         width={`${width}px`}
                     >
                         <line
-                            x1={rect[2] - annotation.lineCoordinates[0]}
-                            y1={rect[3] - annotation.lineCoordinates[1]}
-                            x2={rect[2] - annotation.lineCoordinates[2]}
-                            y2={rect[3] - annotation.lineCoordinates[3]}
-                            strokeWidth={borderWidth || 1}
                             stroke='transparent'
+                            strokeWidth={borderWidth || 1}
+                            x1={rect[2] - annotation.lineCoordinates[0]}
+                            x2={rect[2] - annotation.lineCoordinates[2]}
+                            y1={rect[3] - annotation.lineCoordinates[1]}
+                            y2={rect[3] - annotation.lineCoordinates[3]}
                         />
                     </svg>
                     {props.slot.children}
