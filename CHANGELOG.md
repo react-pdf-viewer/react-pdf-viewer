@@ -18,6 +18,7 @@
     * Text
     * Underline
 
+- The link annotation supports named actions which allow to jump to the first, last, next or previous pages
 - Customize error renderer.
 
 ~~~ javascript

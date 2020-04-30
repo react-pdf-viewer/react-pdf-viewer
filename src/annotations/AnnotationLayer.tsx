@@ -31,10 +31,11 @@ interface AnnotationLayerProps {
     page: PdfJs.Page;
     rotation: number;
     scale: number;
+    onExecuteNamedAction(action: string): void;
     onJumpToDest(pageIndex: number, bottomOffset: number, scaleTo: number | SpecialZoomLevel): void;
 }
 
-const AnnotationLayer: React.FC<AnnotationLayerProps> = ({ doc, page, rotation, scale, onJumpToDest }) => {
+const AnnotationLayer: React.FC<AnnotationLayerProps> = ({ doc, page, rotation, scale, onExecuteNamedAction, onJumpToDest }) => {
     const theme = React.useContext(ThemeContent);
 
     const renderAnnotations = (annotations: PdfJs.Annotation[]): React.ReactElement => {
@@ -47,7 +48,7 @@ const AnnotationLayer: React.FC<AnnotationLayerProps> = ({ doc, page, rotation, 
                 annotations
                     .filter((annotation) => !annotation.parentId)
                     .map((annotation) => {
-                        console.log(annotation);
+                        //console.log(annotation);
                         const childAnnotation = annotations.find((item) => item.parentId === annotation.id);
                         switch (annotation.annotationType) {
                             case AnnotationType.Circle:
@@ -94,6 +95,7 @@ const AnnotationLayer: React.FC<AnnotationLayerProps> = ({ doc, page, rotation, 
                                         doc={doc}
                                         page={page}
                                         viewport={clonedViewPort}
+                                        onExecuteNamedAction={onExecuteNamedAction}
                                         onJumpToDest={onJumpToDest}
                                     />
                                 );

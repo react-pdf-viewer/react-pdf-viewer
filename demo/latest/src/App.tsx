@@ -7,7 +7,7 @@ const App = () => {
     return (
         <Worker workerUrl="https://unpkg.com/pdfjs-dist@2.2.228/build/pdf.worker.min.js">
             <div style={{ height: '750px', padding: '16px 0' }}>
-                <Viewer fileUrl="/sample.pdf" />
+                <Viewer fileUrl="/pdf_commenting_new.pdf" />
             </div>
         </Worker>
     );

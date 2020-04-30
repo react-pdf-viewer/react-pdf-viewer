@@ -259,6 +259,28 @@ const Inner: React.FC<InnerProps> = ({
         });
     };
 
+    // `action` can be `FirstPage`, `PrevPage`, `NextPage`, `LastPage`, `GoBack`, `GoForward`
+    const executeNamedAction = (action: string): void => {
+        const previousPage = currentPage - 1;
+        const nextPage = currentPage + 1;
+        switch (action) {
+            case 'FirstPage':
+                jumpToPage(0);
+                break;
+            case 'LastPage':
+                jumpToPage(numPages - 1);
+                break;
+            case 'NextPage':
+                (nextPage < numPages) && jumpToPage(nextPage);
+                break;
+            case 'PrevPage':
+                (previousPage >= 0) && jumpToPage(previousPage);
+                break;
+            default:
+                break;
+        }
+    };
+
     // Switch to the print mode
     const print = (): void => setPrintStatus(PrintStatus.Preparing);
     const cancelPrinting = (): void => setPrintStatus(PrintStatus.Inactive);
@@ -313,6 +335,7 @@ const Inner: React.FC<InnerProps> = ({
                                         rotation={rotation}
                                         scale={scale}
                                         width={pageWidth}
+                                        onExecuteNamedAction={executeNamedAction}
                                         onJumpToDest={jumpToDest}
                                         onPageVisibilityChanged={pageVisibilityChanged}
                                     />

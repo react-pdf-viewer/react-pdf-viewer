@@ -159,6 +159,7 @@ declare module 'pdfjs-dist' {
         parentId?: string;
         parentType?: string;
         // Link
+        // `action` can be `FirstPage`, `PrevPage`, `NextPage`, `LastPage`, `GoBack`, `GoForward`
         action?: string;
         url?: string;
         // Line
