@@ -15,6 +15,7 @@ import AnnotationLoader from './AnnotationLoader';
 import AnnotationType from './AnnotationType';
 import Circle from './Circle';
 import FreeText from './FreeText';
+import Highlight from './Highlight';
 import Line from './Line';
 import Link from './Link';
 import Popup from './Popup';
@@ -59,6 +60,15 @@ const AnnotationLayer: React.FC<AnnotationLayerProps> = ({ doc, page, rotation, 
                             case AnnotationType.FreeText:
                                 return (
                                     <FreeText
+                                        key={annotation.id}
+                                        annotation={annotation}
+                                        page={page}
+                                        viewport={clonedViewPort}
+                                    />
+                                );
+                            case AnnotationType.Highlight:
+                                return (
+                                    <Highlight
                                         key={annotation.id}
                                         annotation={annotation}
                                         page={page}

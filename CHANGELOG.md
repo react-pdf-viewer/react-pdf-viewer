@@ -7,6 +7,7 @@
 - The annotation layer is rewritten. Support the following type of annotations:
     * Circle
     * Free text
+    * Highlight
     * Line
     * Link
     * Popup

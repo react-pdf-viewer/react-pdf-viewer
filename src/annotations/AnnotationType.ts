@@ -13,6 +13,7 @@ enum AnnotationType {
     Line = 4,
     Square = 5,
     Circle = 6,
+    Highlight = 9,
     Underline = 10,
     Stamp = 13,
     Popup = 16,
