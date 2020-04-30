@@ -21,6 +21,7 @@ import Link from './Link';
 import Popup from './Popup';
 import Square from './Square';
 import Stamp from './Stamp';
+import StrikeOut from './StrikeOut';
 import Text from './Text';
 import Underline from './Underline';
 
@@ -116,6 +117,15 @@ const AnnotationLayer: React.FC<AnnotationLayerProps> = ({ doc, page, rotation, 
                             case AnnotationType.Stamp:
                                 return (
                                     <Stamp
+                                        key={annotation.id}
+                                        annotation={annotation}
+                                        page={page}
+                                        viewport={clonedViewPort}
+                                    />
+                                );
+                            case AnnotationType.StrikeOut:
+                                return (
+                                    <StrikeOut
                                         key={annotation.id}
                                         annotation={annotation}
                                         page={page}

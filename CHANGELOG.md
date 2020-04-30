@@ -11,8 +11,9 @@
     * Line
     * Link
     * Popup
-    * Stamp
     * Square
+    * Stamp
+    * StrikeOut
     * Text
     * Underline
 
