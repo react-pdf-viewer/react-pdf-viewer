@@ -38,7 +38,7 @@ const AnnotationLayer: React.FC<AnnotationLayerProps> = ({ doc, page, rotation, 
                 annotations
                     .filter((annotation) => !annotation.parentId)
                     .map((annotation) => {
-                        //console.log(annotation);
+                        const childAnnotation = annotations.find((item) => item.parentId === annotation.id);
                         switch (annotation.annotationType) {
                             case AnnotationType.Link:
                                 return (
@@ -61,7 +61,6 @@ const AnnotationLayer: React.FC<AnnotationLayerProps> = ({ doc, page, rotation, 
                                     />
                                 );
                             case AnnotationType.Text:
-                                const childAnnotation = annotations.find((item) => item.parentId === annotation.id);
                                 return (
                                     <Text
                                         key={annotation.id}

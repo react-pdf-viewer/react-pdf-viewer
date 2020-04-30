@@ -17,10 +17,10 @@ import useTogglePopup from './useTogglePopup';
 
 interface RenderChildrenProps {
     popup: {
-        opened: boolean,
-        closeOnHover: () => void,
-        openOnHover: () => void,
-        toggleOnClick: () => void,
+        opened: boolean;
+        closeOnHover: () => void;
+        openOnHover: () => void;
+        toggleOnClick: () => void;
     };
     slot: Slot;
 }

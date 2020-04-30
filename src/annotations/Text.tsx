@@ -6,9 +6,8 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { useContext } from 'react';
+import React from 'react';
 
-import ThemeContent from '../theme/ThemeContext';
 import PdfJs from '../vendors/PdfJs';
 import Annotation from './Annotation';
 import AnnotationType from './AnnotationType';
@@ -22,13 +21,12 @@ interface TextProps {
 }
 
 const Text: React.FC<TextProps> = ({ annotation, childAnnotation, page, viewport }) => {
-    const theme = useContext(ThemeContent);
     const hasPopup = annotation.hasPopup === false;
     const isRenderable = !!(annotation.hasPopup || annotation.title || annotation.contents);
 
     return (
         <Annotation annotation={annotation} hasPopup={hasPopup} isRenderable={isRenderable} page={page} viewport={viewport}>
-            {(props) => (
+            {(props): React.ReactElement => (
                 <>
                 <div
                     {...props.slot.attrs}
@@ -42,9 +40,9 @@ const Text: React.FC<TextProps> = ({ annotation, childAnnotation, page, viewport
                             top: 0,
                             width: '100%',
                         }}
-                        onMouseEnter={() => props.popup.openOnHover()}
-                        onMouseLeave={() => props.popup.closeOnHover()}
-                        onClick={() => props.popup.toggleOnClick()}
+                        onMouseEnter={props.popup.openOnHover}
+                        onMouseLeave={props.popup.closeOnHover}
+                        onClick={props.popup.toggleOnClick}
                     />
                     {props.slot.children}
                 </div>

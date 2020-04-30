@@ -26,7 +26,7 @@ const useTogglePopup = (): UsePopupResult => {
     const { opened, toggle } = useToggle();
     const [togglePopupBy, setTooglePopupBy] = React.useState(TogglePopupBy.Hover);
 
-    const toggleOnClick = () => {
+    const toggleOnClick = (): void => {
         switch (togglePopupBy) {
             case TogglePopupBy.Click:
                 opened && setTooglePopupBy(TogglePopupBy.Hover);
@@ -39,11 +39,11 @@ const useTogglePopup = (): UsePopupResult => {
         }
     };
 
-    const openOnHover = () => {
+    const openOnHover = (): void => {
         togglePopupBy === TogglePopupBy.Hover && toggle(ToggleStatus.Open);
     };
 
-    const closeOnHover = () => {
+    const closeOnHover = (): void => {
         togglePopupBy === TogglePopupBy.Hover && toggle(ToggleStatus.Close);
     };
 

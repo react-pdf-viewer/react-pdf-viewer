@@ -25,7 +25,7 @@ interface LinkProps {
 
 const Link: React.FC<LinkProps> = ({ annotation, doc, page, viewport, onJumpToDest }) => {
     const theme = useContext(ThemeContent);
-    const { dest, rect } = annotation;
+    const { dest } = annotation;
     const href = (typeof dest === 'string') ? `#${escape(dest)}` : `#${escape(JSON.stringify(dest))}`;
 
     const link = (e: React.MouseEvent): void => {
@@ -40,7 +40,7 @@ const Link: React.FC<LinkProps> = ({ annotation, doc, page, viewport, onJumpToDe
 
     return (
         <Annotation annotation={annotation} hasPopup={false} isRenderable={isRenderable} page={page} viewport={viewport}>
-            {(props) => (
+            {(props): React.ReactElement => (
                 <div
                     {...props.slot.attrs}
                     data-annotation-id={annotation.id}

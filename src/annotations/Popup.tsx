@@ -6,9 +6,8 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { useContext } from 'react';
+import React from 'react';
 
-import ThemeContent from '../theme/ThemeContext';
 import PdfJs from '../vendors/PdfJs';
 import Annotation from './Annotation';
 import PopupWrapper from './PopupWrapper';
@@ -20,7 +19,6 @@ interface PopupProps {
 }
 
 const Popup: React.FC<PopupProps> = ({ annotation, page, viewport }) => {
-    const theme = useContext(ThemeContent);
     const isRenderable = !!(annotation.title || annotation.contents);
 
     // Don't render the popup for annotation whose parent renders the annotation themselves
@@ -44,7 +42,7 @@ const Popup: React.FC<PopupProps> = ({ annotation, page, viewport }) => {
 
     return (
         <Annotation annotation={annotation} hasPopup={hasPopup} isRenderable={isRenderable} page={page} viewport={viewport}>
-            {(props) => (
+            {(props): React.ReactElement => (
                 <div
                     {...props.slot.attrs}
                     data-annotation-id={annotation.id}
