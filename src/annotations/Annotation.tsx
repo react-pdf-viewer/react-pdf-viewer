@@ -12,6 +12,7 @@ import Slot from '../layouts/Slot';
 import ThemeContent from '../theme/ThemeContext';
 import PdfJs from '../vendors/PdfJs';
 import './annotation.less';
+import AnnotationBorderStyleType from './AnnotationBorderStyleType';
 import PopupWrapper from './PopupWrapper';
 import useTogglePopup from './useTogglePopup';
 
@@ -53,8 +54,55 @@ const Annotation: React.FC<AnnotationProps> = ({ annotation, children, hasPopup,
         page.view[3] + page.view[1] - rect[3],
     ]);
 
-    const width = rect[2] - rect[0];
-    const height = rect[3] - rect[1];
+    let width = rect[2] - rect[0];
+    let height = rect[3] - rect[1];
+
+    let styles = {
+        borderColor: '',
+        borderBottomStyle: '',
+        borderRadius: '',
+        borderStyle: '',
+        borderWidth: '',
+    };
+
+    if (annotation.borderStyle && annotation.borderStyle.width > 0) {
+        // Border style
+        switch (annotation.borderStyle.style) {
+            case AnnotationBorderStyleType.Dashed:
+                styles.borderStyle = 'dashed';
+                break;
+            case AnnotationBorderStyleType.Solid:
+                styles.borderStyle = 'solid';
+                break;
+            case AnnotationBorderStyleType.Underline:
+                styles.borderBottomStyle = 'solid';
+                break;
+            case AnnotationBorderStyleType.Beveled:
+            case AnnotationBorderStyleType.Inset:
+            default:
+                break;
+        }
+
+        // Border with
+        const borderWidth = annotation.borderStyle.width; 
+        styles.borderWidth = `${borderWidth}px`;
+        if (annotation.borderStyle.style !== AnnotationBorderStyleType.Underline) {
+            width = width - 2 * borderWidth;
+            height = height - 2 * borderWidth;
+        }
+
+        // Border radius
+        const { horizontalCornerRadius, verticalCornerRadius } = annotation.borderStyle;
+        if (horizontalCornerRadius > 0 || verticalCornerRadius > 0) {
+            styles.borderRadius = `${horizontalCornerRadius}px / ${verticalCornerRadius}px`;
+        }
+
+        // Border color
+        annotation.color
+            ? (styles.borderColor = `rgb(${annotation.color[0] | 0}, ${annotation.color[1] | 0}, ${annotation.color[2] | 0})`)
+            // Reset the border width
+            : (styles.borderWidth = '0');
+    }    
 
     return (
         <>
@@ -70,14 +118,14 @@ const Annotation: React.FC<AnnotationProps> = ({ annotation, children, hasPopup,
                 slot: {
                     attrs: {
                         className: `${theme.prefixClass}-annotation`,
-                        style: {
+                        style: Object.assign({
                             height: `${height}px`,
                             left: `${bound[0]}px`,
                             top: `${bound[1]}px`,
                             transform: `matrix(${viewport.transform.join(',')})`,
                             transformOrigin: `-${bound[0]}px -${bound[1]}px`,
                             width: `${width}px`,
-                        },
+                        }, styles),
                     },
                     children: (
                         <>
