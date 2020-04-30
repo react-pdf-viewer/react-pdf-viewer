@@ -25,7 +25,7 @@ const Text: React.FC<TextProps> = ({ annotation, childAnnotation, page, viewport
     const isRenderable = !!(annotation.hasPopup || annotation.title || annotation.contents);
 
     return (
-        <Annotation annotation={annotation} hasPopup={hasPopup} isRenderable={isRenderable} page={page} viewport={viewport}>
+        <Annotation annotation={annotation} hasPopup={hasPopup} ignoreBorder={false} isRenderable={isRenderable} page={page} viewport={viewport}>
             {(props): React.ReactElement => (
                 <>
                 <div

@@ -41,7 +41,7 @@ const Popup: React.FC<PopupProps> = ({ annotation, page, viewport }) => {
     }, []);
 
     return (
-        <Annotation annotation={annotation} hasPopup={hasPopup} isRenderable={isRenderable} page={page} viewport={viewport}>
+        <Annotation annotation={annotation} hasPopup={hasPopup} ignoreBorder={false} isRenderable={isRenderable} page={page} viewport={viewport}>
             {(props): React.ReactElement => (
                 <div
                     {...props.slot.attrs}
