@@ -142,6 +142,14 @@ declare module 'pdfjs-dist' {
         id: string;
         rect: number[];
         subtype: string;
+        // Border style
+        borderStyle?: {
+            dashArray: number[];
+            horizontalCornerRadius: number;
+            style: number;
+            verticalCornerRadius: number;
+            width: number;
+        };
         // For annotation that has a popup
         hasPopup?: boolean;
         contents?: string;

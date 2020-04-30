@@ -6,6 +6,8 @@
 
 - The annotation layer is rewritten. Support the following type of annotations:
     * Link
+    * Popup
+    * Text
 
 - Customize error renderer.
 
