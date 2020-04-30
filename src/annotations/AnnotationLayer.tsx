@@ -14,6 +14,7 @@ import PdfJs from '../vendors/PdfJs';
 import AnnotationLoader from './AnnotationLoader';
 import AnnotationType from './AnnotationType';
 import FreeText from './FreeText';
+import Line from './Line';
 import Link from './Link';
 import Popup from './Popup';
 import Square from './Square';
@@ -40,11 +41,21 @@ const AnnotationLayer: React.FC<AnnotationLayerProps> = ({ doc, page, rotation, 
                 annotations
                     .filter((annotation) => !annotation.parentId)
                     .map((annotation) => {
+                        console.log(annotation);
                         const childAnnotation = annotations.find((item) => item.parentId === annotation.id);
                         switch (annotation.annotationType) {
                             case AnnotationType.FreeText:
                                 return (
                                     <FreeText
+                                        key={annotation.id}
+                                        annotation={annotation}
+                                        page={page}
+                                        viewport={clonedViewPort}
+                                    />
+                                );
+                            case AnnotationType.Line:
+                                return (
+                                    <Line
                                         key={annotation.id}
                                         annotation={annotation}
                                         page={page}

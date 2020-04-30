@@ -11,13 +11,13 @@ import React from 'react';
 import PdfJs from '../vendors/PdfJs';
 import Annotation from './Annotation';
 
-interface SquareProps {
+interface LineProps {
     annotation: PdfJs.Annotation;
     page: PdfJs.Page;
     viewport: PdfJs.ViewPort;
 }
 
-const Square: React.FC<SquareProps> = ({ annotation, page, viewport }) => {
+const Line: React.FC<LineProps> = ({ annotation, page, viewport }) => {
     const hasPopup = annotation.hasPopup === false;
     const isRenderable = !!(annotation.hasPopup || annotation.title || annotation.contents);
 
@@ -44,14 +44,13 @@ const Square: React.FC<SquareProps> = ({ annotation, page, viewport }) => {
                         viewBox={`0 0 ${width} ${height}`}
                         width={`${width}px`}
                     >
-                        <rect
-                            height={height - borderWidth}
-                            fill='none'
+                        <line
+                            x1={rect[2] - annotation.lineCoordinates[0]}
+                            y1={rect[3] - annotation.lineCoordinates[1]}
+                            x2={rect[2] - annotation.lineCoordinates[2]}
+                            y2={rect[3] - annotation.lineCoordinates[3]}
                             strokeWidth={borderWidth || 1}
                             stroke='transparent'
-                            x={borderWidth / 2}
-                            y={borderWidth / 2}
-                            width={width - borderWidth}
                         />
                     </svg>
                     {props.slot.children}
@@ -61,4 +60,4 @@ const Square: React.FC<SquareProps> = ({ annotation, page, viewport }) => {
     );
 };
 
-export default Square;
+export default Line;

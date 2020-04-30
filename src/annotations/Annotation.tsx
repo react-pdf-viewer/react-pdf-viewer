@@ -58,7 +58,7 @@ const Annotation: React.FC<AnnotationProps> = ({ annotation, children, ignoreBor
     let width = rect[2] - rect[0];
     let height = rect[3] - rect[1];
 
-    let styles = {
+    const styles = {
         borderColor: '',
         borderBottomStyle: '',
         borderRadius: '',
