@@ -13,6 +13,7 @@
     * Stamp
     * Square
     * Text
+    * Underline
 
 - Customize error renderer.
 
