@@ -27,10 +27,6 @@ interface LinkProps {
 const Link: React.FC<LinkProps> = ({ annotation, doc, page, viewport, onExecuteNamedAction, onJumpToDest }) => {
     const theme = useContext(ThemeContent);
     const { dest } = annotation;
-    const href = annotation.action
-        ? ''
-        : (typeof dest === 'string') ? `#${escape(dest)}` : `#${escape(JSON.stringify(dest))}`;
-
     const link = (e: React.MouseEvent): void => {
         e.preventDefault();
         annotation.action
@@ -43,6 +39,17 @@ const Link: React.FC<LinkProps> = ({ annotation, doc, page, viewport, onExecuteN
 
     const isRenderable = !!(annotation.url || annotation.dest || annotation.action);
     console.log(annotation);
+    const attrs = annotation.url
+        ? {
+            href: annotation.url,
+            rel: 'noopener noreferrer nofollow',
+            target: annotation.newWindow ? '_blank' : '',
+            title: annotation.url,
+        }
+        : {
+            href: '',
+            onClick: link,
+        };
 
     return (
         <Annotation annotation={annotation} hasPopup={false} ignoreBorder={false} isRenderable={isRenderable} page={page} viewport={viewport}>
@@ -53,8 +60,7 @@ const Link: React.FC<LinkProps> = ({ annotation, doc, page, viewport, onExecuteN
                 >
                     <a
                         className={`${theme.prefixClass}-annotation-link`}
-                        {...(href && {href})}
-                        onClick={link}
+                        {...attrs}
                     />
                 </div>
             )}

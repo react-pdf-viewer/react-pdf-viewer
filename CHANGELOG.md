@@ -48,6 +48,9 @@ const renderError = (error: LoadError) => {
 />
 ~~~
 
+**Improvement**
+- Support external links
+
 **Bug fixes**
 - The canvas layer is blurry
 - The tooltip, popover positions are not correct in some cases

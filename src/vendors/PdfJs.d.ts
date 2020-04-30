@@ -162,6 +162,7 @@ declare module 'pdfjs-dist' {
         // `action` can be `FirstPage`, `PrevPage`, `NextPage`, `LastPage`, `GoBack`, `GoForward`
         action?: string;
         url?: string;
+        newWindow?: boolean;
         // Line
         lineCoordinates: number[];
     }
