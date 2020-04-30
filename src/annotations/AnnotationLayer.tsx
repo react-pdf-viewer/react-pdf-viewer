@@ -21,6 +21,7 @@ import Popup from './Popup';
 import Square from './Square';
 import Stamp from './Stamp';
 import Text from './Text';
+import Underline from './Underline';
 
 interface AnnotationLayerProps {
     doc: PdfJs.PdfDocument;
@@ -117,6 +118,15 @@ const AnnotationLayer: React.FC<AnnotationLayerProps> = ({ doc, page, rotation, 
                                         key={annotation.id}
                                         annotation={annotation}
                                         childAnnotation={childAnnotation}
+                                        page={page}
+                                        viewport={clonedViewPort}
+                                    />
+                                );
+                            case AnnotationType.Underline:
+                                return (
+                                    <Underline
+                                        key={annotation.id}
+                                        annotation={annotation}
                                         page={page}
                                         viewport={clonedViewPort}
                                     />
