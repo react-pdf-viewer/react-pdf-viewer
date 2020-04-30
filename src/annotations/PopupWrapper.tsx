@@ -9,6 +9,7 @@
 import React, { useContext } from 'react';
 
 import ThemeContent from '../theme/ThemeContext';
+import convertDate from '../utils/convertDate';
 import PdfJs from '../vendors/PdfJs';
 import AnnotationType from './AnnotationType';
 import './popupWrapper.less';
@@ -19,6 +20,11 @@ interface PopupWrapperProps {
 
 const PopupWrapper: React.FC<PopupWrapperProps> = ({ annotation }) => {
     const theme = useContext(ThemeContent);
+    let dateStr = '';
+    if (annotation.modificationDate) {
+        const date = convertDate(annotation.modificationDate);
+        dateStr = date ? `${date.toLocaleDateString()}, ${date.toLocaleTimeString()}` : '';
+    }
 
     return (
         <div
@@ -27,7 +33,21 @@ const PopupWrapper: React.FC<PopupWrapperProps> = ({ annotation }) => {
                 left: annotation.annotationType === AnnotationType.Popup ? '' : '100%',
             }}
         >
-            Popup
+            {(annotation.title) && (
+                <div className={`${theme.prefixClass}-annotation-popup-wrapper-header`}>
+                    <div className={`${theme.prefixClass}-annotation-popup-wrapper-title`}>
+                        {annotation.title}
+                    </div>
+                    <span className={`${theme.prefixClass}-annotation-popup-wrapper-date`}>
+                        {dateStr}
+                    </span>
+                </div>
+            )}
+            {annotation.contents && (
+                <div className={`${theme.prefixClass}-annotation-popup-wrapper-content`}>
+                    {annotation.contents}
+                </div>
+            )}
         </div>
     );
 };
