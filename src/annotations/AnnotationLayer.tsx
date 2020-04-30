@@ -20,6 +20,7 @@ import Line from './Line';
 import Link from './Link';
 import Popup from './Popup';
 import Square from './Square';
+import Squiggly from './Squiggly';
 import Stamp from './Stamp';
 import StrikeOut from './StrikeOut';
 import Text from './Text';
@@ -108,6 +109,15 @@ const AnnotationLayer: React.FC<AnnotationLayerProps> = ({ doc, page, rotation, 
                             case AnnotationType.Square:
                                 return (
                                     <Square
+                                        key={annotation.id}
+                                        annotation={annotation}
+                                        page={page}
+                                        viewport={clonedViewPort}
+                                    />
+                                );
+                            case AnnotationType.Squiggly:
+                                return (
+                                    <Squiggly
                                         key={annotation.id}
                                         annotation={annotation}
                                         page={page}
