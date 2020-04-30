@@ -12,20 +12,20 @@ import SpecialZoomLevel from '../SpecialZoomLevel';
 import ThemeContent from '../theme/ThemeContext';
 import getDestination from '../utils/getDestination';
 import PdfJs from '../vendors/PdfJs';
-import './link.less';
 import Annotation from './Annotation';
+import './link.less';
 
 interface LinkProps {
+    annotation: PdfJs.Annotation;
     doc: PdfJs.PdfDocument;
-    dest: PdfJs.OutlineDestinationType;
     page: PdfJs.Page;
-    rect: number[];
     viewport: PdfJs.ViewPort;
     onJumpToDest(pageIndex: number, bottomOffset: number, scaleTo: number | SpecialZoomLevel): void;
 }
 
-const Link: React.FC<LinkProps> = ({ dest, doc, page, rect, viewport, onJumpToDest }) => {
+const Link: React.FC<LinkProps> = ({ annotation, doc, page, viewport, onJumpToDest }) => {
     const theme = useContext(ThemeContent);
+    const { dest } = annotation;
     const href = (typeof dest === 'string') ? `#${escape(dest)}` : `#${escape(JSON.stringify(dest))}`;
 
     const link = (e: React.MouseEvent): void => {
@@ -36,13 +36,22 @@ const Link: React.FC<LinkProps> = ({ dest, doc, page, rect, viewport, onJumpToDe
         });
     };
 
+    const isRenderable = !!(annotation.url || annotation.dest || annotation.action);
+
     return (
-        <Annotation page={page} rect={rect} viewport={viewport}>
-            <a
-                className={`${theme.prefixClass}-annotation-link`} 
-                href={href}
-                onClick={link}
-            />
+        <Annotation annotation={annotation} hasPopup={false} isRenderable={isRenderable} page={page} viewport={viewport}>
+            {(props): React.ReactElement => (
+                <div
+                    {...props.slot.attrs}
+                    data-annotation-id={annotation.id}
+                >
+                    <a
+                        className={`${theme.prefixClass}-annotation-link`}
+                        href={href}
+                        onClick={link}
+                    />
+                </div>
+            )}
         </Annotation>
     );
 };

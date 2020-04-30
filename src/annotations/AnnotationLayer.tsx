@@ -14,6 +14,8 @@ import PdfJs from '../vendors/PdfJs';
 import AnnotationLoader from './AnnotationLoader';
 import AnnotationType from './AnnotationType';
 import Link from './Link';
+import Popup from './Popup';
+import Text from './Text';
 
 interface AnnotationLayerProps {
     doc: PdfJs.PdfDocument;
@@ -33,24 +35,45 @@ const AnnotationLayer: React.FC<AnnotationLayerProps> = ({ doc, page, rotation, 
         return (
             <>
             {
-                annotations.map((annotation) => {
-                    switch (annotation.annotationType) {
-                        case AnnotationType.Link:
-                            return (
-                                <Link
-                                    key={annotation.id}
-                                    dest={annotation.dest}
-                                    doc={doc}
-                                    page={page}
-                                    rect={annotation.rect}
-                                    viewport={clonedViewPort}
-                                    onJumpToDest={onJumpToDest}
-                                />
-                            );
-                        default:
-                            return <></>;
-                    }
-                })
+                annotations
+                    .filter((annotation) => !annotation.parentId)
+                    .map((annotation) => {
+                        const childAnnotation = annotations.find((item) => item.parentId === annotation.id);
+                        switch (annotation.annotationType) {
+                            case AnnotationType.Link:
+                                return (
+                                    <Link
+                                        key={annotation.id}
+                                        annotation={annotation}
+                                        doc={doc}
+                                        page={page}
+                                        viewport={clonedViewPort}
+                                        onJumpToDest={onJumpToDest}
+                                    />
+                                );
+                            case AnnotationType.Popup:
+                                return (
+                                    <Popup
+                                        key={annotation.id}
+                                        annotation={annotation}
+                                        page={page}
+                                        viewport={clonedViewPort}
+                                    />
+                                );
+                            case AnnotationType.Text:
+                                return (
+                                    <Text
+                                        key={annotation.id}
+                                        annotation={annotation}
+                                        childAnnotation={childAnnotation}
+                                        page={page}
+                                        viewport={clonedViewPort}
+                                    />
+                                );
+                            default:
+                                return <></>;
+                        }
+                    })
             }
             </>
         );

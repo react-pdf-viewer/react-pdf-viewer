@@ -136,11 +136,23 @@ declare module 'pdfjs-dist' {
     }
     interface Annotation {
         annotationType: number;
+        color?: Uint8ClampedArray;
         dest: string;
         hasAppearance: boolean;
         id: string;
         rect: number[];
-        subtype: string;    // Can be 'Link'
+        subtype: string;
+        // For annotation that has a popup
+        hasPopup?: boolean;
+        contents?: string;
+        modificationDate?: string;
+        title?: string;
+        // Parent annotation
+        parentId?: string;
+        parentType?: string;
+        // Link
+        action?: string;
+        url?: string;
     }
     const AnnotationLayer: PdfAnnotationLayer;
     interface RenderAnnotationLayerParams {
