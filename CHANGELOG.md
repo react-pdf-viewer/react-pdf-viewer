@@ -12,6 +12,7 @@
     * Link
     * Popup
     * Square
+    * Squiggly
     * Stamp
     * StrikeOut
     * Text
