@@ -168,6 +168,8 @@ declare module 'pdfjs-dist' {
         // Parent annotation
         parentId?: string;
         parentType?: string;
+        // File attachment annotation
+        file?: Attachment;
         // Ink annotation
         inkLists?: AnnotationPoint[][];
         // Line annotation

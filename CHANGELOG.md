@@ -7,6 +7,7 @@
 - The annotation layer is rewritten. Support the following type of annotations:
     * Caret
     * Circle
+    * File attachment
     * Free text
     * Highlight
     * Ink
