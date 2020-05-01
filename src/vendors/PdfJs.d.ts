@@ -140,6 +140,10 @@ declare module 'pdfjs-dist' {
         // Can be 'display' or 'print'
         intent: string;
     }
+    interface InkList {
+        x: number;
+        y: number;
+    }
     interface Annotation {
         annotationType: number;
         color?: Uint8ClampedArray;
@@ -164,14 +168,16 @@ declare module 'pdfjs-dist' {
         // Parent annotation
         parentId?: string;
         parentType?: string;
-        // Line
+        // Ink annotation
+        inkLists?: InkList[][];
+        // Line annotation
         lineCoordinates: number[];
-        // Link
+        // Link annotation
         // `action` can be `FirstPage`, `PrevPage`, `NextPage`, `LastPage`, `GoBack`, `GoForward`
         action?: string;
         url?: string;
         newWindow?: boolean;
-        // Text
+        // Text annotation
         name?: string;
     }
     const AnnotationLayer: PdfAnnotationLayer;

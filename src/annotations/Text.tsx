@@ -29,12 +29,11 @@ interface TextProps {
 }
 
 const Text: React.FC<TextProps> = ({ annotation, childAnnotation, page, viewport }) => {
-    const theme = React.useContext(ThemeContext);
+    const theme = useContext(ThemeContext);
     const hasPopup = annotation.hasPopup === false;
     const isRenderable = !!(annotation.hasPopup || annotation.title || annotation.contents);
     const name = annotation.name ? annotation.name.toLowerCase() : '';
 
-    
     return (
         <Annotation annotation={annotation} hasPopup={hasPopup} ignoreBorder={false} isRenderable={isRenderable} page={page} viewport={viewport}>
             {(props): React.ReactElement => (
