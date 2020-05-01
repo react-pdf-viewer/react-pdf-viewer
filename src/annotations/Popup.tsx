@@ -34,10 +34,12 @@ const Popup: React.FC<PopupProps> = ({ annotation, page, viewport }) => {
         if (!parent || !container) {
             return;
         }
-        const parentLeft = parseFloat(parent.style.left);
-        const parentWidth = parseFloat(parent.style.width);
-        container.style.left = `${parentLeft + parentWidth}px`;
-        container.style.transformOrigin = `-${parentLeft + parentWidth}px -${parent.style.top}`;
+        const left = parseFloat(parent.style.left)
+        const top = parseFloat(parent.style.top) + parseFloat(parent.style.height);
+
+        container.style.left = `${left}px`;
+        container.style.top = `${top}px`;
+        container.style.transformOrigin = `-${left}px -${top}px`;
     }, []);
 
     return (
