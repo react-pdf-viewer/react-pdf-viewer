@@ -100,6 +100,7 @@ declare module 'pdfjs-dist' {
     }
     interface ViewPort {
         height: number;
+        rotation: number;
         transform: number[];
         width: number;
         clone(params: ViewPortCloneParams): ViewPort;

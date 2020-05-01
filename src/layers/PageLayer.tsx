@@ -41,6 +41,7 @@ interface PageSizeState {
     page?: PdfJs.Page | null;
     pageHeight: number;
     pageWidth: number;
+    viewportRotation: number;
 }
 
 const PageLayer: React.FC<PageLayerProps> = ({
@@ -53,6 +54,7 @@ const PageLayer: React.FC<PageLayerProps> = ({
         page: null,
         pageHeight: height,
         pageWidth: width,
+        viewportRotation: 0,
     });
     const { isCalculated, page, pageHeight, pageWidth } = pageSize;
 
@@ -78,6 +80,7 @@ const PageLayer: React.FC<PageLayerProps> = ({
                     page: pdfPage,
                     pageHeight: viewport.height,
                     pageWidth: viewport.width,
+                    viewportRotation: viewport.rotation,
                 });
             });
         }
@@ -98,6 +101,9 @@ const PageLayer: React.FC<PageLayerProps> = ({
     );
     const renderPageLayer = renderPage || defaultPageRenderer;
 
+    // To support the document which is already rotated
+    const rotationNumber = (rotation + pageSize.viewportRotation) % 360;
+
     return (
         <Observer onVisibilityChanged={visibilityChanged} threshold={intersectionThreshold}>
             <div
@@ -117,7 +123,7 @@ const PageLayer: React.FC<PageLayerProps> = ({
                                     <AnnotationLayer
                                         doc={doc}
                                         page={page}
-                                        rotation={rotation}
+                                        rotation={rotationNumber}
                                         scale={scale}
                                         onExecuteNamedAction={onExecuteNamedAction}
                                         onJumpToDest={onJumpToDest}
@@ -127,7 +133,7 @@ const PageLayer: React.FC<PageLayerProps> = ({
                             canvasLayer: {
                                 attrs: {},
                                 children: (
-                                    <CanvasLayer height={h} page={page} rotation={rotation} scale={scale} width={w} />
+                                    <CanvasLayer height={h} page={page} rotation={rotationNumber} scale={scale} width={w} />
                                 ),
                             },
                             doc,
@@ -138,7 +144,7 @@ const PageLayer: React.FC<PageLayerProps> = ({
                             svgLayer: {
                                 attrs: {},
                                 children: (
-                                    <SvgLayer height={h} page={page} rotation={rotation} scale={scale} width={w} />
+                                    <SvgLayer height={h} page={page} rotation={rotationNumber} scale={scale} width={w} />
                                 ),
                             },
                             textLayer: {
@@ -149,7 +155,7 @@ const PageLayer: React.FC<PageLayerProps> = ({
                                         match={match}
                                         page={page}
                                         pageIndex={pageIndex}
-                                        rotation={rotation}
+                                        rotation={rotationNumber}
                                         scale={scale}
                                         onJumpToMatch={jumpToMatch}
                                     />

@@ -24,6 +24,7 @@ interface PageThumbnailContainerProps {
 interface PageState {
     height: number;
     page: PdfJs.Page | null;
+    viewportRotation: number;
     width: number;
 }
 
@@ -31,6 +32,7 @@ const PageThumbnailContainer: React.FC<PageThumbnailContainerProps> = ({ doc, pa
     const [pageSize, setPageSize] = React.useState<PageState>({
         height: pageHeight,
         page: null,
+        viewportRotation: 0,
         width: pageWidth,
     });
     const { page, height, width } = pageSize;
@@ -43,10 +45,14 @@ const PageThumbnailContainer: React.FC<PageThumbnailContainerProps> = ({ doc, pa
             setPageSize({
                 height: viewport.height,
                 page: pdfPage,
+                viewportRotation: viewport.rotation,
                 width: viewport.width,
             });
         });
     }, []);
+
+    // To support the document which is already rotated
+    const rotationNumber = (rotation + pageSize.viewportRotation) % 360;
 
     return (
         !page
@@ -56,7 +62,7 @@ const PageThumbnailContainer: React.FC<PageThumbnailContainerProps> = ({ doc, pa
                     page={page}
                     pageHeight={isVertical ? height : width}
                     pageWidth={isVertical ? width : height}
-                    rotation={rotation}
+                    rotation={rotationNumber}
                     onLoad={onLoad}
                 />
             )
