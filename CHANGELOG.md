@@ -54,6 +54,7 @@ const renderError = (error: LoadError) => {
 ~~~
 
 **Improvement**
+- Allow to control the `fileUrl` option
 - Bookmarks support external links
 - Support external links
 
