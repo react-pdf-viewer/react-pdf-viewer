@@ -8,6 +8,14 @@
 
 import React from 'react';
 
+import CheckIcon from '../icons/CheckIcon';
+import CommentIcon from '../icons/CommentIcon';
+import HelpIcon from '../icons/HelpIcon';
+import KeyIcon from '../icons/KeyIcon';
+import NoteIcon from '../icons/NoteIcon';
+import ParagraphIcon from '../icons/ParagraphIcon';
+import TriangleIcon from '../icons/TriangleIcon';
+import ThemeContent from '../theme/ThemeContext';
 import PdfJs from '../vendors/PdfJs';
 import Annotation from './Annotation';
 import AnnotationType from './AnnotationType';
@@ -21,9 +29,12 @@ interface TextProps {
 }
 
 const Text: React.FC<TextProps> = ({ annotation, childAnnotation, page, viewport }) => {
+    const theme = React.useContext(ThemeContent);
     const hasPopup = annotation.hasPopup === false;
     const isRenderable = !!(annotation.hasPopup || annotation.title || annotation.contents);
+    const name = annotation.name ? annotation.name.toLowerCase() : '';
 
+    
     return (
         <Annotation annotation={annotation} hasPopup={hasPopup} ignoreBorder={false} isRenderable={isRenderable} page={page} viewport={viewport}>
             {(props): React.ReactElement => (
@@ -35,6 +46,17 @@ const Text: React.FC<TextProps> = ({ annotation, childAnnotation, page, viewport
                     onMouseEnter={props.popup.openOnHover}
                     onMouseLeave={props.popup.closeOnHover}
                 >
+                    {name && (
+                        <div className={`${theme.prefixClass}-annotation-text-icon`}>
+                            {name === 'check' && <CheckIcon />}
+                            {name === 'comment' && <CommentIcon />}
+                            {name === 'help' && <HelpIcon />}
+                            {name === 'insert' && <TriangleIcon />}
+                            {name === 'key' && <KeyIcon />}
+                            {name === 'note' && <NoteIcon />}
+                            {(name === 'newparagraph' || name === 'paragraph') && <ParagraphIcon />}
+                        </div>
+                    )}
                     {props.slot.children}
                 </div>
                 {childAnnotation && childAnnotation.annotationType === AnnotationType.Popup && props.popup.opened && (
