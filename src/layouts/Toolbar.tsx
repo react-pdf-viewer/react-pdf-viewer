@@ -41,7 +41,7 @@ import SearchPopover from '../search/SearchPopover';
 import ScrollMode from '../ScrollMode';
 import SelectionMode from '../SelectionMode';
 import SpecialZoomLevel from '../SpecialZoomLevel';
-import ThemeContent from '../theme/ThemeContext';
+import ThemeContext from '../theme/ThemeContext';
 import PdfJs from '../vendors/PdfJs';
 import { decrease, increase } from '../zoom/zoomingLevel';
 import ZoomPopover from '../zoom/ZoomPopover';
@@ -79,7 +79,7 @@ const Toolbar: React.FC<ToolbarProps> = ({
     renderToolbar,
 }) => {
     const l10n = React.useContext(LocalizationContext);
-    const theme = React.useContext(ThemeContent);
+    const theme = React.useContext(ThemeContext);
     const [pageTextboxFocused, setPageTextboxFocused] = React.useState(false);
     const [editingPage, setEditingPage] = React.useState(currentPage);
     const [isSidebarOpened, setSidebarOpened] = React.useState(false);

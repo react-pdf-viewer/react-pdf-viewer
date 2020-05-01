@@ -9,7 +9,7 @@
 import React from 'react';
 
 import useKeyUp from '../hooks/useKeyUp';
-import ThemeContent from '../theme/ThemeContext';
+import ThemeContext from '../theme/ThemeContext';
 import './popoverOverlay.less';
 
 interface PopoverOverlayProps {
@@ -18,7 +18,7 @@ interface PopoverOverlayProps {
 }
 
 const PopoverOverlay: React.FC<PopoverOverlayProps> = ({ closeOnEscape, onClose }) => {
-    const theme = React.useContext(ThemeContent);
+    const theme = React.useContext(ThemeContext);
 
     useKeyUp(27, () => closeOnEscape && onClose());
 

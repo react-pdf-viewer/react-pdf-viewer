@@ -8,7 +8,7 @@
 
 import React from 'react';
 
-import ThemeContent from '../theme/ThemeContext';
+import ThemeContext from '../theme/ThemeContext';
 import SpecialZoomLevel from '../SpecialZoomLevel';
 import PdfJs from '../vendors/PdfJs';
 import './bookmarkItem.less';
@@ -23,7 +23,7 @@ interface BookmarkItemProps {
 }
 
 const BookmarkItem: React.FC<BookmarkItemProps> = ({ bookmark, depth, doc, onClick, onJumpToDest }) => {
-    const theme = React.useContext(ThemeContent);
+    const theme = React.useContext(ThemeContext);
     const toggleRef = React.createRef<HTMLSpanElement>();
     const subItemRef = React.createRef<HTMLDivElement>();
     const subItemsDisplayed = React.useRef(true);

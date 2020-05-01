@@ -13,7 +13,7 @@ import LocalizationContext from '../localization/LocalizationContext';
 import LocalizationMap from '../localization/LocalizationMap';
 import Position from '../portal/Position';
 import Tooltip from '../portal/Tooltip';
-import ThemeContent from '../theme/ThemeContext';
+import ThemeContext from '../theme/ThemeContext';
 import './openFileButton.less';
 
 interface OpenFileButtonProps {
@@ -24,7 +24,7 @@ const TOOLTIP_OFFSET = { left: 0, top: 8 };
 
 const OpenFileButton: React.FC<OpenFileButtonProps> = ({ onOpenFiles }) => {
     const l10n = React.useContext(LocalizationContext);
-    const theme = React.useContext(ThemeContent);
+    const theme = React.useContext(ThemeContext);
 
     const openFiles = (e: React.ChangeEvent<HTMLInputElement>): void => {
         const files = e.target.files;

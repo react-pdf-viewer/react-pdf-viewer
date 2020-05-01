@@ -15,7 +15,7 @@ import KeyIcon from '../icons/KeyIcon';
 import NoteIcon from '../icons/NoteIcon';
 import ParagraphIcon from '../icons/ParagraphIcon';
 import TriangleIcon from '../icons/TriangleIcon';
-import ThemeContent from '../theme/ThemeContext';
+import ThemeContext from '../theme/ThemeContext';
 import PdfJs from '../vendors/PdfJs';
 import Annotation from './Annotation';
 import AnnotationType from './AnnotationType';
@@ -29,7 +29,7 @@ interface TextProps {
 }
 
 const Text: React.FC<TextProps> = ({ annotation, childAnnotation, page, viewport }) => {
-    const theme = React.useContext(ThemeContent);
+    const theme = React.useContext(ThemeContext);
     const hasPopup = annotation.hasPopup === false;
     const isRenderable = !!(annotation.hasPopup || annotation.title || annotation.contents);
     const name = annotation.name ? annotation.name.toLowerCase() : '';

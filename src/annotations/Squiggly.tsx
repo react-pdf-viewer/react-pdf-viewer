@@ -8,7 +8,7 @@
 
 import React, { useContext } from 'react';
 
-import ThemeContent from '../theme/ThemeContext';
+import ThemeContext from '../theme/ThemeContext';
 import PdfJs from '../vendors/PdfJs';
 import Annotation from './Annotation';
 
@@ -19,7 +19,7 @@ interface SquigglyProps {
 }
 
 const Squiggly: React.FC<SquigglyProps> = ({ annotation, page, viewport }) => {
-    const theme = useContext(ThemeContent);
+    const theme = useContext(ThemeContext);
     const hasPopup = annotation.hasPopup === false;
     const isRenderable = !!(annotation.hasPopup || annotation.title || annotation.contents);
 

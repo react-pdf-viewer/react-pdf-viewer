@@ -9,7 +9,7 @@
 import React from 'react';
 
 import LocalizationContext from '../localization/LocalizationContext';
-import ThemeContent from '../theme/ThemeContext';
+import ThemeContext from '../theme/ThemeContext';
 import downloadFile from '../utils/downloadFile';
 import './attachmentList.less';
 import FileItem from './FileItem';
@@ -20,7 +20,7 @@ interface AttachmentListProps {
 
 const AttachmentList: React.FC<AttachmentListProps> = ({ files }) => {
     const l10n = React.useContext(LocalizationContext);
-    const theme = React.useContext(ThemeContent);
+    const theme = React.useContext(ThemeContext);
 
     const renderItem = (file: FileItem): React.ReactElement => {
         const onClick = (): void => downloadFile(file.fileName, file.data);

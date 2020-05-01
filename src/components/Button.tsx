@@ -8,7 +8,7 @@
 
 import React from 'react';
 
-import ThemeContent from '../theme/ThemeContext';
+import ThemeContext from '../theme/ThemeContext';
 import classNames from '../utils/classNames';
 import './button.less';
 
@@ -18,7 +18,7 @@ interface ButtonProps {
 }
 
 const Button: React.FC<ButtonProps> = ({ children, isSelected = false, onClick }) => {
-    const theme = React.useContext(ThemeContent);
+    const theme = React.useContext(ThemeContext);
 
     return (
         <button

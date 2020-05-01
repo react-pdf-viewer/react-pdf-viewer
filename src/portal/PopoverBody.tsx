@@ -10,7 +10,7 @@ import React from 'react';
 
 import useClickOutside from '../hooks/useClickOutside';
 import usePosition from '../hooks/usePosition';
-import ThemeContent from '../theme/ThemeContext';
+import ThemeContext from '../theme/ThemeContext';
 import Arrow from './Arrow';
 import Offset from './Offset';
 import './popoverBody.less';
@@ -27,7 +27,7 @@ interface PopoverBodyProps {
 const PopoverBody: React.FC<PopoverBodyProps> = ({
     children, closeOnClickOutside, offset, position, targetRef, onClose,
 }) => {
-    const theme = React.useContext(ThemeContent);
+    const theme = React.useContext(ThemeContext);
     const contentRef = React.createRef<HTMLDivElement>();
     const anchorRef = React.createRef<HTMLDivElement>();
 

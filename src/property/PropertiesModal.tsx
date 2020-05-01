@@ -11,7 +11,7 @@ import React from 'react';
 import PrimaryButton from '../components/PrimaryButton';
 import Separator from '../components/Separator';
 import LocalizationContext from '../localization/LocalizationContext';
-import ThemeContent from '../theme/ThemeContext';
+import ThemeContext from '../theme/ThemeContext';
 import convertDate from '../utils/convertDate';
 import getFileName from '../utils/fileName';
 import getFileSize from '../utils/fileSize';
@@ -29,7 +29,7 @@ interface PropertiesModalProps {
 
 const PropertiesModal: React.FC<PropertiesModalProps> = ({ doc, fileName, onToggle }) => {
     const l10n = React.useContext(LocalizationContext);
-    const theme = React.useContext(ThemeContent);
+    const theme = React.useContext(ThemeContext);
 
     const formatDate = (input: string): string => {
         const date = convertDate(input);

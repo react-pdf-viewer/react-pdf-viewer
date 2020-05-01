@@ -10,7 +10,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import PdfJs from '../vendors/PdfJs';
-import ThemeContent from '../theme/ThemeContext';
+import ThemeContext from '../theme/ThemeContext';
 import PageThumbnailContainer from './PageThumbnailContainer';
 import PrintStatus from './PrintStatus';
 import './printZone.less';
@@ -26,7 +26,7 @@ interface PrintZoneProps {
 }
 
 const PrintZone: React.FC<PrintZoneProps> = ({ doc, pageHeight, pageWidth, printStatus, rotation, onCancel, onLoad }) => {
-    const theme = React.useContext(ThemeContent);
+    const theme = React.useContext(ThemeContext);
     const [numLoadedPages, setNumLoadedPages] = React.useState(0);
 
     React.useEffect(() => {

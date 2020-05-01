@@ -8,7 +8,7 @@
 
 import React, { Fragment, useContext } from 'react';
 
-import ThemeContent from '../theme/ThemeContext';
+import ThemeContext from '../theme/ThemeContext';
 import convertDate from '../utils/convertDate';
 import PdfJs from '../vendors/PdfJs';
 import AnnotationType from './AnnotationType';
@@ -19,7 +19,7 @@ interface PopupWrapperProps {
 }
 
 const PopupWrapper: React.FC<PopupWrapperProps> = ({ annotation }) => {
-    const theme = useContext(ThemeContent);
+    const theme = useContext(ThemeContext);
     let dateStr = '';
     if (annotation.modificationDate) {
         const date = convertDate(annotation.modificationDate);

@@ -17,7 +17,7 @@ import LocalizationMap from '../localization/LocalizationMap';
 import Popover from '../portal/Popover';
 import Position from '../portal/Position';
 import SpecialZoomLevel from '../SpecialZoomLevel';
-import ThemeContent from '../theme/ThemeContext';
+import ThemeContext from '../theme/ThemeContext';
 import './zoomPopover.less';
 
 interface ZoomPopoverProps {
@@ -30,7 +30,7 @@ const PORTAL_OFFSET = { left: 0, top: 8 };
 
 const ZoomPopover: React.FC<ZoomPopoverProps> = ({ scale, onZoom }) => {
     const l10n = React.useContext(LocalizationContext);
-    const theme = React.useContext(ThemeContent);
+    const theme = React.useContext(ThemeContext);
 
     const getSpcialLevelLabel = (level: SpecialZoomLevel): LocalizationMap => {
         switch (level) {

@@ -14,7 +14,7 @@ import Observer, { VisibilityChanged } from '../layouts/Observer';
 import RenderPageProps, { RenderPage } from '../layouts/RenderPage';
 import Match from '../search/Match';
 import SpecialZoomLevel from '../SpecialZoomLevel';
-import ThemeContent from '../theme/ThemeContext';
+import ThemeContext from '../theme/ThemeContext';
 import PdfJs from '../vendors/PdfJs';
 import CanvasLayer from './CanvasLayer';
 import './pageLayer.less';
@@ -47,7 +47,7 @@ const PageLayer: React.FC<PageLayerProps> = ({
     doc, height, keywordRegexp, match, pageIndex, renderPage, rotation, scale, width,
     onExecuteNamedAction, onJumpToDest, onPageVisibilityChanged,
 }) => {
-    const theme = React.useContext(ThemeContent);
+    const theme = React.useContext(ThemeContext);
     const [pageSize, setPageSize] = React.useState<PageSizeState>({
         isCalculated: false,
         page: null,

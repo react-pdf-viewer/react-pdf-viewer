@@ -8,7 +8,7 @@
 
 import React, { useContext } from 'react';
 
-import ThemeContent from '../theme/ThemeContext';
+import ThemeContext from '../theme/ThemeContext';
 import PdfJs from '../vendors/PdfJs';
 import Annotation from './Annotation';
 import PopupWrapper from './PopupWrapper';
@@ -20,7 +20,7 @@ interface PopupProps {
 }
 
 const Popup: React.FC<PopupProps> = ({ annotation, page, viewport }) => {
-    const theme = useContext(ThemeContent);
+    const theme = useContext(ThemeContext);
     const isRenderable = !!(annotation.title || annotation.contents);
 
     // Don't render the popup for annotation whose parent renders the annotation themselves

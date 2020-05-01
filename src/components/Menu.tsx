@@ -8,11 +8,11 @@
 
 import React from 'react';
 
-import ThemeContent from '../theme/ThemeContext';
+import ThemeContext from '../theme/ThemeContext';
 import './menu.less';
 
 const Menu: React.FC<{}> = ({ children}) => {
-    const theme = React.useContext(ThemeContent);
+    const theme = React.useContext(ThemeContext);
 
     return (
         <ul className={`${theme.prefixClass}-menu`}>

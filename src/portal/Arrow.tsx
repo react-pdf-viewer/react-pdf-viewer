@@ -8,7 +8,7 @@
 
 import React from 'react';
 
-import ThemeContent from '../theme/ThemeContext';
+import ThemeContext from '../theme/ThemeContext';
 import classNames from '../utils/classNames';
 import './arrow.less';
 import Position from './Position';
@@ -19,7 +19,7 @@ interface ArrowProps {
 }
 
 const Arrow: React.FC<ArrowProps> = ({ customClassName, position }) => {
-    const theme = React.useContext(ThemeContent);
+    const theme = React.useContext(ThemeContext);
 
     return (
         <div

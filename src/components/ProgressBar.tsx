@@ -8,7 +8,7 @@
 
 import React from 'react';
 
-import ThemeContent from '../theme/ThemeContext';
+import ThemeContext from '../theme/ThemeContext';
 import './progressBar.less';
 
 interface ProgressBarProps {
@@ -16,7 +16,7 @@ interface ProgressBarProps {
 }
 
 const ProgressBar: React.FC<ProgressBarProps> = ({ progress }) => {
-    const theme = React.useContext(ThemeContent);
+    const theme = React.useContext(ThemeContext);
 
     return (
         <div className={`${theme.prefixClass}-progress-bar`}>

@@ -8,7 +8,7 @@
 
 import React from 'react';
 
-import ThemeContent from '../theme/ThemeContext';
+import ThemeContext from '../theme/ThemeContext';
 import PdfJs from '../vendors/PdfJs';
 import './canvasLayer.less';
 import WithScale from './WithScale';
@@ -22,7 +22,7 @@ interface CanvasLayerProps {
 }
 
 const CanvasLayer: React.FC<CanvasLayerProps> = ({ height, page, rotation, scale, width }) => {
-    const theme = React.useContext(ThemeContent);
+    const theme = React.useContext(ThemeContext);
     const canvasRef = React.createRef<HTMLCanvasElement>();
     const renderTask = React.useRef<PdfJs.PageRenderTask>();
 

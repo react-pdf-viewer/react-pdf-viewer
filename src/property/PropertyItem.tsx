@@ -8,7 +8,7 @@
 
 import React from 'react';
 
-import ThemeContent from '../theme/ThemeContext';
+import ThemeContext from '../theme/ThemeContext';
 import './propertyItem.less';
 
 interface PropertyItemProps {
@@ -17,7 +17,7 @@ interface PropertyItemProps {
 }
 
 const PropertyItem: React.FC<PropertyItemProps> = ({ label, value }) => {
-    const theme = React.useContext(ThemeContent);
+    const theme = React.useContext(ThemeContext);
 
     return (
         <dl className={`${theme.prefixClass}-property-item`}>

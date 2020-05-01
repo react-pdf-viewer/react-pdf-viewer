@@ -8,7 +8,7 @@
 
 import React from 'react';
 
-import ThemeContent from '../theme/ThemeContext';
+import ThemeContext from '../theme/ThemeContext';
 import classNames from '../utils/classNames';
 import './defaultLayout.less';
 import Slot from './Slot';
@@ -20,7 +20,7 @@ const defaultLayout = (
     toolbar: React.ReactElement,
     sidebar: Slot,
 ): React.ReactElement => {
-    const theme = React.useContext(ThemeContent);
+    const theme = React.useContext(ThemeContext);
 
     return (
         <div

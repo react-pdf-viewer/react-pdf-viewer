@@ -8,7 +8,7 @@
 
 import React from 'react';
 
-import ThemeContent from '../theme/ThemeContext';
+import ThemeContext from '../theme/ThemeContext';
 import './primaryButton.less';
 
 interface PrimaryButtonProps {
@@ -16,7 +16,7 @@ interface PrimaryButtonProps {
 }
 
 const PrimaryButton: React.FC<PrimaryButtonProps> = ({ children, onClick }) => {
-    const theme = React.useContext(ThemeContent);
+    const theme = React.useContext(ThemeContext);
 
     return (
         <button className={`${theme.prefixClass}-primary-button`} onClick={onClick}>

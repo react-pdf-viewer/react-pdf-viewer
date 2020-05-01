@@ -9,7 +9,7 @@
 import React from 'react';
 
 import Spinner from '../components/Spinner';
-import ThemeContent from '../theme/ThemeContext';
+import ThemeContext from '../theme/ThemeContext';
 import PdfJs from '../vendors/PdfJs';
 import { decrease } from '../zoom/zoomingLevel';
 import './pageSizeCalculator.less';
@@ -26,7 +26,7 @@ interface PageSizeCalculatorProps {
 }
 
 const PageSizeCalculator: React.FC<PageSizeCalculatorProps> = ({ doc, render }) => {
-    const theme = React.useContext(ThemeContent);
+    const theme = React.useContext(ThemeContext);
     const pagesRef = React.useRef<HTMLDivElement | null>(null);
     const [pageSize, setPageSize] = React.useState<PageSizeProps>({
         pageHeight: 0,

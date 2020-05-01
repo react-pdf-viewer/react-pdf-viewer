@@ -12,7 +12,7 @@ import LocalizationContext from '../localization/LocalizationContext';
 import SpecialZoomLevel from '../SpecialZoomLevel';
 import PdfJs from '../vendors/PdfJs';
 import Spinner from '../components/Spinner';
-import ThemeContent from '../theme/ThemeContext';
+import ThemeContext from '../theme/ThemeContext';
 import BookmarkList from './BookmarkList';
 import './bookmarkLoaded.less';
 
@@ -27,7 +27,7 @@ interface BookmarkState {
 
 const BookmarkLoader: React.FC<BookmarkLoaderProps> = ({ doc, onJumpToDest }) => {
     const l10n = React.useContext(LocalizationContext);
-    const theme = React.useContext(ThemeContent);
+    const theme = React.useContext(ThemeContext);
     const [bookmarks, setBookmarks] = React.useState<BookmarkState>({
         isLoaded: false,
         items: [],
