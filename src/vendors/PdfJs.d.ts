@@ -164,13 +164,15 @@ declare module 'pdfjs-dist' {
         // Parent annotation
         parentId?: string;
         parentType?: string;
+        // Line
+        lineCoordinates: number[];
         // Link
         // `action` can be `FirstPage`, `PrevPage`, `NextPage`, `LastPage`, `GoBack`, `GoForward`
         action?: string;
         url?: string;
         newWindow?: boolean;
-        // Line
-        lineCoordinates: number[];
+        // Text
+        name?: string;
     }
     const AnnotationLayer: PdfAnnotationLayer;
     interface RenderAnnotationLayerParams {
