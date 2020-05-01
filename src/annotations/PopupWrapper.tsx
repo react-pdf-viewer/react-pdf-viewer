@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { useContext } from 'react';
+import React, { Fragment, useContext } from 'react';
 
 import ThemeContent from '../theme/ThemeContext';
 import convertDate from '../utils/convertDate';
@@ -45,7 +45,7 @@ const PopupWrapper: React.FC<PopupWrapperProps> = ({ annotation }) => {
             )}
             {annotation.contents && (
                 <div className={`${theme.prefixClass}-annotation-popup-wrapper-content`}>
-                    {annotation.contents}
+                    {annotation.contents.split('\n').map((item, index) => <Fragment key={index}>{item}<br /></Fragment>)}
                 </div>
             )}
         </div>
