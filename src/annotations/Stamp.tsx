@@ -6,8 +6,9 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React from 'react';
+import React, { useContext } from 'react';
 
+import ThemeContent from '../theme/ThemeContext';
 import PdfJs from '../vendors/PdfJs';
 import Annotation from './Annotation';
 
@@ -18,6 +19,7 @@ interface StampProps {
 }
 
 const Stamp: React.FC<StampProps> = ({ annotation, page, viewport }) => {
+    const theme = useContext(ThemeContent);
     const hasPopup = annotation.hasPopup === false;
     const isRenderable = !!(annotation.hasPopup || annotation.title || annotation.contents);
 
@@ -26,6 +28,7 @@ const Stamp: React.FC<StampProps> = ({ annotation, page, viewport }) => {
             {(props): React.ReactElement => (
                 <div
                     {...props.slot.attrs}
+                    className={`${theme.prefixClass}-annotation ${theme.prefixClass}-annotation-stamp`}
                     data-annotation-id={annotation.id}
                     onClick={props.popup.toggleOnClick}
                     onMouseEnter={props.popup.openOnHover}

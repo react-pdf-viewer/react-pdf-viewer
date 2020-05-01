@@ -54,10 +54,10 @@ const Link: React.FC<LinkProps> = ({ annotation, doc, page, viewport, onExecuteN
             {(props): React.ReactElement => (
                 <div
                     {...props.slot.attrs}
+                    className={`${theme.prefixClass}-annotation ${theme.prefixClass}-annotation-link`}
                     data-annotation-id={annotation.id}
                 >
                     <a
-                        className={`${theme.prefixClass}-annotation-link`}
                         {...attrs}
                     />
                 </div>

@@ -118,7 +118,6 @@ const Annotation: React.FC<AnnotationProps> = ({ annotation, children, ignoreBor
                 },
                 slot: {
                     attrs: {
-                        className: `${theme.prefixClass}-annotation`,
                         style: Object.assign({
                             height: `${height}px`,
                             left: `${bound[0]}px`,

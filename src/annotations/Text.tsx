@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React from 'react';
+import React, { useContext } from 'react';
 
 import CheckIcon from '../icons/CheckIcon';
 import CommentIcon from '../icons/CommentIcon';
@@ -41,6 +41,7 @@ const Text: React.FC<TextProps> = ({ annotation, childAnnotation, page, viewport
                 <>
                 <div
                     {...props.slot.attrs}
+                    className={`${theme.prefixClass}-annotation ${theme.prefixClass}-annotation-text`}
                     data-annotation-id={annotation.id}
                     onClick={props.popup.toggleOnClick}
                     onMouseEnter={props.popup.openOnHover}
