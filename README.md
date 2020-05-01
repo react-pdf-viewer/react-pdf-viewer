@@ -112,7 +112,7 @@ Be my friend on
 
 ## Products
 
-You might be interesting in my products:
+You might be interested in my products:
 
 | Product                                               | Description                                                       |
 |-------------------------------------------------------|-------------------------------------------------------------------|
