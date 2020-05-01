@@ -29,7 +29,7 @@ import { RenderViewer } from '../Viewer';
 import ExitFullScreen from './ExitFullScreen';
 import './inner.less';
 import { Layout } from './Layout';
-import { PageSize } from './PageSizeCalculator';
+import PageSize from './PageSize';
 import { RenderPage } from './RenderPage';
 import Sidebar from './Sidebar';
 import Toolbar from './Toolbar';

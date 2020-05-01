@@ -62,6 +62,7 @@ const renderError = (error: LoadError) => {
 - The canvas layer is blurry
 - The tooltip, popover positions are not correct in some cases
 - The drag zone isn't visible if the main area is scrolled
+- The document rotated initially isn't displayed properly
 
 ## v1.5.0
 

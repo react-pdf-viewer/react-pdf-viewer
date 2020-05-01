@@ -13,22 +13,17 @@ import ThemeContext from '../theme/ThemeContext';
 import PdfJs from '../vendors/PdfJs';
 import { decrease } from '../zoom/zoomingLevel';
 import './pageSizeCalculator.less';
-
-interface PageSizeProps {
-    pageHeight: number;
-    pageWidth: number;
-    scale: number;
-}
+import PageSize from './PageSize';
 
 interface PageSizeCalculatorProps {
     doc: PdfJs.PdfDocument;
-    render(pageSize: PageSizeProps): React.ReactElement;
+    render(pageSize: PageSize): React.ReactElement;
 }
 
 const PageSizeCalculator: React.FC<PageSizeCalculatorProps> = ({ doc, render }) => {
     const theme = React.useContext(ThemeContext);
     const pagesRef = React.useRef<HTMLDivElement | null>(null);
-    const [pageSize, setPageSize] = React.useState<PageSizeProps>({
+    const [pageSize, setPageSize] = React.useState<PageSize>({
         pageHeight: 0,
         pageWidth: 0,
         scale: 1,
@@ -70,4 +65,3 @@ const PageSizeCalculator: React.FC<PageSizeCalculatorProps> = ({ doc, render }) 
 };
 
 export default PageSizeCalculator;
-export type PageSize = PageSizeProps;
