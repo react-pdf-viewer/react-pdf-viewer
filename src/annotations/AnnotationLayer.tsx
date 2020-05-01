@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React from 'react';
+import React, { Fragment } from 'react';
 
 import ThemeContent from '../theme/ThemeContext';
 import SpecialZoomLevel from '../SpecialZoomLevel';
@@ -164,7 +164,7 @@ const AnnotationLayer: React.FC<AnnotationLayerProps> = ({ doc, page, rotation, 
                                     />
                                 );
                             default:
-                                return <></>;
+                                return <Fragment key={annotation.id}></Fragment>;
                         }
                     })
             }
