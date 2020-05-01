@@ -12,6 +12,7 @@
     * Ink
     * Line
     * Link
+    * Polyline
     * Popup
     * Square
     * Squiggly
