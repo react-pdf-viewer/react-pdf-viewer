@@ -140,7 +140,7 @@ declare module 'pdfjs-dist' {
         // Can be 'display' or 'print'
         intent: string;
     }
-    interface InkList {
+    interface AnnotationPoint {
         x: number;
         y: number;
     }
@@ -169,7 +169,7 @@ declare module 'pdfjs-dist' {
         parentId?: string;
         parentType?: string;
         // Ink annotation
-        inkLists?: InkList[][];
+        inkLists?: AnnotationPoint[][];
         // Line annotation
         lineCoordinates: number[];
         // Link annotation
@@ -177,6 +177,8 @@ declare module 'pdfjs-dist' {
         action?: string;
         url?: string;
         newWindow?: boolean;
+        // Polyline annotation
+        vertices?: AnnotationPoint[];
         // Text annotation
         name?: string;
     }
