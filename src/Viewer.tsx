@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import File from './File';
 import Slot from './layouts/Slot';
@@ -133,6 +133,13 @@ const Viewer: React.FC<ViewerProps> = ({
             />
         );
     };
+
+    useEffect(() => {
+        setFile({
+            data: fileUrl,
+            name: (typeof fileUrl === 'string') ? fileUrl : '',
+        });
+    }, [fileUrl]);
 
     const defaultRenderer = render || (props => props.viewer);
     return (
