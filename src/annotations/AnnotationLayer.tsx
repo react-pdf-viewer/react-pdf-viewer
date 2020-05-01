@@ -15,6 +15,7 @@ import AnnotationLoader from './AnnotationLoader';
 import AnnotationType from './AnnotationType';
 import Caret from './Caret';
 import Circle from './Circle';
+import FileAttachment from './FileAttachment';
 import FreeText from './FreeText';
 import Highlight from './Highlight';
 import Ink from './Ink';
@@ -66,6 +67,15 @@ const AnnotationLayer: React.FC<AnnotationLayerProps> = ({ doc, page, rotation, 
                             case AnnotationType.Circle:
                                 return (
                                     <Circle
+                                        key={annotation.id}
+                                        annotation={annotation}
+                                        page={page}
+                                        viewport={clonedViewPort}
+                                    />
+                                );
+                            case AnnotationType.FileAttachment:
+                                return (
+                                    <FileAttachment
                                         key={annotation.id}
                                         annotation={annotation}
                                         page={page}

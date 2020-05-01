@@ -23,6 +23,7 @@ enum AnnotationType {
     Caret = 14,
     Ink = 15,
     Popup = 16,
+    FileAttachment = 17,
 }
 
 export default AnnotationType;
