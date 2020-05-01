@@ -13,6 +13,7 @@ import SpecialZoomLevel from '../SpecialZoomLevel';
 import PdfJs from '../vendors/PdfJs';
 import AnnotationLoader from './AnnotationLoader';
 import AnnotationType from './AnnotationType';
+import Caret from './Caret';
 import Circle from './Circle';
 import FreeText from './FreeText';
 import Highlight from './Highlight';
@@ -49,9 +50,17 @@ const AnnotationLayer: React.FC<AnnotationLayerProps> = ({ doc, page, rotation, 
                 annotations
                     .filter((annotation) => !annotation.parentId)
                     .map((annotation) => {
-                        //console.log(annotation);
                         const childAnnotation = annotations.find((item) => item.parentId === annotation.id);
                         switch (annotation.annotationType) {
+                            case AnnotationType.Caret:
+                                return (
+                                    <Caret
+                                        key={annotation.id}
+                                        annotation={annotation}
+                                        page={page}
+                                        viewport={clonedViewPort}
+                                    />
+                                );
                             case AnnotationType.Circle:
                                 return (
                                     <Circle
