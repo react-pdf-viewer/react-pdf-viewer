@@ -8,11 +8,11 @@
 
 import React from 'react';
 
-import ThemeContent from '../theme/ThemeContext';
+import ThemeContext from '../theme/ThemeContext';
 import './modalOverlay.less';
 
 const ModalOverlay: React.FC<{}> = ({ children }) => {
-    const theme = React.useContext(ThemeContent);
+    const theme = React.useContext(ThemeContext);
 
     return (
         <div className={`${theme.prefixClass}-modal-overlay`}>

@@ -10,7 +10,7 @@ import React from 'react';
 
 import Spinner from '../components/Spinner';
 import Observer, { VisibilityChanged } from '../layouts/Observer';
-import ThemeContent from '../theme/ThemeContext';
+import ThemeContext from '../theme/ThemeContext';
 import PdfJs from '../vendors/PdfJs';
 import ThumbnailItem from './ThumbnailItem';
 import './thumbnailContainer.less';
@@ -33,7 +33,7 @@ interface PageState {
 }
 
 const ThumbnailContainer: React.FC<ThumbnailContainerProps> = ({ doc, pageHeight, pageIndex, pageWidth, rotation }) => {
-    const theme = React.useContext(ThemeContent);
+    const theme = React.useContext(ThemeContext);
     const [pageSize, setPageSize] = React.useState<PageState>({
         height: pageHeight,
         isCalculated: false,

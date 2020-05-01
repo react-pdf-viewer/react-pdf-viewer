@@ -11,7 +11,7 @@ import React from 'react';
 import useClickOutside from '../hooks/useClickOutside';
 import useKeyUp from '../hooks/useKeyUp';
 import useLockScroll from '../hooks/useLockScroll';
-import ThemeContent from '../theme/ThemeContext';
+import ThemeContext from '../theme/ThemeContext';
 import './modalBody.less';
 
 interface ModalBodyProps {
@@ -21,7 +21,7 @@ interface ModalBodyProps {
 }
 
 const ModalBody: React.FC<ModalBodyProps> = ({ children, closeOnClickOutside, closeOnEscape, onToggle }) => {
-    const theme = React.useContext(ThemeContent);
+    const theme = React.useContext(ThemeContext);
     const contentRef = React.createRef<HTMLDivElement>();
 
     useLockScroll();

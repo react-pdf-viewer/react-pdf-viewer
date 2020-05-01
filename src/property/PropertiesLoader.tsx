@@ -9,7 +9,7 @@
 import React from 'react';
 
 import Spinner from '../components/Spinner';
-import ThemeContent from '../theme/ThemeContext';
+import ThemeContext from '../theme/ThemeContext';
 import PdfJs from '../vendors/PdfJs';
 import PropertiesData from './PropertiesData';
 import './propertiesLoader.less';
@@ -20,7 +20,7 @@ interface PropertiesLoaderProps {
 }
 
 const PropertiesLoader: React.FC<PropertiesLoaderProps> = ({ doc, render }) => {
-    const theme = React.useContext(ThemeContent);
+    const theme = React.useContext(ThemeContext);
     const [data, setData] = React.useState<PropertiesData>();
 
     React.useEffect(() => {

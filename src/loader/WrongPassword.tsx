@@ -9,7 +9,7 @@
 import React from 'react';
 
 import LocalizationContext from '../localization/LocalizationContext';
-import ThemeContent from '../theme/ThemeContext';
+import ThemeContext from '../theme/ThemeContext';
 import { VerifyPassword } from './LoadingStatus';
 import './askingPassword.less';
 
@@ -19,7 +19,7 @@ interface WrongPasswordProps {
 
 const WrongPassword: React.FC<WrongPasswordProps> = ({ verifyPasswordFn }) => {
     const l10n = React.useContext(LocalizationContext);
-    const theme = React.useContext(ThemeContent);
+    const theme = React.useContext(ThemeContext);
     const [password, setPassword] = React.useState('');
 
     const changePassword = (e: React.ChangeEvent<HTMLInputElement>): void => setPassword(e.target.value);

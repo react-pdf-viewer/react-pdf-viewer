@@ -11,7 +11,7 @@ import React from 'react';
 import PrimaryButton from '../components/PrimaryButton';
 import ProgressBar from '../components/ProgressBar';
 import LocalizationContext from '../localization/LocalizationContext';
-import ThemeContent from '../theme/ThemeContext';
+import ThemeContext from '../theme/ThemeContext';
 import './printProgress.less';
 
 interface PrintProgressProps {
@@ -23,7 +23,7 @@ interface PrintProgressProps {
 
 const PrintProgress: React.FC<PrintProgressProps> = ({ numLoadedPages, numPages, onCancel, onStartPrinting }) => {
     const l10n = React.useContext(LocalizationContext);
-    const theme = React.useContext(ThemeContent);
+    const theme = React.useContext(ThemeContext);
     const progress = Math.floor(numLoadedPages * 100 / numPages);
     React.useEffect(() => {
         if (numLoadedPages === numPages) {

@@ -9,7 +9,7 @@
 import React from 'react';
 
 import Slot from '../layouts/Slot';
-import ThemeContent from '../theme/ThemeContext';
+import ThemeContext from '../theme/ThemeContext';
 import PdfJs from '../vendors/PdfJs';
 import './annotation.less';
 import AnnotationBorderStyleType from './AnnotationBorderStyleType';
@@ -37,7 +37,7 @@ interface AnnotationProps {
 }
 
 const Annotation: React.FC<AnnotationProps> = ({ annotation, children, ignoreBorder, hasPopup, isRenderable, page, viewport }) => {
-    const theme = React.useContext(ThemeContent);
+    const theme = React.useContext(ThemeContext);
     const { rect } = annotation;
     const { closeOnHover, opened, openOnHover, toggleOnClick } = useTogglePopup();
     
@@ -118,7 +118,6 @@ const Annotation: React.FC<AnnotationProps> = ({ annotation, children, ignoreBor
                 },
                 slot: {
                     attrs: {
-                        className: `${theme.prefixClass}-annotation`,
                         style: Object.assign({
                             height: `${height}px`,
                             left: `${bound[0]}px`,

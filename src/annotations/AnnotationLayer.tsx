@@ -8,7 +8,7 @@
 
 import React, { Fragment } from 'react';
 
-import ThemeContent from '../theme/ThemeContext';
+import ThemeContext from '../theme/ThemeContext';
 import SpecialZoomLevel from '../SpecialZoomLevel';
 import PdfJs from '../vendors/PdfJs';
 import AnnotationLoader from './AnnotationLoader';
@@ -16,6 +16,7 @@ import AnnotationType from './AnnotationType';
 import Circle from './Circle';
 import FreeText from './FreeText';
 import Highlight from './Highlight';
+import Ink from './Ink';
 import Line from './Line';
 import Link from './Link';
 import Popup from './Popup';
@@ -36,7 +37,7 @@ interface AnnotationLayerProps {
 }
 
 const AnnotationLayer: React.FC<AnnotationLayerProps> = ({ doc, page, rotation, scale, onExecuteNamedAction, onJumpToDest }) => {
-    const theme = React.useContext(ThemeContent);
+    const theme = React.useContext(ThemeContext);
 
     const renderAnnotations = (annotations: PdfJs.Annotation[]): React.ReactElement => {
         const viewport = page.getViewport({ rotation, scale });
@@ -72,6 +73,15 @@ const AnnotationLayer: React.FC<AnnotationLayerProps> = ({ doc, page, rotation, 
                             case AnnotationType.Highlight:
                                 return (
                                     <Highlight
+                                        key={annotation.id}
+                                        annotation={annotation}
+                                        page={page}
+                                        viewport={clonedViewPort}
+                                    />
+                                );
+                            case AnnotationType.Ink:
+                                return (
+                                    <Ink
                                         key={annotation.id}
                                         annotation={annotation}
                                         page={page}

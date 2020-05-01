@@ -8,7 +8,7 @@
 
 import React from 'react';
 
-import ThemeContent from '../theme/ThemeContext';
+import ThemeContext from '../theme/ThemeContext';
 import classNames from '../utils/classNames';
 import PdfJs from '../vendors/PdfJs';
 import ThumbnailContainer from './ThumbnailContainer';
@@ -26,7 +26,7 @@ interface ThumbnailListProps {
 const ThumbnailList: React.FC<ThumbnailListProps> = ({
     currentPage, doc, pageHeight, pageWidth, rotation, onJumpToPage,
 }) => {
-    const theme = React.useContext(ThemeContent);
+    const theme = React.useContext(ThemeContext);
     const { numPages } = doc;
     return (
         <>

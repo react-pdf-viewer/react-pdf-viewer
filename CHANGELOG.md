@@ -8,6 +8,7 @@
     * Circle
     * Free text
     * Highlight
+    * Ink
     * Line
     * Link
     * Popup

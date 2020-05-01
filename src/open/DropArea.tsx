@@ -9,12 +9,12 @@
 import React from 'react';
 
 import LocalizationContext from '../localization/LocalizationContext';
-import ThemeContent from '../theme/ThemeContext';
+import ThemeContext from '../theme/ThemeContext';
 import './dropArea.less';
 
 const DropArea: React.FC<{}> = () => {
     const l10n = React.useContext(LocalizationContext);
-    const theme = React.useContext(ThemeContent);
+    const theme = React.useContext(ThemeContext);
 
     return (
         <div className={`${theme.prefixClass}-drop-area`}>

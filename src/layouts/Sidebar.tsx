@@ -19,7 +19,7 @@ import LocalizationMap from '../localization/LocalizationMap';
 import Position from '../portal/Position';
 import Tooltip from '../portal/Tooltip';
 import SpecialZoomLevel from '../SpecialZoomLevel';
-import ThemeContent from '../theme/ThemeContext';
+import ThemeContext from '../theme/ThemeContext';
 import ThumbnailList from '../thumbnail/ThumbnailList';
 import classNames from '../utils/classNames';
 import PdfJs from '../vendors/PdfJs';
@@ -45,7 +45,7 @@ const TOOLTIP_OFFSET = { left: 0, top: 8 };
 
 const Sidebar: React.FC<SidebarProps> = ({ currentPage, doc, height, rotation, width, onJumpToDest, onJumpToPage }) => {
     const l10n = React.useContext(LocalizationContext);
-    const theme = React.useContext(ThemeContent);
+    const theme = React.useContext(ThemeContext);
     const [tab, setTab] = React.useState(Tab.Thumbnail);
     const clickThumbnailTab = (): void => setTab(Tab.Thumbnail);
     const clickBookmarkTab = (): void => setTab(Tab.Bookmark);

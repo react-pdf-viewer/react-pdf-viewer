@@ -8,7 +8,7 @@
 
 import React from 'react';
 
-import ThemeContent from '../theme/ThemeContext';
+import ThemeContext from '../theme/ThemeContext';
 import './icon.less';
 
 interface IconProps {
@@ -16,7 +16,7 @@ interface IconProps {
 }
 
 const Icon: React.FC<IconProps> = ({ children, size = 24 }) => {
-    const theme = React.useContext(ThemeContent);
+    const theme = React.useContext(ThemeContext);
     const width = `${size || 24}px`;
 
     return (

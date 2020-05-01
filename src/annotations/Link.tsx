@@ -9,7 +9,7 @@
 import React, { useContext } from 'react';
 
 import SpecialZoomLevel from '../SpecialZoomLevel';
-import ThemeContent from '../theme/ThemeContext';
+import ThemeContext from '../theme/ThemeContext';
 import getDestination from '../utils/getDestination';
 import PdfJs from '../vendors/PdfJs';
 import Annotation from './Annotation';
@@ -25,7 +25,7 @@ interface LinkProps {
 }
 
 const Link: React.FC<LinkProps> = ({ annotation, doc, page, viewport, onExecuteNamedAction, onJumpToDest }) => {
-    const theme = useContext(ThemeContent);
+    const theme = useContext(ThemeContext);
     const link = (e: React.MouseEvent): void => {
         e.preventDefault();
         annotation.action
@@ -54,10 +54,10 @@ const Link: React.FC<LinkProps> = ({ annotation, doc, page, viewport, onExecuteN
             {(props): React.ReactElement => (
                 <div
                     {...props.slot.attrs}
+                    className={`${theme.prefixClass}-annotation ${theme.prefixClass}-annotation-link`}
                     data-annotation-id={annotation.id}
                 >
                     <a
-                        className={`${theme.prefixClass}-annotation-link`}
                         {...attrs}
                     />
                 </div>

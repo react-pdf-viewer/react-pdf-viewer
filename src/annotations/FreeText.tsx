@@ -6,8 +6,9 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React from 'react';
+import React, { useContext } from 'react';
 
+import ThemeContext from '../theme/ThemeContext';
 import PdfJs from '../vendors/PdfJs';
 import Annotation from './Annotation';
 
@@ -18,6 +19,7 @@ interface FreeTextProps {
 }
 
 const FreeText: React.FC<FreeTextProps> = ({ annotation, page, viewport }) => {
+    const theme = useContext(ThemeContext);
     const hasPopup = annotation.hasPopup === false;
     const isRenderable = !!(annotation.hasPopup || annotation.title || annotation.contents);
 
@@ -26,6 +28,7 @@ const FreeText: React.FC<FreeTextProps> = ({ annotation, page, viewport }) => {
             {(props): React.ReactElement => (
                 <div
                     {...props.slot.attrs}
+                    className={`${theme.prefixClass}-annotation ${theme.prefixClass}-annotation-free-text`}
                     data-annotation-id={annotation.id}
                     onClick={props.popup.toggleOnClick}
                     onMouseEnter={props.popup.openOnHover}

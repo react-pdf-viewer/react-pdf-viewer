@@ -9,7 +9,7 @@
 import React from 'react';
 
 import Spinner from '../components/Spinner';
-import ThemeContent from '../theme/ThemeContext';
+import ThemeContext from '../theme/ThemeContext';
 import PdfJs from '../vendors/PdfJs';
 import AskForPasswordState from './AskForPasswordState';
 import AskingPassword from './AskingPassword';
@@ -31,7 +31,7 @@ interface DocumentLoaderProps {
 }
 
 const DocumentLoader: React.FC<DocumentLoaderProps> = ({ file, render, renderError }) => {
-    const theme = React.useContext(ThemeContent);
+    const theme = React.useContext(ThemeContext);
     const [status, setStatus] = React.useState<LoadingStatus>(new LoadingState(0));
 
     React.useEffect(() => {

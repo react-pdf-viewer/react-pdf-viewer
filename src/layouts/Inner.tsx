@@ -21,7 +21,7 @@ import Match from '../search/Match';
 import ScrollMode from '../ScrollMode';
 import SelectionMode from '../SelectionMode';
 import SpecialZoomLevel from '../SpecialZoomLevel';
-import ThemeContent from '../theme/ThemeContext';
+import ThemeContext from '../theme/ThemeContext';
 import PdfJs from '../vendors/PdfJs';
 import downloadFile from '../utils/downloadFile';
 import getFileExt from '../utils/fileExt';
@@ -60,7 +60,7 @@ const Inner: React.FC<InnerProps> = ({
     defaultScale, doc, file, initialPage, keyword, layout, pageSize, render, renderPage, selectionMode,
     onDocumentLoad, onOpenFile, onZoom,
 }) => {
-    const theme = React.useContext(ThemeContent);
+    const theme = React.useContext(ThemeContext);
     const pagesRef = React.useRef<HTMLDivElement | null>(null);
     const [scale, setScale] = React.useState(pageSize.scale);
     const [currentPage, setCurrentPage] = React.useState(0);

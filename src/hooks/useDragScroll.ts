@@ -8,7 +8,7 @@
 
 import React from 'react';
 
-import ThemeContent from '../theme/ThemeContext';
+import ThemeContext from '../theme/ThemeContext';
 import './dragScroll.less';
 
 interface DragScrollHook {
@@ -16,7 +16,7 @@ interface DragScrollHook {
 }
 
 const useDragScroll = (ref: React.RefObject<HTMLDivElement>): DragScrollHook => {
-    const theme = React.useContext(ThemeContent);
+    const theme = React.useContext(ThemeContext);
     const [enabled, setEnabled] = React.useState(false);
     const pos = React.useRef({ top: 0, left: 0, x: 0, y: 0 });
 

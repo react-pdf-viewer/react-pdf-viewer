@@ -9,7 +9,7 @@
 import React from 'react';
 
 import Match from '../search/Match';
-import ThemeContent from '../theme/ThemeContext';
+import ThemeContext from '../theme/ThemeContext';
 import calculateOffset from '../utils/calculateOffset';
 import unwrap from '../utils/unwrap';
 import wrap from '../utils/wrap';
@@ -28,7 +28,7 @@ interface TextLayerProps {
 }
 
 const TextLayer: React.FC<TextLayerProps> = ({ keywordRegexp, match, page, pageIndex, rotation, scale, onJumpToMatch }) => {
-    const theme = React.useContext(ThemeContent);
+    const theme = React.useContext(ThemeContext);
     const containerRef = React.createRef<HTMLDivElement>();
     const renderTask = React.useRef<PdfJs.PageRenderTask>();
     const isRendered = React.useRef(false);

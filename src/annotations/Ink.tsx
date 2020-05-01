@@ -12,13 +12,13 @@ import ThemeContext from '../theme/ThemeContext';
 import PdfJs from '../vendors/PdfJs';
 import Annotation from './Annotation';
 
-interface HighlightProps {
+interface InkProps {
     annotation: PdfJs.Annotation;
     page: PdfJs.Page;
     viewport: PdfJs.ViewPort;
 }
 
-const Highlight: React.FC<HighlightProps> = ({ annotation, page, viewport }) => {
+const Ink: React.FC<InkProps> = ({ annotation, page, viewport }) => {
     const theme = useContext(ThemeContext);
     const hasPopup = annotation.hasPopup === false;
     const isRenderable = !!(annotation.hasPopup || annotation.title || annotation.contents);
@@ -28,7 +28,7 @@ const Highlight: React.FC<HighlightProps> = ({ annotation, page, viewport }) => 
             {(props): React.ReactElement => (
                 <div
                     {...props.slot.attrs}
-                    className={`${theme.prefixClass}-annotation ${theme.prefixClass}-annotation-highlight`}
+                    className={`${theme.prefixClass}-annotation ${theme.prefixClass}-annotation-ink`}
                     data-annotation-id={annotation.id}
                     onClick={props.popup.toggleOnClick}
                     onMouseEnter={props.popup.openOnHover}
@@ -41,4 +41,4 @@ const Highlight: React.FC<HighlightProps> = ({ annotation, page, viewport }) => 
     );
 };
 
-export default Highlight;
+export default Ink;
