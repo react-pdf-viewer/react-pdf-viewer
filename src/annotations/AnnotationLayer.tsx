@@ -20,6 +20,7 @@ import Highlight from './Highlight';
 import Ink from './Ink';
 import Line from './Line';
 import Link from './Link';
+import Polygon from './Polygon';
 import Polyline from './Polyline';
 import Popup from './Popup';
 import Square from './Square';
@@ -117,6 +118,15 @@ const AnnotationLayer: React.FC<AnnotationLayerProps> = ({ doc, page, rotation, 
                                         viewport={clonedViewPort}
                                         onExecuteNamedAction={onExecuteNamedAction}
                                         onJumpToDest={onJumpToDest}
+                                    />
+                                );
+                            case AnnotationType.Polygon:
+                                return (
+                                    <Polygon
+                                        key={annotation.id}
+                                        annotation={annotation}
+                                        page={page}
+                                        viewport={clonedViewPort}
                                     />
                                 );
                             case AnnotationType.Polyline:
