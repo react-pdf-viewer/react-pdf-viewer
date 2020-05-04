@@ -27,8 +27,10 @@ const RenderErrorExample: React.FC<RenderErrorExampleProps> = ({ fileUrl }) => {
             <div
                 style={{
                     alignItems: 'center',
+                    border: '1px solid rgba(0, 0, 0, 0.3)',
                     display: 'flex',
-                    justifyContent: 'center'
+                    height: '100%',
+                    justifyContent: 'center',
                 }}
             >
                 <div
