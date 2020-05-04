@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## v1.6.0 (not released yet)
+## v1.6.0
 
 **New features**
 
@@ -53,7 +53,7 @@ const renderError = (error: LoadError) => {
 />
 ~~~
 
-**Improvement**
+**Improvements**
 - Allow to control the `fileUrl` option
 - Bookmarks support external links
 - Support external links

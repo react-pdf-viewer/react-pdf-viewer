@@ -32,7 +32,7 @@ const PopoverBody: React.FC<PopoverBodyProps> = ({
     const anchorRef = React.createRef<HTMLDivElement>();
 
     useClickOutside(closeOnClickOutside, contentRef, onClose);
-    usePosition(contentRef, targetRef,anchorRef, position, offset);
+    usePosition(contentRef, targetRef, anchorRef, position, offset);
 
     return (
         <>
