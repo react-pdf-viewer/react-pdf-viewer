@@ -262,6 +262,11 @@ export function defaultLayout(
 ): React.ReactElement;
 
 // Events
+// Invoked when the document is loaded successfully
+export interface DocumentLoadEvent {
+    doc: PdfJs.PdfDocument;
+}
+
 // Invoked when users change the current page
 export interface PageChangeEvent {
     // zero-based page index
@@ -287,7 +292,7 @@ export interface ViewerProps {
     renderError?: RenderError;
     renderPage?: RenderPage;
     selectionMode?: SelectionMode;
-    onDocumentLoad?(doc: PdfJs.PdfDocument): void;
+    onDocumentLoad?(e: DocumentLoadEvent): void;
     onPageChange?(e: PageChangeEvent): void;
     onZoom?(doc: PdfJs.PdfDocument, scale: number): void;
 }
