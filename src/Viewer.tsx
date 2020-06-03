@@ -46,6 +46,10 @@ export interface PageChangeEvent {
     currentPage: number;
     doc: PdfJs.PdfDocument;
 }
+export interface ZoomEvent {
+    doc: PdfJs.PdfDocument;
+    scale: number;
+}
 
 export type RenderViewer = (props: RenderViewerProps) => React.ReactElement;
 
@@ -69,7 +73,7 @@ interface ViewerProps {
     selectionMode?: SelectionMode;
     onDocumentLoad?(e: DocumentLoadEvent): void;
     onPageChange?(e: PageChangeEvent): void;
-    onZoom?(doc: PdfJs.PdfDocument, scale: number): void;
+    onZoom?(e: ZoomEvent): void;
 }
 
 const Viewer: React.FC<ViewerProps> = ({

@@ -274,6 +274,12 @@ export interface PageChangeEvent {
     doc: PdfJs.PdfDocument;
 }
 
+// Invoked when users zoom the document
+export interface ZoomEvent {
+    doc: PdfJs.PdfDocument;
+    scale: number;
+}
+
 export interface ViewerProps {
     // The default zoom level
     // If it's not set, the initial zoom level will be calculated based on the dimesion of page and the container width
@@ -294,7 +300,7 @@ export interface ViewerProps {
     selectionMode?: SelectionMode;
     onDocumentLoad?(e: DocumentLoadEvent): void;
     onPageChange?(e: PageChangeEvent): void;
-    onZoom?(doc: PdfJs.PdfDocument, scale: number): void;
+    onZoom?(e: ZoomEvent): void;
 }
 export default class Viewer extends React.Component<ViewerProps> {}
 
