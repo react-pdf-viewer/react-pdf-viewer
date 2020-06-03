@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 
 import File from '../File';
 import useDragScroll from '../hooks/useDragScroll';
@@ -25,7 +25,7 @@ import ThemeContext from '../theme/ThemeContext';
 import PdfJs from '../vendors/PdfJs';
 import downloadFile from '../utils/downloadFile';
 import getFileExt from '../utils/fileExt';
-import { RenderViewer } from '../Viewer';
+import { PageChangeEvent, RenderViewer } from '../Viewer';
 import ExitFullScreen from './ExitFullScreen';
 import './inner.less';
 import { Layout } from './Layout';
@@ -53,29 +53,30 @@ interface InnerProps {
     selectionMode: SelectionMode;
     onDocumentLoad(doc: PdfJs.PdfDocument): void;
     onOpenFile(fileName: string, data: Uint8Array): void;
+    onPageChange(e: PageChangeEvent): void;
     onZoom(doc: PdfJs.PdfDocument, scale: number): void;
 }
 
 const Inner: React.FC<InnerProps> = ({
     defaultScale, doc, file, initialPage, keyword, layout, pageSize, render, renderPage, selectionMode,
-    onDocumentLoad, onOpenFile, onZoom,
+    onDocumentLoad, onOpenFile, onPageChange, onZoom,
 }) => {
-    const theme = React.useContext(ThemeContext);
-    const pagesRef = React.useRef<HTMLDivElement | null>(null);
-    const [scale, setScale] = React.useState(pageSize.scale);
-    const [currentPage, setCurrentPage] = React.useState(0);
-    const [rotation, setRotation] = React.useState(0);
-    const [keywordRegexp, setKeywordRegexp] = React.useState<RegExp>(
+    const theme = useContext(ThemeContext);
+    const pagesRef = useRef<HTMLDivElement | null>(null);
+    const [scale, setScale] = useState(pageSize.scale);
+    const [currentPage, setCurrentPage] = useState(0);
+    const [rotation, setRotation] = useState(0);
+    const [keywordRegexp, setKeywordRegexp] = useState<RegExp>(
         keyword
         ? ((typeof keyword === 'string') ? new RegExp(keyword) : keyword)
         : EMPTY_KEYWORD_REGEXP
     );
-    const [match, setMatch] = React.useState<Match>({
+    const [match, setMatch] = useState<Match>({
         matchIndex: -1,
         pageIndex: -1,
     });
-    const [scrollMode, setScrollMode] = React.useState<ScrollMode>(ScrollMode.Vertical);
-    const [currentMode, setCurrentMode] = React.useState<SelectionMode>(selectionMode);
+    const [scrollMode, setScrollMode] = useState<ScrollMode>(ScrollMode.Vertical);
+    const [currentMode, setCurrentMode] = useState<SelectionMode>(selectionMode);
     const { toggleDragScroll } = useDragScroll(pagesRef);
     const { isFullScreen, openFullScreen, closeFullScreen } = useFullScreen(pagesRef);
     const toggleSidebar = useToggle();
@@ -85,7 +86,7 @@ const Inner: React.FC<InnerProps> = ({
 
     const arr = Array(numPages).fill(null);
     const pageVisibility = arr.map(() => 0);
-    const pageRefs = arr.map(() => React.useRef<HTMLDivElement>());
+    const pageRefs = arr.map(() => useRef<HTMLDivElement>());
 
     const openFiles = (files: FileList): void => {
         if (files.length === 0) {
@@ -109,7 +110,7 @@ const Inner: React.FC<InnerProps> = ({
     const { isDragging } = useDrop(pagesRef, (files) => openFiles(files));
 
     // Print status
-    const [printStatus, setPrintStatus] = React.useState(PrintStatus.Inactive);
+    const [printStatus, setPrintStatus] = useState(PrintStatus.Inactive);
 
     const jumpToPage = (pageIndex: number): void => {
         if (pageIndex < 0 || pageIndex >= numPages) {
@@ -123,12 +124,16 @@ const Inner: React.FC<InnerProps> = ({
         }
     };
 
-    React.useEffect(() => {
+    useEffect(() => {
         onDocumentLoad(doc);
         if (initialPage) {
             jumpToPage(initialPage);
         }
     }, []);
+
+    useEffect(() => {
+        onPageChange({ currentPage, doc });
+    }, [currentPage]);
 
     // Manage the selection mode
     const changeSelectionMode = (mode: SelectionMode): void => {
@@ -171,7 +176,7 @@ const Inner: React.FC<InnerProps> = ({
         onZoom(doc, scaled);
     };
 
-    React.useEffect(() => {
+    useEffect(() => {
         // Toggle the drag scroll if the hand tool is set initially
         if (selectionMode === SelectionMode.Hand) {
             toggleDragScroll(true);

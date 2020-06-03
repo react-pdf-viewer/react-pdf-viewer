@@ -39,6 +39,11 @@ interface RenderViewerProps {
     zoom(level: number | SpecialZoomLevel): void;
 }
 
+export interface PageChangeEvent {
+    currentPage: number;
+    doc: PdfJs.PdfDocument;
+}
+
 export type RenderViewer = (props: RenderViewerProps) => React.ReactElement;
 
 interface ViewerProps {
@@ -60,6 +65,7 @@ interface ViewerProps {
     // The text selection mode
     selectionMode?: SelectionMode;
     onDocumentLoad?(doc: PdfJs.PdfDocument): void;
+    onPageChange?(e: PageChangeEvent): void;
     onZoom?(doc: PdfJs.PdfDocument, scale: number): void;
 }
 
@@ -76,6 +82,7 @@ const Viewer: React.FC<ViewerProps> = ({
     renderPage,
     selectionMode = SelectionMode.Text,
     onDocumentLoad = () => {/**/},
+    onPageChange = () => {/**/},
     onZoom = () => {/**/},
 }) => {
     const [file, setFile] = React.useState<File>({
@@ -123,6 +130,7 @@ const Viewer: React.FC<ViewerProps> = ({
                     selectionMode={selectionMode}
                     onDocumentLoad={onDocumentLoad}
                     onOpenFile={openFile}
+                    onPageChange={onPageChange}
                     onZoom={onZoom}
                 />
             );

@@ -261,6 +261,14 @@ export function defaultLayout(
     sidebar: Slot,
 ): React.ReactElement;
 
+// Events
+// Invoked when users change the current page
+export interface PageChangeEvent {
+    // zero-based page index
+    currentPage: number;
+    doc: PdfJs.PdfDocument;
+}
+
 export interface ViewerProps {
     // The default zoom level
     // If it's not set, the initial zoom level will be calculated based on the dimesion of page and the container width
@@ -280,6 +288,7 @@ export interface ViewerProps {
     renderPage?: RenderPage;
     selectionMode?: SelectionMode;
     onDocumentLoad?(doc: PdfJs.PdfDocument): void;
+    onPageChange?(e: PageChangeEvent): void;
     onZoom?(doc: PdfJs.PdfDocument, scale: number): void;
 }
 export default class Viewer extends React.Component<ViewerProps> {}
