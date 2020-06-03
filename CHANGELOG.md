@@ -1,5 +1,24 @@
 # CHANGELOG
 
+## v1.7.0-dev
+
+**New features**
+
+- Add `onPageChange` callback that is invoked when user changes page:
+
+~~~ javascript
+import Viewer, { PageChangeEvent } from '@phuocng/react-pdf-viewer';
+
+const handlePageChange = (e: PageChangeEvent) => {
+    console.log(`Changed to page: ${e.currentPage}`)
+};
+
+<Viewer
+    fileUrl='/path/to/document.pdf'
+    onPageChange={handlePageChange}
+/>
+~~~
+
 ## v1.6.0
 
 **New features**

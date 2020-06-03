@@ -25,7 +25,7 @@ import ThemeContext from '../theme/ThemeContext';
 import PdfJs from '../vendors/PdfJs';
 import downloadFile from '../utils/downloadFile';
 import getFileExt from '../utils/fileExt';
-import { RenderViewer } from '../Viewer';
+import { PageChangeEvent, RenderViewer } from '../Viewer';
 import ExitFullScreen from './ExitFullScreen';
 import './inner.less';
 import { Layout } from './Layout';
@@ -53,12 +53,13 @@ interface InnerProps {
     selectionMode: SelectionMode;
     onDocumentLoad(doc: PdfJs.PdfDocument): void;
     onOpenFile(fileName: string, data: Uint8Array): void;
+    onPageChange(e: PageChangeEvent): void;
     onZoom(doc: PdfJs.PdfDocument, scale: number): void;
 }
 
 const Inner: React.FC<InnerProps> = ({
     defaultScale, doc, file, initialPage, keyword, layout, pageSize, render, renderPage, selectionMode,
-    onDocumentLoad, onOpenFile, onZoom,
+    onDocumentLoad, onOpenFile, onPageChange, onZoom,
 }) => {
     const theme = React.useContext(ThemeContext);
     const pagesRef = React.useRef<HTMLDivElement | null>(null);
@@ -121,6 +122,7 @@ const Inner: React.FC<InnerProps> = ({
         if (pagesContainer && targetPage) {
             pagesContainer.scrollTop = targetPage.offsetTop;
         }
+        onPageChange({ currentPage: pageIndex, doc });
     };
 
     React.useEffect(() => {
@@ -188,6 +190,7 @@ const Inner: React.FC<InnerProps> = ({
             return item > array[maxIndex] ? index : maxIndex;
         }, 0);
         setCurrentPage(maxRatioPage);
+        onPageChange({ currentPage: maxRatioPage, doc });
     };
 
     const rotate = (degree: number): void => {
