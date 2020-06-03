@@ -25,7 +25,7 @@ import ThemeContext from '../theme/ThemeContext';
 import PdfJs from '../vendors/PdfJs';
 import downloadFile from '../utils/downloadFile';
 import getFileExt from '../utils/fileExt';
-import { PageChangeEvent, RenderViewer } from '../Viewer';
+import { DocumentLoadEvent, PageChangeEvent, RenderViewer, ZoomEvent } from '../Viewer';
 import ExitFullScreen from './ExitFullScreen';
 import './inner.less';
 import { Layout } from './Layout';
@@ -51,10 +51,10 @@ interface InnerProps {
     render: RenderViewer;
     renderPage?: RenderPage;
     selectionMode: SelectionMode;
-    onDocumentLoad(doc: PdfJs.PdfDocument): void;
+    onDocumentLoad(e: DocumentLoadEvent): void;
     onOpenFile(fileName: string, data: Uint8Array): void;
     onPageChange(e: PageChangeEvent): void;
-    onZoom(doc: PdfJs.PdfDocument, scale: number): void;
+    onZoom(e: ZoomEvent): void;
 }
 
 const Inner: React.FC<InnerProps> = ({
@@ -125,7 +125,7 @@ const Inner: React.FC<InnerProps> = ({
     };
 
     useEffect(() => {
-        onDocumentLoad(doc);
+        onDocumentLoad({ doc });
         if (initialPage) {
             jumpToPage(initialPage);
         }
@@ -173,7 +173,7 @@ const Inner: React.FC<InnerProps> = ({
                 break;
         }
         setScale(scaled);
-        onZoom(doc, scaled);
+        onZoom({ doc, scale: scaled });
     };
 
     useEffect(() => {
