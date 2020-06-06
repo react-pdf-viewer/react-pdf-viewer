@@ -1150,10 +1150,10 @@
   resolved "https://registry.yarnpkg.com/@nodelib/fs.stat/-/fs.stat-1.1.3.tgz#2b5a3ab3f918cca48a8c754c08168e3f03eba61b"
   integrity sha512-shAmDyaQC4H92APFoIaVDHCx5bStIocgvbwQyxPRrbUY20V1EYTbSDchWbuwlMG3V17cprZhA6+78JfB+3DTPw==
 
-"@phuocng/react-pdf-viewer@1.5.0":
-  version "1.5.0"
-  resolved "https://registry.yarnpkg.com/@phuocng/react-pdf-viewer/-/react-pdf-viewer-1.5.0.tgz#88390aa9b2dc7168ac762762c92215d7ae1a0c9d"
-  integrity sha512-HDgEdH0BoKn6gNG09kmdAKKtzQDJTmKiJfYFmKq1WtROw23qmJasIvpesm1XupAHSKnSONR2J9PZe5GC3/jy8A==
+"@phuocng/react-pdf-viewer@1.6.0":
+  version "1.6.0"
+  resolved "https://registry.yarnpkg.com/@phuocng/react-pdf-viewer/-/react-pdf-viewer-1.6.0.tgz#b1dd48f523f3dfdbcb85c3aa494f497caf08e6cd"
+  integrity sha512-mU9CyERyjpgwillVAMVzGbGh2hPtT++kO1Lm8NVSHogkuJFJZ04fPOdlKN03J4GxLot3jg8WvDKxT6cmNahzaQ==
   dependencies:
     pdfjs-dist "^2.3.200"
 
