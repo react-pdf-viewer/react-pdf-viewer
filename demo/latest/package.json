@@ -8,7 +8,7 @@
         "dev": "rm -rf dist && mkdir dist && npm run copyasset && webpack-dev-server --env.mode=development"
     },
     "dependencies": {
-        "pdfjs-dist": "^2.3.200",
+        "pdfjs-dist": "^2.4.456",
         "react": "^16.13.1",
         "react-dom": "^16.13.1"
     },
