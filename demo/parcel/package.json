@@ -7,8 +7,7 @@
         "build": "npm run copy && parcel build src/index.html --out-dir dist"
     },
     "dependencies": {
-        "@phuocng/react-pdf-viewer": "^1.5.0",
-        "pdfjs-dist": "^2.3.200",
+        "@phuocng/react-pdf-viewer": "^1.6.0",
         "react": "^16.13.1",
         "react-dom": "^16.13.1"
     },

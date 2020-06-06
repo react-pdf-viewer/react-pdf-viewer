@@ -7,8 +7,7 @@
         "dev": "rm -rf dist && mkdir dist && npm run copyasset && webpack-dev-server"
     },
     "dependencies": {
-        "@phuocng/react-pdf-viewer": "^1.5.0",
-        "pdfjs-dist": "^2.3.200",
+        "@phuocng/react-pdf-viewer": "^1.6.0",
         "react": "^16.13.1",
         "react-dom": "^16.13.1"
     },
