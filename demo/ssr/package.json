@@ -7,6 +7,7 @@
         "dev": "npm run build && nodemon index.js"
     },
     "dependencies": {
+        "pdfjs-dist": "^2.4.456",
         "@phuocng/react-pdf-viewer": "^1.6.0",
         "react": "^16.13.1",
         "react-dom": "^16.13.1"
