@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React from 'react';
+import React, { useContext, useState } from 'react';
 
 import Button from '../components/Button';
 import { Toggle } from '../hooks/useToggle';
@@ -78,11 +78,11 @@ const Toolbar: React.FC<ToolbarProps> = ({
     onJumpToMatch, onOpenFiles, onPrint, onRotate, onSearchFor, onToggleSidebar, onZoom,
     renderToolbar,
 }) => {
-    const l10n = React.useContext(LocalizationContext);
-    const theme = React.useContext(ThemeContext);
-    const [pageTextboxFocused, setPageTextboxFocused] = React.useState(false);
-    const [editingPage, setEditingPage] = React.useState(currentPage);
-    const [isSidebarOpened, setSidebarOpened] = React.useState(false);
+    const l10n = useContext(LocalizationContext);
+    const theme = useContext(ThemeContext);
+    const [pageTextboxFocused, setPageTextboxFocused] = useState(false);
+    const [editingPage, setEditingPage] = useState(currentPage);
+    const [isSidebarOpened, setSidebarOpened] = useState(false);
 
     const { numPages } = doc;
 

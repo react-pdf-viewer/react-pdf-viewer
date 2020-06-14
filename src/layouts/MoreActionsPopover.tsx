@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React from 'react';
+import React, { useContext } from 'react';
 
 import Button from '../components/Button';
 import Menu from '../components/Menu';
@@ -53,7 +53,7 @@ const MoreActionsPopover: React.FC<MoreActionsPopoverProps> = ({
     doc, fileName, scrollMode, selectionMode,
     onChangeScrollMode, onChangeSelectionMode, onJumpToFirstPage, onJumpToLastPage, onRotate,
 }) => {
-    const l10n = React.useContext(LocalizationContext);
+    const l10n = useContext(LocalizationContext);
 
     const renderMoreActions = (): LocalizationMap => l10n.toolbar.moreActions;
     const renderTarget = (toggle: Toggle, opened: boolean): React.ReactElement => (

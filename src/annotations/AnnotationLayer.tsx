@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { Fragment } from 'react';
+import React, { Fragment, useContext } from 'react';
 
 import ThemeContext from '../theme/ThemeContext';
 import SpecialZoomLevel from '../SpecialZoomLevel';
@@ -41,7 +41,7 @@ interface AnnotationLayerProps {
 }
 
 const AnnotationLayer: React.FC<AnnotationLayerProps> = ({ doc, page, rotation, scale, onExecuteNamedAction, onJumpToDest }) => {
-    const theme = React.useContext(ThemeContext);
+    const theme = useContext(ThemeContext);
 
     const renderAnnotations = (annotations: PdfJs.Annotation[]): React.ReactElement => {
         const viewport = page.getViewport({ rotation, scale });

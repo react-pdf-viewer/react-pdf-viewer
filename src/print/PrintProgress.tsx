@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React from 'react';
+import React, { useEffect, useContext } from 'react';
 
 import PrimaryButton from '../components/PrimaryButton';
 import ProgressBar from '../components/ProgressBar';
@@ -22,10 +22,10 @@ interface PrintProgressProps {
 }
 
 const PrintProgress: React.FC<PrintProgressProps> = ({ numLoadedPages, numPages, onCancel, onStartPrinting }) => {
-    const l10n = React.useContext(LocalizationContext);
-    const theme = React.useContext(ThemeContext);
+    const l10n = useContext(LocalizationContext);
+    const theme = useContext(ThemeContext);
     const progress = Math.floor(numLoadedPages * 100 / numPages);
-    React.useEffect(() => {
+    useEffect(() => {
         if (numLoadedPages === numPages) {
             onStartPrinting();
         }

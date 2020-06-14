@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React from 'react';
+import React, { createRef, useContext, useEffect, useRef } from 'react';
 
 import Match from '../search/Match';
 import ThemeContext from '../theme/ThemeContext';
@@ -28,10 +28,10 @@ interface TextLayerProps {
 }
 
 const TextLayer: React.FC<TextLayerProps> = ({ keywordRegexp, match, page, pageIndex, rotation, scale, onJumpToMatch }) => {
-    const theme = React.useContext(ThemeContext);
-    const containerRef = React.createRef<HTMLDivElement>();
-    const renderTask = React.useRef<PdfJs.PageRenderTask>();
-    const isRendered = React.useRef(false);
+    const theme = useContext(ThemeContext);
+    const containerRef = createRef<HTMLDivElement>();
+    const renderTask = useRef<PdfJs.PageRenderTask>();
+    const isRendered = useRef(false);
 
     const empty = (): void => {
         const containerEle = containerRef.current;
@@ -132,7 +132,7 @@ const TextLayer: React.FC<TextLayerProps> = ({ keywordRegexp, match, page, pageI
         });
     };
 
-    React.useEffect(() => {
+    useEffect(() => {
         const containerEle = containerRef.current;
         if (!keywordRegexp || !isRendered.current || !containerEle) {
             return;
@@ -149,7 +149,7 @@ const TextLayer: React.FC<TextLayerProps> = ({ keywordRegexp, match, page, pageI
         }
     }, [keywordRegexp, isRendered.current]);
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (isRendered.current) {
             scrollToMatch();
         }

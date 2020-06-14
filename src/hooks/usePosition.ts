@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React from 'react';
+import React, { useLayoutEffect } from 'react';
 
 import Offset from '../portal/Offset';
 import Position from '../portal/Position';
@@ -19,7 +19,7 @@ const usePosition = (
     position: Position,
     offset: Offset,
 ): void => {
-    React.useLayoutEffect(() => {
+    useLayoutEffect(() => {
         const targetEle = targetRef.current;
         const contentEle = contentRef.current;
         const anchorEle = anchorRef.current;

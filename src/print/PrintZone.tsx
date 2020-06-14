@@ -6,8 +6,8 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React, { useContext, useEffect, useState } from 'react';
+import ReactDOM, { createPortal } from 'react-dom';
 
 import PdfJs from '../vendors/PdfJs';
 import ThemeContext from '../theme/ThemeContext';
@@ -26,10 +26,10 @@ interface PrintZoneProps {
 }
 
 const PrintZone: React.FC<PrintZoneProps> = ({ doc, pageHeight, pageWidth, printStatus, rotation, onCancel, onLoad }) => {
-    const theme = React.useContext(ThemeContext);
-    const [numLoadedPages, setNumLoadedPages] = React.useState(0);
+    const theme = useContext(ThemeContext);
+    const [numLoadedPages, setNumLoadedPages] = useState(0);
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (printStatus === PrintStatus.Ready) {
             document.body.classList.add(`${theme.prefixClass}-body-printing`);
             window.print();
@@ -55,7 +55,7 @@ const PrintZone: React.FC<PrintZoneProps> = ({ doc, pageHeight, pageWidth, print
     };
 
     return (
-        ReactDOM.createPortal(
+        createPortal(
             (
                 <>
                 <div className={`${theme.prefixClass}-print-zone`}>

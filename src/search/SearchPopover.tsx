@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React from 'react';
+import React, { useContext, useRef, useState } from 'react';
 
 import Button from '../components/Button';
 import PrimaryButton from '../components/PrimaryButton';
@@ -35,16 +35,16 @@ interface SearchPopoverProps {
 }
 
 const SearchPopover: React.FC<SearchPopoverProps> = ({ doc, onJumpToMatch, onSearchFor }) => {
-    const theme = React.useContext(ThemeContext);
+    const theme = useContext(ThemeContext);
     const { numPages } = doc;
     const indexArr = Array(numPages).fill(0).map((_, i) => i);
-    const l10n = React.useContext(LocalizationContext);
-    const [keyword, setKeyword] = React.useState('');
-    const [found, setFound] = React.useState<Match[]>([]);
-    const [currentMatch, setCurrentMatch] = React.useState(0);
-    const [matchCase, setMatchCase] = React.useState(false);
-    const [wholeWords, setWholeWords] = React.useState(false);
-    const textContents = React.useRef<string[]>([]);
+    const l10n = useContext(LocalizationContext);
+    const [keyword, setKeyword] = useState('');
+    const [found, setFound] = useState<Match[]>([]);
+    const [currentMatch, setCurrentMatch] = useState(0);
+    const [matchCase, setMatchCase] = useState(false);
+    const [wholeWords, setWholeWords] = useState(false);
+    const textContents = useRef<string[]>([]);
 
     const changeKeyword = (e: React.ChangeEvent<HTMLInputElement>): void => {
         setKeyword(e.target.value);

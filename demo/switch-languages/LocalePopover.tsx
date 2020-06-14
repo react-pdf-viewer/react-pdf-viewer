@@ -6,7 +6,7 @@ import {
     Toggle,
     Tooltip,
 } from '@phuocng/react-pdf-viewer';
-import React from 'react';
+import React, { useState } from 'react';
 
 import LocaleIcon from './LocaleIcon';
 
@@ -15,7 +15,7 @@ interface LocalePopoverProps {
 }
 
 const LocalePopover: React.FC<LocalePopoverProps> = ({ onActivateLocale }) => {
-    const [locale, setLocale] = React.useState('en_US');
+    const [locale, setLocale] = useState('en_US');
     const renderLocale = () => {
         const renderLocaleLabel = () => {
             switch (locale) {

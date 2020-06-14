@@ -6,13 +6,13 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React from 'react';
+import React, { useContext } from 'react';
 
 import ThemeContext from '../theme/ThemeContext';
 import './separator.less';
 
 const Separator: React.FC<{}> = () => {
-    const theme = React.useContext(ThemeContext);
+    const theme = useContext(ThemeContext);
 
     return (
         <div className={`${theme.prefixClass}-separator`} />

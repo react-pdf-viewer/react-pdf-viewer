@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React from 'react';
+import React, { createRef, useContext, useRef } from 'react';
 
 import ThemeContext from '../theme/ThemeContext';
 import SpecialZoomLevel from '../SpecialZoomLevel';
@@ -23,10 +23,10 @@ interface BookmarkItemProps {
 }
 
 const BookmarkItem: React.FC<BookmarkItemProps> = ({ bookmark, depth, doc, onClick, onJumpToDest }) => {
-    const theme = React.useContext(ThemeContext);
-    const toggleRef = React.createRef<HTMLSpanElement>();
-    const subItemRef = React.createRef<HTMLDivElement>();
-    const subItemsDisplayed = React.useRef(true);
+    const theme = useContext(ThemeContext);
+    const toggleRef = createRef<HTMLSpanElement>();
+    const subItemRef = createRef<HTMLDivElement>();
+    const subItemsDisplayed = useRef(true);
 
     const hasSubItems = bookmark.items && bookmark.items.length > 0;
 

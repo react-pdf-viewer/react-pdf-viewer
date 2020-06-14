@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 
 import LocalizationContext from '../localization/LocalizationContext';
 import SpecialZoomLevel from '../SpecialZoomLevel';
@@ -26,14 +26,14 @@ interface BookmarkState {
 }
 
 const BookmarkLoader: React.FC<BookmarkLoaderProps> = ({ doc, onJumpToDest }) => {
-    const l10n = React.useContext(LocalizationContext);
-    const theme = React.useContext(ThemeContext);
-    const [bookmarks, setBookmarks] = React.useState<BookmarkState>({
+    const l10n = useContext(LocalizationContext);
+    const theme = useContext(ThemeContext);
+    const [bookmarks, setBookmarks] = useState<BookmarkState>({
         isLoaded: false,
         items: [],
     });
 
-    React.useEffect(() => {
+    useEffect(() => {
         doc.getOutline().then((outline) => {
             setBookmarks({
                 isLoaded: true,

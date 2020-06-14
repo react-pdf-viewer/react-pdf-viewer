@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React from 'react';
+import React, { createRef, useContext, useRef } from 'react';
 
 import ThemeContext from '../theme/ThemeContext';
 import PdfJs from '../vendors/PdfJs';
@@ -22,9 +22,9 @@ interface CanvasLayerProps {
 }
 
 const CanvasLayer: React.FC<CanvasLayerProps> = ({ height, page, rotation, scale, width }) => {
-    const theme = React.useContext(ThemeContext);
-    const canvasRef = React.createRef<HTMLCanvasElement>();
-    const renderTask = React.useRef<PdfJs.PageRenderTask>();
+    const theme = useContext(ThemeContext);
+    const canvasRef = createRef<HTMLCanvasElement>();
+    const renderTask = useRef<PdfJs.PageRenderTask>();
 
     // Support high DPI screen
     const devicePixelRatio = window.devicePixelRatio || 1;

@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import File from './File';
 import Slot from './layouts/Slot';
@@ -92,7 +92,7 @@ const Viewer: React.FC<ViewerProps> = ({
     onPageChange = () => {/**/},
     onZoom = () => {/**/},
 }) => {
-    const [file, setFile] = React.useState<File>({
+    const [file, setFile] = useState<File>({
         data: fileUrl,
         name: (typeof fileUrl === 'string') ? fileUrl : '',
     });

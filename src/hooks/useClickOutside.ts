@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React from 'react';
+import React, { useEffect } from 'react';
 
 const useClickOutside = (closeOnClickOutside: boolean, targetRef: React.RefObject<HTMLElement>, onClickOutside: () => void): void => {
     const clickHandler = (e: MouseEvent): void => {
@@ -16,7 +16,7 @@ const useClickOutside = (closeOnClickOutside: boolean, targetRef: React.RefObjec
         }
     };
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (!closeOnClickOutside) {
             return;
         }

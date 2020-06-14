@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React from 'react';
+import React, { useContext, useState } from 'react';
 
 import AnnotationLayer from '../annotations/AnnotationLayer';
 import Spinner from '../components/Spinner';
@@ -48,8 +48,8 @@ const PageLayer: React.FC<PageLayerProps> = ({
     doc, height, keywordRegexp, match, pageIndex, renderPage, rotation, scale, width,
     onExecuteNamedAction, onJumpToDest, onPageVisibilityChanged,
 }) => {
-    const theme = React.useContext(ThemeContext);
-    const [pageSize, setPageSize] = React.useState<PageSizeState>({
+    const theme = useContext(ThemeContext);
+    const [pageSize, setPageSize] = useState<PageSizeState>({
         isCalculated: false,
         page: null,
         pageHeight: height,

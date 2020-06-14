@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React from 'react';
+import React, { useState } from 'react';
 
 import PdfJs from '../vendors/PdfJs';
 import PrintProgress from './PrintProgress';
@@ -25,7 +25,7 @@ interface PrintContainerProps {
 }
 
 const PrintContainer: React.FC<PrintContainerProps> = ({ doc, pageHeight, pageWidth, printStatus, rotation, onCancel, onStartPrinting }) => {
-    const [numLoadedPagesForPrint, setNumLoadedPagesForPrint] = React.useState(0);
+    const [numLoadedPagesForPrint, setNumLoadedPagesForPrint] = useState(0);
 
     const cancelPrinting = (): void => {
         setNumLoadedPagesForPrint(0);

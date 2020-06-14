@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 
 import Spinner from '../components/Spinner';
 import ThemeContext from '../theme/ThemeContext';
@@ -23,11 +23,11 @@ interface PageThumbnailProps {
 const PageThumbnail: React.FC<PageThumbnailProps> = ({
     page, pageHeight, pageWidth, rotation, onLoad,
 }) => {
-    const theme = React.useContext(ThemeContext);
-    const renderTask = React.useRef<PdfJs.PageRenderTask>();
-    const [src, setSrc] = React.useState('');
+    const theme = useContext(ThemeContext);
+    const renderTask = useRef<PdfJs.PageRenderTask>();
+    const [src, setSrc] = useState('');
 
-    React.useEffect(() => {
+    useEffect(() => {
         const task = renderTask.current;
         if (task) {
             task.cancel();

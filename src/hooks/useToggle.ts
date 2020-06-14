@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React from 'react';
+import React, { useState } from 'react';
 
 enum ToggleStatus {
     Close = 'Close',
@@ -16,7 +16,7 @@ enum ToggleStatus {
 export type Toggle = (status?: ToggleStatus) => void;
 
 const useToggle = (): { opened: boolean; toggle: Toggle } => {
-    const [opened, setOpened] = React.useState(false);
+    const [opened, setOpened] = useState(false);
     const toggle: Toggle = (status?: ToggleStatus) => {
         switch (status) {
             case ToggleStatus.Close:

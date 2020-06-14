@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React from 'react';
+import React, { useContext } from 'react';
 
 import ThemeContext from '../theme/ThemeContext';
 import './propertyItem.less';
@@ -17,7 +17,7 @@ interface PropertyItemProps {
 }
 
 const PropertyItem: React.FC<PropertyItemProps> = ({ label, value }) => {
-    const theme = React.useContext(ThemeContext);
+    const theme = useContext(ThemeContext);
 
     return (
         <dl className={`${theme.prefixClass}-property-item`}>

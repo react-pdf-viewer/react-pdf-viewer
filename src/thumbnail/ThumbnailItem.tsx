@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 import Spinner from '../components/Spinner';
 import PdfJs from '../vendors/PdfJs';
@@ -23,10 +23,10 @@ interface ThumbnailItemProps {
 const ThumbnailItem: React.FC<ThumbnailItemProps> = ({
     page, pageHeight, pageWidth, rotation, thumbnailHeight, thumbnailWidth,
 }) => {
-    const renderTask = React.useRef<PdfJs.PageRenderTask>();
-    const [src, setSrc] = React.useState('');
+    const renderTask = useRef<PdfJs.PageRenderTask>();
+    const [src, setSrc] = useState('');
 
-    React.useEffect(() => {
+    useEffect(() => {
         const task = renderTask.current;
         if (task) {
             task.cancel();

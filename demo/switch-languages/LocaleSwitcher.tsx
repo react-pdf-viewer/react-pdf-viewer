@@ -6,7 +6,7 @@ import Viewer, {
     Slot,
     ToolbarSlot,
 } from '@phuocng/react-pdf-viewer';
-import React from 'react';
+import React, { useState } from 'react';
 
 import LocalePopover from './LocalePopover';
 import vi_VN from './vi_VN.json';
@@ -16,7 +16,7 @@ interface LocaleSwitcherProps {
 }
 
 const LocaleSwitcher: React.FC<LocaleSwitcherProps> = ({ fileUrl }) => {
-    const [localization, setLocalization] = React.useState<LocalizationMap | undefined>(undefined);
+    const [localization, setLocalization] = useState<LocalizationMap | undefined>(undefined);
 
     const activateLocale = (locale: string) => {
         switch (locale) {

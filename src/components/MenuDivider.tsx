@@ -6,13 +6,13 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React from 'react';
+import React, { useContext } from 'react';
 
 import ThemeContext from '../theme/ThemeContext';
 import './menuDivider.less';
 
 const MenuDivider: React.FC<{}> = () => {
-    const theme = React.useContext(ThemeContext);
+    const theme = useContext(ThemeContext);
     return (
         <li className={`${theme.prefixClass}-menu-divider`} />
     );
