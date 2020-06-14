@@ -50,10 +50,15 @@ export interface ZoomEvent {
     doc: PdfJs.PdfDocument;
     scale: number;
 }
+export interface CharacterMap {
+    isCompressed: boolean;
+    url: string;
+}
 
 export type RenderViewer = (props: RenderViewerProps) => React.ReactElement;
 
 interface ViewerProps {
+    characterMap?: CharacterMap;
     // The default zoom level
     // If it's not set, the initial zoom level will be calculated based on the dimesion of page and the container width
     defaultScale?: number | SpecialZoomLevel;
@@ -77,6 +82,7 @@ interface ViewerProps {
 }
 
 const Viewer: React.FC<ViewerProps> = ({
+    characterMap,
     defaultScale,
     fileUrl,
     initialPage,
@@ -162,6 +168,7 @@ const Viewer: React.FC<ViewerProps> = ({
         <ThemeProvider prefixClass={prefixClass}>
             <LocalizationProvider localization={localization}>
                 <DocumentLoader
+                    characterMap={characterMap}
                     file={file.data}
                     render={renderDoc(defaultRenderer)}
                     renderError={renderError}

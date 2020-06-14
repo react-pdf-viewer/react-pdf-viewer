@@ -280,7 +280,15 @@ export interface ZoomEvent {
     scale: number;
 }
 
+// The character maps that can be downloaded from 
+// https://github.com/mozilla/pdfjs-dist/tree/master/cmaps
+export interface CharacterMap {
+    isCompressed: boolean;
+    url: string;
+}
+
 export interface ViewerProps {
+    characterMap?: CharacterMap;
     // The default zoom level
     // If it's not set, the initial zoom level will be calculated based on the dimesion of page and the container width
     // So that, the document will fit best within the container

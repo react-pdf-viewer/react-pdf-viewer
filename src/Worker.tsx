@@ -14,7 +14,7 @@ interface WorkerProps {
     workerUrl: string;
 }
 
-const Worker: React.FC<WorkerProps> = ({ children, workerUrl}) => {
+const Worker: React.FC<WorkerProps> = ({ children, workerUrl }) => {
     PdfJs.GlobalWorkerOptions.workerSrc = workerUrl;
     return <>{children}</>;
 };
