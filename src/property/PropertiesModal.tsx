@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React from 'react';
+import React, { useContext } from 'react';
 
 import PrimaryButton from '../components/PrimaryButton';
 import Separator from '../components/Separator';
@@ -28,8 +28,8 @@ interface PropertiesModalProps {
 }
 
 const PropertiesModal: React.FC<PropertiesModalProps> = ({ doc, fileName, onToggle }) => {
-    const l10n = React.useContext(LocalizationContext);
-    const theme = React.useContext(ThemeContext);
+    const l10n = useContext(LocalizationContext);
+    const theme = useContext(ThemeContext);
 
     const formatDate = (input: string): string => {
         const date = convertDate(input);

@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React from 'react';
+import React, { useContext } from 'react';
 
 import SpecialZoomLevel from '../SpecialZoomLevel';
 import ThemeContext from '../theme/ThemeContext';
@@ -23,7 +23,7 @@ interface BookmarkListProps {
 }
 
 const BookmarkList: React.FC<BookmarkListProps> = ({ bookmarks, depth = 0, doc, onJumpToDest }) => {
-    const theme = React.useContext(ThemeContext);
+    const theme = useContext(ThemeContext);
     const jumpToDest = (dest: PdfJs.OutlineDestinationType): void => {
         getDestination(doc, dest).then((target) => {
             const { pageIndex, bottomOffset, scaleTo } = target;

@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { useContext } from 'react';
+import React, { useContext, useLayoutEffect } from 'react';
 
 import ThemeContext from '../theme/ThemeContext';
 import PdfJs from '../vendors/PdfJs';
@@ -27,7 +27,7 @@ const Popup: React.FC<PopupProps> = ({ annotation, page, viewport }) => {
     const ignoredParents = ['Circle', 'Ink', 'Line', 'Polygon', 'PolyLine', 'Square'];
     const hasPopup = !annotation.parentType || ignoredParents.includes(annotation.parentType);
 
-    React.useLayoutEffect(() => {
+    useLayoutEffect(() => {
         if (!annotation.parentId) {
             return;
         }

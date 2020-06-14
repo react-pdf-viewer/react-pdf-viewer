@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React from 'react';
+import React, { createRef, useContext } from 'react';
 
 import useClickOutside from '../hooks/useClickOutside';
 import useKeyUp from '../hooks/useKeyUp';
@@ -21,8 +21,8 @@ interface ModalBodyProps {
 }
 
 const ModalBody: React.FC<ModalBodyProps> = ({ children, closeOnClickOutside, closeOnEscape, onToggle }) => {
-    const theme = React.useContext(ThemeContext);
-    const contentRef = React.createRef<HTMLDivElement>();
+    const theme = useContext(ThemeContext);
+    const contentRef = createRef<HTMLDivElement>();
 
     useLockScroll();
     useKeyUp(27, () => closeOnEscape && onToggle());

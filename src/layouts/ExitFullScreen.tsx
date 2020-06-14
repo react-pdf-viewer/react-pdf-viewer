@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React from 'react';
+import React, { useContext } from 'react';
 
 import Button from '../components/Button';
 import ExitFullScreenIcon from '../icons/ExitFullScreenIcon';
@@ -18,7 +18,7 @@ interface ExitFullScreenProps {
 }
 
 const ExitFullScreen: React.FC<ExitFullScreenProps> = ({ onClick }) => {
-    const theme = React.useContext(ThemeContext);
+    const theme = useContext(ThemeContext);
 
     return (
         <div className={`${theme.prefixClass}-exit-fullscreen`}>

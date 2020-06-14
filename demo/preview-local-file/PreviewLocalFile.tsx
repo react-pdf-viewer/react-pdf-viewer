@@ -1,8 +1,8 @@
 import Viewer from '@phuocng/react-pdf-viewer';
-import React from 'react';
+import React, { useState } from 'react';
 
 const PreviewLocalFile: React.FC<{}> = () => {
-    const [url, setUrl] = React.useState('');
+    const [url, setUrl] = useState('');
 
     const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const files = e.target.files;

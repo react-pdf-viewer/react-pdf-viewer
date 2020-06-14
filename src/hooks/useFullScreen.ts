@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import {
     addFullScreenChangeListener,
@@ -23,7 +23,7 @@ interface FullScreenHook {
 }
 
 const useFullScreen = (ref: React.RefObject<HTMLDivElement>): FullScreenHook => {
-    const [isFullScreen, setIsFullScreen] = React.useState(false);
+    const [isFullScreen, setIsFullScreen] = useState(false);
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const closeOtherFullScreen = (): Promise<any> => {
@@ -53,7 +53,7 @@ const useFullScreen = (ref: React.RefObject<HTMLDivElement>): FullScreenHook => 
         setIsFullScreen(ele === ref.current);
     };
 
-    React.useEffect(() => {
+    useEffect(() => {
         addFullScreenChangeListener(onFullScreenChange);
         return (): void => {
             removeFullScreenChangeListener(onFullScreenChange);

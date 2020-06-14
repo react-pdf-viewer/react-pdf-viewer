@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import Spinner from '../components/Spinner';
 import PdfJs from '../vendors/PdfJs';
@@ -23,12 +23,12 @@ interface AttachmentState {
 }
 
 const AttachmentLoader: React.FC<AttachmentLoaderProps> = ({ doc }) => {
-    const [attachments, setAttachments] = React.useState<AttachmentState>({
+    const [attachments, setAttachments] = useState<AttachmentState>({
         files: [],
         isLoaded: false,
     });
 
-    React.useEffect(() => {
+    useEffect(() => {
         doc.getAttachments().then((response) => {
             const files = response
                 ? Object.keys(response).map((file) => {

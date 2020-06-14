@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 
 import Spinner from '../components/Spinner';
 import ThemeContext from '../theme/ThemeContext';
@@ -21,15 +21,15 @@ interface PageSizeCalculatorProps {
 }
 
 const PageSizeCalculator: React.FC<PageSizeCalculatorProps> = ({ doc, render }) => {
-    const theme = React.useContext(ThemeContext);
-    const pagesRef = React.useRef<HTMLDivElement | null>(null);
-    const [pageSize, setPageSize] = React.useState<PageSize>({
+    const theme = useContext(ThemeContext);
+    const pagesRef = useRef<HTMLDivElement | null>(null);
+    const [pageSize, setPageSize] = useState<PageSize>({
         pageHeight: 0,
         pageWidth: 0,
         scale: 1,
     });
 
-    React.useEffect(() => {
+    useEffect(() => {
         doc.getPage(1).then((pdfPage) => {
             const viewport = pdfPage.getViewport({ scale: 1 });
             const w = viewport.width;

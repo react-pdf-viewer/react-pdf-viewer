@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React from 'react';
+import React, { useContext } from 'react';
 
 import Menu from '../components/Menu';
 import MenuDivider from '../components/MenuDivider';
@@ -29,8 +29,8 @@ const LEVELS = [0.5, 0.75, 1, 1.25, 1.5, 2, 3, 4];
 const PORTAL_OFFSET = { left: 0, top: 8 };
 
 const ZoomPopover: React.FC<ZoomPopoverProps> = ({ scale, onZoom }) => {
-    const l10n = React.useContext(LocalizationContext);
-    const theme = React.useContext(ThemeContext);
+    const l10n = useContext(LocalizationContext);
+    const theme = useContext(ThemeContext);
 
     const getSpcialLevelLabel = (level: SpecialZoomLevel): LocalizationMap => {
         switch (level) {

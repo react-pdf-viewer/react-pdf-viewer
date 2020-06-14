@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 
 import Spinner from '../components/Spinner';
 import ThemeContext from '../theme/ThemeContext';
@@ -20,10 +20,10 @@ interface PropertiesLoaderProps {
 }
 
 const PropertiesLoader: React.FC<PropertiesLoaderProps> = ({ doc, render }) => {
-    const theme = React.useContext(ThemeContext);
-    const [data, setData] = React.useState<PropertiesData>();
+    const theme = useContext(ThemeContext);
+    const [data, setData] = useState<PropertiesData>();
 
-    React.useEffect(() => {
+    useEffect(() => {
         doc.getMetadata().then((meta) => {
             return Promise.resolve(meta);
         }).then((meta) => {

@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import PdfJs from '../vendors/PdfJs';
 
@@ -16,10 +16,10 @@ interface AnnotationLayerProps {
 }
 
 const AnnotationLoader: React.FC<AnnotationLayerProps> = ({ page, renderAnnotations }) => {
-    const [loading, setLoading] = React.useState(true);
-    const [annotations, setAnnotations] = React.useState<PdfJs.Annotation[]>([]);
+    const [loading, setLoading] = useState(true);
+    const [annotations, setAnnotations] = useState<PdfJs.Annotation[]>([]);
 
-    React.useEffect(() => {
+    useEffect(() => {
         page.getAnnotations({ intent: 'display' }).then((result) => {
             setLoading(false);
             setAnnotations(result);

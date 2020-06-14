@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 
 import Spinner from '../components/Spinner';
 import ThemeContext from '../theme/ThemeContext';
@@ -31,10 +31,10 @@ interface DocumentLoaderProps {
 }
 
 const DocumentLoader: React.FC<DocumentLoaderProps> = ({ file, render, renderError }) => {
-    const theme = React.useContext(ThemeContext);
-    const [status, setStatus] = React.useState<LoadingStatus>(new LoadingState(0));
+    const theme = useContext(ThemeContext);
+    const [status, setStatus] = useState<LoadingStatus>(new LoadingState(0));
 
-    React.useEffect(() => {
+    useEffect(() => {
         // If we don't reset the status when new `file` is provided
         // (for example, when opening file)
         // then we will see the error

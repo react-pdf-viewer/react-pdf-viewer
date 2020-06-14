@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React from 'react';
+import React, { useContext, useState } from 'react';
 
 import AttachmentLoader from '../attachment/AttachmentLoader';
 import BookmarkLoader from '../bookmark/BookmarkLoader';
@@ -44,9 +44,9 @@ enum Tab {
 const TOOLTIP_OFFSET = { left: 0, top: 8 };
 
 const Sidebar: React.FC<SidebarProps> = ({ currentPage, doc, height, rotation, width, onJumpToDest, onJumpToPage }) => {
-    const l10n = React.useContext(LocalizationContext);
-    const theme = React.useContext(ThemeContext);
-    const [tab, setTab] = React.useState(Tab.Thumbnail);
+    const l10n = useContext(LocalizationContext);
+    const theme = useContext(ThemeContext);
+    const [tab, setTab] = useState(Tab.Thumbnail);
     const clickThumbnailTab = (): void => setTab(Tab.Thumbnail);
     const clickBookmarkTab = (): void => setTab(Tab.Bookmark);
     const clickAttachmentTab = (): void => setTab(Tab.Attachment);

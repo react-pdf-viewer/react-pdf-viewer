@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React from 'react';
+import React, { useContext, useState } from 'react';
 
 import Spinner from '../components/Spinner';
 import Observer, { VisibilityChanged } from '../layouts/Observer';
@@ -34,8 +34,8 @@ interface PageState {
 }
 
 const ThumbnailContainer: React.FC<ThumbnailContainerProps> = ({ doc, pageHeight, pageIndex, pageWidth, rotation }) => {
-    const theme = React.useContext(ThemeContext);
-    const [pageSize, setPageSize] = React.useState<PageState>({
+    const theme = useContext(ThemeContext);
+    const [pageSize, setPageSize] = useState<PageState>({
         height: pageHeight,
         isCalculated: false,
         page: null,

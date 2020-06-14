@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React from 'react';
+import React, { useState } from 'react';
 
 import useToggle, { ToggleStatus } from '../hooks/useToggle';
 
@@ -24,7 +24,7 @@ interface UsePopupResult {
 
 const useTogglePopup = (): UsePopupResult => {
     const { opened, toggle } = useToggle();
-    const [togglePopupBy, setTooglePopupBy] = React.useState(TogglePopupBy.Hover);
+    const [togglePopupBy, setTooglePopupBy] = useState(TogglePopupBy.Hover);
 
     const toggleOnClick = (): void => {
         switch (togglePopupBy) {

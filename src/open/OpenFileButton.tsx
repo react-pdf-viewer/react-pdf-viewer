@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React from 'react';
+import React, { useContext } from 'react';
 
 import OpenFileIcon from '../icons/OpenFileIcon';
 import LocalizationContext from '../localization/LocalizationContext';
@@ -23,8 +23,8 @@ interface OpenFileButtonProps {
 const TOOLTIP_OFFSET = { left: 0, top: 8 };
 
 const OpenFileButton: React.FC<OpenFileButtonProps> = ({ onOpenFiles }) => {
-    const l10n = React.useContext(LocalizationContext);
-    const theme = React.useContext(ThemeContext);
+    const l10n = useContext(LocalizationContext);
+    const theme = useContext(ThemeContext);
 
     const openFiles = (e: React.ChangeEvent<HTMLInputElement>): void => {
         const files = e.target.files;

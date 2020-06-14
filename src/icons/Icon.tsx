@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React from 'react';
+import React, { useContext } from 'react';
 
 import ThemeContext from '../theme/ThemeContext';
 import './icon.less';
@@ -16,7 +16,7 @@ interface IconProps {
 }
 
 const Icon: React.FC<IconProps> = ({ children, size = 24 }) => {
-    const theme = React.useContext(ThemeContext);
+    const theme = useContext(ThemeContext);
     const width = `${size || 24}px`;
 
     return (

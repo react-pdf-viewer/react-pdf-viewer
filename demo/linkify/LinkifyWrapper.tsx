@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import linkifyElement from 'linkifyjs/element';
 
 const LinkifyWrapper: React.FC<{}> = ({ children }) => {
-    const containerRef = React.useRef<HTMLDivElement | null>(null);
+    const containerRef = useRef<HTMLDivElement | null>(null);
 
-    React.useEffect(() => {
+    useEffect(() => {
         const container = containerRef.current;
         if (!container) {
             return;

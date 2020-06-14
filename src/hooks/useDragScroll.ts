@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 
 import ThemeContext from '../theme/ThemeContext';
 import './dragScroll.less';
@@ -16,9 +16,9 @@ interface DragScrollHook {
 }
 
 const useDragScroll = (ref: React.RefObject<HTMLDivElement>): DragScrollHook => {
-    const theme = React.useContext(ThemeContext);
-    const [enabled, setEnabled] = React.useState(false);
-    const pos = React.useRef({ top: 0, left: 0, x: 0, y: 0 });
+    const theme = useContext(ThemeContext);
+    const [enabled, setEnabled] = useState(false);
+    const pos = useRef({ top: 0, left: 0, x: 0, y: 0 });
 
     const onMouseMoveHandler = (e: MouseEvent): void => {
         const ele = ref.current;
@@ -64,7 +64,7 @@ const useDragScroll = (ref: React.RefObject<HTMLDivElement>): DragScrollHook => 
         document.addEventListener('mouseup', onMouseUpHandler);
     };
 
-    React.useEffect(() => {
+    useEffect(() => {
         const ele = ref.current;
         if (!ele) {
             return;

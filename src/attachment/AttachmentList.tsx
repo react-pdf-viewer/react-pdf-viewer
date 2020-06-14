@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React from 'react';
+import React, { useContext } from 'react';
 
 import LocalizationContext from '../localization/LocalizationContext';
 import ThemeContext from '../theme/ThemeContext';
@@ -19,8 +19,8 @@ interface AttachmentListProps {
 }
 
 const AttachmentList: React.FC<AttachmentListProps> = ({ files }) => {
-    const l10n = React.useContext(LocalizationContext);
-    const theme = React.useContext(ThemeContext);
+    const l10n = useContext(LocalizationContext);
+    const theme = useContext(ThemeContext);
 
     const renderItem = (file: FileItem): React.ReactElement => {
         const onClick = (): void => downloadFile(file.fileName, file.data);
