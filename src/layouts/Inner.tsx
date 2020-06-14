@@ -315,6 +315,10 @@ const Inner: React.FC<InnerProps> = ({
             {
                 attrs: {
                     ref: pagesRef,
+                    style: {
+                        // We need this to jump between destinations or searching results
+                        position: 'relative',
+                    }
                 },
                 children: (
                     <>

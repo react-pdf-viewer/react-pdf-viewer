@@ -19,6 +19,10 @@ const handlePageChange = (e: PageChangeEvent) => {
 />
 ~~~
 
+**Bug fixes**
+
+- The viewer doesn't jump to the destination or searching result exactly
+
 **Breaking changes**
 
 The parameters of `onDocumentLoad` and `onZoom` are changed as following:
