@@ -7,7 +7,7 @@
  */
 
 import React, { useContext, useEffect, useState } from 'react';
-import ReactDOM, { createPortal } from 'react-dom';
+import { createPortal } from 'react-dom';
 
 import PdfJs from '../vendors/PdfJs';
 import ThemeContext from '../theme/ThemeContext';

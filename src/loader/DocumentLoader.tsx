@@ -11,6 +11,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import Spinner from '../components/Spinner';
 import ThemeContext from '../theme/ThemeContext';
 import PdfJs from '../vendors/PdfJs';
+import { CharacterMap } from '../Viewer';
 import AskForPasswordState from './AskForPasswordState';
 import AskingPassword from './AskingPassword';
 import CompletedState from './CompletedState';
@@ -25,12 +26,13 @@ import WrongPasswordState from './WrongPasswordState';
 export type RenderError = (error: LoadError) => React.ReactElement;
 
 interface DocumentLoaderProps {
+    characterMap?: CharacterMap;
     file: PdfJs.FileData;
     renderError?: RenderError;
     render(doc: PdfJs.PdfDocument): React.ReactElement;
 }
 
-const DocumentLoader: React.FC<DocumentLoaderProps> = ({ file, render, renderError }) => {
+const DocumentLoader: React.FC<DocumentLoaderProps> = ({ characterMap, file, render, renderError }) => {
     const theme = useContext(ThemeContext);
     const [status, setStatus] = useState<LoadingStatus>(new LoadingState(0));
 
@@ -43,8 +45,13 @@ const DocumentLoader: React.FC<DocumentLoaderProps> = ({ file, render, renderErr
         //  This may be caused by an accidental early return statement
         //  ```
         setStatus(new LoadingState(0));
+        const params = Object.assign(
+            {},
+            { url: file },
+            characterMap ? { cMapUrl: characterMap.url, cMapPacked: characterMap.isCompressed } : {}
+        );
 
-        const loadingTask = PdfJs.getDocument(file);
+        const loadingTask = PdfJs.getDocument(params);
         loadingTask.onPassword = (verifyPassword: VerifyPassword, reason: string): void => {
             switch (reason) {
                 case PdfJs.PasswordResponses.NEED_PASSWORD:

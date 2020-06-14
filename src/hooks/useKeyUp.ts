@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 
 const useKeyUp = (targetKeyCode: number, handler: () => void): void => {
     const keyUpHandler = (e: KeyboardEvent): void => {

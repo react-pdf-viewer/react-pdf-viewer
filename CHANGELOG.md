@@ -19,6 +19,22 @@ const handlePageChange = (e: PageChangeEvent) => {
 />
 ~~~
 
+- Support non-latin characters via the `characterMap` option
+
+~~~ javascript
+import Viewer, { CharacterMap } from '@phuocng/react-pdf-viewer';
+
+const characterMap: CharacterMap = {
+    isCompressed: true,
+    url: 'https://unpkg.com/pdfjs-dist@2.4.456/cmaps/',
+};
+
+<Viewer
+    characterMap={characterMap}
+    fileUrl='/path/to/document.pdf'
+/>
+~~~
+
 **Bug fixes**
 
 - The viewer doesn't jump to the destination or searching result exactly
@@ -27,10 +43,10 @@ const handlePageChange = (e: PageChangeEvent) => {
 
 The parameters of `onDocumentLoad` and `onZoom` are changed as following:
 
-| v1.6.0                    | v1.7.0                                |
-|---------------------------|---------------------------------------|
-| `onDocumentLoad(doc)`     | `onDocumentLoad({ doc } )`            |
-| `onZoom(doc, scale)`      | `onDocumentLoad({ doc, scale })`      |
+| v1.6.0                | v1.7.0                            |
+|-----------------------|-----------------------------------|
+| `onDocumentLoad(doc)` | `onDocumentLoad({ doc })`         |
+| `onZoom(doc, scale)`  | `onDocumentLoad({ doc, scale })`  |
 
 ## v1.6.0
 

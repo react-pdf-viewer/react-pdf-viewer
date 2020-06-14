@@ -38,7 +38,12 @@ declare module 'pdfjs-dist' {
         getPage(pageIndex: number): Promise<Page>;
         getPageIndex(ref: OutlineRef): Promise<number>;
     }
-    function getDocument(file: FileData): LoadingTask;
+    interface GetDocumentParams {
+        url: FileData;
+        cMapUrl?: string;
+        cMapPacked?: boolean;
+    }
+    function getDocument(params: GetDocumentParams): LoadingTask;
 
     // Attachment
     interface Attachment {
