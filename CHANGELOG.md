@@ -19,6 +19,22 @@ const handlePageChange = (e: PageChangeEvent) => {
 />
 ~~~
 
+- Add `onTextLayerRender` event that is invoked when the text layer is ready.
+
+~~~ javascript
+import Viewer, { TextLayerRenderEvent } from '@phuocng/react-pdf-viewer';
+
+const onTextLayerRender = (e: TextLayerRenderEvent) => {
+    // For example, we can find all text elements that look like a link, 
+    // and replace it with `a` elements
+};
+
+<Viewer
+    fileUrl='/path/to/document.pdf'
+    onTextLayerRender={onTextLayerRender}
+/>
+~~~
+
 - Support non-latin characters via the `characterMap` option
 
 ~~~ javascript
