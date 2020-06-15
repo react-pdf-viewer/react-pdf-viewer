@@ -46,10 +46,14 @@ export interface PageChangeEvent {
     currentPage: number;
     doc: PdfJs.PdfDocument;
 }
+export interface TextLayerRenderEvent {
+    ele: HTMLElement;
+}
 export interface ZoomEvent {
     doc: PdfJs.PdfDocument;
     scale: number;
 }
+
 export interface CharacterMap {
     isCompressed: boolean;
     url: string;
@@ -78,6 +82,8 @@ interface ViewerProps {
     selectionMode?: SelectionMode;
     onDocumentLoad?(e: DocumentLoadEvent): void;
     onPageChange?(e: PageChangeEvent): void;
+    // Invoked when the text layer is ready
+    onTextLayerRender?(e: TextLayerRenderEvent): void;
     onZoom?(e: ZoomEvent): void;
 }
 
@@ -96,6 +102,7 @@ const Viewer: React.FC<ViewerProps> = ({
     selectionMode = SelectionMode.Text,
     onDocumentLoad = () => {/**/},
     onPageChange = () => {/**/},
+    onTextLayerRender = () => {/**/},
     onZoom = () => {/**/},
 }) => {
     const [file, setFile] = useState<File>({
@@ -144,6 +151,7 @@ const Viewer: React.FC<ViewerProps> = ({
                     onDocumentLoad={onDocumentLoad}
                     onOpenFile={openFile}
                     onPageChange={onPageChange}
+                    onTextLayerRender={onTextLayerRender}
                     onZoom={onZoom}
                 />
             );
