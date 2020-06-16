@@ -39,6 +39,12 @@ interface RenderViewerProps {
     zoom(level: number | SpecialZoomLevel): void;
 }
 
+export interface CanvasLayerRenderEvent {
+    ele: HTMLCanvasElement;
+    pageIndex: number;
+    rotation: number;
+    scale: number;
+}
 export interface DocumentLoadEvent {
     doc: PdfJs.PdfDocument;
 }
@@ -80,6 +86,7 @@ interface ViewerProps {
     renderPage?: RenderPage;
     // The text selection mode
     selectionMode?: SelectionMode;
+    onCanvasLayerRender?(e: CanvasLayerRenderEvent): void;
     onDocumentLoad?(e: DocumentLoadEvent): void;
     onPageChange?(e: PageChangeEvent): void;
     // Invoked when the text layer is ready
@@ -100,6 +107,7 @@ const Viewer: React.FC<ViewerProps> = ({
     renderError,
     renderPage,
     selectionMode = SelectionMode.Text,
+    onCanvasLayerRender = () => {/**/},
     onDocumentLoad = () => {/**/},
     onPageChange = () => {/**/},
     onTextLayerRender = () => {/**/},
@@ -148,6 +156,7 @@ const Viewer: React.FC<ViewerProps> = ({
                     render={renderViewer}
                     renderPage={renderPage}
                     selectionMode={selectionMode}
+                    onCanvasLayerRender={onCanvasLayerRender}
                     onDocumentLoad={onDocumentLoad}
                     onOpenFile={openFile}
                     onPageChange={onPageChange}

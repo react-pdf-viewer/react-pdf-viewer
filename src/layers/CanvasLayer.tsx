@@ -10,18 +10,21 @@ import React, { createRef, useContext, useRef } from 'react';
 
 import ThemeContext from '../theme/ThemeContext';
 import PdfJs from '../vendors/PdfJs';
+import { CanvasLayerRenderEvent } from '../Viewer';
 import './canvasLayer.less';
 import WithScale from './WithScale';
 
 interface CanvasLayerProps {
     height: number;
     page: PdfJs.Page;
+    pageIndex: number;
     rotation: number;
     scale: number;
     width: number;
+    onCanvasLayerRender(e: CanvasLayerRenderEvent): void;
 }
 
-const CanvasLayer: React.FC<CanvasLayerProps> = ({ height, page, rotation, scale, width }) => {
+const CanvasLayer: React.FC<CanvasLayerProps> = ({ height, page, pageIndex, rotation, scale, width, onCanvasLayerRender }) => {
     const theme = useContext(ThemeContext);
     const canvasRef = createRef<HTMLCanvasElement>();
     const renderTask = useRef<PdfJs.PageRenderTask>();
@@ -46,7 +49,14 @@ const CanvasLayer: React.FC<CanvasLayerProps> = ({ height, page, rotation, scale
         const viewport = page.getViewport({ rotation, scale: scale * devicePixelRatio });
         renderTask.current = page.render({ canvasContext, viewport });
         renderTask.current.promise.then(
-            (): void => {/**/},
+            (): void => {
+                onCanvasLayerRender({
+                    ele: canvasEle,
+                    pageIndex,
+                    rotation,
+                    scale,
+                });
+            },
             (): void => {/**/},
         );
     };

@@ -25,7 +25,7 @@ import ThemeContext from '../theme/ThemeContext';
 import PdfJs from '../vendors/PdfJs';
 import downloadFile from '../utils/downloadFile';
 import getFileExt from '../utils/fileExt';
-import { DocumentLoadEvent, PageChangeEvent, RenderViewer, TextLayerRenderEvent, ZoomEvent } from '../Viewer';
+import { CanvasLayerRenderEvent, DocumentLoadEvent, PageChangeEvent, RenderViewer, TextLayerRenderEvent, ZoomEvent } from '../Viewer';
 import ExitFullScreen from './ExitFullScreen';
 import './inner.less';
 import { Layout } from './Layout';
@@ -51,6 +51,7 @@ interface InnerProps {
     render: RenderViewer;
     renderPage?: RenderPage;
     selectionMode: SelectionMode;
+    onCanvasLayerRender(e: CanvasLayerRenderEvent): void;
     onDocumentLoad(e: DocumentLoadEvent): void;
     onOpenFile(fileName: string, data: Uint8Array): void;
     onPageChange(e: PageChangeEvent): void;
@@ -60,7 +61,7 @@ interface InnerProps {
 
 const Inner: React.FC<InnerProps> = ({
     defaultScale, doc, file, initialPage, keyword, layout, pageSize, render, renderPage, selectionMode,
-    onDocumentLoad, onOpenFile, onPageChange, onTextLayerRender, onZoom,
+    onCanvasLayerRender, onDocumentLoad, onOpenFile, onPageChange, onTextLayerRender, onZoom,
 }) => {
     const theme = useContext(ThemeContext);
     const pagesRef = useRef<HTMLDivElement | null>(null);
@@ -345,6 +346,7 @@ const Inner: React.FC<InnerProps> = ({
                                         rotation={rotation}
                                         scale={scale}
                                         width={pageWidth}
+                                        onCanvasLayerRender={onCanvasLayerRender}
                                         onExecuteNamedAction={executeNamedAction}
                                         onJumpToDest={jumpToDest}
                                         onPageVisibilityChanged={pageVisibilityChanged}
