@@ -16,7 +16,7 @@ import Match from '../search/Match';
 import SpecialZoomLevel from '../SpecialZoomLevel';
 import ThemeContext from '../theme/ThemeContext';
 import PdfJs from '../vendors/PdfJs';
-import { TextLayerRenderEvent } from '../Viewer';
+import { CanvasLayerRenderEvent, TextLayerRenderEvent } from '../Viewer';
 import CanvasLayer from './CanvasLayer';
 import './pageLayer.less';
 import SvgLayer from './SvgLayer';
@@ -32,6 +32,7 @@ interface PageLayerProps {
     rotation: number;
     scale: number;
     width: number;
+    onCanvasLayerRender(e: CanvasLayerRenderEvent): void;
     onExecuteNamedAction(action: string): void;
     onJumpToDest(pageIndex: number, bottomOffset: number, scaleTo: number | SpecialZoomLevel): void;
     onPageVisibilityChanged(pageIndex: number, ratio: number): void;
@@ -48,7 +49,7 @@ interface PageSizeState {
 
 const PageLayer: React.FC<PageLayerProps> = ({
     doc, height, keywordRegexp, match, pageIndex, renderPage, rotation, scale, width,
-    onExecuteNamedAction, onJumpToDest, onPageVisibilityChanged, onTextLayerRender,
+    onCanvasLayerRender, onExecuteNamedAction, onJumpToDest, onPageVisibilityChanged, onTextLayerRender,
 }) => {
     const theme = useContext(ThemeContext);
     const [pageSize, setPageSize] = useState<PageSizeState>({
@@ -135,7 +136,15 @@ const PageLayer: React.FC<PageLayerProps> = ({
                             canvasLayer: {
                                 attrs: {},
                                 children: (
-                                    <CanvasLayer height={h} page={page} rotation={rotationNumber} scale={scale} width={w} />
+                                    <CanvasLayer
+                                        height={h}
+                                        page={page}
+                                        pageIndex={pageIndex}
+                                        rotation={rotationNumber}
+                                        scale={scale}
+                                        width={w}
+                                        onCanvasLayerRender={onCanvasLayerRender}
+                                    />
                                 ),
                             },
                             doc,

@@ -262,6 +262,15 @@ export function defaultLayout(
 ): React.ReactElement;
 
 // Events
+
+// Invoked when the canvas layer is rendered completely
+export interface CanvasLayerRenderEvent {
+    ele: HTMLCanvasElement;
+    pageIndex: number;
+    rotation: number;
+    scale: number;
+}
+
 // Invoked when the document is loaded successfully
 export interface DocumentLoadEvent {
     doc: PdfJs.PdfDocument;
@@ -311,6 +320,7 @@ export interface ViewerProps {
     renderError?: RenderError;
     renderPage?: RenderPage;
     selectionMode?: SelectionMode;
+    onCanvasLayerRender?(e: CanvasLayerRenderEvent): void;
     onDocumentLoad?(e: DocumentLoadEvent): void;
     onPageChange?(e: PageChangeEvent): void;
     onTextLayerRender?(e: TextLayerRenderEvent): void;

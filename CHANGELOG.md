@@ -19,6 +19,23 @@ const handlePageChange = (e: PageChangeEvent) => {
 />
 ~~~
 
+- Add `onCanvasLayerRender` event that is invoked when the canvas layer is rendered completely.
+
+~~~ javascript
+import Viewer, { CanvasLayerRenderEvent } from '@phuocng/react-pdf-viewer';
+
+const onCanvasLayerRender = (e: CanvasLayerRenderEvent) => {
+    // `e.ele` is the canvas element
+    const canvas = e.ele;
+    // Do something with the canvas element
+};
+
+<Viewer
+    fileUrl='/path/to/document.pdf'
+    onCanvasLayerRender={onCanvasLayerRender}
+/>
+~~~
+
 - Add `onTextLayerRender` event that is invoked when the text layer is ready.
 
 ~~~ javascript
