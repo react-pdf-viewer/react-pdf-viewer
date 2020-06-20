@@ -64,6 +64,7 @@ const Inner: React.FC<InnerProps> = ({
     onCanvasLayerRender, onDocumentLoad, onOpenFile, onPageChange, onTextLayerRender, onZoom,
 }) => {
     const theme = useContext(ThemeContext);
+    const containerRef = useRef<HTMLDivElement | null>(null);
     const pagesRef = useRef<HTMLDivElement | null>(null);
     const [scale, setScale] = useState(pageSize.scale);
     const [currentPage, setCurrentPage] = useState(0);
@@ -109,7 +110,7 @@ const Inner: React.FC<InnerProps> = ({
             onOpenFile(selectedFile.name, data);
         });
     };
-    const { isDragging } = useDrop(pagesRef, (files) => openFiles(files));
+    const { isDragging } = useDrop(containerRef, (files) => openFiles(files));
 
     // Print status
     const [printStatus, setPrintStatus] = useState(PrintStatus.Inactive);
@@ -298,11 +299,13 @@ const Inner: React.FC<InnerProps> = ({
             toggleSidebar.opened,
             {
                 attrs: {
+                    ref: containerRef,
                     style: {
                         position: 'relative',
                     }
                 },
                 children: (
+                    <>
                     <PrintContainer
                         doc={doc}
                         pageHeight={pageHeight}
@@ -312,6 +315,8 @@ const Inner: React.FC<InnerProps> = ({
                         onCancel={cancelPrinting}
                         onStartPrinting={startPrinting}
                     />
+                    {isDragging && <DropArea />}
+                    </>
                 )
             },
             {
@@ -324,7 +329,6 @@ const Inner: React.FC<InnerProps> = ({
                 },
                 children: (
                     <>
-                    {isDragging && <DropArea />}
                     {isFullScreen && <ExitFullScreen onClick={closeFullScreen} />}
                     {
                         Array(numPages).fill(0).map((_, index) => {
