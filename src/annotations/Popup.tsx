@@ -25,7 +25,7 @@ const Popup: React.FC<PopupProps> = ({ annotation, page, viewport }) => {
 
     // Don't render the popup for annotation whose parent renders the annotation themselves
     const ignoredParents = ['Circle', 'Ink', 'Line', 'Polygon', 'PolyLine', 'Square'];
-    const hasPopup = !annotation.parentType || ignoredParents.includes(annotation.parentType);
+    const hasPopup = !annotation.parentType || ignoredParents.indexOf(annotation.parentType) !== -1;
 
     useLayoutEffect(() => {
         if (!annotation.parentId) {
