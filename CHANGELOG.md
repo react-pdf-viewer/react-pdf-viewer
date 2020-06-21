@@ -76,10 +76,10 @@ const characterMap: CharacterMap = {
 
 The parameters of `onDocumentLoad` and `onZoom` are changed as following:
 
-| v1.6.0                | v1.7.0                            |
-|-----------------------|-----------------------------------|
-| `onDocumentLoad(doc)` | `onDocumentLoad({ doc })`         |
-| `onZoom(doc, scale)`  | `onDocumentLoad({ doc, scale })`  |
+| v1.6.0                | v1.7.0                    |
+|-----------------------|---------------------------|
+| `onDocumentLoad(doc)` | `onDocumentLoad({ doc })` |
+| `onZoom(doc, scale)`  | `onZoom({ doc, scale })`  |
 
 ## v1.6.0
 
