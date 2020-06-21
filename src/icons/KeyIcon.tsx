@@ -10,7 +10,7 @@ import React from 'react';
 
 import Icon from './Icon';
 
-const KeyIcon: React.FC<{}> = () => {
+const KeyIcon: React.FC = () => {
     return (
         <Icon size={16}>
             <path d='M4.000 18.500 A1.500 1.500 0 1 0 7.000 18.500 A1.500 1.500 0 1 0 4.000 18.500 Z' />

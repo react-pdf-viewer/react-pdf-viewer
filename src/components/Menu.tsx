@@ -11,7 +11,11 @@ import React, { useContext } from 'react';
 import ThemeContext from '../theme/ThemeContext';
 import './menu.less';
 
-const Menu: React.FC<{}> = ({ children}) => {
+interface MenuProps {
+    children?: React.ReactNode;
+}
+
+const Menu: React.FC<MenuProps> = ({ children }) => {
     const theme = useContext(ThemeContext);
 
     return (

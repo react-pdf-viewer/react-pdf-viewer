@@ -10,7 +10,7 @@ import React from 'react';
 
 import Icon from './Icon';
 
-const NoteIcon: React.FC<{}> = () => {
+const NoteIcon: React.FC = () => {
     return (
         <Icon size={16}>
             <path d='M2.000 2.500 L22.000 2.500 L22.000 23.500 L2.000 23.500 Z' />

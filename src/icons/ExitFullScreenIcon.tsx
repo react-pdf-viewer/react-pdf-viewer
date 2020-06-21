@@ -10,7 +10,7 @@ import React from 'react';
 
 import Icon from './Icon';
 
-const ExitFullScreenIcon: React.FC<{}> = () => {
+const ExitFullScreenIcon: React.FC = () => {
     return (
         <Icon size={16}>
             <path

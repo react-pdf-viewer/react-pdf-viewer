@@ -11,7 +11,7 @@ import React, { useContext } from 'react';
 import ThemeContext from '../theme/ThemeContext';
 import './spinner.less';
 
-const Spinner: React.FC<{}> = () => {
+const Spinner: React.FC = () => {
     const theme = useContext(ThemeContext);
 
     return (

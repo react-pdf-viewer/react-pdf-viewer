@@ -10,7 +10,7 @@ import React from 'react';
 
 import Icon from './Icon';
 
-const HorizontalScrollingIcon: React.FC<{}> = () => {
+const HorizontalScrollingIcon: React.FC = () => {
     return (
         <Icon size={16}>
             <path

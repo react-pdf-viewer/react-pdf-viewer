@@ -12,7 +12,7 @@ import LocalizationContext from '../localization/LocalizationContext';
 import ThemeContext from '../theme/ThemeContext';
 import './dropArea.less';
 
-const DropArea: React.FC<{}> = () => {
+const DropArea: React.FC = () => {
     const l10n = useContext(LocalizationContext);
     const theme = useContext(ThemeContext);
 

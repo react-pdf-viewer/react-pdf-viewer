@@ -11,7 +11,11 @@ import React, { useContext } from 'react';
 import ThemeContext from '../theme/ThemeContext';
 import './modalOverlay.less';
 
-const ModalOverlay: React.FC<{}> = ({ children }) => {
+interface ModalOverlayProps {
+    children?: React.ReactNode;
+}
+
+const ModalOverlay: React.FC<ModalOverlayProps> = ({ children }) => {
     const theme = useContext(ThemeContext);
 
     return (

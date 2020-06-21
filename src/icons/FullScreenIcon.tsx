@@ -10,7 +10,7 @@ import React from 'react';
 
 import Icon from './Icon';
 
-const FullScreenIcon: React.FC<{}> = () => {
+const FullScreenIcon: React.FC = () => {
     return (
         <Icon size={16}>
             <path

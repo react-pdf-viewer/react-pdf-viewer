@@ -10,7 +10,7 @@ import React from 'react';
 
 import Icon from './Icon';
 
-const WrappedScrollingIcon: React.FC<{}> = () => {
+const WrappedScrollingIcon: React.FC = () => {
     return (
         <Icon size={16}>
             <path
