@@ -56,9 +56,8 @@ const Annotation: React.FC<AnnotationProps> = ({ annotation, children, ignoreBor
     let width = rect[2] - rect[0];
     let height = rect[3] - rect[1];
 
-    const styles = {
+    let styles = {
         borderColor: '',
-        borderBottomStyle: '',
         borderRadius: '',
         borderStyle: '',
         borderWidth: '',
@@ -74,7 +73,9 @@ const Annotation: React.FC<AnnotationProps> = ({ annotation, children, ignoreBor
                 styles.borderStyle = 'solid';
                 break;
             case AnnotationBorderStyleType.Underline:
-                styles.borderBottomStyle = 'solid';
+                styles = Object.assign({
+                    borderBottomStyle: 'solid',
+                }, styles);
                 break;
             case AnnotationBorderStyleType.Beveled:
             case AnnotationBorderStyleType.Inset:
