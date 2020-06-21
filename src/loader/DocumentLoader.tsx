@@ -47,7 +47,7 @@ const DocumentLoader: React.FC<DocumentLoaderProps> = ({ characterMap, file, ren
         setStatus(new LoadingState(0));
         const params = Object.assign(
             {},
-            { url: file },
+            { data: file },
             characterMap ? { cMapUrl: characterMap.url, cMapPacked: characterMap.isCompressed } : {}
         );
 
