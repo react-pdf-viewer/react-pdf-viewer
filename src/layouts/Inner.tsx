@@ -96,7 +96,7 @@ const Inner: React.FC<InnerProps> = ({
             return;
         }
         const selectedFile = files[0];
-        if (getFileExt(file.name).toLowerCase() !== 'pdf') {
+        if (getFileExt(selectedFile.name).toLowerCase() !== 'pdf') {
             return;
         }
         new Promise<Uint8Array>((resolve) => {
