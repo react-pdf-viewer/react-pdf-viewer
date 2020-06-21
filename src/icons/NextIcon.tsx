@@ -10,7 +10,7 @@ import React from 'react';
 
 import Icon from './Icon';
 
-const NextIcon: React.FC<{}> = () => {
+const NextIcon: React.FC = () => {
     return (
         <Icon size={16}>
             <path

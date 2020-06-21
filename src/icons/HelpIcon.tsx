@@ -10,7 +10,7 @@ import React from 'react';
 
 import Icon from './Icon';
 
-const HelpIcon: React.FC<{}> = () => {
+const HelpIcon: React.FC = () => {
     return (
         <Icon size={16}>
             <path d='M0.500 12.001 A11.500 11.500 0 1 0 23.500 12.001 A11.500 11.500 0 1 0 0.500 12.001 Z' />

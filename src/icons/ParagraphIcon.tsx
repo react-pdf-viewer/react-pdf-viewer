@@ -10,7 +10,7 @@ import React from 'react';
 
 import Icon from './Icon';
 
-const ParagraphIcon: React.FC<{}> = () => {
+const ParagraphIcon: React.FC = () => {
     return (
         <Icon size={16}>
             <path d='M17.5 0.498L17.5 23.498' />

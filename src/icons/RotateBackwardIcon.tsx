@@ -10,7 +10,7 @@ import React from 'react';
 
 import Icon from './Icon';
 
-const RotateBackwardIcon: React.FC<{}> = () => {
+const RotateBackwardIcon: React.FC = () => {
     return (
         <Icon size={16}>
             <path
