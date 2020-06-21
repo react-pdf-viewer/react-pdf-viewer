@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## v1.7.0-dev
+## v1.7.0
 
 **New features**
 
