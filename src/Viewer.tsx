@@ -12,7 +12,7 @@ import File from './File';
 import Slot from './layouts/Slot';
 import defaultLayout from './layouts/defaultLayout';
 import defaultToolbar from './layouts/defaultToolbar';
-import Inner from './layouts/Inner';
+import InnerWrapper from './layouts/InnerWrapper';
 import { Layout } from './layouts/Layout';
 import PageSize from './layouts/PageSize'; 
 import PageSizeCalculator from './layouts/PageSizeCalculator';
@@ -26,6 +26,7 @@ import SelectionMode from './SelectionMode';
 import SpecialZoomLevel from './SpecialZoomLevel';
 import ThemeProvider from './theme/ThemeProvider';
 import PdfJs from './vendors/PdfJs';
+import ViewerState from './ViewerState';
 
 interface RenderViewerProps {
     viewer: React.ReactElement;
@@ -65,14 +66,14 @@ export interface CharacterMap {
     url: string;
 }
 
-export interface ViewerState {
-    // The current opened file. It can be changed from outside, such as user drags and drops an external file
-    // or user opens a file from toolbar
-    file: File;
-    // The current page index
-    pageIndex: number;
-    // The current zoom level
-    scale: number | SpecialZoomLevel;
+export interface PluginFunctions {
+    setViewerState(viewerState: ViewerState): void;
+    getViewerState(): ViewerState;
+}
+
+interface Plugin {
+    install(pluginFunctions: PluginFunctions): void;
+    uninstall(pluginFunctions: PluginFunctions): void;
 }
 
 export type RenderViewer = (props: RenderViewerProps) => React.ReactElement;
@@ -87,6 +88,8 @@ interface ViewerProps {
     initialPage?: number;
     // The keyword that will be highlighted in all pages
     keyword?: string | RegExp;
+    // Plugins
+    plugins?: Plugin[];
     localization?: LocalizationMap;
     // The prefix for CSS classes
     prefixClass?: string;
@@ -106,9 +109,10 @@ const Viewer: React.FC<ViewerProps> = ({
     characterMap,
     defaultScale,
     fileUrl,
-    initialPage,
+    initialPage = 0,
     keyword,
     localization,
+    plugins = [],
     prefixClass,
     renderError,
     renderPage,
@@ -131,36 +135,20 @@ const Viewer: React.FC<ViewerProps> = ({
         });
     };
 
-    const renderDoc = (doc: PdfJs.PdfDocument) => {
-        const renderInner = (ps: PageSize) => {
-            const pageSize = ps;
+    // createEventHooks = (methodName: string, plugins: Plugin[]) => (...args: any[]) => {
+    //     const newArgs = [].slice.apply(args);
+    //     newArgs.push(this.getPluginMethods());
+    
+    //     return plugins.some(
+    //       plugin =>
+    //         typeof plugin[methodName] === 'function' &&
+    //         plugin[methodName](...newArgs) === true
+    //     );
+    // };
 
-            return (
-                <Inner
-                    defaultScale={defaultScale}
-                    doc={doc}
-                    file={file}
-                    initialPage={initialPage}
-                    keyword={keyword}
-                    pageSize={pageSize}
-                    renderPage={renderPage}
-                    selectionMode={selectionMode}
-                    onCanvasLayerRender={onCanvasLayerRender}
-                    onDocumentLoad={onDocumentLoad}
-                    onOpenFile={openFile}
-                    onPageChange={onPageChange}
-                    onTextLayerRender={onTextLayerRender}
-                    onZoom={onZoom}
-                />
-            );
-        };
-        return (
-            <PageSizeCalculator
-                doc={doc}
-                render={renderInner}
-            />
-        );
-    };
+    // getPluginMethods = () => ({
+
+    // });
 
     useEffect(() => {
         setFile({
@@ -175,7 +163,35 @@ const Viewer: React.FC<ViewerProps> = ({
                 <DocumentLoader
                     characterMap={characterMap}
                     file={file.data}
-                    render={renderDoc}
+                    render={(doc: PdfJs.PdfDocument) => (
+                        <PageSizeCalculator
+                            doc={doc}
+                            render={(ps: PageSize) => (
+                                <InnerWrapper
+                                    defaultScale={defaultScale}
+                                    doc={doc}
+                                    file={file}
+                                    initialPage={initialPage}
+                                    keyword={keyword}
+                                    pageSize={ps}
+                                    plugins={plugins}
+                                    renderPage={renderPage}
+                                    selectionMode={selectionMode}
+                                    viewerState={{
+                                        file,
+                                        pageIndex: initialPage,
+                                        scale: defaultScale || ps.scale,
+                                    }}
+                                    onCanvasLayerRender={onCanvasLayerRender}
+                                    onDocumentLoad={onDocumentLoad}
+                                    onOpenFile={openFile}
+                                    onPageChange={onPageChange}
+                                    onTextLayerRender={onTextLayerRender}
+                                    onZoom={onZoom}
+                                />
+                            )}
+                        />
+                    )}
                     renderError={renderError}
                 />
             </LocalizationProvider>

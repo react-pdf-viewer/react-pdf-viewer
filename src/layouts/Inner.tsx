@@ -15,6 +15,7 @@ import useFullScreen from '../hooks/useFullScreen';
 import useToggle from '../hooks/useToggle';
 import PageLayer from '../layers/PageLayer';
 import DropArea from '../open/DropArea';
+import Plugin from '../Plugin';
 import PrintContainer from '../print/PrintContainer';
 import PrintStatus from '../print/PrintStatus';
 import Match from '../search/Match';
