@@ -65,6 +65,16 @@ export interface CharacterMap {
     url: string;
 }
 
+export interface ViewerState {
+    // The current opened file. It can be changed from outside, such as user drags and drops an external file
+    // or user opens a file from toolbar
+    file: File;
+    // The current page index
+    pageIndex: number;
+    // The current zoom level
+    scale: number | SpecialZoomLevel;
+}
+
 export type RenderViewer = (props: RenderViewerProps) => React.ReactElement;
 
 interface ViewerProps {
@@ -77,11 +87,9 @@ interface ViewerProps {
     initialPage?: number;
     // The keyword that will be highlighted in all pages
     keyword?: string | RegExp;
-    layout?: Layout;
     localization?: LocalizationMap;
     // The prefix for CSS classes
     prefixClass?: string;
-    render?: RenderViewer;
     renderError?: RenderError;
     renderPage?: RenderPage;
     // The text selection mode
@@ -100,10 +108,8 @@ const Viewer: React.FC<ViewerProps> = ({
     fileUrl,
     initialPage,
     keyword,
-    layout,
     localization,
     prefixClass,
-    render,
     renderError,
     renderPage,
     selectionMode = SelectionMode.Text,
@@ -117,21 +123,6 @@ const Viewer: React.FC<ViewerProps> = ({
         data: fileUrl,
         name: (typeof fileUrl === 'string') ? fileUrl : '',
     });
-    const layoutOption = (
-        isSidebarOpened: boolean,
-        container: Slot,
-        main: Slot,
-        toolbar: RenderToolbar,
-        sidebar: Slot,
-    ): React.ReactElement => {
-        return defaultLayout(
-            isSidebarOpened,
-            container,
-            main,
-            toolbar(defaultToolbar),
-            sidebar
-        );
-    };
 
     const openFile = (fileName: string, data: Uint8Array) => {
         setFile({
@@ -140,7 +131,7 @@ const Viewer: React.FC<ViewerProps> = ({
         });
     };
 
-    const renderDoc = (renderViewer: RenderViewer) => (doc: PdfJs.PdfDocument) => {
+    const renderDoc = (doc: PdfJs.PdfDocument) => {
         const renderInner = (ps: PageSize) => {
             const pageSize = ps;
 
@@ -151,9 +142,7 @@ const Viewer: React.FC<ViewerProps> = ({
                     file={file}
                     initialPage={initialPage}
                     keyword={keyword}
-                    layout={layout || layoutOption}
                     pageSize={pageSize}
-                    render={renderViewer}
                     renderPage={renderPage}
                     selectionMode={selectionMode}
                     onCanvasLayerRender={onCanvasLayerRender}
@@ -180,14 +169,13 @@ const Viewer: React.FC<ViewerProps> = ({
         });
     }, [fileUrl]);
 
-    const defaultRenderer = render || (props => props.viewer);
     return (
         <ThemeProvider prefixClass={prefixClass}>
             <LocalizationProvider localization={localization}>
                 <DocumentLoader
                     characterMap={characterMap}
                     file={file.data}
-                    render={renderDoc(defaultRenderer)}
+                    render={renderDoc}
                     renderError={renderError}
                 />
             </LocalizationProvider>

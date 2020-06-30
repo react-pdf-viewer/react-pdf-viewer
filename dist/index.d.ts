@@ -312,11 +312,9 @@ export interface ViewerProps {
     initialPage?: number;
     // The keyword that will be highlighted in all pages
     keyword?: string | RegExp;
-    layout?: Layout;
     localization?: LocalizationMap;
     // The prefix for CSS classes
     prefixClass?: string;
-    render?: RenderViewer;
     renderError?: RenderError;
     renderPage?: RenderPage;
     selectionMode?: SelectionMode;

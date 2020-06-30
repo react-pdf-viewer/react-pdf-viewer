@@ -46,9 +46,7 @@ interface InnerProps {
     file: File;
     initialPage?: number;
     keyword?: string | RegExp;
-    layout: Layout;
     pageSize: PageSize;
-    render: RenderViewer;
     renderPage?: RenderPage;
     selectionMode: SelectionMode;
     onCanvasLayerRender(e: CanvasLayerRenderEvent): void;
@@ -60,7 +58,7 @@ interface InnerProps {
 }
 
 const Inner: React.FC<InnerProps> = ({
-    defaultScale, doc, file, initialPage, keyword, layout, pageSize, render, renderPage, selectionMode,
+    defaultScale, doc, file, initialPage, keyword, pageSize, renderPage, selectionMode,
     onCanvasLayerRender, onDocumentLoad, onOpenFile, onPageChange, onTextLayerRender, onZoom,
 }) => {
     const theme = useContext(ThemeContext);
@@ -294,122 +292,48 @@ const Inner: React.FC<InnerProps> = ({
     const cancelPrinting = (): void => setPrintStatus(PrintStatus.Inactive);
     const startPrinting = (): void => setPrintStatus(PrintStatus.Ready);
 
-    return render({
-        viewer: layout(
-            toggleSidebar.opened,
+    return (
+        <div
+            ref={pagesRef}
+            style={{
+                height: '100%',
+                overflow: 'auto',
+                // We need this to jump between destinations or searching results
+                position: 'relative',
+            }}
+        >
             {
-                attrs: {
-                    ref: containerRef,
-                    style: {
-                        position: 'relative',
-                    }
-                },
-                children: (
-                    <>
-                    <PrintContainer
-                        doc={doc}
-                        pageHeight={pageHeight}
-                        pageWidth={pageWidth}
-                        printStatus={printStatus}
-                        rotation={rotation}
-                        onCancel={cancelPrinting}
-                        onStartPrinting={startPrinting}
-                    />
-                    {isDragging && <DropArea />}
-                    </>
-                )
-            },
-            {
-                attrs: {
-                    ref: pagesRef,
-                    style: {
-                        // We need this to jump between destinations or searching results
-                        position: 'relative',
-                    }
-                },
-                children: (
-                    <>
-                    {isFullScreen && <ExitFullScreen onClick={closeFullScreen} />}
-                    {
-                        Array(numPages).fill(0).map((_, index) => {
-                            return (
-                                <div
-                                    className={`${theme.prefixClass}-inner-page`}
-                                    key={`pagelayer-${index}`}
-                                    ref={(ref): void => {
-                                        pageRefs[index].current = ref as HTMLDivElement;
-                                    }}
-                                >
-                                    <PageLayer
-                                        doc={doc}
-                                        keywordRegexp={keywordRegexp}
-                                        height={pageHeight}
-                                        match={match}
-                                        pageIndex={index}
-                                        renderPage={renderPage}
-                                        rotation={rotation}
-                                        scale={scale}
-                                        width={pageWidth}
-                                        onCanvasLayerRender={onCanvasLayerRender}
-                                        onExecuteNamedAction={executeNamedAction}
-                                        onJumpToDest={jumpToDest}
-                                        onPageVisibilityChanged={pageVisibilityChanged}
-                                        onTextLayerRender={onTextLayerRender}
-                                    />
-                                </div>
-                            );
-                        })
-                    }
-                    </>
-                ),
-            },
-            (renderToolbar: RenderToolbarSlot) => (
-                <Toolbar
-                    currentPage={currentPage}
-                    doc={doc}
-                    fileName={file.name}
-                    scale={scale}
-                    scrollMode={scrollMode}
-                    selectionMode={currentMode}
-                    onChangeScrollMode={changeScrollMode}
-                    onChangeSelectionMode={changeSelectionMode}
-                    onDownload={download}
-                    onFullScreen={openFullScreen}
-                    onJumpTo={jumpToPage}
-                    onJumpToMatch={jumpToMatch}
-                    onOpenFiles={openFiles}
-                    onPrint={print}
-                    onRotate={rotate}
-                    onSearchFor={setKeywordRegexp}
-                    onToggleSidebar={toggleSidebar.toggle}
-                    onZoom={zoom}
-                    renderToolbar={renderToolbar}
-                />
-            ),
-            {
-                attrs: {},
-                children: (
-                    <Sidebar
-                        currentPage={currentPage}
-                        doc={doc}
-                        height={pageHeight}
-                        rotation={rotation}
-                        width={pageWidth}
-                        onJumpToDest={jumpToDest}
-                        onJumpToPage={jumpToPage}
-                    />
-                ),
-            },
-        ),
-        doc,
-        download,
-        changeScrollMode,
-        changeSelectionMode,
-        jumpToPage,
-        print,
-        rotate,
-        zoom,
-    });
+                Array(numPages).fill(0).map((_, index) => {
+                    return (
+                        <div
+                            className={`${theme.prefixClass}-inner-page`}
+                            key={`pagelayer-${index}`}
+                            ref={(ref): void => {
+                                pageRefs[index].current = ref as HTMLDivElement;
+                            }}
+                        >
+                            <PageLayer
+                                doc={doc}
+                                keywordRegexp={keywordRegexp}
+                                height={pageHeight}
+                                match={match}
+                                pageIndex={index}
+                                renderPage={renderPage}
+                                rotation={rotation}
+                                scale={scale}
+                                width={pageWidth}
+                                onCanvasLayerRender={onCanvasLayerRender}
+                                onExecuteNamedAction={executeNamedAction}
+                                onJumpToDest={jumpToDest}
+                                onPageVisibilityChanged={pageVisibilityChanged}
+                                onTextLayerRender={onTextLayerRender}
+                            />
+                        </div>
+                    );
+                })
+            }
+        </div>
+    );
 };
 
 export default Inner;
