@@ -27,6 +27,7 @@ import PdfJs from '../vendors/PdfJs';
 import downloadFile from '../utils/downloadFile';
 import getFileExt from '../utils/fileExt';
 import { CanvasLayerRenderEvent, DocumentLoadEvent, PageChangeEvent, RenderViewer, TextLayerRenderEvent, ZoomEvent } from '../Viewer';
+import ViewerState from '../ViewerState';
 import ExitFullScreen from './ExitFullScreen';
 import './inner.less';
 import { Layout } from './Layout';
@@ -50,17 +51,19 @@ interface InnerProps {
     pageSize: PageSize;
     renderPage?: RenderPage;
     selectionMode: SelectionMode;
+    viewerState: ViewerState;
     onCanvasLayerRender(e: CanvasLayerRenderEvent): void;
     onDocumentLoad(e: DocumentLoadEvent): void;
     onOpenFile(fileName: string, data: Uint8Array): void;
     onPageChange(e: PageChangeEvent): void;
     onTextLayerRender(e: TextLayerRenderEvent): void;
+    onViewerStateChange(viewerState: ViewerState): void;
     onZoom(e: ZoomEvent): void;
 }
 
 const Inner: React.FC<InnerProps> = ({
-    defaultScale, doc, file, initialPage, keyword, pageSize, renderPage, selectionMode,
-    onCanvasLayerRender, onDocumentLoad, onOpenFile, onPageChange, onTextLayerRender, onZoom,
+    defaultScale, doc, file, initialPage, keyword, pageSize, renderPage, selectionMode, viewerState,
+    onCanvasLayerRender, onDocumentLoad, onOpenFile, onPageChange, onTextLayerRender, onViewerStateChange, onZoom,
 }) => {
     const theme = useContext(ThemeContext);
     const containerRef = useRef<HTMLDivElement | null>(null);
@@ -135,6 +138,11 @@ const Inner: React.FC<InnerProps> = ({
 
     useEffect(() => {
         onPageChange({ currentPage, doc });
+        onViewerStateChange(
+            Object.assign({}, viewerState, {
+                pageIndex: currentPage,
+            })
+        );
     }, [currentPage]);
 
     // Manage the selection mode

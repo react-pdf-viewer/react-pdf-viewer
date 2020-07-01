@@ -261,7 +261,9 @@ export function defaultLayout(
     sidebar: Slot,
 ): React.ReactElement;
 
+// ------
 // Events
+// ------
 
 // Invoked when the canvas layer is rendered completely
 export interface CanvasLayerRenderEvent {
@@ -294,6 +296,31 @@ export interface ZoomEvent {
     scale: number;
 }
 
+// -------
+// Plugins
+// -------
+
+export interface ViewerState {
+    // The current opened file. It can be changed from outside, such as user drags and drops an external file
+    // or user opens a file from toolbar
+    file: File;
+    // The current page index
+    pageIndex: number;
+    // The current zoom level
+    scale: number | SpecialZoomLevel;
+}
+
+export interface PluginFunctions {
+    setViewerState(viewerState: ViewerState): void;
+    getViewerState(): ViewerState;
+}
+
+export interface Plugin {
+    install(pluginFunctions: PluginFunctions): void;
+    uninstall(pluginFunctions: PluginFunctions): void;
+    onViewerStateChange?(viewState: ViewerState): ViewerState;
+}
+
 // The character maps that can be downloaded from 
 // https://github.com/mozilla/pdfjs-dist/tree/master/cmaps
 export interface CharacterMap {
@@ -312,6 +339,8 @@ export interface ViewerProps {
     initialPage?: number;
     // The keyword that will be highlighted in all pages
     keyword?: string | RegExp;
+    // Plugins
+    plugins?: Plugin[];
     localization?: LocalizationMap;
     // The prefix for CSS classes
     prefixClass?: string;

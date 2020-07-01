@@ -62,7 +62,13 @@ const InnerWrapper: React.FC<InnerWrapperProps> = ({
     onCanvasLayerRender, onDocumentLoad, onOpenFile, onPageChange, onTextLayerRender, onZoom,
 }) => {
     const setViewerState = (newViewerState: ViewerState) => {
-
+        let state = newViewerState;
+        // Loop over the plugins and notify the state changed
+        plugins.forEach(plugin => {
+            if (plugin.onViewerStateChange) {
+                state = plugin.onViewerStateChange(state);
+            }
+        });
     };
 
     const getViewerState = () => viewerState;
@@ -96,14 +102,14 @@ const InnerWrapper: React.FC<InnerWrapperProps> = ({
         return pluginHooks;
     };
 
+    const pluginMethods = getPluginMethods();
+
+    // Install the plugins
+    plugins.forEach((plugin) => {
+        plugin.install(pluginMethods);
+    });
+
     useEffect(() => {
-        const pluginMethods = getPluginMethods();
-
-        // Install the plugins
-        plugins.forEach((plugin) => {
-            plugin.install(pluginMethods);
-        });
-
         return () => {
             // Uninstall the plugins
             plugins.forEach((plugin) => {
@@ -122,11 +128,13 @@ const InnerWrapper: React.FC<InnerWrapperProps> = ({
             pageSize={pageSize}
             renderPage={renderPage}
             selectionMode={selectionMode}
+            viewerState={viewerState}
             onCanvasLayerRender={onCanvasLayerRender}
             onDocumentLoad={onDocumentLoad}
             onOpenFile={onOpenFile}
             onPageChange={onPageChange}
             onTextLayerRender={onTextLayerRender}
+            onViewerStateChange={setViewerState}
             onZoom={onZoom}
         />
     );

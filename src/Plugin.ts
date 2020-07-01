@@ -16,6 +16,7 @@ export interface PluginFunctions {
 interface Plugin {
     install(pluginFunctions: PluginFunctions): void;
     uninstall(pluginFunctions: PluginFunctions): void;
+    onViewerStateChange?(viewState: ViewerState): ViewerState;
 }
 
 export default Plugin;
