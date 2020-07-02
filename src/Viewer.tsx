@@ -135,21 +135,6 @@ const Viewer: React.FC<ViewerProps> = ({
         });
     };
 
-    // createEventHooks = (methodName: string, plugins: Plugin[]) => (...args: any[]) => {
-    //     const newArgs = [].slice.apply(args);
-    //     newArgs.push(this.getPluginMethods());
-    
-    //     return plugins.some(
-    //       plugin =>
-    //         typeof plugin[methodName] === 'function' &&
-    //         plugin[methodName](...newArgs) === true
-    //     );
-    // };
-
-    // getPluginMethods = () => ({
-
-    // });
-
     useEffect(() => {
         setFile({
             data: fileUrl,

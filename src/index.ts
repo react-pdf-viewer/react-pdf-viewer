@@ -23,12 +23,14 @@ import Tooltip from './portal/Tooltip';
 import ScrollMode from './ScrollMode';
 import SelectionMode from './SelectionMode';
 import SpecialZoomLevel from './SpecialZoomLevel';
+import createStore from './store/createStore';
 import Viewer from './Viewer';
 import Worker from './Worker';
 
 export default Viewer;
 export {
     Button,
+    createStore,
     defaultLayout,
     defaultToolbar,
     Icon,

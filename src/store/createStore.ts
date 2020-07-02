@@ -1,20 +1,20 @@
-type State = Record<string, any>;
+type StoreState = Record<string, any>;
 
-type Key<T extends State> = string & keyof T;
-type Handler<T> = (params: T) => void;
+type StoreKey<T extends StoreState> = string & keyof T;
+type StoreHandler<T> = (params: T) => void;
 
-interface Store<T extends State> {
-    subscribe<K extends Key<T>>(eventName: K, handler: Handler<T[K]>): void;
-    unsubscribe<K extends Key<T>>(eventName: K, handler: Handler<T[K]>): void;
-    update<K extends Key<T>>(eventName: K, params: T[K]): void;
-    get<K extends Key<T>>(eventName: K): T;
+interface Store<T extends StoreState> {
+    subscribe<K extends StoreKey<T>>(eventName: K, handler: StoreHandler<T[K]>): void;
+    unsubscribe<K extends StoreKey<T>>(eventName: K, handler: StoreHandler<T[K]>): void;
+    update<K extends StoreKey<T>>(eventName: K, params: T[K]): void;
+    get<K extends StoreKey<T>>(eventName: K): T;
 }
 
-function createStore<T extends State>(initialState: T): Store<T> {
+function createStore<T extends StoreState>(initialState: T): Store<T> {
     let state: T = initialState || {} as T;
 
     const listeners: {
-        [K in keyof State]?: Array<(p: State[K]) => void>;
+        [K in keyof StoreState]?: Array<(p: StoreState[K]) => void>;
     } = {};
 
     return {

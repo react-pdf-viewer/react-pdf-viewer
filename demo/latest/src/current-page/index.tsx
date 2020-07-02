@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Plugin, PluginFunctions, ViewerState } from '@phuocng/react-pdf-viewer';
-
-import createStore from './createStore';
+import { createStore, Plugin, PluginFunctions, ViewerState } from '@phuocng/react-pdf-viewer';
 
 interface CurrentPagePlugin extends Plugin {
     CurrentPageLabel: () => React.ReactElement
@@ -32,13 +30,10 @@ const currentPagePlugin = (): CurrentPagePlugin => {
 
     return {
         install: (pluginFunctions: PluginFunctions) => {
-            console.log('Install currentPagePlugin');
         },
         uninstall: (pluginFunctions: PluginFunctions) => {
-
         },
         onViewerStateChange: (viewerState: ViewerState): ViewerState => {
-            console.log('currentPagePlugin: page changed to', viewerState.pageIndex);
             store.update('pageIndex', viewerState.pageIndex);
             return viewerState;
         },

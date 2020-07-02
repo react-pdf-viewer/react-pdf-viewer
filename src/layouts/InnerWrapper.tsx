@@ -78,30 +78,6 @@ const InnerWrapper: React.FC<InnerWrapperProps> = ({
         getViewerState,
     });
 
-    const createPluginHooks = () => {
-        const pluginHooks = {};
-        const eventHookKeys: string[] = [];
-
-        plugins.forEach(plugin => {
-            Object.keys(plugin).forEach(propName => {
-                if (eventHookKeys.indexOf(propName) !== -1) {
-                    return;
-                }
-
-                if (propName.startsWith('on')) {
-                    eventHookKeys.push(propName);
-                    return;
-                }
-            });
-        });
-
-        // eventHookKeys.forEach(propName => {
-        //     pluginHooks[propName] = createEventHooks(propName, plugins);
-        // });
-
-        return pluginHooks;
-    };
-
     const pluginMethods = getPluginMethods();
 
     // Install the plugins
