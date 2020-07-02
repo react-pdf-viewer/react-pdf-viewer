@@ -71,10 +71,12 @@ const PageLayer: React.FC<PageLayerProps> = ({
     const h = isVertical ? scaledHeight : scaledWidth;
 
     const visibilityChanged = (params: VisibilityChanged): void => {
-        const ratio = params.isVisible ? params.ratio : 0;
-        onPageVisibilityChanged(pageIndex, ratio);
+        if (!params.isVisible) {
+            return;
+        }
 
-        if (params.isVisible && !isCalculated) {
+        onPageVisibilityChanged(pageIndex, params.ratio);
+        if (!isCalculated) {
             doc.getPage(pageIndex + 1).then((pdfPage) => {
                 const viewport = pdfPage.getViewport({ scale: 1 });
 

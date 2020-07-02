@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## v2.0.0
+
+**Bug fixes**
+- The `onPageChange` could be invoke several times when clicking an outline item
+
 ## v1.7.0
 
 **New features**
