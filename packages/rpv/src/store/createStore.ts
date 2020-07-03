@@ -1,16 +1,16 @@
 type StoreState = Record<string, any>;
 
 type StoreKey<T extends StoreState> = string & keyof T;
-type StoreHandler<T> = (params: T) => void;
+type StoreHandlerType<T> = (params: T) => void;
 
 interface Store<T extends StoreState> {
-    subscribe<K extends StoreKey<T>>(eventName: K, handler: StoreHandler<T[K]>): void;
-    unsubscribe<K extends StoreKey<T>>(eventName: K, handler: StoreHandler<T[K]>): void;
+    subscribe<K extends StoreKey<T>>(eventName: K, handler: StoreHandlerType<NonNullable<T[K]>>): void;
+    unsubscribe<K extends StoreKey<T>>(eventName: K, handler: StoreHandlerType<NonNullable<T[K]>>): void;
     update<K extends StoreKey<T>>(eventName: K, params: T[K]): void;
     get<K extends StoreKey<T>>(eventName: K): T[K];
 }
 
-function createStore<T extends StoreState>(initialState: T): Store<T> {
+function createStore<T extends StoreState>(initialState?: T): Store<T> {
     let state: T = initialState || {} as T;
 
     const listeners: {
@@ -37,4 +37,5 @@ function createStore<T extends StoreState>(initialState: T): Store<T> {
     };
 };
 
+export type StoreHandler<T> = StoreHandlerType<T>;
 export default createStore;

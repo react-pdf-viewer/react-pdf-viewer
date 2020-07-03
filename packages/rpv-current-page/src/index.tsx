@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { createStore, Plugin, ViewerState } from '@phuocng/rpv';
+import { createStore, Plugin, StoreHandler, ViewerState } from '@phuocng/rpv';
 
 interface CurrentPagePlugin extends Plugin {
     CurrentPageLabel: () => React.ReactElement;
@@ -10,16 +10,17 @@ interface StoreProps {
 }
 
 const currentPagePlugin = (): CurrentPagePlugin => {
-    const store = createStore<StoreProps>({});
+    const store = createStore<StoreProps>();
 
     const CurrentPageLabel = () => {
-        const [currentPage, setCurrentPage] = useState(0);
+        const [currentPage, setCurrentPage] = useState<number>(0);
 
         useEffect(() => {
-            store.subscribe('pageIndex', setCurrentPage);
+            const handlePageIndex: StoreHandler<number> = (p: number) => setCurrentPage(p);
+            store.subscribe('pageIndex', handlePageIndex);
 
             return () => {
-                store.unsubscribe('pageIndex', setCurrentPage);
+                store.unsubscribe('pageIndex', handlePageIndex);
             };
         }, []);
 

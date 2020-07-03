@@ -26,7 +26,7 @@ import SelectionMode from './SelectionMode';
 import SpecialZoomLevel from './SpecialZoomLevel';
 import ThemeProvider from './theme/ThemeProvider';
 import PdfJs from './vendors/PdfJs';
-import ViewerState from './types/ViewerState';
+import { Plugin } from './types/Plugin';
 
 interface RenderViewerProps {
     viewer: React.ReactElement;
@@ -64,16 +64,6 @@ export interface ZoomEvent {
 export interface CharacterMap {
     isCompressed: boolean;
     url: string;
-}
-
-export interface PluginFunctions {
-    setViewerState(viewerState: ViewerState): void;
-    getViewerState(): ViewerState;
-}
-
-interface Plugin {
-    install(pluginFunctions: PluginFunctions): void;
-    uninstall(pluginFunctions: PluginFunctions): void;
 }
 
 export type RenderViewer = (props: RenderViewerProps) => React.ReactElement;

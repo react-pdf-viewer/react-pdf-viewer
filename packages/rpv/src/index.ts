@@ -23,7 +23,7 @@ import Tooltip from './portal/Tooltip';
 import ScrollMode from './ScrollMode';
 import SelectionMode from './SelectionMode';
 import SpecialZoomLevel from './SpecialZoomLevel';
-import createStore from './store/createStore';
+import createStore, { StoreHandler as StoreHandlerType } from './store/createStore';
 import Viewer from './Viewer';
 import Worker from './Worker';
 
@@ -58,6 +58,7 @@ import { Plugin as PluginType } from './types/Plugin';
 import { PluginFunctions as PluginFunctionsType } from './types/PluginFunctions';
 import { ViewerState as ViewerStateType } from './types/ViewerState';
 
+export type StoreHandler<T> = StoreHandlerType<T>;
 export type Plugin = PluginType;
 export type PluginFunctions = PluginFunctionsType;
 export type ViewerState = ViewerStateType;

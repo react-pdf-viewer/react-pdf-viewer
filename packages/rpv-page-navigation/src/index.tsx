@@ -12,16 +12,22 @@ interface StoreProps {
 }
 
 const pageNavigationPlugin = (): PageNavigationPlugin => {
-    const store = createStore<StoreProps>({});
+    const store = createStore<StoreProps>();
 
     const goToNextPage = () => {
-        const editorState = store.get('getViewerState')();
-        store.get('jumpToPage')(editorState.pageIndex + 1);
+        const editorState = store.get('getViewerState');
+        const jumpToPage = store.get('jumpToPage');
+        if (editorState && jumpToPage) {
+            jumpToPage(editorState().pageIndex + 1);
+        }
     };
 
     const goToPreviousPage = () => {
-        const editorState = store.get('getViewerState')();
-        store.get('jumpToPage')(editorState.pageIndex - 1);
+        const editorState = store.get('getViewerState');
+        const jumpToPage = store.get('jumpToPage');
+        if (editorState && jumpToPage) {
+            jumpToPage(editorState().pageIndex - 1);
+        }
     };
 
     const PreviousPageButton = () => {
