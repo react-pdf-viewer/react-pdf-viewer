@@ -7,7 +7,7 @@ interface Store<T extends StoreState> {
     subscribe<K extends StoreKey<T>>(eventName: K, handler: StoreHandler<T[K]>): void;
     unsubscribe<K extends StoreKey<T>>(eventName: K, handler: StoreHandler<T[K]>): void;
     update<K extends StoreKey<T>>(eventName: K, params: T[K]): void;
-    get<K extends StoreKey<T>>(eventName: K): T;
+    get<K extends StoreKey<T>>(eventName: K): T[K];
 }
 
 function createStore<T extends StoreState>(initialState: T): Store<T> {
