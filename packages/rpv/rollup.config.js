@@ -12,7 +12,7 @@ export default [
     {
         input,
         output: {
-            file: './dist/umd/react-pdf-viewer.js',
+            file: './npm/umd/react-pdf-viewer.js',
             format: 'umd',
             name: 'ReactPdfViewer',
             globals: {
@@ -25,7 +25,7 @@ export default [
         plugins: [
             json(),
             less({
-                output: './dist/umd/react-pdf-viewer.css',
+                output: './npm/umd/react-pdf-viewer.css',
                 sourcemap: false,
             }),
             typescript({
@@ -44,7 +44,7 @@ export default [
     {
         input,
         output: {
-            file: './dist/umd/react-pdf-viewer.min.js',
+            file: './npm/umd/react-pdf-viewer.min.js',
             format: 'umd',
             name: 'ReactPdfViewer',
             globals: {
@@ -57,7 +57,7 @@ export default [
         plugins: [
             json(),
             less({
-                output: './dist/umd/react-pdf-viewer.css',
+                output: './npm/umd/react-pdf-viewer.css',
                 sourcemap: false,
             }),
             typescript({
@@ -77,14 +77,14 @@ export default [
     {
         input,
         output: {
-            file: './dist/cjs/react-pdf-viewer.js',
+            file: './npm/cjs/react-pdf-viewer.js',
             format: 'cjs',
         },
         external: ['pdfjs-dist', 'react', 'react-dom'],
         plugins: [
             json(),
             less({
-                output: './dist/cjs/react-pdf-viewer.css',
+                output: './npm/cjs/react-pdf-viewer.css',
                 sourcemap: false,
             }),
             typescript({
@@ -103,14 +103,14 @@ export default [
     {
         input,
         output: {
-            file: './dist/cjs/react-pdf-viewer.min.js',
+            file: './npm/cjs/react-pdf-viewer.min.js',
             format: 'cjs',
         },
         external: ['pdfjs-dist', 'react', 'react-dom'],
         plugins: [
             json(),
             less({
-                output: './dist/cjs/react-pdf-viewer.css',
+                output: './npm/cjs/react-pdf-viewer.css',
                 sourcemap: false,
             }),
             typescript({

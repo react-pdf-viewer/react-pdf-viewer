@@ -1,5 +1,5 @@
 import React from 'react';
-import Viewer, { RenderPageProps } from '@phuocng/react-pdf-viewer';
+import Viewer, { RenderPageProps } from '../../packages/rpv/npm';
 
 interface CanvasLayerExampleProps {
     fileUrl: string;

@@ -9,14 +9,14 @@ export default [
     {
         input,
         output: {
-            file: './dist/cjs/react-pdf-viewer.js',
+            file: './npm/cjs/react-pdf-viewer.js',
             format: 'cjs',
         },
         external: ['pdfjs-dist', 'react', 'react-dom'],
         plugins: [
             json(),
             less({
-                output: './dist/cjs/react-pdf-viewer.css',
+                output: './npm/cjs/react-pdf-viewer.css',
                 sourcemap: false,
             }),
             typescript({

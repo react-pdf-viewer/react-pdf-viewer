@@ -37,7 +37,9 @@ module.exports = {
             // Webpack seems to duplicate 2 React versions
             // See https://github.com/phuoc-ng/react-pdf-viewer/commit/0cd175bfebfe1922d9c14c5d3309f9d1eff6213f
             react: path.resolve('./node_modules/react'),
-            '@phuocng/react-pdf-viewer': path.join(__dirname, '../../dist/'),
+            '@phuocng/rpv': path.join(__dirname, '../../packages/rpv/src'),
+            '@phuocng/rpv-current-page': path.join(__dirname, '../../packages/rpv-current-page/src'),
+            '@phuocng/rpv-page-navigation': path.join(__dirname, '../../packages/rpv-page-navigation/src'),
         },
     },
     devServer: {

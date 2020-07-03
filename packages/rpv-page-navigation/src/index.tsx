@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { createStore, Plugin, PluginFunctions, ViewerState, ScrollMode } from '@phuocng/react-pdf-viewer';
+import React from 'react';
+import { createStore, Plugin, PluginFunctions, ViewerState } from '@phuocng/rpv';
 
 interface PageNavigationPlugin extends Plugin {
     NextPageButton: () => React.ReactElement;
