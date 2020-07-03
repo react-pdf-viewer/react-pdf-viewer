@@ -6,18 +6,13 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import ViewerState from './ViewerState';
+import { PluginFunctions } from './PluginFunctions';
+import { ViewerState } from './ViewerState';
 
-export interface PluginFunctions {
-    setViewerState(viewerState: ViewerState): void;
-    getViewerState(): ViewerState;
-    jumpToPage(pageIndex: number): void;
-}
-
-interface Plugin {
+interface PluginProps {
     install?(pluginFunctions: PluginFunctions): void;
     uninstall?(pluginFunctions: PluginFunctions): void;
     onViewerStateChange?(viewState: ViewerState): ViewerState;
 }
 
-export default Plugin;
+export type Plugin = PluginProps;

@@ -6,10 +6,10 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import File from './File';
-import SpecialZoomLevel from './SpecialZoomLevel';
+import File from '../File';
+import SpecialZoomLevel from '../SpecialZoomLevel';
 
-interface ViewerState {
+interface ViewerStateProps {
     // The current opened file. It can be changed from outside, such as user drags and drops an external file
     // or user opens a file from toolbar
     file: File;
@@ -19,4 +19,4 @@ interface ViewerState {
     scale: number | SpecialZoomLevel;
 }
 
-export default ViewerState;
+export type ViewerState = ViewerStateProps;

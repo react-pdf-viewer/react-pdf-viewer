@@ -26,7 +26,7 @@ import SelectionMode from './SelectionMode';
 import SpecialZoomLevel from './SpecialZoomLevel';
 import ThemeProvider from './theme/ThemeProvider';
 import PdfJs from './vendors/PdfJs';
-import ViewerState from './ViewerState';
+import ViewerState from './types/ViewerState';
 
 interface RenderViewerProps {
     viewer: React.ReactElement;

@@ -49,3 +49,15 @@ export {
     Tooltip,
     Worker,
 };
+
+// -----
+// Types
+// -----
+
+import { Plugin as PluginType } from './types/Plugin';
+import { PluginFunctions as PluginFunctionsType } from './types/PluginFunctions';
+import { ViewerState as ViewerStateType } from './types/ViewerState';
+
+export type Plugin = PluginType;
+export type PluginFunctions = PluginFunctionsType;
+export type ViewerState = ViewerStateType;
