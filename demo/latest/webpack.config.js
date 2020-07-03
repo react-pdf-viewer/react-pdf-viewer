@@ -27,6 +27,17 @@ module.exports = {
                 exclude: /node_modules/,
                 use: ['babel-loader', 'ts-loader']
             },
+            {
+                test: /\.less$/,
+                use: [
+                    {
+                        loader: 'css-loader'
+                    },
+                    {
+                        loader: 'less-loader'
+                    },
+                ]
+            },
         ],
     },
     resolve: {
@@ -40,6 +51,8 @@ module.exports = {
             '@phuocng/rpv': path.join(__dirname, '../../packages/rpv/src'),
             '@phuocng/rpv-current-page': path.join(__dirname, '../../packages/rpv-current-page/src'),
             '@phuocng/rpv-page-navigation': path.join(__dirname, '../../packages/rpv-page-navigation/src'),
+            // CSS
+            '@phuocng/rpv/cjs/react-pdf-viewer.css': path.join(__dirname, '../../packages/rpv/npm/cjs/react-pdf-viewer.css'),
         },
     },
     devServer: {

@@ -3,7 +3,7 @@ import Viewer, { Worker } from '@phuocng/rpv';
 import currentPagePlugin from '@phuocng/rpv-current-page';
 import pageNavigationPlugin from '@phuocng/rpv-page-navigation';
 
-import '@phuocng/react-pdf-viewer/cjs/react-pdf-viewer.css';
+// import '@phuocng/rpv/cjs/react-pdf-viewer.css';
 
 const currentPage = currentPagePlugin();
 const pageNavigation = pageNavigationPlugin();
@@ -22,7 +22,7 @@ const App = () => {
                 <Viewer
                     fileUrl="/pdf-open-parameters.pdf"
                     plugins={[
-                        // currentPage,
+                        currentPage,
                         pageNavigation
                     ]}
                 />

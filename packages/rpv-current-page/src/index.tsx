@@ -31,7 +31,6 @@ const currentPagePlugin = (): CurrentPagePlugin => {
 
     return {
         onViewerStateChange: (viewerState: ViewerState): ViewerState => {
-            console.log('currentPagePlugin.onViewerStateChange', viewerState);
             store.update('pageIndex', viewerState.pageIndex);
             return viewerState;
         },
