@@ -49,6 +49,7 @@ interface InnerProps {
     initialPage?: number;
     keyword?: string | RegExp;
     pageSize: PageSize;
+    plugins: Plugin[];
     renderPage?: RenderPage;
     selectionMode: SelectionMode;
     viewerState: ViewerState;
@@ -57,13 +58,12 @@ interface InnerProps {
     onOpenFile(fileName: string, data: Uint8Array): void;
     onPageChange(e: PageChangeEvent): void;
     onTextLayerRender(e: TextLayerRenderEvent): void;
-    onViewerStateChange(viewerState: ViewerState): void;
     onZoom(e: ZoomEvent): void;
 }
 
 const Inner: React.FC<InnerProps> = ({
-    defaultScale, doc, file, initialPage, keyword, pageSize, renderPage, selectionMode, viewerState,
-    onCanvasLayerRender, onDocumentLoad, onOpenFile, onPageChange, onTextLayerRender, onViewerStateChange, onZoom,
+    defaultScale, doc, file, initialPage, keyword, pageSize, plugins, renderPage, selectionMode, viewerState,
+    onCanvasLayerRender, onDocumentLoad, onOpenFile, onPageChange, onTextLayerRender, onZoom,
 }) => {
     const theme = useContext(ThemeContext);
     const containerRef = useRef<HTMLDivElement | null>(null);
@@ -80,6 +80,7 @@ const Inner: React.FC<InnerProps> = ({
         matchIndex: -1,
         pageIndex: -1,
     });
+    const stateRef = useRef<ViewerState>(viewerState);
     const [scrollMode, setScrollMode] = useState<ScrollMode>(ScrollMode.Vertical);
     const [currentMode, setCurrentMode] = useState<SelectionMode>(selectionMode);
     const { toggleDragScroll } = useDragScroll(pagesRef);
@@ -92,6 +93,41 @@ const Inner: React.FC<InnerProps> = ({
     const arr = Array(numPages).fill(null);
     const pageVisibility = arr.map(() => 0);
     const pageRefs = arr.map(() => useRef<HTMLDivElement>());
+
+    const setViewerState = (viewerState: ViewerState) => {
+        let newState = viewerState;
+        // Loop over the plugins and notify the state changed
+        plugins.forEach(plugin => {
+            if (plugin.onViewerStateChange) {
+                newState = plugin.onViewerStateChange(newState);
+            }
+        });
+        stateRef.current = newState;
+    };
+
+    const getViewerState = () => stateRef.current;
+
+    const getPluginMethods = () => ({
+        setViewerState,
+        getViewerState,
+        jumpToPage,
+    });
+
+    useEffect(() => {
+        const pluginMethods = getPluginMethods();
+
+        // Install the plugins
+        plugins.forEach((plugin) => {
+            plugin.install(pluginMethods);
+        });
+
+        return () => {
+            // Uninstall the plugins
+            plugins.forEach((plugin) => {
+                plugin.uninstall(pluginMethods);
+            });
+        };
+    }, []);
 
     const openFiles = (files: FileList): void => {
         if (files.length === 0) {
@@ -121,12 +157,12 @@ const Inner: React.FC<InnerProps> = ({
         if (pageIndex < 0 || pageIndex >= numPages) {
             return;
         }
-        setCurrentPage(pageIndex);
         const pagesContainer = pagesRef.current;
         const targetPage = pageRefs[pageIndex].current;
         if (pagesContainer && targetPage) {
             pagesContainer.scrollTop = targetPage.offsetTop;
         }
+        setCurrentPage(pageIndex);
     };
 
     useEffect(() => {
@@ -138,11 +174,11 @@ const Inner: React.FC<InnerProps> = ({
 
     useEffect(() => {
         onPageChange({ currentPage, doc });
-        onViewerStateChange(
-            Object.assign({}, viewerState, {
-                pageIndex: currentPage,
-            })
-        );
+        setViewerState({
+            file: viewerState.file,
+            pageIndex: currentPage,
+            scale,
+        });
     }, [currentPage]);
 
     // Manage the selection mode
@@ -202,7 +238,9 @@ const Inner: React.FC<InnerProps> = ({
         const maxRatioPage = pageVisibility.reduce((maxIndex, item, index, array) => {
             return item > array[maxIndex] ? index : maxIndex;
         }, 0);
-        setCurrentPage(maxRatioPage);
+        if (maxRatioPage !== currentPage) {
+            setCurrentPage(maxRatioPage);
+        }
     };
 
     const rotate = (degree: number): void => {
