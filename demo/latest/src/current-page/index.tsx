@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { createStore, Plugin, PluginFunctions, ViewerState } from '@phuocng/react-pdf-viewer';
 
 interface CurrentPagePlugin extends Plugin {
-    CurrentPageLabel: () => React.ReactElement
+    CurrentPageLabel: () => React.ReactElement;
 }
 
 interface StoreProps {

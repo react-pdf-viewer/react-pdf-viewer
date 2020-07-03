@@ -11,6 +11,7 @@ import ViewerState from './ViewerState';
 export interface PluginFunctions {
     setViewerState(viewerState: ViewerState): void;
     getViewerState(): ViewerState;
+    jumpToPage(pageIndex: number): void;
 }
 
 interface Plugin {

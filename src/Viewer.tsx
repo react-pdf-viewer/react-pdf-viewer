@@ -12,7 +12,7 @@ import File from './File';
 import Slot from './layouts/Slot';
 import defaultLayout from './layouts/defaultLayout';
 import defaultToolbar from './layouts/defaultToolbar';
-import InnerWrapper from './layouts/InnerWrapper';
+import Inner from './layouts/Inner';
 import { Layout } from './layouts/Layout';
 import PageSize from './layouts/PageSize'; 
 import PageSizeCalculator from './layouts/PageSizeCalculator';
@@ -152,7 +152,7 @@ const Viewer: React.FC<ViewerProps> = ({
                         <PageSizeCalculator
                             doc={doc}
                             render={(ps: PageSize) => (
-                                <InnerWrapper
+                                <Inner
                                     defaultScale={defaultScale}
                                     doc={doc}
                                     file={file}
