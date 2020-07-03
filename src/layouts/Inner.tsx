@@ -118,13 +118,17 @@ const Inner: React.FC<InnerProps> = ({
 
         // Install the plugins
         plugins.forEach((plugin) => {
-            plugin.install(pluginMethods);
+            if (plugin.install) {
+                plugin.install(pluginMethods);
+            }
         });
 
         return () => {
             // Uninstall the plugins
             plugins.forEach((plugin) => {
-                plugin.uninstall(pluginMethods);
+                if (plugin.uninstall) {
+                    plugin.uninstall(pluginMethods);
+                }
             });
         };
     }, []);

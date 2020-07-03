@@ -29,10 +29,6 @@ const currentPagePlugin = (): CurrentPagePlugin => {
     };
 
     return {
-        install: (pluginFunctions: PluginFunctions) => {
-        },
-        uninstall: (pluginFunctions: PluginFunctions) => {
-        },
         onViewerStateChange: (viewerState: ViewerState): ViewerState => {
             store.update('pageIndex', viewerState.pageIndex);
             return viewerState;

@@ -41,8 +41,6 @@ const pageNavigationPlugin = (): PageNavigationPlugin => {
             store.update('jumpToPage', pluginFunctions.jumpToPage);
             store.update('getViewerState', pluginFunctions.getViewerState);
         },
-        uninstall: (pluginFunctions: PluginFunctions) => {
-        },
         NextPageButton,
         PreviousPageButton,
     };
