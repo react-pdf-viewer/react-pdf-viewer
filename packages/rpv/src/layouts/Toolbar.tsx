@@ -17,8 +17,6 @@ import HandToolIcon from '../icons/HandToolIcon';
 import HorizontalScrollingIcon from '../icons/HorizontalScrollingIcon';
 import InfoIcon from '../icons/InfoIcon';
 import LeftSidebarIcon from '../icons/LeftSidebarIcon';
-import NextIcon from '../icons/NextIcon';
-import PreviousIcon from '../icons/PreviousIcon';
 import PrintIcon from '../icons/PrintIcon';
 import RotateBackwardIcon from '../icons/RotateBackwardIcon';
 import RotateForwardIcon from '../icons/RotateForwardIcon';
@@ -157,8 +155,6 @@ const Toolbar: React.FC<ToolbarProps> = ({
     const setWrappedScrollMode = (): void => onChangeScrollMode(ScrollMode.Wrapped);
 
     const renderToggle = (): LocalizationMap => l10n.toolbar.toggleSidebar;
-    const renderPreviousPage = (): LocalizationMap => l10n.toolbar.previousPage;
-    const renderNextPage = (): LocalizationMap => l10n.toolbar.nextPage;
     const renderZoomOut = (): LocalizationMap => l10n.toolbar.zoomOut;
     const renderZoomIn = (): LocalizationMap => l10n.toolbar.zoomIn;
     const renderFullScreen = (): LocalizationMap => l10n.toolbar.fullScreen;
@@ -272,25 +268,9 @@ const Toolbar: React.FC<ToolbarProps> = ({
                 onRotate={onRotate}
             />
         ),
-        nextPageButton: (
-            <Tooltip
-                position={Position.BottomCenter}
-                target={<Button onClick={gotoNextPage}><NextIcon /></Button>}
-                content={renderNextPage}
-                offset={TOOLTIP_OFFSET}
-            />
-        ),
         numPages,
         openFileButton: (
             <OpenFileButton onOpenFiles={onOpenFiles} />
-        ),
-        previousPageButton: (
-            <Tooltip
-                position={Position.BottomCenter}
-                target={<Button onClick={gotoPreviousPage}><PreviousIcon /></Button>}
-                content={renderPreviousPage}
-                offset={TOOLTIP_OFFSET}
-            />
         ),
         printButton: (
             <Tooltip

@@ -13,8 +13,6 @@ interface ToolbarSlot {
     numPages: number;
     toggleSidebarButton: React.ReactNode;
     searchPopover: React.ReactNode;
-    previousPageButton: React.ReactNode;
-    nextPageButton: React.ReactNode;
     currentPageInput: React.ReactNode;
     zoomOutButton: React.ReactNode;
     zoomPopover: React.ReactNode;

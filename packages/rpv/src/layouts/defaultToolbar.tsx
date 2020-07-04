@@ -25,13 +25,7 @@ const defaultToolbar: RenderToolbarSlot = (toolbarSlot: ToolbarSlot): React.Reac
                     {toolbarSlot.searchPopover}
                 </div>
                 <div className={`${theme.prefixClass}-toolbar-item`}>
-                    {toolbarSlot.previousPageButton}
-                </div>
-                <div className={`${theme.prefixClass}-toolbar-item`}>
                     {toolbarSlot.currentPageInput} / {toolbarSlot.numPages}
-                </div>
-                <div className={`${theme.prefixClass}-toolbar-item`}>
-                    {toolbarSlot.nextPageButton}
                 </div>
             </div>
             <div className={`${theme.prefixClass}-toolbar-center`}>
