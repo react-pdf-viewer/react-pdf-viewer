@@ -1,40 +1,24 @@
-import React, { useEffect, useState } from 'react';
-import { createStore, Plugin, StoreHandler, ViewerState } from '@phuocng/rpv';
+import React from 'react';
+import { createStore, Plugin, ViewerState } from '@phuocng/rpv';
+
+import CurrentPageLabel from './CurrentPageLabel';
+import StoreProps from './StoreProps';
 
 interface CurrentPagePlugin extends Plugin {
     CurrentPageLabel: () => React.ReactElement;
 }
 
-interface StoreProps {
-    pageIndex?: number;
-}
-
 const currentPagePlugin = (): CurrentPagePlugin => {
     const store = createStore<StoreProps>();
 
-    const CurrentPageLabel = () => {
-        const [currentPage, setCurrentPage] = useState<number>(0);
-
-        useEffect(() => {
-            const handlePageIndex: StoreHandler<number> = (p: number) => setCurrentPage(p);
-            store.subscribe('pageIndex', handlePageIndex);
-
-            return () => {
-                store.unsubscribe('pageIndex', handlePageIndex);
-            };
-        }, []);
-
-        return (
-            <div>{currentPage + 1}</div>
-        );
-    };
+    const CurrentPageLabelDecorator = () => <CurrentPageLabel store={store} />;
 
     return {
         onViewerStateChange: (viewerState: ViewerState): ViewerState => {
-            store.update('pageIndex', viewerState.pageIndex);
+            store.update('currentPage', viewerState.pageIndex);
             return viewerState;
         },
-        CurrentPageLabel,
+        CurrentPageLabel: CurrentPageLabelDecorator,
     };
 };
 
