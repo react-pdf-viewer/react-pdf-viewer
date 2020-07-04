@@ -16,6 +16,8 @@ import Spinner from './components/Spinner';
 import Icon from './icons/Icon';
 import defaultLayout from './layouts/defaultLayout';
 import defaultToolbar from './layouts/defaultToolbar';
+import LocalizationContext from './localization/LocalizationContext';
+import LocalizationProvider from './localization/LocalizationProvider';
 import Modal from './portal/Modal';
 import Popover from './portal/Popover';
 import Position from './portal/Position';
@@ -34,6 +36,8 @@ export {
     defaultLayout,
     defaultToolbar,
     Icon,
+    LocalizationContext,
+    LocalizationProvider,
     MenuDivider,
     MenuItem,
     Modal,
@@ -61,10 +65,15 @@ export { default as PreviousIcon } from './icons/PreviousIcon';
 // Types
 // -----
 
+import { Toggle as ToggleType } from './hooks/useToggle';
+
+import { default as LocalizationMapType } from './localization/LocalizationMap';
 import { Plugin as PluginType, PluginOnDocumentLoad as PluginOnDocumentLoadType } from './types/Plugin';
 import { PluginFunctions as PluginFunctionsType } from './types/PluginFunctions';
 import { ViewerState as ViewerStateType } from './types/ViewerState';
 
+export type LocalizationMap = LocalizationMapType;
+export type Toggle = ToggleType;
 export type Store<T> = StoreType<T>;
 export type StoreHandler<T> = StoreHandlerType<T>;
 export type Plugin = PluginType;

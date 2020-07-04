@@ -25,6 +25,7 @@ export declare namespace PdfJs {
 export interface LocalizationMap {
     [key: string]: LocalizationMap;
 }
+export const LocalizationContext: React.Context<LocalizationMap>;
 
 export interface Offset {
     left: number;

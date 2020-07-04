@@ -135,40 +135,42 @@ const Viewer: React.FC<ViewerProps> = ({
     return (
         <ThemeProvider prefixClass={prefixClass}>
             <LocalizationProvider localization={localization}>
-                <DocumentLoader
-                    characterMap={characterMap}
-                    file={file.data}
-                    render={(doc: PdfJs.PdfDocument) => (
-                        <PageSizeCalculator
-                            doc={doc}
-                            render={(ps: PageSize) => (
-                                <Inner
-                                    defaultScale={defaultScale}
-                                    doc={doc}
-                                    file={file}
-                                    initialPage={initialPage}
-                                    keyword={keyword}
-                                    pageSize={ps}
-                                    plugins={plugins}
-                                    renderPage={renderPage}
-                                    selectionMode={selectionMode}
-                                    viewerState={{
-                                        file,
-                                        pageIndex: initialPage,
-                                        scale: defaultScale || ps.scale,
-                                    }}
-                                    onCanvasLayerRender={onCanvasLayerRender}
-                                    onDocumentLoad={onDocumentLoad}
-                                    onOpenFile={openFile}
-                                    onPageChange={onPageChange}
-                                    onTextLayerRender={onTextLayerRender}
-                                    onZoom={onZoom}
-                                />
-                            )}
-                        />
-                    )}
-                    renderError={renderError}
-                />
+                {(_) => (
+                    <DocumentLoader
+                        characterMap={characterMap}
+                        file={file.data}
+                        render={(doc: PdfJs.PdfDocument) => (
+                            <PageSizeCalculator
+                                doc={doc}
+                                render={(ps: PageSize) => (
+                                    <Inner
+                                        defaultScale={defaultScale}
+                                        doc={doc}
+                                        file={file}
+                                        initialPage={initialPage}
+                                        keyword={keyword}
+                                        pageSize={ps}
+                                        plugins={plugins}
+                                        renderPage={renderPage}
+                                        selectionMode={selectionMode}
+                                        viewerState={{
+                                            file,
+                                            pageIndex: initialPage,
+                                            scale: defaultScale || ps.scale,
+                                        }}
+                                        onCanvasLayerRender={onCanvasLayerRender}
+                                        onDocumentLoad={onDocumentLoad}
+                                        onOpenFile={openFile}
+                                        onPageChange={onPageChange}
+                                        onTextLayerRender={onTextLayerRender}
+                                        onZoom={onZoom}
+                                    />
+                                )}
+                            />
+                        )}
+                        renderError={renderError}
+                    />
+                )}
             </LocalizationProvider>
         </ThemeProvider>
     );
