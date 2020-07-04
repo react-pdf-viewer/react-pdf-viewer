@@ -1,0 +1,23 @@
+{
+    "askingPassword": {
+        "requirePasswordToOpen": "Tập tin yêu cầu mật khẩu để mở",
+        "submit": "Gửi đi"
+    },
+    "attachment": {
+        "clickToDownload": "Nhấn vào để tải về",
+        "noAttachment": "Không có tập tin đính kèm nào"
+    },
+    "plugins": {
+        "localeSwitcher": {
+            "switchLocale": "Chuyển ngôn ngữ"
+        },
+        "pageNavigation": {
+            "previousPage": "Trang trước",
+            "nextPage": "Trang kế"
+        }
+    },
+    "wrongPassword": {
+        "submit": "Gửi đi",
+        "tryAgain": "Mật khẩu không đúng. Xin thử lại"
+    }
+}

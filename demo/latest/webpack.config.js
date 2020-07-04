@@ -53,6 +53,7 @@ module.exports = {
             // Plugins
             '@phuocng/rpv': path.join(__dirname, '../../packages/rpv/src'),
             '@phuocng/rpv-current-page': path.join(__dirname, '../../packages/rpv-current-page/src'),
+            '@phuocng/rpv-locale-switcher': path.join(__dirname, '../../packages/rpv-locale-switcher/src'),
             '@phuocng/rpv-page-navigation': path.join(__dirname, '../../packages/rpv-page-navigation/src'),
         },
     },

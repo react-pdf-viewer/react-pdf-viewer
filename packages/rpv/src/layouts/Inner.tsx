@@ -110,7 +110,6 @@ const Inner: React.FC<InnerProps> = ({
         stateRef.current = newState;
     };
 
-    const getDocument = () => doc;
     const getViewerState = () => stateRef.current;
 
     const getPluginMethods = (): PluginFunctions => ({
