@@ -27,17 +27,34 @@ module.exports = {
                 exclude: /node_modules/,
                 use: ['babel-loader', 'ts-loader']
             },
+            {
+                test: /\.less$/,
+                use: [
+                    {
+                        loader: 'css-loader'
+                    },
+                    {
+                        loader: 'less-loader'
+                    },
+                ]
+            },
         ],
     },
     resolve: {
-        extensions: ['.js', '.jsx', '.ts', '.tsx'],
+        extensions: ['.css', '.js', '.jsx', '.ts', '.tsx'],
         alias: {
             // When linking @phuoc-ng/react-pdf-viewer to the `dist` folder
             // Fix an issue of `Invalid hook call`
             // Webpack seems to duplicate 2 React versions
             // See https://github.com/phuoc-ng/react-pdf-viewer/commit/0cd175bfebfe1922d9c14c5d3309f9d1eff6213f
             react: path.resolve('./node_modules/react'),
-            '@phuocng/react-pdf-viewer': path.join(__dirname, '../../dist/'),
+            // CSS
+            '@phuocng/rpv/cjs/react-pdf-viewer.css': path.join(__dirname, '../../packages/rpv/npm/cjs/react-pdf-viewer.css'),
+            // Plugins
+            '@phuocng/rpv': path.join(__dirname, '../../packages/rpv/src'),
+            '@phuocng/rpv-current-page': path.join(__dirname, '../../packages/rpv-current-page/src'),
+            '@phuocng/rpv-locale-switcher': path.join(__dirname, '../../packages/rpv-locale-switcher/src'),
+            '@phuocng/rpv-page-navigation': path.join(__dirname, '../../packages/rpv-page-navigation/src'),
         },
     },
     devServer: {

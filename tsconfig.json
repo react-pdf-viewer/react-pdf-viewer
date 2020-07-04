@@ -1,6 +1,5 @@
 {
     "compilerOptions": {
-        "rootDir": "./src",
         "esModuleInterop": true,
         "isolatedModules": true,
         "target": "esnext",
@@ -9,11 +8,13 @@
         "jsx": "react",
         "lib": ["dom", "es2015"],
         "resolveJsonModule": true,
-        "baseUrl": "."
+        "baseUrl": ".",
+        "paths": {
+            "@phuocng/*": ["packages/*/src"]
+        }
     },
     "exclude": [
-        "demo",
-        "dist",
+        "npm",
         "node_modules"
     ]
 }

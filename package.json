@@ -1,56 +1,18 @@
 {
-    "name": "@phuocng/react-pdf-viewer",
-    "version": "1.7.0",
-    "description": "A React component to view a PDF document",
-    "license": "https://react-pdf-viewer.dev/license",
-    "author": {
-        "name": "Nguyen Huu Phuoc",
-        "email": "me@phuoc.ng",
-        "url": "https://twitter.com/nghuuphuoc"
-    },
-    "homepage": "https://react-pdf-viewer.dev",
-    "keywords": [
-        "react",
-        "react.js",
-        "pdf",
-        "pdf.js",
-        "pdf viewer"
+    "private": "true",
+    "workspaces": [
+        "packages/*"
     ],
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/phuoc-ng/react-pdf-viewer"
-    },
-    "bugs": {
-        "url": "https://github.com/phuoc-ng/react-pdf-viewer/issues"
-    },
     "scripts": {
-        "copy": "rm -rf dist/cjs/* && rm -rf dist/umd/* && cp README.md dist",
-        "build": "npm run copy && rollup -c && npm run mincss && rm -rf dist/cjs/react-pdf-viewer.less dist/umd/react-pdf-viewer.less",
-        "mincss": "postcss dist/cjs/react-pdf-viewer.css > dist/cjs/react-pdf-viewer.min.css && postcss dist/umd/react-pdf-viewer.css > dist/umd/react-pdf-viewer.min.css",
-        "dev": "npm run copy && rollup -c rollup.dev.config.js -w",
-        "lint": "eslint src/**/*.ts src/**/*.tsx",
-        "typecheck": "tsc --noEmit --watch"
-    },
-    "dependencies": {
-        "pdfjs-dist": "^2.4.456",
-        "react": "^16.13.1",
-        "react-dom": "^16.13.1"
+        "bootstrap": "lerna bootstrap --hoist",
+        "postinstall": "npm run bootstrap",
+        "clean": "lerna run clean",
+        "build": "lerna run build",
+        "dev": "lerna run dev",
+        "pub": "lerna publish"
     },
     "devDependencies": {
-        "@rollup/plugin-json": "^4.1.0",
-        "@rollup/plugin-typescript": "^5.0.0",
-        "@types/react": "^16.9.41",
-        "@types/react-dom": "^16.9.8",
-        "@typescript-eslint/eslint-plugin": "^3.4.0",
-        "@typescript-eslint/parser": "^3.4.0",
-        "cssnano": "^4.1.10",
-        "eslint": "^7.3.1",
-        "eslint-plugin-react": "^7.20.0",
-        "postcss-cli": "^7.1.1",
-        "rollup": "^2.18.0",
-        "rollup-plugin-less": "^1.1.2",
-        "rollup-plugin-less-modules": "^0.1.11",
-        "rollup-plugin-terser": "^6.1.0",
+        "lerna": "^3.22.1",
         "typescript": "^3.9.5"
     }
 }

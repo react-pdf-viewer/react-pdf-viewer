@@ -11,7 +11,9 @@
         "jsx": "react",
         "baseUrl": ".",
         "paths": {
-            "@phuocng/react-pdf-viewer": ["../../dist"]
+            "@phuocng/rpv": ["../../packages/rpv/src"],
+            "@phuocng/rpv-current-page": ["../../packages/rpv-current-page/src"],
+            "@phuocng/rpv-page-navigation": ["../../packages/rpv-page-navigation/src"]
         }
     }
 }
