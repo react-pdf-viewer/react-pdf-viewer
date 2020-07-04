@@ -331,7 +331,7 @@ export type StoreState = Record<string, any>;
 export type StoreKey<T extends StoreState> = string & keyof T;
 export type StoreHandler<T> = (params: T) => void;
 
-interface Store<T extends StoreState> {
+export interface Store<T extends StoreState> {
     subscribe<K extends StoreKey<T>>(eventName: K, handler: StoreHandler<NonNullable<T[K]>>): void;
     unsubscribe<K extends StoreKey<T>>(eventName: K, handler: StoreHandler<NonNullable<T[K]>>): void;
     update<K extends StoreKey<T>>(eventName: K, params: T[K]): void;

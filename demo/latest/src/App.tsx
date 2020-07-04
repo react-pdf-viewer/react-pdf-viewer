@@ -14,9 +14,9 @@ const App = () => {
     return (
         <Worker workerUrl="https://unpkg.com/pdfjs-dist@2.4.456/build/pdf.worker.js">
             <div style={{ display: 'flex' }}>
-                <NextPageButton />
-                <CurrentPageLabel />
                 <PreviousPageButton />
+                <CurrentPageLabel />
+                <NextPageButton />
             </div>
             <div style={{ height: '750px', padding: '16px 0' }}>
                 <Viewer
