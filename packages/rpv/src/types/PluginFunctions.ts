@@ -11,7 +11,6 @@ import { ViewerState } from './ViewerState';
 
 export interface PluginFunctionsProps {
     getViewerState(): ViewerState;
-    getDocument(): PdfJs.PdfDocument;
     jumpToPage(pageIndex: number): void;
     setViewerState(viewerState: ViewerState): void;
 }

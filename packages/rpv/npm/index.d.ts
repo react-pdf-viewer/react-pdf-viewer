@@ -311,15 +311,19 @@ export interface ViewerState {
 }
 
 export interface PluginFunctions {
-    getDocument(): PdfJs.PdfDocument;
     getViewerState(): ViewerState;
     jumpToPage(pageIndex: number): void;
     setViewerState(viewerState: ViewerState): void;
 }
 
+export interface PluginOnDocumentLoadProps {
+    doc: PdfJs.PdfDocument;
+}
+
 export interface Plugin {
     install?(pluginFunctions: PluginFunctions): void;
     uninstall?(pluginFunctions: PluginFunctions): void;
+    onDocumentLoad?(props: PluginOnDocumentLoadProps): void;
     onViewerStateChange?(viewState: ViewerState): ViewerState;
 }
 

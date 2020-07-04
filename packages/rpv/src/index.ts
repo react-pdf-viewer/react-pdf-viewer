@@ -54,7 +54,7 @@ export {
 // Types
 // -----
 
-import { Plugin as PluginType } from './types/Plugin';
+import { Plugin as PluginType, PluginOnDocumentLoad as PluginOnDocumentLoadType } from './types/Plugin';
 import { PluginFunctions as PluginFunctionsType } from './types/PluginFunctions';
 import { ViewerState as ViewerStateType } from './types/ViewerState';
 
@@ -62,4 +62,5 @@ export type Store<T> = StoreType<T>;
 export type StoreHandler<T> = StoreHandlerType<T>;
 export type Plugin = PluginType;
 export type PluginFunctions = PluginFunctionsType;
+export type PluginOnDocumentLoad = PluginOnDocumentLoadType;
 export type ViewerState = ViewerStateType;

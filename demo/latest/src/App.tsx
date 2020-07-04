@@ -18,8 +18,8 @@ const App = () => {
                 <CurrentPageLabel />
                 <NextPageButton>
                 {
-                    props => (
-                        <button onClick={props.onClick}>Go to next page</button>
+                    (props) => (
+                        <button onClick={props.onClick} disabled={props.isDisabled}>Go to next page</button>
                     )
                 }
                 </NextPageButton>

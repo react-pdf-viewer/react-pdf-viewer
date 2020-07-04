@@ -1,8 +1,9 @@
 import { ViewerState } from '@phuocng/rpv';
 
-interface StoreProps {
+interface StoreProps {  
+    currentPage: number;
     jumpToPage?(pageIndex: number): void;
-    getViewerState?: () => ViewerState;
+    numberOfPages?: number;
 }
 
 export default StoreProps;

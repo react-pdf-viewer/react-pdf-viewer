@@ -1,7 +1,10 @@
-import React from 'react';
-import { PluginFunctions, Store } from '@phuocng/rpv';
+import React, { useEffect, useState } from 'react';
+import { Store, StoreHandler } from '@phuocng/rpv';
+
+import StoreProps from './StoreProps';
 
 export interface RenderPreviousPageButtonProps {
+    isDisabled: boolean;
     onClick: () => void;
 }
 
@@ -13,22 +16,36 @@ export type ChildrenPreviousPageButton = (props: RenderPreviousPageButtonProps) 
 
 const PreviousPageButton: React.FC<{
     children?: ChildrenPreviousPageButton,
-    store: Store<PluginFunctions>,
+    store: Store<StoreProps>,
 }> = ({ store, children }) => {
+    const [currentPage, setCurrentPage] = useState(0);
+
+    const handleCurrentPageChanged: StoreHandler<number> = (currentPage: number) => {
+        setCurrentPage(currentPage);
+    };
+
+    useEffect(() => {
+        store.subscribe('currentPage', handleCurrentPageChanged);
+
+        return () => {
+            store.unsubscribe('currentPage', handleCurrentPageChanged);
+        };
+    }, []);
+
     const goToPreviousPage = () => {
-        const editorState = store.get('getViewerState');
         const jumpToPage = store.get('jumpToPage');
-        if (jumpToPage && editorState) {
-            jumpToPage(editorState().pageIndex - 1);
+        if (jumpToPage) {
+            jumpToPage(currentPage - 1);
         }
     };
 
     const defaultChildren = (props: RenderPreviousPageButtonProps) => (
-        <button onClick={props.onClick}>Previous</button>
+        <button onClick={props.onClick} disabled={props.isDisabled}>Previous</button>
     );
     const render = children || defaultChildren;
 
     return render({
+        isDisabled: currentPage <= 0,
         onClick: goToPreviousPage,
     });
 };

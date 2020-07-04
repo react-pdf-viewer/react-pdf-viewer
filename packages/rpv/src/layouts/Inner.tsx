@@ -114,7 +114,6 @@ const Inner: React.FC<InnerProps> = ({
     const getViewerState = () => stateRef.current;
 
     const getPluginMethods = (): PluginFunctions => ({
-        getDocument,
         getViewerState,
         jumpToPage,
         setViewerState,
@@ -178,6 +177,10 @@ const Inner: React.FC<InnerProps> = ({
 
     useEffect(() => {
         onDocumentLoad({ doc });
+        // Loop over the plugins
+        plugins.forEach(plugin => {
+            plugin.onDocumentLoad && plugin.onDocumentLoad({ doc });
+        });
         if (initialPage) {
             jumpToPage(initialPage);
         }
