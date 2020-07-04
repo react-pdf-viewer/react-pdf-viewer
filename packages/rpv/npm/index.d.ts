@@ -311,9 +311,10 @@ export interface ViewerState {
 }
 
 export interface PluginFunctions {
-    setViewerState(viewerState: ViewerState): void;
+    getDocument(): PdfJs.PdfDocument;
     getViewerState(): ViewerState;
     jumpToPage(pageIndex: number): void;
+    setViewerState(viewerState: ViewerState): void;
 }
 
 export interface Plugin {

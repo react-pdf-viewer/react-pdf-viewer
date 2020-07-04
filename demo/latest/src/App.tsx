@@ -16,7 +16,13 @@ const App = () => {
             <div style={{ display: 'flex' }}>
                 <PreviousPageButton />
                 <CurrentPageLabel />
-                <NextPageButton />
+                <NextPageButton>
+                {
+                    props => (
+                        <button onClick={props.onClick}>Go to next page</button>
+                    )
+                }
+                </NextPageButton>
             </div>
             <div style={{ height: '750px', padding: '16px 0' }}>
                 <Viewer

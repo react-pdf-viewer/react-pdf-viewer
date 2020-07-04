@@ -6,12 +6,14 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
+import PdfJs from '../vendors/PdfJs';
 import { ViewerState } from './ViewerState';
 
 export interface PluginFunctionsProps {
-    setViewerState(viewerState: ViewerState): void;
     getViewerState(): ViewerState;
+    getDocument(): PdfJs.PdfDocument;
     jumpToPage(pageIndex: number): void;
+    setViewerState(viewerState: ViewerState): void;
 }
 
 export type PluginFunctions = PluginFunctionsProps;

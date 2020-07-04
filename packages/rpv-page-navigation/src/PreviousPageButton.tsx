@@ -1,24 +1,36 @@
 import React from 'react';
-import { Store } from '@phuocng/rpv';
+import { PluginFunctions, Store } from '@phuocng/rpv';
 
-import StoreProps from './StoreProps';
-
-interface PreviousPageButtonProps {
-    store: Store<StoreProps>;
+export interface RenderPreviousPageButtonProps {
+    onClick: () => void;
 }
 
-const PreviousPageButton: React.FC<PreviousPageButtonProps> = ({ store }) => {
+export interface PreviousPageButtonProps {
+    children?: ChildrenPreviousPageButton;
+}
+
+export type ChildrenPreviousPageButton = (props: RenderPreviousPageButtonProps) => React.ReactElement;
+
+const PreviousPageButton: React.FC<{
+    children?: ChildrenPreviousPageButton,
+    store: Store<PluginFunctions>,
+}> = ({ store, children }) => {
     const goToPreviousPage = () => {
         const editorState = store.get('getViewerState');
         const jumpToPage = store.get('jumpToPage');
-        if (editorState && jumpToPage) {
+        if (jumpToPage && editorState) {
             jumpToPage(editorState().pageIndex - 1);
         }
     };
 
-    return (
-        <button onClick={goToPreviousPage}>Previous</button>
+    const defaultChildren = (props: RenderPreviousPageButtonProps) => (
+        <button onClick={props.onClick}>Previous</button>
     );
+    const render = children || defaultChildren;
+
+    return render({
+        onClick: goToPreviousPage,
+    });
 };
 
 export default PreviousPageButton;

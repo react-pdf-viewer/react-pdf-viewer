@@ -23,6 +23,7 @@ import SelectionMode from '../SelectionMode';
 import SpecialZoomLevel from '../SpecialZoomLevel';
 import ThemeContext from '../theme/ThemeContext';
 import { Plugin } from '../types/Plugin';
+import { PluginFunctions } from '../types/PluginFunctions';
 import { ViewerState } from '../types/ViewerState';
 import PdfJs from '../vendors/PdfJs';
 import downloadFile from '../utils/downloadFile';
@@ -94,6 +95,10 @@ const Inner: React.FC<InnerProps> = ({
     const pageVisibility = arr.map(() => 0);
     const pageRefs = arr.map(() => useRef<HTMLDivElement>());
 
+    // -------------------------------------
+    // The methods that a plugin can hook on
+    // -------------------------------------
+
     const setViewerState = (viewerState: ViewerState) => {
         let newState = viewerState;
         // Loop over the plugins and notify the state changed
@@ -105,12 +110,14 @@ const Inner: React.FC<InnerProps> = ({
         stateRef.current = newState;
     };
 
+    const getDocument = () => doc;
     const getViewerState = () => stateRef.current;
 
-    const getPluginMethods = () => ({
-        setViewerState,
+    const getPluginMethods = (): PluginFunctions => ({
+        getDocument,
         getViewerState,
         jumpToPage,
+        setViewerState,
     });
 
     useEffect(() => {

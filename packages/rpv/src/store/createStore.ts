@@ -7,7 +7,7 @@ interface StoreProps<T extends StoreState> {
     subscribe<K extends StoreKey<T>>(eventName: K, handler: StoreHandlerType<NonNullable<T[K]>>): void;
     unsubscribe<K extends StoreKey<T>>(eventName: K, handler: StoreHandlerType<NonNullable<T[K]>>): void;
     update<K extends StoreKey<T>>(eventName: K, params: T[K]): void;
-    get<K extends StoreKey<T>>(eventName: K): T[K];
+    get<K extends StoreKey<T>>(eventName: K): T[K] | undefined;
 }
 
 function createStore<T extends StoreState>(initialState?: T): StoreProps<T> {
