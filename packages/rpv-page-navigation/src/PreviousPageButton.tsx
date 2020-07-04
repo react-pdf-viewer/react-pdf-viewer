@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Store, StoreHandler } from '@phuocng/rpv';
+import { Button, Position, PreviousIcon, Store, StoreHandler, Tooltip } from '@phuocng/rpv';
 
 import StoreProps from './StoreProps';
 
@@ -13,6 +13,8 @@ export interface PreviousPageButtonProps {
 }
 
 export type ChildrenPreviousPageButton = (props: RenderPreviousPageButtonProps) => React.ReactElement;
+
+const TOOLTIP_OFFSET = { left: 0, top: 8 };
 
 const PreviousPageButton: React.FC<{
     children?: ChildrenPreviousPageButton,
@@ -40,7 +42,12 @@ const PreviousPageButton: React.FC<{
     };
 
     const defaultChildren = (props: RenderPreviousPageButtonProps) => (
-        <button onClick={props.onClick} disabled={props.isDisabled}>Previous</button>
+        <Tooltip
+            position={Position.BottomCenter}
+            target={<Button onClick={props.onClick}><PreviousIcon /></Button>}
+            content={() => 'Previous'}
+            offset={TOOLTIP_OFFSET}
+        />
     );
     const render = children || defaultChildren;
 

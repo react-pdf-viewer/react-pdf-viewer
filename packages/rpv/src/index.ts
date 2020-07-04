@@ -51,6 +51,13 @@ export {
 };
 
 // -----
+// Icons
+// -----
+
+export { default as NextIcon } from './icons/NextIcon';
+export { default as PreviousIcon } from './icons/PreviousIcon';
+
+// -----
 // Types
 // -----
 

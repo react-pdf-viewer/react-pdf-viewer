@@ -111,6 +111,12 @@ export enum SpecialZoomLevel {
     PageWidth = 'PageWidth',
 }
 
+// -----
+// Icons
+// -----
+export class PreviousIcon extends React.Component<{}>{}
+export class NextIcon extends React.Component<{}>{}
+
 // ----------
 // Components
 // ----------
