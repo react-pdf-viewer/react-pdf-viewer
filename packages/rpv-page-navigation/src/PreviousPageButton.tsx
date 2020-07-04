@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { Button, Position, PreviousIcon, Store, StoreHandler, Tooltip } from '@phuocng/rpv';
+import React, { useContext, useEffect, useState } from 'react';
+import { Button, LocalizationContext, Position, PreviousIcon, Store, StoreHandler, Tooltip } from '@phuocng/rpv';
 
 import StoreProps from './StoreProps';
 
@@ -20,6 +20,7 @@ const PreviousPageButton: React.FC<{
     children?: ChildrenPreviousPageButton,
     store: Store<StoreProps>,
 }> = ({ store, children }) => {
+    const l10nContext = useContext(LocalizationContext);
     const [currentPage, setCurrentPage] = useState(0);
 
     const handleCurrentPageChanged: StoreHandler<number> = (currentPage: number) => {
@@ -41,14 +42,20 @@ const PreviousPageButton: React.FC<{
         }
     };
 
-    const defaultChildren = (props: RenderPreviousPageButtonProps) => (
-        <Tooltip
-            position={Position.BottomCenter}
-            target={<Button onClick={props.onClick}><PreviousIcon /></Button>}
-            content={() => 'Previous'}
-            offset={TOOLTIP_OFFSET}
-        />
-    );
+    const defaultChildren = (props: RenderPreviousPageButtonProps) => {
+        const label = (l10nContext && l10nContext.plugins)
+            ? l10nContext.plugins.pageNavigation.previousPage
+            : 'Previous page';
+
+        return (
+            <Tooltip
+                position={Position.BottomCenter}
+                target={<Button onClick={props.onClick}><PreviousIcon /></Button>}
+                content={() => label}
+                offset={TOOLTIP_OFFSET}
+            />
+        );
+    };
     const render = children || defaultChildren;
 
     return render({

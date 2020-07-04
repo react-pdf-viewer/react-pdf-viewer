@@ -12,7 +12,7 @@ interface PageNavigationPlugin extends Plugin {
 }
 
 const pageNavigationPlugin = (): PageNavigationPlugin => {
-    const store = createStore<StoreProps>();
+    const store = createStore<StoreProps>({});
 
     const NextPageButtonDecorator = (props: NextPageButtonProps) => (
         <NextPageButton {...props} store={store} />

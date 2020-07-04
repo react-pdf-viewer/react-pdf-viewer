@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { Button, NextIcon, Position, Store, StoreHandler, Tooltip } from '@phuocng/rpv';
+import React, { useContext, useEffect, useState } from 'react';
+import { Button, LocalizationContext, NextIcon, Position, Store, StoreHandler, Tooltip } from '@phuocng/rpv';
 
 import StoreProps from './StoreProps';
 
@@ -20,6 +20,7 @@ const NextPageButton: React.FC<{
     children?: ChildrenNextPageButton,
     store: Store<StoreProps>,
 }> = ({ store, children }) => {
+    const l10nContext = useContext(LocalizationContext);
     const [numberOfPages, setNumberOfPages] = useState(0);
     const [currentPage, setCurrentPage] = useState(0);
 
@@ -47,14 +48,20 @@ const NextPageButton: React.FC<{
         }
     };
 
-    const defaultChildren = (props: RenderNextPageButtonProps) => (
-        <Tooltip
-            position={Position.BottomCenter}
-            target={<Button onClick={props.onClick}><NextIcon /></Button>}
-            content={() => 'Next page'}
-            offset={TOOLTIP_OFFSET}
-        />
-    );
+    const defaultChildren = (props: RenderNextPageButtonProps) => {
+        const label = (l10nContext && l10nContext.plugins)
+            ? l10nContext.plugins.pageNavigation.nextPage
+            : 'Next page';
+
+        return (
+            <Tooltip
+                position={Position.BottomCenter}
+                target={<Button onClick={props.onClick}><NextIcon /></Button>}
+                content={() => label}
+                offset={TOOLTIP_OFFSET}
+            />
+        );
+    };
     const render = children || defaultChildren;
 
     return render({
