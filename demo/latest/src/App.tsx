@@ -2,7 +2,8 @@ import React from 'react';
 import Viewer, { LocalizationMap, LocalizationProvider, Worker } from '@phuocng/rpv';
 import currentPagePlugin from '@phuocng/rpv-current-page';
 import localeSwitcherPlugin from '@phuocng/rpv-locale-switcher';
-import pageNavigationPlugin from '@phuocng/rpv-page-navigation';
+import nextPagePlugin from '@phuocng/rpv-next-page';
+import previousPagePlugin from '@phuocng/rpv-previous-page';
 
 import '@phuocng/rpv/cjs/react-pdf-viewer.css';
 
@@ -10,11 +11,13 @@ import vi_VN from './vi_VN.json';
 
 const currentPage = currentPagePlugin();
 const localeSwitcher = localeSwitcherPlugin();
-const pageNavigation = pageNavigationPlugin();
+const nextPage = nextPagePlugin();
+const previousPage = previousPagePlugin();
 
 const { CurrentPageLabel } = currentPage;
 const { LocalePopover } = localeSwitcher;
-const { NextPageButton, PreviousPageButton } = pageNavigation;
+const { NextPageButton } = nextPage;
+const { PreviousPageButton } = previousPage;
 
 const vietnameseLocalization = ((vi_VN as any) as LocalizationMap);
 
@@ -46,7 +49,8 @@ const App = () => {
                         plugins={[
                             currentPage,
                             localeSwitcher,
-                            pageNavigation
+                            nextPage,
+                            previousPage,
                         ]}
                     />
                 </div>

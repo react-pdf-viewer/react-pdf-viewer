@@ -1,24 +1,27 @@
+/**
+ * A React component to view a PDF document
+ *
+ * @see https://react-pdf-viewer.dev
+ * @license https://react-pdf-viewer.dev/license
+ * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
+ */
+
 import React from 'react';
 import { createStore, Plugin, PluginFunctions, PluginOnDocumentLoad, ViewerState } from '@phuocng/rpv';
 
-import PreviousPageButton, { PreviousPageButtonProps } from './PreviousPageButton';
 import NextPageButton, { NextPageButtonProps } from './NextPageButton';
 
 import StoreProps from './StoreProps';
 
-interface PageNavigationPlugin extends Plugin {
+interface NextPagePlugin extends Plugin {
     NextPageButton: (props: NextPageButtonProps) => React.ReactElement;
-    PreviousPageButton: (props: PreviousPageButtonProps) => React.ReactElement;
 }
 
-const pageNavigationPlugin = (): PageNavigationPlugin => {
+const nextPagePlugin = (): NextPagePlugin => {
     const store = createStore<StoreProps>({});
 
     const NextPageButtonDecorator = (props: NextPageButtonProps) => (
         <NextPageButton {...props} store={store} />
-    );
-    const PreviousPageButtonDecorator = (props: PreviousPageButtonProps) => (
-        <PreviousPageButton {...props} store={store} />
     );
 
     return {
@@ -33,8 +36,7 @@ const pageNavigationPlugin = (): PageNavigationPlugin => {
             return viewerState;
         },
         NextPageButton: NextPageButtonDecorator,
-        PreviousPageButton: PreviousPageButtonDecorator,
     };
 };
 
-export default pageNavigationPlugin;
+export default nextPagePlugin;
