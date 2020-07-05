@@ -24,7 +24,6 @@
     "bugs": {
         "url": "https://github.com/phuoc-ng/react-pdf-viewer/issues"
     },
-    "types": "npm/index.d.ts",
     "scripts": {
         "copy": "rm -rf npm/cjs/* && cp ../../README.md npm",
         "build": "npm run copy && rollup -c && npm run mincss && rm -rf npm/cjs/rpv.less",

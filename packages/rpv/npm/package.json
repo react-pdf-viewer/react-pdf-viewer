@@ -24,6 +24,7 @@
     "bugs": {
         "url": "https://github.com/phuoc-ng/react-pdf-viewer/issues"
     },
+    "types": "index.d.ts",
     "peerDependencies": {
         "react": "^16.8.0",
         "react-dom": "^16.8.0"
