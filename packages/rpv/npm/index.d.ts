@@ -68,7 +68,6 @@ export enum ToggleStatus {
 export type Toggle = (status?: ToggleStatus) => void;
 
 export interface ToolbarSlot {
-    numPages: number;
     toggleSidebarButton: React.ReactNode;
     searchPopover: React.ReactNode;
     currentPageInput: React.ReactNode;

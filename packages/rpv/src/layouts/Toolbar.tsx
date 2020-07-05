@@ -267,7 +267,6 @@ const Toolbar: React.FC<ToolbarProps> = ({
                 onRotate={onRotate}
             />
         ),
-        numPages,
         openFileButton: (
             <OpenFileButton onOpenFiles={onOpenFiles} />
         ),

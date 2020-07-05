@@ -24,9 +24,6 @@ const defaultToolbar: RenderToolbarSlot = (toolbarSlot: ToolbarSlot): React.Reac
                 <div className={`${theme.prefixClass}-toolbar-item`}>
                     {toolbarSlot.searchPopover}
                 </div>
-                <div className={`${theme.prefixClass}-toolbar-item`}>
-                    {toolbarSlot.currentPageInput} / {toolbarSlot.numPages}
-                </div>
             </div>
             <div className={`${theme.prefixClass}-toolbar-center`}>
                 <div className={`${theme.prefixClass}-toolbar-item`}>
