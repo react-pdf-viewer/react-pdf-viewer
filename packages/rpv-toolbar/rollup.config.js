@@ -10,7 +10,7 @@ const external = [
     ...Object.keys(pkg.peerDependencies || {}),
 ];
 
-const input = './src/index.tsx';
+const input = './src/index.ts';
 const typescriptOptions = {
     removeComments: true,
     module: 'es6',

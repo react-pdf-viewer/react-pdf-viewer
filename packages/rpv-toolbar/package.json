@@ -24,6 +24,7 @@
     "bugs": {
         "url": "https://github.com/phuoc-ng/react-pdf-viewer/issues"
     },
+    "types": "npm/index.d.ts",
     "scripts": {
         "build": "rm -rf npm/cjs/* && rollup -c && npm run mincss && rm -rf npm/cjs/rpv-toolbar.less",
         "mincss": "postcss npm/cjs/rpv-toolbar.css > npm/cjs/rpv-toolbar.min.css"

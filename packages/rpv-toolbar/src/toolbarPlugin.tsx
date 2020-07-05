@@ -7,6 +7,7 @@
  */
 
 import React from 'react';
+
 import { Plugin, PluginFunctions, PluginOnDocumentLoad, ViewerState } from '@phuocng/rpv';
 import currentPagePlugin from '@phuocng/rpv-current-page';
 import nextPagePlugin from '@phuocng/rpv-next-page';
