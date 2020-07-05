@@ -10,6 +10,7 @@ import React from 'react';
 
 import { Plugin, PluginFunctions, PluginOnDocumentLoad, ViewerState } from '@phuocng/rpv';
 import currentPagePlugin from '@phuocng/rpv-current-page';
+import firstPagePlugin from '@phuocng/rpv-first-page';
 import nextPagePlugin from '@phuocng/rpv-next-page';
 import previousPagePlugin from '@phuocng/rpv-previous-page';
 
@@ -21,17 +22,20 @@ interface ToolbarPlugin extends Plugin {
 
 const toolbarPlugin = (): ToolbarPlugin => {
     const currentPagePluginInstance = currentPagePlugin();
+    const firstPagePluginInstance = firstPagePlugin();
     const nextPagePluginInstance = nextPagePlugin();
     const previousPagePluginInstance = previousPagePlugin();
 
     const plugins = [
         currentPagePluginInstance,
+        firstPagePluginInstance,
         nextPagePluginInstance,
         previousPagePluginInstance,
     ];
 
     const ToolbarDecorator = (props: ToolbarProps) => {
         const { CurrentPageLabel } = currentPagePluginInstance;
+        const { GoToFirstPageButton } = firstPagePluginInstance;
         const { NextPageButton } = nextPagePluginInstance;
         const { PreviousPageButton } = previousPagePluginInstance;
 
@@ -40,6 +44,7 @@ const toolbarPlugin = (): ToolbarPlugin => {
                 {...props}
                 slot={{
                     currentPage: <CurrentPageLabel />,
+                    goToFirstPage: <GoToFirstPageButton />,
                     nextPage: <NextPageButton />,
                     previousPage: <PreviousPageButton />,
                 }}
