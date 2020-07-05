@@ -183,7 +183,6 @@ const Toolbar: React.FC<ToolbarProps> = ({
     );
 
     return renderToolbar({
-        currentPage,
         currentPageInput: (
             <input
                 className={`${theme.prefixClass}-toolbar-current-page-input`}

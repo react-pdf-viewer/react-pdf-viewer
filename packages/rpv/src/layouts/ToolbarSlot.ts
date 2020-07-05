@@ -9,7 +9,6 @@
 import React from 'react';
 
 interface ToolbarSlot {
-    currentPage: number;
     numPages: number;
     toggleSidebarButton: React.ReactNode;
     searchPopover: React.ReactNode;
