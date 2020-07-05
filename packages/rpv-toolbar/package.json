@@ -1,5 +1,5 @@
 {
-    "name": "@phuocng/rpv",
+    "name": "@phuocng/rpv-toolbar",
     "version": "2.0.0",
     "description": "A React component to view a PDF document",
     "license": "https://react-pdf-viewer.dev/license",
@@ -19,22 +19,16 @@
     "repository": {
         "type": "git",
         "url": "https://github.com/phuoc-ng/react-pdf-viewer",
-        "directory": "packages/rpv"
+        "directory": "packages/rpv-toolbar"
     },
     "bugs": {
         "url": "https://github.com/phuoc-ng/react-pdf-viewer/issues"
     },
-    "types": "npm/index.d.ts",
     "scripts": {
-        "copy": "rm -rf npm/cjs/* && cp ../../README.md npm",
-        "build": "npm run copy && rollup -c && npm run mincss && rm -rf npm/cjs/rpv.less",
-        "mincss": "postcss npm/cjs/rpv.css > npm/cjs/rpv.min.css",
-        "dev": "npm run copy && rollup -c rollup.dev.config.js -w",
-        "lint": "eslint src/**/*.ts src/**/*.tsx",
-        "typecheck": "tsc --noEmit --watch"
+        "build": "rm -rf npm/cjs/* && rollup -c && npm run mincss && rm -rf npm/cjs/rpv-toolbar.less",
+        "mincss": "postcss npm/cjs/rpv-toolbar.css > npm/cjs/rpv-toolbar.min.css"
     },
     "dependencies": {
-        "pdfjs-dist": "^2.4.456",
         "react": "^16.13.1",
         "react-dom": "^16.13.1"
     },
@@ -54,5 +48,11 @@
         "rollup-plugin-less-modules": "^0.1.11",
         "rollup-plugin-terser": "^6.1.0",
         "typescript": "^3.9.5"
+    },
+    "peerDependencies": {
+        "@phuocng/rpv": "*",
+        "@phuocng/rpv-current-page": "*",
+        "@phuocng/rpv-next-page": "*",
+        "@phuocng/rpv-previous-page": "*"
     }
 }

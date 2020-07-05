@@ -10,8 +10,7 @@ const external = [
     ...Object.keys(pkg.peerDependencies || {}),
 ];
 
-const input = './src/index.ts';
-
+const input = './src/index.tsx';
 const typescriptOptions = {
     removeComments: true,
     module: 'es6',
@@ -27,14 +26,14 @@ export default [
     {
         input,
         output: {
-            file: './npm/cjs/rpv.js',
+            file: './npm/cjs/rpv-toolbar.js',
             format: 'cjs',
         },
         external,
         plugins: [
             json(),
             less({
-                output: './npm/cjs/rpv.css',
+                output: './npm/cjs/rpv-toolbar.css',
                 sourcemap: false,
             }),
             typescript(typescriptOptions),
@@ -45,14 +44,14 @@ export default [
     {
         input,
         output: {
-            file: './npm/cjs/rpv.min.js',
+            file: './npm/cjs/rpv-toolbar.min.js',
             format: 'cjs',
         },
         external,
         plugins: [
             json(),
             less({
-                output: './npm/cjs/rpv.css',
+                output: './npm/cjs/rpv-toolbar.css',
                 sourcemap: false,
             }),
             typescript(typescriptOptions),

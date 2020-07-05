@@ -1,5 +1,4 @@
 npm/cjs/*
-npm/umd/*
 npm/package-lock.json
 npm/README.md
 node_modules
