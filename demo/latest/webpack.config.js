@@ -56,6 +56,7 @@ module.exports = {
             '@phuocng/rpv-locale-switcher': path.join(__dirname, '../../packages/rpv-locale-switcher/src'),
             '@phuocng/rpv-next-page': path.join(__dirname, '../../packages/rpv-next-page/src'),
             '@phuocng/rpv-previous-page': path.join(__dirname, '../../packages/rpv-previous-page/src'),
+            '@phuocng/rpv-toolbar': path.join(__dirname, '../../packages/rpv-toolbar/src'),
         },
     },
     devServer: {

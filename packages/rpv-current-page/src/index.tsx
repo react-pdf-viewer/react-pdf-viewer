@@ -12,7 +12,7 @@ import { createStore, Plugin, PluginOnDocumentLoad, ViewerState } from '@phuocng
 import CurrentPageLabel, { CurrentPageLabelProps } from './CurrentPageLabel';
 import StoreProps from './StoreProps';
 
-interface CurrentPagePlugin extends Plugin {
+export interface CurrentPagePlugin extends Plugin {
     CurrentPageLabel: (props: CurrentPageLabelProps) => React.ReactElement;
 }
 

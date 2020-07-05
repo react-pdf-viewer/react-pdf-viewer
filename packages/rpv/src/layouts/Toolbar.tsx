@@ -44,7 +44,6 @@ import PdfJs from '../vendors/PdfJs';
 import { decrease, increase } from '../zoom/zoomingLevel';
 import ZoomPopover from '../zoom/ZoomPopover';
 import MoreActionsPopover from './MoreActionsPopover';
-import './toolbar.less';
 
 interface ToolbarProps {
     currentPage: number;
