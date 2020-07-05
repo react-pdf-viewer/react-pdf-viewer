@@ -2,7 +2,8 @@ import React from 'react';
 import Viewer, { Worker } from '@phuocng/rpv';
 import toolbarPlugin from '@phuocng/rpv-toolbar';
 
-import '@phuocng/rpv/cjs/react-pdf-viewer.css';
+import '@phuocng/rpv/cjs/rpv.css';
+import '@phuocng/rpv-toolbar/cjs/rpv-toolbar.css';
 
 const toolbar = toolbarPlugin();
 

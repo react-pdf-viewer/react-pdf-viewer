@@ -49,7 +49,8 @@ module.exports = {
             // See https://github.com/phuoc-ng/react-pdf-viewer/commit/0cd175bfebfe1922d9c14c5d3309f9d1eff6213f
             react: path.resolve('./node_modules/react'),
             // CSS
-            '@phuocng/rpv/cjs/react-pdf-viewer.css': path.join(__dirname, '../../packages/rpv/npm/cjs/react-pdf-viewer.css'),
+            '@phuocng/rpv/cjs/rpv.css': path.join(__dirname, '../../packages/rpv/npm/cjs/rpv.css'),
+            '@phuocng/rpv-toolbar/cjs/rpv-toolbar.css': path.join(__dirname, '../../packages/rpv-toolbar/npm/cjs/rpv-toolbar.css'),
             // Plugins
             '@phuocng/rpv': path.join(__dirname, '../../packages/rpv/src'),
             '@phuocng/rpv-current-page': path.join(__dirname, '../../packages/rpv-current-page/src'),
