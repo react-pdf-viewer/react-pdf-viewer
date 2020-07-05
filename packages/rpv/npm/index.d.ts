@@ -327,7 +327,7 @@ export interface Plugin {
     install?(pluginFunctions: PluginFunctions): void;
     uninstall?(pluginFunctions: PluginFunctions): void;
     onDocumentLoad?(props: PluginOnDocumentLoadProps): void;
-    onViewerStateChange?(viewState: ViewerState): ViewerState;
+    onViewerStateChange?(viewerState: ViewerState): ViewerState;
 }
 
 // -----
