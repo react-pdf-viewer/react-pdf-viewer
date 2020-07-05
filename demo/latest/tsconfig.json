@@ -12,8 +12,7 @@
         "baseUrl": ".",
         "paths": {
             "@phuocng/rpv": ["../../packages/rpv/src"],
-            "@phuocng/rpv-current-page": ["../../packages/rpv-current-page/src"],
-            "@phuocng/rpv-page-navigation": ["../../packages/rpv-page-navigation/src"]
+            "@phuocng/rpv-toolbar": ["../../packages/rpv-toolbar/src"]
         }
     }
 }

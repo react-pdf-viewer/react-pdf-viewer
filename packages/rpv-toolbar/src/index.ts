@@ -6,10 +6,6 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-'use strict';
+import toolbarPlugin from './toolbarPlugin';
 
-if (process.env.NODE_ENV === 'production') {
-    module.exports = require('./cjs/rpv.min.js');
-} else {
-    module.exports = require('./cjs/rpv.js');
-}
+export default toolbarPlugin;

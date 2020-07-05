@@ -1,5 +1,5 @@
 {
-    "name": "@phuocng/rpv",
+    "name": "@phuocng/rpv-toolbar",
     "version": "2.0.0",
     "description": "A React component to view a PDF document",
     "license": "https://react-pdf-viewer.dev/license",
@@ -19,22 +19,23 @@
     "repository": {
         "type": "git",
         "url": "https://github.com/phuoc-ng/react-pdf-viewer",
-        "directory": "packages/rpv"
+        "directory": "packages/rpv-toolbar"
     },
     "bugs": {
         "url": "https://github.com/phuoc-ng/react-pdf-viewer/issues"
     },
-    "types": "index.d.ts",
     "peerDependencies": {
         "react": "^16.8.0",
-        "react-dom": "^16.8.0"
+        "react-dom": "^16.8.0",
+        "@phuocng/rpv": "*",
+        "@phuocng/rpv-current-page": "*",
+        "@phuocng/rpv-next-page": "*",
+        "@phuocng/rpv-previous-page": "*"
     },
     "files": [
         "cjs/",
-        "umd/",
         "index.d.ts",
-        "index.js",
-        "README.md"
+        "index.js"
     ],
     "main": "index.js"
 }

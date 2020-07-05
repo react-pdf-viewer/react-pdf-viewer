@@ -44,7 +44,6 @@ import PdfJs from '../vendors/PdfJs';
 import { decrease, increase } from '../zoom/zoomingLevel';
 import ZoomPopover from '../zoom/ZoomPopover';
 import MoreActionsPopover from './MoreActionsPopover';
-import './toolbar.less';
 
 interface ToolbarProps {
     currentPage: number;
@@ -183,7 +182,6 @@ const Toolbar: React.FC<ToolbarProps> = ({
     );
 
     return renderToolbar({
-        currentPage,
         currentPageInput: (
             <input
                 className={`${theme.prefixClass}-toolbar-current-page-input`}
@@ -268,7 +266,6 @@ const Toolbar: React.FC<ToolbarProps> = ({
                 onRotate={onRotate}
             />
         ),
-        numPages,
         openFileButton: (
             <OpenFileButton onOpenFiles={onOpenFiles} />
         ),

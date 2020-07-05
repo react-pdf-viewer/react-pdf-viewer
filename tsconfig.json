@@ -1,5 +1,6 @@
 {
     "compilerOptions": {
+        "emitDeclarationOnly": true,
         "esModuleInterop": true,
         "isolatedModules": true,
         "target": "esnext",
@@ -10,11 +11,16 @@
         "resolveJsonModule": true,
         "baseUrl": ".",
         "paths": {
-            "@phuocng/*": ["packages/*/src"]
+            "@phuocng/*": ["packages/*/src"],
+            "*": ["node_modules", "packages"]
         }
     },
+    "include": [
+        "packages/**/*.ts",
+        "packages/**/*.tsx"
+    ],
     "exclude": [
-        "npm",
-        "node_modules"
+        "node_modules",
+        "**/npm/**/*"
     ]
 }

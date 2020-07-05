@@ -6,10 +6,10 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-@import '../theme/common.less';
+'use strict';
 
-.@{viewer-prefix}-toolbar-current-page-input {
-    border: 1px solid rgba(0, 0, 0, 0.3);
-    padding: 4px;
-    width: 50px;
+if (process.env.NODE_ENV === 'production') {
+    module.exports = require('./cjs/rpv-toolbar.min.js');
+} else {
+    module.exports = require('./cjs/rpv-toolbar.js');
 }

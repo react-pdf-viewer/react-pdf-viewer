@@ -68,8 +68,6 @@ export enum ToggleStatus {
 export type Toggle = (status?: ToggleStatus) => void;
 
 export interface ToolbarSlot {
-    currentPage: number;
-    numPages: number;
     toggleSidebarButton: React.ReactNode;
     searchPopover: React.ReactNode;
     currentPageInput: React.ReactNode;
@@ -329,7 +327,7 @@ export interface Plugin {
     install?(pluginFunctions: PluginFunctions): void;
     uninstall?(pluginFunctions: PluginFunctions): void;
     onDocumentLoad?(props: PluginOnDocumentLoadProps): void;
-    onViewerStateChange?(viewState: ViewerState): ViewerState;
+    onViewerStateChange?(viewerState: ViewerState): ViewerState;
 }
 
 // -----
@@ -345,7 +343,7 @@ export interface Store<T extends StoreState> {
     subscribe<K extends StoreKey<T>>(eventName: K, handler: StoreHandler<NonNullable<T[K]>>): void;
     unsubscribe<K extends StoreKey<T>>(eventName: K, handler: StoreHandler<NonNullable<T[K]>>): void;
     update<K extends StoreKey<T>>(eventName: K, params: T[K]): void;
-    get<K extends StoreKey<T>>(eventName: K): T[K];
+    get<K extends StoreKey<T>>(eventName: K): T[K] | undefined;
 }
 
 export function createStore<T extends StoreState>(initialState?: T): Store<T>;
