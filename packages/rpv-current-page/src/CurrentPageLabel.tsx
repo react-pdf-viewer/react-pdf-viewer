@@ -1,26 +1,58 @@
+/**
+ * A React component to view a PDF document
+ *
+ * @see https://react-pdf-viewer.dev
+ * @license https://react-pdf-viewer.dev/license
+ * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
+ */
+
 import React, { useEffect, useState } from 'react';
 import { Store, StoreHandler } from '@phuocng/rpv';
 
 import StoreProps from './StoreProps';
 
+interface RenderCurrentPageLabelProps {
+    currentPage: number;
+    numberOfPages: number;
+}
+
+export interface CurrentPageLabelProps {
+    children?: ChildrenCurrentPageLabel;
+}
+
+type ChildrenCurrentPageLabel = (props: RenderCurrentPageLabelProps) => React.ReactElement;
+
 const CurrentPageLabel: React.FC<{
-    store: Store<StoreProps>
-}> = ({ store }) => {
-    const [currentPage, setCurrentPage] = useState<number>(0);
+    children?: ChildrenCurrentPageLabel,
+    store: Store<StoreProps>,
+}> = ({ children, store }) => {
+    const [numberOfPages, setNumberOfPages] = useState(0);
+    const [currentPage, setCurrentPage] = useState(0);
 
-    const handleCurrentPage: StoreHandler<number> = (p: number) => setCurrentPage(p);
+    const handleNumberOfPages: StoreHandler<number> = (n: number) => {
+        setNumberOfPages(n);
+    };
+    const handleCurrentPageChanged: StoreHandler<number> = (currentPage: number) => {
+        setCurrentPage(currentPage);
+    };
 
-    useEffect(() => {    
-        store.subscribe('currentPage', handleCurrentPage);
+    useEffect(() => {
+        store.subscribe('currentPage', handleCurrentPageChanged);
+        store.subscribe('numberOfPages', handleNumberOfPages);
 
         return () => {
-            store.unsubscribe('currentPage', handleCurrentPage);
+            store.unsubscribe('currentPage', handleCurrentPageChanged);
+            store.unsubscribe('numberOfPages', handleNumberOfPages);
         };
     }, []);
 
-    return (
-        <div>{currentPage + 1}</div>
-    );
+    const defaultChildren = (props: RenderCurrentPageLabelProps) => <>{props.currentPage + 1}</>;
+
+    const render = children || defaultChildren;
+    return render({
+        currentPage,
+        numberOfPages,
+    });
 };
 
 export default CurrentPageLabel;
