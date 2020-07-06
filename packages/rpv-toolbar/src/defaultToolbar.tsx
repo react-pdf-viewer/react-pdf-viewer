@@ -29,6 +29,9 @@ const defaultToolbar: RenderToolbarSlot = (toolbarSlot: ToolbarSlot): React.Reac
                 <div className='rpv-toolbar-item'>
                     {toolbarSlot.nextPage}
                 </div>
+                <div className='rpv-toolbar-item'>
+                    {toolbarSlot.goToLastPage}
+                </div>
             </div>
             <div className='rpv-toolbar-right'>
             </div>
