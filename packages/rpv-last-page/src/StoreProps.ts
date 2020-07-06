@@ -6,8 +6,9 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import firstPagePlugin from './firstPagePlugin';
-import UpArrowIcon from './UpArrowIcon';
+interface StoreProps {
+    jumpToPage?(pageIndex: number): void;
+    numberOfPages?: number;
+}
 
-export default firstPagePlugin;
-export { UpArrowIcon };
+export default StoreProps;

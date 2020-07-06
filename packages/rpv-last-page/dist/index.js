@@ -6,8 +6,10 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import firstPagePlugin from './firstPagePlugin';
-import UpArrowIcon from './UpArrowIcon';
+'use strict';
 
-export default firstPagePlugin;
-export { UpArrowIcon };
+if (process.env.NODE_ENV === 'production') {
+    module.exports = require('./cjs/rpv.min.js');
+} else {
+    module.exports = require('./cjs/rpv.js');
+}

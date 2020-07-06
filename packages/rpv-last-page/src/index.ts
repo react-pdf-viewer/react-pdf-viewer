@@ -6,8 +6,8 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import firstPagePlugin from './firstPagePlugin';
-import UpArrowIcon from './UpArrowIcon';
+import DownArrowIcon from './DownArrowIcon';
+import lastPagePlugin from './lastPagePlugin';
 
-export default firstPagePlugin;
-export { UpArrowIcon };
+export default lastPagePlugin;
+export { DownArrowIcon };
