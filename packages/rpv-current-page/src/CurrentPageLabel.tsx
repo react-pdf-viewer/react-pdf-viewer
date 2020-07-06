@@ -17,13 +17,13 @@ interface RenderCurrentPageLabelProps {
 }
 
 export interface CurrentPageLabelProps {
-    children?: ChildrenCurrentPageLabel;
+    children?: RenderCurrentPageLabel;
 }
 
-type ChildrenCurrentPageLabel = (props: RenderCurrentPageLabelProps) => React.ReactElement;
+type RenderCurrentPageLabel = (props: RenderCurrentPageLabelProps) => React.ReactElement;
 
 const CurrentPageLabel: React.FC<{
-    children?: ChildrenCurrentPageLabel,
+    children?: RenderCurrentPageLabel,
     store: Store<StoreProps>,
 }> = ({ children, store }) => {
     const [numberOfPages, setNumberOfPages] = useState(0);
