@@ -25,3 +25,5 @@ export interface FirstPagePlugin extends Plugin {
 }
 
 export default function firstPagePlugin(): FirstPagePlugin;
+
+export class UpArrowIcon extends React.Component<{}> {}

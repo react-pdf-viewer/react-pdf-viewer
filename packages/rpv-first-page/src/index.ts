@@ -7,5 +7,7 @@
  */
 
 import firstPagePlugin from './firstPagePlugin';
+import UpArrowIcon from './UpArrowIcon';
 
 export default firstPagePlugin;
+export { UpArrowIcon };
