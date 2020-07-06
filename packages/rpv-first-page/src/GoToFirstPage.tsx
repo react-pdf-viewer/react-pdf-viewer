@@ -16,13 +16,13 @@ export interface RenderGoToFirstPageProps {
 }
 
 export interface GoToFirstPageProps {
-    children: ChildrenGoToFirstPage;
+    children: RenderGoToFirstPage;
 }
 
-type ChildrenGoToFirstPage = (props: RenderGoToFirstPageProps) => React.ReactElement;
+type RenderGoToFirstPage = (props: RenderGoToFirstPageProps) => React.ReactElement;
 
 const GoToFirstPage: React.FC<{
-    children: ChildrenGoToFirstPage,
+    children: RenderGoToFirstPage,
     store: Store<StoreProps>,
 }> = ({ children, store }) => {
     const goToFirstPage = () => {

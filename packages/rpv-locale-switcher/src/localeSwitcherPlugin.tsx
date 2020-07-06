@@ -1,7 +1,6 @@
 import React from 'react';
 import { Plugin } from '@phuocng/rpv';
 
-import LocaleIcon from './LocaleIcon';
 import LocalePopover, { LocalePopoverProps } from './LocalePopover';
 
 interface LocaleSwitcherPlugin extends Plugin {
@@ -19,4 +18,3 @@ const localeSwitcherPlugin = (): LocaleSwitcherPlugin => {
 };
 
 export default localeSwitcherPlugin;
-export { LocaleIcon };

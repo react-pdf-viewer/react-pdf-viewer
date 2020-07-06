@@ -24,11 +24,18 @@
     "bugs": {
         "url": "https://github.com/phuoc-ng/react-pdf-viewer/issues"
     },
+    "main": "npm/index.js",
+    "types": "npm/index.d.ts",
+    "files": [
+        "npm/cjs/*.css",
+        "npm/cjs/*.js",
+        "npm/index.d.ts",
+        "npm/index.js"
+    ],
     "scripts": {
-        "copy": "rm -rf npm/cjs/* && cp ../../README.md npm",
-        "build": "npm run copy && rollup -c && npm run mincss && rm -rf npm/cjs/rpv.less",
+        "clean": "rm -rf npm && mkdir npm",
+        "build": "npm run clean && cp src/index.d.ts npm && cp dist/index.js npm && rollup -c && npm run mincss && rm -rf npm/cjs/rpv.less",
         "mincss": "postcss npm/cjs/rpv.css > npm/cjs/rpv.min.css",
-        "dev": "npm run copy && rollup -c rollup.dev.config.js -w",
         "lint": "eslint src/**/*.ts src/**/*.tsx",
         "typecheck": "tsc --noEmit --watch"
     },
@@ -36,22 +43,5 @@
         "pdfjs-dist": "^2.4.456",
         "react": "^16.13.1",
         "react-dom": "^16.13.1"
-    },
-    "devDependencies": {
-        "@rollup/plugin-json": "^4.1.0",
-        "@rollup/plugin-typescript": "^5.0.0",
-        "@types/react": "^16.9.41",
-        "@types/react-dom": "^16.9.8",
-        "@typescript-eslint/eslint-plugin": "^3.4.0",
-        "@typescript-eslint/parser": "^3.4.0",
-        "cssnano": "^4.1.10",
-        "eslint": "^7.3.1",
-        "eslint-plugin-react": "^7.20.0",
-        "postcss-cli": "^7.1.1",
-        "rollup": "^2.18.0",
-        "rollup-plugin-less": "^1.1.2",
-        "rollup-plugin-less-modules": "^0.1.11",
-        "rollup-plugin-terser": "^6.1.0",
-        "typescript": "^3.9.5"
     }
 }

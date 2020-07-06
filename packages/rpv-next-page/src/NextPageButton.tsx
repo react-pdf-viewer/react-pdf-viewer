@@ -17,15 +17,15 @@ interface RenderNextPageButtonProps {
 }
 
 export interface NextPageButtonProps {
-    children?: ChildrenNextPageButton;
+    children?: RenderNextPageButton;
 }
 
-type ChildrenNextPageButton = (props: RenderNextPageButtonProps) => React.ReactElement;
+type RenderNextPageButton = (props: RenderNextPageButtonProps) => React.ReactElement;
 
 const TOOLTIP_OFFSET = { left: 0, top: 8 };
 
 const NextPageButton: React.FC<{
-    children?: ChildrenNextPageButton,
+    children?: RenderNextPageButton,
     store: Store<StoreProps>,
 }> = ({ children, store }) => {
     const l10nContext = useContext(LocalizationContext);

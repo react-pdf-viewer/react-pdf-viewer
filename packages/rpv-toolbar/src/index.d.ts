@@ -9,7 +9,7 @@
 import * as React from 'react';
 import { Plugin } from '@phuocng/rpv';
 
-interface ToolbarSlot {
+export interface ToolbarSlot {
     currentPage: React.ReactElement;
     nextPage: React.ReactElement;
     previousPage: React.ReactElement;

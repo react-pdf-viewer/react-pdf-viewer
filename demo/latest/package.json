@@ -4,13 +4,14 @@
     "scripts": {
         "copyasset": "cp ../../assets/pdf-open-parameters.pdf dist",
         "typecheck": "tsc --noEmit",
-        "build": "rm -rf dist && webpack --mode production && npm run copyasset",
         "dev": "rm -rf dist && mkdir dist && npm run copyasset && webpack-dev-server --env.mode=development"
     },
     "dependencies": {
         "pdfjs-dist": "^2.4.456",
         "react": "^16.13.1",
-        "react-dom": "^16.13.1"
+        "react-dom": "^16.13.1",
+        "@phuocng/rpv": "^2.0.0",
+        "@phuocng/rpv-toolbar": "^2.0.0"
     },
     "devDependencies": {
         "@babel/core": "^7.10.3",

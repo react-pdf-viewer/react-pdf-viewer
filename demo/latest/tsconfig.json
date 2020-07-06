@@ -11,8 +11,8 @@
         "jsx": "react",
         "baseUrl": ".",
         "paths": {
-            "@phuocng/rpv": ["../../packages/rpv/src"],
-            "@phuocng/rpv-toolbar": ["../../packages/rpv-toolbar/src"]
+            "@phuocng/*": ["packages/*/src"],
+            "*": ["node_modules", "packages"]
         }
     }
 }
