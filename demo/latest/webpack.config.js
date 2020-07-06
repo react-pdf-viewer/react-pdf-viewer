@@ -1,4 +1,5 @@
 const path = require('path');
+const webpack = require('webpack');
 const HtmlWebPackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
@@ -48,16 +49,6 @@ module.exports = {
             // Webpack seems to duplicate 2 React versions
             // See https://github.com/phuoc-ng/react-pdf-viewer/commit/0cd175bfebfe1922d9c14c5d3309f9d1eff6213f
             react: path.resolve('./node_modules/react'),
-            // CSS
-            '@phuocng/rpv/cjs/rpv.css': path.join(__dirname, '../../packages/rpv/npm/cjs/rpv.css'),
-            '@phuocng/rpv-toolbar/cjs/rpv-toolbar.css': path.join(__dirname, '../../packages/rpv-toolbar/npm/cjs/rpv-toolbar.css'),
-            // Plugins
-            '@phuocng/rpv': path.join(__dirname, '../../packages/rpv/src'),
-            '@phuocng/rpv-current-page': path.join(__dirname, '../../packages/rpv-current-page/src'),
-            '@phuocng/rpv-locale-switcher': path.join(__dirname, '../../packages/rpv-locale-switcher/src'),
-            '@phuocng/rpv-next-page': path.join(__dirname, '../../packages/rpv-next-page/src'),
-            '@phuocng/rpv-previous-page': path.join(__dirname, '../../packages/rpv-previous-page/src'),
-            '@phuocng/rpv-toolbar': path.join(__dirname, '../../packages/rpv-toolbar/src'),
         },
     },
     devServer: {
@@ -74,5 +65,25 @@ module.exports = {
             filename: '[name].[contenthash].css',
             ignoreOrder: false,
         }),
+        // Indicate the package source based on the name
+        // So we don't have to map them manually in the `alias` option as 
+        //  alias: {
+        //      '@phuocng/rpv/cjs/rpv.css': path.join(__dirname, '../../packages/rpv/npm/cjs/rpv.css'),
+        //      '@phuocng/rpv': path.join(__dirname, '../../packages/rpv/src'),
+        //      ...
+        //  }
+        new webpack.NormalModuleReplacementPlugin(
+            // The pattern covers the package and its CSS
+            // @phuocng/rpv
+            // @phuocng/rpv/cjs/rpv.css
+            /^@phuocng\/rpv[a-z-]*[\/cjs\/a-z-\.css]*$/,
+            resource => {
+                const request = resource.request;
+                const pkgName = request.split('/')[1];
+                resource.request = request.endsWith('.css')
+                    ? path.join(__dirname, `../../packages/${pkgName}/npm/cjs/${pkgName}.css`)
+                    : path.join(__dirname, `../../packages/${pkgName}/src`)
+            }
+        ),
     ],
 };
