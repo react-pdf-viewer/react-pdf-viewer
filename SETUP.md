@@ -1,11 +1,19 @@
 ## For v2.0.0
 
+* Install dependencies
+
 ```console
 npm install
 ```
 
-* Build the packages
+* Build all packages
 
 ```console
 npm run build
+```
+
+* Remove the built files in all packages:
+
+```console
+npm run clean
 ```
