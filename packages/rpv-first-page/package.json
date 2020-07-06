@@ -24,10 +24,21 @@
     "bugs": {
         "url": "https://github.com/phuoc-ng/react-pdf-viewer/issues"
     },
-    "scripts": {
-        "build": "rm -rf npm/cjs/* && rollup -c"
+    "main": "npm/index.js",
+    "types": "npm/index.d.ts",
+    "files": [
+        "npm/cjs/*.css",
+        "npm/cjs/*.js",
+        "npm/index.d.ts",
+        "npm/index.js"
+    ],
+    "dependencies": {
+        "react": "^16.13.1",
+        "react-dom": "^16.13.1",
+        "@phuocng/rpv": "^2.0.0"
     },
-    "peerDependencies": {
-        "@phuocng/rpv": "*"
+    "scripts": {
+        "clean": "rm -rf npm && mkdir npm",
+        "build": "npm run clean && cp src/index.d.ts npm && cp dist/index.js npm && rollup -c"
     }
 }
