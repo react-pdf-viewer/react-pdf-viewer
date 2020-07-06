@@ -24,16 +24,26 @@
     "bugs": {
         "url": "https://github.com/phuoc-ng/react-pdf-viewer/issues"
     },
+    "main": "npm/index.js",
     "types": "npm/index.d.ts",
-    "scripts": {
-        "build": "rm -rf npm/cjs/* && rollup -c && npm run mincss && rm -rf npm/cjs/rpv-toolbar.less",
-        "mincss": "postcss npm/cjs/rpv-toolbar.css > npm/cjs/rpv-toolbar.min.css"
+    "files": [
+        "npm/cjs/*.css",
+        "npm/cjs/*.js",
+        "npm/index.d.ts",
+        "npm/index.js"
+    ],
+    "dependencies": {
+        "react": "^16.13.1",
+        "react-dom": "^16.13.1",
+        "@phuocng/rpv": "^2.0.0",
+        "@phuocng/rpv-current-page": "^2.0.0",
+        "@phuocng/rpv-first-page": "^2.0.0",
+        "@phuocng/rpv-next-page": "^2.0.0",
+        "@phuocng/rpv-previous-page": "^2.0.0"
     },
-    "peerDependencies": {
-        "@phuocng/rpv": "*",
-        "@phuocng/rpv-current-page": "*",
-        "@phuocng/rpv-first-page": "*",
-        "@phuocng/rpv-next-page": "*",
-        "@phuocng/rpv-previous-page": "*"
+    "scripts": {
+        "clean": "rm -rf npm && mkdir npm",
+        "build": "npm run clean && cp src/index.d.ts npm && cp dist/index.js npm && rollup -c && npm run mincss && rm -rf npm/cjs/rpv-toolbar.less",
+        "mincss": "postcss npm/cjs/rpv-toolbar.css > npm/cjs/rpv-toolbar.min.css"
     }
 }
