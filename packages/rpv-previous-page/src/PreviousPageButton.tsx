@@ -11,21 +11,21 @@ import { Button, LocalizationContext, Position, PreviousIcon, Store, StoreHandle
 
 import StoreProps from './StoreProps';
 
-export interface RenderPreviousPageButtonProps {
+interface RenderPreviousPageButtonProps {
     isDisabled: boolean;
     onClick: () => void;
 }
 
 export interface PreviousPageButtonProps {
-    children?: ChildrenPreviousPageButton;
+    children?: RenderPreviousPageButton;
 }
 
-export type ChildrenPreviousPageButton = (props: RenderPreviousPageButtonProps) => React.ReactElement;
+export type RenderPreviousPageButton = (props: RenderPreviousPageButtonProps) => React.ReactElement;
 
 const TOOLTIP_OFFSET = { left: 0, top: 8 };
 
 const PreviousPageButton: React.FC<{
-    children?: ChildrenPreviousPageButton,
+    children?: RenderPreviousPageButton,
     store: Store<StoreProps>,
 }> = ({ store, children }) => {
     const l10nContext = useContext(LocalizationContext);

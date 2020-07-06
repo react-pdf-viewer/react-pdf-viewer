@@ -13,11 +13,11 @@ import PreviousPageButton, { PreviousPageButtonProps } from './PreviousPageButto
 
 import StoreProps from './StoreProps';
 
-interface PageNavigationPlugin extends Plugin {
+interface PreviousPagePlugin extends Plugin {
     PreviousPageButton: (props: PreviousPageButtonProps) => React.ReactElement;
 }
 
-const previousPagePlugin = (): PageNavigationPlugin => {
+const previousPagePlugin = (): PreviousPagePlugin => {
     const store = createStore<StoreProps>({});
 
     const PreviousPageButtonDecorator = (props: PreviousPageButtonProps) => (
