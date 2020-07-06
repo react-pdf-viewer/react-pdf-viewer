@@ -319,14 +319,14 @@ export interface PluginFunctions {
     setViewerState(viewerState: ViewerState): void;
 }
 
-export interface PluginOnDocumentLoadProps {
+export interface PluginOnDocumentLoad {
     doc: PdfJs.PdfDocument;
 }
 
 export interface Plugin {
     install?(pluginFunctions: PluginFunctions): void;
     uninstall?(pluginFunctions: PluginFunctions): void;
-    onDocumentLoad?(props: PluginOnDocumentLoadProps): void;
+    onDocumentLoad?(props: PluginOnDocumentLoad): void;
     onViewerStateChange?(viewerState: ViewerState): ViewerState;
 }
 

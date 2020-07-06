@@ -24,12 +24,24 @@
     "bugs": {
         "url": "https://github.com/phuoc-ng/react-pdf-viewer/issues"
     },
+    "main": "npm/index.js",
+    "types": "npm/index.d.ts",
+    "files": [
+        "npm/cjs/*.css",
+        "npm/cjs/*.js",
+        "npm/index.d.ts",
+        "npm/index.js"
+    ],
     "scripts": {
-        "copy": "rm -rf npm/cjs/* && cp ../../README.md npm",
-        "build": "npm run copy && rollup -c && npm run mincss && rm -rf npm/cjs/rpv.less",
+        "clean": "rm -rf npm && mkdir npm",
+        "build": "npm run clean && cp src/index.d.ts npm && cp dist/index.js npm && rollup -c && npm run mincss && rm -rf npm/cjs/rpv.less",
         "mincss": "postcss npm/cjs/rpv.css > npm/cjs/rpv.min.css",
-        "dev": "npm run copy && rollup -c rollup.dev.config.js -w",
         "lint": "eslint src/**/*.ts src/**/*.tsx",
         "typecheck": "tsc --noEmit --watch"
+    },
+    "dependencies": {
+        "pdfjs-dist": "^2.4.456",
+        "react": "^16.13.1",
+        "react-dom": "^16.13.1"
     }
 }
