@@ -31,8 +31,5 @@
         "dev": "npm run copy && rollup -c rollup.dev.config.js -w",
         "lint": "eslint src/**/*.ts src/**/*.tsx",
         "typecheck": "tsc --noEmit --watch"
-    },
-    "dependencies": {
-        "pdfjs-dist": "^2.4.456"
     }
 }

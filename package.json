@@ -28,5 +28,8 @@
         "rollup-plugin-less-modules": "^0.1.11",
         "rollup-plugin-terser": "^6.1.0",
         "typescript": "^3.9.5"
+    },
+    "dependencies": {
+        "build": "^0.1.4"
     }
 }

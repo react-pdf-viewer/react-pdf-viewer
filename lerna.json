@@ -1,6 +1,6 @@
 {
-    "useWorkspaces": true,
     "packages": [
+        "demo/latest",
         "packages/*"
     ],
     "version": "independent"
