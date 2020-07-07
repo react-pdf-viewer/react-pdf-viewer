@@ -11,7 +11,6 @@ import React from 'react';
 interface ToolbarSlot {
     toggleSidebarButton: React.ReactNode;
     searchPopover: React.ReactNode;
-    currentPageInput: React.ReactNode;
     zoomOutButton: React.ReactNode;
     zoomPopover: React.ReactNode;
     zoomInButton: React.ReactNode;
@@ -19,8 +18,6 @@ interface ToolbarSlot {
     downloadButton: React.ReactNode;
     openFileButton: React.ReactNode;
     printButton: React.ReactNode;
-    goToFirstPageButton: React.ReactNode;
-    goToLastPageButton: React.ReactNode;
     rotateClockwiseButton: React.ReactNode;
     rotateCounterclockwiseButton: React.ReactNode;
     textSelectionButton: React.ReactNode;
