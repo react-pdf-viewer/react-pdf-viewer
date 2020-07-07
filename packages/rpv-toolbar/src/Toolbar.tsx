@@ -10,7 +10,6 @@ import React from 'react';
 
 import defaultToolbar from './defaultToolbar';
 import ToolbarSlot, { RenderToolbarSlot } from './ToolbarSlot';
-import './toolbar.less';
 
 export interface ToolbarProps {
     children?: RenderToolbarSlot;

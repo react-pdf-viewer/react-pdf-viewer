@@ -11,6 +11,7 @@ import { Plugin } from '@phuocng/rpv';
 
 export interface ToolbarSlot {
     currentPage: React.ReactElement;
+    currentPageInput: React.ReactElement;
     nextPage: React.ReactElement;
     previousPage: React.ReactElement;
 }

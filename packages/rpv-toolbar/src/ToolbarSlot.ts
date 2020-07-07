@@ -10,6 +10,7 @@ import { ReactElement } from 'react';
 
 interface ToolbarSlot {
     currentPage: ReactElement;
+    currentPageInput: React.ReactElement;
     goToFirstPage: ReactElement;
     goToLastPage: ReactElement;
     nextPage: ReactElement;
