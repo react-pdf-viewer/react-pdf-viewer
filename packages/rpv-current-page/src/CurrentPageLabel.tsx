@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, ReactElement } from 'react';
 import { Store, StoreHandler } from '@phuocng/rpv';
 
 import StoreProps from './StoreProps';
@@ -20,7 +20,7 @@ export interface CurrentPageLabelProps {
     children?: RenderCurrentPageLabel;
 }
 
-type RenderCurrentPageLabel = (props: RenderCurrentPageLabelProps) => React.ReactElement;
+type RenderCurrentPageLabel = (props: RenderCurrentPageLabelProps) => ReactElement;
 
 const CurrentPageLabel: React.FC<{
     children?: RenderCurrentPageLabel,

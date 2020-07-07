@@ -21,6 +21,7 @@ export interface CurrentPageLabelProps {
 export type RenderCurrentPageLabel = (props: RenderCurrentPageLabelProps) => React.ReactElement;
 
 export interface CurrentPagePlugin extends Plugin {
+    CurrentPageInput: () => React.ReactElement;
     CurrentPageLabel: (props: CurrentPageLabelProps) => React.ReactElement;
 }
 

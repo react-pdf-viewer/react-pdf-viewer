@@ -37,20 +37,29 @@ const toolbarPlugin = (): ToolbarPlugin => {
     ];
 
     const ToolbarDecorator = (props: ToolbarProps) => {
-        const { CurrentPageLabel } = currentPagePluginInstance;
+        const { CurrentPageInput, CurrentPageLabel } = currentPagePluginInstance;
         const { GoToFirstPageButton } = firstPagePluginInstance;
         const { GoToLastPageButton } = lastPagePluginInstance;
         const { NextPageButton } = nextPagePluginInstance;
         const { PreviousPageButton } = previousPagePluginInstance;
+        const NumberOfPages = () => (
+            <CurrentPageLabel>
+                {
+                    (props) => <>{props.numberOfPages}</>
+                }
+            </CurrentPageLabel>
+        );
 
         return (
             <Toolbar
                 {...props}
                 slot={{
                     currentPage: <CurrentPageLabel />,
+                    currentPageInput: <CurrentPageInput />,
                     goToFirstPage: <GoToFirstPageButton />,
                     goToLastPage: <GoToLastPageButton />,
                     nextPage: <NextPageButton />,
+                    numberOfPages: <NumberOfPages />,
                     previousPage: <PreviousPageButton />,
                 }}
             />

@@ -7,6 +7,7 @@
  */
 
 import React from 'react';
+import '@phuocng/rpv-current-page/cjs/rpv-current-page.css';
 
 import './defaultToolbar.less';
 import ToolbarSlot, { RenderToolbarSlot } from './ToolbarSlot';
@@ -24,7 +25,7 @@ const defaultToolbar: RenderToolbarSlot = (toolbarSlot: ToolbarSlot): React.Reac
                     {toolbarSlot.previousPage}
                 </div>
                 <div className='rpv-toolbar-item'>
-                    {toolbarSlot.currentPage}
+                    {toolbarSlot.currentPageInput} / {toolbarSlot.numberOfPages}
                 </div>
                 <div className='rpv-toolbar-item'>
                     {toolbarSlot.nextPage}

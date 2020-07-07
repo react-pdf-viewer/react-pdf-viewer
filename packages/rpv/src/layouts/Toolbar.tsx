@@ -39,14 +39,12 @@ import SearchPopover from '../search/SearchPopover';
 import ScrollMode from '../ScrollMode';
 import SelectionMode from '../SelectionMode';
 import SpecialZoomLevel from '../SpecialZoomLevel';
-import ThemeContext from '../theme/ThemeContext';
 import PdfJs from '../vendors/PdfJs';
 import { decrease, increase } from '../zoom/zoomingLevel';
 import ZoomPopover from '../zoom/ZoomPopover';
 import MoreActionsPopover from './MoreActionsPopover';
 
 interface ToolbarProps {
-    currentPage: number;
     doc: PdfJs.PdfDocument;
     fileName: string;
     renderToolbar: RenderToolbarSlot;
@@ -70,15 +68,12 @@ interface ToolbarProps {
 const TOOLTIP_OFFSET = { left: 0, top: 8 };
 
 const Toolbar: React.FC<ToolbarProps> = ({
-    currentPage, doc, fileName, scale, scrollMode, selectionMode,
+    doc, fileName, scale, scrollMode, selectionMode,
     onChangeScrollMode, onChangeSelectionMode, onDownload, onFullScreen, onJumpTo,
     onJumpToMatch, onOpenFiles, onPrint, onRotate, onSearchFor, onToggleSidebar, onZoom,
     renderToolbar,
 }) => {
     const l10n = useContext(LocalizationContext);
-    const theme = useContext(ThemeContext);
-    const [pageTextboxFocused, setPageTextboxFocused] = useState(false);
-    const [editingPage, setEditingPage] = useState(currentPage);
     const [isSidebarOpened, setSidebarOpened] = useState(false);
 
     const { numPages } = doc;
@@ -91,50 +86,6 @@ const Toolbar: React.FC<ToolbarProps> = ({
     const zoomIn = (): void => {
         const newLevel = increase(scale);
         onZoom(newLevel);
-    };
-
-    const gotoNextPage = (): void => {
-        const nextPage = currentPage + 1;
-        if (nextPage < numPages) {
-            setEditingPage(nextPage);
-            onJumpTo(nextPage);
-        }
-    };
-
-    const gotoPreviousPage = (): void => {
-        const previousPage = currentPage - 1;
-        if (previousPage >= 0) {
-            setEditingPage(previousPage);
-            onJumpTo(previousPage);
-        }
-    };
-
-    const changePage = (e: React.ChangeEvent<HTMLInputElement>): void => {
-        const newPage = parseInt(e.target.value, 10);
-        if (newPage > 0 && newPage <= numPages) {
-            setEditingPage(newPage - 1);
-        }
-    };
-
-    const focusPageTextbox = (): void => {
-        setPageTextboxFocused(true);
-        setEditingPage(currentPage);
-    };
-
-    const blurPageTextbox = (): void => {
-        setPageTextboxFocused(false);
-    };
-
-    const keydownPage = (e: React.KeyboardEvent): void => {
-        switch (e.keyCode) {
-            // Up key is pressed
-            case 38: gotoPreviousPage(); break;
-            // Down key
-            case 40: gotoNextPage(); break;
-            // Enter key
-            case 13: onJumpTo(editingPage); break;
-            default: break;
-        }
     };
 
     const jumpToFirstPage = (): void => onJumpTo(0);
@@ -159,8 +110,6 @@ const Toolbar: React.FC<ToolbarProps> = ({
     const renderFullScreen = (): LocalizationMap => l10n.toolbar.fullScreen;
     const renderDownload = (): LocalizationMap => l10n.toolbar.download;
     const renderPrint = (): LocalizationMap => l10n.toolbar.print;
-    const renderGoToFirstPage = (): LocalizationMap => l10n.toolbar.goToFirstPage;
-    const renderGoToLastPage = (): LocalizationMap => l10n.toolbar.goToLastPage;
     const renderRotateClockwise = (): LocalizationMap => l10n.toolbar.rotateForward;
     const renderRotateCounterclockwise = (): LocalizationMap => l10n.toolbar.rotateBackward;
     const renderTextSelection = (): LocalizationMap => l10n.toolbar.textSelectionTool;
@@ -182,17 +131,6 @@ const Toolbar: React.FC<ToolbarProps> = ({
     );
 
     return renderToolbar({
-        currentPageInput: (
-            <input
-                className={`${theme.prefixClass}-toolbar-current-page-input`}
-                type="text"
-                value={pageTextboxFocused ? (editingPage + 1) : (currentPage + 1)}
-                onChange={changePage}
-                onFocus={focusPageTextbox}
-                onBlur={blurPageTextbox}
-                onKeyDown={keydownPage}
-            />
-        ),
         documentPropertiesButton: (
             <Modal
                 target={renderPropertyButton}
@@ -214,22 +152,6 @@ const Toolbar: React.FC<ToolbarProps> = ({
                 position={Position.BottomCenter}
                 target={<Button onClick={onFullScreen}><FullScreenIcon /></Button>}
                 content={renderFullScreen}
-                offset={TOOLTIP_OFFSET}
-            />
-        ),
-        goToFirstPageButton: (
-            <Tooltip
-                position={Position.BottomCenter}
-                target={<Button onClick={jumpToFirstPage}><UpArrowIcon /></Button>}
-                content={renderGoToFirstPage}
-                offset={TOOLTIP_OFFSET}
-            />
-        ),
-        goToLastPageButton: (
-            <Tooltip
-                position={Position.BottomCenter}
-                target={<Button onClick={jumpToLastPage}><DownArrowIcon /></Button>}
-                content={renderGoToLastPage}
                 offset={TOOLTIP_OFFSET}
             />
         ),

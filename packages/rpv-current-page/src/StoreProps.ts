@@ -9,6 +9,7 @@
 interface StoreProps {
     currentPage?: number;
     numberOfPages?: number;
+    jumpToPage?(pageIndex: number): void;
 }
 
 export default StoreProps;
