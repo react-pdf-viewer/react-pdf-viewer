@@ -311,6 +311,7 @@ export interface ViewerState {
 }
 
 export interface PluginFunctions {
+    getPagesRef(): React.RefObject<HTMLDivElement>;
     getViewerState(): ViewerState;
     jumpToPage(pageIndex: number): void;
     setViewerState(viewerState: ViewerState): void;

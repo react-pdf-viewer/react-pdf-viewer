@@ -110,9 +110,12 @@ const Inner: React.FC<InnerProps> = ({
         stateRef.current = newState;
     };
 
+    const getPagesRef = () => pagesRef;
+
     const getViewerState = () => stateRef.current;
 
     const getPluginMethods = (): PluginFunctions => ({
+        getPagesRef,
         getViewerState,
         jumpToPage,
         setViewerState,
