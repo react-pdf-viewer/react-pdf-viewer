@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React from 'react';
+import React, { ReactElement } from 'react';
 import { createStore, Plugin, PluginFunctions, PluginOnDocumentLoad, ViewerState } from '@phuocng/rpv';
 
 import CurrentPageInput from './CurrentPageInput';
@@ -14,8 +14,8 @@ import CurrentPageLabel, { CurrentPageLabelProps } from './CurrentPageLabel';
 import StoreProps from './StoreProps';
 
 export interface CurrentPagePlugin extends Plugin {
-    CurrentPageInput: () => React.ReactElement;
-    CurrentPageLabel: (props: CurrentPageLabelProps) => React.ReactElement;
+    CurrentPageInput: () => ReactElement;
+    CurrentPageLabel: (props: CurrentPageLabelProps) => ReactElement;
 }
 
 const currentPagePlugin = (): CurrentPagePlugin => {

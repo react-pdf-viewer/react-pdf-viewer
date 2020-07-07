@@ -42,6 +42,13 @@ const toolbarPlugin = (): ToolbarPlugin => {
         const { GoToLastPageButton } = lastPagePluginInstance;
         const { NextPageButton } = nextPagePluginInstance;
         const { PreviousPageButton } = previousPagePluginInstance;
+        const NumberOfPages = () => (
+            <CurrentPageLabel>
+                {
+                    (props) => <>{props.numberOfPages}</>
+                }
+            </CurrentPageLabel>
+        );
 
         return (
             <Toolbar
@@ -52,6 +59,7 @@ const toolbarPlugin = (): ToolbarPlugin => {
                     goToFirstPage: <GoToFirstPageButton />,
                     goToLastPage: <GoToLastPageButton />,
                     nextPage: <NextPageButton />,
+                    numberOfPages: <NumberOfPages />,
                     previousPage: <PreviousPageButton />,
                 }}
             />

@@ -12,7 +12,10 @@ import { Plugin } from '@phuocng/rpv';
 export interface ToolbarSlot {
     currentPage: React.ReactElement;
     currentPageInput: React.ReactElement;
+    goToFirstPage: React.ReactElement;
+    goToLastPage: React.ReactElement;
     nextPage: React.ReactElement;
+    numberOfPages: React.ReactElement;
     previousPage: React.ReactElement;
 }
 

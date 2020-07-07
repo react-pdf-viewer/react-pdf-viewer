@@ -25,7 +25,7 @@ const defaultToolbar: RenderToolbarSlot = (toolbarSlot: ToolbarSlot): React.Reac
                     {toolbarSlot.previousPage}
                 </div>
                 <div className='rpv-toolbar-item'>
-                    {toolbarSlot.currentPageInput} / {toolbarSlot.currentPage}
+                    {toolbarSlot.currentPageInput} / {toolbarSlot.numberOfPages}
                 </div>
                 <div className='rpv-toolbar-item'>
                     {toolbarSlot.nextPage}
