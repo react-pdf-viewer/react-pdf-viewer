@@ -7,21 +7,28 @@
  */
 
 import React from 'react';
-import { createStore, Plugin, PluginOnDocumentLoad, ViewerState } from '@phuocng/rpv';
+import { createStore, Plugin, PluginFunctions, PluginOnDocumentLoad, ViewerState } from '@phuocng/rpv';
 
+import CurrentPageInput from './CurrentPageInput';
 import CurrentPageLabel, { CurrentPageLabelProps } from './CurrentPageLabel';
 import StoreProps from './StoreProps';
 
 export interface CurrentPagePlugin extends Plugin {
+    CurrentPageInput: () => React.ReactElement;
     CurrentPageLabel: (props: CurrentPageLabelProps) => React.ReactElement;
 }
 
 const currentPagePlugin = (): CurrentPagePlugin => {
     const store = createStore<StoreProps>();
 
+    const CurrentPageInputDecorator = () => <CurrentPageInput store={store} />
+
     const CurrentPageLabelDecorator = (props: CurrentPageLabelProps) => <CurrentPageLabel {...props} store={store} />;
 
     return {
+        install: (pluginFunctions: PluginFunctions) => {
+            store.update('jumpToPage', pluginFunctions.jumpToPage);
+        },
         onDocumentLoad: (props: PluginOnDocumentLoad) => {
             store.update('numberOfPages', props.doc.numPages);
         },
@@ -29,6 +36,7 @@ const currentPagePlugin = (): CurrentPagePlugin => {
             store.update('currentPage', viewerState.pageIndex);
             return viewerState;
         },
+        CurrentPageInput: CurrentPageInputDecorator,
         CurrentPageLabel: CurrentPageLabelDecorator,
     };
 };

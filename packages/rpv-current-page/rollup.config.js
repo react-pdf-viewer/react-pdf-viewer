@@ -1,3 +1,4 @@
+import less from 'rollup-plugin-less-modules';
 import { terser } from 'rollup-plugin-terser';
 import typescript from '@rollup/plugin-typescript';
 
@@ -30,6 +31,10 @@ export default [
         },
         external,
         plugins: [
+            less({
+                output: './npm/cjs/rpv-current-page.css',
+                sourcemap: false,
+            }),
             typescript(typescriptOptions),
         ],
     },
@@ -43,6 +48,10 @@ export default [
         },
         external,
         plugins: [
+            less({
+                output: './npm/cjs/rpv-current-page.css',
+                sourcemap: false,
+            }),
             typescript(typescriptOptions),
             terser(),
         ],
