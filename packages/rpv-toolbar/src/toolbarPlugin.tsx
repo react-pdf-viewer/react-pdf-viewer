@@ -11,6 +11,7 @@ import React from 'react';
 import { Plugin, PluginFunctions, PluginOnDocumentLoad, ViewerState } from '@phuocng/rpv';
 import currentPagePlugin from '@phuocng/rpv-current-page';
 import firstPagePlugin from '@phuocng/rpv-first-page';
+import fullScreenPlugin from '@phuocng/rpv-full-screen';
 import lastPagePlugin from '@phuocng/rpv-last-page';
 import nextPagePlugin from '@phuocng/rpv-next-page';
 import previousPagePlugin from '@phuocng/rpv-previous-page';
@@ -24,6 +25,7 @@ interface ToolbarPlugin extends Plugin {
 const toolbarPlugin = (): ToolbarPlugin => {
     const currentPagePluginInstance = currentPagePlugin();
     const firstPagePluginInstance = firstPagePlugin();
+    const fullScreenPluginInstance = fullScreenPlugin();
     const lastPagePluginInstance = lastPagePlugin();
     const nextPagePluginInstance = nextPagePlugin();
     const previousPagePluginInstance = previousPagePlugin();
@@ -31,6 +33,7 @@ const toolbarPlugin = (): ToolbarPlugin => {
     const plugins = [
         currentPagePluginInstance,
         firstPagePluginInstance,
+        fullScreenPluginInstance,
         lastPagePluginInstance,
         nextPagePluginInstance,
         previousPagePluginInstance,
@@ -39,6 +42,7 @@ const toolbarPlugin = (): ToolbarPlugin => {
     const ToolbarDecorator = (props: ToolbarProps) => {
         const { CurrentPageInput, CurrentPageLabel } = currentPagePluginInstance;
         const { GoToFirstPageButton } = firstPagePluginInstance;
+        const { EnterFullScreenButton } = fullScreenPluginInstance;
         const { GoToLastPageButton } = lastPagePluginInstance;
         const { NextPageButton } = nextPagePluginInstance;
         const { PreviousPageButton } = previousPagePluginInstance;
@@ -56,6 +60,7 @@ const toolbarPlugin = (): ToolbarPlugin => {
                 slot={{
                     currentPage: <CurrentPageLabel />,
                     currentPageInput: <CurrentPageInput />,
+                    fullScreenButton: <EnterFullScreenButton />,
                     goToFirstPage: <GoToFirstPageButton />,
                     goToLastPage: <GoToLastPageButton />,
                     nextPage: <NextPageButton />,

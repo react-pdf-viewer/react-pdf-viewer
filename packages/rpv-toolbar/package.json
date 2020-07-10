@@ -38,6 +38,7 @@
         "@phuocng/rpv": "^2.0.0",
         "@phuocng/rpv-current-page": "^2.0.0",
         "@phuocng/rpv-first-page": "^2.0.0",
+        "@phuocng/rpv-full-screen": "^2.0.0",
         "@phuocng/rpv-last-page": "^2.0.0",
         "@phuocng/rpv-next-page": "^2.0.0",
         "@phuocng/rpv-previous-page": "^2.0.0"
