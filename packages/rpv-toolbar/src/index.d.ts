@@ -12,6 +12,7 @@ import { Plugin } from '@phuocng/rpv';
 export interface ToolbarSlot {
     currentPage: React.ReactElement;
     currentPageInput: React.ReactElement;
+    fullScreenButton: React.ReactElement;
     goToFirstPage: React.ReactElement;
     goToLastPage: React.ReactElement;
     nextPage: React.ReactElement;

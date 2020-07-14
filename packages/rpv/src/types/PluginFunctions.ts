@@ -6,9 +6,11 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
+import React from 'react';
 import { ViewerState } from './ViewerState';
 
 export interface PluginFunctionsProps {
+    getPagesRef(): React.RefObject<HTMLDivElement>;
     getViewerState(): ViewerState;
     jumpToPage(pageIndex: number): void;
     setViewerState(viewerState: ViewerState): void;

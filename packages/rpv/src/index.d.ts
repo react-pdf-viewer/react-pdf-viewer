@@ -73,7 +73,6 @@ export interface ToolbarSlot {
     zoomOutButton: React.ReactNode;
     zoomPopover: React.ReactNode;
     zoomInButton: React.ReactNode;
-    fullScreenButton: React.ReactNode;
     downloadButton: React.ReactNode;
     openFileButton: React.ReactNode;
     printButton: React.ReactNode;
@@ -311,6 +310,7 @@ export interface ViewerState {
 }
 
 export interface PluginFunctions {
+    getPagesRef(): React.RefObject<HTMLDivElement>;
     getViewerState(): ViewerState;
     jumpToPage(pageIndex: number): void;
     setViewerState(viewerState: ViewerState): void;
@@ -322,6 +322,7 @@ export interface PluginOnDocumentLoad {
 
 export interface Plugin {
     install?(pluginFunctions: PluginFunctions): void;
+    renderBody?(): React.ReactElement;
     uninstall?(pluginFunctions: PluginFunctions): void;
     onDocumentLoad?(props: PluginOnDocumentLoad): void;
     onViewerStateChange?(viewerState: ViewerState): ViewerState;

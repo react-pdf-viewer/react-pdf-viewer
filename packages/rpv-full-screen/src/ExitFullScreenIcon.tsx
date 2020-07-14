@@ -8,7 +8,7 @@
 
 import React from 'react';
 
-import Icon from './Icon';
+import { Icon } from '@phuocng/rpv';
 
 const ExitFullScreenIcon: React.FC = () => {
     return (

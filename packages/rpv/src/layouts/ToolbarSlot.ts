@@ -14,7 +14,6 @@ interface ToolbarSlot {
     zoomOutButton: React.ReactNode;
     zoomPopover: React.ReactNode;
     zoomInButton: React.ReactNode;
-    fullScreenButton: React.ReactNode;
     downloadButton: React.ReactNode;
     openFileButton: React.ReactNode;
     printButton: React.ReactNode;
