@@ -6,12 +6,11 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, { Fragment, useContext, useEffect, useRef, useState } from 'react';
 
 import File from '../File';
 import useDragScroll from '../hooks/useDragScroll';
 import useDrop from '../hooks/useDrop';
-import useFullScreen from '../hooks/useFullScreen';
 import useToggle from '../hooks/useToggle';
 import PageLayer from '../layers/PageLayer';
 import DropArea from '../open/DropArea';
@@ -85,7 +84,7 @@ const Inner: React.FC<InnerProps> = ({
     const [scrollMode, setScrollMode] = useState<ScrollMode>(ScrollMode.Vertical);
     const [currentMode, setCurrentMode] = useState<SelectionMode>(selectionMode);
     const { toggleDragScroll } = useDragScroll(pagesRef);
-    const { isFullScreen, openFullScreen, closeFullScreen } = useFullScreen(pagesRef);
+    // const { isFullScreen, openFullScreen, closeFullScreen } = useFullScreen(pagesRef);
     const toggleSidebar = useToggle();
 
     const { numPages } = doc;
@@ -365,6 +364,13 @@ const Inner: React.FC<InnerProps> = ({
                 position: 'relative',
             }}
         >
+            {
+                plugins.map((plugin, idx) => (
+                    <Fragment key={idx}>
+                        {plugin.renderBody && plugin.renderBody()}
+                    </Fragment>
+                ))
+            }
             {
                 Array(numPages).fill(0).map((_, index) => {
                     return (
