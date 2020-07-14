@@ -30,20 +30,20 @@ const fullScreenPlugin = (): FullScreenPlugin => {
     const EnterFullScreenButtonDecorator = () => (
         <EnterFullScreenDecorator>
             {
-                (props) => (
-                    <>
-                        <EnterFullScreenButton {...props} />
-                        {props.isFullScreen && <ExitFullScreenButton {...props} />}
-                    </>
-                )
+                (props) => <EnterFullScreenButton {...props} />
             }
         </EnterFullScreenDecorator>
+    );
+
+    const ExitFullScreenDecorator = () => (
+        <ExitFullScreenButton store={store} />
     );
 
     return {
         install: (pluginFunctions: PluginFunctions) => {
             store.update('getPagesRef', pluginFunctions.getPagesRef);
         },
+        renderBody: ExitFullScreenDecorator,
         EnterFullScreen: EnterFullScreenDecorator,
         EnterFullScreenButton: EnterFullScreenButtonDecorator,
     };

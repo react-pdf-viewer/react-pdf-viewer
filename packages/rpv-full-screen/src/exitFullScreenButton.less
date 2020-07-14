@@ -6,11 +6,13 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import { RefObject } from 'react';
+.rpv-full-screen-exit-button {
+    bottom: 0;
+    padding: 8px;
+    position: fixed;
+    right: 0;
 
-interface StoreProps {
-    getPagesRef?(): RefObject<HTMLDivElement>;
-    isFullScreen?: boolean;
+    &-inner {
+        background: #fff;
+    }    
 }
-
-export default StoreProps;

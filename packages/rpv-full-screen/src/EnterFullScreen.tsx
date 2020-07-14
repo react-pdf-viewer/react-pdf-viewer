@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { RefObject, useEffect, useRef, useState } from 'react';
+import React, { RefObject, useEffect, useRef } from 'react';
 import { Store, StoreHandler } from '@phuocng/rpv';
 
 import {
@@ -18,7 +18,6 @@ import {
 import StoreProps from './StoreProps';
 
 export interface RenderEnterFullScreenProps {
-    isFullScreen: boolean;
     onEnterFullScreen: () => void;
     onExitFullScreen: () => void;
 }
@@ -33,7 +32,6 @@ const EnterFullScreen: React.FC<{
     children: RenderEnterFullScreen,
     store: Store<StoreProps>,
 }> = ({ children, store }) => {
-    const [isFullScreen, setIsFullScreen] = useState(false);
     const pagesRef = useRef<HTMLDivElement | null>(null);
 
     const closeOtherFullScreen = (): Promise<any> => {
@@ -73,7 +71,7 @@ const EnterFullScreen: React.FC<{
 
     const onFullScreenChange = (): void => {
         const ele = getFullScreenElement();
-        setIsFullScreen(ele === pagesRef.current);
+        store.update('isFullScreen', ele === pagesRef.current);
     };
 
     const handlePagesRef: StoreHandler<() => RefObject<HTMLDivElement>> = (pagesRefFn: () => RefObject<HTMLDivElement>) => {
@@ -89,7 +87,6 @@ const EnterFullScreen: React.FC<{
     }, []);
 
     return children({
-        isFullScreen,
         onEnterFullScreen: enterFullScreen,
         onExitFullScreen: closeFullScreen,
     });

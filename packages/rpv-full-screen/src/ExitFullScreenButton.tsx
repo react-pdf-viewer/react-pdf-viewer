@@ -6,28 +6,54 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { useContext } from 'react';
-import { Button, LocalizationContext, Position, Tooltip } from '@phuocng/rpv';
+import React, { useContext, useEffect, useState } from 'react';
+import { Button, LocalizationContext, Position, Store, StoreHandler, Tooltip } from '@phuocng/rpv';
 
-import { RenderEnterFullScreenProps } from './EnterFullScreen';
 import ExitFullScreenIcon from './ExitFullScreenIcon';
+import StoreProps from './StoreProps';
+import './exitFullScreenButton.less';
 
 const TOOLTIP_OFFSET = { left: 0, top: 8 };
 
-const ExitFullScreenButton: React.FC<RenderEnterFullScreenProps> = ({ onExitFullScreen }) => {
+const ExitFullScreenButton: React.FC<{
+    store: Store<StoreProps>,
+}> = ({ store }) => {
+    const [isFullScreen, setFullScreen] = useState(false);
     const l10nContext = useContext(LocalizationContext);
 
     const label = (l10nContext && l10nContext.plugins)
             ? l10nContext.plugins.fullScreen.exitFullScreen
             : 'Exit full screen';
 
+    const handleFullScreen = (fullScreen: boolean) => {
+        setFullScreen(fullScreen);
+    };
+
+    const exitFullScreen = () => setFullScreen(false);
+
+    useEffect(() => {
+        store.subscribe('isFullScreen', handleFullScreen);
+        return (): void => {
+            store.unsubscribe('isFullScreen', handleFullScreen);
+        };
+    }, []);
+
     return (
-        <Tooltip
-            position={Position.BottomCenter}
-            target={<Button onClick={onExitFullScreen}><ExitFullScreenIcon /></Button>}
-            content={() => label}
-            offset={TOOLTIP_OFFSET}
-        />
+        <>
+        {
+            isFullScreen &&
+            <div className='rpv-full-screen-exit-button'>
+                <div className='rpv-full-screen-exit-button-inner'>
+                    <Tooltip
+                        position={Position.BottomCenter}
+                        target={<Button onClick={exitFullScreen}><ExitFullScreenIcon /></Button>}
+                        content={() => label}
+                        offset={TOOLTIP_OFFSET}
+                    />
+                </div>
+            </div>
+        }
+        </>
     );
 };
 
