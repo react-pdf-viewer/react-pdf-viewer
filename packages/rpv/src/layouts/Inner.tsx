@@ -28,7 +28,6 @@ import PdfJs from '../vendors/PdfJs';
 import downloadFile from '../utils/downloadFile';
 import getFileExt from '../utils/fileExt';
 import { CanvasLayerRenderEvent, DocumentLoadEvent, PageChangeEvent, RenderViewer, TextLayerRenderEvent, ZoomEvent } from '../Viewer';
-import ExitFullScreen from './ExitFullScreen';
 import './inner.less';
 import { Layout } from './Layout';
 import PageSize from './PageSize';
@@ -84,7 +83,6 @@ const Inner: React.FC<InnerProps> = ({
     const [scrollMode, setScrollMode] = useState<ScrollMode>(ScrollMode.Vertical);
     const [currentMode, setCurrentMode] = useState<SelectionMode>(selectionMode);
     const { toggleDragScroll } = useDragScroll(pagesRef);
-    // const { isFullScreen, openFullScreen, closeFullScreen } = useFullScreen(pagesRef);
     const toggleSidebar = useToggle();
 
     const { numPages } = doc;

@@ -10,9 +10,7 @@ import React, { useContext, useState } from 'react';
 
 import Button from '../components/Button';
 import { Toggle } from '../hooks/useToggle';
-import DownArrowIcon from '../icons/DownArrowIcon';
 import DownloadIcon from '../icons/DownloadIcon';
-import FullScreenIcon from '../icons/FullScreenIcon';
 import HandToolIcon from '../icons/HandToolIcon';
 import HorizontalScrollingIcon from '../icons/HorizontalScrollingIcon';
 import InfoIcon from '../icons/InfoIcon';
@@ -21,7 +19,6 @@ import PrintIcon from '../icons/PrintIcon';
 import RotateBackwardIcon from '../icons/RotateBackwardIcon';
 import RotateForwardIcon from '../icons/RotateForwardIcon';
 import TextSelectionIcon from '../icons/TextSelectionIcon';
-import UpArrowIcon from '../icons/UpArrowIcon';
 import VerticalScrollingIcon from '../icons/VerticalScrollingIcon';
 import WrappedScrollingIcon from '../icons/WrappedScrollingIcon';
 import ZoomInIcon from '../icons/ZoomInIcon';
@@ -54,7 +51,6 @@ interface ToolbarProps {
     onChangeScrollMode(mode: ScrollMode): void;
     onChangeSelectionMode(mode: SelectionMode): void;
     onDownload(): void;
-    onFullScreen(): void;
     onJumpTo(pageIndex: number): void;
     onJumpToMatch(match: Match): void;
     onOpenFiles(files: FileList): void;
@@ -69,7 +65,7 @@ const TOOLTIP_OFFSET = { left: 0, top: 8 };
 
 const Toolbar: React.FC<ToolbarProps> = ({
     doc, fileName, scale, scrollMode, selectionMode,
-    onChangeScrollMode, onChangeSelectionMode, onDownload, onFullScreen, onJumpTo,
+    onChangeScrollMode, onChangeSelectionMode, onDownload, onJumpTo,
     onJumpToMatch, onOpenFiles, onPrint, onRotate, onSearchFor, onToggleSidebar, onZoom,
     renderToolbar,
 }) => {
@@ -107,7 +103,6 @@ const Toolbar: React.FC<ToolbarProps> = ({
     const renderToggle = (): LocalizationMap => l10n.toolbar.toggleSidebar;
     const renderZoomOut = (): LocalizationMap => l10n.toolbar.zoomOut;
     const renderZoomIn = (): LocalizationMap => l10n.toolbar.zoomIn;
-    const renderFullScreen = (): LocalizationMap => l10n.toolbar.fullScreen;
     const renderDownload = (): LocalizationMap => l10n.toolbar.download;
     const renderPrint = (): LocalizationMap => l10n.toolbar.print;
     const renderRotateClockwise = (): LocalizationMap => l10n.toolbar.rotateForward;
@@ -144,14 +139,6 @@ const Toolbar: React.FC<ToolbarProps> = ({
                 position={Position.BottomCenter}
                 target={<Button onClick={onDownload}><DownloadIcon /></Button>}
                 content={renderDownload}
-                offset={TOOLTIP_OFFSET}
-            />
-        ),
-        fullScreenButton: (
-            <Tooltip
-                position={Position.BottomCenter}
-                target={<Button onClick={onFullScreen}><FullScreenIcon /></Button>}
-                content={renderFullScreen}
                 offset={TOOLTIP_OFFSET}
             />
         ),
