@@ -7,19 +7,13 @@
  */
 
 import React, { RefObject, useEffect, useRef } from 'react';
-import { Store, StoreHandler } from '@phuocng/rpv';
+import { Store } from '@phuocng/rpv';
 
-import {
-    addFullScreenChangeListener,
-    exitFullScreen,
-    getFullScreenElement,
-    requestFullScreen,
-} from './fullScreen';
+import { addFullScreenChangeListener, exitFullScreen, getFullScreenElement, requestFullScreen } from './fullScreen';
 import StoreProps from './StoreProps';
 
 export interface RenderEnterFullScreenProps {
-    onEnterFullScreen: () => void;
-    onExitFullScreen: () => void;
+    onClick: () => void;
 }
 
 export interface EnterFullScreenProps {
@@ -57,24 +51,12 @@ const EnterFullScreen: React.FC<{
         });
     };
 
-    const closeFullScreen = (): void => {
-        const pagesEle = pagesRef.current;
-        if (!pagesEle) {
-            return;
-        }
-
-        const ele = getFullScreenElement();
-        if (ele && ele === pagesEle) {
-            exitFullScreen(document);
-        }
-    };
-
     const onFullScreenChange = (): void => {
         const ele = getFullScreenElement();
         store.update('isFullScreen', ele === pagesRef.current);
     };
 
-    const handlePagesRef: StoreHandler<() => RefObject<HTMLDivElement>> = (pagesRefFn: () => RefObject<HTMLDivElement>) => {
+    const handlePagesRef = (pagesRefFn: () => RefObject<HTMLDivElement>) => {
         pagesRef.current = pagesRefFn().current;
         addFullScreenChangeListener(onFullScreenChange);
     };
@@ -87,8 +69,7 @@ const EnterFullScreen: React.FC<{
     }, []);
 
     return children({
-        onEnterFullScreen: enterFullScreen,
-        onExitFullScreen: closeFullScreen,
+        onClick: enterFullScreen,
     });
 };
 
