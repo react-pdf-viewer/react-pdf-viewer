@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React from 'react';
+import React, { Fragment } from 'react';
 
 import { Plugin, PluginFunctions, PluginOnDocumentLoad, ViewerState } from '@phuocng/rpv';
 import currentPagePlugin from '@phuocng/rpv-current-page';
@@ -80,6 +80,17 @@ const toolbarPlugin = (): ToolbarPlugin => {
                 }
             });
         },
+        renderBody: () => (
+            <>
+            {
+                plugins.map((plugin, idx) => (
+                    <Fragment key={idx}>
+                        {plugin.renderBody && plugin.renderBody()}
+                    </Fragment>
+                ))
+            }
+            </>
+        ),
         onDocumentLoad: (props: PluginOnDocumentLoad) => {
             plugins.forEach(plugin => {
                 if (plugin.onDocumentLoad) {
