@@ -11,6 +11,7 @@ import { createStore, Plugin, PluginFunctions } from '@phuocng/rpv';
 
 import EnterFullScreen, { EnterFullScreenProps } from './EnterFullScreen';
 import EnterFullScreenButton from './EnterFullScreenButton';
+import ExitFullScreenButton from './ExitFullScreenButton';
 
 import StoreProps from './StoreProps';
 
@@ -29,7 +30,12 @@ const fullScreenPlugin = (): FullScreenPlugin => {
     const EnterFullScreenButtonDecorator = () => (
         <EnterFullScreenDecorator>
             {
-                (props) => <EnterFullScreenButton {...props} />
+                (props) => (
+                    <>
+                        <EnterFullScreenButton {...props} />
+                        {props.isFullScreen && <ExitFullScreenButton {...props} />}
+                    </>
+                )
             }
         </EnterFullScreenDecorator>
     );

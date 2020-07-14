@@ -10,7 +10,9 @@ import * as React from 'react';
 import { Plugin } from '@phuocng/rpv';
 
 export interface RenderEnterFullScreenProps {
-    onClick: () => void;
+    isFullScreen: boolean;
+    onEnterFullScreen: () => void;
+    onExitFullScreen: () => void;
 }
 
 export interface EnterFullScreenProps {
@@ -26,4 +28,5 @@ export interface FullScreenPlugin extends Plugin {
 
 export default function fullScreenPlugin(): FullScreenPlugin;
 
+export class ExitFullScreenIcon extends React.Component<{}> {}
 export class FullScreenIcon extends React.Component<{}> {}

@@ -6,10 +6,11 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React from 'react';
-import { Store } from '@phuocng/rpv';
+import React, { RefObject, useEffect, useRef, useState } from 'react';
+import { Store, StoreHandler } from '@phuocng/rpv';
 
 import {
+    addFullScreenChangeListener,
     exitFullScreen,
     getFullScreenElement,
     requestFullScreen,
@@ -17,7 +18,9 @@ import {
 import StoreProps from './StoreProps';
 
 export interface RenderEnterFullScreenProps {
-    onClick: () => void;
+    isFullScreen: boolean;
+    onEnterFullScreen: () => void;
+    onExitFullScreen: () => void;
 }
 
 export interface EnterFullScreenProps {
@@ -30,32 +33,65 @@ const EnterFullScreen: React.FC<{
     children: RenderEnterFullScreen,
     store: Store<StoreProps>,
 }> = ({ children, store }) => {
+    const [isFullScreen, setIsFullScreen] = useState(false);
+    const pagesRef = useRef<HTMLDivElement | null>(null);
+
     const closeOtherFullScreen = (): Promise<any> => {
-        const pagesRef = store.get('getPagesRef');
-        if (!pagesRef || !pagesRef().current) {
+        const pagesEle = pagesRef.current;
+        if (!pagesEle) {
             return Promise.resolve();
         }
 
         const ele = getFullScreenElement();
-        return (ele && ele !== pagesRef().current)
+        return (ele && ele !== pagesEle)
                 ? exitFullScreen(ele)
                 : Promise.resolve();
     };
 
     const enterFullScreen = () => {
-        const pagesRef = store.get('getPagesRef');
-        if (!pagesRef || !pagesRef().current) {
+        const pagesEle = pagesRef.current;
+        if (!pagesEle) {
             return;
         }
 
         closeOtherFullScreen().then(() => {
-            const ele = pagesRef().current as HTMLElement;
-            requestFullScreen(ele);
+            requestFullScreen(pagesEle);
         });
     };
 
+    const closeFullScreen = (): void => {
+        const pagesEle = pagesRef.current;
+        if (!pagesEle) {
+            return;
+        }
+
+        const ele = getFullScreenElement();
+        if (ele && ele === pagesEle) {
+            exitFullScreen(document);
+        }
+    };
+
+    const onFullScreenChange = (): void => {
+        const ele = getFullScreenElement();
+        setIsFullScreen(ele === pagesRef.current);
+    };
+
+    const handlePagesRef: StoreHandler<() => RefObject<HTMLDivElement>> = (pagesRefFn: () => RefObject<HTMLDivElement>) => {
+        pagesRef.current = pagesRefFn().current;
+        addFullScreenChangeListener(onFullScreenChange);
+    };
+
+    useEffect(() => {
+        store.subscribe('getPagesRef', handlePagesRef);
+        return (): void => {
+            store.unsubscribe('getPagesRef', handlePagesRef);
+        };
+    }, []);
+
     return children({
-        onClick: enterFullScreen,
+        isFullScreen,
+        onEnterFullScreen: enterFullScreen,
+        onExitFullScreen: closeFullScreen,
     });
 };
 
