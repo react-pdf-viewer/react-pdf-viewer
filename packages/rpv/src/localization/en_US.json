@@ -48,9 +48,6 @@
     "toolbar": {
         "documentProperties": "Document properties",
         "download": "Download",
-        "fullScreen": "Full screen",
-        "goToFirstPage": "Go to first page",
-        "goToLastPage": "Go to last page",
         "handTool": "Hand tool",
         "horizontalScrolling": "Horizontal scrolling",
         "moreActions": "More actions",
