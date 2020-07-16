@@ -8,7 +8,7 @@
 
 import React, { Fragment } from 'react';
 
-import { Plugin, PluginFunctions, PluginOnDocumentLoad, ViewerState } from '@phuocng/rpv';
+import { Plugin, PluginFunctions, PluginOnDocumentLoad, Slot, ViewerState } from '@phuocng/rpv';
 import currentPagePlugin from '@phuocng/rpv-current-page';
 import firstPagePlugin from '@phuocng/rpv-first-page';
 import fullScreenPlugin from '@phuocng/rpv-full-screen';
@@ -80,17 +80,14 @@ const toolbarPlugin = (): ToolbarPlugin => {
                 }
             });
         },
-        renderBody: () => (
-            <>
-            {
-                plugins.map((plugin, idx) => (
-                    <Fragment key={idx}>
-                        {plugin.renderBody && plugin.renderBody()}
-                    </Fragment>
-                ))
-            }
-            </>
-        ),
+        renderBody: (slot: Slot) => {
+            plugins.forEach(plugin => {
+                if (plugin.renderBody) {
+                    slot = plugin.renderBody(slot);
+                }
+            });
+            return slot;
+        },
         onDocumentLoad: (props: PluginOnDocumentLoad) => {
             plugins.forEach(plugin => {
                 if (plugin.onDocumentLoad) {

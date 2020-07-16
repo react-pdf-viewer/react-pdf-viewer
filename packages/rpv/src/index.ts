@@ -66,7 +66,7 @@ export { default as PreviousIcon } from './icons/PreviousIcon';
 // -----
 
 import { Toggle as ToggleType } from './hooks/useToggle';
-
+import { Slot as SlotType } from './layouts/Slot';
 import { default as LocalizationMapType } from './localization/LocalizationMap';
 import { Plugin as PluginType, PluginOnDocumentLoad as PluginOnDocumentLoadType } from './types/Plugin';
 import { PluginFunctions as PluginFunctionsType } from './types/PluginFunctions';
@@ -74,6 +74,7 @@ import { ViewerState as ViewerStateType } from './types/ViewerState';
 
 export type LocalizationMap = LocalizationMapType;
 export type Toggle = ToggleType;
+export type Slot = SlotType;
 export type Store<T> = StoreType<T>;
 export type StoreHandler<T> = StoreHandlerType<T>;
 export type Plugin = PluginType;
