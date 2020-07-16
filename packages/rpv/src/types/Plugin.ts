@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import * as React from 'react';
+import Slot from '../layouts/Slot';
 import { PluginFunctions } from './PluginFunctions';
 import { ViewerState } from './ViewerState';
 import PdfJs from '../vendors/PdfJs';
@@ -17,7 +17,7 @@ interface PluginOnDocumentLoadProps {
 
 interface PluginProps {
     install?(pluginFunctions: PluginFunctions): void;
-    renderBody?(): React.ReactElement;
+    renderBody?(slot: Slot): Slot;
     uninstall?(pluginFunctions: PluginFunctions): void;
     onDocumentLoad?(props: PluginOnDocumentLoadProps): void;
     onViewerStateChange?(viewerState: ViewerState): ViewerState;

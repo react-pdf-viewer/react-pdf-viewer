@@ -12,9 +12,10 @@ interface Attr extends React.HTMLAttributes<HTMLDivElement> {
     ref?: React.MutableRefObject<HTMLDivElement | null>;
 }
 
-interface Slot {
+interface SlotProps {
     attrs: Attr;
     children: React.ReactNode;
 }
 
-export default Slot;
+export type Slot = SlotProps;
+export default SlotProps;

@@ -322,7 +322,7 @@ export interface PluginOnDocumentLoad {
 
 export interface Plugin {
     install?(pluginFunctions: PluginFunctions): void;
-    renderBody?(): React.ReactElement;
+    renderBody?(slot: Slot): Slot;
     uninstall?(pluginFunctions: PluginFunctions): void;
     onDocumentLoad?(props: PluginOnDocumentLoad): void;
     onViewerStateChange?(viewerState: ViewerState): ViewerState;

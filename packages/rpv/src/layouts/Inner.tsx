@@ -13,6 +13,7 @@ import useDragScroll from '../hooks/useDragScroll';
 import useDrop from '../hooks/useDrop';
 import useToggle from '../hooks/useToggle';
 import PageLayer from '../layers/PageLayer';
+import Slot from '../layouts/Slot';
 import DropArea from '../open/DropArea';
 import PrintContainer from '../print/PrintContainer';
 import PrintStatus from '../print/PrintStatus';
@@ -352,54 +353,70 @@ const Inner: React.FC<InnerProps> = ({
     const cancelPrinting = (): void => setPrintStatus(PrintStatus.Inactive);
     const startPrinting = (): void => setPrintStatus(PrintStatus.Ready);
 
+    const renderBody = (): Slot => {
+        let slot: Slot = {
+            attrs: {
+                ref: pagesRef,
+                style: {
+                    height: '100%',
+                    overflow: 'auto',
+                    // We need this to jump between destinations or searching results
+                    position: 'relative',
+                }
+            },
+            children: (
+                <>
+                {
+                    Array(numPages).fill(0).map((_, index) => {
+                        return (
+                            <div
+                                className={`${theme.prefixClass}-inner-page`}
+                                key={`pagelayer-${index}`}
+                                ref={(ref): void => {
+                                    pageRefs[index].current = ref as HTMLDivElement;
+                                }}
+                            >
+                                <PageLayer
+                                    doc={doc}
+                                    keywordRegexp={keywordRegexp}
+                                    height={pageHeight}
+                                    match={match}
+                                    pageIndex={index}
+                                    renderPage={renderPage}
+                                    rotation={rotation}
+                                    scale={scale}
+                                    width={pageWidth}
+                                    onCanvasLayerRender={onCanvasLayerRender}
+                                    onExecuteNamedAction={executeNamedAction}
+                                    onJumpToDest={jumpToDest}
+                                    onPageVisibilityChanged={pageVisibilityChanged}
+                                    onTextLayerRender={onTextLayerRender}
+                                />
+                            </div>
+                        );
+                    })
+                }
+                </>
+            )
+        };
+
+        plugins.forEach(plugin => {
+            if (plugin.renderBody) {
+                slot = plugin.renderBody(slot);
+            }
+        });
+
+        return slot;
+    };
+
+    const slot = renderBody();
+
     return (
-        <div
-            ref={pagesRef}
-            style={{
-                height: '100%',
-                overflow: 'auto',
-                // We need this to jump between destinations or searching results
-                position: 'relative',
-            }}
-        >
-            {
-                plugins.map((plugin, idx) => (
-                    <Fragment key={idx}>
-                        {plugin.renderBody && plugin.renderBody()}
-                    </Fragment>
-                ))
-            }
-            {
-                Array(numPages).fill(0).map((_, index) => {
-                    return (
-                        <div
-                            className={`${theme.prefixClass}-inner-page`}
-                            key={`pagelayer-${index}`}
-                            ref={(ref): void => {
-                                pageRefs[index].current = ref as HTMLDivElement;
-                            }}
-                        >
-                            <PageLayer
-                                doc={doc}
-                                keywordRegexp={keywordRegexp}
-                                height={pageHeight}
-                                match={match}
-                                pageIndex={index}
-                                renderPage={renderPage}
-                                rotation={rotation}
-                                scale={scale}
-                                width={pageWidth}
-                                onCanvasLayerRender={onCanvasLayerRender}
-                                onExecuteNamedAction={executeNamedAction}
-                                onJumpToDest={jumpToDest}
-                                onPageVisibilityChanged={pageVisibilityChanged}
-                                onTextLayerRender={onTextLayerRender}
-                            />
-                        </div>
-                    );
-                })
-            }
+        <>
+        <div {...slot.attrs}>
+            {slot.children}
         </div>
+        </>
     );
 };
 
