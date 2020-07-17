@@ -95,6 +95,14 @@ const toolbarPlugin = (): ToolbarPlugin => {
             });
             return slot;
         },
+        uninstall: (pluginFunctions: PluginFunctions) => {
+            // Unistall plugins
+            plugins.forEach(plugin => {
+                if (plugin.uninstall) {
+                    plugin.uninstall(pluginFunctions);
+                }
+            });
+        },
         onDocumentLoad: (props: PluginOnDocumentLoad) => {
             plugins.forEach(plugin => {
                 if (plugin.onDocumentLoad) {
