@@ -15,8 +15,6 @@ import useToggle from '../hooks/useToggle';
 import PageLayer from '../layers/PageLayer';
 import Slot from '../layouts/Slot';
 import DropArea from '../open/DropArea';
-// import PrintContainer from '../print/PrintContainer';
-// import PrintStatus from '../print/PrintStatus';
 import Match from '../search/Match';
 import ScrollMode from '../ScrollMode';
 import SelectionMode from '../SelectionMode';
@@ -159,9 +157,6 @@ const Inner: React.FC<InnerProps> = ({
         });
     };
     const { isDragging } = useDrop(containerRef, (files) => openFiles(files));
-
-    // Print status
-    // const [printStatus, setPrintStatus] = useState(PrintStatus.Inactive);
 
     const jumpToPage = (pageIndex: number): void => {
         if (pageIndex < 0 || pageIndex >= numPages) {
@@ -347,11 +342,6 @@ const Inner: React.FC<InnerProps> = ({
                 break;
         }
     };
-
-    // Switch to the print mode
-    // const print = (): void => setPrintStatus(PrintStatus.Preparing);
-    // const cancelPrinting = (): void => setPrintStatus(PrintStatus.Inactive);
-    // const startPrinting = (): void => setPrintStatus(PrintStatus.Ready);
 
     const renderViewer = (): Slot => {
         let slot: Slot = {

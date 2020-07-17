@@ -113,7 +113,6 @@ export interface ToolbarSlot {
     zoomInButton: React.ReactNode;
     downloadButton: React.ReactNode;
     openFileButton: React.ReactNode;
-    printButton: React.ReactNode;
     rotateClockwiseButton: React.ReactNode;
     rotateCounterclockwiseButton: React.ReactNode;
     textSelectionButton: React.ReactNode;
