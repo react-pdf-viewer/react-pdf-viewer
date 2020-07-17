@@ -405,7 +405,6 @@ const Inner: React.FC<InnerProps> = ({
                     changeScrollMode,
                     changeSelectionMode,
                     jumpToPage,
-                    print,
                     rotate,
                     zoom,
                 });

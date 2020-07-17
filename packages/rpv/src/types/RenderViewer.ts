@@ -22,7 +22,6 @@ interface RenderViewerProps {
     changeScrollMode(mode: ScrollMode): void;
     changeSelectionMode(mode: SelectionMode): void;
     jumpToPage(page: number): void;
-    print(): void;
     rotate(degree: number): void;
     zoom(level: number | SpecialZoomLevel): void;
 }
