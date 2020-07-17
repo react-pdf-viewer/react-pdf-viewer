@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { Fragment, useContext, useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 
 import File from '../File';
 import useDragScroll from '../hooks/useDragScroll';
@@ -15,8 +15,8 @@ import useToggle from '../hooks/useToggle';
 import PageLayer from '../layers/PageLayer';
 import Slot from '../layouts/Slot';
 import DropArea from '../open/DropArea';
-import PrintContainer from '../print/PrintContainer';
-import PrintStatus from '../print/PrintStatus';
+// import PrintContainer from '../print/PrintContainer';
+// import PrintStatus from '../print/PrintStatus';
 import Match from '../search/Match';
 import ScrollMode from '../ScrollMode';
 import SelectionMode from '../SelectionMode';
@@ -161,7 +161,7 @@ const Inner: React.FC<InnerProps> = ({
     const { isDragging } = useDrop(containerRef, (files) => openFiles(files));
 
     // Print status
-    const [printStatus, setPrintStatus] = useState(PrintStatus.Inactive);
+    // const [printStatus, setPrintStatus] = useState(PrintStatus.Inactive);
 
     const jumpToPage = (pageIndex: number): void => {
         if (pageIndex < 0 || pageIndex >= numPages) {
@@ -349,9 +349,9 @@ const Inner: React.FC<InnerProps> = ({
     };
 
     // Switch to the print mode
-    const print = (): void => setPrintStatus(PrintStatus.Preparing);
-    const cancelPrinting = (): void => setPrintStatus(PrintStatus.Inactive);
-    const startPrinting = (): void => setPrintStatus(PrintStatus.Ready);
+    // const print = (): void => setPrintStatus(PrintStatus.Preparing);
+    // const cancelPrinting = (): void => setPrintStatus(PrintStatus.Inactive);
+    // const startPrinting = (): void => setPrintStatus(PrintStatus.Ready);
 
     const renderViewer = (): Slot => {
         let slot: Slot = {
@@ -397,13 +397,19 @@ const Inner: React.FC<InnerProps> = ({
                     })
                 }
                 </>
-            )
+            ),
+            outer: (
+                <></>
+            ),
         };
 
         plugins.forEach(plugin => {
             if (plugin.renderViewer) {
                 slot = plugin.renderViewer({
                     doc,
+                    pageHeight,
+                    pageWidth,
+                    rotation,
                     slot,
                     download,
                     changeScrollMode,
@@ -423,6 +429,7 @@ const Inner: React.FC<InnerProps> = ({
 
     return (
         <>
+        {slot.outer}
         <div {...slot.attrs}>
             {slot.children}
         </div>

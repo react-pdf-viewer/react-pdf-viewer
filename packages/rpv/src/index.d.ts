@@ -15,6 +15,43 @@ import * as React from 'react';
 export declare namespace PdfJs {
     interface PdfDocument {
         numPages: number;
+        getPage(pageIndex: number): Promise<Page>;
+    }
+
+    // View port
+    interface ViewPortParams {
+        rotation?: number;
+        scale: number;
+    }
+    interface ViewPortCloneParams {
+        dontFlip: boolean;
+    }
+    interface ViewPort {
+        height: number;
+        rotation: number;
+        transform: number[];
+        width: number;
+        clone(params: ViewPortCloneParams): ViewPort;
+    }
+
+    // Render task
+    interface PageRenderTask {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        promise: Promise<any>;
+        cancel(): void;
+    }
+
+    // Render page
+    interface PageRenderParams {
+        canvasContext: CanvasRenderingContext2D;
+        // Should be 'print' when printing
+        intent?: string;
+        transform?: number[];
+        viewport: ViewPort;
+    }
+    interface Page {
+        getViewport(params: ViewPortParams): ViewPort;
+        render(params: PageRenderParams): PageRenderTask;
     }
 }
 
@@ -56,8 +93,9 @@ export interface SlotAttr extends React.HTMLAttributes<HTMLDivElement> {
     ref?: React.MutableRefObject<HTMLDivElement | null>;
 }
 export interface Slot {
-    attrs: SlotAttr;
-    children: React.ReactNode;
+    attrs?: SlotAttr;
+    children?: React.ReactNode;
+    outer?: React.ReactNode;
 }
 
 export enum ToggleStatus {
@@ -202,6 +240,9 @@ export class Tooltip extends React.Component<TooltipProps> {}
 // Viewer
 export interface RenderViewerProps {
     doc: PdfJs.PdfDocument;
+    pageHeight: number;
+    pageWidth: number;
+    rotation: number;
     slot: Slot;
     download(): void;
     changeScrollMode(mode: ScrollMode): void;

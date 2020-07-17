@@ -14,6 +14,9 @@ import PdfJs from '../vendors/PdfJs';
 
 interface RenderViewerProps {
     doc: PdfJs.PdfDocument;
+    pageHeight: number;
+    pageWidth: number;
+    rotation: number;
     slot: Slot;
     download(): void;
     changeScrollMode(mode: ScrollMode): void;
