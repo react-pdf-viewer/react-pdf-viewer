@@ -6,9 +6,9 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { Fragment } from 'react';
+import React from 'react';
 
-import { Plugin, PluginFunctions, PluginOnDocumentLoad, Slot, ViewerState } from '@phuocng/rpv';
+import { Plugin, PluginFunctions, PluginOnDocumentLoad, RenderViewerProps, Slot, ViewerState } from '@phuocng/rpv';
 import currentPagePlugin from '@phuocng/rpv-current-page';
 import firstPagePlugin from '@phuocng/rpv-first-page';
 import fullScreenPlugin from '@phuocng/rpv-full-screen';
@@ -80,10 +80,11 @@ const toolbarPlugin = (): ToolbarPlugin => {
                 }
             });
         },
-        renderBody: (slot: Slot) => {
+        renderViewer: (props: RenderViewerProps) => {
+            let { slot } = props;
             plugins.forEach(plugin => {
-                if (plugin.renderBody) {
-                    slot = plugin.renderBody(slot);
+                if (plugin.renderViewer) {
+                    slot = plugin.renderViewer({...props, slot});
                 }
             });
             return slot;

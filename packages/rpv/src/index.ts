@@ -70,6 +70,7 @@ import { Slot as SlotType } from './layouts/Slot';
 import { default as LocalizationMapType } from './localization/LocalizationMap';
 import { Plugin as PluginType, PluginOnDocumentLoad as PluginOnDocumentLoadType } from './types/Plugin';
 import { PluginFunctions as PluginFunctionsType } from './types/PluginFunctions';
+import { default as RenderViewerPropsType } from './types/RenderViewer';
 import { ViewerState as ViewerStateType } from './types/ViewerState';
 
 export type LocalizationMap = LocalizationMapType;
@@ -80,4 +81,5 @@ export type StoreHandler<T> = StoreHandlerType<T>;
 export type Plugin = PluginType;
 export type PluginFunctions = PluginFunctionsType;
 export type PluginOnDocumentLoad = PluginOnDocumentLoadType;
+export type RenderViewerProps = RenderViewerPropsType;
 export type ViewerState = ViewerStateType;

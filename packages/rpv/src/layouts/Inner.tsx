@@ -28,7 +28,7 @@ import { ViewerState } from '../types/ViewerState';
 import PdfJs from '../vendors/PdfJs';
 import downloadFile from '../utils/downloadFile';
 import getFileExt from '../utils/fileExt';
-import { CanvasLayerRenderEvent, DocumentLoadEvent, PageChangeEvent, RenderViewer, TextLayerRenderEvent, ZoomEvent } from '../Viewer';
+import { CanvasLayerRenderEvent, DocumentLoadEvent, PageChangeEvent, TextLayerRenderEvent, ZoomEvent } from '../Viewer';
 import './inner.less';
 import { Layout } from './Layout';
 import PageSize from './PageSize';
@@ -353,7 +353,7 @@ const Inner: React.FC<InnerProps> = ({
     const cancelPrinting = (): void => setPrintStatus(PrintStatus.Inactive);
     const startPrinting = (): void => setPrintStatus(PrintStatus.Ready);
 
-    const renderBody = (): Slot => {
+    const renderViewer = (): Slot => {
         let slot: Slot = {
             attrs: {
                 ref: pagesRef,
@@ -401,15 +401,25 @@ const Inner: React.FC<InnerProps> = ({
         };
 
         plugins.forEach(plugin => {
-            if (plugin.renderBody) {
-                slot = plugin.renderBody(slot);
+            if (plugin.renderViewer) {
+                slot = plugin.renderViewer({
+                    doc,
+                    slot,
+                    download,
+                    changeScrollMode,
+                    changeSelectionMode,
+                    jumpToPage,
+                    print,
+                    rotate,
+                    zoom,
+                });
             }
         });
 
         return slot;
     };
 
-    const slot = renderBody();
+    const slot = renderViewer();
 
     return (
         <>

@@ -6,10 +6,10 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import Slot from '../layouts/Slot';
-import { PluginFunctions } from './PluginFunctions';
-import { ViewerState } from './ViewerState';
 import PdfJs from '../vendors/PdfJs';
+import { PluginFunctions } from './PluginFunctions';
+import { RenderViewer } from './RenderViewer';
+import { ViewerState } from './ViewerState';
 
 interface PluginOnDocumentLoadProps {
     doc: PdfJs.PdfDocument;
@@ -17,7 +17,7 @@ interface PluginOnDocumentLoadProps {
 
 interface PluginProps {
     install?(pluginFunctions: PluginFunctions): void;
-    renderBody?(slot: Slot): Slot;
+    renderViewer?: RenderViewer;
     uninstall?(pluginFunctions: PluginFunctions): void;
     onDocumentLoad?(props: PluginOnDocumentLoadProps): void;
     onViewerStateChange?(viewerState: ViewerState): ViewerState;

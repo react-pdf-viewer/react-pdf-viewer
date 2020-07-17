@@ -201,8 +201,8 @@ export class Tooltip extends React.Component<TooltipProps> {}
 
 // Viewer
 export interface RenderViewerProps {
-    viewer: React.ReactElement;
     doc: PdfJs.PdfDocument;
+    slot: Slot;
     download(): void;
     changeScrollMode(mode: ScrollMode): void;
     changeSelectionMode(mode: SelectionMode): void;
@@ -213,7 +213,7 @@ export interface RenderViewerProps {
     rotate(degree: number): void;
     zoom(level: number | SpecialZoomLevel): void;
 }
-export type RenderViewer = (props: RenderViewerProps) => React.ReactElement;
+export type RenderViewer = (props: RenderViewerProps) => Slot;
 
 // Represents the error in case the document can't be loaded
 export interface LoadError {
@@ -322,7 +322,7 @@ export interface PluginOnDocumentLoad {
 
 export interface Plugin {
     install?(pluginFunctions: PluginFunctions): void;
-    renderBody?(slot: Slot): Slot;
+    renderViewer?: RenderViewer;
     uninstall?(pluginFunctions: PluginFunctions): void;
     onDocumentLoad?(props: PluginOnDocumentLoad): void;
     onViewerStateChange?(viewerState: ViewerState): ViewerState;

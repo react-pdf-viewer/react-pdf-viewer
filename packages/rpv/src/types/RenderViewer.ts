@@ -1,0 +1,28 @@
+/**
+ * A React component to view a PDF document
+ *
+ * @see https://react-pdf-viewer.dev
+ * @license https://react-pdf-viewer.dev/license
+ * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
+ */
+
+import Slot from '../layouts/Slot';
+import ScrollMode from '../ScrollMode';
+import SelectionMode from '../SelectionMode';
+import SpecialZoomLevel from '../SpecialZoomLevel';
+import PdfJs from '../vendors/PdfJs';
+
+interface RenderViewerProps {
+    doc: PdfJs.PdfDocument;
+    slot: Slot;
+    download(): void;
+    changeScrollMode(mode: ScrollMode): void;
+    changeSelectionMode(mode: SelectionMode): void;
+    jumpToPage(page: number): void;
+    print(): void;
+    rotate(degree: number): void;
+    zoom(level: number | SpecialZoomLevel): void;
+}
+
+export type RenderViewer = (props: RenderViewerProps) => Slot;
+export default RenderViewerProps;

@@ -7,7 +7,7 @@
  */
 
 import React, { ReactElement } from 'react';
-import { createStore, Plugin, PluginFunctions, Slot } from '@phuocng/rpv';
+import { createStore, Plugin, PluginFunctions, RenderViewerProps, Slot } from '@phuocng/rpv';
 
 import EnterFullScreen, { EnterFullScreenProps } from './EnterFullScreen';
 import EnterFullScreenButton from './EnterFullScreenButton';
@@ -39,7 +39,8 @@ const fullScreenPlugin = (): FullScreenPlugin => {
         <ExitFullScreenButton store={store} />
     );
 
-    const renderBody = (slot: Slot): Slot => {
+    const renderViewer = (props: RenderViewerProps): Slot => {
+        const { slot } = props;
         const updateSlot = {
             children: (
                 <>
@@ -55,7 +56,7 @@ const fullScreenPlugin = (): FullScreenPlugin => {
         install: (pluginFunctions: PluginFunctions) => {
             store.update('getPagesRef', pluginFunctions.getPagesRef);
         },
-        renderBody,
+        renderViewer,
         EnterFullScreen: EnterFullScreenDecorator,
         EnterFullScreenButton: EnterFullScreenButtonDecorator,
     };
