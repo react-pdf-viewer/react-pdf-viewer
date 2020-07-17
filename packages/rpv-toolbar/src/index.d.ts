@@ -18,6 +18,7 @@ export interface ToolbarSlot {
     nextPage: React.ReactElement;
     numberOfPages: React.ReactElement;
     previousPage: React.ReactElement;
+    printButton: React.ReactElement;
 }
 
 export type RenderToolbarSlot = (toolbarSlot: ToolbarSlot) => React.ReactElement;

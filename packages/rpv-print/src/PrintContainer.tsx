@@ -6,36 +6,45 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { PdfJs, Store, StoreHandler } from '@phuocng/rpv';
 
-import PdfJs from '../vendors/PdfJs';
 import PrintProgress from './PrintProgress';
 import PrintStatus from './PrintStatus';
 import PrintZone from './PrintZone';
 import './printZone.less';
+import StoreProps from './StoreProps';
 
 interface PrintContainerProps {
     doc: PdfJs.PdfDocument;
     pageHeight: number;
     pageWidth: number;
-    printStatus: PrintStatus;
     rotation: number;
-    onCancel(): void;
-    onStartPrinting(): void;
+    store: Store<StoreProps>;
 }
 
-const PrintContainer: React.FC<PrintContainerProps> = ({ doc, pageHeight, pageWidth, printStatus, rotation, onCancel, onStartPrinting }) => {
+const PrintContainer: React.FC<PrintContainerProps> = ({ doc, pageHeight, pageWidth, rotation, store }) => {
+    const [printStatus, setPrintStatus] = useState(PrintStatus.Inactive);
     const [numLoadedPagesForPrint, setNumLoadedPagesForPrint] = useState(0);
 
     const cancelPrinting = (): void => {
         setNumLoadedPagesForPrint(0);
-        onCancel();
+        setPrintStatus(PrintStatus.Inactive);
     };
 
     const startPrinting = (): void => {
         setNumLoadedPagesForPrint(0);
-        onStartPrinting();
-    }; 
+        setPrintStatus(PrintStatus.Ready);
+    };
+
+    const handlePrintStatus: StoreHandler<PrintStatus> = (status: PrintStatus) => setPrintStatus(status);
+
+    useEffect(() => {
+        store.subscribe('printStatus', handlePrintStatus);
+        return () => {
+            store.unsubscribe('printStatus', handlePrintStatus);
+        };
+    }, []);
 
     return (
         <>

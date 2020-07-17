@@ -15,6 +15,43 @@ import * as React from 'react';
 export declare namespace PdfJs {
     interface PdfDocument {
         numPages: number;
+        getPage(pageIndex: number): Promise<Page>;
+    }
+
+    // View port
+    interface ViewPortParams {
+        rotation?: number;
+        scale: number;
+    }
+    interface ViewPortCloneParams {
+        dontFlip: boolean;
+    }
+    interface ViewPort {
+        height: number;
+        rotation: number;
+        transform: number[];
+        width: number;
+        clone(params: ViewPortCloneParams): ViewPort;
+    }
+
+    // Render task
+    interface PageRenderTask {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        promise: Promise<any>;
+        cancel(): void;
+    }
+
+    // Render page
+    interface PageRenderParams {
+        canvasContext: CanvasRenderingContext2D;
+        // Should be 'print' when printing
+        intent?: string;
+        transform?: number[];
+        viewport: ViewPort;
+    }
+    interface Page {
+        getViewport(params: ViewPortParams): ViewPort;
+        render(params: PageRenderParams): PageRenderTask;
     }
 }
 
@@ -56,8 +93,9 @@ export interface SlotAttr extends React.HTMLAttributes<HTMLDivElement> {
     ref?: React.MutableRefObject<HTMLDivElement | null>;
 }
 export interface Slot {
-    attrs: SlotAttr;
-    children: React.ReactNode;
+    attrs?: SlotAttr;
+    children?: React.ReactNode;
+    outer?: React.ReactNode;
 }
 
 export enum ToggleStatus {
@@ -75,7 +113,6 @@ export interface ToolbarSlot {
     zoomInButton: React.ReactNode;
     downloadButton: React.ReactNode;
     openFileButton: React.ReactNode;
-    printButton: React.ReactNode;
     rotateClockwiseButton: React.ReactNode;
     rotateCounterclockwiseButton: React.ReactNode;
     textSelectionButton: React.ReactNode;
@@ -201,19 +238,21 @@ export class Tooltip extends React.Component<TooltipProps> {}
 
 // Viewer
 export interface RenderViewerProps {
-    viewer: React.ReactElement;
     doc: PdfJs.PdfDocument;
+    pageHeight: number;
+    pageWidth: number;
+    rotation: number;
+    slot: Slot;
     download(): void;
     changeScrollMode(mode: ScrollMode): void;
     changeSelectionMode(mode: SelectionMode): void;
     // Jump to given page
     // `page` is zero-index based
     jumpToPage(page: number): void;
-    print(): void;
     rotate(degree: number): void;
     zoom(level: number | SpecialZoomLevel): void;
 }
-export type RenderViewer = (props: RenderViewerProps) => React.ReactElement;
+export type RenderViewer = (props: RenderViewerProps) => Slot;
 
 // Represents the error in case the document can't be loaded
 export interface LoadError {
@@ -322,7 +361,7 @@ export interface PluginOnDocumentLoad {
 
 export interface Plugin {
     install?(pluginFunctions: PluginFunctions): void;
-    renderBody?(slot: Slot): Slot;
+    renderViewer?: RenderViewer;
     uninstall?(pluginFunctions: PluginFunctions): void;
     onDocumentLoad?(props: PluginOnDocumentLoad): void;
     onViewerStateChange?(viewerState: ViewerState): ViewerState;

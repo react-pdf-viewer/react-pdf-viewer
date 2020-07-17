@@ -55,6 +55,53 @@ export {
 };
 
 // -----
+// PdfJs
+// -----
+
+export declare namespace PdfJs {
+    interface PdfDocument {
+        numPages: number;
+        getPage(pageIndex: number): Promise<Page>;
+    }
+
+    // View port
+    interface ViewPortParams {
+        rotation?: number;
+        scale: number;
+    }
+    interface ViewPortCloneParams {
+        dontFlip: boolean;
+    }
+    interface ViewPort {
+        height: number;
+        rotation: number;
+        transform: number[];
+        width: number;
+        clone(params: ViewPortCloneParams): ViewPort;
+    }
+
+    // Render task
+    interface PageRenderTask {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        promise: Promise<any>;
+        cancel(): void;
+    }
+
+    // Render page
+    interface PageRenderParams {
+        canvasContext: CanvasRenderingContext2D;
+        // Should be 'print' when printing
+        intent?: string;
+        transform?: number[];
+        viewport: ViewPort;
+    }
+    interface Page {
+        getViewport(params: ViewPortParams): ViewPort;
+        render(params: PageRenderParams): PageRenderTask;
+    }
+}
+
+// -----
 // Icons
 // -----
 
@@ -70,6 +117,7 @@ import { Slot as SlotType } from './layouts/Slot';
 import { default as LocalizationMapType } from './localization/LocalizationMap';
 import { Plugin as PluginType, PluginOnDocumentLoad as PluginOnDocumentLoadType } from './types/Plugin';
 import { PluginFunctions as PluginFunctionsType } from './types/PluginFunctions';
+import { default as RenderViewerPropsType } from './types/RenderViewer';
 import { ViewerState as ViewerStateType } from './types/ViewerState';
 
 export type LocalizationMap = LocalizationMapType;
@@ -80,4 +128,5 @@ export type StoreHandler<T> = StoreHandlerType<T>;
 export type Plugin = PluginType;
 export type PluginFunctions = PluginFunctionsType;
 export type PluginOnDocumentLoad = PluginOnDocumentLoadType;
+export type RenderViewerProps = RenderViewerPropsType;
 export type ViewerState = ViewerStateType;

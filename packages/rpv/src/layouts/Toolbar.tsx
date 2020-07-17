@@ -15,7 +15,6 @@ import HandToolIcon from '../icons/HandToolIcon';
 import HorizontalScrollingIcon from '../icons/HorizontalScrollingIcon';
 import InfoIcon from '../icons/InfoIcon';
 import LeftSidebarIcon from '../icons/LeftSidebarIcon';
-import PrintIcon from '../icons/PrintIcon';
 import RotateBackwardIcon from '../icons/RotateBackwardIcon';
 import RotateForwardIcon from '../icons/RotateForwardIcon';
 import TextSelectionIcon from '../icons/TextSelectionIcon';
@@ -54,7 +53,6 @@ interface ToolbarProps {
     onJumpTo(pageIndex: number): void;
     onJumpToMatch(match: Match): void;
     onOpenFiles(files: FileList): void;
-    onPrint(): void;
     onRotate(degree: number): void;
     onSearchFor(keyword: RegExp): void;
     onToggleSidebar(): void;
@@ -66,7 +64,7 @@ const TOOLTIP_OFFSET = { left: 0, top: 8 };
 const Toolbar: React.FC<ToolbarProps> = ({
     doc, fileName, scale, scrollMode, selectionMode,
     onChangeScrollMode, onChangeSelectionMode, onDownload, onJumpTo,
-    onJumpToMatch, onOpenFiles, onPrint, onRotate, onSearchFor, onToggleSidebar, onZoom,
+    onJumpToMatch, onOpenFiles, onRotate, onSearchFor, onToggleSidebar, onZoom,
     renderToolbar,
 }) => {
     const l10n = useContext(LocalizationContext);
@@ -104,7 +102,6 @@ const Toolbar: React.FC<ToolbarProps> = ({
     const renderZoomOut = (): LocalizationMap => l10n.toolbar.zoomOut;
     const renderZoomIn = (): LocalizationMap => l10n.toolbar.zoomIn;
     const renderDownload = (): LocalizationMap => l10n.toolbar.download;
-    const renderPrint = (): LocalizationMap => l10n.toolbar.print;
     const renderRotateClockwise = (): LocalizationMap => l10n.toolbar.rotateForward;
     const renderRotateCounterclockwise = (): LocalizationMap => l10n.toolbar.rotateBackward;
     const renderTextSelection = (): LocalizationMap => l10n.toolbar.textSelectionTool;
@@ -177,14 +174,6 @@ const Toolbar: React.FC<ToolbarProps> = ({
         ),
         openFileButton: (
             <OpenFileButton onOpenFiles={onOpenFiles} />
-        ),
-        printButton: (
-            <Tooltip
-                position={Position.BottomCenter}
-                target={<Button onClick={onPrint}><PrintIcon /></Button>}
-                content={renderPrint}
-                offset={TOOLTIP_OFFSET}
-            />
         ),
         rotateClockwiseButton: (
             <Tooltip

@@ -7,11 +7,8 @@
  */
 
 import React, { useEffect, useContext } from 'react';
+import { LocalizationContext, PrimaryButton, ProgressBar } from '@phuocng/rpv';
 
-import PrimaryButton from '../components/PrimaryButton';
-import ProgressBar from '../components/ProgressBar';
-import LocalizationContext from '../localization/LocalizationContext';
-import ThemeContext from '../theme/ThemeContext';
 import './printProgress.less';
 
 interface PrintProgressProps {
@@ -22,8 +19,7 @@ interface PrintProgressProps {
 }
 
 const PrintProgress: React.FC<PrintProgressProps> = ({ numLoadedPages, numPages, onCancel, onStartPrinting }) => {
-    const l10n = useContext(LocalizationContext);
-    const theme = useContext(ThemeContext);
+    const l10nContext = useContext(LocalizationContext);
     const progress = Math.floor(numLoadedPages * 100 / numPages);
     useEffect(() => {
         if (numLoadedPages === numPages) {
@@ -32,14 +28,24 @@ const PrintProgress: React.FC<PrintProgressProps> = ({ numLoadedPages, numPages,
     }, [numLoadedPages]);
 
     return (
-        <div className={`${theme.prefixClass}-print-progress`}>
-            <div className={`${theme.prefixClass}-print-progress-inner`}>
-                <div className={`${theme.prefixClass}-print-progress-message`}>{l10n.printProgress.preparingDocument}</div>
-                <div className={`${theme.prefixClass}-print-progress-bar`}>
+        <div className='rpv-print-progress'>
+            <div className='rpv-print-progress-inner'>
+                <div className='rpv-print-progress-message'>
+                    {
+                        (l10nContext && l10nContext.plugins && l10nContext.plugins.preparingDocument)
+                            ? l10nContext.plugins.print.preparingDocument
+                            : 'Preparing document ...'
+                    }
+                </div>
+                <div className='rpv-print-progress-bar'>
                     <ProgressBar progress={progress} />
                 </div>
                 <PrimaryButton onClick={onCancel}>
-                    {l10n.printProgress.cancel}
+                    {
+                        (l10nContext && l10nContext.plugins && l10nContext.plugins.cancel)
+                            ? l10nContext.plugins.print.cancel
+                            : 'Cancel'
+                    }
                 </PrimaryButton>
             </div>
         </div>

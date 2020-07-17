@@ -9,7 +9,7 @@
 'use strict';
 
 if (process.env.NODE_ENV === 'production') {
-    module.exports = require('./cjs/rpv.min.js');
+    module.exports = require('./cjs/rpv-last-page.min.js');
 } else {
-    module.exports = require('./cjs/rpv.js');
+    module.exports = require('./cjs/rpv-last-page.js');
 }

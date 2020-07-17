@@ -6,18 +6,16 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-@import '../theme/common.less';
-
-.@{viewer-prefix}-print-zone {
+.rpv-print-zone {
     display: none;
 }
 
 @media print {
-    .@{viewer-prefix}-body-printing #root {
+    .rpv-body-printing #root {
         display: none;
     }
 
-    .@{viewer-prefix}-print-zone {
+    .rpv-print-zone {
         display: block;
 
         &-page-thumbnail {

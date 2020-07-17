@@ -13,8 +13,9 @@ interface Attr extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 interface SlotProps {
-    attrs: Attr;
-    children: React.ReactNode;
+    attrs?: Attr;
+    children?: React.ReactNode;
+    outer?: React.ReactNode;
 }
 
 export type Slot = SlotProps;

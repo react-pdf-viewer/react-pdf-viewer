@@ -6,15 +6,16 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { Fragment } from 'react';
+import React from 'react';
 
-import { Plugin, PluginFunctions, PluginOnDocumentLoad, Slot, ViewerState } from '@phuocng/rpv';
+import { Plugin, PluginFunctions, PluginOnDocumentLoad, RenderViewerProps, ViewerState } from '@phuocng/rpv';
 import currentPagePlugin from '@phuocng/rpv-current-page';
 import firstPagePlugin from '@phuocng/rpv-first-page';
 import fullScreenPlugin from '@phuocng/rpv-full-screen';
 import lastPagePlugin from '@phuocng/rpv-last-page';
 import nextPagePlugin from '@phuocng/rpv-next-page';
 import previousPagePlugin from '@phuocng/rpv-previous-page';
+import printPlugin from '@phuocng/rpv-print';
 
 import Toolbar, { ToolbarProps } from './Toolbar';
 
@@ -29,6 +30,7 @@ const toolbarPlugin = (): ToolbarPlugin => {
     const lastPagePluginInstance = lastPagePlugin();
     const nextPagePluginInstance = nextPagePlugin();
     const previousPagePluginInstance = previousPagePlugin();
+    const printPluginInstance = printPlugin();
 
     const plugins = [
         currentPagePluginInstance,
@@ -37,6 +39,7 @@ const toolbarPlugin = (): ToolbarPlugin => {
         lastPagePluginInstance,
         nextPagePluginInstance,
         previousPagePluginInstance,
+        printPluginInstance,
     ];
 
     const ToolbarDecorator = (props: ToolbarProps) => {
@@ -46,6 +49,8 @@ const toolbarPlugin = (): ToolbarPlugin => {
         const { GoToLastPageButton } = lastPagePluginInstance;
         const { NextPageButton } = nextPagePluginInstance;
         const { PreviousPageButton } = previousPagePluginInstance;
+        const { PrintButton } = printPluginInstance;
+
         const NumberOfPages = () => (
             <CurrentPageLabel>
                 {
@@ -66,6 +71,7 @@ const toolbarPlugin = (): ToolbarPlugin => {
                     nextPage: <NextPageButton />,
                     numberOfPages: <NumberOfPages />,
                     previousPage: <PreviousPageButton />,
+                    printButton: <PrintButton />,
                 }}
             />
         );
@@ -80,13 +86,22 @@ const toolbarPlugin = (): ToolbarPlugin => {
                 }
             });
         },
-        renderBody: (slot: Slot) => {
+        renderViewer: (props: RenderViewerProps) => {
+            let { slot } = props;
             plugins.forEach(plugin => {
-                if (plugin.renderBody) {
-                    slot = plugin.renderBody(slot);
+                if (plugin.renderViewer) {
+                    slot = plugin.renderViewer({...props, slot});
                 }
             });
             return slot;
+        },
+        uninstall: (pluginFunctions: PluginFunctions) => {
+            // Unistall plugins
+            plugins.forEach(plugin => {
+                if (plugin.uninstall) {
+                    plugin.uninstall(pluginFunctions);
+                }
+            });
         },
         onDocumentLoad: (props: PluginOnDocumentLoad) => {
             plugins.forEach(plugin => {

@@ -44,9 +44,6 @@ const defaultToolbar: RenderToolbarSlot = (toolbarSlot: ToolbarSlot): React.Reac
                     {toolbarSlot.downloadButton}
                 </div>
                 <div className={`${theme.prefixClass}-toolbar-item`}>
-                    {toolbarSlot.printButton}
-                </div>
-                <div className={`${theme.prefixClass}-toolbar-item`}>
                     {toolbarSlot.moreActionsPopover}
                 </div>
             </div>

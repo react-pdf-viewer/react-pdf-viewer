@@ -1,5 +1,5 @@
 {
-    "name": "@phuocng/rpv-toolbar",
+    "name": "@phuocng/rpv-print",
     "version": "2.0.0",
     "description": "A React component to view a PDF document",
     "license": "https://react-pdf-viewer.dev/license",
@@ -19,7 +19,7 @@
     "repository": {
         "type": "git",
         "url": "https://github.com/phuoc-ng/react-pdf-viewer",
-        "directory": "packages/rpv-toolbar"
+        "directory": "packages/rpv-print"
     },
     "bugs": {
         "url": "https://github.com/phuoc-ng/react-pdf-viewer/issues"
@@ -35,18 +35,11 @@
     "dependencies": {
         "react": "^16.13.1",
         "react-dom": "^16.13.1",
-        "@phuocng/rpv": "^2.0.0",
-        "@phuocng/rpv-current-page": "^2.0.0",
-        "@phuocng/rpv-first-page": "^2.0.0",
-        "@phuocng/rpv-full-screen": "^2.0.0",
-        "@phuocng/rpv-last-page": "^2.0.0",
-        "@phuocng/rpv-next-page": "^2.0.0",
-        "@phuocng/rpv-previous-page": "^2.0.0",
-        "@phuocng/rpv-print": "^2.0.0"
+        "@phuocng/rpv": "^2.0.0"
     },
     "scripts": {
         "clean": "rm -rf npm && mkdir npm",
-        "build": "npm run clean && cp src/index.d.ts npm && cp dist/index.js npm && rollup -c && npm run mincss && rm -rf npm/cjs/rpv-toolbar.less",
-        "mincss": "postcss npm/cjs/rpv-toolbar.css > npm/cjs/rpv-toolbar.min.css"
+        "build": "npm run clean && cp src/index.d.ts npm && cp dist/index.js npm && rollup -c && npm run mincss && rm -rf npm/cjs/rpv-print.less",
+        "mincss": "postcss npm/cjs/rpv-print.css > npm/cjs/rpv-print.min.css"
     }
 }

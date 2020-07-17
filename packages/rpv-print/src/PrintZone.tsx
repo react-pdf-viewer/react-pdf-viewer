@@ -6,11 +6,10 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
+import { PdfJs } from '@phuocng/rpv';
 
-import PdfJs from '../vendors/PdfJs';
-import ThemeContext from '../theme/ThemeContext';
 import PageThumbnailContainer from './PageThumbnailContainer';
 import PrintStatus from './PrintStatus';
 import './printZone.less';
@@ -26,19 +25,18 @@ interface PrintZoneProps {
 }
 
 const PrintZone: React.FC<PrintZoneProps> = ({ doc, pageHeight, pageWidth, printStatus, rotation, onCancel, onLoad }) => {
-    const theme = useContext(ThemeContext);
     const [numLoadedPages, setNumLoadedPages] = useState(0);
 
     useEffect(() => {
         if (printStatus === PrintStatus.Ready) {
-            document.body.classList.add(`${theme.prefixClass}-body-printing`);
+            document.body.classList.add('rpv-body-printing');
             window.print();
         }
 
         // Handle the case user clicks the `Cancel` button in the print window
         const handler = (): void => {
             if (printStatus === PrintStatus.Ready) {
-                document.body.classList.remove(`${theme.prefixClass}-body-printing`);
+                document.body.classList.remove('rpv-body-printing');
                 onCancel();
             }
         };
@@ -58,7 +56,7 @@ const PrintZone: React.FC<PrintZoneProps> = ({ doc, pageHeight, pageWidth, print
         createPortal(
             (
                 <>
-                <div className={`${theme.prefixClass}-print-zone`}>
+                <div className='rpv-print-zone'>
                     {
                         Array(numPages).fill(0).map((_, index) => {
                             return (

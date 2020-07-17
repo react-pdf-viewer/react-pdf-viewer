@@ -6,11 +6,9 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
-import Spinner from '../components/Spinner';
-import ThemeContext from '../theme/ThemeContext';
-import PdfJs from '../vendors/PdfJs';
+import { PdfJs, Spinner } from '@phuocng/rpv';
 
 interface PageThumbnailProps {
     page: PdfJs.Page;
@@ -23,7 +21,6 @@ interface PageThumbnailProps {
 const PageThumbnail: React.FC<PageThumbnailProps> = ({
     page, pageHeight, pageWidth, rotation, onLoad,
 }) => {
-    const theme = useContext(ThemeContext);
     const renderTask = useRef<PdfJs.PageRenderTask>();
     const [src, setSrc] = useState('');
 
@@ -68,7 +65,7 @@ const PageThumbnail: React.FC<PageThumbnailProps> = ({
             ? <Spinner />
             : (
                 <div
-                    className={`${theme.prefixClass}-print-page-thumbnail`}
+                    className='rpv-print-page-thumbnail'
                     style={{
                         height: `${Math.floor(pageHeight * 96 / 72)}px`,
                         width: `${Math.floor(pageWidth * 96 / 72)}px`,

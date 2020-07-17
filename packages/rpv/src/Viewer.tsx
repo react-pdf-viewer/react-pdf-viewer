@@ -28,18 +28,6 @@ import ThemeProvider from './theme/ThemeProvider';
 import PdfJs from './vendors/PdfJs';
 import { Plugin } from './types/Plugin';
 
-interface RenderViewerProps {
-    viewer: React.ReactElement;
-    doc: PdfJs.PdfDocument;
-    download(): void;
-    changeScrollMode(mode: ScrollMode): void;
-    changeSelectionMode(mode: SelectionMode): void;
-    jumpToPage(page: number): void;
-    print(): void;
-    rotate(degree: number): void;
-    zoom(level: number | SpecialZoomLevel): void;
-}
-
 export interface CanvasLayerRenderEvent {
     ele: HTMLCanvasElement;
     pageIndex: number;
@@ -65,8 +53,6 @@ export interface CharacterMap {
     isCompressed: boolean;
     url: string;
 }
-
-export type RenderViewer = (props: RenderViewerProps) => React.ReactElement;
 
 interface ViewerProps {
     characterMap?: CharacterMap;

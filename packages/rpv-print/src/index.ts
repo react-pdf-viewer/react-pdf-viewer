@@ -6,10 +6,8 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-'use strict';
+import PrintIcon from './PrintIcon';
+import printPlugin from './printPlugin';
 
-if (process.env.NODE_ENV === 'production') {
-    module.exports = require('./cjs/rpv-previous-page.min.js');
-} else {
-    module.exports = require('./cjs/rpv-previous-page.js');
-}
+export default printPlugin;
+export { PrintIcon };

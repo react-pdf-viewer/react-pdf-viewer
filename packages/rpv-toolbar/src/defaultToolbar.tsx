@@ -9,6 +9,7 @@
 import React from 'react';
 import '@phuocng/rpv-current-page/cjs/rpv-current-page.css';
 import '@phuocng/rpv-full-screen/cjs/rpv-full-screen.css';
+import '@phuocng/rpv-print/cjs/rpv-print.css';
 
 import './defaultToolbar.less';
 import ToolbarSlot, { RenderToolbarSlot } from './ToolbarSlot';
@@ -38,6 +39,9 @@ const defaultToolbar: RenderToolbarSlot = (toolbarSlot: ToolbarSlot): React.Reac
             <div className='rpv-toolbar-right'>
                 <div className='rpv-toolbar-item'>
                     {toolbarSlot.fullScreenButton}
+                </div>
+                <div className='rpv-toolbar-item'>
+                    {toolbarSlot.printButton}
                 </div>
             </div>
         </div>

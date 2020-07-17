@@ -13,10 +13,6 @@
     "main": {
         "dragDropFile": "Drag and drop a PDF document here"
     },
-    "printProgress": {
-        "cancel": "Cancel",
-        "preparingDocument": "Preparing document ..."
-    },
     "property": {
         "author": "Author",
         "close": "Close",
@@ -52,7 +48,6 @@
         "horizontalScrolling": "Horizontal scrolling",
         "moreActions": "More actions",
         "openFile": "Open file",
-        "print": "Print",
         "rotateBackward": "Rotate counterclockwise",
         "rotateForward": "Rotate clockwise",
         "search": "Search",

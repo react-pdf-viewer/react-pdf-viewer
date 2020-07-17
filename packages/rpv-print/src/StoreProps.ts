@@ -6,10 +6,10 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-'use strict';
+import PrintStatus from './PrintStatus';
 
-if (process.env.NODE_ENV === 'production') {
-    module.exports = require('./cjs/rpv-previous-page.min.js');
-} else {
-    module.exports = require('./cjs/rpv-previous-page.js');
+interface StoreProps {
+    printStatus: PrintStatus;
 }
+
+export default StoreProps;
