@@ -31,7 +31,7 @@ const defaultLayout = (
                     [`${theme.prefixClass}-layout-with-sidebar`]: isSidebarOpened,
                 })
             }
-            style={container.attrs.style}
+            style={container.attrs ? container.attrs.style : {}}
         >
             {container.children}
             <div className={`${theme.prefixClass}-layout-toolbar`}>
@@ -43,7 +43,7 @@ const defaultLayout = (
             <div
                 {...main.attrs}
                 className={`${theme.prefixClass}-layout-main`}
-                style={main.attrs.style}
+                style={main.attrs ? main.attrs.style : {}}
             >
                 {main.children}
             </div>
