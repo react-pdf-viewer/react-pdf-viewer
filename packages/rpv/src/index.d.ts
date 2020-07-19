@@ -245,7 +245,6 @@ export interface RenderViewerProps {
     pageWidth: number;
     rotation: number;
     slot: Slot;
-    download(): void;
     changeScrollMode(mode: ScrollMode): void;
     changeSelectionMode(mode: SelectionMode): void;
     openFile(file: File): void;
