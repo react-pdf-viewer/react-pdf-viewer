@@ -11,6 +11,7 @@ import { ReactElement } from 'react';
 interface ToolbarSlot {
     currentPage: ReactElement;
     currentPageInput: ReactElement;
+    downloadButton: ReactElement;
     fullScreenButton: ReactElement;
     goToFirstPage: ReactElement;
     goToLastPage: ReactElement;
