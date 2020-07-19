@@ -10,9 +10,6 @@
     "bookmark": {
         "noBookmark": "There is no bookmark"
     },
-    "main": {
-        "dragDropFile": "Drag and drop a PDF document here"
-    },
     "property": {
         "author": "Author",
         "close": "Close",
