@@ -6,6 +6,8 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
+import { RefObject } from 'react';
+
 import Slot from '../layouts/Slot';
 import ScrollMode from '../ScrollMode';
 import SelectionMode from '../SelectionMode';
@@ -13,6 +15,7 @@ import SpecialZoomLevel from '../SpecialZoomLevel';
 import PdfJs from '../vendors/PdfJs';
 
 interface RenderViewerProps {
+    containerRef: RefObject<HTMLDivElement>;
     doc: PdfJs.PdfDocument;
     pageHeight: number;
     pageWidth: number;
@@ -21,6 +24,7 @@ interface RenderViewerProps {
     download(): void;
     changeScrollMode(mode: ScrollMode): void;
     changeSelectionMode(mode: SelectionMode): void;
+    openFile(file: File): void;
     jumpToPage(page: number): void;
     rotate(degree: number): void;
     zoom(level: number | SpecialZoomLevel): void;

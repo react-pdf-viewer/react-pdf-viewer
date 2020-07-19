@@ -8,13 +8,11 @@
 
 import React, { useContext, useEffect, useRef, useState } from 'react';
 
-import File from '../File';
 import useDragScroll from '../hooks/useDragScroll';
-import useDrop from '../hooks/useDrop';
 import useToggle from '../hooks/useToggle';
 import PageLayer from '../layers/PageLayer';
 import Slot from '../layouts/Slot';
-import DropArea from '../open/DropArea';
+import OpenFile from '../OpenFile';
 import Match from '../search/Match';
 import ScrollMode from '../ScrollMode';
 import SelectionMode from '../SelectionMode';
@@ -43,7 +41,7 @@ const PAGE_PADDING = 8;
 interface InnerProps {
     defaultScale?: number | SpecialZoomLevel;
     doc: PdfJs.PdfDocument;
-    file: File;
+    file: OpenFile;
     initialPage?: number;
     keyword?: string | RegExp;
     pageSize: PageSize;
@@ -137,26 +135,21 @@ const Inner: React.FC<InnerProps> = ({
         };
     }, []);
 
-    const openFiles = (files: FileList): void => {
-        if (files.length === 0) {
-            return;
-        }
-        const selectedFile = files[0];
-        if (getFileExt(selectedFile.name).toLowerCase() !== 'pdf') {
+    const openFile = (file: File): void => {
+        if (getFileExt(file.name).toLowerCase() !== 'pdf') {
             return;
         }
         new Promise<Uint8Array>((resolve) => {
             const reader = new FileReader();
-            reader.readAsArrayBuffer(selectedFile);
+            reader.readAsArrayBuffer(file);
             reader.onload = (): void => {
                 const bytes = new Uint8Array(reader.result as ArrayBuffer);
                 resolve(bytes);
             };
         }).then((data) => {
-            onOpenFile(selectedFile.name, data);
+            onOpenFile(file.name, data);
         });
     };
-    const { isDragging } = useDrop(containerRef, (files) => openFiles(files));
 
     const jumpToPage = (pageIndex: number): void => {
         if (pageIndex < 0 || pageIndex >= numPages) {
@@ -346,56 +339,62 @@ const Inner: React.FC<InnerProps> = ({
     const renderViewer = (): Slot => {
         let slot: Slot = {
             attrs: {
-                ref: pagesRef,
+                ref: containerRef,
                 style: {
                     height: '100%',
-                    overflow: 'auto',
-                    // We need this to jump between destinations or searching results
-                    position: 'relative',
-                }
+                },
             },
-            children: (
-                <>
-                {
-                    Array(numPages).fill(0).map((_, index) => {
-                        return (
-                            <div
-                                className={`${theme.prefixClass}-inner-page`}
-                                key={`pagelayer-${index}`}
-                                ref={(ref): void => {
-                                    pageRefs[index].current = ref as HTMLDivElement;
-                                }}
-                            >
-                                <PageLayer
-                                    doc={doc}
-                                    keywordRegexp={keywordRegexp}
-                                    height={pageHeight}
-                                    match={match}
-                                    pageIndex={index}
-                                    renderPage={renderPage}
-                                    rotation={rotation}
-                                    scale={scale}
-                                    width={pageWidth}
-                                    onCanvasLayerRender={onCanvasLayerRender}
-                                    onExecuteNamedAction={executeNamedAction}
-                                    onJumpToDest={jumpToDest}
-                                    onPageVisibilityChanged={pageVisibilityChanged}
-                                    onTextLayerRender={onTextLayerRender}
-                                />
-                            </div>
-                        );
-                    })
-                }
-                </>
-            ),
-            outer: (
-                <></>
-            ),
+            subSlot: {
+                attrs: {
+                    ref: pagesRef,
+                    style: {
+                        height: '100%',
+                        overflow: 'auto',
+                        // We need this to jump between destinations or searching results
+                        position: 'relative',
+                    },
+                },
+                children: (
+                    <>
+                    {
+                        Array(numPages).fill(0).map((_, index) => {
+                            return (
+                                <div
+                                    className={`${theme.prefixClass}-inner-page`}
+                                    key={`pagelayer-${index}`}
+                                    ref={(ref): void => {
+                                        pageRefs[index].current = ref as HTMLDivElement;
+                                    }}
+                                >
+                                    <PageLayer
+                                        doc={doc}
+                                        keywordRegexp={keywordRegexp}
+                                        height={pageHeight}
+                                        match={match}
+                                        pageIndex={index}
+                                        renderPage={renderPage}
+                                        rotation={rotation}
+                                        scale={scale}
+                                        width={pageWidth}
+                                        onCanvasLayerRender={onCanvasLayerRender}
+                                        onExecuteNamedAction={executeNamedAction}
+                                        onJumpToDest={jumpToDest}
+                                        onPageVisibilityChanged={pageVisibilityChanged}
+                                        onTextLayerRender={onTextLayerRender}
+                                    />
+                                </div>
+                            );
+                        })
+                    }
+                    </>
+                ),
+            },
         };
 
         plugins.forEach(plugin => {
             if (plugin.renderViewer) {
                 slot = plugin.renderViewer({
+                    containerRef,
                     doc,
                     pageHeight,
                     pageWidth,
@@ -405,6 +404,7 @@ const Inner: React.FC<InnerProps> = ({
                     changeScrollMode,
                     changeSelectionMode,
                     jumpToPage,
+                    openFile,
                     rotate,
                     zoom,
                 });
@@ -414,16 +414,14 @@ const Inner: React.FC<InnerProps> = ({
         return slot;
     };
 
-    const slot = renderViewer();
-
-    return (
-        <>
-        {slot.outer}
-        <div {...slot.attrs}>
+    const renderSlot = (slot: Slot) => (
+        <div {...slot.attrs} style={slot.attrs && slot.attrs.style ? slot.attrs.style : {}}>
             {slot.children}
+            {slot.subSlot && renderSlot(slot.subSlot)}
         </div>
-        </>
     );
+
+    return renderSlot(renderViewer());
 };
 
 export default Inner;

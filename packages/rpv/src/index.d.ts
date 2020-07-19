@@ -13,6 +13,8 @@ import * as React from 'react';
 // ---------------
 
 export declare namespace PdfJs {
+    type FileData = string | Uint8Array;
+    
     interface PdfDocument {
         numPages: number;
         getPage(pageIndex: number): Promise<Page>;
@@ -95,7 +97,7 @@ export interface SlotAttr extends React.HTMLAttributes<HTMLDivElement> {
 export interface Slot {
     attrs?: SlotAttr;
     children?: React.ReactNode;
-    outer?: React.ReactNode;
+    subSlot?: Slot;
 }
 
 export enum ToggleStatus {
@@ -238,6 +240,7 @@ export class Tooltip extends React.Component<TooltipProps> {}
 
 // Viewer
 export interface RenderViewerProps {
+    containerRef: React.RefObject<HTMLDivElement>;
     doc: PdfJs.PdfDocument;
     pageHeight: number;
     pageWidth: number;
@@ -246,6 +249,7 @@ export interface RenderViewerProps {
     download(): void;
     changeScrollMode(mode: ScrollMode): void;
     changeSelectionMode(mode: SelectionMode): void;
+    openFile(file: File): void;
     // Jump to given page
     // `page` is zero-index based
     jumpToPage(page: number): void;
@@ -338,10 +342,15 @@ export interface ZoomEvent {
 // Plugins
 // -------
 
+export interface OpenFile {
+    data: PdfJs.FileData;
+    name: string;
+}
+
 export interface ViewerState {
     // The current opened file. It can be changed from outside, such as user drags and drops an external file
     // or user opens a file from toolbar
-    file: File;
+    file: OpenFile;
     // The current page index
     pageIndex: number;
     // The current zoom level

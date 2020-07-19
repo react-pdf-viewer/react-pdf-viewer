@@ -40,16 +40,17 @@ const fullScreenPlugin = (): FullScreenPlugin => {
     );
 
     const renderViewer = (props: RenderViewerProps): Slot => {
-        const { slot } = props;
-        const updateSlot = {
-            children: (
+        let currentSlot = props.slot;
+        if (currentSlot.subSlot) {
+            currentSlot.subSlot.children = (
                 <>
                 <ExitFullScreenDecorator />
-                {slot.children}
+                {currentSlot.subSlot.children}
                 </>
-            )
-        };
-        return {...slot, ...updateSlot};
+            );
+        }
+
+        return currentSlot;
     };
 
     return {

@@ -41,7 +41,7 @@ const printPlugin = (): PrintPlugin => {
     const renderViewer = (props: RenderViewerProps): Slot => {
         const { slot } = props;
         const updateSlot: Slot = {
-            outer: (
+            children: (
                 <>
                 <PrintContainer
                     doc={props.doc}
@@ -50,7 +50,7 @@ const printPlugin = (): PrintPlugin => {
                     rotation={props.rotation}
                     store={store}
                 />
-                {slot.outer}
+                {slot.children}
                 </>
             )
         };

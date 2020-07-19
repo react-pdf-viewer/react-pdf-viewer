@@ -15,7 +15,7 @@ const App = () => {
             <div style={{ display: 'flex' }}>
                 <Toolbar />
             </div>
-            <div style={{ height: '750px', padding: '16px 0' }}>
+            <div style={{ height: '750px' }}>
                 <Viewer
                     fileUrl="/pdf-open-parameters.pdf"
                     plugins={[

@@ -8,7 +8,7 @@
 
 import React, { useEffect, useState } from 'react';
 
-import File from './File';
+import OpenFile from './OpenFile';
 import Slot from './layouts/Slot';
 import defaultLayout from './layouts/defaultLayout';
 import defaultToolbar from './layouts/defaultToolbar';
@@ -99,7 +99,7 @@ const Viewer: React.FC<ViewerProps> = ({
     onTextLayerRender = () => {/**/},
     onZoom = () => {/**/},
 }) => {
-    const [file, setFile] = useState<File>({
+    const [file, setFile] = useState<OpenFile>({
         data: fileUrl,
         name: (typeof fileUrl === 'string') ? fileUrl : '',
     });

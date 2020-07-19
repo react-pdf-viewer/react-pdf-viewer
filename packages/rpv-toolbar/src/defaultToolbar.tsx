@@ -7,9 +7,6 @@
  */
 
 import React from 'react';
-import '@phuocng/rpv-current-page/cjs/rpv-current-page.css';
-import '@phuocng/rpv-full-screen/cjs/rpv-full-screen.css';
-import '@phuocng/rpv-print/cjs/rpv-print.css';
 
 import './defaultToolbar.less';
 import ToolbarSlot, { RenderToolbarSlot } from './ToolbarSlot';
