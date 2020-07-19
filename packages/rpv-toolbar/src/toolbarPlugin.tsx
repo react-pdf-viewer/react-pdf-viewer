@@ -10,12 +10,18 @@ import React from 'react';
 
 import { Plugin, PluginFunctions, PluginOnDocumentLoad, RenderViewerProps, ViewerState } from '@phuocng/rpv';
 import currentPagePlugin from '@phuocng/rpv-current-page';
+import dropPlugin from '@phuocng/rpv-drop';
 import firstPagePlugin from '@phuocng/rpv-first-page';
 import fullScreenPlugin from '@phuocng/rpv-full-screen';
 import lastPagePlugin from '@phuocng/rpv-last-page';
 import nextPagePlugin from '@phuocng/rpv-next-page';
 import previousPagePlugin from '@phuocng/rpv-previous-page';
 import printPlugin from '@phuocng/rpv-print';
+
+import '@phuocng/rpv-current-page/cjs/rpv-current-page.css';
+import '@phuocng/rpv-drop/cjs/rpv-drop.css';
+import '@phuocng/rpv-full-screen/cjs/rpv-full-screen.css';
+import '@phuocng/rpv-print/cjs/rpv-print.css';
 
 import Toolbar, { ToolbarProps } from './Toolbar';
 
@@ -25,6 +31,7 @@ interface ToolbarPlugin extends Plugin {
 
 const toolbarPlugin = (): ToolbarPlugin => {
     const currentPagePluginInstance = currentPagePlugin();
+    const dropPluginInstance = dropPlugin();
     const firstPagePluginInstance = firstPagePlugin();
     const fullScreenPluginInstance = fullScreenPlugin();
     const lastPagePluginInstance = lastPagePlugin();
@@ -34,6 +41,7 @@ const toolbarPlugin = (): ToolbarPlugin => {
 
     const plugins = [
         currentPagePluginInstance,
+        dropPluginInstance,
         firstPagePluginInstance,
         fullScreenPluginInstance,
         lastPagePluginInstance,
