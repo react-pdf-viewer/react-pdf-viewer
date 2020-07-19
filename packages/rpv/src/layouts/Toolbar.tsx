@@ -10,7 +10,6 @@ import React, { useContext, useState } from 'react';
 
 import Button from '../components/Button';
 import { Toggle } from '../hooks/useToggle';
-import DownloadIcon from '../icons/DownloadIcon';
 import HandToolIcon from '../icons/HandToolIcon';
 import HorizontalScrollingIcon from '../icons/HorizontalScrollingIcon';
 import InfoIcon from '../icons/InfoIcon';
@@ -48,7 +47,6 @@ interface ToolbarProps {
     selectionMode: SelectionMode;
     onChangeScrollMode(mode: ScrollMode): void;
     onChangeSelectionMode(mode: SelectionMode): void;
-    onDownload(): void;
     onJumpTo(pageIndex: number): void;
     onJumpToMatch(match: Match): void;
     onRotate(degree: number): void;
@@ -61,7 +59,7 @@ const TOOLTIP_OFFSET = { left: 0, top: 8 };
 
 const Toolbar: React.FC<ToolbarProps> = ({
     doc, fileName, scale, scrollMode, selectionMode,
-    onChangeScrollMode, onChangeSelectionMode, onDownload, onJumpTo,
+    onChangeScrollMode, onChangeSelectionMode, onJumpTo,
     onJumpToMatch, onRotate, onSearchFor, onToggleSidebar, onZoom,
     renderToolbar,
 }) => {
@@ -99,7 +97,6 @@ const Toolbar: React.FC<ToolbarProps> = ({
     const renderToggle = (): LocalizationMap => l10n.toolbar.toggleSidebar;
     const renderZoomOut = (): LocalizationMap => l10n.toolbar.zoomOut;
     const renderZoomIn = (): LocalizationMap => l10n.toolbar.zoomIn;
-    const renderDownload = (): LocalizationMap => l10n.toolbar.download;
     const renderRotateClockwise = (): LocalizationMap => l10n.toolbar.rotateForward;
     const renderRotateCounterclockwise = (): LocalizationMap => l10n.toolbar.rotateBackward;
     const renderTextSelection = (): LocalizationMap => l10n.toolbar.textSelectionTool;
@@ -127,14 +124,6 @@ const Toolbar: React.FC<ToolbarProps> = ({
                 content={renderPropertiesModal}
                 closeOnClickOutside={true}
                 closeOnEscape={true}
-            />
-        ),
-        downloadButton: (
-            <Tooltip
-                position={Position.BottomCenter}
-                target={<Button onClick={onDownload}><DownloadIcon /></Button>}
-                content={renderDownload}
-                offset={TOOLTIP_OFFSET}
             />
         ),
         handToolButton: (
