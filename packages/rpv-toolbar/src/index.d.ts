@@ -17,6 +17,7 @@ export interface ToolbarSlot {
     goToLastPage: React.ReactElement;
     nextPage: React.ReactElement;
     numberOfPages: React.ReactElement;
+    openFileButton: React.ReactElement;
     previousPage: React.ReactElement;
     printButton: React.ReactElement;
 }

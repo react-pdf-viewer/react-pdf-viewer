@@ -15,12 +15,14 @@ import firstPagePlugin from '@phuocng/rpv-first-page';
 import fullScreenPlugin from '@phuocng/rpv-full-screen';
 import lastPagePlugin from '@phuocng/rpv-last-page';
 import nextPagePlugin from '@phuocng/rpv-next-page';
+import openPlugin from '@phuocng/rpv-open';
 import previousPagePlugin from '@phuocng/rpv-previous-page';
 import printPlugin from '@phuocng/rpv-print';
 
 import '@phuocng/rpv-current-page/cjs/rpv-current-page.css';
 import '@phuocng/rpv-drop/cjs/rpv-drop.css';
 import '@phuocng/rpv-full-screen/cjs/rpv-full-screen.css';
+import '@phuocng/rpv-open/cjs/rpv-open.css';
 import '@phuocng/rpv-print/cjs/rpv-print.css';
 
 import Toolbar, { ToolbarProps } from './Toolbar';
@@ -36,6 +38,7 @@ const toolbarPlugin = (): ToolbarPlugin => {
     const fullScreenPluginInstance = fullScreenPlugin();
     const lastPagePluginInstance = lastPagePlugin();
     const nextPagePluginInstance = nextPagePlugin();
+    const openPluginInstance = openPlugin();
     const previousPagePluginInstance = previousPagePlugin();
     const printPluginInstance = printPlugin();
 
@@ -46,6 +49,7 @@ const toolbarPlugin = (): ToolbarPlugin => {
         fullScreenPluginInstance,
         lastPagePluginInstance,
         nextPagePluginInstance,
+        openPluginInstance,
         previousPagePluginInstance,
         printPluginInstance,
     ];
@@ -56,6 +60,7 @@ const toolbarPlugin = (): ToolbarPlugin => {
         const { EnterFullScreenButton } = fullScreenPluginInstance;
         const { GoToLastPageButton } = lastPagePluginInstance;
         const { NextPageButton } = nextPagePluginInstance;
+        const { OpenButton } = openPluginInstance;
         const { PreviousPageButton } = previousPagePluginInstance;
         const { PrintButton } = printPluginInstance;
 
@@ -78,6 +83,7 @@ const toolbarPlugin = (): ToolbarPlugin => {
                     goToLastPage: <GoToLastPageButton />,
                     nextPage: <NextPageButton />,
                     numberOfPages: <NumberOfPages />,
+                    openFileButton: <OpenButton />,
                     previousPage: <PreviousPageButton />,
                     printButton: <PrintButton />,
                 }}
