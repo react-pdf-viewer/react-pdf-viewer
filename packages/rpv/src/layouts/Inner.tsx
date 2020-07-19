@@ -112,6 +112,7 @@ const Inner: React.FC<InnerProps> = ({
         getPagesRef,
         getViewerState,
         jumpToPage,
+        openFile,
         setViewerState,
     });
 

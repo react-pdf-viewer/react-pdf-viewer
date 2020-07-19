@@ -38,9 +38,6 @@ const defaultToolbar: RenderToolbarSlot = (toolbarSlot: ToolbarSlot): React.Reac
             </div>
             <div className={`${theme.prefixClass}-toolbar-right`}>
                 <div className={`${theme.prefixClass}-toolbar-item`}>
-                    {toolbarSlot.openFileButton}
-                </div>
-                <div className={`${theme.prefixClass}-toolbar-item`}>
                     {toolbarSlot.downloadButton}
                 </div>
                 <div className={`${theme.prefixClass}-toolbar-item`}>

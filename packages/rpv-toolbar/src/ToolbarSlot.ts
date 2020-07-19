@@ -16,6 +16,7 @@ interface ToolbarSlot {
     goToLastPage: ReactElement;
     nextPage: ReactElement;
     numberOfPages: ReactElement;
+    openFileButton: ReactElement;
     previousPage: ReactElement;
     printButton: ReactElement;
 }

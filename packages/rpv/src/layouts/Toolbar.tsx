@@ -25,7 +25,6 @@ import ZoomOutIcon from '../icons/ZoomOutIcon';
 import { RenderToolbarSlot } from './ToolbarSlot';
 import LocalizationContext from '../localization/LocalizationContext';
 import LocalizationMap from '../localization/LocalizationMap';
-import OpenFileButton from '../open/OpenFileButton';
 import Modal from '../portal/Modal';
 import Position from '../portal/Position';
 import Tooltip from '../portal/Tooltip';
@@ -52,7 +51,6 @@ interface ToolbarProps {
     onDownload(): void;
     onJumpTo(pageIndex: number): void;
     onJumpToMatch(match: Match): void;
-    onOpenFiles(files: FileList): void;
     onRotate(degree: number): void;
     onSearchFor(keyword: RegExp): void;
     onToggleSidebar(): void;
@@ -64,7 +62,7 @@ const TOOLTIP_OFFSET = { left: 0, top: 8 };
 const Toolbar: React.FC<ToolbarProps> = ({
     doc, fileName, scale, scrollMode, selectionMode,
     onChangeScrollMode, onChangeSelectionMode, onDownload, onJumpTo,
-    onJumpToMatch, onOpenFiles, onRotate, onSearchFor, onToggleSidebar, onZoom,
+    onJumpToMatch, onRotate, onSearchFor, onToggleSidebar, onZoom,
     renderToolbar,
 }) => {
     const l10n = useContext(LocalizationContext);
@@ -171,9 +169,6 @@ const Toolbar: React.FC<ToolbarProps> = ({
                 onJumpToLastPage={jumpToLastPage}
                 onRotate={onRotate}
             />
-        ),
-        openFileButton: (
-            <OpenFileButton onOpenFiles={onOpenFiles} />
         ),
         rotateClockwiseButton: (
             <Tooltip

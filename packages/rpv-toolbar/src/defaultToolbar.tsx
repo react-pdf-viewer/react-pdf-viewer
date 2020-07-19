@@ -38,6 +38,9 @@ const defaultToolbar: RenderToolbarSlot = (toolbarSlot: ToolbarSlot): React.Reac
                     {toolbarSlot.fullScreenButton}
                 </div>
                 <div className='rpv-toolbar-item'>
+                    {toolbarSlot.openFileButton}
+                </div>
+                <div className='rpv-toolbar-item'>
                     {toolbarSlot.printButton}
                 </div>
             </div>
