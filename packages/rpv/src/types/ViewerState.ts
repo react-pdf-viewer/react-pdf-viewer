@@ -6,13 +6,13 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import File from '../OpenFile';
+import OpenFile from '../OpenFile';
 import SpecialZoomLevel from '../SpecialZoomLevel';
 
 interface ViewerStateProps {
     // The current opened file. It can be changed from outside, such as user drags and drops an external file
     // or user opens a file from toolbar
-    file: File;
+    file: OpenFile;
     // The current page index
     pageIndex: number;
     // The current zoom level

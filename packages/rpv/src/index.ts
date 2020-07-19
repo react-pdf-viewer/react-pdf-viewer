@@ -59,6 +59,8 @@ export {
 // -----
 
 export declare namespace PdfJs {
+    type FileData = string | Uint8Array;
+
     interface PdfDocument {
         numPages: number;
         getPage(pageIndex: number): Promise<Page>;
@@ -114,6 +116,7 @@ export { default as PreviousIcon } from './icons/PreviousIcon';
 
 import { Toggle as ToggleType } from './hooks/useToggle';
 import { Slot as SlotType } from './layouts/Slot';
+import { default as OpenFileType } from './OpenFile';
 import { default as LocalizationMapType } from './localization/LocalizationMap';
 import { Plugin as PluginType, PluginOnDocumentLoad as PluginOnDocumentLoadType } from './types/Plugin';
 import { PluginFunctions as PluginFunctionsType } from './types/PluginFunctions';
@@ -121,6 +124,7 @@ import { default as RenderViewerPropsType } from './types/RenderViewer';
 import { ViewerState as ViewerStateType } from './types/ViewerState';
 
 export type LocalizationMap = LocalizationMapType;
+export type OpenFile = OpenFileType;
 export type Toggle = ToggleType;
 export type Slot = SlotType;
 export type Store<T> = StoreType<T>;

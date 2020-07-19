@@ -22,7 +22,6 @@ import { Plugin } from '../types/Plugin';
 import { PluginFunctions } from '../types/PluginFunctions';
 import { ViewerState } from '../types/ViewerState';
 import PdfJs from '../vendors/PdfJs';
-import downloadFile from '../utils/downloadFile';
 import getFileExt from '../utils/fileExt';
 import { CanvasLayerRenderEvent, DocumentLoadEvent, PageChangeEvent, TextLayerRenderEvent, ZoomEvent } from '../Viewer';
 import './inner.less';
@@ -188,10 +187,6 @@ const Inner: React.FC<InnerProps> = ({
     const changeSelectionMode = (mode: SelectionMode): void => {
         toggleDragScroll(mode === SelectionMode.Hand);
         setCurrentMode(mode);
-    };
-
-    const download = (): void => {
-        downloadFile(file.name, file.data);
     };
 
     const zoom = (newScale: number | SpecialZoomLevel): void => {
@@ -401,7 +396,6 @@ const Inner: React.FC<InnerProps> = ({
                     pageWidth,
                     rotation,
                     slot,
-                    download,
                     changeScrollMode,
                     changeSelectionMode,
                     jumpToPage,

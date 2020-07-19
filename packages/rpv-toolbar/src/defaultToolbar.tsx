@@ -41,6 +41,9 @@ const defaultToolbar: RenderToolbarSlot = (toolbarSlot: ToolbarSlot): React.Reac
                     {toolbarSlot.openFileButton}
                 </div>
                 <div className='rpv-toolbar-item'>
+                    {toolbarSlot.downloadButton}
+                </div>
+                <div className='rpv-toolbar-item'>
                     {toolbarSlot.printButton}
                 </div>
             </div>

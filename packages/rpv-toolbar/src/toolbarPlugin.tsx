@@ -10,6 +10,7 @@ import React from 'react';
 
 import { Plugin, PluginFunctions, PluginOnDocumentLoad, RenderViewerProps, ViewerState } from '@phuocng/rpv';
 import currentPagePlugin from '@phuocng/rpv-current-page';
+import downloadPlugin from '@phuocng/rpv-download';
 import dropPlugin from '@phuocng/rpv-drop';
 import firstPagePlugin from '@phuocng/rpv-first-page';
 import fullScreenPlugin from '@phuocng/rpv-full-screen';
@@ -33,6 +34,7 @@ interface ToolbarPlugin extends Plugin {
 
 const toolbarPlugin = (): ToolbarPlugin => {
     const currentPagePluginInstance = currentPagePlugin();
+    const downloadPluginInstance = downloadPlugin();
     const dropPluginInstance = dropPlugin();
     const firstPagePluginInstance = firstPagePlugin();
     const fullScreenPluginInstance = fullScreenPlugin();
@@ -44,6 +46,7 @@ const toolbarPlugin = (): ToolbarPlugin => {
 
     const plugins = [
         currentPagePluginInstance,
+        downloadPluginInstance,
         dropPluginInstance,
         firstPagePluginInstance,
         fullScreenPluginInstance,
@@ -56,6 +59,7 @@ const toolbarPlugin = (): ToolbarPlugin => {
 
     const ToolbarDecorator = (props: ToolbarProps) => {
         const { CurrentPageInput, CurrentPageLabel } = currentPagePluginInstance;
+        const { DownloadButton } = downloadPluginInstance;
         const { GoToFirstPageButton } = firstPagePluginInstance;
         const { EnterFullScreenButton } = fullScreenPluginInstance;
         const { GoToLastPageButton } = lastPagePluginInstance;
@@ -78,6 +82,7 @@ const toolbarPlugin = (): ToolbarPlugin => {
                 slot={{
                     currentPage: <CurrentPageLabel />,
                     currentPageInput: <CurrentPageInput />,
+                    downloadButton: <DownloadButton />,
                     fullScreenButton: <EnterFullScreenButton />,
                     goToFirstPage: <GoToFirstPageButton />,
                     goToLastPage: <GoToLastPageButton />,
