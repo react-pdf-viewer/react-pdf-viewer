@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import File from '../File';
+import File from '../OpenFile';
 import SpecialZoomLevel from '../SpecialZoomLevel';
 
 interface ViewerStateProps {
