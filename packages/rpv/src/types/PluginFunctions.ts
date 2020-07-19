@@ -13,6 +13,7 @@ export interface PluginFunctionsProps {
     getPagesRef(): React.RefObject<HTMLDivElement>;
     getViewerState(): ViewerState;
     jumpToPage(pageIndex: number): void;
+    openFile(file: File): void;
     setViewerState(viewerState: ViewerState): void;
 }
 

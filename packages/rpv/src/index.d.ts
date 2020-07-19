@@ -14,7 +14,7 @@ import * as React from 'react';
 
 export declare namespace PdfJs {
     type FileData = string | Uint8Array;
-    
+
     interface PdfDocument {
         numPages: number;
         getPage(pageIndex: number): Promise<Page>;
@@ -361,6 +361,7 @@ export interface PluginFunctions {
     getPagesRef(): React.RefObject<HTMLDivElement>;
     getViewerState(): ViewerState;
     jumpToPage(pageIndex: number): void;
+    openFile(file: File): void;
     setViewerState(viewerState: ViewerState): void;
 }
 
