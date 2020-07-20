@@ -1,0 +1,44 @@
+{
+    "name": "@phuocng/rpv-zoom-in",
+    "version": "2.0.0",
+    "description": "A React component to view a PDF document",
+    "license": "https://react-pdf-viewer.dev/license",
+    "author": {
+        "name": "Nguyen Huu Phuoc",
+        "email": "me@phuoc.ng",
+        "url": "https://twitter.com/nghuuphuoc"
+    },
+    "homepage": "https://react-pdf-viewer.dev",
+    "keywords": [
+        "react",
+        "react.js",
+        "pdf",
+        "pdf.js",
+        "pdf viewer"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/phuoc-ng/react-pdf-viewer",
+        "directory": "packages/rpv-zoom-in"
+    },
+    "bugs": {
+        "url": "https://github.com/phuoc-ng/react-pdf-viewer/issues"
+    },
+    "main": "npm/index.js",
+    "types": "npm/index.d.ts",
+    "files": [
+        "npm/cjs/*.css",
+        "npm/cjs/*.js",
+        "npm/index.d.ts",
+        "npm/index.js"
+    ],
+    "dependencies": {
+        "react": "^16.13.1",
+        "react-dom": "^16.13.1",
+        "@phuocng/rpv": "^2.0.0"
+    },
+    "scripts": {
+        "clean": "rm -rf npm && mkdir npm",
+        "build": "npm run clean && cp src/index.d.ts npm && cp dist/index.js npm && rollup -c"
+    }
+}
