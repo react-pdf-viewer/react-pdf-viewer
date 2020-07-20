@@ -351,7 +351,7 @@ export interface ViewerState {
     // The current page index
     pageIndex: number;
     // The current zoom level
-    scale: number | SpecialZoomLevel;
+    scale: number;
 }
 
 export interface PluginFunctions {
@@ -360,6 +360,7 @@ export interface PluginFunctions {
     jumpToPage(pageIndex: number): void;
     openFile(file: File): void;
     setViewerState(viewerState: ViewerState): void;
+    zoom(scale: number | SpecialZoomLevel): void;
 }
 
 export interface PluginOnDocumentLoad {

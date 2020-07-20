@@ -7,7 +7,6 @@
  */
 
 import OpenFile from '../OpenFile';
-import SpecialZoomLevel from '../SpecialZoomLevel';
 
 interface ViewerStateProps {
     // The current opened file. It can be changed from outside, such as user drags and drops an external file
@@ -16,7 +15,7 @@ interface ViewerStateProps {
     // The current page index
     pageIndex: number;
     // The current zoom level
-    scale: number | SpecialZoomLevel;
+    scale: number;
 }
 
 export type ViewerState = ViewerStateProps;

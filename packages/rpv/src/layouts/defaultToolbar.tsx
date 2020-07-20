@@ -32,9 +32,6 @@ const defaultToolbar: RenderToolbarSlot = (toolbarSlot: ToolbarSlot): React.Reac
                 <div className={`${theme.prefixClass}-toolbar-item`}>
                     {toolbarSlot.zoomPopover}
                 </div>
-                <div className={`${theme.prefixClass}-toolbar-item`}>
-                    {toolbarSlot.zoomInButton}
-                </div>
             </div>
             <div className={`${theme.prefixClass}-toolbar-right`}>
                 <div className={`${theme.prefixClass}-toolbar-item`}>

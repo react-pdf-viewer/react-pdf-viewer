@@ -7,6 +7,8 @@
  */
 
 import React from 'react';
+
+import SpecialZoomLevel from '../SpecialZoomLevel';
 import { ViewerState } from './ViewerState';
 
 export interface PluginFunctionsProps {
@@ -15,6 +17,7 @@ export interface PluginFunctionsProps {
     jumpToPage(pageIndex: number): void;
     openFile(file: File): void;
     setViewerState(viewerState: ViewerState): void;
+    zoom(scale: number | SpecialZoomLevel): void;
 }
 
 export type PluginFunctions = PluginFunctionsProps;

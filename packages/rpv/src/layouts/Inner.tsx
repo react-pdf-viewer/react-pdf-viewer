@@ -113,6 +113,7 @@ const Inner: React.FC<InnerProps> = ({
         jumpToPage,
         openFile,
         setViewerState,
+        zoom,
     });
 
     useEffect(() => {

@@ -19,7 +19,6 @@ import RotateForwardIcon from '../icons/RotateForwardIcon';
 import TextSelectionIcon from '../icons/TextSelectionIcon';
 import VerticalScrollingIcon from '../icons/VerticalScrollingIcon';
 import WrappedScrollingIcon from '../icons/WrappedScrollingIcon';
-import ZoomInIcon from '../icons/ZoomInIcon';
 import ZoomOutIcon from '../icons/ZoomOutIcon';
 import { RenderToolbarSlot } from './ToolbarSlot';
 import LocalizationContext from '../localization/LocalizationContext';
@@ -34,7 +33,7 @@ import ScrollMode from '../ScrollMode';
 import SelectionMode from '../SelectionMode';
 import SpecialZoomLevel from '../SpecialZoomLevel';
 import PdfJs from '../vendors/PdfJs';
-import { decrease, increase } from '../zoom/zoomingLevel';
+import { decrease } from '../zoom/zoomingLevel';
 import ZoomPopover from '../zoom/ZoomPopover';
 import MoreActionsPopover from './MoreActionsPopover';
 
@@ -70,11 +69,6 @@ const Toolbar: React.FC<ToolbarProps> = ({
 
     const zoomOut = (): void => {
         const newLevel = decrease(scale);
-        onZoom(newLevel);
-    };
-
-    const zoomIn = (): void => {
-        const newLevel = increase(scale);
         onZoom(newLevel);
     };
 
@@ -207,14 +201,6 @@ const Toolbar: React.FC<ToolbarProps> = ({
                     <Button onClick={setVerticalScrollMode} isSelected={scrollMode === ScrollMode.Vertical}><VerticalScrollingIcon /></Button>
                 }
                 content={renderVerticalScrolling}
-                offset={TOOLTIP_OFFSET}
-            />
-        ),
-        zoomInButton: (
-            <Tooltip
-                position={Position.BottomCenter}
-                target={<Button onClick={zoomIn}><ZoomInIcon /></Button>}
-                content={renderZoomIn}
                 offset={TOOLTIP_OFFSET}
             />
         ),

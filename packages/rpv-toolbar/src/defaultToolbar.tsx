@@ -15,8 +15,6 @@ const defaultToolbar: RenderToolbarSlot = (toolbarSlot: ToolbarSlot): React.Reac
     return (
         <div className='rpv-toolbar'>
             <div className='rpv-toolbar-left'>
-            </div>
-            <div className='rpv-toolbar-center'>
                 <div className='rpv-toolbar-item'>
                     {toolbarSlot.goToFirstPage}
                 </div>
@@ -31,6 +29,11 @@ const defaultToolbar: RenderToolbarSlot = (toolbarSlot: ToolbarSlot): React.Reac
                 </div>
                 <div className='rpv-toolbar-item'>
                     {toolbarSlot.goToLastPage}
+                </div>
+            </div>
+            <div className='rpv-toolbar-center'>
+                <div className='rpv-toolbar-item'>
+                    {toolbarSlot.zoomInButton}
                 </div>
             </div>
             <div className='rpv-toolbar-right'>
