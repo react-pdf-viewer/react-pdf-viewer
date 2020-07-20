@@ -13,7 +13,6 @@ interface ToolbarSlot {
     searchPopover: React.ReactNode;
     zoomOutButton: React.ReactNode;
     zoomPopover: React.ReactNode;
-    zoomInButton: React.ReactNode;
     rotateClockwiseButton: React.ReactNode;
     rotateCounterclockwiseButton: React.ReactNode;
     textSelectionButton: React.ReactNode;
