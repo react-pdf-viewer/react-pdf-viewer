@@ -19,6 +19,7 @@ import nextPagePlugin from '@phuocng/rpv-next-page';
 import openPlugin from '@phuocng/rpv-open';
 import previousPagePlugin from '@phuocng/rpv-previous-page';
 import printPlugin from '@phuocng/rpv-print';
+import zoomInPlugin from '@phuocng/rpv-zoom-in';
 
 import '@phuocng/rpv-current-page/cjs/rpv-current-page.css';
 import '@phuocng/rpv-drop/cjs/rpv-drop.css';
@@ -43,6 +44,7 @@ const toolbarPlugin = (): ToolbarPlugin => {
     const openPluginInstance = openPlugin();
     const previousPagePluginInstance = previousPagePlugin();
     const printPluginInstance = printPlugin();
+    const zoomInPluginInstance = zoomInPlugin();
 
     const plugins = [
         currentPagePluginInstance,
@@ -55,6 +57,7 @@ const toolbarPlugin = (): ToolbarPlugin => {
         openPluginInstance,
         previousPagePluginInstance,
         printPluginInstance,
+        zoomInPluginInstance,
     ];
 
     const ToolbarDecorator = (props: ToolbarProps) => {
@@ -67,6 +70,7 @@ const toolbarPlugin = (): ToolbarPlugin => {
         const { OpenButton } = openPluginInstance;
         const { PreviousPageButton } = previousPagePluginInstance;
         const { PrintButton } = printPluginInstance;
+        const { ZoomInButton } = zoomInPluginInstance;
 
         const NumberOfPages = () => (
             <CurrentPageLabel>
@@ -91,6 +95,7 @@ const toolbarPlugin = (): ToolbarPlugin => {
                     openFileButton: <OpenButton />,
                     previousPage: <PreviousPageButton />,
                     printButton: <PrintButton />,
+                    zoomInButton: <ZoomInButton />,
                 }}
             />
         );

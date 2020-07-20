@@ -20,6 +20,7 @@ interface ToolbarSlot {
     openFileButton: ReactElement;
     previousPage: ReactElement;
     printButton: ReactElement;
+    zoomInButton: ReactElement;
 }
 
 export type RenderToolbarSlot = (toolbarSlot: ToolbarSlot) => ReactElement;

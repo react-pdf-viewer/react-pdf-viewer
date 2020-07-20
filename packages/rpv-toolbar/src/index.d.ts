@@ -6,32 +6,33 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import * as React from 'react';
+import { ReactElement } from 'react';
 import { Plugin } from '@phuocng/rpv';
 
 export interface ToolbarSlot {
-    currentPage: React.ReactElement;
-    currentPageInput: React.ReactElement;
-    downloadButton: React.ReactElement;
-    fullScreenButton: React.ReactElement;
-    goToFirstPage: React.ReactElement;
-    goToLastPage: React.ReactElement;
-    nextPage: React.ReactElement;
-    numberOfPages: React.ReactElement;
-    openFileButton: React.ReactElement;
-    previousPage: React.ReactElement;
-    printButton: React.ReactElement;
+    currentPage: ReactElement;
+    currentPageInput: ReactElement;
+    downloadButton: ReactElement;
+    fullScreenButton: ReactElement;
+    goToFirstPage: ReactElement;
+    goToLastPage: ReactElement;
+    nextPage: ReactElement;
+    numberOfPages: ReactElement;
+    openFileButton: ReactElement;
+    previousPage: ReactElement;
+    printButton: ReactElement;
+    zoomInButton: ReactElement;
 }
 
-export type RenderToolbarSlot = (toolbarSlot: ToolbarSlot) => React.ReactElement;
-export type RenderToolbar = (renderToolbar: RenderToolbarSlot) => React.ReactElement;
+export type RenderToolbarSlot = (toolbarSlot: ToolbarSlot) => ReactElement;
+export type RenderToolbar = (renderToolbar: RenderToolbarSlot) => ReactElement;
 
 export interface ToolbarProps {
     children?: RenderToolbarSlot;
 }
 
 export interface ToolbarPlugin extends Plugin {
-    Toolbar: (props: ToolbarProps) => React.ReactElement;
+    Toolbar: (props: ToolbarProps) => ReactElement;
 }
 
 export default function toolbarPlugin(): ToolbarPlugin;
