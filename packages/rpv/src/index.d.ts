@@ -351,7 +351,7 @@ export interface ViewerState {
     // The current page index
     pageIndex: number;
     // The current zoom level
-    scale: number | SpecialZoomLevel;
+    scale: number;
 }
 
 export interface PluginFunctions {

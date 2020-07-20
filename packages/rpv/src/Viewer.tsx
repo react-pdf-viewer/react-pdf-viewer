@@ -142,7 +142,7 @@ const Viewer: React.FC<ViewerProps> = ({
                                         viewerState={{
                                             file,
                                             pageIndex: initialPage,
-                                            scale: defaultScale || ps.scale,
+                                            scale: ps.scale,
                                         }}
                                         onCanvasLayerRender={onCanvasLayerRender}
                                         onDocumentLoad={onDocumentLoad}
