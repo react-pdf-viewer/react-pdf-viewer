@@ -61,6 +61,7 @@ export interface ZoomPlugin extends Plugin {
     ZoomInButton: () => ReactElement;
     ZoomOut: (props: ZoomOutButtonProps) => ReactElement;
     ZoomOutButton: () => ReactElement;
+    ZoomPopover: () => ReactElement;
 }
 
 export default function zoomPlugin(): ZoomPlugin;

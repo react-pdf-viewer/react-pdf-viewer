@@ -39,6 +39,7 @@
     },
     "scripts": {
         "clean": "rm -rf npm && mkdir npm",
-        "build": "npm run clean && cp src/index.d.ts npm && cp dist/index.js npm && rollup -c"
+        "build": "npm run clean && cp src/index.d.ts npm && cp dist/index.js npm && rollup -c && npm run mincss && rm -rf npm/cjs/rpv-zoom.less",
+        "mincss": "postcss npm/cjs/rpv-zoom.css > npm/cjs/rpv-zoom.min.css"
     }
 }

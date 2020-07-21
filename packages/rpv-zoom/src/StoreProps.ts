@@ -6,9 +6,11 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
+import { SpecialZoomLevel } from '@phuocng/rpv';
+
 interface StoreProps {
     scale?: number;
-    zoom?(scale: number): void;
+    zoom?(scale: number | SpecialZoomLevel): void;
 }
 
 export default StoreProps;
