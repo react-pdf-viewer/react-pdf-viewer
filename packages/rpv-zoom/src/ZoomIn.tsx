@@ -6,8 +6,8 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { useContext, useEffect, useState } from 'react';
-import { Button, LocalizationContext, NextIcon, Position, Store, StoreHandler, Tooltip } from '@phuocng/rpv';
+import { FC, ReactElement, useEffect, useState } from 'react';
+import { Store, StoreHandler } from '@phuocng/rpv';
 
 import StoreProps from './StoreProps';
 import { increase } from './zoomingLevel';
@@ -20,11 +20,9 @@ export interface ZoomInProps {
     children: RenderZoomIn;
 }
 
-type RenderZoomIn = (props: RenderZoomInProps) => React.ReactElement;
+type RenderZoomIn = (props: RenderZoomInProps) => ReactElement;
 
-const TOOLTIP_OFFSET = { left: 0, top: 8 };
-
-const ZoomIn: React.FC<{
+const ZoomIn: FC<{
     children: RenderZoomIn,
     store: Store<StoreProps>,
 }> = ({ children, store }) => {

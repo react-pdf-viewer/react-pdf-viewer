@@ -196,29 +196,34 @@ const Inner: React.FC<InnerProps> = ({
             return;
         }
 
-        let scaled = 1;
+        let updateScale = 1;
         switch (newScale) {
             case SpecialZoomLevel.ActualSize:
-                scaled = 1;
+                updateScale = 1;
                 break;
 
             case SpecialZoomLevel.PageFit:
-                scaled = Math.min(
+                updateScale = Math.min(
                     (pagesEle.offsetWidth - SCROLL_BAR_WIDTH) / pageWidth,
                     (pagesEle.offsetHeight - 2 * PAGE_PADDING) / pageHeight
                 );
                 break;
 
             case SpecialZoomLevel.PageWidth:
-                scaled = (pagesEle.offsetWidth - SCROLL_BAR_WIDTH) / pageWidth;
+                updateScale = (pagesEle.offsetWidth - SCROLL_BAR_WIDTH) / pageWidth;
                 break;
 
             default:
-                scaled = newScale;
+                updateScale = newScale;
                 break;
         }
-        setScale(scaled);
-        onZoom({ doc, scale: scaled });
+        setScale(updateScale);
+        onZoom({ doc, scale: updateScale });
+        setViewerState({
+            file: viewerState.file,
+            pageIndex: currentPage,
+            scale: updateScale,
+        });
     };
 
     useEffect(() => {

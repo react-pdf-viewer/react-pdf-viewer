@@ -7,7 +7,7 @@
  */
 
 import React, { ReactElement } from 'react';
-import { createStore, Plugin, PluginFunctions, PluginOnDocumentLoad, ViewerState } from '@phuocng/rpv';
+import { createStore, Plugin, PluginFunctions, ViewerState } from '@phuocng/rpv';
 
 import ZoomIn, { ZoomInProps } from './ZoomIn';
 import ZoomInButton from './ZoomInButton';

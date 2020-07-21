@@ -6,11 +6,11 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React from 'react';
+import React, { FC } from 'react';
 
 import { Icon } from '@phuocng/rpv';
 
-const ZoomInIcon: React.FC = () => {
+const ZoomInIcon: FC = () => {
     return (
         <Icon size={16}>
             <path
