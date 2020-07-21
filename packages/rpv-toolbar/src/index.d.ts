@@ -24,6 +24,7 @@ export interface ToolbarSlot {
     printButton: ReactElement;
     zoomInButton: ReactElement;
     zoomOutButton: ReactElement;
+    zoomPopover: ReactElement;
 }
 
 export type RenderToolbarSlot = (toolbarSlot: ToolbarSlot) => ReactElement;

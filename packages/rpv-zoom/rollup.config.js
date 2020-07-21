@@ -1,4 +1,6 @@
+import less from 'rollup-plugin-less-modules';
 import { terser } from 'rollup-plugin-terser';
+import json from '@rollup/plugin-json';
 import typescript from '@rollup/plugin-typescript';
 
 const pkg = require('./package.json');
@@ -29,6 +31,11 @@ export default [
         },
         external,
         plugins: [
+            json(),
+            less({
+                output: './npm/cjs/rpv-zoom.css',
+                sourcemap: false,
+            }),
             typescript(typescriptOptions),
         ],
     },
@@ -42,6 +49,11 @@ export default [
         },
         external,
         plugins: [
+            json(),
+            less({
+                output: './npm/cjs/rpv-zoom.css',
+                sourcemap: false,
+            }),
             typescript(typescriptOptions),
             terser(),
         ],

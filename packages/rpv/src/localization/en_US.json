@@ -54,10 +54,5 @@
     "wrongPassword": {
         "submit": "Submit",
         "tryAgain": "The password is wrong. Please try again"
-    },
-    "zoom": {
-        "actualSize": "Actual size",
-        "pageFit": "Page fit",
-        "pageWidth": "Page width"
     }
 }

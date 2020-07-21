@@ -7,6 +7,7 @@
  */
 
 import Button from './components/Button';
+import Menu from './components/Menu';
 import MenuDivider from './components/MenuDivider';
 import MenuItem from './components/MenuItem';
 import PrimaryButton from './components/PrimaryButton';
@@ -38,6 +39,7 @@ export {
     Icon,
     LocalizationContext,
     LocalizationProvider,
+    Menu,
     MenuDivider,
     MenuItem,
     Modal,

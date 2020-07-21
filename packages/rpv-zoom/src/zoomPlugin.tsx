@@ -14,6 +14,7 @@ import ZoomIn, { ZoomInProps } from './ZoomIn';
 import ZoomOut, { ZoomOutProps } from './ZoomOut';
 import ZoomInButton from './ZoomInButton';
 import ZoomOutButton from './ZoomOutButton';
+import ZoomPopover from './ZoomPopover';
 
 import StoreProps from './StoreProps';
 
@@ -23,6 +24,7 @@ interface ZoomPlugin extends Plugin {
     ZoomInButton: () => ReactElement;
     ZoomOut: (props: ZoomOutProps) => ReactElement;
     ZoomOutButton: () => ReactElement;
+    ZoomPopover: () => ReactElement;
 }
 
 const zoomPlugin = (): ZoomPlugin => {
@@ -52,6 +54,8 @@ const zoomPlugin = (): ZoomPlugin => {
         </ZoomOutDecorator>
     );
 
+    const ZoomPopoverDecorator = () => <ZoomPopover store={store} />;
+
     return {
         install: (pluginFunctions: PluginFunctions) => {
             store.update('zoom', pluginFunctions.zoom);
@@ -65,6 +69,7 @@ const zoomPlugin = (): ZoomPlugin => {
         ZoomInButton: ZoomInButtonDecorator,
         ZoomOut: ZoomOutDecorator,
         ZoomOutButton: ZoomOutButtonDecorator,
+        ZoomPopover: ZoomPopoverDecorator,
     };
 };
 
