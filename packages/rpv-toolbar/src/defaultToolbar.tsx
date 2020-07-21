@@ -33,6 +33,9 @@ const defaultToolbar: RenderToolbarSlot = (toolbarSlot: ToolbarSlot): React.Reac
             </div>
             <div className='rpv-toolbar-center'>
                 <div className='rpv-toolbar-item'>
+                    {toolbarSlot.zoomOutButton}
+                </div>
+                <div className='rpv-toolbar-item'>
                     {toolbarSlot.zoomInButton}
                 </div>
             </div>
