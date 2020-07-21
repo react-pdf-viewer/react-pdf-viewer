@@ -8,6 +8,7 @@
 
 import zoomPlugin from './zoomPlugin';
 import ZoomInIcon from './ZoomInIcon';
+import ZoomOutIcon from './ZoomOutIcon';
 
 export default zoomPlugin;
-export { ZoomInIcon };
+export { ZoomInIcon, ZoomOutIcon };

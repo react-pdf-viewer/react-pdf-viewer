@@ -19,10 +19,23 @@ export interface ZoomInButtonProps {
     children?: RenderZoomInButton;
 }
 
+export interface RenderZoomOutButtonProps {
+    onClick: () => void;
+}
+
+export type RenderZoomOutButton = (props: RenderZoomOutButtonProps) => ReactElement;
+
+export interface ZoomOutButtonProps {
+    children?: RenderZoomOutButton;
+}
+
 export interface ZoomPlugin extends Plugin {
-    ZoomInButton: (props: ZoomInButtonProps) => ReactElement;
+    ZoomIn: (props: ZoomInButtonProps) => ReactElement;
     ZoomInButton: () => ReactElement;
+    ZoomOut: (props: ZoomOutButtonProps) => ReactElement;
+    ZoomOutButton: () => ReactElement;
 }
 
 export default function zoomPlugin(): ZoomPlugin;
 export class ZoomInIcon extends Component<{}> {}
+export class ZoomOutIcon extends Component<{}> {}
