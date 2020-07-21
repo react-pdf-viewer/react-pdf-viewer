@@ -70,7 +70,7 @@ const toolbarPlugin = (): ToolbarPlugin => {
         const { OpenButton } = openPluginInstance;
         const { PreviousPageButton } = previousPagePluginInstance;
         const { PrintButton } = printPluginInstance;
-        const { ZoomInButton } = zoomPluginInstance;
+        const { ZoomInButton, ZoomOutButton } = zoomPluginInstance;
 
         const NumberOfPages = () => (
             <CurrentPageLabel>
@@ -96,6 +96,7 @@ const toolbarPlugin = (): ToolbarPlugin => {
                     previousPage: <PreviousPageButton />,
                     printButton: <PrintButton />,
                     zoomInButton: <ZoomInButton />,
+                    zoomOutButton: <ZoomOutButton />,
                 }}
             />
         );

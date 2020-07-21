@@ -9,26 +9,26 @@
 import React, { FC, useContext } from 'react';
 import { Button, LocalizationContext, Position, Tooltip } from '@phuocng/rpv';
 
-import { RenderZoomInProps } from './ZoomIn';
-import ZoomInIcon from './ZoomInIcon';
+import { RenderZoomOutProps } from './ZoomOut';
+import ZoomOutIcon from './ZoomOutIcon';
 
 const TOOLTIP_OFFSET = { left: 0, top: 8 };
 
-const ZoomInButton: FC<RenderZoomInProps> = ({ onClick }) => {
+const ZoomOutButton: FC<RenderZoomOutProps> = ({ onClick }) => {
     const l10nContext = useContext(LocalizationContext);
     
     const label = (l10nContext && l10nContext.plugins && l10nContext.plugins.zoom)
-        ? l10nContext.plugins.zoom.zoomIn
-        : 'Zoom in';
+        ? l10nContext.plugins.zoom.zoomOut
+        : 'Zoom out';
 
     return (
         <Tooltip
             position={Position.BottomCenter}
-            target={<Button onClick={onClick}><ZoomInIcon /></Button>}
+            target={<Button onClick={onClick}><ZoomOutIcon /></Button>}
             content={() => label}
             offset={TOOLTIP_OFFSET}
         />
     );
 };
 
-export default ZoomInButton;
+export default ZoomOutButton;

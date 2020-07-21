@@ -11,20 +11,20 @@ import { Store } from '@phuocng/rpv';
 
 import StoreProps from './StoreProps';
 import useZoom from './useZoom';
-import { increase } from './zoomingLevel';
+import { decrease } from './zoomingLevel';
 
-export interface RenderZoomInProps {
+export interface RenderZoomOutProps {
     onClick: () => void;
 }
 
-export interface ZoomInProps {
-    children: RenderZoomIn;
+export interface ZoomOutProps {
+    children: RenderZoomOut;
 }
 
-type RenderZoomIn = (props: RenderZoomInProps) => ReactElement;
+type RenderZoomOut = (props: RenderZoomOutProps) => ReactElement;
 
-const ZoomIn: FC<{
-    children: RenderZoomIn,
+const ZoomOut: FC<{
+    children: RenderZoomOut,
     store: Store<StoreProps>,
 }> = ({ children, store }) => {
     const { scale } = useZoom(store);
@@ -32,7 +32,7 @@ const ZoomIn: FC<{
     const zoomIn = () => {
         const zoom = store.get('zoom');
         if (zoom) {
-            const newLevel = increase(scale);
+            const newLevel = decrease(scale);
             zoom(newLevel);
         }
     };
@@ -42,4 +42,4 @@ const ZoomIn: FC<{
     });
 };
 
-export default ZoomIn;
+export default ZoomOut;

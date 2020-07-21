@@ -19,7 +19,6 @@ import RotateForwardIcon from '../icons/RotateForwardIcon';
 import TextSelectionIcon from '../icons/TextSelectionIcon';
 import VerticalScrollingIcon from '../icons/VerticalScrollingIcon';
 import WrappedScrollingIcon from '../icons/WrappedScrollingIcon';
-import ZoomOutIcon from '../icons/ZoomOutIcon';
 import { RenderToolbarSlot } from './ToolbarSlot';
 import LocalizationContext from '../localization/LocalizationContext';
 import LocalizationMap from '../localization/LocalizationMap';
@@ -89,8 +88,6 @@ const Toolbar: React.FC<ToolbarProps> = ({
     const setWrappedScrollMode = (): void => onChangeScrollMode(ScrollMode.Wrapped);
 
     const renderToggle = (): LocalizationMap => l10n.toolbar.toggleSidebar;
-    const renderZoomOut = (): LocalizationMap => l10n.toolbar.zoomOut;
-    const renderZoomIn = (): LocalizationMap => l10n.toolbar.zoomIn;
     const renderRotateClockwise = (): LocalizationMap => l10n.toolbar.rotateForward;
     const renderRotateCounterclockwise = (): LocalizationMap => l10n.toolbar.rotateBackward;
     const renderTextSelection = (): LocalizationMap => l10n.toolbar.textSelectionTool;
@@ -201,14 +198,6 @@ const Toolbar: React.FC<ToolbarProps> = ({
                     <Button onClick={setVerticalScrollMode} isSelected={scrollMode === ScrollMode.Vertical}><VerticalScrollingIcon /></Button>
                 }
                 content={renderVerticalScrolling}
-                offset={TOOLTIP_OFFSET}
-            />
-        ),
-        zoomOutButton: (
-            <Tooltip
-                position={Position.BottomCenter}
-                target={<Button onClick={zoomOut}><ZoomOutIcon /></Button>}
-                content={renderZoomOut}
                 offset={TOOLTIP_OFFSET}
             />
         ),
