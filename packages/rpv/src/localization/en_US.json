@@ -40,7 +40,6 @@
     },
     "toolbar": {
         "documentProperties": "Document properties",
-        "download": "Download",
         "handTool": "Hand tool",
         "horizontalScrolling": "Horizontal scrolling",
         "moreActions": "More actions",
@@ -50,8 +49,6 @@
         "textSelectionTool": "Text selection tool",
         "toggleSidebar":  "Toggle sidebar",
         "verticalScrolling": "Vertical scrolling",
-        "zoomIn": "Zoom in",
-        "zoomOut": "Zoom out",
         "wrappedScrolling": "Wrapped scrolling"
     },
     "wrongPassword": {
