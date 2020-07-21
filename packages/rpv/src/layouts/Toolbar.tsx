@@ -30,10 +30,7 @@ import Match from '../search/Match';
 import SearchPopover from '../search/SearchPopover';
 import ScrollMode from '../ScrollMode';
 import SelectionMode from '../SelectionMode';
-import SpecialZoomLevel from '../SpecialZoomLevel';
 import PdfJs from '../vendors/PdfJs';
-import { decrease } from '../zoom/zoomingLevel';
-import ZoomPopover from '../zoom/ZoomPopover';
 import MoreActionsPopover from './MoreActionsPopover';
 
 interface ToolbarProps {
@@ -50,7 +47,6 @@ interface ToolbarProps {
     onRotate(degree: number): void;
     onSearchFor(keyword: RegExp): void;
     onToggleSidebar(): void;
-    onZoom(scale: number | SpecialZoomLevel): void;
 }
 
 const TOOLTIP_OFFSET = { left: 0, top: 8 };
@@ -58,18 +54,13 @@ const TOOLTIP_OFFSET = { left: 0, top: 8 };
 const Toolbar: React.FC<ToolbarProps> = ({
     doc, fileName, scale, scrollMode, selectionMode,
     onChangeScrollMode, onChangeSelectionMode, onJumpTo,
-    onJumpToMatch, onRotate, onSearchFor, onToggleSidebar, onZoom,
+    onJumpToMatch, onRotate, onSearchFor, onToggleSidebar,
     renderToolbar,
 }) => {
     const l10n = useContext(LocalizationContext);
     const [isSidebarOpened, setSidebarOpened] = useState(false);
 
     const { numPages } = doc;
-
-    const zoomOut = (): void => {
-        const newLevel = decrease(scale);
-        onZoom(newLevel);
-    };
 
     const jumpToFirstPage = (): void => onJumpTo(0);
     const jumpToLastPage = (): void => onJumpTo(numPages - 1);
@@ -200,9 +191,6 @@ const Toolbar: React.FC<ToolbarProps> = ({
                 content={renderVerticalScrolling}
                 offset={TOOLTIP_OFFSET}
             />
-        ),
-        zoomPopover: (
-            <ZoomPopover scale={scale} onZoom={onZoom} />
         ),
         wrappedScrollingButton: (
             <Tooltip
