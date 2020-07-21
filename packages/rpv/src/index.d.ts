@@ -164,6 +164,9 @@ export interface IconProps {
 
 export class Icon extends React.Component<IconProps> {}
 
+// Menu
+export class Menu extends React.Component<{}> {}
+
 // MenuDivider
 export class MenuDivider extends React.Component<{}> {}
 
