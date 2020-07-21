@@ -70,7 +70,7 @@ const toolbarPlugin = (): ToolbarPlugin => {
         const { OpenButton } = openPluginInstance;
         const { PreviousPageButton } = previousPagePluginInstance;
         const { PrintButton } = printPluginInstance;
-        const { ZoomInButton, ZoomOutButton } = zoomPluginInstance;
+        const { CurrentScale, ZoomInButton, ZoomOutButton } = zoomPluginInstance;
 
         const NumberOfPages = () => (
             <CurrentPageLabel>
@@ -85,6 +85,7 @@ const toolbarPlugin = (): ToolbarPlugin => {
                 {...props}
                 slot={{
                     currentPage: <CurrentPageLabel />,
+                    currentScale: <CurrentScale />,
                     currentPageInput: <CurrentPageInput />,
                     downloadButton: <DownloadButton />,
                     fullScreenButton: <EnterFullScreenButton />,

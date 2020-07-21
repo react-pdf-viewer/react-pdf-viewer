@@ -10,6 +10,7 @@ import { ReactElement } from 'react';
 
 interface ToolbarSlot {
     currentPage: ReactElement;
+    currentScale: ReactElement;
     currentPageInput: ReactElement;
     downloadButton: ReactElement;
     fullScreenButton: ReactElement;

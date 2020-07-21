@@ -9,6 +9,10 @@
 import { Component, ReactElement } from 'react';
 import { Plugin } from '@phuocng/rpv';
 
+// ------------------------
+// Render zooming in button
+// ------------------------
+
 export interface RenderZoomInButtonProps {
     onClick: () => void;
 }
@@ -18,6 +22,10 @@ export type RenderZoomInButton = (props: RenderZoomInButtonProps) => ReactElemen
 export interface ZoomInButtonProps {
     children?: RenderZoomInButton;
 }
+
+// -------------------------
+// Render zooming out button
+// -------------------------
 
 export interface RenderZoomOutButtonProps {
     onClick: () => void;
@@ -29,7 +37,26 @@ export interface ZoomOutButtonProps {
     children?: RenderZoomOutButton;
 }
 
+// -------------
+// Current scale
+// -------------
+
+export interface RenderCurrentScaleProps {
+    scale: number;
+}
+
+export interface CurrentScaleProps {
+    children?: RenderCurrentScale;
+}
+
+export type RenderCurrentScale = (props: RenderCurrentScaleProps) => ReactElement;
+
+// ------
+// Plugin
+// ------
+
 export interface ZoomPlugin extends Plugin {
+    CurrentScale: (props: CurrentScaleProps) => ReactElement;
     ZoomIn: (props: ZoomInButtonProps) => ReactElement;
     ZoomInButton: () => ReactElement;
     ZoomOut: (props: ZoomOutButtonProps) => ReactElement;

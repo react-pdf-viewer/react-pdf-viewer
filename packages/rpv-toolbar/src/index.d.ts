@@ -11,6 +11,7 @@ import { Plugin } from '@phuocng/rpv';
 
 export interface ToolbarSlot {
     currentPage: ReactElement;
+    currentScale: ReactElement;
     currentPageInput: ReactElement;
     downloadButton: ReactElement;
     fullScreenButton: ReactElement;
