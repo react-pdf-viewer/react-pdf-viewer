@@ -46,7 +46,7 @@
         "@phuocng/rpv-open": "^2.0.0",
         "@phuocng/rpv-previous-page": "^2.0.0",
         "@phuocng/rpv-print": "^2.0.0",
-        "@phuocng/rpv-zoom-in": "^2.0.0"
+        "@phuocng/rpv-zoom": "^2.0.0"
     },
     "scripts": {
         "clean": "rm -rf npm && mkdir npm",

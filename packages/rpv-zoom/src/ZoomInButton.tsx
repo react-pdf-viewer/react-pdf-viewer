@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { useContext } from 'react';
+import React, { FC, useContext } from 'react';
 import { Button, LocalizationContext, Position, Tooltip } from '@phuocng/rpv';
 
 import { RenderZoomInProps } from './ZoomIn';
@@ -14,7 +14,7 @@ import ZoomInIcon from './ZoomInIcon';
 
 const TOOLTIP_OFFSET = { left: 0, top: 8 };
 
-const ZoomInButton: React.FC<RenderZoomInProps> = ({ onClick }) => {
+const ZoomInButton: FC<RenderZoomInProps> = ({ onClick }) => {
     const l10nContext = useContext(LocalizationContext);
     
     const label = (l10nContext && l10nContext.plugins && l10nContext.plugins.zoomIn)

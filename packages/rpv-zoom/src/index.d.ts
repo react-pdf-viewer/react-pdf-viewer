@@ -6,22 +6,23 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React from 'react';
+import { Component, ReactElement } from 'react';
 import { Plugin } from '@phuocng/rpv';
 
 export interface RenderZoomInButtonProps {
     onClick: () => void;
 }
 
-export type RenderZoomInButton = (props: RenderZoomInButtonProps) => React.ReactElement;
+export type RenderZoomInButton = (props: RenderZoomInButtonProps) => ReactElement;
 
 export interface ZoomInButtonProps {
     children?: RenderZoomInButton;
 }
 
-export interface ZoomInPlugin extends Plugin {
-    ZoomInButton: (props: ZoomInButtonProps) => React.ReactElement;
+export interface ZoomPlugin extends Plugin {
+    ZoomInButton: (props: ZoomInButtonProps) => ReactElement;
+    ZoomInButton: () => ReactElement;
 }
 
-export default function zoomInPlugin(): ZoomInPlugin;
-export class ZoomInIcon extends React.Component<{}> {}
+export default function zoomPlugin(): ZoomPlugin;
+export class ZoomInIcon extends Component<{}> {}

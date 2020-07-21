@@ -24,7 +24,7 @@ export default [
     {
         input,
         output: {
-            file: './npm/cjs/rpv-zoom-in.js',
+            file: './npm/cjs/rpv-zoom.js',
             format: 'cjs',
         },
         external,
@@ -37,7 +37,7 @@ export default [
     {
         input,
         output: {
-            file: './npm/cjs/rpv-zoom-in.min.js',
+            file: './npm/cjs/rpv-zoom.min.js',
             format: 'cjs',
         },
         external,

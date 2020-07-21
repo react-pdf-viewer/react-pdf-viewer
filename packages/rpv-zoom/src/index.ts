@@ -6,10 +6,8 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-'use strict';
+import zoomPlugin from './zoomPlugin';
+import ZoomInIcon from './ZoomInIcon';
 
-if (process.env.NODE_ENV === 'production') {
-    module.exports = require('./cjs/rpv-zoom-in.min.js');
-} else {
-    module.exports = require('./cjs/rpv-zoom-in.js');
-}
+export default zoomPlugin;
+export { ZoomInIcon };

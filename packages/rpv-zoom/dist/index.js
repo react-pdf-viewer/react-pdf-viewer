@@ -6,8 +6,10 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import nextPagePlugin from './zoomInPlugin';
-import ZoomInIcon from './ZoomInIcon';
+'use strict';
 
-export default nextPagePlugin;
-export { ZoomInIcon };
+if (process.env.NODE_ENV === 'production') {
+    module.exports = require('./cjs/rpv-zoom.min.js');
+} else {
+    module.exports = require('./cjs/rpv-zoom.js');
+}
