@@ -14,12 +14,12 @@ import ZoomInButton from './ZoomInButton';
 
 import StoreProps from './StoreProps';
 
-interface ZoomInPlugin extends Plugin {
+interface ZoomPlugin extends Plugin {
     ZoomIn: (props: ZoomInProps) => ReactElement;
     ZoomInButton: () => ReactElement;
 }
 
-const zoomInPlugin = (): ZoomInPlugin => {
+const zoomPlugin = (): ZoomPlugin => {
     const store = createStore<StoreProps>({});
 
     const ZoomInDecorator = (props: ZoomInProps) => (
@@ -45,4 +45,4 @@ const zoomInPlugin = (): ZoomInPlugin => {
     };
 };
 
-export default zoomInPlugin;
+export default zoomPlugin;
