@@ -6,10 +6,11 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import { FC, ReactElement, useEffect, useState } from 'react';
-import { Store, StoreHandler } from '@phuocng/rpv';
+import { FC, ReactElement } from 'react';
+import { Store } from '@phuocng/rpv';
 
 import StoreProps from './StoreProps';
+import useZoom from './useZoom';
 import { increase } from './zoomingLevel';
 
 export interface RenderZoomInProps {
@@ -26,19 +27,7 @@ const ZoomIn: FC<{
     children: RenderZoomIn,
     store: Store<StoreProps>,
 }> = ({ children, store }) => {
-    const [scale, setScale] = useState(0);
-
-    const handleScaleChanged: StoreHandler<number> = (currentScale: number) => {
-        setScale(currentScale);
-    };
-
-    useEffect(() => {
-        store.subscribe('scale', handleScaleChanged);
-
-        return () => {
-            store.unsubscribe('scale', handleScaleChanged);
-        };
-    }, []);
+    const { scale } = useZoom(store);
 
     const zoomIn = () => {
         const zoom = store.get('zoom');
