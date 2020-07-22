@@ -106,13 +106,6 @@ export declare namespace PdfJs {
 }
 
 // -----
-// Icons
-// -----
-
-export { default as NextIcon } from './icons/NextIcon';
-export { default as PreviousIcon } from './icons/PreviousIcon';
-
-// -----
 // Types
 // -----
 

@@ -22,6 +22,7 @@ import '@phuocng/rpv-full-screen/cjs/rpv-full-screen.css';
 import '@phuocng/rpv-open/cjs/rpv-open.css';
 import '@phuocng/rpv-page-navigation/cjs/rpv-page-navigation.css';
 import '@phuocng/rpv-print/cjs/rpv-print.css';
+import '@phuocng/rpv-zoom/cjs/rpv-zoom.css';
 
 import Toolbar, { ToolbarProps } from './Toolbar';
 

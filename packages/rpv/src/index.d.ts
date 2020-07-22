@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import * as React from 'react';
+import React from 'react';
 
 // ---------------
 // PDFjs namespace
@@ -137,12 +137,6 @@ export enum SpecialZoomLevel {
     PageFit = 'PageFit',
     PageWidth = 'PageWidth',
 }
-
-// -----
-// Icons
-// -----
-export class PreviousIcon extends React.Component<{}>{}
-export class NextIcon extends React.Component<{}>{}
 
 // ----------
 // Components

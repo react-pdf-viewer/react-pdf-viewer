@@ -6,10 +6,11 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { useEffect, useState } from 'react';
-import { Store, StoreHandler } from '@phuocng/rpv';
+import React, { FC, ReactElement } from 'react';
+import { Store } from '@phuocng/rpv';
 
 import StoreProps from './StoreProps';
+import useNumberOfPages from './useNumberOfPages';
 
 export interface RenderGoToLastPageProps {
     onClick: () => void;
@@ -19,25 +20,13 @@ export interface GoToLastPageProps {
     children: RenderGoToLastPage;
 }
 
-type RenderGoToLastPage = (props: RenderGoToLastPageProps) => React.ReactElement;
+type RenderGoToLastPage = (props: RenderGoToLastPageProps) => ReactElement;
 
-const GoToLastPage: React.FC<{
+const GoToLastPage: FC<{
     children: RenderGoToLastPage,
     store: Store<StoreProps>,
 }> = ({ children, store }) => {
-    const [numberOfPages, setNumberOfPages] = useState(0);
-
-    const handleNumberOfPages: StoreHandler<number> = (n: number) => {
-        setNumberOfPages(n);
-    };
-
-    useEffect(() => {
-        store.subscribe('numberOfPages', handleNumberOfPages);
-
-        return () => {
-            store.unsubscribe('numberOfPages', handleNumberOfPages);
-        };
-    }, []);
+    const { numberOfPages } = useNumberOfPages(store);
 
     const goToFirstPage = () => {
         const jumpToPage = store.get('jumpToPage');

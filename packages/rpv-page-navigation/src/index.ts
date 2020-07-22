@@ -7,8 +7,10 @@
  */
 
 import DownArrowIcon from './DownArrowIcon';
+import NextIcon from './NextIcon';
+import PreviousIcon from './PreviousIcon';
 import pageNavigationPlugin from './pageNavigationPlugin';
 import UpArrowIcon from './UpArrowIcon';
 
 export default pageNavigationPlugin;
-export { DownArrowIcon, UpArrowIcon };
+export { DownArrowIcon, NextIcon, PreviousIcon, UpArrowIcon };

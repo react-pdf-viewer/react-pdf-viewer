@@ -6,10 +6,13 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { useContext, useEffect, useState } from 'react';
-import { Button, LocalizationContext, NextIcon, Position, Store, StoreHandler, Tooltip } from '@phuocng/rpv';
+import React, { FC, ReactElement, useContext } from 'react';
+import { Button, LocalizationContext, Position, Store, Tooltip } from '@phuocng/rpv';
 
+import NextIcon from './NextIcon';
 import StoreProps from './StoreProps';
+import useCurrentPage from './useCurrentPage';
+import useNumberOfPages from './useNumberOfPages';
 
 interface RenderNextPageButtonProps {
     isDisabled: boolean;
@@ -20,34 +23,17 @@ export interface NextPageButtonProps {
     children?: RenderNextPageButton;
 }
 
-type RenderNextPageButton = (props: RenderNextPageButtonProps) => React.ReactElement;
+type RenderNextPageButton = (props: RenderNextPageButtonProps) => ReactElement;
 
 const TOOLTIP_OFFSET = { left: 0, top: 8 };
 
-const NextPageButton: React.FC<{
+const NextPageButton: FC<{
     children?: RenderNextPageButton,
     store: Store<StoreProps>,
 }> = ({ children, store }) => {
     const l10nContext = useContext(LocalizationContext);
-    const [numberOfPages, setNumberOfPages] = useState(0);
-    const [currentPage, setCurrentPage] = useState(0);
-
-    const handleNumberOfPages: StoreHandler<number> = (n: number) => {
-        setNumberOfPages(n);
-    };
-    const handleCurrentPageChanged: StoreHandler<number> = (currentPage: number) => {
-        setCurrentPage(currentPage);
-    };
-
-    useEffect(() => {
-        store.subscribe('currentPage', handleCurrentPageChanged);
-        store.subscribe('numberOfPages', handleNumberOfPages);
-
-        return () => {
-            store.unsubscribe('currentPage', handleCurrentPageChanged);
-            store.unsubscribe('numberOfPages', handleNumberOfPages);
-        };
-    }, []);
+    const { currentPage } = useCurrentPage(store);
+    const { numberOfPages } = useNumberOfPages(store);
 
     const goToNextPage = () => {
         const jumpToPage = store.get('jumpToPage');
