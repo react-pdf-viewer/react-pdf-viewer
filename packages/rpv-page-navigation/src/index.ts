@@ -7,7 +7,8 @@
  */
 
 import DownArrowIcon from './DownArrowIcon';
-import lastPagePlugin from './lastPagePlugin';
+import pageNavigationPlugin from './pageNavigationPlugin';
+import UpArrowIcon from './UpArrowIcon';
 
-export default lastPagePlugin;
-export { DownArrowIcon };
+export default pageNavigationPlugin;
+export { DownArrowIcon, UpArrowIcon };

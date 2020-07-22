@@ -51,7 +51,7 @@ const PreviousPageButton: React.FC<{
     };
 
     const defaultChildren = (props: RenderPreviousPageButtonProps) => {
-        const label = (l10nContext && l10nContext.plugins)
+        const label = (l10nContext && l10nContext.plugins && l10nContext.plugins.pageNavigation)
             ? l10nContext.plugins.pageNavigation.previousPage
             : 'Previous page';
 
