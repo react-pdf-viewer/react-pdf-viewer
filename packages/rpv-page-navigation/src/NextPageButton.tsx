@@ -7,8 +7,9 @@
  */
 
 import React, { FC, ReactElement, useContext } from 'react';
-import { Button, LocalizationContext, NextIcon, Position, Store, Tooltip } from '@phuocng/rpv';
+import { Button, LocalizationContext, Position, Store, Tooltip } from '@phuocng/rpv';
 
+import NextIcon from './NextIcon';
 import StoreProps from './StoreProps';
 import useCurrentPage from './useCurrentPage';
 import useNumberOfPages from './useNumberOfPages';
