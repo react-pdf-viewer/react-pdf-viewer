@@ -57,7 +57,7 @@ const NextPageButton: React.FC<{
     };
 
     const defaultChildren = (props: RenderNextPageButtonProps) => {
-        const label = (l10nContext && l10nContext.plugins)
+        const label = (l10nContext && l10nContext.plugins && l10nContext.plugins.pageNavigation)
             ? l10nContext.plugins.pageNavigation.nextPage
             : 'Next page';
 

@@ -9,22 +9,18 @@
 import React from 'react';
 
 import { Plugin, PluginFunctions, PluginOnDocumentLoad, RenderViewerProps, ViewerState } from '@phuocng/rpv';
-import currentPagePlugin from '@phuocng/rpv-current-page';
 import downloadPlugin from '@phuocng/rpv-download';
 import dropPlugin from '@phuocng/rpv-drop';
-import firstPagePlugin from '@phuocng/rpv-first-page';
 import fullScreenPlugin from '@phuocng/rpv-full-screen';
-import lastPagePlugin from '@phuocng/rpv-last-page';
-import nextPagePlugin from '@phuocng/rpv-next-page';
 import openPlugin from '@phuocng/rpv-open';
-import previousPagePlugin from '@phuocng/rpv-previous-page';
+import pageNavigationPlugin from '@phuocng/rpv-page-navigation';
 import printPlugin from '@phuocng/rpv-print';
 import zoomPlugin from '@phuocng/rpv-zoom';
 
-import '@phuocng/rpv-current-page/cjs/rpv-current-page.css';
 import '@phuocng/rpv-drop/cjs/rpv-drop.css';
 import '@phuocng/rpv-full-screen/cjs/rpv-full-screen.css';
 import '@phuocng/rpv-open/cjs/rpv-open.css';
+import '@phuocng/rpv-page-navigation/cjs/rpv-page-navigation.css';
 import '@phuocng/rpv-print/cjs/rpv-print.css';
 
 import Toolbar, { ToolbarProps } from './Toolbar';
@@ -34,41 +30,29 @@ interface ToolbarPlugin extends Plugin {
 }
 
 const toolbarPlugin = (): ToolbarPlugin => {
-    const currentPagePluginInstance = currentPagePlugin();
     const downloadPluginInstance = downloadPlugin();
     const dropPluginInstance = dropPlugin();
-    const firstPagePluginInstance = firstPagePlugin();
     const fullScreenPluginInstance = fullScreenPlugin();
-    const lastPagePluginInstance = lastPagePlugin();
-    const nextPagePluginInstance = nextPagePlugin();
     const openPluginInstance = openPlugin();
-    const previousPagePluginInstance = previousPagePlugin();
+    const pageNavigationPluginInstance = pageNavigationPlugin();
     const printPluginInstance = printPlugin();
     const zoomPluginInstance = zoomPlugin();
 
     const plugins = [
-        currentPagePluginInstance,
         downloadPluginInstance,
         dropPluginInstance,
-        firstPagePluginInstance,
         fullScreenPluginInstance,
-        lastPagePluginInstance,
-        nextPagePluginInstance,
         openPluginInstance,
-        previousPagePluginInstance,
+        pageNavigationPluginInstance,
         printPluginInstance,
         zoomPluginInstance,
     ];
 
     const ToolbarDecorator = (props: ToolbarProps) => {
-        const { CurrentPageInput, CurrentPageLabel } = currentPagePluginInstance;
         const { DownloadButton } = downloadPluginInstance;
-        const { GoToFirstPageButton } = firstPagePluginInstance;
         const { EnterFullScreenButton } = fullScreenPluginInstance;
-        const { GoToLastPageButton } = lastPagePluginInstance;
-        const { NextPageButton } = nextPagePluginInstance;
         const { OpenButton } = openPluginInstance;
-        const { PreviousPageButton } = previousPagePluginInstance;
+        const { CurrentPageInput, CurrentPageLabel, GoToFirstPageButton, GoToLastPageButton, NextPageButton, PreviousPageButton } = pageNavigationPluginInstance;
         const { PrintButton } = printPluginInstance;
         const { CurrentScale, ZoomInButton, ZoomOutButton, ZoomPopover } = zoomPluginInstance;
 

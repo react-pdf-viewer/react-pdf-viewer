@@ -9,26 +9,26 @@
 import React, { useContext } from 'react';
 import { Button, LocalizationContext, Position, Tooltip } from '@phuocng/rpv';
 
-import { RenderGoToLastPageProps } from './GoToLastPage';
-import DownArrowIcon from './DownArrowIcon';
+import { RenderGoToFirstPageProps } from './GoToFirstPage';
+import UpArrowIcon from './UpArrowIcon';
 
 const TOOLTIP_OFFSET = { left: 0, top: 8 };
 
-const GoToLastPageButton: React.FC<RenderGoToLastPageProps> = ({ onClick }) => {
+const GoToFirstPageButton: React.FC<RenderGoToFirstPageProps> = ({ onClick }) => {
     const l10nContext = useContext(LocalizationContext);
 
-    const label = (l10nContext && l10nContext.plugins)
-            ? l10nContext.plugins.lastPage.goToLastPageButton
-            : 'Last page';
+    const label = (l10nContext && l10nContext.plugins && l10nContext.plugins.pageNavigation)
+            ? l10nContext.plugins.pageNavigation.goToFirstPageButton
+            : 'First page';
 
     return (
         <Tooltip
             position={Position.BottomCenter}
-            target={<Button onClick={onClick}><DownArrowIcon /></Button>}
+            target={<Button onClick={onClick}><UpArrowIcon /></Button>}
             content={() => label}
             offset={TOOLTIP_OFFSET}
         />
     );
 };
 
-export default GoToLastPageButton;
+export default GoToFirstPageButton;

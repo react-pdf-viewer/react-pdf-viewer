@@ -1,3 +1,4 @@
+import less from 'rollup-plugin-less-modules';
 import { terser } from 'rollup-plugin-terser';
 import typescript from '@rollup/plugin-typescript';
 
@@ -9,6 +10,7 @@ const external = [
 ];
 
 const input = './src/index.ts';
+
 const typescriptOptions = {
     removeComments: true,
     module: 'es6',
@@ -24,11 +26,15 @@ export default [
     {
         input,
         output: {
-            file: './npm/cjs/rpv-next-page.js',
+            file: './npm/cjs/rpv-page-navigation.js',
             format: 'cjs',
         },
         external,
         plugins: [
+            less({
+                output: './npm/cjs/rpv-page-navigation.css',
+                sourcemap: false,
+            }),
             typescript(typescriptOptions),
         ],
     },
@@ -37,11 +43,15 @@ export default [
     {
         input,
         output: {
-            file: './npm/cjs/rpv-next-page.min.js',
+            file: './npm/cjs/rpv-page-navigation.min.js',
             format: 'cjs',
         },
         external,
         plugins: [
+            less({
+                output: './npm/cjs/rpv-page-navigation.css',
+                sourcemap: false,
+            }),
             typescript(typescriptOptions),
             terser(),
         ],
