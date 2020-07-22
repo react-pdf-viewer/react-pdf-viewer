@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { useContext } from 'react';
+import React, { FC, useContext } from 'react';
 import { Button, LocalizationContext, Position, Tooltip } from '@phuocng/rpv';
 
 import { RenderGoToFirstPageProps } from './GoToFirstPage';
@@ -14,7 +14,7 @@ import UpArrowIcon from './UpArrowIcon';
 
 const TOOLTIP_OFFSET = { left: 0, top: 8 };
 
-const GoToFirstPageButton: React.FC<RenderGoToFirstPageProps> = ({ onClick }) => {
+const GoToFirstPageButton: FC<RenderGoToFirstPageProps> = ({ onClick }) => {
     const l10nContext = useContext(LocalizationContext);
 
     const label = (l10nContext && l10nContext.plugins && l10nContext.plugins.pageNavigation)

@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React from 'react';
+import React, { FC, ReactElement } from 'react';
 import { Store } from '@phuocng/rpv';
 
 import StoreProps from './StoreProps';
@@ -19,9 +19,9 @@ export interface GoToFirstPageProps {
     children: RenderGoToFirstPage;
 }
 
-type RenderGoToFirstPage = (props: RenderGoToFirstPageProps) => React.ReactElement;
+type RenderGoToFirstPage = (props: RenderGoToFirstPageProps) => ReactElement;
 
-const GoToFirstPage: React.FC<{
+const GoToFirstPage: FC<{
     children: RenderGoToFirstPage,
     store: Store<StoreProps>,
 }> = ({ children, store }) => {

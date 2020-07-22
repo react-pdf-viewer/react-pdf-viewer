@@ -6,11 +6,11 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React from 'react';
+import React, { FC } from 'react';
 
 import { Icon } from '@phuocng/rpv';
 
-const UpArrowIcon: React.FC = () => {
+const UpArrowIcon: FC = () => {
     return (
         <Icon size={16}>
             <path

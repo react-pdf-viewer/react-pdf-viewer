@@ -6,10 +6,12 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { useEffect, useState, ReactElement } from 'react';
-import { Store, StoreHandler } from '@phuocng/rpv';
+import React, { FC, ReactElement } from 'react';
+import { Store } from '@phuocng/rpv';
 
 import StoreProps from './StoreProps';
+import useCurrentPage from './useCurrentPage';
+import useNumberOfPages from './useNumberOfPages';
 
 interface RenderCurrentPageLabelProps {
     currentPage: number;
@@ -22,29 +24,12 @@ export interface CurrentPageLabelProps {
 
 type RenderCurrentPageLabel = (props: RenderCurrentPageLabelProps) => ReactElement;
 
-const CurrentPageLabel: React.FC<{
+const CurrentPageLabel: FC<{
     children?: RenderCurrentPageLabel,
     store: Store<StoreProps>,
 }> = ({ children, store }) => {
-    const [numberOfPages, setNumberOfPages] = useState(0);
-    const [currentPage, setCurrentPage] = useState(0);
-
-    const handleNumberOfPages: StoreHandler<number> = (n: number) => {
-        setNumberOfPages(n);
-    };
-    const handleCurrentPageChanged: StoreHandler<number> = (currentPage: number) => {
-        setCurrentPage(currentPage);
-    };
-
-    useEffect(() => {
-        store.subscribe('currentPage', handleCurrentPageChanged);
-        store.subscribe('numberOfPages', handleNumberOfPages);
-
-        return () => {
-            store.unsubscribe('currentPage', handleCurrentPageChanged);
-            store.unsubscribe('numberOfPages', handleNumberOfPages);
-        };
-    }, []);
+    const { currentPage } = useCurrentPage(store);
+    const { numberOfPages } = useNumberOfPages(store);
 
     const defaultChildren = (props: RenderCurrentPageLabelProps) => <>{props.currentPage + 1}</>;
 

@@ -6,38 +6,24 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { useEffect, useState } from 'react';
-import { Store, StoreHandler } from '@phuocng/rpv';
+import React, { ChangeEvent, FC, KeyboardEvent, useState } from 'react';
+import { Store } from '@phuocng/rpv';
 
 import './currentPageInput.less';
 import StoreProps from './StoreProps';
+import useCurrentPage from './useCurrentPage';
+import useNumberOfPages from './useNumberOfPages';
 
-const CurrentPageInput: React.FC<{
+const CurrentPageInput: FC<{
     store: Store<StoreProps>
 }> = ({ store }) => {
     const [pageTextboxFocused, setPageTextboxFocused] = useState(false);
     const [editingPage, setEditingPage] = useState(0);
-    const [numberOfPages, setNumberOfPages] = useState(0);
-    const [currentPage, setCurrentPage] = useState(0);
 
-    const handleNumberOfPages: StoreHandler<number> = (n: number) => {
-        setNumberOfPages(n);
-    };
-    const handleCurrentPageChanged: StoreHandler<number> = (currentPage: number) => {
-        setCurrentPage(currentPage);
-    };
+    const { currentPage } = useCurrentPage(store);
+    const { numberOfPages } = useNumberOfPages(store);
 
-    useEffect(() => {
-        store.subscribe('currentPage', handleCurrentPageChanged);
-        store.subscribe('numberOfPages', handleNumberOfPages);
-
-        return () => {
-            store.unsubscribe('currentPage', handleCurrentPageChanged);
-            store.unsubscribe('numberOfPages', handleNumberOfPages);
-        };
-    }, []);
-
-    const changePage = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    const changePage = (e: ChangeEvent<HTMLInputElement>): void => {
         const newPage = parseInt(e.target.value, 10);
         if (newPage > 0 && newPage <= numberOfPages) {
             setEditingPage(newPage - 1);
@@ -69,14 +55,14 @@ const CurrentPageInput: React.FC<{
         }
     };
     
-    const jumpTo = (page: number) => {
+    const jumpTo = (page: number): void => {
         const jumpToPage = store.get('jumpToPage');
         if (jumpToPage) {
             jumpToPage(page);
         }
     };
 
-    const keydownPage = (e: React.KeyboardEvent): void => {
+    const keydownPage = (e: KeyboardEvent): void => {
         switch (e.keyCode) {
             // Up key is pressed
             case 38: gotoPreviousPage(); break;

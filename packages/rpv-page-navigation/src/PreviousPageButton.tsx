@@ -6,10 +6,11 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { useContext, useEffect, useState } from 'react';
-import { Button, LocalizationContext, Position, PreviousIcon, Store, StoreHandler, Tooltip } from '@phuocng/rpv';
+import React, { FC, ReactElement, useContext } from 'react';
+import { Button, LocalizationContext, Position, PreviousIcon, Store, Tooltip } from '@phuocng/rpv';
 
 import StoreProps from './StoreProps';
+import useCurrentPage from './useCurrentPage';
 
 interface RenderPreviousPageButtonProps {
     isDisabled: boolean;
@@ -20,28 +21,16 @@ export interface PreviousPageButtonProps {
     children?: RenderPreviousPageButton;
 }
 
-export type RenderPreviousPageButton = (props: RenderPreviousPageButtonProps) => React.ReactElement;
+export type RenderPreviousPageButton = (props: RenderPreviousPageButtonProps) => ReactElement;
 
 const TOOLTIP_OFFSET = { left: 0, top: 8 };
 
-const PreviousPageButton: React.FC<{
+const PreviousPageButton: FC<{
     children?: RenderPreviousPageButton,
     store: Store<StoreProps>,
 }> = ({ store, children }) => {
     const l10nContext = useContext(LocalizationContext);
-    const [currentPage, setCurrentPage] = useState(0);
-
-    const handleCurrentPageChanged: StoreHandler<number> = (currentPage: number) => {
-        setCurrentPage(currentPage);
-    };
-
-    useEffect(() => {
-        store.subscribe('currentPage', handleCurrentPageChanged);
-
-        return () => {
-            store.unsubscribe('currentPage', handleCurrentPageChanged);
-        };
-    }, []);
+    const { currentPage } = useCurrentPage(store);
 
     const goToPreviousPage = () => {
         const jumpToPage = store.get('jumpToPage');
