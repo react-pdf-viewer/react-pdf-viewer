@@ -12,7 +12,7 @@ import './defaultToolbar.less';
 import ToolbarSlot, { RenderToolbarSlot } from './ToolbarSlot';
 
 const defaultToolbar: RenderToolbarSlot = (toolbarSlot: ToolbarSlot): React.ReactElement => {
-    const { ZoomOut } = toolbarSlot;
+    const { ZoomIn, ZoomOut } = toolbarSlot;
 
     return (
         <div className='rpv-toolbar'>
@@ -41,7 +41,7 @@ const defaultToolbar: RenderToolbarSlot = (toolbarSlot: ToolbarSlot): React.Reac
                     {toolbarSlot.zoomPopover}
                 </div>
                 <div className='rpv-toolbar-item'>
-                    {toolbarSlot.zoomInButton}
+                    <ZoomIn />
                 </div>
             </div>
             <div className='rpv-toolbar-right'>
