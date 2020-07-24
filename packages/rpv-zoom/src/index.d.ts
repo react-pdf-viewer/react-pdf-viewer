@@ -6,35 +6,35 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import { Component, ReactElement } from 'react';
+import { Component, ReactElement, ReactNode } from 'react';
 import { Plugin } from '@phuocng/rpv';
 
 // ------------------------
 // Render zooming in button
 // ------------------------
 
-export interface RenderZoomInButtonProps {
+export interface RenderZoomInProps {
     onClick: () => void;
 }
 
-export type RenderZoomInButton = (props: RenderZoomInButtonProps) => ReactElement;
+export type RenderZoomIn = (props: RenderZoomInProps) => ReactElement;
 
-export interface ZoomInButtonProps {
-    children?: RenderZoomInButton;
+export interface ZoomInProps {
+    children?: RenderZoomIn;
 }
 
 // -------------------------
 // Render zooming out button
 // -------------------------
 
-export interface RenderZoomOutButtonProps {
+export interface RenderZoomOutProps {
     onClick: () => void;
 }
 
-export type RenderZoomOutButton = (props: RenderZoomOutButtonProps) => ReactElement;
+export type RenderZoomOut = (props: RenderZoomOutProps) => ReactNode;
 
-export interface ZoomOutButtonProps {
-    children?: RenderZoomOutButton;
+export interface ZoomOutProps {
+    children?: RenderZoomOut;
 }
 
 // -------------
@@ -45,11 +45,11 @@ export interface RenderCurrentScaleProps {
     scale: number;
 }
 
+export type RenderCurrentScale = (props: RenderCurrentScaleProps) => ReactElement;
+
 export interface CurrentScaleProps {
     children?: RenderCurrentScale;
 }
-
-export type RenderCurrentScale = (props: RenderCurrentScaleProps) => ReactElement;
 
 // ------
 // Plugin
@@ -57,9 +57,9 @@ export type RenderCurrentScale = (props: RenderCurrentScaleProps) => ReactElemen
 
 export interface ZoomPlugin extends Plugin {
     CurrentScale: (props: CurrentScaleProps) => ReactElement;
-    ZoomIn: (props: ZoomInButtonProps) => ReactElement;
+    ZoomIn: (props: ZoomInProps) => ReactElement;
     ZoomInButton: () => ReactElement;
-    ZoomOut: (props: ZoomOutButtonProps) => ReactElement;
+    ZoomOut: (props: ZoomOutProps) => ReactElement;
     ZoomOutButton: () => ReactElement;
     ZoomPopover: () => ReactElement;
 }

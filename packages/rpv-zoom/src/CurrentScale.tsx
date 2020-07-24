@@ -6,23 +6,23 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { FC, ReactElement } from 'react';
+import React from 'react';
 import { Store } from '@phuocng/rpv';
 
 import StoreProps from './StoreProps';
 import useZoom from './useZoom';
 
-export interface RenderCurrentScaleProps {
+interface RenderCurrentScaleProps {
     scale: number;
 }
+
+type RenderCurrentScale = (props: RenderCurrentScaleProps) => React.ReactElement;
 
 export interface CurrentScaleProps {
     children?: RenderCurrentScale;
 }
 
-type RenderCurrentScale = (props: RenderCurrentScaleProps) => ReactElement;
-
-const CurrentScale: FC<{
+const CurrentScale: React.FC<{
     children?: RenderCurrentScale,
     store: Store<StoreProps>,
 }> = ({ children, store }) => {

@@ -12,3 +12,7 @@ import ZoomOutIcon from './ZoomOutIcon';
 
 export default zoomPlugin;
 export { ZoomInIcon, ZoomOutIcon };
+
+// Types
+import { ZoomOutProps as ZoomOutPropsType } from './ZoomOut' ;
+export type ZoomOutProps = ZoomOutPropsType;
