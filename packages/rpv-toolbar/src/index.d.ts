@@ -8,6 +8,7 @@
 
 import { ReactElement } from 'react';
 import { Plugin } from '@phuocng/rpv';
+import { ZoomInProps, ZoomOutProps } from '@phuocng/rpv-zoom';
 
 export interface ToolbarSlot {
     currentPage: ReactElement;
@@ -22,8 +23,8 @@ export interface ToolbarSlot {
     openFileButton: ReactElement;
     previousPage: ReactElement;
     printButton: ReactElement;
-    zoomInButton: ReactElement;
-    zoomOutButton: ReactElement;
+    ZoomIn(props: ZoomInProps): ReactElement;
+    ZoomOut(props: ZoomOutProps): ReactElement;
     zoomPopover: ReactElement;
 }
 

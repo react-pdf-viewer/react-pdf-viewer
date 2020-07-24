@@ -6,25 +6,26 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import { FC, ReactElement } from 'react';
+import React from 'react';
 import { Store } from '@phuocng/rpv';
 
 import StoreProps from './StoreProps';
 import useZoom from './useZoom';
 import { decrease } from './zoomingLevel';
+import ZoomOutButton from './ZoomOutButton';
 
 export interface RenderZoomOutProps {
     onClick: () => void;
 }
 
 export interface ZoomOutProps {
-    children: RenderZoomOut;
+    children?: RenderZoomOut;
 }
 
-type RenderZoomOut = (props: RenderZoomOutProps) => ReactElement;
+export type RenderZoomOut = (props: RenderZoomOutProps) => React.ReactElement;
 
-const ZoomOut: FC<{
-    children: RenderZoomOut,
+const ZoomOut: React.FC<{
+    children?: RenderZoomOut,
     store: Store<StoreProps>,
 }> = ({ children, store }) => {
     const { scale } = useZoom(store);
@@ -37,7 +38,10 @@ const ZoomOut: FC<{
         }
     };
 
-    return children({
+    const defaultChildren = (props: RenderZoomOutProps) => <ZoomOutButton onClick={props.onClick} />
+    const render = children || defaultChildren;
+
+    return render({
         onClick: zoomIn,
     });
 };

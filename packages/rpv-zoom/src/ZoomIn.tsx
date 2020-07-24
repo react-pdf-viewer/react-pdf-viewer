@@ -6,25 +6,26 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import { FC, ReactElement } from 'react';
+import React, { ReactElement } from 'react';
 import { Store } from '@phuocng/rpv';
 
 import StoreProps from './StoreProps';
 import useZoom from './useZoom';
+import ZoomInButton from './ZoomInButton';
 import { increase } from './zoomingLevel';
 
 export interface RenderZoomInProps {
     onClick: () => void;
 }
 
-export interface ZoomInProps {
-    children: RenderZoomIn;
-}
-
 type RenderZoomIn = (props: RenderZoomInProps) => ReactElement;
 
-const ZoomIn: FC<{
-    children: RenderZoomIn,
+export interface ZoomInProps {
+    children?: RenderZoomIn;
+}
+
+const ZoomIn: React.FC<{
+    children?: RenderZoomIn,
     store: Store<StoreProps>,
 }> = ({ children, store }) => {
     const { scale } = useZoom(store);
@@ -37,7 +38,10 @@ const ZoomIn: FC<{
         }
     };
 
-    return children({
+    const defaultChildren = (props: RenderZoomInProps) => <ZoomInButton onClick={props.onClick} />
+    const render = children || defaultChildren;
+
+    return render({
         onClick: zoomIn,
     });
 };
