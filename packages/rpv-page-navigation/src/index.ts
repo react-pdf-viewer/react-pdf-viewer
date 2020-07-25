@@ -14,3 +14,7 @@ import UpArrowIcon from './UpArrowIcon';
 
 export default pageNavigationPlugin;
 export { DownArrowIcon, NextIcon, PreviousIcon, UpArrowIcon };
+
+// Types
+import { GoToFirstPageProps as GoToFirstPagePropsType } from './GoToFirstPage';
+export type GoToFirstPageProps = GoToFirstPagePropsType;

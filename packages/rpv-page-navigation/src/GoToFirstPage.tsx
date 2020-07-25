@@ -9,20 +9,21 @@
 import React, { FC, ReactElement } from 'react';
 import { Store } from '@phuocng/rpv';
 
+import GoToFirstPageButton from './GoToFirstPageButton';
 import StoreProps from './StoreProps';
 
 export interface RenderGoToFirstPageProps {
     onClick: () => void;
 }
 
-export interface GoToFirstPageProps {
-    children: RenderGoToFirstPage;
-}
-
 type RenderGoToFirstPage = (props: RenderGoToFirstPageProps) => ReactElement;
 
+export interface GoToFirstPageProps {
+    children?: RenderGoToFirstPage;
+}
+
 const GoToFirstPage: FC<{
-    children: RenderGoToFirstPage,
+    children?: RenderGoToFirstPage,
     store: Store<StoreProps>,
 }> = ({ children, store }) => {
     const goToFirstPage = () => {
@@ -32,7 +33,10 @@ const GoToFirstPage: FC<{
         }
     };
 
-    return children({
+    const defaultChildren = (props: RenderGoToFirstPageProps) => <GoToFirstPageButton onClick={props.onClick} />;
+    const render = children || defaultChildren;
+
+    return render({
         onClick: goToFirstPage,
     });
 };

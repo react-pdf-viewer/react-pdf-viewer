@@ -18,11 +18,11 @@ export interface RenderCurrentPageLabelProps {
     numberOfPages: number;
 }
 
+export type RenderCurrentPageLabel = (props: RenderCurrentPageLabelProps) => ReactElement;
+
 export interface CurrentPageLabelProps {
     children?: RenderCurrentPageLabel;
 }
-
-export type RenderCurrentPageLabel = (props: RenderCurrentPageLabelProps) => ReactElement;
 
 // -------------------------------------
 // Render button to go to the first page
@@ -32,11 +32,11 @@ export interface RenderGoToFirstPageProps {
     onClick: () => void;
 }
 
-export interface GoToFirstPageProps {
-    children: RenderGoToFirstPage;
-}
-
 export type RenderGoToFirstPage = (props: RenderGoToFirstPageProps) => ReactElement;
+
+export interface GoToFirstPageProps {
+    children?: RenderGoToFirstPage;
+}
 
 // -------------------------------------
 // Render button to go the the last page
@@ -46,11 +46,11 @@ export interface RenderGoToLastPageProps {
     onClick: () => void;
 }
 
+export type RenderGoToLastPage = (props: RenderGoToLastPageProps) => ReactElement;
+
 export interface GoToLastPageProps {
     children: RenderGoToLastPage;
 }
-
-export type RenderGoToLastPage = (props: RenderGoToLastPageProps) => ReactElement;
 
 // ------------------------------------
 // Render button to go to the next page
