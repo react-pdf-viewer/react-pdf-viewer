@@ -7,7 +7,7 @@
  */
 
 import { Component, ReactElement, ReactNode } from 'react';
-import { Plugin } from '@phuocng/rpv';
+import { Plugin, SpecialZoomLevel } from '@phuocng/rpv';
 
 // ------------------------
 // Render zooming in button
@@ -51,6 +51,21 @@ export interface CurrentScaleProps {
     children?: RenderCurrentScale;
 }
 
+// -------------------
+// Zoom to given scale
+// -------------------
+
+export interface RenderZoomProps {
+    scale: number;
+    onZoom(newScale: number | SpecialZoomLevel): void;
+}
+
+export type RenderZoom = (props: RenderZoomProps) => ReactElement;
+
+export interface ZoomProps {
+    children?: RenderZoom;
+}
+
 // ------
 // Plugin
 // ------
@@ -61,6 +76,7 @@ export interface ZoomPlugin extends Plugin {
     ZoomInButton: () => ReactElement;
     ZoomOut: (props: ZoomOutProps) => ReactElement;
     ZoomOutButton: () => ReactElement;
+    Zoom: (props: ZoomProps) => ReactElement;
     ZoomPopover: () => ReactElement;
 }
 

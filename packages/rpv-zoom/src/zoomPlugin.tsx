@@ -10,6 +10,7 @@ import React, { ReactElement } from 'react';
 import { createStore, Plugin, PluginFunctions, ViewerState } from '@phuocng/rpv';
 
 import CurrentScale, { CurrentScaleProps } from './CurrentScale';
+import Zoom, { ZoomProps } from './Zoom';
 import ZoomIn, { ZoomInProps } from './ZoomIn';
 import ZoomOut, { ZoomOutProps } from './ZoomOut';
 import ZoomInButton from './ZoomInButton';
@@ -24,6 +25,7 @@ interface ZoomPlugin extends Plugin {
     ZoomInButton: () => ReactElement;
     ZoomOut: (props: ZoomOutProps) => ReactElement;
     ZoomOutButton: () => ReactElement;
+    Zoom: (props: ZoomProps) => ReactElement;
     ZoomPopover: () => ReactElement;
 }
 
@@ -54,7 +56,13 @@ const zoomPlugin = (): ZoomPlugin => {
         </ZoomOutDecorator>
     );
 
-    const ZoomPopoverDecorator = () => <ZoomPopover store={store} />;
+    const ZoomDecorator = (props: ZoomProps) => <Zoom {...props} store={store} />;
+
+    const ZoomPopoverDecorator = () => (
+        <ZoomDecorator>
+            {props => <ZoomPopover {...props} />}
+        </ZoomDecorator>
+    );
 
     return {
         install: (pluginFunctions: PluginFunctions) => {
@@ -69,6 +77,7 @@ const zoomPlugin = (): ZoomPlugin => {
         ZoomInButton: ZoomInButtonDecorator,
         ZoomOut: ZoomOutDecorator,
         ZoomOutButton: ZoomOutButtonDecorator,
+        Zoom: ZoomDecorator,
         ZoomPopover: ZoomPopoverDecorator,
     };
 };
