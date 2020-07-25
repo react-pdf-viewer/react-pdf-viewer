@@ -9,6 +9,7 @@
 import React from 'react';
 import { Store } from '@phuocng/rpv';
 
+import PrintButton from './PrintButton';
 import PrintStatus from './PrintStatus';
 import StoreProps from './StoreProps';
 
@@ -16,21 +17,24 @@ export interface RenderPrintProps {
     onClick: () => void;
 }
 
-export interface PrintProps {
-    children: RenderPrint;
-}
-
 type RenderPrint = (props: RenderPrintProps) => React.ReactElement;
 
+export interface PrintProps {
+    children?: RenderPrint;
+}
+
 const Print: React.FC<{
-    children: RenderPrint,
+    children?: RenderPrint,
     store: Store<StoreProps>,
 }> = ({ children, store }) => {
     const print = () => {
         store.update('printStatus', PrintStatus.Preparing);
     };
 
-    return children({
+    const defaultChildern = (props: RenderPrintProps) => <PrintButton onClick={props.onClick} />;
+    const render = children || defaultChildern;
+
+    return render({
         onClick: print,
     });
 };

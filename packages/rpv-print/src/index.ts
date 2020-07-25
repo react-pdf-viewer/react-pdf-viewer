@@ -11,3 +11,7 @@ import printPlugin from './printPlugin';
 
 export default printPlugin;
 export { PrintIcon };
+
+// Types
+import { PrintProps as PrintPropsType } from './Print';
+export type PrintProps = PrintPropsType;
