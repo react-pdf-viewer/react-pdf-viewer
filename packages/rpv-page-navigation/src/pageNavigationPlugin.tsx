@@ -17,7 +17,8 @@ import GoToLastPage, { GoToLastPageProps } from './GoToLastPage';
 import GoToLastPageButton from './GoToLastPageButton';
 import GoToNextPage, { GoToNextPageProps } from './GoToNextPage';
 import GoToNextPageButton from './GoToNextPageButton';
-import PreviousPageButton, { PreviousPageButtonProps } from './PreviousPageButton';
+import GoToPreviousPage, { GoToPreviousPageProps } from './GoToPreviousPage';
+import GoToPreviousPageButton from './GoToPreviousPageButton';
 import StoreProps from './StoreProps';
 
 export interface PageNavigationPlugin extends Plugin {
@@ -29,7 +30,8 @@ export interface PageNavigationPlugin extends Plugin {
     GoToLastPageButton: () => ReactElement;
     GoToNextPage: (props: GoToNextPageProps) => ReactElement;
     GoToNextPageButton: () => ReactElement;
-    PreviousPageButton: (props: PreviousPageButtonProps) => ReactElement;
+    GoToPreviousPage: (props: GoToPreviousPageProps) => ReactElement;
+    GoToPreviousPageButton: () => ReactElement;
 }
 
 const pageNavigationPlugin = (): PageNavigationPlugin => {
@@ -75,8 +77,16 @@ const pageNavigationPlugin = (): PageNavigationPlugin => {
         </GoToNextPageDecorator>
     );
 
-    const PreviousPageButtonDecorator = (props: PreviousPageButtonProps) => (
-        <PreviousPageButton {...props} store={store} />
+    const GoToPreviousPageDecorator = (props: GoToPreviousPageProps) => (
+        <GoToPreviousPage {...props} store={store} />
+    );
+
+    const GoToPreviousPageButtonDecorator = () => (
+        <GoToPreviousPageDecorator>
+            {
+                (props) => <GoToPreviousPageButton {...props} />
+            }
+        </GoToPreviousPageDecorator>
     );
 
     return {
@@ -98,7 +108,8 @@ const pageNavigationPlugin = (): PageNavigationPlugin => {
         GoToLastPageButton: GoToLastPageButtonDecorator,
         GoToNextPage: GoToNextPageDecorator,
         GoToNextPageButton: GoToNextPageButtonDecorator,
-        PreviousPageButton: PreviousPageButtonDecorator,
+        GoToPreviousPage: GoToPreviousPageDecorator,
+        GoToPreviousPageButton: GoToPreviousPageButtonDecorator,
     };
 };
 
