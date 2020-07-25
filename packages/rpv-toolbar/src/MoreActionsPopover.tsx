@@ -20,7 +20,7 @@ const PORTAL_OFFSET = { left: 0, top: 8 };
 
 const MoreActionsPopover: React.FC<MoreActionsPopoverProps> = ({ toolbarSlot }) => {
     const l10n = useContext(LocalizationContext);
-    const { GoToFirstPageMenuItem } = toolbarSlot;
+    const { GoToFirstPageMenuItem, GoToLastPageMenuItem } = toolbarSlot;
 
     const renderTarget = (toggle: Toggle, opened: boolean): React.ReactElement => {
         const label = (l10n && l10n.plugins && l10n.plugins.toolbar)
@@ -41,6 +41,7 @@ const MoreActionsPopover: React.FC<MoreActionsPopoverProps> = ({ toolbarSlot }) 
         return (
             <Menu>
                 <GoToFirstPageMenuItem />
+                <GoToLastPageMenuItem />
             </Menu>
         );
     };
