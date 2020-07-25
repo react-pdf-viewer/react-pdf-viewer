@@ -51,7 +51,7 @@ const toolbarPlugin = (): ToolbarPlugin => {
 
     const ToolbarDecorator = (props: ToolbarProps) => {
         const { Download } = downloadPluginInstance;
-        const { EnterFullScreenButton } = fullScreenPluginInstance;
+        const { EnterFullScreen } = fullScreenPluginInstance;
         const { OpenButton } = openPluginInstance;
         const { CurrentPageInput, CurrentPageLabel, GoToFirstPageButton, GoToLastPageButton, NextPageButton, PreviousPageButton } = pageNavigationPluginInstance;
         const { Print } = printPluginInstance;
@@ -73,7 +73,7 @@ const toolbarPlugin = (): ToolbarPlugin => {
                     currentScale: <CurrentScale />,
                     currentPageInput: <CurrentPageInput />,
                     Download,
-                    fullScreenButton: <EnterFullScreenButton />,
+                    EnterFullScreen,
                     goToFirstPage: <GoToFirstPageButton />,
                     goToLastPage: <GoToLastPageButton />,
                     nextPage: <NextPageButton />,

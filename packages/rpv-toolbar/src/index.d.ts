@@ -8,21 +8,24 @@
 
 import { ReactElement } from 'react';
 import { Plugin } from '@phuocng/rpv';
+import { DownloadProps } from '@phuocng/rpv-download';
+import { EnterFullScreenProps } from '@phuocng/rpv-full-screen';
 import { ZoomInProps, ZoomOutProps } from '@phuocng/rpv-zoom';
+import { PrintProps } from '@phuocng/rpv-print';
 
 export interface ToolbarSlot {
     currentPage: ReactElement;
     currentScale: ReactElement;
     currentPageInput: ReactElement;
-    downloadButton: ReactElement;
-    fullScreenButton: ReactElement;
+    Download(props: DownloadProps): ReactElement;
+    EnterFullScreen(props: EnterFullScreenProps): ReactElement;
     goToFirstPage: ReactElement;
     goToLastPage: ReactElement;
     nextPage: ReactElement;
     numberOfPages: ReactElement;
     openFileButton: ReactElement;
     previousPage: ReactElement;
-    printButton: ReactElement;
+    Print(props: PrintProps): ReactElement;
     ZoomIn(props: ZoomInProps): ReactElement;
     ZoomOut(props: ZoomOutProps): ReactElement;
     zoomPopover: ReactElement;

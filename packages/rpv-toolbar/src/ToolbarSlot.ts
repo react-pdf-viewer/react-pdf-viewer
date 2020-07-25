@@ -9,6 +9,7 @@
 import { ReactElement } from 'react';
 
 import { DownloadProps } from '@phuocng/rpv-download';
+import { EnterFullScreenProps } from '@phuocng/rpv-full-screen';
 import { ZoomInProps, ZoomOutProps } from '@phuocng/rpv-zoom';
 import { PrintProps } from '@phuocng/rpv-print';
 
@@ -17,7 +18,7 @@ interface ToolbarSlot {
     currentScale: ReactElement;
     currentPageInput: ReactElement;
     Download(props: DownloadProps): ReactElement;
-    fullScreenButton: ReactElement;
+    EnterFullScreen(props: EnterFullScreenProps): ReactElement;
     goToFirstPage: ReactElement;
     goToLastPage: ReactElement;
     nextPage: ReactElement;
