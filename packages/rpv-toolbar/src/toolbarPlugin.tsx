@@ -78,7 +78,7 @@ const toolbarPlugin = (): ToolbarPlugin => {
                     GoToLastPage,
                     GoToNextPage,
                     GoToPreviousPage,
-                    numberOfPages: <NumberOfPages />,
+                    NumberOfPages,
                     Open,
                     Print,
                     ZoomIn,

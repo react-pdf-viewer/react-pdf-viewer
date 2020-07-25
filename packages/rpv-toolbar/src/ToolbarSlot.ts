@@ -25,7 +25,7 @@ interface ToolbarSlot {
     GoToLastPage(props: GoToLastPageProps): ReactElement;
     GoToNextPage(props: GoToNextPageProps): ReactElement;
     GoToPreviousPage(props: GoToPreviousPageProps): ReactElement;
-    numberOfPages: ReactElement;
+    NumberOfPages(): ReactElement;
     Open(props: OpenProps): ReactElement;
     Print(props: PrintProps): ReactElement;
     ZoomIn(props: ZoomInProps): ReactElement;
