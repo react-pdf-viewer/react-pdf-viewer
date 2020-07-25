@@ -13,7 +13,7 @@ import ToolbarSlot, { RenderToolbarSlot } from './ToolbarSlot';
 
 const defaultToolbar: RenderToolbarSlot = (toolbarSlot: ToolbarSlot): React.ReactElement => {
     const {
-        Download, EnterFullScreen,
+        CurrentPageInput, Download, EnterFullScreen,
         GoToFirstPage, GoToLastPage, GoToNextPage, GoToPreviousPage,
         Open, Print, ZoomIn, ZoomOut,
     } = toolbarSlot;
@@ -28,7 +28,7 @@ const defaultToolbar: RenderToolbarSlot = (toolbarSlot: ToolbarSlot): React.Reac
                     <GoToPreviousPage />
                 </div>
                 <div className='rpv-toolbar-item'>
-                    {toolbarSlot.currentPageInput} / {toolbarSlot.numberOfPages}
+                    <CurrentPageInput /> / {toolbarSlot.numberOfPages}
                 </div>
                 <div className='rpv-toolbar-item'>
                     <GoToNextPage />

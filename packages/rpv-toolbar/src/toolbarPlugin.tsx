@@ -71,7 +71,7 @@ const toolbarPlugin = (): ToolbarPlugin => {
                 slot={{
                     currentPage: <CurrentPageLabel />,
                     currentScale: <CurrentScale />,
-                    currentPageInput: <CurrentPageInput />,
+                    CurrentPageInput,
                     Download,
                     EnterFullScreen,
                     GoToFirstPage,

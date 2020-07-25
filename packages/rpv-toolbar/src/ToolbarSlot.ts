@@ -18,7 +18,7 @@ import { ZoomInProps, ZoomOutProps } from '@phuocng/rpv-zoom';
 interface ToolbarSlot {
     currentPage: ReactElement;
     currentScale: ReactElement;
-    currentPageInput: ReactElement;
+    CurrentPageInput(): ReactElement;
     Download(props: DownloadProps): ReactElement;
     EnterFullScreen(props: EnterFullScreenProps): ReactElement;
     GoToFirstPage(props: GoToFirstPageProps): ReactElement;

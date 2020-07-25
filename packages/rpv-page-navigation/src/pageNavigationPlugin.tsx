@@ -37,7 +37,7 @@ export interface PageNavigationPlugin extends Plugin {
 const pageNavigationPlugin = (): PageNavigationPlugin => {
     const store = createStore<StoreProps>();
 
-    const CurrentPageInputDecorator = () => <CurrentPageInput store={store} />
+    const CurrentPageInputDecorator = () => <CurrentPageInput store={store} />;
 
     const CurrentPageLabelDecorator = (props: CurrentPageLabelProps) => <CurrentPageLabel {...props} store={store} />;
 
