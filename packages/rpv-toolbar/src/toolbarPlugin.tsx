@@ -53,7 +53,7 @@ const toolbarPlugin = (): ToolbarPlugin => {
         const { Download } = downloadPluginInstance;
         const { EnterFullScreen } = fullScreenPluginInstance;
         const { Open } = openPluginInstance;
-        const { CurrentPageInput, CurrentPageLabel, GoToFirstPage, GoToLastPage, GoToNextPage, PreviousPageButton } = pageNavigationPluginInstance;
+        const { CurrentPageInput, CurrentPageLabel, GoToFirstPage, GoToLastPage, GoToNextPage, GoToPreviousPage } = pageNavigationPluginInstance;
         const { Print } = printPluginInstance;
         const { CurrentScale, ZoomIn, ZoomOut, ZoomPopover } = zoomPluginInstance;
 
@@ -77,9 +77,9 @@ const toolbarPlugin = (): ToolbarPlugin => {
                     GoToFirstPage,
                     GoToLastPage,
                     GoToNextPage,
+                    GoToPreviousPage,
                     numberOfPages: <NumberOfPages />,
                     Open,
-                    previousPage: <PreviousPageButton />,
                     Print,
                     ZoomIn,
                     ZoomOut,
