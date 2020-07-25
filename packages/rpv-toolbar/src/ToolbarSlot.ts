@@ -8,8 +8,9 @@
 
 import { ReactElement } from 'react';
 
-import { ZoomInProps, ZoomOutProps } from '@phuocng/rpv-zoom';
 import { DownloadProps } from '@phuocng/rpv-download';
+import { ZoomInProps, ZoomOutProps } from '@phuocng/rpv-zoom';
+import { PrintProps } from '@phuocng/rpv-print';
 
 interface ToolbarSlot {
     currentPage: ReactElement;
@@ -23,7 +24,7 @@ interface ToolbarSlot {
     numberOfPages: ReactElement;
     openFileButton: ReactElement;
     previousPage: ReactElement;
-    printButton: ReactElement;
+    Print(props: PrintProps): ReactElement;
     ZoomIn(props: ZoomInProps): ReactElement;
     ZoomOut(props: ZoomOutProps): ReactElement;
     zoomPopover: ReactElement;
