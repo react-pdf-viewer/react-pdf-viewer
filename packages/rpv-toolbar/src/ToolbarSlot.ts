@@ -9,12 +9,13 @@
 import { ReactElement } from 'react';
 
 import { ZoomInProps, ZoomOutProps } from '@phuocng/rpv-zoom';
+import { DownloadProps } from '@phuocng/rpv-download';
 
 interface ToolbarSlot {
     currentPage: ReactElement;
     currentScale: ReactElement;
     currentPageInput: ReactElement;
-    downloadButton: ReactElement;
+    Download(props: DownloadProps): ReactElement;
     fullScreenButton: ReactElement;
     goToFirstPage: ReactElement;
     goToLastPage: ReactElement;
