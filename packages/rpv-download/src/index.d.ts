@@ -6,18 +6,18 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import * as React from 'react';
+import React from 'react';
 import { Plugin } from '@phuocng/rpv';
 
 export interface RenderDownloadProps {
     onClick: () => void;
 }
 
-export interface DownloadProps {
-    children: RenderDownload;
-}
-
 export type RenderDownload = (props: RenderDownloadProps) => React.ReactElement;
+
+export interface DownloadProps {
+    children?: RenderDownload;
+}
 
 export interface FirstPagePlugin extends Plugin {
     Download: (props: DownloadProps) => React.ReactElement;

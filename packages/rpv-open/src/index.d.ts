@@ -6,21 +6,22 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React from 'react';
+import React, { ChangeEvent, ReactElement } from 'react';
 import { Plugin } from '@phuocng/rpv';
 
-export interface RenderOpenButtonProps {
-    onClick: (e: React.ChangeEvent<HTMLInputElement>) => void;
+export interface RenderOpenProps {
+    onClick: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 
-export type RenderOpenButton = (props: RenderOpenButtonProps) => React.ReactElement;
+export type RenderOpen = (props: RenderOpenProps) => ReactElement;
 
-export interface OpenButtonProps {
-    children?: RenderOpenButton;
+export interface OpenProps {
+    children?: RenderOpen;
 }
 
 export interface OpenPlugin extends Plugin {
-    OpenButton: (props: OpenButtonProps) => React.ReactElement;
+    Open: (props: OpenProps) => ReactElement;
+    OpenButton: () => ReactElement;
 }
 
 export default function openPlugin(): OpenPlugin;

@@ -6,18 +6,18 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import * as React from 'react';
+import React from 'react';
 import { Plugin } from '@phuocng/rpv';
 
 export interface RenderEnterFullScreenProps {
     onClick: () => void;
 }
 
-export interface EnterFullScreenProps {
-    children: RenderEnterFullScreen;
-}
-
 type RenderEnterFullScreen = (props: RenderEnterFullScreenProps) => React.ReactElement;
+
+export interface EnterFullScreenProps {
+    children?: RenderEnterFullScreen;
+}
 
 export interface FullScreenPlugin extends Plugin {
     EnterFullScreen: (props: EnterFullScreenProps) => React.ReactElement;

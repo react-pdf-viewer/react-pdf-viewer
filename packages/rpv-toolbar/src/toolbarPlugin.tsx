@@ -50,11 +50,11 @@ const toolbarPlugin = (): ToolbarPlugin => {
     ];
 
     const ToolbarDecorator = (props: ToolbarProps) => {
-        const { DownloadButton } = downloadPluginInstance;
-        const { EnterFullScreenButton } = fullScreenPluginInstance;
-        const { OpenButton } = openPluginInstance;
+        const { Download } = downloadPluginInstance;
+        const { EnterFullScreen } = fullScreenPluginInstance;
+        const { Open } = openPluginInstance;
         const { CurrentPageInput, CurrentPageLabel, GoToFirstPageButton, GoToLastPageButton, NextPageButton, PreviousPageButton } = pageNavigationPluginInstance;
-        const { PrintButton } = printPluginInstance;
+        const { Print } = printPluginInstance;
         const { CurrentScale, ZoomIn, ZoomOut, ZoomPopover } = zoomPluginInstance;
 
         const NumberOfPages = () => (
@@ -72,15 +72,15 @@ const toolbarPlugin = (): ToolbarPlugin => {
                     currentPage: <CurrentPageLabel />,
                     currentScale: <CurrentScale />,
                     currentPageInput: <CurrentPageInput />,
-                    downloadButton: <DownloadButton />,
-                    fullScreenButton: <EnterFullScreenButton />,
+                    Download,
+                    EnterFullScreen,
                     goToFirstPage: <GoToFirstPageButton />,
                     goToLastPage: <GoToLastPageButton />,
                     nextPage: <NextPageButton />,
                     numberOfPages: <NumberOfPages />,
-                    openFileButton: <OpenButton />,
+                    Open,
                     previousPage: <PreviousPageButton />,
-                    printButton: <PrintButton />,
+                    Print,
                     ZoomIn,
                     ZoomOut,
                     zoomPopover: <ZoomPopover />,
