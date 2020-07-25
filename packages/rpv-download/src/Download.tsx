@@ -9,6 +9,7 @@
 import React, { useEffect, useState } from 'react';
 import { OpenFile, Store, StoreHandler } from '@phuocng/rpv';
 
+import DownloadButton from './DownloadButton';
 import downloadFile from './downloadFile';
 import StoreProps from './StoreProps';
 
@@ -16,14 +17,14 @@ export interface RenderDownloadProps {
     onClick: () => void;
 }
 
+export type RenderDownload = (props: RenderDownloadProps) => React.ReactElement;
+
 export interface DownloadProps {
-    children: RenderDownload;
+    children?: RenderDownload;
 }
 
-type RenderDownload = (props: RenderDownloadProps) => React.ReactElement;
-
 const Download: React.FC<{
-    children: RenderDownload,
+    children?: RenderDownload,
     store: Store<StoreProps>,
 }> = ({ children, store }) => {
     const [currentFile, setCurrentFile] = useState<OpenFile>();
@@ -46,7 +47,10 @@ const Download: React.FC<{
         }
     };
 
-    return children({
+    const defaultChildren = (props: RenderDownloadProps) => <DownloadButton onClick={props.onClick} />;
+    const render = children || defaultChildren;
+
+    return render({
         onClick: download,
     });
 };
