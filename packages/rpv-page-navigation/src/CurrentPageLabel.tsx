@@ -18,11 +18,11 @@ interface RenderCurrentPageLabelProps {
     numberOfPages: number;
 }
 
+type RenderCurrentPageLabel = (props: RenderCurrentPageLabelProps) => ReactElement;
+
 export interface CurrentPageLabelProps {
     children?: RenderCurrentPageLabel;
 }
-
-type RenderCurrentPageLabel = (props: RenderCurrentPageLabelProps) => ReactElement;
 
 const CurrentPageLabel: FC<{
     children?: RenderCurrentPageLabel,
