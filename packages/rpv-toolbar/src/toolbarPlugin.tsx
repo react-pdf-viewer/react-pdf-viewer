@@ -55,7 +55,7 @@ const toolbarPlugin = (): ToolbarPlugin => {
         const { Open } = openPluginInstance;
         const { CurrentPageInput, CurrentPageLabel, GoToFirstPage, GoToLastPage, GoToNextPage, GoToPreviousPage } = pageNavigationPluginInstance;
         const { Print } = printPluginInstance;
-        const { CurrentScale, ZoomIn, ZoomOut, ZoomPopover } = zoomPluginInstance;
+        const { CurrentScale, Zoom, ZoomIn, ZoomOut } = zoomPluginInstance;
 
         const NumberOfPages = () => (
             <CurrentPageLabel>
@@ -81,9 +81,9 @@ const toolbarPlugin = (): ToolbarPlugin => {
                     NumberOfPages,
                     Open,
                     Print,
+                    Zoom,
                     ZoomIn,
                     ZoomOut,
-                    zoomPopover: <ZoomPopover />,
                 }}
             />
         );
