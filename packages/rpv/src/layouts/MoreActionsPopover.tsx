@@ -13,7 +13,6 @@ import Menu from '../components/Menu';
 import MenuDivider from '../components/MenuDivider';
 import MenuItem from '../components/MenuItem';
 import { Toggle } from '../hooks/useToggle';
-import DownArrowIcon from '../icons/DownArrowIcon';
 import HandToolIcon from '../icons/HandToolIcon';
 import HorizontalScrollingIcon from '../icons/HorizontalScrollingIcon';
 import InfoIcon from '../icons/InfoIcon';
@@ -41,8 +40,6 @@ interface MoreActionsPopoverProps {
     selectionMode: SelectionMode;
     onChangeScrollMode(mode: ScrollMode): void;
     onChangeSelectionMode(mode: SelectionMode): void;
-    onJumpToFirstPage(): void;
-    onJumpToLastPage(): void;
     onRotate(degree: number): void;
 }
 
@@ -50,7 +47,7 @@ const PORTAL_OFFSET = { left: 0, top: 8 };
 
 const MoreActionsPopover: React.FC<MoreActionsPopoverProps> = ({
     doc, fileName, scrollMode, selectionMode,
-    onChangeScrollMode, onChangeSelectionMode, onJumpToFirstPage, onJumpToLastPage, onRotate,
+    onChangeScrollMode, onChangeSelectionMode, onRotate,
 }) => {
     const l10n = useContext(LocalizationContext);
 
@@ -71,10 +68,6 @@ const MoreActionsPopover: React.FC<MoreActionsPopoverProps> = ({
         <PropertiesModal doc={doc} fileName={fileName} onToggle={toggle} />
     );
     const renderContent = (toggle: Toggle): React.ReactElement => {
-        const jumpToLastPage = (): void => {
-            toggle();
-            onJumpToLastPage();
-        };
         const rotateForward = (): void => {
             toggle();
             onRotate(90);
@@ -101,10 +94,6 @@ const MoreActionsPopover: React.FC<MoreActionsPopoverProps> = ({
 
         return (
             <Menu>
-                <MenuItem icon={<DownArrowIcon />} onClick={jumpToLastPage}>
-                    {l10n.toolbar.goToLastPage}
-                </MenuItem>
-                <MenuDivider />
                 <MenuItem icon={<RotateForwardIcon />} onClick={rotateForward}>
                     {l10n.toolbar.rotateForward}
                 </MenuItem>
