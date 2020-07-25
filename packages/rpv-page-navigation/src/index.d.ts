@@ -49,7 +49,7 @@ export interface RenderGoToLastPageProps {
 export type RenderGoToLastPage = (props: RenderGoToLastPageProps) => ReactElement;
 
 export interface GoToLastPageProps {
-    children: RenderGoToLastPage;
+    children?: RenderGoToLastPage;
 }
 
 // ------------------------------------

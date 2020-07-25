@@ -17,4 +17,6 @@ export { DownArrowIcon, NextIcon, PreviousIcon, UpArrowIcon };
 
 // Types
 import { GoToFirstPageProps as GoToFirstPagePropsType } from './GoToFirstPage';
+import { GoToLastPageProps as GoToLastPagePropsType } from './GoToLastPage';
 export type GoToFirstPageProps = GoToFirstPagePropsType;
+export type GoToLastPageProps = GoToLastPagePropsType;
