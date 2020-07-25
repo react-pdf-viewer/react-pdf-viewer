@@ -13,6 +13,7 @@ import CurrentPageInput from './CurrentPageInput';
 import CurrentPageLabel, { CurrentPageLabelProps } from './CurrentPageLabel';
 import GoToFirstPage, { GoToFirstPageProps } from './GoToFirstPage';
 import GoToFirstPageButton from './GoToFirstPageButton';
+import GoToFirstPageMenuItem from './GoToFirstPageMenuItem';
 import GoToLastPage, { GoToLastPageProps } from './GoToLastPage';
 import GoToLastPageButton from './GoToLastPageButton';
 import GoToNextPage, { GoToNextPageProps } from './GoToNextPage';
@@ -26,6 +27,7 @@ export interface PageNavigationPlugin extends Plugin {
     CurrentPageLabel: (props: CurrentPageLabelProps) => ReactElement;
     GoToFirstPage: (props: GoToFirstPageProps) => ReactElement;
     GoToFirstPageButton: () => ReactElement;
+    GoToFirstPageMenuItem: () => ReactElement;
     GoToLastPage: (props: GoToLastPageProps) => ReactElement;
     GoToLastPageButton: () => ReactElement;
     GoToNextPage: (props: GoToNextPageProps) => ReactElement;
@@ -47,9 +49,13 @@ const pageNavigationPlugin = (): PageNavigationPlugin => {
 
     const GoToFirstPageButtonDecorator = () => (
         <GoToFirstPageDecorator>
-            {
-                (props) => <GoToFirstPageButton {...props} />
-            }
+            {(props) => <GoToFirstPageButton {...props} />}
+        </GoToFirstPageDecorator>
+    );
+
+    const GoToFirstPageMenuItemDecorator = () => (
+        <GoToFirstPageDecorator>
+            {(props) => <GoToFirstPageMenuItem {...props} />}
         </GoToFirstPageDecorator>
     );
 
@@ -59,9 +65,7 @@ const pageNavigationPlugin = (): PageNavigationPlugin => {
 
     const GoToLastPageButtonDecorator = () => (
         <GoToLastPageDecorator>
-            {
-                (props) => <GoToLastPageButton {...props} />
-            }
+            {(props) => <GoToLastPageButton {...props} />}
         </GoToLastPageDecorator>
     );
 
@@ -71,9 +75,7 @@ const pageNavigationPlugin = (): PageNavigationPlugin => {
 
     const GoToNextPageButtonDecorator = () => (
         <GoToNextPageDecorator>
-            {
-                (props) => <GoToNextPageButton {...props} />
-            }
+            {(props) => <GoToNextPageButton {...props} />}
         </GoToNextPageDecorator>
     );
 
@@ -83,9 +85,7 @@ const pageNavigationPlugin = (): PageNavigationPlugin => {
 
     const GoToPreviousPageButtonDecorator = () => (
         <GoToPreviousPageDecorator>
-            {
-                (props) => <GoToPreviousPageButton {...props} />
-            }
+            {(props) => <GoToPreviousPageButton {...props} />}
         </GoToPreviousPageDecorator>
     );
 
@@ -104,6 +104,7 @@ const pageNavigationPlugin = (): PageNavigationPlugin => {
         CurrentPageLabel: CurrentPageLabelDecorator,
         GoToFirstPage: GoToFirstPageDecorator,
         GoToFirstPageButton: GoToFirstPageButtonDecorator,
+        GoToFirstPageMenuItem: GoToFirstPageMenuItemDecorator,
         GoToLastPage: GoToLastPageDecorator,
         GoToLastPageButton: GoToLastPageButtonDecorator,
         GoToNextPage: GoToNextPageDecorator,
