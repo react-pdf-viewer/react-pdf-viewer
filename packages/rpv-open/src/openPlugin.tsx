@@ -6,30 +6,34 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React from 'react';
+import React, { ReactElement } from 'react';
 import { createStore, Plugin, PluginFunctions } from '@phuocng/rpv';
 
-import OpenButton, { OpenButtonProps } from './OpenButton';
+import Open, { OpenProps } from './Open';
 
 import StoreProps from './StoreProps';
 
 interface OpenPlugin extends Plugin {
-    OpenButton: (props: OpenButtonProps) => React.ReactElement;
+    Open: (props: OpenProps) => ReactElement;
+    OpenButton: () => ReactElement;
 }
 
-const previousPagePlugin = (): OpenPlugin => {
+const openPlugin = (): OpenPlugin => {
     const store = createStore<StoreProps>({});
 
-    const OpenButtonDecorator = (props: OpenButtonProps) => (
-        <OpenButton {...props} store={store} />
+    const OpenDecorator = (props: OpenProps) => (
+        <Open {...props} store={store} />
     );
+
+    const OpenButtonDecorator = () => <OpenDecorator />;
 
     return {
         install: (pluginFunctions: PluginFunctions) => {
             store.update('openFile', pluginFunctions.openFile);
         },
+        Open: OpenDecorator,
         OpenButton: OpenButtonDecorator,
     };
 };
 
-export default previousPagePlugin;
+export default openPlugin;

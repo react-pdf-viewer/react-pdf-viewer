@@ -7,71 +7,40 @@
  */
 
 import React, { useContext } from 'react';
-import { LocalizationContext, Position, Store, Tooltip } from '@phuocng/rpv';
+import { LocalizationContext, Position, Tooltip } from '@phuocng/rpv';
 
-import './openFileButton.less';
+import { RenderOpenProps } from './Open';
+import './openButton.less';
 import OpenFileIcon from './OpenFileIcon';
-import StoreProps from './StoreProps';
-
-interface RenderOpenButtonProps {
-    onClick: (e: React.ChangeEvent<HTMLInputElement>) => void;
-}
-
-export interface OpenButtonProps {
-    children?: RenderOpenButton;
-}
-
-export type RenderOpenButton = (props: RenderOpenButtonProps) => React.ReactElement;
 
 const TOOLTIP_OFFSET = { left: 0, top: 8 };
 
-const OpenButton: React.FC<{
-    children?: RenderOpenButton,
-    store: Store<StoreProps>,
-}> = ({ store, children }) => {
+const OpenButton: React.FC<RenderOpenProps> = ({ onClick }) => {
     const l10nContext = useContext(LocalizationContext);
 
-    const handleOpenFiles = (e: React.ChangeEvent<HTMLInputElement>): void => {
-        const files = e.target.files;
-        if (!files || !files.length) {
-            return;
-        }
-        const openFile = store.get('openFile');
-        if (openFile) {
-            openFile(files[0]);
-        }
-    };
-
-    const defaultChildren = (props: RenderOpenButtonProps) => {
-        const label = (l10nContext && l10nContext.plugins && l10nContext.plugins.open)
+    const label = (l10nContext && l10nContext.plugins && l10nContext.plugins.open)
             ? l10nContext.plugins.open.openFile
             : 'Open file';
 
-        return (
-            <Tooltip
-                position={Position.BottomCenter}
-                target={(
-                    <div className='rpv-open-file'>
-                        <input
-                            className='rpv-open-file-input'
-                            multiple={false}
-                            type='file'
-                            title=''
-                            onChange={handleOpenFiles}
-                        />
-                        <OpenFileIcon />
-                    </div>
-                )}
-                content={() => label}
-                offset={TOOLTIP_OFFSET}
-            />
-        );
-    };
-    const render = children || defaultChildren;
-
-    return render({
-        onClick: handleOpenFiles,
-    });
+    return (
+        <Tooltip
+            position={Position.BottomCenter}
+            target={(
+                <div className='rpv-open-button'>
+                    <input
+                        className='rpv-open-button-input'
+                        multiple={false}
+                        type='file'
+                        title=''
+                        onChange={onClick}
+                    />
+                    <OpenFileIcon />
+                </div>
+            )}
+            content={() => label}
+            offset={TOOLTIP_OFFSET}
+        />
+    );
 };
 
 export default OpenButton;
