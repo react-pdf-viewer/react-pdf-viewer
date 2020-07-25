@@ -13,12 +13,12 @@ import { EnterFullScreenProps } from '@phuocng/rpv-full-screen';
 import { OpenProps } from '@phuocng/rpv-open';
 import { CurrentPageLabelProps, GoToFirstPageProps, GoToLastPageProps, GoToNextPageProps, GoToPreviousPageProps } from '@phuocng/rpv-page-navigation';
 import { PrintProps } from '@phuocng/rpv-print';
-import { ZoomInProps, ZoomOutProps } from '@phuocng/rpv-zoom';
+import { CurrentScaleProps, ZoomInProps, ZoomOutProps } from '@phuocng/rpv-zoom';
 
 export interface ToolbarSlot {
-    currentScale: ReactElement;
     CurrentPageInput(): ReactElement;
     CurrentPageLabel(props: CurrentPageLabelProps): ReactElement;
+    CurrentScale(props: CurrentScaleProps): ReactElement;
     Download(props: DownloadProps): ReactElement;
     EnterFullScreen(props: EnterFullScreenProps): ReactElement;
     GoToFirstPage(props: GoToFirstPageProps): ReactElement;
