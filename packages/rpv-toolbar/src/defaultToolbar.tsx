@@ -12,25 +12,29 @@ import './defaultToolbar.less';
 import ToolbarSlot, { RenderToolbarSlot } from './ToolbarSlot';
 
 const defaultToolbar: RenderToolbarSlot = (toolbarSlot: ToolbarSlot): React.ReactElement => {
-    const { Download, EnterFullScreen, Open, Print, ZoomIn, ZoomOut } = toolbarSlot;
+    const {
+        CurrentPageInput, Download, EnterFullScreen,
+        GoToFirstPage, GoToLastPage, GoToNextPage, GoToPreviousPage,
+        NumberOfPages, Open, Print, ZoomIn, ZoomOut,
+    } = toolbarSlot;
 
     return (
         <div className='rpv-toolbar'>
             <div className='rpv-toolbar-left'>
                 <div className='rpv-toolbar-item'>
-                    {toolbarSlot.goToFirstPage}
+                    <GoToFirstPage />
                 </div>
                 <div className='rpv-toolbar-item'>
-                    {toolbarSlot.previousPage}
+                    <GoToPreviousPage />
                 </div>
                 <div className='rpv-toolbar-item'>
-                    {toolbarSlot.currentPageInput} / {toolbarSlot.numberOfPages}
+                    <CurrentPageInput /> / <NumberOfPages />
                 </div>
                 <div className='rpv-toolbar-item'>
-                    {toolbarSlot.nextPage}
+                    <GoToNextPage />
                 </div>
                 <div className='rpv-toolbar-item'>
-                    {toolbarSlot.goToLastPage}
+                    <GoToLastPage />
                 </div>
             </div>
             <div className='rpv-toolbar-center'>

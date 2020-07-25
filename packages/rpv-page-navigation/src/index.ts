@@ -14,3 +14,16 @@ import UpArrowIcon from './UpArrowIcon';
 
 export default pageNavigationPlugin;
 export { DownArrowIcon, NextIcon, PreviousIcon, UpArrowIcon };
+
+// Types
+import { CurrentPageLabelProps as CurrentPageLabelPropsType } from './CurrentPageLabel';
+import { GoToFirstPageProps as GoToFirstPagePropsType } from './GoToFirstPage';
+import { GoToLastPageProps as GoToLastPagePropsType } from './GoToLastPage';
+import { GoToNextPageProps as GoToNextPagePropsType } from './GoToNextPage';
+import { GoToPreviousPageProps as GoToPreviousPagePropsType } from './GoToPreviousPage';
+
+export type CurrentPageLabelProps = CurrentPageLabelPropsType;
+export type GoToFirstPageProps = GoToFirstPagePropsType;
+export type GoToLastPageProps = GoToLastPagePropsType;
+export type GoToNextPageProps = GoToNextPagePropsType;
+export type GoToPreviousPageProps = GoToPreviousPagePropsType;

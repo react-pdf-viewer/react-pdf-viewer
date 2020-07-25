@@ -9,6 +9,7 @@
 import React, { FC, ReactElement } from 'react';
 import { Store } from '@phuocng/rpv';
 
+import GoToLastPageButton from './GoToLastPageButton';
 import StoreProps from './StoreProps';
 import useNumberOfPages from './useNumberOfPages';
 
@@ -16,14 +17,14 @@ export interface RenderGoToLastPageProps {
     onClick: () => void;
 }
 
-export interface GoToLastPageProps {
-    children: RenderGoToLastPage;
-}
-
 type RenderGoToLastPage = (props: RenderGoToLastPageProps) => ReactElement;
 
+export interface GoToLastPageProps {
+    children?: RenderGoToLastPage;
+}
+
 const GoToLastPage: FC<{
-    children: RenderGoToLastPage,
+    children?: RenderGoToLastPage,
     store: Store<StoreProps>,
 }> = ({ children, store }) => {
     const { numberOfPages } = useNumberOfPages(store);
@@ -35,7 +36,10 @@ const GoToLastPage: FC<{
         }
     };
 
-    return children({
+    const defaultChildren = (props: RenderGoToLastPageProps) => <GoToLastPageButton onClick={props.onClick} />;
+    const render = children || defaultChildren;
+
+    return render({
         onClick: goToFirstPage,
     });
 };
