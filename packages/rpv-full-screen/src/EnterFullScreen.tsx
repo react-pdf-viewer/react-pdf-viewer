@@ -9,6 +9,7 @@
 import React, { RefObject, useEffect, useRef } from 'react';
 import { Store } from '@phuocng/rpv';
 
+import EnterFullScreenButton from './EnterFullScreenButton';
 import { addFullScreenChangeListener, exitFullScreen, getFullScreenElement, requestFullScreen } from './fullScreen';
 import StoreProps from './StoreProps';
 
@@ -16,14 +17,14 @@ export interface RenderEnterFullScreenProps {
     onClick: () => void;
 }
 
-export interface EnterFullScreenProps {
-    children: RenderEnterFullScreen;
-}
-
 type RenderEnterFullScreen = (props: RenderEnterFullScreenProps) => React.ReactElement;
 
+export interface EnterFullScreenProps {
+    children?: RenderEnterFullScreen;
+}
+
 const EnterFullScreen: React.FC<{
-    children: RenderEnterFullScreen,
+    children?: RenderEnterFullScreen,
     store: Store<StoreProps>,
 }> = ({ children, store }) => {
     const pagesRef = useRef<HTMLDivElement | null>(null);
@@ -68,7 +69,10 @@ const EnterFullScreen: React.FC<{
         };
     }, []);
 
-    return children({
+    const defaultChildren = (props: RenderEnterFullScreenProps) => <EnterFullScreenButton onClick={props.onClick} />;
+    const render = children || defaultChildren;
+
+    return render({
         onClick: enterFullScreen,
     });
 };
