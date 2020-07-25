@@ -12,13 +12,13 @@ import './defaultToolbar.less';
 import ToolbarSlot, { RenderToolbarSlot } from './ToolbarSlot';
 
 const defaultToolbar: RenderToolbarSlot = (toolbarSlot: ToolbarSlot): React.ReactElement => {
-    const { Download, EnterFullScreen, Open, Print, ZoomIn, ZoomOut } = toolbarSlot;
+    const { Download, EnterFullScreen, GoToFirstPage, Open, Print, ZoomIn, ZoomOut } = toolbarSlot;
 
     return (
         <div className='rpv-toolbar'>
             <div className='rpv-toolbar-left'>
                 <div className='rpv-toolbar-item'>
-                    {toolbarSlot.goToFirstPage}
+                    <GoToFirstPage />
                 </div>
                 <div className='rpv-toolbar-item'>
                     {toolbarSlot.previousPage}
