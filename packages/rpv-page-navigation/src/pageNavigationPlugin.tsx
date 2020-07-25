@@ -16,6 +16,7 @@ import GoToFirstPageButton from './GoToFirstPageButton';
 import GoToFirstPageMenuItem from './GoToFirstPageMenuItem';
 import GoToLastPage, { GoToLastPageProps } from './GoToLastPage';
 import GoToLastPageButton from './GoToLastPageButton';
+import GoToLastPageMenuItem from './GoToLastPageMenuItem';
 import GoToNextPage, { GoToNextPageProps } from './GoToNextPage';
 import GoToNextPageButton from './GoToNextPageButton';
 import GoToPreviousPage, { GoToPreviousPageProps } from './GoToPreviousPage';
@@ -30,6 +31,7 @@ export interface PageNavigationPlugin extends Plugin {
     GoToFirstPageMenuItem: () => ReactElement;
     GoToLastPage: (props: GoToLastPageProps) => ReactElement;
     GoToLastPageButton: () => ReactElement;
+    GoToLastPageMenuItem: () => ReactElement;
     GoToNextPage: (props: GoToNextPageProps) => ReactElement;
     GoToNextPageButton: () => ReactElement;
     GoToPreviousPage: (props: GoToPreviousPageProps) => ReactElement;
@@ -66,6 +68,12 @@ const pageNavigationPlugin = (): PageNavigationPlugin => {
     const GoToLastPageButtonDecorator = () => (
         <GoToLastPageDecorator>
             {(props) => <GoToLastPageButton {...props} />}
+        </GoToLastPageDecorator>
+    );
+
+    const GoToLastPageMenuItemDecorator = () => (
+        <GoToLastPageDecorator>
+            {(props) => <GoToLastPageMenuItem {...props} />}
         </GoToLastPageDecorator>
     );
 
@@ -107,6 +115,7 @@ const pageNavigationPlugin = (): PageNavigationPlugin => {
         GoToFirstPageMenuItem: GoToFirstPageMenuItemDecorator,
         GoToLastPage: GoToLastPageDecorator,
         GoToLastPageButton: GoToLastPageButtonDecorator,
+        GoToLastPageMenuItem: GoToLastPageMenuItemDecorator,
         GoToNextPage: GoToNextPageDecorator,
         GoToNextPageButton: GoToNextPageButtonDecorator,
         GoToPreviousPage: GoToPreviousPageDecorator,
