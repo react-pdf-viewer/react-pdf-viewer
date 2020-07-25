@@ -13,7 +13,7 @@ import { EnterFullScreenProps } from '@phuocng/rpv-full-screen';
 import { OpenProps } from '@phuocng/rpv-open';
 import { CurrentPageLabelProps, GoToFirstPageProps, GoToLastPageProps, GoToNextPageProps, GoToPreviousPageProps } from '@phuocng/rpv-page-navigation';
 import { PrintProps } from '@phuocng/rpv-print';
-import { CurrentScaleProps, ZoomInProps, ZoomOutProps } from '@phuocng/rpv-zoom';
+import { CurrentScaleProps, ZoomProps, ZoomInProps, ZoomOutProps } from '@phuocng/rpv-zoom';
 
 export interface ToolbarSlot {
     CurrentPageInput(): ReactElement;
@@ -28,9 +28,9 @@ export interface ToolbarSlot {
     NumberOfPages(): ReactElement;
     Open(props: OpenProps): ReactElement;
     Print(props: PrintProps): ReactElement;
+    Zoom(props: ZoomProps): ReactElement;
     ZoomIn(props: ZoomInProps): ReactElement;
     ZoomOut(props: ZoomOutProps): ReactElement;
-    zoomPopover: ReactElement;
 }
 
 export type RenderToolbarSlot = (toolbarSlot: ToolbarSlot) => ReactElement;

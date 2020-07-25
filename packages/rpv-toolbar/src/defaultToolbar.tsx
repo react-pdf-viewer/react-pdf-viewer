@@ -15,7 +15,7 @@ const defaultToolbar: RenderToolbarSlot = (toolbarSlot: ToolbarSlot): React.Reac
     const {
         CurrentPageInput, Download, EnterFullScreen,
         GoToFirstPage, GoToLastPage, GoToNextPage, GoToPreviousPage,
-        NumberOfPages, Open, Print, ZoomIn, ZoomOut,
+        NumberOfPages, Open, Print, Zoom, ZoomIn, ZoomOut,
     } = toolbarSlot;
 
     return (
@@ -42,7 +42,7 @@ const defaultToolbar: RenderToolbarSlot = (toolbarSlot: ToolbarSlot): React.Reac
                     <ZoomOut />
                 </div>
                 <div className='rpv-toolbar-item'>
-                    {toolbarSlot.zoomPopover}
+                    <Zoom />
                 </div>
                 <div className='rpv-toolbar-item'>
                     <ZoomIn />
