@@ -21,7 +21,6 @@ import MoreIcon from '../icons/MoreIcon';
 import RotateBackwardIcon from '../icons/RotateBackwardIcon';
 import RotateForwardIcon from '../icons/RotateForwardIcon';
 import TextSelectionIcon from '../icons/TextSelectionIcon';
-import UpArrowIcon from '../icons/UpArrowIcon';
 import VerticalScrollingIcon from '../icons/VerticalScrollingIcon';
 import WrappedScrollingIcon from '../icons/WrappedScrollingIcon';
 import LocalizationContext from '../localization/LocalizationContext';
@@ -72,10 +71,6 @@ const MoreActionsPopover: React.FC<MoreActionsPopoverProps> = ({
         <PropertiesModal doc={doc} fileName={fileName} onToggle={toggle} />
     );
     const renderContent = (toggle: Toggle): React.ReactElement => {
-        const jumpToFirstPage = (): void => {
-            toggle();
-            onJumpToFirstPage();
-        };
         const jumpToLastPage = (): void => {
             toggle();
             onJumpToLastPage();
@@ -106,9 +101,6 @@ const MoreActionsPopover: React.FC<MoreActionsPopoverProps> = ({
 
         return (
             <Menu>
-                <MenuItem icon={<UpArrowIcon />} onClick={jumpToFirstPage}>
-                    {l10n.toolbar.goToFirstPage}
-                </MenuItem>
                 <MenuItem icon={<DownArrowIcon />} onClick={jumpToLastPage}>
                     {l10n.toolbar.goToLastPage}
                 </MenuItem>
