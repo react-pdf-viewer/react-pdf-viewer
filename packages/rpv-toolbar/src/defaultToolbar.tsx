@@ -12,7 +12,7 @@ import './defaultToolbar.less';
 import ToolbarSlot, { RenderToolbarSlot } from './ToolbarSlot';
 
 const defaultToolbar: RenderToolbarSlot = (toolbarSlot: ToolbarSlot): React.ReactElement => {
-    const { Download, EnterFullScreen, Print, ZoomIn, ZoomOut } = toolbarSlot;
+    const { Download, EnterFullScreen, Open, Print, ZoomIn, ZoomOut } = toolbarSlot;
 
     return (
         <div className='rpv-toolbar'>
@@ -49,7 +49,7 @@ const defaultToolbar: RenderToolbarSlot = (toolbarSlot: ToolbarSlot): React.Reac
                     <EnterFullScreen />
                 </div>
                 <div className='rpv-toolbar-item'>
-                    {toolbarSlot.openFileButton}
+                    <Open />
                 </div>
                 <div className='rpv-toolbar-item'>
                     <Download />
