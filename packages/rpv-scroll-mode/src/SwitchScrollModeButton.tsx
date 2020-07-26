@@ -14,13 +14,13 @@ import SwitchScrollModeDecorator from './SwitchScrollModeDecorator';
 
 const TOOLTIP_OFFSET = { left: 0, top: 8 };
 
-const SwitchScrollModeButton: FC<RenderSwitchScrollModeProps> = ({ mode, onClick }) => (
+const SwitchScrollModeButton: FC<RenderSwitchScrollModeProps> = ({ isSelected, mode, onClick }) => (
     <SwitchScrollModeDecorator mode={mode} onClick={onClick}>
         {
             (props) => (
                 <Tooltip
                     position={Position.BottomCenter}
-                    target={<Button isSelected={false} onClick={props.onClick}>{props.icon}</Button>}
+                    target={<Button isSelected={isSelected} onClick={props.onClick}>{props.icon}</Button>}
                     content={() => props.label}
                     offset={TOOLTIP_OFFSET}
                 />

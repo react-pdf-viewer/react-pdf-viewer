@@ -7,12 +7,10 @@
  */
 
 import React, { FC, useContext, ReactElement } from 'react';
-import { LocalizationContext, Store } from '@phuocng/rpv';
+import { LocalizationContext } from '@phuocng/rpv';
 
 import HorizontalScrollingIcon from './HorizontalScrollingIcon';
 import ScrollMode from './ScrollMode';
-import StoreProps from './StoreProps';
-import useScrollMode from './useScrollMode';
 import VerticalScrollingIcon from './VerticalScrollingIcon';
 import WrappedScrollingIcon from './WrappedScrollingIcon';
 

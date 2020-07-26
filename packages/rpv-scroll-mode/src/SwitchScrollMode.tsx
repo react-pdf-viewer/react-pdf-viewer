@@ -16,6 +16,7 @@ import SwitchScrollModeButton from './SwitchScrollModeButton';
 import useScrollMode from './useScrollMode';
 
 export interface RenderSwitchScrollModeProps {
+    isSelected: boolean;
     mode: ScrollMode;
     onClick(): void;
 }
@@ -39,11 +40,12 @@ const SwitchScrollMode: FC<{
     const isSelected = scrollMode === mode;
 
     const defaultChildren = (props: RenderSwitchScrollModeProps) => (
-        <SwitchScrollModeButton mode={props.mode} onClick={props.onClick} />
+        <SwitchScrollModeButton isSelected={isSelected} mode={props.mode} onClick={props.onClick} />
     );
     const render = children || defaultChildren;
 
     return render({
+        isSelected,
         mode,
         onClick,
     });

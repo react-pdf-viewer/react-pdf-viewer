@@ -9,11 +9,11 @@
 import { useEffect, useState } from 'react';
 import { Store, StoreHandler } from '@phuocng/rpv';
 
-import StoreProps from './StoreProps';
 import ScrollMode from './ScrollMode';
+import StoreProps from './StoreProps';
 
 const useScrollMode = (store: Store<StoreProps>) => {
-    const [scrollMode, setScrollMode] = useState<ScrollMode>(ScrollMode.Vertical);
+    const [scrollMode, setScrollMode] = useState(store.get('scrollMode') || ScrollMode.Vertical);
 
     const switchTo = (newScrollMode: ScrollMode) => {
         const pagesRef = store.get('getPagesRef');
@@ -47,8 +47,20 @@ const useScrollMode = (store: Store<StoreProps>) => {
                 break;
         }
 
+        store.update('scrollMode', newScrollMode);
+    };
+
+    const handleScrollModeChanged: StoreHandler<ScrollMode> = (newScrollMode: ScrollMode) => {
         setScrollMode(newScrollMode);
     };
+
+    useEffect(() => {
+        store.subscribe('scrollMode', handleScrollModeChanged);
+
+        return () => {
+            store.unsubscribe('scrollMode', handleScrollModeChanged);
+        };
+    }, []);
 
     return { scrollMode, switchTo };
 };

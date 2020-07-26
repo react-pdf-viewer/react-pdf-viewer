@@ -10,10 +10,9 @@ import React, { ReactElement } from 'react';
 import { createStore, Plugin, PluginFunctions } from '@phuocng/rpv';
 
 import ScrollMode from './ScrollMode';
+import StoreProps from './StoreProps';
 import SwitchScrollMode, { RenderSwitchScrollModeProps, SwitchScrollModeProps } from './SwitchScrollMode';
 import SwitchScrollModeMenuItem from './SwitchScrollModeMenuItem';
-
-import StoreProps from './StoreProps';
 
 interface ScrollModePlugin extends Plugin {
     SwitchScrollMode(props: SwitchScrollModeProps): ReactElement;
@@ -31,7 +30,15 @@ const scrollModePlugin = (): ScrollModePlugin => {
 
     const SwitchScrollModeMenuItemDecorator = (props: RenderSwitchScrollModeProps) => (
         <SwitchScrollModeDecorator mode={props.mode}>
-            {(p) => <SwitchScrollModeMenuItem mode={p.mode} onClick={() => { p.onClick(); props.onClick(); }} />}
+            {
+                (p) => (
+                    <SwitchScrollModeMenuItem
+                        isSelected={p.isSelected}
+                        mode={p.mode}
+                        onClick={() => { p.onClick(); props.onClick(); }}
+                    />
+                )
+            }
         </SwitchScrollModeDecorator>
     );
 

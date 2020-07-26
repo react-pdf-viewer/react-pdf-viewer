@@ -12,12 +12,12 @@ import { MenuItem } from '@phuocng/rpv';
 import { RenderSwitchScrollModeProps } from './SwitchScrollMode';
 import SwitchScrollModeDecorator from './SwitchScrollModeDecorator';
 
-const SwitchScrollModeMenuItem: FC<RenderSwitchScrollModeProps> = ({ mode, onClick }) => (
+const SwitchScrollModeMenuItem: FC<RenderSwitchScrollModeProps> = ({ isSelected, mode, onClick }) => (
     <SwitchScrollModeDecorator mode={mode} onClick={onClick}>
         {
             (props) => (
                 <MenuItem
-                    checked={false}
+                    checked={isSelected}
                     icon={props.icon}
                     onClick={props.onClick}
                 >
