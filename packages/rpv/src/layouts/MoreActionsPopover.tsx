@@ -17,8 +17,6 @@ import HandToolIcon from '../icons/HandToolIcon';
 import HorizontalScrollingIcon from '../icons/HorizontalScrollingIcon';
 import InfoIcon from '../icons/InfoIcon';
 import MoreIcon from '../icons/MoreIcon';
-import RotateBackwardIcon from '../icons/RotateBackwardIcon';
-import RotateForwardIcon from '../icons/RotateForwardIcon';
 import TextSelectionIcon from '../icons/TextSelectionIcon';
 import VerticalScrollingIcon from '../icons/VerticalScrollingIcon';
 import WrappedScrollingIcon from '../icons/WrappedScrollingIcon';
@@ -40,14 +38,13 @@ interface MoreActionsPopoverProps {
     selectionMode: SelectionMode;
     onChangeScrollMode(mode: ScrollMode): void;
     onChangeSelectionMode(mode: SelectionMode): void;
-    onRotate(degree: number): void;
 }
 
 const PORTAL_OFFSET = { left: 0, top: 8 };
 
 const MoreActionsPopover: React.FC<MoreActionsPopoverProps> = ({
     doc, fileName, scrollMode, selectionMode,
-    onChangeScrollMode, onChangeSelectionMode, onRotate,
+    onChangeScrollMode, onChangeSelectionMode,
 }) => {
     const l10n = useContext(LocalizationContext);
 
@@ -68,14 +65,6 @@ const MoreActionsPopover: React.FC<MoreActionsPopoverProps> = ({
         <PropertiesModal doc={doc} fileName={fileName} onToggle={toggle} />
     );
     const renderContent = (toggle: Toggle): React.ReactElement => {
-        const rotateForward = (): void => {
-            toggle();
-            onRotate(90);
-        };
-        const rotateBackward = (): void => {
-            toggle();
-            onRotate(-90);
-        };
         const activateTextSelectionMode = (): void => {
             toggle();
             onChangeSelectionMode(SelectionMode.Text);
@@ -94,13 +83,6 @@ const MoreActionsPopover: React.FC<MoreActionsPopoverProps> = ({
 
         return (
             <Menu>
-                <MenuItem icon={<RotateForwardIcon />} onClick={rotateForward}>
-                    {l10n.toolbar.rotateForward}
-                </MenuItem>
-                <MenuItem icon={<RotateBackwardIcon />} onClick={rotateBackward}>
-                    {l10n.toolbar.rotateBackward}
-                </MenuItem>
-                <MenuDivider />
                 <MenuItem
                     checked={selectionMode === SelectionMode.Text}
                     icon={<TextSelectionIcon />}
