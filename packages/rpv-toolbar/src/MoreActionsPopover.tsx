@@ -40,7 +40,7 @@ const MoreActionsPopover: React.FC<MoreActionsPopoverProps> = ({ toolbarSlot }) 
     const renderContent = (toggle: Toggle): React.ReactElement => {
         return (
             <Menu>
-                <GoToFirstPageMenuItem />
+                <GoToFirstPageMenuItem onClick={toggle} />
                 <GoToLastPageMenuItem />
             </Menu>
         );

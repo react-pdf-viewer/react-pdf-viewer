@@ -28,6 +28,10 @@ export interface CurrentPageLabelProps {
 // Render button to go to the first page
 // -------------------------------------
 
+export interface GoToFirstPageMenuItemProps {
+    onClick: () => void;
+}
+
 export interface RenderGoToFirstPageProps {
     onClick: () => void;
 }

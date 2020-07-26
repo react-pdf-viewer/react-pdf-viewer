@@ -9,10 +9,13 @@
 import React, { FC, useContext } from 'react';
 import { LocalizationContext, MenuItem } from '@phuocng/rpv';
 
-import { RenderGoToFirstPageProps } from './GoToFirstPage';
 import UpArrowIcon from './UpArrowIcon';
 
-const GoToFirstPageMenuItem: FC<RenderGoToFirstPageProps> = ({ onClick }) => {
+export interface GoToFirstPageMenuItemProps {
+    onClick(): void;
+}
+
+const GoToFirstPageMenuItem: FC<GoToFirstPageMenuItemProps> = ({ onClick }) => {
     const l10nContext = useContext(LocalizationContext);
 
     const label = (l10nContext && l10nContext.plugins && l10nContext.plugins.pageNavigation)
