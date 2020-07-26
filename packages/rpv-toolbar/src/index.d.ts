@@ -11,7 +11,7 @@ import { Plugin } from '@phuocng/rpv';
 import { DownloadProps } from '@phuocng/rpv-download';
 import { EnterFullScreenProps } from '@phuocng/rpv-full-screen';
 import { OpenProps } from '@phuocng/rpv-open';
-import { CurrentPageLabelProps, GoToFirstPageProps, GoToFirstPageMenuItemProps, GoToLastPageProps, GoToNextPageProps, GoToPreviousPageProps } from '@phuocng/rpv-page-navigation';
+import { CurrentPageLabelProps, GoToFirstPageProps, GoToFirstPageMenuItemProps, GoToLastPageProps, GoToLastPageMenuItemProps, GoToNextPageProps, GoToPreviousPageProps } from '@phuocng/rpv-page-navigation';
 import { PrintProps } from '@phuocng/rpv-print';
 import { CurrentScaleProps, ZoomProps, ZoomInProps, ZoomOutProps } from '@phuocng/rpv-zoom';
 
@@ -24,7 +24,7 @@ export interface ToolbarSlot {
     GoToFirstPage(props: GoToFirstPageProps): ReactElement;
     GoToFirstPageMenuItem(props: GoToFirstPageMenuItemProps): ReactElement;
     GoToLastPage(props: GoToLastPageProps): ReactElement;
-    GoToLastPageMenuItem(): ReactElement;
+    GoToLastPageMenuItem(props: GoToLastPageMenuItemProps): ReactElement;
     GoToNextPage(props: GoToNextPageProps): ReactElement;
     GoToPreviousPage(props: GoToPreviousPageProps): ReactElement;
     NumberOfPages(): ReactElement;

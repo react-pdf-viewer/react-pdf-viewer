@@ -46,6 +46,10 @@ export interface GoToFirstPageProps {
 // Render button to go the the last page
 // -------------------------------------
 
+export interface GoToLastPageMenuItemProps {
+    onClick(): void;
+}
+
 export interface RenderGoToLastPageProps {
     onClick: () => void;
 }

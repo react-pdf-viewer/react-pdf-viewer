@@ -10,9 +10,12 @@ import React, { FC, useContext } from 'react';
 import { LocalizationContext, MenuItem } from '@phuocng/rpv';
 
 import DownArrowIcon from './DownArrowIcon';
-import { RenderGoToLastPageProps } from './GoToLastPage';
 
-const GoToLastPageMenuItem: FC<RenderGoToLastPageProps> = ({ onClick }) => {
+export interface GoToLastPageMenuItemProps {
+    onClick(): void;
+}
+
+const GoToLastPageMenuItem: FC<GoToLastPageMenuItemProps> = ({ onClick }) => {
     const l10nContext = useContext(LocalizationContext);
 
     const label = (l10nContext && l10nContext.plugins && l10nContext.plugins.pageNavigation)
