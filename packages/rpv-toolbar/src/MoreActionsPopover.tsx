@@ -8,6 +8,7 @@
 
 import React, { useContext } from 'react';
 import { Button, LocalizationContext, Menu, MenuDivider, Popover, Position, Toggle, Tooltip } from '@phuocng/rpv';
+import { ScrollMode } from '@phuocng/rpv-scroll-mode';
 
 import MoreIcon from './MoreIcon';
 import ToolbarSlot from './ToolbarSlot';
@@ -20,7 +21,7 @@ const PORTAL_OFFSET = { left: 0, top: 8 };
 
 const MoreActionsPopover: React.FC<MoreActionsPopoverProps> = ({ toolbarSlot }) => {
     const l10n = useContext(LocalizationContext);
-    const { GoToFirstPageMenuItem, GoToLastPageMenuItem, RotateBackwardMenuItem, RotateForwardMenuItem } = toolbarSlot;
+    const { GoToFirstPageMenuItem, GoToLastPageMenuItem, RotateBackwardMenuItem, RotateForwardMenuItem, SwitchScrollModeMenuItem } = toolbarSlot;
 
     const renderTarget = (toggle: Toggle, opened: boolean): React.ReactElement => {
         const label = (l10n && l10n.plugins && l10n.plugins.toolbar)
@@ -45,6 +46,10 @@ const MoreActionsPopover: React.FC<MoreActionsPopoverProps> = ({ toolbarSlot }) 
                 <MenuDivider />
                 <RotateForwardMenuItem onClick={toggle} />
                 <RotateBackwardMenuItem onClick={toggle} />
+                <MenuDivider />
+                <SwitchScrollModeMenuItem mode={ScrollMode.Vertical} onClick={toggle} />
+                <SwitchScrollModeMenuItem mode={ScrollMode.Horizontal} onClick={toggle} />
+                <SwitchScrollModeMenuItem mode={ScrollMode.Wrapped} onClick={toggle} />
             </Menu>
         );
     };
