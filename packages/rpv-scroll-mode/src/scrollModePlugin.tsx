@@ -31,7 +31,7 @@ const scrollModePlugin = (): ScrollModePlugin => {
 
     const SwitchScrollModeMenuItemDecorator = (props: RenderSwitchScrollModeProps) => (
         <SwitchScrollModeDecorator mode={props.mode}>
-            {(p) => <SwitchScrollModeMenuItem mode={p.mode} onClick={() => { props.onClick; p.onClick(); }} />}
+            {(p) => <SwitchScrollModeMenuItem mode={p.mode} onClick={() => { p.onClick(); props.onClick(); }} />}
         </SwitchScrollModeDecorator>
     );
 
