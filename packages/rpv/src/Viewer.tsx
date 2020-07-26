@@ -9,19 +9,13 @@
 import React, { useEffect, useState } from 'react';
 
 import OpenFile from './OpenFile';
-import Slot from './layouts/Slot';
-import defaultLayout from './layouts/defaultLayout';
-import defaultToolbar from './layouts/defaultToolbar';
 import Inner from './layouts/Inner';
-import { Layout } from './layouts/Layout';
 import PageSize from './layouts/PageSize'; 
 import PageSizeCalculator from './layouts/PageSizeCalculator';
 import { RenderPage } from './layouts/RenderPage';
-import { RenderToolbar } from './layouts/ToolbarSlot';
 import DocumentLoader, { RenderError } from './loader/DocumentLoader';
 import LocalizationMap from './localization/LocalizationMap';
 import LocalizationProvider from './localization/LocalizationProvider';
-import ScrollMode from './ScrollMode';
 import SelectionMode from './SelectionMode';
 import SpecialZoomLevel from './SpecialZoomLevel';
 import ThemeProvider from './theme/ThemeProvider';

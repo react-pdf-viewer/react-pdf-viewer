@@ -11,12 +11,9 @@ import React, { useContext, useState } from 'react';
 import Button from '../components/Button';
 import { Toggle } from '../hooks/useToggle';
 import HandToolIcon from '../icons/HandToolIcon';
-import HorizontalScrollingIcon from '../icons/HorizontalScrollingIcon';
 import InfoIcon from '../icons/InfoIcon';
 import LeftSidebarIcon from '../icons/LeftSidebarIcon';
 import TextSelectionIcon from '../icons/TextSelectionIcon';
-import VerticalScrollingIcon from '../icons/VerticalScrollingIcon';
-import WrappedScrollingIcon from '../icons/WrappedScrollingIcon';
 import { RenderToolbarSlot } from './ToolbarSlot';
 import LocalizationContext from '../localization/LocalizationContext';
 import LocalizationMap from '../localization/LocalizationMap';
@@ -26,7 +23,6 @@ import Tooltip from '../portal/Tooltip';
 import PropertiesModal from '../property/PropertiesModal';
 import Match from '../search/Match';
 import SearchPopover from '../search/SearchPopover';
-import ScrollMode from '../ScrollMode';
 import SelectionMode from '../SelectionMode';
 import PdfJs from '../vendors/PdfJs';
 import MoreActionsPopover from './MoreActionsPopover';
@@ -35,9 +31,7 @@ interface ToolbarProps {
     doc: PdfJs.PdfDocument;
     fileName: string;
     renderToolbar: RenderToolbarSlot;
-    scrollMode: ScrollMode;
     selectionMode: SelectionMode;
-    onChangeScrollMode(mode: ScrollMode): void;
     onChangeSelectionMode(mode: SelectionMode): void;
     onJumpToMatch(match: Match): void;
     onSearchFor(keyword: RegExp): void;
@@ -47,15 +41,13 @@ interface ToolbarProps {
 const TOOLTIP_OFFSET = { left: 0, top: 8 };
 
 const Toolbar: React.FC<ToolbarProps> = ({
-    doc, fileName, scrollMode, selectionMode,
-    onChangeScrollMode, onChangeSelectionMode,
+    doc, fileName, selectionMode,
+    onChangeSelectionMode,
     onJumpToMatch, onSearchFor, onToggleSidebar,
     renderToolbar,
 }) => {
     const l10n = useContext(LocalizationContext);
     const [isSidebarOpened, setSidebarOpened] = useState(false);
-
-    const { numPages } = doc;
 
     const toggleSidebar = (): void => {
         setSidebarOpened(!isSidebarOpened);
@@ -65,17 +57,10 @@ const Toolbar: React.FC<ToolbarProps> = ({
     const activateTextSelectionMode = (): void => onChangeSelectionMode(SelectionMode.Text);
     const activateHandMode = (): void => onChangeSelectionMode(SelectionMode.Hand);
 
-    const setVerticalScrollMode = (): void => onChangeScrollMode(ScrollMode.Vertical);
-    const setHorizontalScrollMode = (): void => onChangeScrollMode(ScrollMode.Horizontal);
-    const setWrappedScrollMode = (): void => onChangeScrollMode(ScrollMode.Wrapped);
-
     const renderToggle = (): LocalizationMap => l10n.toolbar.toggleSidebar;
     const renderTextSelection = (): LocalizationMap => l10n.toolbar.textSelectionTool;
     const renderHandTool = (): LocalizationMap => l10n.toolbar.handTool;
-    const renderVerticalScrolling = (): LocalizationMap => l10n.toolbar.verticalScrolling;
-    const renderHorizontalScrolling = (): LocalizationMap => l10n.toolbar.horizontalScrolling;
     const renderDocumentProperties = (): LocalizationMap => l10n.toolbar.documentProperties;
-    const renderWrappedScrolling = (): LocalizationMap => l10n.toolbar.wrappedScrolling;
     const renderPropertyButton = (toggle: Toggle): React.ReactElement => (
         <Tooltip
             position={Position.BottomCenter}
@@ -107,23 +92,11 @@ const Toolbar: React.FC<ToolbarProps> = ({
                 offset={TOOLTIP_OFFSET}
             />
         ),
-        horizontalScrollingButton: (
-            <Tooltip
-                position={Position.BottomCenter}
-                target={
-                    <Button onClick={setHorizontalScrollMode} isSelected={scrollMode === ScrollMode.Horizontal}><HorizontalScrollingIcon /></Button>
-                }
-                content={renderHorizontalScrolling}
-                offset={TOOLTIP_OFFSET}
-            />
-        ),
         moreActionsPopover: (
             <MoreActionsPopover
                 doc={doc}
                 fileName={fileName}
-                scrollMode={scrollMode}
                 selectionMode={selectionMode}
-                onChangeScrollMode={onChangeScrollMode}
                 onChangeSelectionMode={onChangeSelectionMode}
             />
         ),
@@ -149,26 +122,6 @@ const Toolbar: React.FC<ToolbarProps> = ({
                     </Button>
                 )}
                 content={renderToggle}
-                offset={TOOLTIP_OFFSET}
-            />
-        ),
-        verticalScrollingButton: (
-            <Tooltip
-                position={Position.BottomCenter}
-                target={
-                    <Button onClick={setVerticalScrollMode} isSelected={scrollMode === ScrollMode.Vertical}><VerticalScrollingIcon /></Button>
-                }
-                content={renderVerticalScrolling}
-                offset={TOOLTIP_OFFSET}
-            />
-        ),
-        wrappedScrollingButton: (
-            <Tooltip
-                position={Position.BottomCenter}
-                target={
-                    <Button onClick={setWrappedScrollMode} isSelected={scrollMode === ScrollMode.Wrapped}><WrappedScrollingIcon /></Button>
-                }
-                content={renderWrappedScrolling}
                 offset={TOOLTIP_OFFSET}
             />
         ),
