@@ -36,15 +36,14 @@ interface MoreActionsPopoverProps {
     fileName: string;
     scrollMode: ScrollMode;
     selectionMode: SelectionMode;
-    onChangeScrollMode(mode: ScrollMode): void;
     onChangeSelectionMode(mode: SelectionMode): void;
 }
 
 const PORTAL_OFFSET = { left: 0, top: 8 };
 
 const MoreActionsPopover: React.FC<MoreActionsPopoverProps> = ({
-    doc, fileName, scrollMode, selectionMode,
-    onChangeScrollMode, onChangeSelectionMode,
+    doc, fileName, selectionMode,
+    onChangeSelectionMode,
 }) => {
     const l10n = useContext(LocalizationContext);
 
@@ -73,13 +72,6 @@ const MoreActionsPopover: React.FC<MoreActionsPopoverProps> = ({
             toggle();
             onChangeSelectionMode(SelectionMode.Hand);
         };
-        const activateScrollMode = (mode: ScrollMode): void => {
-            toggle();
-            onChangeScrollMode(mode);
-        };
-        const setVerticalScrollMode = (): void => activateScrollMode(ScrollMode.Vertical);
-        const setHorizontalScrollMode = (): void => activateScrollMode(ScrollMode.Horizontal);
-        const setWrappedScrollMode = (): void => activateScrollMode(ScrollMode.Wrapped);
 
         return (
             <Menu>
@@ -96,28 +88,6 @@ const MoreActionsPopover: React.FC<MoreActionsPopoverProps> = ({
                     onClick={activateHandMode}
                 >
                     {l10n.toolbar.handTool}
-                </MenuItem>
-                <MenuDivider />
-                <MenuItem
-                    checked={scrollMode === ScrollMode.Vertical}
-                    icon={<VerticalScrollingIcon />}
-                    onClick={setVerticalScrollMode}
-                >
-                    {l10n.toolbar.verticalScrolling}
-                </MenuItem>
-                <MenuItem
-                    checked={scrollMode === ScrollMode.Horizontal}
-                    icon={<HorizontalScrollingIcon />}
-                    onClick={setHorizontalScrollMode}
-                >
-                    {l10n.toolbar.horizontalScrolling}
-                </MenuItem>
-                <MenuItem
-                    checked={scrollMode === ScrollMode.Wrapped}
-                    icon={<WrappedScrollingIcon />}
-                    onClick={setWrappedScrollMode}
-                >
-                    {l10n.toolbar.wrappedScrolling}
                 </MenuItem>
                 <MenuDivider />
                 <Modal

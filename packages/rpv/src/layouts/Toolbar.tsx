@@ -37,7 +37,6 @@ interface ToolbarProps {
     renderToolbar: RenderToolbarSlot;
     scrollMode: ScrollMode;
     selectionMode: SelectionMode;
-    onChangeScrollMode(mode: ScrollMode): void;
     onChangeSelectionMode(mode: SelectionMode): void;
     onJumpToMatch(match: Match): void;
     onSearchFor(keyword: RegExp): void;
@@ -48,7 +47,7 @@ const TOOLTIP_OFFSET = { left: 0, top: 8 };
 
 const Toolbar: React.FC<ToolbarProps> = ({
     doc, fileName, scrollMode, selectionMode,
-    onChangeScrollMode, onChangeSelectionMode,
+    onChangeSelectionMode,
     onJumpToMatch, onSearchFor, onToggleSidebar,
     renderToolbar,
 }) => {
@@ -104,7 +103,6 @@ const Toolbar: React.FC<ToolbarProps> = ({
                 fileName={fileName}
                 scrollMode={scrollMode}
                 selectionMode={selectionMode}
-                onChangeScrollMode={onChangeScrollMode}
                 onChangeSelectionMode={onChangeSelectionMode}
             />
         ),
