@@ -110,8 +110,6 @@ export type Toggle = (status?: ToggleStatus) => void;
 export interface ToolbarSlot {
     toggleSidebarButton: React.ReactNode;
     searchPopover: React.ReactNode;
-    rotateClockwiseButton: React.ReactNode;
-    rotateCounterclockwiseButton: React.ReactNode;
     textSelectionButton: React.ReactNode;
     handToolButton: React.ReactNode;
     verticalScrollingButton: React.ReactNode;
