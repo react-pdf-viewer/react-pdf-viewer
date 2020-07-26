@@ -14,6 +14,7 @@ interface ViewerStateProps {
     file: OpenFile;
     // The current page index
     pageIndex: number;
+    rotation: number;
     // The current zoom level
     scale: number;
 }

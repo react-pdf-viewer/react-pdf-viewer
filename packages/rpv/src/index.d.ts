@@ -110,8 +110,6 @@ export type Toggle = (status?: ToggleStatus) => void;
 export interface ToolbarSlot {
     toggleSidebarButton: React.ReactNode;
     searchPopover: React.ReactNode;
-    rotateClockwiseButton: React.ReactNode;
-    rotateCounterclockwiseButton: React.ReactNode;
     textSelectionButton: React.ReactNode;
     handToolButton: React.ReactNode;
     verticalScrollingButton: React.ReactNode;
@@ -344,6 +342,7 @@ export interface ViewerState {
     file: OpenFile;
     // The current page index
     pageIndex: number;
+    rotation: number;
     // The current zoom level
     scale: number;
 }
@@ -353,6 +352,7 @@ export interface PluginFunctions {
     getViewerState(): ViewerState;
     jumpToPage(pageIndex: number): void;
     openFile(file: File): void;
+    rotate(rotation: number): void;
     setViewerState(viewerState: ViewerState): void;
     zoom(scale: number | SpecialZoomLevel): void;
 }

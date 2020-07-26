@@ -14,8 +14,6 @@ import HandToolIcon from '../icons/HandToolIcon';
 import HorizontalScrollingIcon from '../icons/HorizontalScrollingIcon';
 import InfoIcon from '../icons/InfoIcon';
 import LeftSidebarIcon from '../icons/LeftSidebarIcon';
-import RotateBackwardIcon from '../icons/RotateBackwardIcon';
-import RotateForwardIcon from '../icons/RotateForwardIcon';
 import TextSelectionIcon from '../icons/TextSelectionIcon';
 import VerticalScrollingIcon from '../icons/VerticalScrollingIcon';
 import WrappedScrollingIcon from '../icons/WrappedScrollingIcon';
@@ -42,7 +40,6 @@ interface ToolbarProps {
     onChangeScrollMode(mode: ScrollMode): void;
     onChangeSelectionMode(mode: SelectionMode): void;
     onJumpToMatch(match: Match): void;
-    onRotate(degree: number): void;
     onSearchFor(keyword: RegExp): void;
     onToggleSidebar(): void;
 }
@@ -52,7 +49,7 @@ const TOOLTIP_OFFSET = { left: 0, top: 8 };
 const Toolbar: React.FC<ToolbarProps> = ({
     doc, fileName, scrollMode, selectionMode,
     onChangeScrollMode, onChangeSelectionMode,
-    onJumpToMatch, onRotate, onSearchFor, onToggleSidebar,
+    onJumpToMatch, onSearchFor, onToggleSidebar,
     renderToolbar,
 }) => {
     const l10n = useContext(LocalizationContext);
@@ -65,8 +62,6 @@ const Toolbar: React.FC<ToolbarProps> = ({
         onToggleSidebar();
     };
 
-    const rotateForward = (): void => onRotate(90);
-    const rotateBackward = (): void => onRotate(-90);
     const activateTextSelectionMode = (): void => onChangeSelectionMode(SelectionMode.Text);
     const activateHandMode = (): void => onChangeSelectionMode(SelectionMode.Hand);
 
@@ -75,8 +70,6 @@ const Toolbar: React.FC<ToolbarProps> = ({
     const setWrappedScrollMode = (): void => onChangeScrollMode(ScrollMode.Wrapped);
 
     const renderToggle = (): LocalizationMap => l10n.toolbar.toggleSidebar;
-    const renderRotateClockwise = (): LocalizationMap => l10n.toolbar.rotateForward;
-    const renderRotateCounterclockwise = (): LocalizationMap => l10n.toolbar.rotateBackward;
     const renderTextSelection = (): LocalizationMap => l10n.toolbar.textSelectionTool;
     const renderHandTool = (): LocalizationMap => l10n.toolbar.handTool;
     const renderVerticalScrolling = (): LocalizationMap => l10n.toolbar.verticalScrolling;
@@ -132,23 +125,6 @@ const Toolbar: React.FC<ToolbarProps> = ({
                 selectionMode={selectionMode}
                 onChangeScrollMode={onChangeScrollMode}
                 onChangeSelectionMode={onChangeSelectionMode}
-                onRotate={onRotate}
-            />
-        ),
-        rotateClockwiseButton: (
-            <Tooltip
-                position={Position.BottomCenter}
-                target={<Button onClick={rotateForward}><RotateForwardIcon /></Button>}
-                content={renderRotateClockwise}
-                offset={TOOLTIP_OFFSET}
-            />
-        ),
-        rotateCounterclockwiseButton: (
-            <Tooltip
-                position={Position.BottomCenter}
-                target={<Button onClick={rotateBackward}><RotateBackwardIcon /></Button>}
-                content={renderRotateCounterclockwise}
-                offset={TOOLTIP_OFFSET}
             />
         ),
         searchPopover: (

@@ -15,6 +15,7 @@ import fullScreenPlugin from '@phuocng/rpv-full-screen';
 import openPlugin from '@phuocng/rpv-open';
 import pageNavigationPlugin from '@phuocng/rpv-page-navigation';
 import printPlugin from '@phuocng/rpv-print';
+import rotatePlugin from '@phuocng/rpv-rotate';
 import zoomPlugin from '@phuocng/rpv-zoom';
 
 import '@phuocng/rpv-drop/cjs/rpv-drop.css';
@@ -37,6 +38,7 @@ const toolbarPlugin = (): ToolbarPlugin => {
     const openPluginInstance = openPlugin();
     const pageNavigationPluginInstance = pageNavigationPlugin();
     const printPluginInstance = printPlugin();
+    const rotatePluginInstance = rotatePlugin();
     const zoomPluginInstance = zoomPlugin();
 
     const plugins = [
@@ -46,6 +48,7 @@ const toolbarPlugin = (): ToolbarPlugin => {
         openPluginInstance,
         pageNavigationPluginInstance,
         printPluginInstance,
+        rotatePluginInstance,
         zoomPluginInstance,
     ];
 
@@ -58,6 +61,7 @@ const toolbarPlugin = (): ToolbarPlugin => {
             GoToLastPageMenuItem, GoToNextPage, GoToPreviousPage,
         } = pageNavigationPluginInstance;
         const { Print } = printPluginInstance;
+        const { Rotate, RotateBackwardMenuItem, RotateForwardMenuItem } = rotatePluginInstance;
         const { CurrentScale, Zoom, ZoomIn, ZoomOut } = zoomPluginInstance;
 
         const NumberOfPages = () => (
@@ -84,6 +88,9 @@ const toolbarPlugin = (): ToolbarPlugin => {
                     NumberOfPages,
                     Open,
                     Print,
+                    Rotate,
+                    RotateBackwardMenuItem,
+                    RotateForwardMenuItem,
                     Zoom,
                     ZoomIn,
                     ZoomOut,
