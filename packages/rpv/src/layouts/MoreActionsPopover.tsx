@@ -24,14 +24,12 @@ import Popover from '../portal/Popover';
 import Position from '../portal/Position';
 import Tooltip from '../portal/Tooltip';
 import PropertiesModal from '../property/PropertiesModal';
-import ScrollMode from '../ScrollMode';
 import SelectionMode from '../SelectionMode';
 import PdfJs from '../vendors/PdfJs';
 
 interface MoreActionsPopoverProps {
     doc: PdfJs.PdfDocument;
     fileName: string;
-    scrollMode: ScrollMode;
     selectionMode: SelectionMode;
     onChangeSelectionMode(mode: SelectionMode): void;
 }

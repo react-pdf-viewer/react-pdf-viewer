@@ -14,7 +14,6 @@ import PageLayer from '../layers/PageLayer';
 import Slot from '../layouts/Slot';
 import OpenFile from '../OpenFile';
 import Match from '../search/Match';
-import ScrollMode from '../ScrollMode';
 import SelectionMode from '../SelectionMode';
 import SpecialZoomLevel from '../SpecialZoomLevel';
 import ThemeContext from '../theme/ThemeContext';
@@ -25,12 +24,8 @@ import PdfJs from '../vendors/PdfJs';
 import getFileExt from '../utils/fileExt';
 import { CanvasLayerRenderEvent, DocumentLoadEvent, PageChangeEvent, TextLayerRenderEvent, ZoomEvent } from '../Viewer';
 import './inner.less';
-import { Layout } from './Layout';
 import PageSize from './PageSize';
 import { RenderPage } from './RenderPage';
-import Sidebar from './Sidebar';
-import Toolbar from './Toolbar';
-import { RenderToolbarSlot } from './ToolbarSlot';
 
 // `new RegExp('')` will treat the source as `(?:)` which is not an empty string
 const EMPTY_KEYWORD_REGEXP = new RegExp(' ');
@@ -76,7 +71,6 @@ const Inner: React.FC<InnerProps> = ({
         pageIndex: -1,
     });
     const stateRef = useRef<ViewerState>(viewerState);
-    const [scrollMode, setScrollMode] = useState<ScrollMode>(ScrollMode.Vertical);
     const [currentMode, setCurrentMode] = useState<SelectionMode>(selectionMode);
     const { toggleDragScroll } = useDragScroll(pagesRef);
     const toggleSidebar = useToggle();
@@ -260,36 +254,6 @@ const Inner: React.FC<InnerProps> = ({
         });
     };
 
-    const changeScrollMode = (mode: ScrollMode): void => {
-        const pagesContainer = pagesRef.current;
-        if (!pagesContainer) {
-            return;
-        }
-        switch (mode) {
-            case ScrollMode.Vertical:
-                pagesContainer.classList.add(`${theme.prefixClass}-inner-pages-vertical`);
-                pagesContainer.classList.remove(`${theme.prefixClass}-inner-pages-horizontal`);
-                pagesContainer.classList.remove(`${theme.prefixClass}-inner-pages-wrapped`);
-                break;
-
-            case ScrollMode.Horizontal:
-                pagesContainer.classList.add(`${theme.prefixClass}-inner-pages-horizontal`);
-                pagesContainer.classList.remove(`${theme.prefixClass}-inner-pages-vertical`);
-                pagesContainer.classList.remove(`${theme.prefixClass}-inner-pages-wrapped`);
-                break;
-
-            case ScrollMode.Wrapped:
-                pagesContainer.classList.add(`${theme.prefixClass}-inner-pages-wrapped`);
-                pagesContainer.classList.remove(`${theme.prefixClass}-inner-pages-vertical`);
-                pagesContainer.classList.remove(`${theme.prefixClass}-inner-pages-horizontal`);
-                break;
-
-            default:
-                break;
-        }
-        setScrollMode(mode);
-    };
-
     const jumpToMatch = (target: Match): void => {
         jumpToPage(target.pageIndex);
         setMatch(target);
@@ -410,7 +374,6 @@ const Inner: React.FC<InnerProps> = ({
                     pageWidth,
                     rotation,
                     slot,
-                    changeScrollMode,
                     changeSelectionMode,
                     jumpToPage,
                     openFile,

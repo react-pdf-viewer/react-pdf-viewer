@@ -116,12 +116,6 @@ export interface ToolbarSlot {
     moreActionsPopover: React.ReactNode;
 }
 
-export enum ScrollMode {
-    Horizontal = 'Horizontal',
-    Vertical = 'Vertical',
-    Wrapped = 'Wrapped',
-}
-
 export enum SelectionMode {
     Hand,
     Text,
@@ -233,7 +227,6 @@ export interface RenderViewerProps {
     pageWidth: number;
     rotation: number;
     slot: Slot;
-    changeScrollMode(mode: ScrollMode): void;
     changeSelectionMode(mode: SelectionMode): void;
     openFile(file: File): void;
     // Jump to given page

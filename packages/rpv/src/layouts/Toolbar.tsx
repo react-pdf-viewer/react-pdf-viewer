@@ -23,7 +23,6 @@ import Tooltip from '../portal/Tooltip';
 import PropertiesModal from '../property/PropertiesModal';
 import Match from '../search/Match';
 import SearchPopover from '../search/SearchPopover';
-import ScrollMode from '../ScrollMode';
 import SelectionMode from '../SelectionMode';
 import PdfJs from '../vendors/PdfJs';
 import MoreActionsPopover from './MoreActionsPopover';
@@ -32,7 +31,6 @@ interface ToolbarProps {
     doc: PdfJs.PdfDocument;
     fileName: string;
     renderToolbar: RenderToolbarSlot;
-    scrollMode: ScrollMode;
     selectionMode: SelectionMode;
     onChangeSelectionMode(mode: SelectionMode): void;
     onJumpToMatch(match: Match): void;
@@ -43,7 +41,7 @@ interface ToolbarProps {
 const TOOLTIP_OFFSET = { left: 0, top: 8 };
 
 const Toolbar: React.FC<ToolbarProps> = ({
-    doc, fileName, scrollMode, selectionMode,
+    doc, fileName, selectionMode,
     onChangeSelectionMode,
     onJumpToMatch, onSearchFor, onToggleSidebar,
     renderToolbar,
@@ -98,7 +96,6 @@ const Toolbar: React.FC<ToolbarProps> = ({
             <MoreActionsPopover
                 doc={doc}
                 fileName={fileName}
-                scrollMode={scrollMode}
                 selectionMode={selectionMode}
                 onChangeSelectionMode={onChangeSelectionMode}
             />
