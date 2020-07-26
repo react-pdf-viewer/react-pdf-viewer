@@ -29,7 +29,7 @@ const GoToLastPage: FC<{
 }> = ({ children, store }) => {
     const { numberOfPages } = useNumberOfPages(store);
 
-    const goToFirstPage = () => {
+    const goToLastPage = () => {
         const jumpToPage = store.get('jumpToPage');
         if (jumpToPage) {
             jumpToPage(numberOfPages - 1);
@@ -40,7 +40,7 @@ const GoToLastPage: FC<{
     const render = children || defaultChildren;
 
     return render({
-        onClick: goToFirstPage,
+        onClick: goToLastPage,
     });
 };
 

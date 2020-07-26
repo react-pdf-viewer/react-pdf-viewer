@@ -9,21 +9,19 @@
 import React from 'react';
 
 import './defaultToolbar.less';
+import MoreActionsPopover from './MoreActionsPopover';
 import ToolbarSlot, { RenderToolbarSlot } from './ToolbarSlot';
 
 const defaultToolbar: RenderToolbarSlot = (toolbarSlot: ToolbarSlot): React.ReactElement => {
     const {
-        CurrentPageInput, Download, EnterFullScreen,
-        GoToFirstPage, GoToLastPage, GoToNextPage, GoToPreviousPage,
-        NumberOfPages, Open, Print, Zoom, ZoomIn, ZoomOut,
+        CurrentPageInput, Download, EnterFullScreen, GoToNextPage, GoToPreviousPage,
+        NumberOfPages, Open, Print, Zoom, ZoomIn,
+        ZoomOut,
     } = toolbarSlot;
 
     return (
         <div className='rpv-toolbar'>
             <div className='rpv-toolbar-left'>
-                <div className='rpv-toolbar-item'>
-                    <GoToFirstPage />
-                </div>
                 <div className='rpv-toolbar-item'>
                     <GoToPreviousPage />
                 </div>
@@ -32,9 +30,6 @@ const defaultToolbar: RenderToolbarSlot = (toolbarSlot: ToolbarSlot): React.Reac
                 </div>
                 <div className='rpv-toolbar-item'>
                     <GoToNextPage />
-                </div>
-                <div className='rpv-toolbar-item'>
-                    <GoToLastPage />
                 </div>
             </div>
             <div className='rpv-toolbar-center'>
@@ -60,6 +55,9 @@ const defaultToolbar: RenderToolbarSlot = (toolbarSlot: ToolbarSlot): React.Reac
                 </div>
                 <div className='rpv-toolbar-item'>
                     <Print />
+                </div>
+                <div className='rpv-toolbar-item'>
+                    <MoreActionsPopover toolbarSlot={toolbarSlot} />
                 </div>
             </div>
         </div>

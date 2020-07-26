@@ -6,19 +6,19 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import { useEffect, useState } from 'react';
+import { useLayoutEffect, useState } from 'react';
 import { Store, StoreHandler } from '@phuocng/rpv';
 
 import StoreProps from './StoreProps';
 
 const useCurrentPage = (store: Store<StoreProps>) => {
-    const [currentPage, setCurrentPage] = useState(0);
+    const [currentPage, setCurrentPage] = useState(store.get('currentPage') || 0);
 
     const handleCurrentPageChanged: StoreHandler<number> = (currentPageIndex: number) => {
         setCurrentPage(currentPageIndex);
     };
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         store.subscribe('currentPage', handleCurrentPageChanged);
 
         return () => {

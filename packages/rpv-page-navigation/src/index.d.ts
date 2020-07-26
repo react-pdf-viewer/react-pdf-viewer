@@ -28,6 +28,10 @@ export interface CurrentPageLabelProps {
 // Render button to go to the first page
 // -------------------------------------
 
+export interface GoToFirstPageMenuItemProps {
+    onClick: () => void;
+}
+
 export interface RenderGoToFirstPageProps {
     onClick: () => void;
 }
@@ -41,6 +45,10 @@ export interface GoToFirstPageProps {
 // -------------------------------------
 // Render button to go the the last page
 // -------------------------------------
+
+export interface GoToLastPageMenuItemProps {
+    onClick(): void;
+}
 
 export interface RenderGoToLastPageProps {
     onClick: () => void;
@@ -91,8 +99,10 @@ export interface PageNavigationPlugin extends Plugin {
     CurrentPageLabel: (props: CurrentPageLabelProps) => ReactElement;
     GoToFirstPage: (props: GoToFirstPageProps) => ReactElement;
     GoToFirstPageButton: () => ReactElement;
+    GoToFirstPageMenuItem: () => ReactElement;
     GoToLastPage: (props: GoToLastPageProps) => ReactElement;
     GoToLastPageButton: () => ReactElement;
+    GoToLastPageMenuItem: () => ReactElement;
     GoToNextPage: (props: GoToNextPageProps) => ReactElement;
     GoToNextPageButton: () => ReactElement;
     GoToPreviousPage: (props: GoToPreviousPageProps) => ReactElement;

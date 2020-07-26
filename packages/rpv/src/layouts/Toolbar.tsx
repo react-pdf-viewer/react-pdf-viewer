@@ -37,12 +37,10 @@ interface ToolbarProps {
     doc: PdfJs.PdfDocument;
     fileName: string;
     renderToolbar: RenderToolbarSlot;
-    scale: number;
     scrollMode: ScrollMode;
     selectionMode: SelectionMode;
     onChangeScrollMode(mode: ScrollMode): void;
     onChangeSelectionMode(mode: SelectionMode): void;
-    onJumpTo(pageIndex: number): void;
     onJumpToMatch(match: Match): void;
     onRotate(degree: number): void;
     onSearchFor(keyword: RegExp): void;
@@ -52,8 +50,8 @@ interface ToolbarProps {
 const TOOLTIP_OFFSET = { left: 0, top: 8 };
 
 const Toolbar: React.FC<ToolbarProps> = ({
-    doc, fileName, scale, scrollMode, selectionMode,
-    onChangeScrollMode, onChangeSelectionMode, onJumpTo,
+    doc, fileName, scrollMode, selectionMode,
+    onChangeScrollMode, onChangeSelectionMode,
     onJumpToMatch, onRotate, onSearchFor, onToggleSidebar,
     renderToolbar,
 }) => {
@@ -62,8 +60,6 @@ const Toolbar: React.FC<ToolbarProps> = ({
 
     const { numPages } = doc;
 
-    const jumpToFirstPage = (): void => onJumpTo(0);
-    const jumpToLastPage = (): void => onJumpTo(numPages - 1);
     const toggleSidebar = (): void => {
         setSidebarOpened(!isSidebarOpened);
         onToggleSidebar();
@@ -136,8 +132,6 @@ const Toolbar: React.FC<ToolbarProps> = ({
                 selectionMode={selectionMode}
                 onChangeScrollMode={onChangeScrollMode}
                 onChangeSelectionMode={onChangeSelectionMode}
-                onJumpToFirstPage={jumpToFirstPage}
-                onJumpToLastPage={jumpToLastPage}
                 onRotate={onRotate}
             />
         ),

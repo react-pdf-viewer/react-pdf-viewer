@@ -12,7 +12,10 @@ import { Store, StoreHandler } from '@phuocng/rpv';
 import StoreProps from './StoreProps';
 
 const useNumberOfPages = (store: Store<StoreProps>) => {
-    const [numberOfPages, setNumberOfPages] = useState(0);
+    // It's safer to set the initial state from `store.get('numberOfPages')` instead of `0`.
+    // There's a case that a component is loaded within a portal
+    // so the hook `useEffect` usage below isn't triggered
+    const [numberOfPages, setNumberOfPages] = useState(store.get('numberOfPages') || 0);
 
     const handleNumberOfPages: StoreHandler<number> = (total: number) => {
         setNumberOfPages(total);
