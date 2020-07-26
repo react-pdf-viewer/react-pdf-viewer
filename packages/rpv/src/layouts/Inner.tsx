@@ -181,6 +181,7 @@ const Inner: React.FC<InnerProps> = ({
         setViewerState({
             file: viewerState.file,
             pageIndex: currentPage,
+            rotation,
             scale,
         });
     }, [currentPage]);
@@ -223,6 +224,7 @@ const Inner: React.FC<InnerProps> = ({
         setViewerState({
             file: viewerState.file,
             pageIndex: currentPage,
+            rotation,
             scale: updateScale,
         });
     };
@@ -248,9 +250,14 @@ const Inner: React.FC<InnerProps> = ({
         }
     };
 
-    const rotate = (degrees: number): void => {
-        const updateRotation = (rotation === 360 || rotation === -360) ? degrees : rotation + degrees;
+    const rotate = (updateRotation: number): void => {
         setRotation(updateRotation);
+        setViewerState({
+            file: viewerState.file,
+            pageIndex: currentPage,
+            rotation: updateRotation,
+            scale,
+        });
     };
 
     const changeScrollMode = (mode: ScrollMode): void => {

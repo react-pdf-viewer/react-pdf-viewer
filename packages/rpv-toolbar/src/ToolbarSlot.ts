@@ -13,6 +13,7 @@ import { EnterFullScreenProps } from '@phuocng/rpv-full-screen';
 import { OpenProps } from '@phuocng/rpv-open';
 import { CurrentPageLabelProps, GoToFirstPageMenuItemProps, GoToFirstPageProps, GoToLastPageMenuItemProps, GoToLastPageProps, GoToNextPageProps, GoToPreviousPageProps } from '@phuocng/rpv-page-navigation';
 import { PrintProps } from '@phuocng/rpv-print';
+import { RotateDecoratorProps, RotateProps } from '@phuocng/rpv-rotate';
 import { CurrentScaleProps, ZoomProps, ZoomInProps, ZoomOutProps } from '@phuocng/rpv-zoom';
 
 interface ToolbarSlot {
@@ -30,6 +31,9 @@ interface ToolbarSlot {
     NumberOfPages(): ReactElement;
     Open(props: OpenProps): ReactElement;
     Print(props: PrintProps): ReactElement;
+    Rotate(props: RotateProps): ReactElement;
+    RotateBackwardMenuItem(props: RotateDecoratorProps): ReactElement;
+    RotateForwardMenuItem(props: RotateDecoratorProps): ReactElement;
     Zoom(props: ZoomProps): ReactElement;
     ZoomIn(props: ZoomInProps): ReactElement;
     ZoomOut(props: ZoomOutProps): ReactElement;

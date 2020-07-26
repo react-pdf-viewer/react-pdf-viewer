@@ -344,6 +344,7 @@ export interface ViewerState {
     file: OpenFile;
     // The current page index
     pageIndex: number;
+    rotation: number;
     // The current zoom level
     scale: number;
 }
@@ -353,7 +354,7 @@ export interface PluginFunctions {
     getViewerState(): ViewerState;
     jumpToPage(pageIndex: number): void;
     openFile(file: File): void;
-    rotate(degrees: number): void;
+    rotate(rotation: number): void;
     setViewerState(viewerState: ViewerState): void;
     zoom(scale: number | SpecialZoomLevel): void;
 }

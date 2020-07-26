@@ -142,6 +142,7 @@ const Viewer: React.FC<ViewerProps> = ({
                                         viewerState={{
                                             file,
                                             pageIndex: initialPage,
+                                            rotation: 0,
                                             scale: ps.scale,
                                         }}
                                         onCanvasLayerRender={onCanvasLayerRender}
