@@ -14,7 +14,7 @@ import { OpenProps } from '@phuocng/rpv-open';
 import { CurrentPageLabelProps, GoToFirstPageMenuItemProps, GoToFirstPageProps, GoToLastPageMenuItemProps, GoToLastPageProps, GoToNextPageProps, GoToPreviousPageProps } from '@phuocng/rpv-page-navigation';
 import { PrintProps } from '@phuocng/rpv-print';
 import { RotateDecoratorProps, RotateProps } from '@phuocng/rpv-rotate';
-import { RenderSwitchScrollModeProps, SwitchScrollModeProps } from '@phuocng/rpv-scroll-mode';
+import { SwitchScrollModeMenuItemProps, SwitchScrollModeProps } from '@phuocng/rpv-scroll-mode';
 import { CurrentScaleProps, ZoomProps, ZoomInProps, ZoomOutProps } from '@phuocng/rpv-zoom';
 
 interface ToolbarSlot {
@@ -36,7 +36,7 @@ interface ToolbarSlot {
     RotateBackwardMenuItem(props: RotateDecoratorProps): ReactElement;
     RotateForwardMenuItem(props: RotateDecoratorProps): ReactElement;
     SwitchScrollMode(props: SwitchScrollModeProps): ReactElement;
-    SwitchScrollModeMenuItem(props: RenderSwitchScrollModeProps): ReactElement;
+    SwitchScrollModeMenuItem(props: SwitchScrollModeMenuItemProps): ReactElement;
     Zoom(props: ZoomProps): ReactElement;
     ZoomIn(props: ZoomInProps): ReactElement;
     ZoomOut(props: ZoomOutProps): ReactElement;

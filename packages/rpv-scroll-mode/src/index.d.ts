@@ -16,6 +16,7 @@ export enum ScrollMode {
 }
 
 export interface RenderSwitchScrollModeProps {
+    isSelected: boolean;
     mode: ScrollMode;
     onClick(): void;
 }
@@ -27,9 +28,14 @@ export interface SwitchScrollModeProps {
     mode: ScrollMode;
 }
 
+export interface SwitchScrollModeMenuItemProps {
+    mode: ScrollMode;
+    onClick(): void;
+}
+
 export interface ScrollModePlugin extends Plugin {
     SwitchScrollMode(props: SwitchScrollModeProps): ReactElement;
-    SwitchScrollModeMenuItem(props: RenderSwitchScrollModeProps): ReactElement;
+    SwitchScrollModeMenuItem(props: SwitchScrollModeMenuItemProps): ReactElement;
 }
 
 export default function scrollModePlugin(): ScrollModePlugin;

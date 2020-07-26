@@ -8,7 +8,7 @@
 
 import HorizontalScrollingIcon from './HorizontalScrollingIcon';
 import ScrollMode from './ScrollMode';
-import scrollModePlugin from './scrollModePlugin';
+import scrollModePlugin, { SwitchScrollModeMenuItemProps as SwitchScrollModeMenuItemPropsType } from './scrollModePlugin';
 import VerticalScrollingIcon from './VerticalScrollingIcon';
 import WrappedScrollingIcon from './WrappedScrollingIcon';
 
@@ -22,6 +22,6 @@ export {
 };
 
 // Types
-import { RenderSwitchScrollModeProps as RenderSwitchScrollModePropsType, SwitchScrollModeProps as SwitchScrollModePropsType } from './SwitchScrollMode';
-export type RenderSwitchScrollModeProps = RenderSwitchScrollModePropsType;
+import { SwitchScrollModeProps as SwitchScrollModePropsType } from './SwitchScrollMode';
+export type SwitchScrollModeMenuItemProps = SwitchScrollModeMenuItemPropsType;
 export type SwitchScrollModeProps = SwitchScrollModePropsType;
