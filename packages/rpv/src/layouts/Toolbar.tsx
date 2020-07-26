@@ -55,8 +55,6 @@ const Toolbar: React.FC<ToolbarProps> = ({
     const l10n = useContext(LocalizationContext);
     const [isSidebarOpened, setSidebarOpened] = useState(false);
 
-    const { numPages } = doc;
-
     const toggleSidebar = (): void => {
         setSidebarOpened(!isSidebarOpened);
         onToggleSidebar();
@@ -65,17 +63,10 @@ const Toolbar: React.FC<ToolbarProps> = ({
     const activateTextSelectionMode = (): void => onChangeSelectionMode(SelectionMode.Text);
     const activateHandMode = (): void => onChangeSelectionMode(SelectionMode.Hand);
 
-    const setVerticalScrollMode = (): void => onChangeScrollMode(ScrollMode.Vertical);
-    const setHorizontalScrollMode = (): void => onChangeScrollMode(ScrollMode.Horizontal);
-    const setWrappedScrollMode = (): void => onChangeScrollMode(ScrollMode.Wrapped);
-
     const renderToggle = (): LocalizationMap => l10n.toolbar.toggleSidebar;
     const renderTextSelection = (): LocalizationMap => l10n.toolbar.textSelectionTool;
     const renderHandTool = (): LocalizationMap => l10n.toolbar.handTool;
-    const renderVerticalScrolling = (): LocalizationMap => l10n.toolbar.verticalScrolling;
-    const renderHorizontalScrolling = (): LocalizationMap => l10n.toolbar.horizontalScrolling;
     const renderDocumentProperties = (): LocalizationMap => l10n.toolbar.documentProperties;
-    const renderWrappedScrolling = (): LocalizationMap => l10n.toolbar.wrappedScrolling;
     const renderPropertyButton = (toggle: Toggle): React.ReactElement => (
         <Tooltip
             position={Position.BottomCenter}
@@ -104,16 +95,6 @@ const Toolbar: React.FC<ToolbarProps> = ({
                     <Button onClick={activateHandMode} isSelected={selectionMode === SelectionMode.Hand}><HandToolIcon /></Button>
                 }
                 content={renderHandTool}
-                offset={TOOLTIP_OFFSET}
-            />
-        ),
-        horizontalScrollingButton: (
-            <Tooltip
-                position={Position.BottomCenter}
-                target={
-                    <Button onClick={setHorizontalScrollMode} isSelected={scrollMode === ScrollMode.Horizontal}><HorizontalScrollingIcon /></Button>
-                }
-                content={renderHorizontalScrolling}
                 offset={TOOLTIP_OFFSET}
             />
         ),
@@ -149,26 +130,6 @@ const Toolbar: React.FC<ToolbarProps> = ({
                     </Button>
                 )}
                 content={renderToggle}
-                offset={TOOLTIP_OFFSET}
-            />
-        ),
-        verticalScrollingButton: (
-            <Tooltip
-                position={Position.BottomCenter}
-                target={
-                    <Button onClick={setVerticalScrollMode} isSelected={scrollMode === ScrollMode.Vertical}><VerticalScrollingIcon /></Button>
-                }
-                content={renderVerticalScrolling}
-                offset={TOOLTIP_OFFSET}
-            />
-        ),
-        wrappedScrollingButton: (
-            <Tooltip
-                position={Position.BottomCenter}
-                target={
-                    <Button onClick={setWrappedScrollMode} isSelected={scrollMode === ScrollMode.Wrapped}><WrappedScrollingIcon /></Button>
-                }
-                content={renderWrappedScrolling}
                 offset={TOOLTIP_OFFSET}
             />
         ),
