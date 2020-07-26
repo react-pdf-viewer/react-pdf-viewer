@@ -41,13 +41,10 @@
     "toolbar": {
         "documentProperties": "Document properties",
         "handTool": "Hand tool",
-        "horizontalScrolling": "Horizontal scrolling",
         "moreActions": "More actions",
         "search": "Search",
         "textSelectionTool": "Text selection tool",
-        "toggleSidebar":  "Toggle sidebar",
-        "verticalScrolling": "Vertical scrolling",
-        "wrappedScrolling": "Wrapped scrolling"
+        "toggleSidebar":  "Toggle sidebar"
     },
     "wrongPassword": {
         "submit": "Submit",
