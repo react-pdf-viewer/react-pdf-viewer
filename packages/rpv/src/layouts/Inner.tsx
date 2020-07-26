@@ -112,6 +112,7 @@ const Inner: React.FC<InnerProps> = ({
         getViewerState,
         jumpToPage,
         openFile,
+        rotate,
         setViewerState,
         zoom,
     });
@@ -247,8 +248,8 @@ const Inner: React.FC<InnerProps> = ({
         }
     };
 
-    const rotate = (degree: number): void => {
-        const updateRotation = (rotation === 360 || rotation === -360) ? degree : rotation + degree;
+    const rotate = (degrees: number): void => {
+        const updateRotation = (rotation === 360 || rotation === -360) ? degrees : rotation + degrees;
         setRotation(updateRotation);
     };
 

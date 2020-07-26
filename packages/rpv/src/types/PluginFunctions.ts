@@ -16,6 +16,7 @@ export interface PluginFunctionsProps {
     getViewerState(): ViewerState;
     jumpToPage(pageIndex: number): void;
     openFile(file: File): void;
+    rotate(degrees: number): void;
     setViewerState(viewerState: ViewerState): void;
     zoom(scale: number | SpecialZoomLevel): void;
 }
