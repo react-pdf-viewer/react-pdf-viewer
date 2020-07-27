@@ -17,6 +17,8 @@ export declare namespace PdfJs {
 
     interface PdfDocument {
         numPages: number;
+        getDownloadInfo(): Promise<{ length: number }>;
+        getMetadata(): Promise<MetaData>;
         getPage(pageIndex: number): Promise<Page>;
     }
 
@@ -54,6 +56,23 @@ export declare namespace PdfJs {
     interface Page {
         getViewport(params: ViewPortParams): ViewPort;
         render(params: PageRenderParams): PageRenderTask;
+    }
+
+    // Metadata
+    interface MetaData {
+        contentDispositionFilename?: string;
+        info: MetaDataInfo;
+    }
+    interface MetaDataInfo {
+        Author: string;
+        CreationDate: string;
+        Creator: string;
+        Keywords: string;
+        ModDate: string;
+        PDFFormatVersion: string;
+        Producer: string;
+        Subject: string;
+        Title: string;
     }
 }
 
