@@ -131,11 +131,6 @@ export interface ToolbarSlot {
     searchPopover: React.ReactNode;
 }
 
-export enum SelectionMode {
-    Hand,
-    Text,
-}
-
 export enum SpecialZoomLevel {
     ActualSize = 'ActualSize',
     PageFit = 'PageFit',
@@ -242,7 +237,6 @@ export interface RenderViewerProps {
     pageWidth: number;
     rotation: number;
     slot: Slot;
-    changeSelectionMode(mode: SelectionMode): void;
     openFile(file: File): void;
     // Jump to given page
     // `page` is zero-index based
@@ -417,7 +411,8 @@ export interface ViewerProps {
     prefixClass?: string;
     renderError?: RenderError;
     renderPage?: RenderPage;
-    selectionMode?: SelectionMode;
+    // TODO: Move to plugin
+    // selectionMode?: SelectionMode;
     onCanvasLayerRender?(e: CanvasLayerRenderEvent): void;
     onDocumentLoad?(e: DocumentLoadEvent): void;
     onPageChange?(e: PageChangeEvent): void;

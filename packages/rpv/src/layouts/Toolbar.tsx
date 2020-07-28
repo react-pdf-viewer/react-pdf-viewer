@@ -17,15 +17,11 @@ import Position from '../portal/Position';
 import Tooltip from '../portal/Tooltip';
 import Match from '../search/Match';
 import SearchPopover from '../search/SearchPopover';
-import SelectionMode from '../SelectionMode';
 import PdfJs from '../vendors/PdfJs';
 
 interface ToolbarProps {
     doc: PdfJs.PdfDocument;
-    fileName: string;
     renderToolbar: RenderToolbarSlot;
-    selectionMode: SelectionMode;
-    onChangeSelectionMode(mode: SelectionMode): void;
     onJumpToMatch(match: Match): void;
     onSearchFor(keyword: RegExp): void;
     onToggleSidebar(): void;
@@ -34,8 +30,7 @@ interface ToolbarProps {
 const TOOLTIP_OFFSET = { left: 0, top: 8 };
 
 const Toolbar: React.FC<ToolbarProps> = ({
-    doc, fileName, selectionMode,
-    onChangeSelectionMode,
+    doc,
     onJumpToMatch, onSearchFor, onToggleSidebar,
     renderToolbar,
 }) => {

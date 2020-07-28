@@ -23,7 +23,6 @@ import Modal from './portal/Modal';
 import Popover from './portal/Popover';
 import Position from './portal/Position';
 import Tooltip from './portal/Tooltip';
-import SelectionMode from './SelectionMode';
 import SpecialZoomLevel from './SpecialZoomLevel';
 import createStore, { Store as StoreType, StoreHandler as StoreHandlerType } from './store/createStore';
 import Viewer from './Viewer';
@@ -46,7 +45,6 @@ export {
     Position,
     PrimaryButton,
     ProgressBar,
-    SelectionMode,
     Separator,
     SpecialZoomLevel,
     Spinner,
