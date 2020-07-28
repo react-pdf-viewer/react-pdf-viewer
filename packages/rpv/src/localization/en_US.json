@@ -10,21 +10,6 @@
     "bookmark": {
         "noBookmark": "There is no bookmark"
     },
-    "property": {
-        "author": "Author",
-        "close": "Close",
-        "creationDate": "Creation date",
-        "creator": "Creator",
-        "fileName": "File name",
-        "fileSize": "File size",
-        "keywords": "Keywords",
-        "modificationDate": "Modification date",
-        "pageCount": "Page count",
-        "pdfProducer": "PDF producer",
-        "pdfVersion": "PDF Version",
-        "subject": "Subject",
-        "title": "Title"
-    },
     "search": {
         "close": "Close",
         "enterToSearch": "Enter to search",
@@ -39,7 +24,6 @@
         "thumbnail": "Thumbnail"
     },
     "toolbar": {
-        "documentProperties": "Document properties",
         "handTool": "Hand tool",
         "moreActions": "More actions",
         "search": "Search",

@@ -6,9 +6,8 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { useContext } from 'react';
+import React, { FC } from 'react';
 
-import ThemeContext from '../theme/ThemeContext';
 import './propertyItem.less';
 
 interface PropertyItemProps {
@@ -16,15 +15,13 @@ interface PropertyItemProps {
     value: string;
 }
 
-const PropertyItem: React.FC<PropertyItemProps> = ({ label, value }) => {
-    const theme = useContext(ThemeContext);
-
+const PropertyItem: FC<PropertyItemProps> = ({ label, value }) => {
     return (
-        <dl className={`${theme.prefixClass}-property-item`}>
-            <dt className={`${theme.prefixClass}-property-item-label`}>
+        <dl className='rpv-property-item'>
+            <dt className='rpv-property-item-label'>
                 {label}:
             </dt>
-            <dd className={`${theme.prefixClass}-property-item-value`}>
+            <dd className='rpv-property-item-value'>
                 {value || '-'}
             </dd>
         </dl>

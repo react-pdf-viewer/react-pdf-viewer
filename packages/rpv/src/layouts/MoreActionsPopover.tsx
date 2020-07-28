@@ -10,20 +10,16 @@ import React, { useContext } from 'react';
 
 import Button from '../components/Button';
 import Menu from '../components/Menu';
-import MenuDivider from '../components/MenuDivider';
 import MenuItem from '../components/MenuItem';
 import { Toggle } from '../hooks/useToggle';
 import HandToolIcon from '../icons/HandToolIcon';
-import InfoIcon from '../icons/InfoIcon';
 import MoreIcon from '../icons/MoreIcon';
 import TextSelectionIcon from '../icons/TextSelectionIcon';
 import LocalizationContext from '../localization/LocalizationContext';
 import LocalizationMap from '../localization/LocalizationMap';
-import Modal from '../portal/Modal';
 import Popover from '../portal/Popover';
 import Position from '../portal/Position';
 import Tooltip from '../portal/Tooltip';
-import PropertiesModal from '../property/PropertiesModal';
 import SelectionMode from '../SelectionMode';
 import PdfJs from '../vendors/PdfJs';
 
@@ -52,12 +48,6 @@ const MoreActionsPopover: React.FC<MoreActionsPopoverProps> = ({
         />
     );
 
-    const renderPropertyMenu = (toggle: Toggle): React.ReactElement => (
-        <MenuItem icon={<InfoIcon />} onClick={toggle}>{l10n.toolbar.documentProperties}</MenuItem>
-    );
-    const renderPropertiesModal = (toggle: Toggle): React.ReactElement => (
-        <PropertiesModal doc={doc} fileName={fileName} onToggle={toggle} />
-    );
     const renderContent = (toggle: Toggle): React.ReactElement => {
         const activateTextSelectionMode = (): void => {
             toggle();
@@ -84,13 +74,6 @@ const MoreActionsPopover: React.FC<MoreActionsPopoverProps> = ({
                 >
                     {l10n.toolbar.handTool}
                 </MenuItem>
-                <MenuDivider />
-                <Modal
-                    target={renderPropertyMenu}
-                    content={renderPropertiesModal}
-                    closeOnClickOutside={true}
-                    closeOnEscape={true}
-                />
             </Menu>
         );
     };

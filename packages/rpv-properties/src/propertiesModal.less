@@ -6,12 +6,16 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import PdfJs from '../vendors/PdfJs';
+.rpv-properties-modal {
+    padding: 8px 0px;
 
-interface PropertiesData {
-    fileName: string;
-    info: PdfJs.MetaDataInfo;
-    length: number;
+    &-group {
+        padding: 0px 8px;
+    }
+
+    &-footer {
+        display: flex;
+        justify-content: center;
+        margin-top: 8px;
+    }
 }
-
-export default PropertiesData;

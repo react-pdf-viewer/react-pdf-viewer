@@ -6,21 +6,18 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { useContext, useEffect, useState } from 'react';
+import React, { FC, ReactElement, useEffect, useState } from 'react';
+import { PdfJs, Spinner } from '@phuocng/rpv';
 
-import Spinner from '../components/Spinner';
-import ThemeContext from '../theme/ThemeContext';
-import PdfJs from '../vendors/PdfJs';
 import PropertiesData from './PropertiesData';
 import './propertiesLoader.less';
 
 interface PropertiesLoaderProps {
     doc: PdfJs.PdfDocument;
-    render(doc: PropertiesData): React.ReactElement;
+    render(doc: PropertiesData): ReactElement;
 }
 
-const PropertiesLoader: React.FC<PropertiesLoaderProps> = ({ doc, render }) => {
-    const theme = useContext(ThemeContext);
+const PropertiesLoader: FC<PropertiesLoaderProps> = ({ doc, render }) => {
     const [data, setData] = useState<PropertiesData>();
 
     useEffect(() => {
@@ -40,7 +37,7 @@ const PropertiesLoader: React.FC<PropertiesLoaderProps> = ({ doc, render }) => {
     }, []);
 
     return (
-        data ? render(data) : <div className={`${theme.prefixClass}-properties-loader`}><Spinner /></div>
+        data ? render(data) : <div className='rpv-properties-loader'><Spinner /></div>
     );
 };
 
