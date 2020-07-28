@@ -45,6 +45,7 @@
         "@phuocng/rpv-properties": "^2.0.0",
         "@phuocng/rpv-rotate": "^2.0.0",
         "@phuocng/rpv-scroll-mode": "^2.0.0",
+        "@phuocng/rpv-selection-mode": "^2.0.0",
         "@phuocng/rpv-zoom": "^2.0.0"
     },
     "scripts": {

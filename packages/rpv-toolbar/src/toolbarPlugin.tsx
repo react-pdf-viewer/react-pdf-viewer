@@ -18,6 +18,7 @@ import printPlugin from '@phuocng/rpv-print';
 import propertiesPlugin from '@phuocng/rpv-properties';
 import rotatePlugin from '@phuocng/rpv-rotate';
 import scrollModePlugin from '@phuocng/rpv-scroll-mode';
+import selectionModePlugin from '@phuocng/rpv-selection-mode';
 import zoomPlugin from '@phuocng/rpv-zoom';
 
 import '@phuocng/rpv-drop/cjs/rpv-drop.css';
@@ -27,6 +28,7 @@ import '@phuocng/rpv-page-navigation/cjs/rpv-page-navigation.css';
 import '@phuocng/rpv-print/cjs/rpv-print.css';
 import '@phuocng/rpv-properties/cjs/rpv-properties.css';
 import '@phuocng/rpv-scroll-mode/cjs/rpv-scroll-mode.css';
+import '@phuocng/rpv-selection-mode/cjs/rpv-selection-mode.css';
 import '@phuocng/rpv-zoom/cjs/rpv-zoom.css';
 
 import Toolbar, { ToolbarProps } from './Toolbar';
@@ -45,6 +47,7 @@ const toolbarPlugin = (): ToolbarPlugin => {
     const propertiesPluginInstance = propertiesPlugin();
     const rotatePluginInstance = rotatePlugin();
     const scrollModePluginInstance = scrollModePlugin();
+    const selectionModePluginInstance = selectionModePlugin();
     const zoomPluginInstance = zoomPlugin();
 
     const plugins = [
@@ -57,6 +60,7 @@ const toolbarPlugin = (): ToolbarPlugin => {
         propertiesPluginInstance,
         rotatePluginInstance,
         scrollModePluginInstance,
+        selectionModePluginInstance,
         zoomPluginInstance,
     ];
 
@@ -72,6 +76,7 @@ const toolbarPlugin = (): ToolbarPlugin => {
         const { ShowProperties, ShowPropertiesMenuItem } = propertiesPluginInstance;
         const { Rotate, RotateBackwardMenuItem, RotateForwardMenuItem } = rotatePluginInstance;
         const { SwitchScrollMode, SwitchScrollModeMenuItem } = scrollModePluginInstance;
+        const { SwitchSelectionMode, SwitchSelectionModeMenuItem } = selectionModePluginInstance;
         const { CurrentScale, Zoom, ZoomIn, ZoomOut } = zoomPluginInstance;
 
         const NumberOfPages = () => (
@@ -105,6 +110,8 @@ const toolbarPlugin = (): ToolbarPlugin => {
                     ShowPropertiesMenuItem,
                     SwitchScrollMode,
                     SwitchScrollModeMenuItem,
+                    SwitchSelectionMode,
+                    SwitchSelectionModeMenuItem,
                     Zoom,
                     ZoomIn,
                     ZoomOut,
