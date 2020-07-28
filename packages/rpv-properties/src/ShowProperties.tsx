@@ -13,6 +13,7 @@ import InfoIcon from './InfoIcon';
 import PropertiesModal from './PropertiesModal';
 import ShowPropertiesButton from './ShowPropertiesButton';
 import StoreProps from './StoreProps';
+import useDocument from './useDocument';
 
 export interface RenderShowPropertiesProps {
     icon: ReactElement;
@@ -30,13 +31,13 @@ const ShowProperties: FC<{
     children?: RenderShowProperties,
     store: Store<StoreProps>,
 }> = ({ children, store }) => {
+    const { currentDoc } = useDocument(store);
     const l10n = useContext(LocalizationContext);
 
     const label = (l10n && l10n.plugins && l10n.plugins.properties)
             ? l10n.plugins.properties.showProperties
             : 'Show properties';
 
-    const doc = store.get('doc');
     const fileName = store.get('fileName') || '';
 
     const defaultChildren = (props: RenderShowPropertiesProps) => (
@@ -45,7 +46,7 @@ const ShowProperties: FC<{
     const render = children || defaultChildren;
 
     return (
-        doc
+        currentDoc
             ? (
                 <Modal
                     target={
@@ -56,7 +57,7 @@ const ShowProperties: FC<{
                         })
                     }
                     content={
-                        (toggle: Toggle) => <PropertiesModal doc={doc} fileName={fileName} onToggle={toggle} />
+                        (toggle: Toggle) => <PropertiesModal doc={currentDoc} fileName={fileName} onToggle={toggle} />
                     }
                     closeOnClickOutside={true}
                     closeOnEscape={true}

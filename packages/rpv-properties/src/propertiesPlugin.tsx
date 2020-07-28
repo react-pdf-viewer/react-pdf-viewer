@@ -33,15 +33,7 @@ const propertiesPlugin = (): PropertiesPlugin => {
 
     const ShowPropertiesMenuItemDecorator = (props: ShowPropertiesMenuItemProps) => (
         <ShowPropertiesDecorator>
-            {
-                (p) => (
-                    <ShowPropertiesMenuItem
-                        icon={p.icon}
-                        label={p.label}
-                        onClick={() => { p.onClick(); props.onClick(); }}
-                    />
-                )
-            }
+            {(p) => <ShowPropertiesMenuItem {...p} />}
         </ShowPropertiesDecorator>
     );
 
