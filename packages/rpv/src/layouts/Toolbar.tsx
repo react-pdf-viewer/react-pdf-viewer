@@ -21,7 +21,6 @@ import Match from '../search/Match';
 import SearchPopover from '../search/SearchPopover';
 import SelectionMode from '../SelectionMode';
 import PdfJs from '../vendors/PdfJs';
-import MoreActionsPopover from './MoreActionsPopover';
 
 interface ToolbarProps {
     doc: PdfJs.PdfDocument;
@@ -53,14 +52,6 @@ const Toolbar: React.FC<ToolbarProps> = ({
     const renderToggle = (): LocalizationMap => l10n.toolbar.toggleSidebar;
 
     return renderToolbar({
-        moreActionsPopover: (
-            <MoreActionsPopover
-                doc={doc}
-                fileName={fileName}
-                selectionMode={selectionMode}
-                onChangeSelectionMode={onChangeSelectionMode}
-            />
-        ),
         searchPopover: (
             <SearchPopover doc={doc} onJumpToMatch={onJumpToMatch} onSearchFor={onSearchFor} />
         ),
