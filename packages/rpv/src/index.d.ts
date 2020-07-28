@@ -129,8 +129,6 @@ export type Toggle = (status?: ToggleStatus) => void;
 export interface ToolbarSlot {
     toggleSidebarButton: React.ReactNode;
     searchPopover: React.ReactNode;
-    textSelectionButton: React.ReactNode;
-    handToolButton: React.ReactNode;
     moreActionsPopover: React.ReactNode;
 }
 

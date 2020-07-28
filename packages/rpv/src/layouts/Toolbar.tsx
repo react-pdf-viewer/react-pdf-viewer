@@ -50,24 +50,9 @@ const Toolbar: React.FC<ToolbarProps> = ({
         onToggleSidebar();
     };
 
-    const activateTextSelectionMode = (): void => onChangeSelectionMode(SelectionMode.Text);
-    const activateHandMode = (): void => onChangeSelectionMode(SelectionMode.Hand);
-
     const renderToggle = (): LocalizationMap => l10n.toolbar.toggleSidebar;
-    const renderTextSelection = (): LocalizationMap => l10n.toolbar.textSelectionTool;
-    const renderHandTool = (): LocalizationMap => l10n.toolbar.handTool;
 
     return renderToolbar({
-        handToolButton: (
-            <Tooltip
-                position={Position.BottomCenter}
-                target={
-                    <Button onClick={activateHandMode} isSelected={selectionMode === SelectionMode.Hand}><HandToolIcon /></Button>
-                }
-                content={renderHandTool}
-                offset={TOOLTIP_OFFSET}
-            />
-        ),
         moreActionsPopover: (
             <MoreActionsPopover
                 doc={doc}
@@ -78,16 +63,6 @@ const Toolbar: React.FC<ToolbarProps> = ({
         ),
         searchPopover: (
             <SearchPopover doc={doc} onJumpToMatch={onJumpToMatch} onSearchFor={onSearchFor} />
-        ),
-        textSelectionButton: (
-            <Tooltip
-                position={Position.BottomCenter}
-                target={
-                    <Button onClick={activateTextSelectionMode} isSelected={selectionMode === SelectionMode.Text}><TextSelectionIcon /></Button>
-                }
-                content={renderTextSelection}
-                offset={TOOLTIP_OFFSET}
-            />
         ),
         toggleSidebarButton: (
             <Tooltip
