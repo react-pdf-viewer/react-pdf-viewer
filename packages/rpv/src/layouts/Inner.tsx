@@ -8,7 +8,6 @@
 
 import React, { useContext, useEffect, useRef, useState } from 'react';
 
-import useDragScroll from '../hooks/useDragScroll';
 import useToggle from '../hooks/useToggle';
 import PageLayer from '../layers/PageLayer';
 import Slot from '../layouts/Slot';
