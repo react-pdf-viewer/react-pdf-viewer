@@ -9,18 +9,14 @@
 import React, { useContext, useState } from 'react';
 
 import Button from '../components/Button';
-import { Toggle } from '../hooks/useToggle';
 import HandToolIcon from '../icons/HandToolIcon';
-import InfoIcon from '../icons/InfoIcon';
 import LeftSidebarIcon from '../icons/LeftSidebarIcon';
 import TextSelectionIcon from '../icons/TextSelectionIcon';
 import { RenderToolbarSlot } from './ToolbarSlot';
 import LocalizationContext from '../localization/LocalizationContext';
 import LocalizationMap from '../localization/LocalizationMap';
-import Modal from '../portal/Modal';
 import Position from '../portal/Position';
 import Tooltip from '../portal/Tooltip';
-import PropertiesModal from '../property/PropertiesModal';
 import Match from '../search/Match';
 import SearchPopover from '../search/SearchPopover';
 import SelectionMode from '../SelectionMode';
@@ -60,28 +56,8 @@ const Toolbar: React.FC<ToolbarProps> = ({
     const renderToggle = (): LocalizationMap => l10n.toolbar.toggleSidebar;
     const renderTextSelection = (): LocalizationMap => l10n.toolbar.textSelectionTool;
     const renderHandTool = (): LocalizationMap => l10n.toolbar.handTool;
-    const renderDocumentProperties = (): LocalizationMap => l10n.toolbar.documentProperties;
-    const renderPropertyButton = (toggle: Toggle): React.ReactElement => (
-        <Tooltip
-            position={Position.BottomCenter}
-            target={<Button onClick={toggle}><InfoIcon /></Button>}
-            content={renderDocumentProperties}
-            offset={TOOLTIP_OFFSET}
-        />
-    );
-    const renderPropertiesModal = (toggle: Toggle): React.ReactElement => (
-        <PropertiesModal doc={doc} fileName={fileName} onToggle={toggle} />
-    );
 
     return renderToolbar({
-        documentPropertiesButton: (
-            <Modal
-                target={renderPropertyButton}
-                content={renderPropertiesModal}
-                closeOnClickOutside={true}
-                closeOnEscape={true}
-            />
-        ),
         handToolButton: (
             <Tooltip
                 position={Position.BottomCenter}

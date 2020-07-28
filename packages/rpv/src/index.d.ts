@@ -131,7 +131,6 @@ export interface ToolbarSlot {
     searchPopover: React.ReactNode;
     textSelectionButton: React.ReactNode;
     handToolButton: React.ReactNode;
-    documentPropertiesButton: React.ReactNode;
     moreActionsPopover: React.ReactNode;
 }
 
