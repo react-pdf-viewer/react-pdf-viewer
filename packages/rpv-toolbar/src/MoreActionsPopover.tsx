@@ -21,7 +21,10 @@ const PORTAL_OFFSET = { left: 0, top: 8 };
 
 const MoreActionsPopover: React.FC<MoreActionsPopoverProps> = ({ toolbarSlot }) => {
     const l10n = useContext(LocalizationContext);
-    const { GoToFirstPageMenuItem, GoToLastPageMenuItem, RotateBackwardMenuItem, RotateForwardMenuItem, SwitchScrollModeMenuItem } = toolbarSlot;
+    const {
+        GoToFirstPageMenuItem, GoToLastPageMenuItem, RotateBackwardMenuItem, RotateForwardMenuItem, ShowPropertiesMenuItem,
+        SwitchScrollModeMenuItem,
+    } = toolbarSlot;
 
     const renderTarget = (toggle: Toggle, opened: boolean): React.ReactElement => {
         const label = (l10n && l10n.plugins && l10n.plugins.toolbar)
@@ -50,6 +53,8 @@ const MoreActionsPopover: React.FC<MoreActionsPopoverProps> = ({ toolbarSlot }) 
                 <SwitchScrollModeMenuItem mode={ScrollMode.Vertical} onClick={toggle} />
                 <SwitchScrollModeMenuItem mode={ScrollMode.Horizontal} onClick={toggle} />
                 <SwitchScrollModeMenuItem mode={ScrollMode.Wrapped} onClick={toggle} />
+                <MenuDivider />
+                <ShowPropertiesMenuItem onClick={toggle} />
             </Menu>
         );
     };

@@ -15,6 +15,7 @@ import fullScreenPlugin from '@phuocng/rpv-full-screen';
 import openPlugin from '@phuocng/rpv-open';
 import pageNavigationPlugin from '@phuocng/rpv-page-navigation';
 import printPlugin from '@phuocng/rpv-print';
+import propertiesPlugin from '@phuocng/rpv-properties';
 import rotatePlugin from '@phuocng/rpv-rotate';
 import scrollModePlugin from '@phuocng/rpv-scroll-mode';
 import zoomPlugin from '@phuocng/rpv-zoom';
@@ -24,6 +25,7 @@ import '@phuocng/rpv-full-screen/cjs/rpv-full-screen.css';
 import '@phuocng/rpv-open/cjs/rpv-open.css';
 import '@phuocng/rpv-page-navigation/cjs/rpv-page-navigation.css';
 import '@phuocng/rpv-print/cjs/rpv-print.css';
+import '@phuocng/rpv-properties/cjs/rpv-properties.css';
 import '@phuocng/rpv-scroll-mode/cjs/rpv-scroll-mode.css';
 import '@phuocng/rpv-zoom/cjs/rpv-zoom.css';
 
@@ -40,6 +42,7 @@ const toolbarPlugin = (): ToolbarPlugin => {
     const openPluginInstance = openPlugin();
     const pageNavigationPluginInstance = pageNavigationPlugin();
     const printPluginInstance = printPlugin();
+    const propertiesPluginInstance = propertiesPlugin();
     const rotatePluginInstance = rotatePlugin();
     const scrollModePluginInstance = scrollModePlugin();
     const zoomPluginInstance = zoomPlugin();
@@ -51,6 +54,7 @@ const toolbarPlugin = (): ToolbarPlugin => {
         openPluginInstance,
         pageNavigationPluginInstance,
         printPluginInstance,
+        propertiesPluginInstance,
         rotatePluginInstance,
         scrollModePluginInstance,
         zoomPluginInstance,
@@ -65,6 +69,7 @@ const toolbarPlugin = (): ToolbarPlugin => {
             GoToLastPageMenuItem, GoToNextPage, GoToPreviousPage,
         } = pageNavigationPluginInstance;
         const { Print } = printPluginInstance;
+        const { ShowProperties, ShowPropertiesMenuItem } = propertiesPluginInstance;
         const { Rotate, RotateBackwardMenuItem, RotateForwardMenuItem } = rotatePluginInstance;
         const { SwitchScrollMode, SwitchScrollModeMenuItem } = scrollModePluginInstance;
         const { CurrentScale, Zoom, ZoomIn, ZoomOut } = zoomPluginInstance;
@@ -96,6 +101,8 @@ const toolbarPlugin = (): ToolbarPlugin => {
                     Rotate,
                     RotateBackwardMenuItem,
                     RotateForwardMenuItem,
+                    ShowProperties,
+                    ShowPropertiesMenuItem,
                     SwitchScrollMode,
                     SwitchScrollModeMenuItem,
                     Zoom,

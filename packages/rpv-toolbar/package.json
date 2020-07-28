@@ -42,6 +42,7 @@
         "@phuocng/rpv-open": "^2.0.0",
         "@phuocng/rpv-page-navigation": "^2.0.0",
         "@phuocng/rpv-print": "^2.0.0",
+        "@phuocng/rpv-properties": "^2.0.0",
         "@phuocng/rpv-rotate": "^2.0.0",
         "@phuocng/rpv-scroll-mode": "^2.0.0",
         "@phuocng/rpv-zoom": "^2.0.0"
