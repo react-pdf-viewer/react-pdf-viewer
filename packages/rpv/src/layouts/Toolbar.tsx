@@ -9,9 +9,7 @@
 import React, { useContext, useState } from 'react';
 
 import Button from '../components/Button';
-import HandToolIcon from '../icons/HandToolIcon';
 import LeftSidebarIcon from '../icons/LeftSidebarIcon';
-import TextSelectionIcon from '../icons/TextSelectionIcon';
 import { RenderToolbarSlot } from './ToolbarSlot';
 import LocalizationContext from '../localization/LocalizationContext';
 import LocalizationMap from '../localization/LocalizationMap';
