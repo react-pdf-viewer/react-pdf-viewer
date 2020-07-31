@@ -11,14 +11,12 @@ import React from 'react';
 import './defaultToolbar.less';
 import MoreActionsPopover from './MoreActionsPopover';
 import ToolbarSlot, { RenderToolbarSlot } from './ToolbarSlot';
-import { SelectionMode } from '@phuocng/rpv-selection-mode';
 
 const defaultToolbar: RenderToolbarSlot = (toolbarSlot: ToolbarSlot): React.ReactElement => {
     const {
         CurrentPageInput, Download, EnterFullScreen, GoToNextPage, GoToPreviousPage,
         NumberOfPages, Open, Print, Zoom, ZoomIn,
         ZoomOut,
-        SwitchSelectionMode
     } = toolbarSlot;
 
     return (
@@ -35,9 +33,6 @@ const defaultToolbar: RenderToolbarSlot = (toolbarSlot: ToolbarSlot): React.Reac
                 </div>
             </div>
             <div className='rpv-toolbar-center'>
-                <div className='rpv-toolbar-item'>
-                    <SwitchSelectionMode mode={SelectionMode.Hand} />
-                </div>
                 <div className='rpv-toolbar-item'>
                     <ZoomOut />
                 </div>

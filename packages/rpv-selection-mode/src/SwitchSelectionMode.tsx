@@ -12,7 +12,6 @@ import { Store } from '@phuocng/rpv';
 import SelectionMode from './SelectionMode';
 import StoreProps from './StoreProps';
 import SwitchSelectionModeButton from './SwitchSelectionModeButton';
-import useDragScroll from './useDragScroll';
 
 export interface RenderSwitchSelectionModeProps {
     isSelected: boolean;
@@ -32,11 +31,9 @@ const SwitchSelectionMode: FC<{
     mode: SelectionMode,
     store: Store<StoreProps>,
 }> = ({ children, mode, store }) => {
-    const { selectionMode, switchSelectionMode } = useDragScroll(store);
+    const onClick = () => store.update('selectionMode', mode);
 
-    const onClick = () => switchSelectionMode(mode);
-
-    const isSelected = mode === selectionMode;
+    const isSelected = mode === store.get('selectionMode');
 
     const defaultChildren = (props: RenderSwitchSelectionModeProps) => (
         <SwitchSelectionModeButton isSelected={isSelected} mode={props.mode} onClick={props.onClick} />

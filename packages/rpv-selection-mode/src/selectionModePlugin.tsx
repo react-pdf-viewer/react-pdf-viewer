@@ -7,12 +7,13 @@
  */
 
 import React, { ReactElement } from 'react';
-import { createStore, Plugin, PluginFunctions } from '@phuocng/rpv';
+import { createStore, Plugin, PluginFunctions, RenderViewerProps, Slot } from '@phuocng/rpv';
 
 import SelectionMode from './SelectionMode';
 import StoreProps from './StoreProps';
 import SwitchSelectionMode, { SwitchSelectionModeProps } from './SwitchSelectionMode';
 import SwitchSelectionModeMenuItem from './SwitchSelectionModeMenuItem';
+import Tracker from './Tracker';
 
 export interface SwitchSelectionModeMenuItemProps {
     mode: SelectionMode;
@@ -47,10 +48,25 @@ const scrollModePlugin = (): SelectionModePlugin => {
         </SwitchSelectionModeDecorator>
     );
 
+    const renderViewer = (props: RenderViewerProps): Slot => {
+        let currentSlot = props.slot;
+        if (currentSlot.children) {
+            currentSlot.children = (
+                <>
+                <Tracker store={store} />
+                {currentSlot.children}
+                </>
+            );
+        }
+
+        return currentSlot;
+    };
+
     return {
         install: (pluginFunctions: PluginFunctions) => {
             store.update('getPagesRef', pluginFunctions.getPagesRef);
         },
+        renderViewer,
         SwitchSelectionMode: SwitchSelectionModeDecorator,
         SwitchSelectionModeMenuItem: SwitchSelectionModeMenuItemDecorator,
     };
