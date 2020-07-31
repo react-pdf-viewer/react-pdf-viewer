@@ -16,7 +16,6 @@ import { RenderPage } from './layouts/RenderPage';
 import DocumentLoader, { RenderError } from './loader/DocumentLoader';
 import LocalizationMap from './localization/LocalizationMap';
 import LocalizationProvider from './localization/LocalizationProvider';
-import SelectionMode from './SelectionMode';
 import SpecialZoomLevel from './SpecialZoomLevel';
 import ThemeProvider from './theme/ThemeProvider';
 import PdfJs from './vendors/PdfJs';
@@ -86,7 +85,6 @@ const Viewer: React.FC<ViewerProps> = ({
     prefixClass,
     renderError,
     renderPage,
-    selectionMode = SelectionMode.Text,
     onCanvasLayerRender = () => {/**/},
     onDocumentLoad = () => {/**/},
     onPageChange = () => {/**/},
@@ -132,7 +130,6 @@ const Viewer: React.FC<ViewerProps> = ({
                                         pageSize={ps}
                                         plugins={plugins}
                                         renderPage={renderPage}
-                                        selectionMode={selectionMode}
                                         viewerState={{
                                             file,
                                             pageIndex: initialPage,

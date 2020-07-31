@@ -8,13 +8,11 @@
 
 import React, { useContext, useEffect, useRef, useState } from 'react';
 
-import useDragScroll from '../hooks/useDragScroll';
 import useToggle from '../hooks/useToggle';
 import PageLayer from '../layers/PageLayer';
 import Slot from '../layouts/Slot';
 import OpenFile from '../OpenFile';
 import Match from '../search/Match';
-import SelectionMode from '../SelectionMode';
 import SpecialZoomLevel from '../SpecialZoomLevel';
 import ThemeContext from '../theme/ThemeContext';
 import { Plugin } from '../types/Plugin';
@@ -41,7 +39,6 @@ interface InnerProps {
     pageSize: PageSize;
     plugins: Plugin[];
     renderPage?: RenderPage;
-    selectionMode: SelectionMode;
     viewerState: ViewerState;
     onCanvasLayerRender(e: CanvasLayerRenderEvent): void;
     onDocumentLoad(e: DocumentLoadEvent): void;
@@ -52,7 +49,7 @@ interface InnerProps {
 }
 
 const Inner: React.FC<InnerProps> = ({
-    defaultScale, doc, file, initialPage, keyword, pageSize, plugins, renderPage, selectionMode, viewerState,
+    defaultScale, doc, file, initialPage, keyword, pageSize, plugins, renderPage, viewerState,
     onCanvasLayerRender, onDocumentLoad, onOpenFile, onPageChange, onTextLayerRender, onZoom,
 }) => {
     const theme = useContext(ThemeContext);
@@ -71,8 +68,6 @@ const Inner: React.FC<InnerProps> = ({
         pageIndex: -1,
     });
     const stateRef = useRef<ViewerState>(viewerState);
-    const [currentMode, setCurrentMode] = useState<SelectionMode>(selectionMode);
-    const { toggleDragScroll } = useDragScroll(pagesRef);
     const toggleSidebar = useToggle();
 
     const { numPages } = doc;
@@ -180,12 +175,6 @@ const Inner: React.FC<InnerProps> = ({
         });
     }, [currentPage]);
 
-    // Manage the selection mode
-    const changeSelectionMode = (mode: SelectionMode): void => {
-        toggleDragScroll(mode === SelectionMode.Hand);
-        setCurrentMode(mode);
-    };
-
     const zoom = (newScale: number | SpecialZoomLevel): void => {
         const pagesEle = pagesRef.current;
         if (!pagesEle) {
@@ -224,10 +213,6 @@ const Inner: React.FC<InnerProps> = ({
     };
 
     useEffect(() => {
-        // Toggle the drag scroll if the hand tool is set initially
-        if (selectionMode === SelectionMode.Hand) {
-            toggleDragScroll(true);
-        }
         // If the default scale is set
         if (defaultScale) {
             zoom(defaultScale);
@@ -374,7 +359,6 @@ const Inner: React.FC<InnerProps> = ({
                     pageWidth,
                     rotation,
                     slot,
-                    changeSelectionMode,
                     jumpToPage,
                     openFile,
                     rotate,

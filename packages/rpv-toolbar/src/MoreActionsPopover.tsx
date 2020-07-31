@@ -9,6 +9,7 @@
 import React, { useContext } from 'react';
 import { Button, LocalizationContext, Menu, MenuDivider, Popover, Position, Toggle, Tooltip } from '@phuocng/rpv';
 import { ScrollMode } from '@phuocng/rpv-scroll-mode';
+import { SelectionMode } from '@phuocng/rpv-selection-mode';
 
 import MoreIcon from './MoreIcon';
 import ToolbarSlot from './ToolbarSlot';
@@ -23,7 +24,7 @@ const MoreActionsPopover: React.FC<MoreActionsPopoverProps> = ({ toolbarSlot }) 
     const l10n = useContext(LocalizationContext);
     const {
         GoToFirstPageMenuItem, GoToLastPageMenuItem, RotateBackwardMenuItem, RotateForwardMenuItem, ShowPropertiesMenuItem,
-        SwitchScrollModeMenuItem,
+        SwitchScrollModeMenuItem, SwitchSelectionModeMenuItem,
     } = toolbarSlot;
 
     const renderTarget = (toggle: Toggle, opened: boolean): React.ReactElement => {
@@ -49,6 +50,9 @@ const MoreActionsPopover: React.FC<MoreActionsPopoverProps> = ({ toolbarSlot }) 
                 <MenuDivider />
                 <RotateForwardMenuItem onClick={toggle} />
                 <RotateBackwardMenuItem onClick={toggle} />
+                <MenuDivider />
+                <SwitchSelectionModeMenuItem mode={SelectionMode.Text} onClick={toggle} />
+                <SwitchSelectionModeMenuItem mode={SelectionMode.Hand} onClick={toggle} />
                 <MenuDivider />
                 <SwitchScrollModeMenuItem mode={ScrollMode.Vertical} onClick={toggle} />
                 <SwitchScrollModeMenuItem mode={ScrollMode.Horizontal} onClick={toggle} />

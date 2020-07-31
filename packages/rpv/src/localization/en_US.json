@@ -24,10 +24,8 @@
         "thumbnail": "Thumbnail"
     },
     "toolbar": {
-        "handTool": "Hand tool",
         "moreActions": "More actions",
         "search": "Search",
-        "textSelectionTool": "Text selection tool",
         "toggleSidebar":  "Toggle sidebar"
     },
     "wrongPassword": {

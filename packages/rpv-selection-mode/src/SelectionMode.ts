@@ -7,8 +7,8 @@
  */
 
 enum SelectionMode {
-    Hand,
-    Text,
+    Hand = 'Hand',
+    Text = 'Text',
 }
 
 export default SelectionMode;

@@ -25,11 +25,6 @@ const defaultToolbar: RenderToolbarSlot = (toolbarSlot: ToolbarSlot): React.Reac
                     {toolbarSlot.searchPopover}
                 </div>
             </div>
-            <div className={`${theme.prefixClass}-toolbar-right`}>
-                <div className={`${theme.prefixClass}-toolbar-item`}>
-                    {toolbarSlot.moreActionsPopover}
-                </div>
-            </div>
         </div>
     );
 };

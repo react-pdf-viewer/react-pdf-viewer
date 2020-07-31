@@ -11,9 +11,6 @@ import React from 'react';
 interface ToolbarSlot {
     toggleSidebarButton: React.ReactNode;
     searchPopover: React.ReactNode;
-    textSelectionButton: React.ReactNode;
-    handToolButton: React.ReactNode;
-    moreActionsPopover: React.ReactNode;
 }
 
 export type RenderToolbarSlot = (toolbarSlot: ToolbarSlot) => React.ReactElement;

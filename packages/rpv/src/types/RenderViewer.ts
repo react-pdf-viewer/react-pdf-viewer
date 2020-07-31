@@ -9,7 +9,6 @@
 import { RefObject } from 'react';
 
 import Slot from '../layouts/Slot';
-import SelectionMode from '../SelectionMode';
 import SpecialZoomLevel from '../SpecialZoomLevel';
 import PdfJs from '../vendors/PdfJs';
 
@@ -20,7 +19,6 @@ interface RenderViewerProps {
     pageWidth: number;
     rotation: number;
     slot: Slot;
-    changeSelectionMode(mode: SelectionMode): void;
     openFile(file: File): void;
     jumpToPage(page: number): void;
     rotate(degree: number): void;

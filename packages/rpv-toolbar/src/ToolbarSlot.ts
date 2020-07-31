@@ -16,6 +16,7 @@ import { PrintProps } from '@phuocng/rpv-print';
 import { ShowPropertiesProps, ShowPropertiesMenuItemProps } from '@phuocng/rpv-properties';
 import { RotateDecoratorProps, RotateProps } from '@phuocng/rpv-rotate';
 import { SwitchScrollModeMenuItemProps, SwitchScrollModeProps } from '@phuocng/rpv-scroll-mode';
+import { SwitchSelectionModeMenuItemProps, SwitchSelectionModeProps } from '@phuocng/rpv-selection-mode';
 import { CurrentScaleProps, ZoomProps, ZoomInProps, ZoomOutProps } from '@phuocng/rpv-zoom';
 
 interface ToolbarSlot {
@@ -40,6 +41,8 @@ interface ToolbarSlot {
     ShowPropertiesMenuItem(props: ShowPropertiesMenuItemProps): ReactElement;
     SwitchScrollMode(props: SwitchScrollModeProps): ReactElement;
     SwitchScrollModeMenuItem(props: SwitchScrollModeMenuItemProps): ReactElement;
+    SwitchSelectionMode(props: SwitchSelectionModeProps): ReactElement;
+    SwitchSelectionModeMenuItem(props: SwitchSelectionModeMenuItemProps): ReactElement;
     Zoom(props: ZoomProps): ReactElement;
     ZoomIn(props: ZoomInProps): ReactElement;
     ZoomOut(props: ZoomOutProps): ReactElement;
