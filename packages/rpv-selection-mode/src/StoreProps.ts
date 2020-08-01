@@ -12,7 +12,7 @@ import SelectionMode from './SelectionMode';
 
 interface StoreProps {
     getPagesRef?(): RefObject<HTMLDivElement>;
-    selectionMode: SelectionMode;
+    selectionMode?: SelectionMode;
 }
 
 export default StoreProps;

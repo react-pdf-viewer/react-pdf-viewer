@@ -411,8 +411,6 @@ export interface ViewerProps {
     prefixClass?: string;
     renderError?: RenderError;
     renderPage?: RenderPage;
-    // TODO: Move to plugin
-    // selectionMode?: SelectionMode;
     onCanvasLayerRender?(e: CanvasLayerRenderEvent): void;
     onDocumentLoad?(e: DocumentLoadEvent): void;
     onPageChange?(e: PageChangeEvent): void;

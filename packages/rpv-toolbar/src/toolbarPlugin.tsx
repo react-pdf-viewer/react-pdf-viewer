@@ -18,7 +18,7 @@ import printPlugin from '@phuocng/rpv-print';
 import propertiesPlugin from '@phuocng/rpv-properties';
 import rotatePlugin from '@phuocng/rpv-rotate';
 import scrollModePlugin from '@phuocng/rpv-scroll-mode';
-import selectionModePlugin from '@phuocng/rpv-selection-mode';
+import selectionModePlugin, { SelectionMode } from '@phuocng/rpv-selection-mode';
 import zoomPlugin from '@phuocng/rpv-zoom';
 
 import '@phuocng/rpv-drop/cjs/rpv-drop.css';
@@ -37,7 +37,9 @@ interface ToolbarPlugin extends Plugin {
     Toolbar: (props: ToolbarProps) => React.ReactElement;
 }
 
-const toolbarPlugin = (): ToolbarPlugin => {
+const toolbarPlugin = (props?: {
+    selectionMode?: SelectionMode,
+}): ToolbarPlugin => {
     const downloadPluginInstance = downloadPlugin();
     const dropPluginInstance = dropPlugin();
     const fullScreenPluginInstance = fullScreenPlugin();
@@ -47,7 +49,9 @@ const toolbarPlugin = (): ToolbarPlugin => {
     const propertiesPluginInstance = propertiesPlugin();
     const rotatePluginInstance = rotatePlugin();
     const scrollModePluginInstance = scrollModePlugin();
-    const selectionModePluginInstance = selectionModePlugin();
+    const selectionModePluginInstance = selectionModePlugin(
+        props ? { selectionMode: props.selectionMode } : {}
+    );
     const zoomPluginInstance = zoomPlugin();
 
     const plugins = [

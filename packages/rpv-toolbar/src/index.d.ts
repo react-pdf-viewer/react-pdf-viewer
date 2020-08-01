@@ -16,7 +16,7 @@ import { PrintProps } from '@phuocng/rpv-print';
 import { ShowPropertiesProps, ShowPropertiesMenuItemProps } from '@phuocng/rpv-properties';
 import { RotateDecoratorProps, RotateProps } from '@phuocng/rpv-rotate';
 import { SwitchScrollModeMenuItemProps, SwitchScrollModeProps } from '@phuocng/rpv-scroll-mode';
-import { SwitchSelectionModeMenuItemProps, SwitchSelectionModeProps } from '@phuocng/rpv-selection-mode';
+import { SelectionMode, SwitchSelectionModeMenuItemProps, SwitchSelectionModeProps } from '@phuocng/rpv-selection-mode';
 import { CurrentScaleProps, ZoomProps, ZoomInProps, ZoomOutProps } from '@phuocng/rpv-zoom';
 
 export interface ToolbarSlot {
@@ -59,4 +59,6 @@ export interface ToolbarPlugin extends Plugin {
     Toolbar: (props: ToolbarProps) => ReactElement;
 }
 
-export default function toolbarPlugin(): ToolbarPlugin;
+export default function toolbarPlugin(props?: {
+    selectionMode?: SelectionMode,
+}): ToolbarPlugin;

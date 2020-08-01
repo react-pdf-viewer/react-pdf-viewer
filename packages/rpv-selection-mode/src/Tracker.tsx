@@ -9,6 +9,7 @@
 import React, { FC, RefObject, useEffect, useRef, useState } from 'react';
 import { Store } from '@phuocng/rpv';
 
+import './selectionMode.less';
 import SelectionMode from './SelectionMode';
 import StoreProps from './StoreProps';
 
@@ -44,10 +45,7 @@ const Tracker: FC<{
 
     const onMouseDownHandler = (e: MouseEvent): void => {
         const ele = pagesRef.current;
-        if (!ele) {
-            return;
-        }
-        if (selectionMode === SelectionMode.Text) {
+        if (!ele || selectionMode === SelectionMode.Text) {
             return;
         }
 
