@@ -37,7 +37,9 @@ export interface SelectionModePlugin extends Plugin {
     SwitchSelectionModeMenuItem(props: SwitchSelectionModeMenuItemProps): ReactElement;
 }
 
-export default function selectionModePlugin(): SelectionModePlugin;
+export default function selectionModePlugin(props?: {
+    selectionMode?: SelectionMode,
+}): SelectionModePlugin;
 
 // -----
 // Icons

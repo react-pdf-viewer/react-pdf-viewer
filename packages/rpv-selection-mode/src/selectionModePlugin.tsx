@@ -25,10 +25,10 @@ interface SelectionModePlugin extends Plugin {
     SwitchSelectionModeMenuItem(props: SwitchSelectionModeMenuItemProps): ReactElement;
 }
 
-const scrollModePlugin = (): SelectionModePlugin => {
-    const store = createStore<StoreProps>({
-        selectionMode: SelectionMode.Text,
-    });
+const selectionModePlugin = (props?: {
+    selectionMode?: SelectionMode,
+}): SelectionModePlugin => {
+    const store = createStore<StoreProps>();
 
     const SwitchSelectionModeDecorator = (props: SwitchSelectionModeProps) => (
         <SwitchSelectionMode {...props} store={store} />
@@ -64,6 +64,7 @@ const scrollModePlugin = (): SelectionModePlugin => {
 
     return {
         install: (pluginFunctions: PluginFunctions) => {
+            store.update('selectionMode', props ? props.selectionMode : SelectionMode.Text);
             store.update('getPagesRef', pluginFunctions.getPagesRef);
         },
         renderViewer,
@@ -72,4 +73,4 @@ const scrollModePlugin = (): SelectionModePlugin => {
     };
 };
 
-export default scrollModePlugin;
+export default selectionModePlugin;

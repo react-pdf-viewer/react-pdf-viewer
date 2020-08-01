@@ -1,11 +1,14 @@
 import React from 'react';
 import Viewer, { Worker } from '@phuocng/rpv';
+import { SelectionMode } from '@phuocng/rpv-selection-mode';
 import toolbarPlugin from '@phuocng/rpv-toolbar';
 
 import '@phuocng/rpv/cjs/rpv.css';
 import '@phuocng/rpv-toolbar/cjs/rpv-toolbar.css';
 
-const toolbar = toolbarPlugin();
+const toolbar = toolbarPlugin({
+    selectionMode: SelectionMode.Text,
+});
 
 const { Toolbar } = toolbar;
 

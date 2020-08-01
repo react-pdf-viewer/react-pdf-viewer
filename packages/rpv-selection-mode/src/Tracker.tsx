@@ -45,10 +45,7 @@ const Tracker: FC<{
 
     const onMouseDownHandler = (e: MouseEvent): void => {
         const ele = pagesRef.current;
-        if (!ele) {
-            return;
-        }
-        if (selectionMode === SelectionMode.Text) {
+        if (!ele || selectionMode === SelectionMode.Text) {
             return;
         }
 
