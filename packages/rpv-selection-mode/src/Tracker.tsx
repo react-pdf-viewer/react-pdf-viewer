@@ -9,6 +9,7 @@
 import React, { FC, RefObject, useEffect, useRef, useState } from 'react';
 import { Store } from '@phuocng/rpv';
 
+import './selectionMode.less';
 import SelectionMode from './SelectionMode';
 import StoreProps from './StoreProps';
 
