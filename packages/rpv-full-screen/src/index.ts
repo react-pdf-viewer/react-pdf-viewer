@@ -14,5 +14,4 @@ export default fullScreenPlugin;
 export { ExitFullScreenIcon, FullScreenIcon };
 
 // Types
-import { EnterFullScreenProps as EnterFullScreenPropsType } from './EnterFullScreen';
-export type EnterFullScreenProps = EnterFullScreenPropsType;
+export type { EnterFullScreenProps } from './EnterFullScreen';

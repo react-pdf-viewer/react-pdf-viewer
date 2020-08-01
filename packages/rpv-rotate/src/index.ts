@@ -6,20 +6,13 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import rotatePlugin, { RotateDecoratorProps as RotateDecoratorPropsType } from './rotatePlugin';
-import RotateBackwardIcon from './RotateBackwardIcon';
-import RotateForwardIcon from './RotateForwardIcon';
-import RotateDirection from './RotateDirection';
+import rotatePlugin from './rotatePlugin';
+export { default as RotateBackwardIcon } from './RotateBackwardIcon';
+export { default as  RotateForwardIcon } from './RotateForwardIcon';
+export { default as RotateDirection } from './RotateDirection';
 
 export default rotatePlugin;
 
-export {
-    RotateBackwardIcon,
-    RotateDirection,
-    RotateForwardIcon,
-};
-
 // Types
-import { RotateProps as RotatePropsType } from './Rotate';
-export type RotateDecoratorProps = RotateDecoratorPropsType;
-export type RotateProps = RotatePropsType;
+export type { RotateDecoratorProps } from './rotatePlugin';
+export type { RotateProps } from './Rotate';

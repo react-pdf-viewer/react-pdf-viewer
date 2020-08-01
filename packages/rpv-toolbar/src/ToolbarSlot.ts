@@ -19,7 +19,7 @@ import { SwitchScrollModeMenuItemProps, SwitchScrollModeProps } from '@phuocng/r
 import { SwitchSelectionModeMenuItemProps, SwitchSelectionModeProps } from '@phuocng/rpv-selection-mode';
 import { CurrentScaleProps, ZoomProps, ZoomInProps, ZoomOutProps } from '@phuocng/rpv-zoom';
 
-interface ToolbarSlot {
+export default interface ToolbarSlot {
     CurrentPageInput(): ReactElement;
     CurrentPageLabel(props: CurrentPageLabelProps): ReactElement;
     CurrentScale(props: CurrentScaleProps): ReactElement;
@@ -47,7 +47,3 @@ interface ToolbarSlot {
     ZoomIn(props: ZoomInProps): ReactElement;
     ZoomOut(props: ZoomOutProps): ReactElement;
 }
-
-export type RenderToolbarSlot = (toolbarSlot: ToolbarSlot) => ReactElement;
-export type RenderToolbar = (renderToolbar: RenderToolbarSlot) => ReactElement;
-export default ToolbarSlot;

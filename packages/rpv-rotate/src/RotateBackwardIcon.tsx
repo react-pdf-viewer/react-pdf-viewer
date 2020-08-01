@@ -7,7 +7,6 @@
  */
 
 import React from 'react';
-
 import { Icon } from '@phuocng/rpv';
 
 const RotateBackwardIcon: React.FC = () => {

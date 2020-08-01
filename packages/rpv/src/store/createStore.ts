@@ -1,16 +1,24 @@
+/**
+ * A React component to view a PDF document
+ *
+ * @see https://react-pdf-viewer.dev
+ * @license https://react-pdf-viewer.dev/license
+ * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
+ */
+
 type StoreState = Record<string, any>;
-
 type StoreKey<T extends StoreState> = string & keyof T;
-type StoreHandlerType<T> = (params: T) => void;
 
-interface StoreProps<T extends StoreState> {
-    subscribe<K extends StoreKey<T>>(eventName: K, handler: StoreHandlerType<NonNullable<T[K]>>): void;
-    unsubscribe<K extends StoreKey<T>>(eventName: K, handler: StoreHandlerType<NonNullable<T[K]>>): void;
+export type StoreHandler<T> = (params: T) => void;
+
+export interface Store<T extends StoreState> {
+    subscribe<K extends StoreKey<T>>(eventName: K, handler: StoreHandler<NonNullable<T[K]>>): void;
+    unsubscribe<K extends StoreKey<T>>(eventName: K, handler: StoreHandler<NonNullable<T[K]>>): void;
     update<K extends StoreKey<T>>(eventName: K, params: T[K]): void;
     get<K extends StoreKey<T>>(eventName: K): T[K] | undefined;
 }
 
-function createStore<T extends StoreState>(initialState?: T): StoreProps<T> {
+export default function createStore<T extends StoreState>(initialState?: T): Store<T> {
     let state: T = initialState || {} as T;
 
     const listeners: {
@@ -36,7 +44,3 @@ function createStore<T extends StoreState>(initialState?: T): StoreProps<T> {
         },
     };
 };
-
-export type StoreHandler<T> = StoreHandlerType<T>;
-export type Store<T> = StoreProps<T>;
-export default createStore;

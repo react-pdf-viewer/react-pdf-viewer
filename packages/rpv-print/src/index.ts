@@ -6,12 +6,10 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import PrintIcon from './PrintIcon';
+export { default as PrintIcon } from './PrintIcon';
 import printPlugin from './printPlugin';
 
 export default printPlugin;
-export { PrintIcon };
 
 // Types
-import { PrintProps as PrintPropsType } from './Print';
-export type PrintProps = PrintPropsType;
+export type { PrintProps } from './Print';

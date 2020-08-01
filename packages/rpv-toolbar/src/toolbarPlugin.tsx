@@ -8,7 +8,7 @@
 
 import React from 'react';
 
-import { Plugin, PluginFunctions, PluginOnDocumentLoad, RenderViewerProps, ViewerState } from '@phuocng/rpv';
+import { Plugin, PluginFunctions, PluginOnDocumentLoad, RenderViewer, ViewerState } from '@phuocng/rpv';
 import downloadPlugin from '@phuocng/rpv-download';
 import dropPlugin from '@phuocng/rpv-drop';
 import fullScreenPlugin from '@phuocng/rpv-full-screen';
@@ -133,7 +133,7 @@ const toolbarPlugin = (props?: {
                 }
             });
         },
-        renderViewer: (props: RenderViewerProps) => {
+        renderViewer: (props: RenderViewer) => {
             let { slot } = props;
             plugins.forEach(plugin => {
                 if (plugin.renderViewer) {

@@ -9,9 +9,9 @@
 import React from 'react';
 
 import SpecialZoomLevel from '../SpecialZoomLevel';
-import { ViewerState } from './ViewerState';
+import ViewerState from './ViewerState';
 
-export interface PluginFunctionsProps {
+export default interface PluginFunctions {
     getPagesRef(): React.RefObject<HTMLDivElement>;
     getViewerState(): ViewerState;
     jumpToPage(pageIndex: number): void;
@@ -20,5 +20,3 @@ export interface PluginFunctionsProps {
     setViewerState(viewerState: ViewerState): void;
     zoom(scale: number | SpecialZoomLevel): void;
 }
-
-export type PluginFunctions = PluginFunctionsProps;

@@ -8,10 +8,8 @@
 
 import { PdfJs } from '@phuocng/rpv';
 
-interface PropertiesData {
+export default interface PropertiesData {
     fileName: string;
     info: PdfJs.MetaDataInfo;
     length: number;
 }
-
-export default PropertiesData;

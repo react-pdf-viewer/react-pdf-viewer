@@ -19,10 +19,8 @@ export interface RenderShowPropertiesProps {
     onClick(): void;
 }
 
-export type RenderShowProperties = (props: RenderShowPropertiesProps) => ReactElement;
-
 export interface ShowPropertiesProps {
-    children?: RenderShowProperties;
+    children?: (props: RenderShowPropertiesProps) => ReactElement;
 }
 
 export interface PropertiesPlugin extends Plugin {

@@ -7,7 +7,7 @@
  */
 
 import React, { ReactElement } from 'react';
-import { createStore, Plugin, PluginFunctions, RenderViewerProps, Slot } from '@phuocng/rpv';
+import { createStore, Plugin, PluginFunctions, RenderViewer, Slot } from '@phuocng/rpv';
 
 import EnterFullScreen, { EnterFullScreenProps } from './EnterFullScreen';
 import EnterFullScreenButton from './EnterFullScreenButton';
@@ -39,7 +39,7 @@ const fullScreenPlugin = (): FullScreenPlugin => {
         <ExitFullScreenButton store={store} />
     );
 
-    const renderViewer = (props: RenderViewerProps): Slot => {
+    const renderViewer = (props: RenderViewer): Slot => {
         let currentSlot = props.slot;
         if (currentSlot.subSlot) {
             currentSlot.subSlot.children = (

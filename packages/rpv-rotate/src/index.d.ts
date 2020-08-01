@@ -23,10 +23,8 @@ export interface RotateDecoratorProps {
     onClick(): void;
 }
 
-export type RenderRotate = (props: RenderRotateProps) => ReactElement;
-
 export interface RotateProps {
-    children?: RenderRotate;
+    children?: (props: RenderRotateProps) => ReactElement;
     direction: RotateDirection;
 }
 

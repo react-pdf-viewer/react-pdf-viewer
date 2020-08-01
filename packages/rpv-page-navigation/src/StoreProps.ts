@@ -6,10 +6,8 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-interface StoreProps {
+export default interface StoreProps {
     currentPage?: number;
     numberOfPages?: number;
     jumpToPage?(pageIndex: number): void;
 }
-
-export default StoreProps;

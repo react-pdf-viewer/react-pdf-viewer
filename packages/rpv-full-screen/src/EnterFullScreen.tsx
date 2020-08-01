@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { RefObject, useEffect, useRef } from 'react';
+import React, { FC, ReactElement, RefObject, useEffect, useRef } from 'react';
 import { Store } from '@phuocng/rpv';
 
 import EnterFullScreenButton from './EnterFullScreenButton';
@@ -14,16 +14,16 @@ import { addFullScreenChangeListener, exitFullScreen, getFullScreenElement, requ
 import StoreProps from './StoreProps';
 
 export interface RenderEnterFullScreenProps {
-    onClick: () => void;
+    onClick(): void;
 }
 
-type RenderEnterFullScreen = (props: RenderEnterFullScreenProps) => React.ReactElement;
+type RenderEnterFullScreen = (props: RenderEnterFullScreenProps) => ReactElement;
 
 export interface EnterFullScreenProps {
     children?: RenderEnterFullScreen;
 }
 
-const EnterFullScreen: React.FC<{
+const EnterFullScreen: FC<{
     children?: RenderEnterFullScreen,
     store: Store<StoreProps>,
 }> = ({ children, store }) => {

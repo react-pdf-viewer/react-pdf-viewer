@@ -6,8 +6,6 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-interface LocalizationMap {
+export default interface LocalizationMap {
     [key: string]: LocalizationMap;
 }
-
-export default LocalizationMap;

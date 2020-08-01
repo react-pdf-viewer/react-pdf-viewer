@@ -6,14 +6,11 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import InfoIcon from './InfoIcon';
-import propertiesPlugin, { ShowPropertiesMenuItemProps as ShowPropertiesMenuItemPropsType } from './propertiesPlugin';
+export { default as InfoIcon } from './InfoIcon';
+import propertiesPlugin from './propertiesPlugin';
 
 export default propertiesPlugin;
-export { InfoIcon };
 
 // Types
-import { ShowPropertiesProps as ShowPropertiesPropsType } from './ShowProperties';
-
-export type ShowPropertiesProps = ShowPropertiesPropsType;
-export type ShowPropertiesMenuItemProps = ShowPropertiesMenuItemPropsType;
+export type { ShowPropertiesMenuItemProps } from './propertiesPlugin';
+export type { ShowPropertiesProps } from './ShowProperties';

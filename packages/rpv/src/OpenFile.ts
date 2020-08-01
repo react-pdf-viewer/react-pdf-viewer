@@ -8,9 +8,7 @@
 
 import PdfJs from './vendors/PdfJs';
 
-interface OpenFile {
+export default interface OpenFile {
     data: PdfJs.FileData;
     name: string;
 };
-
-export default OpenFile;

@@ -6,28 +6,19 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import DownArrowIcon from './DownArrowIcon';
-import NextIcon from './NextIcon';
-import PreviousIcon from './PreviousIcon';
+export { default as DownArrowIcon } from './DownArrowIcon';
+export { default as NextIcon } from './NextIcon';
+export { default as PreviousIcon } from './PreviousIcon';
 import pageNavigationPlugin from './pageNavigationPlugin';
-import UpArrowIcon from './UpArrowIcon';
+export { default as UpArrowIcon } from './UpArrowIcon';
 
 export default pageNavigationPlugin;
-export { DownArrowIcon, NextIcon, PreviousIcon, UpArrowIcon };
 
 // Types
-import { CurrentPageLabelProps as CurrentPageLabelPropsType } from './CurrentPageLabel';
-import { GoToFirstPageProps as GoToFirstPagePropsType } from './GoToFirstPage';
-import { GoToFirstPageMenuItemProps as GoToFirstPageMenuItemPropsType } from './GoToFirstPageMenuItem';
-import { GoToLastPageProps as GoToLastPagePropsType } from './GoToLastPage';
-import { GoToLastPageMenuItemProps as GoToLastPageMenuItemPropsType } from './GoToLastPageMenuItem';
-import { GoToNextPageProps as GoToNextPagePropsType } from './GoToNextPage';
-import { GoToPreviousPageProps as GoToPreviousPagePropsType } from './GoToPreviousPage';
-
-export type CurrentPageLabelProps = CurrentPageLabelPropsType;
-export type GoToFirstPageProps = GoToFirstPagePropsType;
-export type GoToFirstPageMenuItemProps = GoToFirstPageMenuItemPropsType;
-export type GoToLastPageProps = GoToLastPagePropsType;
-export type GoToLastPageMenuItemProps = GoToLastPageMenuItemPropsType;
-export type GoToNextPageProps = GoToNextPagePropsType;
-export type GoToPreviousPageProps = GoToPreviousPagePropsType;
+export type { CurrentPageLabelProps } from './CurrentPageLabel';
+export type { GoToFirstPageProps } from './GoToFirstPage';
+export type { GoToFirstPageMenuItemProps } from './GoToFirstPageMenuItem';
+export type { GoToLastPageProps } from './GoToLastPage';
+export type { GoToLastPageMenuItemProps } from './GoToLastPageMenuItem';
+export type { GoToNextPageProps } from './GoToNextPage';
+export type { GoToPreviousPageProps } from './GoToPreviousPage';

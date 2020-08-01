@@ -10,9 +10,7 @@ import { RefObject } from 'react';
 
 import SelectionMode from './SelectionMode';
 
-interface StoreProps {
+export default interface StoreProps {
     getPagesRef?(): RefObject<HTMLDivElement>;
     selectionMode?: SelectionMode;
 }
-
-export default StoreProps;

@@ -7,7 +7,7 @@
  */
 
 import React, { ReactElement } from 'react';
-import { createStore, Plugin, RenderViewerProps, Slot } from '@phuocng/rpv';
+import { createStore, Plugin, RenderViewer, Slot } from '@phuocng/rpv';
 
 import Print, { PrintProps } from './Print';
 import PrintButton from './PrintButton';
@@ -38,7 +38,7 @@ const printPlugin = (): PrintPlugin => {
         </PrintDecorator>
     );
 
-    const renderViewer = (props: RenderViewerProps): Slot => {
+    const renderViewer = (props: RenderViewer): Slot => {
         const { slot } = props;
         const updateSlot: Slot = {
             children: (

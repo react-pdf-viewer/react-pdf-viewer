@@ -7,21 +7,19 @@
  */
 
 import PdfJs from '../vendors/PdfJs';
-import { PluginFunctions } from './PluginFunctions';
-import { RenderViewer } from './RenderViewer';
-import { ViewerState } from './ViewerState';
+import PluginFunctions from './PluginFunctions';
+import RenderViewer from './RenderViewer';
+import Slot from '../layouts/Slot';
+import ViewerState from './ViewerState';
 
-interface PluginOnDocumentLoadProps {
+export interface PluginOnDocumentLoad {
     doc: PdfJs.PdfDocument;
 }
 
-interface PluginProps {
+export interface Plugin {
     install?(pluginFunctions: PluginFunctions): void;
-    renderViewer?: RenderViewer;
+    renderViewer?(props: RenderViewer): Slot;
     uninstall?(pluginFunctions: PluginFunctions): void;
-    onDocumentLoad?(props: PluginOnDocumentLoadProps): void;
+    onDocumentLoad?(props: PluginOnDocumentLoad): void;
     onViewerStateChange?(viewerState: ViewerState): ViewerState;
 }
-
-export type Plugin = PluginProps;
-export type PluginOnDocumentLoad = PluginOnDocumentLoadProps;

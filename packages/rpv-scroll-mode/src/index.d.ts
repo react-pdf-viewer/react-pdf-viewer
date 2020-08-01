@@ -21,10 +21,8 @@ export interface RenderSwitchScrollModeProps {
     onClick(): void;
 }
 
-export type RenderSwitchScrollMode = (props: RenderSwitchScrollModeProps) => ReactElement;
-
 export interface SwitchScrollModeProps {
-    children?: RenderSwitchScrollMode;
+    children?: (props: RenderSwitchScrollModeProps) => ReactElement;
     mode: ScrollMode;
 }
 

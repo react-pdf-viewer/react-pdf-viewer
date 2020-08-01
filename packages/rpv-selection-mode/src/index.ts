@@ -6,20 +6,13 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import HandToolIcon from './HandToolIcon';
-import SelectionMode from './SelectionMode';
-import selectionModePlugin, { SwitchSelectionModeMenuItemProps as SwitchSelectionModeMenuItemPropsType } from './selectionModePlugin';
-import TextSelectionIcon from './TextSelectionIcon';
+export { default as HandToolIcon } from './HandToolIcon';
+export { default as SelectionMode } from './SelectionMode';
+import selectionModePlugin from './selectionModePlugin';
+export { default as TextSelectionIcon } from './TextSelectionIcon';
 
 export default selectionModePlugin;
 
-export {
-    HandToolIcon,
-    SelectionMode,
-    TextSelectionIcon,
-};
-
 // Types
-import { SwitchSelectionModeProps as SwitchSelectionModePropsType } from './SwitchSelectionMode';
-export type SwitchSelectionModeMenuItemProps = SwitchSelectionModeMenuItemPropsType;
-export type SwitchSelectionModeProps = SwitchSelectionModePropsType;
+export type { SwitchSelectionModeMenuItemProps } from './selectionModePlugin';
+export type { SwitchSelectionModeProps } from './SwitchSelectionMode';

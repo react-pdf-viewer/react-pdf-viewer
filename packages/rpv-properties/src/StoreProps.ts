@@ -8,9 +8,7 @@
 
 import { PdfJs } from '@phuocng/rpv';
 
-interface StoreProps {
+export default interface StoreProps {
     doc?: PdfJs.PdfDocument;
     fileName: string;
 }
-
-export default StoreProps;
