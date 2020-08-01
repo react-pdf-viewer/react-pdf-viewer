@@ -230,7 +230,7 @@ export interface TooltipProps {
 export class Tooltip extends React.Component<TooltipProps> {}
 
 // Viewer
-export interface RenderViewerProps {
+export interface RenderViewer {
     containerRef: React.RefObject<HTMLDivElement>;
     doc: PdfJs.PdfDocument;
     pageHeight: number;
@@ -244,7 +244,6 @@ export interface RenderViewerProps {
     rotate(degree: number): void;
     zoom(level: number | SpecialZoomLevel): void;
 }
-export type RenderViewer = (props: RenderViewerProps) => Slot;
 
 // Represents the error in case the document can't be loaded
 export interface LoadError {
@@ -362,7 +361,7 @@ export interface PluginOnDocumentLoad {
 
 export interface Plugin {
     install?(pluginFunctions: PluginFunctions): void;
-    renderViewer?: RenderViewer;
+    renderViewer?(props: RenderViewer): Slot;
     uninstall?(pluginFunctions: PluginFunctions): void;
     onDocumentLoad?(props: PluginOnDocumentLoad): void;
     onViewerStateChange?(viewerState: ViewerState): ViewerState;

@@ -6,8 +6,6 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-interface StoreProps {
+export default interface StoreProps {
     openFile?(file: File): void;
 }
-
-export default StoreProps;

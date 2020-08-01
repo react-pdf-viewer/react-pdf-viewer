@@ -10,9 +10,7 @@ import { RefObject } from 'react';
 
 import ScrollMode from './ScrollMode';
 
-interface StoreProps {
+export default interface StoreProps {
     getPagesRef?(): RefObject<HTMLDivElement>;
     scrollMode: ScrollMode;
 }
-
-export default StoreProps;

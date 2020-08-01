@@ -6,25 +6,23 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React from 'react';
+import { Component, ReactElement } from 'react';
 import { Plugin } from '@phuocng/rpv';
 
 export interface RenderEnterFullScreenProps {
-    onClick: () => void;
+    onClick(): void;
 }
 
-type RenderEnterFullScreen = (props: RenderEnterFullScreenProps) => React.ReactElement;
-
 export interface EnterFullScreenProps {
-    children?: RenderEnterFullScreen;
+    children?(props: RenderEnterFullScreenProps): ReactElement;
 }
 
 export interface FullScreenPlugin extends Plugin {
-    EnterFullScreen: (props: EnterFullScreenProps) => React.ReactElement;
-    EnterFullScreenButton: () => React.ReactElement;
+    EnterFullScreen(props: EnterFullScreenProps): ReactElement;
+    EnterFullScreenButton(): ReactElement;
 }
 
 export default function fullScreenPlugin(): FullScreenPlugin;
 
-export class ExitFullScreenIcon extends React.Component<{}> {}
-export class FullScreenIcon extends React.Component<{}> {}
+export class ExitFullScreenIcon extends Component<{}> {}
+export class FullScreenIcon extends Component<{}> {}

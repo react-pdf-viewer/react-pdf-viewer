@@ -8,9 +8,7 @@
 
 import { SpecialZoomLevel } from '@phuocng/rpv';
 
-interface StoreProps {
+export default interface StoreProps {
     scale?: number;
     zoom?(scale: number | SpecialZoomLevel): void;
 }
-
-export default StoreProps;

@@ -6,10 +6,8 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-interface PageSize {
+export default interface PageSize {
     pageHeight: number;
     pageWidth: number;
     scale: number;
 }
-
-export default PageSize;

@@ -7,7 +7,7 @@
  */
 
 import React, { ReactElement } from 'react';
-import { createStore, Plugin, PluginFunctions, RenderViewerProps, Slot } from '@phuocng/rpv';
+import { createStore, Plugin, PluginFunctions, RenderViewer, Slot } from '@phuocng/rpv';
 
 import SelectionMode from './SelectionMode';
 import StoreProps from './StoreProps';
@@ -48,7 +48,7 @@ const selectionModePlugin = (props?: {
         </SwitchSelectionModeDecorator>
     );
 
-    const renderViewer = (props: RenderViewerProps): Slot => {
+    const renderViewer = (props: RenderViewer): Slot => {
         let currentSlot = props.slot;
         if (currentSlot.children) {
             currentSlot.children = (

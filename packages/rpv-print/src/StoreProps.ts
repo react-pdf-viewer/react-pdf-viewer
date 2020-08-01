@@ -8,8 +8,6 @@
 
 import PrintStatus from './PrintStatus';
 
-interface StoreProps {
+export default interface StoreProps {
     printStatus: PrintStatus;
 }
-
-export default StoreProps;

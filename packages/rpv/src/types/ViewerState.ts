@@ -8,7 +8,7 @@
 
 import OpenFile from '../OpenFile';
 
-interface ViewerStateProps {
+export default interface ViewerState {
     // The current opened file. It can be changed from outside, such as user drags and drops an external file
     // or user opens a file from toolbar
     file: OpenFile;
@@ -18,5 +18,3 @@ interface ViewerStateProps {
     // The current zoom level
     scale: number;
 }
-
-export type ViewerState = ViewerStateProps;

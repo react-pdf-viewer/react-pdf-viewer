@@ -6,17 +6,14 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React from 'react';
+import { HTMLAttributes, MutableRefObject, ReactNode } from 'react';
 
-interface Attr extends React.HTMLAttributes<HTMLDivElement> {
-    ref?: React.MutableRefObject<HTMLDivElement | null>;
+interface Attr extends HTMLAttributes<HTMLDivElement> {
+    ref?: MutableRefObject<HTMLDivElement | null>;
 }
 
-interface SlotProps {
+export default interface Slot {
     attrs?: Attr;
-    children?: React.ReactNode;
-    subSlot?: SlotProps;
+    children?: ReactNode;
+    subSlot?: Slot;
 }
-
-export type Slot = SlotProps;
-export default SlotProps;

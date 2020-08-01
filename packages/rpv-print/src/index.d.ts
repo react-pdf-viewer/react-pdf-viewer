@@ -13,10 +13,8 @@ export interface RenderPrintProps {
     onClick: () => void;
 }
 
-type RenderPrint = (props: RenderPrintProps) => React.ReactElement;
-
 export interface PrintProps {
-    children?: RenderPrint;
+    children?: (props: RenderPrintProps) => React.ReactElement;
 }
 
 export interface PrintPlugin extends Plugin {

@@ -13,5 +13,4 @@ export default downloadPlugin;
 export { DownloadIcon };
 
 // Types
-import { DownloadProps as DownloadPropsType } from './Download';
-export type DownloadProps = DownloadPropsType;
+export type { DownloadProps } from './Download';

@@ -6,13 +6,12 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React from 'react';
+import { ReactElement, ReactNode } from 'react';
 
-interface ToolbarSlot {
-    toggleSidebarButton: React.ReactNode;
-    searchPopover: React.ReactNode;
+export default interface ToolbarSlot {
+    toggleSidebarButton: ReactNode;
+    searchPopover: ReactNode;
 }
 
-export type RenderToolbarSlot = (toolbarSlot: ToolbarSlot) => React.ReactElement;
-export type RenderToolbar = (renderToolbar: RenderToolbarSlot) => React.ReactElement;
-export default ToolbarSlot;
+export type RenderToolbarSlot = (toolbarSlot: ToolbarSlot) => ReactElement;
+export type RenderToolbar = (renderToolbar: RenderToolbarSlot) => ReactElement;

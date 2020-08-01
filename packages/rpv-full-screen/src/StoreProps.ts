@@ -8,9 +8,7 @@
 
 import { RefObject } from 'react';
 
-interface StoreProps {
+export default interface StoreProps {
     getPagesRef?(): RefObject<HTMLDivElement>;
     isFullScreen?: boolean;
 }
-
-export default StoreProps;

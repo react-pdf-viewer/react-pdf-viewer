@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import { ReactElement } from 'react';
+import { Component, ReactElement } from 'react';
 import { Plugin } from '@phuocng/rpv';
 import { DownloadProps } from '@phuocng/rpv-download';
 import { EnterFullScreenProps } from '@phuocng/rpv-full-screen';
@@ -48,11 +48,8 @@ export interface ToolbarSlot {
     ZoomOut(props: ZoomOutProps): ReactElement;
 }
 
-export type RenderToolbarSlot = (toolbarSlot: ToolbarSlot) => ReactElement;
-export type RenderToolbar = (renderToolbar: RenderToolbarSlot) => ReactElement;
-
 export interface ToolbarProps {
-    children?: RenderToolbarSlot;
+    children?: (toolbarSlot: ToolbarSlot) => ReactElement;
 }
 
 export interface ToolbarPlugin extends Plugin {
@@ -62,3 +59,10 @@ export interface ToolbarPlugin extends Plugin {
 export default function toolbarPlugin(props?: {
     selectionMode?: SelectionMode,
 }): ToolbarPlugin;
+
+// ----
+// Icon
+// ----
+
+export class MoreIcon extends Component<{}> {}
+

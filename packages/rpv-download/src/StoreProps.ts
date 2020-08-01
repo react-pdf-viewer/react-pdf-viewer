@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import { OpenFile } from '@phuocng/rpv';
+import type { OpenFile } from '@phuocng/rpv';
 
 interface StoreProps {
     file?: OpenFile;

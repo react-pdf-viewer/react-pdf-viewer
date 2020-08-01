@@ -7,12 +7,12 @@
  */
 
 import React from 'react';
-import { Plugin, RenderViewerProps, Slot } from '@phuocng/rpv';
+import type { Plugin, RenderViewer, Slot } from '@phuocng/rpv';
 
 import DropArea from './DropArea';
 
 const dropPlugin = (): Plugin => {
-    const renderViewer = (props: RenderViewerProps): Slot => {
+    const renderViewer = (props: RenderViewer): Slot => {
         const { slot } = props;
         
         if (slot.attrs) {

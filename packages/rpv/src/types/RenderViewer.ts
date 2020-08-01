@@ -12,7 +12,7 @@ import Slot from '../layouts/Slot';
 import SpecialZoomLevel from '../SpecialZoomLevel';
 import PdfJs from '../vendors/PdfJs';
 
-interface RenderViewerProps {
+export default interface RenderViewer {
     containerRef: RefObject<HTMLDivElement>;
     doc: PdfJs.PdfDocument;
     pageHeight: number;
@@ -24,6 +24,3 @@ interface RenderViewerProps {
     rotate(degree: number): void;
     zoom(level: number | SpecialZoomLevel): void;
 }
-
-export type RenderViewer = (props: RenderViewerProps) => Slot;
-export default RenderViewerProps;

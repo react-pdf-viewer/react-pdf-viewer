@@ -7,7 +7,6 @@
  */
 
 import React, { FC } from 'react';
-
 import { Icon } from '@phuocng/rpv';
 
 const UpArrowIcon: FC = () => {

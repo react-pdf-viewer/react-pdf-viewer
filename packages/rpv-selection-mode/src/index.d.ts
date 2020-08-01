@@ -20,10 +20,8 @@ export interface RenderSwitchSelectionModeProps {
     onClick(): void;
 }
 
-export type RenderSwitchSelectionMode = (props: RenderSwitchSelectionModeProps) => ReactElement;
-
 export interface SwitchSelectionModeProps {
-    children?: RenderSwitchSelectionMode;
+    children?: (props: RenderSwitchSelectionModeProps) => ReactElement;
     mode: SelectionMode;
 }
 

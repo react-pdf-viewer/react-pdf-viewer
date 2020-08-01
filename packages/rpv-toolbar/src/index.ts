@@ -6,6 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
+export { default as MoreIcon } from './MoreIcon';
 import toolbarPlugin from './toolbarPlugin';
 
 export default toolbarPlugin;

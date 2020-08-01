@@ -6,17 +6,15 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { ChangeEvent, ReactElement } from 'react';
+import { ChangeEvent, Component, ReactElement } from 'react';
 import { Plugin } from '@phuocng/rpv';
 
 export interface RenderOpenProps {
     onClick: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 
-export type RenderOpen = (props: RenderOpenProps) => ReactElement;
-
 export interface OpenProps {
-    children?: RenderOpen;
+    children?: (props: RenderOpenProps) => ReactElement;
 }
 
 export interface OpenPlugin extends Plugin {
@@ -25,4 +23,4 @@ export interface OpenPlugin extends Plugin {
 }
 
 export default function openPlugin(): OpenPlugin;
-export class OpenFileIcon extends React.Component<{}> {}
+export class OpenFileIcon extends Component<{}> {}

@@ -6,24 +6,22 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React from 'react';
+import { Component, ReactElement } from 'react';
 import { Plugin } from '@phuocng/rpv';
 
 export interface RenderDownloadProps {
-    onClick: () => void;
+    onClick(): void;
 }
 
-export type RenderDownload = (props: RenderDownloadProps) => React.ReactElement;
-
 export interface DownloadProps {
-    children?: RenderDownload;
+    children?(props: RenderDownloadProps): ReactElement;
 }
 
 export interface FirstPagePlugin extends Plugin {
-    Download: (props: DownloadProps) => React.ReactElement;
-    DownloadButton: () => React.ReactElement;
+    Download(props: DownloadProps): ReactElement;
+    DownloadButton(): ReactElement;
 }
 
 export default function firstPagePlugin(): FirstPagePlugin;
 
-export class DownloadIcon extends React.Component<{}> {}
+export class DownloadIcon extends Component<{}> {}

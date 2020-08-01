@@ -6,51 +6,29 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import Button from './components/Button';
-import Menu from './components/Menu';
-import MenuDivider from './components/MenuDivider';
-import MenuItem from './components/MenuItem';
-import PrimaryButton from './components/PrimaryButton';
-import ProgressBar from './components/ProgressBar';
-import Separator from './components/Separator';
-import Spinner from './components/Spinner';
-import Icon from './icons/Icon';
-import defaultLayout from './layouts/defaultLayout';
-import defaultToolbar from './layouts/defaultToolbar';
-import LocalizationContext from './localization/LocalizationContext';
-import LocalizationProvider from './localization/LocalizationProvider';
-import Modal from './portal/Modal';
-import Popover from './portal/Popover';
-import Position from './portal/Position';
-import Tooltip from './portal/Tooltip';
-import SpecialZoomLevel from './SpecialZoomLevel';
-import createStore, { Store as StoreType, StoreHandler as StoreHandlerType } from './store/createStore';
+export { default as Button } from './components/Button';
+export { default as Menu } from './components/Menu';
+export { default as MenuDivider } from './components/MenuDivider';
+export { default as MenuItem } from './components/MenuItem';
+export { default as PrimaryButton } from './components/PrimaryButton';
+export { default as ProgressBar } from './components/ProgressBar';
+export { default as Separator } from './components/Separator';
+export { default as Spinner } from './components/Spinner';
+export { default as Icon } from './icons/Icon';
+export { default as defaultLayout } from './layouts/defaultLayout';
+export { default as defaultToolbar } from './layouts/defaultToolbar';
+export { default as LocalizationContext } from './localization/LocalizationContext';
+export { default as LocalizationProvider } from './localization/LocalizationProvider';
+export { default as Modal } from './portal/Modal';
+export { default as Popover } from './portal/Popover';
+export { default as Position } from './portal/Position';
+export { default as Tooltip } from './portal/Tooltip';
+export { default as SpecialZoomLevel } from './SpecialZoomLevel';
+export { default as createStore } from './store/createStore';
 import Viewer from './Viewer';
-import Worker from './Worker';
+export { default as Worker } from './Worker';
 
 export default Viewer;
-export {
-    Button,
-    createStore,
-    defaultLayout,
-    defaultToolbar,
-    Icon,
-    LocalizationContext,
-    LocalizationProvider,
-    Menu,
-    MenuDivider,
-    MenuItem,
-    Modal,
-    Popover,
-    Position,
-    PrimaryButton,
-    ProgressBar,
-    Separator,
-    SpecialZoomLevel,
-    Spinner,
-    Tooltip,
-    Worker,
-};
 
 // -----
 // PdfJs
@@ -124,23 +102,12 @@ export declare namespace PdfJs {
 // Types
 // -----
 
-import { Toggle as ToggleType } from './hooks/useToggle';
-import { Slot as SlotType } from './layouts/Slot';
-import { default as OpenFileType } from './OpenFile';
-import { default as LocalizationMapType } from './localization/LocalizationMap';
-import { Plugin as PluginType, PluginOnDocumentLoad as PluginOnDocumentLoadType } from './types/Plugin';
-import { PluginFunctions as PluginFunctionsType } from './types/PluginFunctions';
-import { default as RenderViewerPropsType } from './types/RenderViewer';
-import { ViewerState as ViewerStateType } from './types/ViewerState';
-
-export type LocalizationMap = LocalizationMapType;
-export type OpenFile = OpenFileType;
-export type Toggle = ToggleType;
-export type Slot = SlotType;
-export type Store<T> = StoreType<T>;
-export type StoreHandler<T> = StoreHandlerType<T>;
-export type Plugin = PluginType;
-export type PluginFunctions = PluginFunctionsType;
-export type PluginOnDocumentLoad = PluginOnDocumentLoadType;
-export type RenderViewerProps = RenderViewerPropsType;
-export type ViewerState = ViewerStateType;
+export type { Toggle } from './hooks/useToggle';
+export type { default as Slot } from './layouts/Slot';
+export type { default as OpenFile } from './OpenFile';
+export type { default as LocalizationMap } from './localization/LocalizationMap';
+export type { Store, StoreHandler } from './store/createStore';
+export type { Plugin, PluginOnDocumentLoad } from './types/Plugin';
+export type { default as PluginFunctions } from './types/PluginFunctions';
+export type { default as RenderViewer } from './types/RenderViewer';
+export type { default as ViewerState } from './types/ViewerState';

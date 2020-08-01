@@ -6,22 +6,14 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import HorizontalScrollingIcon from './HorizontalScrollingIcon';
-import ScrollMode from './ScrollMode';
-import scrollModePlugin, { SwitchScrollModeMenuItemProps as SwitchScrollModeMenuItemPropsType } from './scrollModePlugin';
-import VerticalScrollingIcon from './VerticalScrollingIcon';
-import WrappedScrollingIcon from './WrappedScrollingIcon';
+export { default as HorizontalScrollingIcon } from './HorizontalScrollingIcon';
+export { default as ScrollMode } from './ScrollMode';
+import scrollModePlugin from './scrollModePlugin';
+export { default as VerticalScrollingIcon } from './VerticalScrollingIcon';
+export { default as WrappedScrollingIcon } from './WrappedScrollingIcon';
 
 export default scrollModePlugin;
 
-export {
-    HorizontalScrollingIcon,
-    ScrollMode,
-    VerticalScrollingIcon,
-    WrappedScrollingIcon,
-};
-
 // Types
-import { SwitchScrollModeProps as SwitchScrollModePropsType } from './SwitchScrollMode';
-export type SwitchScrollModeMenuItemProps = SwitchScrollModeMenuItemPropsType;
-export type SwitchScrollModeProps = SwitchScrollModePropsType;
+export type { SwitchScrollModeMenuItemProps } from './scrollModePlugin';
+export type { SwitchScrollModeProps } from './SwitchScrollMode';

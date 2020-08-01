@@ -17,10 +17,8 @@ export interface RenderZoomInProps {
     onClick: () => void;
 }
 
-export type RenderZoomIn = (props: RenderZoomInProps) => ReactElement;
-
 export interface ZoomInProps {
-    children?: RenderZoomIn;
+    children?: (props: RenderZoomInProps) => ReactElement;
 }
 
 // -------------------------
@@ -31,10 +29,8 @@ export interface RenderZoomOutProps {
     onClick: () => void;
 }
 
-export type RenderZoomOut = (props: RenderZoomOutProps) => ReactNode;
-
 export interface ZoomOutProps {
-    children?: RenderZoomOut;
+    children?: (props: RenderZoomOutProps) => ReactNode;
 }
 
 // -------------
@@ -45,10 +41,8 @@ export interface RenderCurrentScaleProps {
     scale: number;
 }
 
-export type RenderCurrentScale = (props: RenderCurrentScaleProps) => ReactElement;
-
 export interface CurrentScaleProps {
-    children?: RenderCurrentScale;
+    children?: (props: RenderCurrentScaleProps) => ReactElement;
 }
 
 // -------------------
@@ -60,10 +54,8 @@ export interface RenderZoomProps {
     onZoom(newScale: number | SpecialZoomLevel): void;
 }
 
-export type RenderZoom = (props: RenderZoomProps) => ReactElement;
-
 export interface ZoomProps {
-    children?: RenderZoom;
+    children?: (props: RenderZoomProps) => ReactElement;
 }
 
 // ------

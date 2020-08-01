@@ -21,7 +21,7 @@ export interface RenderShowPropertiesProps {
     onClick(): void;
 }
 
-export type RenderShowProperties = (props: RenderShowPropertiesProps) => ReactElement;
+type RenderShowProperties = (props: RenderShowPropertiesProps) => ReactElement;
 
 export interface ShowPropertiesProps {
     children?: RenderShowProperties;

@@ -7,19 +7,13 @@
  */
 
 import zoomPlugin from './zoomPlugin';
-import ZoomInIcon from './ZoomInIcon';
-import ZoomOutIcon from './ZoomOutIcon';
+export { default as ZoomInIcon } from './ZoomInIcon';
+export { default as ZoomOutIcon } from './ZoomOutIcon';
 
 export default zoomPlugin;
-export { ZoomInIcon, ZoomOutIcon };
 
 // Types
-import { CurrentScaleProps as CurrentScalePropsType } from './CurrentScale';
-import { ZoomProps as ZoomPropsType } from './Zoom' ;
-import { ZoomInProps as ZoomInPropsType } from './ZoomIn' ;
-import { ZoomOutProps as ZoomOutPropsType } from './ZoomOut' ;
-
-export type CurrentScaleProps = CurrentScalePropsType;
-export type ZoomProps = ZoomPropsType;
-export type ZoomInProps = ZoomInPropsType;
-export type ZoomOutProps = ZoomOutPropsType;
+export type { CurrentScaleProps } from './CurrentScale';
+export type { ZoomProps } from './Zoom';
+export type { ZoomInProps } from './ZoomIn';
+export type { ZoomOutProps } from './ZoomOut';

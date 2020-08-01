@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { useContext, RefObject } from 'react';
+import React, { FC, useContext, RefObject } from 'react';
 import { LocalizationContext } from '@phuocng/rpv';
 
 import './dropArea.less';
@@ -17,7 +17,7 @@ interface DropAreaProps {
     openFile(file: File): void;
 }
 
-const DropArea: React.FC<DropAreaProps> = ({ containerRef, openFile }) => {
+const DropArea: FC<DropAreaProps> = ({ containerRef, openFile }) => {
     const { isDragging } = useDrop(containerRef, (files) => {
         if (files.length === 0) {
             return;

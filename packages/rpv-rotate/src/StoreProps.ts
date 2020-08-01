@@ -6,9 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-interface StoreProps {
+export default interface StoreProps {
     rotation: number;
     rotate?(degrees: number): void;
 }
-
-export default StoreProps;

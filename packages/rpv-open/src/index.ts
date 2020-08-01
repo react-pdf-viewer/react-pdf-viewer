@@ -13,5 +13,4 @@ export default openPlugin;
 export { OpenFileIcon };
 
 // Types
-import { OpenProps as OpenPropsType } from './Open';
-export type OpenProps = OpenPropsType;
+export type { OpenProps  } from './Open';

@@ -8,14 +8,14 @@
 
 import React, { useLayoutEffect, useRef } from 'react';
 
-interface VisibilityChangedProps {
+export interface VisibilityChanged {
     isVisible: boolean;
     ratio: number;
 }
 
 interface ObserverProps {
     threshold?: number | number[];
-    onVisibilityChanged(params: VisibilityChangedProps): void;
+    onVisibilityChanged(params: VisibilityChanged): void;
 }
 
 const Observer: React.FC<ObserverProps> = ({ children, threshold, onVisibilityChanged }) => {
@@ -48,4 +48,3 @@ const Observer: React.FC<ObserverProps> = ({ children, threshold, onVisibilityCh
 };
 
 export default Observer;
-export type VisibilityChanged = VisibilityChangedProps;

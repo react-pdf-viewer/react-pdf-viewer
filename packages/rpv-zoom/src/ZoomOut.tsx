@@ -18,11 +18,11 @@ export interface RenderZoomOutProps {
     onClick: () => void;
 }
 
+type RenderZoomOut = (props: RenderZoomOutProps) => React.ReactElement;
+
 export interface ZoomOutProps {
     children?: RenderZoomOut;
 }
-
-export type RenderZoomOut = (props: RenderZoomOutProps) => React.ReactElement;
 
 const ZoomOut: React.FC<{
     children?: RenderZoomOut,
