@@ -16,7 +16,6 @@ import calculateOffset from '../utils/calculateOffset';
 import unwrap from '../utils/unwrap';
 import wrap from '../utils/wrap';
 import PdfJs from '../vendors/PdfJs';
-import { TextLayerRenderEvent } from '../Viewer';
 import './textLayer.less';
 import WithScale from './WithScale';
 
@@ -29,10 +28,9 @@ interface TextLayerProps {
     rotation: number;
     scale: number;
     onJumpToMatch(pageIndex: number, top: number, left: number): void;
-    onTextLayerRender(e: TextLayerRenderEvent): void;
 }
 
-const TextLayer: React.FC<TextLayerProps> = ({ keywordRegexp, match, page, pageIndex, plugins, rotation, scale, onJumpToMatch, onTextLayerRender }) => {
+const TextLayer: React.FC<TextLayerProps> = ({ keywordRegexp, match, page, pageIndex, plugins, rotation, scale, onJumpToMatch }) => {
     const theme = useContext(ThemeContext);
     const containerRef = createRef<HTMLDivElement>();
     const renderTask = useRef<PdfJs.PageRenderTask>();
@@ -141,10 +139,6 @@ const TextLayer: React.FC<TextLayerProps> = ({ keywordRegexp, match, page, pageI
                         }
                     }
                     scrollToMatch();
-                    // TODO: Remove this
-                    onTextLayerRender({
-                        ele: containerEle,
-                    });
                     plugins.forEach(plugin => {
                         if (plugin.onTextLayerRender) {
                             plugin.onTextLayerRender({

@@ -17,7 +17,7 @@ import SpecialZoomLevel from '../SpecialZoomLevel';
 import ThemeContext from '../theme/ThemeContext';
 import { Plugin } from '../types/Plugin';
 import PdfJs from '../vendors/PdfJs';
-import { CanvasLayerRenderEvent, TextLayerRenderEvent } from '../Viewer';
+import { CanvasLayerRenderEvent } from '../Viewer';
 import CanvasLayer from './CanvasLayer';
 import './pageLayer.less';
 import SvgLayer from './SvgLayer';
@@ -38,7 +38,6 @@ interface PageLayerProps {
     onExecuteNamedAction(action: string): void;
     onJumpToDest(pageIndex: number, bottomOffset: number, scaleTo: number | SpecialZoomLevel): void;
     onPageVisibilityChanged(pageIndex: number, ratio: number): void;
-    onTextLayerRender(e: TextLayerRenderEvent): void;
 }
 
 interface PageSizeState {
@@ -51,7 +50,7 @@ interface PageSizeState {
 
 const PageLayer: React.FC<PageLayerProps> = ({
     doc, height, keywordRegexp, match, pageIndex, plugins, renderPage, rotation, scale, width,
-    onCanvasLayerRender, onExecuteNamedAction, onJumpToDest, onPageVisibilityChanged, onTextLayerRender,
+    onCanvasLayerRender, onExecuteNamedAction, onJumpToDest, onPageVisibilityChanged,
 }) => {
     const theme = useContext(ThemeContext);
     const [pageSize, setPageSize] = useState<PageSizeState>({
@@ -170,7 +169,6 @@ const PageLayer: React.FC<PageLayerProps> = ({
                                         rotation={rotationNumber}
                                         scale={scale}
                                         onJumpToMatch={jumpToMatch}
-                                        onTextLayerRender={onTextLayerRender}
                                     />
                                 )
                             },

@@ -20,7 +20,7 @@ import PluginFunctions from '../types/PluginFunctions';
 import ViewerState from '../types/ViewerState';
 import PdfJs from '../vendors/PdfJs';
 import getFileExt from '../utils/fileExt';
-import { CanvasLayerRenderEvent, DocumentLoadEvent, PageChangeEvent, TextLayerRenderEvent, ZoomEvent } from '../Viewer';
+import { CanvasLayerRenderEvent, DocumentLoadEvent, PageChangeEvent, ZoomEvent } from '../Viewer';
 import './inner.less';
 import PageSize from './PageSize';
 import { RenderPage } from './RenderPage';
@@ -44,13 +44,12 @@ interface InnerProps {
     onDocumentLoad(e: DocumentLoadEvent): void;
     onOpenFile(fileName: string, data: Uint8Array): void;
     onPageChange(e: PageChangeEvent): void;
-    onTextLayerRender(e: TextLayerRenderEvent): void;
     onZoom(e: ZoomEvent): void;
 }
 
 const Inner: React.FC<InnerProps> = ({
     defaultScale, doc, file, initialPage, keyword, pageSize, plugins, renderPage, viewerState,
-    onCanvasLayerRender, onDocumentLoad, onOpenFile, onPageChange, onTextLayerRender, onZoom,
+    onCanvasLayerRender, onDocumentLoad, onOpenFile, onPageChange, onZoom,
 }) => {
     const theme = useContext(ThemeContext);
     const containerRef = useRef<HTMLDivElement | null>(null);
@@ -340,7 +339,6 @@ const Inner: React.FC<InnerProps> = ({
                                         onExecuteNamedAction={executeNamedAction}
                                         onJumpToDest={jumpToDest}
                                         onPageVisibilityChanged={pageVisibilityChanged}
-                                        onTextLayerRender={onTextLayerRender}
                                     />
                                 </div>
                             );

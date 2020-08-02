@@ -34,9 +34,6 @@ export interface PageChangeEvent {
     currentPage: number;
     doc: PdfJs.PdfDocument;
 }
-export interface TextLayerRenderEvent {
-    ele: HTMLElement;
-}
 export interface ZoomEvent {
     doc: PdfJs.PdfDocument;
     scale: number;
@@ -69,8 +66,6 @@ interface ViewerProps {
     onCanvasLayerRender?(e: CanvasLayerRenderEvent): void;
     onDocumentLoad?(e: DocumentLoadEvent): void;
     onPageChange?(e: PageChangeEvent): void;
-    // Invoked when the text layer is ready
-    onTextLayerRender?(e: TextLayerRenderEvent): void;
     onZoom?(e: ZoomEvent): void;
 }
 
@@ -88,7 +83,6 @@ const Viewer: React.FC<ViewerProps> = ({
     onCanvasLayerRender = () => {/**/},
     onDocumentLoad = () => {/**/},
     onPageChange = () => {/**/},
-    onTextLayerRender = () => {/**/},
     onZoom = () => {/**/},
 }) => {
     const [file, setFile] = useState<OpenFile>({
@@ -140,7 +134,6 @@ const Viewer: React.FC<ViewerProps> = ({
                                         onDocumentLoad={onDocumentLoad}
                                         onOpenFile={openFile}
                                         onPageChange={onPageChange}
-                                        onTextLayerRender={onTextLayerRender}
                                         onZoom={onZoom}
                                     />
                                 )}

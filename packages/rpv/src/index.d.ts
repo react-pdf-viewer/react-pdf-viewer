@@ -322,11 +322,6 @@ export interface PageChangeEvent {
     doc: PdfJs.PdfDocument;
 }
 
-// Invoked when the text layer is ready
-export interface TextLayerRenderEvent {
-    ele: HTMLElement;
-}
-
 // Invoked when users zoom the document
 export interface ZoomEvent {
     doc: PdfJs.PdfDocument;
@@ -433,7 +428,6 @@ export interface ViewerProps {
     onCanvasLayerRender?(e: CanvasLayerRenderEvent): void;
     onDocumentLoad?(e: DocumentLoadEvent): void;
     onPageChange?(e: PageChangeEvent): void;
-    onTextLayerRender?(e: TextLayerRenderEvent): void;
     onZoom?(e: ZoomEvent): void;
 }
 export default class Viewer extends React.Component<ViewerProps> {}
