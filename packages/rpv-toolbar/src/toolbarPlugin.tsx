@@ -8,7 +8,7 @@
 
 import React from 'react';
 
-import { Plugin, PluginFunctions, PluginOnDocumentLoad, RenderViewer, ViewerState } from '@phuocng/rpv';
+import { Plugin, PluginFunctions, PluginOnDocumentLoad, RenderViewer, ViewerState, PluginOnTextLayerRender } from '@phuocng/rpv';
 import downloadPlugin from '@phuocng/rpv-download';
 import dropPlugin from '@phuocng/rpv-drop';
 import fullScreenPlugin from '@phuocng/rpv-full-screen';
@@ -160,6 +160,13 @@ const toolbarPlugin = (props?: {
             plugins.forEach(plugin => {
                 if (plugin.onDocumentLoad) {
                     plugin.onDocumentLoad(props);
+                }
+            });
+        },
+        onTextLayerRender: (props: PluginOnTextLayerRender) => {
+            plugins.forEach(plugin => {
+                if (plugin.onTextLayerRender) {
+                    plugin.onTextLayerRender(props);
                 }
             });
         },

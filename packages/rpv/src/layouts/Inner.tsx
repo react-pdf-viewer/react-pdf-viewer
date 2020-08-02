@@ -331,6 +331,7 @@ const Inner: React.FC<InnerProps> = ({
                                         height={pageHeight}
                                         match={match}
                                         pageIndex={index}
+                                        plugins={plugins}
                                         renderPage={renderPage}
                                         rotation={rotation}
                                         scale={scale}

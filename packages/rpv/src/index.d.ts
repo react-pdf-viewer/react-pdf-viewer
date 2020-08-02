@@ -367,11 +367,23 @@ export interface PluginOnDocumentLoad {
     doc: PdfJs.PdfDocument;
 }
 
+export enum TextLayerRenderStatus {
+    PreRender,
+    DidRender,
+}
+
+export interface PluginOnTextLayerRender {
+    ele: HTMLElement;
+    pageIndex: number;
+    status: TextLayerRenderStatus;
+}
+
 export interface Plugin {
     install?(pluginFunctions: PluginFunctions): void;
     renderViewer?(props: RenderViewer): Slot;
     uninstall?(pluginFunctions: PluginFunctions): void;
     onDocumentLoad?(props: PluginOnDocumentLoad): void;
+    onTextLayerRender?(props: PluginOnTextLayerRender): void;
     onViewerStateChange?(viewerState: ViewerState): ViewerState;
 }
 

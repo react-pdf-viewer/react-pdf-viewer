@@ -10,6 +10,8 @@ import React, { createRef, useContext, useEffect, useRef } from 'react';
 
 import Match from '../search/Match';
 import ThemeContext from '../theme/ThemeContext';
+import { Plugin } from '../types/Plugin';
+import TextLayerRenderStatus from '../types/TextLayerRenderStatus';
 import calculateOffset from '../utils/calculateOffset';
 import unwrap from '../utils/unwrap';
 import wrap from '../utils/wrap';
@@ -23,13 +25,14 @@ interface TextLayerProps {
     match: Match;
     page: PdfJs.Page;
     pageIndex: number;
+    plugins: Plugin[];
     rotation: number;
     scale: number;
     onJumpToMatch(pageIndex: number, top: number, left: number): void;
     onTextLayerRender(e: TextLayerRenderEvent): void;
 }
 
-const TextLayer: React.FC<TextLayerProps> = ({ keywordRegexp, match, page, pageIndex, rotation, scale, onJumpToMatch, onTextLayerRender }) => {
+const TextLayer: React.FC<TextLayerProps> = ({ keywordRegexp, match, page, pageIndex, plugins, rotation, scale, onJumpToMatch, onTextLayerRender }) => {
     const theme = useContext(ThemeContext);
     const containerRef = createRef<HTMLDivElement>();
     const renderTask = useRef<PdfJs.PageRenderTask>();
@@ -103,6 +106,16 @@ const TextLayer: React.FC<TextLayerProps> = ({ keywordRegexp, match, page, pageI
         const viewport = page.getViewport({ rotation, scale });
 
         isRendered.current = false;
+
+        plugins.forEach(plugin => {
+            if (plugin.onTextLayerRender) {
+                plugin.onTextLayerRender({
+                    ele: containerEle,
+                    pageIndex,
+                    status: TextLayerRenderStatus.PreRender,
+                });
+            }
+        });
         page.getTextContent().then((textContent) => {
             empty();
             renderTask.current = PdfJs.renderTextLayer({
@@ -128,8 +141,18 @@ const TextLayer: React.FC<TextLayerProps> = ({ keywordRegexp, match, page, pageI
                         }
                     }
                     scrollToMatch();
+                    // TODO: Remove this
                     onTextLayerRender({
                         ele: containerEle,
+                    });
+                    plugins.forEach(plugin => {
+                        if (plugin.onTextLayerRender) {
+                            plugin.onTextLayerRender({
+                                ele: containerEle,
+                                pageIndex,
+                                status: TextLayerRenderStatus.DidRender,
+                            });
+                        }
                     });
                 },
                 () => {/**/},

@@ -15,6 +15,7 @@ import RenderPageProps, { RenderPage } from '../layouts/RenderPage';
 import Match from '../search/Match';
 import SpecialZoomLevel from '../SpecialZoomLevel';
 import ThemeContext from '../theme/ThemeContext';
+import { Plugin } from '../types/Plugin';
 import PdfJs from '../vendors/PdfJs';
 import { CanvasLayerRenderEvent, TextLayerRenderEvent } from '../Viewer';
 import CanvasLayer from './CanvasLayer';
@@ -28,6 +29,7 @@ interface PageLayerProps {
     keywordRegexp: RegExp;
     match: Match;
     pageIndex: number;
+    plugins: Plugin[];
     renderPage?: RenderPage;
     rotation: number;
     scale: number;
@@ -48,7 +50,7 @@ interface PageSizeState {
 }
 
 const PageLayer: React.FC<PageLayerProps> = ({
-    doc, height, keywordRegexp, match, pageIndex, renderPage, rotation, scale, width,
+    doc, height, keywordRegexp, match, pageIndex, plugins, renderPage, rotation, scale, width,
     onCanvasLayerRender, onExecuteNamedAction, onJumpToDest, onPageVisibilityChanged, onTextLayerRender,
 }) => {
     const theme = useContext(ThemeContext);
@@ -164,6 +166,7 @@ const PageLayer: React.FC<PageLayerProps> = ({
                                         match={match}
                                         page={page}
                                         pageIndex={pageIndex}
+                                        plugins={plugins}
                                         rotation={rotationNumber}
                                         scale={scale}
                                         onJumpToMatch={jumpToMatch}
