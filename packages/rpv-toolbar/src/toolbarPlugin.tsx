@@ -18,6 +18,7 @@ import printPlugin from '@phuocng/rpv-print';
 import propertiesPlugin from '@phuocng/rpv-properties';
 import rotatePlugin from '@phuocng/rpv-rotate';
 import scrollModePlugin from '@phuocng/rpv-scroll-mode';
+import searchPlugin from '@phuocng/rpv-search';
 import selectionModePlugin, { SelectionMode } from '@phuocng/rpv-selection-mode';
 import zoomPlugin from '@phuocng/rpv-zoom';
 
@@ -28,6 +29,7 @@ import '@phuocng/rpv-page-navigation/cjs/rpv-page-navigation.css';
 import '@phuocng/rpv-print/cjs/rpv-print.css';
 import '@phuocng/rpv-properties/cjs/rpv-properties.css';
 import '@phuocng/rpv-scroll-mode/cjs/rpv-scroll-mode.css';
+import '@phuocng/rpv-search/cjs/rpv-search.css';
 import '@phuocng/rpv-selection-mode/cjs/rpv-selection-mode.css';
 import '@phuocng/rpv-zoom/cjs/rpv-zoom.css';
 
@@ -49,6 +51,7 @@ const toolbarPlugin = (props?: {
     const propertiesPluginInstance = propertiesPlugin();
     const rotatePluginInstance = rotatePlugin();
     const scrollModePluginInstance = scrollModePlugin();
+    const searchPluginInstance = searchPlugin();
     const selectionModePluginInstance = selectionModePlugin(
         props ? { selectionMode: props.selectionMode } : {}
     );
@@ -64,6 +67,7 @@ const toolbarPlugin = (props?: {
         propertiesPluginInstance,
         rotatePluginInstance,
         scrollModePluginInstance,
+        searchPluginInstance,
         selectionModePluginInstance,
         zoomPluginInstance,
     ];
@@ -80,6 +84,7 @@ const toolbarPlugin = (props?: {
         const { ShowProperties, ShowPropertiesMenuItem } = propertiesPluginInstance;
         const { Rotate, RotateBackwardMenuItem, RotateForwardMenuItem } = rotatePluginInstance;
         const { SwitchScrollMode, SwitchScrollModeMenuItem } = scrollModePluginInstance;
+        const { ShowSearchPopover } = searchPluginInstance;
         const { SwitchSelectionMode, SwitchSelectionModeMenuItem } = selectionModePluginInstance;
         const { CurrentScale, Zoom, ZoomIn, ZoomOut } = zoomPluginInstance;
 
@@ -112,6 +117,7 @@ const toolbarPlugin = (props?: {
                     RotateForwardMenuItem,
                     ShowProperties,
                     ShowPropertiesMenuItem,
+                    ShowSearchPopover,
                     SwitchScrollMode,
                     SwitchScrollModeMenuItem,
                     SwitchSelectionMode,
