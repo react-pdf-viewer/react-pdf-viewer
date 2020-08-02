@@ -58,7 +58,7 @@ const ShowSearchPopover: FC<{
                         })
                     }
                     content={
-                        (toggle: Toggle) => <SearchPopover doc={currentDoc} onToggle={toggle} />
+                        (toggle: Toggle) => <SearchPopover doc={currentDoc} store={store} onToggle={toggle} />
                     }
                     offset={PORTAL_OFFSET}
                     closeOnClickOutside={false}

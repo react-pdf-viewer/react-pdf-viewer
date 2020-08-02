@@ -7,15 +7,17 @@
  */
 
 import React, { useContext, useRef, useState } from 'react';
-import { Button, LocalizationContext, PdfJs, Position, PrimaryButton, Tooltip } from '@phuocng/rpv';
+import { Button, LocalizationContext, PdfJs, Position, PrimaryButton, Store, Tooltip } from '@phuocng/rpv';
 
 import Match from './Match';
 import NextIcon from './NextIcon';
 import PreviousIcon from './PreviousIcon';
 import './searchPopover.less';
+import StoreProps from './StoreProps';
 
 interface SearchPopoverProps {
     doc: PdfJs.PdfDocument;
+    store: Store<StoreProps>;
     onToggle(): void;
 }
 
@@ -23,7 +25,7 @@ interface SearchPopoverProps {
 const EMPTY_KEYWORD_REGEXP = new RegExp(' ');
 const PORTAL_OFFSET = { left: 0, top: 8 };
 
-const SearchPopover: React.FC<SearchPopoverProps> = ({ doc, onToggle }) => {
+const SearchPopover: React.FC<SearchPopoverProps> = ({ doc, store, onToggle }) => {
     const l10n = useContext(LocalizationContext);
     const [keyword, setKeyword] = useState('');
     const [found, setFound] = useState<Match[]>([]);
@@ -83,7 +85,8 @@ const SearchPopover: React.FC<SearchPopoverProps> = ({ doc, onToggle }) => {
         if (!keyword) {
             // Do nothing
         }
-        // onSearchFor(EMPTY_KEYWORD_REGEXP);
+        store.update('keyword', EMPTY_KEYWORD_REGEXP);
+
         setKeyword('');
         setCurrentMatch(0);
         setFound([]);
@@ -104,7 +107,7 @@ const SearchPopover: React.FC<SearchPopoverProps> = ({ doc, onToggle }) => {
 
     const search = (keywordParam: string, matchCaseParam: boolean, wholeWordsParam: boolean): void => {
         const regexp = buildKeywordRegex(keywordParam, matchCaseParam, wholeWordsParam);
-        // onSearchFor(regexp);
+        store.update('keyword', regexp);
 
         setCurrentMatch(0);
         setFound([]);

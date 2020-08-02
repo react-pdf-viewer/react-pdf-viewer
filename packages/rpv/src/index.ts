@@ -25,6 +25,7 @@ export { default as Position } from './portal/Position';
 export { default as Tooltip } from './portal/Tooltip';
 export { default as SpecialZoomLevel } from './SpecialZoomLevel';
 export { default as createStore } from './store/createStore';
+export { default as TextLayerRenderStatus } from './types/TextLayerRenderStatus';
 import Viewer from './Viewer';
 export { default as Worker } from './Worker';
 

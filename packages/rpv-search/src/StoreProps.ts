@@ -6,8 +6,10 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import { PdfJs } from '@phuocng/rpv';
+import { PdfJs, PluginOnTextLayerRender } from '@phuocng/rpv';
 
 export default interface StoreProps {
     doc?: PdfJs.PdfDocument;
+    keyword?: RegExp;
+    renderStatus: Map<number, PluginOnTextLayerRender>;
 }
