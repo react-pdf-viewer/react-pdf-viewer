@@ -45,13 +45,16 @@ const searchPlugin = (): SearchPlugin => {
     };
 
     return {
+        install: (props: PluginFunctions) => {
+            store.update('jumpToPage', props.jumpToPage);
+        },
+        renderViewer,
         uninstall: (props: PluginFunctions) => {
             const renderStatus = store.get('renderStatus');
             if (renderStatus) {
                 renderStatus.clear();
             }
         },
-        renderViewer,
         onDocumentLoad: (props: PluginOnDocumentLoad) => {
             store.update('doc', props.doc);
         },

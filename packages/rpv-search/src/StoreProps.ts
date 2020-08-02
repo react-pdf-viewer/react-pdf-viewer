@@ -12,4 +12,5 @@ export default interface StoreProps {
     doc?: PdfJs.PdfDocument;
     keyword?: RegExp;
     renderStatus: Map<number, PluginOnTextLayerRender>;
+    jumpToPage?(pageIndex: number): void;
 }

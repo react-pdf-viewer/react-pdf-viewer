@@ -133,7 +133,7 @@ const SearchPopover: React.FC<SearchPopoverProps> = ({ doc, store, onToggle }) =
             setFound(arr);
             if (arr.length > 0) {
                 setCurrentMatch(1);
-                // onJumpToMatch(arr[0]);
+                jumpToMatch(arr[0]);
             }
         });
     };
@@ -142,14 +142,21 @@ const SearchPopover: React.FC<SearchPopoverProps> = ({ doc, store, onToggle }) =
         const prev = currentMatch - 1;
         const updated = prev > 0 ? prev : found.length;
         setCurrentMatch(updated);
-        // onJumpToMatch(found[updated - 1]);
+        jumpToMatch(found[updated - 1]);
     };
 
     const jumpToNextMatch = (): void => {
         const next = currentMatch + 1;
         const updated = next <= found.length ? next : 1;
         setCurrentMatch(updated);
-        // onJumpToMatch(found[updated - 1]);
+        jumpToMatch(found[updated - 1]);
+    };
+
+    const jumpToMatch = (match: Match) => {
+        const jumpToPage = store.get('jumpToPage');
+        if (jumpToPage) {
+            jumpToPage(match.pageIndex);
+        }
     };
 
     return (
