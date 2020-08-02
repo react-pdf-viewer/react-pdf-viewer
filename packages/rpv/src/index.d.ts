@@ -38,6 +38,13 @@ export declare namespace PdfJs {
         clone(params: ViewPortCloneParams): ViewPort;
     }
 
+    interface PageTextContent {
+        items: PageTextItem[];
+    }
+    interface PageTextItem {
+        str: string;
+    }
+
     // Render task
     interface PageRenderTask {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -54,6 +61,7 @@ export declare namespace PdfJs {
         viewport: ViewPort;
     }
     interface Page {
+        getTextContent(): Promise<PageTextContent>;
         getViewport(params: ViewPortParams): ViewPort;
         render(params: PageRenderParams): PageRenderTask;
     }

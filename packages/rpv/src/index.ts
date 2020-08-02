@@ -59,6 +59,12 @@ export declare namespace PdfJs {
         width: number;
         clone(params: ViewPortCloneParams): ViewPort;
     }
+    interface PageTextContent {
+        items: PageTextItem[];
+    }
+    interface PageTextItem {
+        str: string;
+    }
 
     // Render task
     interface PageRenderTask {
@@ -76,6 +82,7 @@ export declare namespace PdfJs {
         viewport: ViewPort;
     }
     interface Page {
+        getTextContent(): Promise<PageTextContent>;
         getViewport(params: ViewPortParams): ViewPort;
         render(params: PageRenderParams): PageRenderTask;
     }

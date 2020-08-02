@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { useContext, useState } from 'react';
+import React, { useContext, useRef, useState } from 'react';
 import { Button, LocalizationContext, PdfJs, Position, PrimaryButton, Tooltip } from '@phuocng/rpv';
 
 import Match from './Match';
@@ -29,10 +29,30 @@ const SearchPopover: React.FC<SearchPopoverProps> = ({ doc, onToggle }) => {
     const [found, setFound] = useState<Match[]>([]);
     const [currentMatch, setCurrentMatch] = useState(0);
     const [matchCase, setMatchCase] = useState(false);
+    const textContents = useRef<string[]>([]);
     const [wholeWords, setWholeWords] = useState(false);
+    const indexArr = Array(doc.numPages).fill(0).map((_, i) => i);
 
     const changeKeyword = (e: React.ChangeEvent<HTMLInputElement>): void => {
         setKeyword(e.target.value);
+    };
+
+    const getTextContents = (): Promise<string[]> => {
+        const promises = indexArr.map((pageIndex) => {
+            return doc.getPage(pageIndex + 1).then((page) => {
+                return page.getTextContent();
+            }).then((content) => {
+                const pageContent = content.items.map((item) => item.str || '').join('');
+                return Promise.resolve({
+                    pageContent,
+                    pageIndex,
+                });
+            });
+        });
+        return Promise.all(promises).then((data) => {
+            data.sort((a, b) => a.pageIndex - b.pageIndex);
+            return Promise.resolve(data.map((item) => item.pageContent));
+        });
     };
 
     const keydownSearch = (e: React.KeyboardEvent<HTMLInputElement>): void => {
@@ -76,7 +96,43 @@ const SearchPopover: React.FC<SearchPopoverProps> = ({ doc, onToggle }) => {
         clearKeyword();
     };
 
+    const buildKeywordRegex = (keywordParam: string, matchCaseParam: boolean, wholeWordsParam: boolean): RegExp => {
+        const source = wholeWordsParam ? ` ${keywordParam} ` : keywordParam;
+        const flags = matchCaseParam ? 'g' : 'gi';
+        return new RegExp(source, flags);
+    };
+
     const search = (keywordParam: string, matchCaseParam: boolean, wholeWordsParam: boolean): void => {
+        const regexp = buildKeywordRegex(keywordParam, matchCaseParam, wholeWordsParam);
+        // onSearchFor(regexp);
+
+        setCurrentMatch(0);
+        setFound([]);
+
+        const promise = (textContents.current.length === 0)
+            ? getTextContents().then((response) => {
+                textContents.current = response;
+                return Promise.resolve(response);
+            })
+            : Promise.resolve(textContents.current);
+
+        promise.then((response) => {
+            const arr: Match[] = [];
+            response.forEach((item, pageIndex) => {
+                const numMatches = (item.match(regexp) || []).length;
+                for (let matchIndex = 0; matchIndex < numMatches; matchIndex++) {
+                    arr.push({
+                        matchIndex,
+                        pageIndex,
+                    });
+                }
+            });
+            setFound(arr);
+            if (arr.length > 0) {
+                setCurrentMatch(1);
+                // onJumpToMatch(arr[0]);
+            }
+        });
     };
 
     const jumpToPreviousMatch = (): void => {
