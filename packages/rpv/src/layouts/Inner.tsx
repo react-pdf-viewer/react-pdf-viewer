@@ -98,6 +98,7 @@ const Inner: React.FC<InnerProps> = ({
     const getPluginMethods = (): PluginFunctions => ({
         getPagesRef,
         getViewerState,
+        jumpToDestination,
         jumpToPage,
         openFile,
         rotate,
@@ -243,7 +244,7 @@ const Inner: React.FC<InnerProps> = ({
         setMatch(target);
     };
 
-    const jumpToDest = (pageIndex: number, bottomOffset: number, scaleTo: number | SpecialZoomLevel): void => {
+    const jumpToDestination = (pageIndex: number, bottomOffset: number, scaleTo: number | SpecialZoomLevel): void => {
         const pagesContainer = pagesRef.current;
         if (!pagesContainer) {
             return;
@@ -337,7 +338,7 @@ const Inner: React.FC<InnerProps> = ({
                                         width={pageWidth}
                                         onCanvasLayerRender={onCanvasLayerRender}
                                         onExecuteNamedAction={executeNamedAction}
-                                        onJumpToDest={jumpToDest}
+                                        onJumpToDest={jumpToDestination}
                                         onPageVisibilityChanged={pageVisibilityChanged}
                                     />
                                 </div>

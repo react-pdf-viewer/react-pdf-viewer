@@ -46,6 +46,7 @@ const searchPlugin = (): SearchPlugin => {
 
     return {
         install: (props: PluginFunctions) => {
+            store.update('jumpToDestination', props.jumpToDestination);
             store.update('jumpToPage', props.jumpToPage);
         },
         renderViewer,
