@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { FC, ReactElement, useContext } from 'react';
+import React, { ReactElement, useContext } from 'react';
 import { LocalizationContext, Popover, Position, Store, Toggle } from '@phuocng/rpv';
 
 import SearchIcon from './SearchIcon';
@@ -29,7 +29,7 @@ export interface ShowSearchPopoverProps {
 
 const PORTAL_OFFSET = { left: 0, top: 8 };
 
-const ShowSearchPopover: FC<{
+const ShowSearchPopover: React.FC<{
     children?: RenderShowSearchPopover,
     store: Store<StoreProps>,
 }> = ({ children, store }) => {

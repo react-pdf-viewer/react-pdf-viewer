@@ -40,6 +40,7 @@ interface ToolbarPlugin extends Plugin {
 }
 
 const toolbarPlugin = (props?: {
+    keyword?: string | RegExp,
     selectionMode?: SelectionMode,
 }): ToolbarPlugin => {
     const downloadPluginInstance = downloadPlugin();
@@ -51,7 +52,9 @@ const toolbarPlugin = (props?: {
     const propertiesPluginInstance = propertiesPlugin();
     const rotatePluginInstance = rotatePlugin();
     const scrollModePluginInstance = scrollModePlugin();
-    const searchPluginInstance = searchPlugin();
+    const searchPluginInstance = searchPlugin(
+        props ? { keyword: props.keyword } : {}
+    );
     const selectionModePluginInstance = selectionModePlugin(
         props ? { selectionMode: props.selectionMode } : {}
     );

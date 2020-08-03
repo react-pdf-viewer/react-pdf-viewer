@@ -59,6 +59,8 @@ export interface ToolbarPlugin extends Plugin {
 }
 
 export default function toolbarPlugin(props?: {
+    // The keyword that will be highlighted in all pages
+    keyword?: string | RegExp;
     selectionMode?: SelectionMode,
 }): ToolbarPlugin;
 

@@ -6,10 +6,10 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { FC } from 'react';
+import React from 'react';
 import { Icon } from '@phuocng/rpv';
 
-const SearchIcon: FC = () => {
+const SearchIcon: React.FC = () => {
     return (
         <Icon size={16}>
             <path

@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { FC } from 'react';
+import React from 'react';
 import { Icon } from '@phuocng/rpv';
 
 const NextIcon: React.FC = () => {

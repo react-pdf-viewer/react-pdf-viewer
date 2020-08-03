@@ -9,6 +9,7 @@
 import React, { ReactElement } from 'react';
 import { createStore, Plugin, PluginFunctions, PluginOnDocumentLoad, PluginOnTextLayerRender, RenderViewer, Slot } from '@phuocng/rpv';
 
+import { EMPTY_KEYWORD_REGEXP } from './constants';
 import ShowSearchPopover, { ShowSearchPopoverProps } from './ShowSearchPopover';
 import StoreProps from './StoreProps';
 import Tracker from './Tracker';
@@ -17,7 +18,10 @@ interface SearchPlugin extends Plugin {
     ShowSearchPopover(props: ShowSearchPopoverProps): ReactElement;
 }
 
-const searchPlugin = (): SearchPlugin => {
+const searchPlugin = (props?: {
+    // The keyword that will be highlighted in all pages
+    keyword?: string | RegExp;
+}): SearchPlugin => {
     const store = createStore<StoreProps>({
         renderStatus: new Map<number, PluginOnTextLayerRender>(),
     });
@@ -45,9 +49,13 @@ const searchPlugin = (): SearchPlugin => {
     };
 
     return {
-        install: (props: PluginFunctions) => {
-            store.update('jumpToDestination', props.jumpToDestination);
-            store.update('jumpToPage', props.jumpToPage);
+        install: (pluginFunctions: PluginFunctions) => {
+            store.update('jumpToDestination', pluginFunctions.jumpToDestination);
+            store.update('jumpToPage', pluginFunctions.jumpToPage);
+            store.update(
+                'keyword',
+                props ? ((typeof props.keyword === 'string') ? new RegExp(props.keyword) : props.keyword) : EMPTY_KEYWORD_REGEXP
+            );
         },
         renderViewer,
         uninstall: (props: PluginFunctions) => {
