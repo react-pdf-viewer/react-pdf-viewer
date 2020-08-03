@@ -23,10 +23,12 @@ export interface SearchPlugin extends Plugin {
     ShowSearchPopover: (props: ShowSearchPopoverProps) => ReactElement;
 }
 
-export default function searchPlugin(props?: {
+export interface SearchPluginProps {
     // The keyword that will be highlighted in all pages
     keyword?: string | RegExp;
-}): SearchPlugin;
+}
+
+export default function searchPlugin(props?: SearchPluginProps): SearchPlugin;
 
 export class NextIcon extends Component<{}> {}
 export class PreviousIcon extends Component<{}> {}
