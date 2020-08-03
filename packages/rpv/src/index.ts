@@ -25,6 +25,7 @@ export { default as Position } from './portal/Position';
 export { default as Tooltip } from './portal/Tooltip';
 export { default as SpecialZoomLevel } from './SpecialZoomLevel';
 export { default as createStore } from './store/createStore';
+export { default as TextLayerRenderStatus } from './types/TextLayerRenderStatus';
 import Viewer from './Viewer';
 export { default as Worker } from './Worker';
 
@@ -59,6 +60,12 @@ export declare namespace PdfJs {
         width: number;
         clone(params: ViewPortCloneParams): ViewPort;
     }
+    interface PageTextContent {
+        items: PageTextItem[];
+    }
+    interface PageTextItem {
+        str: string;
+    }
 
     // Render task
     interface PageRenderTask {
@@ -76,6 +83,7 @@ export declare namespace PdfJs {
         viewport: ViewPort;
     }
     interface Page {
+        getTextContent(): Promise<PageTextContent>;
         getViewport(params: ViewPortParams): ViewPort;
         render(params: PageRenderParams): PageRenderTask;
     }
@@ -102,12 +110,14 @@ export declare namespace PdfJs {
 // Types
 // -----
 
+
 export type { Toggle } from './hooks/useToggle';
+export type { default as LocalizationMap } from './localization/LocalizationMap';
 export type { default as Slot } from './layouts/Slot';
 export type { default as OpenFile } from './OpenFile';
-export type { default as LocalizationMap } from './localization/LocalizationMap';
+export type { default as Offset } from './portal/Offset';
 export type { Store, StoreHandler } from './store/createStore';
-export type { Plugin, PluginOnDocumentLoad } from './types/Plugin';
+export type { Plugin, PluginOnDocumentLoad, PluginOnTextLayerRender } from './types/Plugin';
 export type { default as PluginFunctions } from './types/PluginFunctions';
 export type { default as RenderViewer } from './types/RenderViewer';
 export type { default as ViewerState } from './types/ViewerState';

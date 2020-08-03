@@ -10,14 +10,6 @@
     "bookmark": {
         "noBookmark": "There is no bookmark"
     },
-    "search": {
-        "close": "Close",
-        "enterToSearch": "Enter to search",
-        "matchCase": "Match case",
-        "nextMatch": "Next match",
-        "previousMatch": "Previous match",
-        "wholeWords": "Whole words"
-    },
     "sidebar": {
         "attachment": "Attachment",
         "bookmark": "Bookmark",
@@ -25,7 +17,6 @@
     },
     "toolbar": {
         "moreActions": "More actions",
-        "search": "Search",
         "toggleSidebar":  "Toggle sidebar"
     },
     "wrongPassword": {

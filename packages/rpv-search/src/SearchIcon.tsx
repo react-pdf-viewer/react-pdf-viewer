@@ -7,18 +7,18 @@
  */
 
 import React from 'react';
+import { Icon } from '@phuocng/rpv';
 
-import Icon from './Icon';
-
-const PreviousIcon: React.FC = () => {
+const SearchIcon: React.FC = () => {
     return (
         <Icon size={16}>
             <path
-                d={`M23.535,18.373L12.409,5.8c-0.183-0.207-0.499-0.226-0.706-0.043C11.688,5.77,11.674,5.785,11.66,5.8
-                L0.535,18.373`}
+                d={`M10.5,0.5c5.523,0,10,4.477,10,10s-4.477,10-10,10s-10-4.477-10-10S4.977,0.5,10.5,0.5z
+                M23.5,23.5
+                l-5.929-5.929`}
             />
         </Icon>
     );
 };
 
-export default PreviousIcon;
+export default SearchIcon;

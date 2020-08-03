@@ -15,13 +15,16 @@ import ToolbarSlot from './ToolbarSlot';
 const defaultToolbar = (toolbarSlot: ToolbarSlot): ReactElement => {
     const {
         CurrentPageInput, Download, EnterFullScreen, GoToNextPage, GoToPreviousPage,
-        NumberOfPages, Open, Print, Zoom, ZoomIn,
+        NumberOfPages, Open, Print, ShowSearchPopover, Zoom, ZoomIn,
         ZoomOut,
     } = toolbarSlot;
 
     return (
         <div className='rpv-toolbar'>
             <div className='rpv-toolbar-left'>
+                <div className='rpv-toolbar-item'>
+                    <ShowSearchPopover />
+                </div>
                 <div className='rpv-toolbar-item'>
                     <GoToPreviousPage />
                 </div>

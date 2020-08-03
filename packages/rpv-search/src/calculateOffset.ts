@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import Offset from '../portal/Offset';
+import { Offset } from '@phuocng/rpv';
 
 const calculateOffset = (children: HTMLElement, parent: HTMLElement): Offset => {
     let top = children.offsetTop;

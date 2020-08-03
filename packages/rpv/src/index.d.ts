@@ -38,6 +38,13 @@ export declare namespace PdfJs {
         clone(params: ViewPortCloneParams): ViewPort;
     }
 
+    interface PageTextContent {
+        items: PageTextItem[];
+    }
+    interface PageTextItem {
+        str: string;
+    }
+
     // Render task
     interface PageRenderTask {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -54,6 +61,7 @@ export declare namespace PdfJs {
         viewport: ViewPort;
     }
     interface Page {
+        getTextContent(): Promise<PageTextContent>;
         getViewport(params: ViewPortParams): ViewPort;
         render(params: PageRenderParams): PageRenderTask;
     }
@@ -128,7 +136,6 @@ export type Toggle = (status?: ToggleStatus) => void;
 
 export interface ToolbarSlot {
     toggleSidebarButton: React.ReactNode;
-    searchPopover: React.ReactNode;
 }
 
 export enum SpecialZoomLevel {
@@ -314,11 +321,6 @@ export interface PageChangeEvent {
     doc: PdfJs.PdfDocument;
 }
 
-// Invoked when the text layer is ready
-export interface TextLayerRenderEvent {
-    ele: HTMLElement;
-}
-
 // Invoked when users zoom the document
 export interface ZoomEvent {
     doc: PdfJs.PdfDocument;
@@ -348,6 +350,7 @@ export interface ViewerState {
 export interface PluginFunctions {
     getPagesRef(): React.RefObject<HTMLDivElement>;
     getViewerState(): ViewerState;
+    jumpToDestination(pageIndex: number, bottomOffset: number, scaleTo: number | SpecialZoomLevel): void;
     jumpToPage(pageIndex: number): void;
     openFile(file: File): void;
     rotate(rotation: number): void;
@@ -359,11 +362,24 @@ export interface PluginOnDocumentLoad {
     doc: PdfJs.PdfDocument;
 }
 
+export enum TextLayerRenderStatus {
+    PreRender,
+    DidRender,
+}
+
+export interface PluginOnTextLayerRender {
+    ele: HTMLElement;
+    pageIndex: number;
+    scale: number;
+    status: TextLayerRenderStatus;
+}
+
 export interface Plugin {
     install?(pluginFunctions: PluginFunctions): void;
     renderViewer?(props: RenderViewer): Slot;
     uninstall?(pluginFunctions: PluginFunctions): void;
     onDocumentLoad?(props: PluginOnDocumentLoad): void;
+    onTextLayerRender?(props: PluginOnTextLayerRender): void;
     onViewerStateChange?(viewerState: ViewerState): ViewerState;
 }
 
@@ -401,8 +417,6 @@ export interface ViewerProps {
     fileUrl: string | Uint8Array;
     // The page (zero-index based) that will be displayed initially
     initialPage?: number;
-    // The keyword that will be highlighted in all pages
-    keyword?: string | RegExp;
     // Plugins
     plugins?: Plugin[];
     localization?: LocalizationMap;
@@ -413,7 +427,6 @@ export interface ViewerProps {
     onCanvasLayerRender?(e: CanvasLayerRenderEvent): void;
     onDocumentLoad?(e: DocumentLoadEvent): void;
     onPageChange?(e: PageChangeEvent): void;
-    onTextLayerRender?(e: TextLayerRenderEvent): void;
     onZoom?(e: ZoomEvent): void;
 }
 export default class Viewer extends React.Component<ViewerProps> {}

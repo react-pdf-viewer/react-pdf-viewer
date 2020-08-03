@@ -34,9 +34,6 @@ export interface PageChangeEvent {
     currentPage: number;
     doc: PdfJs.PdfDocument;
 }
-export interface TextLayerRenderEvent {
-    ele: HTMLElement;
-}
 export interface ZoomEvent {
     doc: PdfJs.PdfDocument;
     scale: number;
@@ -55,8 +52,6 @@ interface ViewerProps {
     fileUrl: string | Uint8Array;
     // The page (zero-index based) that will be displayed initially
     initialPage?: number;
-    // The keyword that will be highlighted in all pages
-    keyword?: string | RegExp;
     // Plugins
     plugins?: Plugin[];
     localization?: LocalizationMap;
@@ -69,8 +64,6 @@ interface ViewerProps {
     onCanvasLayerRender?(e: CanvasLayerRenderEvent): void;
     onDocumentLoad?(e: DocumentLoadEvent): void;
     onPageChange?(e: PageChangeEvent): void;
-    // Invoked when the text layer is ready
-    onTextLayerRender?(e: TextLayerRenderEvent): void;
     onZoom?(e: ZoomEvent): void;
 }
 
@@ -79,7 +72,6 @@ const Viewer: React.FC<ViewerProps> = ({
     defaultScale,
     fileUrl,
     initialPage = 0,
-    keyword,
     localization,
     plugins = [],
     prefixClass,
@@ -88,7 +80,6 @@ const Viewer: React.FC<ViewerProps> = ({
     onCanvasLayerRender = () => {/**/},
     onDocumentLoad = () => {/**/},
     onPageChange = () => {/**/},
-    onTextLayerRender = () => {/**/},
     onZoom = () => {/**/},
 }) => {
     const [file, setFile] = useState<OpenFile>({
@@ -124,9 +115,7 @@ const Viewer: React.FC<ViewerProps> = ({
                                     <Inner
                                         defaultScale={defaultScale}
                                         doc={doc}
-                                        file={file}
                                         initialPage={initialPage}
-                                        keyword={keyword}
                                         pageSize={ps}
                                         plugins={plugins}
                                         renderPage={renderPage}
@@ -140,7 +129,6 @@ const Viewer: React.FC<ViewerProps> = ({
                                         onDocumentLoad={onDocumentLoad}
                                         onOpenFile={openFile}
                                         onPageChange={onPageChange}
-                                        onTextLayerRender={onTextLayerRender}
                                         onZoom={onZoom}
                                     />
                                 )}

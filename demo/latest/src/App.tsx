@@ -7,6 +7,7 @@ import '@phuocng/rpv/cjs/rpv.css';
 import '@phuocng/rpv-toolbar/cjs/rpv-toolbar.css';
 
 const toolbar = toolbarPlugin({
+    keyword: '',
     selectionMode: SelectionMode.Text,
 });
 

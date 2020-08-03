@@ -16,6 +16,7 @@ import { PrintProps } from '@phuocng/rpv-print';
 import { ShowPropertiesProps, ShowPropertiesMenuItemProps } from '@phuocng/rpv-properties';
 import { RotateDecoratorProps, RotateProps } from '@phuocng/rpv-rotate';
 import { SwitchScrollModeMenuItemProps, SwitchScrollModeProps } from '@phuocng/rpv-scroll-mode';
+import type { ShowSearchPopoverProps } from '@phuocng/rpv-search';
 import { SelectionMode, SwitchSelectionModeMenuItemProps, SwitchSelectionModeProps } from '@phuocng/rpv-selection-mode';
 import { CurrentScaleProps, ZoomProps, ZoomInProps, ZoomOutProps } from '@phuocng/rpv-zoom';
 
@@ -39,6 +40,7 @@ export interface ToolbarSlot {
     RotateForwardMenuItem(props: RotateDecoratorProps): ReactElement;
     ShowProperties(props: ShowPropertiesProps): ReactElement;
     ShowPropertiesMenuItem(props: ShowPropertiesMenuItemProps): ReactElement;
+    ShowSearchPopover(props: ShowSearchPopoverProps): ReactElement;
     SwitchScrollMode(props: SwitchScrollModeProps): ReactElement;
     SwitchScrollModeMenuItem(props: SwitchScrollModeMenuItemProps): ReactElement;
     SwitchSelectionMode(props: SwitchSelectionModeProps): ReactElement;
@@ -57,6 +59,8 @@ export interface ToolbarPlugin extends Plugin {
 }
 
 export default function toolbarPlugin(props?: {
+    // The keyword that will be highlighted in all pages
+    keyword?: string | RegExp;
     selectionMode?: SelectionMode,
 }): ToolbarPlugin;
 

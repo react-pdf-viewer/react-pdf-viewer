@@ -6,9 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-interface Match {
+export default interface Match {
     matchIndex: number;
     pageIndex: number;
 }
-
-export default Match;

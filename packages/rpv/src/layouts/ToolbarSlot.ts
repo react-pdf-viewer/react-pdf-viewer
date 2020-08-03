@@ -10,7 +10,6 @@ import { ReactElement, ReactNode } from 'react';
 
 export default interface ToolbarSlot {
     toggleSidebarButton: ReactNode;
-    searchPopover: ReactNode;
 }
 
 export type RenderToolbarSlot = (toolbarSlot: ToolbarSlot) => ReactElement;

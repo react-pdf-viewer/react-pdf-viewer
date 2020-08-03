@@ -11,8 +11,6 @@ import React, { useContext, useEffect, useRef, useState } from 'react';
 import useToggle from '../hooks/useToggle';
 import PageLayer from '../layers/PageLayer';
 import Slot from '../layouts/Slot';
-import OpenFile from '../OpenFile';
-import Match from '../search/Match';
 import SpecialZoomLevel from '../SpecialZoomLevel';
 import ThemeContext from '../theme/ThemeContext';
 import { Plugin } from '../types/Plugin';
@@ -20,22 +18,18 @@ import PluginFunctions from '../types/PluginFunctions';
 import ViewerState from '../types/ViewerState';
 import PdfJs from '../vendors/PdfJs';
 import getFileExt from '../utils/fileExt';
-import { CanvasLayerRenderEvent, DocumentLoadEvent, PageChangeEvent, TextLayerRenderEvent, ZoomEvent } from '../Viewer';
+import { CanvasLayerRenderEvent, DocumentLoadEvent, PageChangeEvent, ZoomEvent } from '../Viewer';
 import './inner.less';
 import PageSize from './PageSize';
 import { RenderPage } from './RenderPage';
 
-// `new RegExp('')` will treat the source as `(?:)` which is not an empty string
-const EMPTY_KEYWORD_REGEXP = new RegExp(' ');
 const SCROLL_BAR_WIDTH = 17;
 const PAGE_PADDING = 8;
 
 interface InnerProps {
     defaultScale?: number | SpecialZoomLevel;
     doc: PdfJs.PdfDocument;
-    file: OpenFile;
     initialPage?: number;
-    keyword?: string | RegExp;
     pageSize: PageSize;
     plugins: Plugin[];
     renderPage?: RenderPage;
@@ -44,13 +38,12 @@ interface InnerProps {
     onDocumentLoad(e: DocumentLoadEvent): void;
     onOpenFile(fileName: string, data: Uint8Array): void;
     onPageChange(e: PageChangeEvent): void;
-    onTextLayerRender(e: TextLayerRenderEvent): void;
     onZoom(e: ZoomEvent): void;
 }
 
 const Inner: React.FC<InnerProps> = ({
-    defaultScale, doc, file, initialPage, keyword, pageSize, plugins, renderPage, viewerState,
-    onCanvasLayerRender, onDocumentLoad, onOpenFile, onPageChange, onTextLayerRender, onZoom,
+    defaultScale, doc, initialPage, pageSize, plugins, renderPage, viewerState,
+    onCanvasLayerRender, onDocumentLoad, onOpenFile, onPageChange, onZoom,
 }) => {
     const theme = useContext(ThemeContext);
     const containerRef = useRef<HTMLDivElement | null>(null);
@@ -58,15 +51,6 @@ const Inner: React.FC<InnerProps> = ({
     const [scale, setScale] = useState(pageSize.scale);
     const [currentPage, setCurrentPage] = useState(0);
     const [rotation, setRotation] = useState(0);
-    const [keywordRegexp, setKeywordRegexp] = useState<RegExp>(
-        keyword
-        ? ((typeof keyword === 'string') ? new RegExp(keyword) : keyword)
-        : EMPTY_KEYWORD_REGEXP
-    );
-    const [match, setMatch] = useState<Match>({
-        matchIndex: -1,
-        pageIndex: -1,
-    });
     const stateRef = useRef<ViewerState>(viewerState);
     const toggleSidebar = useToggle();
 
@@ -99,6 +83,7 @@ const Inner: React.FC<InnerProps> = ({
     const getPluginMethods = (): PluginFunctions => ({
         getPagesRef,
         getViewerState,
+        jumpToDestination,
         jumpToPage,
         openFile,
         rotate,
@@ -239,12 +224,7 @@ const Inner: React.FC<InnerProps> = ({
         });
     };
 
-    const jumpToMatch = (target: Match): void => {
-        jumpToPage(target.pageIndex);
-        setMatch(target);
-    };
-
-    const jumpToDest = (pageIndex: number, bottomOffset: number, scaleTo: number | SpecialZoomLevel): void => {
+    const jumpToDestination = (pageIndex: number, bottomOffset: number, scaleTo: number | SpecialZoomLevel): void => {
         const pagesContainer = pagesRef.current;
         if (!pagesContainer) {
             return;
@@ -327,19 +307,17 @@ const Inner: React.FC<InnerProps> = ({
                                 >
                                     <PageLayer
                                         doc={doc}
-                                        keywordRegexp={keywordRegexp}
                                         height={pageHeight}
-                                        match={match}
                                         pageIndex={index}
+                                        plugins={plugins}
                                         renderPage={renderPage}
                                         rotation={rotation}
                                         scale={scale}
                                         width={pageWidth}
                                         onCanvasLayerRender={onCanvasLayerRender}
                                         onExecuteNamedAction={executeNamedAction}
-                                        onJumpToDest={jumpToDest}
+                                        onJumpToDest={jumpToDestination}
                                         onPageVisibilityChanged={pageVisibilityChanged}
-                                        onTextLayerRender={onTextLayerRender}
                                     />
                                 </div>
                             );
