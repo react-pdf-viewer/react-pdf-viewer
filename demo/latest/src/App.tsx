@@ -7,8 +7,12 @@ import '@phuocng/rpv/cjs/rpv.css';
 import '@phuocng/rpv-toolbar/cjs/rpv-toolbar.css';
 
 const toolbar = toolbarPlugin({
-    keyword: '',
-    selectionMode: SelectionMode.Text,
+    searchPlugin: {
+        keyword: 'PDF',
+    },
+    selectionModePlugin: {
+        selectionMode: SelectionMode.Text,
+    },
 });
 
 const { Toolbar } = toolbar;

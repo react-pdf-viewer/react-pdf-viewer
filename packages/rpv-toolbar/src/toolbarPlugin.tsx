@@ -18,8 +18,8 @@ import printPlugin from '@phuocng/rpv-print';
 import propertiesPlugin from '@phuocng/rpv-properties';
 import rotatePlugin from '@phuocng/rpv-rotate';
 import scrollModePlugin from '@phuocng/rpv-scroll-mode';
-import searchPlugin from '@phuocng/rpv-search';
-import selectionModePlugin, { SelectionMode } from '@phuocng/rpv-selection-mode';
+import searchPlugin, { SearchPluginProps } from '@phuocng/rpv-search';
+import selectionModePlugin, { SelectionModePluginProps } from '@phuocng/rpv-selection-mode';
 import zoomPlugin from '@phuocng/rpv-zoom';
 
 import '@phuocng/rpv-drop/cjs/rpv-drop.css';
@@ -39,10 +39,12 @@ interface ToolbarPlugin extends Plugin {
     Toolbar: (props: ToolbarProps) => React.ReactElement;
 }
 
-const toolbarPlugin = (props?: {
-    keyword?: string | RegExp,
-    selectionMode?: SelectionMode,
-}): ToolbarPlugin => {
+export interface ToolbarPluginProps {
+    searchPlugin?: SearchPluginProps;
+    selectionModePlugin?: SelectionModePluginProps;
+}
+
+const toolbarPlugin = (props?: ToolbarPluginProps): ToolbarPlugin => {
     const downloadPluginInstance = downloadPlugin();
     const dropPluginInstance = dropPlugin();
     const fullScreenPluginInstance = fullScreenPlugin();
@@ -52,12 +54,8 @@ const toolbarPlugin = (props?: {
     const propertiesPluginInstance = propertiesPlugin();
     const rotatePluginInstance = rotatePlugin();
     const scrollModePluginInstance = scrollModePlugin();
-    const searchPluginInstance = searchPlugin(
-        props ? { keyword: props.keyword } : {}
-    );
-    const selectionModePluginInstance = selectionModePlugin(
-        props ? { selectionMode: props.selectionMode } : {}
-    );
+    const searchPluginInstance = searchPlugin(props ? props.searchPlugin : {});
+    const selectionModePluginInstance = selectionModePlugin(props ? props.selectionModePlugin : {});
     const zoomPluginInstance = zoomPlugin();
 
     const plugins = [
