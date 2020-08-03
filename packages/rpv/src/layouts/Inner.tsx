@@ -12,7 +12,6 @@ import useToggle from '../hooks/useToggle';
 import PageLayer from '../layers/PageLayer';
 import Slot from '../layouts/Slot';
 import OpenFile from '../OpenFile';
-import Match from '../search/Match';
 import SpecialZoomLevel from '../SpecialZoomLevel';
 import ThemeContext from '../theme/ThemeContext';
 import { Plugin } from '../types/Plugin';
@@ -25,8 +24,6 @@ import './inner.less';
 import PageSize from './PageSize';
 import { RenderPage } from './RenderPage';
 
-// `new RegExp('')` will treat the source as `(?:)` which is not an empty string
-const EMPTY_KEYWORD_REGEXP = new RegExp(' ');
 const SCROLL_BAR_WIDTH = 17;
 const PAGE_PADDING = 8;
 
@@ -57,15 +54,6 @@ const Inner: React.FC<InnerProps> = ({
     const [scale, setScale] = useState(pageSize.scale);
     const [currentPage, setCurrentPage] = useState(0);
     const [rotation, setRotation] = useState(0);
-    const [keywordRegexp, setKeywordRegexp] = useState<RegExp>(
-        keyword
-        ? ((typeof keyword === 'string') ? new RegExp(keyword) : keyword)
-        : EMPTY_KEYWORD_REGEXP
-    );
-    const [match, setMatch] = useState<Match>({
-        matchIndex: -1,
-        pageIndex: -1,
-    });
     const stateRef = useRef<ViewerState>(viewerState);
     const toggleSidebar = useToggle();
 
@@ -239,11 +227,6 @@ const Inner: React.FC<InnerProps> = ({
         });
     };
 
-    const jumpToMatch = (target: Match): void => {
-        jumpToPage(target.pageIndex);
-        setMatch(target);
-    };
-
     const jumpToDestination = (pageIndex: number, bottomOffset: number, scaleTo: number | SpecialZoomLevel): void => {
         const pagesContainer = pagesRef.current;
         if (!pagesContainer) {
@@ -327,9 +310,7 @@ const Inner: React.FC<InnerProps> = ({
                                 >
                                     <PageLayer
                                         doc={doc}
-                                        keywordRegexp={keywordRegexp}
                                         height={pageHeight}
-                                        match={match}
                                         pageIndex={index}
                                         plugins={plugins}
                                         renderPage={renderPage}

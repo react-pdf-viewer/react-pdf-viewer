@@ -12,7 +12,6 @@ import AnnotationLayer from '../annotations/AnnotationLayer';
 import Spinner from '../components/Spinner';
 import Observer, { VisibilityChanged } from '../layouts/Observer';
 import RenderPageProps, { RenderPage } from '../layouts/RenderPage';
-import Match from '../search/Match';
 import SpecialZoomLevel from '../SpecialZoomLevel';
 import ThemeContext from '../theme/ThemeContext';
 import { Plugin } from '../types/Plugin';
@@ -26,8 +25,6 @@ import TextLayer from './TextLayer';
 interface PageLayerProps {
     doc: PdfJs.PdfDocument;
     height: number;
-    keywordRegexp: RegExp;
-    match: Match;
     pageIndex: number;
     plugins: Plugin[];
     renderPage?: RenderPage;
@@ -49,7 +46,7 @@ interface PageSizeState {
 }
 
 const PageLayer: React.FC<PageLayerProps> = ({
-    doc, height, keywordRegexp, match, pageIndex, plugins, renderPage, rotation, scale, width,
+    doc, height, pageIndex, plugins, renderPage, rotation, scale, width,
     onCanvasLayerRender, onExecuteNamedAction, onJumpToDest, onPageVisibilityChanged,
 }) => {
     const theme = useContext(ThemeContext);
@@ -86,11 +83,6 @@ const PageLayer: React.FC<PageLayerProps> = ({
                 });
             });
         }
-    };
-
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const jumpToMatch = (indexOfPage: number, top: number, left: number): void => {
-        onJumpToDest(indexOfPage, pageHeight - top, scale);
     };
 
     // Default page renderer
@@ -161,14 +153,11 @@ const PageLayer: React.FC<PageLayerProps> = ({
                                 attrs: {},
                                 children: (
                                     <TextLayer
-                                        keywordRegexp={keywordRegexp}
-                                        match={match}
                                         page={page}
                                         pageIndex={pageIndex}
                                         plugins={plugins}
                                         rotation={rotationNumber}
                                         scale={scale}
-                                        onJumpToMatch={jumpToMatch}
                                     />
                                 )
                             },
