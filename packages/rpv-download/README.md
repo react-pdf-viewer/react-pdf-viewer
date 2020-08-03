@@ -8,12 +8,12 @@ import downloadPlugin from '@phuocng/rpv-download';
 const downloadPluginInstance = downloadPlugin();
 
 // The button to download the current file
-const { DownloadButton } = downloadPluginInstance;
+const { Download } = downloadPluginInstance;
 
 // Render
 return (
     <>
-    <DownloadButton />
+    <Download />
     <Viewer
         plugins={[
             downloadPluginInstance,
@@ -31,12 +31,12 @@ import downloadPlugin from '@phuocng/rpv-download';
 const downloadPluginInstance = downloadPlugin();
 
 // The button to download the current file
-const { DownloadButton } = downloadPluginInstance;
+const { Download } = downloadPluginInstance;
 
 // Render
 return (
     <>
-    <DownloadButton>
+    <Download>
     {
         (props) => (
             // Your custom button here
@@ -45,7 +45,7 @@ return (
             </button>
         )
     }
-    </OpenButton>
+    </Download>
     <Viewer
         plugins={[
             downloadPluginInstance,
@@ -53,4 +53,29 @@ return (
     >
     </>
 );
+~~~
+
+## Plugin options
+
+* `fileNameGenerator` (Optional): Custom the name of download file. 
+
+It is a function accepts the current opened file and returns a `string`:
+
+~~~ javascript
+(file: OpenFile) => string;
+~~~
+
+By default, the name of download file is determined by the `name` properties of `OpenFile`.
+You can customize it as following:
+
+~~~ javascript
+import { OpenFile } from '@phuocng/rpv';
+
+const downloadPluginInstance = downloadPlugin({
+    fileNameGenerator: (file: OpenFile) => {
+        // `file.name` is the URL of opened file
+        const fileName = file.name.substring(file.name.lastIndexOf('/') + 1);
+        return `a-copy-of-${fileName}`;
+    },
+});
 ~~~
