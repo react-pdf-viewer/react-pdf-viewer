@@ -102,6 +102,12 @@ const Tracker: React.FC<{
         scrollToMatch();
     }, [keywordRegexp, match, renderStatus]);
 
+    useEffect(() => {
+        if (keywordRegexp.source.trim() === '' && renderStatus.ele && renderStatus.status === TextLayerRenderStatus.DidRender) {
+            unhighlightAll(renderStatus.ele);
+        }
+    }, [keywordRegexp, renderStatus]);
+
     const scrollToMatch = (): void => {
         if (match.pageIndex !== pageIndex || !renderStatus.ele || renderStatus.status !== TextLayerRenderStatus.DidRender) {
             return;
