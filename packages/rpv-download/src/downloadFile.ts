@@ -6,18 +6,16 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import getFileName from './fileName';
+import { OpenFile } from '@phuocng/rpv';
 
-import { PdfJs } from '@phuocng/rpv';
-
-const downloadFile = (url: string, data: PdfJs.FileData): void => {
-    const blobUrl = (typeof data === 'string')
+const downloadFile = (file: OpenFile, saveAs: string): void => {
+    const blobUrl = (typeof file.data === 'string')
                     ? ''
-                    : URL.createObjectURL(new Blob([data], { type: '' }));
+                    : URL.createObjectURL(new Blob([file.data], { type: '' }));
     const link = document.createElement('a');
     link.style.display = 'none';
-    link.href = blobUrl || url;
-    link.setAttribute('download', getFileName(url));
+    link.href = blobUrl || file.name;
+    link.setAttribute('download', saveAs);
 
     document.body.appendChild(link);
     link.click();

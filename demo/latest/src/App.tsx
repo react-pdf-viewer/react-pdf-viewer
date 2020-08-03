@@ -25,7 +25,7 @@ const App = () => {
             </div>
             <div style={{ height: '750px' }}>
                 <Viewer
-                    fileUrl="/pdf-open-parameters.pdf"
+                    fileUrl="http://localhost:8001/pdf-open-parameters.pdf"
                     plugins={[
                         toolbar,
                     ]}

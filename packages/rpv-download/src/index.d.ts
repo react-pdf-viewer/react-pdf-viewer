@@ -7,7 +7,7 @@
  */
 
 import { Component, ReactElement } from 'react';
-import { Plugin } from '@phuocng/rpv';
+import { OpenFile, Plugin } from '@phuocng/rpv';
 
 export interface RenderDownloadProps {
     onClick(): void;
@@ -17,11 +17,16 @@ export interface DownloadProps {
     children?(props: RenderDownloadProps): ReactElement;
 }
 
-export interface FirstPagePlugin extends Plugin {
+export interface DownloadPlugin extends Plugin {
     Download(props: DownloadProps): ReactElement;
     DownloadButton(): ReactElement;
 }
 
-export default function firstPagePlugin(): FirstPagePlugin;
+export interface DownloadPluginProps {
+    // Custom the download file name
+    fileNameGenerator?: (file: OpenFile) => string;
+}
+
+export default function downloadPlugin(props?: DownloadPluginProps): DownloadPlugin;
 
 export class DownloadIcon extends Component<{}> {}

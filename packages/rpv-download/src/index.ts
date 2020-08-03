@@ -14,3 +14,4 @@ export { DownloadIcon };
 
 // Types
 export type { DownloadProps } from './Download';
+export type { DownloadPluginProps } from './downloadPlugin';
