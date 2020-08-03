@@ -28,4 +28,6 @@ export default function searchPlugin(props?: {
     keyword?: string | RegExp;
 }): SearchPlugin;
 
+export class NextIcon extends Component<{}> {}
+export class PreviousIcon extends Component<{}> {}
 export class SearchIcon extends Component<{}> {}
