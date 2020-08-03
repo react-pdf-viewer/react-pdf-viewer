@@ -136,7 +136,6 @@ export type Toggle = (status?: ToggleStatus) => void;
 
 export interface ToolbarSlot {
     toggleSidebarButton: React.ReactNode;
-    searchPopover: React.ReactNode;
 }
 
 export enum SpecialZoomLevel {
