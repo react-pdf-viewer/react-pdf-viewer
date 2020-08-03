@@ -8,7 +8,7 @@
 
 import { Component, ReactElement } from 'react';
 import { Plugin } from '@phuocng/rpv';
-import { DownloadProps } from '@phuocng/rpv-download';
+import { DownloadProps, DownloadPluginProps } from '@phuocng/rpv-download';
 import { EnterFullScreenProps } from '@phuocng/rpv-full-screen';
 import { OpenProps } from '@phuocng/rpv-open';
 import { CurrentPageLabelProps, GoToFirstPageProps, GoToFirstPageMenuItemProps, GoToLastPageProps, GoToLastPageMenuItemProps, GoToNextPageProps, GoToPreviousPageProps } from '@phuocng/rpv-page-navigation';
@@ -59,6 +59,7 @@ export interface ToolbarPlugin extends Plugin {
 }
 
 export interface ToolbarPluginProps {
+    downloadPlugin?: DownloadPluginProps;
     searchPlugin?: SearchPluginProps;
     selectionModePlugin?: SelectionModePluginProps;
 }
