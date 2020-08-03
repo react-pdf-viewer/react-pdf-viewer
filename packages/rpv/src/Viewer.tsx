@@ -52,8 +52,6 @@ interface ViewerProps {
     fileUrl: string | Uint8Array;
     // The page (zero-index based) that will be displayed initially
     initialPage?: number;
-    // The keyword that will be highlighted in all pages
-    keyword?: string | RegExp;
     // Plugins
     plugins?: Plugin[];
     localization?: LocalizationMap;
@@ -74,7 +72,6 @@ const Viewer: React.FC<ViewerProps> = ({
     defaultScale,
     fileUrl,
     initialPage = 0,
-    keyword,
     localization,
     plugins = [],
     prefixClass,
@@ -118,9 +115,7 @@ const Viewer: React.FC<ViewerProps> = ({
                                     <Inner
                                         defaultScale={defaultScale}
                                         doc={doc}
-                                        file={file}
                                         initialPage={initialPage}
-                                        keyword={keyword}
                                         pageSize={ps}
                                         plugins={plugins}
                                         renderPage={renderPage}

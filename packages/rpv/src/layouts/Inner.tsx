@@ -11,7 +11,6 @@ import React, { useContext, useEffect, useRef, useState } from 'react';
 import useToggle from '../hooks/useToggle';
 import PageLayer from '../layers/PageLayer';
 import Slot from '../layouts/Slot';
-import OpenFile from '../OpenFile';
 import SpecialZoomLevel from '../SpecialZoomLevel';
 import ThemeContext from '../theme/ThemeContext';
 import { Plugin } from '../types/Plugin';
@@ -30,9 +29,7 @@ const PAGE_PADDING = 8;
 interface InnerProps {
     defaultScale?: number | SpecialZoomLevel;
     doc: PdfJs.PdfDocument;
-    file: OpenFile;
     initialPage?: number;
-    keyword?: string | RegExp;
     pageSize: PageSize;
     plugins: Plugin[];
     renderPage?: RenderPage;
@@ -45,7 +42,7 @@ interface InnerProps {
 }
 
 const Inner: React.FC<InnerProps> = ({
-    defaultScale, doc, file, initialPage, keyword, pageSize, plugins, renderPage, viewerState,
+    defaultScale, doc, initialPage, pageSize, plugins, renderPage, viewerState,
     onCanvasLayerRender, onDocumentLoad, onOpenFile, onPageChange, onZoom,
 }) => {
     const theme = useContext(ThemeContext);
