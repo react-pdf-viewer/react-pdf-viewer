@@ -14,5 +14,5 @@ export { default as TextSelectionIcon } from './TextSelectionIcon';
 export default selectionModePlugin;
 
 // Types
-export type { SwitchSelectionModeMenuItemProps } from './selectionModePlugin';
+export type { SelectionModePluginProps, SwitchSelectionModeMenuItemProps } from './selectionModePlugin';
 export type { SwitchSelectionModeProps } from './SwitchSelectionMode';

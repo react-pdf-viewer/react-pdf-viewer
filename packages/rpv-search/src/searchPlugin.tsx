@@ -18,10 +18,12 @@ interface SearchPlugin extends Plugin {
     ShowSearchPopover(props: ShowSearchPopoverProps): ReactElement;
 }
 
-const searchPlugin = (props?: {
+export interface SearchPluginProps {
     // The keyword that will be highlighted in all pages
     keyword?: string | RegExp;
-}): SearchPlugin => {
+}
+
+const searchPlugin = (props?: SearchPluginProps): SearchPlugin => {
     const store = createStore<StoreProps>({
         renderStatus: new Map<number, PluginOnTextLayerRender>(),
     });

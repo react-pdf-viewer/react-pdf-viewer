@@ -25,9 +25,11 @@ interface SelectionModePlugin extends Plugin {
     SwitchSelectionModeMenuItem(props: SwitchSelectionModeMenuItemProps): ReactElement;
 }
 
-const selectionModePlugin = (props?: {
-    selectionMode?: SelectionMode,
-}): SelectionModePlugin => {
+export interface SelectionModePluginProps {
+    selectionMode?: SelectionMode;
+}
+
+const selectionModePlugin = (props?: SelectionModePluginProps): SelectionModePlugin => {
     const store = createStore<StoreProps>();
 
     const SwitchSelectionModeDecorator = (props: SwitchSelectionModeProps) => (
