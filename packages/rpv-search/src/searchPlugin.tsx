@@ -54,7 +54,11 @@ const searchPlugin = (props?: {
             store.update('jumpToPage', pluginFunctions.jumpToPage);
             store.update(
                 'keyword',
-                props ? ((typeof props.keyword === 'string') ? new RegExp(props.keyword) : props.keyword) : EMPTY_KEYWORD_REGEXP
+                props
+                    ? ((typeof props.keyword === 'string')
+                        ? (props.keyword === '' ? EMPTY_KEYWORD_REGEXP : new RegExp(props.keyword))
+                        : props.keyword)
+                    : EMPTY_KEYWORD_REGEXP
             );
         },
         renderViewer,
