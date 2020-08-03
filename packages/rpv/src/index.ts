@@ -110,10 +110,12 @@ export declare namespace PdfJs {
 // Types
 // -----
 
+
 export type { Toggle } from './hooks/useToggle';
+export type { default as LocalizationMap } from './localization/LocalizationMap';
 export type { default as Slot } from './layouts/Slot';
 export type { default as OpenFile } from './OpenFile';
-export type { default as LocalizationMap } from './localization/LocalizationMap';
+export type { default as Offset } from './portal/Offset';
 export type { Store, StoreHandler } from './store/createStore';
 export type { Plugin, PluginOnDocumentLoad, PluginOnTextLayerRender } from './types/Plugin';
 export type { default as PluginFunctions } from './types/PluginFunctions';

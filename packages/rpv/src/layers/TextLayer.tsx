@@ -110,6 +110,7 @@ const TextLayer: React.FC<TextLayerProps> = ({ keywordRegexp, match, page, pageI
                 plugin.onTextLayerRender({
                     ele: containerEle,
                     pageIndex,
+                    scale,
                     status: TextLayerRenderStatus.PreRender,
                 });
             }
@@ -144,6 +145,7 @@ const TextLayer: React.FC<TextLayerProps> = ({ keywordRegexp, match, page, pageI
                             plugin.onTextLayerRender({
                                 ele: containerEle,
                                 pageIndex,
+                                scale,
                                 status: TextLayerRenderStatus.DidRender,
                             });
                         }

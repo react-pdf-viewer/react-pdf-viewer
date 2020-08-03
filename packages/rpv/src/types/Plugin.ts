@@ -20,6 +20,7 @@ export interface PluginOnDocumentLoad {
 export interface PluginOnTextLayerRender {
     ele: HTMLElement;
     pageIndex: number;
+    scale: number;
     status: TextLayerRenderStatus;
 }
 

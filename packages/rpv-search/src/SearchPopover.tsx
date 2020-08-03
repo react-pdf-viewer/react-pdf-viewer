@@ -9,6 +9,7 @@
 import React, { useContext, useRef, useState } from 'react';
 import { Button, LocalizationContext, PdfJs, Position, PrimaryButton, Store, Tooltip } from '@phuocng/rpv';
 
+import { EMPTY_KEYWORD_REGEXP } from './constants';
 import Match from './Match';
 import NextIcon from './NextIcon';
 import PreviousIcon from './PreviousIcon';
@@ -22,7 +23,6 @@ interface SearchPopoverProps {
 }
 
 // `new RegExp('')` will treat the source as `(?:)` which is not an empty string
-const EMPTY_KEYWORD_REGEXP = new RegExp(' ');
 const PORTAL_OFFSET = { left: 0, top: 8 };
 
 const SearchPopover: React.FC<SearchPopoverProps> = ({ doc, store, onToggle }) => {
@@ -157,6 +157,7 @@ const SearchPopover: React.FC<SearchPopoverProps> = ({ doc, store, onToggle }) =
         if (jumpToPage) {
             jumpToPage(match.pageIndex);
         }
+        store.update('match', match);
     };
 
     return (

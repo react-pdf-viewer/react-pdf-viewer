@@ -9,17 +9,18 @@
 import React, { useEffect, useState } from 'react';
 import { PluginOnTextLayerRender, TextLayerRenderStatus, Store } from '@phuocng/rpv';
 
+import calculateOffset from './calculateOffset';
+import { EMPTY_KEYWORD_REGEXP } from './constants';
 import './highlight.less';
+import Match from './Match';
 import StoreProps from './StoreProps';
 import unwrap from './unwrap';
 import wrap from './wrap';
 
-// `new RegExp('')` will treat the source as `(?:)` which is not an empty string
-const EMPTY_KEYWORD_REGEXP = new RegExp(' ');
-
 interface RenderStatus {
     ele?: HTMLElement;
     pageIndex: number;
+    scale: number;
     status: TextLayerRenderStatus;
 }
 
@@ -27,9 +28,14 @@ const Tracker: React.FC<{
     pageIndex: number,
     store: Store<StoreProps>,
 }> = ({ pageIndex, store }) => {
+    const [match, setMatch] = useState<Match>({
+        matchIndex: -1,
+        pageIndex: -1,
+    });
     const [keywordRegexp, setKeywordRegexp] = useState<RegExp>(EMPTY_KEYWORD_REGEXP);
     const [renderStatus, setRenderStatus] = useState<RenderStatus>({
         pageIndex,
+        scale: 1,
         status: TextLayerRenderStatus.PreRender,
     });
 
@@ -61,6 +67,10 @@ const Tracker: React.FC<{
         setKeywordRegexp(keyword);
     };
 
+    const handleMatchChanged = (currentMatch: Match) => {
+        setMatch(currentMatch);
+    };
+
     const handleRenderStatusChanged = (status: Map<number, PluginOnTextLayerRender>) => {
         if (!status.has(pageIndex)) {
             return;
@@ -70,6 +80,7 @@ const Tracker: React.FC<{
             setRenderStatus({
                 ele: currentStatus.ele,
                 pageIndex,
+                scale: currentStatus.scale,
                 status: currentStatus.status,
             });
         }
@@ -88,14 +99,34 @@ const Tracker: React.FC<{
             const span = spans[i] as HTMLElement;
             highlight(span);
         }
-    }, [keywordRegexp, renderStatus]);
+        scrollToMatch();
+    }, [keywordRegexp, match, renderStatus]);
+
+    const scrollToMatch = (): void => {
+        if (match.pageIndex !== pageIndex || !renderStatus.ele || renderStatus.status !== TextLayerRenderStatus.DidRender) {
+            return;
+        }
+        
+        const container = renderStatus.ele;
+        const spans = container.querySelectorAll('.rpv-search-text-highlight');
+        if (match.matchIndex < spans.length) {
+            const span = spans[match.matchIndex] as HTMLElement;
+            const { top } = calculateOffset(span, container);
+            const jump = store.get('jumpToDestination');
+            if (jump) {
+                jump(pageIndex, (container.getBoundingClientRect().height - top) / renderStatus.scale, renderStatus.scale);
+            }
+        }
+    };
     
     useEffect(() => {
         store.subscribe('keyword', handleKeywordChanged);
+        store.subscribe('match', handleMatchChanged);
         store.subscribe('renderStatus', handleRenderStatusChanged);
 
         return () => {
             store.unsubscribe('keyword', handleKeywordChanged);
+            store.unsubscribe('match', handleMatchChanged);
             store.unsubscribe('renderStatus', handleRenderStatusChanged);
         };
     }, []);

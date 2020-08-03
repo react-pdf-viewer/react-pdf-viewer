@@ -8,9 +8,12 @@
 
 import { PdfJs, PluginOnTextLayerRender, SpecialZoomLevel } from '@phuocng/rpv';
 
+import Match from './Match';
+
 export default interface StoreProps {
     doc?: PdfJs.PdfDocument;
     keyword?: RegExp;
+    match?: Match;
     renderStatus: Map<number, PluginOnTextLayerRender>;
     jumpToDestination?(pageIndex: number, bottomOffset: number, scaleTo: number | SpecialZoomLevel): void;
     jumpToPage?(pageIndex: number): void;
