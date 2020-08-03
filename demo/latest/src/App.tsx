@@ -1,5 +1,5 @@
 import React from 'react';
-import Viewer, { Worker } from '@phuocng/rpv';
+import Viewer, { OpenFile, Worker } from '@phuocng/rpv';
 import { SelectionMode } from '@phuocng/rpv-selection-mode';
 import toolbarPlugin from '@phuocng/rpv-toolbar';
 
@@ -7,6 +7,12 @@ import '@phuocng/rpv/cjs/rpv.css';
 import '@phuocng/rpv-toolbar/cjs/rpv-toolbar.css';
 
 const toolbar = toolbarPlugin({
+    downloadPlugin: {
+        fileNameGenerator: (file: OpenFile) => {
+            const fileName = file.name.substring(file.name.lastIndexOf('/') + 1);
+            return `a-copy-of-${fileName}`;
+        },
+    },
     searchPlugin: {
         keyword: 'PDF',
     },
@@ -25,7 +31,7 @@ const App = () => {
             </div>
             <div style={{ height: '750px' }}>
                 <Viewer
-                    fileUrl="/pdf-open-parameters.pdf"
+                    fileUrl="http://localhost:8001/pdf-open-parameters.pdf"
                     plugins={[
                         toolbar,
                     ]}

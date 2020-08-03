@@ -9,7 +9,7 @@
 import React from 'react';
 
 import { Plugin, PluginFunctions, PluginOnDocumentLoad, RenderViewer, ViewerState, PluginOnTextLayerRender } from '@phuocng/rpv';
-import downloadPlugin from '@phuocng/rpv-download';
+import downloadPlugin, { DownloadPluginProps } from '@phuocng/rpv-download';
 import dropPlugin from '@phuocng/rpv-drop';
 import fullScreenPlugin from '@phuocng/rpv-full-screen';
 import openPlugin from '@phuocng/rpv-open';
@@ -40,12 +40,13 @@ interface ToolbarPlugin extends Plugin {
 }
 
 export interface ToolbarPluginProps {
+    downloadPlugin?: DownloadPluginProps;
     searchPlugin?: SearchPluginProps;
     selectionModePlugin?: SelectionModePluginProps;
 }
 
 const toolbarPlugin = (props?: ToolbarPluginProps): ToolbarPlugin => {
-    const downloadPluginInstance = downloadPlugin();
+    const downloadPluginInstance = downloadPlugin(props ? props.downloadPlugin : {});
     const dropPluginInstance = dropPlugin();
     const fullScreenPluginInstance = fullScreenPlugin();
     const openPluginInstance = openPlugin();

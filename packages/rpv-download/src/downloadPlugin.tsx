@@ -7,10 +7,11 @@
  */
 
 import React, { ReactElement } from 'react';
-import { createStore, Plugin, ViewerState } from '@phuocng/rpv';
+import { createStore, OpenFile, Plugin, ViewerState } from '@phuocng/rpv';
 
 import Download, { DownloadProps } from './Download';
 import DownloadButton from './DownloadButton';
+import getFileName from './getFileName';
 
 import StoreProps from './StoreProps';
 
@@ -19,18 +20,27 @@ interface DownloadPlugin extends Plugin {
     DownloadButton: () => ReactElement;
 }
 
-const downloadPlugin = (): DownloadPlugin => {
+export interface DownloadPluginProps {
+    // Custom the download file name
+    fileNameGenerator?: (file: OpenFile) => string;
+}
+
+const downloadPlugin = (props?: DownloadPluginProps): DownloadPlugin => {
     const store = createStore<StoreProps>({});
 
-    const DownloadDecorator = (props: DownloadProps) => (
-        <Download {...props} store={store} />
+    const defaultFileNameGenerator = (file: OpenFile) => getFileName(file.name);
+
+    const DownloadDecorator = (downloadProps: DownloadProps) => (
+        <Download
+            {...downloadProps}
+            fileNameGenerator={props ? (props.fileNameGenerator || defaultFileNameGenerator) : defaultFileNameGenerator}
+            store={store}
+        />
     );
 
     const DownloadButtonDecorator = () => (
         <DownloadDecorator>
-            {
-                (props) => <DownloadButton {...props} />
-            }
+            { (props) => <DownloadButton {...props} /> }
         </DownloadDecorator>
     );
 

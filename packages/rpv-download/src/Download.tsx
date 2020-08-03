@@ -25,8 +25,9 @@ export interface DownloadProps {
 
 const Download: React.FC<{
     children?: RenderDownload,
+    fileNameGenerator: (file: OpenFile) => string,
     store: Store<StoreProps>,
-}> = ({ children, store }) => {
+}> = ({ children, fileNameGenerator, store }) => {
     const [currentFile, setCurrentFile] = useState<OpenFile>();
 
     const handleFileChanged: StoreHandler<OpenFile> = (file: OpenFile) => {
@@ -43,7 +44,7 @@ const Download: React.FC<{
 
     const download = () => {
         if (currentFile) {
-            downloadFile(currentFile.name, currentFile.data);
+            downloadFile(currentFile, fileNameGenerator(currentFile));
         }
     };
 
