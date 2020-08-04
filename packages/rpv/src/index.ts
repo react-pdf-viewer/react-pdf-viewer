@@ -17,6 +17,7 @@ export { default as Spinner } from './components/Spinner';
 export { default as Icon } from './icons/Icon';
 export { default as defaultLayout } from './layouts/defaultLayout';
 export { default as defaultToolbar } from './layouts/defaultToolbar';
+export { default as Observer } from './layouts/Observer';
 export { default as LocalizationContext } from './localization/LocalizationContext';
 export { default as LocalizationProvider } from './localization/LocalizationProvider';
 export { default as Modal } from './portal/Modal';
@@ -113,6 +114,7 @@ export declare namespace PdfJs {
 
 export type { Toggle } from './hooks/useToggle';
 export type { default as LocalizationMap } from './localization/LocalizationMap';
+export type { VisibilityChanged } from './layouts/Observer';
 export type { default as Slot } from './layouts/Slot';
 export type { default as OpenFile } from './OpenFile';
 export type { default as Offset } from './portal/Offset';
