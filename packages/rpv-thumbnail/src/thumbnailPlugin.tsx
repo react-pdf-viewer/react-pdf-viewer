@@ -30,10 +30,11 @@ const thumbnailPlugin = (): ThumbnailPlugin => {
         onDocumentLoad: (props: PluginOnDocumentLoad) => {
             store.update('doc', props.doc);
         },
-        onViewerStateChange: (state: ViewerState) => {
-            store.update('pageHeight', state.pageHeight);
-            store.update('pageWidth', state.pageWidth);
-            return state;
+        onViewerStateChange: (viewerState: ViewerState) => {
+            store.update('currentPage', viewerState.pageIndex);
+            store.update('pageHeight', viewerState.pageHeight);
+            store.update('pageWidth', viewerState.pageWidth);
+            return viewerState;
         },
         Thumbnails: ThumbnailsDecorator,
     };
