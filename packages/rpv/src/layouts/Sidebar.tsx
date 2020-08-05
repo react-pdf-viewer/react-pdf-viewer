@@ -44,7 +44,6 @@ const Sidebar: React.FC<SidebarProps> = ({ doc, onJumpToDest }) => {
 
     const renderAttachmentTip = (): LocalizationMap => l10n.sidebar.attachment;
     const renderBookmarkTip = (): LocalizationMap => l10n.sidebar.bookmark;
-    const renderThumbnailTip = (): LocalizationMap => l10n.sidebar.thumbnail;
 
     return (
         <div className={`${theme.prefixClass}-sidebar`}>
@@ -78,7 +77,6 @@ const Sidebar: React.FC<SidebarProps> = ({ doc, onJumpToDest }) => {
                 className={
                     classNames({
                         [`${theme.prefixClass}-sidebar-content`]: true,
-                        [`${theme.prefixClass}-sidebar-thumbnails`]: tab === Tab.Thumbnail,
                     })
                 }
             >
