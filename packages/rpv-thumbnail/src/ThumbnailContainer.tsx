@@ -6,12 +6,9 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
+import { Observer, PdfJs, Spinner, VisibilityChanged } from '@phuocng/rpv';
 
-import Spinner from '../components/Spinner';
-import Observer, { VisibilityChanged } from '../layouts/Observer';
-import ThemeContext from '../theme/ThemeContext';
-import PdfJs from '../vendors/PdfJs';
 import ThumbnailItem from './ThumbnailItem';
 import './thumbnailContainer.less';
 
@@ -34,7 +31,6 @@ interface PageState {
 }
 
 const ThumbnailContainer: React.FC<ThumbnailContainerProps> = ({ doc, pageHeight, pageIndex, pageWidth, rotation }) => {
-    const theme = useContext(ThemeContext);
     const [pageSize, setPageSize] = useState<PageState>({
         height: pageHeight,
         isCalculated: false,
@@ -71,7 +67,7 @@ const ThumbnailContainer: React.FC<ThumbnailContainerProps> = ({ doc, pageHeight
     return (
         <Observer onVisibilityChanged={onVisibilityChanged}>
             <div
-                className={`${theme.prefixClass}-thumbnail-container`}
+                className='rpv-thumbnail-container'
                 style={{
                     height: `${h}px`,
                     width: `${w}px`,

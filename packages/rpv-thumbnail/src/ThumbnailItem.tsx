@@ -7,9 +7,7 @@
  */
 
 import React, { useEffect, useRef, useState } from 'react';
-
-import Spinner from '../components/Spinner';
-import PdfJs from '../vendors/PdfJs';
+import { PdfJs, Spinner } from '@phuocng/rpv';
 
 interface ThumbnailItemProps {
     page: PdfJs.Page;

@@ -237,6 +237,19 @@ export interface TooltipProps {
 export class Tooltip extends React.Component<TooltipProps> {}
 
 // Viewer
+
+export interface VisibilityChanged {
+    isVisible: boolean;
+    ratio: number;
+}
+
+interface ObserverProps {
+    threshold?: number | number[];
+    onVisibilityChanged(params: VisibilityChanged): void;
+}
+
+export class Observer extends React.Component<ObserverProps> {}
+
 export interface RenderViewer {
     containerRef: React.RefObject<HTMLDivElement>;
     doc: PdfJs.PdfDocument;
@@ -342,6 +355,9 @@ export interface ViewerState {
     file: OpenFile;
     // The current page index
     pageIndex: number;
+    // Size of page
+    pageHeight: number;
+    pageWidth: number;
     rotation: number;
     // The current zoom level
     scale: number;

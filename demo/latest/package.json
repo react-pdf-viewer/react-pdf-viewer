@@ -11,6 +11,7 @@
         "react": "^16.13.1",
         "react-dom": "^16.13.1",
         "@phuocng/rpv": "^2.0.0",
+        "@phuocng/rpv-thumbnail": "^2.0.0",
         "@phuocng/rpv-toolbar": "^2.0.0"
     },
     "devDependencies": {
