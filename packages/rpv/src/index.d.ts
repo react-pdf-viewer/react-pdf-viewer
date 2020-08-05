@@ -355,6 +355,9 @@ export interface ViewerState {
     file: OpenFile;
     // The current page index
     pageIndex: number;
+    // Size of page
+    pageHeight: number;
+    pageWidth: number;
     rotation: number;
     // The current zoom level
     scale: number;

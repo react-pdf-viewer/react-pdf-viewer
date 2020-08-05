@@ -122,6 +122,8 @@ const Viewer: React.FC<ViewerProps> = ({
                                         viewerState={{
                                             file,
                                             pageIndex: initialPage,
+                                            pageHeight: ps.pageHeight,
+                                            pageWidth: ps.pageWidth,
                                             rotation: 0,
                                             scale: ps.scale,
                                         }}

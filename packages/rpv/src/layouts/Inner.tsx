@@ -155,6 +155,8 @@ const Inner: React.FC<InnerProps> = ({
         setViewerState({
             file: viewerState.file,
             pageIndex: currentPage,
+            pageHeight,
+            pageWidth,
             rotation,
             scale,
         });
@@ -192,6 +194,8 @@ const Inner: React.FC<InnerProps> = ({
         setViewerState({
             file: viewerState.file,
             pageIndex: currentPage,
+            pageHeight,
+            pageWidth,
             rotation,
             scale: updateScale,
         });
@@ -219,6 +223,8 @@ const Inner: React.FC<InnerProps> = ({
         setViewerState({
             file: viewerState.file,
             pageIndex: currentPage,
+            pageHeight,
+            pageWidth,
             rotation: updateRotation,
             scale,
         });
