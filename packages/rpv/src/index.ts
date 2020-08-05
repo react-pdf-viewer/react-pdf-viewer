@@ -41,9 +41,12 @@ export declare namespace PdfJs {
 
     interface PdfDocument {
         numPages: number;
+        getDestination(dest: string): Promise<OutlineDestination>;
         getDownloadInfo(): Promise<{ length: number }>;
+        getOutline(): Promise<Outline[]>;
         getMetadata(): Promise<MetaData>;
         getPage(pageIndex: number): Promise<Page>;
+        getPageIndex(ref: OutlineRef): Promise<number>;
     }
 
     // View port
@@ -104,6 +107,33 @@ export declare namespace PdfJs {
         Producer: string;
         Subject: string;
         Title: string;
+    }
+
+    // Outline
+    type OutlineDestinationType = string | OutlineDestination;
+    interface Outline {
+        bold?: boolean;
+        color?: number[];
+        dest?: OutlineDestinationType;
+        italic?: boolean;
+        items: Outline[];
+        newWindow?: boolean;
+        title: string;
+        unsafeUrl?: string;
+        url?: string;
+    }
+    type OutlineDestination = [
+        OutlineRef,
+        OutlineDestinationName,
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        ...any[],
+    ];
+    interface OutlineDestinationName {
+        name: string;   // Can be 'WYZ', 'Fit', ...
+    }
+    interface OutlineRef {
+        gen: number;
+        num: number;
     }
 }
 
