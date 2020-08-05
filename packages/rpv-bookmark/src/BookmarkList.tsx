@@ -6,13 +6,11 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { useContext } from 'react';
+import React from 'react';
+import { PdfJs, SpecialZoomLevel } from '@phuocng/rpv';
 
-import SpecialZoomLevel from '../SpecialZoomLevel';
-import ThemeContext from '../theme/ThemeContext';
-import getDestination from '../utils/getDestination';
-import PdfJs from '../vendors/PdfJs';
 import BookmarkItem from './BookmarkItem';
+import getDestination from './getDestination';
 import './bookmarkList.less';
 
 interface BookmarkListProps {
@@ -23,7 +21,6 @@ interface BookmarkListProps {
 }
 
 const BookmarkList: React.FC<BookmarkListProps> = ({ bookmarks, depth = 0, doc, onJumpToDest }) => {
-    const theme = useContext(ThemeContext);
     const jumpToDest = (dest: PdfJs.OutlineDestinationType): void => {
         getDestination(doc, dest).then((target) => {
             const { pageIndex, bottomOffset, scaleTo } = target;
@@ -32,7 +29,7 @@ const BookmarkList: React.FC<BookmarkListProps> = ({ bookmarks, depth = 0, doc, 
     };
 
     return (
-        <ul className={`${theme.prefixClass}-bookmark-list`}>
+        <ul className='rpv-bookmark-list'>
         {
             bookmarks.map((bookmark, index) => {
                 return (

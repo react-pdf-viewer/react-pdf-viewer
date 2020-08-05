@@ -6,11 +6,9 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { createRef, useContext, useRef } from 'react';
+import React, { createRef, useRef } from 'react';
+import { PdfJs, SpecialZoomLevel } from '@phuocng/rpv';
 
-import ThemeContext from '../theme/ThemeContext';
-import SpecialZoomLevel from '../SpecialZoomLevel';
-import PdfJs from '../vendors/PdfJs';
 import './bookmarkItem.less';
 import BookmarkList from './BookmarkList';
 
@@ -23,7 +21,6 @@ interface BookmarkItemProps {
 }
 
 const BookmarkItem: React.FC<BookmarkItemProps> = ({ bookmark, depth, doc, onClick, onJumpToDest }) => {
-    const theme = useContext(ThemeContext);
     const toggleRef = createRef<HTMLSpanElement>();
     const subItemRef = createRef<HTMLDivElement>();
     const subItemsDisplayed = useRef(true);
@@ -38,7 +35,7 @@ const BookmarkItem: React.FC<BookmarkItemProps> = ({ bookmark, depth, doc, onCli
             return;
         }
         subItemsEle.style.display = subItemsDisplayed.current ? 'block' : 'none';
-        toggleEle.classList.toggle(`${theme.prefixClass}-bookmark-toggle-expanded`);
+        toggleEle.classList.toggle('rpv-bookmark-toggle-expanded');
     };
 
     const clickBookmak = (): void => {
@@ -55,7 +52,7 @@ const BookmarkItem: React.FC<BookmarkItemProps> = ({ bookmark, depth, doc, onCli
     return (
         <>
             <div
-                className={`${theme.prefixClass}-bookmark-item`}
+                className='rpv-bookmark-item'
                 style={{
                     paddingLeft: `${depth * 20 + 4}px`,
                 }}
@@ -65,7 +62,7 @@ const BookmarkItem: React.FC<BookmarkItemProps> = ({ bookmark, depth, doc, onCli
                     hasSubItems && (
                         <span
                             ref={toggleRef}
-                            className={`${theme.prefixClass}-bookmark-toggle`}
+                            className='rpv-bookmark-toggle'
                             onClick={toggleSubItems}
                         >
                             ►
@@ -76,7 +73,7 @@ const BookmarkItem: React.FC<BookmarkItemProps> = ({ bookmark, depth, doc, onCli
                     bookmark.url
                     ? (
                         <a
-                            className={`${theme.prefixClass}-bookmark-title`}
+                            className='rpv-bookmark-title'
                             href={bookmark.url}
                             rel='noopener noreferrer nofollow'
                             target={bookmark.newWindow ? '_blank' : ''}
@@ -86,7 +83,7 @@ const BookmarkItem: React.FC<BookmarkItemProps> = ({ bookmark, depth, doc, onCli
                     )
                     : (
                         <div
-                            className={`${theme.prefixClass}-bookmark-title`}
+                            className='rpv-bookmark-title'
                             onClick={clickBookmak}
                         >
                             {bookmark.title}

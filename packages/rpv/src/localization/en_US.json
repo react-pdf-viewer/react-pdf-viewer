@@ -7,13 +7,8 @@
         "clickToDownload": "Click to download",
         "noAttachment": "There is no attachment"
     },
-    "bookmark": {
-        "noBookmark": "There is no bookmark"
-    },
     "sidebar": {
-        "attachment": "Attachment",
-        "bookmark": "Bookmark",
-        "thumbnail": "Thumbnail"
+        "attachment": "Attachment"
     },
     "toolbar": {
         "moreActions": "More actions",

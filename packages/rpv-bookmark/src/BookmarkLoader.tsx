@@ -7,12 +7,8 @@
  */
 
 import React, { useContext, useEffect, useState } from 'react';
+import { LocalizationContext, PdfJs, SpecialZoomLevel, Spinner } from '@phuocng/rpv';
 
-import LocalizationContext from '../localization/LocalizationContext';
-import SpecialZoomLevel from '../SpecialZoomLevel';
-import PdfJs from '../vendors/PdfJs';
-import Spinner from '../components/Spinner';
-import ThemeContext from '../theme/ThemeContext';
 import BookmarkList from './BookmarkList';
 import './bookmarkLoaded.less';
 
@@ -27,7 +23,6 @@ interface BookmarkState {
 
 const BookmarkLoader: React.FC<BookmarkLoaderProps> = ({ doc, onJumpToDest }) => {
     const l10n = useContext(LocalizationContext);
-    const theme = useContext(ThemeContext);
     const [bookmarks, setBookmarks] = useState<BookmarkState>({
         isLoaded: false,
         items: [],
@@ -47,7 +42,9 @@ const BookmarkLoader: React.FC<BookmarkLoaderProps> = ({ doc, onJumpToDest }) =>
             ? <Spinner />
             : (
                 bookmarks.items.length === 0
-                    ? <div className={`${theme.prefixClass}-bookmark-empty`}>{l10n.bookmark.noBookmark}</div>
+                    ? <div className='rpv-bookmark-empty'>
+                        {l10n && l10n.plugins && l10n.plugins.bookmark ? l10n.plugins.bookmark.noBookmark : 'There is no bookmark'}
+                    </div>
                     : (
                         <BookmarkList
                             bookmarks={bookmarks.items}
