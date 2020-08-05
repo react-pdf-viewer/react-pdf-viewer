@@ -3,13 +3,6 @@
         "requirePasswordToOpen": "This document requires a password to open",
         "submit": "Submit"
     },
-    "attachment": {
-        "clickToDownload": "Click to download",
-        "noAttachment": "There is no attachment"
-    },
-    "sidebar": {
-        "attachment": "Attachment"
-    },
     "toolbar": {
         "moreActions": "More actions",
         "toggleSidebar":  "Toggle sidebar"
