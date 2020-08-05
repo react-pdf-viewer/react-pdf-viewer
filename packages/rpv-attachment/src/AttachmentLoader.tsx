@@ -42,7 +42,7 @@ const AttachmentLoader: React.FC<AttachmentLoaderProps> = ({ doc }) => {
                 isLoaded: true,
             });
         });
-    }, []);
+    }, [doc]);
 
     return (
         !attachments.isLoaded
