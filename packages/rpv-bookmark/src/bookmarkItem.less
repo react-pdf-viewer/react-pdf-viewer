@@ -1,0 +1,35 @@
+/**
+ * A React component to view a PDF document
+ *
+ * @see https://react-pdf-viewer.dev
+ * @license https://react-pdf-viewer.dev/license
+ * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
+ */
+
+.rpv-bookmark-item {
+    align-items: center;
+    cursor: pointer;
+    display: flex;
+    padding-bottom: 6px;
+    padding-right: 4px;
+    padding-top: 6px;
+
+    &:hover {
+        background-color: rgba(0, 0, 0, 0.1);
+    }
+}
+
+.rpv-bookmark-toggle {
+    margin-right: 4px;
+    transform: rotate(90deg);
+
+    &-expanded {
+        transform: rotate(0deg);
+    }
+}
+
+.rpv-bookmark-title {
+    flex-grow: 1;
+    flex-shrink: 1;
+    text-decoration: none;
+}
