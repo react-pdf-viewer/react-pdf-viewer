@@ -42,10 +42,10 @@ const ThumbnailListWithStore: React.FC<{
         setRotation(currentRotation);
     };
 
-    const jump = () => {
+    const jump = (pageIndex: number) => {
         const jumpToPage = store.get('jumpToPage');
         if (jumpToPage) {
-            jumpToPage(currentPage);
+            jumpToPage(pageIndex);
         }
     };
 

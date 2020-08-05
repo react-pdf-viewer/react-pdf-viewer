@@ -30,26 +30,24 @@ const ThumbnailList: React.FC<ThumbnailListProps> = ({
         <div className='rpv-thumbnail-list'>
             {
                 Array(numPages).fill(0).map((_, index) => {
-                    const onClick = (): void => onJumpToPage(index);
                     return (
-                        <div key={`thumbnail-${index}`}>
-                            <div
-                                className={
-                                    classNames({
-                                        ['rpv-thumbnail-item']: true,
-                                        ['rpv-thumbnail-item-selected']: currentPage === index,
-                                    })
-                                }
-                                onClick={onClick}
-                            >
-                                <ThumbnailContainer
-                                    doc={doc}
-                                    pageHeight={pageHeight}
-                                    pageIndex={index}
-                                    pageWidth={pageWidth}
-                                    rotation={rotation}
-                                />
-                            </div>
+                        <div
+                            key={`thumbnail-${index}`}
+                            className={
+                                classNames({
+                                    ['rpv-thumbnail-item']: true,
+                                    ['rpv-thumbnail-item-selected']: currentPage === index,
+                                })
+                            }
+                            onClick={() => onJumpToPage(index)}
+                        >
+                            <ThumbnailContainer
+                                doc={doc}
+                                pageHeight={pageHeight}
+                                pageIndex={index}
+                                pageWidth={pageWidth}
+                                rotation={rotation}
+                            />
                         </div>
                     );
                 })

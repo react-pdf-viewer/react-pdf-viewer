@@ -1,12 +1,14 @@
 import React from 'react';
 import Viewer, { OpenFile, Worker } from '@phuocng/rpv';
-import { SelectionMode } from '@phuocng/rpv-selection-mode';
+import thumbnailPlugin from '@phuocng/rpv-thumbnail';
 import toolbarPlugin from '@phuocng/rpv-toolbar';
 
 import '@phuocng/rpv/cjs/rpv.css';
+import '@phuocng/rpv-thumbnail/cjs/rpv-thumbnail.css';
 import '@phuocng/rpv-toolbar/cjs/rpv-toolbar.css';
 
-const toolbar = toolbarPlugin({
+const thumbnailPluginInstance = thumbnailPlugin();
+const toolbarPluginInstance = toolbarPlugin({
     downloadPlugin: {
         fileNameGenerator: (file: OpenFile) => {
             const fileName = file.name.substring(file.name.lastIndexOf('/') + 1);
@@ -16,12 +18,10 @@ const toolbar = toolbarPlugin({
     searchPlugin: {
         keyword: 'PDF',
     },
-    selectionModePlugin: {
-        selectionMode: SelectionMode.Text,
-    },
 });
 
-const { Toolbar } = toolbar;
+const { Thumbnails } = thumbnailPluginInstance;
+const { Toolbar } = toolbarPluginInstance;
 
 const App = () => {
     return (
@@ -29,13 +29,29 @@ const App = () => {
             <div style={{ display: 'flex' }}>
                 <Toolbar />
             </div>
-            <div style={{ height: '750px' }}>
-                <Viewer
-                    fileUrl="http://localhost:8001/pdf-open-parameters.pdf"
-                    plugins={[
-                        toolbar,
-                    ]}
-                />
+            <div
+                style={{
+                    display: 'flex',
+                    height: '750px'
+                }}
+            >
+                <div
+                    style={{
+                        overflow: 'auto',
+                        width: '25%'
+                    }}
+                >
+                    <Thumbnails />
+                </div>
+                <div>
+                    <Viewer
+                        fileUrl="http://localhost:8001/pdf-open-parameters.pdf"
+                        plugins={[
+                            thumbnailPluginInstance,
+                            toolbarPluginInstance,
+                        ]}
+                    />
+                </div>
             </div>
         </Worker>
     );
