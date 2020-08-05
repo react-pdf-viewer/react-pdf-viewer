@@ -41,6 +41,7 @@ export declare namespace PdfJs {
 
     interface PdfDocument {
         numPages: number;
+        getAttachments(): Promise<{[filename: string]: Attachment}>;
         getDestination(dest: string): Promise<OutlineDestination>;
         getDownloadInfo(): Promise<{ length: number }>;
         getOutline(): Promise<Outline[]>;
@@ -90,6 +91,12 @@ export declare namespace PdfJs {
         getTextContent(): Promise<PageTextContent>;
         getViewport(params: ViewPortParams): ViewPort;
         render(params: PageRenderParams): PageRenderTask;
+    }
+
+    // Attachment
+    interface Attachment {
+        content: Uint8Array;
+        filename: string;
     }
 
     // Metadata
