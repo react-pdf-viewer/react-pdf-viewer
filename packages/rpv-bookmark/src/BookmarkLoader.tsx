@@ -29,13 +29,17 @@ const BookmarkLoader: React.FC<BookmarkLoaderProps> = ({ doc, onJumpToDest }) =>
     });
 
     useEffect(() => {
+        setBookmarks({
+            isLoaded: false,
+            items: [],
+        });
         doc.getOutline().then((outline) => {
             setBookmarks({
                 isLoaded: true,
                 items: outline || [],
             });
         });
-    }, []);
+    }, [doc]);
 
     return (
         !bookmarks.isLoaded
