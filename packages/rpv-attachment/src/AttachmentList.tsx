@@ -7,11 +7,10 @@
  */
 
 import React, { useContext } from 'react';
+import { LocalizationContext } from '@phuocng/rpv';
 
-import LocalizationContext from '../localization/LocalizationContext';
-import ThemeContext from '../theme/ThemeContext';
-import downloadFile from '../utils/downloadFile';
 import './attachmentList.less';
+import downloadFile from './downloadFile';
 import FileItem from './FileItem';
 
 interface AttachmentListProps {
@@ -20,15 +19,20 @@ interface AttachmentListProps {
 
 const AttachmentList: React.FC<AttachmentListProps> = ({ files }) => {
     const l10n = useContext(LocalizationContext);
-    const theme = useContext(ThemeContext);
 
     const renderItem = (file: FileItem): React.ReactElement => {
         const onClick = (): void => downloadFile(file.fileName, file.data);
         return (
             <li
-                className={`${theme.prefixClass}-attachment-item`}
+                className='rpv-attachment-item'
                 key={`attachment-${file.fileName}`}
-                title={`${l10n.attachment.clickToDownload}`}
+                title={
+                    (
+                        l10n && l10n.plugins && l10n.plugins.attachment
+                            ? l10n.plugins.attachment.clickToDownload
+                            : 'Click to download'
+                    ) as string
+                }
                 onClick={onClick}
             >
                 {file.fileName}
@@ -38,9 +42,15 @@ const AttachmentList: React.FC<AttachmentListProps> = ({ files }) => {
 
     return (
         files.length === 0
-            ? <div className={`${theme.prefixClass}-attachment-list-empty`}>{l10n.attachment.noAttachment}</div>
+            ? <div className='rpv-attachment-list-empty'>
+                {
+                    l10n && l10n.plugins && l10n.plugins.attachment
+                    ? l10n.plugins.attachment.noAttachment
+                    : 'There is no attachment'
+                }
+            </div>
             : (
-                <ul className={`${theme.prefixClass}-attachment-list`}>
+                <ul className='rpv-attachment-list'>
                     {
                         files.map(renderItem)
                     }

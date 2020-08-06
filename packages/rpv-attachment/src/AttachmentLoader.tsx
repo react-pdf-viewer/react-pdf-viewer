@@ -7,9 +7,8 @@
  */
 
 import React, { useEffect, useState } from 'react';
+import { PdfJs, Spinner } from '@phuocng/rpv';
 
-import Spinner from '../components/Spinner';
-import PdfJs from '../vendors/PdfJs';
 import AttachmentList from './AttachmentList';
 import FileItem from './FileItem';
 
@@ -43,7 +42,7 @@ const AttachmentLoader: React.FC<AttachmentLoaderProps> = ({ doc }) => {
                 isLoaded: true,
             });
         });
-    }, []);
+    }, [doc]);
 
     return (
         !attachments.isLoaded

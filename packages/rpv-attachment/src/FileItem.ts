@@ -6,11 +6,9 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import PdfJs from '../vendors/PdfJs';
+import { PdfJs } from '@phuocng/rpv';
 
-interface FileItem {
+export default interface FileItem {
     data: PdfJs.FileData;
     fileName: string;
 }
-
-export default FileItem;

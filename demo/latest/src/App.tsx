@@ -1,13 +1,13 @@
 import React from 'react';
 import Viewer, { OpenFile, Worker } from '@phuocng/rpv';
-import bookmarkPlugin from '@phuocng/rpv-bookmark';
+import attachmentPlugin from '@phuocng/rpv-attachment';
 import toolbarPlugin from '@phuocng/rpv-toolbar';
 
 import '@phuocng/rpv/cjs/rpv.css';
-import '@phuocng/rpv-bookmark/cjs/rpv-bookmark.css';
+import '@phuocng/rpv-attachment/cjs/rpv-attachment.css';
 import '@phuocng/rpv-toolbar/cjs/rpv-toolbar.css';
 
-const bookmarkPluginInstance = bookmarkPlugin();
+const attachmentPluginInstance = attachmentPlugin();
 const toolbarPluginInstance = toolbarPlugin({
     downloadPlugin: {
         fileNameGenerator: (file: OpenFile) => {
@@ -21,7 +21,7 @@ const toolbarPluginInstance = toolbarPlugin({
 });
 
 
-const { Bookmarks } = bookmarkPluginInstance;
+const { Attachments } = attachmentPluginInstance;
 const { Toolbar } = toolbarPluginInstance;
 
 const App = () => {
@@ -42,13 +42,13 @@ const App = () => {
                         width: '25%'
                     }}
                 >
-                    <Bookmarks />
+                    <Attachments />
                 </div>
                 <div>
                     <Viewer
                         fileUrl="http://localhost:8001/pdf-open-parameters.pdf"
                         plugins={[
-                            bookmarkPluginInstance,
+                            attachmentPluginInstance,
                             toolbarPluginInstance,
                         ]}
                     />
