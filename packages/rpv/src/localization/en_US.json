@@ -3,10 +3,6 @@
         "requirePasswordToOpen": "This document requires a password to open",
         "submit": "Submit"
     },
-    "toolbar": {
-        "moreActions": "More actions",
-        "toggleSidebar":  "Toggle sidebar"
-    },
     "wrongPassword": {
         "submit": "Submit",
         "tryAgain": "The password is wrong. Please try again"
