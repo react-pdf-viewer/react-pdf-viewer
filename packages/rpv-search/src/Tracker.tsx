@@ -63,8 +63,10 @@ const Tracker: React.FC<{
         wrapper.classList.add('rpv-search-text-highlight');
     };
 
-    const handleKeywordChanged = (keyword: RegExp) => {
-        setKeywordRegexp(keyword);
+    const handleKeywordChanged = (keyword?: RegExp) => {
+        if (keyword) {
+            setKeywordRegexp(keyword);
+        }
     };
 
     const handleMatchChanged = (currentMatch: Match) => {
