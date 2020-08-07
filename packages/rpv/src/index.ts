@@ -15,8 +15,6 @@ export { default as ProgressBar } from './components/ProgressBar';
 export { default as Separator } from './components/Separator';
 export { default as Spinner } from './components/Spinner';
 export { default as Icon } from './icons/Icon';
-export { default as defaultLayout } from './layouts/defaultLayout';
-export { default as defaultToolbar } from './layouts/defaultToolbar';
 export { default as Observer } from './layouts/Observer';
 export { default as LocalizationContext } from './localization/LocalizationContext';
 export { default as LocalizationProvider } from './localization/LocalizationProvider';
