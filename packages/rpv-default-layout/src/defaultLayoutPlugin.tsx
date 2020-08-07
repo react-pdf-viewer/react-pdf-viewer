@@ -19,6 +19,7 @@ import '@phuocng/rpv-thumbnail/cjs/rpv-thumbnail.css';
 import '@phuocng/rpv-toolbar/cjs/rpv-toolbar.css';
 
 import './defaultLayout.less';
+import Sidebar from './Sidebar';
 
 const defaultLayoutPlugin = (): Plugin => {
     const attachmentPluginInstance = attachmentPlugin();
@@ -43,13 +44,22 @@ const defaultLayoutPlugin = (): Plugin => {
 
         if (slot.attrs) {
             const currentClasses = slot.attrs && slot.attrs.className ? slot.attrs.className : '';
-            slot.attrs.className = `${currentClasses} rpv-default-layout`;
+            slot.attrs.className = `${currentClasses} rpv-default-layout-container`;
         }
 
         slot.children = (
             <>
             <div className='rpv-default-layout-toolbar'>
                 <Toolbar />
+            </div>
+            <div className='rpv-default-layout-sidebar'>
+                <Sidebar
+                    tabContents={[
+                        () => <Thumbnails />,
+                        () => <Bookmarks />,
+                        () => <Attachments />,
+                    ]}
+                />
             </div>
             {slot.children}
             </>
@@ -58,7 +68,7 @@ const defaultLayoutPlugin = (): Plugin => {
             const attrs = slot.subSlot.attrs || {};
             slot.subSlot.attrs = {
                 ...slot.subSlot.attrs,
-                className: `${attrs.className || ''} rpv-default-layout-body`,
+                className: `${attrs.className || ''} rpv-default-layout-main`,
             };
         }
 
