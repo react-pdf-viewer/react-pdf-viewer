@@ -52,15 +52,6 @@ const defaultLayoutPlugin = (): Plugin => {
             <div className='rpv-default-layout-toolbar'>
                 <Toolbar />
             </div>
-            <div className='rpv-default-layout-sidebar'>
-                <Sidebar
-                    tabContents={[
-                        () => <Thumbnails />,
-                        () => <Bookmarks />,
-                        () => <Attachments />,
-                    ]}
-                />
-            </div>
             {slot.children}
             </>
         );
@@ -70,6 +61,20 @@ const defaultLayoutPlugin = (): Plugin => {
                 ...slot.subSlot.attrs,
                 className: `${attrs.className || ''} rpv-default-layout-main`,
             };
+            slot.subSlot.children = (
+                <>
+                <Sidebar
+                    tabContents={[
+                        () => <Thumbnails />,
+                        () => <Bookmarks />,
+                        () => <Attachments />,
+                    ]}
+                />
+                <div className='rpv-default-layout-body'>
+                    {slot.subSlot.children}
+                </div>
+                </>
+            );
         }
 
         return slot;

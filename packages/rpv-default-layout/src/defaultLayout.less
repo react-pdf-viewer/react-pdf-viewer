@@ -8,45 +8,32 @@
 
 .rpv-default-layout-container {
     border: 1px solid rgba(0, 0, 0, 0.3);
-    display: -ms-grid;
-    display: grid;
-    -ms-grid-columns: 25% 1fr;
-    grid-template-columns: 25% 1fr;
-    -ms-grid-rows: 44px calc(100% - 44px);
-    grid-template-rows: 44px calc(100% - 44px);
+    display: flex;
+    flex-direction: column;
     height: 100%;
     position: relative;
     width: 100%;
 }
 
 .rpv-default-layout-toolbar {
-    align-items: center;
     background-color: rgb(238, 238, 238);
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-    -ms-grid-column: 1;
-    grid-column-start: 1;
-    -ms-grid-column-span: 2;
-    grid-column-end: 3;
-    -ms-grid-row: 1;
-    grid-row: 1;
-    justify-content: center;
     padding: 4px;
 }
 
 .rpv-default-layout-sidebar {
     border-right: 1px solid rgba(0, 0, 0, 0.2);
-    display: flex;
-    -ms-grid-column: 1;
-    grid-column: 1;
-    -ms-grid-row: 2;
-    grid-row: 2;
-    justify-content: center;
+
+    &-opened {
+        width: 25%;
+    }
 }
 
 .rpv-default-layout-main {
-    -ms-grid-column: 2;
-    grid-column: 2;
-    -ms-grid-row: 2;
-    grid-row: 2;
+    display: flex;
+}
+
+.rpv-default-layout-body {
+    flex: 1;
     overflow: scroll;
 }
