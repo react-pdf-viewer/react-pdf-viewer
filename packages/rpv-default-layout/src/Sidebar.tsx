@@ -18,7 +18,7 @@ interface SidebarProps {
     tabContents: (() => ReactElement)[];
 }
 
-const TOOLTIP_OFFSET = { left: 0, top: 8 };
+const TOOLTIP_OFFSET = { left: 8, top: 0 };
 
 const Sidebar: React.FC<SidebarProps> = ({ tabContents }) => {
     const l10n = useContext(LocalizationContext);
@@ -29,21 +29,21 @@ const Sidebar: React.FC<SidebarProps> = ({ tabContents }) => {
             <div className='rpv-default-layout-sidebar-headers'>
                 <div className='rpv-default-layout-sidebar-header'>
                     <Tooltip
-                        position={Position.BottomCenter}
+                        position={Position.RightCenter}
                         target={(
                             <Button onClick={() => setTab(0)} isSelected={tab === 0}>
                                 <ThumbnailIcon />
                             </Button>
                         )}
-                        content={() => 
-                            l10n && l10n.defaultLayoutPlugin ? l10n.defaultLayoutPlugin.attachment : 'Attachment'
+                        content={() =>
+                            l10n && l10n.defaultLayoutPlugin ? l10n.defaultLayoutPlugin.thumbnail : 'Thumbnail'
                         }
                         offset={TOOLTIP_OFFSET}
                     />
                 </div>
                 <div className='rpv-default-layout-sidebar-header'>
                     <Tooltip
-                        position={Position.BottomCenter}
+                        position={Position.RightCenter}
                         target={(
                             <Button onClick={() => setTab(1)} isSelected={tab === 1}>
                                 <BookmarkIcon />
@@ -57,14 +57,14 @@ const Sidebar: React.FC<SidebarProps> = ({ tabContents }) => {
                 </div>
                 <div className='rpv-default-layout-sidebar-header'>
                     <Tooltip
-                        position={Position.BottomCenter}
+                        position={Position.RightCenter}
                         target={(
                             <Button onClick={() => setTab(2)} isSelected={tab === 2}>
                                 <FileIcon />
                             </Button>
                         )}
-                        content={() =>
-                            l10n && l10n.defaultLayoutPlugin ? l10n.defaultLayoutPlugin.thumbnail : 'Thumbnail'
+                        content={() => 
+                            l10n && l10n.defaultLayoutPlugin ? l10n.defaultLayoutPlugin.attachment : 'Attachment'
                         }
                         offset={TOOLTIP_OFFSET}
                     />
