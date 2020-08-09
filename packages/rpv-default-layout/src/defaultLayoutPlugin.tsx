@@ -55,24 +55,29 @@ const defaultLayoutPlugin = (): Plugin => {
             {slot.children}
             </>
         );
-        if (slot.subSlot) {
-            const attrs = slot.subSlot.attrs || {};
-            slot.subSlot.attrs = {
-                ...slot.subSlot.attrs,
-                className: `${attrs.className || ''} rpv-default-layout-main`,
+        const subSlot = slot.subSlot;
+        if (subSlot) {
+            const attrs = {...subSlot.attrs};
+            delete subSlot.attrs;
+
+            subSlot.attrs = {
+                className: 'rpv-default-layout-main',
             };
-            slot.subSlot.children = (
+            subSlot.children = (
                 <>
-                <Sidebar
-                    tabContents={[
-                        () => <Thumbnails />,
-                        () => <Bookmarks />,
-                        () => <Attachments />,
-                    ]}
-                />
-                <div className='rpv-default-layout-body'>
-                    {slot.subSlot.children}
-                </div>
+                    <Sidebar
+                        tabContents={[
+                            () => <Thumbnails />,
+                            () => <Bookmarks />,
+                            () => <Attachments />,
+                        ]}
+                    />
+                    <div
+                        {...attrs}
+                        className='rpv-default-layout-body'
+                    >
+                        {subSlot.children}
+                    </div>
                 </>
             );
         }
