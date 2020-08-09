@@ -7,10 +7,9 @@
  */
 
 import React from 'react';
+import { Icon } from '@phuocng/rpv';
 
-import Icon from './Icon';
-
-const WrappedScrollingIcon: React.FC = () => {
+const ThumbnailIcon: React.FC = () => {
     return (
         <Icon size={16}>
             <path
@@ -23,4 +22,4 @@ const WrappedScrollingIcon: React.FC = () => {
     );
 };
 
-export default WrappedScrollingIcon;
+export default ThumbnailIcon;

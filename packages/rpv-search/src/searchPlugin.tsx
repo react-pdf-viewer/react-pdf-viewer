@@ -59,7 +59,7 @@ const searchPlugin = (props?: SearchPluginProps): SearchPlugin => {
                 props
                     ? ((typeof props.keyword === 'string')
                         ? (props.keyword === '' ? EMPTY_KEYWORD_REGEXP : new RegExp(props.keyword))
-                        : props.keyword)
+                        : (props.keyword || EMPTY_KEYWORD_REGEXP))
                     : EMPTY_KEYWORD_REGEXP
             );
         },

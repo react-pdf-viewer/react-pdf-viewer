@@ -6,10 +6,10 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-export { default as MoreIcon } from './MoreIcon';
-import toolbarPlugin from './toolbarPlugin';
+'use strict';
 
-export default toolbarPlugin;
-
-// Types
-export type { ToolbarPluginProps } from './toolbarPlugin';
+if (process.env.NODE_ENV === 'production') {
+    module.exports = require('./cjs/rpv-default-layout.min.js');
+} else {
+    module.exports = require('./cjs/rpv-default-layout.js');
+}

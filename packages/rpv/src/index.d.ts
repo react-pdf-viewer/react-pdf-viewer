@@ -150,11 +150,6 @@ export enum Position {
     LeftBottom = 'LEFT_BOTTOM',
 }
 
-export type RenderToolbarSlot = (toolbarSlot: ToolbarSlot) => React.ReactElement;
-export type RenderToolbar = (renderToolbar: RenderToolbarSlot) => React.ReactElement;
-
-export function defaultToolbar(toolbarSlot: ToolbarSlot): RenderToolbarSlot;
-
 export interface SlotAttr extends React.HTMLAttributes<HTMLDivElement> {
     ref?: React.MutableRefObject<HTMLDivElement | null>;
 }
@@ -170,10 +165,6 @@ export enum ToggleStatus {
     Toggle = 'Toggle',
 }
 export type Toggle = (status?: ToggleStatus) => void;
-
-export interface ToolbarSlot {
-    toggleSidebarButton: React.ReactNode;
-}
 
 export enum SpecialZoomLevel {
     ActualSize = 'ActualSize',
@@ -330,22 +321,6 @@ export interface RenderPageProps {
     width: number;
 }
 export type RenderPage = (props: RenderPageProps) => React.ReactElement;
-
-export type Layout = (
-    isSidebarOpened: boolean,
-    container: Slot,
-    main: Slot,
-    toolbar: RenderToolbar,
-    sidebar: Slot,
-) => React.ReactElement;
-
-export function defaultLayout(
-    isSidebarOpened: boolean,
-    container: Slot,
-    main: Slot,
-    toolbar: React.ReactElement,
-    sidebar: Slot,
-): React.ReactElement;
 
 // ------
 // Events

@@ -66,7 +66,7 @@ const selectionModePlugin = (props?: SelectionModePluginProps): SelectionModePlu
 
     return {
         install: (pluginFunctions: PluginFunctions) => {
-            store.update('selectionMode', props ? props.selectionMode : SelectionMode.Text);
+            store.update('selectionMode', props && props.selectionMode ? props.selectionMode : SelectionMode.Text);
             store.update('getPagesRef', pluginFunctions.getPagesRef);
         },
         renderViewer,
