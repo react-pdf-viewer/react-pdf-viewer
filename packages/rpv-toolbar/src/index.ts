@@ -10,3 +10,6 @@ export { default as MoreIcon } from './MoreIcon';
 import toolbarPlugin from './toolbarPlugin';
 
 export default toolbarPlugin;
+
+// Types
+export type { ToolbarPluginProps } from './toolbarPlugin';

@@ -82,7 +82,7 @@ const Sidebar: React.FC<SidebarProps> = ({ tabContents }) => {
                         />
                     </div>
                 </div>
-                <div className={opened ? 'rpv-default-layout-sidebar-content-opened' : 'rpv-default-layout-sidebar-content'}>
+                <div className={`rpv-default-layout-sidebar-content ${opened ? 'rpv-default-layout-sidebar-content-opened' : ''}`}>
                     { tabContents && tabContents[tab] ? tabContents[tab]() : <></>}
                 </div>
             </div>

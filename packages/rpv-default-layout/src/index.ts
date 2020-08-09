@@ -6,13 +6,12 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import defaultLayoutPlugin from './defaultLayoutPlugin';
-export default defaultLayoutPlugin;
-
-// Icons
 export { default as BookmarkIcon } from './BookmarkIcon';
+import defaultLayoutPlugin from './defaultLayoutPlugin';
 export { default as FileIcon } from './FileIcon';
 export { default as ThumbnailIcon } from './ThumbnailIcon';
+
+export default defaultLayoutPlugin;
 
 // Types
 export type { DefaultLayoutPluginProps } from './defaultLayoutPlugin';
