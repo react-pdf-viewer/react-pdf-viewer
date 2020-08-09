@@ -7,14 +7,14 @@
  */
 
 import { Component } from 'react';
-import { Plugin } from '@phuocng/rpv';
+import type { ViewerProps } from '@phuocng/rpv';
 import type { ToolbarPluginProps } from '@phuocng/rpv-toolbar';
 
-export interface DefaultLayoutPluginProps {
+export interface DefaultLayoutProps extends ViewerProps {
     toolbarPlugin?: ToolbarPluginProps;
 }
 
-export default function defaultLayoutPlugin(props?: DefaultLayoutPluginProps): Plugin;
+export default class DefaultLayout extends Component<DefaultLayoutProps> {}
 
 // -----
 // Icons

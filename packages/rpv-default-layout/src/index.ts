@@ -7,11 +7,11 @@
  */
 
 export { default as BookmarkIcon } from './BookmarkIcon';
-import defaultLayoutPlugin from './defaultLayoutPlugin';
+import DefaultLayout from './DefaultLayout';
 export { default as FileIcon } from './FileIcon';
 export { default as ThumbnailIcon } from './ThumbnailIcon';
 
-export default defaultLayoutPlugin;
+export default DefaultLayout;
 
 // Types
-export type { DefaultLayoutPluginProps } from './defaultLayoutPlugin';
+export type { DefaultLayoutProps } from './DefaultLayout';

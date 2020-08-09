@@ -158,3 +158,4 @@ export type { Plugin, PluginOnDocumentLoad, PluginOnTextLayerRender } from './ty
 export type { default as PluginFunctions } from './types/PluginFunctions';
 export type { default as RenderViewer } from './types/RenderViewer';
 export type { default as ViewerState } from './types/ViewerState';
+export type { ViewerProps } from './Viewer';

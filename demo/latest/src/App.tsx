@@ -1,12 +1,11 @@
 import React from 'react';
 import Viewer, { OpenFile, Worker } from '@phuocng/rpv';
 
-import defaultLayoutPlugin from '@phuocng/rpv-default-layout';
+import DefaultLayout from '@phuocng/rpv-default-layout';
 
 import '@phuocng/rpv/cjs/rpv.css';
 import '@phuocng/rpv-default-layout/cjs/rpv-default-layout.css';
 
-const defaultLayoutPluginInstance = defaultLayoutPlugin();
 // const toolbarPluginInstance = toolbarPlugin({
 //     downloadPlugin: {
 //         fileNameGenerator: (file: OpenFile) => {
@@ -27,11 +26,8 @@ const App = () => {
                     height: '750px'
                 }}
             >
-                <Viewer
+                <DefaultLayout
                     fileUrl="http://localhost:8001/pdf-open-parameters.pdf"
-                    plugins={[
-                        defaultLayoutPluginInstance,
-                    ]}
                 />
             </div>
         </Worker>

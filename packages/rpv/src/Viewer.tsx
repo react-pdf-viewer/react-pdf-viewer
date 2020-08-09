@@ -44,7 +44,7 @@ export interface CharacterMap {
     url: string;
 }
 
-interface ViewerProps {
+export interface ViewerProps {
     characterMap?: CharacterMap;
     // The default zoom level
     // If it's not set, the initial zoom level will be calculated based on the dimesion of page and the container width
