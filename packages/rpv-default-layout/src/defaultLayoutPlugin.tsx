@@ -11,7 +11,7 @@ import { Plugin, PluginFunctions, PluginOnDocumentLoad, PluginOnTextLayerRender,
 import attachmentPlugin from '@phuocng/rpv-attachment';
 import bookmarkPlugin from '@phuocng/rpv-bookmark';
 import thumbnailPlugin from '@phuocng/rpv-thumbnail';
-import toolbarPlugin from '@phuocng/rpv-toolbar';
+import toolbarPlugin, { ToolbarPluginProps } from '@phuocng/rpv-toolbar';
 
 import '@phuocng/rpv-attachment/cjs/rpv-attachment.css';
 import '@phuocng/rpv-bookmark/cjs/rpv-bookmark.css';
@@ -21,11 +21,15 @@ import '@phuocng/rpv-toolbar/cjs/rpv-toolbar.css';
 import './defaultLayout.less';
 import Sidebar from './Sidebar';
 
-const defaultLayoutPlugin = (): Plugin => {
+export interface DefaultLayoutPluginProps {
+    toolbarPlugin?: ToolbarPluginProps;
+}
+
+const defaultLayoutPlugin = (props?: DefaultLayoutPluginProps): Plugin => {
     const attachmentPluginInstance = attachmentPlugin();
     const bookmarkPluginInstance = bookmarkPlugin();
     const thumbnailPluginInstance = thumbnailPlugin();
-    const toolbarPluginInstance = toolbarPlugin();
+    const toolbarPluginInstance = toolbarPlugin(props ? props.toolbarPlugin : {});
 
     const { Attachments } = attachmentPluginInstance;
     const { Bookmarks } = bookmarkPluginInstance;

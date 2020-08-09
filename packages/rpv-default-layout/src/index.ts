@@ -7,5 +7,12 @@
  */
 
 import defaultLayoutPlugin from './defaultLayoutPlugin';
-
 export default defaultLayoutPlugin;
+
+// Icons
+export { default as BookmarkIcon } from './BookmarkIcon';
+export { default as FileIcon } from './FileIcon';
+export { default as ThumbnailIcon } from './ThumbnailIcon';
+
+// Types
+export type { DefaultLayoutPluginProps } from './defaultLayoutPlugin';

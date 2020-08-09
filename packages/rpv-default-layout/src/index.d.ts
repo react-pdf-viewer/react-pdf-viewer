@@ -6,7 +6,20 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import { ReactElement } from 'react';
+import { Component } from 'react';
 import { Plugin } from '@phuocng/rpv';
+import type { ToolbarPluginProps } from '@phuocng/rpv-toolbar';
 
-export default function defaultLayoutPlugin(): Plugin;
+export interface DefaultLayoutPluginProps {
+    toolbarPlugin?: ToolbarPluginProps;
+}
+
+export default function defaultLayoutPlugin(props?: DefaultLayoutPluginProps): Plugin;
+
+// -----
+// Icons
+// -----
+
+export class BookmarkIcon extends Component<{}> {}
+export class FileIcon extends Component<{}> {}
+export class ThumbnailIcon extends Component<{}> {}
