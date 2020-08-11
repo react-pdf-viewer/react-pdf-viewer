@@ -8,7 +8,6 @@
 
 import React, { useContext, useEffect, useRef, useState } from 'react';
 
-import useToggle from '../hooks/useToggle';
 import PageLayer from '../layers/PageLayer';
 import Slot from '../layouts/Slot';
 import SpecialZoomLevel from '../SpecialZoomLevel';
@@ -52,7 +51,6 @@ const Inner: React.FC<InnerProps> = ({
     const [currentPage, setCurrentPage] = useState(0);
     const [rotation, setRotation] = useState(0);
     const stateRef = useRef<ViewerState>(viewerState);
-    const toggleSidebar = useToggle();
 
     const { numPages } = doc;
     const { pageWidth, pageHeight } = pageSize;
