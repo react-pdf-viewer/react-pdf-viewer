@@ -9,7 +9,8 @@
         "clean": "lerna run clean",
         "build": "lerna run build",
         "dev": "lerna run dev",
-        "pub": "lerna publish"
+        "pub": "lerna publish",
+        "lint": "eslint packages/**/*.ts packages/**/*.tsx"
     },
     "devDependencies": {
         "lerna": "^3.22.1",

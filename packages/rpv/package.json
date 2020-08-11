@@ -36,7 +36,6 @@
         "clean": "rm -rf npm && mkdir npm",
         "build": "npm run clean && cp src/index.d.ts npm && cp dist/index.js npm && rollup -c && npm run mincss && rm -rf npm/cjs/rpv.less",
         "mincss": "postcss npm/cjs/rpv.css > npm/cjs/rpv.min.css",
-        "lint": "eslint src/**/*.ts src/**/*.tsx",
         "typecheck": "tsc --noEmit --watch"
     },
     "dependencies": {
