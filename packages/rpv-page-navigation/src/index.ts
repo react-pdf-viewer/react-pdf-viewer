@@ -13,12 +13,3 @@ import pageNavigationPlugin from './pageNavigationPlugin';
 export { default as UpArrowIcon } from './UpArrowIcon';
 
 export default pageNavigationPlugin;
-
-// Types
-export type { CurrentPageLabelProps } from './CurrentPageLabel';
-export type { GoToFirstPageProps } from './GoToFirstPage';
-export type { GoToFirstPageMenuItemProps } from './GoToFirstPageMenuItem';
-export type { GoToLastPageProps } from './GoToLastPage';
-export type { GoToLastPageMenuItemProps } from './GoToLastPageMenuItem';
-export type { GoToNextPageProps } from './GoToNextPage';
-export type { GoToPreviousPageProps } from './GoToPreviousPage';

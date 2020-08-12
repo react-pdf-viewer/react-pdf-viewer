@@ -12,7 +12,3 @@ export { default as SearchIcon } from './SearchIcon';
 import searchPlugin from './searchPlugin';
 
 export default searchPlugin;
-
-// Types
-export type { SearchPluginProps } from './searchPlugin';
-export type { ShowSearchPopoverProps } from './ShowSearchPopover';

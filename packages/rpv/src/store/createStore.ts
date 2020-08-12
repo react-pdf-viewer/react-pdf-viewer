@@ -6,6 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 type StoreState = Record<string, any>;
 type StoreKey<T extends StoreState> = string & keyof T;
 
@@ -42,5 +43,5 @@ export default function createStore<T extends StoreState>(initialState?: T): Sto
         get(key) {
             return state[key];
         },
-    };
-};
+    }
+}

@@ -13,7 +13,3 @@ export { default as VerticalScrollingIcon } from './VerticalScrollingIcon';
 export { default as WrappedScrollingIcon } from './WrappedScrollingIcon';
 
 export default scrollModePlugin;
-
-// Types
-export type { SwitchScrollModeMenuItemProps } from './scrollModePlugin';
-export type { SwitchScrollModeProps } from './SwitchScrollMode';

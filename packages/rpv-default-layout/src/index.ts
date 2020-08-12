@@ -12,6 +12,3 @@ export { default as FileIcon } from './FileIcon';
 export { default as ThumbnailIcon } from './ThumbnailIcon';
 
 export default DefaultLayout;
-
-// Types
-export type { DefaultLayoutProps } from './DefaultLayout';

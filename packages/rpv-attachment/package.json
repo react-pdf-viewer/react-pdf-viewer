@@ -39,7 +39,7 @@
     },
     "scripts": {
         "clean": "rm -rf npm && mkdir npm",
-        "build": "npm run clean && cp src/index.d.ts npm && cp dist/index.js npm && rollup -c && npm run mincss && rm -rf npm/cjs/rpv-attachment.less",
+        "build": "npm run clean && cp src/index.d.ts npm && cp dist/index.js npm && rollup -c ../../rollup.config.js && npm run mincss && rm -rf npm/cjs/rpv-attachment.less",
         "mincss": "postcss npm/cjs/rpv-attachment.css > npm/cjs/rpv-attachment.min.css"
     }
 }

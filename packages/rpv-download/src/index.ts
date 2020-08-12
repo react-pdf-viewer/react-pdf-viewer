@@ -7,11 +7,6 @@
  */
 
 import downloadPlugin from './downloadPlugin';
-import DownloadIcon from './DownloadIcon';
+export { default as DownloadIcon } from './DownloadIcon';
 
 export default downloadPlugin;
-export { DownloadIcon };
-
-// Types
-export type { DownloadProps } from './Download';
-export type { DownloadPluginProps } from './downloadPlugin';

@@ -12,7 +12,3 @@ export { default as  RotateForwardIcon } from './RotateForwardIcon';
 export { default as RotateDirection } from './RotateDirection';
 
 export default rotatePlugin;
-
-// Types
-export type { RotateDecoratorProps } from './rotatePlugin';
-export type { RotateProps } from './Rotate';

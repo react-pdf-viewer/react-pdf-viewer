@@ -17,3 +17,9 @@ npm run build
 ```console
 npm run clean
 ```
+
+* Check the formats
+
+```console
+npm run lint
+```
