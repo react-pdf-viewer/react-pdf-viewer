@@ -35,8 +35,7 @@
     "scripts": {
         "clean": "rm -rf npm && mkdir npm",
         "build": "npm run clean && cp src/index.d.ts npm && cp dist/index.js npm && rollup -c && npm run mincss && rm -rf npm/cjs/rpv.less",
-        "mincss": "postcss npm/cjs/rpv.css > npm/cjs/rpv.min.css",
-        "typecheck": "tsc --noEmit --watch"
+        "mincss": "postcss npm/cjs/rpv.css > npm/cjs/rpv.min.css"
     },
     "dependencies": {
         "pdfjs-dist": "^2.4.456",
