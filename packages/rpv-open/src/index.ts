@@ -7,10 +7,6 @@
  */
 
 import openPlugin from './openPlugin';
-import OpenFileIcon from './OpenFileIcon';
+export { default as OpenFileIcon } from './OpenFileIcon';
 
 export default openPlugin;
-export { OpenFileIcon };
-
-// Types
-export type { OpenProps  } from './Open';

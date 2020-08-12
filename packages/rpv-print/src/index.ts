@@ -10,6 +10,3 @@ export { default as PrintIcon } from './PrintIcon';
 import printPlugin from './printPlugin';
 
 export default printPlugin;
-
-// Types
-export type { PrintProps } from './Print';

@@ -11,9 +11,3 @@ export { default as ZoomInIcon } from './ZoomInIcon';
 export { default as ZoomOutIcon } from './ZoomOutIcon';
 
 export default zoomPlugin;
-
-// Types
-export type { CurrentScaleProps } from './CurrentScale';
-export type { ZoomProps } from './Zoom';
-export type { ZoomInProps } from './ZoomIn';
-export type { ZoomOutProps } from './ZoomOut';

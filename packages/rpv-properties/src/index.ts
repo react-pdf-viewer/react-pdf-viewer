@@ -10,7 +10,3 @@ export { default as InfoIcon } from './InfoIcon';
 import propertiesPlugin from './propertiesPlugin';
 
 export default propertiesPlugin;
-
-// Types
-export type { ShowPropertiesMenuItemProps } from './propertiesPlugin';
-export type { ShowPropertiesProps } from './ShowProperties';
