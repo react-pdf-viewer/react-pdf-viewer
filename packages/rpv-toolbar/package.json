@@ -51,7 +51,7 @@
     },
     "scripts": {
         "clean": "rm -rf npm && mkdir npm",
-        "build": "npm run clean && cp src/index.d.ts npm && cp dist/index.js npm && rollup -c && npm run mincss && rm -rf npm/cjs/rpv-toolbar.less",
+        "build": "npm run clean && cp src/index.d.ts npm && cp dist/index.js npm && rollup -c ../../rollup.config.js && npm run mincss && rm -rf npm/cjs/rpv-toolbar.less",
         "mincss": "postcss npm/cjs/rpv-toolbar.css > npm/cjs/rpv-toolbar.min.css"
     }
 }

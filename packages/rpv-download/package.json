@@ -39,6 +39,6 @@
     },
     "scripts": {
         "clean": "rm -rf npm && mkdir npm",
-        "build": "npm run clean && cp src/index.d.ts npm && cp dist/index.js npm && rollup -c"
+        "build": "npm run clean && cp src/index.d.ts npm && cp dist/index.js npm && NO_CSS='true' rollup -c ../../rollup.config.js"
     }
 }
