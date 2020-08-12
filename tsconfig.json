@@ -1,26 +1,15 @@
 {
     "compilerOptions": {
-        "emitDeclarationOnly": true,
-        "esModuleInterop": true,
+        "allowSyntheticDefaultImports": true,
         "isolatedModules": true,
-        "target": "esnext",
-        "module": "commonjs",
-        "strict": true,
         "jsx": "react",
-        "lib": ["dom", "es2015"],
+        "module": "es6",
+        "moduleResolution": "node",
+        "removeComments": true,
         "resolveJsonModule": true,
-        "baseUrl": ".",
-        "paths": {
-            "@phuocng/*": ["packages/*/src"],
-            "*": ["node_modules", "packages"]
-        }
+        "target": "es5"
     },
-    "include": [
-        "packages/**/*.ts",
-        "packages/**/*.tsx"
-    ],
     "exclude": [
-        "node_modules",
-        "**/npm/**/*"
+        "node_modules"
     ]
 }

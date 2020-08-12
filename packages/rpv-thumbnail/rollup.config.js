@@ -11,15 +11,6 @@ const external = [
 ];
 
 const input = './src/index.ts';
-const typescriptOptions = {
-    removeComments: true,
-    module: 'es6',
-    target: 'es5',
-    jsx: 'react',
-    allowSyntheticDefaultImports: true,
-    resolveJsonModule: true,
-    moduleResolution: 'node',
-};
 
 export default [
     // CJS
@@ -36,7 +27,7 @@ export default [
                 output: './npm/cjs/rpv-thumbnail.css',
                 sourcemap: false,
             }),
-            typescript(typescriptOptions),
+            typescript(),
         ],
     },
 
@@ -54,7 +45,7 @@ export default [
                 output: './npm/cjs/rpv-thumbnail.css',
                 sourcemap: false,
             }),
-            typescript(typescriptOptions),
+            typescript(),
             terser(),
         ],
     }

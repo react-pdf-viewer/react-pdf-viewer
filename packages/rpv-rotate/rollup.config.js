@@ -10,16 +10,6 @@ const external = [
 
 const input = './src/index.ts';
 
-const typescriptOptions = {
-    removeComments: true,
-    module: 'es6',
-    target: 'es5',
-    jsx: 'react',
-    allowSyntheticDefaultImports: true,
-    resolveJsonModule: true,
-    moduleResolution: 'node',
-};
-
 export default [
     // CJS
     {
@@ -30,7 +20,7 @@ export default [
         },
         external,
         plugins: [
-            typescript(typescriptOptions),
+            typescript(),
         ],
     },
 
@@ -43,7 +33,7 @@ export default [
         },
         external,
         plugins: [
-            typescript(typescriptOptions),
+            typescript(),
             terser(),
         ],
     }
