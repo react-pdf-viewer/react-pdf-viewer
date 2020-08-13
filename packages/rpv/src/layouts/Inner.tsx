@@ -78,36 +78,47 @@ const Inner: React.FC<InnerProps> = ({
 
     const getViewerState = () => stateRef.current;
 
-    const getPluginMethods = (): PluginFunctions => ({
-        getPagesRef,
-        getViewerState,
-        jumpToDestination,
-        jumpToPage,
-        openFile,
-        rotate,
-        setViewerState,
-        zoom,
-    });
+    const jumpToDestination = (pageIndex: number, bottomOffset: number, scaleTo: number | SpecialZoomLevel): void => {
+        const pagesContainer = pagesRef.current;
+        const currentState = stateRef.current;
+        if (!pagesContainer || !currentState) {
+            return;
+        }
 
-    useEffect(() => {
-        const pluginMethods = getPluginMethods();
+        const newPageIndex = pageIndex + 1;
+        doc.getPage(newPageIndex).then((page) => {
+            const viewport = page.getViewport({ scale: 1 });
 
-        // Install the plugins
-        plugins.forEach((plugin) => {
-            if (plugin.install) {
-                plugin.install(pluginMethods);
+            let top = 0;
+            const bottom = bottomOffset || 0;
+            switch (scaleTo) {
+                case SpecialZoomLevel.PageFit:
+                    top = 0;
+                    zoom(SpecialZoomLevel.PageFit);
+                    break;
+                default:
+                    top = (viewport.height - bottom) * currentState.scale;
+                    break;
+            }
+
+            const targetPageEle = pageRefs[pageIndex].current;
+            if (targetPageEle) {
+                pagesContainer.scrollTop = targetPageEle.offsetTop + top;
             }
         });
+    };
 
-        return () => {
-            // Uninstall the plugins
-            plugins.forEach((plugin) => {
-                if (plugin.uninstall) {
-                    plugin.uninstall(pluginMethods);
-                }
-            });
-        };
-    }, []);
+    const jumpToPage = (pageIndex: number): void => {
+        if (pageIndex < 0 || pageIndex >= numPages) {
+            return;
+        }
+        const pagesContainer = pagesRef.current;
+        const targetPage = pageRefs[pageIndex].current;
+        if (pagesContainer && targetPage) {
+            pagesContainer.scrollTop = targetPage.offsetTop;
+        }
+        setCurrentPage(pageIndex);
+    };
 
     const openFile = (file: File): void => {
         if (getFileExt(file.name).toLowerCase() !== 'pdf') {
@@ -125,40 +136,17 @@ const Inner: React.FC<InnerProps> = ({
         });
     };
 
-    const jumpToPage = (pageIndex: number): void => {
-        if (pageIndex < 0 || pageIndex >= numPages) {
-            return;
-        }
-        const pagesContainer = pagesRef.current;
-        const targetPage = pageRefs[pageIndex].current;
-        if (pagesContainer && targetPage) {
-            pagesContainer.scrollTop = targetPage.offsetTop;
-        }
-        setCurrentPage(pageIndex);
-    };
-
-    useEffect(() => {
-        onDocumentLoad({ doc });
-        // Loop over the plugins
-        plugins.forEach(plugin => {
-            plugin.onDocumentLoad && plugin.onDocumentLoad({ doc });
-        });
-        if (initialPage) {
-            jumpToPage(initialPage);
-        }
-    }, []);
-
-    useEffect(() => {
-        onPageChange({ currentPage, doc });
+    const rotate = (updateRotation: number): void => {
+        setRotation(updateRotation);
         setViewerState({
             file: viewerState.file,
             pageIndex: currentPage,
             pageHeight,
             pageWidth,
-            rotation,
+            rotation: updateRotation,
             scale,
         });
-    }, [currentPage]);
+    };
 
     const zoom = (newScale: number | SpecialZoomLevel): void => {
         const pagesEle = pagesRef.current;
@@ -199,6 +187,63 @@ const Inner: React.FC<InnerProps> = ({
         });
     };
 
+    // Important rule: All the plugin methods can't use the internal state (`currentPage`, `rotation`, `scale`, for example).
+    // These methods when being called from plugins will use the initial value of state, not the latest one.
+    // If you want to access internal state from plugin methods, use `stateRef`
+    const getPluginMethods = (): PluginFunctions => ({
+        getPagesRef,
+        getViewerState,
+        jumpToDestination,
+        jumpToPage,
+        openFile,
+        rotate,
+        setViewerState,
+        zoom,
+    });
+
+    useEffect(() => {
+        const pluginMethods = getPluginMethods();
+
+        // Install the plugins
+        plugins.forEach((plugin) => {
+            if (plugin.install) {
+                plugin.install(pluginMethods);
+            }
+        });
+
+        return () => {
+            // Uninstall the plugins
+            plugins.forEach((plugin) => {
+                if (plugin.uninstall) {
+                    plugin.uninstall(pluginMethods);
+                }
+            });
+        };
+    }, []);
+
+    useEffect(() => {
+        onDocumentLoad({ doc });
+        // Loop over the plugins
+        plugins.forEach(plugin => {
+            plugin.onDocumentLoad && plugin.onDocumentLoad({ doc });
+        });
+        if (initialPage) {
+            jumpToPage(initialPage);
+        }
+    }, []);
+
+    useEffect(() => {
+        onPageChange({ currentPage, doc });
+        setViewerState({
+            file: viewerState.file,
+            pageIndex: currentPage,
+            pageHeight,
+            pageWidth,
+            rotation,
+            scale,
+        });
+    }, [currentPage]);
+
     useEffect(() => {
         // If the default scale is set
         if (defaultScale) {
@@ -212,47 +257,6 @@ const Inner: React.FC<InnerProps> = ({
             return item > array[maxIndex] ? index : maxIndex;
         }, 0);
         setCurrentPage(maxRatioPage);
-    };
-
-    const rotate = (updateRotation: number): void => {
-        setRotation(updateRotation);
-        setViewerState({
-            file: viewerState.file,
-            pageIndex: currentPage,
-            pageHeight,
-            pageWidth,
-            rotation: updateRotation,
-            scale,
-        });
-    };
-
-    const jumpToDestination = (pageIndex: number, bottomOffset: number, scaleTo: number | SpecialZoomLevel): void => {
-        const pagesContainer = pagesRef.current;
-        if (!pagesContainer) {
-            return;
-        }
-
-        const newPageIndex = pageIndex + 1;
-        doc.getPage(newPageIndex).then((page) => {
-            const viewport = page.getViewport({ scale: 1 });
-
-            let top = 0;
-            const bottom = bottomOffset || 0;
-            switch (scaleTo) {
-                case SpecialZoomLevel.PageFit:
-                    top = 0;
-                    zoom(SpecialZoomLevel.PageFit);
-                    break;
-                default:
-                    top = (viewport.height - bottom) * scale;
-                    break;
-            }
-
-            const targetPageEle = pageRefs[pageIndex].current;
-            if (targetPageEle) {
-                pagesContainer.scrollTop = targetPageEle.offsetTop + top;
-            }
-        });
     };
 
     // `action` can be `FirstPage`, `PrevPage`, `NextPage`, `LastPage`, `GoBack`, `GoForward`
