@@ -211,9 +211,7 @@ const Inner: React.FC<InnerProps> = ({
         const maxRatioPage = pageVisibility.reduce((maxIndex, item, index, array) => {
             return item > array[maxIndex] ? index : maxIndex;
         }, 0);
-        if (maxRatioPage !== currentPage) {
-            setCurrentPage(maxRatioPage);
-        }
+        setCurrentPage(maxRatioPage);
     };
 
     const rotate = (updateRotation: number): void => {
