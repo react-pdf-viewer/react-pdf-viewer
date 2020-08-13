@@ -40,7 +40,7 @@ const fullScreenPlugin = (): FullScreenPlugin => {
     );
 
     const renderViewer = (props: RenderViewer): Slot => {
-        let currentSlot = props.slot;
+        const currentSlot = props.slot;
         if (currentSlot.subSlot) {
             currentSlot.subSlot.children = (
                 <>

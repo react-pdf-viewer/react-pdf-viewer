@@ -11,7 +11,7 @@ import { Store, StoreHandler } from '@phuocng/rpv';
 
 import StoreProps from './StoreProps';
 
-const useZoom = (store: Store<StoreProps>) => {
+const useZoom = (store: Store<StoreProps>): { scale: number } => {
     const [scale, setScale] = useState(0);
 
     const handleScaleChanged: StoreHandler<number> = (currentScale: number) => {

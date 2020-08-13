@@ -29,4 +29,4 @@ export interface DownloadPluginProps {
 
 export default function downloadPlugin(props?: DownloadPluginProps): DownloadPlugin;
 
-export class DownloadIcon extends Component<{}> {}
+export class DownloadIcon extends Component {}

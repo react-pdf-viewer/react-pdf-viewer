@@ -31,6 +31,7 @@ const propertiesPlugin = (): PropertiesPlugin => {
         <ShowProperties {...props} store={store} />
     );
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const ShowPropertiesMenuItemDecorator = (props: ShowPropertiesMenuItemProps) => (
         <ShowPropertiesDecorator>
             {(p) => <ShowPropertiesMenuItem {...p} />}

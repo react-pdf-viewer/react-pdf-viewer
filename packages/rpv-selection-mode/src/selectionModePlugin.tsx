@@ -51,7 +51,7 @@ const selectionModePlugin = (props?: SelectionModePluginProps): SelectionModePlu
     );
 
     const renderViewer = (props: RenderViewer): Slot => {
-        let currentSlot = props.slot;
+        const currentSlot = props.slot;
         if (currentSlot.children) {
             currentSlot.children = (
                 <>

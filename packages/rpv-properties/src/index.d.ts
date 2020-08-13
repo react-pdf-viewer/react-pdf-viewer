@@ -30,4 +30,4 @@ export interface PropertiesPlugin extends Plugin {
 
 export default function propertiesPlugin(): PropertiesPlugin;
 
-export class InfoIcon extends Component<{}> {}
+export class InfoIcon extends Component {}

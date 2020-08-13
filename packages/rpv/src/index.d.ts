@@ -192,10 +192,10 @@ export interface IconProps {
 export class Icon extends React.Component<IconProps> {}
 
 // Menu
-export class Menu extends React.Component<{}> {}
+export class Menu extends React.Component {}
 
 // MenuDivider
-export class MenuDivider extends React.Component<{}> {}
+export class MenuDivider extends React.Component {}
 
 // MenuItem
 export interface MenuItemProps {
@@ -247,10 +247,10 @@ export interface ProgressBarProps {
 export class ProgressBar extends React.Component<ProgressBarProps> {}
 
 // Separator
-export class Separator extends React.Component<{}> {}
+export class Separator extends React.Component {}
 
 // Spinner
-export class Spinner extends React.Component<{}> {}
+export class Spinner extends React.Component {}
 
 // Tooltip
 export type RenderTooltipContent = () => React.ReactNode;
@@ -415,6 +415,7 @@ export interface Plugin {
 // Store
 // -----
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type StoreState = Record<string, any>;
 
 export type StoreKey<T extends StoreState> = string & keyof T;

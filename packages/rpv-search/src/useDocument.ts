@@ -11,7 +11,7 @@ import { PdfJs, Store, StoreHandler } from '@phuocng/rpv';
 
 import StoreProps from './StoreProps';
 
-const useDocument = (store: Store<StoreProps>) => {
+const useDocument = (store: Store<StoreProps>): { currentDoc: PdfJs.PdfDocument } => {
     const [currentDoc, setCurrentDoc] = useState(store.get('doc'));
 
     const handleDocumentChanged: StoreHandler<PdfJs.PdfDocument> = (doc: PdfJs.PdfDocument) => {

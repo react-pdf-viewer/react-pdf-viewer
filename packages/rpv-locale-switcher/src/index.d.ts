@@ -26,4 +26,4 @@ export interface LocalePopoverProps {
 
 export default function localeSwitcherPlugin(): LocaleSwitcherPlugin;
 
-export class LocaleIcon extends React.Component<{}> {}
+export class LocaleIcon extends React.Component {}
