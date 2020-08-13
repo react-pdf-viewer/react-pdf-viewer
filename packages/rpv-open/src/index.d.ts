@@ -23,4 +23,4 @@ export interface OpenPlugin extends Plugin {
 }
 
 export default function openPlugin(): OpenPlugin;
-export class OpenFileIcon extends Component<{}> {}
+export class OpenFileIcon extends Component {}

@@ -45,5 +45,5 @@ export default function selectionModePlugin(props?: SelectionModePluginProps): S
 // Icons
 // -----
 
-export class HandToolIcon extends Component<{}> {}
-export class TextSelectionIcon extends Component<{}> {}
+export class HandToolIcon extends Component {}
+export class TextSelectionIcon extends Component {}

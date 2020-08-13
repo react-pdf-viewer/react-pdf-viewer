@@ -9,7 +9,7 @@
 import React from 'react';
 import { Icon } from '@phuocng/rpv';
 
-const LocaleIcon: React.FC<{}> = () => {
+const LocaleIcon: React.FC = () => {
     return (
         <Icon size={16}>
             <path

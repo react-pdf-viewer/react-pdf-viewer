@@ -104,7 +104,7 @@ const Viewer: React.FC<ViewerProps> = ({
     return (
         <ThemeProvider prefixClass={prefixClass}>
             <LocalizationProvider localization={localization}>
-                {(_) => (
+                {(_) => ( // eslint-disable-line @typescript-eslint/no-unused-vars
                     <DocumentLoader
                         characterMap={characterMap}
                         file={file.data}

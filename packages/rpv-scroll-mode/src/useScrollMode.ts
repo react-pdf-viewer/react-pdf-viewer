@@ -12,7 +12,12 @@ import { Store, StoreHandler } from '@phuocng/rpv';
 import ScrollMode from './ScrollMode';
 import StoreProps from './StoreProps';
 
-const useScrollMode = (store: Store<StoreProps>) => {
+interface UseScrollMode {
+    scrollMode: ScrollMode;
+    switchTo: (newScrollMode: ScrollMode) => void;
+}
+
+const useScrollMode = (store: Store<StoreProps>): UseScrollMode => {
     const [scrollMode, setScrollMode] = useState(store.get('scrollMode') || ScrollMode.Vertical);
 
     const switchTo = (newScrollMode: ScrollMode) => {

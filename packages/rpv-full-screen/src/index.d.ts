@@ -24,5 +24,5 @@ export interface FullScreenPlugin extends Plugin {
 
 export default function fullScreenPlugin(): FullScreenPlugin;
 
-export class ExitFullScreenIcon extends Component<{}> {}
-export class FullScreenIcon extends Component<{}> {}
+export class ExitFullScreenIcon extends Component {}
+export class FullScreenIcon extends Component {}

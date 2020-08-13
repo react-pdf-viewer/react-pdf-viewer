@@ -33,7 +33,7 @@ const searchPlugin = (props?: SearchPluginProps): SearchPlugin => {
     );
 
     const renderViewer = (props: RenderViewer): Slot => {
-        let currentSlot = props.slot;
+        const currentSlot = props.slot;
         if (currentSlot.children) {
             currentSlot.children = (
                 <>
@@ -64,6 +64,7 @@ const searchPlugin = (props?: SearchPluginProps): SearchPlugin => {
             );
         },
         renderViewer,
+        // eslint-disable-next-line  @typescript-eslint/no-unused-vars
         uninstall: (props: PluginFunctions) => {
             const renderStatus = store.get('renderStatus');
             if (renderStatus) {

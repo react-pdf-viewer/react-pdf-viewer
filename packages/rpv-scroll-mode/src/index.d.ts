@@ -42,6 +42,6 @@ export default function scrollModePlugin(): ScrollModePlugin;
 // Icons
 // -----
 
-export class HorizontalScrollingIcon extends Component<{}> {}
-export class VerticalScrollingIcon extends Component<{}> {}
-export class WrappedScrollingIcon extends Component<{}> {}
+export class HorizontalScrollingIcon extends Component {}
+export class VerticalScrollingIcon extends Component {}
+export class WrappedScrollingIcon extends Component {}

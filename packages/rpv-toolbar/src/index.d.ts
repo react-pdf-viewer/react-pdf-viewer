@@ -70,5 +70,5 @@ export default function toolbarPlugin(props?: ToolbarPluginProps): ToolbarPlugin
 // Icon
 // ----
 
-export class MoreIcon extends Component<{}> {}
+export class MoreIcon extends Component {}
 

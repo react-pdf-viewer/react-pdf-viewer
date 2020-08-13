@@ -73,5 +73,5 @@ export interface ZoomPlugin extends Plugin {
 }
 
 export default function zoomPlugin(): ZoomPlugin;
-export class ZoomInIcon extends Component<{}> {}
-export class ZoomOutIcon extends Component<{}> {}
+export class ZoomInIcon extends Component {}
+export class ZoomOutIcon extends Component {}

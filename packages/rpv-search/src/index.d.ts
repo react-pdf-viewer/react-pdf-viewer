@@ -30,6 +30,6 @@ export interface SearchPluginProps {
 
 export default function searchPlugin(props?: SearchPluginProps): SearchPlugin;
 
-export class NextIcon extends Component<{}> {}
-export class PreviousIcon extends Component<{}> {}
-export class SearchIcon extends Component<{}> {}
+export class NextIcon extends Component {}
+export class PreviousIcon extends Component {}
+export class SearchIcon extends Component {}

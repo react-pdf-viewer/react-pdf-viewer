@@ -46,5 +46,5 @@ export default function rotatePlugin(): RotatePlugin;
 // Icons
 // -----
 
-export class RotateBackwardIcon extends Component<{}> {}
-export class RotateForwardIcon extends Component<{}> {}
+export class RotateBackwardIcon extends Component {}
+export class RotateForwardIcon extends Component {}

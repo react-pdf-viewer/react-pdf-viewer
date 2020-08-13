@@ -20,6 +20,6 @@ export default class DefaultLayout extends Component<DefaultLayoutProps> {}
 // Icons
 // -----
 
-export class BookmarkIcon extends Component<{}> {}
-export class FileIcon extends Component<{}> {}
-export class ThumbnailIcon extends Component<{}> {}
+export class BookmarkIcon extends Component {}
+export class FileIcon extends Component {}
+export class ThumbnailIcon extends Component {}

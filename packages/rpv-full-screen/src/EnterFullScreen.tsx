@@ -29,6 +29,7 @@ const EnterFullScreen: FC<{
 }> = ({ children, store }) => {
     const pagesRef = useRef<HTMLDivElement | null>(null);
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const closeOtherFullScreen = (): Promise<any> => {
         const pagesEle = pagesRef.current;
         if (!pagesEle) {
