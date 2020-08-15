@@ -10,8 +10,8 @@
         "pdfjs-dist": "^2.4.456",
         "react": "^16.13.1",
         "react-dom": "^16.13.1",
-        "@phuocng/rpv": "^2.0.0",
-        "@phuocng/rpv-default-layout": "^2.0.0"
+        "@react-pdf-viewer/core": "^2.0.0",
+        "@react-pdf-viewer/default-layout": "^2.0.0"
     },
     "devDependencies": {
         "@babel/core": "^7.10.3",

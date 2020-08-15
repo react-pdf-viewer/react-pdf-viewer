@@ -11,7 +11,7 @@
         "jsx": "react",
         "baseUrl": ".",
         "paths": {
-            "@phuocng/*": ["packages/*/src"],
+            "@react-pdf-viewer/*": ["packages/*/src"],
             "*": ["node_modules", "packages"]
         }
     }
