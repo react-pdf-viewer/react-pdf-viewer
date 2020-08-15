@@ -61,20 +61,20 @@ module.exports = {
         // Indicate the package source based on the name
         // So we don't have to map them manually in the `alias` option as 
         //  alias: {
-        //      '@phuocng/rpv/cjs/rpv.css': path.join(__dirname, '../../packages/rpv/npm/cjs/rpv.css'),
-        //      '@phuocng/rpv': path.join(__dirname, '../../packages/rpv/src'),
+        //      '@react-pdf-viewer/core/styles.css': path.join(__dirname, '../../packages/core/npm/styles.css'),
+        //      '@react-pdf-viewer/core': path.join(__dirname, '../../packages/core/src'),
         //      ...
         //  }
         new webpack.NormalModuleReplacementPlugin(
             // The pattern covers the package and its CSS
-            // @phuocng/rpv
-            // @phuocng/rpv/cjs/rpv.css
-            /^@phuocng\/rpv[a-z-]*[\/cjs\/a-z-\.css]*$/,
+            // @react-pdf-viewer/core
+            // @react-pdf-viewer/core/styles.css
+            /^@react-pdf-viewer\/[a-z-]*[\/a-z-\.css]*$/,
             resource => {
                 const request = resource.request;
                 const pkgName = request.split('/')[1];
                 resource.request = request.endsWith('.css')
-                    ? path.join(__dirname, `../../packages/${pkgName}/npm/cjs/${pkgName}.css`)
+                    ? path.join(__dirname, `../../packages/${pkgName}/npm/styles.css`)
                     : path.join(__dirname, `../../packages/${pkgName}/src`)
             }
         ),

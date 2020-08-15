@@ -8,7 +8,7 @@ const rootPackagePath = process.cwd();
 const input = path.join(rootPackagePath, 'src/index.ts');
 const pkg = require(path.join(rootPackagePath, 'package.json'));
 
-const outputDir = path.join(rootPackagePath, 'npm/cjs');
+const outputDir = path.join(rootPackagePath, 'npm');
 const pgkName = pkg.name.split('/').pop();
 
 const external = [
@@ -23,7 +23,7 @@ const plugins = [
     typescript(),
 ].concat(noBundleCss ? [] : [
     less({
-        output: path.join(outputDir, `${pgkName}.css`),
+        output: path.join(outputDir, 'styles.css'),
         sourcemap: false,
     }),
 ]);
@@ -34,7 +34,7 @@ export default [
         input,
         output: {
             exports: 'named',
-            file: path.join(outputDir, `${pgkName}.js`),
+            file: path.join(outputDir, `cjs/${pgkName}.js`),
             format: 'cjs',
         },
         external,
@@ -46,7 +46,7 @@ export default [
         input,
         output: {
             exports: 'named',
-            file: path.join(outputDir, `${pgkName}.min.js`),
+            file: path.join(outputDir, `cjs/${pgkName}.min.js`),
             format: 'cjs',
         },
         external,

@@ -1,10 +1,10 @@
 import React from 'react';
-import Viewer, { OpenFile, Worker } from '@phuocng/rpv';
+import Viewer, { OpenFile, Worker } from '@react-pdf-viewer/core';
 
-import DefaultLayout from '@phuocng/rpv-default-layout';
+import DefaultLayout from '@react-pdf-viewer/default-layout';
 
-import '@phuocng/rpv/cjs/rpv.css';
-import '@phuocng/rpv-default-layout/cjs/rpv-default-layout.css';
+import '@react-pdf-viewer/core/styles.css';
+import '@react-pdf-viewer/default-layout/styles.css';
 
 // const toolbarPluginInstance = toolbarPlugin({
 //     downloadPlugin: {
