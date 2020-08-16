@@ -16,7 +16,7 @@ interface ThemeProviderProps {
 
 const ThemeProvider: React.FC<ThemeProviderProps> = ({ children, prefixClass }) => {
     return (
-        <ThemeContext.Provider value={{ prefixClass: prefixClass || 'viewer'}}>
+        <ThemeContext.Provider value={{ prefixClass: prefixClass || 'rpv-core'}}>
             {children}
         </ThemeContext.Provider>
     );

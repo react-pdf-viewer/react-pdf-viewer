@@ -13,7 +13,7 @@ interface ThemeContextProps {
 }
 
 const ThemeContext = React.createContext<ThemeContextProps>({
-    prefixClass: 'viewer',
+    prefixClass: 'rpv-core',
 });
 
 export default ThemeContext;
