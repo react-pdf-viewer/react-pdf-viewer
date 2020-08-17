@@ -11,7 +11,6 @@ import { PluginOnTextLayerRender, TextLayerRenderStatus, Store } from '@react-pd
 
 import calculateOffset from './calculateOffset';
 import { EMPTY_KEYWORD_REGEXP } from './constants';
-import './highlight.less';
 import Match from './Match';
 import StoreProps from './StoreProps';
 import unwrap from './unwrap';

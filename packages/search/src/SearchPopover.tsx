@@ -13,7 +13,6 @@ import { EMPTY_KEYWORD_REGEXP } from './constants';
 import Match from './Match';
 import NextIcon from './NextIcon';
 import PreviousIcon from './PreviousIcon';
-import './searchPopover.less';
 import StoreProps from './StoreProps';
 
 interface SearchPopoverProps {
