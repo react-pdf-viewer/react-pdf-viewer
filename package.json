@@ -13,7 +13,6 @@
         "lint": "eslint packages/**/*.ts packages/**/*.tsx"
     },
     "devDependencies": {
-        "lerna": "^3.22.1",
         "@rollup/plugin-json": "^4.1.0",
         "@rollup/plugin-typescript": "^5.0.0",
         "@types/react": "^16.9.41",
@@ -23,6 +22,8 @@
         "cssnano": "^4.1.10",
         "eslint": "^7.3.1",
         "eslint-plugin-react": "^7.20.0",
+        "lerna": "^3.22.1",
+        "less": "^3.12.2",
         "postcss-cli": "^7.1.1",
         "rollup": "^2.18.0",
         "rollup-plugin-less": "^1.1.2",
