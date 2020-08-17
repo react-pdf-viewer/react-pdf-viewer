@@ -10,7 +10,6 @@ import React, { useContext, useState } from 'react';
 
 import LocalizationContext from '../localization/LocalizationContext';
 import ThemeContext from '../theme/ThemeContext';
-import './askingPassword.less';
 import { VerifyPassword } from './LoadingStatus';
 
 interface AskingPasswordProps {

@@ -12,7 +12,6 @@ import ThemeContext from '../theme/ThemeContext';
 import { Plugin } from '../types/Plugin';
 import TextLayerRenderStatus from '../types/TextLayerRenderStatus';
 import PdfJs from '../vendors/PdfJs';
-import './textLayer.less';
 import WithScale from './WithScale';
 
 interface TextLayerProps {

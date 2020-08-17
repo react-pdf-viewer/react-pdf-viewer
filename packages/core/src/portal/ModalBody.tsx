@@ -12,7 +12,6 @@ import useClickOutside from '../hooks/useClickOutside';
 import useKeyUp from '../hooks/useKeyUp';
 import useLockScroll from '../hooks/useLockScroll';
 import ThemeContext from '../theme/ThemeContext';
-import './modalBody.less';
 
 interface ModalBodyProps {
     closeOnClickOutside: boolean;

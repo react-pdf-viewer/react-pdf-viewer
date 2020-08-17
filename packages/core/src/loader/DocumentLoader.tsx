@@ -15,7 +15,6 @@ import { CharacterMap } from '../Viewer';
 import AskForPasswordState from './AskForPasswordState';
 import AskingPassword from './AskingPassword';
 import CompletedState from './CompletedState';
-import './documentLoader.less';
 import FailureState from './FailureState';
 import LoadError from './LoadError';
 import LoadingState from './LoadingState';

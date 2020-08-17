@@ -9,7 +9,6 @@
 import React, { useContext } from 'react';
 
 import ThemeContext from '../theme/ThemeContext';
-import './primaryButton.less';
 
 interface PrimaryButtonProps {
     onClick(): void;

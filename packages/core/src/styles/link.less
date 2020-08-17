@@ -6,12 +6,16 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-@import '../theme/common.less';
+@import './variables.less';
 
-.@{core-prefix}-page-size-calculator {
-    align-items: center;
-    display: flex;
+.@{core-prefix}-annotation-link a {
     height: 100%;
-    justify-content: center;
+    left: 0;
+    position: absolute;
+    top: 0;
     width: 100%;
+
+    &:hover {
+        background: rgba(255, 255, 0, 0.2);
+    }
 }

@@ -13,7 +13,6 @@ import usePosition from '../hooks/usePosition';
 import ThemeContext from '../theme/ThemeContext';
 import Arrow from './Arrow';
 import Offset from './Offset';
-import './popoverBody.less';
 import Position from './Position';
 
 interface PopoverBodyProps {

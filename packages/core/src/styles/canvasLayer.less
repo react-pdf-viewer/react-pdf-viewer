@@ -6,16 +6,11 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-@import '../theme/common.less';
+@import './variables.less';
 
-.@{core-prefix}-annotation-link a {
-    height: 100%;
-    left: 0;
+.@{core-prefix}-canvas-layer {
+    left: 0px;
     position: absolute;
-    top: 0;
-    width: 100%;
-
-    &:hover {
-        background: rgba(255, 255, 0, 0.2);
-    }
+    overflow: hidden;
+    top: 0px;
 }
