@@ -9,7 +9,6 @@
 import React, { useContext } from 'react';
 import { LocalizationContext } from '@react-pdf-viewer/core';
 
-import './attachmentList.less';
 import downloadFile from './downloadFile';
 import FileItem from './FileItem';
 
