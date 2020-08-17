@@ -10,7 +10,6 @@ import React, { useContext } from 'react';
 import { LocalizationContext, LocalizationMap, Menu, MenuDivider, MenuItem, Popover, Position, SpecialZoomLevel, Toggle } from '@react-pdf-viewer/core';
 
 import { RenderZoomProps } from './Zoom';
-import './zoomPopover.less';
 
 const LEVELS = [0.5, 0.75, 1, 1.25, 1.5, 2, 3, 4];
 const PORTAL_OFFSET = { left: 0, top: 8 };
