@@ -27,8 +27,8 @@
     "main": "npm/index.js",
     "types": "npm/index.d.ts",
     "files": [
-        "npm/styles.css",
-        "npm/cjs/*.js",
+        "npm/cjs/*.*",
+        "npm/styles/*.*",
         "npm/index.d.ts",
         "npm/index.js"
     ],
@@ -43,7 +43,8 @@
     },
     "scripts": {
         "clean": "rm -rf npm && mkdir npm",
-        "build": "npm run clean && cp src/index.d.ts npm && cp dist/index.js npm && rollup -c ../../rollup.config.js && npm run mincss && rm -rf npm/styles.less",
-        "mincss": "postcss npm/styles.css > npm/styles.min.css"
+        "build": "npm run clean && npm run js && npm run css",
+        "js": "cp src/index.d.ts npm && cp dist/index.js npm && rollup -c ../../rollup.config.js",
+        "css": "cp -r src/styles npm && postcss npm/styles/index.css > npm/styles/index.min.css"
     }
 }
