@@ -13,12 +13,6 @@ import bookmarkPlugin from '@react-pdf-viewer/bookmark';
 import thumbnailPlugin from '@react-pdf-viewer/thumbnail';
 import toolbarPlugin, { ToolbarPluginProps } from '@react-pdf-viewer/toolbar';
 
-import '@react-pdf-viewer/attachment/styles.css';
-import '@react-pdf-viewer/bookmark/styles.css';
-import '@react-pdf-viewer/thumbnail/styles.css';
-import '@react-pdf-viewer/toolbar/styles.css';
-
-import './defaultLayout.less';
 import Sidebar from './Sidebar';
 
 export interface DefaultLayoutProps extends ViewerProps {

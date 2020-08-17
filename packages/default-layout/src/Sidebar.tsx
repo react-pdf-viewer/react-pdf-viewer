@@ -12,7 +12,6 @@ import { Button, LocalizationContext, Position, Tooltip } from '@react-pdf-viewe
 import BookmarkIcon from './BookmarkIcon';
 import FileIcon from './FileIcon';
 import ThumbnailIcon from './ThumbnailIcon';
-import './sidebar.less';
 
 interface SidebarProps {
     tabContents: (() => ReactElement)[];
