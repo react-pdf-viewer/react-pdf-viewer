@@ -9,7 +9,6 @@
 import React, { ChangeEvent, FC, KeyboardEvent, useState } from 'react';
 import { Store } from '@react-pdf-viewer/core';
 
-import './currentPageInput.less';
 import StoreProps from './StoreProps';
 import useCurrentPage from './useCurrentPage';
 import useNumberOfPages from './useNumberOfPages';
