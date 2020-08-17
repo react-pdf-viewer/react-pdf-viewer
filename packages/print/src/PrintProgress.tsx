@@ -9,8 +9,6 @@
 import React, { useEffect, useContext } from 'react';
 import { LocalizationContext, PrimaryButton, ProgressBar } from '@react-pdf-viewer/core';
 
-import './printProgress.less';
-
 interface PrintProgressProps {
     numLoadedPages: number;
     numPages: number;

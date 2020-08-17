@@ -12,7 +12,6 @@ import { PdfJs } from '@react-pdf-viewer/core';
 
 import PageThumbnailContainer from './PageThumbnailContainer';
 import PrintStatus from './PrintStatus';
-import './printZone.less';
 
 interface PrintZoneProps {
     doc: PdfJs.PdfDocument;
