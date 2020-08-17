@@ -11,7 +11,6 @@ import { Store } from '@react-pdf-viewer/core';
 
 import ScrollMode from './ScrollMode';
 import StoreProps from './StoreProps';
-import './switchScrollMode.less';
 import SwitchScrollModeButton from './SwitchScrollModeButton';
 import useScrollMode from './useScrollMode';
 
