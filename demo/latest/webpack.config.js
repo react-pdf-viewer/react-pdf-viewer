@@ -68,13 +68,13 @@ module.exports = {
         new webpack.NormalModuleReplacementPlugin(
             // The pattern covers the package and its CSS
             // @react-pdf-viewer/core
-            // @react-pdf-viewer/core/styles.css
-            /^@react-pdf-viewer\/[a-z-]*[\/a-z-\.css]*$/,
+            // @react-pdf-viewer/core/styles/index.css
+            /^@react-pdf-viewer\/[a-z-]+[\/styles\/index.css]*$/,
             resource => {
                 const request = resource.request;
                 const pkgName = request.split('/')[1];
                 resource.request = request.endsWith('.css')
-                    ? path.join(__dirname, `../../packages/${pkgName}/npm/styles.css`)
+                    ? path.join(__dirname, `../../packages/${pkgName}/npm/styles/index.css`)
                     : path.join(__dirname, `../../packages/${pkgName}/src`)
             }
         ),
