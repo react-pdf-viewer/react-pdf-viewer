@@ -11,7 +11,6 @@ import { PdfJs, Spinner, Store, StoreHandler } from '@react-pdf-viewer/core';
 
 import StoreProps from './StoreProps';
 import ThumbnailList from './ThumbnailList';
-import './thumbnailListLoader.less';
 
 const ThumbnailListWithStore: React.FC<{
     store: Store<StoreProps>,
