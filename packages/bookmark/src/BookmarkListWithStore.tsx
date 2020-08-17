@@ -11,7 +11,6 @@ import { PdfJs, SpecialZoomLevel, Spinner, Store, StoreHandler } from '@react-pd
 
 import StoreProps from './StoreProps';
 import BookmarkLoader from './BookmarkLoader';
-import './bookmarkListLoader.less';
 
 const BookmarkListWithStore: React.FC<{
     store: Store<StoreProps>,

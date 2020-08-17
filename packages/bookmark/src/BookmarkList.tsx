@@ -11,7 +11,6 @@ import { PdfJs, SpecialZoomLevel } from '@react-pdf-viewer/core';
 
 import BookmarkItem from './BookmarkItem';
 import getDestination from './getDestination';
-import './bookmarkList.less';
 
 interface BookmarkListProps {
     bookmarks: PdfJs.Outline[];
