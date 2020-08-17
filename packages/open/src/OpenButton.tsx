@@ -10,7 +10,6 @@ import React, { useContext } from 'react';
 import { LocalizationContext, Position, Tooltip } from '@react-pdf-viewer/core';
 
 import { RenderOpenProps } from './Open';
-import './openButton.less';
 import OpenFileIcon from './OpenFileIcon';
 
 const TOOLTIP_OFFSET = { left: 0, top: 8 };
