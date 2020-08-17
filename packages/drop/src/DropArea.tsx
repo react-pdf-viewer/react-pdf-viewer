@@ -9,7 +9,6 @@
 import React, { FC, useContext, RefObject } from 'react';
 import { LocalizationContext } from '@react-pdf-viewer/core';
 
-import './dropArea.less';
 import useDrop from './useDrop';
 
 interface DropAreaProps {
