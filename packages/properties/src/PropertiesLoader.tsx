@@ -10,7 +10,6 @@ import React, { FC, ReactElement, useEffect, useState } from 'react';
 import { PdfJs, Spinner } from '@react-pdf-viewer/core';
 
 import PropertiesData from './PropertiesData';
-import './propertiesLoader.less';
 
 interface PropertiesLoaderProps {
     doc: PdfJs.PdfDocument;

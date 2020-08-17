@@ -8,8 +8,6 @@
 
 import React, { FC } from 'react';
 
-import './propertyItem.less';
-
 interface PropertyItemProps {
     label: string;
     value: string;
