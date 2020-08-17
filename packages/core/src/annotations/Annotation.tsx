@@ -10,7 +10,6 @@ import React from 'react';
 
 import Slot from '../layouts/Slot';
 import PdfJs from '../vendors/PdfJs';
-import './annotation.less';
 import AnnotationBorderStyleType from './AnnotationBorderStyleType';
 import PopupWrapper from './PopupWrapper';
 import useTogglePopup from './useTogglePopup';

@@ -12,7 +12,6 @@ import ThemeContext from '../theme/ThemeContext';
 import convertDate from '../utils/convertDate';
 import PdfJs from '../vendors/PdfJs';
 import AnnotationType from './AnnotationType';
-import './popupWrapper.less';
 
 interface PopupWrapperProps {
     annotation: PdfJs.Annotation;

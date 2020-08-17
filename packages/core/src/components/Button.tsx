@@ -10,7 +10,6 @@ import React, { useContext } from 'react';
 
 import ThemeContext from '../theme/ThemeContext';
 import classNames from '../utils/classNames';
-import './button.less';
 
 interface ButtonProps {
     isSelected?: boolean;

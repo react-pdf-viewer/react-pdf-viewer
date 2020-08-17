@@ -12,7 +12,6 @@ import Spinner from '../components/Spinner';
 import ThemeContext from '../theme/ThemeContext';
 import PdfJs from '../vendors/PdfJs';
 import { decrease } from '../zoom/zoomingLevel';
-import './pageSizeCalculator.less';
 import PageSize from './PageSize';
 
 interface PageSizeCalculatorProps {

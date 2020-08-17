@@ -9,7 +9,6 @@
 import React, { useContext } from 'react';
 
 import ThemeContext from '../theme/ThemeContext';
-import './menu.less';
 
 interface MenuProps {
     children?: React.ReactNode;

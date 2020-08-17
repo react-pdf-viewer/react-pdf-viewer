@@ -10,7 +10,6 @@ import React, { useContext } from 'react';
 
 import ThemeContext from '../theme/ThemeContext';
 import classNames from '../utils/classNames';
-import './arrow.less';
 import Position from './Position';
 
 interface ArrowProps {

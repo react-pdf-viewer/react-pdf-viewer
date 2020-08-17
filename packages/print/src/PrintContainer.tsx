@@ -12,7 +12,6 @@ import { PdfJs, Store, StoreHandler } from '@react-pdf-viewer/core';
 import PrintProgress from './PrintProgress';
 import PrintStatus from './PrintStatus';
 import PrintZone from './PrintZone';
-import './printZone.less';
 import StoreProps from './StoreProps';
 
 interface PrintContainerProps {

@@ -8,7 +8,6 @@
 
 import React, { ReactElement } from 'react';
 
-import './defaultToolbar.less';
 import MoreActionsPopover from './MoreActionsPopover';
 import ToolbarSlot from './ToolbarSlot';
 

@@ -10,7 +10,6 @@ import React, { useContext, useEffect, useState } from 'react';
 import { LocalizationContext, PdfJs, SpecialZoomLevel, Spinner } from '@react-pdf-viewer/core';
 
 import BookmarkList from './BookmarkList';
-import './bookmarkLoaded.less';
 
 interface BookmarkLoaderProps {
     doc: PdfJs.PdfDocument;

@@ -9,7 +9,6 @@
 import React, { FC, RefObject, useEffect, useRef, useState } from 'react';
 import { Store } from '@react-pdf-viewer/core';
 
-import './selectionMode.less';
 import SelectionMode from './SelectionMode';
 import StoreProps from './StoreProps';
 

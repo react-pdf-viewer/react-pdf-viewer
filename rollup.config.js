@@ -23,7 +23,7 @@ const plugins = [
     typescript(),
 ].concat(noBundleCss ? [] : [
     less({
-        output: path.join(outputDir, 'styles.css'),
+        output: path.join(outputDir, 'styles/index.css'),
         sourcemap: false,
     }),
 ]);

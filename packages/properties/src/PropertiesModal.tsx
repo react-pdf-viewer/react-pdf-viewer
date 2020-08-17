@@ -11,7 +11,6 @@ import { LocalizationContext, PdfJs, PrimaryButton, Separator } from '@react-pdf
 
 import PropertiesData from './PropertiesData';
 import PropertiesLoader from './PropertiesLoader';
-import './propertiesModal.less';
 import PropertyItem from './PropertyItem';
 import convertDate from './utils/convertDate';
 import getFileName from './utils/fileName';

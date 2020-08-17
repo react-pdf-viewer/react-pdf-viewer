@@ -11,7 +11,6 @@ import React, { useContext, useState } from 'react';
 import LocalizationContext from '../localization/LocalizationContext';
 import ThemeContext from '../theme/ThemeContext';
 import { VerifyPassword } from './LoadingStatus';
-import './askingPassword.less';
 
 interface WrongPasswordProps {
     verifyPasswordFn: VerifyPassword;

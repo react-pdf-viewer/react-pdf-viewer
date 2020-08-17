@@ -12,7 +12,6 @@ import { Button, Store } from '@react-pdf-viewer/core';
 import ExitFullScreenIcon from './ExitFullScreenIcon';
 import { exitFullScreen, getFullScreenElement } from './fullScreen';
 import StoreProps from './StoreProps';
-import './exitFullScreenButton.less';
 
 const ExitFullScreenButton: React.FC<{
     store: Store<StoreProps>,

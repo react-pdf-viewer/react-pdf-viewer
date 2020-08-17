@@ -7,5 +7,6 @@
  */
 
 import dropPlugin from './dropPlugin';
+import './styles';
 
 export default dropPlugin;

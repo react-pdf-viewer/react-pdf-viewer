@@ -10,7 +10,6 @@ import React, { useContext } from 'react';
 
 import useKeyUp from '../hooks/useKeyUp';
 import ThemeContext from '../theme/ThemeContext';
-import './popoverOverlay.less';
 
 interface PopoverOverlayProps {
     closeOnEscape: boolean;

@@ -18,7 +18,6 @@ import ViewerState from '../types/ViewerState';
 import PdfJs from '../vendors/PdfJs';
 import getFileExt from '../utils/fileExt';
 import { CanvasLayerRenderEvent, DocumentLoadEvent, PageChangeEvent, ZoomEvent } from '../Viewer';
-import './inner.less';
 import PageSize from './PageSize';
 import { RenderPage } from './RenderPage';
 

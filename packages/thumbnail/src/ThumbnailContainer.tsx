@@ -10,7 +10,6 @@ import React, { useState } from 'react';
 import { Observer, PdfJs, Spinner, VisibilityChanged } from '@react-pdf-viewer/core';
 
 import ThumbnailItem from './ThumbnailItem';
-import './thumbnailContainer.less';
 
 const THUMBNAIL_WIDTH = 100;
 

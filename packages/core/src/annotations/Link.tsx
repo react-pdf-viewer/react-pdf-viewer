@@ -13,7 +13,6 @@ import ThemeContext from '../theme/ThemeContext';
 import getDestination from '../utils/getDestination';
 import PdfJs from '../vendors/PdfJs';
 import Annotation from './Annotation';
-import './link.less';
 
 interface LinkProps {
     annotation: PdfJs.Annotation;

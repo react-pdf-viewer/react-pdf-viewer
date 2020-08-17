@@ -10,7 +10,6 @@ import React, { useEffect, useState } from 'react';
 import { PdfJs, Spinner, Store, StoreHandler } from '@react-pdf-viewer/core';
 
 import AttachmentLoader from './AttachmentLoader';
-import './attachmentListLoader.less';
 import StoreProps from './StoreProps';
 
 const AttachmentListWithStore: React.FC<{

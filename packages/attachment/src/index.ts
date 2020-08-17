@@ -7,5 +7,6 @@
  */
 
 import attachmentPlugin from './attachmentPlugin';
+import './styles';
 
 export default attachmentPlugin;

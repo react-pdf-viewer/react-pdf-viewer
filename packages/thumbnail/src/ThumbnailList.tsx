@@ -11,7 +11,6 @@ import { PdfJs } from '@react-pdf-viewer/core';
 
 import classNames from './classNames';
 import ThumbnailContainer from './ThumbnailContainer';
-import './thumbnailList.less';
 
 interface ThumbnailListProps {
     currentPage: number;

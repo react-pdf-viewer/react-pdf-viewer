@@ -22,17 +22,6 @@ import searchPlugin, { SearchPluginProps } from '@react-pdf-viewer/search';
 import selectionModePlugin, { SelectionModePluginProps } from '@react-pdf-viewer/selection-mode';
 import zoomPlugin from '@react-pdf-viewer/zoom';
 
-import '@react-pdf-viewer/drop/styles.css';
-import '@react-pdf-viewer/full-screen/styles.css';
-import '@react-pdf-viewer/open/styles.css';
-import '@react-pdf-viewer/page-navigation/styles.css';
-import '@react-pdf-viewer/print/styles.css';
-import '@react-pdf-viewer/properties/styles.css';
-import '@react-pdf-viewer/scroll-mode/styles.css';
-import '@react-pdf-viewer/search/styles.css';
-import '@react-pdf-viewer/selection-mode/styles.css';
-import '@react-pdf-viewer/zoom/styles.css';
-
 import Toolbar, { ToolbarProps } from './Toolbar';
 
 interface ToolbarPlugin extends Plugin {

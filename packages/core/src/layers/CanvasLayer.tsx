@@ -11,7 +11,6 @@ import React, { createRef, useContext, useRef } from 'react';
 import ThemeContext from '../theme/ThemeContext';
 import PdfJs from '../vendors/PdfJs';
 import { CanvasLayerRenderEvent } from '../Viewer';
-import './canvasLayer.less';
 import WithScale from './WithScale';
 
 interface CanvasLayerProps {

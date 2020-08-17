@@ -9,7 +9,6 @@
 import React, { createRef, useRef } from 'react';
 import { PdfJs, SpecialZoomLevel } from '@react-pdf-viewer/core';
 
-import './bookmarkItem.less';
 import BookmarkList from './BookmarkList';
 
 interface BookmarkItemProps {

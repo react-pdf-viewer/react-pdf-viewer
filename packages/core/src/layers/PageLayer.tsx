@@ -18,7 +18,6 @@ import { Plugin } from '../types/Plugin';
 import PdfJs from '../vendors/PdfJs';
 import { CanvasLayerRenderEvent } from '../Viewer';
 import CanvasLayer from './CanvasLayer';
-import './pageLayer.less';
 import SvgLayer from './SvgLayer';
 import TextLayer from './TextLayer';
 

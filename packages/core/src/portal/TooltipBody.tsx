@@ -13,7 +13,6 @@ import ThemeContext from '../theme/ThemeContext';
 import Arrow from './Arrow';
 import Offset from './Offset';
 import Position from './Position';
-import './tooltipBody.less';
 
 interface TooltipBodyProps {
     offset: Offset;

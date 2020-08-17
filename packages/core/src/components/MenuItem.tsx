@@ -10,7 +10,6 @@ import React, { useContext } from 'react';
 
 import CheckIcon from '../icons/CheckIcon';
 import ThemeContext from '../theme/ThemeContext';
-import './menuItem.less';
 
 interface MenuItemProps {
     checked?: boolean;

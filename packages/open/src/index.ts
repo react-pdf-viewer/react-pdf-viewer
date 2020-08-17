@@ -7,6 +7,8 @@
  */
 
 import openPlugin from './openPlugin';
+import './styles';
+
 export { default as OpenFileIcon } from './OpenFileIcon';
 
 export default openPlugin;

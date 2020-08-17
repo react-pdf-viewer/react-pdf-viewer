@@ -9,7 +9,6 @@
 import React, { useContext } from 'react';
 
 import ThemeContext from '../theme/ThemeContext';
-import './progressBar.less';
 
 interface ProgressBarProps {
     progress: number;
