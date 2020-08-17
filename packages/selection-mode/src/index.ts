@@ -6,9 +6,11 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
+import selectionModePlugin from './selectionModePlugin';
+import './styles';
+
 export { default as HandToolIcon } from './HandToolIcon';
 export { default as SelectionMode } from './SelectionMode';
-import selectionModePlugin from './selectionModePlugin';
 export { default as TextSelectionIcon } from './TextSelectionIcon';
 
 export default selectionModePlugin;

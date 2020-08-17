@@ -7,5 +7,6 @@
  */
 
 import bookmarkPlugin from './bookmarkPlugin';
+import './styles';
 
 export default bookmarkPlugin;

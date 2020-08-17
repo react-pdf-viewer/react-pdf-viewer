@@ -6,7 +6,9 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-export { default as InfoIcon } from './InfoIcon';
 import propertiesPlugin from './propertiesPlugin';
+import './styles';
+
+export { default as InfoIcon } from './InfoIcon';
 
 export default propertiesPlugin;

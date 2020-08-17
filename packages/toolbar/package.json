@@ -53,6 +53,6 @@
         "clean": "rm -rf npm && mkdir npm",
         "build": "npm run clean && npm run js && npm run css",
         "js": "cp src/index.d.ts npm && cp dist/index.js npm && rollup -c ../../rollup.config.js",
-        "css": "cp -r src/styles npm && postcss npm/styles/index.css > npm/styles/index.min.css"
+        "css": "cp -r src/styles npm && rm npm/styles/index.less && postcss npm/styles/index.css > npm/styles/index.min.css"
     }
 }

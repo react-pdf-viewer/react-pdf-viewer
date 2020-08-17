@@ -6,7 +6,9 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
+import './styles';
 import zoomPlugin from './zoomPlugin';
+
 export { default as ZoomInIcon } from './ZoomInIcon';
 export { default as ZoomOutIcon } from './ZoomOutIcon';
 
