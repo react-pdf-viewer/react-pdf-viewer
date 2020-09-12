@@ -20,11 +20,11 @@ const ZoomPopover: React.FC<RenderZoomProps> = ({ scale, onZoom }) => {
     const getSpcialLevelLabel = (level: SpecialZoomLevel): string | LocalizationMap => {
         switch (level) {
             case SpecialZoomLevel.ActualSize:
-                return (l10n && l10n.plugins && l10n.plugins.zoom) ? l10n.plugins.zoom.actualSize : 'Actual size';
+                return l10n && l10n.zoom ? l10n.zoom.actualSize : 'Actual size';
             case SpecialZoomLevel.PageFit:
-                return (l10n && l10n.plugins && l10n.plugins.zoom) ? l10n.plugins.zoom.pageFit : 'Page fit';
+                return l10n && l10n.zoom ? l10n.zoom.pageFit : 'Page fit';
             case SpecialZoomLevel.PageWidth:
-                return (l10n && l10n.plugins && l10n.plugins.zoom) ? l10n.plugins.zoom.pageWidth : 'Page width';
+                return l10n && l10n.zoom ? l10n.zoom.pageWidth : 'Page width';
         }
     };
 

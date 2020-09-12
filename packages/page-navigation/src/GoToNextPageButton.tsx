@@ -15,11 +15,8 @@ import NextIcon from './NextIcon';
 const TOOLTIP_OFFSET = { left: 0, top: 8 };
 
 const GoToNextPageButton: FC<RenderGoToNextPageProps> = ({ onClick }) => {
-    const l10nContext = useContext(LocalizationContext);
-        
-    const label = (l10nContext && l10nContext.plugins && l10nContext.plugins.pageNavigation)
-        ? l10nContext.plugins.pageNavigation.nextPage
-        : 'Next page';
+    const l10n = useContext(LocalizationContext);
+    const label = l10n && l10n.pageNavigation ? l10n.pageNavigation.nextPage : 'Next page';
 
     return (
         <Tooltip

@@ -15,11 +15,8 @@ import PreviousIcon from './PreviousIcon';
 const TOOLTIP_OFFSET = { left: 0, top: 8 };
 
 const GoToPreviousPageButton: FC<RenderGoToPreviousPageProps> = ({ onClick }) => {
-    const l10nContext = useContext(LocalizationContext);
-    
-    const label = (l10nContext && l10nContext.plugins && l10nContext.plugins.pageNavigation)
-        ? l10nContext.plugins.pageNavigation.previousPage
-        : 'Previous page';
+    const l10n = useContext(LocalizationContext);
+    const label = l10n && l10n.pageNavigation ? l10n.pageNavigation.previousPage : 'Previous page';
 
     return (
         <Tooltip

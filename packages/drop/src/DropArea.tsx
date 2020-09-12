@@ -23,16 +23,14 @@ const DropArea: FC<DropAreaProps> = ({ containerRef, openFile }) => {
         }
         openFile(files[0]);
     });
-    const l10nContext = useContext(LocalizationContext);
+    const l10n = useContext(LocalizationContext);
 
     return (
         <>
         {isDragging && (
             <div className='rpv-drop-area'>
                 {
-                    (l10nContext && l10nContext.plugins && l10nContext.plugins.drop)
-                        ? l10nContext.plugins.drop.dragDropFile
-                        : 'Drag and drop a PDF document here'
+                    l10n && l10n.drop ? l10n.drop.dragDropFile : 'Drag and drop a PDF document here'
                 }
             </div>
         )}

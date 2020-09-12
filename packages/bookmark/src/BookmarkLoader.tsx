@@ -46,7 +46,7 @@ const BookmarkLoader: React.FC<BookmarkLoaderProps> = ({ doc, onJumpToDest }) =>
             : (
                 bookmarks.items.length === 0
                     ? <div className='rpv-bookmark-empty'>
-                        {l10n && l10n.plugins && l10n.plugins.bookmark ? l10n.plugins.bookmark.noBookmark : 'There is no bookmark'}
+                        {l10n && l10n.bookmark ? l10n.bookmark.noBookmark : 'There is no bookmark'}
                     </div>
                     : (
                         <BookmarkList

@@ -164,7 +164,7 @@ const SearchPopover: React.FC<SearchPopoverProps> = ({ doc, store, onToggle }) =
             <div className='rpv-search-popover-input-counter'>
                 <input
                     className='rpv-search-popover-input'
-                    placeholder={(l10n && l10n.plugins && l10n.plugins.search ? l10n.plugins.search.enterToSearch : 'Enter to search') as string}
+                    placeholder={(l10n && l10n.search ? l10n.search.enterToSearch : 'Enter to search') as string}
                     type="text"
                     value={keyword}
                     onChange={changeKeyword}
@@ -180,7 +180,7 @@ const SearchPopover: React.FC<SearchPopoverProps> = ({ doc, store, onToggle }) =
                     checked={matchCase}
                     type="checkbox"
                     onChange={changeMatchCase}
-                /> {l10n && l10n.plugins && l10n.plugins.search ? l10n.plugins.search.matchCase : 'Match case'}
+                /> {l10n && l10n.search ? l10n.search.matchCase : 'Match case'}
             </label>
             <label className='rpv-search-popover-label'>
                 <input
@@ -188,14 +188,14 @@ const SearchPopover: React.FC<SearchPopoverProps> = ({ doc, store, onToggle }) =
                     checked={wholeWords}
                     type="checkbox"
                     onChange={changeWholeWords}
-                /> {l10n && l10n.plugins && l10n.plugins.search ? l10n.plugins.search.wholeWords : 'Whole words'}
+                /> {l10n && l10n.search ? l10n.search.wholeWords : 'Whole words'}
             </label>
             <div className='rpv-search-popover-footer'>
                 <div className='rpv-search-popover-footer-item'>
                     <Tooltip
                         position={Position.BottomCenter}
                         target={<Button onClick={jumpToPreviousMatch}><PreviousIcon /></Button>}
-                        content={() => (l10n && l10n.plugins && l10n.plugins.search ? l10n.plugins.search.previousMatch : 'Previous match')}
+                        content={() => (l10n && l10n.search ? l10n.search.previousMatch : 'Previous match')}
                         offset={PORTAL_OFFSET}
                     />
                 </div>
@@ -203,13 +203,13 @@ const SearchPopover: React.FC<SearchPopoverProps> = ({ doc, store, onToggle }) =
                     <Tooltip
                         position={Position.BottomCenter}
                         target={<Button onClick={jumpToNextMatch}><NextIcon /></Button>}
-                        content={() => (l10n && l10n.plugins && l10n.plugins.search ? l10n.plugins.search.nextMatch : 'Next match')}
+                        content={() => (l10n && l10n.search ? l10n.search.nextMatch : 'Next match')}
                         offset={PORTAL_OFFSET}
                     />
                 </div>
                 <div className='rpv-search-popover-footer-button'>
                     <PrimaryButton onClick={close}>
-                        {l10n && l10n.plugins && l10n.plugins.search ? l10n.plugins.search.close : 'Close'}
+                        {l10n && l10n.search ? l10n.search.close : 'Close'}
                     </PrimaryButton>
                 </div>
             </div>

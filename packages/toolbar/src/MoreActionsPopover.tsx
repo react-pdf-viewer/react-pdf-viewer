@@ -28,9 +28,7 @@ const MoreActionsPopover: React.FC<MoreActionsPopoverProps> = ({ toolbarSlot }) 
     } = toolbarSlot;
 
     const renderTarget = (toggle: Toggle, opened: boolean): React.ReactElement => {
-        const label = (l10n && l10n.plugins && l10n.plugins.toolbar)
-            ? l10n.plugins.toolbar.moreActions
-            : 'More actions';
+        const label = l10n && l10n.toolbar ? l10n.toolbar.moreActions : 'More actions';
 
         return (
             <Tooltip

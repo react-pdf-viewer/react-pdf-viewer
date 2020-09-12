@@ -27,8 +27,8 @@ const LocalePopover: React.FC<LocalePopoverProps> = ({ initialLocale = 'en_US', 
     const [locale, setLocale] = useState(initialLocale);
 
     const renderTarget = (toggle: Toggle, opened: boolean) => {
-        const label = (l10n && l10n.plugins)
-            ? l10n.plugins.localeSwitcher.switchLocale
+        const label = l10n && l10n.localeSwitcher
+            ? l10n.localeSwitcher.switchLocale
             : 'Switch locale';
 
         return (

@@ -17,12 +17,8 @@ import RotateDirection from './RotateDirection';
 const RotateMenuItem: FC<RenderRotateProps> = ({ direction, onClick }) => {
     const l10n = useContext(LocalizationContext);
 
-    const backwardLabel = (l10n && l10n.plugins && l10n.plugins.rotate)
-            ? l10n.plugins.rotate.rotateBackward
-            : 'Rotate counterclockwise';
-    const forwardLabel = (l10n && l10n.plugins && l10n.plugins.rotate)
-        ? l10n.plugins.rotate.rotateForward
-        : 'Rotate clockwise';
+    const backwardLabel = l10n && l10n.rotate ? l10n.rotate.rotateBackward : 'Rotate counterclockwise';
+    const forwardLabel = l10n && l10n.rotate ? l10n.rotate.rotateForward : 'Rotate clockwise';
     const label = (direction === RotateDirection.Backward) ? backwardLabel : forwardLabel;
     const icon = (direction === RotateDirection.Backward) ? <RotateBackwardIcon /> : <RotateForwardIcon />;
 

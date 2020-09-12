@@ -1,10 +1,12 @@
 {
-    "askingPassword": {
-        "requirePasswordToOpen": "This document requires a password to open",
-        "submit": "Submit"
-    },
-    "wrongPassword": {
-        "submit": "Submit",
-        "tryAgain": "The password is wrong. Please try again"
+    "core": {
+        "askingPassword": {
+            "requirePasswordToOpen": "This document requires a password to open",
+            "submit": "Submit"
+        },
+        "wrongPassword": {
+            "submit": "Submit",
+            "tryAgain": "The password is wrong. Please try again"
+        }
     }
 }

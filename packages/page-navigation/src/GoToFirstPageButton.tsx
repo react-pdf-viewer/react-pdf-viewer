@@ -15,11 +15,9 @@ import UpArrowIcon from './UpArrowIcon';
 const TOOLTIP_OFFSET = { left: 0, top: 8 };
 
 const GoToFirstPageButton: FC<RenderGoToFirstPageProps> = ({ onClick }) => {
-    const l10nContext = useContext(LocalizationContext);
+    const l10n = useContext(LocalizationContext);
 
-    const label = (l10nContext && l10nContext.plugins && l10nContext.plugins.pageNavigation)
-            ? l10nContext.plugins.pageNavigation.goToFirstPageButton
-            : 'First page';
+    const label = l10n && l10n.pageNavigation ? l10n.pageNavigation.goToFirstPageButton : 'First page';
 
     return (
         <Tooltip

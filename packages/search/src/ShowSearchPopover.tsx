@@ -36,9 +36,7 @@ const ShowSearchPopover: React.FC<{
     const { currentDoc } = useDocument(store);
     const l10n = useContext(LocalizationContext);
 
-    const label = (l10n && l10n.plugins && l10n.plugins.search)
-            ? l10n.plugins.search.search
-            : 'Search';
+    const label = l10n && l10n.search ? l10n.search.search : 'Search';
 
     const defaultChildren = (props: RenderShowSearchPopoverProps) => (
         <ShowSearchPopoverButton {...props} />

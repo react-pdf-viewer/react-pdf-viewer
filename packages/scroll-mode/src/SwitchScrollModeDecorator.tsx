@@ -34,23 +34,23 @@ const SwitchScrollModeDecorator: FC<SwitchScrollModeDecoratorProps> = ({ childre
 
     switch (mode) {
         case ScrollMode.Horizontal:
-            label = ((l10n && l10n.plugins && l10n.plugins.scrollMode)
-                    ? l10n.plugins.scrollMode.horizontalScrolling
+            label = (l10n && l10n.scrollMode
+                    ? l10n.scrollMode.horizontalScrolling
                     : 'Horizontal scrolling') as string;
             icon = <HorizontalScrollingIcon />;
             break;
 
         case ScrollMode.Wrapped:
-            label = ((l10n && l10n.plugins && l10n.plugins.scrollMode)
-                    ? l10n.plugins.scrollMode.wrappedScrolling
+            label = (l10n && l10n.scrollMode
+                    ? l10n.scrollMode.wrappedScrolling
                     : 'Wrapped scrolling') as string;
             icon = <WrappedScrollingIcon />;
             break;
 
         case ScrollMode.Vertical:
         default:
-            label = ((l10n && l10n.plugins && l10n.plugins.scrollMode)
-                    ? l10n.plugins.scrollMode.verticalScrolling
+            label = (l10n && l10n.scrollMode
+                    ? l10n.scrollMode.verticalScrolling
                     : 'Vertical scrolling') as string;
             icon = <VerticalScrollingIcon />;
             break;

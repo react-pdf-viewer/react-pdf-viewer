@@ -15,11 +15,9 @@ import FullScreenIcon from './FullScreenIcon';
 const TOOLTIP_OFFSET = { left: 0, top: 8 };
 
 const EnterFullScreenButton: React.FC<RenderEnterFullScreenProps> = ({ onClick }) => {
-    const l10nContext = useContext(LocalizationContext);
+    const l10n = useContext(LocalizationContext);
 
-    const label = (l10nContext && l10nContext.plugins)
-            ? l10nContext.plugins.fullScreen.enterFullScreen
-            : 'Full screen';
+    const label = l10n && l10n.fullScreen ? l10n.fullScreen.enterFullScreen : 'Full screen';
 
     return (
         <Tooltip

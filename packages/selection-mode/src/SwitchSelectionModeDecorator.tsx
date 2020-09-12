@@ -33,16 +33,16 @@ const SwitchSelectionModeDecorator: FC<SwitchSelectionModeDecoratorProps> = ({ c
 
     switch (mode) {
         case SelectionMode.Hand:
-            label = ((l10n && l10n.plugins && l10n.plugins.selectionMode)
-                    ? l10n.plugins.selectionMode.handTool
+            label = (l10n && l10n.selectionMode
+                    ? l10n.selectionMode.handTool
                     : 'Hand tool') as string;
             icon = <HandToolIcon />;
             break;
 
         case SelectionMode.Text:
         default:
-            label = ((l10n && l10n.plugins && l10n.plugins.selectionMode)
-                    ? l10n.plugins.selectionMode.textSelectionTool
+            label = (l10n && l10n.selectionMode
+                    ? l10n.selectionMode.textSelectionTool
                     : 'Text selection tool') as string;
             icon = <TextSelectionIcon />;
             break;

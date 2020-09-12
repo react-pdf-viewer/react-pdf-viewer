@@ -27,8 +27,8 @@ const AttachmentList: React.FC<AttachmentListProps> = ({ files }) => {
                 key={`attachment-${file.fileName}`}
                 title={
                     (
-                        l10n && l10n.plugins && l10n.plugins.attachment
-                            ? l10n.plugins.attachment.clickToDownload
+                        l10n && l10n.attachment
+                            ? l10n.attachment.clickToDownload
                             : 'Click to download'
                     ) as string
                 }
@@ -43,8 +43,8 @@ const AttachmentList: React.FC<AttachmentListProps> = ({ files }) => {
         files.length === 0
             ? <div className='rpv-attachment-list-empty'>
                 {
-                    l10n && l10n.plugins && l10n.plugins.attachment
-                    ? l10n.plugins.attachment.noAttachment
+                    l10n && l10n.attachment
+                    ? l10n.attachment.noAttachment
                     : 'There is no attachment'
                 }
             </div>

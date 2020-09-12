@@ -15,11 +15,8 @@ import PrintIcon from './PrintIcon';
 const TOOLTIP_OFFSET = { left: 0, top: 8 };
 
 const PrintButton: React.FC<RenderPrintProps> = ({ onClick }) => {
-    const l10nContext = useContext(LocalizationContext);
-
-    const label = (l10nContext && l10nContext.plugins && l10nContext.plugins.print)
-            ? l10nContext.plugins.print.print
-            : 'Print';
+    const l10n = useContext(LocalizationContext);
+    const label = l10n && l10n.print ? l10n.print.print : 'Print';
 
     return (
         <Tooltip

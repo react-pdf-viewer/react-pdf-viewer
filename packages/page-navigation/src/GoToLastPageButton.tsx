@@ -15,11 +15,8 @@ import { RenderGoToLastPageProps } from './GoToLastPage';
 const TOOLTIP_OFFSET = { left: 0, top: 8 };
 
 const GoToLastPageButton: FC<RenderGoToLastPageProps> = ({ onClick }) => {
-    const l10nContext = useContext(LocalizationContext);
-
-    const label = (l10nContext && l10nContext.plugins && l10nContext.plugins.pageNavigation)
-            ? l10nContext.plugins.pageNavigation.goToLastPageButton
-            : 'Last page';
+    const l10n = useContext(LocalizationContext);
+    const label = l10n && l10n.pageNavigation ? l10n.pageNavigation.goToLastPageButton : 'Last page';
 
     return (
         <Tooltip
