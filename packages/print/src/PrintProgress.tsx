@@ -17,7 +17,7 @@ interface PrintProgressProps {
 }
 
 const PrintProgress: React.FC<PrintProgressProps> = ({ numLoadedPages, numPages, onCancel, onStartPrinting }) => {
-    const l10nContext = useContext(LocalizationContext);
+    const l10n = useContext(LocalizationContext);
     const progress = Math.floor(numLoadedPages * 100 / numPages);
     useEffect(() => {
         if (numLoadedPages === numPages) {
@@ -30,9 +30,7 @@ const PrintProgress: React.FC<PrintProgressProps> = ({ numLoadedPages, numPages,
             <div className='rpv-print-progress-inner'>
                 <div className='rpv-print-progress-message'>
                     {
-                        (l10nContext && l10nContext.plugins && l10nContext.plugins.preparingDocument)
-                            ? l10nContext.plugins.print.preparingDocument
-                            : 'Preparing document ...'
+                        l10n && l10n.print ? l10n.print.preparingDocument : 'Preparing document ...'
                     }
                 </div>
                 <div className='rpv-print-progress-bar'>
@@ -40,9 +38,7 @@ const PrintProgress: React.FC<PrintProgressProps> = ({ numLoadedPages, numPages,
                 </div>
                 <PrimaryButton onClick={onCancel}>
                     {
-                        (l10nContext && l10nContext.plugins && l10nContext.plugins.cancel)
-                            ? l10nContext.plugins.print.cancel
-                            : 'Cancel'
+                        l10n && l10n.print ? l10n.print.cancel : 'Cancel'
                     }
                 </PrimaryButton>
             </div>

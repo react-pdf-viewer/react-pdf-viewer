@@ -27,7 +27,7 @@ const WrongPassword: React.FC<WrongPasswordProps> = ({ verifyPasswordFn }) => {
     return (
         <div className={`${theme.prefixClass}-asking-password`}>
             <div>
-                <div className={`${theme.prefixClass}-asking-password-message`}>{l10n.wrongPassword.tryAgain}:</div>
+                <div className={`${theme.prefixClass}-asking-password-message`}>{l10n.core.wrongPassword.tryAgain}:</div>
                 <div className={`${theme.prefixClass}-asking-password-input-container`}>
                     <input
                         className={`${theme.prefixClass}-asking-password-input`}
@@ -35,7 +35,7 @@ const WrongPassword: React.FC<WrongPasswordProps> = ({ verifyPasswordFn }) => {
                         onChange={changePassword}
                     />
                     <button className={`${theme.prefixClass}-asking-password-button`} onClick={submit}>
-                        {l10n.wrongPassword.submit}
+                        {l10n.core.wrongPassword.submit}
                     </button>
                 </div>
             </div>

@@ -15,11 +15,9 @@ import DownloadIcon from './DownloadIcon';
 const TOOLTIP_OFFSET = { left: 0, top: 8 };
 
 const DownloadButton: React.FC<RenderDownloadProps> = ({ onClick }) => {
-    const l10nContext = useContext(LocalizationContext);
+    const l10n = useContext(LocalizationContext);
 
-    const label = (l10nContext && l10nContext.plugins && l10nContext.plugins.download)
-            ? l10nContext.plugins.download.download
-            : 'Download';
+    const label = l10n && l10n.download ? l10n.download.download : 'Download';
 
     return (
         <Tooltip

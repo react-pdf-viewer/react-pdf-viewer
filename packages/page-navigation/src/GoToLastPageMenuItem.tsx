@@ -16,11 +16,8 @@ export interface GoToLastPageMenuItemProps {
 }
 
 const GoToLastPageMenuItem: FC<GoToLastPageMenuItemProps> = ({ onClick }) => {
-    const l10nContext = useContext(LocalizationContext);
-
-    const label = (l10nContext && l10nContext.plugins && l10nContext.plugins.pageNavigation)
-            ? l10nContext.plugins.pageNavigation.goToLastPageMenuItem
-            : 'Go to last page';
+    const l10n = useContext(LocalizationContext);
+    const label = l10n && l10n.pageNavigation ? l10n.pageNavigation.goToLastPageMenuItem : 'Go to last page';
 
     return (
         <MenuItem icon={<DownArrowIcon />} onClick={onClick}>

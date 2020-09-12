@@ -15,11 +15,8 @@ import ZoomOutIcon from './ZoomOutIcon';
 const TOOLTIP_OFFSET = { left: 0, top: 8 };
 
 const ZoomOutButton: FC<RenderZoomOutProps> = ({ onClick }) => {
-    const l10nContext = useContext(LocalizationContext);
-    
-    const label = (l10nContext && l10nContext.plugins && l10nContext.plugins.zoom)
-        ? l10nContext.plugins.zoom.zoomOut
-        : 'Zoom out';
+    const l10n = useContext(LocalizationContext);
+    const label = l10n && l10n.zoom ? l10n.zoom.zoomOut : 'Zoom out';
 
     return (
         <Tooltip

@@ -34,8 +34,8 @@ const ShowProperties: FC<{
     const { currentDoc } = useDocument(store);
     const l10n = useContext(LocalizationContext);
 
-    const label = (l10n && l10n.plugins && l10n.plugins.properties)
-            ? l10n.plugins.properties.showProperties
+    const label = l10n && l10n.properties
+            ? l10n.properties.showProperties
             : 'Show properties';
 
     const fileName = store.get('fileName') || '';
