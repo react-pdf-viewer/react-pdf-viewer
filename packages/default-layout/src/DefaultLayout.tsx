@@ -53,7 +53,7 @@ const DefaultLayout: React.FC<DefaultLayoutProps> = (props) => {
                 <div className='rpv-default-layout-body'>
                     <Viewer
                         {...props}
-                        plugins={plugins}
+                        plugins={plugins.concat(props.plugins || [])}
                     />
                 </div>
             </div>
