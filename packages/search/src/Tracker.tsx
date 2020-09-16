@@ -52,12 +52,13 @@ const Tracker: React.FC<{
             return;
         }
 
-        const startOffset = text.search(keywordRegexp);
+        const match = text.match(keywordRegexp) //doesn't support 'g' flag
         const firstChild = span.firstChild;
-        if (startOffset === -1 || !firstChild) {
+        if (match || !firstChild) {
             return;
         }
-        const endOffset = startOffset + keywordRegexp.source.length;
+        const startOffset = match.index;
+        const endOffset = startOffset + match[0].length;
         const wrapper = wrap(firstChild, startOffset, endOffset);
         wrapper.classList.add('rpv-search-text-highlight');
     };
