@@ -54,7 +54,7 @@ const Tracker: React.FC<{
 
         const match = text.match(keywordRegexp) //doesn't support 'g' flag
         const firstChild = span.firstChild;
-        if (match || !firstChild) {
+        if (!match || !firstChild) {
             return;
         }
         const startOffset = match.index;
