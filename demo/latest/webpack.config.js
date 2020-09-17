@@ -28,17 +28,17 @@ module.exports = {
                 exclude: /node_modules/,
                 use: ['babel-loader', 'ts-loader']
             },
-            {
-                test: /\.less$/,
-                use: [
-                    {
-                        loader: 'css-loader'
-                    },
-                    {
-                        loader: 'less-loader'
-                    },
-                ]
-            },
+            // {
+            //     test: /\.less$/,
+            //     use: [
+            //         {
+            //             loader: 'css-loader'
+            //         },
+            //         {
+            //             loader: 'less-loader'
+            //         },
+            //     ]
+            // },
         ],
     },
     resolve: {
@@ -79,13 +79,13 @@ module.exports = {
                         resource.request = path.join(__dirname, `../../packages/${pkgName}/npm/styles/index.css`);
                         break;
 
-                    case request.endsWith('.less'):
-                        resource.request = path.join(__dirname, `../../packages/${pkgName}/npm/styles/index.less`);
-                        break;
+                    // case request.endsWith('.less'):
+                    //     resource.request = path.join(__dirname, `../../packages/${pkgName}/npm/styles/index.less`);
+                    //     break;
 
-                    case request.endsWith('/styles'):
-                        resource.request = path.join(__dirname, `../../packages/${pkgName}/npm/styles`);
-                        break;
+                    // case request.endsWith('/styles'):
+                    //     resource.request = path.join(__dirname, `../../packages/${pkgName}/npm/styles`);
+                    //     break;
 
                     default:
                         resource.request = path.join(__dirname, `../../packages/${pkgName}/src`);

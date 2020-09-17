@@ -6,11 +6,9 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-@import './variables.less';
-
-.@{core-prefix}-spinner {
+.rpv-core-spinner {
     animation-duration: 750ms;
-    animation-name: viewer-spinner-transform;
+    animation-name: rpv-core-spinner-transform;
     animation-iteration-count: infinite;
     animation-timing-function: linear;
     transition-property: transform;
@@ -22,7 +20,8 @@
         stroke-width: 2;
     }
 }
-@keyframes viewer-spinner-transform {
+
+@keyframes rpv-core-spinner-transform {
     from {
         transform: rotate(0deg);
     }
