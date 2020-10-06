@@ -24,13 +24,13 @@
     "bugs": {
         "url": "https://github.com/phuoc-ng/react-pdf-viewer/issues"
     },
-    "main": "npm/index.js",
-    "types": "npm/index.d.ts",
+    "main": "lib/index.js",
+    "types": "lib/index.d.ts",
     "files": [
-        "npm/cjs/*.*",
-        "npm/styles/*.*",
-        "npm/index.d.ts",
-        "npm/index.js"
+        "lib/cjs/*.*",
+        "lib/styles/*.*",
+        "lib/index.d.ts",
+        "lib/index.js"
     ],
     "dependencies": {
         "react": "^16.13.1",
@@ -57,9 +57,9 @@
         "access": "public"
     },
     "scripts": {
-        "clean": "rm -rf npm && mkdir npm",
+        "clean": "rm -rf lib && mkdir lib",
         "build": "npm run clean && npm run js && npm run css",
-        "js": "cp src/index.d.ts npm && cp dist/index.js npm && rollup -c ../../rollup.config.js",
-        "css": "rm npm/styles/index.less && postcss npm/styles/index.css > npm/styles/index.min.css"
+        "js": "cp src/index.d.ts lib && cp dist/index.js lib && rollup -c ../../rollup.config.js",
+        "css": "rm lib/styles/index.less && postcss lib/styles/index.css > lib/styles/index.min.css"
     }
 }
