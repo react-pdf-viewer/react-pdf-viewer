@@ -1,4 +1,21 @@
 {
+    "name": "@react-pdf-viewer/root",
+    "version": "0.0.0",
+    "description": "A React component to view a PDF document",
+    "license": "https://react-pdf-viewer.dev/license",
+    "author": {
+        "name": "Nguyen Huu Phuoc",
+        "email": "me@phuoc.ng",
+        "url": "https://twitter.com/nghuuphuoc"
+    },
+    "homepage": "https://react-pdf-viewer.dev",
+    "keywords": [
+        "react",
+        "react.js",
+        "pdf",
+        "pdf.js",
+        "pdf viewer"
+    ],
     "private": "true",
     "workspaces": [
         "packages/*"
@@ -10,7 +27,8 @@
         "build": "lerna run build",
         "dev": "lerna run dev",
         "pub": "lerna publish",
-        "lint": "eslint packages/**/*.ts packages/**/*.tsx"
+        "lint": "eslint packages/**/*.ts packages/**/*.tsx",
+        "release": "lerna publish --exact"
     },
     "devDependencies": {
         "@rollup/plugin-json": "^4.1.0",

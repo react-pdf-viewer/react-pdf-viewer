@@ -35,12 +35,19 @@
     "dependencies": {
         "react": "^16.13.1",
         "react-dom": "^16.13.1",
-        "@react-pdf-viewer/core": "^2.0.0"
+        "@react-pdf-viewer/core": "2.0.0"
+    },
+    "peerDependencies": {
+        "react": "^16.8.0",
+        "react-dom": "^16.8.0"
+    },
+    "publishConfig": {
+        "access": "public"
     },
     "scripts": {
         "clean": "rm -rf npm && mkdir npm",
         "build": "npm run clean && npm run js && npm run css",
         "js": "cp src/index.d.ts npm && cp dist/index.js npm && rollup -c ../../rollup.config.js",
-        "css": "cp -r src/styles npm && rm npm/styles/index.less && postcss npm/styles/index.css > npm/styles/index.min.css"
+        "css": "rm npm/styles/index.less && postcss npm/styles/index.css > npm/styles/index.min.css"
     }
 }
