@@ -35,19 +35,26 @@
     "dependencies": {
         "react": "^16.13.1",
         "react-dom": "^16.13.1",
-        "@react-pdf-viewer/core": "^2.0.0",
-        "@react-pdf-viewer/download": "^2.0.0",
-        "@react-pdf-viewer/drop": "^2.0.0",
-        "@react-pdf-viewer/full-screen": "^2.0.0",
-        "@react-pdf-viewer/open": "^2.0.0",
-        "@react-pdf-viewer/page-navigation": "^2.0.0",
-        "@react-pdf-viewer/print": "^2.0.0",
-        "@react-pdf-viewer/properties": "^2.0.0",
-        "@react-pdf-viewer/rotate": "^2.0.0",
-        "@react-pdf-viewer/scroll-mode": "^2.0.0",
-        "@react-pdf-viewer/search": "^2.0.0",
-        "@react-pdf-viewer/selection-mode": "^2.0.0",
-        "@react-pdf-viewer/zoom": "^2.0.0"
+        "@react-pdf-viewer/core": "2.0.0",
+        "@react-pdf-viewer/download": "2.0.0",
+        "@react-pdf-viewer/drop": "2.0.0",
+        "@react-pdf-viewer/full-screen": "2.0.0",
+        "@react-pdf-viewer/open": "2.0.0",
+        "@react-pdf-viewer/page-navigation": "2.0.0",
+        "@react-pdf-viewer/print": "2.0.0",
+        "@react-pdf-viewer/properties": "2.0.0",
+        "@react-pdf-viewer/rotate": "2.0.0",
+        "@react-pdf-viewer/scroll-mode": "2.0.0",
+        "@react-pdf-viewer/search": "2.0.0",
+        "@react-pdf-viewer/selection-mode": "2.0.0",
+        "@react-pdf-viewer/zoom": "2.0.0"
+    },
+    "peerDependencies": {
+        "react": "^16.8.0",
+        "react-dom": "^16.8.0"
+    },
+    "publishConfig": {
+        "access": "public"
     },
     "scripts": {
         "clean": "rm -rf npm && mkdir npm",

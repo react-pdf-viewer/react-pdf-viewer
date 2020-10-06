@@ -32,15 +32,22 @@
         "npm/index.d.ts",
         "npm/index.js"
     ],
+    "dependencies": {
+        "pdfjs-dist": "^2.4.456",
+        "react": "^16.13.1",
+        "react-dom": "^16.13.1"
+    },
+    "peerDependencies": {
+        "react": "^16.8.0",
+        "react-dom": "^16.8.0"
+    },
+    "publishConfig": {
+        "access": "public"
+    },
     "scripts": {
         "clean": "rm -rf npm && mkdir npm",
         "build": "npm run clean && npm run js && npm run css",
         "js": "cp src/index.d.ts npm && cp dist/index.js npm && rollup -c ../../rollup.config.js",
         "css": "rm npm/styles/index.less && postcss npm/styles/index.css > npm/styles/index.min.css"
-    },
-    "dependencies": {
-        "pdfjs-dist": "^2.4.456",
-        "react": "^16.13.1",
-        "react-dom": "^16.13.1"
     }
 }
