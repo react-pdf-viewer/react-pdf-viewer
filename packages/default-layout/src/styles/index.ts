@@ -8,6 +8,7 @@
 
 import '@react-pdf-viewer/attachment/styles/index.css';
 import '@react-pdf-viewer/bookmark/styles/index.css';
+import '@react-pdf-viewer/core/styles/index.css';
 import '@react-pdf-viewer/thumbnail/styles/index.css';
 import '@react-pdf-viewer/toolbar/styles/index.css';
 
