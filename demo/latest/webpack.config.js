@@ -88,7 +88,7 @@ module.exports = {
                     //     break;
 
                     default:
-                        resource.request = path.join(__dirname, `../../packages/${pkgName}/src`);
+                        resource.request = path.join(__dirname, `../../packages/${pkgName}/npm`);
                         break;
                 }
             }
