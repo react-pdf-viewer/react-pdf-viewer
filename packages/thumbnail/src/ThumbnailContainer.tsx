@@ -9,12 +9,14 @@
 import React, { useState } from 'react';
 import { Observer, PdfJs, Spinner, VisibilityChanged } from '@react-pdf-viewer/core';
 
+import classNames from './classNames';
 import ThumbnailItem from './ThumbnailItem';
 
 const THUMBNAIL_WIDTH = 100;
 
 interface ThumbnailContainerProps {
     doc: PdfJs.PdfDocument;
+    isSelected: boolean;
     pageHeight: number;
     pageIndex: number;
     pageWidth: number;
@@ -29,7 +31,7 @@ interface PageState {
     width: number;
 }
 
-const ThumbnailContainer: React.FC<ThumbnailContainerProps> = ({ doc, pageHeight, pageIndex, pageWidth, rotation }) => {
+const ThumbnailContainer: React.FC<ThumbnailContainerProps> = ({ doc, isSelected, pageHeight, pageIndex, pageWidth, rotation }) => {
     const [pageSize, setPageSize] = useState<PageState>({
         height: pageHeight,
         isCalculated: false,
@@ -66,7 +68,12 @@ const ThumbnailContainer: React.FC<ThumbnailContainerProps> = ({ doc, pageHeight
     return (
         <Observer onVisibilityChanged={onVisibilityChanged}>
             <div
-                className='rpv-thumbnail-container'
+                className={
+                    classNames({
+                        ['rpv-thumbnail-container']: true,
+                        ['rpv-thumbnail-container-selected']: isSelected,
+                    })
+                }
                 style={{
                     height: `${h}px`,
                     width: `${w}px`,

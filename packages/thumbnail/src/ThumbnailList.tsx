@@ -9,7 +9,6 @@
 import React from 'react';
 import { PdfJs } from '@react-pdf-viewer/core';
 
-import classNames from './classNames';
 import ThumbnailContainer from './ThumbnailContainer';
 
 interface ThumbnailListProps {
@@ -32,16 +31,12 @@ const ThumbnailList: React.FC<ThumbnailListProps> = ({
                     return (
                         <div
                             key={`thumbnail-${index}`}
-                            className={
-                                classNames({
-                                    ['rpv-thumbnail-item']: true,
-                                    ['rpv-thumbnail-item-selected']: currentPage === index,
-                                })
-                            }
+                            className='rpv-thumbnail-item'
                             onClick={() => onJumpToPage(index)}
                         >
                             <ThumbnailContainer
                                 doc={doc}
+                                isSelected={currentPage === index}
                                 pageHeight={pageHeight}
                                 pageIndex={index}
                                 pageWidth={pageWidth}
