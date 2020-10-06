@@ -13,4 +13,4 @@ export interface AttachmentPlugin extends Plugin {
     Attachments: () => ReactElement;
 }
 
-export default function attachmentPlugin(): AttachmentPlugin;
+export function attachmentPlugin(): AttachmentPlugin;

@@ -6,11 +6,9 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import searchPlugin from './searchPlugin';
 import './styles';
 
 export { default as NextIcon } from './NextIcon';
 export { default as PreviousIcon } from './PreviousIcon';
 export { default as SearchIcon } from './SearchIcon';
-
-export default searchPlugin;
+export { default as searchPlugin } from './searchPlugin';

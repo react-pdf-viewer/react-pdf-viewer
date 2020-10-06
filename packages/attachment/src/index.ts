@@ -6,7 +6,6 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import attachmentPlugin from './attachmentPlugin';
 import './styles';
 
-export default attachmentPlugin;
+export { default as attachmentPlugin } from './attachmentPlugin';

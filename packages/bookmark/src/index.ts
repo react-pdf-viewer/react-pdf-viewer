@@ -6,7 +6,6 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import bookmarkPlugin from './bookmarkPlugin';
 import './styles';
 
-export default bookmarkPlugin;
+export { default as bookmarkPlugin } from './bookmarkPlugin';

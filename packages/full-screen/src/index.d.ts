@@ -22,7 +22,7 @@ export interface FullScreenPlugin extends Plugin {
     EnterFullScreenButton(): ReactElement;
 }
 
-export default function fullScreenPlugin(): FullScreenPlugin;
+export function fullScreenPlugin(): FullScreenPlugin;
 
 export class ExitFullScreenIcon extends Component {}
 export class FullScreenIcon extends Component {}

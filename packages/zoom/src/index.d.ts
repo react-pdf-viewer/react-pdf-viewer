@@ -72,6 +72,6 @@ export interface ZoomPlugin extends Plugin {
     ZoomPopover: () => ReactElement;
 }
 
-export default function zoomPlugin(): ZoomPlugin;
+export function zoomPlugin(): ZoomPlugin;
 export class ZoomInIcon extends Component {}
 export class ZoomOutIcon extends Component {}

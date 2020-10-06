@@ -7,7 +7,6 @@
  */
 
 import { ReactElement } from 'react';
-
 import { DownloadProps } from '@react-pdf-viewer/download';
 import { EnterFullScreenProps } from '@react-pdf-viewer/full-screen';
 import { OpenProps } from '@react-pdf-viewer/open';

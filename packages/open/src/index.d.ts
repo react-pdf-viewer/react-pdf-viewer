@@ -22,5 +22,5 @@ export interface OpenPlugin extends Plugin {
     OpenButton: () => ReactElement;
 }
 
-export default function openPlugin(): OpenPlugin;
+export function openPlugin(): OpenPlugin;
 export class OpenFileIcon extends Component {}

@@ -3,7 +3,7 @@
 This plugin allows user to download the current file.
 
 ~~~ javascript
-import downloadPlugin from '@react-pdf-viewer/download';
+import { downloadPlugin } from '@react-pdf-viewer/download';
 
 const downloadPluginInstance = downloadPlugin();
 
@@ -26,7 +26,7 @@ return (
 ## Use a custom button
 
 ~~~ javascript
-import downloadPlugin from '@react-pdf-viewer/download';
+import { downloadPlugin } from '@react-pdf-viewer/download';
 
 const downloadPluginInstance = downloadPlugin();
 

@@ -6,10 +6,8 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import fullScreenPlugin from './fullScreenPlugin';
 import './styles';
 
 export { default as ExitFullScreenIcon } from './ExitFullScreenIcon';
+export { default as fullScreenPlugin } from './fullScreenPlugin';
 export { default as FullScreenIcon } from './FullScreenIcon';
-
-export default fullScreenPlugin;

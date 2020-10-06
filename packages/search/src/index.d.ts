@@ -28,7 +28,7 @@ export interface SearchPluginProps {
     keyword?: string | RegExp;
 }
 
-export default function searchPlugin(props?: SearchPluginProps): SearchPlugin;
+export function searchPlugin(props?: SearchPluginProps): SearchPlugin;
 
 export class NextIcon extends Component {}
 export class PreviousIcon extends Component {}

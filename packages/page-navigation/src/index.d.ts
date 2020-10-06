@@ -99,7 +99,7 @@ export interface PageNavigationPlugin extends Plugin {
     GoToPreviousPageButton: () => ReactElement;
 }
 
-export default function pageNavigationPlugin(): PageNavigationPlugin;
+export function pageNavigationPlugin(): PageNavigationPlugin;
 
 // -----
 // Icons

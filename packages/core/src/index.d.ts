@@ -458,7 +458,7 @@ export interface ViewerProps {
     onPageChange?(e: PageChangeEvent): void;
     onZoom?(e: ZoomEvent): void;
 }
-export default class Viewer extends React.Component<ViewerProps> {}
+export class Viewer extends React.Component<ViewerProps> {}
 
 // Worker
 export interface WorkerProps {

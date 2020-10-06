@@ -7,8 +7,6 @@
  */
 
 import './styles';
-import toolbarPlugin from './toolbarPlugin';
 
 export { default as MoreIcon } from './MoreIcon';
-
-export default toolbarPlugin;
+export { default as toolbarPlugin } from './toolbarPlugin';

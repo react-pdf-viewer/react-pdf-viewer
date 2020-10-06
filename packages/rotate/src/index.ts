@@ -6,9 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import rotatePlugin from './rotatePlugin';
 export { default as RotateBackwardIcon } from './RotateBackwardIcon';
-export { default as  RotateForwardIcon } from './RotateForwardIcon';
+export { default as RotateForwardIcon } from './RotateForwardIcon';
 export { default as RotateDirection } from './RotateDirection';
-
-export default rotatePlugin;
+export { default as rotatePlugin } from './rotatePlugin';

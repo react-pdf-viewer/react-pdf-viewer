@@ -13,4 +13,4 @@ export interface ThumbnailPlugin extends Plugin {
     Thumbnails: () => ReactElement;
 }
 
-export default function thumbnailPlugin(): ThumbnailPlugin;
+export function thumbnailPlugin(): ThumbnailPlugin;
