@@ -8,7 +8,7 @@ const rootPackagePath = process.cwd();
 const input = path.join(rootPackagePath, 'src/index.ts');
 const pkg = require(path.join(rootPackagePath, 'package.json'));
 
-const outputDir = path.join(rootPackagePath, 'npm');
+const outputDir = path.join(rootPackagePath, 'lib');
 const pgkName = pkg.name.split('/').pop();
 
 const external = [
