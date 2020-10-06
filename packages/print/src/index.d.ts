@@ -22,6 +22,6 @@ export interface PrintPlugin extends Plugin {
     PrintButton: () => React.ReactElement;
 }
 
-export default function printPlugin(): PrintPlugin;
+export function printPlugin(): PrintPlugin;
 
 export class PrintIcon extends React.Component {}

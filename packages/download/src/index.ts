@@ -6,7 +6,5 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import downloadPlugin from './downloadPlugin';
+export { default as downloadPlugin } from './downloadPlugin';
 export { default as DownloadIcon } from './DownloadIcon';
-
-export default downloadPlugin;

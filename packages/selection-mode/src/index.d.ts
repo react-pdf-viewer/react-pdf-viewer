@@ -39,7 +39,7 @@ export interface SelectionModePluginProps {
     selectionMode?: SelectionMode;
 }
 
-export default function selectionModePlugin(props?: SelectionModePluginProps): SelectionModePlugin;
+export function selectionModePlugin(props?: SelectionModePluginProps): SelectionModePlugin;
 
 // -----
 // Icons

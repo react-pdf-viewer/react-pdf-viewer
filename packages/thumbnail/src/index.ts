@@ -7,6 +7,5 @@
  */
 
 import './styles';
-import thumbnailPlugin from './thumbnailPlugin';
 
-export default thumbnailPlugin;
+export { default as thumbnailPlugin } from './thumbnailPlugin';

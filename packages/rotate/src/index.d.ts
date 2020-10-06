@@ -40,7 +40,7 @@ export interface RotatePlugin extends Plugin {
     RotateForwardMenuItem(props: RotateDecoratorProps): ReactElement;
 }
 
-export default function rotatePlugin(): RotatePlugin;
+export function rotatePlugin(): RotatePlugin;
 
 // -----
 // Icons

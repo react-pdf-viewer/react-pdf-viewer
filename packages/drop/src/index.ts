@@ -6,7 +6,6 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import dropPlugin from './dropPlugin';
 import './styles';
 
-export default dropPlugin;
+export { default as dropPlugin } from './dropPlugin';

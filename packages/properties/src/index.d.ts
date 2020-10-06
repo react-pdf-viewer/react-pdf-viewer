@@ -28,6 +28,6 @@ export interface PropertiesPlugin extends Plugin {
     ShowPropertiesMenuItem: (props: ShowPropertiesMenuItemProps) => ReactElement;
 }
 
-export default function propertiesPlugin(): PropertiesPlugin;
+export function propertiesPlugin(): PropertiesPlugin;
 
 export class InfoIcon extends Component {}

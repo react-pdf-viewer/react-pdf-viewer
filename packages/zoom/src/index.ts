@@ -7,9 +7,7 @@
  */
 
 import './styles';
-import zoomPlugin from './zoomPlugin';
 
 export { default as ZoomInIcon } from './ZoomInIcon';
 export { default as ZoomOutIcon } from './ZoomOutIcon';
-
-export default zoomPlugin;
+export { default as zoomPlugin } from './zoomPlugin';

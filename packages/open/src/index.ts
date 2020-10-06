@@ -6,9 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import openPlugin from './openPlugin';
 import './styles';
 
 export { default as OpenFileIcon } from './OpenFileIcon';
-
-export default openPlugin;
+export { default as openPlugin } from './openPlugin';

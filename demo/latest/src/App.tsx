@@ -1,9 +1,8 @@
 import React from 'react';
-import Viewer, { OpenFile, Worker } from '@react-pdf-viewer/core';
+import { OpenFile, Viewer, Worker } from '@react-pdf-viewer/core';
 
-import DefaultLayout from '@react-pdf-viewer/default-layout';
+import { DefaultLayout } from '@react-pdf-viewer/default-layout';
 
-import '@react-pdf-viewer/core/styles/index.css';
 import '@react-pdf-viewer/default-layout/styles/index.css';
 
 // const toolbarPluginInstance = toolbarPlugin({

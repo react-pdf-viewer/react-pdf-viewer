@@ -27,6 +27,6 @@ export interface DownloadPluginProps {
     fileNameGenerator?: (file: OpenFile) => string;
 }
 
-export default function downloadPlugin(props?: DownloadPluginProps): DownloadPlugin;
+export function downloadPlugin(props?: DownloadPluginProps): DownloadPlugin;
 
 export class DownloadIcon extends Component {}

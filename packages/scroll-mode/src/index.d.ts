@@ -36,7 +36,7 @@ export interface ScrollModePlugin extends Plugin {
     SwitchScrollModeMenuItem(props: SwitchScrollModeMenuItemProps): ReactElement;
 }
 
-export default function scrollModePlugin(): ScrollModePlugin;
+export function scrollModePlugin(): ScrollModePlugin;
 
 // -----
 // Icons

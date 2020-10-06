@@ -8,4 +8,4 @@
 
 import { Plugin } from '@react-pdf-viewer/core';
 
-export default function dropPlugin(): Plugin;
+export function dropPlugin(): Plugin;

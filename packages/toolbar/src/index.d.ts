@@ -64,7 +64,7 @@ export interface ToolbarPluginProps {
     selectionModePlugin?: SelectionModePluginProps;
 }
 
-export default function toolbarPlugin(props?: ToolbarPluginProps): ToolbarPlugin;
+export function toolbarPlugin(props?: ToolbarPluginProps): ToolbarPlugin;
 
 // ----
 // Icon

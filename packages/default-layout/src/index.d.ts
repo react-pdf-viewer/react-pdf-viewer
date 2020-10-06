@@ -14,7 +14,7 @@ export interface DefaultLayoutProps extends ViewerProps {
     toolbarPlugin?: ToolbarPluginProps;
 }
 
-export default class DefaultLayout extends Component<DefaultLayoutProps> {}
+export class DefaultLayout extends Component<DefaultLayoutProps> {}
 
 // -----
 // Icons

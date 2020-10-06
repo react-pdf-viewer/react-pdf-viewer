@@ -13,4 +13,4 @@ export interface BookmarkPlugin extends Plugin {
     Bookmarks: () => ReactElement;
 }
 
-export default function bookmarkPlugin(): BookmarkPlugin;
+export function bookmarkPlugin(): BookmarkPlugin;

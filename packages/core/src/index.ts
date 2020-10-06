@@ -7,7 +7,6 @@
  */
 
 import './styles';
-import Viewer from './Viewer';
 
 export { default as Button } from './components/Button';
 export { default as Menu } from './components/Menu';
@@ -28,6 +27,5 @@ export { default as Tooltip } from './portal/Tooltip';
 export { default as SpecialZoomLevel } from './SpecialZoomLevel';
 export { default as createStore } from './store/createStore';
 export { default as TextLayerRenderStatus } from './types/TextLayerRenderStatus';
+export { default as Viewer } from './Viewer';
 export { default as Worker } from './Worker';
-
-export default Viewer;
