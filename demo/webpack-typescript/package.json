@@ -8,8 +8,8 @@
         "dev": "rm -rf dist && mkdir dist && npm run copyasset && webpack-dev-server"
     },
     "dependencies": {
-        "pdfjs-dist": "^2.4.456",
-        "@phuocng/react-pdf-viewer": "^1.6.0",
+        "pdfjs-dist": "^2.5.207",
+        "@phuocng/react-pdf-viewer": "^1.7.0",
         "react": "^16.13.1",
         "react-dom": "^16.13.1"
     },

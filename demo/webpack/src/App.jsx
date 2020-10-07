@@ -5,7 +5,7 @@ import '@phuocng/react-pdf-viewer/cjs/react-pdf-viewer.css';
 
 const App = () => {
     return (
-        <Worker workerUrl="https://unpkg.com/pdfjs-dist@2.4.456/build/pdf.worker.min.js">
+        <Worker workerUrl="https://unpkg.com/pdfjs-dist@2.5.207/build/pdf.worker.min.js">
             <div
                 style={{
                     height: '750px',
