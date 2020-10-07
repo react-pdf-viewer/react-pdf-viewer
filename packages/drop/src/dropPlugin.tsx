@@ -22,6 +22,7 @@ const dropPlugin = (): Plugin => {
                 ...{
                     height: '100%',
                     position: 'relative',
+                    width: '100%',
                 }
             };
             slot.attrs.style = updateStyle;
