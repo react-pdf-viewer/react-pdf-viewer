@@ -49,7 +49,7 @@ Perform the following steps to have the simplest example. For more demos, please
 1. Install packages
 
 ~~~ console
-$ npm install pdfjs-dist@2.4.456
+$ npm install pdfjs-dist@2.5.207
 $ npm install @phuocng/react-pdf-viewer
 ~~~
 
@@ -64,7 +64,7 @@ import '@phuocng/react-pdf-viewer/cjs/react-pdf-viewer.css';
 3. Use the component
 
 ~~~ javascript
-<Worker workerUrl="https://unpkg.com/pdfjs-dist@2.4.456/build/pdf.worker.min.js">
+<Worker workerUrl="https://unpkg.com/pdfjs-dist@2.5.207/build/pdf.worker.min.js">
     <div style={{ height: '750px' }}>
         <Viewer fileUrl="/path/to/document.pdf" />
     </div>

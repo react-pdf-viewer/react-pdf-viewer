@@ -28,7 +28,7 @@
     ]
   },
   "devDependencies": {
-    "@phuocng/react-pdf-viewer": "1.6.0",
-    "pdfjs-dist": "^2.4.456"
+    "@phuocng/react-pdf-viewer": "1.7.0",
+    "pdfjs-dist": "^2.5.207"
   }
 }

@@ -33,7 +33,7 @@
         "lib/index.js"
     ],
     "dependencies": {
-        "pdfjs-dist": "^2.4.456",
+        "pdfjs-dist": "^2.5.207",
         "react": "^16.13.1",
         "react-dom": "^16.13.1"
     },
