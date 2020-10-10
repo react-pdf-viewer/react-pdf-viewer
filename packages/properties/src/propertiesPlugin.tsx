@@ -19,6 +19,7 @@ export interface ShowPropertiesMenuItemProps {
 
 interface PropertiesPlugin extends Plugin {
     ShowProperties(props: ShowPropertiesProps): ReactElement;
+    ShowPropertiesButton(): ReactElement;
     ShowPropertiesMenuItem(props: ShowPropertiesMenuItemProps): ReactElement;
 }
 
@@ -29,6 +30,10 @@ const propertiesPlugin = (): PropertiesPlugin => {
 
     const ShowPropertiesDecorator = (props: ShowPropertiesProps) => (
         <ShowProperties {...props} store={store} />
+    );
+
+    const ShowPropertiesButtonDecorator = () => (
+        <ShowProperties store={store} />
     );
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -47,6 +52,7 @@ const propertiesPlugin = (): PropertiesPlugin => {
             return viewerState;
         },
         ShowProperties: ShowPropertiesDecorator,
+        ShowPropertiesButton: ShowPropertiesButtonDecorator,
         ShowPropertiesMenuItem: ShowPropertiesMenuItemDecorator,
     };
 };

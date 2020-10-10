@@ -23,6 +23,7 @@ export interface ShowPropertiesProps {
 
 export interface PropertiesPlugin extends Plugin {
     ShowProperties: (props: ShowPropertiesProps) => ReactElement;
+    ShowPropertiesButton(): ReactElement;
     ShowPropertiesMenuItem: (props: ShowPropertiesMenuItemProps) => ReactElement;
 }
 
