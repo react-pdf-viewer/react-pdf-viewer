@@ -14,8 +14,6 @@ export interface ShowPropertiesMenuItemProps {
 }
 
 export interface RenderShowPropertiesProps {
-    icon: ReactElement;
-    label: string;
     onClick(): void;
 }
 

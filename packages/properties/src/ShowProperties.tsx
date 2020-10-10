@@ -6,18 +6,15 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { FC, ReactElement, useContext } from 'react';
-import { LocalizationContext, Modal, Store, Toggle } from '@react-pdf-viewer/core';
+import React, { FC, ReactElement } from 'react';
+import { Modal, Store, Toggle } from '@react-pdf-viewer/core';
 
-import InfoIcon from './InfoIcon';
 import PropertiesModal from './PropertiesModal';
 import ShowPropertiesButton from './ShowPropertiesButton';
 import StoreProps from './StoreProps';
 import useDocument from './useDocument';
 
 export interface RenderShowPropertiesProps {
-    icon: ReactElement;
-    label: string;
     onClick(): void;
 }
 
@@ -32,12 +29,6 @@ const ShowProperties: FC<{
     store: Store<StoreProps>,
 }> = ({ children, store }) => {
     const { currentDoc } = useDocument(store);
-    const l10n = useContext(LocalizationContext);
-
-    const label = l10n && l10n.properties
-            ? l10n.properties.showProperties
-            : 'Show properties';
-
     const fileName = store.get('fileName') || '';
 
     const defaultChildren = (props: RenderShowPropertiesProps) => (
@@ -51,8 +42,6 @@ const ShowProperties: FC<{
                 <Modal
                     target={
                         (toggle: Toggle) => render({
-                            icon: <InfoIcon />,
-                            label: label as string,
                             onClick: toggle,
                         })
                     }
