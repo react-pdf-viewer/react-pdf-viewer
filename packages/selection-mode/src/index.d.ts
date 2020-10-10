@@ -25,6 +25,10 @@ export interface SwitchSelectionModeProps {
     mode: SelectionMode;
 }
 
+export interface SwitchSelectionModeButtonProps {
+    mode: SelectionMode;
+}
+
 export interface SwitchSelectionModeMenuItemProps {
     mode: SelectionMode;
     onClick(): void;
@@ -32,6 +36,7 @@ export interface SwitchSelectionModeMenuItemProps {
 
 export interface SelectionModePlugin extends Plugin {
     SwitchSelectionMode(props: SwitchSelectionModeProps): ReactElement;
+    SwitchSelectionModeButton(props: SwitchSelectionModeButtonProps): ReactElement;
     SwitchSelectionModeMenuItem(props: SwitchSelectionModeMenuItemProps): ReactElement;
 }
 

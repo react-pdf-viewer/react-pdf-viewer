@@ -12,8 +12,13 @@ import { createStore, Plugin, PluginFunctions, RenderViewer, Slot } from '@react
 import SelectionMode from './SelectionMode';
 import StoreProps from './StoreProps';
 import SwitchSelectionMode, { SwitchSelectionModeProps } from './SwitchSelectionMode';
+import SwitchSelectionModeButton from './SwitchSelectionModeButton';
 import SwitchSelectionModeMenuItem from './SwitchSelectionModeMenuItem';
 import Tracker from './Tracker';
+
+export interface SwitchSelectionModeButtonProps {
+    mode: SelectionMode;
+}
 
 export interface SwitchSelectionModeMenuItemProps {
     mode: SelectionMode;
@@ -22,6 +27,7 @@ export interface SwitchSelectionModeMenuItemProps {
 
 interface SelectionModePlugin extends Plugin {
     SwitchSelectionMode(props: SwitchSelectionModeProps): ReactElement;
+    SwitchSelectionModeButton(props: SwitchSelectionModeButtonProps): ReactElement;
     SwitchSelectionModeMenuItem(props: SwitchSelectionModeMenuItemProps): ReactElement;
 }
 
@@ -34,6 +40,20 @@ const selectionModePlugin = (props?: SelectionModePluginProps): SelectionModePlu
 
     const SwitchSelectionModeDecorator = (props: SwitchSelectionModeProps) => (
         <SwitchSelectionMode {...props} store={store} />
+    );
+
+    const SwitchSelectionModeButtonDecorator = (props: SwitchSelectionModeButtonProps) => (
+        <SwitchSelectionModeDecorator mode={props.mode}>
+            {
+                (p) => (
+                    <SwitchSelectionModeButton
+                        isSelected={p.isSelected}
+                        mode={p.mode}
+                        onClick={() => { p.onClick(); }}
+                    />
+                )
+            }
+        </SwitchSelectionModeDecorator>
     );
 
     const SwitchSelectionModeMenuItemDecorator = (props: SwitchSelectionModeMenuItemProps) => (
@@ -52,11 +72,11 @@ const selectionModePlugin = (props?: SelectionModePluginProps): SelectionModePlu
 
     const renderViewer = (props: RenderViewer): Slot => {
         const currentSlot = props.slot;
-        if (currentSlot.children) {
-            currentSlot.children = (
+        if (currentSlot.subSlot && currentSlot.subSlot.children) {
+            currentSlot.subSlot.children = (
                 <>
                 <Tracker store={store} />
-                {currentSlot.children}
+                {currentSlot.subSlot.children}
                 </>
             );
         }
@@ -71,6 +91,7 @@ const selectionModePlugin = (props?: SelectionModePluginProps): SelectionModePlu
         },
         renderViewer,
         SwitchSelectionMode: SwitchSelectionModeDecorator,
+        SwitchSelectionModeButton: SwitchSelectionModeButtonDecorator,
         SwitchSelectionModeMenuItem: SwitchSelectionModeMenuItemDecorator,
     };
 };
