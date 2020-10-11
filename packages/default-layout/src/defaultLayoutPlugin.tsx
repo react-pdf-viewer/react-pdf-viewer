@@ -7,9 +7,9 @@
  */
 
 import React from 'react';
-import { Plugin, PluginFunctions, PluginOnDocumentLoad, RenderViewer, ViewerState, PluginOnTextLayerRender } from '@react-pdf-viewer/core';
 import { attachmentPlugin } from '@react-pdf-viewer/attachment';
 import { bookmarkPlugin } from '@react-pdf-viewer/bookmark';
+import { Plugin, PluginFunctions, PluginOnDocumentLoad, RenderViewer, ViewerState, PluginOnTextLayerRender } from '@react-pdf-viewer/core';
 import { thumbnailPlugin } from '@react-pdf-viewer/thumbnail';
 import { toolbarPlugin, ToolbarPluginProps } from '@react-pdf-viewer/toolbar';
 

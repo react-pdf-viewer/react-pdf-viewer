@@ -18,7 +18,6 @@ export interface DefaultLayoutPluginProps {
     toolbarPlugin?: ToolbarPluginProps;
 }
 
-export class DefaultLayout extends Component<DefaultLayoutProps> {}
 export function defaultLayoutPlugin(props?: DefaultLayoutPluginProps): Plugin;
 
 // -----
