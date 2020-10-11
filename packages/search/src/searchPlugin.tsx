@@ -11,11 +11,13 @@ import { createStore, Plugin, PluginFunctions, PluginOnDocumentLoad, PluginOnTex
 
 import { EMPTY_KEYWORD_REGEXP } from './constants';
 import ShowSearchPopover, { ShowSearchPopoverProps } from './ShowSearchPopover';
+import ShowSearchPopoverButton from './ShowSearchPopoverButton';
 import StoreProps from './StoreProps';
 import Tracker from './Tracker';
 
 interface SearchPlugin extends Plugin {
     ShowSearchPopover(props: ShowSearchPopoverProps): ReactElement;
+    ShowSearchPopoverButton(): ReactElement;
 }
 
 export interface SearchPluginProps {
@@ -30,6 +32,12 @@ const searchPlugin = (props?: SearchPluginProps): SearchPlugin => {
 
     const ShowSearchPopoverDecorator = (props: ShowSearchPopoverProps) => (
         <ShowSearchPopover {...props} store={store} />
+    );
+
+    const ShowSearchPopoverButtonDecorator = () => (
+        <ShowSearchPopoverDecorator>
+            {(props) => <ShowSearchPopoverButton {...props} />}
+        </ShowSearchPopoverDecorator>
     );
 
     const renderViewer = (props: RenderViewer): Slot => {
@@ -82,6 +90,7 @@ const searchPlugin = (props?: SearchPluginProps): SearchPlugin => {
             }
         },
         ShowSearchPopover: ShowSearchPopoverDecorator,
+        ShowSearchPopoverButton: ShowSearchPopoverButtonDecorator,
     };
 };
 

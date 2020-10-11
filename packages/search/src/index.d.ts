@@ -21,6 +21,7 @@ export interface ShowSearchPopoverProps {
 
 export interface SearchPlugin extends Plugin {
     ShowSearchPopover: (props: ShowSearchPopoverProps) => ReactElement;
+    ShowSearchPopoverButton(): ReactElement;
 }
 
 export interface SearchPluginProps {
