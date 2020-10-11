@@ -130,6 +130,15 @@ export interface LocalizationMap {
 }
 export const LocalizationContext: React.Context<LocalizationMap>;
 
+export type SetLocalization = (l10n: LocalizationMap) => void;
+
+export interface LocalizationProviderProps {
+    children: (setLocalization: SetLocalization) => React.ReactElement;
+    localization?: LocalizationMap;
+}
+
+export class LocalizationProvider extends React.Component<LocalizationProviderProps> {}
+
 export interface Offset {
     left: number;
     top: number;
