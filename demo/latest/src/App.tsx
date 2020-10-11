@@ -1,7 +1,7 @@
 import React from 'react';
 import { OpenFile, Viewer, Worker } from '@react-pdf-viewer/core';
 
-import { DefaultLayout } from '@react-pdf-viewer/default-layout';
+import { defaultLayoutPlugin } from '@react-pdf-viewer/default-layout';
 
 import '@react-pdf-viewer/default-layout/styles/index.css';
 
@@ -18,6 +18,8 @@ import '@react-pdf-viewer/default-layout/styles/index.css';
 // });
 
 const App = () => {
+    const defaultLayoutPluginInstance = defaultLayoutPlugin();
+
     return (
         <Worker workerUrl="https://unpkg.com/pdfjs-dist@2.5.207/build/pdf.worker.js">
             <div
@@ -25,8 +27,11 @@ const App = () => {
                     height: '750px'
                 }}
             >
-                <DefaultLayout
+                <Viewer
                     fileUrl="http://localhost:8001/pdf-open-parameters.pdf"
+                    plugins={[
+                        defaultLayoutPluginInstance,
+                    ]}
                 />
             </div>
         </Worker>
