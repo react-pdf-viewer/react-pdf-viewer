@@ -10,8 +10,6 @@ import { Component, ReactElement } from 'react';
 import { Plugin } from '@react-pdf-viewer/core';
 
 export interface RenderShowSearchPopoverProps {
-    icon: ReactElement;
-    label: string;
     onClick: () => void;
 }
 
