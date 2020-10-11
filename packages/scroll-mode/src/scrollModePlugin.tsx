@@ -7,13 +7,14 @@
  */
 
 import React, { ReactElement } from 'react';
-import { createStore, Plugin, PluginFunctions } from '@react-pdf-viewer/core';
+import { createStore, Plugin, PluginFunctions, RenderViewer, Slot } from '@react-pdf-viewer/core';
 
 import ScrollMode from './ScrollMode';
 import StoreProps from './StoreProps';
 import SwitchScrollMode, { SwitchScrollModeProps } from './SwitchScrollMode';
 import SwitchScrollModeButton from './SwitchScrollModeButton';
 import SwitchScrollModeMenuItem from './SwitchScrollModeMenuItem';
+import Tracker from './Tracker';
 
 export interface SwitchScrollModeButtonProps {
     mode: ScrollMode;
@@ -30,9 +31,13 @@ interface ScrollModePlugin extends Plugin {
     SwitchScrollModeMenuItem(props: SwitchScrollModeMenuItemProps): ReactElement;
 }
 
-const scrollModePlugin = (): ScrollModePlugin => {
+export interface ScrollModePluginProps {
+    scrollMode?: ScrollMode;
+}
+
+const scrollModePlugin = (props?: ScrollModePluginProps): ScrollModePlugin => {
     const store = createStore<StoreProps>({
-        scrollMode: ScrollMode.Vertical,
+        scrollMode: props && props.scrollMode ? props.scrollMode : ScrollMode.Vertical,
     });
 
     const SwitchScrollModeDecorator = (props: SwitchScrollModeProps) => (
@@ -67,10 +72,25 @@ const scrollModePlugin = (): ScrollModePlugin => {
         </SwitchScrollModeDecorator>
     );
 
+    const renderViewer = (props: RenderViewer): Slot => {
+        const currentSlot = props.slot;
+        if (currentSlot && currentSlot.children) {
+            currentSlot.children = (
+                <>
+                <Tracker store={store} />
+                {currentSlot.children}
+                </>
+            );
+        }
+
+        return currentSlot;
+    };
+
     return {
         install: (pluginFunctions: PluginFunctions) => {
             store.update('getPagesRef', pluginFunctions.getPagesRef);
         },
+        renderViewer,
         SwitchScrollMode: SwitchScrollModeDecorator,
         SwitchScrollModeButton: SwitchScrollModeButtonDecorator,
         SwitchScrollModeMenuItem: SwitchScrollModeMenuItemDecorator,
