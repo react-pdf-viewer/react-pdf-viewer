@@ -47,7 +47,7 @@ const Sidebar: React.FC<SidebarProps> = ({ tabContents }) => {
                                 </Button>
                             )}
                             content={() =>
-                                l10n && l10n.defaultLayoutPlugin ? l10n.defaultLayoutPlugin.thumbnail : 'Thumbnail'
+                                l10n && l10n.defaultLayout ? l10n.defaultLayout.thumbnail : 'Thumbnail'
                             }
                             offset={TOOLTIP_OFFSET}
                         />
@@ -61,7 +61,7 @@ const Sidebar: React.FC<SidebarProps> = ({ tabContents }) => {
                                 </Button>
                             )}
                             content={() =>
-                                l10n && l10n.defaultLayoutPlugin ? l10n.defaultLayoutPlugin.bookmark : 'Bookmark'
+                                l10n && l10n.defaultLayout ? l10n.defaultLayout.bookmark : 'Bookmark'
                             }
                             offset={TOOLTIP_OFFSET}
                         />
@@ -75,7 +75,7 @@ const Sidebar: React.FC<SidebarProps> = ({ tabContents }) => {
                                 </Button>
                             )}
                             content={() => 
-                                l10n && l10n.defaultLayoutPlugin ? l10n.defaultLayoutPlugin.attachment : 'Attachment'
+                                l10n && l10n.defaultLayout ? l10n.defaultLayout.attachment : 'Attachment'
                             }
                             offset={TOOLTIP_OFFSET}
                         />
