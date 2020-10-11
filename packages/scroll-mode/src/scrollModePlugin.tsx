@@ -12,7 +12,12 @@ import { createStore, Plugin, PluginFunctions } from '@react-pdf-viewer/core';
 import ScrollMode from './ScrollMode';
 import StoreProps from './StoreProps';
 import SwitchScrollMode, { SwitchScrollModeProps } from './SwitchScrollMode';
+import SwitchScrollModeButton from './SwitchScrollModeButton';
 import SwitchScrollModeMenuItem from './SwitchScrollModeMenuItem';
+
+export interface SwitchScrollModeButtonProps {
+    mode: ScrollMode;
+}
 
 export interface SwitchScrollModeMenuItemProps {
     mode: ScrollMode;
@@ -21,6 +26,7 @@ export interface SwitchScrollModeMenuItemProps {
 
 interface ScrollModePlugin extends Plugin {
     SwitchScrollMode(props: SwitchScrollModeProps): ReactElement;
+    SwitchScrollModeButton(props: SwitchScrollModeButtonProps): ReactElement;
     SwitchScrollModeMenuItem(props: SwitchScrollModeMenuItemProps): ReactElement;
 }
 
@@ -31,6 +37,20 @@ const scrollModePlugin = (): ScrollModePlugin => {
 
     const SwitchScrollModeDecorator = (props: SwitchScrollModeProps) => (
         <SwitchScrollMode {...props} store={store} />
+    );
+
+    const SwitchScrollModeButtonDecorator = (props: SwitchScrollModeButtonProps) => (
+        <SwitchScrollModeDecorator mode={props.mode}>
+            {
+                (p) => (
+                    <SwitchScrollModeButton
+                        isSelected={p.isSelected}
+                        mode={p.mode}
+                        onClick={() => { p.onClick(); }}
+                    />
+                )
+            }
+        </SwitchScrollModeDecorator>
     );
 
     const SwitchScrollModeMenuItemDecorator = (props: SwitchScrollModeMenuItemProps) => (
@@ -52,6 +72,7 @@ const scrollModePlugin = (): ScrollModePlugin => {
             store.update('getPagesRef', pluginFunctions.getPagesRef);
         },
         SwitchScrollMode: SwitchScrollModeDecorator,
+        SwitchScrollModeButton: SwitchScrollModeButtonDecorator,
         SwitchScrollModeMenuItem: SwitchScrollModeMenuItemDecorator,
     };
 };
