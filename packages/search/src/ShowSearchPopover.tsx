@@ -6,18 +6,15 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { ReactElement, useContext } from 'react';
-import { LocalizationContext, Popover, Position, Store, Toggle } from '@react-pdf-viewer/core';
+import React, { ReactElement } from 'react';
+import { Popover, Position, Store, Toggle } from '@react-pdf-viewer/core';
 
-import SearchIcon from './SearchIcon';
 import SearchPopover from './SearchPopover';
 import ShowSearchPopoverButton from './ShowSearchPopoverButton';
 import StoreProps from './StoreProps';
 import useDocument from './useDocument';
 
 export interface RenderShowSearchPopoverProps {
-    icon: ReactElement;
-    label: string;
     onClick(): void;
 }
 
@@ -34,10 +31,6 @@ const ShowSearchPopover: React.FC<{
     store: Store<StoreProps>,
 }> = ({ children, store }) => {
     const { currentDoc } = useDocument(store);
-    const l10n = useContext(LocalizationContext);
-
-    const label = l10n && l10n.search ? l10n.search.search : 'Search';
-
     const defaultChildren = (props: RenderShowSearchPopoverProps) => (
         <ShowSearchPopoverButton {...props} />
     );
@@ -50,8 +43,6 @@ const ShowSearchPopover: React.FC<{
                     position={Position.BottomLeft}
                     target={
                         (toggle: Toggle) => render({
-                            icon: <SearchIcon />,
-                            label: label as string,
                             onClick: toggle,
                         })
                     }
