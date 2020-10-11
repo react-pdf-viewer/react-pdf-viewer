@@ -288,6 +288,7 @@ const Inner: React.FC<InnerProps> = ({
                     height: '100%',
                 },
             },
+            children: <></>,
             subSlot: {
                 attrs: {
                     ref: pagesRef,
