@@ -15,7 +15,7 @@ import { CurrentPageLabelProps, GoToFirstPageProps, GoToFirstPageMenuItemProps, 
 import { PrintProps } from '@react-pdf-viewer/print';
 import { ShowPropertiesProps, ShowPropertiesMenuItemProps } from '@react-pdf-viewer/properties';
 import { RotateDecoratorProps, RotateProps } from '@react-pdf-viewer/rotate';
-import { SwitchScrollModeMenuItemProps, SwitchScrollModeProps } from '@react-pdf-viewer/scroll-mode';
+import { ScrollModePluginProps, SwitchScrollModeMenuItemProps, SwitchScrollModeProps } from '@react-pdf-viewer/scroll-mode';
 import { SearchPluginProps, ShowSearchPopoverProps } from '@react-pdf-viewer/search';
 import { SelectionModePluginProps, SwitchSelectionModeMenuItemProps, SwitchSelectionModeProps } from '@react-pdf-viewer/selection-mode';
 import { CurrentScaleProps, ZoomProps, ZoomInProps, ZoomOutProps } from '@react-pdf-viewer/zoom';
@@ -60,6 +60,7 @@ export interface ToolbarPlugin extends Plugin {
 
 export interface ToolbarPluginProps {
     downloadPlugin?: DownloadPluginProps;
+    scrollModePlugin?: ScrollModePluginProps;
     searchPlugin?: SearchPluginProps;
     selectionModePlugin?: SelectionModePluginProps;
 }
