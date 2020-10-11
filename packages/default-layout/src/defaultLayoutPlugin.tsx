@@ -54,6 +54,14 @@ const defaultLayoutPlugin = (props?: DefaultLayoutPluginProps): Plugin => {
                 }
             });
 
+            const mergeSubSlot =
+                slot.subSlot && slot.subSlot.attrs
+                ? {
+                    ref: slot.subSlot.attrs.ref,
+                    style: slot.subSlot.attrs.style
+                }
+                : {};
+
             slot.children = (
                 <div className='rpv-default-layout-container'>
                     <div className='rpv-default-layout-toolbar'>
@@ -69,8 +77,7 @@ const defaultLayoutPlugin = (props?: DefaultLayoutPluginProps): Plugin => {
                         />
                         <div
                             className='rpv-default-layout-body'
-                            ref={slot.subSlot.attrs.ref}
-                            style={slot.subSlot.attrs.style}
+                            {...mergeSubSlot}
                         >
                             {slot.subSlot.children}
                         </div>
@@ -78,6 +85,7 @@ const defaultLayoutPlugin = (props?: DefaultLayoutPluginProps): Plugin => {
                 </div>
             );
             
+            // Reset the sub slot
             slot.subSlot.attrs = {};
             slot.subSlot.children = <></>;
 
