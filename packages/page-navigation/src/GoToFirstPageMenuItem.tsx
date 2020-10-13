@@ -17,7 +17,7 @@ export interface GoToFirstPageMenuItemProps {
 
 const GoToFirstPageMenuItem: FC<GoToFirstPageMenuItemProps> = ({ onClick }) => {
     const l10n = useContext(LocalizationContext);
-    const label = l10n && l10n.pageNavigation ? l10n.pageNavigation.goToFirstPageMenuItem : 'Go to first page';
+    const label = l10n && l10n.pageNavigation ? l10n.pageNavigation.goToFirstPage : 'First page';
 
     return (
         <MenuItem icon={<UpArrowIcon />} onClick={onClick}>

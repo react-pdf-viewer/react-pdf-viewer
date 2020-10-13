@@ -16,7 +16,7 @@ const TOOLTIP_OFFSET = { left: 0, top: 8 };
 
 const GoToPreviousPageButton: FC<RenderGoToPreviousPageProps> = ({ onClick }) => {
     const l10n = useContext(LocalizationContext);
-    const label = l10n && l10n.pageNavigation ? l10n.pageNavigation.previousPage : 'Previous page';
+    const label = l10n && l10n.pageNavigation ? l10n.pageNavigation.goToPreviousPage : 'Previous page';
 
     return (
         <Tooltip
