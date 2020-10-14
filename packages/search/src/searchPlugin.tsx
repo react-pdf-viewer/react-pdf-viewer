@@ -42,15 +42,15 @@ const searchPlugin = (props?: SearchPluginProps): SearchPlugin => {
 
     const renderViewer = (props: RenderViewer): Slot => {
         const currentSlot = props.slot;
-        if (currentSlot.children) {
-            currentSlot.children = (
+        if (currentSlot.subSlot) {
+            currentSlot.subSlot.children = (
                 <>
                 {
                     Array(props.doc.numPages).fill(0).map((_, index) => (
                         <Tracker key={index} pageIndex={index} store={store} />
                     ))
                 }
-                {currentSlot.children}
+                {currentSlot.subSlot.children}
                 </>
             );
         }
