@@ -161,13 +161,13 @@ const Inner: React.FC<InnerProps> = ({
 
             case SpecialZoomLevel.PageFit:
                 updateScale = Math.min(
-                    (pagesEle.offsetWidth - SCROLL_BAR_WIDTH) / pageWidth,
-                    (pagesEle.offsetHeight - 2 * PAGE_PADDING) / pageHeight
+                    (pagesEle.clientWidth - SCROLL_BAR_WIDTH) / pageWidth,
+                    (pagesEle.clientHeight - 2 * PAGE_PADDING) / pageHeight
                 );
                 break;
 
             case SpecialZoomLevel.PageWidth:
-                updateScale = (pagesEle.offsetWidth - SCROLL_BAR_WIDTH) / pageWidth;
+                updateScale = (pagesEle.clientWidth - SCROLL_BAR_WIDTH) / pageWidth;
                 break;
 
             default:
