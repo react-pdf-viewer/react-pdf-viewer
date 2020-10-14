@@ -6,17 +6,18 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React from 'react';
+import React, { ReactElement } from 'react';
 import { attachmentPlugin } from '@react-pdf-viewer/attachment';
 import { bookmarkPlugin } from '@react-pdf-viewer/bookmark';
 import { Plugin, PluginFunctions, PluginOnDocumentLoad, RenderViewer, ViewerState, PluginOnTextLayerRender } from '@react-pdf-viewer/core';
 import { thumbnailPlugin } from '@react-pdf-viewer/thumbnail';
-import { toolbarPlugin, ToolbarPluginProps } from '@react-pdf-viewer/toolbar';
+import { toolbarPlugin, ToolbarPluginProps, ToolbarSlot } from '@react-pdf-viewer/toolbar';
 
 import Sidebar from './Sidebar';
 
 export interface DefaultLayoutPluginProps {
     toolbarPlugin?: ToolbarPluginProps;
+    renderToolbar?: (toolbarSlot: ToolbarSlot) => ReactElement;
 }
 
 const defaultLayoutPlugin = (props?: DefaultLayoutPluginProps): Plugin => {
@@ -46,11 +47,11 @@ const defaultLayoutPlugin = (props?: DefaultLayoutPluginProps): Plugin => {
                 }
             });
         },
-        renderViewer: (props: RenderViewer) => {
-            let { slot } = props;
+        renderViewer: (renderProps: RenderViewer) => {
+            let { slot } = renderProps;
             plugins.forEach(plugin => {
                 if (plugin.renderViewer) {
-                    slot = plugin.renderViewer({...props, slot});
+                    slot = plugin.renderViewer({...renderProps, slot});
                 }
             });
 
@@ -65,7 +66,11 @@ const defaultLayoutPlugin = (props?: DefaultLayoutPluginProps): Plugin => {
             slot.children = (
                 <div className='rpv-default-layout-container'>
                     <div className='rpv-default-layout-toolbar'>
-                        <Toolbar />
+                        {
+                            props && props.renderToolbar
+                                ? <Toolbar>{props.renderToolbar}</Toolbar>
+                                : <Toolbar />
+                        }
                     </div>
                     <div className='rpv-default-layout-main'>
                         <Sidebar

@@ -8,5 +8,6 @@
 
 import './styles';
 
+export { default as MoreActionsPopover } from './MoreActionsPopover';
 export { default as MoreIcon } from './MoreIcon';
 export { default as toolbarPlugin } from './toolbarPlugin';
