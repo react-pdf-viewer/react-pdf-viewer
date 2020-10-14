@@ -28,17 +28,17 @@ module.exports = {
                 exclude: /node_modules/,
                 use: ['babel-loader', 'ts-loader']
             },
-            // {
-            //     test: /\.less$/,
-            //     use: [
-            //         {
-            //             loader: 'css-loader'
-            //         },
-            //         {
-            //             loader: 'less-loader'
-            //         },
-            //     ]
-            // },
+            {
+                test: /\.less$/,
+                use: [
+                    {
+                        loader: 'css-loader'
+                    },
+                    {
+                        loader: 'less-loader'
+                    },
+                ]
+            },
         ],
     },
     resolve: {
@@ -84,7 +84,7 @@ module.exports = {
                     //     break;
 
                     default:
-                        resource.request = path.join(__dirname, `../../packages/${pkgName}/lib`);
+                        resource.request = path.join(__dirname, `../../packages/${pkgName}/src`);
                         break;
                 }
             }
