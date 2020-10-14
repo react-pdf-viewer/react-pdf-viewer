@@ -2,6 +2,7 @@ import React from 'react';
 import { OpenFile, Viewer, Worker } from '@react-pdf-viewer/core';
 
 import { defaultLayoutPlugin, ToolbarSlot } from '@react-pdf-viewer/default-layout';
+import { MoreActionsPopover } from '@react-pdf-viewer/toolbar';
 
 import '@react-pdf-viewer/default-layout/styles/index.css';
 
@@ -64,6 +65,9 @@ const App = () => {
                     </div>
                     <div className='rpv-toolbar-item'>
                         <Print />
+                    </div>
+                    <div className='rpv-toolbar-item'>
+                        <MoreActionsPopover toolbarSlot={toolbarSlot} />
                     </div>
                 </div>
             </div>

@@ -10,8 +10,9 @@
         "pdfjs-dist": "^2.5.207",
         "react": "^16.13.1",
         "react-dom": "^16.13.1",
-        "@react-pdf-viewer/core": "^2.0.0",
-        "@react-pdf-viewer/default-layout": "^2.0.0"
+        "@react-pdf-viewer/core": "2.0.0",
+        "@react-pdf-viewer/default-layout": "2.0.0",
+        "@react-pdf-viewer/toolbar": "2.0.0"
     },
     "devDependencies": {
         "@babel/core": "^7.10.3",

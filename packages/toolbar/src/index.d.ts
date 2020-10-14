@@ -67,6 +67,11 @@ export interface ToolbarPluginProps {
 
 export function toolbarPlugin(props?: ToolbarPluginProps): ToolbarPlugin;
 
+export interface MoreActionsPopoverProps {
+    toolbarSlot: ToolbarSlot;
+}
+export class MoreActionsPopover extends Component<MoreActionsPopoverProps> {}
+
 // ----
 // Icon
 // ----
