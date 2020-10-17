@@ -11,13 +11,13 @@ import { attachmentPlugin } from '@react-pdf-viewer/attachment';
 import { bookmarkPlugin } from '@react-pdf-viewer/bookmark';
 import { Plugin, PluginFunctions, PluginOnDocumentLoad, RenderViewer, ViewerState, PluginOnTextLayerRender } from '@react-pdf-viewer/core';
 import { thumbnailPlugin } from '@react-pdf-viewer/thumbnail';
-import { toolbarPlugin, ToolbarPluginProps, ToolbarSlot } from '@react-pdf-viewer/toolbar';
+import { toolbarPlugin, ToolbarPluginProps, ToolbarProps } from '@react-pdf-viewer/toolbar';
 
 import Sidebar from './Sidebar';
 
 export interface DefaultLayoutPluginProps {
     toolbarPlugin?: ToolbarPluginProps;
-    renderToolbar?: (toolbarSlot: ToolbarSlot) => ReactElement;
+    renderToolbar?: (Toolbar: ((props: ToolbarProps) => ReactElement)) => ReactElement;
 }
 
 const defaultLayoutPlugin = (props?: DefaultLayoutPluginProps): Plugin => {
@@ -68,7 +68,7 @@ const defaultLayoutPlugin = (props?: DefaultLayoutPluginProps): Plugin => {
                     <div className='rpv-default-layout-toolbar'>
                         {
                             props && props.renderToolbar
-                                ? <Toolbar>{props.renderToolbar}</Toolbar>
+                                ? props.renderToolbar(Toolbar)
                                 : <Toolbar />
                         }
                     </div>
