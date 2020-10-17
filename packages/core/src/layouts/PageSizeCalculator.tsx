@@ -40,7 +40,8 @@ const PageSizeCalculator: React.FC<PageSizeCalculatorProps> = ({ doc, render }) 
             }
 
             // Determine the best scale that fits the document within the container
-            const scaled = pagesEle.offsetWidth / w;
+            // We spend 50 pixels in the left and right sides for other parts such as sidebar
+            const scaled = (pagesEle.clientWidth - 2 * 50) / w;
             const scale = decrease(Math.max(1, scaled));
 
             setPageSize({
