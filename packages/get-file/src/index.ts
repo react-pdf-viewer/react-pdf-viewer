@@ -6,10 +6,5 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-'use strict';
-
-if (process.env.NODE_ENV === 'production') {
-    module.exports = require('./cjs/download.min.js');
-} else {
-    module.exports = require('./cjs/download.js');
-}
+export { default as DownloadIcon } from './DownloadIcon';
+export { default as getFilePlugin } from './getFilePlugin';

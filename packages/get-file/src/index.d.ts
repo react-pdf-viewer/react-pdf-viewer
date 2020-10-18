@@ -17,16 +17,16 @@ export interface DownloadProps {
     children?(props: RenderDownloadProps): ReactElement;
 }
 
-export interface DownloadPlugin extends Plugin {
+export interface GetFilePlugin extends Plugin {
     Download(props: DownloadProps): ReactElement;
     DownloadButton(): ReactElement;
 }
 
-export interface DownloadPluginProps {
+export interface GetFilePluginProps {
     // Custom the download file name
     fileNameGenerator?: (file: OpenFile) => string;
 }
 
-export function downloadPlugin(props?: DownloadPluginProps): DownloadPlugin;
+export function getFilePlugin(props?: GetFilePluginProps): GetFilePlugin;
 
 export class DownloadIcon extends Component {}

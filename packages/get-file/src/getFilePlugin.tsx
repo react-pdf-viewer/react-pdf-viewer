@@ -15,17 +15,17 @@ import getFileName from './getFileName';
 
 import StoreProps from './StoreProps';
 
-interface DownloadPlugin extends Plugin {
+interface GetFilePlugin extends Plugin {
     Download: (props: DownloadProps) => ReactElement;
     DownloadButton: () => ReactElement;
 }
 
-export interface DownloadPluginProps {
+export interface GetFilePluginProps {
     // Custom the download file name
     fileNameGenerator?: (file: OpenFile) => string;
 }
 
-const downloadPlugin = (props?: DownloadPluginProps): DownloadPlugin => {
+const getFilePlugin = (props?: GetFilePluginProps): GetFilePlugin => {
     const store = createStore<StoreProps>({});
 
     const defaultFileNameGenerator = (file: OpenFile) => getFileName(file.name);
@@ -54,4 +54,4 @@ const downloadPlugin = (props?: DownloadPluginProps): DownloadPlugin => {
     };
 };
 
-export default downloadPlugin;
+export default getFilePlugin;

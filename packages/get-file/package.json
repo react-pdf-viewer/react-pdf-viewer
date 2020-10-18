@@ -1,5 +1,5 @@
 {
-    "name": "@react-pdf-viewer/download",
+    "name": "@react-pdf-viewer/get-file",
     "version": "2.0.0",
     "description": "A React component to view a PDF document",
     "license": "https://react-pdf-viewer.dev/license",
@@ -19,7 +19,7 @@
     "repository": {
         "type": "git",
         "url": "https://github.com/phuoc-ng/react-pdf-viewer",
-        "directory": "packages/download"
+        "directory": "packages/get-file"
     },
     "bugs": {
         "url": "https://github.com/phuoc-ng/react-pdf-viewer/issues"
