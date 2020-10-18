@@ -1,6 +1,5 @@
 {
     "packages": [
-        "demo/latest",
         "packages/*"
     ],
     "version": "2.0.0"
