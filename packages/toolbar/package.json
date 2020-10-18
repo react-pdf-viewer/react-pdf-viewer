@@ -1,6 +1,6 @@
 {
     "name": "@react-pdf-viewer/toolbar",
-    "version": "2.0.0",
+    "version": "2.0.1",
     "description": "A React component to view a PDF document",
     "license": "https://react-pdf-viewer.dev/license",
     "author": {
@@ -18,11 +18,11 @@
     ],
     "repository": {
         "type": "git",
-        "url": "https://github.com/phuoc-ng/react-pdf-viewer",
+        "url": "https://github.com/react-pdf-viewer/react-pdf-viewer",
         "directory": "packages/toolbar"
     },
     "bugs": {
-        "url": "https://github.com/phuoc-ng/react-pdf-viewer/issues"
+        "url": "https://github.com/react-pdf-viewer/react-pdf-viewer/issues"
     },
     "main": "lib/index.js",
     "types": "lib/index.d.ts",
@@ -33,19 +33,19 @@
         "lib/index.js"
     ],
     "dependencies": {
-        "@react-pdf-viewer/core": "2.0.0",
-        "@react-pdf-viewer/drop": "2.0.0",
-        "@react-pdf-viewer/full-screen": "2.0.0",
-        "@react-pdf-viewer/get-file": "2.0.0",
-        "@react-pdf-viewer/open": "2.0.0",
-        "@react-pdf-viewer/page-navigation": "2.0.0",
-        "@react-pdf-viewer/print": "2.0.0",
-        "@react-pdf-viewer/properties": "2.0.0",
-        "@react-pdf-viewer/rotate": "2.0.0",
-        "@react-pdf-viewer/scroll-mode": "2.0.0",
-        "@react-pdf-viewer/search": "2.0.0",
-        "@react-pdf-viewer/selection-mode": "2.0.0",
-        "@react-pdf-viewer/zoom": "2.0.0",
+        "@react-pdf-viewer/core": "2.0.1",
+        "@react-pdf-viewer/drop": "2.0.1",
+        "@react-pdf-viewer/full-screen": "2.0.1",
+        "@react-pdf-viewer/get-file": "2.0.1",
+        "@react-pdf-viewer/open": "2.0.1",
+        "@react-pdf-viewer/page-navigation": "2.0.1",
+        "@react-pdf-viewer/print": "2.0.1",
+        "@react-pdf-viewer/properties": "2.0.1",
+        "@react-pdf-viewer/rotate": "2.0.1",
+        "@react-pdf-viewer/scroll-mode": "2.0.1",
+        "@react-pdf-viewer/search": "2.0.1",
+        "@react-pdf-viewer/selection-mode": "2.0.1",
+        "@react-pdf-viewer/zoom": "2.0.1",
         "react": "^16.13.1",
         "react-dom": "^16.13.1"
     },
