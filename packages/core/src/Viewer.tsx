@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { useEffect, useState } from 'react';
+import React, { ReactElement, useEffect, useState } from 'react';
 
 import OpenFile from './OpenFile';
 import Inner from './layouts/Inner';
@@ -59,6 +59,7 @@ export interface ViewerProps {
     prefixClass?: string;
     renderError?: RenderError;
     renderPage?: RenderPage;
+    renderLoader?(percentages: number): ReactElement;
     // The text selection mode
     selectionMode?: SelectionMode;
     onCanvasLayerRender?(e: CanvasLayerRenderEvent): void;
@@ -77,6 +78,7 @@ const Viewer: React.FC<ViewerProps> = ({
     prefixClass,
     renderError,
     renderPage,
+    renderLoader,
     onCanvasLayerRender = () => {/**/},
     onDocumentLoad = () => {/**/},
     onPageChange = () => {/**/},
@@ -137,6 +139,7 @@ const Viewer: React.FC<ViewerProps> = ({
                             />
                         )}
                         renderError={renderError}
+                        renderLoader={renderLoader}
                     />
                 )}
             </LocalizationProvider>

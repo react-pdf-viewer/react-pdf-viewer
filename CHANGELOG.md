@@ -2,6 +2,22 @@
 
 ## v2.0.0
 
+**New features**
+- `Viewer` supports to use a custom loader instead of the default `<Spinner>`:
+
+~~~ javascript
+import { ProgressBar, Viewer } from '@react-pdf-viewer/core';
+
+<Viewer
+    renderLoader={(percentages: number) => (
+        // You can use your own progress bar component
+        <div style={{ width: '240px' }}>
+            <ProgressBar progress={Math.round(percentages)} />
+        </div>
+    )}
+/>
+~~~
+
 **Bug fixes**
 - The `onPageChange` could be invoke several times when clicking an outline item
 
