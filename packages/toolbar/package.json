@@ -33,8 +33,6 @@
         "lib/index.js"
     ],
     "dependencies": {
-        "react": "^16.13.1",
-        "react-dom": "^16.13.1",
         "@react-pdf-viewer/core": "2.0.0",
         "@react-pdf-viewer/download": "2.0.0",
         "@react-pdf-viewer/drop": "2.0.0",
@@ -47,7 +45,9 @@
         "@react-pdf-viewer/scroll-mode": "2.0.0",
         "@react-pdf-viewer/search": "2.0.0",
         "@react-pdf-viewer/selection-mode": "2.0.0",
-        "@react-pdf-viewer/zoom": "2.0.0"
+        "@react-pdf-viewer/zoom": "2.0.0",
+        "react": "^16.13.1",
+        "react-dom": "^16.13.1"
     },
     "peerDependencies": {
         "react": "^16.8.0",

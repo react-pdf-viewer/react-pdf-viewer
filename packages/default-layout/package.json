@@ -33,13 +33,13 @@
         "lib/index.js"
     ],
     "dependencies": {
-        "react": "^16.13.1",
-        "react-dom": "^16.13.1",
-        "@react-pdf-viewer/core": "2.0.0",
         "@react-pdf-viewer/attachment": "2.0.0",
         "@react-pdf-viewer/bookmark": "2.0.0",
+        "@react-pdf-viewer/core": "2.0.0",
         "@react-pdf-viewer/thumbnail": "2.0.0",
-        "@react-pdf-viewer/toolbar": "2.0.0"
+        "@react-pdf-viewer/toolbar": "2.0.0",
+        "react": "^16.13.1",
+        "react-dom": "^16.13.1"
     },
     "peerDependencies": {
         "react": "^16.8.0",
