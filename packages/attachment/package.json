@@ -18,11 +18,11 @@
     ],
     "repository": {
         "type": "git",
-        "url": "https://github.com/phuoc-ng/react-pdf-viewer",
+        "url": "https://github.com/react-pdf-viewer/react-pdf-viewer",
         "directory": "packages/attachment"
     },
     "bugs": {
-        "url": "https://github.com/phuoc-ng/react-pdf-viewer/issues"
+        "url": "https://github.com/react-pdf-viewer/react-pdf-viewer/issues"
     },
     "main": "lib/index.js",
     "types": "lib/index.d.ts",

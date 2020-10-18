@@ -1,6 +1,6 @@
 This folder demonstrates how to bundle React PDF viewer with [Webpack](https://webpack.js.org) and [Typescript](https://www.typescriptlang.org).
 
-The main package, `@phuocng/react-pdf-viewer` is linked to the [dist](https://github.com/phuoc-ng/react-pdf-viewer/tree/master/dist) folder.
+The main package, `@phuocng/react-pdf-viewer` is linked to the [dist](https://github.com/react-pdf-viewer/react-pdf-viewer/tree/master/dist) folder.
 
 1. Install the dependencies
 
