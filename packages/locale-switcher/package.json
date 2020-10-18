@@ -33,9 +33,9 @@
         "lib/index.js"
     ],
     "dependencies": {
+        "@react-pdf-viewer/core": "2.0.0",
         "react": "^16.13.1",
-        "react-dom": "^16.13.1",
-        "@react-pdf-viewer/core": "2.0.0"
+        "react-dom": "^16.13.1"
     },
     "peerDependencies": {
         "react": "^16.8.0",
@@ -47,5 +47,6 @@
     "scripts": {
         "clean": "rm -rf lib && mkdir lib",
         "build": "npm run clean && cp src/index.d.ts lib && cp dist/index.js lib && NO_CSS='true' rollup -c ../../rollup.config.js"
-    }
+    },
+    "gitHead": "aaad5d65cd2cb5110d68e12ef02051d9803796d4"
 }

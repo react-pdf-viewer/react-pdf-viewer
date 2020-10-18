@@ -8,9 +8,9 @@
 
 import React from 'react';
 import { Plugin, PluginFunctions, PluginOnDocumentLoad, RenderViewer, ViewerState, PluginOnTextLayerRender } from '@react-pdf-viewer/core';
-import { downloadPlugin, DownloadPluginProps } from '@react-pdf-viewer/download';
 import { dropPlugin } from '@react-pdf-viewer/drop';
 import { fullScreenPlugin } from '@react-pdf-viewer/full-screen';
+import { getFilePlugin, GetFilePluginProps } from '@react-pdf-viewer/get-file';
 import { openPlugin } from '@react-pdf-viewer/open';
 import { pageNavigationPlugin } from '@react-pdf-viewer/page-navigation';
 import { printPlugin } from '@react-pdf-viewer/print';
@@ -28,16 +28,16 @@ interface ToolbarPlugin extends Plugin {
 }
 
 export interface ToolbarPluginProps {
-    downloadPlugin?: DownloadPluginProps;
+    getFilePlugin?: GetFilePluginProps;
     scrollModePlugin?: ScrollModePluginProps;
     searchPlugin?: SearchPluginProps;
     selectionModePlugin?: SelectionModePluginProps;
 }
 
 const toolbarPlugin = (props?: ToolbarPluginProps): ToolbarPlugin => {
-    const downloadPluginInstance = downloadPlugin(props ? props.downloadPlugin : {});
     const dropPluginInstance = dropPlugin();
     const fullScreenPluginInstance = fullScreenPlugin();
+    const getFilePluginInstance = getFilePlugin(props ? props.getFilePlugin : {});
     const openPluginInstance = openPlugin();
     const pageNavigationPluginInstance = pageNavigationPlugin();
     const printPluginInstance = printPlugin();
@@ -49,9 +49,9 @@ const toolbarPlugin = (props?: ToolbarPluginProps): ToolbarPlugin => {
     const zoomPluginInstance = zoomPlugin();
 
     const plugins = [
-        downloadPluginInstance,
         dropPluginInstance,
         fullScreenPluginInstance,
+        getFilePluginInstance,
         openPluginInstance,
         pageNavigationPluginInstance,
         printPluginInstance,
@@ -64,8 +64,8 @@ const toolbarPlugin = (props?: ToolbarPluginProps): ToolbarPlugin => {
     ];
 
     const ToolbarDecorator = (props: ToolbarProps) => {
-        const { Download } = downloadPluginInstance;
         const { EnterFullScreen } = fullScreenPluginInstance;
+        const { Download } = getFilePluginInstance;
         const { Open } = openPluginInstance;
         const {
             CurrentPageInput, CurrentPageLabel, GoToFirstPage, GoToFirstPageMenuItem, GoToLastPage,

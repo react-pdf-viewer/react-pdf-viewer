@@ -2,7 +2,33 @@
 
 ## v2.0.0
 
+This version rewrites the entire viewer with the plugin architecture. The main viewer component `Viewer` is very lightweight,
+and everything else is powered by plugins.
+
+The basic setup looks like following:
+
+~~~ javascript
+// Import plugin
+import { toolbarPlugin } from '@react-pdf-viewer/toolbar';
+
+// Import styles
+import '@react-pdf-viewer/toolbar/styles/index.css';
+
+// Create the plugin instance
+const toolbarPluginInstance = toolbarPlugin(...);
+
+// Register plugins
+<Viewer
+    plugins={[
+        // Array of plugins
+        toolbarPlugin,
+        ...
+    ]}
+/>
+~~~
+
 **New features**
+
 - `Viewer` supports to use a custom loader instead of the default `<Spinner>`:
 
 ~~~ javascript
@@ -18,8 +44,95 @@ import { ProgressBar, Viewer } from '@react-pdf-viewer/core';
 />
 ~~~
 
+- Customizable name of download file with the [get-file](https://react-pdf-viewer.dev/plugins/get-file) plugin:
+
+~~~ javascript
+const getFilePluginInstance = getFilePlugin({
+    fileNameGenerator: (file: OpenFile) => {
+        // `file.name` is the URL of opened file
+        const fileName = file.name.substring(file.name.lastIndexOf('/') + 1);
+        return `a-copy-of-${fileName}`;
+    },
+});
+~~~
+
+- New [Locale Switcher](https://react-pdf-viewer.dev/plugins/locale-switcher) plugin for switching between different locales
+- Provide the ability of setting the scroll mode via the [Scroll Mode](https://react-pdf-viewer.dev/plugins/scroll-mode) plugin. 
+
 **Bug fixes**
-- The `onPageChange` could be invoke several times when clicking an outline item
+- The `onPageChange` could be invoked several times when clicking an outline item
+
+**Breaking changes**
+
+- The `keyword` option is removed. Use the `keyword` option provided by the [search plugin](https://react-pdf-viewer.dev/plugins/search).
+- The `layout` option is removed
+- The `render` option is removed
+- The `selectionMode` option is removed. Use the `selectionMode` option provided by the [selection-mode plugin](https://react-pdf-viewer.dev/plugins/selection-mode).
+- The `onTextLayerRender` option is removed. Instead, use the `onTextLayerRender` option in your plugin.
+
+**Upgrade from 1.7.0 to 2.0.0**
+
+*Uninstall the old packages:*
+
+~~~ console
+npm uninstall pdfjs-dist
+npm uninstall @phuocng/react-pdf-viewer
+~~~
+
+*Install the new packages:*
+
+~~~ console
+npm install pdfjs-dist@2.5.207
+npm install @react-pdf-viewer/core@2.0.0
+~~~
+
+*Replace the old \`Worker\` with new one:*
+
+~~~ javascript
+// Remove the old Worker
+import { Worker } from '@phuocng/react-pdf-viewer';
+
+// Use the new Worker
+import { Worker } from '@react-pdf-viewer/core';
+~~~
+
+*Use the new `Viewer`:*
+
+- First, you might need to install the [Default Layout](https://react-pdf-viewer.dev/plugins/default-layout) plugin:
+
+~~~ console
+npm install @react-pdf-viewer/default-layout@2.0.0
+~~~
+
+- Replace the old `Viewer` with new one:
+
+~~~ javascript
+// Old Viewer
+import Viewer from '@phuocng/react-pdf-viewer';
+
+// New Viewer
+import { Viewer } from '@react-pdf-viewer/core';
+
+// Plugins
+import { defaultLayoutPlugin } from '@react-pdf-viewer/default-layout';
+
+// Import styles
+import '@react-pdf-viewer/core/styles/index.css';
+import '@react-pdf-viewer/default-layout/styles/index.css';
+
+// Create new plugin instance
+const defaultLayoutPluginInstance = defaultLayoutPlugin();
+
+// Your render function
+<Viewer
+    fileUrl='/path/to/document.pdf'
+    plugins={[
+        // Register plugins
+        defaultLayoutPluginInstance,
+        ...
+    ]}
+/>
+~~~
 
 ## v1.7.0
 

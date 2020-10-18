@@ -7,8 +7,8 @@
  */
 
 import { ReactElement } from 'react';
-import { DownloadProps } from '@react-pdf-viewer/download';
 import { EnterFullScreenProps } from '@react-pdf-viewer/full-screen';
+import { DownloadProps } from '@react-pdf-viewer/get-file';
 import { OpenProps } from '@react-pdf-viewer/open';
 import { CurrentPageLabelProps, GoToFirstPageMenuItemProps, GoToFirstPageProps, GoToLastPageMenuItemProps, GoToLastPageProps, GoToNextPageProps, GoToPreviousPageProps } from '@react-pdf-viewer/page-navigation';
 import { PrintProps } from '@react-pdf-viewer/print';

@@ -8,8 +8,8 @@
 
 import { Component, ReactElement } from 'react';
 import { Plugin } from '@react-pdf-viewer/core';
-import { DownloadProps, DownloadPluginProps } from '@react-pdf-viewer/download';
 import { EnterFullScreenProps } from '@react-pdf-viewer/full-screen';
+import { DownloadProps, GetFilePluginProps } from '@react-pdf-viewer/get-file';
 import { OpenProps } from '@react-pdf-viewer/open';
 import { CurrentPageLabelProps, GoToFirstPageProps, GoToFirstPageMenuItemProps, GoToLastPageProps, GoToLastPageMenuItemProps, GoToNextPageProps, GoToPreviousPageProps } from '@react-pdf-viewer/page-navigation';
 import { PrintProps } from '@react-pdf-viewer/print';
@@ -59,7 +59,7 @@ export interface ToolbarPlugin extends Plugin {
 }
 
 export interface ToolbarPluginProps {
-    downloadPlugin?: DownloadPluginProps;
+    getFilePlugin?: GetFilePluginProps;
     scrollModePlugin?: ScrollModePluginProps;
     searchPlugin?: SearchPluginProps;
     selectionModePlugin?: SelectionModePluginProps;

@@ -1,9 +1,0 @@
-@media print {
-    .viewer-body-printing .example-modal {
-        display: none;
-    }
-}
-
-.example-modal {
-    display: flex;
-}
