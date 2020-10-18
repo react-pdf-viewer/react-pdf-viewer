@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## v2.0.0
+## v2.0.1
 
 This version rewrites the entire viewer with the plugin architecture. The main viewer component `Viewer` is very lightweight,
 and everything else is powered by plugins.
@@ -83,7 +83,7 @@ npm uninstall @phuocng/react-pdf-viewer
 
 ~~~ console
 npm install pdfjs-dist@2.5.207
-npm install @react-pdf-viewer/core@2.0.0
+npm install @react-pdf-viewer/core@2.0.1
 ~~~
 
 *Replace the old \`Worker\` with new one:*
