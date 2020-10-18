@@ -34,9 +34,9 @@
     ],
     "dependencies": {
         "@react-pdf-viewer/core": "2.0.0",
-        "@react-pdf-viewer/download": "2.0.0",
         "@react-pdf-viewer/drop": "2.0.0",
         "@react-pdf-viewer/full-screen": "2.0.0",
+        "@react-pdf-viewer/get-file": "2.0.0",
         "@react-pdf-viewer/open": "2.0.0",
         "@react-pdf-viewer/page-navigation": "2.0.0",
         "@react-pdf-viewer/print": "2.0.0",
