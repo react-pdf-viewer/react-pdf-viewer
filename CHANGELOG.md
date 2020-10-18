@@ -44,10 +44,10 @@ import { ProgressBar, Viewer } from '@react-pdf-viewer/core';
 />
 ~~~
 
-- Customizable name of download file with the [download](https://react-pdf-viewer.dev/plugins/download) plugin:
+- Customizable name of download file with the [get-file](https://react-pdf-viewer.dev/plugins/get-file) plugin:
 
 ~~~ javascript
-const downloadPluginInstance = downloadPlugin({
+const getFilePluginInstance = getFilePlugin({
     fileNameGenerator: (file: OpenFile) => {
         // `file.name` is the URL of opened file
         const fileName = file.name.substring(file.name.lastIndexOf('/') + 1);
