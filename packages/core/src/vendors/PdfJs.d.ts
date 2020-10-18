@@ -23,8 +23,14 @@ declare module 'pdfjs-dist' {
     type VerifyPassword = (password: string) => void;
     type FileData = string | Uint8Array;
 
+    interface LoadingTaskProgress {
+        loaded: number;
+        total: number;
+    }
+
     interface LoadingTask {
         onPassword: (verifyPassword: VerifyPassword, reason: string) => void;
+        onProgress: (progress: LoadingTaskProgress) => void;
         promise: Promise<PdfDocument>;
         destroy(): void;
     }
