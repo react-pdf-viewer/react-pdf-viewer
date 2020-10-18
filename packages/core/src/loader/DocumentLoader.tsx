@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { useContext, useEffect, useState } from 'react';
+import React, { ReactElement, useContext, useEffect, useState } from 'react';
 
 import Spinner from '../components/Spinner';
 import ThemeContext from '../theme/ThemeContext';
@@ -22,18 +22,22 @@ import LoadingStatus, { VerifyPassword } from './LoadingStatus';
 import WrongPassword from './WrongPassword';
 import WrongPasswordState from './WrongPasswordState';
 
-export type RenderError = (error: LoadError) => React.ReactElement;
+export type RenderError = (error: LoadError) => ReactElement;
 
 interface DocumentLoaderProps {
     characterMap?: CharacterMap;
     file: PdfJs.FileData;
     renderError?: RenderError;
-    render(doc: PdfJs.PdfDocument): React.ReactElement;
+    renderLoader?(percentages: number): ReactElement;
+    render(doc: PdfJs.PdfDocument): ReactElement;
 }
 
-const DocumentLoader: React.FC<DocumentLoaderProps> = ({ characterMap, file, render, renderError }) => {
+const DocumentLoader: React.FC<DocumentLoaderProps> = ({ characterMap, file, render, renderError, renderLoader }) => {
     const theme = useContext(ThemeContext);
     const [status, setStatus] = useState<LoadingStatus>(new LoadingState(0));
+
+    const [percentages, setPercentages] = useState(0);
+    const [loadedDocument, setLoadedDocument] = useState<PdfJs.PdfDocument>(null);
 
     useEffect(() => {
         // If we don't reset the status when new `file` is provided
@@ -63,8 +67,14 @@ const DocumentLoader: React.FC<DocumentLoaderProps> = ({ characterMap, file, ren
                     break;
             }
         };
+        loadingTask.onProgress = (progress) => {
+            progress.total > 0
+                // It seems weird but there is a case that `loaded` is greater than `total`
+                ? setPercentages(Math.min(100, 100 * progress.loaded / progress.total))
+                : setPercentages(100);
+        };
         loadingTask.promise.then(
-            (doc) => setStatus(new CompletedState(doc)),
+            (doc) => setLoadedDocument(doc),
             (err) => setStatus(new FailureState({
                 message: err.message || 'Cannot load document',
                 name: err.name,
@@ -75,6 +85,15 @@ const DocumentLoader: React.FC<DocumentLoaderProps> = ({ characterMap, file, ren
             loadingTask.destroy();
         };
     }, [file]);
+
+    // There is a case that `loadingTask.promise()` is already resolved but `loadingTask.onProgress` is still triggered
+    // (numOfPercentages does not reach 100 yet)
+    // So, we have to check both `percentages` and `loaded`
+    useEffect(() => {
+        (percentages === 100 && loadedDocument)
+            ? setStatus(new CompletedState(loadedDocument))
+            : setStatus(new LoadingState(percentages));
+    }, [percentages, loadedDocument]);
 
     switch (true) {
         case (status instanceof AskForPasswordState):
@@ -94,6 +113,13 @@ const DocumentLoader: React.FC<DocumentLoaderProps> = ({ characterMap, file, ren
                     </div>
                 );
         case (status instanceof LoadingState):
+            return (
+                <div className={`${theme.prefixClass}-doc-loading`}>
+                    {
+                        renderLoader ? renderLoader((status as LoadingState).percentages) : <Spinner />
+                    }
+                </div>
+            );
         default:
             return (
                 <div className={`${theme.prefixClass}-doc-loading`}>
