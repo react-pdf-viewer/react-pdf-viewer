@@ -1,6 +1,7 @@
 {
     "packages": [
-        "packages/get-file"
+        "packages/default-layout",
+        "packages/toolbar"
     ],
     "version": "2.0.0"
 }
