@@ -26,9 +26,8 @@
 		"clean": "lerna run clean",
 		"build": "lerna run build",
 		"dev": "lerna run dev",
-		"pub": "lerna publish",
 		"lint": "eslint packages/**/*.ts packages/**/*.tsx",
-		"release": "lerna publish --exact"
+		"release": "lerna publish from-package"
 	},
 	"devDependencies": {
 		"@rollup/plugin-json": "^4.1.0",

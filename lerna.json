@@ -1,6 +1,6 @@
 {
     "packages": [
-        "packages/bookmark"
+        "packages/get-file"
     ],
     "version": "2.0.0"
 }
