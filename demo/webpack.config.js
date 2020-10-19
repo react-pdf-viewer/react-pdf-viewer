@@ -42,7 +42,13 @@ module.exports = {
         ],
     },
     resolve: {
-        extensions: ['.css', '.js', '.jsx', '.ts', '.tsx']
+        extensions: ['.css', '.js', '.jsx', '.ts', '.tsx'],
+        // In development mode that maps `react-pdf-viewer` packages with `../packages/PACKAGE_NAME/src`
+        // we have to indicate the `react` path
+        // Otherwise, we will see "Invalid hook call" error
+        alias: {
+            "react": path.join(__dirname, './node_modules/react')
+        }
     },
     devServer: {
         contentBase: path.join(__dirname, 'dist'),
