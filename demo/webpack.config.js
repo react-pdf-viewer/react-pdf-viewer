@@ -61,8 +61,8 @@ module.exports = {
         // Indicate the package source based on the name
         // So we don't have to map them manually in the `alias` option as 
         //  alias: {
-        //      '@react-pdf-viewer/core/styles.css': path.join(__dirname, '../../packages/core/lib/styles.css'),
-        //      '@react-pdf-viewer/core': path.join(__dirname, '../../packages/core/src'),
+        //      '@react-pdf-viewer/core/styles.css': path.join(__dirname, '../packages/core/lib/styles.css'),
+        //      '@react-pdf-viewer/core': path.join(__dirname, '../packages/core/src'),
         //      ...
         //  }
         new webpack.NormalModuleReplacementPlugin(
@@ -76,15 +76,15 @@ module.exports = {
 
                 switch (true) {
                     case request.endsWith('.css'):
-                        resource.request = path.join(__dirname, `../../packages/${pkgName}/lib/styles/index.css`);
+                        resource.request = path.join(__dirname, `../packages/${pkgName}/lib/styles/index.css`);
                         break;
 
                     // case request.endsWith('.less'):
-                    //     resource.request = path.join(__dirname, `../../packages/${pkgName}/lib/styles/index.less`);
+                    //     resource.request = path.join(__dirname, `../packages/${pkgName}/lib/styles/index.less`);
                     //     break;
 
                     default:
-                        resource.request = path.join(__dirname, `../../packages/${pkgName}/src`);
+                        resource.request = path.join(__dirname, `../packages/${pkgName}/src`);
                         break;
                 }
             }
