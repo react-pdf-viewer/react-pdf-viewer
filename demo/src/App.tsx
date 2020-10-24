@@ -1,5 +1,5 @@
-import React, { ReactElement } from 'react';
-import { OpenFile, ProgressBar, Viewer, Worker } from '@react-pdf-viewer/core';
+import React from 'react';
+import { Viewer, Worker } from '@react-pdf-viewer/core';
 
 import { defaultLayoutPlugin } from '@react-pdf-viewer/default-layout';
 
@@ -29,11 +29,6 @@ const App = () => {
             >
                 <Viewer
                     fileUrl="http://localhost:8001/pdf-open-parameters.pdf"
-                    renderLoader={(percentages: number) => (
-                        <div style={{ width: '240px' }}>
-                            <ProgressBar progress={Math.round(percentages)} />
-                        </div>
-                    )}
                     plugins={[
                         defaultLayoutPluginInstance,
                     ]}

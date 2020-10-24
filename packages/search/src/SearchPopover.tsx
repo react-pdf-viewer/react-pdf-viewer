@@ -83,6 +83,7 @@ const SearchPopover: React.FC<SearchPopoverProps> = ({ doc, store, onToggle }) =
     const clearKeyword = (): void => {
         if (!keyword) {
             // Do nothing
+            return;
         }
         store.update('keyword', EMPTY_KEYWORD_REGEXP);
 
@@ -138,6 +139,9 @@ const SearchPopover: React.FC<SearchPopoverProps> = ({ doc, store, onToggle }) =
     };
 
     const jumpToPreviousMatch = (): void => {
+        if (!keyword) {
+            return;
+        }
         const prev = currentMatch - 1;
         const updated = prev > 0 ? prev : found.length;
         setCurrentMatch(updated);
@@ -145,6 +149,9 @@ const SearchPopover: React.FC<SearchPopoverProps> = ({ doc, store, onToggle }) =
     };
 
     const jumpToNextMatch = (): void => {
+        if (!keyword) {
+            return;
+        }
         const next = currentMatch + 1;
         const updated = next <= found.length ? next : 1;
         setCurrentMatch(updated);

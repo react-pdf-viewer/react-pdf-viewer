@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## v2.1.0 (not released yet)
+
+**Bug fixes**
+- Clicking _Previous match_ or _Next match_ button throws an error if the keyword is empty
+
 ## v2.0.1
 
 This version rewrites the entire viewer with the plugin architecture. The main viewer component `Viewer` is very lightweight,
