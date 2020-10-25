@@ -13,6 +13,7 @@ import calculateOffset from './calculateOffset';
 import { EMPTY_KEYWORD_REGEXP } from './constants';
 import Match from './Match';
 import StoreProps from './StoreProps';
+import unwrap from './unwrap';
 
 interface RenderStatus {
     ele?: HTMLElement;
@@ -76,7 +77,7 @@ const Tracker: React.FC<{
         highlightEle.style.height = `${100 * (wrapperRect.height) / containerRect.height}%`;
         highlightEle.classList.add('rpv-search-text-highlight');
 
-        wrapper.parentElement.removeChild(wrapper);
+        unwrap(wrapper);
     };
 
     const handleKeywordChanged = (keyword?: RegExp) => {
