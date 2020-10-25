@@ -119,13 +119,13 @@ const Tracker: React.FC<{
             highlight(containerEle, span);
         }
         scrollToMatch();
-    }, [keywordRegexp, match, renderStatus]);
+    }, [keywordRegexp, match, renderStatus.status]);
 
     useEffect(() => {
         if (keywordRegexp.source.trim() === '' && renderStatus.ele && renderStatus.status === TextLayerRenderStatus.DidRender) {
             unhighlightAll(renderStatus.ele);
         }
-    }, [keywordRegexp, renderStatus]);
+    }, [keywordRegexp, renderStatus.status]);
 
     const scrollToMatch = (): void => {
         if (match.pageIndex !== pageIndex || !renderStatus.ele || renderStatus.status !== TextLayerRenderStatus.DidRender) {

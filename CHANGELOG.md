@@ -30,6 +30,9 @@ const customPlugin = (): Plugin => {
 };
 ~~~
 
+**Improvements**
+- Optimize the `seach` plugin that doesn't perform unhighligting and highlighting many times after texts are rendered
+
 **Bug fixes**
 - Clicking _Previous match_ or _Next match_ button throws an error if the keyword is empty
 
