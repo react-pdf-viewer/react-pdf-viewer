@@ -85,7 +85,7 @@ const SearchPopover: React.FC<SearchPopoverProps> = ({ doc, store, onToggle }) =
             // Do nothing
             return;
         }
-        store.update('keyword', EMPTY_KEYWORD_REGEXP);
+        store.update('keyword', [EMPTY_KEYWORD_REGEXP]);
 
         setKeyword('');
         setCurrentMatch(0);
@@ -107,7 +107,7 @@ const SearchPopover: React.FC<SearchPopoverProps> = ({ doc, store, onToggle }) =
 
     const search = (keywordParam: string, matchCaseParam: boolean, wholeWordsParam: boolean): void => {
         const regexp = buildKeywordRegex(keywordParam, matchCaseParam, wholeWordsParam);
-        store.update('keyword', regexp);
+        store.update('keyword', [regexp]);
 
         setCurrentMatch(0);
         setFound([]);

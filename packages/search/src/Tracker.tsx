@@ -30,7 +30,7 @@ const Tracker: React.FC<{
         matchIndex: -1,
         pageIndex: -1,
     });
-    const [keywordRegexp, setKeywordRegexp] = useState<RegExp>(EMPTY_KEYWORD_REGEXP);
+    const [keywordRegexp, setKeywordRegexp] = useState<RegExp[]>([EMPTY_KEYWORD_REGEXP]);
     const [renderStatus, setRenderStatus] = useState<RenderStatus>({
         pageIndex,
         scale: 1,
@@ -45,18 +45,18 @@ const Tracker: React.FC<{
         }
     };
 
-    const highlight = (containerEle: Element, span: Element): void => {
+    const highlight = (keyword: RegExp, containerEle: Element, span: Element): void => {
         const text = span.textContent;
-        if (!keywordRegexp.source.trim() || !text) {
+        if (!keyword.source.trim() || !text) {
             return;
         }
 
-        const startOffset = text.search(keywordRegexp);
+        const startOffset = text.search(keyword);
         const firstChild = span.firstChild;
         if (startOffset === -1 || !firstChild) {
             return;
         }
-        const endOffset = startOffset + keywordRegexp.source.length;
+        const endOffset = startOffset + keyword.source.length;
 
         const range = document.createRange();
         range.setStart(firstChild, startOffset);
@@ -80,8 +80,17 @@ const Tracker: React.FC<{
         unwrap(wrapper);
     };
 
-    const handleKeywordChanged = (keyword?: RegExp) => {
-        if (keyword) {
+    const highlightAll = (containerEle: Element): void => {
+        const spans: HTMLElement[] = [].slice.call(containerEle.querySelectorAll('.rpv-core-text'));
+        keywordRegexp.forEach(keyword => {
+            spans.forEach(span => {
+                highlight(keyword, containerEle, span);
+            });
+        });
+    };
+
+    const handleKeywordChanged = (keyword?: RegExp[]) => {
+        if (keyword && keyword.length > 0) {
             setKeywordRegexp(keyword);
         }
     };
@@ -105,24 +114,21 @@ const Tracker: React.FC<{
         }
     };
 
+    const isEmptyKeyword = () => keywordRegexp.length === 0 || (keywordRegexp.length === 1 && keywordRegexp[0].source.trim() === '');
+
     useEffect(() => {
-        if (!keywordRegexp.source.trim() || !renderStatus.ele || renderStatus.status !== TextLayerRenderStatus.DidRender) {
+        if (isEmptyKeyword() || !renderStatus.ele || renderStatus.status !== TextLayerRenderStatus.DidRender) {
             return;
         }
+        
         const containerEle = renderStatus.ele;
-        const spans = containerEle.querySelectorAll('.rpv-core-text');
-        const numSpans = spans.length;
         unhighlightAll(containerEle);
-
-        for (let i = 0; i < numSpans; i++) {
-            const span = spans[i] as HTMLElement;
-            highlight(containerEle, span);
-        }
+        highlightAll(containerEle);
         scrollToMatch();
     }, [keywordRegexp, match, renderStatus.status]);
 
     useEffect(() => {
-        if (keywordRegexp.source.trim() === '' && renderStatus.ele && renderStatus.status === TextLayerRenderStatus.DidRender) {
+        if (isEmptyKeyword() && renderStatus.ele && renderStatus.status === TextLayerRenderStatus.DidRender) {
             unhighlightAll(renderStatus.ele);
         }
     }, [keywordRegexp, renderStatus.status]);

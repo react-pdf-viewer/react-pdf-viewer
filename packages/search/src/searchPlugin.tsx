@@ -20,9 +20,11 @@ interface SearchPlugin extends Plugin {
     ShowSearchPopoverButton(): ReactElement;
 }
 
+export type SingleKeyword = string | RegExp;
+
 export interface SearchPluginProps {
     // The keyword that will be highlighted in all pages
-    keyword?: string | RegExp;
+    keyword?: SingleKeyword | SingleKeyword[];
 }
 
 const searchPlugin = (props?: SearchPluginProps): SearchPlugin => {
@@ -58,18 +60,26 @@ const searchPlugin = (props?: SearchPluginProps): SearchPlugin => {
         return currentSlot;
     };
 
+    const normalizeKeywordItem = (keyword: SingleKeyword): RegExp => {
+        return typeof keyword === 'string'
+            ? (keyword === '' ? EMPTY_KEYWORD_REGEXP : new RegExp(keyword))
+            : (keyword || EMPTY_KEYWORD_REGEXP);
+    };
+
     return {
         install: (pluginFunctions: PluginFunctions) => {
+            let keyword = [EMPTY_KEYWORD_REGEXP];
+            if (props) {
+                if (Array.isArray(props.keyword)) {
+                    keyword = (props.keyword).map(k => normalizeKeywordItem(k));
+                } else {
+                    keyword = [normalizeKeywordItem(props.keyword)];
+                }
+            }
+
             store.update('jumpToDestination', pluginFunctions.jumpToDestination);
             store.update('jumpToPage', pluginFunctions.jumpToPage);
-            store.update(
-                'keyword',
-                props
-                    ? ((typeof props.keyword === 'string')
-                        ? (props.keyword === '' ? EMPTY_KEYWORD_REGEXP : new RegExp(props.keyword))
-                        : (props.keyword || EMPTY_KEYWORD_REGEXP))
-                    : EMPTY_KEYWORD_REGEXP
-            );
+            store.update('keyword', keyword);
         },
         renderViewer,
         // eslint-disable-next-line  @typescript-eslint/no-unused-vars

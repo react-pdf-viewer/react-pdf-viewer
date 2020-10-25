@@ -12,7 +12,7 @@ import Match from './Match';
 
 export default interface StoreProps {
     doc?: PdfJs.PdfDocument;
-    keyword?: RegExp;
+    keyword?: RegExp[];
     match?: Match;
     renderStatus: Map<number, PluginOnTextLayerRender>;
     jumpToDestination?(pageIndex: number, bottomOffset: number, scaleTo: number | SpecialZoomLevel): void;
