@@ -15,21 +15,30 @@ interface AnnotationLayerProps {
     renderAnnotations(annotations: PdfJs.Annotation[]): React.ReactElement;
 }
 
+interface Status {
+    loading: boolean;
+    annotations: PdfJs.Annotation[];
+}
+
 const AnnotationLoader: React.FC<AnnotationLayerProps> = ({ page, renderAnnotations }) => {
-    const [loading, setLoading] = useState(true);
-    const [annotations, setAnnotations] = useState<PdfJs.Annotation[]>([]);
+    const [status, setStatus] = useState<Status>({
+        loading: true,
+        annotations: [],
+    })
 
     useEffect(() => {
         page.getAnnotations({ intent: 'display' }).then((result) => {
-            setLoading(false);
-            setAnnotations(result);
+            setStatus({
+                loading: false,
+                annotations: result,
+            });
         });
     }, []);
 
     return (
-        loading
+        status.loading
             ? <></>
-            : renderAnnotations(annotations)
+            : renderAnnotations(status.annotations)
     );
 };
 
