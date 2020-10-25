@@ -13,8 +13,6 @@ import calculateOffset from './calculateOffset';
 import { EMPTY_KEYWORD_REGEXP } from './constants';
 import Match from './Match';
 import StoreProps from './StoreProps';
-import unwrap from './unwrap';
-import wrap from './wrap';
 
 interface RenderStatus {
     ele?: HTMLElement;
@@ -42,11 +40,11 @@ const Tracker: React.FC<{
         const highlightNodes = containerEle.querySelectorAll('span.rpv-search-text-highlight');
         const total = highlightNodes.length;
         for (let i = 0; i < total; i++) {
-            unwrap(highlightNodes[i]);
+            highlightNodes[i].parentElement.removeChild(highlightNodes[i]);
         }
     };
 
-    const highlight = (span: Element): void => {
+    const highlight = (containerEle: Element, span: Element): void => {
         const text = span.textContent;
         if (!keywordRegexp.source.trim() || !text) {
             return;
@@ -58,8 +56,27 @@ const Tracker: React.FC<{
             return;
         }
         const endOffset = startOffset + keywordRegexp.source.length;
-        const wrapper = wrap(firstChild, startOffset, endOffset);
-        wrapper.classList.add('rpv-search-text-highlight');
+
+        const range = document.createRange();
+        range.setStart(firstChild, startOffset);
+        range.setEnd(firstChild, endOffset);
+
+        const wrapper = document.createElement('span');
+        range.surroundContents(wrapper);
+
+        const wrapperRect = wrapper.getBoundingClientRect();
+        const containerRect = containerEle.getBoundingClientRect();
+
+        const highlightEle = document.createElement('span');
+        containerEle.appendChild(highlightEle);
+
+        highlightEle.style.left = `${100 * (wrapperRect.left - containerRect.left) / containerRect.width}%`;
+        highlightEle.style.top = `${100 * (wrapperRect.top - containerRect.top) / containerRect.height}%`;
+        highlightEle.style.width = `${100 * (wrapperRect.width) / containerRect.width}%`;
+        highlightEle.style.height = `${100 * (wrapperRect.height) / containerRect.height}%`;
+        highlightEle.classList.add('rpv-search-text-highlight');
+
+        wrapper.parentElement.removeChild(wrapper);
     };
 
     const handleKeywordChanged = (keyword?: RegExp) => {
@@ -92,13 +109,13 @@ const Tracker: React.FC<{
             return;
         }
         const containerEle = renderStatus.ele;
-        const spans = containerEle.childNodes;
+        const spans = containerEle.querySelectorAll('.rpv-core-text');
         const numSpans = spans.length;
         unhighlightAll(containerEle);
 
         for (let i = 0; i < numSpans; i++) {
             const span = spans[i] as HTMLElement;
-            highlight(span);
+            highlight(containerEle, span);
         }
         scrollToMatch();
     }, [keywordRegexp, match, renderStatus]);

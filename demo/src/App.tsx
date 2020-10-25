@@ -1,21 +1,8 @@
 import React from 'react';
 import { AnnotationType, Plugin, PluginOnAnnotationLayerRender, Viewer, Worker } from '@react-pdf-viewer/core';
-
 import { defaultLayoutPlugin } from '@react-pdf-viewer/default-layout';
 
 import '@react-pdf-viewer/default-layout/styles/index.css';
-
-// const toolbarPluginInstance = toolbarPlugin({
-//     downloadPlugin: {
-//         fileNameGenerator: (file: OpenFile) => {
-//             const fileName = file.name.substring(file.name.lastIndexOf('/') + 1);
-//             return `a-copy-of-${fileName}`;
-//         },
-//     },
-//     searchPlugin: {
-//         keyword: 'PDF',
-//     },
-// });
 
 const testAnnotationRenderPlugin = (): Plugin => {
     const onRenderAnnotations = (e: PluginOnAnnotationLayerRender) => {
@@ -38,7 +25,13 @@ const testAnnotationRenderPlugin = (): Plugin => {
 };
 
 const App = () => {
-    const defaultLayoutPluginInstance = defaultLayoutPlugin();
+    const defaultLayoutPluginInstance = defaultLayoutPlugin({
+        toolbarPlugin: {
+            searchPlugin: {
+                keyword: 'PDF',
+            },
+        }
+    });
     const testAnnotationRenderPluginInstance = testAnnotationRenderPlugin();
 
     return (
