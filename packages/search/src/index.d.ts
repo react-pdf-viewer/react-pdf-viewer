@@ -22,9 +22,11 @@ export interface SearchPlugin extends Plugin {
     ShowSearchPopoverButton(): ReactElement;
 }
 
+export type SingleKeyword = string | RegExp;
+
 export interface SearchPluginProps {
     // The keyword that will be highlighted in all pages
-    keyword?: string | RegExp;
+    keyword?: SingleKeyword | SingleKeyword[];
 }
 
 export function searchPlugin(props?: SearchPluginProps): SearchPlugin;

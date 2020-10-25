@@ -30,6 +30,26 @@ const customPlugin = (): Plugin => {
 };
 ~~~
 
+- The `seach` plugin allows to set multiple keywords to be highlighted initially
+
+~~~ javascript
+// Use the search plugin
+import { searchPlugin } from '@react-pdf-viewer/search';
+const searchPluginInstance = searchPlugin({
+    keyword: ['document', 'PDF'],
+});
+
+// Use with default-layout plugin
+import { defaultLayoutPlugin } from '@react-pdf-viewer/default-layout';
+const defaultLayoutPluginInstance = defaultLayoutPlugin({
+    toolbarPlugin: {
+        searchPlugin: {
+            keyword: ['document', 'PDF'],
+        },
+    },
+});
+~~~
+
 **Improvements**
 - Optimize the `seach` plugin that doesn't perform unhighligting and highlighting many times after texts are rendered
 

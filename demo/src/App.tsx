@@ -28,7 +28,7 @@ const App = () => {
     const defaultLayoutPluginInstance = defaultLayoutPlugin({
         toolbarPlugin: {
             searchPlugin: {
-                keyword: 'PDF',
+                keyword: ['document', 'PDF'],
             },
         }
     });
