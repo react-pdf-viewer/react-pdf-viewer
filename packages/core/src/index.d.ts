@@ -119,6 +119,51 @@ export declare namespace PdfJs {
         gen: number;
         num: number;
     }
+
+    interface AnnotationPoint {
+        x: number;
+        y: number;
+    }
+    interface Annotation {
+        annotationType: number;
+        color?: Uint8ClampedArray;
+        dest: string;
+        hasAppearance: boolean;
+        id: string;
+        rect: number[];
+        subtype: string;
+        // Border style
+        borderStyle: {
+            dashArray: number[];
+            horizontalCornerRadius: number;
+            style: number;
+            verticalCornerRadius: number;
+            width: number;
+        };
+        // For annotation that has a popup
+        hasPopup?: boolean;
+        contents?: string;
+        modificationDate?: string;
+        title?: string;
+        // Parent annotation
+        parentId?: string;
+        parentType?: string;
+        // File attachment annotation
+        file?: Attachment;
+        // Ink annotation
+        inkLists?: AnnotationPoint[][];
+        // Line annotation
+        lineCoordinates: number[];
+        // Link annotation
+        // `action` can be `FirstPage`, `PrevPage`, `NextPage`, `LastPage`, `GoBack`, `GoForward`
+        action?: string;
+        url?: string;
+        newWindow?: boolean;
+        // Polyline annotation
+        vertices?: AnnotationPoint[];
+        // Text annotation
+        name?: string;
+    }
 }
 
 // --------------------
@@ -411,10 +456,19 @@ export interface PluginOnTextLayerRender {
     status: TextLayerRenderStatus;
 }
 
+export interface PluginOnAnnotationLayerRender {
+    annotations: PdfJs.Annotation[];
+    container: HTMLElement;
+    pageIndex: number;
+    scale: number;
+    rotation: number;
+}
+
 export interface Plugin {
     install?(pluginFunctions: PluginFunctions): void;
     renderViewer?(props: RenderViewer): Slot;
     uninstall?(pluginFunctions: PluginFunctions): void;
+    onAnnotationLayerRender?(props: PluginOnAnnotationLayerRender): void;
     onDocumentLoad?(props: PluginOnDocumentLoad): void;
     onTextLayerRender?(props: PluginOnTextLayerRender): void;
     onViewerStateChange?(viewerState: ViewerState): ViewerState;

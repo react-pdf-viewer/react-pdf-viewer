@@ -2,6 +2,9 @@
 
 ## v2.1.0 (not released yet)
 
+**New features**
+- Add `onAnnotationLayerRender` hook for plugin
+
 **Bug fixes**
 - Clicking _Previous match_ or _Next match_ button throws an error if the keyword is empty
 

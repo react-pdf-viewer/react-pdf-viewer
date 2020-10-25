@@ -1,5 +1,5 @@
 import React from 'react';
-import { Viewer, Worker } from '@react-pdf-viewer/core';
+import { PdfJs, Plugin, PluginOnAnnotationLayerRender, Viewer, Worker } from '@react-pdf-viewer/core';
 
 import { defaultLayoutPlugin } from '@react-pdf-viewer/default-layout';
 
@@ -17,8 +17,19 @@ import '@react-pdf-viewer/default-layout/styles/index.css';
 //     },
 // });
 
+const testAnnotationRenderPlugin = (): Plugin => {
+    const onRenderAnnotation = (e: PluginOnAnnotationLayerRender) => {
+        console.log(e);
+    };
+
+    return {
+        onAnnotationLayerRender: onRenderAnnotation,
+    };
+};
+
 const App = () => {
     const defaultLayoutPluginInstance = defaultLayoutPlugin();
+    const testAnnotationRenderPluginInstance = testAnnotationRenderPlugin();
 
     return (
         <Worker workerUrl="https://unpkg.com/pdfjs-dist@2.5.207/build/pdf.worker.js">
@@ -31,6 +42,7 @@ const App = () => {
                     fileUrl="http://localhost:8001/pdf-open-parameters.pdf"
                     plugins={[
                         defaultLayoutPluginInstance,
+                        testAnnotationRenderPluginInstance,
                     ]}
                 />
             </div>
