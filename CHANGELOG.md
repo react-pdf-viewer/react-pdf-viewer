@@ -2,6 +2,34 @@
 
 ## v2.1.0 (not released yet)
 
+**New features**
+- Add `onAnnotationLayerRender` hook for plugin. We can perform custom action after annotations are rendered.
+The following sample code creates a plugin that finds all annotation links, and add the `target="_blank"` attribute to the links:
+
+~~~ javascript
+import { AnnotationType, Plugin, PluginOnAnnotationLayerRender } from '@react-pdf-viewer/core';
+
+const customPlugin = (): Plugin => {
+    const onRenderAnnotations = (e: PluginOnAnnotationLayerRender) => {
+        // Find all `Link` annotation
+        e.annotations
+            .filter(annotation => annotation.annotationType === AnnotationType.Link)
+            .forEach(annotation => {
+                if (annotation.url) {
+                    // Find the `a` element represents the link
+                    [...e.container.querySelectorAll('.rpv-core-annotation-link a')].forEach(linkEle => {
+                        linkEle.setAttribute('target', '_blank');
+                    });
+                }
+            });
+    };
+
+    return {
+        onAnnotationLayerRender: onRenderAnnotations,
+    };
+};
+~~~
+
 **Bug fixes**
 - Clicking _Previous match_ or _Next match_ button throws an error if the keyword is empty
 

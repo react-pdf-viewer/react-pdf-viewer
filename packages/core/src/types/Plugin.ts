@@ -24,10 +24,19 @@ export interface PluginOnTextLayerRender {
     status: TextLayerRenderStatus;
 }
 
+export interface PluginOnAnnotationLayerRender {
+    annotations: PdfJs.Annotation[];
+    container: HTMLElement;
+    pageIndex: number;
+    scale: number;
+    rotation: number;
+}
+
 export interface Plugin {
     install?(pluginFunctions: PluginFunctions): void;
     renderViewer?(props: RenderViewer): Slot;
     uninstall?(pluginFunctions: PluginFunctions): void;
+    onAnnotationLayerRender?(props: PluginOnAnnotationLayerRender): void;
     onDocumentLoad?(props: PluginOnDocumentLoad): void;
     onTextLayerRender?(props: PluginOnTextLayerRender): void;
     onViewerStateChange?(viewerState: ViewerState): ViewerState;

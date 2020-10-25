@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { useContext, useState } from 'react';
+import React, { useContext, useRef, useState } from 'react';
 
 import AnnotationLayer from '../annotations/AnnotationLayer';
 import Spinner from '../components/Spinner';
@@ -37,7 +37,6 @@ interface PageLayerProps {
 }
 
 interface PageSizeState {
-    isCalculated: boolean;
     page?: PdfJs.Page | null;
     pageHeight: number;
     pageWidth: number;
@@ -50,13 +49,14 @@ const PageLayer: React.FC<PageLayerProps> = ({
 }) => {
     const theme = useContext(ThemeContext);
     const [pageSize, setPageSize] = useState<PageSizeState>({
-        isCalculated: false,
         page: null,
         pageHeight: height,
         pageWidth: width,
         viewportRotation: 0,
     });
-    const { isCalculated, page, pageHeight, pageWidth } = pageSize;
+    const { page, pageHeight, pageWidth } = pageSize;
+
+    const prevIsCalculated = useRef(false);
 
     const intersectionThreshold = Array(10).fill(null).map((_, i) => i / 10);
 
@@ -69,12 +69,13 @@ const PageLayer: React.FC<PageLayerProps> = ({
 
     const visibilityChanged = (params: VisibilityChanged): void => {
         onPageVisibilityChanged(pageIndex, params.isVisible ? params.ratio : -1);
-        if (params.isVisible && !isCalculated) {
+        if (params.isVisible && !prevIsCalculated.current) {
+            prevIsCalculated.current = true;
+
             doc.getPage(pageIndex + 1).then((pdfPage) => {
                 const viewport = pdfPage.getViewport({ scale: 1 });
 
                 setPageSize({
-                    isCalculated: true,
                     page: pdfPage,
                     pageHeight: viewport.height,
                     pageWidth: viewport.width,
@@ -116,6 +117,8 @@ const PageLayer: React.FC<PageLayerProps> = ({
                                     <AnnotationLayer
                                         doc={doc}
                                         page={page}
+                                        pageIndex={pageIndex}
+                                        plugins={plugins}
                                         rotation={rotationNumber}
                                         scale={scale}
                                         onExecuteNamedAction={onExecuteNamedAction}
