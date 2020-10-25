@@ -1,5 +1,5 @@
 import React from 'react';
-import { PdfJs, Plugin, PluginOnAnnotationLayerRender, Viewer, Worker } from '@react-pdf-viewer/core';
+import { AnnotationType, Plugin, PluginOnAnnotationLayerRender, Viewer, Worker } from '@react-pdf-viewer/core';
 
 import { defaultLayoutPlugin } from '@react-pdf-viewer/default-layout';
 
@@ -18,12 +18,22 @@ import '@react-pdf-viewer/default-layout/styles/index.css';
 // });
 
 const testAnnotationRenderPlugin = (): Plugin => {
-    const onRenderAnnotation = (e: PluginOnAnnotationLayerRender) => {
-        console.log(e);
+    const onRenderAnnotations = (e: PluginOnAnnotationLayerRender) => {
+        // Find all `Link` annotation
+        e.annotations
+            .filter(annotation => annotation.annotationType === AnnotationType.Link)
+            .forEach(annotation => {
+                if (annotation.url) {
+                    // Find the `a` element represents the link
+                    [...e.container.querySelectorAll('.rpv-core-annotation-link a')].forEach(linkEle => {
+                        linkEle.setAttribute('target', '_blank');
+                    });
+                }
+            });
     };
 
     return {
-        onAnnotationLayerRender: onRenderAnnotation,
+        onAnnotationLayerRender: onRenderAnnotations,
     };
 };
 
