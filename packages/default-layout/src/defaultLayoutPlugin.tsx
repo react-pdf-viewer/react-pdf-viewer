@@ -87,6 +87,7 @@ const defaultLayoutPlugin = (props?: DefaultLayoutPluginProps): Plugin => {
                             {slot.subSlot.children}
                         </div>
                     </div>
+                    {slot.children}
                 </div>
             );
             
