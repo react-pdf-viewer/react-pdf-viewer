@@ -67,14 +67,14 @@ module.exports = {
         // Indicate the package source based on the name
         // So we don't have to map them manually in the `alias` option as 
         //  alias: {
-        //      '@react-pdf-viewer/core/styles.css': path.join(__dirname, '../packages/core/lib/styles.css'),
+        //      '@react-pdf-viewer/core/lib/styles.css': path.join(__dirname, '../packages/core/lib/styles.css'),
         //      '@react-pdf-viewer/core': path.join(__dirname, '../packages/core/src'),
         //      ...
         //  }
         new webpack.NormalModuleReplacementPlugin(
             // The pattern covers the package and its CSS
             // @react-pdf-viewer/core
-            // @react-pdf-viewer/core/styles/index.css
+            // @react-pdf-viewer/core/lib/styles/index.css
             /^@react-pdf-viewer\/[a-z-]+[\/styles]*[\/index.(css)]*$/,
             resource => {
                 const request = resource.request;

@@ -6,7 +6,7 @@ It's written in TypeScript, and powered by React hooks completely.
 import { Viewer } from '@react-pdf-viewer/core';
 
 // Import styles
-import '@react-pdf-viewer/core/styles/index.css';
+import '@react-pdf-viewer/core/lib/styles/index.css';
 
 <Viewer fileUrl='/path/to/document.pdf' />
 ~~~

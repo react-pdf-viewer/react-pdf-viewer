@@ -6,11 +6,11 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import '@react-pdf-viewer/attachment/styles/index.css';
-import '@react-pdf-viewer/bookmark/styles/index.css';
-import '@react-pdf-viewer/core/styles/index.css';
-import '@react-pdf-viewer/thumbnail/styles/index.css';
-import '@react-pdf-viewer/toolbar/styles/index.css';
+import '@react-pdf-viewer/attachment/lib/styles/index.css';
+import '@react-pdf-viewer/bookmark/lib/styles/index.css';
+import '@react-pdf-viewer/core/lib/styles/index.css';
+import '@react-pdf-viewer/thumbnail/lib/styles/index.css';
+import '@react-pdf-viewer/toolbar/lib/styles/index.css';
 
 import './defaultLayout.less';
 import './sidebar.less';

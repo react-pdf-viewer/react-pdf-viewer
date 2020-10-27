@@ -55,6 +55,7 @@ const defaultLayoutPluginInstance = defaultLayoutPlugin({
 
 **Bug fixes**
 - Clicking _Previous match_ or _Next match_ button throws an error if the keyword is empty
+- Fix the incorrect path of styles
 
 ## v2.0.1
 
@@ -68,7 +69,7 @@ The basic setup looks like following:
 import { toolbarPlugin } from '@react-pdf-viewer/toolbar';
 
 // Import styles
-import '@react-pdf-viewer/toolbar/styles/index.css';
+import '@react-pdf-viewer/toolbar/lib/styles/index.css';
 
 // Create the plugin instance
 const toolbarPluginInstance = toolbarPlugin(...);
@@ -173,8 +174,8 @@ import { Viewer } from '@react-pdf-viewer/core';
 import { defaultLayoutPlugin } from '@react-pdf-viewer/default-layout';
 
 // Import styles
-import '@react-pdf-viewer/core/styles/index.css';
-import '@react-pdf-viewer/default-layout/styles/index.css';
+import '@react-pdf-viewer/core/lib/styles/index.css';
+import '@react-pdf-viewer/default-layout/lib/styles/index.css';
 
 // Create new plugin instance
 const defaultLayoutPluginInstance = defaultLayoutPlugin();
