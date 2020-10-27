@@ -47,7 +47,7 @@ module.exports = {
         // we have to indicate the `react` path
         // Otherwise, we will see "Invalid hook call" error
         alias: {
-            "react": path.join(__dirname, './node_modules/react')
+            "react": path.join(__dirname, '../node_modules/react')
         }
     },
     devServer: {
