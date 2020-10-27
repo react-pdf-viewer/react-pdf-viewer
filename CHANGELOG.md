@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## v2.1.0 (not released yet)
+## v2.1.0
 
 **New features**
 - Add `onAnnotationLayerRender` hook for plugin. We can perform custom action after annotations are rendered.
@@ -56,6 +56,18 @@ const defaultLayoutPluginInstance = defaultLayoutPlugin({
 **Bug fixes**
 - Clicking _Previous match_ or _Next match_ button throws an error if the keyword is empty
 - Fix the incorrect path of styles
+
+**Upgrade from 2.0.1 to 2.1.0**
+
+We have to update the path of styles which are placed in the `lib` directory. For example:
+
+~~~ javascript
+// Old version
+import '@react-pdf-viewer/core/styles/index.css';
+
+// New version
+import '@react-pdf-viewer/core/lib/styles/index.css';
+~~~
 
 ## v2.0.1
 
