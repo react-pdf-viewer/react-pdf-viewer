@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## v2.2.0 (not released yet)
+
+**Bug fixes**
+- The print plugin doesn't work with default-layout plugin
+
 ## v2.1.0
 
 **New features**
