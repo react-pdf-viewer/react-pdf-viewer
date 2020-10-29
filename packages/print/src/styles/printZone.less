@@ -11,17 +11,27 @@
 }
 
 @media print {
-    .rpv-body-printing #root {
+    @page {
+        margin: 0;
+    }
+
+    .rpv-body-printing * {
         display: none;
     }
 
     .rpv-print-zone {
         display: block;
+        height: 100%;
+    }
 
-        &-page-thumbnail {
-            overflow: hidden;
-            page-break-after: auto;
-            page-break-inside: avoid;
+    .rpv-print-page-thumbnail {
+        display: block;
+        overflow: hidden;
+        page-break-after: auto;
+        page-break-inside: avoid;
+
+        img {
+            display: block;
         }
     }
 }
