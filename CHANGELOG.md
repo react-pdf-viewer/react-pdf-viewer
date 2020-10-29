@@ -4,6 +4,7 @@
 
 **Bug fixes**
 - The print plugin doesn't work with default-layout plugin
+- In some cases, there is an extra blank page when printing
 
 ## v2.1.0
 
