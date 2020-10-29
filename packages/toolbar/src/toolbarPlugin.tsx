@@ -75,7 +75,7 @@ const toolbarPlugin = (props?: ToolbarPluginProps): ToolbarPlugin => {
         const { ShowProperties, ShowPropertiesMenuItem } = propertiesPluginInstance;
         const { Rotate, RotateBackwardMenuItem, RotateForwardMenuItem } = rotatePluginInstance;
         const { SwitchScrollMode, SwitchScrollModeMenuItem } = scrollModePluginInstance;
-        const { ShowSearchPopover } = searchPluginInstance;
+        const { Search, ShowSearchPopover } = searchPluginInstance;
         const { SwitchSelectionMode, SwitchSelectionModeMenuItem } = selectionModePluginInstance;
         const { CurrentScale, Zoom, ZoomIn, ZoomOut } = zoomPluginInstance;
 
@@ -106,6 +106,7 @@ const toolbarPlugin = (props?: ToolbarPluginProps): ToolbarPlugin => {
                     Rotate,
                     RotateBackwardMenuItem,
                     RotateForwardMenuItem,
+                    Search,
                     ShowProperties,
                     ShowPropertiesMenuItem,
                     ShowSearchPopover,
