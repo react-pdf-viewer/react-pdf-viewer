@@ -6,14 +6,13 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { useContext, useRef, useState } from 'react';
+import React, { useContext } from 'react';
 import { Button, LocalizationContext, PdfJs, Position, PrimaryButton, Store, Tooltip } from '@react-pdf-viewer/core';
 
-import { EMPTY_KEYWORD_REGEXP } from './constants';
-import Match from './Match';
 import NextIcon from './NextIcon';
 import PreviousIcon from './PreviousIcon';
 import StoreProps from './StoreProps';
+import useSearch from './useSearch';
 
 interface SearchPopoverProps {
     doc: PdfJs.PdfDocument;
@@ -26,144 +25,45 @@ const PORTAL_OFFSET = { left: 0, top: 8 };
 
 const SearchPopover: React.FC<SearchPopoverProps> = ({ doc, store, onToggle }) => {
     const l10n = useContext(LocalizationContext);
-    const [keyword, setKeyword] = useState('');
-    const [found, setFound] = useState<Match[]>([]);
-    const [currentMatch, setCurrentMatch] = useState(0);
-    const [matchCase, setMatchCase] = useState(false);
-    const textContents = useRef<string[]>([]);
-    const [wholeWords, setWholeWords] = useState(false);
-    const indexArr = Array(doc.numPages).fill(0).map((_, i) => i);
 
-    const changeKeyword = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    const {
+        clearKeyword,
+        changeMatchCase,
+        changeWholeWords,
+        currentMatch,
+        jumpToNextMatch,
+        jumpToPreviousMatch,
+        keyword,
+        matchCase,
+        numberOfMatches,
+        wholeWords,
+        search,
+        setKeyword,
+    } = useSearch(doc, store);
+
+    const onChangeKeyword = (e: React.ChangeEvent<HTMLInputElement>): void => {
         setKeyword(e.target.value);
     };
 
-    const getTextContents = (): Promise<string[]> => {
-        const promises = indexArr.map((pageIndex) => {
-            return doc.getPage(pageIndex + 1).then((page) => {
-                return page.getTextContent();
-            }).then((content) => {
-                const pageContent = content.items.map((item) => item.str || '').join('');
-                return Promise.resolve({
-                    pageContent,
-                    pageIndex,
-                });
-            });
-        });
-        return Promise.all(promises).then((data) => {
-            data.sort((a, b) => a.pageIndex - b.pageIndex);
-            return Promise.resolve(data.map((item) => item.pageContent));
-        });
-    };
-
-    const keydownSearch = (e: React.KeyboardEvent<HTMLInputElement>): void => {
+    const onKeydownSearch = (e: React.KeyboardEvent<HTMLInputElement>): void => {
         // Press the Enter key
         if (e.keyCode !== 13 || !keyword) {
             return;
         }
-        search(keyword, matchCase, wholeWords);
+        search();
     };
 
-    const changeMatchCase = (e: React.ChangeEvent<HTMLInputElement>): void => {
-        const isChecked = e.target.checked;
-        setMatchCase(isChecked);
-        if (keyword) {
-            search(keyword, isChecked, wholeWords);
-        }
+    const onChangeMatchCase = (e: React.ChangeEvent<HTMLInputElement>): void => {
+        changeMatchCase(e.target.checked);
     };
 
-    const changeWholeWords = (e: React.ChangeEvent<HTMLInputElement>): void => {
-        const isChecked = e.target.checked;
-        setWholeWords(isChecked);
-        if (keyword) {
-            search(keyword, matchCase, isChecked);
-        }
+    const onChangeWholeWords = (e: React.ChangeEvent<HTMLInputElement>): void => {
+        changeWholeWords(e.target.checked);
     };
 
-    const clearKeyword = (): void => {
-        if (!keyword) {
-            // Do nothing
-            return;
-        }
-        store.update('keyword', [EMPTY_KEYWORD_REGEXP]);
-
-        setKeyword('');
-        setCurrentMatch(0);
-        setFound([]);
-        setMatchCase(false);
-        setWholeWords(false);
-    };
-
-    const close = (): void => {
+    const onClose = (): void => {
         onToggle();
         clearKeyword();
-    };
-
-    const buildKeywordRegex = (keywordParam: string, matchCaseParam: boolean, wholeWordsParam: boolean): RegExp => {
-        const source = wholeWordsParam ? ` ${keywordParam} ` : keywordParam;
-        const flags = matchCaseParam ? 'g' : 'gi';
-        return new RegExp(source, flags);
-    };
-
-    const search = (keywordParam: string, matchCaseParam: boolean, wholeWordsParam: boolean): void => {
-        const regexp = buildKeywordRegex(keywordParam, matchCaseParam, wholeWordsParam);
-        store.update('keyword', [regexp]);
-
-        setCurrentMatch(0);
-        setFound([]);
-
-        const promise = (textContents.current.length === 0)
-            ? getTextContents().then((response) => {
-                textContents.current = response;
-                return Promise.resolve(response);
-            })
-            : Promise.resolve(textContents.current);
-
-        promise.then((response) => {
-            const arr: Match[] = [];
-            response.forEach((item, pageIndex) => {
-                const numMatches = (item.match(regexp) || []).length;
-                for (let matchIndex = 0; matchIndex < numMatches; matchIndex++) {
-                    arr.push({
-                        matchIndex,
-                        pageIndex,
-                    });
-                }
-            });
-            setFound(arr);
-            if (arr.length > 0) {
-                setCurrentMatch(1);
-                jumpToMatch(arr[0]);
-            }
-        });
-    };
-
-    const jumpToPreviousMatch = (): void => {
-        if (!keyword) {
-            return;
-        }
-        const prev = currentMatch - 1;
-        const updated = prev > 0 ? prev : found.length;
-        setCurrentMatch(updated);
-        jumpToMatch(found[updated - 1]);
-    };
-
-    const jumpToNextMatch = (): void => {
-        if (!keyword) {
-            return;
-        }
-        const next = currentMatch + 1;
-        const updated = next <= found.length ? next : 1;
-        setCurrentMatch(updated);
-        jumpToMatch(found[updated - 1]);
-    };
-
-    const jumpToMatch = (match: Match) => {
-        const jumpToPage = store.get('jumpToPage');
-        if (jumpToPage) {
-            jumpToPage(match.pageIndex);
-        }
-        store.update('match', match);
     };
 
     return (
@@ -174,11 +74,11 @@ const SearchPopover: React.FC<SearchPopoverProps> = ({ doc, store, onToggle }) =
                     placeholder={(l10n && l10n.search ? l10n.search.enterToSearch : 'Enter to search') as string}
                     type="text"
                     value={keyword}
-                    onChange={changeKeyword}
-                    onKeyDown={keydownSearch}
+                    onChange={onChangeKeyword}
+                    onKeyDown={onKeydownSearch}
                 />
                 <div className='rpv-search-popover-counter'>
-                    {currentMatch}/{found.length}
+                    {currentMatch}/{numberOfMatches}
                 </div>
             </div>
             <label className='rpv-search-popover-label'>
@@ -186,7 +86,7 @@ const SearchPopover: React.FC<SearchPopoverProps> = ({ doc, store, onToggle }) =
                     className='rpv-search-popover-label-checkbox'
                     checked={matchCase}
                     type="checkbox"
-                    onChange={changeMatchCase}
+                    onChange={onChangeMatchCase}
                 /> {l10n && l10n.search ? l10n.search.matchCase : 'Match case'}
             </label>
             <label className='rpv-search-popover-label'>
@@ -194,7 +94,7 @@ const SearchPopover: React.FC<SearchPopoverProps> = ({ doc, store, onToggle }) =
                     className='rpv-search-popover-label-checkbox'
                     checked={wholeWords}
                     type="checkbox"
-                    onChange={changeWholeWords}
+                    onChange={onChangeWholeWords}
                 /> {l10n && l10n.search ? l10n.search.wholeWords : 'Whole words'}
             </label>
             <div className='rpv-search-popover-footer'>
@@ -215,7 +115,7 @@ const SearchPopover: React.FC<SearchPopoverProps> = ({ doc, store, onToggle }) =
                     />
                 </div>
                 <div className='rpv-search-popover-footer-button'>
-                    <PrimaryButton onClick={close}>
+                    <PrimaryButton onClick={onClose}>
                         {l10n && l10n.search ? l10n.search.close : 'Close'}
                     </PrimaryButton>
                 </div>
