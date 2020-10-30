@@ -2,6 +2,37 @@
 
 ## v2.2.0 (not released yet)
 
+**New features**
+- It's possible to customize the search control with the new `Search` component:
+
+~~~ javascript
+import { RenderSearchProps, Search } from '@react-pdf-viewer/search';
+
+<Search>
+{
+    (renderSearchProps: RenderSearchProps) => (
+        // Your custom search control
+    )
+}
+</Search>
+~~~ 
+
+The parameter `renderSearchProps` provides the properties and methods to build up a custom search control:
+
+| Property              | Type          | Description                                                                           |
+|-----------------------|---------------|---------------------------------------------------------------------------------------|
+| `clearKeyword`        | `Function`    | Clear the keyword                                                                     |
+| `changeMatchCase`     | `Function`    | The result has to match case with the keyword                                         |
+| `changeWholeWords`    | `Function`    | The result has to match the whole keyword                                             |
+| `currentMatch`        | `number`      | The index of current match                                                            |
+| `jumpToNextMatch`     | `Function`    | Jump to the next match                                                                |
+| `jumpToPreviousMatch` | `Function`    | Jump to the previous match                                                            |
+| `keyword`             | `string`      | The current keyword                                                                   |
+| `matchCase`           | `boolean`     | `true` if the result matches case with the keyword                                    |
+| `wholeWords`          | `boolean`     | `true` if the result matches the whole keyword                                        |
+| `search`              | `Function`    | Perform the search with current `keyword` and `matchCase`, `wholeWords` conditions    |
+| `setKeyword`          | `Function`    | Set the current keyword                                                               |
+
 **Bug fixes**
 - The print plugin doesn't work with default-layout plugin
 - In some cases, there is an extra blank page when printing
