@@ -40,7 +40,7 @@ const Inner: FC<{
     store: Store<StoreProps>,
 }> = ({ children, doc, store }) => {
     const result = useSearch(doc, store);
-    return children({...result})
+    return children({...result});
 };
 
 const Search: FC<{
@@ -50,7 +50,7 @@ const Search: FC<{
     const { currentDoc } = useDocument(store);
     return (
         currentDoc
-            ? <Inner children={children} doc={currentDoc} store={store} />
+            ? <Inner doc={currentDoc} store={store}>{children}</Inner>
             : <></>
     );
 };
