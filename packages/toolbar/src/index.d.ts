@@ -16,7 +16,7 @@ import { PrintProps } from '@react-pdf-viewer/print';
 import { ShowPropertiesProps, ShowPropertiesMenuItemProps } from '@react-pdf-viewer/properties';
 import { RotateDecoratorProps, RotateProps } from '@react-pdf-viewer/rotate';
 import { ScrollModePluginProps, SwitchScrollModeMenuItemProps, SwitchScrollModeProps } from '@react-pdf-viewer/scroll-mode';
-import { SearchPluginProps, ShowSearchPopoverProps } from '@react-pdf-viewer/search';
+import { SearchPluginProps, SearchProps, ShowSearchPopoverProps } from '@react-pdf-viewer/search';
 import { SelectionModePluginProps, SwitchSelectionModeMenuItemProps, SwitchSelectionModeProps } from '@react-pdf-viewer/selection-mode';
 import { CurrentScaleProps, ZoomProps, ZoomInProps, ZoomOutProps } from '@react-pdf-viewer/zoom';
 
@@ -38,6 +38,7 @@ export interface ToolbarSlot {
     Rotate(props: RotateProps): ReactElement;
     RotateBackwardMenuItem(props: RotateDecoratorProps): ReactElement;
     RotateForwardMenuItem(props: RotateDecoratorProps): ReactElement;
+    Search(props: SearchProps): ReactElement;
     ShowProperties(props: ShowPropertiesProps): ReactElement;
     ShowPropertiesMenuItem(props: ShowPropertiesMenuItemProps): ReactElement;
     ShowSearchPopover(props: ShowSearchPopoverProps): ReactElement;

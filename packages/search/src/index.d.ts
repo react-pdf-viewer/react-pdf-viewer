@@ -13,11 +13,31 @@ export interface RenderShowSearchPopoverProps {
     onClick: () => void;
 }
 
+export interface RenderSearchProps {
+    clearKeyword(): void;
+    changeMatchCase(matchCase: boolean): void;
+    changeWholeWords(wholeWords: boolean): void;
+    currentMatch: number;
+    jumpToNextMatch(): void;
+    jumpToPreviousMatch(): void;
+    keyword: string;
+    matchCase: boolean;
+    numberOfMatches: number;
+    wholeWords: boolean;
+    search(): void;
+    setKeyword(keyword: string): void;
+}
+
 export interface ShowSearchPopoverProps {
     children?: (props: RenderShowSearchPopoverProps) => ReactElement;
 }
 
+export interface SearchProps {
+    children?: (props: RenderSearchProps) => ReactElement;
+}
+
 export interface SearchPlugin extends Plugin {
+    Search: (props: SearchProps) => ReactElement;
     ShowSearchPopover: (props: ShowSearchPopoverProps) => ReactElement;
     ShowSearchPopoverButton(): ReactElement;
 }

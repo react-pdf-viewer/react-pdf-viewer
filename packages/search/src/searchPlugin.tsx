@@ -10,12 +10,14 @@ import React, { ReactElement } from 'react';
 import { createStore, Plugin, PluginFunctions, PluginOnDocumentLoad, PluginOnTextLayerRender, RenderViewer, Slot } from '@react-pdf-viewer/core';
 
 import { EMPTY_KEYWORD_REGEXP } from './constants';
+import Search, { SearchProps } from './Search';
 import ShowSearchPopover, { ShowSearchPopoverProps } from './ShowSearchPopover';
 import ShowSearchPopoverButton from './ShowSearchPopoverButton';
 import StoreProps from './StoreProps';
 import Tracker from './Tracker';
 
 interface SearchPlugin extends Plugin {
+    Search(props: SearchProps): ReactElement;
     ShowSearchPopover(props: ShowSearchPopoverProps): ReactElement;
     ShowSearchPopoverButton(): ReactElement;
 }
@@ -31,6 +33,10 @@ const searchPlugin = (props?: SearchPluginProps): SearchPlugin => {
     const store = createStore<StoreProps>({
         renderStatus: new Map<number, PluginOnTextLayerRender>(),
     });
+
+    const SearchDecorator = (props: SearchProps) => (
+        <Search {...props} store={store} />
+    );
 
     const ShowSearchPopoverDecorator = (props: ShowSearchPopoverProps) => (
         <ShowSearchPopover {...props} store={store} />
@@ -99,6 +105,7 @@ const searchPlugin = (props?: SearchPluginProps): SearchPlugin => {
                 store.update('renderStatus', renderStatus);
             }
         },
+        Search: SearchDecorator,
         ShowSearchPopover: ShowSearchPopoverDecorator,
         ShowSearchPopoverButton: ShowSearchPopoverButtonDecorator,
     };
