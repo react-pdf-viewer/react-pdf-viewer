@@ -48,7 +48,7 @@ declare module 'pdfjs-dist' {
         data?: FileData;
         cMapUrl?: string;
         cMapPacked?: boolean;
-        httpHeaders?: object;
+        httpHeaders?: Record<string, string | string[]>;
         url?: string;
         withCredentials?: boolean;
     }

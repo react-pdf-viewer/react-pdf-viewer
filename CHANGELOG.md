@@ -21,9 +21,10 @@ import { Viewer } from '@react-pdf-viewer/core';
 
 <Viewer
     fileUrl={...}
-    httpHeaders={
-        Authorization: '...',
-    }
+    authorization='...'
+    httpHeaders={{
+        key: value,
+    }}
 />
 ~~~
 

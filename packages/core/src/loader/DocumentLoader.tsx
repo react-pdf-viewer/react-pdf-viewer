@@ -28,7 +28,7 @@ interface DocumentLoaderProps {
     authorization: string;
     characterMap?: CharacterMap;
     file: PdfJs.FileData;
-    httpHeaders?: object;
+    httpHeaders?: Record<string, string | string[]>;
     renderError?: RenderError;
     renderLoader?(percentages: number): ReactElement;
     render(doc: PdfJs.PdfDocument): ReactElement;
@@ -50,7 +50,7 @@ const DocumentLoader: React.FC<DocumentLoaderProps> = ({ authorization, characte
         //  This may be caused by an accidental early return statement
         //  ```
         setStatus(new LoadingState(0));
-        let params: PdfJs.GetDocumentParams = Object.assign(
+        const params: PdfJs.GetDocumentParams = Object.assign(
             {},
             ('string' === typeof file) ? { url: file } : { data: file },
             characterMap ? { cMapUrl: characterMap.url, cMapPacked: characterMap.isCompressed } : {}

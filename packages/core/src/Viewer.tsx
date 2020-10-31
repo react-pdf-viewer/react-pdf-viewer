@@ -56,7 +56,7 @@ export interface ViewerProps {
     defaultScale?: number | SpecialZoomLevel;
     fileUrl: string | Uint8Array;
     // Additional authentication headers
-    httpHeaders?: object;
+    httpHeaders?: Record<string, string | string[]>;
     // The page (zero-index based) that will be displayed initially
     initialPage?: number;
     // Plugins
