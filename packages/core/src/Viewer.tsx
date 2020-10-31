@@ -45,11 +45,18 @@ export interface CharacterMap {
 }
 
 export interface ViewerProps {
+    // If you want to use an authorization header to access a PDF document from a protected server, then you can use
+    // `authorization: TOKEN_HERE`, for example:
+    // `authorization: 'Bearer ...'`
+    // Use `httpHeaders` option if you want to use other authorization server
+    authorization?: string;
     characterMap?: CharacterMap;
     // The default zoom level
     // If it's not set, the initial zoom level will be calculated based on the dimesion of page and the container width
     defaultScale?: number | SpecialZoomLevel;
     fileUrl: string | Uint8Array;
+    // Additional authentication headers
+    httpHeaders?: Record<string, string | string[]>;
     // The page (zero-index based) that will be displayed initially
     initialPage?: number;
     // Plugins
@@ -69,9 +76,11 @@ export interface ViewerProps {
 }
 
 const Viewer: React.FC<ViewerProps> = ({
+    authorization = '',
     characterMap,
     defaultScale,
     fileUrl,
+    httpHeaders,
     initialPage = 0,
     localization,
     plugins = [],
@@ -108,8 +117,10 @@ const Viewer: React.FC<ViewerProps> = ({
             <LocalizationProvider localization={localization}>
                 {(_) => ( // eslint-disable-line @typescript-eslint/no-unused-vars
                     <DocumentLoader
+                        authorization={authorization}
                         characterMap={characterMap}
                         file={file.data}
+                        httpHeaders={httpHeaders}
                         render={(doc: PdfJs.PdfDocument) => (
                             <PageSizeCalculator
                                 doc={doc}

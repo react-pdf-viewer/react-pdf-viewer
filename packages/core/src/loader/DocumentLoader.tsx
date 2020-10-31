@@ -25,14 +25,16 @@ import WrongPasswordState from './WrongPasswordState';
 export type RenderError = (error: LoadError) => ReactElement;
 
 interface DocumentLoaderProps {
+    authorization: string;
     characterMap?: CharacterMap;
     file: PdfJs.FileData;
+    httpHeaders?: Record<string, string | string[]>;
     renderError?: RenderError;
     renderLoader?(percentages: number): ReactElement;
     render(doc: PdfJs.PdfDocument): ReactElement;
 }
 
-const DocumentLoader: React.FC<DocumentLoaderProps> = ({ characterMap, file, render, renderError, renderLoader }) => {
+const DocumentLoader: React.FC<DocumentLoaderProps> = ({ authorization, characterMap, file, httpHeaders, render, renderError, renderLoader }) => {
     const theme = useContext(ThemeContext);
     const [status, setStatus] = useState<LoadingStatus>(new LoadingState(0));
 
@@ -48,11 +50,25 @@ const DocumentLoader: React.FC<DocumentLoaderProps> = ({ characterMap, file, ren
         //  This may be caused by an accidental early return statement
         //  ```
         setStatus(new LoadingState(0));
-        const params = Object.assign(
+        const params: PdfJs.GetDocumentParams = Object.assign(
             {},
             ('string' === typeof file) ? { url: file } : { data: file },
             characterMap ? { cMapUrl: characterMap.url, cMapPacked: characterMap.isCompressed } : {}
         );
+
+        if (authorization) {
+            params.withCredentials = true;
+            if (httpHeaders) {
+                params.httpHeaders = httpHeaders;
+                if (!params.httpHeaders['Authorization']) {
+                    params.httpHeaders['Authorization'] = authorization;
+                }
+            } else {
+                params.httpHeaders = {
+                    'Authorization': authorization,
+                };
+            }
+        }
 
         const loadingTask = PdfJs.getDocument(params);
         loadingTask.onPassword = (verifyPassword: VerifyPassword, reason: string): void => {

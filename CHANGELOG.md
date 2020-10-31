@@ -3,6 +3,31 @@
 ## v2.2.0 (not released yet)
 
 **New features**
+- Support loading PDF from a protected resource with new `authorization` option.
+
+~~~ javascript
+import { Viewer } from '@react-pdf-viewer/core';
+
+<Viewer
+    fileUrl={...}
+    authorization='Bearer ...'
+/>
+~~~
+
+If you want to use another authorization servers or send more additional authentication headers, then use the new `httpHeaders` option, for example:
+
+~~~ javascript
+import { Viewer } from '@react-pdf-viewer/core';
+
+<Viewer
+    fileUrl={...}
+    authorization='...'
+    httpHeaders={{
+        key: value,
+    }}
+/>
+~~~
+
 - It's possible to customize the search control with the new `Search` component:
 
 ~~~ javascript
