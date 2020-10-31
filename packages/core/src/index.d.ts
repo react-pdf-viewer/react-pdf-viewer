@@ -521,12 +521,19 @@ export interface CharacterMap {
 }
 
 export interface ViewerProps {
+    // If you want to use an authorization header to access a PDF document from a protected server, then you can use
+    // `authorization: TOKEN_HERE`, for example:
+    // `authorization: 'Bearer ...'`
+    // Use `httpHeaders` option if you want to use other authorization server
+    authorization?: string;
     characterMap?: CharacterMap;
     // The default zoom level
     // If it's not set, the initial zoom level will be calculated based on the dimesion of page and the container width
     // So that, the document will fit best within the container
     defaultScale?: number | SpecialZoomLevel;
     fileUrl: string | Uint8Array;
+    // Additional authentication headers
+    httpHeaders?: object;
     // The page (zero-index based) that will be displayed initially
     initialPage?: number;
     // Plugins
