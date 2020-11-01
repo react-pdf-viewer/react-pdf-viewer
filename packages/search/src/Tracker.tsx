@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { PluginOnTextLayerRender, TextLayerRenderStatus, Store } from '@react-pdf-viewer/core';
 
 import calculateOffset from './calculateOffset';
@@ -36,6 +36,7 @@ const Tracker: React.FC<{
         scale: 1,
         status: TextLayerRenderStatus.PreRender,
     });
+    const currentMatchRef = useRef<HTMLElement | null>(null);
 
     const unhighlightAll = (containerEle: HTMLElement): void => {
         const highlightNodes = containerEle.querySelectorAll('span.rpv-search-text-highlight');
@@ -146,6 +147,11 @@ const Tracker: React.FC<{
             const jump = store.get('jumpToDestination');
             if (jump) {
                 jump(pageIndex, (container.getBoundingClientRect().height - top) / renderStatus.scale, left / renderStatus.scale, renderStatus.scale);
+                if (currentMatchRef.current) {
+                    currentMatchRef.current.classList.remove('rpv-search-text-highlight-current');
+                }
+                currentMatchRef.current = span;
+                span.classList.add('rpv-search-text-highlight-current');
             }
         }
     };
