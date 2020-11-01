@@ -58,6 +58,9 @@ The parameter `renderSearchProps` provides the properties and methods to build u
 | `search`              | `Function`    | Perform the search with current `keyword` and `matchCase`, `wholeWords` conditions    |
 | `setKeyword`          | `Function`    | Set the current keyword                                                               |
 
+**Improvements**
+- A current match search has a custom class `rpv-search-text-highlight-current`. So you can customize the current match by adding CSS properties for the class.
+
 **Bug fixes**
 - The print plugin doesn't work with default-layout plugin
 - In some cases, there is an extra blank page when printing

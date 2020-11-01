@@ -5,6 +5,7 @@ import { ScrollMode } from '@react-pdf-viewer/scroll-mode';
 import { NextIcon, PreviousIcon, RenderSearchProps } from '@react-pdf-viewer/search';
 
 import '@react-pdf-viewer/default-layout/lib/styles/index.css';
+import './styles.css';
 
 const App = () => {
     const renderToolbar = (Toolbar: ((props: ToolbarProps) => ReactElement)) => (
@@ -137,7 +138,7 @@ const App = () => {
         renderToolbar,
         toolbarPlugin: {
             scrollModePlugin: {
-                scrollMode: ScrollMode.Horizontal,
+                scrollMode: ScrollMode.Vertical,
             },
             searchPlugin: {
                 keyword: ['document', 'PDF'],
