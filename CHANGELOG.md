@@ -61,6 +61,7 @@ The parameter `renderSearchProps` provides the properties and methods to build u
 **Bug fixes**
 - The print plugin doesn't work with default-layout plugin
 - In some cases, there is an extra blank page when printing
+- Clicking bookmark doesn't jump to correct page in horizontal scroll mode
 
 ## v2.1.0
 

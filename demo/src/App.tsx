@@ -133,7 +133,7 @@ const App = () => {
     );
 
     const defaultLayoutPluginInstance = defaultLayoutPlugin({
-        renderToolbar,
+        // renderToolbar,
         toolbarPlugin: {
             searchPlugin: {
                 keyword: ['document', 'PDF'],
