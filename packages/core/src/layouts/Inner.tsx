@@ -77,7 +77,7 @@ const Inner: React.FC<InnerProps> = ({
 
     const getViewerState = () => stateRef.current;
 
-    const jumpToDestination = (pageIndex: number, bottomOffset: number, scaleTo: number | SpecialZoomLevel): void => {
+    const jumpToDestination = (pageIndex: number, bottomOffset: number, leftOffset: number, scaleTo: number | SpecialZoomLevel): void => {
         const pagesContainer = pagesRef.current;
         const currentState = stateRef.current;
         if (!pagesContainer || !currentState) {
@@ -90,20 +90,23 @@ const Inner: React.FC<InnerProps> = ({
 
             let top = 0;
             const bottom = bottomOffset || 0;
+            let left = leftOffset || 0;
             switch (scaleTo) {
                 case SpecialZoomLevel.PageFit:
                     top = 0;
+                    left = 0;
                     zoom(SpecialZoomLevel.PageFit);
                     break;
                 default:
                     top = (viewport.height - bottom) * currentState.scale;
+                    left = left * currentState.scale;
                     break;
             }
 
             const targetPageEle = pageRefs[pageIndex].current;
             if (targetPageEle) {
                 pagesContainer.scrollTop = targetPageEle.offsetTop + top;
-                pagesContainer.scrollLeft = targetPageEle.offsetLeft;
+                pagesContainer.scrollLeft = targetPageEle.offsetLeft + left;
             }
         });
     };

@@ -13,6 +13,7 @@
         "react-dom": "^16.13.1",
         "@react-pdf-viewer/core": "2.1.0",
         "@react-pdf-viewer/default-layout": "2.1.0",
+        "@react-pdf-viewer/scroll-mode": "2.1.0",
         "@react-pdf-viewer/search": "2.1.0",
         "@react-pdf-viewer/toolbar": "2.1.0"
     },

@@ -1,6 +1,7 @@
 import React, { ReactElement } from 'react';
 import { Icon, Button, Position, Tooltip, Viewer, Worker } from '@react-pdf-viewer/core';
 import { defaultLayoutPlugin, ToolbarProps, ToolbarSlot } from '@react-pdf-viewer/default-layout';
+import { ScrollMode } from '@react-pdf-viewer/scroll-mode';
 import { NextIcon, PreviousIcon, RenderSearchProps } from '@react-pdf-viewer/search';
 
 import '@react-pdf-viewer/default-layout/lib/styles/index.css';
@@ -133,12 +134,15 @@ const App = () => {
     );
 
     const defaultLayoutPluginInstance = defaultLayoutPlugin({
-        // renderToolbar,
+        renderToolbar,
         toolbarPlugin: {
+            scrollModePlugin: {
+                scrollMode: ScrollMode.Horizontal,
+            },
             searchPlugin: {
                 keyword: ['document', 'PDF'],
             },
-        }
+        },
     });
 
     return (

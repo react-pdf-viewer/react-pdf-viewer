@@ -20,7 +20,7 @@ interface LinkProps {
     page: PdfJs.Page;
     viewport: PdfJs.ViewPort;
     onExecuteNamedAction(action: string): void;
-    onJumpToDest(pageIndex: number, bottomOffset: number, scaleTo: number | SpecialZoomLevel): void;
+    onJumpToDest(pageIndex: number, bottomOffset: number, leftOffset: number, scaleTo: number | SpecialZoomLevel): void;
 }
 
 const Link: React.FC<LinkProps> = ({ annotation, doc, page, viewport, onExecuteNamedAction, onJumpToDest }) => {
@@ -31,7 +31,7 @@ const Link: React.FC<LinkProps> = ({ annotation, doc, page, viewport, onExecuteN
             ? onExecuteNamedAction(annotation.action)
             : getDestination(doc, annotation.dest).then((target) => {
                 const { pageIndex, bottomOffset, scaleTo } = target;
-                onJumpToDest(pageIndex + 1, bottomOffset, scaleTo);
+                onJumpToDest(pageIndex + 1, bottomOffset, 0, scaleTo);
             });
     };
 

@@ -15,6 +15,6 @@ export default interface StoreProps {
     keyword?: RegExp[];
     match?: Match;
     renderStatus: Map<number, PluginOnTextLayerRender>;
-    jumpToDestination?(pageIndex: number, bottomOffset: number, scaleTo: number | SpecialZoomLevel): void;
+    jumpToDestination?(pageIndex: number, bottomOffset: number, leftOffset: number, scaleTo: number | SpecialZoomLevel): void;
     jumpToPage?(pageIndex: number): void;
 }
