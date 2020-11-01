@@ -142,10 +142,10 @@ const Tracker: React.FC<{
         const spans = container.querySelectorAll('.rpv-search-text-highlight');
         if (match.matchIndex < spans.length) {
             const span = spans[match.matchIndex] as HTMLElement;
-            const { top } = calculateOffset(span, container);
+            const { left, top } = calculateOffset(span, container);
             const jump = store.get('jumpToDestination');
             if (jump) {
-                jump(pageIndex, (container.getBoundingClientRect().height - top) / renderStatus.scale, 0, renderStatus.scale);
+                jump(pageIndex, (container.getBoundingClientRect().height - top) / renderStatus.scale, left / renderStatus.scale, renderStatus.scale);
             }
         }
     };
