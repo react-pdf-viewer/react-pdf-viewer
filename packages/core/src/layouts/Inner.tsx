@@ -103,6 +103,7 @@ const Inner: React.FC<InnerProps> = ({
             const targetPageEle = pageRefs[pageIndex].current;
             if (targetPageEle) {
                 pagesContainer.scrollTop = targetPageEle.offsetTop + top;
+                pagesContainer.scrollLeft = targetPageEle.offsetLeft;
             }
         });
     };
@@ -115,6 +116,7 @@ const Inner: React.FC<InnerProps> = ({
         const targetPage = pageRefs[pageIndex].current;
         if (pagesContainer && targetPage) {
             pagesContainer.scrollTop = targetPage.offsetTop;
+            pagesContainer.scrollLeft = targetPage.offsetLeft;
         }
         setCurrentPage(pageIndex);
     };
