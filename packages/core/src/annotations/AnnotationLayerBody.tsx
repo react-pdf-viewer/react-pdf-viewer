@@ -40,7 +40,7 @@ interface AnnotationLayerBodyProps {
     rotation: number;
     scale: number;
     onExecuteNamedAction(action: string): void;
-    onJumpToDest(pageIndex: number, bottomOffset: number, scaleTo: number | SpecialZoomLevel): void;
+    onJumpToDest(pageIndex: number, bottomOffset: number, leftOffset: number, scaleTo: number | SpecialZoomLevel): void;
 }
 
 const AnnotationLayerBody: React.FC<AnnotationLayerBodyProps> = ({ annotations, containerRef, doc, page, pageIndex, plugins, rotation, scale, onExecuteNamedAction, onJumpToDest }) => {

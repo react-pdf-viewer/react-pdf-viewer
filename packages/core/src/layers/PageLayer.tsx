@@ -32,7 +32,7 @@ interface PageLayerProps {
     width: number;
     onCanvasLayerRender(e: CanvasLayerRenderEvent): void;
     onExecuteNamedAction(action: string): void;
-    onJumpToDest(pageIndex: number, bottomOffset: number, scaleTo: number | SpecialZoomLevel): void;
+    onJumpToDest(pageIndex: number, bottomOffset: number, leftOffset: number, scaleTo: number | SpecialZoomLevel): void;
     onPageVisibilityChanged(pageIndex: number, ratio: number): void;
 }
 

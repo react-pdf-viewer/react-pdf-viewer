@@ -24,7 +24,7 @@ const BookmarkListWithStore: React.FC<{
     const jump = (pageIndex: number, bottomOffset: number, scaleTo: number | SpecialZoomLevel) => {
         const jumpToDestination = store.get('jumpToDestination');
         if (jumpToDestination) {
-            jumpToDestination(pageIndex, bottomOffset, scaleTo);
+            jumpToDestination(pageIndex, bottomOffset, 0, scaleTo);
         }
     };
 

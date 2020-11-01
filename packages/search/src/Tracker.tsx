@@ -145,7 +145,7 @@ const Tracker: React.FC<{
             const { top } = calculateOffset(span, container);
             const jump = store.get('jumpToDestination');
             if (jump) {
-                jump(pageIndex, (container.getBoundingClientRect().height - top) / renderStatus.scale, renderStatus.scale);
+                jump(pageIndex, (container.getBoundingClientRect().height - top) / renderStatus.scale, 0, renderStatus.scale);
             }
         }
     };
