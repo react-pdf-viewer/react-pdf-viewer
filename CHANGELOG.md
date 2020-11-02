@@ -119,6 +119,7 @@ const defaultLayoutPluginInstance = defaultLayoutPlugin({
 
 **Improvements**
 - Optimize the [search plugin](https://react-pdf-viewer.dev/plugins/search) that doesn't perform unhighligting and highlighting many times after texts are rendered
+- Avoid the black flickering when clicking a bookmark
 
 **Bug fixes**
 - Clicking _Previous match_ or _Next match_ button throws an error if the keyword is empty
