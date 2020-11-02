@@ -21,7 +21,7 @@
 		"packages/*"
 	],
 	"scripts": {
-		"bootstrap": "npm install & lerna bootstrap --hoist & npm run build",
+		"bootstrap": "npm install && lerna bootstrap --hoist && npm run build",
 		"postinstall": "npm run bootstrap",
 		"clean": "lerna run clean",
 		"build": "lerna run build",
