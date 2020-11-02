@@ -7,7 +7,7 @@
  */
 
 import React, { useEffect, useRef, useState } from 'react';
-import { PluginOnTextLayerRender, TextLayerRenderStatus, Store } from '@react-pdf-viewer/core';
+import { PluginOnTextLayerRender, LayerRenderStatus, Store } from '@react-pdf-viewer/core';
 
 import calculateOffset from './calculateOffset';
 import { EMPTY_KEYWORD_REGEXP } from './constants';
@@ -19,7 +19,7 @@ interface RenderStatus {
     ele?: HTMLElement;
     pageIndex: number;
     scale: number;
-    status: TextLayerRenderStatus;
+    status: LayerRenderStatus;
 }
 
 const Tracker: React.FC<{
@@ -34,7 +34,7 @@ const Tracker: React.FC<{
     const [renderStatus, setRenderStatus] = useState<RenderStatus>({
         pageIndex,
         scale: 1,
-        status: TextLayerRenderStatus.PreRender,
+        status: LayerRenderStatus.PreRender,
     });
     const currentMatchRef = useRef<HTMLElement | null>(null);
 
@@ -118,7 +118,7 @@ const Tracker: React.FC<{
     const isEmptyKeyword = () => keywordRegexp.length === 0 || (keywordRegexp.length === 1 && keywordRegexp[0].source.trim() === '');
 
     useEffect(() => {
-        if (isEmptyKeyword() || !renderStatus.ele || renderStatus.status !== TextLayerRenderStatus.DidRender) {
+        if (isEmptyKeyword() || !renderStatus.ele || renderStatus.status !== LayerRenderStatus.DidRender) {
             return;
         }
         
@@ -129,13 +129,13 @@ const Tracker: React.FC<{
     }, [keywordRegexp, match, renderStatus.status]);
 
     useEffect(() => {
-        if (isEmptyKeyword() && renderStatus.ele && renderStatus.status === TextLayerRenderStatus.DidRender) {
+        if (isEmptyKeyword() && renderStatus.ele && renderStatus.status === LayerRenderStatus.DidRender) {
             unhighlightAll(renderStatus.ele);
         }
     }, [keywordRegexp, renderStatus.status]);
 
     const scrollToMatch = (): void => {
-        if (match.pageIndex !== pageIndex || !renderStatus.ele || renderStatus.status !== TextLayerRenderStatus.DidRender) {
+        if (match.pageIndex !== pageIndex || !renderStatus.ele || renderStatus.status !== LayerRenderStatus.DidRender) {
             return;
         }
         

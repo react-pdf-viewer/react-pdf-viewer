@@ -60,12 +60,17 @@ The parameter `renderSearchProps` provides the properties and methods to build u
 
 **Improvements**
 - A current match search has a custom class `rpv-search-text-highlight-current`. So you can customize the current match by adding CSS properties for the class.
+- Avoid the black flickering when clicking a bookmark
 
 **Bug fixes**
 - The [print plugin](https://react-pdf-viewer.dev/plugins/print/) doesn't work with default-layout plugin
 - In some cases, there is an extra blank page when printing
 - Clicking [bookmark](https://react-pdf-viewer.dev/plugins/bookmark) doesn't jump to correct page in horizontal [scroll mode](https://react-pdf-viewer.dev/plugins/scroll-mode)
 - Jumping between [search](https://react-pdf-viewer.dev/plugins/search) match doesn't work properly in horizontal [scroll mode](https://react-pdf-viewer.dev/plugins/scroll-mode)
+
+**Breaking changes**
+- The `onCanvasLayerRender` option is removed. Instead, use the `onCanvasLayerRender` option in your plugin. 
+- The `TextLayerRenderStatus` enum is renamed to `LayerRenderStatus`.
 
 ## v2.1.0
 
@@ -119,7 +124,6 @@ const defaultLayoutPluginInstance = defaultLayoutPlugin({
 
 **Improvements**
 - Optimize the [search plugin](https://react-pdf-viewer.dev/plugins/search) that doesn't perform unhighligting and highlighting many times after texts are rendered
-- Avoid the black flickering when clicking a bookmark
 
 **Bug fixes**
 - Clicking _Previous match_ or _Next match_ button throws an error if the keyword is empty
@@ -200,7 +204,6 @@ const getFilePluginInstance = getFilePlugin({
 - The `onPageChange` could be invoked several times when clicking an outline item
 
 **Breaking changes**
-
 - The `keyword` option is removed. Use the `keyword` option provided by the [search plugin](https://react-pdf-viewer.dev/plugins/search).
 - The `layout` option is removed
 - The `render` option is removed

@@ -16,7 +16,6 @@ import SpecialZoomLevel from '../SpecialZoomLevel';
 import ThemeContext from '../theme/ThemeContext';
 import { Plugin } from '../types/Plugin';
 import PdfJs from '../vendors/PdfJs';
-import { CanvasLayerRenderEvent } from '../Viewer';
 import CanvasLayer from './CanvasLayer';
 import SvgLayer from './SvgLayer';
 import TextLayer from './TextLayer';
@@ -30,7 +29,6 @@ interface PageLayerProps {
     rotation: number;
     scale: number;
     width: number;
-    onCanvasLayerRender(e: CanvasLayerRenderEvent): void;
     onExecuteNamedAction(action: string): void;
     onJumpToDest(pageIndex: number, bottomOffset: number, leftOffset: number, scaleTo: number | SpecialZoomLevel): void;
     onPageVisibilityChanged(pageIndex: number, ratio: number): void;
@@ -45,7 +43,7 @@ interface PageSizeState {
 
 const PageLayer: React.FC<PageLayerProps> = ({
     doc, height, pageIndex, plugins, renderPage, rotation, scale, width,
-    onCanvasLayerRender, onExecuteNamedAction, onJumpToDest, onPageVisibilityChanged,
+    onExecuteNamedAction, onJumpToDest, onPageVisibilityChanged,
 }) => {
     const theme = useContext(ThemeContext);
     const [pageSize, setPageSize] = useState<PageSizeState>({
@@ -133,10 +131,10 @@ const PageLayer: React.FC<PageLayerProps> = ({
                                         height={h}
                                         page={page}
                                         pageIndex={pageIndex}
+                                        plugins={plugins}
                                         rotation={rotationNumber}
                                         scale={scale}
                                         width={w}
-                                        onCanvasLayerRender={onCanvasLayerRender}
                                     />
                                 ),
                             },

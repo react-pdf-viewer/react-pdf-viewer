@@ -21,12 +21,6 @@ import ThemeProvider from './theme/ThemeProvider';
 import PdfJs from './vendors/PdfJs';
 import { Plugin } from './types/Plugin';
 
-export interface CanvasLayerRenderEvent {
-    ele: HTMLCanvasElement;
-    pageIndex: number;
-    rotation: number;
-    scale: number;
-}
 export interface DocumentLoadEvent {
     doc: PdfJs.PdfDocument;
 }
@@ -69,7 +63,6 @@ export interface ViewerProps {
     renderLoader?(percentages: number): ReactElement;
     // The text selection mode
     selectionMode?: SelectionMode;
-    onCanvasLayerRender?(e: CanvasLayerRenderEvent): void;
     onDocumentLoad?(e: DocumentLoadEvent): void;
     onPageChange?(e: PageChangeEvent): void;
     onZoom?(e: ZoomEvent): void;
@@ -88,7 +81,6 @@ const Viewer: React.FC<ViewerProps> = ({
     renderError,
     renderPage,
     renderLoader,
-    onCanvasLayerRender = () => {/**/},
     onDocumentLoad = () => {/**/},
     onPageChange = () => {/**/},
     onZoom = () => {/**/},
@@ -140,7 +132,6 @@ const Viewer: React.FC<ViewerProps> = ({
                                             rotation: 0,
                                             scale: ps.scale,
                                         }}
-                                        onCanvasLayerRender={onCanvasLayerRender}
                                         onDocumentLoad={onDocumentLoad}
                                         onOpenFile={openFile}
                                         onPageChange={onPageChange}

@@ -8,9 +8,9 @@
 
 import Slot from '../layouts/Slot';
 import PdfJs from '../vendors/PdfJs';
+import LayerRenderStatus from './LayerRenderStatus';
 import PluginFunctions from './PluginFunctions';
 import RenderViewer from './RenderViewer';
-import TextLayerRenderStatus from './TextLayerRenderStatus';
 import ViewerState from './ViewerState';
 
 export interface PluginOnDocumentLoad {
@@ -21,7 +21,7 @@ export interface PluginOnTextLayerRender {
     ele: HTMLElement;
     pageIndex: number;
     scale: number;
-    status: TextLayerRenderStatus;
+    status: LayerRenderStatus;
 }
 
 export interface PluginOnAnnotationLayerRender {
@@ -32,11 +32,20 @@ export interface PluginOnAnnotationLayerRender {
     rotation: number;
 }
 
+export interface PluginOnCanvasLayerRender {
+    ele: HTMLCanvasElement;
+    pageIndex: number;
+    rotation: number;
+    scale: number;
+    status: LayerRenderStatus;
+}
+
 export interface Plugin {
     install?(pluginFunctions: PluginFunctions): void;
     renderViewer?(props: RenderViewer): Slot;
     uninstall?(pluginFunctions: PluginFunctions): void;
     onAnnotationLayerRender?(props: PluginOnAnnotationLayerRender): void;
+    onCanvasLayerRender?(props: PluginOnCanvasLayerRender): void;
     onDocumentLoad?(props: PluginOnDocumentLoad): void;
     onTextLayerRender?(props: PluginOnTextLayerRender): void;
     onViewerStateChange?(viewerState: ViewerState): ViewerState;
