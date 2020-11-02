@@ -42,6 +42,7 @@ const CanvasLayer: React.FC<CanvasLayerProps> = ({ height, page, pageIndex, rota
         // to avoid the black flickering
         canvasEle.height = height * devicePixelRatio;
         canvasEle.width = width * devicePixelRatio;
+        canvasEle.style.opacity = '0';
 
         const canvasContext = canvasEle.getContext('2d', { alpha: false }) as CanvasRenderingContext2D;
 
@@ -49,6 +50,7 @@ const CanvasLayer: React.FC<CanvasLayerProps> = ({ height, page, pageIndex, rota
         renderTask.current = page.render({ canvasContext, viewport });
         renderTask.current.promise.then(
             (): void => {
+                canvasEle.style.removeProperty('opacity');
                 onCanvasLayerRender({
                     ele: canvasEle,
                     pageIndex,

@@ -62,10 +62,10 @@ The parameter `renderSearchProps` provides the properties and methods to build u
 - A current match search has a custom class `rpv-search-text-highlight-current`. So you can customize the current match by adding CSS properties for the class.
 
 **Bug fixes**
-- The print plugin doesn't work with default-layout plugin
+- The [print plugin](https://react-pdf-viewer.dev/plugins/print/) doesn't work with default-layout plugin
 - In some cases, there is an extra blank page when printing
-- Clicking bookmark doesn't jump to correct page in horizontal scroll mode
-- Jumping between search match doesn't work properly in horizontal scroll mode
+- Clicking [bookmark](https://react-pdf-viewer.dev/plugins/bookmark) doesn't jump to correct page in horizontal [scroll mode](https://react-pdf-viewer.dev/plugins/scroll-mode)
+- Jumping between [search](https://react-pdf-viewer.dev/plugins/search) match doesn't work properly in horizontal [scroll mode](https://react-pdf-viewer.dev/plugins/scroll-mode)
 
 ## v2.1.0
 
@@ -97,7 +97,7 @@ const customPlugin = (): Plugin => {
 };
 ~~~
 
-- The `seach` plugin allows to set multiple keywords to be highlighted initially
+- The [search plugin](https://react-pdf-viewer.dev/plugins/search) allows to set multiple keywords to be highlighted initially
 
 ~~~ javascript
 // Use the search plugin
@@ -118,7 +118,8 @@ const defaultLayoutPluginInstance = defaultLayoutPlugin({
 ~~~
 
 **Improvements**
-- Optimize the `seach` plugin that doesn't perform unhighligting and highlighting many times after texts are rendered
+- Optimize the [search plugin](https://react-pdf-viewer.dev/plugins/search) that doesn't perform unhighligting and highlighting many times after texts are rendered
+- Avoid the black flickering when clicking a bookmark
 
 **Bug fixes**
 - Clicking _Previous match_ or _Next match_ button throws an error if the keyword is empty
