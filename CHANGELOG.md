@@ -68,6 +68,10 @@ The parameter `renderSearchProps` provides the properties and methods to build u
 - Clicking [bookmark](https://react-pdf-viewer.dev/plugins/bookmark) doesn't jump to correct page in horizontal [scroll mode](https://react-pdf-viewer.dev/plugins/scroll-mode)
 - Jumping between [search](https://react-pdf-viewer.dev/plugins/search) match doesn't work properly in horizontal [scroll mode](https://react-pdf-viewer.dev/plugins/scroll-mode)
 
+**Breaking changes**
+- The `onCanvasLayerRender` option is removed. Instead, use the `onCanvasLayerRender` option in your plugin. 
+- The `TextLayerRenderStatus` enum is renamed to `LayerRenderStatus`.
+
 ## v2.1.0
 
 **New features**
@@ -200,7 +204,6 @@ const getFilePluginInstance = getFilePlugin({
 - The `onPageChange` could be invoked several times when clicking an outline item
 
 **Breaking changes**
-
 - The `keyword` option is removed. Use the `keyword` option provided by the [search plugin](https://react-pdf-viewer.dev/plugins/search).
 - The `layout` option is removed
 - The `render` option is removed

@@ -6,9 +6,9 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-enum TextLayerRenderStatus {
+enum LayerRenderStatus {
     PreRender,
     DidRender,
 }
 
-export default TextLayerRenderStatus;
+export default LayerRenderStatus;

@@ -400,14 +400,6 @@ export type RenderPage = (props: RenderPageProps) => React.ReactElement;
 // Events
 // ------
 
-// Invoked when the canvas layer is rendered completely
-export interface CanvasLayerRenderEvent {
-    ele: HTMLCanvasElement;
-    pageIndex: number;
-    rotation: number;
-    scale: number;
-}
-
 // Invoked when the document is loaded successfully
 export interface DocumentLoadEvent {
     doc: PdfJs.PdfDocument;
@@ -464,7 +456,7 @@ export interface PluginOnDocumentLoad {
     doc: PdfJs.PdfDocument;
 }
 
-export enum TextLayerRenderStatus {
+export enum LayerRenderStatus {
     PreRender,
     DidRender,
 }
@@ -473,7 +465,7 @@ export interface PluginOnTextLayerRender {
     ele: HTMLElement;
     pageIndex: number;
     scale: number;
-    status: TextLayerRenderStatus;
+    status: LayerRenderStatus;
 }
 
 export interface PluginOnAnnotationLayerRender {
@@ -484,11 +476,21 @@ export interface PluginOnAnnotationLayerRender {
     rotation: number;
 }
 
+// Invoked when the canvas layer is rendered
+export interface PluginOnCanvasLayerRender {
+    ele: HTMLCanvasElement;
+    pageIndex: number;
+    rotation: number;
+    scale: number;
+    status: LayerRenderStatus;
+}
+
 export interface Plugin {
     install?(pluginFunctions: PluginFunctions): void;
     renderViewer?(props: RenderViewer): Slot;
     uninstall?(pluginFunctions: PluginFunctions): void;
     onAnnotationLayerRender?(props: PluginOnAnnotationLayerRender): void;
+    onCanvasLayerRender?(props: PluginOnCanvasLayerRender): void;
     onDocumentLoad?(props: PluginOnDocumentLoad): void;
     onTextLayerRender?(props: PluginOnTextLayerRender): void;
     onViewerStateChange?(viewerState: ViewerState): ViewerState;
@@ -544,7 +546,6 @@ export interface ViewerProps {
     renderError?: RenderError;
     renderPage?: RenderPage;
     renderLoader?(percentages: number): ReactElement;
-    onCanvasLayerRender?(e: CanvasLayerRenderEvent): void;
     onDocumentLoad?(e: DocumentLoadEvent): void;
     onPageChange?(e: PageChangeEvent): void;
     onZoom?(e: ZoomEvent): void;

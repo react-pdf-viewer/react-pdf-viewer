@@ -17,7 +17,7 @@ import PluginFunctions from '../types/PluginFunctions';
 import ViewerState from '../types/ViewerState';
 import PdfJs from '../vendors/PdfJs';
 import getFileExt from '../utils/fileExt';
-import { CanvasLayerRenderEvent, DocumentLoadEvent, PageChangeEvent, ZoomEvent } from '../Viewer';
+import { DocumentLoadEvent, PageChangeEvent, ZoomEvent } from '../Viewer';
 import PageSize from './PageSize';
 import { RenderPage } from './RenderPage';
 
@@ -32,7 +32,6 @@ interface InnerProps {
     plugins: Plugin[];
     renderPage?: RenderPage;
     viewerState: ViewerState;
-    onCanvasLayerRender(e: CanvasLayerRenderEvent): void;
     onDocumentLoad(e: DocumentLoadEvent): void;
     onOpenFile(fileName: string, data: Uint8Array): void;
     onPageChange(e: PageChangeEvent): void;
@@ -41,7 +40,7 @@ interface InnerProps {
 
 const Inner: React.FC<InnerProps> = ({
     defaultScale, doc, initialPage, pageSize, plugins, renderPage, viewerState,
-    onCanvasLayerRender, onDocumentLoad, onOpenFile, onPageChange, onZoom,
+    onDocumentLoad, onOpenFile, onPageChange, onZoom,
 }) => {
     const theme = useContext(ThemeContext);
     const containerRef = useRef<HTMLDivElement | null>(null);
@@ -325,7 +324,6 @@ const Inner: React.FC<InnerProps> = ({
                                         rotation={rotation}
                                         scale={scale}
                                         width={pageWidth}
-                                        onCanvasLayerRender={onCanvasLayerRender}
                                         onExecuteNamedAction={executeNamedAction}
                                         onJumpToDest={jumpToDestination}
                                         onPageVisibilityChanged={pageVisibilityChanged}

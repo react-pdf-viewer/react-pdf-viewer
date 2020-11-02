@@ -9,21 +9,22 @@
 import React, { createRef, useContext, useRef } from 'react';
 
 import ThemeContext from '../theme/ThemeContext';
+import LayerRenderStatus from '../types/LayerRenderStatus';
+import { Plugin } from '../types/Plugin';
 import PdfJs from '../vendors/PdfJs';
-import { CanvasLayerRenderEvent } from '../Viewer';
 import WithScale from './WithScale';
 
 interface CanvasLayerProps {
     height: number;
     page: PdfJs.Page;
     pageIndex: number;
+    plugins: Plugin[];
     rotation: number;
     scale: number;
     width: number;
-    onCanvasLayerRender(e: CanvasLayerRenderEvent): void;
 }
 
-const CanvasLayer: React.FC<CanvasLayerProps> = ({ height, page, pageIndex, rotation, scale, width, onCanvasLayerRender }) => {
+const CanvasLayer: React.FC<CanvasLayerProps> = ({ height, page, pageIndex, plugins, rotation, scale, width }) => {
     const theme = useContext(ThemeContext);
     const canvasRef = createRef<HTMLCanvasElement>();
     const renderTask = useRef<PdfJs.PageRenderTask>();
@@ -38,6 +39,19 @@ const CanvasLayer: React.FC<CanvasLayerProps> = ({ height, page, pageIndex, rota
         }
 
         const canvasEle = canvasRef.current as HTMLCanvasElement;
+
+        plugins.forEach(plugin => {
+            if (plugin.onCanvasLayerRender) {
+                plugin.onCanvasLayerRender({
+                    ele: canvasEle,
+                    pageIndex,
+                    rotation,
+                    scale,
+                    status: LayerRenderStatus.PreRender,
+                });
+            }
+        });
+
         // Set the size for canvas here instead of inside `render`
         // to avoid the black flickering
         canvasEle.height = height * devicePixelRatio;
@@ -51,11 +65,16 @@ const CanvasLayer: React.FC<CanvasLayerProps> = ({ height, page, pageIndex, rota
         renderTask.current.promise.then(
             (): void => {
                 canvasEle.style.removeProperty('opacity');
-                onCanvasLayerRender({
-                    ele: canvasEle,
-                    pageIndex,
-                    rotation,
-                    scale,
+                plugins.forEach(plugin => {
+                    if (plugin.onCanvasLayerRender) {
+                        plugin.onCanvasLayerRender({
+                            ele: canvasEle,
+                            pageIndex,
+                            rotation,
+                            scale,
+                            status: LayerRenderStatus.DidRender,
+                        });
+                    }
                 });
             },
             (): void => {/**/},

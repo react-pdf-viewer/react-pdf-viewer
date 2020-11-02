@@ -9,8 +9,8 @@
 import React, { createRef, useContext, useRef } from 'react';
 
 import ThemeContext from '../theme/ThemeContext';
+import LayerRenderStatus from '../types/LayerRenderStatus';
 import { Plugin } from '../types/Plugin';
-import TextLayerRenderStatus from '../types/TextLayerRenderStatus';
 import PdfJs from '../vendors/PdfJs';
 import WithScale from './WithScale';
 
@@ -58,7 +58,7 @@ const TextLayer: React.FC<TextLayerProps> = ({ page, pageIndex, plugins, rotatio
                     ele: containerEle,
                     pageIndex,
                     scale,
-                    status: TextLayerRenderStatus.PreRender,
+                    status: LayerRenderStatus.PreRender,
                 });
             }
         });
@@ -83,7 +83,7 @@ const TextLayer: React.FC<TextLayerProps> = ({ page, pageIndex, plugins, rotatio
                                 ele: containerEle,
                                 pageIndex,
                                 scale,
-                                status: TextLayerRenderStatus.DidRender,
+                                status: LayerRenderStatus.DidRender,
                             });
                         }
                     });
