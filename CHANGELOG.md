@@ -61,6 +61,7 @@ The parameter `renderSearchProps` provides the properties and methods to build u
 **Improvements**
 - A current match search has a custom class `rpv-search-text-highlight-current`. So you can customize the current match by adding CSS properties for the class.
 - Avoid the black flickering when clicking a bookmark
+- Support both React v16 and v17
 
 **Bug fixes**
 - The [print plugin](https://react-pdf-viewer.dev/plugins/print/) doesn't work with default-layout plugin

@@ -9,13 +9,13 @@
     },
     "dependencies": {
         "pdfjs-dist": "^2.5.207",
-        "react": "^16.13.1",
-        "react-dom": "^16.13.1",
         "@react-pdf-viewer/core": "2.1.0",
         "@react-pdf-viewer/default-layout": "2.1.0",
         "@react-pdf-viewer/scroll-mode": "2.1.0",
         "@react-pdf-viewer/search": "2.1.0",
-        "@react-pdf-viewer/toolbar": "2.1.0"
+        "@react-pdf-viewer/toolbar": "2.1.0",
+        "react": "^17.0.1",
+        "react-dom": "^17.0.1"
     },
     "devDependencies": {
         "@babel/core": "^7.10.3",
