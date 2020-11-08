@@ -33,13 +33,11 @@
         "lib/index.js"
     ],
     "dependencies": {
-        "pdfjs-dist": "^2.5.207",
-        "react": "^16.13.1",
-        "react-dom": "^16.13.1"
+        "pdfjs-dist": "^2.5.207"
     },
     "peerDependencies": {
-        "react": "^16.8.0",
-        "react-dom": "^16.8.0"
+        "react": "^16.8.0 || ^17.0.0",
+        "react-dom": "^16.8.0 || ^17.0.0"
     },
     "publishConfig": {
         "access": "public"
