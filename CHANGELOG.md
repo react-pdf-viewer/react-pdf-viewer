@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## v2.2.0 (not released yet)
+## v2.2.0
 
 **New features**
 - Support loading PDF from a protected resource with new `authorization` option.

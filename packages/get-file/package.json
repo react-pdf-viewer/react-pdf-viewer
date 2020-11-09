@@ -1,6 +1,6 @@
 {
     "name": "@react-pdf-viewer/get-file",
-    "version": "2.1.0",
+    "version": "2.2.0",
     "description": "A React component to view a PDF document",
     "license": "https://react-pdf-viewer.dev/license",
     "author": {
@@ -33,7 +33,7 @@
         "lib/index.js"
     ],
     "dependencies": {
-        "@react-pdf-viewer/core": "2.1.0"
+        "@react-pdf-viewer/core": "2.2.0"
     },
     "peerDependencies": {
         "react": "^16.8.0 || ^17.0.0",
@@ -45,6 +45,5 @@
     "scripts": {
         "clean": "rm -rf lib && mkdir lib",
         "build": "npm run clean && cp src/index.d.ts lib && cp dist/index.js lib && NO_CSS='true' rollup -c ../../rollup.config.js"
-    },
-    "gitHead": "aaad5d65cd2cb5110d68e12ef02051d9803796d4"
+    }
 }
