@@ -27,7 +27,7 @@
 		"build": "lerna run build",
 		"dev": "lerna run dev",
 		"lint": "eslint packages/**/*.ts packages/**/*.tsx",
-		"release": "lerna publish from-package"
+		"release": "npm run build && lerna publish from-package"
 	},
 	"devDependencies": {
 		"@rollup/plugin-json": "^4.1.0",
