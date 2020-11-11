@@ -135,15 +135,15 @@ const App = () => {
     );
 
     const defaultLayoutPluginInstance = defaultLayoutPlugin({
-        renderToolbar,
-        toolbarPlugin: {
-            scrollModePlugin: {
-                scrollMode: ScrollMode.Vertical,
-            },
-            searchPlugin: {
-                keyword: ['document', 'PDF'],
-            },
-        },
+        // renderToolbar,
+        // toolbarPlugin: {
+        //     scrollModePlugin: {
+        //         scrollMode: ScrollMode.Vertical,
+        //     },
+        //     searchPlugin: {
+        //         keyword: ['document', 'PDF'],
+        //     },
+        // },
     });
 
     return (

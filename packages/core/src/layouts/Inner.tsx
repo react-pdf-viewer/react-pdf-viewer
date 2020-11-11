@@ -153,7 +153,8 @@ const Inner: React.FC<InnerProps> = ({
 
     const zoom = (newScale: number | SpecialZoomLevel): void => {
         const pagesEle = pagesRef.current;
-        if (!pagesEle) {
+        const currentState = stateRef.current;
+        if (!pagesEle || !currentState) {
             return;
         }
 
@@ -178,17 +179,32 @@ const Inner: React.FC<InnerProps> = ({
                 updateScale = newScale;
                 break;
         }
+
         setScale(updateScale);
         onZoom({ doc, scale: updateScale });
+    };
+
+    useEffect(() => {
+        const pagesEle = pagesRef.current;
+        const currentState = stateRef.current;
+        if (!pagesEle || !currentState) {
+            return;
+        }
+
+        // Keep the current scroll position
+        pagesEle.scrollTop = pagesEle.scrollTop * scale / currentState.scale;
+        pagesEle.scrollLeft = pagesEle.scrollLeft * scale / currentState.scale;
+        
         setViewerState({
             file: viewerState.file,
-            pageIndex: currentPage,
+            // Keep the current page after zooming
+            pageIndex: currentState.pageIndex,
             pageHeight,
             pageWidth,
             rotation,
-            scale: updateScale,
+            scale: scale,
         });
-    };
+    }, [scale]);
 
     // Important rule: All the plugin methods can't use the internal state (`currentPage`, `rotation`, `scale`, for example).
     // These methods when being called from plugins will use the initial value of state, not the latest one.
