@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## v2.3.0 [WIP]
+
+**Improvements**
+- Keep the current page and scroll position after zooming the document
+
 ## v2.2.0
 
 **New features**
