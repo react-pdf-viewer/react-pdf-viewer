@@ -8,7 +8,11 @@
 
 import { Component, ReactElement } from 'react';
 import { Plugin, ViewerProps } from '@react-pdf-viewer/core';
-import type { ToolbarPluginProps, ToolbarProps, ToolbarSlot } from '@react-pdf-viewer/toolbar';
+import type {
+    ToolbarPluginProps,
+    ToolbarProps,
+    ToolbarSlot,
+} from '@react-pdf-viewer/toolbar';
 
 export type { ToolbarPluginProps, ToolbarProps, ToolbarSlot };
 
@@ -18,7 +22,9 @@ export interface DefaultLayoutProps extends ViewerProps {
 
 export interface DefaultLayoutPluginProps {
     toolbarPlugin?: ToolbarPluginProps;
-    renderToolbar?: (Toolbar: ((props: ToolbarProps) => ReactElement)) => ReactElement;
+    renderToolbar?: (
+        Toolbar: (props: ToolbarProps) => ReactElement
+    ) => ReactElement;
 }
 
 export function defaultLayoutPlugin(props?: DefaultLayoutPluginProps): Plugin;

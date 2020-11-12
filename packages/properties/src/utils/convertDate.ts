@@ -7,23 +7,28 @@
  */
 
 const dateRegex = new RegExp(
-    '^D:' +         // Prefix
-    '(\\d{4})' +    // group 1: Year
-    '(\\d{2})?' +   // group 2: Month
-    '(\\d{2})?' +   // group 3: Day
-    '(\\d{2})?' +   // group 4: Hour
-    '(\\d{2})?' +   // group 5: Minute
-    '(\\d{2})?' +   // group 6: Second
-    '([Z|+|-])?' +  // group 7: Universal time relation
-    '(\\d{2})?' +   // group 8: Offset hour
-    '\'?' +
-    '(\\d{2})?' +   // group 9: Offset minute
-    '\'?',
+    '^D:' + // Prefix
+        '(\\d{4})' + // group 1: Year
+        '(\\d{2})?' + // group 2: Month
+        '(\\d{2})?' + // group 3: Day
+        '(\\d{2})?' + // group 4: Hour
+        '(\\d{2})?' + // group 5: Minute
+        '(\\d{2})?' + // group 6: Second
+        '([Z|+|-])?' + // group 7: Universal time relation
+        '(\\d{2})?' + // group 8: Offset hour
+        "'?" +
+        '(\\d{2})?' + // group 9: Offset minute
+        "'?"
 );
 
-const parse = (value: string, min: number, max: number, defaultValue: number): number => {
+const parse = (
+    value: string,
+    min: number,
+    max: number,
+    defaultValue: number
+): number => {
     const parsed = parseInt(value, 10);
-    return (parsed >= min && parsed <= max) ? parsed : defaultValue;
+    return parsed >= min && parsed <= max ? parsed : defaultValue;
 };
 
 const convertDate = (input: string): Date | null => {

@@ -16,10 +16,10 @@ export interface LocaleSwitcherPlugin extends Plugin {
 export interface LocalePopoverProps {
     initialLocale?: string;
     locales: {
-        [locale: string]: string,
+        [locale: string]: string;
     };
     localizations: {
-        [locale: string]: LocalizationMap,
+        [locale: string]: LocalizationMap;
     };
     onUpdateLocalization: (localization: LocalizationMap) => void;
 }

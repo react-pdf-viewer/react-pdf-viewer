@@ -8,7 +8,10 @@
 
 import { Offset } from '@react-pdf-viewer/core';
 
-const calculateOffset = (children: HTMLElement, parent: HTMLElement): Offset => {
+const calculateOffset = (
+    children: HTMLElement,
+    parent: HTMLElement
+): Offset => {
     let top = children.offsetTop;
     let left = children.offsetLeft;
 

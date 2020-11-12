@@ -14,7 +14,12 @@ import ViewerState from './ViewerState';
 export default interface PluginFunctions {
     getPagesRef(): React.RefObject<HTMLDivElement>;
     getViewerState(): ViewerState;
-    jumpToDestination(pageIndex: number, bottomOffset: number, leftOffset: number, scaleTo: number | SpecialZoomLevel): void;
+    jumpToDestination(
+        pageIndex: number,
+        bottomOffset: number,
+        leftOffset: number,
+        scaleTo: number | SpecialZoomLevel
+    ): void;
     jumpToPage(pageIndex: number): void;
     openFile(file: File): void;
     rotate(rotation: number): void;

@@ -9,9 +9,10 @@
 import { OpenFile } from '@react-pdf-viewer/core';
 
 const downloadFile = (file: OpenFile, saveAs: string): void => {
-    const blobUrl = (typeof file.data === 'string')
-                    ? ''
-                    : URL.createObjectURL(new Blob([file.data], { type: '' }));
+    const blobUrl =
+        typeof file.data === 'string'
+            ? ''
+            : URL.createObjectURL(new Blob([file.data], { type: '' }));
     const link = document.createElement('a');
     link.style.display = 'none';
     link.href = blobUrl || file.name;

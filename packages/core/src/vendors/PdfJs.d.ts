@@ -36,7 +36,7 @@ declare module 'pdfjs-dist' {
     }
     interface PdfDocument {
         numPages: number;
-        getAttachments(): Promise<{[filename: string]: Attachment}>;
+        getAttachments(): Promise<{ [filename: string]: Attachment }>;
         getDestination(dest: string): Promise<OutlineDestination>;
         getDownloadInfo(): Promise<{ length: number }>;
         getMetadata(): Promise<MetaData>;
@@ -94,10 +94,10 @@ declare module 'pdfjs-dist' {
         OutlineRef,
         OutlineDestinationName,
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        ...any[],
+        ...any[]
     ];
     interface OutlineDestinationName {
-        name: string;   // Can be 'WYZ', 'Fit', ...
+        name: string; // Can be 'WYZ', 'Fit', ...
     }
     interface OutlineRef {
         gen: number;
@@ -129,10 +129,13 @@ declare module 'pdfjs-dist' {
 
     // Render SVG
     interface SVGGraphics {
-        getSVG(operatorList: PageOperatorList, viewport: ViewPort): Promise<SVGElement>;
+        getSVG(
+            operatorList: PageOperatorList,
+            viewport: ViewPort
+        ): Promise<SVGElement>;
     }
     interface SVGGraphicsConstructor {
-        new(commonObjs: PageCommonObjects, objs: PageObjects): SVGGraphics;
+        new (commonObjs: PageCommonObjects, objs: PageObjects): SVGGraphics;
     }
     let SVGGraphics: SVGGraphicsConstructor;
 

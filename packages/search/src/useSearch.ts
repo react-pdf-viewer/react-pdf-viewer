@@ -38,7 +38,9 @@ const useSearch = (
     const [matchCase, setMatchCase] = useState(false);
     const textContents = useRef<string[]>([]);
     const [wholeWords, setWholeWords] = useState(false);
-    const indexArr = Array(doc.numPages).fill(0).map((_, i) => i);
+    const indexArr = Array(doc.numPages)
+        .fill(0)
+        .map((_, i) => i);
 
     const changeMatchCase = (isChecked: boolean): void => {
         setMatchCase(isChecked);
@@ -72,7 +74,7 @@ const useSearch = (
         const updated = next <= found.length ? next : 1;
         setCurrentMatch(updated);
         jumpToMatch(found[updated - 1]);
-    };    
+    };
 
     const clearKeyword = (): void => {
         if (!keyword) {
@@ -93,7 +95,11 @@ const useSearch = (
     // Private
     // -------
 
-    const buildKeywordRegex = (keywordParam: string, matchCaseParam: boolean, wholeWordsParam: boolean): RegExp => {
+    const buildKeywordRegex = (
+        keywordParam: string,
+        matchCaseParam: boolean,
+        wholeWordsParam: boolean
+    ): RegExp => {
         const source = wholeWordsParam ? ` ${keywordParam} ` : keywordParam;
         const flags = matchCaseParam ? 'g' : 'gi';
         return new RegExp(source, flags);
@@ -101,15 +107,20 @@ const useSearch = (
 
     const getTextContents = (): Promise<string[]> => {
         const promises = indexArr.map((pageIndex) => {
-            return doc.getPage(pageIndex + 1).then((page) => {
-                return page.getTextContent();
-            }).then((content) => {
-                const pageContent = content.items.map((item) => item.str || '').join('');
-                return Promise.resolve({
-                    pageContent,
-                    pageIndex,
+            return doc
+                .getPage(pageIndex + 1)
+                .then((page) => {
+                    return page.getTextContent();
+                })
+                .then((content) => {
+                    const pageContent = content.items
+                        .map((item) => item.str || '')
+                        .join('');
+                    return Promise.resolve({
+                        pageContent,
+                        pageIndex,
+                    });
                 });
-            });
         });
         return Promise.all(promises).then((data) => {
             data.sort((a, b) => a.pageIndex - b.pageIndex);
@@ -125,25 +136,38 @@ const useSearch = (
         store.update('match', match);
     };
 
-    const searchFor = (keywordParam: string, matchCaseParam: boolean, wholeWordsParam: boolean): void => {
-        const regexp = buildKeywordRegex(keywordParam, matchCaseParam, wholeWordsParam);
+    const searchFor = (
+        keywordParam: string,
+        matchCaseParam: boolean,
+        wholeWordsParam: boolean
+    ): void => {
+        const regexp = buildKeywordRegex(
+            keywordParam,
+            matchCaseParam,
+            wholeWordsParam
+        );
         store.update('keyword', [regexp]);
 
         setCurrentMatch(0);
         setFound([]);
 
-        const promise = (textContents.current.length === 0)
-            ? getTextContents().then((response) => {
-                textContents.current = response;
-                return Promise.resolve(response);
-            })
-            : Promise.resolve(textContents.current);
+        const promise =
+            textContents.current.length === 0
+                ? getTextContents().then((response) => {
+                      textContents.current = response;
+                      return Promise.resolve(response);
+                  })
+                : Promise.resolve(textContents.current);
 
         promise.then((response) => {
             const arr: Match[] = [];
             response.forEach((item, pageIndex) => {
                 const numMatches = (item.match(regexp) || []).length;
-                for (let matchIndex = 0; matchIndex < numMatches; matchIndex++) {
+                for (
+                    let matchIndex = 0;
+                    matchIndex < numMatches;
+                    matchIndex++
+                ) {
                     arr.push({
                         matchIndex,
                         pageIndex,

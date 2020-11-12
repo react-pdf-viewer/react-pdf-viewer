@@ -18,7 +18,9 @@ interface UseScrollMode {
 }
 
 const useScrollMode = (store: Store<StoreProps>): UseScrollMode => {
-    const [scrollMode, setScrollMode] = useState(store.get('scrollMode') || ScrollMode.Vertical);
+    const [scrollMode, setScrollMode] = useState(
+        store.get('scrollMode') || ScrollMode.Vertical
+    );
 
     const switchTo = (newScrollMode: ScrollMode) => {
         const pagesRef = store.get('getPagesRef');
@@ -55,7 +57,9 @@ const useScrollMode = (store: Store<StoreProps>): UseScrollMode => {
         store.update('scrollMode', newScrollMode);
     };
 
-    const handleScrollModeChanged: StoreHandler<ScrollMode> = (newScrollMode: ScrollMode) => {
+    const handleScrollModeChanged: StoreHandler<ScrollMode> = (
+        newScrollMode: ScrollMode
+    ) => {
         setScrollMode(newScrollMode);
     };
 

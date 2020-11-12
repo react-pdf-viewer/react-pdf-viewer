@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
- // Represents the error in case the document can't be loaded
+// Represents the error in case the document can't be loaded
 interface LoadError {
     message?: string;
     // Some possible values for `name` are
