@@ -2,7 +2,7 @@
 
 This plugin allows user to download the current file.
 
-~~~ javascript
+```javascript
 import { downloadPlugin } from '@react-pdf-viewer/download';
 
 const downloadPluginInstance = downloadPlugin();
@@ -21,11 +21,11 @@ return (
     >
     </>
 );
-~~~
+```
 
 ## Use a custom button
 
-~~~ javascript
+```javascript
 import { downloadPlugin } from '@react-pdf-viewer/download';
 
 const downloadPluginInstance = downloadPlugin();
@@ -53,22 +53,22 @@ return (
     >
     </>
 );
-~~~
+```
 
 ## Plugin options
 
-* `fileNameGenerator` (Optional): Custom the name of download file. 
+-   `fileNameGenerator` (Optional): Custom the name of download file.
 
 It is a function accepts the current opened file and returns a `string`:
 
-~~~ javascript
+```javascript
 (file: OpenFile) => string;
-~~~
+```
 
 By default, the name of download file is determined by the `name` properties of `OpenFile`.
 You can customize it as following:
 
-~~~ javascript
+```javascript
 import { OpenFile } from '@react-pdf-viewer/core';
 
 const downloadPluginInstance = downloadPlugin({
@@ -78,4 +78,4 @@ const downloadPluginInstance = downloadPlugin({
         return `a-copy-of-${fileName}`;
     },
 });
-~~~
+```

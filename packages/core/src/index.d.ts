@@ -17,7 +17,7 @@ export declare namespace PdfJs {
 
     interface PdfDocument {
         numPages: number;
-        getAttachments(): Promise<{[filename: string]: Attachment}>;
+        getAttachments(): Promise<{ [filename: string]: Attachment }>;
         getDestination(dest: string): Promise<OutlineDestination>;
         getDownloadInfo(): Promise<{ length: number }>;
         getMetadata(): Promise<MetaData>;
@@ -110,10 +110,10 @@ export declare namespace PdfJs {
         OutlineRef,
         OutlineDestinationName,
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        ...any[],
+        ...any[]
     ];
     interface OutlineDestinationName {
-        name: string;   // Can be 'WYZ', 'Fit', ...
+        name: string; // Can be 'WYZ', 'Fit', ...
     }
     interface OutlineRef {
         gen: number;
@@ -182,7 +182,9 @@ export interface LocalizationProviderProps {
     localization?: LocalizationMap;
 }
 
-export class LocalizationProvider extends React.Component<LocalizationProviderProps> {}
+export class LocalizationProvider extends React.Component<
+    LocalizationProviderProps
+> {}
 
 export interface Offset {
     left: number;
@@ -444,7 +446,12 @@ export interface ViewerState {
 export interface PluginFunctions {
     getPagesRef(): React.RefObject<HTMLDivElement>;
     getViewerState(): ViewerState;
-    jumpToDestination(pageIndex: number, bottomOffset: number, leftOffset: number, scaleTo: number | SpecialZoomLevel): void;
+    jumpToDestination(
+        pageIndex: number,
+        bottomOffset: number,
+        leftOffset: number,
+        scaleTo: number | SpecialZoomLevel
+    ): void;
     jumpToPage(pageIndex: number): void;
     openFile(file: File): void;
     rotate(rotation: number): void;
@@ -507,15 +514,21 @@ export type StoreKey<T extends StoreState> = string & keyof T;
 export type StoreHandler<T> = (params: T) => void;
 
 export interface Store<T extends StoreState> {
-    subscribe<K extends StoreKey<T>>(eventName: K, handler: StoreHandler<NonNullable<T[K]>>): void;
-    unsubscribe<K extends StoreKey<T>>(eventName: K, handler: StoreHandler<NonNullable<T[K]>>): void;
+    subscribe<K extends StoreKey<T>>(
+        eventName: K,
+        handler: StoreHandler<NonNullable<T[K]>>
+    ): void;
+    unsubscribe<K extends StoreKey<T>>(
+        eventName: K,
+        handler: StoreHandler<NonNullable<T[K]>>
+    ): void;
     update<K extends StoreKey<T>>(eventName: K, params: T[K]): void;
     get<K extends StoreKey<T>>(eventName: K): T[K] | undefined;
 }
 
 export function createStore<T extends StoreState>(initialState?: T): Store<T>;
 
-// The character maps that can be downloaded from 
+// The character maps that can be downloaded from
 // https://github.com/mozilla/pdfjs-dist/tree/master/cmaps
 export interface CharacterMap {
     isCompressed: boolean;

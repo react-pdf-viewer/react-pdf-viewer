@@ -25,7 +25,7 @@ const defaultVendor: ApiMap = {
     FullScreenElement: 'fullscreenElement',
     FullScreenEnabled: 'fullscreenEnabled',
     RequestFullScreen: 'requestFullscreen',
-}
+};
 
 const webkitVendor: ApiMap = {
     ExitFullScreen: 'webkitExitFullscreen',
@@ -43,14 +43,14 @@ const msVendor: ApiMap = {
     RequestFullScreen: 'msRequestFullscreen',
 };
 
-const isBrowser = (typeof window !== 'undefined');
+const isBrowser = typeof window !== 'undefined';
 
-const vendor: ApiMap = isBrowser ? (
-    (Api.FullScreenEnabled in document && defaultVendor) ||
-    (webkitVendor.FullScreenEnabled in document && webkitVendor) ||
-    (msVendor.FullScreenEnabled in document && msVendor) ||
-    defaultVendor
-) : defaultVendor;
+const vendor: ApiMap = isBrowser
+    ? (Api.FullScreenEnabled in document && defaultVendor) ||
+      (webkitVendor.FullScreenEnabled in document && webkitVendor) ||
+      (msVendor.FullScreenEnabled in document && msVendor) ||
+      defaultVendor
+    : defaultVendor;
 
 const addFullScreenChangeListener = (handler: () => void): void => {
     if (isBrowser) {
@@ -66,9 +66,9 @@ const removeFullScreenChangeListener = (handler: () => void): void => {
 
 const exitFullScreen = (element: Element | Document): Promise<void> => {
     return isBrowser
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            ? (element as any)[vendor.ExitFullScreen]()
-            : Promise.resolve({});
+        ? // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          (element as any)[vendor.ExitFullScreen]()
+        : Promise.resolve({});
 };
 
 const getFullScreenElement = (): Element | null => {

@@ -17,7 +17,7 @@ const usePosition = (
     targetRef: React.RefObject<HTMLElement>,
     anchorRef: React.RefObject<HTMLElement>,
     position: Position,
-    offset: Offset,
+    offset: Offset
 ): void => {
     useLayoutEffect(() => {
         const targetEle = targetRef.current;
@@ -28,7 +28,12 @@ const usePosition = (
         }
 
         const anchorRect = anchorEle.getBoundingClientRect();
-        const { top, left } = calculatePosition(contentEle, targetEle, position, offset);
+        const { top, left } = calculatePosition(
+            contentEle,
+            targetEle,
+            position,
+            offset
+        );
         contentEle.style.top = `${top - anchorRect.top}px`;
         contentEle.style.left = `${left - anchorRect.left}px`;
     }, []);

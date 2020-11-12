@@ -10,5 +10,10 @@ import { PdfJs, SpecialZoomLevel } from '@react-pdf-viewer/core';
 
 export default interface StoreProps {
     doc?: PdfJs.PdfDocument;
-    jumpToDestination?: (pageIndex: number, bottomOffset: number, leftOffset: number, scaleTo: number | SpecialZoomLevel) => void;
+    jumpToDestination?: (
+        pageIndex: number,
+        bottomOffset: number,
+        leftOffset: number,
+        scaleTo: number | SpecialZoomLevel
+    ) => void;
 }

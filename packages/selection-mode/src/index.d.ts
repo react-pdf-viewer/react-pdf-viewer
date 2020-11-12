@@ -36,15 +36,21 @@ export interface SwitchSelectionModeMenuItemProps {
 
 export interface SelectionModePlugin extends Plugin {
     SwitchSelectionMode(props: SwitchSelectionModeProps): ReactElement;
-    SwitchSelectionModeButton(props: SwitchSelectionModeButtonProps): ReactElement;
-    SwitchSelectionModeMenuItem(props: SwitchSelectionModeMenuItemProps): ReactElement;
+    SwitchSelectionModeButton(
+        props: SwitchSelectionModeButtonProps
+    ): ReactElement;
+    SwitchSelectionModeMenuItem(
+        props: SwitchSelectionModeMenuItemProps
+    ): ReactElement;
 }
 
 export interface SelectionModePluginProps {
     selectionMode?: SelectionMode;
 }
 
-export function selectionModePlugin(props?: SelectionModePluginProps): SelectionModePlugin;
+export function selectionModePlugin(
+    props?: SelectionModePluginProps
+): SelectionModePlugin;
 
 // -----
 // Icons

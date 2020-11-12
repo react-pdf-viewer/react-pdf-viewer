@@ -10,7 +10,7 @@ import { useEffect } from 'react';
 
 const useKeyUp = (targetKeyCode: number, handler: () => void): void => {
     const keyUpHandler = (e: KeyboardEvent): void => {
-        (e.keyCode === targetKeyCode) && handler();
+        e.keyCode === targetKeyCode && handler();
     };
 
     useEffect(() => {
