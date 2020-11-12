@@ -332,6 +332,7 @@ const Inner: React.FC<InnerProps> = ({
                                     }}
                                 >
                                     <PageLayer
+                                        currentPage={currentPage}
                                         doc={doc}
                                         height={pageHeight}
                                         pageIndex={index}
