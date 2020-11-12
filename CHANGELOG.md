@@ -4,6 +4,7 @@
 
 **Improvements**
 - Keep the current page and scroll position after zooming the document
+- Pre-render a few of previous and next pages of the current page, so users see the page instantly when scrolling
 
 ## v2.2.0
 

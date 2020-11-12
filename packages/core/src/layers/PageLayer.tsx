@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { useContext, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 
 import AnnotationLayer from '../annotations/AnnotationLayer';
 import Spinner from '../components/Spinner';
@@ -21,6 +21,7 @@ import SvgLayer from './SvgLayer';
 import TextLayer from './TextLayer';
 
 interface PageLayerProps {
+    currentPage: number;
     doc: PdfJs.PdfDocument;
     height: number;
     pageIndex: number;
@@ -41,8 +42,10 @@ interface PageSizeState {
     viewportRotation: number;
 }
 
+const NUMBER_OF_OVERSCAN_PAGES = 2;
+
 const PageLayer: React.FC<PageLayerProps> = ({
-    doc, height, pageIndex, plugins, renderPage, rotation, scale, width,
+    currentPage, doc, height, pageIndex, plugins, renderPage, rotation, scale, width,
     onExecuteNamedAction, onJumpToDest, onPageVisibilityChanged,
 }) => {
     const theme = useContext(ThemeContext);
@@ -65,21 +68,28 @@ const PageLayer: React.FC<PageLayerProps> = ({
     const w = isVertical ? scaledWidth : scaledHeight;
     const h = isVertical ? scaledHeight : scaledWidth;
 
+    const determinePageSize = () => {
+        if (prevIsCalculated.current) {
+            return;
+        }
+        prevIsCalculated.current = true;
+
+        doc.getPage(pageIndex + 1).then((pdfPage) => {
+            const viewport = pdfPage.getViewport({ scale: 1 });
+
+            setPageSize({
+                page: pdfPage,
+                pageHeight: viewport.height,
+                pageWidth: viewport.width,
+                viewportRotation: viewport.rotation,
+            });
+        });
+    };
+
     const visibilityChanged = (params: VisibilityChanged): void => {
         onPageVisibilityChanged(pageIndex, params.isVisible ? params.ratio : -1);
-        if (params.isVisible && !prevIsCalculated.current) {
-            prevIsCalculated.current = true;
-
-            doc.getPage(pageIndex + 1).then((pdfPage) => {
-                const viewport = pdfPage.getViewport({ scale: 1 });
-
-                setPageSize({
-                    page: pdfPage,
-                    pageHeight: viewport.height,
-                    pageWidth: viewport.width,
-                    viewportRotation: viewport.rotation,
-                });
-            });
+        if (params.isVisible) {
+            determinePageSize();
         }
     };
 
@@ -95,6 +105,12 @@ const PageLayer: React.FC<PageLayerProps> = ({
 
     // To support the document which is already rotated
     const rotationNumber = (rotation + pageSize.viewportRotation) % 360;
+
+    useEffect(() => {
+        if (currentPage - NUMBER_OF_OVERSCAN_PAGES <= pageIndex && pageIndex <= currentPage + NUMBER_OF_OVERSCAN_PAGES) {
+            determinePageSize();
+        }
+    }, [currentPage]);
 
     return (
         <Observer onVisibilityChanged={visibilityChanged} threshold={intersectionThreshold}>
