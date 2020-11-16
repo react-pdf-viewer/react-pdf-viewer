@@ -1,6 +1,6 @@
 {
     "name": "@react-pdf-viewer/core",
-    "version": "2.2.0",
+    "version": "2.2.1",
     "description": "A React component to view a PDF document",
     "license": "https://react-pdf-viewer.dev/license",
     "author": {
