@@ -1,7 +1,7 @@
 import React, { ReactElement } from 'react';
 import { Icon, Button, Position, Tooltip, Viewer, Worker } from '@react-pdf-viewer/core';
 import { defaultLayoutPlugin, ToolbarProps, ToolbarSlot } from '@react-pdf-viewer/default-layout';
-import { ScrollMode } from '@react-pdf-viewer/scroll-mode';
+import { highlightPlugin } from '@react-pdf-viewer/highlight';
 import { NextIcon, PreviousIcon, RenderSearchProps } from '@react-pdf-viewer/search';
 
 import '@react-pdf-viewer/default-layout/lib/styles/index.css';
@@ -146,6 +146,8 @@ const App = () => {
         // },
     });
 
+    const highlightPluginInstance = highlightPlugin();
+
     return (
         <Worker workerUrl="https://unpkg.com/pdfjs-dist@2.5.207/build/pdf.worker.js">
             <div
@@ -157,6 +159,7 @@ const App = () => {
                     fileUrl="http://localhost:8001/pdf-open-parameters.pdf"
                     plugins={[
                         defaultLayoutPluginInstance,
+                        highlightPluginInstance,
                     ]}
                 />
             </div>

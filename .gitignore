@@ -1,3 +1,7 @@
+demo/dist
+demo/node_modules
 lerna-debug.log
 node_modules
 package-lock.json
+packages/**/lib
+packages/**/node_modules
