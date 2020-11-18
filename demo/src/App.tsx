@@ -158,8 +158,8 @@ const App = () => {
                 <Viewer
                     fileUrl="http://localhost:8001/pdf-open-parameters.pdf"
                     plugins={[
-                        defaultLayoutPluginInstance,
                         highlightPluginInstance,
+                        defaultLayoutPluginInstance,
                     ]}
                 />
             </div>
