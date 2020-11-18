@@ -14,12 +14,7 @@ module.exports = {
             {
                 test: /\.css$/,
                 use: [
-                    {
-                        loader: MiniCssExtractPlugin.loader,
-                        options: {
-                            hmr: process.env.NODE_ENV === 'development',
-                        },
-                    },
+                    MiniCssExtractPlugin.loader,
                     'css-loader',
                 ],
             },
