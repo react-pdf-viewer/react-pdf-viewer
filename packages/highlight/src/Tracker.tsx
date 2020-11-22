@@ -87,7 +87,7 @@ const Tracker: FC<{
                 break;
         }
 
-        const getRectBetween = (min: number, max: number) => Array(max - min + 1).fill(0).map((_, i) => startDivSiblings[min + i].getBoundingClientRect());
+        const getRectBetween = (min: number, max: number, eleArray: HTMLElement[]) => Array(max - min + 1).fill(0).map((_, i) => eleArray[min + i].getBoundingClientRect());
 
         let highlightAreas: HighlightArea[] = [];
         switch (rangeType) {
@@ -105,7 +105,7 @@ const Tracker: FC<{
 
             case SelectionRange.DifferentDivs:
                 highlightAreas = [getRectFromOffsets(startDiv, range.startOffset, startDiv.textContent.length)]
-                    .concat(getRectBetween(startDivIdx + 1, endDivIdx - 1))
+                    .concat(getRectBetween(startDivIdx + 1, endDivIdx - 1, startDivSiblings))
                     .concat([getRectFromOffsets(endDiv, 0, endOffset)])
                     .map(rect => {
                         return {
@@ -121,7 +121,7 @@ const Tracker: FC<{
             case SelectionRange.DifferentPages:
                 // eslint-disable-next-line no-case-declarations
                 const startAreas = [getRectFromOffsets(startDiv, range.startOffset, startDiv.textContent.length)]
-                    .concat(getRectBetween(startDivIdx + 1, startDivSiblings.length - 1))
+                    .concat(getRectBetween(startDivIdx + 1, startDivSiblings.length - 1, startDivSiblings))
                     .map(rect => {
                         return {
                             height: rect.height * 100 / startPageRect.height,
@@ -132,7 +132,7 @@ const Tracker: FC<{
                         };
                     });
                 // eslint-disable-next-line no-case-declarations
-                const endAreas = getRectBetween(0, endDivIdx - 1)
+                const endAreas = getRectBetween(0, endDivIdx - 1, endDivSiblings)
                     .concat([getRectFromOffsets(endDiv, 0, endOffset)])
                     .map(rect => {
                         return {

@@ -19,7 +19,7 @@ interface HighlightPlugin extends Plugin {
 
 const highlightPlugin = (): HighlightPlugin => {
     const store = createStore<StoreProps>({
-        selectionState: NoSelectionState,
+        selectionState: new NoSelectionState(),
     });
 
     const renderViewer = (props: RenderViewer): Slot => {
@@ -60,18 +60,22 @@ const highlightPlugin = (): HighlightPlugin => {
             if (userClickedInsideArea) {
                 // Cancel the selection
                 window.getSelection().removeAllRanges();
-                store.update('selectionState', NoSelectionState);
+                store.update('selectionState', new NoSelectionState());
             } else {
-                store.update('selectionState', SelectingState);
+                store.update('selectionState', new SelectingState());
             }
         } else {
-            store.update('selectionState', NoSelectionState);
+            store.update('selectionState', new NoSelectionState());
         }
     };
 
     const onTextLayerRender = (e: PluginOnTextLayerRender) => {
         if (e.status === LayerRenderStatus.DidRender) {
             e.ele.addEventListener('mousedown', handleMouseDown(e));
+
+            // Set some special attributes so we can query the text later
+            e.ele.setAttribute('data-layer', 'text');
+            e.ele.querySelectorAll('.rpv-core-text').forEach(span => span.setAttribute('data-text-page', `${e.pageIndex + 1}`));
         }
     };
 

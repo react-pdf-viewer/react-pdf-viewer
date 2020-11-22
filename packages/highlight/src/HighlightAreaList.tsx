@@ -9,7 +9,7 @@
 import React, { FC, useEffect, useState } from 'react';
 import { Store } from '@react-pdf-viewer/core';
 
-import { HighlightState, SelectedState } from './SelectionState';
+import { HighlightState, SelectedState, SelectionState } from './SelectionState';
 import StoreProps from './StoreProps';
 import HighlightArea from './HighlightArea';
 
@@ -17,11 +17,9 @@ const HighlightAreaList: FC<{
     pageIndex: number,
     store: Store<StoreProps>,
 }> = ({ pageIndex, store }) => {
-    const [selections, setSelections] = useState<HighlightArea[]>([]);
+    const [selectionState, setSelectionState] = useState<SelectionState>(store.get('selectionState'));
 
-    const handleSelectionState = (selectionState: SelectedState) => {
-        setSelections(selectionState instanceof HighlightState ? selectionState.highlightAreas : []);
-    };
+    const handleSelectionState = (s: SelectionState) => setSelectionState(s);
 
     useEffect(() => {
         store.subscribe('selectionState', handleSelectionState);
@@ -32,7 +30,9 @@ const HighlightAreaList: FC<{
     }, []);
 
     // Filter the selections
-    const listAreas = selections.filter(s => s.pageIndex === pageIndex);
+    let listAreas = selectionState instanceof HighlightState
+        ? selectionState.highlightAreas.filter(s => s.pageIndex === pageIndex)
+        : [];
 
     return (
         <>
