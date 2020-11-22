@@ -6,8 +6,12 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import { Plugin } from '@react-pdf-viewer/core';
+interface HighlightArea {
+    height: number;
+    left: number;
+    pageIndex: number;
+    top: number;
+    width: number;
+}
 
-export interface HighlightPlugin extends Plugin {}
-
-export function highlightPlugin(): HighlightPlugin;
+export default HighlightArea;
