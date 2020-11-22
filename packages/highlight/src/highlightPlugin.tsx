@@ -7,8 +7,9 @@
  */
 
 import React from 'react';
-import { createStore, LayerRenderStatus, PluginOnTextLayerRender, Plugin, PluginFunctions, RenderViewer, Slot } from '@react-pdf-viewer/core';
+import { createStore, LayerRenderStatus, PluginOnTextLayerRender, Plugin, PluginFunctions, PluginRenderPageLayer, RenderViewer, Slot } from '@react-pdf-viewer/core';
 
+import HighlightAreaList from './HighlightAreaList';
 import { NoSelectionState, SelectedState, SelectingState } from './SelectionState';
 import StoreProps from './StoreProps';
 import Tracker from './Tracker';
@@ -74,11 +75,16 @@ const highlightPlugin = (): HighlightPlugin => {
         }
     };
 
+    const renderPageLayer = (props: PluginRenderPageLayer) => (
+        <HighlightAreaList pageIndex={props.pageIndex} store={store} />
+    );
+
     return {
         install: (pluginFunctions: PluginFunctions) => {
             store.update('getPagesRef', pluginFunctions.getPagesRef);
         },
         onTextLayerRender,
+        renderPageLayer,
         renderViewer,
     };
 };
