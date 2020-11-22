@@ -15,6 +15,7 @@ import SelectionRange from './SelectionRange';
 import { NoSelectionState, SelectedState, SelectingState } from './SelectionState';
 import StoreProps from './StoreProps';
 import HighlightArea from './HighlightArea';
+import SelectionData from './SelectionData';
 
 const Tracker: FC<{
     store: Store<StoreProps>,
@@ -87,7 +88,7 @@ const Tracker: FC<{
                 break;
         }
 
-        const getRectBetween = (min: number, max: number) => Array(max - min + 1).fill(0).map((_, i) => startDivSiblings[min + i].getBoundingClientRect());
+        const getRectBetween = (min: number, max: number, eleArray: HTMLElement[]) => Array(max - min + 1).fill(0).map((_, i) => eleArray[min + i].getBoundingClientRect());
 
         let highlightAreas: HighlightArea[] = [];
         switch (rangeType) {
@@ -105,7 +106,7 @@ const Tracker: FC<{
 
             case SelectionRange.DifferentDivs:
                 highlightAreas = [getRectFromOffsets(startDiv, range.startOffset, startDiv.textContent.length)]
-                    .concat(getRectBetween(startDivIdx + 1, endDivIdx - 1))
+                    .concat(getRectBetween(startDivIdx + 1, endDivIdx - 1, startDivSiblings))
                     .concat([getRectFromOffsets(endDiv, 0, endOffset)])
                     .map(rect => {
                         return {
@@ -121,7 +122,7 @@ const Tracker: FC<{
             case SelectionRange.DifferentPages:
                 // eslint-disable-next-line no-case-declarations
                 const startAreas = [getRectFromOffsets(startDiv, range.startOffset, startDiv.textContent.length)]
-                    .concat(getRectBetween(startDivIdx + 1, startDivSiblings.length - 1))
+                    .concat(getRectBetween(startDivIdx + 1, startDivSiblings.length - 1, startDivSiblings))
                     .map(rect => {
                         return {
                             height: rect.height * 100 / startPageRect.height,
@@ -132,7 +133,7 @@ const Tracker: FC<{
                         };
                     });
                 // eslint-disable-next-line no-case-declarations
-                const endAreas = getRectBetween(0, endDivIdx - 1)
+                const endAreas = getRectBetween(0, endDivIdx - 1, endDivSiblings)
                     .concat([getRectFromOffsets(endDiv, 0, endOffset)])
                     .map(rect => {
                         return {
@@ -169,7 +170,29 @@ const Tracker: FC<{
                 break;
         }
 
-        store.update('selectionState', new SelectedState(selectedText, highlightAreas));
+        let selectionRegion: HighlightArea;
+        if (highlightAreas.length > 0) {
+            selectionRegion = highlightAreas[0];
+        } else {
+            const endDivRect = endDiv.getBoundingClientRect();
+            selectionRegion = {
+                height: endDivRect.height * 100 / endPageRect.height,
+                left: (endDivRect.left - endPageRect.left) * 100 / endPageRect.width,
+                pageIndex: endPageIdx,
+                top: (endDivRect.top - endPageRect.top) * 100 / endPageRect.height,
+                width: endDivRect.width * 100 / endPageRect.width,
+            };
+        }
+
+        const selectionData: SelectionData = {
+            startPageIndex: startPageIdx - 1,
+            endPageIndex: endPageIdx - 1,
+            startOffset: range.startOffset,
+            startDivIndex: startDivIdx,
+            endOffset,
+            endDivIndex: endDivIdx
+        };
+        store.update('selectionState', new SelectedState(selectedText, highlightAreas, selectionData, selectionRegion));
     };
 
     useEffect(() => {

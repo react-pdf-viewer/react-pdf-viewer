@@ -1,7 +1,7 @@
 import React, { ReactElement } from 'react';
-import { Icon, Button, Position, Tooltip, Viewer, Worker } from '@react-pdf-viewer/core';
+import { Icon, Button, Position, PrimaryButton, Tooltip, Viewer, Worker } from '@react-pdf-viewer/core';
 import { defaultLayoutPlugin, ToolbarProps, ToolbarSlot } from '@react-pdf-viewer/default-layout';
-import { highlightPlugin } from '@react-pdf-viewer/highlight';
+import { highlightPlugin, RenderHighlightTarget } from '@react-pdf-viewer/highlight';
 import { NextIcon, PreviousIcon, RenderSearchProps } from '@react-pdf-viewer/search';
 
 import '@react-pdf-viewer/default-layout/lib/styles/index.css';
@@ -146,7 +146,30 @@ const App = () => {
         // },
     });
 
-    const highlightPluginInstance = highlightPlugin();
+    const renderHighlightTarget = (props: RenderHighlightTarget) => (
+        <div
+            style={{
+                position: 'absolute',
+                left: `${props.selectionRegion.left}%`,
+                top: `${props.selectionRegion.top + props.selectionRegion.height}%`,
+            }}
+        >
+            <Tooltip
+                position={Position.TopCenter}
+                target={
+                    <PrimaryButton onClick={props.toggle}>
+                        +
+                    </PrimaryButton>
+                }
+                content={() => 'Add a note'}
+                offset={{ left: 0, top: -8 }}
+            />
+        </div>
+    );
+
+    const highlightPluginInstance = highlightPlugin({
+        renderHighlightTarget,
+    });
 
     return (
         <Worker workerUrl="https://unpkg.com/pdfjs-dist@2.5.207/build/pdf.worker.js">

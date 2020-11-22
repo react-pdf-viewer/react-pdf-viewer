@@ -492,8 +492,18 @@ export interface PluginOnCanvasLayerRender {
     status: LayerRenderStatus;
 }
 
+export interface PluginRenderPageLayer {
+    doc: PdfJs.PdfDocument;
+    height: number;
+    pageIndex: number;
+    rotation: number;
+    scale: number;
+    width: number;
+}
+
 export interface Plugin {
     install?(pluginFunctions: PluginFunctions): void;
+    renderPageLayer?(props: PluginRenderPageLayer): ReactElement;
     renderViewer?(props: RenderViewer): Slot;
     uninstall?(pluginFunctions: PluginFunctions): void;
     onAnnotationLayerRender?(props: PluginOnAnnotationLayerRender): void;

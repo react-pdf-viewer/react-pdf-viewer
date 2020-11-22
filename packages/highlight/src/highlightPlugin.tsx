@@ -6,9 +6,13 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React from 'react';
-import { createStore, LayerRenderStatus, PluginOnTextLayerRender, Plugin, PluginFunctions, RenderViewer, Slot } from '@react-pdf-viewer/core';
+import React, { ReactElement } from 'react';
+import { createStore, LayerRenderStatus, PluginOnTextLayerRender, Plugin, PluginFunctions, PluginRenderPageLayer, RenderViewer, Slot } from '@react-pdf-viewer/core';
 
+import HighlightArea from './HighlightArea';
+import RenderHighlightTarget from './RenderHighlightTarget';
+import SelectionData from './SelectionData';
+import HighlightAreaList from './HighlightAreaList';
 import { NoSelectionState, SelectedState, SelectingState } from './SelectionState';
 import StoreProps from './StoreProps';
 import Tracker from './Tracker';
@@ -16,9 +20,13 @@ import Tracker from './Tracker';
 interface HighlightPlugin extends Plugin {
 }
 
-const highlightPlugin = (): HighlightPlugin => {
+export interface HighlightPluginProps {
+    renderHighlightTarget(props: RenderHighlightTarget): ReactElement;
+}
+
+const highlightPlugin = (props?: HighlightPluginProps): HighlightPlugin => {
     const store = createStore<StoreProps>({
-        selectionState: NoSelectionState,
+        selectionState: new NoSelectionState(),
     });
 
     const renderViewer = (props: RenderViewer): Slot => {
@@ -59,26 +67,39 @@ const highlightPlugin = (): HighlightPlugin => {
             if (userClickedInsideArea) {
                 // Cancel the selection
                 window.getSelection().removeAllRanges();
-                store.update('selectionState', NoSelectionState);
+                store.update('selectionState', new NoSelectionState());
             } else {
-                store.update('selectionState', SelectingState);
+                store.update('selectionState', new SelectingState());
             }
         } else {
-            store.update('selectionState', NoSelectionState);
+            store.update('selectionState', new NoSelectionState());
         }
     };
 
     const onTextLayerRender = (e: PluginOnTextLayerRender) => {
         if (e.status === LayerRenderStatus.DidRender) {
             e.ele.addEventListener('mousedown', handleMouseDown(e));
+
+            // Set some special attributes so we can query the text later
+            e.ele.setAttribute('data-layer', 'text');
+            e.ele.querySelectorAll('.rpv-core-text').forEach(span => span.setAttribute('data-text-page', `${e.pageIndex + 1}`));
         }
     };
+
+    const renderPageLayer = (renderPageProps: PluginRenderPageLayer) => (
+        <HighlightAreaList
+            pageIndex={renderPageProps.pageIndex}
+            renderHighlightTarget={props ? props.renderHighlightTarget : null}
+            store={store}
+        />
+    );
 
     return {
         install: (pluginFunctions: PluginFunctions) => {
             store.update('getPagesRef', pluginFunctions.getPagesRef);
         },
         onTextLayerRender,
+        renderPageLayer,
         renderViewer,
     };
 };

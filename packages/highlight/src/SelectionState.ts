@@ -7,6 +7,7 @@
  */
 
 import HighlightArea from './HighlightArea';
+import SelectionData from './SelectionData';
 
 class SelectionState {}
 
@@ -16,22 +17,40 @@ class SelectingState extends SelectionState {}
 
 class SelectedState extends SelectionState {
     public selectedText: string;
+    public selectionData: SelectionData;
+    public selectionRegion: HighlightArea;
     public highlightAreas: HighlightArea[];
 
-    constructor(selectedText: string, highlightAreas: HighlightArea[]) {
+    constructor(
+        selectedText: string,
+        highlightAreas: HighlightArea[],
+        selectionData: SelectionData,
+        selectionRegion: HighlightArea
+    ) {
         super();
         this.selectedText = selectedText;
+        this.selectionData = selectionData;
+        this.selectionRegion = selectionRegion;
         this.highlightAreas = highlightAreas;
     }
 }
 
 class HighlightState extends SelectionState {
     public selectedText: string;
+    public selectionData: SelectionData;
+    public selectionRegion: HighlightArea;
     public highlightAreas: HighlightArea[];
 
-    constructor(selectedText: string, highlightAreas: HighlightArea[]) {
+    constructor(
+        selectedText: string,
+        highlightAreas: HighlightArea[],
+        selectionData: SelectionData,
+        selectionRegion: HighlightArea
+    ) {
         super();
         this.selectedText = selectedText;
+        this.selectionData = selectionData;
+        this.selectionRegion = selectionRegion;
         this.highlightAreas = highlightAreas;
     }
 }
