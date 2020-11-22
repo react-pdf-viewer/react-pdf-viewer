@@ -15,6 +15,7 @@ import SelectionRange from './SelectionRange';
 import { NoSelectionState, SelectedState, SelectingState } from './SelectionState';
 import StoreProps from './StoreProps';
 import HighlightArea from './HighlightArea';
+import SelectionData from './SelectionData';
 
 const Tracker: FC<{
     store: Store<StoreProps>,
@@ -169,7 +170,29 @@ const Tracker: FC<{
                 break;
         }
 
-        store.update('selectionState', new SelectedState(selectedText, highlightAreas));
+        let selectionRegion: HighlightArea;
+        if (highlightAreas.length > 0) {
+            selectionRegion = highlightAreas[0];
+        } else {
+            const endDivRect = endDiv.getBoundingClientRect();
+            selectionRegion = {
+                height: endDivRect.height * 100 / endPageRect.height,
+                left: (endDivRect.left - endPageRect.left) * 100 / endPageRect.width,
+                pageIndex: endPageIdx,
+                top: (endDivRect.top - endPageRect.top) * 100 / endPageRect.height,
+                width: endDivRect.width * 100 / endPageRect.width,
+            };
+        }
+
+        const selectionData: SelectionData = {
+            startPageIndex: startPageIdx - 1,
+            endPageIndex: endPageIdx - 1,
+            startOffset: range.startOffset,
+            startDivIndex: startDivIdx,
+            endOffset,
+            endDivIndex: endDivIdx
+        };
+        store.update('selectionState', new SelectedState(selectedText, highlightAreas, selectionData, selectionRegion));
     };
 
     useEffect(() => {

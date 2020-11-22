@@ -6,20 +6,27 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, ReactElement, useEffect, useState } from 'react';
 import { Store } from '@react-pdf-viewer/core';
 
-import { HighlightState, SelectedState, SelectionState } from './SelectionState';
+import RenderHighlightTarget from './RenderHighlightTarget';
+import { HighlightState, NoSelectionState, SelectedState, SelectionState } from './SelectionState';
 import StoreProps from './StoreProps';
-import HighlightArea from './HighlightArea';
 
 const HighlightAreaList: FC<{
     pageIndex: number,
+    renderHighlightTarget?(props: RenderHighlightTarget): ReactElement,
     store: Store<StoreProps>,
-}> = ({ pageIndex, store }) => {
+}> = ({ pageIndex, renderHighlightTarget, store }) => {
     const [selectionState, setSelectionState] = useState<SelectionState>(store.get('selectionState'));
 
     const handleSelectionState = (s: SelectionState) => setSelectionState(s);
+
+    // Cancel the selection
+    const cancel = () => {
+        window.getSelection().removeAllRanges();
+        store.update('selectionState', new NoSelectionState());
+    };
 
     useEffect(() => {
         store.subscribe('selectionState', handleSelectionState);
@@ -31,11 +38,30 @@ const HighlightAreaList: FC<{
 
     // Filter the selections
     let listAreas = selectionState instanceof HighlightState
-        ? selectionState.highlightAreas.filter(s => s.pageIndex === pageIndex)
+        ? selectionState.highlightAreas.filter(s => s.pageIndex === pageIndex + 1)
         : [];
 
     return (
         <>
+        {
+            renderHighlightTarget && (selectionState instanceof SelectedState) && (selectionState.selectionRegion.pageIndex === pageIndex + 1) && (
+                renderHighlightTarget({
+                    highlightAreas: selectionState.highlightAreas,
+                    selectedText: selectionState.selectedText,
+                    selectionRegion: selectionState.selectionRegion,
+                    selectionData: selectionState.selectionData,
+                    cancel,
+                    toggle: () => {
+                        store.update('selectionState', new HighlightState(
+                            selectionState.selectedText,
+                            selectionState.highlightAreas,
+                            selectionState.selectionData,
+                            selectionState.selectionRegion
+                        ));
+                    },
+                })
+            )
+        }
         {
            listAreas.map((area, idx) => (
                 <svg
