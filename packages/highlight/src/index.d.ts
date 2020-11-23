@@ -9,8 +9,6 @@
 import { ReactElement } from 'react';
 import { Plugin } from '@react-pdf-viewer/core';
 
-export interface HighlightPlugin extends Plugin {}
-
 export interface HighlightArea {
     height: number;
     left: number;
@@ -28,7 +26,7 @@ export interface SelectionData {
     endDivIndex: number;
 }
 
-export interface RenderHighlightTarget {
+export interface RenderHighlightTargetProps {
     highlightAreas: HighlightArea[];
     selectedText: string;
     selectionRegion: HighlightArea;
@@ -39,7 +37,7 @@ export interface RenderHighlightTarget {
 }
 
 export interface HighlightPluginProps {
-    renderHighlightTarget(props: RenderHighlightTarget): ReactElement;
+    renderHighlightTarget(props: RenderHighlightTargetProps): ReactElement;
 }
 
-export function highlightPlugin(props?: HighlightPluginProps): HighlightPlugin;
+export function highlightPlugin(props?: HighlightPluginProps): Plugin;

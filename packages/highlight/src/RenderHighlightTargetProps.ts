@@ -9,7 +9,7 @@
 import HighlightArea from './HighlightArea';
 import SelectionData from './SelectionData';
 
-interface RenderHighlightTarget {
+interface RenderHighlightTargetProps {
     highlightAreas: HighlightArea[];
     selectedText: string;
     selectionRegion: HighlightArea;
@@ -19,4 +19,4 @@ interface RenderHighlightTarget {
     toggle(): void;
 }
 
-export default RenderHighlightTarget;
+export default RenderHighlightTargetProps;

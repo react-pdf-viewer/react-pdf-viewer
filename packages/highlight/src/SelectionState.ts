@@ -55,10 +55,14 @@ class HighlightState extends SelectionState {
     }
 }
 
+// Create some instances
+const NO_SELECTION_STATE = new NoSelectionState();
+const SELECTING_STATE = new SelectingState();
+
 export {
-    SelectionState,
-    NoSelectionState,
-    SelectingState,
-    SelectedState,
+    NO_SELECTION_STATE,
+    SELECTING_STATE,
     HighlightState,
+    SelectedState,
+    SelectionState,
 };

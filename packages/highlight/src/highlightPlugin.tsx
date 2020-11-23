@@ -9,24 +9,20 @@
 import React, { ReactElement } from 'react';
 import { createStore, LayerRenderStatus, PluginOnTextLayerRender, Plugin, PluginFunctions, PluginRenderPageLayer, RenderViewer, Slot } from '@react-pdf-viewer/core';
 
-import HighlightArea from './HighlightArea';
-import RenderHighlightTarget from './RenderHighlightTarget';
-import SelectionData from './SelectionData';
+import { HIGHLIGHT_LAYER_ATTR, HIGHLIGHT_PAGE_ATTR } from './constants';
 import HighlightAreaList from './HighlightAreaList';
-import { NoSelectionState, SelectedState, SelectingState } from './SelectionState';
+import RenderHighlightTargetProps from './RenderHighlightTargetProps';
+import { NO_SELECTION_STATE, SELECTING_STATE, SelectedState } from './SelectionState';
 import StoreProps from './StoreProps';
 import Tracker from './Tracker';
 
-interface HighlightPlugin extends Plugin {
-}
-
 export interface HighlightPluginProps {
-    renderHighlightTarget(props: RenderHighlightTarget): ReactElement;
+    renderHighlightTarget(props: RenderHighlightTargetProps): ReactElement;
 }
 
-const highlightPlugin = (props?: HighlightPluginProps): HighlightPlugin => {
+const highlightPlugin = (props?: HighlightPluginProps): Plugin => {
     const store = createStore<StoreProps>({
-        selectionState: new NoSelectionState(),
+        selectionState: NO_SELECTION_STATE,
     });
 
     const renderViewer = (props: RenderViewer): Slot => {
@@ -44,10 +40,6 @@ const highlightPlugin = (props?: HighlightPluginProps): HighlightPlugin => {
     };
 
     const handleMouseDown = (textLayerRender: PluginOnTextLayerRender) => (e: MouseEvent) => {
-        const pagesRef = store.get('getPagesRef');
-        if (!pagesRef || !pagesRef().current) {
-            return;
-        }
         const pageRect = textLayerRender.ele.getBoundingClientRect();
         const selectionState = store.get('selectionState');
         if (selectionState instanceof SelectedState) {
@@ -67,12 +59,12 @@ const highlightPlugin = (props?: HighlightPluginProps): HighlightPlugin => {
             if (userClickedInsideArea) {
                 // Cancel the selection
                 window.getSelection().removeAllRanges();
-                store.update('selectionState', new NoSelectionState());
+                store.update('selectionState', NO_SELECTION_STATE);
             } else {
-                store.update('selectionState', new SelectingState());
+                store.update('selectionState', SELECTING_STATE);
             }
         } else {
-            store.update('selectionState', new NoSelectionState());
+            store.update('selectionState', NO_SELECTION_STATE);
         }
     };
 
@@ -81,8 +73,8 @@ const highlightPlugin = (props?: HighlightPluginProps): HighlightPlugin => {
             e.ele.addEventListener('mousedown', handleMouseDown(e));
 
             // Set some special attributes so we can query the text later
-            e.ele.setAttribute('data-layer', 'text');
-            e.ele.querySelectorAll('.rpv-core-text').forEach(span => span.setAttribute('data-text-page', `${e.pageIndex + 1}`));
+            e.ele.setAttribute(HIGHLIGHT_LAYER_ATTR, 'true');
+            e.ele.querySelectorAll('.rpv-core-text').forEach(span => span.setAttribute(HIGHLIGHT_PAGE_ATTR, `${e.pageIndex + 1}`));
         }
     };
 

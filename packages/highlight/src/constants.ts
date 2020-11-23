@@ -6,6 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import './styles';
+const HIGHLIGHT_LAYER_ATTR = 'data-highlight-text-layer';
+const HIGHLIGHT_PAGE_ATTR = 'data-highlight-text-page';
 
-export { default as highlightPlugin } from './highlightPlugin';
+export { HIGHLIGHT_LAYER_ATTR, HIGHLIGHT_PAGE_ATTR };

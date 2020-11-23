@@ -9,13 +9,13 @@
 import React, { FC, ReactElement, useEffect, useState } from 'react';
 import { Store } from '@react-pdf-viewer/core';
 
-import RenderHighlightTarget from './RenderHighlightTarget';
-import { HighlightState, NoSelectionState, SelectedState, SelectionState } from './SelectionState';
+import RenderHighlightTargetProps from './RenderHighlightTargetProps';
+import { NO_SELECTION_STATE, HighlightState, SelectedState, SelectionState } from './SelectionState';
 import StoreProps from './StoreProps';
 
 const HighlightAreaList: FC<{
     pageIndex: number,
-    renderHighlightTarget?(props: RenderHighlightTarget): ReactElement,
+    renderHighlightTarget?(props: RenderHighlightTargetProps): ReactElement,
     store: Store<StoreProps>,
 }> = ({ pageIndex, renderHighlightTarget, store }) => {
     const [selectionState, setSelectionState] = useState<SelectionState>(store.get('selectionState'));
@@ -25,7 +25,7 @@ const HighlightAreaList: FC<{
     // Cancel the selection
     const cancel = () => {
         window.getSelection().removeAllRanges();
-        store.update('selectionState', new NoSelectionState());
+        store.update('selectionState', NO_SELECTION_STATE);
     };
 
     useEffect(() => {
@@ -37,7 +37,7 @@ const HighlightAreaList: FC<{
     }, []);
 
     // Filter the selections
-    let listAreas = selectionState instanceof HighlightState
+    const listAreas = selectionState instanceof HighlightState
         ? selectionState.highlightAreas.filter(s => s.pageIndex === pageIndex + 1)
         : [];
 
@@ -58,30 +58,29 @@ const HighlightAreaList: FC<{
                             selectionState.selectionData,
                             selectionState.selectionRegion
                         ));
+                        window.getSelection().removeAllRanges();
                     },
                 })
             )
         }
+        <div>
         {
            listAreas.map((area, idx) => (
                 <svg
                     key={idx}
                     style={{
                         position: 'absolute',
-                        transform: `translate(${area.left}%, ${area.top}%)`,
+                        top: `${area.top}%`,
+                        left: `${area.left}%`,
                     }}
                     height={`${area.height}%`}
                     width={`${area.width}%`}
                 >
-                    <rect
-                        height='100%'
-                        width='100%'
-                        fill='yellow'
-                        fillOpacity='0.4'
-                    />
+                    <rect className='rpv-highlight-highlighting-rect' />
                 </svg>
             ))
         }
+        </div>
         </>
     );
 };
