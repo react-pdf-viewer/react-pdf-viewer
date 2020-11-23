@@ -5,6 +5,7 @@ import { highlightPlugin, RenderHighlightTargetProps } from '@react-pdf-viewer/h
 import { NextIcon, PreviousIcon, RenderSearchProps } from '@react-pdf-viewer/search';
 
 import '@react-pdf-viewer/default-layout/lib/styles/index.css';
+import '@react-pdf-viewer/highlight/lib/styles/index.css';
 import './styles.css';
 
 const App = () => {

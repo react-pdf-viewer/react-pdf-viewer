@@ -75,12 +75,7 @@ const HighlightAreaList: FC<{
                     height={`${area.height}%`}
                     width={`${area.width}%`}
                 >
-                    <rect
-                        height='100%'
-                        width='100%'
-                        fill='yellow'
-                        fillOpacity='0.4'
-                    />
+                    <rect className='rpv-highlight-highlighting-rect' />
                 </svg>
             ))
         }

@@ -6,6 +6,4 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import './styles';
-
-export { default as highlightPlugin } from './highlightPlugin';
+import './highlighting.less';
