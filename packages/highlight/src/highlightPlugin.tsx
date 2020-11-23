@@ -9,6 +9,7 @@
 import React, { ReactElement } from 'react';
 import { createStore, LayerRenderStatus, PluginOnTextLayerRender, Plugin, PluginFunctions, PluginRenderPageLayer, RenderViewer, Slot } from '@react-pdf-viewer/core';
 
+import { HIGHLIGHT_LAYER_ATTR, HIGHLIGHT_PAGE_ATTR } from './constants';
 import HighlightAreaList from './HighlightAreaList';
 import RenderHighlightTargetProps from './RenderHighlightTargetProps';
 import { NO_SELECTION_STATE, SELECTING_STATE, SelectedState } from './SelectionState';
@@ -75,8 +76,8 @@ const highlightPlugin = (props?: HighlightPluginProps): HighlightPlugin => {
             e.ele.addEventListener('mousedown', handleMouseDown(e));
 
             // Set some special attributes so we can query the text later
-            e.ele.setAttribute('data-layer', 'text');
-            e.ele.querySelectorAll('.rpv-core-text').forEach(span => span.setAttribute('data-text-page', `${e.pageIndex + 1}`));
+            e.ele.setAttribute(HIGHLIGHT_LAYER_ATTR, 'true');
+            e.ele.querySelectorAll('.rpv-core-text').forEach(span => span.setAttribute(HIGHLIGHT_PAGE_ATTR, `${e.pageIndex + 1}`));
         }
     };
 

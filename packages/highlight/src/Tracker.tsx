@@ -9,13 +9,14 @@
 import React, { FC, RefObject, useEffect, useRef, useState } from 'react';
 import { Store } from '@react-pdf-viewer/core';
 
+import { HIGHLIGHT_LAYER_ATTR, HIGHLIGHT_PAGE_ATTR } from './constants';
 import getRectFromOffsets from './getRectFromOffsets';
 import getTextFromOffsets from './getTextFromOffsets';
+import HighlightArea from './HighlightArea';
+import SelectionData from './SelectionData';
 import SelectionRange from './SelectionRange';
 import { NO_SELECTION_STATE, SELECTING_STATE, SelectedState } from './SelectionState';
 import StoreProps from './StoreProps';
-import HighlightArea from './HighlightArea';
-import SelectionData from './SelectionData';
 
 const Tracker: FC<{
     store: Store<StoreProps>,
@@ -43,7 +44,7 @@ const Tracker: FC<{
         const range = selection.getRangeAt(0);
         const startDiv = range.startContainer.parentNode;
         const parentEndContainer = range.endContainer.parentNode;
-        const shouldIgnoreEndContainer = (parentEndContainer instanceof HTMLElement) && parentEndContainer.getAttribute('data-layer') === 'text';
+        const shouldIgnoreEndContainer = (parentEndContainer instanceof HTMLElement) && parentEndContainer.hasAttribute(HIGHLIGHT_LAYER_ATTR);
 
         let endDiv: Node, endOffset: number;
         if (shouldIgnoreEndContainer && range.endOffset == 0) {
@@ -61,18 +62,18 @@ const Tracker: FC<{
             return;
         }
 
-        const startPageIdx = parseInt(startDiv.getAttribute('data-text-page'), 10);
-        const endPageIdx = parseInt(endDiv.getAttribute('data-text-page'), 10);
+        const startPageIdx = parseInt(startDiv.getAttribute(HIGHLIGHT_PAGE_ATTR), 10);
+        const endPageIdx = parseInt(endDiv.getAttribute(HIGHLIGHT_PAGE_ATTR), 10);
 
         const startTextLayer = startDiv.parentElement;
         const endTextLayer = endDiv.parentElement;
 
         const startPageRect = startTextLayer.getBoundingClientRect();
-        const startDivSiblings: HTMLElement[] = [].slice.call(startTextLayer.querySelectorAll('[data-text-page]'));
+        const startDivSiblings: HTMLElement[] = [].slice.call(startTextLayer.querySelectorAll(`[${HIGHLIGHT_PAGE_ATTR}]`));
         const startDivIdx = startDivSiblings.indexOf(startDiv);
 
         const endPageRect = endTextLayer.getBoundingClientRect();
-        const endDivSiblings: HTMLElement[] = [].slice.call(endTextLayer.querySelectorAll('[data-text-page]'));
+        const endDivSiblings: HTMLElement[] = [].slice.call(endTextLayer.querySelectorAll(`[${HIGHLIGHT_PAGE_ATTR}]`));
         const endDivIdx = endDivSiblings.indexOf(endDiv);
 
         let rangeType: SelectionRange = SelectionRange.DifferentPages; 
