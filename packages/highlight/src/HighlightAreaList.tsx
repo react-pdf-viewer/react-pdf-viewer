@@ -62,13 +62,15 @@ const HighlightAreaList: FC<{
                 })
             )
         }
+        <div>
         {
            listAreas.map((area, idx) => (
                 <svg
                     key={idx}
                     style={{
                         position: 'absolute',
-                        transform: `translate(${area.left}%, ${area.top}%)`,
+                        top: `${area.top}%`,
+                        left: `${area.left}%`,
                     }}
                     height={`${area.height}%`}
                     width={`${area.width}%`}
@@ -82,6 +84,7 @@ const HighlightAreaList: FC<{
                 </svg>
             ))
         }
+        </div>
         </>
     );
 };
