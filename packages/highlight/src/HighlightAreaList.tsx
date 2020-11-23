@@ -9,15 +9,17 @@
 import React, { FC, ReactElement, useEffect, useState } from 'react';
 import { Store } from '@react-pdf-viewer/core';
 
+import RenderHighlightContentProps from './RenderHighlightContentProps';
 import RenderHighlightTargetProps from './RenderHighlightTargetProps';
 import { NO_SELECTION_STATE, HighlightState, SelectedState, SelectionState } from './SelectionState';
 import StoreProps from './StoreProps';
 
 const HighlightAreaList: FC<{
     pageIndex: number,
+    renderHighlightContent?(props: RenderHighlightContentProps): ReactElement,
     renderHighlightTarget?(props: RenderHighlightTargetProps): ReactElement,
     store: Store<StoreProps>,
-}> = ({ pageIndex, renderHighlightTarget, store }) => {
+}> = ({ pageIndex, renderHighlightContent, renderHighlightTarget, store }) => {
     const [selectionState, setSelectionState] = useState<SelectionState>(store.get('selectionState'));
 
     const handleSelectionState = (s: SelectionState) => setSelectionState(s);
@@ -60,6 +62,17 @@ const HighlightAreaList: FC<{
                         ));
                         window.getSelection().removeAllRanges();
                     },
+                })
+            )
+        }
+        {
+            renderHighlightContent && (selectionState instanceof HighlightState) && (selectionState.selectionRegion.pageIndex === pageIndex + 1) && (
+                renderHighlightContent({
+                    highlightAreas: selectionState.highlightAreas,
+                    selectedText: selectionState.selectedText,
+                    selectionRegion: selectionState.selectionRegion,
+                    selectionData: selectionState.selectionData,
+                    cancel,
                 })
             )
         }

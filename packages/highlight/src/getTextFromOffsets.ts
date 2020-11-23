@@ -18,12 +18,12 @@ const getTextFromOffsets = (
     if (startDivIdx < endDivIdx) {
         const startDivText = nodes
             .slice(startDivIdx, startDivIdx + 1)
-            .map((node) => node.textContent.substring(startOffset).trim)
+            .map((node) => node.textContent.substring(startOffset).trim())
             .join(' ');
 
         const middleDivText = nodes
             .slice(startDivIdx + 1, endDivIdx)
-            .map((node) => node.textContent.trim)
+            .map((node) => node.textContent.trim())
             .join(' ');
 
         const endDivText = nodes
