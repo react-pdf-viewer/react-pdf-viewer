@@ -11,7 +11,7 @@ import { createStore, LayerRenderStatus, PluginOnTextLayerRender, Plugin, Plugin
 
 import HighlightAreaList from './HighlightAreaList';
 import RenderHighlightTargetProps from './RenderHighlightTargetProps';
-import { NoSelectionState, SelectedState, SelectingState } from './SelectionState';
+import { NO_SELECTION_STATE, SELECTING_STATE, SelectedState } from './SelectionState';
 import StoreProps from './StoreProps';
 import Tracker from './Tracker';
 
@@ -24,7 +24,7 @@ export interface HighlightPluginProps {
 
 const highlightPlugin = (props?: HighlightPluginProps): HighlightPlugin => {
     const store = createStore<StoreProps>({
-        selectionState: new NoSelectionState(),
+        selectionState: NO_SELECTION_STATE,
     });
 
     const renderViewer = (props: RenderViewer): Slot => {
@@ -61,12 +61,12 @@ const highlightPlugin = (props?: HighlightPluginProps): HighlightPlugin => {
             if (userClickedInsideArea) {
                 // Cancel the selection
                 window.getSelection().removeAllRanges();
-                store.update('selectionState', new NoSelectionState());
+                store.update('selectionState', NO_SELECTION_STATE);
             } else {
-                store.update('selectionState', new SelectingState());
+                store.update('selectionState', SELECTING_STATE);
             }
         } else {
-            store.update('selectionState', new NoSelectionState());
+            store.update('selectionState', NO_SELECTION_STATE);
         }
     };
 

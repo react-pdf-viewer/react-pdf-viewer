@@ -10,7 +10,7 @@ import React, { FC, ReactElement, useEffect, useState } from 'react';
 import { Store } from '@react-pdf-viewer/core';
 
 import RenderHighlightTargetProps from './RenderHighlightTargetProps';
-import { HighlightState, NoSelectionState, SelectedState, SelectionState } from './SelectionState';
+import { NO_SELECTION_STATE, HighlightState, SelectedState, SelectionState } from './SelectionState';
 import StoreProps from './StoreProps';
 
 const HighlightAreaList: FC<{
@@ -25,7 +25,7 @@ const HighlightAreaList: FC<{
     // Cancel the selection
     const cancel = () => {
         window.getSelection().removeAllRanges();
-        store.update('selectionState', new NoSelectionState());
+        store.update('selectionState', NO_SELECTION_STATE);
     };
 
     useEffect(() => {

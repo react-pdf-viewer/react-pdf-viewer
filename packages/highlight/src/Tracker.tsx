@@ -12,7 +12,7 @@ import { Store } from '@react-pdf-viewer/core';
 import getRectFromOffsets from './getRectFromOffsets';
 import getTextFromOffsets from './getTextFromOffsets';
 import SelectionRange from './SelectionRange';
-import { NoSelectionState, SelectedState, SelectingState } from './SelectionState';
+import { NO_SELECTION_STATE, SELECTING_STATE, SelectedState } from './SelectionState';
 import StoreProps from './StoreProps';
 import HighlightArea from './HighlightArea';
 import SelectionData from './SelectionData';
@@ -34,7 +34,7 @@ const Tracker: FC<{
         const selection = document.getSelection();
 
         const selectionState = store.get('selectionState');
-        const hasSelection = (selectionState instanceof NoSelectionState || selectionState instanceof SelectingState) &&
+        const hasSelection = (selectionState === NO_SELECTION_STATE || selectionState === SELECTING_STATE) &&
                             selection.rangeCount > 0 && selection.toString() !== '';
         if (!hasSelection) {
             return;
@@ -88,7 +88,8 @@ const Tracker: FC<{
                 break;
         }
 
-        const getRectBetween = (min: number, max: number, eleArray: HTMLElement[]) => Array(max - min + 1).fill(0).map((_, i) => eleArray[min + i].getBoundingClientRect());
+        const getRectBetween = (min: number, max: number, eleArray: HTMLElement[]) => Array(max - min + 1).fill(0)
+            .map((_, i) => eleArray[min + i].getBoundingClientRect());
 
         let highlightAreas: HighlightArea[] = [];
         switch (rangeType) {
