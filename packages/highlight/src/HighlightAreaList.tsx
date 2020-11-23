@@ -58,6 +58,7 @@ const HighlightAreaList: FC<{
                             selectionState.selectionData,
                             selectionState.selectionRegion
                         ));
+                        window.getSelection().removeAllRanges();
                     },
                 })
             )

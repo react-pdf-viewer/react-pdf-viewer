@@ -42,10 +42,6 @@ const highlightPlugin = (props?: HighlightPluginProps): HighlightPlugin => {
     };
 
     const handleMouseDown = (textLayerRender: PluginOnTextLayerRender) => (e: MouseEvent) => {
-        const pagesRef = store.get('getPagesRef');
-        if (!pagesRef || !pagesRef().current) {
-            return;
-        }
         const pageRect = textLayerRender.ele.getBoundingClientRect();
         const selectionState = store.get('selectionState');
         if (selectionState instanceof SelectedState) {
