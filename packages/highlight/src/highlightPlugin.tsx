@@ -16,14 +16,11 @@ import { NO_SELECTION_STATE, SELECTING_STATE, SelectedState } from './SelectionS
 import StoreProps from './StoreProps';
 import Tracker from './Tracker';
 
-interface HighlightPlugin extends Plugin {
-}
-
 export interface HighlightPluginProps {
     renderHighlightTarget(props: RenderHighlightTargetProps): ReactElement;
 }
 
-const highlightPlugin = (props?: HighlightPluginProps): HighlightPlugin => {
+const highlightPlugin = (props?: HighlightPluginProps): Plugin => {
     const store = createStore<StoreProps>({
         selectionState: NO_SELECTION_STATE,
     });

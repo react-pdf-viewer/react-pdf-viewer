@@ -9,8 +9,6 @@
 import { ReactElement } from 'react';
 import { Plugin } from '@react-pdf-viewer/core';
 
-export interface HighlightPlugin extends Plugin {}
-
 export interface HighlightArea {
     height: number;
     left: number;
@@ -42,4 +40,4 @@ export interface HighlightPluginProps {
     renderHighlightTarget(props: RenderHighlightTargetProps): ReactElement;
 }
 
-export function highlightPlugin(props?: HighlightPluginProps): HighlightPlugin;
+export function highlightPlugin(props?: HighlightPluginProps): Plugin;

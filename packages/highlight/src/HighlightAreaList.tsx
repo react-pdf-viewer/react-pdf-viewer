@@ -37,7 +37,7 @@ const HighlightAreaList: FC<{
     }, []);
 
     // Filter the selections
-    let listAreas = selectionState instanceof HighlightState
+    const listAreas = selectionState instanceof HighlightState
         ? selectionState.highlightAreas.filter(s => s.pageIndex === pageIndex + 1)
         : [];
 
