@@ -11,6 +11,7 @@ import { createStore, LayerRenderStatus, PluginOnTextLayerRender, Plugin, Plugin
 
 import { HIGHLIGHT_LAYER_ATTR, HIGHLIGHT_PAGE_ATTR } from './constants';
 import HighlightAreaList from './HighlightAreaList';
+import RenderHighlightContentProps from './RenderHighlightContentProps';
 import RenderHighlightTargetProps from './RenderHighlightTargetProps';
 import { NO_SELECTION_STATE, SELECTING_STATE, SelectedState } from './SelectionState';
 import StoreProps from './StoreProps';
@@ -18,6 +19,7 @@ import Tracker from './Tracker';
 
 export interface HighlightPluginProps {
     renderHighlightTarget(props: RenderHighlightTargetProps): ReactElement;
+    renderHighlightContent(props: RenderHighlightContentProps): ReactElement;
 }
 
 const highlightPlugin = (props?: HighlightPluginProps): Plugin => {
@@ -81,6 +83,7 @@ const highlightPlugin = (props?: HighlightPluginProps): Plugin => {
     const renderPageLayer = (renderPageProps: PluginRenderPageLayer) => (
         <HighlightAreaList
             pageIndex={renderPageProps.pageIndex}
+            renderHighlightContent={props ? props.renderHighlightContent : null}
             renderHighlightTarget={props ? props.renderHighlightTarget : null}
             store={store}
         />

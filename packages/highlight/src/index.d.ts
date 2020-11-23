@@ -36,8 +36,17 @@ export interface RenderHighlightTargetProps {
     toggle(): void;
 }
 
+export interface RenderHighlightContentProps {
+    highlightAreas: HighlightArea[];
+    selectedText: string;
+    selectionRegion: HighlightArea;
+    selectionData: SelectionData;
+    cancel(): void;
+}
+
 export interface HighlightPluginProps {
     renderHighlightTarget(props: RenderHighlightTargetProps): ReactElement;
+    renderHighlightContent(props: RenderHighlightContentProps): ReactElement;
 }
 
 export function highlightPlugin(props?: HighlightPluginProps): Plugin;
