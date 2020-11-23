@@ -28,7 +28,7 @@ export interface SelectionData {
     endDivIndex: number;
 }
 
-export interface RenderHighlightTarget {
+export interface RenderHighlightTargetProps {
     highlightAreas: HighlightArea[];
     selectedText: string;
     selectionRegion: HighlightArea;
@@ -39,7 +39,7 @@ export interface RenderHighlightTarget {
 }
 
 export interface HighlightPluginProps {
-    renderHighlightTarget(props: RenderHighlightTarget): ReactElement;
+    renderHighlightTarget(props: RenderHighlightTargetProps): ReactElement;
 }
 
 export function highlightPlugin(props?: HighlightPluginProps): HighlightPlugin;

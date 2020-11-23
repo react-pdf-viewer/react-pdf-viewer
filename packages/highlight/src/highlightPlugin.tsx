@@ -9,10 +9,8 @@
 import React, { ReactElement } from 'react';
 import { createStore, LayerRenderStatus, PluginOnTextLayerRender, Plugin, PluginFunctions, PluginRenderPageLayer, RenderViewer, Slot } from '@react-pdf-viewer/core';
 
-import HighlightArea from './HighlightArea';
-import RenderHighlightTarget from './RenderHighlightTarget';
-import SelectionData from './SelectionData';
 import HighlightAreaList from './HighlightAreaList';
+import RenderHighlightTargetProps from './RenderHighlightTargetProps';
 import { NoSelectionState, SelectedState, SelectingState } from './SelectionState';
 import StoreProps from './StoreProps';
 import Tracker from './Tracker';
@@ -21,7 +19,7 @@ interface HighlightPlugin extends Plugin {
 }
 
 export interface HighlightPluginProps {
-    renderHighlightTarget(props: RenderHighlightTarget): ReactElement;
+    renderHighlightTarget(props: RenderHighlightTargetProps): ReactElement;
 }
 
 const highlightPlugin = (props?: HighlightPluginProps): HighlightPlugin => {

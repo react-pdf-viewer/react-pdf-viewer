@@ -1,7 +1,7 @@
 import React, { ReactElement } from 'react';
 import { Icon, Button, Position, PrimaryButton, Tooltip, Viewer, Worker } from '@react-pdf-viewer/core';
 import { defaultLayoutPlugin, ToolbarProps, ToolbarSlot } from '@react-pdf-viewer/default-layout';
-import { highlightPlugin, RenderHighlightTarget } from '@react-pdf-viewer/highlight';
+import { highlightPlugin, RenderHighlightTargetProps } from '@react-pdf-viewer/highlight';
 import { NextIcon, PreviousIcon, RenderSearchProps } from '@react-pdf-viewer/search';
 
 import '@react-pdf-viewer/default-layout/lib/styles/index.css';
@@ -146,7 +146,7 @@ const App = () => {
         // },
     });
 
-    const renderHighlightTarget = (props: RenderHighlightTarget) => (
+    const renderHighlightTarget = (props: RenderHighlightTargetProps) => (
         <div
             style={{
                 position: 'absolute',

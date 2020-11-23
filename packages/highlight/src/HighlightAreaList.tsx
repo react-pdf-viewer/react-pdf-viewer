@@ -9,13 +9,13 @@
 import React, { FC, ReactElement, useEffect, useState } from 'react';
 import { Store } from '@react-pdf-viewer/core';
 
-import RenderHighlightTarget from './RenderHighlightTarget';
+import RenderHighlightTargetProps from './RenderHighlightTargetProps';
 import { HighlightState, NoSelectionState, SelectedState, SelectionState } from './SelectionState';
 import StoreProps from './StoreProps';
 
 const HighlightAreaList: FC<{
     pageIndex: number,
-    renderHighlightTarget?(props: RenderHighlightTarget): ReactElement,
+    renderHighlightTarget?(props: RenderHighlightTargetProps): ReactElement,
     store: Store<StoreProps>,
 }> = ({ pageIndex, renderHighlightTarget, store }) => {
     const [selectionState, setSelectionState] = useState<SelectionState>(store.get('selectionState'));
