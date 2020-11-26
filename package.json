@@ -48,7 +48,7 @@
 		"rollup-plugin-less": "^1.1.2",
 		"rollup-plugin-less-modules": "^0.1.11",
 		"rollup-plugin-terser": "^7.0.2",
-		"typescript": "^4.0.5"
+		"typescript": "^4.1.2"
 	},
 	"dependencies": {
 		"build": "^0.1.4"
