@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import { ReactElement } from 'react';
+import { Component, ReactElement } from 'react';
 import { Plugin } from '@react-pdf-viewer/core';
 
 export interface HighlightArea {
@@ -50,3 +50,4 @@ export interface HighlightPluginProps {
 }
 
 export function highlightPlugin(props?: HighlightPluginProps): Plugin;
+export class MessageIcon extends Component {}
