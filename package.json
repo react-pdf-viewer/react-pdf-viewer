@@ -33,22 +33,22 @@
 	"devDependencies": {
 		"@rollup/plugin-json": "^4.1.0",
 		"@rollup/plugin-typescript": "^6.1.0",
-		"@types/react": "^16.9.56",
-		"@types/react-dom": "^16.9.9",
-		"@typescript-eslint/eslint-plugin": "^4.8.1",
-		"@typescript-eslint/parser": "^4.8.1",
+		"@types/react": "^17.0.0",
+		"@types/react-dom": "^17.0.0",
+		"@typescript-eslint/eslint-plugin": "^4.8.2",
+		"@typescript-eslint/parser": "^4.8.2",
 		"cssnano": "^4.1.10",
-		"eslint": "^7.13.0",
+		"eslint": "^7.14.0",
 		"eslint-plugin-react": "^7.21.5",
 		"lerna": "^3.22.1",
 		"less": "^3.12.2",
 		"postcss-cli": "^8.3.0",
-		"prettier": "^2.1.2",
+		"prettier": "^2.2.0",
 		"rollup": "^2.33.3",
 		"rollup-plugin-less": "^1.1.2",
 		"rollup-plugin-less-modules": "^0.1.11",
 		"rollup-plugin-terser": "^7.0.2",
-		"typescript": "^4.0.5"
+		"typescript": "^4.1.2"
 	},
 	"dependencies": {
 		"build": "^0.1.4"
