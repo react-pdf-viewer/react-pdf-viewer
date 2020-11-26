@@ -43,7 +43,7 @@
 		"lerna": "^3.22.1",
 		"less": "^3.12.2",
 		"postcss-cli": "^8.3.0",
-		"prettier": "^2.1.2",
+		"prettier": "^2.2.0",
 		"rollup": "^2.33.3",
 		"rollup-plugin-less": "^1.1.2",
 		"rollup-plugin-less-modules": "^0.1.11",
