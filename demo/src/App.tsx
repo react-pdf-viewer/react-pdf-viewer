@@ -13,15 +13,18 @@ const App = () => {
     const renderHighlightTarget = (props: RenderHighlightTargetProps) => (
         <div
             style={{
+                background: '#eee',
+                display: 'flex',
                 position: 'absolute',
                 left: `${props.selectionRegion.left}%`,
                 top: `${props.selectionRegion.top + props.selectionRegion.height}%`,
+                transform: 'translate(0, 8px)',
             }}
         >
             <Tooltip
                 position={Position.TopCenter}
                 target={<Button onClick={props.toggle}><MessageIcon /></Button>}
-                content={() => 'Add a note'}
+                content={() => <div style={{ width: '100px' }}>Add a note</div>}
                 offset={{ left: 0, top: -8 }}
             />
         </div>
