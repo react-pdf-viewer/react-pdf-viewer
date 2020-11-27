@@ -9,3 +9,4 @@
 import './styles';
 
 export { default as highlightPlugin } from './highlightPlugin';
+export { default as MessageIcon } from './MessageIcon';

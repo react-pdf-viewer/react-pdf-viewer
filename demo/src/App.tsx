@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, Position, PrimaryButton, Tooltip, Viewer, Worker } from '@react-pdf-viewer/core';
 import { defaultLayoutPlugin } from '@react-pdf-viewer/default-layout';
-import { highlightPlugin, RenderHighlightContentProps, RenderHighlightTargetProps } from '@react-pdf-viewer/highlight';
+import { highlightPlugin, MessageIcon, RenderHighlightContentProps, RenderHighlightTargetProps } from '@react-pdf-viewer/highlight';
 
 import '@react-pdf-viewer/default-layout/lib/styles/index.css';
 import '@react-pdf-viewer/highlight/lib/styles/index.css';
@@ -13,19 +13,18 @@ const App = () => {
     const renderHighlightTarget = (props: RenderHighlightTargetProps) => (
         <div
             style={{
+                background: '#eee',
+                display: 'flex',
                 position: 'absolute',
                 left: `${props.selectionRegion.left}%`,
                 top: `${props.selectionRegion.top + props.selectionRegion.height}%`,
+                transform: 'translate(0, 8px)',
             }}
         >
             <Tooltip
                 position={Position.TopCenter}
-                target={
-                    <PrimaryButton onClick={props.toggle}>
-                        +
-                    </PrimaryButton>
-                }
-                content={() => 'Add a note'}
+                target={<Button onClick={props.toggle}><MessageIcon /></Button>}
+                content={() => <div style={{ width: '100px' }}>Add a note</div>}
                 offset={{ left: 0, top: -8 }}
             />
         </div>

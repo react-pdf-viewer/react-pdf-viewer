@@ -174,7 +174,7 @@ const Tracker: FC<{
 
         let selectionRegion: HighlightArea;
         if (highlightAreas.length > 0) {
-            selectionRegion = highlightAreas[0];
+            selectionRegion = highlightAreas[highlightAreas.length - 1];
         } else {
             const endDivRect = endDiv.getBoundingClientRect();
             selectionRegion = {
