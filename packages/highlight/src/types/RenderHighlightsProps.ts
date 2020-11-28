@@ -6,4 +6,8 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import './rect.less';
+interface RenderHighlightsProps {
+    pageIndex: number;
+}
+
+export default RenderHighlightsProps;

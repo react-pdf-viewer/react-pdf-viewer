@@ -44,10 +44,19 @@ export interface RenderHighlightContentProps {
     cancel(): void;
 }
 
-export interface HighlightPluginProps {
-    renderHighlightTarget(props: RenderHighlightTargetProps): ReactElement;
-    renderHighlightContent(props: RenderHighlightContentProps): ReactElement;
+export interface RenderHighlightsProps {
+    pageIndex: number;
 }
 
-export function highlightPlugin(props?: HighlightPluginProps): Plugin;
+export interface HighlightPlugin extends Plugin {
+    jumpToHighlightArea(area: HighlightArea): void;
+}
+
+export interface HighlightPluginProps {
+    renderHighlightTarget?(props: RenderHighlightTargetProps): ReactElement;
+    renderHighlightContent?(props: RenderHighlightContentProps): ReactElement;
+    renderHighlights?(props: RenderHighlightsProps): ReactElement;
+}
+
+export function highlightPlugin(props?: HighlightPluginProps): HighlightPlugin;
 export class MessageIcon extends Component {}

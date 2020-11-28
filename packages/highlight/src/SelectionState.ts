@@ -6,8 +6,8 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import HighlightArea from './HighlightArea';
-import SelectionData from './SelectionData';
+import HighlightArea from './types/HighlightArea';
+import SelectionData from './types/SelectionData';
 
 class SelectionState {}
 

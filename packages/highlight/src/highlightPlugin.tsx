@@ -11,18 +11,25 @@ import { createStore, LayerRenderStatus, PluginOnTextLayerRender, Plugin, Plugin
 
 import { HIGHLIGHT_LAYER_ATTR, HIGHLIGHT_PAGE_ATTR } from './constants';
 import HighlightAreaList from './HighlightAreaList';
-import RenderHighlightContentProps from './RenderHighlightContentProps';
-import RenderHighlightTargetProps from './RenderHighlightTargetProps';
 import { NO_SELECTION_STATE, SELECTING_STATE, SelectedState } from './SelectionState';
 import StoreProps from './StoreProps';
 import Tracker from './Tracker';
+import HighlightArea from './types/HighlightArea';
+import RenderHighlightsProps from './types/RenderHighlightsProps';
+import RenderHighlightContentProps from './types/RenderHighlightContentProps';
+import RenderHighlightTargetProps from './types/RenderHighlightTargetProps';
 
-export interface HighlightPluginProps {
-    renderHighlightTarget(props: RenderHighlightTargetProps): ReactElement;
-    renderHighlightContent(props: RenderHighlightContentProps): ReactElement;
+export interface HighlightPlugin extends Plugin {
+    jumpToHighlightArea(area: HighlightArea): void;
 }
 
-const highlightPlugin = (props?: HighlightPluginProps): Plugin => {
+export interface HighlightPluginProps {
+    renderHighlightTarget?(props: RenderHighlightTargetProps): ReactElement;
+    renderHighlightContent?(props: RenderHighlightContentProps): ReactElement;
+    renderHighlights?(props: RenderHighlightsProps): ReactElement;
+}
+
+const highlightPlugin = (props?: HighlightPluginProps): HighlightPlugin => {
     const store = useMemo(() => createStore<StoreProps>({
         selectionState: NO_SELECTION_STATE,
     }), []);
@@ -83,7 +90,7 @@ const highlightPlugin = (props?: HighlightPluginProps): Plugin => {
 
                 // Set some special attributes so we can query the text later
                 textEle.setAttribute(HIGHLIGHT_LAYER_ATTR, 'true');
-                textEle.querySelectorAll('.rpv-core-text').forEach(span => span.setAttribute(HIGHLIGHT_PAGE_ATTR, `${e.pageIndex + 1}`));
+                textEle.querySelectorAll('.rpv-core-text').forEach(span => span.setAttribute(HIGHLIGHT_PAGE_ATTR, `${e.pageIndex}`));
                 break;
             default:
                 break;
@@ -93,16 +100,35 @@ const highlightPlugin = (props?: HighlightPluginProps): Plugin => {
     const renderPageLayer = (renderPageProps: PluginRenderPageLayer) => (
         <HighlightAreaList
             pageIndex={renderPageProps.pageIndex}
-            renderHighlightContent={props ? props.renderHighlightContent : null}
-            renderHighlightTarget={props ? props.renderHighlightTarget : null}
+            renderHighlightContent={props && props.renderHighlightContent ? props.renderHighlightContent : null}
+            renderHighlightTarget={props && props.renderHighlightTarget ? props.renderHighlightTarget : null}
+            renderHighlights={props && props.renderHighlights ? props.renderHighlights : null}
             store={store}
         />
     );
 
+    const jumpToHighlightArea = (area: HighlightArea) => {
+        const getPagesRef = store.get('getPagesRef');
+        const getPageElement = store.get('getPageElement');
+        if (!getPagesRef || !getPageElement) {
+            return;
+        }
+
+        const pagesEle = getPagesRef().current;
+        if (!pagesEle) {
+            return;
+        }
+
+        const targetPage = getPageElement(area.pageIndex);
+        pagesEle.scrollTop = targetPage.offsetTop + area.top * targetPage.clientHeight / 100 - pagesEle.offsetTop;
+    };
+
     return {
         install: (pluginFunctions: PluginFunctions) => {
+            store.update('getPageElement', pluginFunctions.getPageElement);
             store.update('getPagesRef', pluginFunctions.getPagesRef);
         },
+        jumpToHighlightArea,
         onTextLayerRender,
         renderPageLayer,
         renderViewer,

@@ -12,11 +12,11 @@ import { Store } from '@react-pdf-viewer/core';
 import { HIGHLIGHT_LAYER_ATTR, HIGHLIGHT_PAGE_ATTR } from './constants';
 import getRectFromOffsets from './getRectFromOffsets';
 import getTextFromOffsets from './getTextFromOffsets';
-import HighlightArea from './HighlightArea';
-import SelectionData from './SelectionData';
-import SelectionRange from './SelectionRange';
 import { NO_SELECTION_STATE, SELECTING_STATE, SelectedState } from './SelectionState';
 import StoreProps from './StoreProps';
+import HighlightArea from './types/HighlightArea';
+import SelectionData from './types/SelectionData';
+import SelectionRange from './types/SelectionRange';
 
 const Tracker: FC<{
     store: Store<StoreProps>,

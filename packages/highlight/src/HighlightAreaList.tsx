@@ -9,17 +9,20 @@
 import React, { FC, ReactElement, useEffect, useState } from 'react';
 import { Store } from '@react-pdf-viewer/core';
 
-import RenderHighlightContentProps from './RenderHighlightContentProps';
-import RenderHighlightTargetProps from './RenderHighlightTargetProps';
+import HighlightRect from './HighlightRect';
 import { NO_SELECTION_STATE, HighlightState, SelectedState, SelectionState } from './SelectionState';
 import StoreProps from './StoreProps';
+import RenderHighlightContentProps from './types/RenderHighlightContentProps';
+import RenderHighlightTargetProps from './types/RenderHighlightTargetProps';
+import RenderHighlightsProps from './types/RenderHighlightsProps';
 
 const HighlightAreaList: FC<{
     pageIndex: number,
     renderHighlightContent?(props: RenderHighlightContentProps): ReactElement,
     renderHighlightTarget?(props: RenderHighlightTargetProps): ReactElement,
+    renderHighlights?(props: RenderHighlightsProps): ReactElement,
     store: Store<StoreProps>,
-}> = ({ pageIndex, renderHighlightContent, renderHighlightTarget, store }) => {
+}> = ({ pageIndex, renderHighlightContent, renderHighlightTarget, renderHighlights, store }) => {
     const [selectionState, setSelectionState] = useState<SelectionState>(store.get('selectionState'));
 
     const handleSelectionState = (s: SelectionState) => setSelectionState(s);
@@ -40,13 +43,13 @@ const HighlightAreaList: FC<{
 
     // Filter the selections
     const listAreas = selectionState instanceof HighlightState
-        ? selectionState.highlightAreas.filter(s => s.pageIndex === pageIndex + 1)
+        ? selectionState.highlightAreas.filter(s => s.pageIndex === pageIndex)
         : [];
 
     return (
         <>
         {
-            renderHighlightTarget && (selectionState instanceof SelectedState) && (selectionState.selectionRegion.pageIndex === pageIndex + 1) && (
+            renderHighlightTarget && (selectionState instanceof SelectedState) && (selectionState.selectionRegion.pageIndex === pageIndex) && (
                 renderHighlightTarget({
                     highlightAreas: selectionState.highlightAreas,
                     selectedText: selectionState.selectedText,
@@ -66,7 +69,7 @@ const HighlightAreaList: FC<{
             )
         }
         {
-            renderHighlightContent && (selectionState instanceof HighlightState) && (selectionState.selectionRegion.pageIndex === pageIndex + 1) && (
+            renderHighlightContent && (selectionState instanceof HighlightState) && (selectionState.selectionRegion.pageIndex === pageIndex) && (
                 renderHighlightContent({
                     highlightAreas: selectionState.highlightAreas,
                     selectedText: selectionState.selectedText,
@@ -78,22 +81,12 @@ const HighlightAreaList: FC<{
         }
         <div>
         {
-           listAreas.map((area, idx) => (
-                <svg
-                    key={idx}
-                    style={{
-                        position: 'absolute',
-                        top: `${area.top}%`,
-                        left: `${area.left}%`,
-                    }}
-                    height={`${area.height}%`}
-                    width={`${area.width}%`}
-                >
-                    <rect className='rpv-highlight-highlighting-rect' />
-                </svg>
-            ))
+           listAreas.map((area, idx) => <HighlightRect key={idx} area={area} />)
         }
         </div>
+        {
+            renderHighlights && renderHighlights({ pageIndex })
+        }
         </>
     );
 };
