@@ -55,7 +55,7 @@ const fullScreenPlugin = (): FullScreenPlugin => {
 
     return {
         install: (pluginFunctions: PluginFunctions) => {
-            store.update('getPagesRef', pluginFunctions.getPagesRef);
+            store.update('getPagesContainer', pluginFunctions.getPagesContainer);
         },
         renderViewer,
         EnterFullScreen: EnterFullScreenDecorator,

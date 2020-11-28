@@ -6,9 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import { RefObject } from 'react';
-
 export default interface StoreProps {
-    getPagesRef?(): RefObject<HTMLDivElement>;
+    getPagesContainer?(): HTMLElement;
     isFullScreen?: boolean;
 }

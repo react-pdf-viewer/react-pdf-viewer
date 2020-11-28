@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { FC, ReactElement, RefObject, useEffect, useRef } from 'react';
+import React, { FC, ReactElement, useEffect, useRef } from 'react';
 import { Store } from '@react-pdf-viewer/core';
 
 import EnterFullScreenButton from './EnterFullScreenButton';
@@ -27,7 +27,7 @@ const EnterFullScreen: FC<{
     children?: RenderEnterFullScreen,
     store: Store<StoreProps>,
 }> = ({ children, store }) => {
-    const pagesRef = useRef<HTMLDivElement | null>(null);
+    const pagesRef = useRef<HTMLElement | null>(null);
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const closeOtherFullScreen = (): Promise<any> => {
@@ -58,15 +58,15 @@ const EnterFullScreen: FC<{
         store.update('isFullScreen', ele === pagesRef.current);
     };
 
-    const handlePagesRef = (pagesRefFn: () => RefObject<HTMLDivElement>) => {
-        pagesRef.current = pagesRefFn().current;
+    const handlePagesContainer = (getPagesContainer: () => HTMLElement) => {
+        pagesRef.current = getPagesContainer();
         addFullScreenChangeListener(onFullScreenChange);
     };
 
     useEffect(() => {
-        store.subscribe('getPagesRef', handlePagesRef);
+        store.subscribe('getPagesContainer', handlePagesContainer);
         return (): void => {
-            store.unsubscribe('getPagesRef', handlePagesRef);
+            store.unsubscribe('getPagesContainer', handlePagesContainer);
         };
     }, []);
 

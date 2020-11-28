@@ -6,11 +6,9 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import { RefObject } from 'react';
-
 import SelectionMode from './SelectionMode';
 
 export default interface StoreProps {
-    getPagesRef?(): RefObject<HTMLDivElement>;
+    getPagesContainer?(): HTMLElement;
     selectionMode?: SelectionMode;
 }

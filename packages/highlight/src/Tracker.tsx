@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { FC, RefObject, useEffect, useRef, useState } from 'react';
+import React, { FC, useEffect, useRef, useState } from 'react';
 import { Store } from '@react-pdf-viewer/core';
 
 import { HIGHLIGHT_LAYER_ATTR, HIGHLIGHT_PAGE_ATTR } from './constants';
@@ -21,11 +21,11 @@ import SelectionRange from './types/SelectionRange';
 const Tracker: FC<{
     store: Store<StoreProps>,
 }> = ({ store }) => {
-    const pagesRef = useRef<HTMLDivElement | null>(null);
+    const pagesRef = useRef<HTMLElement | null>(null);
     const [arePagesFound, setPagesFound] = useState(false);
 
-    const handlePagesRef = (pagesRefFn: () => RefObject<HTMLDivElement>) => {
-        const ele = pagesRefFn().current;
+    const handlePagesContainer = (getPagesContainer: () => HTMLElement) => {
+        const ele = getPagesContainer();
         pagesRef.current = ele;
         setPagesFound(!!ele);
     };
@@ -210,10 +210,10 @@ const Tracker: FC<{
     }, [arePagesFound]);
 
     useEffect(() => {
-        store.subscribe('getPagesRef', handlePagesRef);
+        store.subscribe('getPagesContainer', handlePagesContainer);
 
         return (): void => {
-            store.unsubscribe('getPagesRef', handlePagesRef);
+            store.unsubscribe('getPagesContainer', handlePagesContainer);
         };
     }, []);
 

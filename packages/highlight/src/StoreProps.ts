@@ -6,11 +6,10 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import { RefObject } from 'react';
 import { SelectionState } from './SelectionState';
 
 export default interface StoreProps {
     getPageElement?(pageIndex: number): HTMLElement | null;
-    getPagesRef?(): RefObject<HTMLDivElement>;
+    getPagesContainer?(): HTMLElement;
     selectionState: SelectionState;
 }

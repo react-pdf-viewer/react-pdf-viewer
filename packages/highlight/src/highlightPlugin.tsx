@@ -108,13 +108,13 @@ const highlightPlugin = (props?: HighlightPluginProps): HighlightPlugin => {
     );
 
     const jumpToHighlightArea = (area: HighlightArea) => {
-        const getPagesRef = store.get('getPagesRef');
+        const getPagesContainer = store.get('getPagesContainer');
         const getPageElement = store.get('getPageElement');
-        if (!getPagesRef || !getPageElement) {
+        if (!getPagesContainer || !getPageElement) {
             return;
         }
 
-        const pagesEle = getPagesRef().current;
+        const pagesEle = getPagesContainer();
         if (!pagesEle) {
             return;
         }
@@ -126,7 +126,7 @@ const highlightPlugin = (props?: HighlightPluginProps): HighlightPlugin => {
     return {
         install: (pluginFunctions: PluginFunctions) => {
             store.update('getPageElement', pluginFunctions.getPageElement);
-            store.update('getPagesRef', pluginFunctions.getPagesRef);
+            store.update('getPagesContainer', pluginFunctions.getPagesContainer);
         },
         jumpToHighlightArea,
         onTextLayerRender,

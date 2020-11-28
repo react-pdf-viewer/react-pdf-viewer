@@ -6,11 +6,9 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import { RefObject } from 'react';
-
 import ScrollMode from './ScrollMode';
 
 export default interface StoreProps {
-    getPagesRef?(): RefObject<HTMLDivElement>;
+    getPagesContainer?(): HTMLElement;
     scrollMode: ScrollMode;
 }

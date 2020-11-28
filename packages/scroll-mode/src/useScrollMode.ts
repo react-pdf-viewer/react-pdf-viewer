@@ -23,11 +23,11 @@ const useScrollMode = (store: Store<StoreProps>): UseScrollMode => {
     );
 
     const switchTo = (newScrollMode: ScrollMode) => {
-        const pagesRef = store.get('getPagesRef');
-        if (!pagesRef) {
+        const getPagesContainer = store.get('getPagesContainer');
+        if (!getPagesContainer) {
             return;
         }
-        const pagesEle = pagesRef().current;
+        const pagesEle = getPagesContainer();
         if (!pagesEle) {
             return;
         }
