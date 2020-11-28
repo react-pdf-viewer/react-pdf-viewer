@@ -44,10 +44,14 @@ export interface RenderHighlightContentProps {
     cancel(): void;
 }
 
+export interface HighlightPlugin extends Plugin {
+    jumpToHighlightArea(area: HighlightArea): void;
+}
+
 export interface HighlightPluginProps {
     renderHighlightTarget(props: RenderHighlightTargetProps): ReactElement;
     renderHighlightContent(props: RenderHighlightContentProps): ReactElement;
 }
 
-export function highlightPlugin(props?: HighlightPluginProps): Plugin;
+export function highlightPlugin(props?: HighlightPluginProps): HighlightPlugin;
 export class MessageIcon extends Component {}

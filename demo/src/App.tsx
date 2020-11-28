@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Button, Position, PrimaryButton, Tooltip, Viewer, Worker } from '@react-pdf-viewer/core';
 import { defaultLayoutPlugin } from '@react-pdf-viewer/default-layout';
-import { highlightPlugin, MessageIcon, RenderHighlightContentProps, RenderHighlightTargetProps } from '@react-pdf-viewer/highlight';
+import { HighlightArea, highlightPlugin, MessageIcon, RenderHighlightContentProps, RenderHighlightTargetProps } from '@react-pdf-viewer/highlight';
 
 import '@react-pdf-viewer/core/lib/styles/index.css';
 import '@react-pdf-viewer/highlight/lib/styles/index.css';
@@ -9,6 +9,7 @@ import './styles.css';
 
 interface Note {
     content: string;
+    highlightAreas: HighlightArea[];
     quote: string;
 }
 
@@ -42,8 +43,10 @@ const App = () => {
             if (message !== '') {
                 const note: Note = {
                     content: message,
+                    highlightAreas: props.highlightAreas,
                     quote: props.selectedText,
                 }
+                console.log(props.highlightAreas);
                 setNotes(notes.concat([note]));
                 props.cancel();
             }
@@ -91,6 +94,8 @@ const App = () => {
         renderHighlightContent,
     });
 
+    const { jumpToHighlightArea } = highlightPluginInstance;
+
     return (
         <Worker workerUrl="https://unpkg.com/pdfjs-dist@2.5.207/build/pdf.worker.js">
             <div
@@ -101,6 +106,7 @@ const App = () => {
                 <div
                     style={{
                         border: '1px solid rgba(0, 0, 0, 0.3)',
+                        cursor: 'pointer',
                         display: 'flex',
                         height: '100%',
                     }}
@@ -121,6 +127,7 @@ const App = () => {
                                             borderBottom: '1px solid rgba(0, 0, 0, .3)',
                                             padding: '8px',
                                         }}
+                                        onClick={() => jumpToHighlightArea(note.highlightAreas[0])}
                                     >
                                         <blockquote
                                             style={{

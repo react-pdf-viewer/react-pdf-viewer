@@ -16,13 +16,18 @@ import RenderHighlightTargetProps from './RenderHighlightTargetProps';
 import { NO_SELECTION_STATE, SELECTING_STATE, SelectedState } from './SelectionState';
 import StoreProps from './StoreProps';
 import Tracker from './Tracker';
+import HighlightArea from './HighlightArea';
+
+export interface HighlightPlugin extends Plugin {
+    jumpToHighlightArea(area: HighlightArea): void;
+}
 
 export interface HighlightPluginProps {
     renderHighlightTarget(props: RenderHighlightTargetProps): ReactElement;
     renderHighlightContent(props: RenderHighlightContentProps): ReactElement;
 }
 
-const highlightPlugin = (props?: HighlightPluginProps): Plugin => {
+const highlightPlugin = (props?: HighlightPluginProps): HighlightPlugin => {
     const store = useMemo(() => createStore<StoreProps>({
         selectionState: NO_SELECTION_STATE,
     }), []);
@@ -83,7 +88,7 @@ const highlightPlugin = (props?: HighlightPluginProps): Plugin => {
 
                 // Set some special attributes so we can query the text later
                 textEle.setAttribute(HIGHLIGHT_LAYER_ATTR, 'true');
-                textEle.querySelectorAll('.rpv-core-text').forEach(span => span.setAttribute(HIGHLIGHT_PAGE_ATTR, `${e.pageIndex + 1}`));
+                textEle.querySelectorAll('.rpv-core-text').forEach(span => span.setAttribute(HIGHLIGHT_PAGE_ATTR, `${e.pageIndex}`));
                 break;
             default:
                 break;
@@ -99,10 +104,28 @@ const highlightPlugin = (props?: HighlightPluginProps): Plugin => {
         />
     );
 
+    const jumpToHighlightArea = (area: HighlightArea) => {
+        const getPagesRef = store.get('getPagesRef');
+        const getPageElement = store.get('getPageElement');
+        if (!getPagesRef || !getPageElement) {
+            return;
+        }
+
+        const pagesEle = getPagesRef().current;
+        if (!pagesEle) {
+            return;
+        }
+
+        const targetPage = getPageElement(area.pageIndex);
+        pagesEle.scrollTop = targetPage.offsetTop + area.top * targetPage.clientHeight / 100 - pagesEle.offsetTop;
+    };
+
     return {
         install: (pluginFunctions: PluginFunctions) => {
+            store.update('getPageElement', pluginFunctions.getPageElement);
             store.update('getPagesRef', pluginFunctions.getPagesRef);
         },
+        jumpToHighlightArea,
         onTextLayerRender,
         renderPageLayer,
         renderViewer,

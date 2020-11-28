@@ -10,6 +10,7 @@ import { RefObject } from 'react';
 import { SelectionState } from './SelectionState';
 
 export default interface StoreProps {
+    getPageElement?(pageIndex: number): HTMLElement | null;
     getPagesRef?(): RefObject<HTMLDivElement>;
     selectionState: SelectionState;
 }

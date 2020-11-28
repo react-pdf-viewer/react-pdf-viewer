@@ -40,13 +40,13 @@ const HighlightAreaList: FC<{
 
     // Filter the selections
     const listAreas = selectionState instanceof HighlightState
-        ? selectionState.highlightAreas.filter(s => s.pageIndex === pageIndex + 1)
+        ? selectionState.highlightAreas.filter(s => s.pageIndex === pageIndex)
         : [];
 
     return (
         <>
         {
-            renderHighlightTarget && (selectionState instanceof SelectedState) && (selectionState.selectionRegion.pageIndex === pageIndex + 1) && (
+            renderHighlightTarget && (selectionState instanceof SelectedState) && (selectionState.selectionRegion.pageIndex === pageIndex) && (
                 renderHighlightTarget({
                     highlightAreas: selectionState.highlightAreas,
                     selectedText: selectionState.selectedText,
@@ -66,7 +66,7 @@ const HighlightAreaList: FC<{
             )
         }
         {
-            renderHighlightContent && (selectionState instanceof HighlightState) && (selectionState.selectionRegion.pageIndex === pageIndex + 1) && (
+            renderHighlightContent && (selectionState instanceof HighlightState) && (selectionState.selectionRegion.pageIndex === pageIndex) && (
                 renderHighlightContent({
                     highlightAreas: selectionState.highlightAreas,
                     selectedText: selectionState.selectedText,
