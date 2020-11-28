@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import { Button, Position, PrimaryButton, Tooltip, Viewer, Worker } from '@react-pdf-viewer/core';
 import { defaultLayoutPlugin } from '@react-pdf-viewer/default-layout';
 import { HighlightArea, highlightPlugin, MessageIcon, RenderHighlightContentProps, RenderHighlightTargetProps, RenderHighlightsProps } from '@react-pdf-viewer/highlight';
@@ -8,17 +8,18 @@ import '@react-pdf-viewer/highlight/lib/styles/index.css';
 import './styles.css';
 
 interface Note {
+    id: number;
     content: string;
     highlightAreas: HighlightArea[];
     quote: string;
 }
 
-const flat = (arr: any[]): any[] => [].concat.apply([], arr.map(a => Array.isArray(a) ? flat(a) : a));
+let noteId = 0;
 
 const App = () => {
     const [message, setMessage] = useState('');
     const [notes, setNotes] = useState<Note[]>([]);
-    const defaultLayoutPluginInstance = defaultLayoutPlugin();
+    const noteEles: Map<number, HTMLElement> = new Map();
 
     const renderHighlightTarget = (props: RenderHighlightTargetProps) => (
         <div
@@ -44,6 +45,7 @@ const App = () => {
         const addNote = () => {
             if (message !== '') {
                 const note: Note = {
+                    id: ++noteId,
                     content: message,
                     highlightAreas: props.highlightAreas,
                     quote: props.selectedText,
@@ -90,30 +92,41 @@ const App = () => {
         );
     };
 
-    const renderHighlights = (props: RenderHighlightsProps) => {
-        const highlights = flat(notes.map(note => note.highlightAreas)) as HighlightArea[];
-        const pageHighlights = highlights.filter(note => note.pageIndex === props.pageIndex);
-        return (
-            <>
-            {
-                pageHighlights.map((area, idx) => (
-                    <svg
-                        key={idx}
-                        style={{
-                            position: 'absolute',
-                            top: `${area.top}%`,
-                            left: `${area.left}%`,
-                        }}
-                        height={`${area.height}%`}
-                        width={`${area.width}%`}
-                    >
-                        <rect className='rpv-highlight-rect' />
-                    </svg>                
-                ))
-            }
-            </>
-        );
+    const jumpToNote = (note: Note) => {
+        if (noteEles.has(note.id)) {
+            noteEles.get(note.id).scrollIntoView();
+        }
     };
+
+    const renderHighlights = (props: RenderHighlightsProps) => (
+        <div>
+        {
+            notes.map(note => (
+                <Fragment key={note.id}>
+                {
+                    note.highlightAreas
+                        .filter(area => area.pageIndex === props.pageIndex)
+                        .map((area, idx) => (
+                            <svg
+                                key={idx}
+                                style={{
+                                    position: 'absolute',
+                                    top: `${area.top}%`,
+                                    left: `${area.left}%`,
+                                }}
+                                height={`${area.height}%`}
+                                width={`${area.width}%`}
+                                onClick={() => jumpToNote(note)}
+                            >
+                                <rect className='rpv-highlight-rect' />
+                            </svg>
+                        ))
+                }
+                </Fragment>
+            ))
+        }
+        </div>
+    );
 
     const highlightPluginInstance = highlightPlugin({
         renderHighlightTarget,
@@ -122,6 +135,12 @@ const App = () => {
     });
 
     const { jumpToHighlightArea } = highlightPluginInstance;
+
+    useEffect(() => {
+        return () => {
+            noteEles.clear();
+        };
+    }, []);
 
     return (
         <Worker workerUrl="https://unpkg.com/pdfjs-dist@2.5.207/build/pdf.worker.js">
@@ -146,15 +165,18 @@ const App = () => {
                         }}
                     >
                         {
-                            notes.map((note, idx) => {
+                            notes.map(note => {
                                 return (
                                     <div
-                                        key={idx}
+                                        key={note.id}
                                         style={{
                                             borderBottom: '1px solid rgba(0, 0, 0, .3)',
                                             padding: '8px',
                                         }}
                                         onClick={() => jumpToHighlightArea(note.highlightAreas[0])}
+                                        ref={(ref): void => {
+                                            noteEles.set(note.id, ref as HTMLElement);
+                                        }}
                                     >
                                         <blockquote
                                             style={{
