@@ -7,9 +7,14 @@ import '@react-pdf-viewer/core/lib/styles/index.css';
 import '@react-pdf-viewer/highlight/lib/styles/index.css';
 import './styles.css';
 
+interface Note {
+    content: string;
+    quote: string;
+}
+
 const App = () => {
     const [message, setMessage] = useState('');
-    const [notes, setNotes] = useState<string[]>([]);
+    const [notes, setNotes] = useState<Note[]>([]);
     const defaultLayoutPluginInstance = defaultLayoutPlugin();
 
     const renderHighlightTarget = (props: RenderHighlightTargetProps) => (
@@ -35,7 +40,11 @@ const App = () => {
     const renderHighlightContent = (props: RenderHighlightContentProps) => {
         const addNote = () => {
             if (message !== '') {
-                setNotes(notes.concat([message]));
+                const note: Note = {
+                    content: message,
+                    quote: props.selectedText,
+                }
+                setNotes(notes.concat([note]));
                 props.cancel();
             }
         };
@@ -113,7 +122,19 @@ const App = () => {
                                             padding: '8px',
                                         }}
                                     >
-                                        {note}
+                                        <blockquote
+                                            style={{
+                                                borderLeft: '2px solid rgba(0, 0, 0, 0.2)',
+                                                fontSize: '.75rem',
+                                                lineHeight: 1.5,
+                                                margin: '0 0 8px 0',
+                                                paddingLeft: '8px',
+                                                textAlign: 'justify',
+                                            }}
+                                        >
+                                            {note.quote}
+                                        </blockquote>
+                                        {note.content}
                                     </div>
                                 );
                             })
