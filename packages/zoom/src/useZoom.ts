@@ -12,7 +12,7 @@ import { Store, StoreHandler } from '@react-pdf-viewer/core';
 import StoreProps from './StoreProps';
 
 const useZoom = (store: Store<StoreProps>): { scale: number } => {
-    const [scale, setScale] = useState(0);
+    const [scale, setScale] = useState(store.get('scale') || 0);
 
     const handleScaleChanged: StoreHandler<number> = (currentScale: number) => {
         setScale(currentScale);

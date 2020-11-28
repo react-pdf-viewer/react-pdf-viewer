@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useMemo } from 'react';
 import { createStore, Plugin, PluginFunctions, PluginOnDocumentLoad, ViewerState } from '@react-pdf-viewer/core';
 
 import CurrentPageInput from './CurrentPageInput';
@@ -39,7 +39,7 @@ export interface PageNavigationPlugin extends Plugin {
 }
 
 const pageNavigationPlugin = (): PageNavigationPlugin => {
-    const store = createStore<StoreProps>();
+    const store = useMemo(() => createStore<StoreProps>(), []);
 
     const CurrentPageInputDecorator = () => <CurrentPageInput store={store} />;
 

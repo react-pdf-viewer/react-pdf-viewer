@@ -182,9 +182,7 @@ export interface LocalizationProviderProps {
     localization?: LocalizationMap;
 }
 
-export class LocalizationProvider extends React.Component<
-    LocalizationProviderProps
-> {}
+export class LocalizationProvider extends React.Component<LocalizationProviderProps> {}
 
 export interface Offset {
     left: number;
