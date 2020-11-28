@@ -60,7 +60,7 @@ const zoomPlugin = (): ZoomPlugin => {
 
     const ZoomPopoverDecorator = () => (
         <ZoomDecorator>
-            {props => <ZoomPopover scale={props.scale} onZoom={props.onZoom} />}
+            {props => <ZoomPopover {...props} />}
         </ZoomDecorator>
     );
 
