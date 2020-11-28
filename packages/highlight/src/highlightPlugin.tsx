@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useMemo } from 'react';
 import { createStore, LayerRenderStatus, PluginOnTextLayerRender, Plugin, PluginFunctions, PluginRenderPageLayer, RenderViewer, Slot } from '@react-pdf-viewer/core';
 
 import { HIGHLIGHT_LAYER_ATTR, HIGHLIGHT_PAGE_ATTR } from './constants';
@@ -23,9 +23,9 @@ export interface HighlightPluginProps {
 }
 
 const highlightPlugin = (props?: HighlightPluginProps): Plugin => {
-    const store = createStore<StoreProps>({
+    const store = useMemo(() => createStore<StoreProps>({
         selectionState: NO_SELECTION_STATE,
-    });
+    }), []);
 
     const renderViewer = (props: RenderViewer): Slot => {
         const currentSlot = props.slot;
@@ -71,12 +71,22 @@ const highlightPlugin = (props?: HighlightPluginProps): Plugin => {
     };
 
     const onTextLayerRender = (e: PluginOnTextLayerRender) => {
-        if (e.status === LayerRenderStatus.DidRender) {
-            e.ele.addEventListener('mousedown', handleMouseDown(e));
+        const mouseDownHandler = handleMouseDown(e);
+        const textEle = e.ele;
 
-            // Set some special attributes so we can query the text later
-            e.ele.setAttribute(HIGHLIGHT_LAYER_ATTR, 'true');
-            e.ele.querySelectorAll('.rpv-core-text').forEach(span => span.setAttribute(HIGHLIGHT_PAGE_ATTR, `${e.pageIndex + 1}`));
+        switch (e.status) {
+            case LayerRenderStatus.PreRender:
+                textEle.removeEventListener('mousedown', mouseDownHandler);
+                break;
+            case LayerRenderStatus.DidRender:
+                textEle.addEventListener('mousedown', mouseDownHandler);
+
+                // Set some special attributes so we can query the text later
+                textEle.setAttribute(HIGHLIGHT_LAYER_ATTR, 'true');
+                textEle.querySelectorAll('.rpv-core-text').forEach(span => span.setAttribute(HIGHLIGHT_PAGE_ATTR, `${e.pageIndex + 1}`));
+                break;
+            default:
+                break;
         }
     };
 
