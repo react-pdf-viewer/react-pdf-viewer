@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useMemo } from 'react';
 import { createStore, Plugin, PluginOnDocumentLoad, ViewerState } from '@react-pdf-viewer/core';
 
 import ShowProperties, { ShowPropertiesProps } from './ShowProperties';
@@ -24,9 +24,9 @@ interface PropertiesPlugin extends Plugin {
 }
 
 const propertiesPlugin = (): PropertiesPlugin => {
-    const store = createStore<StoreProps>({
+    const store = useMemo(() => createStore<StoreProps>({
         fileName: '',
-    });
+    }), []);
 
     const ShowPropertiesDecorator = (props: ShowPropertiesProps) => (
         <ShowProperties {...props} store={store} />

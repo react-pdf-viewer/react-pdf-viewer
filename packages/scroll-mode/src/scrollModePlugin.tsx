@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useMemo } from 'react';
 import { createStore, Plugin, PluginFunctions, RenderViewer, Slot } from '@react-pdf-viewer/core';
 
 import ScrollMode from './ScrollMode';
@@ -36,9 +36,9 @@ export interface ScrollModePluginProps {
 }
 
 const scrollModePlugin = (props?: ScrollModePluginProps): ScrollModePlugin => {
-    const store = createStore<StoreProps>({
+    const store = useMemo(() => createStore<StoreProps>({
         scrollMode: props && props.scrollMode ? props.scrollMode : ScrollMode.Vertical,
-    });
+    }), []);
 
     const SwitchScrollModeDecorator = (props: SwitchScrollModeProps) => (
         <SwitchScrollMode {...props} store={store} />

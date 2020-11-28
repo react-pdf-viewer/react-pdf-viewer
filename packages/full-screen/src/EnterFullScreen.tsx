@@ -27,7 +27,7 @@ const EnterFullScreen: FC<{
     children?: RenderEnterFullScreen,
     store: Store<StoreProps>,
 }> = ({ children, store }) => {
-    const pagesRef = useRef<HTMLElement | null>(null);
+    const pagesRef = useRef<HTMLElement | null>(store.get('getPagesContainer') ? store.get('getPagesContainer')() : null);
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const closeOtherFullScreen = (): Promise<any> => {

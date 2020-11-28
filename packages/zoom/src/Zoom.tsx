@@ -37,7 +37,7 @@ const Zoom: React.FC<{
         }
     };
 
-    const defaultChildren = (props: RenderZoomProps) => <ZoomPopover scale={props.scale} onZoom={props.onZoom} />;
+    const defaultChildren = (props: RenderZoomProps) => <ZoomPopover scale={scale} onZoom={props.onZoom} />;
     const render = children || defaultChildren;
 
     return render({

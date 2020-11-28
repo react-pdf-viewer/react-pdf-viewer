@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useMemo } from 'react';
 import { createStore, Plugin, PluginOnDocumentLoad } from '@react-pdf-viewer/core';
 
 import AttachmentListWithStore from './AttachmentListWithStore';
@@ -17,7 +17,7 @@ interface AttachmentPlugin extends Plugin {
 }
 
 const attachmentPlugin = (): AttachmentPlugin => {
-    const store = createStore<StoreProps>({});
+    const store = useMemo(() => createStore<StoreProps>({}), []);
 
     const AttachmentsDecorator = () => (
         <AttachmentListWithStore store={store} />

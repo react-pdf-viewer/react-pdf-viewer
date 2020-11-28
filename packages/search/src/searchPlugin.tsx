@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useMemo } from 'react';
 import { createStore, Plugin, PluginFunctions, PluginOnDocumentLoad, PluginOnTextLayerRender, RenderViewer, Slot } from '@react-pdf-viewer/core';
 
 import { EMPTY_KEYWORD_REGEXP } from './constants';
@@ -30,9 +30,9 @@ export interface SearchPluginProps {
 }
 
 const searchPlugin = (props?: SearchPluginProps): SearchPlugin => {
-    const store = createStore<StoreProps>({
+    const store = useMemo(() => createStore<StoreProps>({
         renderStatus: new Map<number, PluginOnTextLayerRender>(),
-    });
+    }), []);
 
     const SearchDecorator = (props: SearchProps) => (
         <Search {...props} store={store} />

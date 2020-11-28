@@ -7,14 +7,15 @@
  */
 
 import React, { useContext } from 'react';
-import { LocalizationContext, LocalizationMap, Menu, MenuDivider, MenuItem, Popover, Position, SpecialZoomLevel, Toggle } from '@react-pdf-viewer/core';
-
-import { RenderZoomProps } from './Zoom';
+import { LocalizationContext, LocalizationMap, Menu, MenuDivider, MenuItem, Popover, Position, SpecialZoomLevel, Store, Toggle } from '@react-pdf-viewer/core';
 
 const LEVELS = [0.5, 0.75, 1, 1.25, 1.5, 2, 3, 4];
 const PORTAL_OFFSET = { left: 0, top: 8 };
 
-const ZoomPopover: React.FC<RenderZoomProps> = ({ scale, onZoom }) => {
+const ZoomPopover: React.FC<{
+    scale: number,
+    onZoom(newScale: number | SpecialZoomLevel): void,
+}> = ({ scale, onZoom }) => {
     const l10n = useContext(LocalizationContext);
 
     const getSpcialLevelLabel = (level: SpecialZoomLevel): string | LocalizationMap => {

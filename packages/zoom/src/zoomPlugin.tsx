@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useMemo } from 'react';
 import { createStore, Plugin, PluginFunctions, ViewerState } from '@react-pdf-viewer/core';
 
 import CurrentScale, { CurrentScaleProps } from './CurrentScale';
@@ -30,7 +30,7 @@ interface ZoomPlugin extends Plugin {
 }
 
 const zoomPlugin = (): ZoomPlugin => {
-    const store = createStore<StoreProps>({});
+    const store = useMemo(() => createStore<StoreProps>({}), []);
 
     const CurrentScaleDecorator = (props: CurrentScaleProps) => (
         <CurrentScale {...props} store={store} />
@@ -60,7 +60,7 @@ const zoomPlugin = (): ZoomPlugin => {
 
     const ZoomPopoverDecorator = () => (
         <ZoomDecorator>
-            {props => <ZoomPopover {...props} />}
+            {props => <ZoomPopover scale={props.scale} onZoom={props.onZoom} />}
         </ZoomDecorator>
     );
 

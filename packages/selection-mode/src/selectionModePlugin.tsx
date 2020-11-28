@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useMemo } from 'react';
 import { createStore, Plugin, PluginFunctions, RenderViewer, Slot } from '@react-pdf-viewer/core';
 
 import SelectionMode from './SelectionMode';
@@ -36,7 +36,7 @@ export interface SelectionModePluginProps {
 }
 
 const selectionModePlugin = (props?: SelectionModePluginProps): SelectionModePlugin => {
-    const store = createStore<StoreProps>();
+    const store = useMemo(() => createStore<StoreProps>(), []);
 
     const SwitchSelectionModeDecorator = (props: SwitchSelectionModeProps) => (
         <SwitchSelectionMode {...props} store={store} />

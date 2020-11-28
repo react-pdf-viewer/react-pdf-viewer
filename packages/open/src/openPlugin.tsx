@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useMemo } from 'react';
 import { createStore, Plugin, PluginFunctions } from '@react-pdf-viewer/core';
 
 import Open, { OpenProps } from './Open';
@@ -19,7 +19,7 @@ interface OpenPlugin extends Plugin {
 }
 
 const openPlugin = (): OpenPlugin => {
-    const store = createStore<StoreProps>({});
+    const store = useMemo(() => createStore<StoreProps>({}), []);
 
     const OpenDecorator = (props: OpenProps) => (
         <Open {...props} store={store} />
