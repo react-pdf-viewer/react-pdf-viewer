@@ -11,20 +11,22 @@ import { createStore, LayerRenderStatus, PluginOnTextLayerRender, Plugin, Plugin
 
 import { HIGHLIGHT_LAYER_ATTR, HIGHLIGHT_PAGE_ATTR } from './constants';
 import HighlightAreaList from './HighlightAreaList';
-import RenderHighlightContentProps from './RenderHighlightContentProps';
-import RenderHighlightTargetProps from './RenderHighlightTargetProps';
 import { NO_SELECTION_STATE, SELECTING_STATE, SelectedState } from './SelectionState';
 import StoreProps from './StoreProps';
 import Tracker from './Tracker';
-import HighlightArea from './HighlightArea';
+import HighlightArea from './types/HighlightArea';
+import RenderHighlightsProps from './types/RenderHighlightsProps';
+import RenderHighlightContentProps from './types/RenderHighlightContentProps';
+import RenderHighlightTargetProps from './types/RenderHighlightTargetProps';
 
 export interface HighlightPlugin extends Plugin {
     jumpToHighlightArea(area: HighlightArea): void;
 }
 
 export interface HighlightPluginProps {
-    renderHighlightTarget(props: RenderHighlightTargetProps): ReactElement;
-    renderHighlightContent(props: RenderHighlightContentProps): ReactElement;
+    renderHighlightTarget?(props: RenderHighlightTargetProps): ReactElement;
+    renderHighlightContent?(props: RenderHighlightContentProps): ReactElement;
+    renderHighlights?(props: RenderHighlightsProps): ReactElement;
 }
 
 const highlightPlugin = (props?: HighlightPluginProps): HighlightPlugin => {
@@ -98,8 +100,9 @@ const highlightPlugin = (props?: HighlightPluginProps): HighlightPlugin => {
     const renderPageLayer = (renderPageProps: PluginRenderPageLayer) => (
         <HighlightAreaList
             pageIndex={renderPageProps.pageIndex}
-            renderHighlightContent={props ? props.renderHighlightContent : null}
-            renderHighlightTarget={props ? props.renderHighlightTarget : null}
+            renderHighlightContent={props && props.renderHighlightContent ? props.renderHighlightContent : null}
+            renderHighlightTarget={props && props.renderHighlightTarget ? props.renderHighlightTarget : null}
+            renderHighlights={props && props.renderHighlights ? props.renderHighlights : null}
             store={store}
         />
     );

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Button, Position, PrimaryButton, Tooltip, Viewer, Worker } from '@react-pdf-viewer/core';
 import { defaultLayoutPlugin } from '@react-pdf-viewer/default-layout';
-import { HighlightArea, highlightPlugin, MessageIcon, RenderHighlightContentProps, RenderHighlightTargetProps } from '@react-pdf-viewer/highlight';
+import { HighlightArea, highlightPlugin, MessageIcon, RenderHighlightContentProps, RenderHighlightTargetProps, RenderHighlightsProps } from '@react-pdf-viewer/highlight';
 
 import '@react-pdf-viewer/core/lib/styles/index.css';
 import '@react-pdf-viewer/highlight/lib/styles/index.css';
@@ -12,6 +12,8 @@ interface Note {
     highlightAreas: HighlightArea[];
     quote: string;
 }
+
+const flat = (arr: any[]): any[] => [].concat.apply([], arr.map(a => Array.isArray(a) ? flat(a) : a));
 
 const App = () => {
     const [message, setMessage] = useState('');
@@ -45,8 +47,7 @@ const App = () => {
                     content: message,
                     highlightAreas: props.highlightAreas,
                     quote: props.selectedText,
-                }
-                console.log(props.highlightAreas);
+                };
                 setNotes(notes.concat([note]));
                 props.cancel();
             }
@@ -89,9 +90,35 @@ const App = () => {
         );
     };
 
+    const renderHighlights = (props: RenderHighlightsProps) => {
+        const highlights = flat(notes.map(note => note.highlightAreas)) as HighlightArea[];
+        const pageHighlights = highlights.filter(note => note.pageIndex === props.pageIndex);
+        return (
+            <>
+            {
+                pageHighlights.map((area, idx) => (
+                    <svg
+                        key={idx}
+                        style={{
+                            position: 'absolute',
+                            top: `${area.top}%`,
+                            left: `${area.left}%`,
+                        }}
+                        height={`${area.height}%`}
+                        width={`${area.width}%`}
+                    >
+                        <rect className='rpv-highlight-rect' />
+                    </svg>                
+                ))
+            }
+            </>
+        );
+    };
+
     const highlightPluginInstance = highlightPlugin({
         renderHighlightTarget,
         renderHighlightContent,
+        renderHighlights,
     });
 
     const { jumpToHighlightArea } = highlightPluginInstance;

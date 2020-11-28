@@ -44,13 +44,18 @@ export interface RenderHighlightContentProps {
     cancel(): void;
 }
 
+export interface RenderHighlightsProps {
+    pageIndex: number;
+}
+
 export interface HighlightPlugin extends Plugin {
     jumpToHighlightArea(area: HighlightArea): void;
 }
 
 export interface HighlightPluginProps {
-    renderHighlightTarget(props: RenderHighlightTargetProps): ReactElement;
-    renderHighlightContent(props: RenderHighlightContentProps): ReactElement;
+    renderHighlightTarget?(props: RenderHighlightTargetProps): ReactElement;
+    renderHighlightContent?(props: RenderHighlightContentProps): ReactElement;
+    renderHighlights?(props: RenderHighlightsProps): ReactElement;
 }
 
 export function highlightPlugin(props?: HighlightPluginProps): HighlightPlugin;
