@@ -13,7 +13,7 @@ import ViewerState from './ViewerState';
 
 export default interface PluginFunctions {
     getPageElement(pageIndex: number): HTMLElement | null;
-    getPagesRef(): React.RefObject<HTMLDivElement>;
+    getPagesContainer(): HTMLElement;
     getViewerState(): ViewerState;
     jumpToDestination(
         pageIndex: number,

@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { FC, RefObject, useEffect, useRef, useState } from 'react';
+import React, { FC, useEffect, useRef, useState } from 'react';
 import { Store } from '@react-pdf-viewer/core';
 
 import SelectionMode from './SelectionMode';
@@ -15,7 +15,7 @@ import StoreProps from './StoreProps';
 const Tracker: FC<{
     store: Store<StoreProps>,
 }> = ({ store }) => {
-    const pagesRef = useRef<HTMLDivElement | null>(null);
+    const pagesRef = useRef<HTMLElement | null>(null);
     const [selectionMode, setSelectionMode] = useState<SelectionMode>(SelectionMode.Text);
     const pos = useRef({ top: 0, left: 0, x: 0, y: 0 });
 
@@ -65,8 +65,8 @@ const Tracker: FC<{
         document.addEventListener('mouseup', onMouseUpHandler);
     };
 
-    const handlePagesRef = (pagesRefFn: () => RefObject<HTMLDivElement>) => {
-        pagesRef.current = pagesRefFn().current;
+    const handlePagesContainer = (getPagesContainer: () => HTMLElement) => {
+        pagesRef.current = getPagesContainer();
     };
 
     const handleSelectionModeChanged = (mode: SelectionMode) => {
@@ -90,11 +90,11 @@ const Tracker: FC<{
     }, [selectionMode]);
 
     useEffect(() => {
-        store.subscribe('getPagesRef', handlePagesRef);
+        store.subscribe('getPagesContainer', handlePagesContainer);
         store.subscribe('selectionMode', handleSelectionModeChanged);
 
         return (): void => {
-            store.unsubscribe('getPagesRef', handlePagesRef);
+            store.unsubscribe('getPagesContainer', handlePagesContainer);
             store.unsubscribe('selectionMode', handleSelectionModeChanged);
         };
     }, []);

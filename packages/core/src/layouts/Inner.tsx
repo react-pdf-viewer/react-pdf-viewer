@@ -72,7 +72,8 @@ const Inner: React.FC<InnerProps> = ({
         stateRef.current = newState;
     };
 
-    const getPagesRef = () => pagesRef;
+    const getPagesContainer = () => pagesRef.current;
+
     const getPageElement = (pageIndex: number): HTMLElement | null => {
         if (pageIndex < 0 || pageIndex >= numPages) {
             return null;
@@ -217,7 +218,7 @@ const Inner: React.FC<InnerProps> = ({
     // If you want to access internal state from plugin methods, use `stateRef`
     const getPluginMethods = (): PluginFunctions => ({
         getPageElement,
-        getPagesRef,
+        getPagesContainer,
         getViewerState,
         jumpToDestination,
         jumpToPage,

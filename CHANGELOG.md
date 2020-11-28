@@ -1,5 +1,22 @@
 # CHANGELOG
 
+## v2.3.0 [not released yet]
+
+**Breaking changes**
+- The `getPagesRef` method in plugins are changed to `getPagesContainer`:
+
+~~~ javascript
+// Before
+interface PluginFunctions {
+    getPagesRef(): React.RefObject<HTMLDivElement>;
+}
+
+// After
+interface PluginFunctions {
+    getPagesContainer(): HTMLElement;
+}
+~~~
+
 ## v2.2.1
 
 **Improvements**

@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { FC, RefObject, useEffect } from 'react';
+import React, { FC, useEffect } from 'react';
 import { Store } from '@react-pdf-viewer/core';
 
 import ScrollMode from './ScrollMode';
@@ -18,8 +18,8 @@ const Tracker: FC<{
 }> = ({ store }) => {
     const { switchTo } = useScrollMode(store);
 
-    const handlePagesRef = (pagesRefFn: () => RefObject<HTMLDivElement>) => {
-        const pagesEle = pagesRefFn().current;
+    const handlePagesContainer = (getPagesContainer: () => HTMLElement) => {
+        const pagesEle = getPagesContainer();
         if (!pagesEle) {
             return;
         }
@@ -30,10 +30,10 @@ const Tracker: FC<{
     };
 
     useEffect(() => {
-        store.subscribe('getPagesRef', handlePagesRef);
+        store.subscribe('getPagesContainer', handlePagesContainer);
 
         return (): void => {
-            store.unsubscribe('getPagesRef', handlePagesRef);
+            store.unsubscribe('getPagesContainer', handlePagesContainer);
         };
     }, []);
 

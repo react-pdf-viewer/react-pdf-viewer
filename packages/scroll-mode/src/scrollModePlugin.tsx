@@ -88,7 +88,7 @@ const scrollModePlugin = (props?: ScrollModePluginProps): ScrollModePlugin => {
 
     return {
         install: (pluginFunctions: PluginFunctions) => {
-            store.update('getPagesRef', pluginFunctions.getPagesRef);
+            store.update('getPagesContainer', pluginFunctions.getPagesContainer);
         },
         renderViewer,
         SwitchScrollMode: SwitchScrollModeDecorator,
