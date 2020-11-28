@@ -12,6 +12,7 @@ import SpecialZoomLevel from '../SpecialZoomLevel';
 import ViewerState from './ViewerState';
 
 export default interface PluginFunctions {
+    getPageElement(pageIndex: number): HTMLElement | null;
     getPagesRef(): React.RefObject<HTMLDivElement>;
     getViewerState(): ViewerState;
     jumpToDestination(

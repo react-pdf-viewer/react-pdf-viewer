@@ -444,6 +444,7 @@ export interface ViewerState {
 }
 
 export interface PluginFunctions {
+    getPageElement(pageIndex: number): HTMLElement | null;
     getPagesRef(): React.RefObject<HTMLDivElement>;
     getViewerState(): ViewerState;
     jumpToDestination(

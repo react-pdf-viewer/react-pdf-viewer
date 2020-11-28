@@ -73,6 +73,12 @@ const Inner: React.FC<InnerProps> = ({
     };
 
     const getPagesRef = () => pagesRef;
+    const getPageElement = (pageIndex: number): HTMLElement | null => {
+        if (pageIndex < 0 || pageIndex >= numPages) {
+            return null;
+        }
+        return pageRefs[pageIndex].current;
+    };
 
     const getViewerState = () => stateRef.current;
 
@@ -210,6 +216,7 @@ const Inner: React.FC<InnerProps> = ({
     // These methods when being called from plugins will use the initial value of state, not the latest one.
     // If you want to access internal state from plugin methods, use `stateRef`
     const getPluginMethods = (): PluginFunctions => ({
+        getPageElement,
         getPagesRef,
         getViewerState,
         jumpToDestination,
