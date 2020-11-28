@@ -1,13 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Button, Position, PrimaryButton, Tooltip, Viewer, Worker } from '@react-pdf-viewer/core';
 import { defaultLayoutPlugin } from '@react-pdf-viewer/default-layout';
 import { highlightPlugin, MessageIcon, RenderHighlightContentProps, RenderHighlightTargetProps } from '@react-pdf-viewer/highlight';
 
-import '@react-pdf-viewer/default-layout/lib/styles/index.css';
+import '@react-pdf-viewer/core/lib/styles/index.css';
 import '@react-pdf-viewer/highlight/lib/styles/index.css';
 import './styles.css';
 
 const App = () => {
+    const [message, setMessage] = useState('');
+    const [notes, setNotes] = useState<string[]>([]);
     const defaultLayoutPluginInstance = defaultLayoutPlugin();
 
     const renderHighlightTarget = (props: RenderHighlightTargetProps) => (
@@ -32,7 +34,10 @@ const App = () => {
 
     const renderHighlightContent = (props: RenderHighlightContentProps) => {
         const addNote = () => {
-            console.log(props.selectedText)
+            if (message !== '') {
+                setNotes(notes.concat([message]));
+                props.cancel();
+            }
         };
 
         return (
@@ -54,6 +59,7 @@ const App = () => {
                         style={{
                             border: '1px solid rgba(0, 0, 0, .3)',
                         }}
+                        onChange={e => setMessage(e.target.value)}
                     ></textarea>
                 </div>
                 <div
@@ -83,13 +89,45 @@ const App = () => {
                     height: '750px'
                 }}
             >
-                <Viewer
-                    fileUrl="http://localhost:8001/pdf-open-parameters.pdf"
-                    plugins={[
-                        highlightPluginInstance,
-                        defaultLayoutPluginInstance,
-                    ]}
-                />
+                <div
+                    style={{
+                        border: '1px solid rgba(0, 0, 0, 0.3)',
+                        display: 'flex',
+                        height: '100%',
+                    }}
+                >
+                    <div
+                        style={{
+                            borderRight: '1px solid rgba(0, 0, 0, 0.3)',
+                            overflow: 'auto',
+                            width: '30%',
+                        }}
+                    >
+                        {
+                            notes.map((note, idx) => {
+                                return (
+                                    <div
+                                        key={idx}
+                                        style={{
+                                            borderBottom: '1px solid rgba(0, 0, 0, .3)',
+                                            padding: '8px',
+                                        }}
+                                    >
+                                        {note}
+                                    </div>
+                                );
+                            })
+                        }
+                    </div>
+                    <div style={{ flex: 1 }}>
+                        <Viewer
+                            fileUrl="http://localhost:8001/pdf-open-parameters.pdf"
+                            plugins={[
+                                highlightPluginInstance,
+                            ]}
+                        />
+                    </div>
+                </div>
             </div>
         </Worker>
     );
