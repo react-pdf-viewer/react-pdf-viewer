@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect, useState } from 'react';
-import { Button, Position, PrimaryButton, Tooltip, Viewer, Worker } from '@react-pdf-viewer/core';
+import { Button, DocumentLoadEvent, PdfJs, Position, PrimaryButton, Tooltip, Viewer, Worker } from '@react-pdf-viewer/core';
 import { defaultLayoutPlugin } from '@react-pdf-viewer/default-layout';
 import { HighlightArea, highlightPlugin, MessageIcon, RenderHighlightContentProps, RenderHighlightTargetProps, RenderHighlightsProps } from '@react-pdf-viewer/highlight';
 import { toolbarPlugin } from '@react-pdf-viewer/toolbar';
@@ -22,6 +22,15 @@ const App = () => {
     const [message, setMessage] = useState('');
     const [notes, setNotes] = useState<Note[]>([]);
     const noteEles: Map<number, HTMLElement> = new Map();
+    const [currentDoc, setCurrentDoc] = useState<PdfJs.PdfDocument | null>(null);
+
+    const handleDocumentLoad = (e: DocumentLoadEvent) => {
+        setCurrentDoc(e.doc);
+        if (currentDoc && currentDoc !== e.doc) {
+            // User opens new document
+            setNotes([]);
+        }
+    };
 
     const renderHighlightTarget = (props: RenderHighlightTargetProps) => (
         <div
@@ -227,6 +236,7 @@ const App = () => {
                                     highlightPluginInstance,
                                     toolbarPluginInstance,
                                 ]}
+                                onDocumentLoad={handleDocumentLoad}
                             />
                         </div>
                     </div>
