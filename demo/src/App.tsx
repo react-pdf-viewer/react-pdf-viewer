@@ -118,19 +118,16 @@ const App = () => {
                     note.highlightAreas
                         .filter(area => area.pageIndex === props.pageIndex)
                         .map((area, idx) => (
-                            <svg
+                            <div
                                 key={idx}
-                                style={{
-                                    position: 'absolute',
-                                    top: `${area.top}%`,
-                                    left: `${area.left}%`,
-                                }}
-                                height={`${area.height}%`}
-                                width={`${area.width}%`}
+                                style={
+                                    Object.assign({}, {
+                                        background: 'yellow',
+                                        opacity: 0.4,
+                                    }, props.getCssProperties(area, props.rotation))
+                                }
                                 onClick={() => jumpToNote(note)}
-                            >
-                                <rect className='rpv-highlight-rect' />
-                            </svg>
+                            />
                         ))
                 }
                 </Fragment>

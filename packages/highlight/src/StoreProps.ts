@@ -11,5 +11,6 @@ import { SelectionState } from './SelectionState';
 export default interface StoreProps {
     getPageElement?(pageIndex: number): HTMLElement | null;
     getPagesContainer?(): HTMLElement;
+    rotation?: number;
     selectionState: SelectionState;
 }

@@ -7,7 +7,7 @@
  */
 
 import React, { ReactElement, useMemo } from 'react';
-import { createStore, LayerRenderStatus, PluginOnTextLayerRender, Plugin, PluginFunctions, PluginRenderPageLayer, RenderViewer, Slot } from '@react-pdf-viewer/core';
+import { createStore, LayerRenderStatus, PluginOnTextLayerRender, Plugin, PluginFunctions, PluginRenderPageLayer, RenderViewer, Slot, ViewerState } from '@react-pdf-viewer/core';
 
 import { HIGHLIGHT_LAYER_ATTR, HIGHLIGHT_PAGE_ATTR } from './constants';
 import HighlightAreaList from './HighlightAreaList';
@@ -127,6 +127,10 @@ const highlightPlugin = (props?: HighlightPluginProps): HighlightPlugin => {
         install: (pluginFunctions: PluginFunctions) => {
             store.update('getPageElement', pluginFunctions.getPageElement);
             store.update('getPagesContainer', pluginFunctions.getPagesContainer);
+        },
+        onViewerStateChange: (viewerState: ViewerState) => {
+            store.update('rotation', viewerState.rotation);
+            return viewerState;
         },
         jumpToHighlightArea,
         onTextLayerRender,

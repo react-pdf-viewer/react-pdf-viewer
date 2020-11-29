@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import { Component, ReactElement } from 'react';
+import { Component, CSSProperties, ReactElement } from 'react';
 import { Plugin } from '@react-pdf-viewer/core';
 
 export interface HighlightArea {
@@ -45,7 +45,9 @@ export interface RenderHighlightContentProps {
 }
 
 export interface RenderHighlightsProps {
+    getCssProperties(area: HighlightArea, rotation: number): CSSProperties;
     pageIndex: number;
+    rotation: number;
 }
 
 export interface HighlightPlugin extends Plugin {
