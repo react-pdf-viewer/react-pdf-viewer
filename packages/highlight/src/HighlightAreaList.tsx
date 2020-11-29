@@ -93,7 +93,7 @@ const HighlightAreaList: FC<{
             renderHighlights && renderHighlights({
                 pageIndex,
                 rotation,
-                getCssProperties: area => getCssProperties(area, rotation),
+                getCssProperties,
             })
         }
         </>

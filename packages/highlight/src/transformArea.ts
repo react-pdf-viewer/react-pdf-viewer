@@ -10,9 +10,13 @@ import { CSSProperties } from 'react';
 
 import HighlightArea from './types/HighlightArea';
 
-const normalizeRotation = (rotation: number): number => rotation >= 0 ? rotation : 360 + rotation;
+const normalizeRotation = (rotation: number): number =>
+    rotation >= 0 ? rotation : 360 + rotation;
 
-const getCssProperties = (area: HighlightArea, rotation: number): CSSProperties => {
+const getCssProperties = (
+    area: HighlightArea,
+    rotation: number
+): CSSProperties => {
     const r = normalizeRotation(rotation);
     switch (r) {
         case 90:
@@ -52,7 +56,10 @@ const getCssProperties = (area: HighlightArea, rotation: number): CSSProperties 
     }
 };
 
-const transformArea = (area: HighlightArea, rotation: number): HighlightArea => {
+const transformArea = (
+    area: HighlightArea,
+    rotation: number
+): HighlightArea => {
     const r = normalizeRotation(rotation);
     console.log(rotation, r, area);
     switch (r) {
@@ -87,7 +94,4 @@ const transformArea = (area: HighlightArea, rotation: number): HighlightArea => 
     }
 };
 
-export {
-    getCssProperties,
-    transformArea,
-};
+export { getCssProperties, transformArea };

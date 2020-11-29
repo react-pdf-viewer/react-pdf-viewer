@@ -45,7 +45,7 @@ export interface RenderHighlightContentProps {
 }
 
 export interface RenderHighlightsProps {
-    getCssProperties(area: HighlightArea): CSSProperties;
+    getCssProperties(area: HighlightArea, rotation: number): CSSProperties;
     pageIndex: number;
     rotation: number;
 }
