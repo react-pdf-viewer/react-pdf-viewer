@@ -9,12 +9,14 @@
 import React, { FC, ReactElement, useEffect, useState } from 'react';
 import { Store } from '@react-pdf-viewer/core';
 
+import { getCssProperties } from './getCssProperties';
 import HighlightRect from './HighlightRect';
 import { NO_SELECTION_STATE, HighlightState, SelectedState, SelectionState } from './SelectionState';
 import StoreProps from './StoreProps';
 import RenderHighlightContentProps from './types/RenderHighlightContentProps';
 import RenderHighlightTargetProps from './types/RenderHighlightTargetProps';
 import RenderHighlightsProps from './types/RenderHighlightsProps';
+import useRotation from './useRotation';
 
 const HighlightAreaList: FC<{
     pageIndex: number,
@@ -24,6 +26,7 @@ const HighlightAreaList: FC<{
     store: Store<StoreProps>,
 }> = ({ pageIndex, renderHighlightContent, renderHighlightTarget, renderHighlights, store }) => {
     const [selectionState, setSelectionState] = useState<SelectionState>(store.get('selectionState'));
+    const { rotation } = useRotation(store);
 
     const handleSelectionState = (s: SelectionState) => setSelectionState(s);
 
@@ -79,13 +82,19 @@ const HighlightAreaList: FC<{
                 })
             )
         }
-        <div>
         {
-           listAreas.map((area, idx) => <HighlightRect key={idx} area={area} />)
+            listAreas.length > 0 && (
+                <div>
+                    {listAreas.map((area, idx) => <HighlightRect key={idx} area={area} />)}
+                </div>
+            )
         }
-        </div>
         {
-            renderHighlights && renderHighlights({ pageIndex })
+            renderHighlights && renderHighlights({
+                pageIndex,
+                rotation,
+                getCssProperties: area => getCssProperties(area, rotation),
+            })
         }
         </>
     );

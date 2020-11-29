@@ -8,24 +8,18 @@
 
 import React, { FC } from 'react';
 
+import { getCssProperties } from './getCssProperties';
 import HighlightArea from './types/HighlightArea';
 
 interface HighlightRectProps {
-    area: HighlightArea,
+    area: HighlightArea;
 }
 
 const HighlightRect: FC<HighlightRectProps> = ({ area }) => (
-    <svg
-        style={{
-            position: 'absolute',
-            top: `${area.top}%`,
-            left: `${area.left}%`,
-        }}
-        height={`${area.height}%`}
-        width={`${area.width}%`}
-    >
-        <rect className='rpv-highlight-rect' />
-    </svg>
+    <div
+        className='rpv-highlight-rect'
+        style={getCssProperties(area, 0)}
+    />
 );
 
 export default HighlightRect;
