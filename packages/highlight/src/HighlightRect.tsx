@@ -8,17 +8,18 @@
 
 import React, { FC } from 'react';
 
-import { getCssProperties } from './getCssProperties';
+import { getCssProperties } from './transformArea';
 import HighlightArea from './types/HighlightArea';
 
 interface HighlightRectProps {
     area: HighlightArea;
+    rotation: number;
 }
 
-const HighlightRect: FC<HighlightRectProps> = ({ area }) => (
+const HighlightRect: FC<HighlightRectProps> = ({ area, rotation }) => (
     <div
         className='rpv-highlight-rect'
-        style={getCssProperties(area, 0)}
+        style={getCssProperties(area, rotation)}
     />
 );
 

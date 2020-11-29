@@ -14,13 +14,16 @@ import getRectFromOffsets from './getRectFromOffsets';
 import getTextFromOffsets from './getTextFromOffsets';
 import { NO_SELECTION_STATE, SELECTING_STATE, SelectedState } from './SelectionState';
 import StoreProps from './StoreProps';
+import { transformArea } from './transformArea';
 import HighlightArea from './types/HighlightArea';
 import SelectionData from './types/SelectionData';
 import SelectionRange from './types/SelectionRange';
+import useRotation from './useRotation';
 
 const Tracker: FC<{
     store: Store<StoreProps>,
 }> = ({ store }) => {
+    const { rotation } = useRotation(store);
     const pagesRef = useRef<HTMLElement | null>(null);
     const [arePagesFound, setPagesFound] = useState(false);
 
@@ -194,7 +197,10 @@ const Tracker: FC<{
             endOffset,
             endDivIndex: endDivIdx
         };
-        store.update('selectionState', new SelectedState(selectedText, highlightAreas, selectionData, selectionRegion));
+
+        store.update('selectionState', new SelectedState(
+            selectedText, highlightAreas.map(area => transformArea(area, rotation)), selectionData, selectionRegion
+        ));
     };
 
     useEffect(() => {
@@ -207,7 +213,7 @@ const Tracker: FC<{
         return (): void => {
             ele.removeEventListener('mouseup', onMouseUpHandler);
         };
-    }, [arePagesFound]);
+    }, [arePagesFound, rotation]);
 
     useEffect(() => {
         store.subscribe('getPagesContainer', handlePagesContainer);

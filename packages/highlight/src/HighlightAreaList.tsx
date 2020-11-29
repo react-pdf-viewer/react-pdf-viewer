@@ -9,7 +9,7 @@
 import React, { FC, ReactElement, useEffect, useState } from 'react';
 import { Store } from '@react-pdf-viewer/core';
 
-import { getCssProperties } from './getCssProperties';
+import { getCssProperties } from './transformArea';
 import HighlightRect from './HighlightRect';
 import { NO_SELECTION_STATE, HighlightState, SelectedState, SelectionState } from './SelectionState';
 import StoreProps from './StoreProps';
@@ -85,7 +85,7 @@ const HighlightAreaList: FC<{
         {
             listAreas.length > 0 && (
                 <div>
-                    {listAreas.map((area, idx) => <HighlightRect key={idx} area={area} />)}
+                    {listAreas.map((area, idx) => <HighlightRect key={idx} area={area} rotation={rotation} />)}
                 </div>
             )
         }
