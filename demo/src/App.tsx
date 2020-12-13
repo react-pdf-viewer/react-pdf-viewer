@@ -2,11 +2,10 @@ import React, { Fragment, useEffect, useState } from 'react';
 import { Button, DocumentLoadEvent, PdfJs, Position, PrimaryButton, Tooltip, Viewer, Worker } from '@react-pdf-viewer/core';
 import { defaultLayoutPlugin } from '@react-pdf-viewer/default-layout';
 import { HighlightArea, highlightPlugin, MessageIcon, RenderHighlightContentProps, RenderHighlightTargetProps, RenderHighlightsProps } from '@react-pdf-viewer/highlight';
-import { toolbarPlugin } from '@react-pdf-viewer/toolbar';
 
 import '@react-pdf-viewer/core/lib/styles/index.css';
+import '@react-pdf-viewer/default-layout/lib/styles/index.css';
 import '@react-pdf-viewer/highlight/lib/styles/index.css';
-import '@react-pdf-viewer/toolbar/lib/styles/index.css';
 import './styles.css';
 
 interface Note {
@@ -23,6 +22,9 @@ const App = () => {
     const [notes, setNotes] = useState<Note[]>([]);
     const noteEles: Map<number, HTMLElement> = new Map();
     const [currentDoc, setCurrentDoc] = useState<PdfJs.PdfDocument | null>(null);
+    const defaultLayoutPluginInstance = defaultLayoutPlugin({
+        sidebarTabs: defaultTabs => [defaultTabs[1], defaultTabs[2], defaultTabs[0]],
+    });
 
     const handleDocumentLoad = (e: DocumentLoadEvent) => {
         setCurrentDoc(e.doc);
@@ -144,14 +146,53 @@ const App = () => {
 
     const { jumpToHighlightArea } = highlightPluginInstance;
 
-    const toolbarPluginInstance = toolbarPlugin();
-    const { Toolbar } = toolbarPluginInstance;
-
     useEffect(() => {
         return () => {
             noteEles.clear();
         };
     }, []);
+
+    const sidebarNotes = (
+        <div
+            style={{
+                borderRight: '1px solid rgba(0, 0, 0, 0.3)',
+                overflow: 'auto',
+                width: '30%',
+            }}
+        >
+            {
+                notes.map(note => {
+                    return (
+                        <div
+                            key={note.id}
+                            style={{
+                                borderBottom: '1px solid rgba(0, 0, 0, .3)',
+                                padding: '8px',
+                            }}
+                            onClick={() => jumpToHighlightArea(note.highlightAreas[0])}
+                            ref={(ref): void => {
+                                noteEles.set(note.id, ref as HTMLElement);
+                            }}
+                        >
+                            <blockquote
+                                style={{
+                                    borderLeft: '2px solid rgba(0, 0, 0, 0.2)',
+                                    fontSize: '.75rem',
+                                    lineHeight: 1.5,
+                                    margin: '0 0 8px 0',
+                                    paddingLeft: '8px',
+                                    textAlign: 'justify',
+                                }}
+                            >
+                                {note.quote}
+                            </blockquote>
+                            {note.content}
+                        </div>
+                    );
+                })
+            }
+        </div>
+    );
 
     return (
         <Worker workerUrl="https://unpkg.com/pdfjs-dist@2.5.207/build/pdf.worker.js">
@@ -160,84 +201,14 @@ const App = () => {
                     height: '750px'
                 }}
             >
-                <div
-                    style={{
-                        border: '1px solid rgba(0, 0, 0, 0.3)',
-                        cursor: 'pointer',
-                        display: 'flex',
-                        flexDirection: 'column',
-                        height: '100%',
-                    }}
-                >
-                    <div
-                        style={{
-                            alignItems: 'center',
-                            backgroundColor: '#eeeeee',
-                            borderBottom: '1px solid rgba(0, 0, 0, 0.1)',
-                            display: 'flex',
-                            padding: '4px',
-                        }}
-                    >
-                        <Toolbar />
-                    </div>
-                    <div
-                        style={{
-                            display: 'flex',
-                            flex: 1,
-                            overflow: 'hidden',
-                        }}
-                    >
-                        <div
-                            style={{
-                                borderRight: '1px solid rgba(0, 0, 0, 0.3)',
-                                overflow: 'auto',
-                                width: '30%',
-                            }}
-                        >
-                            {
-                                notes.map(note => {
-                                    return (
-                                        <div
-                                            key={note.id}
-                                            style={{
-                                                borderBottom: '1px solid rgba(0, 0, 0, .3)',
-                                                padding: '8px',
-                                            }}
-                                            onClick={() => jumpToHighlightArea(note.highlightAreas[0])}
-                                            ref={(ref): void => {
-                                                noteEles.set(note.id, ref as HTMLElement);
-                                            }}
-                                        >
-                                            <blockquote
-                                                style={{
-                                                    borderLeft: '2px solid rgba(0, 0, 0, 0.2)',
-                                                    fontSize: '.75rem',
-                                                    lineHeight: 1.5,
-                                                    margin: '0 0 8px 0',
-                                                    paddingLeft: '8px',
-                                                    textAlign: 'justify',
-                                                }}
-                                            >
-                                                {note.quote}
-                                            </blockquote>
-                                            {note.content}
-                                        </div>
-                                    );
-                                })
-                            }
-                        </div>
-                        <div style={{ flex: 1 }}>
-                            <Viewer
-                                fileUrl="http://localhost:8001/pdf-open-parameters.pdf"
-                                plugins={[
-                                    highlightPluginInstance,
-                                    toolbarPluginInstance,
-                                ]}
-                                onDocumentLoad={handleDocumentLoad}
-                            />
-                        </div>
-                    </div>
-                </div>
+                <Viewer
+                    fileUrl="http://localhost:8001/pdf-open-parameters.pdf"
+                    plugins={[
+                        // highlightPluginInstance,
+                        defaultLayoutPluginInstance,
+                    ]}
+                    onDocumentLoad={handleDocumentLoad}
+                />
             </div>
         </Worker>
     );

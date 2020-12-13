@@ -13,24 +13,53 @@ import BookmarkIcon from './BookmarkIcon';
 import FileIcon from './FileIcon';
 import ThumbnailIcon from './ThumbnailIcon';
 
+export interface SidebarTab {
+    content: ReactElement;
+    icon: ReactElement;
+    title: ReactElement;
+}
+
 interface SidebarProps {
-    tabContents: (() => ReactElement)[];
+    attachmentTabContent: ReactElement;
+    bookmarkTabContent: ReactElement;
+    thumbnailTabContent: ReactElement;
+    tabs?: (defaultTabs: SidebarTab[]) => SidebarTab[];
 }
 
 const TOOLTIP_OFFSET = { left: 8, top: 0 };
 
-const Sidebar: React.FC<SidebarProps> = ({ tabContents }) => {
+const Sidebar: React.FC<SidebarProps> = ({ attachmentTabContent, bookmarkTabContent, thumbnailTabContent, tabs }) => {
     const l10n = useContext(LocalizationContext);
     const [opened, setOpened] = useState(false);
-    const [tab, setTab] = useState(0);
+    const [currentTab, setCurrentTab] = useState(0);
+
+    const defaultTabs: SidebarTab[] = [
+        {
+            content: thumbnailTabContent,
+            icon: <ThumbnailIcon />,
+            title: <>{(l10n && l10n.defaultLayout ? l10n.defaultLayout.thumbnail : 'Thumbnail')}</>,
+        },
+        {
+            content: bookmarkTabContent,
+            icon: <BookmarkIcon />,
+            title: <>{l10n && l10n.defaultLayout ? l10n.defaultLayout.bookmark : 'Bookmark'}</>,
+        },
+        {
+            content: attachmentTabContent,
+            icon: <FileIcon />,
+            title: <>{l10n && l10n.defaultLayout ? l10n.defaultLayout.attachment : 'Attachment'}</>,
+        },
+    ];
+
+    const listTabs = tabs ? tabs(defaultTabs) : defaultTabs;
 
     const switchToTab = (index: number) => {
-        if (tab === index) {
+        if (currentTab === index) {
             // Toggle the current tab
             setOpened(isOpened => !isOpened);
         } else {
             setOpened(true);
-            setTab(index);
+            setCurrentTab(index);
         }
     };
 
@@ -38,51 +67,25 @@ const Sidebar: React.FC<SidebarProps> = ({ tabContents }) => {
         <div className={`rpv-default-layout-sidebar ${opened ? 'rpv-default-layout-sidebar-opened' : ''}`}>
             <div className='rpv-default-layout-sidebar-tabs'>
                 <div className='rpv-default-layout-sidebar-headers'>
-                    <div className='rpv-default-layout-sidebar-header'>
-                        <Tooltip
-                            position={Position.RightCenter}
-                            target={(
-                                <Button onClick={() => switchToTab(0)} isSelected={tab === 0}>
-                                    <ThumbnailIcon />
-                                </Button>
-                            )}
-                            content={() =>
-                                l10n && l10n.defaultLayout ? l10n.defaultLayout.thumbnail : 'Thumbnail'
-                            }
-                            offset={TOOLTIP_OFFSET}
-                        />
-                    </div>
-                    <div className='rpv-default-layout-sidebar-header'>
-                        <Tooltip
-                            position={Position.RightCenter}
-                            target={(
-                                <Button onClick={() => switchToTab(1)} isSelected={tab === 1}>
-                                    <BookmarkIcon />
-                                </Button>
-                            )}
-                            content={() =>
-                                l10n && l10n.defaultLayout ? l10n.defaultLayout.bookmark : 'Bookmark'
-                            }
-                            offset={TOOLTIP_OFFSET}
-                        />
-                    </div>
-                    <div className='rpv-default-layout-sidebar-header'>
-                        <Tooltip
-                            position={Position.RightCenter}
-                            target={(
-                                <Button onClick={() => switchToTab(2)} isSelected={tab === 2}>
-                                    <FileIcon />
-                                </Button>
-                            )}
-                            content={() => 
-                                l10n && l10n.defaultLayout ? l10n.defaultLayout.attachment : 'Attachment'
-                            }
-                            offset={TOOLTIP_OFFSET}
-                        />
-                    </div>
+                    {
+                        listTabs.map((tab, index) => (
+                            <div key={index} className='rpv-default-layout-sidebar-header'>
+                                <Tooltip
+                                    position={Position.RightCenter}
+                                    target={(
+                                        <Button onClick={() => switchToTab(index)} isSelected={currentTab === index}>
+                                            {tab.icon}
+                                        </Button>
+                                    )}
+                                    content={() => tab.title}
+                                    offset={TOOLTIP_OFFSET}
+                                />
+                            </div>
+                        ))
+                    }
                 </div>
                 <div className={`rpv-default-layout-sidebar-content ${opened ? 'rpv-default-layout-sidebar-content-opened' : ''}`}>
-                    { tabContents && tabContents[tab] ? tabContents[tab]() : <></>}
+                    {listTabs[currentTab].content}
                 </div>
             </div>
         </div>

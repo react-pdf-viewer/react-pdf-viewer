@@ -16,6 +16,12 @@ import type {
 
 export type { ToolbarPluginProps, ToolbarProps, ToolbarSlot };
 
+export interface SidebarTab {
+    content: ReactElement;
+    icon: ReactElement;
+    title: ReactElement;
+}
+
 export interface DefaultLayoutProps extends ViewerProps {
     toolbarPlugin?: ToolbarPluginProps;
 }
@@ -25,6 +31,7 @@ export interface DefaultLayoutPluginProps {
     renderToolbar?: (
         Toolbar: (props: ToolbarProps) => ReactElement
     ) => ReactElement;
+    sidebarTabs?: (defaultTabs: SidebarTab[]) => SidebarTab[];
 }
 
 export function defaultLayoutPlugin(props?: DefaultLayoutPluginProps): Plugin;
