@@ -13,11 +13,12 @@ import { Plugin, PluginFunctions, PluginOnDocumentLoad, RenderViewer, ViewerStat
 import { thumbnailPlugin } from '@react-pdf-viewer/thumbnail';
 import { toolbarPlugin, ToolbarPluginProps, ToolbarProps } from '@react-pdf-viewer/toolbar';
 
-import Sidebar from './Sidebar';
+import Sidebar, { SidebarTab } from './Sidebar';
 
 export interface DefaultLayoutPluginProps {
     toolbarPlugin?: ToolbarPluginProps;
     renderToolbar?: (Toolbar: ((props: ToolbarProps) => ReactElement)) => ReactElement;
+    sidebarTabs?: (defaultTabs: SidebarTab[]) => SidebarTab[];
 }
 
 const defaultLayoutPlugin = (props?: DefaultLayoutPluginProps): Plugin => {
@@ -30,6 +31,8 @@ const defaultLayoutPlugin = (props?: DefaultLayoutPluginProps): Plugin => {
     const { Bookmarks } = bookmarkPluginInstance;
     const { Thumbnails } = thumbnailPluginInstance;
     const { Toolbar } = toolbarPluginInstance;
+
+    const sidebarTabs = props ? props.sidebarTabs : (defaultTabs: SidebarTab[]) => defaultTabs;
 
     const plugins = [
         attachmentPluginInstance,
@@ -74,11 +77,10 @@ const defaultLayoutPlugin = (props?: DefaultLayoutPluginProps): Plugin => {
                     </div>
                     <div className='rpv-default-layout-main'>
                         <Sidebar
-                            tabContents={[
-                                () => <Thumbnails />,
-                                () => <Bookmarks />,
-                                () => <Attachments />,
-                            ]}
+                            attachmentTabContent={<Attachments />}
+                            bookmarkTabContent={<Bookmarks />}
+                            thumbnailTabContent={<Thumbnails />}
+                            tabs={sidebarTabs}
                         />
                         <div
                             className='rpv-default-layout-body'

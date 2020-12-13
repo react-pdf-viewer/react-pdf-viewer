@@ -2,6 +2,17 @@
 
 ## v2.3.0 [not released yet]
 
+**New features**
+- New `highlight` plugin provides the ability of selecting and adding notes for text in the document
+- The `default-layout` plugin allows to customize the tabs:
+
+~~~ javascript
+// `defaultTabs` is the list of default tabs which lists thumbnails, bookmarks and attachments respetively
+const defaultLayoutPluginInstance = defaultLayoutPlugin({
+    sidebarTabs: defaultTabs => { ... }
+});
+~~~
+
 **Breaking changes**
 - The `getPagesRef` method in plugins are changed to `getPagesContainer`:
 
