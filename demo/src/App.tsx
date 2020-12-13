@@ -22,9 +22,6 @@ const App = () => {
     const [notes, setNotes] = useState<Note[]>([]);
     const noteEles: Map<number, HTMLElement> = new Map();
     const [currentDoc, setCurrentDoc] = useState<PdfJs.PdfDocument | null>(null);
-    const defaultLayoutPluginInstance = defaultLayoutPlugin({
-        sidebarTabs: defaultTabs => [defaultTabs[1], defaultTabs[2], defaultTabs[0]],
-    });
 
     const handleDocumentLoad = (e: DocumentLoadEvent) => {
         setCurrentDoc(e.doc);
@@ -155,11 +152,11 @@ const App = () => {
     const sidebarNotes = (
         <div
             style={{
-                borderRight: '1px solid rgba(0, 0, 0, 0.3)',
                 overflow: 'auto',
-                width: '30%',
+                width: '100%',
             }}
         >
+            {notes.length === 0 && <div style={{ textAlign: 'center' }}>There is no note</div>}
             {
                 notes.map(note => {
                     return (
@@ -167,6 +164,7 @@ const App = () => {
                             key={note.id}
                             style={{
                                 borderBottom: '1px solid rgba(0, 0, 0, .3)',
+                                cursor: 'pointer',
                                 padding: '8px',
                             }}
                             onClick={() => jumpToHighlightArea(note.highlightAreas[0])}
@@ -194,6 +192,14 @@ const App = () => {
         </div>
     );
 
+    const defaultLayoutPluginInstance = defaultLayoutPlugin({
+        sidebarTabs: defaultTabs => defaultTabs.concat({
+            content: sidebarNotes,
+            icon: <MessageIcon />,
+            title: <>Notes</>,
+        }),
+    });
+
     return (
         <Worker workerUrl="https://unpkg.com/pdfjs-dist@2.5.207/build/pdf.worker.js">
             <div
@@ -204,7 +210,7 @@ const App = () => {
                 <Viewer
                     fileUrl="http://localhost:8001/pdf-open-parameters.pdf"
                     plugins={[
-                        // highlightPluginInstance,
+                        highlightPluginInstance,
                         defaultLayoutPluginInstance,
                     ]}
                     onDocumentLoad={handleDocumentLoad}
