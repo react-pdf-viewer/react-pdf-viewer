@@ -25,16 +25,16 @@ import WrongPasswordState from './WrongPasswordState';
 export type RenderError = (error: LoadError) => ReactElement;
 
 interface DocumentLoaderProps {
-    authorization: string;
     characterMap?: CharacterMap;
     file: PdfJs.FileData;
     httpHeaders?: Record<string, string | string[]>;
     renderError?: RenderError;
     renderLoader?(percentages: number): ReactElement;
     render(doc: PdfJs.PdfDocument): ReactElement;
+    withCredentials: boolean;
 }
 
-const DocumentLoader: React.FC<DocumentLoaderProps> = ({ authorization, characterMap, file, httpHeaders, render, renderError, renderLoader }) => {
+const DocumentLoader: React.FC<DocumentLoaderProps> = ({ characterMap, file, httpHeaders, render, renderError, renderLoader, withCredentials }) => {
     const theme = useContext(ThemeContext);
     const [status, setStatus] = useState<LoadingStatus>(new LoadingState(0));
 
@@ -51,24 +51,13 @@ const DocumentLoader: React.FC<DocumentLoaderProps> = ({ authorization, characte
         //  ```
         setStatus(new LoadingState(0));
         const params: PdfJs.GetDocumentParams = Object.assign(
-            {},
+            {
+                httpHeaders,
+                withCredentials,
+            },
             ('string' === typeof file) ? { url: file } : { data: file },
             characterMap ? { cMapUrl: characterMap.url, cMapPacked: characterMap.isCompressed } : {}
         );
-
-        if (authorization) {
-            params.withCredentials = true;
-            if (httpHeaders) {
-                params.httpHeaders = httpHeaders;
-                if (!params.httpHeaders['Authorization']) {
-                    params.httpHeaders['Authorization'] = authorization;
-                }
-            } else {
-                params.httpHeaders = {
-                    'Authorization': authorization,
-                };
-            }
-        }
 
         const loadingTask = PdfJs.getDocument(params);
         loadingTask.onPassword = (verifyPassword: VerifyPassword, reason: string): void => {
