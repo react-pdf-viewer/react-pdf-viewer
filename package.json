@@ -26,6 +26,7 @@
 		"clean": "lerna run clean",
 		"build": "lerna run build",
 		"dev": "lerna run dev",
+		"test": "lerna run test",
 		"lint": "eslint packages/**/src/*.ts packages/**/src/*.tsx",
 		"format": "prettier --write \"packages/**/*.+(js|jsx|json|css|md|ts)\"",
 		"release": "npm run build && lerna publish from-package"
@@ -33,6 +34,9 @@
 	"devDependencies": {
 		"@rollup/plugin-json": "^4.1.0",
 		"@rollup/plugin-typescript": "^6.1.0",
+		"@testing-library/jest-dom": "^5.11.6",
+		"@testing-library/react": "^11.2.2",
+		"@types/jest": "^26.0.19",
 		"@types/react": "^17.0.0",
 		"@types/react-dom": "^17.0.0",
 		"@typescript-eslint/eslint-plugin": "^4.8.2",
@@ -40,14 +44,19 @@
 		"cssnano": "^4.1.10",
 		"eslint": "^7.14.0",
 		"eslint-plugin-react": "^7.21.5",
+		"jest": "^26.6.3",
 		"lerna": "^3.22.1",
 		"less": "^3.12.2",
+		"pdfjs-dist": "^2.5.207",
 		"postcss-cli": "^8.3.0",
 		"prettier": "^2.2.0",
+		"react": "^16.8.0 || ^17.0.0",
+		"react-dom": "^16.8.0 || ^17.0.0",
 		"rollup": "^2.33.3",
 		"rollup-plugin-less": "^1.1.2",
 		"rollup-plugin-less-modules": "^0.1.11",
 		"rollup-plugin-terser": "^7.0.2",
+		"ts-jest": "^26.4.4",
 		"typescript": "^4.1.2"
 	},
 	"dependencies": {
