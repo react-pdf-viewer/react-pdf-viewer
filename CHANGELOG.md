@@ -28,6 +28,25 @@ interface PluginFunctions {
 }
 ~~~
 
+- The `authorization` option is removed. You can use new `withCredentials` option:
+
+~~~ javascript
+// Before v2.3.0
+<Viewer
+    fileUrl={...}
+    authorization='Bearer ...'
+/>
+
+// From v2.3.0
+<Viewer
+    fileUrl={...}
+    withCredentials={true}
+    httpHeaders={{
+        'Authorization': 'Bearer ...',
+    }}
+/>
+~~~
+
 ## v2.2.1
 
 **Improvements**
