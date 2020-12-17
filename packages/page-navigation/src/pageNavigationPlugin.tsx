@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { ReactElement, useMemo } from 'react';
+import * as React from 'react';
 import { createStore, Plugin, PluginFunctions, PluginOnDocumentLoad, ViewerState } from '@react-pdf-viewer/core';
 
 import CurrentPageInput from './CurrentPageInput';
@@ -24,22 +24,22 @@ import GoToPreviousPageButton from './GoToPreviousPageButton';
 import StoreProps from './StoreProps';
 
 export interface PageNavigationPlugin extends Plugin {
-    CurrentPageInput: () => ReactElement;
-    CurrentPageLabel: (props: CurrentPageLabelProps) => ReactElement;
-    GoToFirstPage: (props: GoToFirstPageProps) => ReactElement;
-    GoToFirstPageButton: () => ReactElement;
-    GoToFirstPageMenuItem: (props: GoToFirstPageMenuItemProps) => ReactElement;
-    GoToLastPage: (props: GoToLastPageProps) => ReactElement;
-    GoToLastPageButton: () => ReactElement;
-    GoToLastPageMenuItem: (props: GoToLastPageMenuItemProps) => ReactElement;
-    GoToNextPage: (props: GoToNextPageProps) => ReactElement;
-    GoToNextPageButton: () => ReactElement;
-    GoToPreviousPage: (props: GoToPreviousPageProps) => ReactElement;
-    GoToPreviousPageButton: () => ReactElement;
+    CurrentPageInput: () => React.ReactElement;
+    CurrentPageLabel: (props: CurrentPageLabelProps) => React.ReactElement;
+    GoToFirstPage: (props: GoToFirstPageProps) => React.ReactElement;
+    GoToFirstPageButton: () => React.ReactElement;
+    GoToFirstPageMenuItem: (props: GoToFirstPageMenuItemProps) => React.ReactElement;
+    GoToLastPage: (props: GoToLastPageProps) => React.ReactElement;
+    GoToLastPageButton: () => React.ReactElement;
+    GoToLastPageMenuItem: (props: GoToLastPageMenuItemProps) => React.ReactElement;
+    GoToNextPage: (props: GoToNextPageProps) => React.ReactElement;
+    GoToNextPageButton: () => React.ReactElement;
+    GoToPreviousPage: (props: GoToPreviousPageProps) => React.ReactElement;
+    GoToPreviousPageButton: () => React.ReactElement;
 }
 
 const pageNavigationPlugin = (): PageNavigationPlugin => {
-    const store = useMemo(() => createStore<StoreProps>(), []);
+    const store = React.useMemo(() => createStore<StoreProps>(), []);
 
     const CurrentPageInputDecorator = () => <CurrentPageInput store={store} />;
 

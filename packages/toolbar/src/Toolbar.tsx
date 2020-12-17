@@ -6,12 +6,12 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import { ReactElement } from 'react';
+import * as React from 'react';
 
 import defaultToolbar from './defaultToolbar';
 import ToolbarSlot from './ToolbarSlot';
 
-type RenderToolbarSlot = (toolbarSlot: ToolbarSlot) => ReactElement;
+type RenderToolbarSlot = (toolbarSlot: ToolbarSlot) => React.ReactElement;
 
 export interface ToolbarProps {
     children?: RenderToolbarSlot;

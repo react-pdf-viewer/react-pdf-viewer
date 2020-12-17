@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { FC, useContext } from 'react';
+import * as React from 'react';
 import { Button, LocalizationContext, Position, Tooltip } from '@react-pdf-viewer/core';
 
 import { RenderRotateProps } from './Rotate';
@@ -16,8 +16,8 @@ import RotateDirection from './RotateDirection';
 
 const TOOLTIP_OFFSET = { left: 0, top: 8 };
 
-const RotateButton: FC<RenderRotateProps> = ({ direction, onClick }) => {
-    const l10n = useContext(LocalizationContext);
+const RotateButton: React.FC<RenderRotateProps> = ({ direction, onClick }) => {
+    const l10n = React.useContext(LocalizationContext);
 
     const backwardLabel = l10n && l10n.rotate ? l10n.rotate.rotateBackward : 'Rotate counterclockwise';
     const forwardLabel = l10n && l10n.rotate ? l10n.rotate.rotateForward : 'Rotate clockwise';

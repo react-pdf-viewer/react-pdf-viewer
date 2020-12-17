@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { ReactElement } from 'react';
+import * as React from 'react';
 
 // ---------------
 // PDFjs namespace
@@ -502,7 +502,7 @@ export interface PluginRenderPageLayer {
 
 export interface Plugin {
     install?(pluginFunctions: PluginFunctions): void;
-    renderPageLayer?(props: PluginRenderPageLayer): ReactElement;
+    renderPageLayer?(props: PluginRenderPageLayer): React.ReactElement;
     renderViewer?(props: RenderViewer): Slot;
     uninstall?(pluginFunctions: PluginFunctions): void;
     onAnnotationLayerRender?(props: PluginOnAnnotationLayerRender): void;
@@ -562,7 +562,7 @@ export interface ViewerProps {
     prefixClass?: string;
     renderError?: RenderError;
     renderPage?: RenderPage;
-    renderLoader?(percentages: number): ReactElement;
+    renderLoader?(percentages: number): React.ReactElement;
     // Indicate the cross-site requests should be made with credentials such as cookie and authorization headers.
     // The default value is `false`
     withCredentials?: boolean;

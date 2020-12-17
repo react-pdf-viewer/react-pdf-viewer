@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { useContext } from 'react';
+import * as React from 'react';
 
 import CheckIcon from '../icons/CheckIcon';
 import ThemeContext from '../theme/ThemeContext';
@@ -18,7 +18,7 @@ interface MenuItemProps {
 }
 
 const MenuItem: React.FC<MenuItemProps> = ({ checked = false, children, icon = null, onClick }) => {
-    const theme = useContext(ThemeContext);
+    const theme = React.useContext(ThemeContext);
 
     return (
         <li className={`${theme.prefixClass}-menu-item`} onClick={onClick}>

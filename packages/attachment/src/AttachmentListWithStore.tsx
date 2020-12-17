@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { useEffect, useState } from 'react';
+import * as React from 'react';
 import { PdfJs, Spinner, Store, StoreHandler } from '@react-pdf-viewer/core';
 
 import AttachmentLoader from './AttachmentLoader';
@@ -15,13 +15,13 @@ import StoreProps from './StoreProps';
 const AttachmentListWithStore: React.FC<{
     store: Store<StoreProps>,
 }> = ({ store }) => {
-    const [currentDoc, setCurrentDoc] = useState(store.get('doc'));
+    const [currentDoc, setCurrentDoc] = React.useState(store.get('doc'));
 
     const handleDocumentChanged: StoreHandler<PdfJs.PdfDocument> = (doc: PdfJs.PdfDocument) => {
         setCurrentDoc(doc);
     };
 
-    useEffect(() => {
+    React.React.useEffect(() => {
         store.subscribe('doc', handleDocumentChanged);
 
         return () => {

@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { useState } from 'react';
+import * as React from 'react';
 
 import enUs from './en_US.json';
 import LocalizationContext from './LocalizationContext';
@@ -23,7 +23,7 @@ const LocalizationProvider: React.FC<LocalizationProviderProps> = ({ children, l
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const defaultL10n = (enUs as any) as LocalizationMap;
 
-    const [l10nData, setL10nData] = useState(localization || defaultL10n);
+    const [l10nData, setL10nData] = React.useState(localization || defaultL10n);
     const setLocalization = (l10n: LocalizationMap) => setL10nData(l10n);
 
     return (

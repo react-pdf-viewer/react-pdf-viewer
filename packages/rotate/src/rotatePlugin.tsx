@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { ReactElement, useMemo } from 'react';
+import * as React from 'react';
 import { createStore, Plugin, PluginFunctions, ViewerState } from '@react-pdf-viewer/core';
 
 import Rotate, { RotateProps } from './Rotate';
@@ -20,15 +20,15 @@ export interface RotateDecoratorProps {
 }
 
 export interface RotatePlugin extends Plugin {
-    Rotate(props: RotateProps): ReactElement;
-    RotateBackwardButton(): ReactElement;
-    RotateBackwardMenuItem(props: RotateDecoratorProps): ReactElement;
-    RotateForwardButton(): ReactElement;
-    RotateForwardMenuItem(props: RotateDecoratorProps): ReactElement;
+    Rotate(props: RotateProps): React.ReactElement;
+    RotateBackwardButton(): React.ReactElement;
+    RotateBackwardMenuItem(props: RotateDecoratorProps): React.ReactElement;
+    RotateForwardButton(): React.ReactElement;
+    RotateForwardMenuItem(props: RotateDecoratorProps): React.ReactElement;
 }
 
 const rotatePlugin = (): RotatePlugin => {
-    const store = useMemo(() => createStore<StoreProps>({
+    const store = React.useMemo(() => createStore<StoreProps>({
         rotation: 0,
     }), []);
 

@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { Fragment, useContext, useEffect, useRef, useState } from 'react';
+import * as React from 'react';
 
 import AnnotationLayer from '../annotations/AnnotationLayer';
 import Spinner from '../components/Spinner';
@@ -48,8 +48,8 @@ const PageLayer: React.FC<PageLayerProps> = ({
     currentPage, doc, height, pageIndex, plugins, renderPage, rotation, scale, width,
     onExecuteNamedAction, onJumpToDest, onPageVisibilityChanged,
 }) => {
-    const theme = useContext(ThemeContext);
-    const [pageSize, setPageSize] = useState<PageSizeState>({
+    const theme = React.useContext(ThemeContext);
+    const [pageSize, setPageSize] = React.useState<PageSizeState>({
         page: null,
         pageHeight: height,
         pageWidth: width,
@@ -57,7 +57,7 @@ const PageLayer: React.FC<PageLayerProps> = ({
     });
     const { page, pageHeight, pageWidth } = pageSize;
 
-    const prevIsCalculated = useRef(false);
+    const prevIsCalculated = React.useRef(false);
 
     const intersectionThreshold = Array(10).fill(null).map((_, i) => i / 10);
 
@@ -106,7 +106,7 @@ const PageLayer: React.FC<PageLayerProps> = ({
     // To support the document which is already rotated
     const rotationNumber = (rotation + pageSize.viewportRotation) % 360;
 
-    useEffect(() => {
+    React.useEffect(() => {
         if (currentPage - NUMBER_OF_OVERSCAN_PAGES <= pageIndex && pageIndex <= currentPage + NUMBER_OF_OVERSCAN_PAGES) {
             determinePageSize();
         }
@@ -186,7 +186,7 @@ const PageLayer: React.FC<PageLayerProps> = ({
                             plugins.map((plugin, idx) => 
                                 plugin.renderPageLayer
                                 ? 
-                                    <Fragment key={idx}>
+                                    <React.Fragment key={idx}>
                                     {
                                         plugin.renderPageLayer({
                                             doc,
@@ -197,8 +197,8 @@ const PageLayer: React.FC<PageLayerProps> = ({
                                             width: w,
                                         })
                                     }
-                                    </Fragment>
-                                : <Fragment key={idx}></Fragment>
+                                    </React.Fragment>
+                                : <React.Fragment key={idx}></React.Fragment>
                             )
                         }
                         </>

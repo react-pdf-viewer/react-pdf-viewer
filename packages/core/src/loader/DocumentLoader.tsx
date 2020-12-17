@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { ReactElement, useContext, useEffect, useState } from 'react';
+import * as React from 'react';
 
 import Spinner from '../components/Spinner';
 import ThemeContext from '../theme/ThemeContext';
@@ -22,26 +22,26 @@ import LoadingStatus, { VerifyPassword } from './LoadingStatus';
 import WrongPassword from './WrongPassword';
 import WrongPasswordState from './WrongPasswordState';
 
-export type RenderError = (error: LoadError) => ReactElement;
+export type RenderError = (error: LoadError) => React.ReactElement;
 
 interface DocumentLoaderProps {
     characterMap?: CharacterMap;
     file: PdfJs.FileData;
     httpHeaders?: Record<string, string | string[]>;
     renderError?: RenderError;
-    renderLoader?(percentages: number): ReactElement;
-    render(doc: PdfJs.PdfDocument): ReactElement;
+    renderLoader?(percentages: number): React.ReactElement;
+    render(doc: PdfJs.PdfDocument): React.ReactElement;
     withCredentials: boolean;
 }
 
 const DocumentLoader: React.FC<DocumentLoaderProps> = ({ characterMap, file, httpHeaders, render, renderError, renderLoader, withCredentials }) => {
-    const theme = useContext(ThemeContext);
-    const [status, setStatus] = useState<LoadingStatus>(new LoadingState(0));
+    const theme = React.useContext(ThemeContext);
+    const [status, setStatus] = React.useState<LoadingStatus>(new LoadingState(0));
 
-    const [percentages, setPercentages] = useState(0);
-    const [loadedDocument, setLoadedDocument] = useState<PdfJs.PdfDocument>(null);
+    const [percentages, setPercentages] = React.useState(0);
+    const [loadedDocument, setLoadedDocument] = React.useState<PdfJs.PdfDocument>(null);
 
-    useEffect(() => {
+    React.useEffect(() => {
         // If we don't reset the status when new `file` is provided
         // (for example, when opening file)
         // then we will see the error
@@ -94,7 +94,7 @@ const DocumentLoader: React.FC<DocumentLoaderProps> = ({ characterMap, file, htt
     // There is a case that `loadingTask.promise()` is already resolved but `loadingTask.onProgress` is still triggered
     // (numOfPercentages does not reach 100 yet)
     // So, we have to check both `percentages` and `loaded`
-    useEffect(() => {
+    React.useEffect(() => {
         (percentages === 100 && loadedDocument)
             ? setStatus(new CompletedState(loadedDocument))
             : setStatus(new LoadingState(percentages));

@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { ReactElement } from 'react';
+import * as React from 'react';
 import { SpecialZoomLevel, Store } from '@react-pdf-viewer/core';
 
 import StoreProps from './StoreProps';
@@ -18,7 +18,7 @@ export interface RenderZoomProps {
     onZoom(newScale: number | SpecialZoomLevel): void;
 }
 
-type RenderZoom = (props: RenderZoomProps) => ReactElement;
+type RenderZoom = (props: RenderZoomProps) => React.ReactElement;
 
 export interface ZoomProps {
     children?: RenderZoom;

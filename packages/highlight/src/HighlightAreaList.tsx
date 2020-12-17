@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { FC, ReactElement, useEffect, useState } from 'react';
+import * as React from 'react';
 import { Store } from '@react-pdf-viewer/core';
 
 import { getCssProperties } from './transformArea';
@@ -18,14 +18,14 @@ import RenderHighlightTargetProps from './types/RenderHighlightTargetProps';
 import RenderHighlightsProps from './types/RenderHighlightsProps';
 import useRotation from './useRotation';
 
-const HighlightAreaList: FC<{
+const HighlightAreaList: React.FC<{
     pageIndex: number,
-    renderHighlightContent?(props: RenderHighlightContentProps): ReactElement,
-    renderHighlightTarget?(props: RenderHighlightTargetProps): ReactElement,
-    renderHighlights?(props: RenderHighlightsProps): ReactElement,
+    renderHighlightContent?(props: RenderHighlightContentProps): React.ReactElement,
+    renderHighlightTarget?(props: RenderHighlightTargetProps): React.ReactElement,
+    renderHighlights?(props: RenderHighlightsProps): React.ReactElement,
     store: Store<StoreProps>,
 }> = ({ pageIndex, renderHighlightContent, renderHighlightTarget, renderHighlights, store }) => {
-    const [selectionState, setSelectionState] = useState<SelectionState>(store.get('selectionState'));
+    const [selectionState, setSelectionState] = React.useState<SelectionState>(store.get('selectionState'));
     const { rotation } = useRotation(store);
 
     const handleSelectionState = (s: SelectionState) => setSelectionState(s);
@@ -36,7 +36,7 @@ const HighlightAreaList: FC<{
         store.update('selectionState', NO_SELECTION_STATE);
     };
 
-    useEffect(() => {
+    React.useEffect(() => {
         store.subscribe('selectionState', handleSelectionState);
 
         return (): void => {

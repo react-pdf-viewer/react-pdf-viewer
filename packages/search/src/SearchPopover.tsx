@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { useContext } from 'react';
+import * as React from 'react';
 import { Button, LocalizationContext, PdfJs, Position, PrimaryButton, Store, Tooltip } from '@react-pdf-viewer/core';
 
 import NextIcon from './NextIcon';
@@ -24,7 +24,7 @@ interface SearchPopoverProps {
 const PORTAL_OFFSET = { left: 0, top: 8 };
 
 const SearchPopover: React.FC<SearchPopoverProps> = ({ doc, store, onToggle }) => {
-    const l10n = useContext(LocalizationContext);
+    const l10n = React.useContext(LocalizationContext);
 
     const {
         clearKeyword,

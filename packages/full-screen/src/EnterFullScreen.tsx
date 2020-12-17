@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { FC, ReactElement, useEffect, useRef } from 'react';
+import * as React from 'react';
 import { Store } from '@react-pdf-viewer/core';
 
 import EnterFullScreenButton from './EnterFullScreenButton';
@@ -17,17 +17,17 @@ export interface RenderEnterFullScreenProps {
     onClick(): void;
 }
 
-type RenderEnterFullScreen = (props: RenderEnterFullScreenProps) => ReactElement;
+type RenderEnterFullScreen = (props: RenderEnterFullScreenProps) => React.ReactElement;
 
 export interface EnterFullScreenProps {
     children?: RenderEnterFullScreen;
 }
 
-const EnterFullScreen: FC<{
+const EnterFullScreen: React.FC<{
     children?: RenderEnterFullScreen,
     store: Store<StoreProps>,
 }> = ({ children, store }) => {
-    const pagesRef = useRef<HTMLElement | null>(store.get('getPagesContainer') ? store.get('getPagesContainer')() : null);
+    const pagesRef = React.useRef<HTMLElement | null>(store.get('getPagesContainer') ? store.get('getPagesContainer')() : null);
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const closeOtherFullScreen = (): Promise<any> => {
@@ -63,7 +63,7 @@ const EnterFullScreen: FC<{
         addFullScreenChangeListener(onFullScreenChange);
     };
 
-    useEffect(() => {
+    React.useEffect(() => {
         store.subscribe('getPagesContainer', handlePagesContainer);
         return (): void => {
             store.unsubscribe('getPagesContainer', handlePagesContainer);

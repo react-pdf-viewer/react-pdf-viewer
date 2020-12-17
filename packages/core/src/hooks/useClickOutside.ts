@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { useEffect } from 'react';
+import * as React from 'react';
 
 const useClickOutside = (
     closeOnClickOutside: boolean,
@@ -20,7 +20,7 @@ const useClickOutside = (
         }
     };
 
-    useEffect(() => {
+    React.useEffect(() => {
         if (!closeOnClickOutside) {
             return;
         }

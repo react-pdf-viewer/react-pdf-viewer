@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { FC, ReactElement } from 'react';
+import * as React from 'react';
 import { Store } from '@react-pdf-viewer/core';
 
 import SelectionMode from './SelectionMode';
@@ -19,14 +19,14 @@ export interface RenderSwitchSelectionModeProps {
     onClick(): void;
 }
 
-type RenderSwitchSelectionMode = (props: RenderSwitchSelectionModeProps) => ReactElement;
+type RenderSwitchSelectionMode = (props: RenderSwitchSelectionModeProps) => React.ReactElement;
 
 export interface SwitchSelectionModeProps {
     children?: RenderSwitchSelectionMode;
     mode: SelectionMode;
 }
 
-const SwitchSelectionMode: FC<{
+const SwitchSelectionMode: React.FC<{
     children?: RenderSwitchSelectionMode,
     mode: SelectionMode,
     store: Store<StoreProps>,

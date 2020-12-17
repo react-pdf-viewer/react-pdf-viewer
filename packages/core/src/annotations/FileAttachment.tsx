@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { useContext } from 'react';
+import * as React from 'react';
 
 import ThemeContext from '../theme/ThemeContext';
 import downloadFile from '../utils/downloadFile';
@@ -20,7 +20,7 @@ interface FileAttachmentProps {
 }
 
 const FileAttachment: React.FC<FileAttachmentProps> = ({ annotation, page, viewport }) => {
-    const theme = useContext(ThemeContext);
+    const theme = React.useContext(ThemeContext);
     const hasPopup = annotation.hasPopup === false && (!!annotation.title || !!annotation.contents);
 
     const doubleClick = (): void => {

@@ -6,12 +6,12 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { ReactElement } from 'react';
+import * as React from 'react';
 
 import MoreActionsPopover from './MoreActionsPopover';
 import ToolbarSlot from './ToolbarSlot';
 
-const defaultToolbar = (toolbarSlot: ToolbarSlot): ReactElement => {
+const defaultToolbar = (toolbarSlot: ToolbarSlot): React.ReactElement => {
     const {
         CurrentPageInput, Download, EnterFullScreen, GoToNextPage, GoToPreviousPage,
         NumberOfPages, Open, Print, ShowSearchPopover, Zoom, ZoomIn,

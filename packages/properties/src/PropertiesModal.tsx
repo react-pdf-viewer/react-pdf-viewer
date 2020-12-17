@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { FC, useContext } from 'react';
+import * as React from 'react';
 import { LocalizationContext, PdfJs, PrimaryButton, Separator } from '@react-pdf-viewer/core';
 
 import PropertiesData from './PropertiesData';
@@ -22,8 +22,8 @@ interface PropertiesModalProps {
     onToggle(): void;
 }
 
-const PropertiesModal: FC<PropertiesModalProps> = ({ doc, fileName, onToggle }) => {
-    const l10n = useContext(LocalizationContext);
+const PropertiesModal: React.FC<PropertiesModalProps> = ({ doc, fileName, onToggle }) => {
+    const l10n = React.useContext(LocalizationContext);
 
     const formatDate = (input: string): string => {
         const date = convertDate(input);

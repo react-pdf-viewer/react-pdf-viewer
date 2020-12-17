@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { FC, ReactElement } from 'react';
+import * as React from 'react';
 import { Store } from '@react-pdf-viewer/core';
 
 import GoToFirstPageButton from './GoToFirstPageButton';
@@ -16,13 +16,13 @@ export interface RenderGoToFirstPageProps {
     onClick: () => void;
 }
 
-type RenderGoToFirstPage = (props: RenderGoToFirstPageProps) => ReactElement;
+type RenderGoToFirstPage = (props: RenderGoToFirstPageProps) => React.ReactElement;
 
 export interface GoToFirstPageProps {
     children?: RenderGoToFirstPage;
 }
 
-const GoToFirstPage: FC<{
+const GoToFirstPage: React.FC<{
     children?: RenderGoToFirstPage,
     store: Store<StoreProps>,
 }> = ({ children, store }) => {

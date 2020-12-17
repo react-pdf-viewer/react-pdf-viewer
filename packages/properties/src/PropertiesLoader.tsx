@@ -6,20 +6,20 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { FC, ReactElement, useEffect, useState } from 'react';
+import * as React from 'react';
 import { PdfJs, Spinner } from '@react-pdf-viewer/core';
 
 import PropertiesData from './PropertiesData';
 
 interface PropertiesLoaderProps {
     doc: PdfJs.PdfDocument;
-    render(doc: PropertiesData): ReactElement;
+    render(doc: PropertiesData): React.ReactElement;
 }
 
-const PropertiesLoader: FC<PropertiesLoaderProps> = ({ doc, render }) => {
-    const [data, setData] = useState<PropertiesData>();
+const PropertiesLoader: React.FC<PropertiesLoaderProps> = ({ doc, render }) => {
+    const [data, setData] = React.useState<PropertiesData>();
 
-    useEffect(() => {
+    React.useEffect(() => {
         doc.getMetadata().then((meta) => {
             return Promise.resolve(meta);
         }).then((meta) => {

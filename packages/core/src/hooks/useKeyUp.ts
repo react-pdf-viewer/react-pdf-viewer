@@ -6,14 +6,14 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import { useEffect } from 'react';
+import * as React from 'react';
 
 const useKeyUp = (targetKeyCode: number, handler: () => void): void => {
     const keyUpHandler = (e: KeyboardEvent): void => {
         e.keyCode === targetKeyCode && handler();
     };
 
-    useEffect(() => {
+    React.useEffect(() => {
         document.addEventListener('keyup', keyUpHandler);
         return (): void => {
             document.removeEventListener('keyup', keyUpHandler);

@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { FC, ReactElement } from 'react';
+import * as React from 'react';
 import { PdfJs, Store } from '@react-pdf-viewer/core';
 
 import StoreProps from './StoreProps';
@@ -28,13 +28,13 @@ interface RenderSearchProps {
     setKeyword(keyword: string): void;
 }
 
-type RenderSearch = (props: RenderSearchProps) => ReactElement;
+type RenderSearch = (props: RenderSearchProps) => React.ReactElement;
 
 export interface SearchProps {
     children: RenderSearch;
 }
 
-const Inner: FC<{
+const Inner: React.FC<{
     children: RenderSearch,
     doc: PdfJs.PdfDocument,
     store: Store<StoreProps>,
@@ -43,7 +43,7 @@ const Inner: FC<{
     return children({...result});
 };
 
-const Search: FC<{
+const Search: React.FC<{
     children: RenderSearch,
     store: Store<StoreProps>
 }> = ({ children, store }) => {

@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { ReactElement, useMemo } from 'react';
+import * as React from 'react';
 import { createStore, Plugin, PluginFunctions, RenderViewer, Slot } from '@react-pdf-viewer/core';
 
 import ScrollMode from './ScrollMode';
@@ -26,9 +26,9 @@ export interface SwitchScrollModeMenuItemProps {
 }
 
 interface ScrollModePlugin extends Plugin {
-    SwitchScrollMode(props: SwitchScrollModeProps): ReactElement;
-    SwitchScrollModeButton(props: SwitchScrollModeButtonProps): ReactElement;
-    SwitchScrollModeMenuItem(props: SwitchScrollModeMenuItemProps): ReactElement;
+    SwitchScrollMode(props: SwitchScrollModeProps): React.ReactElement;
+    SwitchScrollModeButton(props: SwitchScrollModeButtonProps): React.ReactElement;
+    SwitchScrollModeMenuItem(props: SwitchScrollModeMenuItemProps): React.ReactElement;
 }
 
 export interface ScrollModePluginProps {
@@ -36,7 +36,7 @@ export interface ScrollModePluginProps {
 }
 
 const scrollModePlugin = (props?: ScrollModePluginProps): ScrollModePlugin => {
-    const store = useMemo(() => createStore<StoreProps>({
+    const store = React.useMemo(() => createStore<StoreProps>({
         scrollMode: props && props.scrollMode ? props.scrollMode : ScrollMode.Vertical,
     }), []);
 

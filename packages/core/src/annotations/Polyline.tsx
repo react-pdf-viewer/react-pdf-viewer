@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { useContext } from 'react';
+import * as React from 'react';
 
 import ThemeContext from '../theme/ThemeContext';
 import PdfJs from '../vendors/PdfJs';
@@ -19,7 +19,7 @@ interface PolylineProps {
 }
 
 const Polyline: React.FC<PolylineProps> = ({ annotation, page, viewport }) => {
-    const theme = useContext(ThemeContext);
+    const theme = React.useContext(ThemeContext);
     const hasPopup = annotation.hasPopup === false;
     const isRenderable = !!(annotation.hasPopup || annotation.title || annotation.contents);
 

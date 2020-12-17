@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { ReactElement, useMemo } from 'react';
+import * as React from 'react';
 import { createStore, Plugin, PluginFunctions, ViewerState } from '@react-pdf-viewer/core';
 
 import CurrentScale, { CurrentScaleProps } from './CurrentScale';
@@ -20,17 +20,17 @@ import ZoomPopover from './ZoomPopover';
 import StoreProps from './StoreProps';
 
 interface ZoomPlugin extends Plugin {
-    CurrentScale: (props: CurrentScaleProps) => ReactElement;
-    ZoomIn: (props: ZoomInProps) => ReactElement;
-    ZoomInButton: () => ReactElement;
-    ZoomOut: (props: ZoomOutProps) => ReactElement;
-    ZoomOutButton: () => ReactElement;
-    Zoom: (props: ZoomProps) => ReactElement;
-    ZoomPopover: () => ReactElement;
+    CurrentScale: (props: CurrentScaleProps) => React.ReactElement;
+    ZoomIn: (props: ZoomInProps) => React.ReactElement;
+    ZoomInButton: () => React.ReactElement;
+    ZoomOut: (props: ZoomOutProps) => React.ReactElement;
+    ZoomOutButton: () => React.ReactElement;
+    Zoom: (props: ZoomProps) => React.ReactElement;
+    ZoomPopover: () => React.ReactElement;
 }
 
 const zoomPlugin = (): ZoomPlugin => {
-    const store = useMemo(() => createStore<StoreProps>({}), []);
+    const store = React.useMemo(() => createStore<StoreProps>({}), []);
 
     const CurrentScaleDecorator = (props: CurrentScaleProps) => (
         <CurrentScale {...props} store={store} />

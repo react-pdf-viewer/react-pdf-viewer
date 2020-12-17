@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { ReactElement, useMemo } from 'react';
+import * as React from 'react';
 import { createStore, Plugin, PluginFunctions, PluginOnDocumentLoad, PluginOnTextLayerRender, RenderViewer, Slot } from '@react-pdf-viewer/core';
 
 import { EMPTY_KEYWORD_REGEXP } from './constants';
@@ -17,9 +17,9 @@ import StoreProps from './StoreProps';
 import Tracker from './Tracker';
 
 interface SearchPlugin extends Plugin {
-    Search(props: SearchProps): ReactElement;
-    ShowSearchPopover(props: ShowSearchPopoverProps): ReactElement;
-    ShowSearchPopoverButton(): ReactElement;
+    Search(props: SearchProps): React.ReactElement;
+    ShowSearchPopover(props: ShowSearchPopoverProps): React.ReactElement;
+    ShowSearchPopoverButton(): React.ReactElement;
 }
 
 export type SingleKeyword = string | RegExp;
@@ -30,7 +30,7 @@ export interface SearchPluginProps {
 }
 
 const searchPlugin = (props?: SearchPluginProps): SearchPlugin => {
-    const store = useMemo(() => createStore<StoreProps>({
+    const store = React.useMemo(() => createStore<StoreProps>({
         renderStatus: new Map<number, PluginOnTextLayerRender>(),
     }), []);
 

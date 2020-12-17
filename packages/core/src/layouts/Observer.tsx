@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { useLayoutEffect, useRef } from 'react';
+import * as React from 'react';
 
 export interface VisibilityChanged {
     isVisible: boolean;
@@ -19,9 +19,9 @@ interface ObserverProps {
 }
 
 const Observer: React.FC<ObserverProps> = ({ children, threshold, onVisibilityChanged }) => {
-    const containerRef = useRef<HTMLDivElement | null>(null);
+    const containerRef = React.useRef<HTMLDivElement | null>(null);
 
-    useLayoutEffect(() => {
+    React.useLayoutEffect(() => {
         const io = new IntersectionObserver((entries) => {
             entries.forEach((entry) => {
                 const isVisible = entry.isIntersecting;

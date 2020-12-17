@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import { Component, ReactElement, ReactNode } from 'react';
+import * as React from 'react';
 import { Plugin, SpecialZoomLevel } from '@react-pdf-viewer/core';
 
 // ------------------------
@@ -18,7 +18,7 @@ export interface RenderZoomInProps {
 }
 
 export interface ZoomInProps {
-    children?: (props: RenderZoomInProps) => ReactElement;
+    children?: (props: RenderZoomInProps) => React.ReactElement;
 }
 
 // -------------------------
@@ -30,7 +30,7 @@ export interface RenderZoomOutProps {
 }
 
 export interface ZoomOutProps {
-    children?: (props: RenderZoomOutProps) => ReactNode;
+    children?: (props: RenderZoomOutProps) => React.ReactNode;
 }
 
 // -------------
@@ -42,7 +42,7 @@ export interface RenderCurrentScaleProps {
 }
 
 export interface CurrentScaleProps {
-    children?: (props: RenderCurrentScaleProps) => ReactElement;
+    children?: (props: RenderCurrentScaleProps) => React.ReactElement;
 }
 
 // -------------------
@@ -55,7 +55,7 @@ export interface RenderZoomProps {
 }
 
 export interface ZoomProps {
-    children?: (props: RenderZoomProps) => ReactElement;
+    children?: (props: RenderZoomProps) => React.ReactElement;
 }
 
 // ------
@@ -63,15 +63,15 @@ export interface ZoomProps {
 // ------
 
 export interface ZoomPlugin extends Plugin {
-    CurrentScale: (props: CurrentScaleProps) => ReactElement;
-    ZoomIn: (props: ZoomInProps) => ReactElement;
-    ZoomInButton: () => ReactElement;
-    ZoomOut: (props: ZoomOutProps) => ReactElement;
-    ZoomOutButton: () => ReactElement;
-    Zoom: (props: ZoomProps) => ReactElement;
-    ZoomPopover: () => ReactElement;
+    CurrentScale: (props: CurrentScaleProps) => React.ReactElement;
+    ZoomIn: (props: ZoomInProps) => React.ReactElement;
+    ZoomInButton: () => React.ReactElement;
+    ZoomOut: (props: ZoomOutProps) => React.ReactElement;
+    ZoomOutButton: () => React.ReactElement;
+    Zoom: (props: ZoomProps) => React.ReactElement;
+    ZoomPopover: () => React.ReactElement;
 }
 
 export function zoomPlugin(): ZoomPlugin;
-export class ZoomInIcon extends Component {}
-export class ZoomOutIcon extends Component {}
+export class ZoomInIcon extends React.Component {}
+export class ZoomOutIcon extends React.Component {}

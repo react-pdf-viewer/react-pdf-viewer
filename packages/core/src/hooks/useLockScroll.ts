@@ -6,10 +6,10 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import { useEffect } from 'react';
+import * as React from 'react';
 
 const useLockScroll = (): void => {
-    useEffect(() => {
+    React.useEffect(() => {
         const originalStyle = window.getComputedStyle(document.body).overflow;
         document.body.style.overflow = 'hidden';
         return (): void => {

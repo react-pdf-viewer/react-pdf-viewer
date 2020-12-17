@@ -6,24 +6,24 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { FC, useContext, RefObject } from 'react';
+import * as React from 'react';
 import { LocalizationContext } from '@react-pdf-viewer/core';
 
 import useDrop from './useDrop';
 
 interface DropAreaProps {
-    containerRef: RefObject<HTMLDivElement>;
+    containerRef: React.RefObject<HTMLDivElement>;
     openFile(file: File): void;
 }
 
-const DropArea: FC<DropAreaProps> = ({ containerRef, openFile }) => {
+const DropArea: React.FC<DropAreaProps> = ({ containerRef, openFile }) => {
     const { isDragging } = useDrop(containerRef, (files) => {
         if (files.length === 0) {
             return;
         }
         openFile(files[0]);
     });
-    const l10n = useContext(LocalizationContext);
+    const l10n = React.useContext(LocalizationContext);
 
     return (
         <>

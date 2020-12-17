@@ -6,21 +6,21 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import { ChangeEvent, Component, ReactElement } from 'react';
+import * as React from 'react';
 import { Plugin } from '@react-pdf-viewer/core';
 
 export interface RenderOpenProps {
-    onClick: (e: ChangeEvent<HTMLInputElement>) => void;
+    onClick: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 export interface OpenProps {
-    children?: (props: RenderOpenProps) => ReactElement;
+    children?: (props: RenderOpenProps) => React.ReactElement;
 }
 
 export interface OpenPlugin extends Plugin {
-    Open: (props: OpenProps) => ReactElement;
-    OpenButton: () => ReactElement;
+    Open: (props: OpenProps) => React.ReactElement;
+    OpenButton: () => React.ReactElement;
 }
 
 export function openPlugin(): OpenPlugin;
-export class OpenFileIcon extends Component {}
+export class OpenFileIcon extends React.Component {}

@@ -6,23 +6,23 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { ChangeEvent, FC, KeyboardEvent, useState } from 'react';
+import * as React from 'react';
 import { Store } from '@react-pdf-viewer/core';
 
 import StoreProps from './StoreProps';
 import useCurrentPage from './useCurrentPage';
 import useNumberOfPages from './useNumberOfPages';
 
-const CurrentPageInput: FC<{
+const CurrentPageInput: React.FC<{
     store: Store<StoreProps>
 }> = ({ store }) => {
-    const [pageTextboxFocused, setPageTextboxFocused] = useState(false);
-    const [editingPage, setEditingPage] = useState(0);
+    const [pageTextboxFocused, setPageTextboxFocused] = React.useState(false);
+    const [editingPage, setEditingPage] = React.useState(0);
 
     const { currentPage } = useCurrentPage(store);
     const { numberOfPages } = useNumberOfPages(store);
 
-    const changePage = (e: ChangeEvent<HTMLInputElement>): void => {
+    const changePage = (e: React.ChangeEvent<HTMLInputElement>): void => {
         const newPage = parseInt(e.target.value, 10);
         if (newPage > 0 && newPage <= numberOfPages) {
             setEditingPage(newPage - 1);
@@ -61,7 +61,7 @@ const CurrentPageInput: FC<{
         }
     };
 
-    const keydownPage = (e: KeyboardEvent): void => {
+    const keydownPage = (e: React.KeyboardEvent): void => {
         switch (e.keyCode) {
             // Up key is pressed
             case 38: gotoPreviousPage(); break;

@@ -6,13 +6,13 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import { useLayoutEffect, useState } from 'react';
+import * as React from 'react';
 import { Store, StoreHandler } from '@react-pdf-viewer/core';
 
 import StoreProps from './StoreProps';
 
 const useCurrentPage = (store: Store<StoreProps>): { currentPage: number } => {
-    const [currentPage, setCurrentPage] = useState(
+    const [currentPage, setCurrentPage] = React.useState(
         store.get('currentPage') || 0
     );
 
@@ -22,7 +22,7 @@ const useCurrentPage = (store: Store<StoreProps>): { currentPage: number } => {
         setCurrentPage(currentPageIndex);
     };
 
-    useLayoutEffect(() => {
+    React.useLayoutEffect(() => {
         store.subscribe('currentPage', handleCurrentPageChanged);
 
         return () => {

@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { ReactElement, useMemo } from 'react';
+import * as React from 'react';
 import { createStore, Plugin, PluginFunctions, RenderViewer, Slot } from '@react-pdf-viewer/core';
 
 import EnterFullScreen, { EnterFullScreenProps } from './EnterFullScreen';
@@ -16,12 +16,12 @@ import ExitFullScreenButton from './ExitFullScreenButton';
 import StoreProps from './StoreProps';
 
 interface FullScreenPlugin extends Plugin {
-    EnterFullScreen: (props: EnterFullScreenProps) => ReactElement;
-    EnterFullScreenButton: () => ReactElement;
+    EnterFullScreen: (props: EnterFullScreenProps) => React.ReactElement;
+    EnterFullScreenButton: () => React.ReactElement;
 }
 
 const fullScreenPlugin = (): FullScreenPlugin => {
-    const store = useMemo(() => createStore<StoreProps>({}), []);
+    const store = React.useMemo(() => createStore<StoreProps>({}), []);
 
     const EnterFullScreenDecorator = (props: EnterFullScreenProps) => (
         <EnterFullScreen {...props} store={store} />

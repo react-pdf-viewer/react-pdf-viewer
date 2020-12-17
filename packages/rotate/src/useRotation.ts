@@ -6,13 +6,13 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import { useEffect, useState } from 'react';
+import * as React from 'react';
 import { Store, StoreHandler } from '@react-pdf-viewer/core';
 
 import StoreProps from './StoreProps';
 
 const useRotation = (store: Store<StoreProps>): { rotation: number } => {
-    const [rotation, setRotation] = useState(store.get('rotation') || 0);
+    const [rotation, setRotation] = React.useState(store.get('rotation') || 0);
 
     const handleRotationChanged: StoreHandler<number> = (
         currentRotation: number
@@ -20,7 +20,7 @@ const useRotation = (store: Store<StoreProps>): { rotation: number } => {
         setRotation(currentRotation);
     };
 
-    useEffect(() => {
+    React.useEffect(() => {
         store.subscribe('rotation', handleRotationChanged);
 
         return () => {

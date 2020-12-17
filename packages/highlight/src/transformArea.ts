@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import { CSSProperties } from 'react';
+import * as React from 'react';
 
 import HighlightArea from './types/HighlightArea';
 
@@ -16,7 +16,7 @@ const normalizeRotation = (rotation: number): number =>
 const getCssProperties = (
     area: HighlightArea,
     rotation: number
-): CSSProperties => {
+): React.CSSProperties => {
     const r = normalizeRotation(rotation);
     switch (r) {
         case 90:

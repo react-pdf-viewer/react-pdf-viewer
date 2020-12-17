@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import { Component, ReactElement } from 'react';
+import * as React from 'react';
 import { Plugin } from '@react-pdf-viewer/core';
 
 export enum RotateDirection {
@@ -24,7 +24,7 @@ export interface RotateDecoratorProps {
 }
 
 export interface RotateProps {
-    children?: (props: RenderRotateProps) => ReactElement;
+    children?: (props: RenderRotateProps) => React.ReactElement;
     direction: RotateDirection;
 }
 
@@ -33,11 +33,11 @@ export interface RotateProps {
 // ------
 
 export interface RotatePlugin extends Plugin {
-    Rotate(props: RotateProps): ReactElement;
-    RotateBackwardButton(): ReactElement;
-    RotateBackwardMenuItem(props: RotateDecoratorProps): ReactElement;
-    RotateForwardButton(): ReactElement;
-    RotateForwardMenuItem(props: RotateDecoratorProps): ReactElement;
+    Rotate(props: RotateProps): React.ReactElement;
+    RotateBackwardButton(): React.ReactElement;
+    RotateBackwardMenuItem(props: RotateDecoratorProps): React.ReactElement;
+    RotateForwardButton(): React.ReactElement;
+    RotateForwardMenuItem(props: RotateDecoratorProps): React.ReactElement;
 }
 
 export function rotatePlugin(): RotatePlugin;
@@ -46,5 +46,5 @@ export function rotatePlugin(): RotatePlugin;
 // Icons
 // -----
 
-export class RotateBackwardIcon extends Component {}
-export class RotateForwardIcon extends Component {}
+export class RotateBackwardIcon extends React.Component {}
+export class RotateForwardIcon extends React.Component {}

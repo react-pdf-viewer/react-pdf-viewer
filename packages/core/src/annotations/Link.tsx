@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { useContext } from 'react';
+import * as React from 'react';
 
 import SpecialZoomLevel from '../SpecialZoomLevel';
 import ThemeContext from '../theme/ThemeContext';
@@ -24,7 +24,7 @@ interface LinkProps {
 }
 
 const Link: React.FC<LinkProps> = ({ annotation, doc, page, viewport, onExecuteNamedAction, onJumpToDest }) => {
-    const theme = useContext(ThemeContext);
+    const theme = React.useContext(ThemeContext);
     const link = (e: React.MouseEvent): void => {
         e.preventDefault();
         annotation.action

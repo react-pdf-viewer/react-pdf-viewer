@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { FC } from 'react';
+import * as React from 'react';
 import { Button, Position, Tooltip } from '@react-pdf-viewer/core';
 
 import { RenderShowSearchPopoverProps } from './ShowSearchPopover';
@@ -14,7 +14,7 @@ import ShowSearchPopoverDecorator from './ShowSearchPopoverDecorator';
 
 const TOOLTIP_OFFSET = { left: 0, top: 8 };
 
-const ShowSearchPopoverButton: FC<RenderShowSearchPopoverProps> = ({ onClick }) => (
+const ShowSearchPopoverButton: React.FC<RenderShowSearchPopoverProps> = ({ onClick }) => (
     <ShowSearchPopoverDecorator onClick={onClick}>
     {
         (p) => (

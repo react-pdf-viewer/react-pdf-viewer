@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { useContext, useState } from 'react';
+import * as React from 'react';
 import { Button, LocalizationContext, LocalizationMap, MenuItem, Popover, Position, Toggle, Tooltip } from '@react-pdf-viewer/core';
 
 import LocaleIcon from './LocaleIcon';
@@ -23,8 +23,8 @@ export interface LocalePopoverProps {
 }
 
 const LocalePopover: React.FC<LocalePopoverProps> = ({ initialLocale = 'en_US', locales, localizations, onUpdateLocalization }) => {
-    const l10n = useContext(LocalizationContext);
-    const [locale, setLocale] = useState(initialLocale);
+    const l10n = React.useContext(LocalizationContext);
+    const [locale, setLocale] = React.useState(initialLocale);
 
     const renderTarget = (toggle: Toggle, opened: boolean) => {
         const label = l10n && l10n.localeSwitcher

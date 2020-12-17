@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { FC } from 'react';
+import * as React from 'react';
 import { Button, Position, Tooltip } from '@react-pdf-viewer/core';
 
 import { RenderSwitchScrollModeProps } from './SwitchScrollMode';
@@ -14,7 +14,7 @@ import SwitchScrollModeDecorator from './SwitchScrollModeDecorator';
 
 const TOOLTIP_OFFSET = { left: 0, top: 8 };
 
-const SwitchScrollModeButton: FC<RenderSwitchScrollModeProps> = ({ isSelected, mode, onClick }) => (
+const SwitchScrollModeButton: React.FC<RenderSwitchScrollModeProps> = ({ isSelected, mode, onClick }) => (
     <SwitchScrollModeDecorator mode={mode} onClick={onClick}>
         {
             (props) => (

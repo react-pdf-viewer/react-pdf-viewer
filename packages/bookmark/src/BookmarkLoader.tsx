@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { useContext, useEffect, useState } from 'react';
+import * as React from 'react';
 import { LocalizationContext, PdfJs, SpecialZoomLevel, Spinner } from '@react-pdf-viewer/core';
 
 import BookmarkList from './BookmarkList';
@@ -21,13 +21,13 @@ interface BookmarkState {
 }
 
 const BookmarkLoader: React.FC<BookmarkLoaderProps> = ({ doc, onJumpToDest }) => {
-    const l10n = useContext(LocalizationContext);
-    const [bookmarks, setBookmarks] = useState<BookmarkState>({
+    const l10n = React.useContext(LocalizationContext);
+    const [bookmarks, setBookmarks] = React.useState<BookmarkState>({
         isLoaded: false,
         items: [],
     });
 
-    useEffect(() => {
+    React.useEffect(() => {
         setBookmarks({
             isLoaded: false,
             items: [],

@@ -6,12 +6,15 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import { CSSProperties } from 'react';
+import * as React from 'react';
 
 import HighlightArea from './HighlightArea';
 
 interface RenderHighlightsProps {
-    getCssProperties(area: HighlightArea, rotation: number): CSSProperties;
+    getCssProperties(
+        area: HighlightArea,
+        rotation: number
+    ): React.CSSProperties;
     pageIndex: number;
     rotation: number;
 }

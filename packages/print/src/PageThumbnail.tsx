@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { useEffect, useRef, useState } from 'react';
+import * as React from 'react';
 import { PdfJs, Spinner } from '@react-pdf-viewer/core';
 
 interface PageThumbnailProps {
@@ -20,10 +20,10 @@ interface PageThumbnailProps {
 const PageThumbnail: React.FC<PageThumbnailProps> = ({
     page, pageHeight, pageWidth, rotation, onLoad,
 }) => {
-    const renderTask = useRef<PdfJs.PageRenderTask>();
-    const [src, setSrc] = useState('');
+    const renderTask = React.useRef<PdfJs.PageRenderTask>();
+    const [src, setSrc] = React.useState('');
 
-    useEffect(() => {
+    React.useEffect(() => {
         const task = renderTask.current;
         if (task) {
             task.cancel();

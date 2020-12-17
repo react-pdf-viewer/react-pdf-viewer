@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { useEffect, useState } from 'react';
+import * as React from 'react';
 import { Button, Store } from '@react-pdf-viewer/core';
 
 import ExitFullScreenIcon from './ExitFullScreenIcon';
@@ -16,7 +16,7 @@ import StoreProps from './StoreProps';
 const ExitFullScreenButton: React.FC<{
     store: Store<StoreProps>,
 }> = ({ store }) => {
-    const [isFullScreen, setFullScreen] = useState(false);
+    const [isFullScreen, setFullScreen] = React.useState(false);
 
     const handleFullScreen = (fullScreen: boolean) => {
         setFullScreen(fullScreen);
@@ -41,7 +41,7 @@ const ExitFullScreenButton: React.FC<{
         }
     }
 
-    useEffect(() => {
+    React.useEffect(() => {
         store.subscribe('isFullScreen', handleFullScreen);
         return (): void => {
             store.unsubscribe('isFullScreen', handleFullScreen);

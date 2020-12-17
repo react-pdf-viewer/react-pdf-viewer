@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import { useEffect, useState } from 'react';
+import * as React from 'react';
 import { Store, StoreHandler } from '@react-pdf-viewer/core';
 
 import StoreProps from './StoreProps';
@@ -17,7 +17,7 @@ const useNumberOfPages = (
     // It's safer to set the initial state from `store.get('numberOfPages')` instead of `0`.
     // There's a case that a component is loaded within a portal
     // so the hook `useEffect` usage below isn't triggered
-    const [numberOfPages, setNumberOfPages] = useState(
+    const [numberOfPages, setNumberOfPages] = React.useState(
         store.get('numberOfPages') || 0
     );
 
@@ -25,7 +25,7 @@ const useNumberOfPages = (
         setNumberOfPages(total);
     };
 
-    useEffect(() => {
+    React.useEffect(() => {
         store.subscribe('numberOfPages', handleNumberOfPages);
 
         return () => {

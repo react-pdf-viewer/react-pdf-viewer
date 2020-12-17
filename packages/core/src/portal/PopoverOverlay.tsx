@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { useContext } from 'react';
+import * as React from 'react';
 
 import useKeyUp from '../hooks/useKeyUp';
 import ThemeContext from '../theme/ThemeContext';
@@ -17,7 +17,7 @@ interface PopoverOverlayProps {
 }
 
 const PopoverOverlay: React.FC<PopoverOverlayProps> = ({ closeOnEscape, onClose }) => {
-    const theme = useContext(ThemeContext);
+    const theme = React.useContext(ThemeContext);
 
     useKeyUp(27, () => closeOnEscape && onClose());
 

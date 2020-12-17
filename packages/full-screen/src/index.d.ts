@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import { Component, ReactElement } from 'react';
+import * as React from 'react';
 import { Plugin } from '@react-pdf-viewer/core';
 
 export interface RenderEnterFullScreenProps {
@@ -14,15 +14,15 @@ export interface RenderEnterFullScreenProps {
 }
 
 export interface EnterFullScreenProps {
-    children?(props: RenderEnterFullScreenProps): ReactElement;
+    children?(props: RenderEnterFullScreenProps): React.ReactElement;
 }
 
 export interface FullScreenPlugin extends Plugin {
-    EnterFullScreen(props: EnterFullScreenProps): ReactElement;
-    EnterFullScreenButton(): ReactElement;
+    EnterFullScreen(props: EnterFullScreenProps): React.ReactElement;
+    EnterFullScreenButton(): React.ReactElement;
 }
 
 export function fullScreenPlugin(): FullScreenPlugin;
 
-export class ExitFullScreenIcon extends Component {}
-export class FullScreenIcon extends Component {}
+export class ExitFullScreenIcon extends React.Component {}
+export class FullScreenIcon extends React.Component {}

@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import { Component, ReactElement } from 'react';
+import * as React from 'react';
 import { Plugin } from '@react-pdf-viewer/core';
 
 export interface ShowPropertiesMenuItemProps {
@@ -18,17 +18,17 @@ export interface RenderShowPropertiesProps {
 }
 
 export interface ShowPropertiesProps {
-    children?: (props: RenderShowPropertiesProps) => ReactElement;
+    children?: (props: RenderShowPropertiesProps) => React.ReactElement;
 }
 
 export interface PropertiesPlugin extends Plugin {
-    ShowProperties: (props: ShowPropertiesProps) => ReactElement;
-    ShowPropertiesButton(): ReactElement;
+    ShowProperties: (props: ShowPropertiesProps) => React.ReactElement;
+    ShowPropertiesButton(): React.ReactElement;
     ShowPropertiesMenuItem: (
         props: ShowPropertiesMenuItemProps
-    ) => ReactElement;
+    ) => React.ReactElement;
 }
 
 export function propertiesPlugin(): PropertiesPlugin;
 
-export class InfoIcon extends Component {}
+export class InfoIcon extends React.Component {}

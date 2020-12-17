@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { createRef, useContext, useRef } from 'react';
+import * as React from 'react';
 
 import ThemeContext from '../theme/ThemeContext';
 import LayerRenderStatus from '../types/LayerRenderStatus';
@@ -23,9 +23,9 @@ interface TextLayerProps {
 }
 
 const TextLayer: React.FC<TextLayerProps> = ({ page, pageIndex, plugins, rotation, scale }) => {
-    const theme = useContext(ThemeContext);
-    const containerRef = createRef<HTMLDivElement>();
-    const renderTask = useRef<PdfJs.PageRenderTask>();
+    const theme = React.useContext(ThemeContext);
+    const containerRef = React.createRef<HTMLDivElement>();
+    const renderTask = React.useRef<PdfJs.PageRenderTask>();
 
     const empty = (): void => {
         const containerEle = containerRef.current;

@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { useContext, useState } from 'react';
+import * as React from 'react';
 
 import LocalizationContext from '../localization/LocalizationContext';
 import ThemeContext from '../theme/ThemeContext';
@@ -17,9 +17,9 @@ interface WrongPasswordProps {
 }
 
 const WrongPassword: React.FC<WrongPasswordProps> = ({ verifyPasswordFn }) => {
-    const l10n = useContext(LocalizationContext);
-    const theme = useContext(ThemeContext);
-    const [password, setPassword] = useState('');
+    const l10n = React.useContext(LocalizationContext);
+    const theme = React.useContext(ThemeContext);
+    const [password, setPassword] = React.useState('');
 
     const changePassword = (e: React.ChangeEvent<HTMLInputElement>): void => setPassword(e.target.value);
     const submit = (): void => verifyPasswordFn(password);

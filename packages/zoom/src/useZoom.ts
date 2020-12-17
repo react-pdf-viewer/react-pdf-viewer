@@ -6,19 +6,19 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import { useEffect, useState } from 'react';
+import * as React from 'react';
 import { Store, StoreHandler } from '@react-pdf-viewer/core';
 
 import StoreProps from './StoreProps';
 
 const useZoom = (store: Store<StoreProps>): { scale: number } => {
-    const [scale, setScale] = useState(store.get('scale') || 0);
+    const [scale, setScale] = React.useState(store.get('scale') || 0);
 
     const handleScaleChanged: StoreHandler<number> = (currentScale: number) => {
         setScale(currentScale);
     };
 
-    useEffect(() => {
+    React.useEffect(() => {
         store.subscribe('scale', handleScaleChanged);
 
         return () => {

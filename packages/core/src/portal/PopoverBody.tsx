@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { createRef, useContext } from 'react';
+import * as React from 'react';
 
 import useClickOutside from '../hooks/useClickOutside';
 import usePosition from '../hooks/usePosition';
@@ -26,9 +26,9 @@ interface PopoverBodyProps {
 const PopoverBody: React.FC<PopoverBodyProps> = ({
     children, closeOnClickOutside, offset, position, targetRef, onClose,
 }) => {
-    const theme = useContext(ThemeContext);
-    const contentRef = createRef<HTMLDivElement>();
-    const anchorRef = createRef<HTMLDivElement>();
+    const theme = React.useContext(ThemeContext);
+    const contentRef = React.createRef<HTMLDivElement>();
+    const anchorRef = React.createRef<HTMLDivElement>();
 
     useClickOutside(closeOnClickOutside, contentRef, onClose);
     usePosition(contentRef, targetRef, anchorRef, position, offset);

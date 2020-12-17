@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import { Component, ReactElement } from 'react';
+import * as React from 'react';
 import { OpenFile, Plugin } from '@react-pdf-viewer/core';
 
 export interface RenderDownloadProps {
@@ -14,12 +14,12 @@ export interface RenderDownloadProps {
 }
 
 export interface DownloadProps {
-    children?(props: RenderDownloadProps): ReactElement;
+    children?(props: RenderDownloadProps): React.ReactElement;
 }
 
 export interface GetFilePlugin extends Plugin {
-    Download(props: DownloadProps): ReactElement;
-    DownloadButton(): ReactElement;
+    Download(props: DownloadProps): React.ReactElement;
+    DownloadButton(): React.ReactElement;
 }
 
 export interface GetFilePluginProps {
@@ -29,4 +29,4 @@ export interface GetFilePluginProps {
 
 export function getFilePlugin(props?: GetFilePluginProps): GetFilePlugin;
 
-export class DownloadIcon extends Component {}
+export class DownloadIcon extends React.Component {}

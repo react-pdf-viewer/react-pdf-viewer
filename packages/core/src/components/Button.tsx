@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { useContext } from 'react';
+import * as React from 'react';
 
 import ThemeContext from '../theme/ThemeContext';
 import classNames from '../utils/classNames';
@@ -17,7 +17,7 @@ interface ButtonProps {
 }
 
 const Button: React.FC<ButtonProps> = ({ children, isSelected = false, onClick }) => {
-    const theme = useContext(ThemeContext);
+    const theme = React.useContext(ThemeContext);
 
     return (
         <button

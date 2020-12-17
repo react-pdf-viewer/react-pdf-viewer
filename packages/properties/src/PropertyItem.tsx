@@ -6,14 +6,14 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { FC } from 'react';
+import * as React from 'react';
 
 interface PropertyItemProps {
     label: string;
     value: string;
 }
 
-const PropertyItem: FC<PropertyItemProps> = ({ label, value }) => {
+const PropertyItem: React.FC<PropertyItemProps> = ({ label, value }) => {
     return (
         <dl className='rpv-property-item'>
             <dt className='rpv-property-item-label'>

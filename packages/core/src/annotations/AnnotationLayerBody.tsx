@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { Fragment, useEffect } from 'react';
+import * as React from 'react';
 
 import SpecialZoomLevel from '../SpecialZoomLevel';
 import { Plugin } from '../types/Plugin';
@@ -49,7 +49,7 @@ const AnnotationLayerBody: React.FC<AnnotationLayerBodyProps> = ({ annotations, 
 
     const filterAnnotations = annotations.filter((annotation) => !annotation.parentId);
 
-    useEffect(() => {
+    React.useEffect(() => {
         const container = containerRef.current;
         if (!container) {
             return;
@@ -233,7 +233,7 @@ const AnnotationLayerBody: React.FC<AnnotationLayerBodyProps> = ({ annotations, 
                                 />
                             );
                         default:
-                            return <Fragment key={annotation.id}></Fragment>;
+                            return <React.Fragment key={annotation.id}></React.Fragment>;
                     }
                 })
         }

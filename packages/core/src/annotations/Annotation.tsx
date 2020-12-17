@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React from 'react';
+import * as React from 'react';
 
 import Slot from '../layouts/Slot';
 import PdfJs from '../vendors/PdfJs';

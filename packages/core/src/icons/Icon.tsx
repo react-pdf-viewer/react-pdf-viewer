@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { useContext } from 'react';
+import * as React from 'react';
 
 import ThemeContext from '../theme/ThemeContext';
 
@@ -16,7 +16,7 @@ interface IconProps {
 }
 
 const Icon: React.FC<IconProps> = ({ children, size = 24 }) => {
-    const theme = useContext(ThemeContext);
+    const theme = React.useContext(ThemeContext);
     const width = `${size || 24}px`;
 
     return (

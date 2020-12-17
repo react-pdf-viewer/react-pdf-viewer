@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { useContext } from 'react';
+import * as React from 'react';
 import { Button, LocalizationContext, Menu, MenuDivider, Popover, Position, Toggle, Tooltip } from '@react-pdf-viewer/core';
 import { ScrollMode } from '@react-pdf-viewer/scroll-mode';
 import { SelectionMode } from '@react-pdf-viewer/selection-mode';
@@ -21,7 +21,7 @@ interface MoreActionsPopoverProps {
 const PORTAL_OFFSET = { left: 0, top: 8 };
 
 const MoreActionsPopover: React.FC<MoreActionsPopoverProps> = ({ toolbarSlot }) => {
-    const l10n = useContext(LocalizationContext);
+    const l10n = React.useContext(LocalizationContext);
     const {
         GoToFirstPageMenuItem, GoToLastPageMenuItem, RotateBackwardMenuItem, RotateForwardMenuItem, ShowPropertiesMenuItem,
         SwitchScrollModeMenuItem, SwitchSelectionModeMenuItem,

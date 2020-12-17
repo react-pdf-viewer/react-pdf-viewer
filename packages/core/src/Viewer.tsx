@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { ReactElement, useEffect, useState } from 'react';
+import * as React from 'react';
 
 import OpenFile from './OpenFile';
 import Inner from './layouts/Inner';
@@ -55,7 +55,7 @@ export interface ViewerProps {
     prefixClass?: string;
     renderError?: RenderError;
     renderPage?: RenderPage;
-    renderLoader?(percentages: number): ReactElement;
+    renderLoader?(percentages: number): React.ReactElement;
     // Indicate the cross-site requests should be made with credentials such as cookie and authorization headers.
     // The default value is `false` 
     withCredentials?: boolean;
@@ -83,7 +83,7 @@ const Viewer: React.FC<ViewerProps> = ({
     onPageChange = () => {/**/},
     onZoom = () => {/**/},
 }) => {
-    const [file, setFile] = useState<OpenFile>({
+    const [file, setFile] = React.useState<OpenFile>({
         data: fileUrl,
         name: (typeof fileUrl === 'string') ? fileUrl : '',
     });
@@ -95,7 +95,7 @@ const Viewer: React.FC<ViewerProps> = ({
         });
     };
 
-    useEffect(() => {
+    React.useEffect(() => {
         setFile({
             data: fileUrl,
             name: (typeof fileUrl === 'string') ? fileUrl : '',

@@ -6,18 +6,18 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { FC, useEffect, useRef, useState } from 'react';
+import * as React from 'react';
 import { Store } from '@react-pdf-viewer/core';
 
 import SelectionMode from './SelectionMode';
 import StoreProps from './StoreProps';
 
-const Tracker: FC<{
+const Tracker: React.FC<{
     store: Store<StoreProps>,
 }> = ({ store }) => {
-    const pagesRef = useRef<HTMLElement | null>(null);
-    const [selectionMode, setSelectionMode] = useState<SelectionMode>(SelectionMode.Text);
-    const pos = useRef({ top: 0, left: 0, x: 0, y: 0 });
+    const pagesRef = React.useRef<HTMLElement | null>(null);
+    const [selectionMode, setSelectionMode] = React.useState<SelectionMode>(SelectionMode.Text);
+    const pos = React.useRef({ top: 0, left: 0, x: 0, y: 0 });
 
     const onMouseMoveHandler = (e: MouseEvent): void => {
         const ele = pagesRef.current;
@@ -73,7 +73,7 @@ const Tracker: FC<{
         setSelectionMode(mode);
     };
 
-    useEffect(() => {
+    React.useEffect(() => {
         const ele = pagesRef.current;
         if (!ele) {
             return;
@@ -89,7 +89,7 @@ const Tracker: FC<{
         };
     }, [selectionMode]);
 
-    useEffect(() => {
+    React.useEffect(() => {
         store.subscribe('getPagesContainer', handlePagesContainer);
         store.subscribe('selectionMode', handleSelectionModeChanged);
 

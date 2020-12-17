@@ -6,10 +6,10 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { FC } from 'react';
+import * as React from 'react';
 import { Icon } from '@react-pdf-viewer/core';
 
-const NextIcon: FC = () => {
+const NextIcon: React.FC = () => {
     return (
         <Icon size={16}>
             <path

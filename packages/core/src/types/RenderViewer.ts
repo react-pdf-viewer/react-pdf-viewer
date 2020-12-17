@@ -6,14 +6,14 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import { RefObject } from 'react';
+import * as React from 'react';
 
 import Slot from '../layouts/Slot';
 import SpecialZoomLevel from '../SpecialZoomLevel';
 import PdfJs from '../vendors/PdfJs';
 
 export default interface RenderViewer {
-    containerRef: RefObject<HTMLDivElement>;
+    containerRef: React.RefObject<HTMLDivElement>;
     doc: PdfJs.PdfDocument;
     pageHeight: number;
     pageWidth: number;

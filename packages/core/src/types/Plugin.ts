@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import { ReactElement } from 'react';
+import * as React from 'react';
 
 import Slot from '../layouts/Slot';
 import PdfJs from '../vendors/PdfJs';
@@ -53,7 +53,7 @@ export interface PluginRenderPageLayer {
 
 export interface Plugin {
     install?(pluginFunctions: PluginFunctions): void;
-    renderPageLayer?(props: PluginRenderPageLayer): ReactElement;
+    renderPageLayer?(props: PluginRenderPageLayer): React.ReactElement;
     renderViewer?(props: RenderViewer): Slot;
     uninstall?(pluginFunctions: PluginFunctions): void;
     onAnnotationLayerRender?(props: PluginOnAnnotationLayerRender): void;

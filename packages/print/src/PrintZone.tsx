@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { useEffect, useState } from 'react';
+import * as React from 'react';
 import { createPortal } from 'react-dom';
 import { PdfJs } from '@react-pdf-viewer/core';
 
@@ -24,9 +24,9 @@ interface PrintZoneProps {
 }
 
 const PrintZone: React.FC<PrintZoneProps> = ({ doc, pageHeight, pageWidth, printStatus, rotation, onCancel, onLoad }) => {
-    const [numLoadedPages, setNumLoadedPages] = useState(0);
+    const [numLoadedPages, setNumLoadedPages] = React.useState(0);
 
-    useEffect(() => {
+    React.useEffect(() => {
         if (printStatus === PrintStatus.Ready) {
             document.body.classList.add('rpv-body-printing');
             window.print();

@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { createRef, useRef } from 'react';
+import * as React from 'react';
 import { PdfJs, SpecialZoomLevel } from '@react-pdf-viewer/core';
 
 import BookmarkList from './BookmarkList';
@@ -20,9 +20,9 @@ interface BookmarkItemProps {
 }
 
 const BookmarkItem: React.FC<BookmarkItemProps> = ({ bookmark, depth, doc, onClick, onJumpToDest }) => {
-    const toggleRef = createRef<HTMLSpanElement>();
-    const subItemRef = createRef<HTMLDivElement>();
-    const subItemsDisplayed = useRef(true);
+    const toggleRef = React.createRef<HTMLSpanElement>();
+    const subItemRef = React.createRef<HTMLDivElement>();
+    const subItemsDisplayed = React.useRef(true);
 
     const hasSubItems = bookmark.items && bookmark.items.length > 0;
 

@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { ReactElement } from 'react';
+import * as React from 'react';
 import { attachmentPlugin } from '@react-pdf-viewer/attachment';
 import { bookmarkPlugin } from '@react-pdf-viewer/bookmark';
 import { Plugin, PluginFunctions, PluginOnDocumentLoad, RenderViewer, ViewerState, PluginOnTextLayerRender } from '@react-pdf-viewer/core';
@@ -17,7 +17,7 @@ import Sidebar, { SidebarTab } from './Sidebar';
 
 export interface DefaultLayoutPluginProps {
     toolbarPlugin?: ToolbarPluginProps;
-    renderToolbar?: (Toolbar: ((props: ToolbarProps) => ReactElement)) => ReactElement;
+    renderToolbar?: (Toolbar: ((props: ToolbarProps) => React.ReactElement)) => React.ReactElement;
     sidebarTabs?: (defaultTabs: SidebarTab[]) => SidebarTab[];
 }
 

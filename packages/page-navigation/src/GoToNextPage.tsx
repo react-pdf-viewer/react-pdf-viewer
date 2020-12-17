@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { FC, ReactElement } from 'react';
+import * as React from 'react';
 import { Store } from '@react-pdf-viewer/core';
 
 import GoToNextPageButton from './GoToNextPageButton';
@@ -19,13 +19,13 @@ export interface RenderGoToNextPageProps {
     onClick: () => void;
 }
 
-type RenderGoToNextPage = (props: RenderGoToNextPageProps) => ReactElement;
+type RenderGoToNextPage = (props: RenderGoToNextPageProps) => React.ReactElement;
 
 export interface GoToNextPageProps {
     children?: RenderGoToNextPage;
 }
 
-const GoToNextPage: FC<{
+const GoToNextPage: React.FC<{
     children?: RenderGoToNextPage,
     store: Store<StoreProps>,
 }> = ({ children, store }) => {

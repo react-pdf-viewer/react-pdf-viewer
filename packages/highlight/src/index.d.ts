@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import { Component, CSSProperties, ReactElement } from 'react';
+import * as React from 'react';
 import { Plugin } from '@react-pdf-viewer/core';
 
 export interface HighlightArea {
@@ -45,7 +45,10 @@ export interface RenderHighlightContentProps {
 }
 
 export interface RenderHighlightsProps {
-    getCssProperties(area: HighlightArea, rotation: number): CSSProperties;
+    getCssProperties(
+        area: HighlightArea,
+        rotation: number
+    ): React.CSSProperties;
     pageIndex: number;
     rotation: number;
 }
@@ -55,10 +58,14 @@ export interface HighlightPlugin extends Plugin {
 }
 
 export interface HighlightPluginProps {
-    renderHighlightTarget?(props: RenderHighlightTargetProps): ReactElement;
-    renderHighlightContent?(props: RenderHighlightContentProps): ReactElement;
-    renderHighlights?(props: RenderHighlightsProps): ReactElement;
+    renderHighlightTarget?(
+        props: RenderHighlightTargetProps
+    ): React.ReactElement;
+    renderHighlightContent?(
+        props: RenderHighlightContentProps
+    ): React.ReactElement;
+    renderHighlights?(props: RenderHighlightsProps): React.ReactElement;
 }
 
 export function highlightPlugin(props?: HighlightPluginProps): HighlightPlugin;
-export class MessageIcon extends Component {}
+export class MessageIcon extends React.Component {}

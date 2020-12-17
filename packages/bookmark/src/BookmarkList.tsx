@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React from 'react';
+import * as React from 'react';
 import { PdfJs, SpecialZoomLevel } from '@react-pdf-viewer/core';
 
 import BookmarkItem from './BookmarkItem';

@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { FC, ReactElement } from 'react';
+import * as React from 'react';
 import { Store } from '@react-pdf-viewer/core';
 
 import GoToPreviousPageButton from './GoToPreviousPageButton';
@@ -18,13 +18,13 @@ export interface RenderGoToPreviousPageProps {
     onClick: () => void;
 }
 
-type RenderGoToPreviousPage = (props: RenderGoToPreviousPageProps) => ReactElement;
+type RenderGoToPreviousPage = (props: RenderGoToPreviousPageProps) => React.ReactElement;
 
 export interface GoToPreviousPageProps {
     children?: RenderGoToPreviousPage;
 }
 
-const GoToPreviousPage: FC<{
+const GoToPreviousPage: React.FC<{
     children?: RenderGoToPreviousPage,
     store: Store<StoreProps>,
 }> = ({ store, children }) => {
