@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { useContext } from 'react';
+import * as React from 'react';
 import { Button, LocalizationContext, Position, Tooltip } from '@react-pdf-viewer/core';
 
 import { RenderPrintProps } from './Print';
@@ -15,7 +15,7 @@ import PrintIcon from './PrintIcon';
 const TOOLTIP_OFFSET = { left: 0, top: 8 };
 
 const PrintButton: React.FC<RenderPrintProps> = ({ onClick }) => {
-    const l10n = useContext(LocalizationContext);
+    const l10n = React.useContext(LocalizationContext);
     const label = l10n && l10n.print ? l10n.print.print : 'Print';
 
     return (

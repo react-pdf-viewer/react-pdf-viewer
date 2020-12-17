@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from 'react';
+import * as React from 'react';
 import { Button, DocumentLoadEvent, PdfJs, Position, PrimaryButton, Tooltip, Viewer, Worker } from '@react-pdf-viewer/core';
 import { defaultLayoutPlugin } from '@react-pdf-viewer/default-layout';
 import { HighlightArea, highlightPlugin, MessageIcon, RenderHighlightContentProps, RenderHighlightTargetProps, RenderHighlightsProps } from '@react-pdf-viewer/highlight';
@@ -18,10 +18,10 @@ interface Note {
 let noteId = 0;
 
 const App = () => {
-    const [message, setMessage] = useState('');
-    const [notes, setNotes] = useState<Note[]>([]);
+    const [message, setMessage] = React.useState('');
+    const [notes, setNotes] = React.useState<Note[]>([]);
     const noteEles: Map<number, HTMLElement> = new Map();
-    const [currentDoc, setCurrentDoc] = useState<PdfJs.PdfDocument | null>(null);
+    const [currentDoc, setCurrentDoc] = React.useState<PdfJs.PdfDocument | null>(null);
 
     const handleDocumentLoad = (e: DocumentLoadEvent) => {
         setCurrentDoc(e.doc);
@@ -112,7 +112,7 @@ const App = () => {
         <div>
         {
             notes.map(note => (
-                <Fragment key={note.id}>
+                <React.Fragment key={note.id}>
                 {
                     note.highlightAreas
                         .filter(area => area.pageIndex === props.pageIndex)
@@ -129,7 +129,7 @@ const App = () => {
                             />
                         ))
                 }
-                </Fragment>
+                </React.Fragment>
             ))
         }
         </div>
@@ -143,7 +143,7 @@ const App = () => {
 
     const { jumpToHighlightArea } = highlightPluginInstance;
 
-    useEffect(() => {
+    React.React.useEffect(() => {
         return () => {
             noteEles.clear();
         };

@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { useEffect, useState } from 'react';
+import * as React from 'react';
 import { PdfJs, SpecialZoomLevel, Spinner, Store, StoreHandler } from '@react-pdf-viewer/core';
 
 import StoreProps from './StoreProps';
@@ -15,7 +15,7 @@ import BookmarkLoader from './BookmarkLoader';
 const BookmarkListWithStore: React.FC<{
     store: Store<StoreProps>,
 }> = ({ store }) => {
-    const [currentDoc, setCurrentDoc] = useState(store.get('doc'));
+    const [currentDoc, setCurrentDoc] = React.useState(store.get('doc'));
 
     const handleDocumentChanged: StoreHandler<PdfJs.PdfDocument> = (doc: PdfJs.PdfDocument) => {
         setCurrentDoc(doc);
@@ -28,7 +28,7 @@ const BookmarkListWithStore: React.FC<{
         }
     };
 
-    useEffect(() => {
+    React.useEffect(() => {
         store.subscribe('doc', handleDocumentChanged);
 
         return () => {

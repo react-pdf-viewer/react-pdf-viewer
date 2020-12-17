@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { useEffect, useState } from 'react';
+import * as React from 'react';
 import { PdfJs, Store, StoreHandler } from '@react-pdf-viewer/core';
 
 import PrintProgress from './PrintProgress';
@@ -23,8 +23,8 @@ interface PrintContainerProps {
 }
 
 const PrintContainer: React.FC<PrintContainerProps> = ({ doc, pageHeight, pageWidth, rotation, store }) => {
-    const [printStatus, setPrintStatus] = useState(PrintStatus.Inactive);
-    const [numLoadedPagesForPrint, setNumLoadedPagesForPrint] = useState(0);
+    const [printStatus, setPrintStatus] = React.useState(PrintStatus.Inactive);
+    const [numLoadedPagesForPrint, setNumLoadedPagesForPrint] = React.useState(0);
 
     const cancelPrinting = (): void => {
         setNumLoadedPagesForPrint(0);
@@ -38,7 +38,7 @@ const PrintContainer: React.FC<PrintContainerProps> = ({ doc, pageHeight, pageWi
 
     const handlePrintStatus: StoreHandler<PrintStatus> = (status: PrintStatus) => setPrintStatus(status);
 
-    useEffect(() => {
+    React.useEffect(() => {
         store.subscribe('printStatus', handlePrintStatus);
         return () => {
             store.unsubscribe('printStatus', handlePrintStatus);

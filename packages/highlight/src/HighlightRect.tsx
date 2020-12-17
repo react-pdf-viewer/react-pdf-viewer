@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { FC } from 'react';
+import * as React from 'react';
 
 import { getCssProperties } from './transformArea';
 import HighlightArea from './types/HighlightArea';
@@ -16,7 +16,7 @@ interface HighlightRectProps {
     rotation: number;
 }
 
-const HighlightRect: FC<HighlightRectProps> = ({ area, rotation }) => (
+const HighlightRect: React.FC<HighlightRectProps> = ({ area, rotation }) => (
     <div
         className='rpv-highlight-rect'
         style={getCssProperties(area, rotation)}

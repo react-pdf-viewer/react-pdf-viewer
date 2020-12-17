@@ -6,13 +6,13 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { FC } from 'react';
+import * as React from 'react';
 import { MenuItem } from '@react-pdf-viewer/core';
 
 import { RenderSwitchScrollModeProps } from './SwitchScrollMode';
 import SwitchScrollModeDecorator from './SwitchScrollModeDecorator';
 
-const SwitchScrollModeMenuItem: FC<RenderSwitchScrollModeProps> = ({ isSelected, mode, onClick }) => (
+const SwitchScrollModeMenuItem: React.FC<RenderSwitchScrollModeProps> = ({ isSelected, mode, onClick }) => (
     <SwitchScrollModeDecorator mode={mode} onClick={onClick}>
         {
             (props) => (

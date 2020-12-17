@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { useContext } from 'react';
+import * as React from 'react';
 
 import ThemeContext from '../theme/ThemeContext';
 
@@ -15,7 +15,7 @@ interface MenuProps {
 }
 
 const Menu: React.FC<MenuProps> = ({ children }) => {
-    const theme = useContext(ThemeContext);
+    const theme = React.useContext(ThemeContext);
 
     return (
         <ul className={`${theme.prefixClass}-menu`}>

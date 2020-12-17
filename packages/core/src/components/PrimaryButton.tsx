@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { useContext } from 'react';
+import * as React from 'react';
 
 import ThemeContext from '../theme/ThemeContext';
 
@@ -15,7 +15,7 @@ interface PrimaryButtonProps {
 }
 
 const PrimaryButton: React.FC<PrimaryButtonProps> = ({ children, onClick }) => {
-    const theme = useContext(ThemeContext);
+    const theme = React.useContext(ThemeContext);
 
     return (
         <button className={`${theme.prefixClass}-primary-button`} onClick={onClick}>

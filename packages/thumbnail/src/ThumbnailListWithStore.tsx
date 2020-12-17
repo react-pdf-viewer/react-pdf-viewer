@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { useEffect, useLayoutEffect, useState } from 'react';
+import * as React from 'react';
 import { PdfJs, Spinner, Store, StoreHandler } from '@react-pdf-viewer/core';
 
 import StoreProps from './StoreProps';
@@ -15,11 +15,11 @@ import ThumbnailList from './ThumbnailList';
 const ThumbnailListWithStore: React.FC<{
     store: Store<StoreProps>,
 }> = ({ store }) => {
-    const [currentDoc, setCurrentDoc] = useState(store.get('doc'));
-    const [currentPage, setCurrentPage] = useState(store.get('currentPage') || 0);
-    const [pageHeight, setPageHeight] = useState(store.get('pageHeight') || 0);
-    const [pageWidth, setPageWidth] = useState(store.get('pageWidth') || 0);
-    const [rotation, setRotation] = useState(store.get('rotation') || 0);
+    const [currentDoc, setCurrentDoc] = React.useState(store.get('doc'));
+    const [currentPage, setCurrentPage] = React.useState(store.get('currentPage') || 0);
+    const [pageHeight, setPageHeight] = React.useState(store.get('pageHeight') || 0);
+    const [pageWidth, setPageWidth] = React.useState(store.get('pageWidth') || 0);
+    const [rotation, setRotation] = React.useState(store.get('rotation') || 0);
 
     const handleCurrentPageChanged: StoreHandler<number> = (currentPageIndex: number) => {
         setCurrentPage(currentPageIndex);
@@ -48,7 +48,7 @@ const ThumbnailListWithStore: React.FC<{
         }
     };
 
-    useEffect(() => {
+    React.useEffect(() => {
         store.subscribe('doc', handleDocumentChanged);
         store.subscribe('pageHeight', handlePageHeightChanged);
         store.subscribe('pageWidth', handlePageWidthChanged);
@@ -62,7 +62,7 @@ const ThumbnailListWithStore: React.FC<{
         };
     }, []);
 
-    useLayoutEffect(() => {
+    React.useLayoutEffect(() => {
         store.subscribe('currentPage', handleCurrentPageChanged);
 
         return () => {

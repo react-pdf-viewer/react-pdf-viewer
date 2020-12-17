@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import { Component, ReactElement } from 'react';
+import * as React from 'react';
 import { Plugin } from '@react-pdf-viewer/core';
 
 export enum SelectionMode {
@@ -21,7 +21,7 @@ export interface RenderSwitchSelectionModeProps {
 }
 
 export interface SwitchSelectionModeProps {
-    children?: (props: RenderSwitchSelectionModeProps) => ReactElement;
+    children?: (props: RenderSwitchSelectionModeProps) => React.ReactElement;
     mode: SelectionMode;
 }
 
@@ -35,13 +35,13 @@ export interface SwitchSelectionModeMenuItemProps {
 }
 
 export interface SelectionModePlugin extends Plugin {
-    SwitchSelectionMode(props: SwitchSelectionModeProps): ReactElement;
+    SwitchSelectionMode(props: SwitchSelectionModeProps): React.ReactElement;
     SwitchSelectionModeButton(
         props: SwitchSelectionModeButtonProps
-    ): ReactElement;
+    ): React.ReactElement;
     SwitchSelectionModeMenuItem(
         props: SwitchSelectionModeMenuItemProps
-    ): ReactElement;
+    ): React.ReactElement;
 }
 
 export interface SelectionModePluginProps {
@@ -56,5 +56,5 @@ export function selectionModePlugin(
 // Icons
 // -----
 
-export class HandToolIcon extends Component {}
-export class TextSelectionIcon extends Component {}
+export class HandToolIcon extends React.Component {}
+export class TextSelectionIcon extends React.Component {}

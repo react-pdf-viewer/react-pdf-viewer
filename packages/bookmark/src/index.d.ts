@@ -6,11 +6,11 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import { ReactElement } from 'react';
+import * as React from 'react';
 import { Plugin } from '@react-pdf-viewer/core';
 
 export interface BookmarkPlugin extends Plugin {
-    Bookmarks: () => ReactElement;
+    Bookmarks: () => React.ReactElement;
 }
 
 export function bookmarkPlugin(): BookmarkPlugin;

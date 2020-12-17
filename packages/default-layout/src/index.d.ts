@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import { Component, ReactElement } from 'react';
+import * as React from 'react';
 import { Plugin, ViewerProps } from '@react-pdf-viewer/core';
 import type {
     ToolbarPluginProps,
@@ -17,9 +17,9 @@ import type {
 export type { ToolbarPluginProps, ToolbarProps, ToolbarSlot };
 
 export interface SidebarTab {
-    content: ReactElement;
-    icon: ReactElement;
-    title: ReactElement;
+    content: React.ReactElement;
+    icon: React.ReactElement;
+    title: React.ReactElement;
 }
 
 export interface DefaultLayoutProps extends ViewerProps {
@@ -29,8 +29,8 @@ export interface DefaultLayoutProps extends ViewerProps {
 export interface DefaultLayoutPluginProps {
     toolbarPlugin?: ToolbarPluginProps;
     renderToolbar?: (
-        Toolbar: (props: ToolbarProps) => ReactElement
-    ) => ReactElement;
+        Toolbar: (props: ToolbarProps) => React.ReactElement
+    ) => React.ReactElement;
     sidebarTabs?: (defaultTabs: SidebarTab[]) => SidebarTab[];
 }
 
@@ -40,6 +40,6 @@ export function defaultLayoutPlugin(props?: DefaultLayoutPluginProps): Plugin;
 // Icons
 // -----
 
-export class BookmarkIcon extends Component {}
-export class FileIcon extends Component {}
-export class ThumbnailIcon extends Component {}
+export class BookmarkIcon extends React.Component {}
+export class FileIcon extends React.Component {}
+export class ThumbnailIcon extends React.Component {}

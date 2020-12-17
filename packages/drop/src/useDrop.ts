@@ -6,18 +6,18 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import { RefObject, useEffect, useRef, useState } from 'react';
+import * as React from 'react';
 
 interface DropHook {
     isDragging: boolean;
 }
 
 const useDrop = (
-    ref: RefObject<HTMLDivElement>,
+    ref: React.RefObject<HTMLDivElement>,
     onDrop: (files: FileList) => void
 ): DropHook => {
-    const dragCount = useRef(0);
-    const [isDragging, setDragging] = useState(false);
+    const dragCount = React.useRef(0);
+    const [isDragging, setDragging] = React.useState(false);
 
     const onDropHandler = (e: DragEvent): void => {
         e.preventDefault();
@@ -49,7 +49,7 @@ const useDrop = (
         }
     };
 
-    useEffect(() => {
+    React.useEffect(() => {
         const ele = ref.current;
         if (!ele) {
             return;

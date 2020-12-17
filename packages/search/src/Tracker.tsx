@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { useEffect, useRef, useState } from 'react';
+import * as React from 'react';
 import { PluginOnTextLayerRender, LayerRenderStatus, Store } from '@react-pdf-viewer/core';
 
 import calculateOffset from './calculateOffset';
@@ -26,17 +26,17 @@ const Tracker: React.FC<{
     pageIndex: number,
     store: Store<StoreProps>,
 }> = ({ pageIndex, store }) => {
-    const [match, setMatch] = useState<Match>({
+    const [match, setMatch] = React.useState<Match>({
         matchIndex: -1,
         pageIndex: -1,
     });
-    const [keywordRegexp, setKeywordRegexp] = useState<RegExp[]>([EMPTY_KEYWORD_REGEXP]);
-    const [renderStatus, setRenderStatus] = useState<RenderStatus>({
+    const [keywordRegexp, setKeywordRegexp] = React.useState<RegExp[]>([EMPTY_KEYWORD_REGEXP]);
+    const [renderStatus, setRenderStatus] = React.useState<RenderStatus>({
         pageIndex,
         scale: 1,
         status: LayerRenderStatus.PreRender,
     });
-    const currentMatchRef = useRef<HTMLElement | null>(null);
+    const currentMatchRef = React.useRef<HTMLElement | null>(null);
 
     const unhighlightAll = (containerEle: HTMLElement): void => {
         const highlightNodes = containerEle.querySelectorAll('span.rpv-search-text-highlight');
@@ -117,7 +117,7 @@ const Tracker: React.FC<{
 
     const isEmptyKeyword = () => keywordRegexp.length === 0 || (keywordRegexp.length === 1 && keywordRegexp[0].source.trim() === '');
 
-    useEffect(() => {
+    React.useEffect(() => {
         if (isEmptyKeyword() || !renderStatus.ele || renderStatus.status !== LayerRenderStatus.DidRender) {
             return;
         }
@@ -128,7 +128,7 @@ const Tracker: React.FC<{
         scrollToMatch();
     }, [keywordRegexp, match, renderStatus.status]);
 
-    useEffect(() => {
+    React.useEffect(() => {
         if (isEmptyKeyword() && renderStatus.ele && renderStatus.status === LayerRenderStatus.DidRender) {
             unhighlightAll(renderStatus.ele);
         }
@@ -156,7 +156,7 @@ const Tracker: React.FC<{
         }
     };
     
-    useEffect(() => {
+    React.useEffect(() => {
         store.subscribe('keyword', handleKeywordChanged);
         store.subscribe('match', handleMatchChanged);
         store.subscribe('renderStatus', handleRenderStatusChanged);

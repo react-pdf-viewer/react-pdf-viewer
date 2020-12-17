@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { ReactElement, useMemo } from 'react';
+import * as React from 'react';
 import { createStore, OpenFile, Plugin, ViewerState } from '@react-pdf-viewer/core';
 
 import Download, { DownloadProps } from './Download';
@@ -16,8 +16,8 @@ import getFileName from './getFileName';
 import StoreProps from './StoreProps';
 
 interface GetFilePlugin extends Plugin {
-    Download: (props: DownloadProps) => ReactElement;
-    DownloadButton: () => ReactElement;
+    Download: (props: DownloadProps) => React.ReactElement;
+    DownloadButton: () => React.ReactElement;
 }
 
 export interface GetFilePluginProps {
@@ -26,7 +26,7 @@ export interface GetFilePluginProps {
 }
 
 const getFilePlugin = (props?: GetFilePluginProps): GetFilePlugin => {
-    const store = useMemo(() => createStore<StoreProps>({}), []);
+    const store = React.useMemo(() => createStore<StoreProps>({}), []);
 
     const defaultFileNameGenerator = (file: OpenFile) => getFileName(file.name);
 

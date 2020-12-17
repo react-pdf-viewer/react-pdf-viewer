@@ -6,18 +6,18 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { ReactElement, useMemo } from 'react';
+import * as React from 'react';
 import { createStore, Plugin, PluginFunctions, PluginOnDocumentLoad } from '@react-pdf-viewer/core';
 
 import BookmarkListWithStore from './BookmarkListWithStore';
 import StoreProps from './StoreProps';
 
 interface BookmarkPlugin extends Plugin {
-    Bookmarks: () => ReactElement;
+    Bookmarks: () => React.ReactElement;
 }
 
 const bookmarkPlugin = (): BookmarkPlugin => {
-    const store = useMemo(() => createStore<StoreProps>({}), []);
+    const store = React.useMemo(() => createStore<StoreProps>({}), []);
 
     const BookmarksDecorator = () => (
         <BookmarkListWithStore store={store} />

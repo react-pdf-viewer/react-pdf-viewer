@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import { Component, ReactElement } from 'react';
+import * as React from 'react';
 import { Plugin } from '@react-pdf-viewer/core';
 
 export enum ScrollMode {
@@ -22,7 +22,7 @@ export interface RenderSwitchScrollModeProps {
 }
 
 export interface SwitchScrollModeProps {
-    children?: (props: RenderSwitchScrollModeProps) => ReactElement;
+    children?: (props: RenderSwitchScrollModeProps) => React.ReactElement;
     mode: ScrollMode;
 }
 
@@ -36,11 +36,13 @@ export interface SwitchScrollModeMenuItemProps {
 }
 
 export interface ScrollModePlugin extends Plugin {
-    SwitchScrollMode(props: SwitchScrollModeProps): ReactElement;
-    SwitchScrollModeButton(props: SwitchScrollModeButtonProps): ReactElement;
+    SwitchScrollMode(props: SwitchScrollModeProps): React.ReactElement;
+    SwitchScrollModeButton(
+        props: SwitchScrollModeButtonProps
+    ): React.ReactElement;
     SwitchScrollModeMenuItem(
         props: SwitchScrollModeMenuItemProps
-    ): ReactElement;
+    ): React.ReactElement;
 }
 
 export interface ScrollModePluginProps {
@@ -55,6 +57,6 @@ export function scrollModePlugin(
 // Icons
 // -----
 
-export class HorizontalScrollingIcon extends Component {}
-export class VerticalScrollingIcon extends Component {}
-export class WrappedScrollingIcon extends Component {}
+export class HorizontalScrollingIcon extends React.Component {}
+export class VerticalScrollingIcon extends React.Component {}
+export class WrappedScrollingIcon extends React.Component {}

@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { FC, useContext } from 'react';
+import * as React from 'react';
 import { Button, LocalizationContext, Position, Tooltip } from '@react-pdf-viewer/core';
 
 import { RenderZoomOutProps } from './ZoomOut';
@@ -14,8 +14,8 @@ import ZoomOutIcon from './ZoomOutIcon';
 
 const TOOLTIP_OFFSET = { left: 0, top: 8 };
 
-const ZoomOutButton: FC<RenderZoomOutProps> = ({ onClick }) => {
-    const l10n = useContext(LocalizationContext);
+const ZoomOutButton: React.FC<RenderZoomOutProps> = ({ onClick }) => {
+    const l10n = React.useContext(LocalizationContext);
     const label = l10n && l10n.zoom ? l10n.zoom.zoomOut : 'Zoom out';
 
     return (

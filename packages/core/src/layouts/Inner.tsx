@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import * as React from 'react';
 
 import PageLayer from '../layers/PageLayer';
 import Slot from '../layouts/Slot';
@@ -42,13 +42,13 @@ const Inner: React.FC<InnerProps> = ({
     defaultScale, doc, initialPage, pageSize, plugins, renderPage, viewerState,
     onDocumentLoad, onOpenFile, onPageChange, onZoom,
 }) => {
-    const theme = useContext(ThemeContext);
-    const containerRef = useRef<HTMLDivElement | null>(null);
-    const pagesRef = useRef<HTMLDivElement | null>(null);
-    const [scale, setScale] = useState(pageSize.scale);
-    const [currentPage, setCurrentPage] = useState(0);
-    const [rotation, setRotation] = useState(0);
-    const stateRef = useRef<ViewerState>(viewerState);
+    const theme = React.useContext(ThemeContext);
+    const containerRef = React.useRef<HTMLDivElement | null>(null);
+    const pagesRef = React.useRef<HTMLDivElement | null>(null);
+    const [scale, setScale] = React.useState(pageSize.scale);
+    const [currentPage, setCurrentPage] = React.useState(0);
+    const [rotation, setRotation] = React.useState(0);
+    const stateRef = React.useRef<ViewerState>(viewerState);
 
     const { numPages } = doc;
     const { pageWidth, pageHeight } = pageSize;
@@ -191,7 +191,7 @@ const Inner: React.FC<InnerProps> = ({
         onZoom({ doc, scale: updateScale });
     };
 
-    useEffect(() => {
+    React.useEffect(() => {
         const pagesEle = pagesRef.current;
         const currentState = stateRef.current;
         if (!pagesEle || !currentState) {
@@ -228,7 +228,7 @@ const Inner: React.FC<InnerProps> = ({
         zoom,
     });
 
-    useEffect(() => {
+    React.useEffect(() => {
         const pluginMethods = getPluginMethods();
 
         // Install the plugins
@@ -248,7 +248,7 @@ const Inner: React.FC<InnerProps> = ({
         };
     }, []);
 
-    useEffect(() => {
+    React.useEffect(() => {
         onDocumentLoad({ doc });
         // Loop over the plugins
         plugins.forEach(plugin => {
@@ -259,7 +259,7 @@ const Inner: React.FC<InnerProps> = ({
         }
     }, []);
 
-    useEffect(() => {
+    React.useEffect(() => {
         onPageChange({ currentPage, doc });
         setViewerState({
             file: viewerState.file,
@@ -271,7 +271,7 @@ const Inner: React.FC<InnerProps> = ({
         });
     }, [currentPage]);
 
-    useEffect(() => {
+    React.useEffect(() => {
         // If the default scale is set
         if (defaultScale) {
             zoom(defaultScale);

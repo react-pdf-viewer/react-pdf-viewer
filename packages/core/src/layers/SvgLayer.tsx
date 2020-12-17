@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { createRef, useContext } from 'react';
+import * as React from 'react';
 
 import ThemeContext from '../theme/ThemeContext';
 import PdfJs from '../vendors/PdfJs';
@@ -21,8 +21,8 @@ interface SvgLayerProps {
 }
 
 const SvgLayer: React.FC<SvgLayerProps> = ({ height, page, rotation, scale, width }) => {
-    const theme = useContext(ThemeContext);
-    const containerRef = createRef<HTMLDivElement>();
+    const theme = React.useContext(ThemeContext);
+    const containerRef = React.createRef<HTMLDivElement>();
 
     const empty = (): void => {
         const containerEle = containerRef.current;

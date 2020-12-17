@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { FC, ReactElement } from 'react';
+import * as React from 'react';
 import { Store } from '@react-pdf-viewer/core';
 
 import RotateButton from './RotateButton';
@@ -19,14 +19,14 @@ export interface RenderRotateProps {
     onClick(): void;
 }
 
-type RenderRotate = (props: RenderRotateProps) => ReactElement;
+type RenderRotate = (props: RenderRotateProps) => React.ReactElement;
 
 export interface RotateProps {
     children?: RenderRotate;
     direction: RotateDirection;
 }
 
-const Rotate: FC<{
+const Rotate: React.FC<{
     children?: RenderRotate,
     direction: RotateDirection,
     store: Store<StoreProps>,

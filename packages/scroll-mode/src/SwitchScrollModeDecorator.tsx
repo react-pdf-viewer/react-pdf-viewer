@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { FC, useContext, ReactElement } from 'react';
+import * as React from 'react';
 import { LocalizationContext } from '@react-pdf-viewer/core';
 
 import HorizontalScrollingIcon from './HorizontalScrollingIcon';
@@ -15,19 +15,19 @@ import VerticalScrollingIcon from './VerticalScrollingIcon';
 import WrappedScrollingIcon from './WrappedScrollingIcon';
 
 interface RenderChildren {
-    icon: ReactElement;
+    icon: React.ReactElement;
     label: string;
     onClick(): void;
 }
 
 interface SwitchScrollModeDecoratorProps {
-    children(props: RenderChildren): ReactElement;
+    children(props: RenderChildren): React.ReactElement;
     mode: ScrollMode;
     onClick(): void;
 }
 
-const SwitchScrollModeDecorator: FC<SwitchScrollModeDecoratorProps> = ({ children, mode, onClick }) => {
-    const l10n = useContext(LocalizationContext);
+const SwitchScrollModeDecorator: React.FC<SwitchScrollModeDecoratorProps> = ({ children, mode, onClick }) => {
+    const l10n = React.useContext(LocalizationContext);
 
     let label = '';
     let icon = <VerticalScrollingIcon />;

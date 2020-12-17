@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { ReactElement, useMemo } from 'react';
+import * as React from 'react';
 import { createStore, Plugin, RenderViewer, Slot } from '@react-pdf-viewer/core';
 
 import Print, { PrintProps } from './Print';
@@ -17,12 +17,12 @@ import PrintStatus from './PrintStatus';
 import StoreProps from './StoreProps';
 
 interface PrintPlugin extends Plugin {
-    Print: (props: PrintProps) => ReactElement;
-    PrintButton: () => ReactElement;
+    Print: (props: PrintProps) => React.ReactElement;
+    PrintButton: () => React.ReactElement;
 }
 
 const printPlugin = (): PrintPlugin => {
-    const store = useMemo(() => createStore<StoreProps>({
+    const store = React.useMemo(() => createStore<StoreProps>({
         printStatus: PrintStatus.Inactive,
     }), []);
 

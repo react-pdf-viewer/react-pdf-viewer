@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import { useEffect, useState } from 'react';
+import * as React from 'react';
 import { Store, StoreHandler } from '@react-pdf-viewer/core';
 
 import ScrollMode from './ScrollMode';
@@ -18,7 +18,7 @@ interface UseScrollMode {
 }
 
 const useScrollMode = (store: Store<StoreProps>): UseScrollMode => {
-    const [scrollMode, setScrollMode] = useState(
+    const [scrollMode, setScrollMode] = React.useState(
         store.get('scrollMode') || ScrollMode.Vertical
     );
 
@@ -63,7 +63,7 @@ const useScrollMode = (store: Store<StoreProps>): UseScrollMode => {
         setScrollMode(newScrollMode);
     };
 
-    useEffect(() => {
+    React.useEffect(() => {
         store.subscribe('scrollMode', handleScrollModeChanged);
 
         return () => {

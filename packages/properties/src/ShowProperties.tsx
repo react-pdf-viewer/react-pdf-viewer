@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { FC, ReactElement } from 'react';
+import * as React from 'react';
 import { Modal, Store, Toggle } from '@react-pdf-viewer/core';
 
 import PropertiesModal from './PropertiesModal';
@@ -18,13 +18,13 @@ export interface RenderShowPropertiesProps {
     onClick(): void;
 }
 
-type RenderShowProperties = (props: RenderShowPropertiesProps) => ReactElement;
+type RenderShowProperties = (props: RenderShowPropertiesProps) => React.ReactElement;
 
 export interface ShowPropertiesProps {
     children?: RenderShowProperties;
 }
 
-const ShowProperties: FC<{
+const ShowProperties: React.FC<{
     children?: RenderShowProperties,
     store: Store<StoreProps>,
 }> = ({ children, store }) => {

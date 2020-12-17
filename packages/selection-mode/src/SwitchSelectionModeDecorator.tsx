@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { FC, useContext, ReactElement } from 'react';
+import * as React from 'react';
 import { LocalizationContext } from '@react-pdf-viewer/core';
 
 import HandToolIcon from './HandToolIcon';
@@ -14,19 +14,19 @@ import SelectionMode from './SelectionMode';
 import TextSelectionIcon from './TextSelectionIcon';
 
 interface RenderChildren {
-    icon: ReactElement;
+    icon: React.ReactElement;
     label: string;
     onClick(): void;
 }
 
 interface SwitchSelectionModeDecoratorProps {
-    children(props: RenderChildren): ReactElement;
+    children(props: RenderChildren): React.ReactElement;
     mode: SelectionMode;
     onClick(): void;
 }
 
-const SwitchSelectionModeDecorator: FC<SwitchSelectionModeDecoratorProps> = ({ children, mode, onClick }) => {
-    const l10n = useContext(LocalizationContext);
+const SwitchSelectionModeDecorator: React.FC<SwitchSelectionModeDecoratorProps> = ({ children, mode, onClick }) => {
+    const l10n = React.useContext(LocalizationContext);
 
     let label = '';
     let icon = <TextSelectionIcon />;

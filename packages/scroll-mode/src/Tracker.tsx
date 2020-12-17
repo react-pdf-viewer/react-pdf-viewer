@@ -6,14 +6,14 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { FC, useEffect } from 'react';
+import * as React from 'react';
 import { Store } from '@react-pdf-viewer/core';
 
 import ScrollMode from './ScrollMode';
 import StoreProps from './StoreProps';
 import useScrollMode from './useScrollMode';
 
-const Tracker: FC<{
+const Tracker: React.FC<{
     store: Store<StoreProps>,
 }> = ({ store }) => {
     const { switchTo } = useScrollMode(store);
@@ -29,7 +29,7 @@ const Tracker: FC<{
         }
     };
 
-    useEffect(() => {
+    React.useEffect(() => {
         store.subscribe('getPagesContainer', handlePagesContainer);
 
         return (): void => {

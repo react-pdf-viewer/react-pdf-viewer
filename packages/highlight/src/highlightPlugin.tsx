@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { ReactElement, useMemo } from 'react';
+import * as React from 'react';
 import { createStore, LayerRenderStatus, PluginOnTextLayerRender, Plugin, PluginFunctions, PluginRenderPageLayer, RenderViewer, Slot, ViewerState } from '@react-pdf-viewer/core';
 
 import { HIGHLIGHT_LAYER_ATTR, HIGHLIGHT_PAGE_ATTR } from './constants';
@@ -24,13 +24,13 @@ export interface HighlightPlugin extends Plugin {
 }
 
 export interface HighlightPluginProps {
-    renderHighlightTarget?(props: RenderHighlightTargetProps): ReactElement;
-    renderHighlightContent?(props: RenderHighlightContentProps): ReactElement;
-    renderHighlights?(props: RenderHighlightsProps): ReactElement;
+    renderHighlightTarget?(props: RenderHighlightTargetProps): React.ReactElement;
+    renderHighlightContent?(props: RenderHighlightContentProps): React.ReactElement;
+    renderHighlights?(props: RenderHighlightsProps): React.ReactElement;
 }
 
 const highlightPlugin = (props?: HighlightPluginProps): HighlightPlugin => {
-    const store = useMemo(() => createStore<StoreProps>({
+    const store = React.useMemo(() => createStore<StoreProps>({
         selectionState: NO_SELECTION_STATE,
     }), []);
 

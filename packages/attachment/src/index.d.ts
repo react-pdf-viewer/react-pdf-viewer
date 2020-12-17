@@ -6,11 +6,11 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import { ReactElement } from 'react';
+import * as React from 'react';
 import { Plugin } from '@react-pdf-viewer/core';
 
 export interface AttachmentPlugin extends Plugin {
-    Attachments: () => ReactElement;
+    Attachments: () => React.ReactElement;
 }
 
 export function attachmentPlugin(): AttachmentPlugin;

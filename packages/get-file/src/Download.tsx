@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { useEffect, useState } from 'react';
+import * as React from 'react';
 import { OpenFile, Store, StoreHandler } from '@react-pdf-viewer/core';
 
 import DownloadButton from './DownloadButton';
@@ -28,13 +28,13 @@ const Download: React.FC<{
     fileNameGenerator: (file: OpenFile) => string,
     store: Store<StoreProps>,
 }> = ({ children, fileNameGenerator, store }) => {
-    const [currentFile, setCurrentFile] = useState<OpenFile>();
+    const [currentFile, setCurrentFile] = React.useState<OpenFile>();
 
     const handleFileChanged: StoreHandler<OpenFile> = (file: OpenFile) => {
         setCurrentFile(file);
     };
 
-    useEffect(() => {
+    React.useEffect(() => {
         store.subscribe('file', handleFileChanged);
 
         return () => {

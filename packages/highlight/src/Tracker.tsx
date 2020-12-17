@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { FC, useEffect, useRef, useState } from 'react';
+import * as React from 'react';
 import { Store } from '@react-pdf-viewer/core';
 
 import { HIGHLIGHT_LAYER_ATTR, HIGHLIGHT_PAGE_ATTR } from './constants';
@@ -20,12 +20,12 @@ import SelectionData from './types/SelectionData';
 import SelectionRange from './types/SelectionRange';
 import useRotation from './useRotation';
 
-const Tracker: FC<{
+const Tracker: React.FC<{
     store: Store<StoreProps>,
 }> = ({ store }) => {
     const { rotation } = useRotation(store);
-    const pagesRef = useRef<HTMLElement | null>(null);
-    const [arePagesFound, setPagesFound] = useState(false);
+    const pagesRef = React.useRef<HTMLElement | null>(null);
+    const [arePagesFound, setPagesFound] = React.useState(false);
 
     const handlePagesContainer = (getPagesContainer: () => HTMLElement) => {
         const ele = getPagesContainer();
@@ -203,7 +203,7 @@ const Tracker: FC<{
         ));
     };
 
-    useEffect(() => {
+    React.useEffect(() => {
         const ele = pagesRef.current;
         if (!ele) {
             return;
@@ -215,7 +215,7 @@ const Tracker: FC<{
         };
     }, [arePagesFound, rotation]);
 
-    useEffect(() => {
+    React.useEffect(() => {
         store.subscribe('getPagesContainer', handlePagesContainer);
 
         return (): void => {

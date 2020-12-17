@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { ReactElement, useContext, useState } from 'react';
+import * as React from 'react';
 import { Button, LocalizationContext, Position, Tooltip } from '@react-pdf-viewer/core';
 
 import BookmarkIcon from './BookmarkIcon';
@@ -14,24 +14,24 @@ import FileIcon from './FileIcon';
 import ThumbnailIcon from './ThumbnailIcon';
 
 export interface SidebarTab {
-    content: ReactElement;
-    icon: ReactElement;
-    title: ReactElement;
+    content: React.ReactElement;
+    icon: React.ReactElement;
+    title: React.ReactElement;
 }
 
 interface SidebarProps {
-    attachmentTabContent: ReactElement;
-    bookmarkTabContent: ReactElement;
-    thumbnailTabContent: ReactElement;
+    attachmentTabContent: React.ReactElement;
+    bookmarkTabContent: React.ReactElement;
+    thumbnailTabContent: React.ReactElement;
     tabs?: (defaultTabs: SidebarTab[]) => SidebarTab[];
 }
 
 const TOOLTIP_OFFSET = { left: 8, top: 0 };
 
 const Sidebar: React.FC<SidebarProps> = ({ attachmentTabContent, bookmarkTabContent, thumbnailTabContent, tabs }) => {
-    const l10n = useContext(LocalizationContext);
-    const [opened, setOpened] = useState(false);
-    const [currentTab, setCurrentTab] = useState(0);
+    const l10n = React.useContext(LocalizationContext);
+    const [opened, setOpened] = React.useState(false);
+    const [currentTab, setCurrentTab] = React.useState(0);
 
     const defaultTabs: SidebarTab[] = [
         {

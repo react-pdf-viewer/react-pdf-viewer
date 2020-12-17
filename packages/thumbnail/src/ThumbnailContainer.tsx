@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { useState } from 'react';
+import * as React from 'react';
 import { Observer, PdfJs, Spinner, VisibilityChanged } from '@react-pdf-viewer/core';
 
 import ThumbnailItem from './ThumbnailItem';
@@ -30,7 +30,7 @@ interface PageState {
 }
 
 const ThumbnailContainer: React.FC<ThumbnailContainerProps> = ({ doc, pageHeight, pageIndex, pageWidth, rotation }) => {
-    const [pageSize, setPageSize] = useState<PageState>({
+    const [pageSize, setPageSize] = React.useState<PageState>({
         height: pageHeight,
         isCalculated: false,
         page: null,

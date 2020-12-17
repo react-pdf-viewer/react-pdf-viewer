@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { ReactElement } from 'react';
+import * as React from 'react';
 import { Store } from '@react-pdf-viewer/core';
 
 import StoreProps from './StoreProps';
@@ -18,7 +18,7 @@ export interface RenderZoomInProps {
     onClick: () => void;
 }
 
-type RenderZoomIn = (props: RenderZoomInProps) => ReactElement;
+type RenderZoomIn = (props: RenderZoomInProps) => React.ReactElement;
 
 export interface ZoomInProps {
     children?: RenderZoomIn;

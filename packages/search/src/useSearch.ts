@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import { useRef, useState } from 'react';
+import * as React from 'react';
 import { PdfJs, Store } from '@react-pdf-viewer/core';
 
 import { EMPTY_KEYWORD_REGEXP } from './constants';
@@ -32,12 +32,12 @@ const useSearch = (
     doc: PdfJs.PdfDocument,
     store: Store<StoreProps>
 ): UseSearch => {
-    const [keyword, setKeyword] = useState('');
-    const [found, setFound] = useState<Match[]>([]);
-    const [currentMatch, setCurrentMatch] = useState(0);
-    const [matchCase, setMatchCase] = useState(false);
-    const textContents = useRef<string[]>([]);
-    const [wholeWords, setWholeWords] = useState(false);
+    const [keyword, setKeyword] = React.useState('');
+    const [found, setFound] = React.useState<Match[]>([]);
+    const [currentMatch, setCurrentMatch] = React.useState(0);
+    const [matchCase, setMatchCase] = React.useState(false);
+    const textContents = React.useRef<string[]>([]);
+    const [wholeWords, setWholeWords] = React.useState(false);
     const indexArr = Array(doc.numPages)
         .fill(0)
         .map((_, i) => i);

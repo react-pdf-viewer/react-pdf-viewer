@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { FC, useContext } from 'react';
+import * as React from 'react';
 import { Button, LocalizationContext, Position, Tooltip } from '@react-pdf-viewer/core';
 
 import { RenderGoToPreviousPageProps } from './GoToPreviousPage';
@@ -14,8 +14,8 @@ import PreviousIcon from './PreviousIcon';
 
 const TOOLTIP_OFFSET = { left: 0, top: 8 };
 
-const GoToPreviousPageButton: FC<RenderGoToPreviousPageProps> = ({ onClick }) => {
-    const l10n = useContext(LocalizationContext);
+const GoToPreviousPageButton: React.FC<RenderGoToPreviousPageProps> = ({ onClick }) => {
+    const l10n = React.useContext(LocalizationContext);
     const label = l10n && l10n.pageNavigation ? l10n.pageNavigation.goToPreviousPage : 'Previous page';
 
     return (

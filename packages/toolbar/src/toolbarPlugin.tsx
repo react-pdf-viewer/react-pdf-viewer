@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React from 'react';
+import * as React from 'react';
 import { Plugin, PluginFunctions, PluginOnDocumentLoad, RenderViewer, ViewerState, PluginOnTextLayerRender } from '@react-pdf-viewer/core';
 import { dropPlugin } from '@react-pdf-viewer/drop';
 import { fullScreenPlugin } from '@react-pdf-viewer/full-screen';

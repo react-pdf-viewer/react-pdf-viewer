@@ -6,12 +6,12 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { useContext } from 'react';
+import * as React from 'react';
 
 import ThemeContext from '../theme/ThemeContext';
 
 const Spinner: React.FC = () => {
-    const theme = useContext(ThemeContext);
+    const theme = React.useContext(ThemeContext);
 
     return (
         <svg className={`${theme.prefixClass}-spinner`} width="64px" height="64px" viewBox="0 0 32 32">

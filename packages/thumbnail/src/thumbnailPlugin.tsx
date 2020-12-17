@@ -6,18 +6,18 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { ReactElement, useMemo } from 'react';
+import * as React from 'react';
 import { createStore, Plugin, PluginFunctions, PluginOnDocumentLoad, ViewerState } from '@react-pdf-viewer/core';
 
 import ThumbnailListWithStore from './ThumbnailListWithStore';
 import StoreProps from './StoreProps';
 
 interface ThumbnailPlugin extends Plugin {
-    Thumbnails: () => ReactElement;
+    Thumbnails: () => React.ReactElement;
 }
 
 const thumbnailPlugin = (): ThumbnailPlugin => {
-    const store = useMemo(() => createStore<StoreProps>({}), []);
+    const store = React.useMemo(() => createStore<StoreProps>({}), []);
 
     const ThumbnailsDecorator = () => (
         <ThumbnailListWithStore store={store} />

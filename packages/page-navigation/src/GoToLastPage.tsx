@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { FC, ReactElement } from 'react';
+import * as React from 'react';
 import { Store } from '@react-pdf-viewer/core';
 
 import GoToLastPageButton from './GoToLastPageButton';
@@ -17,13 +17,13 @@ export interface RenderGoToLastPageProps {
     onClick: () => void;
 }
 
-type RenderGoToLastPage = (props: RenderGoToLastPageProps) => ReactElement;
+type RenderGoToLastPage = (props: RenderGoToLastPageProps) => React.ReactElement;
 
 export interface GoToLastPageProps {
     children?: RenderGoToLastPage;
 }
 
-const GoToLastPage: FC<{
+const GoToLastPage: React.FC<{
     children?: RenderGoToLastPage,
     store: Store<StoreProps>,
 }> = ({ children, store }) => {

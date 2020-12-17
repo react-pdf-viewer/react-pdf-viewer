@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import { useEffect, useState } from 'react';
+import * as React from 'react';
 import { PdfJs, Store, StoreHandler } from '@react-pdf-viewer/core';
 
 import StoreProps from './StoreProps';
@@ -14,7 +14,7 @@ import StoreProps from './StoreProps';
 const useDocument = (
     store: Store<StoreProps>
 ): { currentDoc: PdfJs.PdfDocument } => {
-    const [currentDoc, setCurrentDoc] = useState(store.get('doc'));
+    const [currentDoc, setCurrentDoc] = React.useState(store.get('doc'));
 
     const handleDocumentChanged: StoreHandler<PdfJs.PdfDocument> = (
         doc: PdfJs.PdfDocument
@@ -22,7 +22,7 @@ const useDocument = (
         setCurrentDoc(doc);
     };
 
-    useEffect(() => {
+    React.useEffect(() => {
         store.subscribe('doc', handleDocumentChanged);
 
         return () => {

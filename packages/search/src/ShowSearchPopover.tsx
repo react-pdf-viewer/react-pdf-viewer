@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { ReactElement } from 'react';
+import * as React from 'react';
 import { Popover, Position, Store, Toggle } from '@react-pdf-viewer/core';
 
 import SearchPopover from './SearchPopover';
@@ -18,7 +18,7 @@ export interface RenderShowSearchPopoverProps {
     onClick(): void;
 }
 
-type RenderShowSearchPopover = (props: RenderShowSearchPopoverProps) => ReactElement;
+type RenderShowSearchPopover = (props: RenderShowSearchPopoverProps) => React.ReactElement;
 
 export interface ShowSearchPopoverProps {
     children?: RenderShowSearchPopover;

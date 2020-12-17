@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { useContext } from 'react';
+import * as React from 'react';
 import { LocalizationContext } from '@react-pdf-viewer/core';
 
 import downloadFile from './downloadFile';
@@ -17,7 +17,7 @@ interface AttachmentListProps {
 }
 
 const AttachmentList: React.FC<AttachmentListProps> = ({ files }) => {
-    const l10n = useContext(LocalizationContext);
+    const l10n = React.useContext(LocalizationContext);
 
     const renderItem = (file: FileItem): React.ReactElement => {
         const onClick = (): void => downloadFile(file.fileName, file.data);

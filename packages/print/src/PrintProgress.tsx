@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { useEffect, useContext } from 'react';
+import * as React from 'react';
 import { LocalizationContext, PrimaryButton, ProgressBar } from '@react-pdf-viewer/core';
 
 interface PrintProgressProps {
@@ -17,9 +17,9 @@ interface PrintProgressProps {
 }
 
 const PrintProgress: React.FC<PrintProgressProps> = ({ numLoadedPages, numPages, onCancel, onStartPrinting }) => {
-    const l10n = useContext(LocalizationContext);
+    const l10n = React.useContext(LocalizationContext);
     const progress = Math.floor(numLoadedPages * 100 / numPages);
-    useEffect(() => {
+    React.useEffect(() => {
         if (numLoadedPages === numPages) {
             onStartPrinting();
         }

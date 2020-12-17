@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { useEffect, useState } from 'react';
+import * as React from 'react';
 import { PdfJs, Spinner } from '@react-pdf-viewer/core';
 
 import PageThumbnail from './PageThumbnail';
@@ -28,7 +28,7 @@ interface PageState {
 }
 
 const PageThumbnailContainer: React.FC<PageThumbnailContainerProps> = ({ doc, pageHeight, pageIndex, pageWidth, rotation, onLoad }) => {
-    const [pageSize, setPageSize] = useState<PageState>({
+    const [pageSize, setPageSize] = React.useState<PageState>({
         height: pageHeight,
         page: null,
         viewportRotation: 0,
@@ -37,7 +37,7 @@ const PageThumbnailContainer: React.FC<PageThumbnailContainerProps> = ({ doc, pa
     const { page, height, width } = pageSize;
     const isVertical = Math.abs(rotation) % 180 === 0;
 
-    useEffect(() => {
+    React.useEffect(() => {
         doc.getPage(pageIndex + 1).then((pdfPage) => {
             const viewport = pdfPage.getViewport({ scale: 1 });
 

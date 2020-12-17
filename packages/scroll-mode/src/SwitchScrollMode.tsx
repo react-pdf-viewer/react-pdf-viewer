@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { FC, ReactElement } from 'react';
+import * as React from 'react';
 import { Store } from '@react-pdf-viewer/core';
 
 import ScrollMode from './ScrollMode';
@@ -20,14 +20,14 @@ export interface RenderSwitchScrollModeProps {
     onClick(): void;
 }
 
-type RenderSwitchScrollMode = (props: RenderSwitchScrollModeProps) => ReactElement;
+type RenderSwitchScrollMode = (props: RenderSwitchScrollModeProps) => React.ReactElement;
 
 export interface SwitchScrollModeProps {
     children?: RenderSwitchScrollMode;
     mode: ScrollMode;
 }
 
-const SwitchScrollMode: FC<{
+const SwitchScrollMode: React.FC<{
     children?: RenderSwitchScrollMode,
     mode: ScrollMode,
     store: Store<StoreProps>,

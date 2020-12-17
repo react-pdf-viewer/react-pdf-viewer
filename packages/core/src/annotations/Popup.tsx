@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { useContext, useLayoutEffect } from 'react';
+import * as React from 'react';
 
 import ThemeContext from '../theme/ThemeContext';
 import PdfJs from '../vendors/PdfJs';
@@ -20,14 +20,14 @@ interface PopupProps {
 }
 
 const Popup: React.FC<PopupProps> = ({ annotation, page, viewport }) => {
-    const theme = useContext(ThemeContext);
+    const theme = React.useContext(ThemeContext);
     const isRenderable = !!(annotation.title || annotation.contents);
 
     // Don't render the popup for annotation whose parent renders the annotation themselves
     const ignoredParents = ['Circle', 'Ink', 'Line', 'Polygon', 'PolyLine', 'Square'];
     const hasPopup = !annotation.parentType || ignoredParents.indexOf(annotation.parentType) !== -1;
 
-    useLayoutEffect(() => {
+    React.useLayoutEffect(() => {
         if (!annotation.parentId) {
             return;
         }

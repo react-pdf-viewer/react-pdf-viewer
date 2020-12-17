@@ -6,13 +6,13 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { FC } from 'react';
+import * as React from 'react';
 import { MenuItem } from '@react-pdf-viewer/core';
 
 import { RenderSwitchSelectionModeProps } from './SwitchSelectionMode';
 import SwitchSelectionModeDecorator from './SwitchSelectionModeDecorator';
 
-const SwitchSelectionModeMenuItem: FC<RenderSwitchSelectionModeProps> = ({ isSelected, mode, onClick }) => (
+const SwitchSelectionModeMenuItem: React.FC<RenderSwitchSelectionModeProps> = ({ isSelected, mode, onClick }) => (
     <SwitchSelectionModeDecorator mode={mode} onClick={onClick}>
         {
             (props) => (

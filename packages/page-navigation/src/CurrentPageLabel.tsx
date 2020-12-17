@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { FC, ReactElement } from 'react';
+import * as React from 'react';
 import { Store } from '@react-pdf-viewer/core';
 
 import StoreProps from './StoreProps';
@@ -18,13 +18,13 @@ interface RenderCurrentPageLabelProps {
     numberOfPages: number;
 }
 
-type RenderCurrentPageLabel = (props: RenderCurrentPageLabelProps) => ReactElement;
+type RenderCurrentPageLabel = (props: RenderCurrentPageLabelProps) => React.ReactElement;
 
 export interface CurrentPageLabelProps {
     children?: RenderCurrentPageLabel;
 }
 
-const CurrentPageLabel: FC<{
+const CurrentPageLabel: React.FC<{
     children?: RenderCurrentPageLabel,
     store: Store<StoreProps>,
 }> = ({ children, store }) => {

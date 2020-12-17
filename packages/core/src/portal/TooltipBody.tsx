@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { createRef, useContext } from 'react';
+import * as React from 'react';
 
 import usePosition from '../hooks/usePosition';
 import ThemeContext from '../theme/ThemeContext';
@@ -21,9 +21,9 @@ interface TooltipBodyProps {
 }
 
 const TooltipBody: React.FC<TooltipBodyProps> = ({ children, offset, position, targetRef }) => {
-    const theme = useContext(ThemeContext);
-    const contentRef = createRef<HTMLDivElement>();
-    const anchorRef = createRef<HTMLDivElement>();
+    const theme = React.useContext(ThemeContext);
+    const contentRef = React.createRef<HTMLDivElement>();
+    const anchorRef = React.createRef<HTMLDivElement>();
 
     usePosition(contentRef, targetRef, anchorRef, position, offset);
 

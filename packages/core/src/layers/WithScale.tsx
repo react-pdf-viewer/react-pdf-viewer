@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import React, { useLayoutEffect } from 'react';
+import * as React from 'react';
 
 interface WithScaleProps {
     rotation: number;
@@ -15,7 +15,7 @@ interface WithScaleProps {
 }
 
 const WithScale: React.FC<WithScaleProps> = ({ callback, children, rotation, scale }) => {
-    useLayoutEffect(() => {
+    React.useLayoutEffect(() => {
         callback();
     }, [rotation, scale]);
     return (<>{children}</>);

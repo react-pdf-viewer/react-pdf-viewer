@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import { Component, ReactElement } from 'react';
+import * as React from 'react';
 import { Plugin } from '@react-pdf-viewer/core';
 
 // -------------------
@@ -19,7 +19,7 @@ export interface RenderCurrentPageLabelProps {
 }
 
 export interface CurrentPageLabelProps {
-    children?: (props: RenderCurrentPageLabelProps) => ReactElement;
+    children?: (props: RenderCurrentPageLabelProps) => React.ReactElement;
 }
 
 // -------------------------------------
@@ -35,7 +35,7 @@ export interface RenderGoToFirstPageProps {
 }
 
 export interface GoToFirstPageProps {
-    children?: (props: RenderGoToFirstPageProps) => ReactElement;
+    children?: (props: RenderGoToFirstPageProps) => React.ReactElement;
 }
 
 // -------------------------------------
@@ -51,7 +51,7 @@ export interface RenderGoToLastPageProps {
 }
 
 export interface GoToLastPageProps {
-    children?: (props: RenderGoToLastPageProps) => ReactElement;
+    children?: (props: RenderGoToLastPageProps) => React.ReactElement;
 }
 
 // ------------------------------------
@@ -64,7 +64,7 @@ export interface RenderGoToNextPageProps {
 }
 
 export interface GoToNextPageProps {
-    children?: (props: RenderGoToNextPageProps) => ReactElement;
+    children?: (props: RenderGoToNextPageProps) => React.ReactElement;
 }
 
 // ----------------------------------------
@@ -77,7 +77,7 @@ export interface RenderGoToPreviousPageProps {
 }
 
 export interface GoToPreviousPageProps {
-    children?: (props: RenderGoToPreviousPageProps) => ReactElement;
+    children?: (props: RenderGoToPreviousPageProps) => React.ReactElement;
 }
 
 // ------
@@ -85,18 +85,18 @@ export interface GoToPreviousPageProps {
 // ------
 
 export interface PageNavigationPlugin extends Plugin {
-    CurrentPageInput: () => ReactElement;
-    CurrentPageLabel: (props: CurrentPageLabelProps) => ReactElement;
-    GoToFirstPage: (props: GoToFirstPageProps) => ReactElement;
-    GoToFirstPageButton: () => ReactElement;
-    GoToFirstPageMenuItem: () => ReactElement;
-    GoToLastPage: (props: GoToLastPageProps) => ReactElement;
-    GoToLastPageButton: () => ReactElement;
-    GoToLastPageMenuItem: () => ReactElement;
-    GoToNextPage: (props: GoToNextPageProps) => ReactElement;
-    GoToNextPageButton: () => ReactElement;
-    GoToPreviousPage: (props: GoToPreviousPageProps) => ReactElement;
-    GoToPreviousPageButton: () => ReactElement;
+    CurrentPageInput: () => React.ReactElement;
+    CurrentPageLabel: (props: CurrentPageLabelProps) => React.ReactElement;
+    GoToFirstPage: (props: GoToFirstPageProps) => React.ReactElement;
+    GoToFirstPageButton: () => React.ReactElement;
+    GoToFirstPageMenuItem: () => React.ReactElement;
+    GoToLastPage: (props: GoToLastPageProps) => React.ReactElement;
+    GoToLastPageButton: () => React.ReactElement;
+    GoToLastPageMenuItem: () => React.ReactElement;
+    GoToNextPage: (props: GoToNextPageProps) => React.ReactElement;
+    GoToNextPageButton: () => React.ReactElement;
+    GoToPreviousPage: (props: GoToPreviousPageProps) => React.ReactElement;
+    GoToPreviousPageButton: () => React.ReactElement;
 }
 
 export function pageNavigationPlugin(): PageNavigationPlugin;
@@ -105,7 +105,7 @@ export function pageNavigationPlugin(): PageNavigationPlugin;
 // Icons
 // -----
 
-export class DownArrowIcon extends Component {}
-export class NextIcon extends Component {}
-export class PreviousIcon extends Component {}
-export class UpArrowIcon extends Component {}
+export class DownArrowIcon extends React.Component {}
+export class NextIcon extends React.Component {}
+export class PreviousIcon extends React.Component {}
+export class UpArrowIcon extends React.Component {}

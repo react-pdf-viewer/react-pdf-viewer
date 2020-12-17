@@ -6,7 +6,7 @@
  * @copyright 2019-2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import { Component, ReactElement } from 'react';
+import * as React from 'react';
 import { Plugin } from '@react-pdf-viewer/core';
 import { EnterFullScreenProps } from '@react-pdf-viewer/full-screen';
 import { DownloadProps, GetFilePluginProps } from '@react-pdf-viewer/get-file';
@@ -49,46 +49,50 @@ import {
 } from '@react-pdf-viewer/zoom';
 
 export interface ToolbarSlot {
-    CurrentPageInput(): ReactElement;
-    CurrentPageLabel(props: CurrentPageLabelProps): ReactElement;
-    CurrentScale(props: CurrentScaleProps): ReactElement;
-    Download(props: DownloadProps): ReactElement;
-    EnterFullScreen(props: EnterFullScreenProps): ReactElement;
-    GoToFirstPage(props: GoToFirstPageProps): ReactElement;
-    GoToFirstPageMenuItem(props: GoToFirstPageMenuItemProps): ReactElement;
-    GoToLastPage(props: GoToLastPageProps): ReactElement;
-    GoToLastPageMenuItem(props: GoToLastPageMenuItemProps): ReactElement;
-    GoToNextPage(props: GoToNextPageProps): ReactElement;
-    GoToPreviousPage(props: GoToPreviousPageProps): ReactElement;
-    NumberOfPages(): ReactElement;
-    Open(props: OpenProps): ReactElement;
-    Print(props: PrintProps): ReactElement;
-    Rotate(props: RotateProps): ReactElement;
-    RotateBackwardMenuItem(props: RotateDecoratorProps): ReactElement;
-    RotateForwardMenuItem(props: RotateDecoratorProps): ReactElement;
-    Search(props: SearchProps): ReactElement;
-    ShowProperties(props: ShowPropertiesProps): ReactElement;
-    ShowPropertiesMenuItem(props: ShowPropertiesMenuItemProps): ReactElement;
-    ShowSearchPopover(props: ShowSearchPopoverProps): ReactElement;
-    SwitchScrollMode(props: SwitchScrollModeProps): ReactElement;
+    CurrentPageInput(): React.ReactElement;
+    CurrentPageLabel(props: CurrentPageLabelProps): React.ReactElement;
+    CurrentScale(props: CurrentScaleProps): React.ReactElement;
+    Download(props: DownloadProps): React.ReactElement;
+    EnterFullScreen(props: EnterFullScreenProps): React.ReactElement;
+    GoToFirstPage(props: GoToFirstPageProps): React.ReactElement;
+    GoToFirstPageMenuItem(
+        props: GoToFirstPageMenuItemProps
+    ): React.ReactElement;
+    GoToLastPage(props: GoToLastPageProps): React.ReactElement;
+    GoToLastPageMenuItem(props: GoToLastPageMenuItemProps): React.ReactElement;
+    GoToNextPage(props: GoToNextPageProps): React.ReactElement;
+    GoToPreviousPage(props: GoToPreviousPageProps): React.ReactElement;
+    NumberOfPages(): React.ReactElement;
+    Open(props: OpenProps): React.ReactElement;
+    Print(props: PrintProps): React.ReactElement;
+    Rotate(props: RotateProps): React.ReactElement;
+    RotateBackwardMenuItem(props: RotateDecoratorProps): React.ReactElement;
+    RotateForwardMenuItem(props: RotateDecoratorProps): React.ReactElement;
+    Search(props: SearchProps): React.ReactElement;
+    ShowProperties(props: ShowPropertiesProps): React.ReactElement;
+    ShowPropertiesMenuItem(
+        props: ShowPropertiesMenuItemProps
+    ): React.ReactElement;
+    ShowSearchPopover(props: ShowSearchPopoverProps): React.ReactElement;
+    SwitchScrollMode(props: SwitchScrollModeProps): React.ReactElement;
     SwitchScrollModeMenuItem(
         props: SwitchScrollModeMenuItemProps
-    ): ReactElement;
-    SwitchSelectionMode(props: SwitchSelectionModeProps): ReactElement;
+    ): React.ReactElement;
+    SwitchSelectionMode(props: SwitchSelectionModeProps): React.ReactElement;
     SwitchSelectionModeMenuItem(
         props: SwitchSelectionModeMenuItemProps
-    ): ReactElement;
-    Zoom(props: ZoomProps): ReactElement;
-    ZoomIn(props: ZoomInProps): ReactElement;
-    ZoomOut(props: ZoomOutProps): ReactElement;
+    ): React.ReactElement;
+    Zoom(props: ZoomProps): React.ReactElement;
+    ZoomIn(props: ZoomInProps): React.ReactElement;
+    ZoomOut(props: ZoomOutProps): React.ReactElement;
 }
 
 export interface ToolbarProps {
-    children?: (toolbarSlot: ToolbarSlot) => ReactElement;
+    children?: (toolbarSlot: ToolbarSlot) => React.ReactElement;
 }
 
 export interface ToolbarPlugin extends Plugin {
-    Toolbar: (props: ToolbarProps) => ReactElement;
+    Toolbar: (props: ToolbarProps) => React.ReactElement;
 }
 
 export interface ToolbarPluginProps {
@@ -109,4 +113,4 @@ export class MoreActionsPopover extends Component<MoreActionsPopoverProps> {}
 // Icon
 // ----
 
-export class MoreIcon extends Component {}
+export class MoreIcon extends React.Component {}
