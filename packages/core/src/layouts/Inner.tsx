@@ -55,7 +55,7 @@ const Inner: React.FC<InnerProps> = ({
 
     const arr = Array(numPages).fill(null);
     const pageVisibility = arr.map(() => 0);
-    const pageRefs = arr.map(() => useRef<HTMLDivElement>());
+    const pageRefs = arr.map(() => React.useRef<HTMLDivElement>());
 
     // -------------------------------------
     // The methods that a plugin can hook on
