@@ -58,6 +58,7 @@ const DocumentLoader: React.FC<DocumentLoaderProps> = ({ characterMap, file, htt
             ('string' === typeof file) ? { url: file } : { data: file },
             characterMap ? { cMapUrl: characterMap.url, cMapPacked: characterMap.isCompressed } : {}
         );
+        console.log(params);
 
         const loadingTask = PdfJs.getDocument(params);
         loadingTask.onPassword = (verifyPassword: VerifyPassword, reason: string): void => {
