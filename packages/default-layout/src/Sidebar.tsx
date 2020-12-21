@@ -7,10 +7,11 @@
  */
 
 import * as React from 'react';
-import { Button, LocalizationContext, Position, Tooltip } from '@react-pdf-viewer/core';
+import { Button, LocalizationContext, Position, Store, Tooltip } from '@react-pdf-viewer/core';
 
 import BookmarkIcon from './BookmarkIcon';
 import FileIcon from './FileIcon';
+import StoreProps from './StoreProps';
 import ThumbnailIcon from './ThumbnailIcon';
 
 export interface SidebarTab {
@@ -22,16 +23,17 @@ export interface SidebarTab {
 interface SidebarProps {
     attachmentTabContent: React.ReactElement;
     bookmarkTabContent: React.ReactElement;
+    store: Store<StoreProps>,
     thumbnailTabContent: React.ReactElement;
     tabs?: (defaultTabs: SidebarTab[]) => SidebarTab[];
 }
 
 const TOOLTIP_OFFSET = { left: 8, top: 0 };
 
-const Sidebar: React.FC<SidebarProps> = ({ attachmentTabContent, bookmarkTabContent, thumbnailTabContent, tabs }) => {
+const Sidebar: React.FC<SidebarProps> = ({ attachmentTabContent, bookmarkTabContent, store, thumbnailTabContent, tabs }) => {
     const l10n = React.useContext(LocalizationContext);
     const [opened, setOpened] = React.useState(false);
-    const [currentTab, setCurrentTab] = React.useState(0);
+    const [currentTab, setCurrentTab] = React.useState(store.get('currentTab') || 0);
 
     const defaultTabs: SidebarTab[] = [
         {
@@ -62,6 +64,14 @@ const Sidebar: React.FC<SidebarProps> = ({ attachmentTabContent, bookmarkTabCont
             setCurrentTab(index);
         }
     };
+
+    React.useEffect(() => {
+        store.subscribe('currentTab', switchToTab);
+
+        return (): void => {
+            store.unsubscribe('currentTab', switchToTab);
+        };
+    }, []);
 
     return (
         <div className={`rpv-default-layout-sidebar ${opened ? 'rpv-default-layout-sidebar-opened' : ''}`}>

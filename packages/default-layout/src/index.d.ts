@@ -22,6 +22,10 @@ export interface SidebarTab {
     title: React.ReactElement;
 }
 
+export interface DefaultLayoutPlugin extends Plugin {
+    activateTab(index: number): void;
+}
+
 export interface DefaultLayoutProps extends ViewerProps {
     toolbarPlugin?: ToolbarPluginProps;
 }
@@ -34,7 +38,9 @@ export interface DefaultLayoutPluginProps {
     sidebarTabs?: (defaultTabs: SidebarTab[]) => SidebarTab[];
 }
 
-export function defaultLayoutPlugin(props?: DefaultLayoutPluginProps): Plugin;
+export function defaultLayoutPlugin(
+    props?: DefaultLayoutPluginProps
+): DefaultLayoutPlugin;
 
 // -----
 // Icons

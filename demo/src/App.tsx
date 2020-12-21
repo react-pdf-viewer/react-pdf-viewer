@@ -133,6 +133,7 @@ const App = () => {
     };
 
     const jumpToNote = (note: Note) => {
+        activateTab(3);
         if (noteEles.has(note.id)) {
             noteEles.get(note.id).scrollIntoView();
         }
@@ -229,6 +230,7 @@ const App = () => {
             title: <>Notes</>,
         }),
     });
+    const { activateTab } = defaultLayoutPluginInstance;
 
     return (
         <Worker workerUrl="https://unpkg.com/pdfjs-dist@2.5.207/build/pdf.worker.js">
