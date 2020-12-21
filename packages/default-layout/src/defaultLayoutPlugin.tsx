@@ -9,11 +9,16 @@
 import * as React from 'react';
 import { attachmentPlugin } from '@react-pdf-viewer/attachment';
 import { bookmarkPlugin } from '@react-pdf-viewer/bookmark';
-import { Plugin, PluginFunctions, PluginOnDocumentLoad, RenderViewer, ViewerState, PluginOnTextLayerRender } from '@react-pdf-viewer/core';
+import { createStore, Plugin, PluginFunctions, PluginOnDocumentLoad, RenderViewer, ViewerState, PluginOnTextLayerRender } from '@react-pdf-viewer/core';
 import { thumbnailPlugin } from '@react-pdf-viewer/thumbnail';
 import { toolbarPlugin, ToolbarPluginProps, ToolbarProps } from '@react-pdf-viewer/toolbar';
 
 import Sidebar, { SidebarTab } from './Sidebar';
+import StoreProps from './StoreProps';
+
+export interface DefaultLayoutPlugin extends Plugin {
+    activateTab(index: number): void;
+}
 
 export interface DefaultLayoutPluginProps {
     toolbarPlugin?: ToolbarPluginProps;
@@ -21,7 +26,11 @@ export interface DefaultLayoutPluginProps {
     sidebarTabs?: (defaultTabs: SidebarTab[]) => SidebarTab[];
 }
 
-const defaultLayoutPlugin = (props?: DefaultLayoutPluginProps): Plugin => {
+const defaultLayoutPlugin = (props?: DefaultLayoutPluginProps): DefaultLayoutPlugin => {
+    const store = React.useMemo(() => createStore<StoreProps>({
+        currentTab: 0,
+    }), []);
+
     const attachmentPluginInstance = attachmentPlugin();
     const bookmarkPluginInstance = bookmarkPlugin();
     const thumbnailPluginInstance = thumbnailPlugin();
@@ -42,6 +51,9 @@ const defaultLayoutPlugin = (props?: DefaultLayoutPluginProps): Plugin => {
     ];
 
     return {
+        activateTab: (index: number) => {
+            store.update('currentTab', index);
+        },
         install: (pluginFunctions: PluginFunctions) => {
             // Install plugins
             plugins.forEach(plugin => {
@@ -79,6 +91,7 @@ const defaultLayoutPlugin = (props?: DefaultLayoutPluginProps): Plugin => {
                         <Sidebar
                             attachmentTabContent={<Attachments />}
                             bookmarkTabContent={<Bookmarks />}
+                            store={store}
                             thumbnailTabContent={<Thumbnails />}
                             tabs={sidebarTabs}
                         />

@@ -13,6 +13,15 @@ const defaultLayoutPluginInstance = defaultLayoutPlugin({
 });
 ~~~
 
+We also can activate a given tab:
+
+~~~ javascript
+const { activateTab } = defaultLayoutPluginInstance;
+
+// Activate a tab
+// activateTab(index);
+~~~
+
 **Breaking changes**
 - The `getPagesRef` method in plugins are changed to `getPagesContainer`:
 
