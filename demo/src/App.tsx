@@ -15,11 +15,40 @@ interface Note {
     quote: string;
 }
 
-let noteId = 0;
-
 const App = () => {
     const [message, setMessage] = React.useState('');
-    const [notes, setNotes] = React.useState<Note[]>([]);
+    const [notes, setNotes] = React.useState<Note[]>([
+        {
+            id: 1,
+            content: 'a simple note',
+            highlightAreas: [
+                {
+                    height: 3.451178451178451,
+                    left: 19.141063411896745,
+                    pageIndex: 0,
+                    top: 42.800399831649834,
+                    width: 18.321192063867844,
+                }
+            ],
+            quote: 'Parameters'
+        },
+        {
+            id: 2,
+            content: 'another note',
+            highlightAreas: [
+                {
+                    height: 2.6094276094276094,
+                    left: 6.0606060606060606,
+                    pageIndex: 3,
+                    top: 22.689130892255893,
+                    width: 38.15405574845679,
+                }
+            ],
+            quote: 'Who should read this guide?'
+        },
+    ]);
+    let noteId = notes.length;
+    
     const noteEles: Map<number, HTMLElement> = new Map();
     const [currentDoc, setCurrentDoc] = React.useState<PdfJs.PdfDocument | null>(null);
 
@@ -60,6 +89,7 @@ const App = () => {
                     highlightAreas: props.highlightAreas,
                     quote: props.selectedText,
                 };
+                console.log(note);
                 setNotes(notes.concat([note]));
                 props.cancel();
             }
