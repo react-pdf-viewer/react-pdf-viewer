@@ -21,7 +21,7 @@ const AttachmentListWithStore: React.FC<{
         setCurrentDoc(doc);
     };
 
-    React.React.useEffect(() => {
+    React.useEffect(() => {
         store.subscribe('doc', handleDocumentChanged);
 
         return () => {

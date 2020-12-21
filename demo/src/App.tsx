@@ -143,7 +143,7 @@ const App = () => {
 
     const { jumpToHighlightArea } = highlightPluginInstance;
 
-    React.React.useEffect(() => {
+    React.useEffect(() => {
         return () => {
             noteEles.clear();
         };
@@ -208,10 +208,10 @@ const App = () => {
                 }}
             >
                 <Viewer
-                    fileUrl="http://localhost:8001/sample.pdf"
+                    fileUrl="http://localhost:8001/pdf-open-parameters.pdf"
                     plugins={[
-                        // highlightPluginInstance,
-                        // defaultLayoutPluginInstance,
+                        highlightPluginInstance,
+                        defaultLayoutPluginInstance,
                     ]}
                     onDocumentLoad={handleDocumentLoad}
                 />
