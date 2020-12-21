@@ -61,7 +61,6 @@ const transformArea = (
     rotation: number
 ): HighlightArea => {
     const r = normalizeRotation(rotation);
-    console.log(rotation, r, area);
     switch (r) {
         case 90:
             return {
