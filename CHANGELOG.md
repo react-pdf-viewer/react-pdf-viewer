@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## v2.3.0 [not released yet]
+## v2.3.0
 
 **New features**
 - New `highlight` plugin provides the ability of selecting and adding notes for text in the document
