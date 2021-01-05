@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## v2.3.1 (not released yet)
+
+**Bug fixes**
+- The style files are missing in the `highlight` plugin
+
 ## v2.3.0
 
 **New features**
