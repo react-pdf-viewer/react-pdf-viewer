@@ -4,6 +4,7 @@
 
 **Bug fixes**
 - The style files are missing in the `highlight` plugin
+- Render highlight annotations formed by quadrilaterals
 
 ## v2.3.0
 
