@@ -182,6 +182,7 @@ declare module 'pdfjs-dist' {
         hasPopup?: boolean;
         contents?: string;
         modificationDate?: string;
+        quadPoints?: AnnotationPoint[][];
         title?: string;
         // Parent annotation
         parentId?: string;
