@@ -144,6 +144,7 @@ export declare namespace PdfJs {
         hasPopup?: boolean;
         contents?: string;
         modificationDate?: string;
+        quadPoints?: AnnotationPoint[][];
         title?: string;
         // Parent annotation
         parentId?: string;
