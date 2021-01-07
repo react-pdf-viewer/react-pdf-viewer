@@ -107,7 +107,8 @@ export declare namespace PdfJs {
         url?: string;
     }
     type OutlineDestination = [
-        OutlineRef,
+        // The first item is used to indicate the destination page
+        OutlineRef | number,
         OutlineDestinationName,
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         ...any[]
@@ -579,3 +580,17 @@ export interface WorkerProps {
 }
 
 export class Worker extends React.Component<WorkerProps> {}
+
+// Utils
+// -----
+
+export interface JumpToDestination {
+    bottomOffset: number;
+    pageIndex: number;
+    scaleTo: number | SpecialZoomLevel;
+}
+
+export function getDestination(
+    doc: PdfJs.PdfDocument,
+    dest: PdfJs.OutlineDestinationType
+): Promise<JumpToDestination>;

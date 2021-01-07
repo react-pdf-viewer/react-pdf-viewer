@@ -91,7 +91,8 @@ declare module 'pdfjs-dist' {
         url?: string;
     }
     type OutlineDestination = [
-        OutlineRef,
+        // The first item is used to indicate the destination page
+        OutlineRef | number,
         OutlineDestinationName,
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         ...any[]

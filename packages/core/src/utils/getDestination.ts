@@ -31,6 +31,7 @@ const parse = (
                 scaleTo: scale,
             };
         case 'Fit':
+        case 'FitB':
             return {
                 bottomOffset: 0,
                 pageIndex: pageIndex - 1,
@@ -58,11 +59,16 @@ const getDestination = (
             } else {
                 resolve(dest);
             }
-        }).then((destArray) => {
-            doc.getPageIndex(destArray[0]).then((pageIndex) => {
-                const target = parse(pageIndex, destArray);
-                res(target);
-            });
+        }).then((destArray) => (
+            ('object' === typeof destArray[0])
+                ? doc.getPageIndex(destArray[0]).then((pageIndex) => Promise.resolve({ pageIndex, destArray }))
+                : Promise.resolve({
+                    pageIndex: destArray[0] + 1,
+                    destArray,
+                })
+        )).then(({ pageIndex, destArray }) => {
+            const target = parse(pageIndex, destArray);
+            res(target);
         });
     });
 };
