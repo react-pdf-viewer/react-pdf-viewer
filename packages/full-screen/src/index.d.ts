@@ -29,7 +29,9 @@ export interface FullScreenPluginProps {
     onExitFullScreen?(zoom: Zoom): void;
 }
 
-export function fullScreenPlugin(props?: FullScreenPluginProps): FullScreenPlugin;
+export function fullScreenPlugin(
+    props?: FullScreenPluginProps
+): FullScreenPlugin;
 
 export class ExitFullScreenIcon extends React.Component {}
 export class FullScreenIcon extends React.Component {}

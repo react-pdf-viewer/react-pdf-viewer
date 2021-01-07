@@ -8,7 +8,10 @@
 
 import * as React from 'react';
 import { Plugin } from '@react-pdf-viewer/core';
-import { EnterFullScreenProps, FullScreenPluginProps } from '@react-pdf-viewer/full-screen';
+import {
+    EnterFullScreenProps,
+    FullScreenPluginProps,
+} from '@react-pdf-viewer/full-screen';
 import { DownloadProps, GetFilePluginProps } from '@react-pdf-viewer/get-file';
 import { OpenProps } from '@react-pdf-viewer/open';
 import {
