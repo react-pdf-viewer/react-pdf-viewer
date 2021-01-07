@@ -5,6 +5,7 @@
 **Bug fixes**
 - The style files are missing in the `highlight` plugin
 - Render highlight annotations formed by quadrilaterals
+- The popup annotations aren't shown if they are children of highlight annotations
 
 ## v2.3.0
 
