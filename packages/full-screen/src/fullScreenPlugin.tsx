@@ -7,7 +7,7 @@
  */
 
 import * as React from 'react';
-import { createStore, Plugin, PluginFunctions, RenderViewer, Slot, SpecialZoomLevel } from '@react-pdf-viewer/core';
+import { createStore, Plugin, PluginFunctions, RenderViewer, Slot } from '@react-pdf-viewer/core';
 
 import EnterFullScreen, { EnterFullScreenProps } from './EnterFullScreen';
 import EnterFullScreenButton from './EnterFullScreenButton';
@@ -28,8 +28,11 @@ export interface FullScreenPluginProps {
 
 const fullScreenPlugin = (props?: FullScreenPluginProps): FullScreenPlugin => {
     const store = React.useMemo(() => createStore<StoreProps>({}), []);
+
+    /* eslint-disable @typescript-eslint/no-empty-function */
     const onEnterFullScreen = props && props.onEnterFullScreen ? props.onEnterFullScreen : () => {};
     const onExitFullScreen = props && props.onExitFullScreen ? props.onExitFullScreen : () => {};
+    /* eslint-enable @typescript-eslint/no-empty-function */
 
     const EnterFullScreenDecorator = (props: EnterFullScreenProps) => (
         <EnterFullScreen {...props} store={store} onEnterFullScreen={onEnterFullScreen} onExitFullScreen={onExitFullScreen} />
