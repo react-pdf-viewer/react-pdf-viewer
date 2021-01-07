@@ -103,6 +103,11 @@ const Inner: React.FC<InnerProps> = ({
                     left = 0;
                     zoom(SpecialZoomLevel.PageFit);
                     break;
+                case SpecialZoomLevel.PageWidth:
+                    top = (viewport.height - bottom) * currentState.scale;
+                    left = left * currentState.scale;
+                    zoom(SpecialZoomLevel.PageWidth);
+                    break;
                 default:
                     top = (viewport.height - bottom) * currentState.scale;
                     left = left * currentState.scale;
