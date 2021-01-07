@@ -66,17 +66,23 @@ const getDestination = (
             } else {
                 resolve(dest);
             }
-        }).then((destArray) => (
-            ('object' === typeof destArray[0])
-                ? doc.getPageIndex(destArray[0]).then((pageIndex) => Promise.resolve({ pageIndex, destArray }))
-                : Promise.resolve({
-                    pageIndex: destArray[0],
-                    destArray,
-                })
-        )).then(({ pageIndex, destArray }) => {
-            const target = parse(pageIndex, destArray);
-            res(target);
-        });
+        })
+            .then((destArray) =>
+                'object' === typeof destArray[0]
+                    ? doc
+                          .getPageIndex(destArray[0])
+                          .then((pageIndex) =>
+                              Promise.resolve({ pageIndex, destArray })
+                          )
+                    : Promise.resolve({
+                          pageIndex: destArray[0],
+                          destArray,
+                      })
+            )
+            .then(({ pageIndex, destArray }) => {
+                const target = parse(pageIndex, destArray);
+                res(target);
+            });
     });
 };
 
