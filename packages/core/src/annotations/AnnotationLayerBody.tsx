@@ -116,6 +116,7 @@ const AnnotationLayerBody: React.FC<AnnotationLayerBodyProps> = ({ annotations, 
                                 <Highlight
                                     key={annotation.id}
                                     annotation={annotation}
+                                    childAnnotation={childAnnotation}
                                     page={page}
                                     viewport={clonedViewPort}
                                 />
