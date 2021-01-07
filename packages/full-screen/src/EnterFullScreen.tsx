@@ -28,7 +28,8 @@ const EnterFullScreen: React.FC<{
     children?: RenderEnterFullScreen,
     store: Store<StoreProps>,
     onEnterFullScreen(zoom: Zoom): void,
-}> = ({ children, store, onEnterFullScreen }) => {
+    onExitFullScreen(zoom: Zoom): void,
+}> = ({ children, store, onEnterFullScreen, onExitFullScreen }) => {
     const pagesRef = React.useRef<HTMLElement | null>(store.get('getPagesContainer') ? store.get('getPagesContainer')() : null);
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -61,8 +62,8 @@ const EnterFullScreen: React.FC<{
         store.update('isFullScreen', isFullScreen);
 
         const zoom = store.get('zoom');
-        if (isFullScreen && zoom) {
-            onEnterFullScreen(zoom);
+        if (zoom) {
+            isFullScreen ? onEnterFullScreen(zoom) : onExitFullScreen(zoom);
         }
     };
 

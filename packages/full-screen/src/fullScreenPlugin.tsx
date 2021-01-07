@@ -32,7 +32,7 @@ const fullScreenPlugin = (props?: FullScreenPluginProps): FullScreenPlugin => {
     const onExitFullScreen = props && props.onExitFullScreen ? props.onExitFullScreen : () => {};
 
     const EnterFullScreenDecorator = (props: EnterFullScreenProps) => (
-        <EnterFullScreen {...props} store={store} onEnterFullScreen={onEnterFullScreen} />
+        <EnterFullScreen {...props} store={store} onEnterFullScreen={onEnterFullScreen} onExitFullScreen={onExitFullScreen} />
     );
 
     const EnterFullScreenButtonDecorator = () => (
@@ -44,7 +44,7 @@ const fullScreenPlugin = (props?: FullScreenPluginProps): FullScreenPlugin => {
     );
 
     const ExitFullScreenDecorator = () => (
-        <ExitFullScreenButton store={store} onExitFullScreen={onExitFullScreen} />
+        <ExitFullScreenButton store={store} />
     );
 
     const renderViewer = (props: RenderViewer): Slot => {

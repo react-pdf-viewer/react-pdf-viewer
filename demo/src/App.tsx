@@ -1,12 +1,24 @@
 import * as React from 'react';
-import { Viewer, Worker } from '@react-pdf-viewer/core';
+import { SpecialZoomLevel, Viewer, Worker } from '@react-pdf-viewer/core';
 import { defaultLayoutPlugin } from '@react-pdf-viewer/default-layout';
+import { Zoom } from '@react-pdf-viewer/full-screen';
 
 import '@react-pdf-viewer/core/lib/styles/index.css';
 import '@react-pdf-viewer/default-layout/lib/styles/index.css';
 
 const App = () => {
-    const defaultLayoutPluginInstance = defaultLayoutPlugin();
+    const defaultLayoutPluginInstance = defaultLayoutPlugin({
+        toolbarPlugin: {
+            fullScreenPlugin: {
+                onEnterFullScreen: (zoom: Zoom) => {
+                    zoom(SpecialZoomLevel.PageFit);
+                },
+                onExitFullScreen: (zoom: Zoom) => {
+                    zoom(SpecialZoomLevel.PageFit);
+                },
+            }
+        }
+    });
 
     return (
         <Worker workerUrl="https://unpkg.com/pdfjs-dist@2.5.207/build/pdf.worker.js">
