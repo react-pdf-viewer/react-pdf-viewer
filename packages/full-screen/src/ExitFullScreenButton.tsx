@@ -12,10 +12,12 @@ import { Button, Store } from '@react-pdf-viewer/core';
 import ExitFullScreenIcon from './ExitFullScreenIcon';
 import { exitFullScreen, getFullScreenElement } from './fullScreen';
 import StoreProps from './StoreProps';
+import type { Zoom } from './types';
 
 const ExitFullScreenButton: React.FC<{
     store: Store<StoreProps>,
-}> = ({ store }) => {
+    onExitFullScreen(zoom: Zoom): void,
+}> = ({ store, onExitFullScreen }) => {
     const [isFullScreen, setFullScreen] = React.useState(false);
 
     const handleFullScreen = (fullScreen: boolean) => {
@@ -38,6 +40,9 @@ const ExitFullScreenButton: React.FC<{
         const ele = getFullScreenElement();
         if (ele && ele === pagesEle) {
             exitFullScreen(document);
+
+            const zoom = store.get('zoom');
+            zoom && onExitFullScreen(zoom);
         }
     }
 

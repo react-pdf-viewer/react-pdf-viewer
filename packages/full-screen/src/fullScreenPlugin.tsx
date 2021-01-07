@@ -7,11 +7,12 @@
  */
 
 import * as React from 'react';
-import { createStore, Plugin, PluginFunctions, RenderViewer, Slot } from '@react-pdf-viewer/core';
+import { createStore, Plugin, PluginFunctions, RenderViewer, Slot, SpecialZoomLevel } from '@react-pdf-viewer/core';
 
 import EnterFullScreen, { EnterFullScreenProps } from './EnterFullScreen';
 import EnterFullScreenButton from './EnterFullScreenButton';
 import ExitFullScreenButton from './ExitFullScreenButton';
+import type { Zoom } from './types';
 
 import StoreProps from './StoreProps';
 
@@ -20,23 +21,30 @@ interface FullScreenPlugin extends Plugin {
     EnterFullScreenButton: () => React.ReactElement;
 }
 
-const fullScreenPlugin = (): FullScreenPlugin => {
+export interface FullScreenPluginProps {
+    onEnterFullScreen?(zoom: Zoom): void;
+    onExitFullScreen?(zoom: Zoom): void;
+}
+
+const fullScreenPlugin = (props?: FullScreenPluginProps): FullScreenPlugin => {
     const store = React.useMemo(() => createStore<StoreProps>({}), []);
+    const onEnterFullScreen = props && props.onEnterFullScreen ? props.onEnterFullScreen : () => {};
+    const onExitFullScreen = props && props.onExitFullScreen ? props.onExitFullScreen : () => {};
 
     const EnterFullScreenDecorator = (props: EnterFullScreenProps) => (
-        <EnterFullScreen {...props} store={store} />
+        <EnterFullScreen {...props} store={store} onEnterFullScreen={onEnterFullScreen} />
     );
 
     const EnterFullScreenButtonDecorator = () => (
         <EnterFullScreenDecorator>
             {
-                (props) => <EnterFullScreenButton {...props} />
+                (renderProps) => <EnterFullScreenButton {...renderProps} />
             }
         </EnterFullScreenDecorator>
     );
 
     const ExitFullScreenDecorator = () => (
-        <ExitFullScreenButton store={store} />
+        <ExitFullScreenButton store={store} onExitFullScreen={onExitFullScreen} />
     );
 
     const renderViewer = (props: RenderViewer): Slot => {
@@ -56,6 +64,7 @@ const fullScreenPlugin = (): FullScreenPlugin => {
     return {
         install: (pluginFunctions: PluginFunctions) => {
             store.update('getPagesContainer', pluginFunctions.getPagesContainer);
+            store.update('zoom', pluginFunctions.zoom);
         },
         renderViewer,
         EnterFullScreen: EnterFullScreenDecorator,

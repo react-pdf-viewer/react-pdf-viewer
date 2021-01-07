@@ -7,7 +7,7 @@
  */
 
 import * as React from 'react';
-import { Plugin } from '@react-pdf-viewer/core';
+import { Plugin, SpecialZoomLevel } from '@react-pdf-viewer/core';
 
 export interface RenderEnterFullScreenProps {
     onClick(): void;
@@ -22,7 +22,14 @@ export interface FullScreenPlugin extends Plugin {
     EnterFullScreenButton(): React.ReactElement;
 }
 
-export function fullScreenPlugin(): FullScreenPlugin;
+export type Zoom = (scale: number | SpecialZoomLevel) => void;
+
+export interface FullScreenPluginProps {
+    onEnterFullScreen?(zoom: Zoom): void;
+    onExitFullScreen?(zoom: Zoom): void;
+}
+
+export function fullScreenPlugin(props?: FullScreenPluginProps): FullScreenPlugin;
 
 export class ExitFullScreenIcon extends React.Component {}
 export class FullScreenIcon extends React.Component {}

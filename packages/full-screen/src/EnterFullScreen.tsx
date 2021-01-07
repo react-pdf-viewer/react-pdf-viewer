@@ -12,6 +12,7 @@ import { Store } from '@react-pdf-viewer/core';
 import EnterFullScreenButton from './EnterFullScreenButton';
 import { addFullScreenChangeListener, exitFullScreen, getFullScreenElement, requestFullScreen } from './fullScreen';
 import StoreProps from './StoreProps';
+import type { Zoom } from './types';
 
 export interface RenderEnterFullScreenProps {
     onClick(): void;
@@ -26,7 +27,8 @@ export interface EnterFullScreenProps {
 const EnterFullScreen: React.FC<{
     children?: RenderEnterFullScreen,
     store: Store<StoreProps>,
-}> = ({ children, store }) => {
+    onEnterFullScreen(zoom: Zoom): void,
+}> = ({ children, store, onEnterFullScreen }) => {
     const pagesRef = React.useRef<HTMLElement | null>(store.get('getPagesContainer') ? store.get('getPagesContainer')() : null);
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -55,7 +57,13 @@ const EnterFullScreen: React.FC<{
 
     const onFullScreenChange = (): void => {
         const ele = getFullScreenElement();
-        store.update('isFullScreen', ele === pagesRef.current);
+        const isFullScreen = ele === pagesRef.current;
+        store.update('isFullScreen', isFullScreen);
+
+        const zoom = store.get('zoom');
+        if (isFullScreen && zoom) {
+            onEnterFullScreen(zoom);
+        }
     };
 
     const handlePagesContainer = (getPagesContainer: () => HTMLElement) => {
