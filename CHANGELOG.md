@@ -6,6 +6,7 @@
 - The style files are missing in the `highlight` plugin
 - Render highlight annotations formed by quadrilaterals
 - The popup annotations aren't shown if they are children of highlight annotations
+- Clicking a destination (bookmark, for example) with name of `FitH` or `FitBH` throws an exception
 
 ## v2.3.0
 

@@ -37,6 +37,13 @@ const parse = (
                 pageIndex: pageIndex - 1,
                 scaleTo: SpecialZoomLevel.PageFit,
             };
+        case 'FitH':
+        case 'FitBH':
+            return {
+                bottomOffset: destArray[2],
+                pageIndex: pageIndex - 1,
+                scaleTo: SpecialZoomLevel.PageWidth,
+            };
         default:
             return {
                 bottomOffset: 0,
@@ -63,7 +70,7 @@ const getDestination = (
             ('object' === typeof destArray[0])
                 ? doc.getPageIndex(destArray[0]).then((pageIndex) => Promise.resolve({ pageIndex, destArray }))
                 : Promise.resolve({
-                    pageIndex: destArray[0] + 1,
+                    pageIndex: destArray[0],
                     destArray,
                 })
         )).then(({ pageIndex, destArray }) => {
