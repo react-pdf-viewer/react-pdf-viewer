@@ -12,6 +12,7 @@ import { createStore, Plugin, PluginFunctions, RenderViewer, Slot } from '@react
 import EnterFullScreen, { EnterFullScreenProps } from './EnterFullScreen';
 import EnterFullScreenButton from './EnterFullScreenButton';
 import ExitFullScreenButton from './ExitFullScreenButton';
+import type { Zoom } from './types';
 
 import StoreProps from './StoreProps';
 
@@ -20,17 +21,27 @@ interface FullScreenPlugin extends Plugin {
     EnterFullScreenButton: () => React.ReactElement;
 }
 
-const fullScreenPlugin = (): FullScreenPlugin => {
+export interface FullScreenPluginProps {
+    onEnterFullScreen?(zoom: Zoom): void;
+    onExitFullScreen?(zoom: Zoom): void;
+}
+
+const fullScreenPlugin = (props?: FullScreenPluginProps): FullScreenPlugin => {
     const store = React.useMemo(() => createStore<StoreProps>({}), []);
 
+    /* eslint-disable @typescript-eslint/no-empty-function */
+    const onEnterFullScreen = props && props.onEnterFullScreen ? props.onEnterFullScreen : () => {};
+    const onExitFullScreen = props && props.onExitFullScreen ? props.onExitFullScreen : () => {};
+    /* eslint-enable @typescript-eslint/no-empty-function */
+
     const EnterFullScreenDecorator = (props: EnterFullScreenProps) => (
-        <EnterFullScreen {...props} store={store} />
+        <EnterFullScreen {...props} store={store} onEnterFullScreen={onEnterFullScreen} onExitFullScreen={onExitFullScreen} />
     );
 
     const EnterFullScreenButtonDecorator = () => (
         <EnterFullScreenDecorator>
             {
-                (props) => <EnterFullScreenButton {...props} />
+                (renderProps) => <EnterFullScreenButton {...renderProps} />
             }
         </EnterFullScreenDecorator>
     );
@@ -56,6 +67,7 @@ const fullScreenPlugin = (): FullScreenPlugin => {
     return {
         install: (pluginFunctions: PluginFunctions) => {
             store.update('getPagesContainer', pluginFunctions.getPagesContainer);
+            store.update('zoom', pluginFunctions.zoom);
         },
         renderViewer,
         EnterFullScreen: EnterFullScreenDecorator,

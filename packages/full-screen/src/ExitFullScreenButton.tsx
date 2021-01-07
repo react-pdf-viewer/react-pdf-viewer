@@ -14,7 +14,7 @@ import { exitFullScreen, getFullScreenElement } from './fullScreen';
 import StoreProps from './StoreProps';
 
 const ExitFullScreenButton: React.FC<{
-    store: Store<StoreProps>,
+    store: Store<StoreProps>
 }> = ({ store }) => {
     const [isFullScreen, setFullScreen] = React.useState(false);
 

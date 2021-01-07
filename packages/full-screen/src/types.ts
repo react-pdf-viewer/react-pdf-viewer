@@ -8,8 +8,4 @@
 
 import { SpecialZoomLevel } from '@react-pdf-viewer/core';
 
-export default interface StoreProps {
-    getPagesContainer?(): HTMLElement;
-    isFullScreen?: boolean;
-    zoom?(scale: number | SpecialZoomLevel): void;
-}
+export type Zoom = (scale: number | SpecialZoomLevel) => void;

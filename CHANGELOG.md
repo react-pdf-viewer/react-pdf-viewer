@@ -2,6 +2,24 @@
 
 ## v2.3.1 (not released yet)
 
+**Improvements**
+- `full-screen` plugin provides new callbacks that are triggered after entering and exiting the full screen mode
+
+~~~ javascript
+import { SpecialZoomLevel } from '@react-pdf-viewer/core';
+import { fullScreenPlugin } from '@react-pdf-viewer/full-screen';
+
+const fullScreenPluginInstance = fullScreenPlugin({
+    // Zoom to fit the screen after entering and exiting the full screen mode
+    onEnterFullScreen: (zoom) => {
+        zoom(SpecialZoomLevel.PageFit);
+    },
+    onExitFullScreen: (zoom) => {
+        zoom(SpecialZoomLevel.PageFit);
+    },
+});
+~~~
+
 **Bug fixes**
 - The style files are missing in the `highlight` plugin
 - Render highlight annotations formed by quadrilaterals
