@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## v2.3.1 (not released yet)
+## v2.3.1
 
 **Improvements**
 - `full-screen` plugin provides new callbacks that are triggered after entering and exiting the full screen mode
