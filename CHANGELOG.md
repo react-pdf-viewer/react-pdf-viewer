@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## v2.3.2 [WIP]
+
+**Improvements**
+- Lazy load the document. The PDF document will be loaded if the viewer container is visible in the viewport.
+
 ## v2.3.1
 
 **Improvements**

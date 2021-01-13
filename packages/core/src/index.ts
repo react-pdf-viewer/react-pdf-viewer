@@ -17,6 +17,7 @@ export { default as PrimaryButton } from './components/PrimaryButton';
 export { default as ProgressBar } from './components/ProgressBar';
 export { default as Separator } from './components/Separator';
 export { default as Spinner } from './components/Spinner';
+export { default as useIntersectionObserver } from './hooks/useIntersectionObserver';
 export { default as Icon } from './icons/Icon';
 export { default as Observer } from './layouts/Observer';
 export { default as LocalizationContext } from './localization/LocalizationContext';

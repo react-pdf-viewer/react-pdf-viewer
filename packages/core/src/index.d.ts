@@ -581,6 +581,13 @@ export interface WorkerProps {
 
 export class Worker extends React.Component<WorkerProps> {}
 
+// Hooks
+export interface UseIntersectionObserverProps {
+    threshold?: number | number[];
+    onVisibilityChanged(params: VisibilityChanged): void;
+}
+export function useIntersectionObserver(props: UseIntersectionObserverProps): React.MutableRefObject<HTMLDivElement>;
+
 // Utils
 // -----
 

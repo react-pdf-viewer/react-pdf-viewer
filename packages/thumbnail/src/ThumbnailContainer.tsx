@@ -7,7 +7,7 @@
  */
 
 import * as React from 'react';
-import { Observer, PdfJs, Spinner, VisibilityChanged } from '@react-pdf-viewer/core';
+import { useIntersectionObserver, PdfJs, Spinner, VisibilityChanged } from '@react-pdf-viewer/core';
 
 import ThumbnailItem from './ThumbnailItem';
 
@@ -63,31 +63,34 @@ const ThumbnailContainer: React.FC<ThumbnailContainerProps> = ({ doc, pageHeight
     // To support the document which is already rotated
     const rotationNumber = (rotation + pageSize.viewportRotation) % 360;
 
+    const containerRef = useIntersectionObserver({
+        onVisibilityChanged,
+    });
+
     return (
-        <Observer onVisibilityChanged={onVisibilityChanged}>
-            <div
-                className='rpv-thumbnail-container'
-                style={{
-                    height: `${h}px`,
-                    width: `${w}px`,
-                }}
-            >
-                {
-                    !page
-                        ? <Spinner />
-                        : (
-                            <ThumbnailItem
-                                page={page}
-                                pageHeight={isVertical ? height : width}
-                                pageWidth={isVertical ? width : height}
-                                rotation={rotationNumber}
-                                thumbnailHeight={h}
-                                thumbnailWidth={w}
-                            />
-                        )
-                }
-            </div>
-        </Observer>
+        <div
+            className='rpv-thumbnail-container'
+            ref={containerRef}
+            style={{
+                height: `${h}px`,
+                width: `${w}px`,
+            }}
+        >
+            {
+                !page
+                    ? <Spinner />
+                    : (
+                        <ThumbnailItem
+                            page={page}
+                            pageHeight={isVertical ? height : width}
+                            pageWidth={isVertical ? width : height}
+                            rotation={rotationNumber}
+                            thumbnailHeight={h}
+                            thumbnailWidth={w}
+                        />
+                    )
+            }
+        </div>
     );
 };
 

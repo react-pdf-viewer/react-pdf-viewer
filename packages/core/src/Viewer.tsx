@@ -9,6 +9,8 @@
 import * as React from 'react';
 
 import OpenFile from './OpenFile';
+import useIntersectionObserver, { VisibilityChanged } from './hooks/useIntersectionObserver';
+import usePrevious from './hooks/usePrevious';
 import Inner from './layouts/Inner';
 import PageSize from './layouts/PageSize'; 
 import PageSizeCalculator from './layouts/PageSizeCalculator';
@@ -66,6 +68,12 @@ export interface ViewerProps {
     onZoom?(e: ZoomEvent): void;
 }
 
+interface FileState {
+    data: PdfJs.FileData;
+    name: string;
+    shouldLoad: boolean;
+}
+
 const Viewer: React.FC<ViewerProps> = ({
     characterMap,
     defaultScale,
@@ -83,64 +91,96 @@ const Viewer: React.FC<ViewerProps> = ({
     onPageChange = () => {/**/},
     onZoom = () => {/**/},
 }) => {
-    const [file, setFile] = React.useState<OpenFile>({
+    const [file, setFile] = React.useState<FileState>({
         data: fileUrl,
         name: (typeof fileUrl === 'string') ? fileUrl : '',
+        shouldLoad: false, 
     });
 
     const openFile = (fileName: string, data: Uint8Array) => {
         setFile({
             data,
             name: fileName,
+            shouldLoad: true,
         });
     };
+    const [visible, setVisible] = React.useState(false);
+
+    const prevFile = usePrevious<FileState>(file);
 
     React.useEffect(() => {
-        setFile({
-            data: fileUrl,
-            name: (typeof fileUrl === 'string') ? fileUrl : '',
-        });
-    }, [fileUrl]);
+        // If the document is changed
+        if (prevFile.data !== fileUrl) {
+            setFile({
+                data: fileUrl,
+                name: (typeof fileUrl === 'string') ? fileUrl : '',
+                shouldLoad: visible,
+            });
+        }
+    }, [fileUrl, visible]);
+
+    const visibilityChanged = (params: VisibilityChanged): void => {
+        setVisible(params.isVisible);
+        if (params.isVisible) {
+            setFile(currentFile => Object.assign({}, currentFile, { shouldLoad: true }));
+        }
+    };
+
+    const containerRef = useIntersectionObserver({
+        onVisibilityChanged: visibilityChanged,
+    });
 
     return (
         <ThemeProvider prefixClass={prefixClass}>
             <LocalizationProvider localization={localization}>
                 {(_) => ( // eslint-disable-line @typescript-eslint/no-unused-vars
-                    <DocumentLoader
-                        characterMap={characterMap}
-                        file={file.data}
-                        httpHeaders={httpHeaders}
-                        render={(doc: PdfJs.PdfDocument) => (
-                            <PageSizeCalculator
-                                doc={doc}
-                                render={(ps: PageSize) => (
-                                    <Inner
-                                        defaultScale={defaultScale}
+                    <div
+                        ref={containerRef}
+                        style={{
+                            height: '100%',
+                            width: '100%',
+                        }}
+                    >
+                    {
+                        file.shouldLoad && (
+                            <DocumentLoader
+                                characterMap={characterMap}
+                                file={file.data}
+                                httpHeaders={httpHeaders}
+                                render={(doc: PdfJs.PdfDocument) => (
+                                    <PageSizeCalculator
                                         doc={doc}
-                                        initialPage={initialPage}
-                                        pageSize={ps}
-                                        plugins={plugins}
-                                        renderPage={renderPage}
-                                        viewerState={{
-                                            file,
-                                            pageIndex: initialPage,
-                                            pageHeight: ps.pageHeight,
-                                            pageWidth: ps.pageWidth,
-                                            rotation: 0,
-                                            scale: ps.scale,
-                                        }}
-                                        onDocumentLoad={onDocumentLoad}
-                                        onOpenFile={openFile}
-                                        onPageChange={onPageChange}
-                                        onZoom={onZoom}
+                                        render={(ps: PageSize) => (
+                                            <Inner
+                                                defaultScale={defaultScale}
+                                                doc={doc}
+                                                initialPage={initialPage}
+                                                pageSize={ps}
+                                                plugins={plugins}
+                                                renderPage={renderPage}
+                                                viewerState={{
+                                                    file,
+                                                    pageIndex: initialPage,
+                                                    pageHeight: ps.pageHeight,
+                                                    pageWidth: ps.pageWidth,
+                                                    rotation: 0,
+                                                    scale: ps.scale,
+                                                }}
+                                                onDocumentLoad={onDocumentLoad}
+                                                onOpenFile={openFile}
+                                                onPageChange={onPageChange}
+                                                onZoom={onZoom}
+                                            />
+                                        )}
                                     />
                                 )}
+                                renderError={renderError}
+                                renderLoader={renderLoader}
+                                withCredentials={withCredentials}
                             />
-                        )}
-                        renderError={renderError}
-                        renderLoader={renderLoader}
-                        withCredentials={withCredentials}
-                    />
+                        )
+                    }
+                    </div>
                 )}
             </LocalizationProvider>
         </ThemeProvider>
