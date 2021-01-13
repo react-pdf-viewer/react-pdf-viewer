@@ -10,8 +10,7 @@ import * as React from 'react';
 
 import AnnotationLayer from '../annotations/AnnotationLayer';
 import Spinner from '../components/Spinner';
-import useIntersectionObserver from '../hooks/useIntersectionObserver';
-import Observer, { VisibilityChanged } from '../layouts/Observer';
+import useIntersectionObserver, { VisibilityChanged } from '../hooks/useIntersectionObserver';
 import RenderPageProps, { RenderPage } from '../layouts/RenderPage';
 import SpecialZoomLevel from '../SpecialZoomLevel';
 import ThemeContext from '../theme/ThemeContext';
