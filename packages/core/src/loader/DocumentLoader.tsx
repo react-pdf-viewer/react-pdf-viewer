@@ -53,10 +53,14 @@ const DocumentLoader: React.FC<DocumentLoaderProps> = ({ characterMap, file, htt
         //  ```
         setStatus(new LoadingState(0));
 
+        // Create a new worker
+        const worker = new PdfJs.PDFWorker({ name: `PDFWorker_${Date.now()}` });
+
         const params: PdfJs.GetDocumentParams = Object.assign(
             {
                 httpHeaders,
                 withCredentials,
+                worker,
             },
             ('string' === typeof file) ? { url: file } : { data: file },
             characterMap ? { cMapUrl: characterMap.url, cMapPacked: characterMap.isCompressed } : {}
@@ -91,6 +95,7 @@ const DocumentLoader: React.FC<DocumentLoaderProps> = ({ characterMap, file, htt
 
         return (): void => {
             loadingTask.destroy();
+            worker.destroy();
         };
     }, [file]);
 
