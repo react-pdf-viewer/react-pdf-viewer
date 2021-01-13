@@ -13,6 +13,15 @@ declare module 'pdfjs-dist' {
         workerSrc: string;
     }
 
+    interface PDFWorkerConstructorParams {
+        name: string;
+    }
+    class PDFWorker {
+        destroyed: boolean;
+        constructor(params: PDFWorkerConstructorParams);
+        destroy(): void;
+    }
+
     // Loading task
     const PasswordResponses: PasswordResponsesValue;
     interface PasswordResponsesValue {
@@ -51,6 +60,7 @@ declare module 'pdfjs-dist' {
         httpHeaders?: Record<string, string | string[]>;
         url?: string;
         withCredentials?: boolean;
+        worker?: PDFWorker;
     }
     function getDocument(params: GetDocumentParams): LoadingTask;
 

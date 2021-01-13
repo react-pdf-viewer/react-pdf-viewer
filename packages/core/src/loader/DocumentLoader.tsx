@@ -9,6 +9,7 @@
 import * as React from 'react';
 
 import Spinner from '../components/Spinner';
+import useIsMounted from '../hooks/useIsMounted';
 import ThemeContext from '../theme/ThemeContext';
 import PdfJs from '../vendors/PdfJs';
 import { CharacterMap } from '../Viewer';
@@ -40,6 +41,7 @@ const DocumentLoader: React.FC<DocumentLoaderProps> = ({ characterMap, file, htt
 
     const [percentages, setPercentages] = React.useState(0);
     const [loadedDocument, setLoadedDocument] = React.useState<PdfJs.PdfDocument>(null);
+    const isMounted = useIsMounted();
 
     React.useEffect(() => {
         // If we don't reset the status when new `file` is provided
@@ -50,10 +52,15 @@ const DocumentLoader: React.FC<DocumentLoaderProps> = ({ characterMap, file, htt
         //  This may be caused by an accidental early return statement
         //  ```
         setStatus(new LoadingState(0));
+
+        // Create a new worker
+        const worker = new PdfJs.PDFWorker({ name: `PDFWorker_${Date.now()}` });
+
         const params: PdfJs.GetDocumentParams = Object.assign(
             {
                 httpHeaders,
                 withCredentials,
+                worker,
             },
             ('string' === typeof file) ? { url: file } : { data: file },
             characterMap ? { cMapUrl: characterMap.url, cMapPacked: characterMap.isCompressed } : {}
@@ -63,10 +70,10 @@ const DocumentLoader: React.FC<DocumentLoaderProps> = ({ characterMap, file, htt
         loadingTask.onPassword = (verifyPassword: VerifyPassword, reason: string): void => {
             switch (reason) {
                 case PdfJs.PasswordResponses.NEED_PASSWORD:
-                    setStatus(new AskForPasswordState(verifyPassword));
+                    isMounted.current && setStatus(new AskForPasswordState(verifyPassword));
                     break;
                 case PdfJs.PasswordResponses.INCORRECT_PASSWORD:
-                    setStatus(new WrongPasswordState(verifyPassword));
+                    isMounted.current && setStatus(new WrongPasswordState(verifyPassword));
                     break;
                 default:
                     break;
@@ -75,12 +82,12 @@ const DocumentLoader: React.FC<DocumentLoaderProps> = ({ characterMap, file, htt
         loadingTask.onProgress = (progress) => {
             progress.total > 0
                 // It seems weird but there is a case that `loaded` is greater than `total`
-                ? setPercentages(Math.min(100, 100 * progress.loaded / progress.total))
-                : setPercentages(100);
+                ? isMounted.current && setPercentages(Math.min(100, 100 * progress.loaded / progress.total))
+                : isMounted.current && setPercentages(100);
         };
         loadingTask.promise.then(
-            (doc) => setLoadedDocument(doc),
-            (err) => setStatus(new FailureState({
+            (doc) => isMounted.current && setLoadedDocument(doc),
+            (err) => isMounted.current && !worker.destroyed && setStatus(new FailureState({
                 message: err.message || 'Cannot load document',
                 name: err.name,
             })),
@@ -88,6 +95,7 @@ const DocumentLoader: React.FC<DocumentLoaderProps> = ({ characterMap, file, htt
 
         return (): void => {
             loadingTask.destroy();
+            worker.destroy();
         };
     }, [file]);
 
@@ -96,8 +104,8 @@ const DocumentLoader: React.FC<DocumentLoaderProps> = ({ characterMap, file, htt
     // So, we have to check both `percentages` and `loaded`
     React.useEffect(() => {
         (percentages === 100 && loadedDocument)
-            ? setStatus(new CompletedState(loadedDocument))
-            : setStatus(new LoadingState(percentages));
+            ? isMounted.current && setStatus(new CompletedState(loadedDocument))
+            : isMounted.current && setStatus(new LoadingState(percentages));
     }, [percentages, loadedDocument]);
 
     switch (true) {
