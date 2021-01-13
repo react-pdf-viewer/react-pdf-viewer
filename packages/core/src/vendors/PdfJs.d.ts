@@ -17,6 +17,7 @@ declare module 'pdfjs-dist' {
         name: string;
     }
     class PDFWorker {
+        destroyed: boolean;
         constructor(params: PDFWorkerConstructorParams);
         destroy(): void;
     }

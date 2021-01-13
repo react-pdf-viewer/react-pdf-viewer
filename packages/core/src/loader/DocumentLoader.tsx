@@ -87,7 +87,7 @@ const DocumentLoader: React.FC<DocumentLoaderProps> = ({ characterMap, file, htt
         };
         loadingTask.promise.then(
             (doc) => isMounted.current && setLoadedDocument(doc),
-            (err) => isMounted.current && setStatus(new FailureState({
+            (err) => isMounted.current && !worker.destroyed && setStatus(new FailureState({
                 message: err.message || 'Cannot load document',
                 name: err.name,
             })),
