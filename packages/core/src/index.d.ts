@@ -586,7 +586,7 @@ export interface UseIntersectionObserverProps {
     threshold?: number | number[];
     onVisibilityChanged(params: VisibilityChanged): void;
 }
-export function useIntersectionObserver(props: UseIntersectionObserverProps): React.MutableRefObject<HTMLElement>;
+export function useIntersectionObserver(props: UseIntersectionObserverProps): React.MutableRefObject<HTMLDivElement>;
 
 // Utils
 // -----
