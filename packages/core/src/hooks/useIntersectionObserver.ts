@@ -24,15 +24,18 @@ const useIntersectionObserver = (props: UseIntersectionObserverProps) => {
     const { threshold, onVisibilityChanged } = props;
 
     React.useLayoutEffect(() => {
-        const io = new IntersectionObserver((entries) => {
-            entries.forEach((entry) => {
-                const isVisible = entry.isIntersecting;
-                const ratio = entry.intersectionRatio;
-                onVisibilityChanged({ isVisible, ratio });
-            });
-        }, {
-            threshold: threshold || 0,
-        });
+        const io = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    const isVisible = entry.isIntersecting;
+                    const ratio = entry.intersectionRatio;
+                    onVisibilityChanged({ isVisible, ratio });
+                });
+            },
+            {
+                threshold: threshold || 0,
+            }
+        );
         const container = containerRef.current;
         if (!container) {
             return;

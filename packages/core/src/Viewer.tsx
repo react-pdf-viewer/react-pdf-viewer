@@ -8,7 +8,6 @@
 
 import * as React from 'react';
 
-import OpenFile from './OpenFile';
 import useIntersectionObserver, { VisibilityChanged } from './hooks/useIntersectionObserver';
 import usePrevious from './hooks/usePrevious';
 import Inner from './layouts/Inner';
