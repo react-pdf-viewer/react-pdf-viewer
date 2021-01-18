@@ -46,7 +46,6 @@
         "clean": "rm -rf lib && mkdir lib",
         "build": "npm run clean && npm run js && npm run css",
         "js": "cp src/index.d.ts lib && cp dist/index.js lib && rollup -c ../../rollup.config.js",
-        "css": "rm lib/styles/index.less && postcss lib/styles/index.css > lib/styles/index.min.css",
-        "test": "jest --config ../../jest.config.js"
+        "css": "rm lib/styles/index.less && postcss lib/styles/index.css > lib/styles/index.min.css"
     }
 }
