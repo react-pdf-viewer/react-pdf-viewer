@@ -16,4 +16,4 @@ export default function usePrevious<T>(value: T) {
     }, [value]);
 
     return ref.current;
-};
+}
