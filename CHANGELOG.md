@@ -2,7 +2,20 @@
 
 ## v2.4.0 [WIP]
 
-**Improvements**
+**New features**
+- You can highlight multiple keywords programatically:
+
+~~~ javascript
+import { searchPlugin } from '@react-pdf-viewer/search';
+const searchPluginInstance = searchPlugin();
+
+const { highlight } = searchPluginInstance;
+
+<button onClick={() => highlight(['document', 'PDF']) }>
+    Highlight: document, PDF
+</button>
+~~~
+
 - It's possible to retrieve the instances of _Attachment_, _Bookmark_, _Thumbnail_, _Toolbar_ plugins from the _Default Layout_ plugin instance.
 
 ~~~ javascript

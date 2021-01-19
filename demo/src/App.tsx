@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { SpecialZoomLevel, Viewer, Worker } from '@react-pdf-viewer/core';
+import { PrimaryButton, SpecialZoomLevel, Viewer, Worker } from '@react-pdf-viewer/core';
 import { defaultLayoutPlugin } from '@react-pdf-viewer/default-layout';
 import { Zoom } from '@react-pdf-viewer/full-screen';
 
@@ -22,9 +22,31 @@ const App = () => {
 
     const { toolbarPluginInstance } = defaultLayoutPluginInstance;
     const { searchPluginInstance } = toolbarPluginInstance;
+    const { highlight } = searchPluginInstance;
 
     return (
         <Worker workerUrl="https://unpkg.com/pdfjs-dist@2.5.207/build/pdf.worker.js">
+            <div
+                style={{
+                    display: 'flex',
+                    marginBottom: '16px',
+                }}
+            >
+                <div style={{ marginRight: '8px' }}>
+                    <PrimaryButton
+                        onClick={() => highlight(['document', 'PDF']) }
+                    >
+                        Highlight: document, PDF
+                    </PrimaryButton>
+                </div>
+                <div style={{ marginRight: '8px' }}>
+                    <PrimaryButton
+                        onClick={() => highlight(['Adobe', 'Acrobat']) }
+                    >
+                        Highlight: Adobe, Acrobat
+                    </PrimaryButton>
+                </div>
+            </div>
             <div
                 style={{
                     height: '750px'
