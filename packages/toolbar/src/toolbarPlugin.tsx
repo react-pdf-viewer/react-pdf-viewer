@@ -9,22 +9,35 @@
 import * as React from 'react';
 import { Plugin, PluginFunctions, PluginOnDocumentLoad, RenderViewer, ViewerState, PluginOnTextLayerRender } from '@react-pdf-viewer/core';
 import { dropPlugin } from '@react-pdf-viewer/drop';
-import { fullScreenPlugin, FullScreenPluginProps } from '@react-pdf-viewer/full-screen';
-import { getFilePlugin, GetFilePluginProps } from '@react-pdf-viewer/get-file';
-import { openPlugin } from '@react-pdf-viewer/open';
-import { pageNavigationPlugin } from '@react-pdf-viewer/page-navigation';
-import { printPlugin } from '@react-pdf-viewer/print';
-import { propertiesPlugin } from '@react-pdf-viewer/properties';
-import { rotatePlugin } from '@react-pdf-viewer/rotate';
-import { ScrollModePluginProps, scrollModePlugin } from '@react-pdf-viewer/scroll-mode';
-import { searchPlugin, SearchPluginProps } from '@react-pdf-viewer/search';
-import { selectionModePlugin, SelectionModePluginProps } from '@react-pdf-viewer/selection-mode';
-import { zoomPlugin } from '@react-pdf-viewer/zoom';
+import { fullScreenPlugin, FullScreenPlugin, FullScreenPluginProps } from '@react-pdf-viewer/full-screen';
+import { getFilePlugin, GetFilePlugin, GetFilePluginProps } from '@react-pdf-viewer/get-file';
+import { openPlugin, OpenPlugin } from '@react-pdf-viewer/open';
+import { pageNavigationPlugin, PageNavigationPlugin } from '@react-pdf-viewer/page-navigation';
+import { printPlugin, PrintPlugin } from '@react-pdf-viewer/print';
+import { propertiesPlugin, PropertiesPlugin } from '@react-pdf-viewer/properties';
+import { rotatePlugin, RotatePlugin } from '@react-pdf-viewer/rotate';
+import { scrollModePlugin, ScrollModePlugin, ScrollModePluginProps } from '@react-pdf-viewer/scroll-mode';
+import { searchPlugin, SearchPlugin, SearchPluginProps } from '@react-pdf-viewer/search';
+import { selectionModePlugin, SelectionModePlugin, SelectionModePluginProps } from '@react-pdf-viewer/selection-mode';
+import { zoomPlugin, ZoomPlugin } from '@react-pdf-viewer/zoom';
 
 import Toolbar, { ToolbarProps } from './Toolbar';
 
 interface ToolbarPlugin extends Plugin {
     Toolbar: (props: ToolbarProps) => React.ReactElement;
+    // Plugins instance
+    dropPluginInstance: Plugin;
+    fullScreenPluginInstance: FullScreenPlugin;
+    getFilePluginInstance: GetFilePlugin;
+    openPluginInstance: OpenPlugin;
+    pageNavigationPluginInstance: PageNavigationPlugin;
+    printPluginInstance: PrintPlugin;
+    propertiesPluginInstance: PropertiesPlugin;
+    rotatePluginInstance: RotatePlugin;
+    scrollModePluginInstance: ScrollModePlugin;
+    searchPluginInstance: SearchPlugin;
+    selectionModePluginInstance: SelectionModePlugin;
+    zoomPluginInstance: ZoomPlugin;
 }
 
 export interface ToolbarPluginProps {
@@ -124,6 +137,19 @@ const toolbarPlugin = (props?: ToolbarPluginProps): ToolbarPlugin => {
     };
 
     return {
+        // Plugin instances
+        dropPluginInstance,
+        fullScreenPluginInstance,
+        getFilePluginInstance,
+        openPluginInstance,
+        pageNavigationPluginInstance,
+        printPluginInstance,
+        propertiesPluginInstance,
+        rotatePluginInstance,
+        scrollModePluginInstance,
+        searchPluginInstance,
+        selectionModePluginInstance,
+        zoomPluginInstance,
         install: (pluginFunctions: PluginFunctions) => {
             // Install plugins
             plugins.forEach(plugin => {

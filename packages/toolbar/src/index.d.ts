@@ -7,14 +7,15 @@
  */
 
 import * as React from 'react';
-import { Plugin } from '@react-pdf-viewer/core';
-import {
+import type { Plugin } from '@react-pdf-viewer/core';
+import type {
     EnterFullScreenProps,
+    FullScreenPlugin,
     FullScreenPluginProps,
 } from '@react-pdf-viewer/full-screen';
-import { DownloadProps, GetFilePluginProps } from '@react-pdf-viewer/get-file';
-import { OpenProps } from '@react-pdf-viewer/open';
-import {
+import type { DownloadProps, GetFilePlugin, GetFilePluginProps } from '@react-pdf-viewer/get-file';
+import type { OpenPlugin, OpenProps } from '@react-pdf-viewer/open';
+import type {
     CurrentPageLabelProps,
     GoToFirstPageProps,
     GoToFirstPageMenuItemProps,
@@ -22,33 +23,39 @@ import {
     GoToLastPageMenuItemProps,
     GoToNextPageProps,
     GoToPreviousPageProps,
+    PageNavigationPlugin,
 } from '@react-pdf-viewer/page-navigation';
-import { PrintProps } from '@react-pdf-viewer/print';
-import {
+import type { PrintPlugin, PrintProps } from '@react-pdf-viewer/print';
+import type {
+    PropertiesPlugin,
     ShowPropertiesProps,
     ShowPropertiesMenuItemProps,
 } from '@react-pdf-viewer/properties';
-import { RotateDecoratorProps, RotateProps } from '@react-pdf-viewer/rotate';
-import {
+import type { RotateDecoratorProps, RotatePlugin, RotateProps } from '@react-pdf-viewer/rotate';
+import type {
+    ScrollModePlugin,
     ScrollModePluginProps,
     SwitchScrollModeMenuItemProps,
     SwitchScrollModeProps,
 } from '@react-pdf-viewer/scroll-mode';
-import {
+import type {
+    SearchPlugin,
     SearchPluginProps,
     SearchProps,
     ShowSearchPopoverProps,
 } from '@react-pdf-viewer/search';
-import {
+import type {
+    SelectionModePlugin,
     SelectionModePluginProps,
     SwitchSelectionModeMenuItemProps,
     SwitchSelectionModeProps,
 } from '@react-pdf-viewer/selection-mode';
-import {
+import type {
     CurrentScaleProps,
-    ZoomProps,
     ZoomInProps,
     ZoomOutProps,
+    ZoomPlugin,
+    ZoomProps,
 } from '@react-pdf-viewer/zoom';
 
 export interface ToolbarSlot {
@@ -96,6 +103,19 @@ export interface ToolbarProps {
 
 export interface ToolbarPlugin extends Plugin {
     Toolbar: (props: ToolbarProps) => React.ReactElement;
+    // Plugins instance
+    dropPluginInstance: Plugin;
+    fullScreenPluginInstance: FullScreenPlugin;
+    getFilePluginInstance: GetFilePlugin;
+    openPluginInstance: OpenPlugin;
+    pageNavigationPluginInstance: PageNavigationPlugin;
+    printPluginInstance: PrintPlugin;
+    propertiesPluginInstance: PropertiesPlugin;
+    rotatePluginInstance: RotatePlugin;
+    scrollModePluginInstance: ScrollModePlugin;
+    searchPluginInstance: SearchPlugin;
+    selectionModePluginInstance: SelectionModePlugin;
+    zoomPluginInstance: ZoomPlugin;
 }
 
 export interface ToolbarPluginProps {
@@ -111,7 +131,7 @@ export function toolbarPlugin(props?: ToolbarPluginProps): ToolbarPlugin;
 export interface MoreActionsPopoverProps {
     toolbarSlot: ToolbarSlot;
 }
-export class MoreActionsPopover extends Component<MoreActionsPopoverProps> {}
+export class MoreActionsPopover extends React.Component<MoreActionsPopoverProps> {}
 
 // ----
 // Icon

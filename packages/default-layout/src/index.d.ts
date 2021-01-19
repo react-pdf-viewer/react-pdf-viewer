@@ -7,8 +7,12 @@
  */
 
 import * as React from 'react';
-import { Plugin, ViewerProps } from '@react-pdf-viewer/core';
+import type { Plugin, ViewerProps } from '@react-pdf-viewer/core';
+import type { AttachmentPlugin } from '@react-pdf-viewer/attachment';
+import type { BookmarkPlugin } from '@react-pdf-viewer/bookmark';
+import type { ThumbnailPlugin } from '@react-pdf-viewer/thumbnail';
 import type {
+    ToolbarPlugin,
     ToolbarPluginProps,
     ToolbarProps,
     ToolbarSlot,
@@ -24,6 +28,10 @@ export interface SidebarTab {
 
 export interface DefaultLayoutPlugin extends Plugin {
     activateTab(index: number): void;
+    attachmentPluginInstance: AttachmentPlugin;
+    bookmarkPluginInstance: BookmarkPlugin;
+    thumbnailPluginInstance: ThumbnailPlugin;
+    toolbarPluginInstance: ToolbarPlugin;
 }
 
 export interface DefaultLayoutProps extends ViewerProps {

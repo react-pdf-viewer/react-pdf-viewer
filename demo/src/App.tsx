@@ -20,6 +20,9 @@ const App = () => {
         }
     });
 
+    const { toolbarPluginInstance } = defaultLayoutPluginInstance;
+    const { searchPluginInstance } = toolbarPluginInstance;
+
     return (
         <Worker workerUrl="https://unpkg.com/pdfjs-dist@2.5.207/build/pdf.worker.js">
             <div
