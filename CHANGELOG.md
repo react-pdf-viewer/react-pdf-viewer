@@ -16,6 +16,12 @@ const { highlight } = searchPluginInstance;
 </button>
 ~~~
 
+It's also possible to clear the highlights:
+
+~~~ javascript
+const { clearHighlights } = searchPluginInstance;
+~~~
+
 - It's possible to retrieve the instances of _Attachment_, _Bookmark_, _Thumbnail_, _Toolbar_ plugins from the _Default Layout_ plugin instance.
 
 ~~~ javascript

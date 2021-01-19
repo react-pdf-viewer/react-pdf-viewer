@@ -20,6 +20,7 @@ interface SearchPlugin extends Plugin {
     Search(props: SearchProps): React.ReactElement;
     ShowSearchPopover(props: ShowSearchPopoverProps): React.ReactElement;
     ShowSearchPopoverButton(): React.ReactElement;
+    clearHighlights(): void;
     highlight(keyword: SingleKeyword | SingleKeyword[]): void;
 }
 
@@ -108,6 +109,9 @@ const searchPlugin = (props?: SearchPluginProps): SearchPlugin => {
         Search: SearchDecorator,
         ShowSearchPopover: ShowSearchPopoverDecorator,
         ShowSearchPopoverButton: ShowSearchPopoverButtonDecorator,
+        clearHighlights: () => {
+            store.update('keyword', [EMPTY_KEYWORD_REGEXP]);
+        },
         highlight: (keyword: SingleKeyword | SingleKeyword[]) => {
             store.update('keyword', normalizeKeywords(keyword));
         },

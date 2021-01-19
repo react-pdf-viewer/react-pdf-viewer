@@ -40,6 +40,7 @@ export interface SearchPlugin extends Plugin {
     Search: (props: SearchProps) => React.ReactElement;
     ShowSearchPopover: (props: ShowSearchPopoverProps) => React.ReactElement;
     ShowSearchPopoverButton(): React.ReactElement;
+    clearHighlights(): void;
     highlight(keyword: SingleKeyword | SingleKeyword[]): void;
 }
 

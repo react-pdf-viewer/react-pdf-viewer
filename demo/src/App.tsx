@@ -22,7 +22,7 @@ const App = () => {
 
     const { toolbarPluginInstance } = defaultLayoutPluginInstance;
     const { searchPluginInstance } = toolbarPluginInstance;
-    const { highlight } = searchPluginInstance;
+    const { clearHighlights, highlight } = searchPluginInstance;
 
     return (
         <Worker workerUrl="https://unpkg.com/pdfjs-dist@2.5.207/build/pdf.worker.js">
@@ -44,6 +44,13 @@ const App = () => {
                         onClick={() => highlight(['Adobe', 'Acrobat']) }
                     >
                         Highlight: Adobe, Acrobat
+                    </PrimaryButton>
+                </div>
+                <div style={{ marginRight: '8px' }}>
+                    <PrimaryButton
+                        onClick={() => clearHighlights() }
+                    >
+                        Clear highlight
                     </PrimaryButton>
                 </div>
             </div>
