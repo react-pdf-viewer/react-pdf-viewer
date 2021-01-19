@@ -20,6 +20,8 @@ interface SearchPlugin extends Plugin {
     Search(props: SearchProps): React.ReactElement;
     ShowSearchPopover(props: ShowSearchPopoverProps): React.ReactElement;
     ShowSearchPopoverButton(): React.ReactElement;
+    clearHighlights(): void;
+    highlight(keyword: SingleKeyword | SingleKeyword[]): void;
 }
 
 export type SingleKeyword = string | RegExp;
@@ -72,16 +74,15 @@ const searchPlugin = (props?: SearchPluginProps): SearchPlugin => {
             : (keyword || EMPTY_KEYWORD_REGEXP);
     };
 
+    const normalizeKeywords = (keyword?: SingleKeyword | SingleKeyword[]): RegExp[] => (
+        Array.isArray(keyword)
+            ? keyword.map(k => normalizeKeywordItem(k))
+            : [normalizeKeywordItem(keyword)]
+    );
+
     return {
         install: (pluginFunctions: PluginFunctions) => {
-            let keyword = [EMPTY_KEYWORD_REGEXP];
-            if (props) {
-                if (Array.isArray(props.keyword)) {
-                    keyword = (props.keyword).map(k => normalizeKeywordItem(k));
-                } else {
-                    keyword = [normalizeKeywordItem(props.keyword)];
-                }
-            }
+            const keyword = props ? normalizeKeywords(props.keyword) : [EMPTY_KEYWORD_REGEXP];
 
             store.update('jumpToDestination', pluginFunctions.jumpToDestination);
             store.update('jumpToPage', pluginFunctions.jumpToPage);
@@ -108,6 +109,12 @@ const searchPlugin = (props?: SearchPluginProps): SearchPlugin => {
         Search: SearchDecorator,
         ShowSearchPopover: ShowSearchPopoverDecorator,
         ShowSearchPopoverButton: ShowSearchPopoverButtonDecorator,
+        clearHighlights: () => {
+            store.update('keyword', [EMPTY_KEYWORD_REGEXP]);
+        },
+        highlight: (keyword: SingleKeyword | SingleKeyword[]) => {
+            store.update('keyword', normalizeKeywords(keyword));
+        },
     };
 };
 
