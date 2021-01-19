@@ -16,6 +16,27 @@ const {
 } = defaultLayoutPluginInstance;
 ~~~
 
+Similarity, the _Toolbar_ plugin instance provides the accesses to the instance of other plugins that build the toolbar:
+
+~~~ javascript
+const toolbarPluginInstance = toolbarPlugin();
+
+const {
+    dropPluginInstance,
+    fullScreenPluginInstance,
+    getFilePluginInstance,
+    openPluginInstance,
+    pageNavigationPluginInstance,
+    printPluginInstance,
+    propertiesPluginInstance,
+    rotatePluginInstance,
+    scrollModePluginInstance,
+    searchPluginInstance,
+    selectionModePluginInstance,
+    zoomPluginInstance,
+} = toolbarPluginInstance;
+~~~
+
 ## v2.3.2
 
 **Improvements**
