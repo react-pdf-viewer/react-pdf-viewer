@@ -7,17 +7,21 @@
  */
 
 import * as React from 'react';
-import { attachmentPlugin } from '@react-pdf-viewer/attachment';
-import { bookmarkPlugin } from '@react-pdf-viewer/bookmark';
+import { attachmentPlugin, AttachmentPlugin } from '@react-pdf-viewer/attachment';
+import { bookmarkPlugin, BookmarkPlugin } from '@react-pdf-viewer/bookmark';
 import { createStore, Plugin, PluginFunctions, PluginOnDocumentLoad, RenderViewer, ViewerState, PluginOnTextLayerRender } from '@react-pdf-viewer/core';
-import { thumbnailPlugin } from '@react-pdf-viewer/thumbnail';
-import { toolbarPlugin, ToolbarPluginProps, ToolbarProps } from '@react-pdf-viewer/toolbar';
+import { thumbnailPlugin, ThumbnailPlugin } from '@react-pdf-viewer/thumbnail';
+import { toolbarPlugin, ToolbarPlugin, ToolbarPluginProps, ToolbarProps } from '@react-pdf-viewer/toolbar';
 
 import Sidebar, { SidebarTab } from './Sidebar';
 import StoreProps from './StoreProps';
 
 export interface DefaultLayoutPlugin extends Plugin {
     activateTab(index: number): void;
+    attachmentPluginInstance: AttachmentPlugin;
+    bookmarkPluginInstance: BookmarkPlugin;
+    thumbnailPluginInstance: ThumbnailPlugin;
+    toolbarPluginInstance: ToolbarPlugin;
 }
 
 export interface DefaultLayoutPluginProps {
@@ -51,6 +55,11 @@ const defaultLayoutPlugin = (props?: DefaultLayoutPluginProps): DefaultLayoutPlu
     ];
 
     return {
+        // The plugin instances
+        attachmentPluginInstance,
+        bookmarkPluginInstance,
+        thumbnailPluginInstance,
+        toolbarPluginInstance,
         activateTab: (index: number) => {
             store.update('currentTab', index);
         },

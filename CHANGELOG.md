@@ -1,5 +1,21 @@
 # CHANGELOG
 
+## v2.4.0 [WIP]
+
+**Improvements**
+- It's possible to retrieve the instances of _Attachment_, _Bookmark_, _Thumbnail_, _Toolbar_ plugins from the _Default Layout_ plugin instance.
+
+~~~ javascript
+const defaultLayoutPluginInstance = defaultLayoutPlugin();
+
+const {
+    attachmentPluginInstance,
+    bookmarkPluginInstance,
+    thumbnailPluginInstance,
+    toolbarPluginInstance,
+} = defaultLayoutPluginInstance;
+~~~
+
 ## v2.3.2
 
 **Improvements**
