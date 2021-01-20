@@ -7,7 +7,7 @@
  */
 
 import * as React from 'react';
-import { createStore, Plugin, PluginFunctions, ViewerState } from '@react-pdf-viewer/core';
+import { createStore, Plugin, PluginFunctions, SpecialZoomLevel, ViewerState } from '@react-pdf-viewer/core';
 
 import CurrentScale, { CurrentScaleProps } from './CurrentScale';
 import Zoom, { ZoomProps } from './Zoom';
@@ -20,6 +20,7 @@ import ZoomPopover from './ZoomPopover';
 import StoreProps from './StoreProps';
 
 interface ZoomPlugin extends Plugin {
+    zoomTo: (scale: number | SpecialZoomLevel) => void;
     CurrentScale: (props: CurrentScaleProps) => React.ReactElement;
     ZoomIn: (props: ZoomInProps) => React.ReactElement;
     ZoomInButton: () => React.ReactElement;
@@ -71,6 +72,12 @@ const zoomPlugin = (): ZoomPlugin => {
         onViewerStateChange: (viewerState: ViewerState) => {
             store.update('scale', viewerState.scale);
             return viewerState;
+        },
+        zoomTo: (scale: number | SpecialZoomLevel) => {
+            const zoom = store.get('zoom');
+            if (zoom) {
+                zoom(scale);
+            }
         },
         CurrentScale: CurrentScaleDecorator,
         ZoomIn: ZoomInDecorator,

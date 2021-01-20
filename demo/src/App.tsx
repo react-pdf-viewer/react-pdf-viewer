@@ -21,8 +21,9 @@ const App = () => {
     });
 
     const { toolbarPluginInstance } = defaultLayoutPluginInstance;
-    const { searchPluginInstance } = toolbarPluginInstance;
+    const { searchPluginInstance, zoomPluginInstance } = toolbarPluginInstance;
     const { clearHighlights, highlight } = searchPluginInstance;
+    const { zoomTo } = zoomPluginInstance;
 
     return (
         <Worker workerUrl="https://unpkg.com/pdfjs-dist@2.5.207/build/pdf.worker.js">
@@ -48,9 +49,9 @@ const App = () => {
                 </div>
                 <div style={{ marginRight: '8px' }}>
                     <PrimaryButton
-                        onClick={() => clearHighlights() }
+                        onClick={() => zoomTo(1.5) }
                     >
-                        Clear highlight
+                        Zoom to 150%
                     </PrimaryButton>
                 </div>
             </div>
