@@ -21,9 +21,10 @@ const App = () => {
     });
 
     const { toolbarPluginInstance } = defaultLayoutPluginInstance;
-    const { searchPluginInstance, zoomPluginInstance } = toolbarPluginInstance;
+    const { pageNavigationPluginInstance, searchPluginInstance, zoomPluginInstance } = toolbarPluginInstance;
     const { clearHighlights, highlight } = searchPluginInstance;
     const { zoomTo } = zoomPluginInstance;
+    const { jumpToPage } = pageNavigationPluginInstance;
 
     return (
         <Worker workerUrl="https://unpkg.com/pdfjs-dist@2.5.207/build/pdf.worker.js">
@@ -42,9 +43,9 @@ const App = () => {
                 </div>
                 <div style={{ marginRight: '8px' }}>
                     <PrimaryButton
-                        onClick={() => highlight(['Adobe', 'Acrobat']) }
+                        onClick={() => jumpToPage(2) }
                     >
-                        Highlight: Adobe, Acrobat
+                        Jump to page 3
                     </PrimaryButton>
                 </div>
                 <div style={{ marginRight: '8px' }}>

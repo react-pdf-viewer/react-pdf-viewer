@@ -24,6 +24,7 @@ import GoToPreviousPageButton from './GoToPreviousPageButton';
 import StoreProps from './StoreProps';
 
 export interface PageNavigationPlugin extends Plugin {
+    jumpToPage: (pageIndex: number) => void;
     CurrentPageInput: () => React.ReactElement;
     CurrentPageLabel: (props: CurrentPageLabelProps) => React.ReactElement;
     GoToFirstPage: (props: GoToFirstPageProps) => React.ReactElement;
@@ -107,6 +108,12 @@ const pageNavigationPlugin = (): PageNavigationPlugin => {
         onViewerStateChange: (viewerState: ViewerState): ViewerState => {
             store.update('currentPage', viewerState.pageIndex);
             return viewerState;
+        },
+        jumpToPage: (pageIndex: number) => {
+            const jumpTo = store.get('jumpToPage');
+            if (jumpTo) {
+                jumpTo(pageIndex);
+            }
         },
         CurrentPageInput: CurrentPageInputDecorator,
         CurrentPageLabel: CurrentPageLabelDecorator,

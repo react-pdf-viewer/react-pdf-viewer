@@ -32,6 +32,15 @@ zoomTo(1.5);
 zoomTo(SpecialZoomLevel.PageFit);
 ~~~
 
+- The Page Navigation plugin provides the `jumpToPage` function:
+
+~~~ javascript
+const { jumpToPage } = pageNavigationPluginInstance;
+
+// Jump to the third page
+jumpToPage(2);
+~~~
+
 - It's possible to retrieve the instances of _Attachment_, _Bookmark_, _Thumbnail_, _Toolbar_ plugins from the _Default Layout_ plugin instance.
 
 ~~~ javascript
