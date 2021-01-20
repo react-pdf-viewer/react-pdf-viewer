@@ -63,6 +63,7 @@ export interface ZoomProps {
 // ------
 
 export interface ZoomPlugin extends Plugin {
+    zoomTo: (scale: number | SpecialZoomLevel) => void;
     CurrentScale: (props: CurrentScaleProps) => React.ReactElement;
     ZoomIn: (props: ZoomInProps) => React.ReactElement;
     ZoomInButton: () => React.ReactElement;

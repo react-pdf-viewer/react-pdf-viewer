@@ -22,6 +22,16 @@ It's also possible to clear the highlights:
 const { clearHighlights } = searchPluginInstance;
 ~~~
 
+- The Zoom plugin exposes the `zoomTo` function:
+
+~~~ javascript
+const { zoomTo } = zoomPluginInstance;
+
+// Zoom to a given level
+zoomTo(1.5);
+zoomTo(SpecialZoomLevel.PageFit);
+~~~
+
 - It's possible to retrieve the instances of _Attachment_, _Bookmark_, _Thumbnail_, _Toolbar_ plugins from the _Default Layout_ plugin instance.
 
 ~~~ javascript
