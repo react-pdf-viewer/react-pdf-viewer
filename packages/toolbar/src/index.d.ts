@@ -13,7 +13,11 @@ import type {
     FullScreenPlugin,
     FullScreenPluginProps,
 } from '@react-pdf-viewer/full-screen';
-import type { DownloadProps, GetFilePlugin, GetFilePluginProps } from '@react-pdf-viewer/get-file';
+import type {
+    DownloadProps,
+    GetFilePlugin,
+    GetFilePluginProps,
+} from '@react-pdf-viewer/get-file';
 import type { OpenPlugin, OpenProps } from '@react-pdf-viewer/open';
 import type {
     CurrentPageLabelProps,
@@ -31,7 +35,11 @@ import type {
     ShowPropertiesProps,
     ShowPropertiesMenuItemProps,
 } from '@react-pdf-viewer/properties';
-import type { RotateDecoratorProps, RotatePlugin, RotateProps } from '@react-pdf-viewer/rotate';
+import type {
+    RotateDecoratorProps,
+    RotatePlugin,
+    RotateProps,
+} from '@react-pdf-viewer/rotate';
 import type {
     ScrollModePlugin,
     ScrollModePluginProps,
