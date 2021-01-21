@@ -59,6 +59,18 @@ module.exports = {
             filename: '[name].[contenthash].css',
             ignoreOrder: false,
         }),
+
+        // If you want to see the signature which is disabled by pdf.js, then you have to replace it
+        // with `@react-pdf-viewer/pdfjs-dist-signature`
+        /*
+        new webpack.NormalModuleReplacementPlugin(
+            /^pdfjs-dist$/,
+            resource => {
+                resource.request = path.join(__dirname, '../node_modules/@react-pdf-viewer/pdfjs-dist-signature');
+            },
+        ),
+        */
+        
         // Indicate the package source based on the name
         // So we don't have to map them manually in the `alias` option as 
         //  alias: {
