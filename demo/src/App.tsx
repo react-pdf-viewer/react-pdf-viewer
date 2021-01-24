@@ -9,6 +9,9 @@ import '@react-pdf-viewer/default-layout/lib/styles/index.css';
 const App = () => {
     const defaultLayoutPluginInstance = defaultLayoutPlugin({
         toolbarPlugin: {
+            searchPlugin: {
+                // keyword: 'supported by',
+            },
             fullScreenPlugin: {
                 onEnterFullScreen: (zoom: Zoom) => {
                     zoom(SpecialZoomLevel.PageFit);
