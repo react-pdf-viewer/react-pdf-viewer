@@ -22,6 +22,16 @@ interface RenderStatus {
     status: LayerRenderStatus;
 }
 
+interface MatchIndexes {
+    startIndex: number;
+    endIndex: number;
+}
+interface CharIndex {
+    char: string;
+    charIndexInSpan: number;
+    spanIndex: number;
+}
+
 const Tracker: React.FC<{
     pageIndex: number,
     store: Store<StoreProps>,
@@ -37,6 +47,7 @@ const Tracker: React.FC<{
         status: LayerRenderStatus.PreRender,
     });
     const currentMatchRef = React.useRef<HTMLElement | null>(null);
+    const characterIndexesRef = React.useRef<CharIndex[]>([]);
 
     const unhighlightAll = (containerEle: HTMLElement): void => {
         const highlightNodes = containerEle.querySelectorAll('span.rpv-search-text-highlight');
@@ -46,22 +57,21 @@ const Tracker: React.FC<{
         }
     };
 
-    const highlight = (keyword: RegExp, containerEle: Element, span: Element): void => {
-        const text = span.textContent;
-        if (!keyword.source.trim() || !text) {
-            return;
-        }
-
-        const startOffset = text.search(keyword);
-        const firstChild = span.firstChild;
-        if (startOffset === -1 || !firstChild) {
-            return;
-        }
-        const endOffset = startOffset + keyword.source.length;
-
+    const highlight = (containerEle: Element, span: HTMLElement, charIndexSpan: CharIndex[]): void => {
         const range = document.createRange();
+
+        const firstChild = span.firstChild;
+        if (!firstChild) {
+            return;
+        }
+        
+        const startOffset = charIndexSpan[0].charIndexInSpan;
+        const endOffset = charIndexSpan.length === 1
+                        ? startOffset
+                        : charIndexSpan[charIndexSpan.length - 1].charIndexInSpan;
+
         range.setStart(firstChild, startOffset);
-        range.setEnd(firstChild, endOffset);
+        range.setEnd(firstChild, endOffset + 1);
 
         const wrapper = document.createElement('span');
         range.surroundContents(wrapper);
@@ -82,10 +92,48 @@ const Tracker: React.FC<{
     };
 
     const highlightAll = (containerEle: Element): void => {
+        const charIndexes = characterIndexesRef.current;
+        if (charIndexes.length === 0) {
+            return;
+        }
+
         const spans: HTMLElement[] = [].slice.call(containerEle.querySelectorAll('.rpv-core-text'));
+
+        // Generate the full text of page
+        const fullText = charIndexes.map(item => item.char).join('');
+
         keywordRegexp.forEach(keyword => {
-            spans.forEach(span => {
-                highlight(keyword, containerEle, span);
+            const keywordStr = keyword.source;
+            if (!keywordStr.trim()) {
+                return;
+            }
+
+            // Clone the keyword regular expression, and add the global (`g`) flag
+            // If the `g` flag is missing, it will lead to an infinitive loop
+            const cloneKeyword = keyword.flags.indexOf('g') === -1 ? new RegExp(keyword, `${keyword.flags}g`) : keyword;
+
+            // Find all matches in the full text
+            let match;
+            const matches: MatchIndexes[] = [];
+            while ((match = cloneKeyword.exec(fullText)) !== null) {
+                matches.push({
+                    startIndex: match.index as number,
+                    endIndex: cloneKeyword.lastIndex,
+                });
+            }
+
+            matches.map(item => charIndexes.slice(item.startIndex, item.endIndex)).forEach(item => {
+                // Group by the span index
+                const spanIndexes = item.reduce(
+                    (acc, item) => {
+                        acc[item.spanIndex] = [...(acc[item.spanIndex] || []), item];
+                        return acc;
+                    },
+                    {} as { [spanIndex: number]: CharIndex[] }
+                );
+                Object.values(spanIndexes).forEach(charIndexSpan => {
+                    highlight(containerEle, spans[charIndexSpan[0].spanIndex], charIndexSpan);
+                });
             });
         });
     };
@@ -126,13 +174,42 @@ const Tracker: React.FC<{
         unhighlightAll(containerEle);
         highlightAll(containerEle);
         scrollToMatch();
-    }, [keywordRegexp, match, renderStatus.status]);
+    }, [keywordRegexp, match, renderStatus.status, characterIndexesRef.current]);
 
     React.useEffect(() => {
         if (isEmptyKeyword() && renderStatus.ele && renderStatus.status === LayerRenderStatus.DidRender) {
             unhighlightAll(renderStatus.ele);
         }
     }, [keywordRegexp, renderStatus.status]);
+
+    // Prepare the characters indexes
+    React.useEffect(() => {
+        if (isEmptyKeyword() || renderStatus.status !== LayerRenderStatus.DidRender || characterIndexesRef.current.length) {
+            return;
+        }
+
+        const containerEle = renderStatus.ele;
+        const spans: HTMLElement[] = [].slice.call(containerEle.querySelectorAll('.rpv-core-text'));
+
+        const charIndexes: CharIndex[] = spans.map(span => span.textContent)
+            .reduce(
+                (prev, curr, index) => prev.concat(curr.split('').map((c, i) => ({
+                    char: c,
+                    charIndexInSpan: i,
+                    spanIndex: index,
+                }))),
+                [
+                    {
+                        char: '',
+                        charIndexInSpan: 0,
+                        spanIndex: 0,
+                    }
+                ]
+            )
+            .slice(1);
+
+        characterIndexesRef.current = charIndexes;
+    }, [renderStatus.status]);
 
     const scrollToMatch = (): void => {
         if (match.pageIndex !== pageIndex || !renderStatus.ele || renderStatus.status !== LayerRenderStatus.DidRender) {

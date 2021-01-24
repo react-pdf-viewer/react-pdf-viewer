@@ -75,6 +75,9 @@ const {
 } = toolbarPluginInstance;
 ~~~
 
+**Bug fixes**
+- The Search plugin can find text that belongs to multiple `span` elements
+
 ## v2.3.2
 
 **Improvements**
