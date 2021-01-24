@@ -10,7 +10,7 @@ const App = () => {
     const defaultLayoutPluginInstance = defaultLayoutPlugin({
         toolbarPlugin: {
             searchPlugin: {
-                // keyword: 'supported by',
+                // keyword: ['document', 'PDF'], // 'supported by',
             },
             fullScreenPlugin: {
                 onEnterFullScreen: (zoom: Zoom) => {
