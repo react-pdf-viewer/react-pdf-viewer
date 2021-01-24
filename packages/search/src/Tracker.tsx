@@ -165,24 +165,9 @@ const Tracker: React.FC<{
 
     const isEmptyKeyword = () => keywordRegexp.length === 0 || (keywordRegexp.length === 1 && keywordRegexp[0].source.trim() === '');
 
-    React.useEffect(() => {
-        if (isEmptyKeyword() || !renderStatus.ele || renderStatus.status !== LayerRenderStatus.DidRender) {
-            return;
-        }
-        
-        const containerEle = renderStatus.ele;
-        unhighlightAll(containerEle);
-        highlightAll(containerEle);
-        scrollToMatch();
-    }, [keywordRegexp, match, renderStatus.status, characterIndexesRef.current]);
-
-    React.useEffect(() => {
-        if (isEmptyKeyword() && renderStatus.ele && renderStatus.status === LayerRenderStatus.DidRender) {
-            unhighlightAll(renderStatus.ele);
-        }
-    }, [keywordRegexp, renderStatus.status]);
-
     // Prepare the characters indexes
+    // The order of hooks are important. Since `charIndexes` will be used when we highlight matching items,
+    // this hook is put at the top
     React.useEffect(() => {
         if (isEmptyKeyword() || renderStatus.status !== LayerRenderStatus.DidRender || characterIndexesRef.current.length) {
             return;
@@ -209,7 +194,24 @@ const Tracker: React.FC<{
             .slice(1);
 
         characterIndexesRef.current = charIndexes;
-    }, [renderStatus.status]);
+    }, [keywordRegexp, renderStatus.status]);
+
+    React.useEffect(() => {
+        if (isEmptyKeyword() || !renderStatus.ele || renderStatus.status !== LayerRenderStatus.DidRender) {
+            return;
+        }
+        
+        const containerEle = renderStatus.ele;
+        unhighlightAll(containerEle);
+        highlightAll(containerEle);
+        scrollToMatch();
+    }, [keywordRegexp, match, renderStatus.status, characterIndexesRef.current]);
+
+    React.useEffect(() => {
+        if (isEmptyKeyword() && renderStatus.ele && renderStatus.status === LayerRenderStatus.DidRender) {
+            unhighlightAll(renderStatus.ele);
+        }
+    }, [keywordRegexp, renderStatus.status]);
 
     const scrollToMatch = (): void => {
         if (match.pageIndex !== pageIndex || !renderStatus.ele || renderStatus.status !== LayerRenderStatus.DidRender) {
