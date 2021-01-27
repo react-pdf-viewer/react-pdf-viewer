@@ -1,3 +1,4 @@
+.DS_Store
 demo/dist
 demo/node_modules
 lerna-debug.log
