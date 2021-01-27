@@ -105,6 +105,15 @@ const mockAllIsIntersecting = (isIntersecting: boolean | number) => {
     });
 };
 
+const mockIsIntersecting = (element: Element, isIntersecting: boolean | number) => {
+    observerMap.forEach((item, observer) => {
+        if (item.elements.has(element)) {
+            triggerIntersection([element], isIntersecting, observer, item);
+        }
+    });
+};
+
 export {
     mockAllIsIntersecting,
+    mockIsIntersecting,
 };
