@@ -122,6 +122,7 @@ const PageLayer: React.FC<PageLayerProps> = ({
         <div
             ref={containerRef}
             className={`${theme.prefixClass}-page-layer`}
+            data-testid={`viewer-page-layer-${pageIndex}`}
             style={{
                 height: `${h}px`,
                 width: `${w}px`,
