@@ -78,6 +78,9 @@ const {
 **Bug fixes**
 - The Search plugin can find text that belongs to multiple `span` elements
 
+**Breaking changes**
+- The `Observer` component is removed from the `@react-pdf-viewer/core` package
+
 ## v2.3.2
 
 **Improvements**
