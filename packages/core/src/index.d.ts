@@ -352,8 +352,6 @@ interface ObserverProps {
     onVisibilityChanged(params: VisibilityChanged): void;
 }
 
-export class Observer extends React.Component<ObserverProps> {}
-
 export interface RenderViewer {
     containerRef: React.RefObject<HTMLDivElement>;
     doc: PdfJs.PdfDocument;
