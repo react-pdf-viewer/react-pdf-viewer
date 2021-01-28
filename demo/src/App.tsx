@@ -70,7 +70,7 @@ const App = () => {
                     plugins={[
                         // defaultLayoutPluginInstance,
                     ]}
-                    // defaultScale={1}
+                    defaultScale={1.5}
                 />
             </div>
         </Worker>
