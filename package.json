@@ -48,7 +48,7 @@
 		"jest-canvas-mock": "^2.3.0",
 		"lerna": "^3.22.1",
 		"less": "^3.13.0",
-		"pdfjs-dist": "^2.5.207",
+		"pdfjs-dist": "^2.6.347",
 		"postcss": "^8.2.1",
 		"postcss-cli": "^8.3.1",
 		"prettier": "^2.2.1",
