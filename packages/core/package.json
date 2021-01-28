@@ -32,10 +32,8 @@
         "lib/index.d.ts",
         "lib/index.js"
     ],
-    "dependencies": {
-        "pdfjs-dist": "^2.5.207"
-    },
     "peerDependencies": {
+        "pdfjs-dist": "^2.6.347",
         "react": "^16.8.0 || ^17.0.0",
         "react-dom": "^16.8.0 || ^17.0.0"
     },
