@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 
 import * as React from 'react';
-import { findByTestId, render, screen } from '@testing-library/react';
+import { render } from '@testing-library/react';
 
 import { mockAllIsIntersecting, mockIsIntersecting } from '../../../test-utils/mockIntersectionObserver';
 import Viewer from '../src/Viewer';
@@ -10,7 +10,7 @@ import Viewer from '../src/Viewer';
 describe('Test Viewer', () => {
     test('Render document that does not exist', async () => {
         const App = () => (
-            <div style={{ height: '100px' }}>
+            <div style={{ height: '720px' }}>
                 <Viewer
                     fileUrl={'file:///../../../assets/not-found.pdf'}
                 />
@@ -26,7 +26,7 @@ describe('Test Viewer', () => {
     test('Load document successfully', async () => {
         const rawSamplePdf = fs.readFileSync(path.resolve(__dirname, '../../../assets/sample.pdf'));
         const App = () => (
-            <div style={{ height: '100px' }}>
+            <div style={{ height: '720px' }}>
                 <Viewer
                     fileUrl={new Uint8Array(rawSamplePdf)}
                 />
@@ -42,7 +42,7 @@ describe('Test Viewer', () => {
     test('Lazy load', async () => {
         const rawSamplePdf = fs.readFileSync(path.resolve(__dirname, '../../../assets/sample.pdf'));
         const App = () => (
-            <div style={{ height: '100px' }}>
+            <div style={{ height: '720px' }}>
                 <Viewer
                     fileUrl={new Uint8Array(rawSamplePdf)}
                 />
@@ -58,7 +58,7 @@ describe('Test Viewer', () => {
     test('Lazy load page', async () => {
         const rawSamplePdf = fs.readFileSync(path.resolve(__dirname, '../../../assets/pdf-open-parameters.pdf'));
         const App = () => (
-            <div style={{ height: '100px' }}>
+            <div style={{ height: '720px' }}>
                 <Viewer
                     fileUrl={new Uint8Array(rawSamplePdf)}
                 />
@@ -84,5 +84,72 @@ describe('Test Viewer', () => {
         mockIsIntersecting(lastPage, true);
         text = await findByText('Acrobat SDK', { exact: false });
         expect(text).toHaveTextContent('Adobe Acrobat SDK');
+    });
+
+    test('Calculate page size', async () => {
+        const rawSamplePdf = fs.readFileSync(path.resolve(__dirname, '../../../assets/sample.pdf'));
+        const App = () => (
+            <div style={{ height: '720px', width: '600px' }}>
+                <Viewer
+                    fileUrl={new Uint8Array(rawSamplePdf)}
+                />
+            </div>
+        );
+        const { getByTestId, findByTestId } = render(<App />);
+        mockIsIntersecting(getByTestId('viewer'), true);
+        
+        const firstPage = await findByTestId('viewer-page-layer-0');
+        mockIsIntersecting(firstPage, true);
+        
+        expect(parseInt(firstPage.style.width, 10)).toEqual(535);
+        expect(parseInt(firstPage.style.height, 10)).toEqual(757);
+    });
+
+    test('defaultScale option', async () => {
+        const rawSamplePdf = fs.readFileSync(path.resolve(__dirname, '../../../assets/sample.pdf'));
+        const App = () => (
+            <div style={{ height: '720px', width: '600px' }}>
+                <Viewer
+                    fileUrl={new Uint8Array(rawSamplePdf)}
+                    defaultScale={1.5}
+                />
+            </div>
+        );
+        const { getByTestId, findByTestId } = render(<App />);
+        mockIsIntersecting(getByTestId('viewer'), true);
+        
+        const firstPage = await findByTestId('viewer-page-layer-0');
+        mockIsIntersecting(firstPage, true);
+        
+        expect(parseInt(firstPage.style.width, 10)).toEqual(892);
+        expect(parseInt(firstPage.style.height, 10)).toEqual(1263);
+    });
+
+    const TestOnDocumentLoad: React.FC<{
+        fileUrl: Uint8Array
+    }> = ({ fileUrl }) => {
+        const [numPages, setNumPages] = React.useState(0);
+
+        return (
+            <>
+            <div data-testid='num-pages'>{numPages}</div>
+            <div style={{ height: '720px' }}>
+                <Viewer
+                    fileUrl={fileUrl}
+                    onDocumentLoad={(e) => setNumPages(e.doc.numPages)}
+                />
+            </div>
+            </>
+        );
+    };
+
+    test('onDocumentLoad() callback', async () => {
+        const rawSamplePdf = fs.readFileSync(path.resolve(__dirname, '../../../assets/pdf-open-parameters.pdf'));
+
+        const { findByTestId, getByTestId } = render(<TestOnDocumentLoad fileUrl={new Uint8Array(rawSamplePdf)} />);
+        mockIsIntersecting(getByTestId('viewer'), true);
+
+        const numPagesLabel = await findByTestId('num-pages');
+        expect(numPagesLabel.textContent).toEqual("8");
     });
 });
