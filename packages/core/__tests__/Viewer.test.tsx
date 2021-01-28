@@ -124,4 +124,32 @@ describe('Test Viewer', () => {
         expect(parseInt(firstPage.style.width, 10)).toEqual(892);
         expect(parseInt(firstPage.style.height, 10)).toEqual(1263);
     });
+
+    const TestOnDocumentLoad: React.FC<{
+        fileUrl: Uint8Array
+    }> = ({ fileUrl }) => {
+        const [numPages, setNumPages] = React.useState(0);
+
+        return (
+            <>
+            <div data-testid='num-pages'>{numPages}</div>
+            <div style={{ height: '720px' }}>
+                <Viewer
+                    fileUrl={fileUrl}
+                    onDocumentLoad={(e) => setNumPages(e.doc.numPages)}
+                />
+            </div>
+            </>
+        );
+    };
+
+    test('onDocumentLoad() callback', async () => {
+        const rawSamplePdf = fs.readFileSync(path.resolve(__dirname, '../../../assets/pdf-open-parameters.pdf'));
+
+        const { findByTestId, getByTestId } = render(<TestOnDocumentLoad fileUrl={new Uint8Array(rawSamplePdf)} />);
+        mockIsIntersecting(getByTestId('viewer'), true);
+
+        const numPagesLabel = await findByTestId('num-pages');
+        expect(numPagesLabel.textContent).toEqual("8");
+    });
 });
