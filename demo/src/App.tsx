@@ -61,14 +61,16 @@ const App = () => {
             </div>
             <div
                 style={{
-                    height: '750px'
+                    height: '720px',
+                    width: '640px',
                 }}
             >
                 <Viewer
-                    fileUrl="http://localhost:8001/pdf-open-parameters.pdf"
+                    fileUrl="http://localhost:8001/sample.pdf"
                     plugins={[
-                        defaultLayoutPluginInstance,
+                        // defaultLayoutPluginInstance,
                     ]}
+                    // defaultScale={1}
                 />
             </div>
         </Worker>
