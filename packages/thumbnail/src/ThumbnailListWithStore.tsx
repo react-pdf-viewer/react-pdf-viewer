@@ -7,7 +7,7 @@
  */
 
 import * as React from 'react';
-import { PdfJs, Spinner, Store, StoreHandler } from '@react-pdf-viewer/core';
+import { PdfJs, Spinner, Store, StoreHandler, useIsomorphicLayoutEffect } from '@react-pdf-viewer/core';
 
 import StoreProps from './StoreProps';
 import ThumbnailList from './ThumbnailList';
@@ -62,7 +62,7 @@ const ThumbnailListWithStore: React.FC<{
         };
     }, []);
 
-    React.useLayoutEffect(() => {
+    useIsomorphicLayoutEffect(() => {
         store.subscribe('currentPage', handleCurrentPageChanged);
 
         return () => {

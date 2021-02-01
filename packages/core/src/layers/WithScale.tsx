@@ -8,6 +8,8 @@
 
 import * as React from 'react';
 
+import useIsomorphicLayoutEffect from '../hooks/useIsomorphicLayoutEffect';
+
 interface WithScaleProps {
     rotation: number;
     scale: number;
@@ -15,7 +17,7 @@ interface WithScaleProps {
 }
 
 const WithScale: React.FC<WithScaleProps> = ({ callback, children, rotation, scale }) => {
-    React.useLayoutEffect(() => {
+    useIsomorphicLayoutEffect(() => {
         callback();
     }, [rotation, scale]);
     return (<>{children}</>);

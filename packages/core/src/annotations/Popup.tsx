@@ -8,6 +8,7 @@
 
 import * as React from 'react';
 
+import useIsomorphicLayoutEffect from '../hooks/useIsomorphicLayoutEffect';
 import ThemeContext from '../theme/ThemeContext';
 import PdfJs from '../vendors/PdfJs';
 import Annotation from './Annotation';
@@ -27,7 +28,7 @@ const Popup: React.FC<PopupProps> = ({ annotation, page, viewport }) => {
     const ignoredParents = ['Circle', 'Ink', 'Line', 'Polygon', 'PolyLine', 'Square'];
     const hasPopup = !annotation.parentType || ignoredParents.indexOf(annotation.parentType) !== -1;
 
-    React.useLayoutEffect(() => {
+    useIsomorphicLayoutEffect(() => {
         if (!annotation.parentId) {
             return;
         }

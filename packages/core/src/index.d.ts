@@ -588,6 +588,9 @@ export function useIntersectionObserver(
     props: UseIntersectionObserverProps
 ): React.MutableRefObject<HTMLDivElement>;
 
+
+export function useIsomorphicLayoutEffect(effect: React.EffectCallback, deps?: React.DependencyList): void;
+
 // Utils
 // -----
 

@@ -8,6 +8,8 @@
 
 import * as React from 'react';
 
+import useIsomorphicLayoutEffect from '../hooks/useIsomorphicLayoutEffect';
+
 export interface VisibilityChanged {
     isVisible: boolean;
     ratio: number;
@@ -23,7 +25,7 @@ const useIntersectionObserver = (props: UseIntersectionObserverProps) => {
 
     const { threshold, onVisibilityChanged } = props;
 
-    React.useLayoutEffect(() => {
+    useIsomorphicLayoutEffect(() => {
         const io = new IntersectionObserver(
             (entries) => {
                 entries.forEach((entry) => {
