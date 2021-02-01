@@ -18,6 +18,7 @@ export { default as ProgressBar } from './components/ProgressBar';
 export { default as Separator } from './components/Separator';
 export { default as Spinner } from './components/Spinner';
 export { default as useIntersectionObserver } from './hooks/useIntersectionObserver';
+export { default as useIsomorphicLayoutEffect } from './hooks/useIsomorphicLayoutEffect';
 export { default as Icon } from './icons/Icon';
 export { default as LocalizationContext } from './localization/LocalizationContext';
 export { default as LocalizationProvider } from './localization/LocalizationProvider';
