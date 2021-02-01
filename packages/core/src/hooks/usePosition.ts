@@ -8,6 +8,7 @@
 
 import * as React from 'react';
 
+import useIsomorphicLayoutEffect from '../hooks/useIsomorphicLayoutEffect';
 import Offset from '../portal/Offset';
 import Position from '../portal/Position';
 import calculatePosition from '../utils/calculatePosition';
@@ -19,7 +20,7 @@ const usePosition = (
     position: Position,
     offset: Offset
 ): void => {
-    React.useLayoutEffect(() => {
+    useIsomorphicLayoutEffect(() => {
         const targetEle = targetRef.current;
         const contentEle = contentRef.current;
         const anchorEle = anchorRef.current;
