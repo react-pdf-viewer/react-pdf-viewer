@@ -14,6 +14,7 @@ import Search, { SearchProps } from './Search';
 import ShowSearchPopover, { ShowSearchPopoverProps } from './ShowSearchPopover';
 import ShowSearchPopoverButton from './ShowSearchPopoverButton';
 import StoreProps from './StoreProps';
+import OnHighlightKeyword from './types/OnHighlightKeyword';
 import Tracker from './Tracker';
 
 interface SearchPlugin extends Plugin {
@@ -29,9 +30,13 @@ export type SingleKeyword = string | RegExp;
 export interface SearchPluginProps {
     // The keyword that will be highlighted in all pages
     keyword?: SingleKeyword | SingleKeyword[];
+    onHighlightKeyword?(props: OnHighlightKeyword): void;
 }
 
 const searchPlugin = (props?: SearchPluginProps): SearchPlugin => {
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
+    const onHighlightKeyword = React.useMemo(() => props && props.onHighlightKeyword ? props.onHighlightKeyword : () => {}, []);
+
     const store = React.useMemo(() => createStore<StoreProps>({
         renderStatus: new Map<number, PluginOnTextLayerRender>(),
     }), []);
@@ -50,14 +55,14 @@ const searchPlugin = (props?: SearchPluginProps): SearchPlugin => {
         </ShowSearchPopoverDecorator>
     );
 
-    const renderViewer = (props: RenderViewer): Slot => {
-        const currentSlot = props.slot;
+    const renderViewer = (renderViewerProps: RenderViewer): Slot => {
+        const currentSlot = renderViewerProps.slot;
         if (currentSlot.subSlot) {
             currentSlot.subSlot.children = (
                 <>
                 {
-                    Array(props.doc.numPages).fill(0).map((_, index) => (
-                        <Tracker key={index} pageIndex={index} store={store} />
+                    Array(renderViewerProps.doc.numPages).fill(0).map((_, index) => (
+                        <Tracker key={index} pageIndex={index} store={store} onHighlightKeyword={onHighlightKeyword} />
                     ))
                 }
                 {currentSlot.subSlot.children}

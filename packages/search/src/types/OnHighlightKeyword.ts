@@ -6,9 +6,7 @@
  * @copyright 2019-2021 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import * as React from 'react';
-
-const useIsomorphicLayoutEffect =
-    typeof window !== 'undefined' ? React.useLayoutEffect : React.useEffect;
-
-export default useIsomorphicLayoutEffect;
+export default interface OnHighlightKeyword {
+    highlightEle: HTMLElement;
+    keyword: RegExp;
+}
