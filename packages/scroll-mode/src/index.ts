@@ -6,8 +6,6 @@
  * @copyright 2019-2021 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import './styles';
-
 export { default as HorizontalScrollingIcon } from './HorizontalScrollingIcon';
 export { default as ScrollMode } from './ScrollMode';
 export { default as scrollModePlugin } from './scrollModePlugin';

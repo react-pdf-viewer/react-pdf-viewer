@@ -6,8 +6,6 @@
  * @copyright 2019-2021 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import './styles';
-
 export { default as HandToolIcon } from './HandToolIcon';
 export { default as SelectionMode } from './SelectionMode';
 export { default as selectionModePlugin } from './selectionModePlugin';

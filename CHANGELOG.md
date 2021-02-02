@@ -75,6 +75,10 @@ const {
 } = toolbarPluginInstance;
 ~~~
 
+**Improvements**
+- Support Next.js integration
+- Fix a warning in the Console when using with Next.js
+
 **Bug fixes**
 - The Search plugin can find text that belongs to multiple `span` elements
 

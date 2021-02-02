@@ -1,5 +1,4 @@
 import path from 'path';
-import less from 'rollup-plugin-less-modules';
 import { terser } from 'rollup-plugin-terser';
 import json from '@rollup/plugin-json';
 import typescript from '@rollup/plugin-typescript';
@@ -16,17 +15,10 @@ const external = [
     ...Object.keys(pkg.peerDependencies || {}),
 ];
 
-const noBundleCss = process.env.NO_CSS === 'true';
-
 const plugins = [
     json(),
     typescript(),
-].concat(noBundleCss ? [] : [
-    less({
-        output: path.join(outputDir, 'styles/index.css'),
-        sourcemap: false,
-    }),
-]);
+];
 
 export default [
     // CJS

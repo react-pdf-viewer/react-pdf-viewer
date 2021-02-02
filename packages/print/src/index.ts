@@ -6,7 +6,5 @@
  * @copyright 2019-2021 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import './styles';
-
 export { default as PrintIcon } from './PrintIcon';
 export { default as printPlugin } from './printPlugin';
