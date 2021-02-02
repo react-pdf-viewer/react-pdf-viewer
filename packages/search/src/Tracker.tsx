@@ -13,6 +13,7 @@ import calculateOffset from './calculateOffset';
 import { EMPTY_KEYWORD_REGEXP } from './constants';
 import Match from './Match';
 import StoreProps from './StoreProps';
+import OnHighlightKeyword from './types/OnHighlightKeyword';
 import unwrap from './unwrap';
 
 interface RenderStatus {
@@ -23,6 +24,7 @@ interface RenderStatus {
 }
 
 interface MatchIndexes {
+    keyword: RegExp;
     startIndex: number;
     endIndex: number;
 }
@@ -35,7 +37,8 @@ interface CharIndex {
 const Tracker: React.FC<{
     pageIndex: number,
     store: Store<StoreProps>,
-}> = ({ pageIndex, store }) => {
+    onHighlightKeyword?(props: OnHighlightKeyword): void,
+}> = ({ pageIndex, store, onHighlightKeyword }) => {
     const [match, setMatch] = React.useState<Match>({
         matchIndex: -1,
         pageIndex: -1,
@@ -57,7 +60,7 @@ const Tracker: React.FC<{
         }
     };
 
-    const highlight = (containerEle: Element, span: HTMLElement, charIndexSpan: CharIndex[]): void => {
+    const highlight = (keyword: RegExp, containerEle: Element, span: HTMLElement, charIndexSpan: CharIndex[]): void => {
         const range = document.createRange();
 
         const firstChild = span.firstChild;
@@ -89,6 +92,13 @@ const Tracker: React.FC<{
         highlightEle.classList.add('rpv-search-text-highlight');
 
         unwrap(wrapper);
+
+        if (onHighlightKeyword) {
+            onHighlightKeyword({
+                highlightEle,
+                keyword,
+            });
+        }
     };
 
     const highlightAll = (containerEle: Element): void => {
@@ -117,14 +127,18 @@ const Tracker: React.FC<{
             const matches: MatchIndexes[] = [];
             while ((match = cloneKeyword.exec(fullText)) !== null) {
                 matches.push({
+                    keyword: cloneKeyword,
                     startIndex: match.index as number,
                     endIndex: cloneKeyword.lastIndex,
                 });
             }
 
-            matches.map(item => charIndexes.slice(item.startIndex, item.endIndex)).forEach(item => {
+            matches.map(item => ({
+                keyword: item.keyword, 
+                indexes: charIndexes.slice(item.startIndex, item.endIndex)
+            })).forEach(item => {
                 // Group by the span index
-                const spanIndexes = item.reduce(
+                const spanIndexes = item.indexes.reduce(
                     (acc, item) => {
                         acc[item.spanIndex] = [...(acc[item.spanIndex] || []), item];
                         return acc;
@@ -132,7 +146,7 @@ const Tracker: React.FC<{
                     {} as { [spanIndex: number]: CharIndex[] }
                 );
                 Object.values(spanIndexes).forEach(charIndexSpan => {
-                    highlight(containerEle, spans[charIndexSpan[0].spanIndex], charIndexSpan);
+                    highlight(item.keyword, containerEle, spans[charIndexSpan[0].spanIndex], charIndexSpan);
                 });
             });
         });

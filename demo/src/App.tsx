@@ -2,6 +2,7 @@ import * as React from 'react';
 import { PrimaryButton, SpecialZoomLevel, Viewer, Worker } from '@react-pdf-viewer/core';
 import { defaultLayoutPlugin } from '@react-pdf-viewer/default-layout';
 import { Zoom } from '@react-pdf-viewer/full-screen';
+import { OnHighlightKeyword } from '@react-pdf-viewer/search';
 
 import '@react-pdf-viewer/core/lib/styles/index.css';
 import '@react-pdf-viewer/default-layout/lib/styles/index.css';
@@ -11,6 +12,12 @@ const App = () => {
         toolbarPlugin: {
             searchPlugin: {
                 // keyword: ['document', 'PDF'], // 'supported by',
+                onHighlightKeyword: (props: OnHighlightKeyword) => {
+                    if (props.keyword.source === 'document') {
+                        props.highlightEle.style.outline = '2px dashed blue';
+                        props.highlightEle.style.backgroundColor = 'rgba(0, 0, 0, .1)';
+                    }
+                },
             },
             fullScreenPlugin: {
                 onEnterFullScreen: (zoom: Zoom) => {

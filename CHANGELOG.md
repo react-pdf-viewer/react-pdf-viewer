@@ -22,6 +22,19 @@ It's also possible to clear the highlights:
 const { clearHighlights } = searchPluginInstance;
 ~~~
 
+- It's possible to add custom styles for highlighted area based on the keyword:
+
+~~~ javascript
+const searchPluginInstance = searchPlugin({
+    onHighlightKeyword: (props: OnHighlightKeyword) => {
+        if (props.keyword.source === 'document') {
+            props.highlightEle.style.outline = '2px dashed blue';
+            props.highlightEle.style.backgroundColor = 'rgba(0, 0, 0, .1)';
+        }
+    },
+});
+~~~
+
 - The Zoom plugin exposes the `zoomTo` function:
 
 ~~~ javascript

@@ -46,9 +46,15 @@ export interface SearchPlugin extends Plugin {
 
 export type SingleKeyword = string | RegExp;
 
+export interface OnHighlightKeyword {
+    highlightEle: HTMLElement;
+    keyword: RegExp;
+}
+
 export interface SearchPluginProps {
     // The keyword that will be highlighted in all pages
     keyword?: SingleKeyword | SingleKeyword[];
+    onHighlightKeyword?(props: OnHighlightKeyword): void;
 }
 
 export function searchPlugin(props?: SearchPluginProps): SearchPlugin;
