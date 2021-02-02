@@ -30,7 +30,7 @@ const App = () => {
     const { jumpToPage } = pageNavigationPluginInstance;
 
     return (
-        <Worker workerUrl="https://unpkg.com/pdfjs-dist@2.5.207/build/pdf.worker.js">
+        <Worker workerUrl="https://unpkg.com/pdfjs-dist@2.6.347/build/pdf.worker.js">
             <div
                 style={{
                     display: 'flex',
@@ -66,11 +66,10 @@ const App = () => {
                 }}
             >
                 <Viewer
-                    fileUrl="http://localhost:8001/sample.pdf"
+                    fileUrl="http://localhost:8001/pdf-open-parameters.pdf"
                     plugins={[
-                        // defaultLayoutPluginInstance,
+                        defaultLayoutPluginInstance,
                     ]}
-                    defaultScale={1.5}
                 />
             </div>
         </Worker>

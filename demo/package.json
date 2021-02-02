@@ -3,7 +3,7 @@
     "private": true,
     "version": "0.0.0",
     "scripts": {
-        "copyasset": "cp ../assets/pdf-open-parameters.pdf dist",
+        "copyasset": "cp -rf ../assets/*.pdf dist",
         "typecheck": "tsc --noEmit",
         "dev": "rm -rf dist && mkdir dist && npm run copyasset && webpack-dev-server --env.mode=development"
     },
