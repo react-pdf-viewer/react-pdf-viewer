@@ -14,7 +14,8 @@
         "@react-pdf-viewer/highlight": "2.3.2",
         "@react-pdf-viewer/scroll-mode": "2.3.2",
         "@react-pdf-viewer/search": "2.3.2",
-        "@react-pdf-viewer/toolbar": "2.3.2"
+        "@react-pdf-viewer/toolbar": "2.3.2",
+        "@react-pdf-viewer/zoom": "2.3.2"
     },
     "devDependencies": {
         "@babel/core": "^7.12.3",
