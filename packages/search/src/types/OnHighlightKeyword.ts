@@ -9,4 +9,4 @@
 export default interface OnHighlightKeyword {
     highlightEle: HTMLElement;
     keyword: RegExp;
-};
+}
