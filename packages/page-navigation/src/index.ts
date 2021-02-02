@@ -6,8 +6,6 @@
  * @copyright 2019-2021 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import './styles';
-
 export { default as DownArrowIcon } from './DownArrowIcon';
 export { default as NextIcon } from './NextIcon';
 export { default as pageNavigationPlugin } from './pageNavigationPlugin';

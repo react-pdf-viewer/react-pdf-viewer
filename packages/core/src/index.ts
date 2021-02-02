@@ -6,8 +6,6 @@
  * @copyright 2019-2021 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import './styles';
-
 export { default as AnnotationType } from './annotations/AnnotationType';
 export { default as Button } from './components/Button';
 export { default as Menu } from './components/Menu';
