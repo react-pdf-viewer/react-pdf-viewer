@@ -91,6 +91,28 @@ const {
 **Improvements**
 - Support Next.js integration
 - Fix a warning in the Console when using with Next.js
+- The `SingleKeyword` type in the `Search` plugin supports flags:
+
+~~~ javascript
+interface FlagKeyword {
+    keyword: string;
+    matchCase?: boolean;    // `false` by default
+    wholeWords?: boolean;   // `false` by default
+}
+
+type SingleKeyword = string | RegExp | FlagKeyword;
+~~~
+
+You can use these flags when passing the keywords:
+
+~~~ javascript
+const searchPluginInstance = searchPlugin({
+    keyword: {
+        keyword: 'document',
+        matchCase: true,
+    },
+});
+~~~
 
 **Bug fixes**
 - The Search plugin can find text that belongs to multiple `span` elements

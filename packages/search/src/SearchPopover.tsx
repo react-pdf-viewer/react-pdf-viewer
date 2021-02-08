@@ -11,7 +11,7 @@ import { Button, LocalizationContext, PdfJs, Position, PrimaryButton, Store, Too
 
 import NextIcon from './NextIcon';
 import PreviousIcon from './PreviousIcon';
-import StoreProps from './StoreProps';
+import StoreProps from './types/StoreProps';
 import useSearch from './useSearch';
 
 interface SearchPopoverProps {

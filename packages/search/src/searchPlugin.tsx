@@ -10,10 +10,12 @@ import * as React from 'react';
 import { createStore, Plugin, PluginFunctions, PluginOnDocumentLoad, PluginOnTextLayerRender, RenderViewer, Slot } from '@react-pdf-viewer/core';
 
 import { EMPTY_KEYWORD_REGEXP } from './constants';
+import { normalizeSingleKeyword } from './normalizeKeyword';
 import Search, { SearchProps } from './Search';
 import ShowSearchPopover, { ShowSearchPopoverProps } from './ShowSearchPopover';
 import ShowSearchPopoverButton from './ShowSearchPopoverButton';
-import StoreProps from './StoreProps';
+import SingleKeyword from './types/SingleKeyword';
+import StoreProps from './types/StoreProps';
 import OnHighlightKeyword from './types/OnHighlightKeyword';
 import Tracker from './Tracker';
 
@@ -24,8 +26,6 @@ interface SearchPlugin extends Plugin {
     clearHighlights(): void;
     highlight(keyword: SingleKeyword | SingleKeyword[]): void;
 }
-
-export type SingleKeyword = string | RegExp;
 
 export interface SearchPluginProps {
     // The keyword that will be highlighted in all pages
@@ -73,21 +73,15 @@ const searchPlugin = (props?: SearchPluginProps): SearchPlugin => {
         return currentSlot;
     };
 
-    const normalizeKeywordItem = (keyword: SingleKeyword): RegExp => {
-        return typeof keyword === 'string'
-            ? (keyword === '' ? EMPTY_KEYWORD_REGEXP : new RegExp(keyword))
-            : (keyword || EMPTY_KEYWORD_REGEXP);
-    };
-
     const normalizeKeywords = (keyword?: SingleKeyword | SingleKeyword[]): RegExp[] => (
         Array.isArray(keyword)
-            ? keyword.map(k => normalizeKeywordItem(k))
-            : [normalizeKeywordItem(keyword)]
+            ? keyword.map(k => normalizeSingleKeyword(k))
+            : [normalizeSingleKeyword(keyword)]
     );
 
     return {
         install: (pluginFunctions: PluginFunctions) => {
-            const keyword = props ? normalizeKeywords(props.keyword) : [EMPTY_KEYWORD_REGEXP];
+            const keyword = props && props.keyword ? normalizeKeywords(props.keyword) : [EMPTY_KEYWORD_REGEXP];
 
             store.update('jumpToDestination', pluginFunctions.jumpToDestination);
             store.update('jumpToPage', pluginFunctions.jumpToPage);

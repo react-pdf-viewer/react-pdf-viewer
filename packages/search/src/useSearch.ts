@@ -10,8 +10,9 @@ import * as React from 'react';
 import { PdfJs, Store } from '@react-pdf-viewer/core';
 
 import { EMPTY_KEYWORD_REGEXP } from './constants';
-import Match from './Match';
-import StoreProps from './StoreProps';
+import { normalizeFlagKeyword } from './normalizeKeyword';
+import Match from './types/Match';
+import StoreProps from './types/StoreProps';
 
 interface UseSearch {
     clearKeyword(): void;
@@ -95,16 +96,6 @@ const useSearch = (
     // Private
     // -------
 
-    const buildKeywordRegex = (
-        keywordParam: string,
-        matchCaseParam: boolean,
-        wholeWordsParam: boolean
-    ): RegExp => {
-        const source = wholeWordsParam ? ` ${keywordParam} ` : keywordParam;
-        const flags = matchCaseParam ? 'g' : 'gi';
-        return new RegExp(source, flags);
-    };
-
     const getTextContents = (): Promise<string[]> => {
         const promises = indexArr.map((pageIndex) => {
             return doc
@@ -141,11 +132,11 @@ const useSearch = (
         matchCaseParam: boolean,
         wholeWordsParam: boolean
     ): void => {
-        const regexp = buildKeywordRegex(
-            keywordParam,
-            matchCaseParam,
-            wholeWordsParam
-        );
+        const regexp = normalizeFlagKeyword({
+            keyword: keywordParam,
+            matchCase: matchCaseParam,
+            wholeWords: wholeWordsParam,
+        });
         store.update('keyword', [regexp]);
 
         setCurrentMatch(0);
