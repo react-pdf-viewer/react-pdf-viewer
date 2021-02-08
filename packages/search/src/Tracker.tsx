@@ -90,6 +90,7 @@ const Tracker: React.FC<{
         highlightEle.style.width = `${100 * (wrapperRect.width) / containerRect.width}%`;
         highlightEle.style.height = `${100 * (wrapperRect.height) / containerRect.height}%`;
         highlightEle.classList.add('rpv-search-text-highlight');
+        highlightEle.setAttribute('title', keyword.source.trim());
 
         unwrap(wrapper);
 
