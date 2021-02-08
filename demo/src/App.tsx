@@ -46,7 +46,13 @@ const App = () => {
             >
                 <div style={{ marginRight: '8px' }}>
                     <PrimaryButton
-                        onClick={() => highlight(['document', 'PDF']) }
+                        onClick={() => highlight([
+                            'document',
+                            {
+                                keyword: 'PDF',
+                                matchCase: true,
+                            },
+                        ])}
                     >
                         Highlight: document, PDF
                     </PrimaryButton>

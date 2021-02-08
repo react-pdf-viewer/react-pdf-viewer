@@ -44,7 +44,13 @@ export interface SearchPlugin extends Plugin {
     highlight(keyword: SingleKeyword | SingleKeyword[]): void;
 }
 
-export type SingleKeyword = string | RegExp;
+export interface FlagKeyword {
+    keyword: string;
+    matchCase?: boolean;    // `false` by default
+    wholeWords?: boolean;   // `false` by default
+}
+
+export type SingleKeyword = string | RegExp | FlagKeyword;
 
 export interface OnHighlightKeyword {
     highlightEle: HTMLElement;
