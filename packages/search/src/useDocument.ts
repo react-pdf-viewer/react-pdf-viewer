@@ -9,7 +9,7 @@
 import * as React from 'react';
 import { PdfJs, Store, StoreHandler } from '@react-pdf-viewer/core';
 
-import StoreProps from './StoreProps';
+import StoreProps from './types/StoreProps';
 
 const useDocument = (
     store: Store<StoreProps>

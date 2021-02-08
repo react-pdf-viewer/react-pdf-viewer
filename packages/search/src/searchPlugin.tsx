@@ -13,7 +13,7 @@ import { EMPTY_KEYWORD_REGEXP } from './constants';
 import Search, { SearchProps } from './Search';
 import ShowSearchPopover, { ShowSearchPopoverProps } from './ShowSearchPopover';
 import ShowSearchPopoverButton from './ShowSearchPopoverButton';
-import StoreProps from './StoreProps';
+import StoreProps from './types/StoreProps';
 import OnHighlightKeyword from './types/OnHighlightKeyword';
 import Tracker from './Tracker';
 

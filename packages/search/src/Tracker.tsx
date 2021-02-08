@@ -11,9 +11,9 @@ import { PluginOnTextLayerRender, LayerRenderStatus, Store } from '@react-pdf-vi
 
 import calculateOffset from './calculateOffset';
 import { EMPTY_KEYWORD_REGEXP } from './constants';
-import Match from './Match';
-import StoreProps from './StoreProps';
+import Match from './types/Match';
 import OnHighlightKeyword from './types/OnHighlightKeyword';
+import StoreProps from './types/StoreProps';
 import unwrap from './unwrap';
 
 interface RenderStatus {

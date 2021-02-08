@@ -11,7 +11,7 @@ import { Popover, Position, Store, Toggle } from '@react-pdf-viewer/core';
 
 import SearchPopover from './SearchPopover';
 import ShowSearchPopoverButton from './ShowSearchPopoverButton';
-import StoreProps from './StoreProps';
+import StoreProps from './types/StoreProps';
 import useDocument from './useDocument';
 
 export interface RenderShowSearchPopoverProps {

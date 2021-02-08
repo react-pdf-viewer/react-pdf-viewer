@@ -10,8 +10,8 @@ import * as React from 'react';
 import { PdfJs, Store } from '@react-pdf-viewer/core';
 
 import { EMPTY_KEYWORD_REGEXP } from './constants';
-import Match from './Match';
-import StoreProps from './StoreProps';
+import Match from './types/Match';
+import StoreProps from './types/StoreProps';
 
 interface UseSearch {
     clearKeyword(): void;
