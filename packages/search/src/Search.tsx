@@ -7,7 +7,7 @@
  */
 
 import * as React from 'react';
-import { PdfJs, Store } from '@react-pdf-viewer/core';
+import { Store } from '@react-pdf-viewer/core';
 
 import StoreProps from './types/StoreProps';
 import useDocument from './useDocument';
@@ -36,10 +36,9 @@ export interface SearchProps {
 
 const Inner: React.FC<{
     children: RenderSearch,
-    doc: PdfJs.PdfDocument,
     store: Store<StoreProps>,
-}> = ({ children, doc, store }) => {
-    const result = useSearch(doc, store);
+}> = ({ children, store }) => {
+    const result = useSearch(store);
     return children({...result});
 };
 
@@ -50,7 +49,7 @@ const Search: React.FC<{
     const { currentDoc } = useDocument(store);
     return (
         currentDoc
-            ? <Inner doc={currentDoc} store={store}>{children}</Inner>
+            ? <Inner store={store}>{children}</Inner>
             : <></>
     );
 };

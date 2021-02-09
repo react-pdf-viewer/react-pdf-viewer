@@ -7,7 +7,7 @@
  */
 
 import * as React from 'react';
-import { Button, LocalizationContext, PdfJs, Position, PrimaryButton, Store, Tooltip } from '@react-pdf-viewer/core';
+import { Button, LocalizationContext, Position, PrimaryButton, Store, Tooltip } from '@react-pdf-viewer/core';
 
 import NextIcon from './NextIcon';
 import PreviousIcon from './PreviousIcon';
@@ -15,7 +15,6 @@ import StoreProps from './types/StoreProps';
 import useSearch from './useSearch';
 
 interface SearchPopoverProps {
-    doc: PdfJs.PdfDocument;
     store: Store<StoreProps>;
     onToggle(): void;
 }
@@ -23,7 +22,7 @@ interface SearchPopoverProps {
 // `new RegExp('')` will treat the source as `(?:)` which is not an empty string
 const PORTAL_OFFSET = { left: 0, top: 8 };
 
-const SearchPopover: React.FC<SearchPopoverProps> = ({ doc, store, onToggle }) => {
+const SearchPopover: React.FC<SearchPopoverProps> = ({ store, onToggle }) => {
     const l10n = React.useContext(LocalizationContext);
 
     const {
@@ -39,7 +38,7 @@ const SearchPopover: React.FC<SearchPopoverProps> = ({ doc, store, onToggle }) =
         wholeWords,
         search,
         setKeyword,
-    } = useSearch(doc, store);
+    } = useSearch(store);
 
     const onChangeKeyword = (e: React.ChangeEvent<HTMLInputElement>): void => {
         setKeyword(e.target.value);

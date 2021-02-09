@@ -7,13 +7,14 @@
  */
 
 import * as React from 'react';
-import { PdfJs, Store } from '@react-pdf-viewer/core';
+import { Store } from '@react-pdf-viewer/core';
 
 import { EMPTY_KEYWORD_REGEXP } from './constants';
 import { normalizeFlagKeyword } from './normalizeKeyword';
 import Match from './types/Match';
 import SingleKeyword from './types/SingleKeyword';
 import StoreProps from './types/StoreProps';
+import useDocument from './useDocument';
 
 interface UseSearch {
     clearKeyword(): void;
@@ -34,18 +35,15 @@ interface UseSearch {
 }
 
 const useSearch = (
-    doc: PdfJs.PdfDocument,
     store: Store<StoreProps>
 ): UseSearch => {
+    const { currentDoc } = useDocument(store);
     const [keywords, setKeywords] = React.useState<SingleKeyword[]>([]);
     const [found, setFound] = React.useState<Match[]>([]);
     const [currentMatch, setCurrentMatch] = React.useState(0);
     const [matchCase, setMatchCase] = React.useState(false);
     const textContents = React.useRef<string[]>([]);
     const [wholeWords, setWholeWords] = React.useState(false);
-    const indexArr = Array(doc.numPages)
-        .fill(0)
-        .map((_, i) => i);
 
     const changeMatchCase = (isChecked: boolean): void => {
         setMatchCase(isChecked);
@@ -103,22 +101,28 @@ const useSearch = (
     // -------
 
     const getTextContents = (): Promise<string[]> => {
-        const promises = indexArr.map((pageIndex) => {
-            return doc
-                .getPage(pageIndex + 1)
-                .then((page) => {
-                    return page.getTextContent();
-                })
-                .then((content) => {
-                    const pageContent = content.items
-                        .map((item) => item.str || '')
-                        .join('');
-                    return Promise.resolve({
-                        pageContent,
-                        pageIndex,
+        if (!currentDoc) {
+            return Promise.resolve([]);
+        }
+
+        const promises =  Array(currentDoc.numPages)
+            .fill(0)
+            .map((_, pageIndex) => {
+                return currentDoc
+                    .getPage(pageIndex + 1)
+                    .then((page) => {
+                        return page.getTextContent();
+                    })
+                    .then((content) => {
+                        const pageContent = content.items
+                            .map((item) => item.str || '')
+                            .join('');
+                        return Promise.resolve({
+                            pageContent,
+                            pageIndex,
+                        });
                     });
-                });
-        });
+            });
         return Promise.all(promises).then((data) => {
             data.sort((a, b) => a.pageIndex - b.pageIndex);
             return Promise.resolve(data.map((item) => item.pageContent));
@@ -188,6 +192,11 @@ const useSearch = (
             }
         });
     };
+
+    React.useEffect(() => {
+        // Reset the text contents when the document changes
+        textContents.current = [];
+    }, [currentDoc]);
 
     return {
         clearKeyword,

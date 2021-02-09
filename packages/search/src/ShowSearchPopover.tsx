@@ -47,7 +47,7 @@ const ShowSearchPopover: React.FC<{
                         })
                     }
                     content={
-                        (toggle: Toggle) => <SearchPopover doc={currentDoc} store={store} onToggle={toggle} />
+                        (toggle: Toggle) => <SearchPopover store={store} onToggle={toggle} />
                     }
                     offset={PORTAL_OFFSET}
                     closeOnClickOutside={false}
