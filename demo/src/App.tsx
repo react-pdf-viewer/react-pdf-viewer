@@ -32,7 +32,7 @@ const App = () => {
 
     const { toolbarPluginInstance } = defaultLayoutPluginInstance;
     const { pageNavigationPluginInstance, searchPluginInstance, zoomPluginInstance } = toolbarPluginInstance;
-    const { clearHighlights, highlight } = searchPluginInstance;
+    const { clearHighlights, highlight, jumpToPreviousMatch, jumpToNextMatch } = searchPluginInstance;
     const { zoomTo } = zoomPluginInstance;
     const { jumpToPage } = pageNavigationPluginInstance;
 
@@ -55,6 +55,20 @@ const App = () => {
                         ])}
                     >
                         Highlight: document, PDF
+                    </PrimaryButton>
+                </div>
+                <div style={{ marginRight: '8px' }}>
+                    <PrimaryButton
+                        onClick={() => jumpToPreviousMatch() }
+                    >
+                        Jump to previous match
+                    </PrimaryButton>
+                </div>
+                <div style={{ marginRight: '8px' }}>
+                    <PrimaryButton
+                        onClick={() => jumpToNextMatch() }
+                    >
+                        Jump to next match
                     </PrimaryButton>
                 </div>
                 <div style={{ marginRight: '8px' }}>

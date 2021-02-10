@@ -16,12 +16,28 @@ const normalizeFlagKeyword = (flagKeyword: FlagKeyword): RegExp => {
     return new RegExp(source, flags);
 };
 
-const normalizeSingleKeyword = (keyword: SingleKeyword): RegExp => {
+const normalizeSingleKeyword = (keyword: SingleKeyword, matchCase?: boolean, wholeWords?: boolean): RegExp => {
     if (keyword instanceof RegExp) {
         return keyword;
     }
+
+    // Normalize a string keyword
     if (typeof keyword === 'string') {
-        return keyword === '' ? EMPTY_KEYWORD_REGEXP : new RegExp(keyword);
+        return keyword === ''
+            ? EMPTY_KEYWORD_REGEXP
+            : normalizeFlagKeyword({
+                keyword,
+                matchCase: matchCase || false,
+                wholeWords: wholeWords || false,
+            });
+    }
+
+    // Normalize a keyword with flags
+    if (typeof matchCase !== 'undefined') {
+        keyword.matchCase = matchCase;
+    }
+    if (typeof wholeWords !== 'undefined') {
+        keyword.wholeWords = wholeWords;
     }
     return normalizeFlagKeyword(keyword);
 };
