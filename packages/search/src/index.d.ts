@@ -42,6 +42,8 @@ export interface SearchPlugin extends Plugin {
     ShowSearchPopoverButton(): React.ReactElement;
     clearHighlights(): void;
     highlight(keyword: SingleKeyword | SingleKeyword[]): void;
+    jumpToNextMatch(): void;
+    jumpToPreviousMatch(): void;
 }
 
 export interface FlagKeyword {

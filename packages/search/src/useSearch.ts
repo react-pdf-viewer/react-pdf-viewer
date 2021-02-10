@@ -10,7 +10,7 @@ import * as React from 'react';
 import { Store } from '@react-pdf-viewer/core';
 
 import { EMPTY_KEYWORD_REGEXP } from './constants';
-import { normalizeFlagKeyword } from './normalizeKeyword';
+import { normalizeSingleKeyword } from './normalizeKeyword';
 import Match from './types/Match';
 import SingleKeyword from './types/SingleKeyword';
 import StoreProps from './types/StoreProps';
@@ -29,6 +29,7 @@ interface UseSearch {
     wholeWords: boolean;
     search(): void;
     setKeywords(keyword: SingleKeyword[]): void;
+    searchFor(keyword: SingleKeyword[], matchCase?: boolean, wholeWords?: boolean): void;
     // Compatible with the single keyword search
     keyword: string;
     setKeyword(keyword: string): void;
@@ -149,14 +150,10 @@ const useSearch = (
 
     const searchFor = (
         keywordParam: SingleKeyword[],
-        matchCaseParam: boolean,
-        wholeWordsParam: boolean
+        matchCaseParam?: boolean,
+        wholeWordsParam?: boolean
     ): void => {
-        const keywords = keywordParam.map(k => normalizeFlagKeyword({
-            keyword: getKeywordSource(k),
-            matchCase: matchCaseParam,
-            wholeWords: wholeWordsParam,
-        }));
+        const keywords = keywordParam.map(k => normalizeSingleKeyword(k, matchCaseParam, wholeWordsParam));
         store.update('keyword', keywords);
 
         setCurrentMatch(0);
@@ -210,6 +207,7 @@ const useSearch = (
         numberOfMatches: found.length,
         wholeWords,
         search,
+        searchFor,
         setKeywords,
         // Compatible with the single keyword search
         keyword: keywords.length === 0 ? '' : getKeywordSource(keywords[0]),

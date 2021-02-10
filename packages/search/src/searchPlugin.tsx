@@ -18,6 +18,7 @@ import SingleKeyword from './types/SingleKeyword';
 import StoreProps from './types/StoreProps';
 import OnHighlightKeyword from './types/OnHighlightKeyword';
 import Tracker from './Tracker';
+import useSearch from './useSearch';
 
 interface SearchPlugin extends Plugin {
     Search(props: SearchProps): React.ReactElement;
@@ -25,6 +26,8 @@ interface SearchPlugin extends Plugin {
     ShowSearchPopoverButton(): React.ReactElement;
     clearHighlights(): void;
     highlight(keyword: SingleKeyword | SingleKeyword[]): void;
+    jumpToNextMatch(): void;
+    jumpToPreviousMatch(): void;
 }
 
 export interface SearchPluginProps {
@@ -36,10 +39,10 @@ export interface SearchPluginProps {
 const searchPlugin = (props?: SearchPluginProps): SearchPlugin => {
     // eslint-disable-next-line @typescript-eslint/no-empty-function
     const onHighlightKeyword = React.useMemo(() => props && props.onHighlightKeyword ? props.onHighlightKeyword : () => {}, []);
-
     const store = React.useMemo(() => createStore<StoreProps>({
         renderStatus: new Map<number, PluginOnTextLayerRender>(),
     }), []);
+    const { clearKeyword, jumpToNextMatch, jumpToPreviousMatch, searchFor, setKeywords } = useSearch(store);
 
     const SearchDecorator = (props: SearchProps) => (
         <Search {...props} store={store} />
@@ -109,11 +112,15 @@ const searchPlugin = (props?: SearchPluginProps): SearchPlugin => {
         ShowSearchPopover: ShowSearchPopoverDecorator,
         ShowSearchPopoverButton: ShowSearchPopoverButtonDecorator,
         clearHighlights: () => {
-            store.update('keyword', [EMPTY_KEYWORD_REGEXP]);
+            clearKeyword();
         },
         highlight: (keyword: SingleKeyword | SingleKeyword[]) => {
-            store.update('keyword', normalizeKeywords(keyword));
+            const keywords = Array.isArray(keyword) ? keyword : [keyword];
+            setKeywords(keywords);
+            searchFor(keywords);
         },
+        jumpToNextMatch,
+        jumpToPreviousMatch,
     };
 };
 

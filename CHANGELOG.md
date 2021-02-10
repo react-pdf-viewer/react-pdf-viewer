@@ -3,23 +3,24 @@
 ## v2.4.0 [WIP]
 
 **New features**
-- You can highlight multiple keywords programatically:
+- The Search plugin provides methods to search for given keywords programatically:
+
+| Method                | Description                   |
+|-----------------------|-------------------------------|
+| `clearHighlights`     | Clear the highlights          |
+| `highlight`           | Highlight multiple keywords   |
+| `jumpToNextMatch`     | Jump to the next match        |
+| `jumpToPreviousMatch` | Jump to the previous match    |
 
 ~~~ javascript
 import { searchPlugin } from '@react-pdf-viewer/search';
 const searchPluginInstance = searchPlugin();
 
-const { highlight } = searchPluginInstance;
+const { clearHighlights, highlight, jumpToNextMatch, jumpToPreviousMatch } = searchPluginInstance;
 
 <button onClick={() => highlight(['document', 'PDF']) }>
     Highlight: document, PDF
 </button>
-~~~
-
-It's also possible to clear the highlights:
-
-~~~ javascript
-const { clearHighlights } = searchPluginInstance;
 ~~~
 
 - It's possible to add custom styles for highlighted area based on the keyword:
@@ -116,6 +117,7 @@ const searchPluginInstance = searchPlugin({
 
 **Bug fixes**
 - The Search plugin can find text that belongs to multiple `span` elements
+- Fix the type definitions of the `MoreActionsPopover` component in the Toolbar plugin
 
 **Breaking changes**
 - The `Observer` component is removed from the `@react-pdf-viewer/core` package
