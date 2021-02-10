@@ -29,15 +29,17 @@ interface UseSearch {
     wholeWords: boolean;
     search(): void;
     setKeywords(keyword: SingleKeyword[]): void;
-    searchFor(keyword: SingleKeyword[], matchCase?: boolean, wholeWords?: boolean): void;
+    searchFor(
+        keyword: SingleKeyword[],
+        matchCase?: boolean,
+        wholeWords?: boolean
+    ): void;
     // Compatible with the single keyword search
     keyword: string;
     setKeyword(keyword: string): void;
 }
 
-const useSearch = (
-    store: Store<StoreProps>
-): UseSearch => {
+const useSearch = (store: Store<StoreProps>): UseSearch => {
     const { currentDoc } = useDocument(store);
     const [keywords, setKeywords] = React.useState<SingleKeyword[]>([]);
     const [found, setFound] = React.useState<Match[]>([]);
@@ -96,7 +98,8 @@ const useSearch = (
 
     const search = () => searchFor(keywords, matchCase, wholeWords);
 
-    const setKeyword = (keyword: string) => setKeywords(keyword === '' ? [] : [keyword]);
+    const setKeyword = (keyword: string) =>
+        setKeywords(keyword === '' ? [] : [keyword]);
 
     // Private
     // -------
@@ -106,7 +109,7 @@ const useSearch = (
             return Promise.resolve([]);
         }
 
-        const promises =  Array(currentDoc.numPages)
+        const promises = Array(currentDoc.numPages)
             .fill(0)
             .map((_, pageIndex) => {
                 return currentDoc
@@ -153,7 +156,9 @@ const useSearch = (
         matchCaseParam?: boolean,
         wholeWordsParam?: boolean
     ): void => {
-        const keywords = keywordParam.map(k => normalizeSingleKeyword(k, matchCaseParam, wholeWordsParam));
+        const keywords = keywordParam.map((k) =>
+            normalizeSingleKeyword(k, matchCaseParam, wholeWordsParam)
+        );
         store.update('keyword', keywords);
 
         setCurrentMatch(0);
@@ -170,7 +175,9 @@ const useSearch = (
         promise.then((response) => {
             const arr: Match[] = [];
             response.forEach((item, pageIndex) => {
-                const numMatches = keywords.map(k => (item.match(k) || []).length).reduce((a, b) => a + b, 0);
+                const numMatches = keywords
+                    .map((k) => (item.match(k) || []).length)
+                    .reduce((a, b) => a + b, 0);
                 for (
                     let matchIndex = 0;
                     matchIndex < numMatches;

@@ -8,6 +8,6 @@
 
 export default interface FlagKeyword {
     keyword: string;
-    matchCase?: boolean;    // `false` by default
-    wholeWords?: boolean;   // `false` by default
+    matchCase?: boolean; // `false` by default
+    wholeWords?: boolean; // `false` by default
 }
