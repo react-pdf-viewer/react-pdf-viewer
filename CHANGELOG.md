@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## v2.4.0 [WIP]
+## v2.4.0
 
 **New features**
 - The Search plugin provides methods to search for given keywords programatically:
