@@ -3,12 +3,27 @@ A React component to view a PDF document.
 It's written in TypeScript, and powered by React hooks completely.
 
 ~~~ javascript
+// Core viewer
 import { Viewer } from '@react-pdf-viewer/core';
+
+// Plugins
+import { defaultLayoutPlugin } from '@react-pdf-viewer/default-layout';
 
 // Import styles
 import '@react-pdf-viewer/core/lib/styles/index.css';
+import '@react-pdf-viewer/default-layout/lib/styles/index.css';
 
-<Viewer fileUrl='/path/to/document.pdf' />
+// Create new plugin instance
+const defaultLayoutPluginInstance = defaultLayoutPlugin();
+
+<Viewer
+    fileUrl='/assets/pdf-open-parameters.pdf'
+    plugins={[
+        // Register plugins
+        defaultLayoutPluginInstance,
+        ...
+    ]}
+/>
 ~~~
 
 ![React PDF viewer](https://raw.githubusercontent.com/phuoc-ng/react-pdf-viewer/master/assets/screenshot.png)
