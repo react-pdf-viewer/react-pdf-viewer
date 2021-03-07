@@ -3,7 +3,8 @@
 ## v2.4.1 [WIP]
 
 **Bug fixes**
-- Clicking the Download button doesn't work. It only works the file when scrolling to the second page.
+- Clicking the Download button doesn't work. It only works the file when scrolling to the second page
+- Using the Default Layout plugin, we can't scroll between pages on Safari 14
 
 ## v2.4.0
 
