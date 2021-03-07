@@ -5,6 +5,7 @@
 **Bug fixes**
 - Clicking the Download button doesn't work. It only works the file when scrolling to the second page
 - Using the Default Layout plugin, we can't scroll between pages on Safari 14
+- The Open file button covers other elements, so we can't click on the Download or Print buttons. This issue only happens on Safari 14
 
 ## v2.4.0
 
