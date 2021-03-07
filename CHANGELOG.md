@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## v2.4.1 [WIP]
+
+**Bug fixes**
+- Clicking the Download button doesn't work. It only works the file when scrolling to the second page.
+
 ## v2.4.0
 
 **New features**
