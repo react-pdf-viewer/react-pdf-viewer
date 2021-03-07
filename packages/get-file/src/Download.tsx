@@ -28,7 +28,7 @@ const Download: React.FC<{
     fileNameGenerator: (file: OpenFile) => string,
     store: Store<StoreProps>,
 }> = ({ children, fileNameGenerator, store }) => {
-    const [currentFile, setCurrentFile] = React.useState<OpenFile>();
+    const [currentFile, setCurrentFile] = React.useState<OpenFile>(store.get('file'));
 
     const handleFileChanged: StoreHandler<OpenFile> = (file: OpenFile) => {
         setCurrentFile(file);
