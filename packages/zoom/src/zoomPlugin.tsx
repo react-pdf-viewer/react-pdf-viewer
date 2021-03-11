@@ -7,17 +7,17 @@
  */
 
 import * as React from 'react';
-import { createStore, Plugin, PluginFunctions, SpecialZoomLevel, ViewerState } from '@react-pdf-viewer/core';
+import { createStore, Plugin, PluginFunctions, RenderViewer, Slot, SpecialZoomLevel, ViewerState } from '@react-pdf-viewer/core';
 
 import CurrentScale, { CurrentScaleProps } from './CurrentScale';
+import ShortcutHandler from './ShortcutHandler';
+import StoreProps from './StoreProps';
 import Zoom, { ZoomProps } from './Zoom';
 import ZoomIn, { ZoomInProps } from './ZoomIn';
 import ZoomOut, { ZoomOutProps } from './ZoomOut';
 import ZoomInButton from './ZoomInButton';
 import ZoomOutButton from './ZoomOutButton';
 import ZoomPopover from './ZoomPopover';
-
-import StoreProps from './StoreProps';
 
 interface ZoomPlugin extends Plugin {
     zoomTo: (scale: number | SpecialZoomLevel) => void;
@@ -65,7 +65,24 @@ const zoomPlugin = (): ZoomPlugin => {
         </ZoomDecorator>
     );
 
+    const renderViewer = (props: RenderViewer): Slot => {
+        const { slot } = props;
+        const updateSlot: Slot = {
+            children: (
+                <>
+                <ShortcutHandler
+                    containerRef={props.containerRef}
+                    store={store}
+                />
+                {slot.children}
+                </>
+            )
+        };
+        return {...slot, ...updateSlot};
+    };
+
     return {
+        renderViewer,
         install: (pluginFunctions: PluginFunctions) => {
             store.update('zoom', pluginFunctions.zoom);
         },

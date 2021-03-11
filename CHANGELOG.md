@@ -3,11 +3,15 @@
 ## v2.4.2 [WIP]
 
 **Improvements**
+
 Support shortcuts.
 
-| Shortcut  | Supported plugin                                      | Action                |
-|-----------|-------------------------------------------------------|-----------------------|
-| `cmd + p` | [Print](https://react-pdf-viewer.dev/plugins/print/)  | Print the document    |
+| Shortcut                      | Supported plugin                                      | Action                |
+|-------------------------------|-------------------------------------------------------|-----------------------|
+| <kbd>cmd</kbd> + <kbd>p</kbd> | [Print](https://react-pdf-viewer.dev/plugins/print/)  | Print the document    |
+| <kbd>cmd</kbd> + <kbd>-</kbd> | [Zoom](https://react-pdf-viewer.dev/plugins/zoom/)    | Zoom out the document |
+| <kbd>cmd</kbd> + <kbd>+</kbd> |                                                       | Zoom in the document  |
+| <kbd>cmd</kbd> + <kbd>0</kbd> |                                                       | Reset zoom to 100%    |
 
 ## v2.4.1
 
