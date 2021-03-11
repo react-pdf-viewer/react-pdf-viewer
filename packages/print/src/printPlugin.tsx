@@ -13,7 +13,7 @@ import Print, { PrintProps } from './Print';
 import PrintButton from './PrintButton';
 import PrintContainer from './PrintContainer';
 import PrintStatus from './PrintStatus';
-
+import ShortcutHandler from './ShortcutHandler';
 import StoreProps from './StoreProps';
 
 interface PrintPlugin extends Plugin {
@@ -43,6 +43,10 @@ const printPlugin = (): PrintPlugin => {
         const updateSlot: Slot = {
             children: (
                 <>
+                <ShortcutHandler
+                    containerRef={props.containerRef}
+                    store={store}
+                />
                 <PrintContainer
                     doc={props.doc}
                     pageHeight={props.pageHeight}
