@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## v2.4.2 [WIP]
+
+**Improvements**
+Support shortcuts.
+
+| Shortcut  | Supported plugin                                      | Action                |
+|-----------|-------------------------------------------------------|-----------------------|
+| `cmd + p` | [Print](https://react-pdf-viewer.dev/plugins/print/)  | Print the document    |
+
 ## v2.4.1
 
 **Bug fixes**
