@@ -17,9 +17,16 @@ interface ShortcutHandlerProps {
     store: Store<StoreProps>;
 }
 
+const isMac = /(Mac|iPhone|iPod|iPad)/i.test(navigator.platform);
+
 const ShortcutHandler: React.FC<ShortcutHandlerProps> = ({ containerRef, store }) => {
     const keydownHandler = (e: KeyboardEvent) => {
-        if (e.key !== 'p' || !e.metaKey || e.ctrlKey) {
+        if (e.shiftKey || e.altKey || e.key !== 'p') {
+            return;
+        }
+
+        const isCommandPressed = isMac ? e.metaKey : e.ctrlKey;
+        if (!isCommandPressed) {
             return;
         }
 
