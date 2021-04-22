@@ -2,6 +2,9 @@
 
 ## v2.4.2 [WIP]
 
+**Bug fixes**
+- Can't delete the last remaining digit in the page number input
+
 **Improvements**
 
 Support shortcuts.

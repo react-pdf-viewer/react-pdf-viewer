@@ -16,32 +16,21 @@ import useNumberOfPages from './useNumberOfPages';
 const CurrentPageInput: React.FC<{
     store: Store<StoreProps>
 }> = ({ store }) => {
-    const [pageTextboxFocused, setPageTextboxFocused] = React.useState(false);
-    const [editingPage, setEditingPage] = React.useState(0);
+    const [editingPage, setEditingPage] = React.useState('1');
 
     const { currentPage } = useCurrentPage(store);
     const { numberOfPages } = useNumberOfPages(store);
 
+    React.useEffect(() => setEditingPage(`${currentPage + 1}`), [currentPage]);
+
     const changePage = (e: React.ChangeEvent<HTMLInputElement>): void => {
-        const newPage = parseInt(e.target.value, 10);
-        if (newPage > 0 && newPage <= numberOfPages) {
-            setEditingPage(newPage - 1);
-        }
-    };
-
-    const focusPageTextbox = (): void => {
-        setPageTextboxFocused(true);
-        setEditingPage(currentPage);
-    };
-
-    const blurPageTextbox = (): void => {
-        setPageTextboxFocused(false);
+        setEditingPage(e.target.value);
     };
 
     const gotoNextPage = (): void => {
         const nextPage = currentPage + 1;
         if (nextPage < numberOfPages) {
-            setEditingPage(nextPage);
+            setEditingPage(`${nextPage + 1}`);
             jumpTo(nextPage);
         }
     };
@@ -49,7 +38,7 @@ const CurrentPageInput: React.FC<{
     const gotoPreviousPage = (): void => {
         const previousPage = currentPage - 1;
         if (previousPage >= 0) {
-            setEditingPage(previousPage);
+            setEditingPage(`${previousPage + 1}`);
             jumpTo(previousPage);
         }
     };
@@ -64,12 +53,22 @@ const CurrentPageInput: React.FC<{
     const keydownPage = (e: React.KeyboardEvent): void => {
         switch (e.keyCode) {
             // Up key is pressed
-            case 38: gotoPreviousPage(); break;
+            case 38:
+                gotoPreviousPage();
+                break;
             // Down key
-            case 40: gotoNextPage(); break;
+            case 40:
+                gotoNextPage();
+                break;
             // Enter key
-            case 13: jumpTo(editingPage); break;
-            default: break;
+            case 13:
+                const newPage = parseInt(editingPage, 10);
+                (editingPage === '' || newPage < 1 || newPage > numberOfPages)
+                    ? setEditingPage(`${currentPage + 1}`)
+                    : jumpTo(newPage - 1);
+                break;
+            default:
+                break;
         }
     };
 
@@ -77,10 +76,8 @@ const CurrentPageInput: React.FC<{
         <input
             className='rpv-current-page-input'
             type='text'
-            value={pageTextboxFocused ? (editingPage + 1) : (currentPage + 1)}
+            value={editingPage}
             onChange={changePage}
-            onFocus={focusPageTextbox}
-            onBlur={blurPageTextbox}
             onKeyDown={keydownPage}
         />
     );
