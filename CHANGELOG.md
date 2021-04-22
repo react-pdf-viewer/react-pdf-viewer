@@ -6,8 +6,8 @@
 - Can't delete the last remaining digit in the page number input
 
 **Improvements**
-
-Support shortcuts.
+- Display the current page number in the right
+- Support shortcuts
 
 | Shortcut                      | Supported plugin                                      | Action                |
 |-------------------------------|-------------------------------------------------------|-----------------------|

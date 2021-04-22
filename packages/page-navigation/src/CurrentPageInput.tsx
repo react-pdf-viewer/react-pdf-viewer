@@ -50,6 +50,13 @@ const CurrentPageInput: React.FC<{
         }
     };
 
+    const jump = () => {
+        const newPage = parseInt(editingPage, 10);
+        (editingPage === '' || newPage < 1 || newPage > numberOfPages)
+            ? setEditingPage(`${currentPage + 1}`)
+            : jumpTo(newPage - 1);
+    };
+
     const keydownPage = (e: React.KeyboardEvent): void => {
         switch (e.keyCode) {
             // Up key is pressed
@@ -62,10 +69,7 @@ const CurrentPageInput: React.FC<{
                 break;
             // Enter key
             case 13:
-                const newPage = parseInt(editingPage, 10);
-                (editingPage === '' || newPage < 1 || newPage > numberOfPages)
-                    ? setEditingPage(`${currentPage + 1}`)
-                    : jumpTo(newPage - 1);
+                jump();
                 break;
             default:
                 break;
