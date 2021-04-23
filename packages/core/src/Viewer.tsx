@@ -19,6 +19,7 @@ import LocalizationMap from './localization/LocalizationMap';
 import LocalizationProvider from './localization/LocalizationProvider';
 import SpecialZoomLevel from './SpecialZoomLevel';
 import ThemeProvider from './theme/ThemeProvider';
+import isSameUrl from './utils/isSameUrl';
 import PdfJs from './vendors/PdfJs';
 import { Plugin } from './types/Plugin';
 
@@ -97,6 +98,7 @@ const Viewer: React.FC<ViewerProps> = ({
     });
 
     const openFile = (fileName: string, data: Uint8Array) => {
+        console.log(fileName, data);
         setFile({
             data,
             name: fileName,
@@ -109,7 +111,7 @@ const Viewer: React.FC<ViewerProps> = ({
 
     React.useEffect(() => {
         // If the document is changed
-        if (prevFile.data !== fileUrl) {
+        if (!isSameUrl(prevFile.data, fileUrl)) {
             setFile({
                 data: fileUrl,
                 name: (typeof fileUrl === 'string') ? fileUrl : '',

@@ -4,6 +4,8 @@
 
 **Bug fixes**
 - Can't delete the last remaining digit in the page number input
+- Properly check whether or not the `fileUrl` changes
+- Fix the issue where we see the spinner if the document has a single page and the height is smaller than the viewer's height
 
 **Improvements**
 - Display the current page number in the right
