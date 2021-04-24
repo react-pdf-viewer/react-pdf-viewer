@@ -10,6 +10,7 @@
 
 **Improvements**
 - Display the current page number in the right
+- Make the content of annotation scrollable
 - Support shortcuts
 
 | Shortcut                      | Supported plugin                                      | Action                |
