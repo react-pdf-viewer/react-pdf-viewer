@@ -9,6 +9,7 @@
 - Can't open the downloaded file if it was loaded with `Uint8Array`
 - Annotation popup can be displayed under the previous or next page
 - When users download a document loaded with `Uint8Array`, the download file is named as `document.pdf` instead of the document blob
+- Clicking a bookmark doesn't jump to the destination properly in the first time if the bookmark also requires to zoom the document to fit the width
 
 **Improvements**
 - Display the current page number in the right
