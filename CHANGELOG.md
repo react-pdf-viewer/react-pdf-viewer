@@ -7,6 +7,7 @@
 - Properly check whether or not the `fileUrl` changes
 - Fix the issue where we see the spinner if the document has a single page and the height is smaller than the viewer's height
 - Can't open the downloaded file if it was loaded with `Uint8Array`
+- Annotation popup can be displayed under the previous or next page
 
 **Improvements**
 - Display the current page number in the right
