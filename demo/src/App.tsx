@@ -14,11 +14,11 @@ const App = () => {
             <div
                 style={{
                     height: '720px',
-                    width: '640px',
+                    width: '900px',
                 }}
             >
                 <Viewer
-                    fileUrl='sample-2.pdf'
+                    fileUrl='sample.pdf'
                     plugins={[
                         defaultLayoutPluginInstance,
                     ]}
