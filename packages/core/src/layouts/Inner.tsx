@@ -97,6 +97,7 @@ const Inner: React.FC<InnerProps> = ({
             let top = 0;
             const bottom = bottomOffset || 0;
             let left = leftOffset || 0;
+            let updateScale = currentState.scale;
             switch (scaleTo) {
                 case SpecialZoomLevel.PageFit:
                     top = 0;
@@ -104,9 +105,10 @@ const Inner: React.FC<InnerProps> = ({
                     zoom(SpecialZoomLevel.PageFit);
                     break;
                 case SpecialZoomLevel.PageWidth:
-                    top = (viewport.height - bottom) * currentState.scale;
-                    left = left * currentState.scale;
-                    zoom(SpecialZoomLevel.PageWidth);
+                    updateScale = calculateScale(SpecialZoomLevel.PageWidth);
+                    top = (viewport.height - bottom) * updateScale;
+                    left = left * updateScale;
+                    zoom(updateScale);
                     break;
                 default:
                     top = (viewport.height - bottom) * currentState.scale;
@@ -163,11 +165,12 @@ const Inner: React.FC<InnerProps> = ({
         });
     };
 
-    const zoom = (newScale: number | SpecialZoomLevel): void => {
+    // Calculate the new scale
+    const calculateScale = (newScale: number | SpecialZoomLevel): number => {
         const pagesEle = pagesRef.current;
         const currentState = stateRef.current;
         if (!pagesEle || !currentState) {
-            return;
+            return 1;
         }
 
         let updateScale = 1;
@@ -192,6 +195,11 @@ const Inner: React.FC<InnerProps> = ({
                 break;
         }
 
+        return updateScale;
+    };
+
+    const zoom = (newScale: number | SpecialZoomLevel): void => {
+        const updateScale = calculateScale(newScale);
         setScale(updateScale);
         onZoom({ doc, scale: updateScale });
     };
