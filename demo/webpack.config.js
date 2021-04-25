@@ -48,6 +48,9 @@ module.exports = {
         }
     },
     devServer: {
+        // Allow us to access the demo from the IP address
+        // `http://IP_ADDRESS:8001`, `http://localhost:8001` work
+        host: '0.0.0.0',
         contentBase: path.join(__dirname, 'dist'),
         historyApiFallback: true,
         port: 8001,
