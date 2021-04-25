@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## v2.4.2 [WIP]
+## v2.4.2
 
 **Bug fixes**
 - Can't delete the last remaining digit in the page number input
@@ -20,8 +20,8 @@
 |-------------------------------|-------------------------------------------------------|-----------------------|
 | <kbd>cmd</kbd> + <kbd>p</kbd> | [Print](https://react-pdf-viewer.dev/plugins/print/)  | Print the document    |
 | <kbd>cmd</kbd> + <kbd>-</kbd> | [Zoom](https://react-pdf-viewer.dev/plugins/zoom/)    | Zoom out the document |
-| <kbd>cmd</kbd> + <kbd>+</kbd> |                                                       | Zoom in the document  |
-| <kbd>cmd</kbd> + <kbd>0</kbd> |                                                       | Reset zoom to 100%    |
+| <kbd>cmd</kbd> + <kbd>+</kbd> | [Zoom](https://react-pdf-viewer.dev/plugins/zoom/)    | Zoom in the document  |
+| <kbd>cmd</kbd> + <kbd>0</kbd> | [Zoom](https://react-pdf-viewer.dev/plugins/zoom/)    | Reset zoom to 100%    |
 
 ## v2.4.1
 
