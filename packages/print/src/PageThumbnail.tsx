@@ -63,19 +63,9 @@ const PageThumbnail: React.FC<PageThumbnailProps> = ({
         !src
             ? <Spinner />
             : (
-                <div
-                    className='rpv-print-page-thumbnail'
-                    style={{
-                        height: `${Math.floor(pageHeight * 96 / 72)}px`,
-                        width: `${Math.floor(pageWidth * 96 / 72)}px`,
-                    }}
-                >
+                <div className='rpv-print-page-thumbnail'>
                     <img
                         src={src}
-                        style={{
-                            height: `${Math.floor(pageHeight * 96 / 72)}px`,
-                            width: `${Math.floor(pageWidth * 96 / 72)}px`,
-                        }}
                         onLoad={onLoad}
                     />
                 </div>

@@ -74,11 +74,7 @@ const PrintZone: React.FC<PrintZoneProps> = ({ doc, pageHeight, pageWidth, print
                 </div>
                 <style
                     dangerouslySetInnerHTML={{
-                        __html: `
-                            @supports ((size:A4) and (size:1pt 1pt)) {
-                                @page { size: ${pageWidth}pt ${pageHeight}pt }
-                            }
-                        `
+                        __html: `@page { size: ${pageWidth}pt ${pageHeight}pt }`
                     }}
                 >
                 </style>
