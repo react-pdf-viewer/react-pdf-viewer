@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## v2.4.3 [WIP]
+
+**Improvements**
+- The print plugin supports documents whose pages have different dimensions
+
 ## v2.4.2
 
 **Bug fixes**

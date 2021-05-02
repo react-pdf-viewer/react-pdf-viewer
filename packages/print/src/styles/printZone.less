@@ -15,6 +15,11 @@
         margin: 0;
     }
 
+    .rpv-body-printing {
+        height: 100vh;
+        margin: 0;
+    }
+
     .rpv-body-printing * {
         display: none;
     }
@@ -25,13 +30,24 @@
     }
 
     .rpv-print-page-thumbnail {
-        display: block;
-        overflow: hidden;
-        page-break-after: auto;
+        // Center the content
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+
+        // Take full size
+        height: 100%;
+        width: 100%;
+
+        // Misc        
+        page-break-after: always;
         page-break-inside: avoid;
 
         img {
             display: block;
+            max-height: 100%;
+            max-width: 100%;       
         }
     }
 }
