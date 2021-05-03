@@ -17,7 +17,10 @@ const isSameUrl = (a: PdfJs.FileData, b: PdfJs.FileData): boolean => {
         return true;
     }
     if (typeA === 'object' && typeB === 'object') {
-        return a.length === b.length && (a as Uint8Array).every((v, i) => v === b[i]);
+        return (
+            a.length === b.length &&
+            (a as Uint8Array).every((v, i) => v === b[i])
+        );
     }
     return false;
 };
