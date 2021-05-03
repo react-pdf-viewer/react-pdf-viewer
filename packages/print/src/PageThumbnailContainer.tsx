@@ -7,7 +7,7 @@
  */
 
 import * as React from 'react';
-import { PdfJs, Spinner } from '@react-pdf-viewer/core';
+import { PdfJs } from '@react-pdf-viewer/core';
 
 import PageThumbnail from './PageThumbnail';
 
@@ -54,17 +54,15 @@ const PageThumbnailContainer: React.FC<PageThumbnailContainerProps> = ({ doc, pa
     const rotationNumber = (rotation + pageSize.viewportRotation) % 360;
 
     return (
-        !page
-            ? <Spinner />
-            : (
-                <PageThumbnail
-                    page={page}
-                    pageHeight={isVertical ? height : width}
-                    pageWidth={isVertical ? width : height}
-                    rotation={rotationNumber}
-                    onLoad={onLoad}
-                />
-            )
+        page && (
+            <PageThumbnail
+                page={page}
+                pageHeight={isVertical ? height : width}
+                pageWidth={isVertical ? width : height}
+                rotation={rotationNumber}
+                onLoad={onLoad}
+            />
+        )
     );
 };
 

@@ -31,12 +31,15 @@ const PrintContainer: React.FC<PrintContainerProps> = ({ doc, pageHeight, pageWi
         setPrintStatus(PrintStatus.Inactive);
     };
 
-    const startPrinting = (): void => {
-        setNumLoadedPagesForPrint(0);
-        setPrintStatus(PrintStatus.Ready);
-    };
-
     const handlePrintStatus: StoreHandler<PrintStatus> = (status: PrintStatus) => setPrintStatus(status);
+
+    const onLoadPage = () => {
+        const total = numLoadedPagesForPrint + 1;        
+        if (total <= doc.numPages) {
+            setNumLoadedPagesForPrint(total);
+            total === doc.numPages && setPrintStatus(PrintStatus.Ready);
+        }
+    };
 
     React.useEffect(() => {
         store.subscribe('printStatus', handlePrintStatus);
@@ -52,18 +55,18 @@ const PrintContainer: React.FC<PrintContainerProps> = ({ doc, pageHeight, pageWi
                 numLoadedPages={numLoadedPagesForPrint}
                 numPages={doc.numPages}
                 onCancel={cancelPrinting}
-                onStartPrinting={startPrinting}
             />
         )}
-        {(printStatus === PrintStatus.Preparing || printStatus === PrintStatus.Ready) && (
+        {(printStatus === PrintStatus.Preparing || printStatus === PrintStatus.Ready) && (numLoadedPagesForPrint <= doc.numPages) && (
             <PrintZone
                 doc={doc}
+                numLoadedPages={numLoadedPagesForPrint}
                 pageHeight={pageHeight}
                 pageWidth={pageWidth}
                 printStatus={printStatus}
                 rotation={rotation}
                 onCancel={cancelPrinting}
-                onLoad={setNumLoadedPagesForPrint}
+                onLoad={onLoadPage}
             />
         )}
         </>

@@ -13,17 +13,11 @@ interface PrintProgressProps {
     numLoadedPages: number;
     numPages: number;
     onCancel(): void;
-    onStartPrinting(): void;
 }
 
-const PrintProgress: React.FC<PrintProgressProps> = ({ numLoadedPages, numPages, onCancel, onStartPrinting }) => {
+const PrintProgress: React.FC<PrintProgressProps> = ({ numLoadedPages, numPages, onCancel }) => {
     const l10n = React.useContext(LocalizationContext);
     const progress = Math.floor(numLoadedPages * 100 / numPages);
-    React.useEffect(() => {
-        if (numLoadedPages === numPages) {
-            onStartPrinting();
-        }
-    }, [numLoadedPages]);
 
     return (
         <div className='rpv-print-progress'>
