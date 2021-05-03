@@ -25,13 +25,11 @@ interface PrintZoneProps {
 }
 
 const PrintZone: React.FC<PrintZoneProps> = ({ doc, numLoadedPages, pageHeight, pageWidth, printStatus, rotation, onCancel, onLoad }) => {
-    const canvas = React.useMemo(() => {
-        console.log('Create shared canvas');
-        return document.createElement('canvas') as HTMLCanvasElement;
-    }, []);
+    const canvas = React.useMemo(() => document.createElement('canvas') as HTMLCanvasElement, []);
 
     React.useEffect(() => {
         if (printStatus === PrintStatus.Ready) {
+            document.documentElement.classList.add('rpv-html-printing');
             document.body.classList.add('rpv-body-printing');
             window.print();
         }
@@ -39,8 +37,9 @@ const PrintZone: React.FC<PrintZoneProps> = ({ doc, numLoadedPages, pageHeight, 
         // Handle the case user clicks the `Cancel` button in the print window
         const handler = (): void => {
             if (printStatus === PrintStatus.Ready) {
-                // document.body.classList.remove('rpv-body-printing');
-                // onCancel();
+                document.documentElement.classList.remove('rpv-html-printing');
+                document.body.classList.remove('rpv-body-printing');
+                onCancel();
             }
         };
         document.addEventListener('mousemove', handler);
