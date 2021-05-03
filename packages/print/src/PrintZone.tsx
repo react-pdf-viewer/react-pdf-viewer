@@ -39,6 +39,11 @@ const PrintZone: React.FC<PrintZoneProps> = ({ doc, numLoadedPages, pageHeight, 
             if (printStatus === PrintStatus.Ready) {
                 document.documentElement.classList.remove('rpv-html-printing');
                 document.body.classList.remove('rpv-body-printing');
+
+                // Cleanup
+                canvas.height = 0;
+                canvas.width = 0;
+
                 onCancel();
             }
         };
