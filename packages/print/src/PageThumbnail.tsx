@@ -7,7 +7,7 @@
  */
 
 import * as React from 'react';
-import { PdfJs, Spinner } from '@react-pdf-viewer/core';
+import { PdfJs } from '@react-pdf-viewer/core';
 
 interface PageThumbnailProps {
     page: PdfJs.Page;
@@ -60,16 +60,11 @@ const PageThumbnail: React.FC<PageThumbnailProps> = ({
     }, []);
 
     return (
-        !src
-            ? <Spinner />
-            : (
-                <div className='rpv-print-page-thumbnail'>
-                    <img
-                        src={src}
-                        onLoad={onLoad}
-                    />
-                </div>
-            )
+        src && (
+            <div className='rpv-print-page-thumbnail'>
+                <img src={src} onLoad={() => onLoad()} />
+            </div>
+        )
     );
 };
 

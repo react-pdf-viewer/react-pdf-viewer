@@ -15,17 +15,16 @@ import PrintStatus from './PrintStatus';
 
 interface PrintZoneProps {
     doc: PdfJs.PdfDocument;
+    numLoadedPages: number;
     pageHeight: number;
     pageWidth: number;
     printStatus: PrintStatus;
     rotation: number;
     onCancel(): void;
-    onLoad(numberOfPages: number): void;
+    onLoad(): void;
 }
 
-const PrintZone: React.FC<PrintZoneProps> = ({ doc, pageHeight, pageWidth, printStatus, rotation, onCancel, onLoad }) => {
-    const [numLoadedPages, setNumLoadedPages] = React.useState(0);
-
+const PrintZone: React.FC<PrintZoneProps> = ({ doc, numLoadedPages, pageHeight, pageWidth, printStatus, rotation, onCancel, onLoad }) => {
     React.useEffect(() => {
         if (printStatus === PrintStatus.Ready) {
             document.body.classList.add('rpv-body-printing');
@@ -44,32 +43,23 @@ const PrintZone: React.FC<PrintZoneProps> = ({ doc, pageHeight, pageWidth, print
         return (): void => document.removeEventListener('mousemove', handler);
     }, [printStatus]);
 
-    const { numPages } = doc;
-    const loadPage = (): void => {
-        const total = numLoadedPages + 1;
-        setNumLoadedPages(total);
-        onLoad(total);
-    };
-
     return (
         createPortal(
             (
                 <>
                 <div className='rpv-print-zone'>
                     {
-                        Array(numPages).fill(0).map((_, index) => {
-                            return (
-                                <PageThumbnailContainer
-                                    key={index}
-                                    doc={doc}
-                                    pageHeight={pageHeight}
-                                    pageIndex={index}
-                                    pageWidth={pageWidth}
-                                    rotation={rotation}
-                                    onLoad={loadPage}
-                                />
-                            );
-                        })
+                        Array(Math.min(numLoadedPages + 1, doc.numPages)).fill(0).map((_, index) => (
+                            <PageThumbnailContainer
+                                key={index}
+                                doc={doc}
+                                pageHeight={pageHeight}
+                                pageIndex={index}
+                                pageWidth={pageWidth}
+                                rotation={rotation}
+                                onLoad={onLoad}
+                            />
+                        ))
                     }
                 </div>
                 <style

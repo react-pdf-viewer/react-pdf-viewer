@@ -3,6 +3,7 @@
 ## v2.4.3 [WIP]
 
 **Improvements**
+- Display the progress properly when printing a big document
 - The print plugin supports documents whose pages have different dimensions
 
 ## v2.4.2
