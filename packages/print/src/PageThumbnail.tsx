@@ -10,6 +10,7 @@ import * as React from 'react';
 import { PdfJs } from '@react-pdf-viewer/core';
 
 interface PageThumbnailProps {
+    canvas: HTMLCanvasElement;
     page: PdfJs.Page;
     pageHeight: number;
     pageWidth: number;
@@ -18,7 +19,7 @@ interface PageThumbnailProps {
 }
 
 const PageThumbnail: React.FC<PageThumbnailProps> = ({
-    page, pageHeight, pageWidth, rotation, onLoad,
+    canvas, page, pageHeight, pageWidth, rotation, onLoad,
 }) => {
     const renderTask = React.useRef<PdfJs.PageRenderTask>();
     const [src, setSrc] = React.useState('');
@@ -29,7 +30,6 @@ const PageThumbnail: React.FC<PageThumbnailProps> = ({
             task.cancel();
         }
 
-        const canvas = document.createElement('canvas') as HTMLCanvasElement;
         const printUnit = 150 / 72;
         canvas.height = Math.floor(pageHeight * printUnit);
         canvas.width = Math.floor(pageWidth * printUnit);

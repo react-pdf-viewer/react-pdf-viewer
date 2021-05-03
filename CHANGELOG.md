@@ -4,6 +4,7 @@
 
 **Improvements**
 - Display the progress properly when printing a big document
+- Improve the performance of preparing pages for print such as using a shared `canvas` element for all pages
 - The print plugin supports documents whose pages have different dimensions
 
 ## v2.4.2
