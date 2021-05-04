@@ -7,7 +7,7 @@
  */
 
 // Scroll the `ele` element if it's not visible in its scrollable `container`
-const scrollToBeVisible = (ele: HTMLElement, container: HTMLElement) => {
+const scrollToBeVisible = (ele: HTMLElement, container: HTMLElement): void => {
     const eleTop = ele.offsetTop;
     const eleBottom = eleTop + ele.clientHeight;
 
@@ -16,10 +16,10 @@ const scrollToBeVisible = (ele: HTMLElement, container: HTMLElement) => {
 
     if (eleTop < containerTop) {
         // Scroll to the top of container
-        container.scrollTop -= (containerTop - eleTop);
+        container.scrollTop -= containerTop - eleTop;
     } else if (eleBottom > containerBottom) {
         // Scroll to the bottom of container
-        container.scrollTop += (eleBottom - containerBottom);
+        container.scrollTop += eleBottom - containerBottom;
     }
 };
 
