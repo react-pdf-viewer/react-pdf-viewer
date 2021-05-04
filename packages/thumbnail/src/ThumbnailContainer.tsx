@@ -50,7 +50,7 @@ const ThumbnailContainer: React.FC<ThumbnailContainerProps> = ({ doc, isActive, 
     const w = isVertical ? THUMBNAIL_WIDTH : (THUMBNAIL_WIDTH / scale);
     const h = isVertical ? (THUMBNAIL_WIDTH / scale) : THUMBNAIL_WIDTH;
 
-    React.useEffect(() => {
+    React.useLayoutEffect(() => {
         if (!isActive) {
             return;
         }

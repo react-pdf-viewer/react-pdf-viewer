@@ -8,19 +8,8 @@
 
 .rpv-thumbnail-list {
     display: flex;
+    height: 100%;
     flex-flow: row wrap;
     justify-content: center;
-}
-
-.rpv-thumbnail-item {
-    cursor: pointer;
-    padding: 8px;
-
-    &:hover {
-        background-color: rgba(0, 0, 0, 0.3);
-    }
-
-    &-selected {
-        background-color: rgba(0, 0, 0, 0.3);
-    }
+    overflow: auto;
 }
