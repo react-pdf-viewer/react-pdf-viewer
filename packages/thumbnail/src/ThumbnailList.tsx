@@ -25,35 +25,51 @@ const ThumbnailList: React.FC<ThumbnailListProps> = ({
     currentPage, doc, pageHeight, pageWidth, rotation, onJumpToPage,
 }) => {
     const { numPages } = doc;
+    const containerRef = React.useRef<HTMLDivElement | null>(null);
+
+    const scrollToThumbnail = (target: HTMLElement) => {
+        const container = containerRef.current;
+        if (!container) {
+            return;
+        }
+
+        // Scroll to the thumbnail that represents the current page
+        container.scrollTop = target.offsetTop;
+        container.scrollLeft = target.offsetLeft;
+    };
+
     return (
-        <div className='rpv-thumbnail-list'>
-            {
-                Array(numPages).fill(0).map((_, index) => {
-                    return (
-                        <div
-                            key={`thumbnail-${index}`}
-                            onClick={() => onJumpToPage(index)}
-                        >
-                            <div
-                                className={
-                                    classNames({
-                                        ['rpv-thumbnail-item']: true,
-                                        ['rpv-thumbnail-item-selected']: currentPage === index,
-                                    })
-                                }
-                            >
-                                <ThumbnailContainer
-                                    doc={doc}
-                                    pageHeight={pageHeight}
-                                    pageIndex={index}
-                                    pageWidth={pageWidth}
-                                    rotation={rotation}
-                                />
-                            </div>
-                        </div>
-                    );
-                })
-            }
+        <div
+            ref={containerRef}
+            className='rpv-thumbnail-list'
+        >
+        {
+            Array(numPages).fill(0).map((_, index) => (
+                <div
+                    key={`thumbnail-${index}`}
+                    onClick={() => onJumpToPage(index)}
+                >
+                    <div
+                        className={
+                            classNames({
+                                ['rpv-thumbnail-item']: true,
+                                ['rpv-thumbnail-item-selected']: currentPage === index,
+                            })
+                        }
+                    >
+                        <ThumbnailContainer                            
+                            doc={doc}
+                            isActive={currentPage === index}
+                            pageHeight={pageHeight}
+                            pageIndex={index}
+                            pageWidth={pageWidth}
+                            rotation={rotation}
+                            onActive={scrollToThumbnail}
+                        />
+                    </div>
+                </div>
+            ))
+        }
         </div>
     );
 };

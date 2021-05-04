@@ -13,12 +13,14 @@ import ThumbnailItem from './ThumbnailItem';
 
 const THUMBNAIL_WIDTH = 100;
 
-interface ThumbnailContainerProps {
+interface ThumbnailContainerProps {    
     doc: PdfJs.PdfDocument;
+    isActive: boolean;
     pageHeight: number;
     pageIndex: number;
     pageWidth: number;
     rotation: number;
+    onActive(target: HTMLElement): void;
 }
 
 interface PageState {
@@ -29,13 +31,17 @@ interface PageState {
     width: number;
 }
 
-const ThumbnailContainer: React.FC<ThumbnailContainerProps> = ({ doc, pageHeight, pageIndex, pageWidth, rotation }) => {
+const ThumbnailContainer: React.FC<ThumbnailContainerProps> = ({ doc, isActive, pageHeight, pageIndex, pageWidth, rotation, onActive }) => {
     const [pageSize, setPageSize] = React.useState<PageState>({
         height: pageHeight,
         isCalculated: false,
         page: null,
         viewportRotation: 0,
         width: pageWidth,
+    });
+    const visibilityRef = React.useRef<VisibilityChanged>({
+        isVisible: false,
+        ratio: 0,
     });
     const { isCalculated, page, height, width } = pageSize;
 
@@ -44,7 +50,19 @@ const ThumbnailContainer: React.FC<ThumbnailContainerProps> = ({ doc, pageHeight
     const w = isVertical ? THUMBNAIL_WIDTH : (THUMBNAIL_WIDTH / scale);
     const h = isVertical ? (THUMBNAIL_WIDTH / scale) : THUMBNAIL_WIDTH;
 
+    React.useEffect(() => {
+        if (!isActive) {
+            return;
+        }
+        const ele = containerRef.current;
+        const visibility = visibilityRef.current;
+        if (!visibility.isVisible || visibility.ratio < 1) {
+            onActive(ele);
+        }
+    }, [isActive]);
+
     const onVisibilityChanged = (params: VisibilityChanged): void => {
+        visibilityRef.current = params;
         if (params.isVisible && !isCalculated) {
             doc.getPage(pageIndex + 1).then((pdfPage) => {
                 const viewport = pdfPage.getViewport({ scale: 1 });
