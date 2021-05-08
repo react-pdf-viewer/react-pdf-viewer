@@ -2,6 +2,9 @@
 
 ## v2.4.3 [WIP]
 
+**Bug fixes**
+- Clicking on an internal link jumps to an incorrect page (one page after the destination one)
+
 **Improvements**
 - Automatically scroll to the thumbnail that represents the current page
 - Display the progress properly when printing a big document
