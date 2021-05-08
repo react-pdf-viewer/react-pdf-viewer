@@ -31,7 +31,7 @@ const Link: React.FC<LinkProps> = ({ annotation, doc, page, viewport, onExecuteN
             ? onExecuteNamedAction(annotation.action)
             : getDestination(doc, annotation.dest).then((target) => {
                 const { pageIndex, bottomOffset, scaleTo } = target;
-                onJumpToDest(pageIndex + 1, bottomOffset, 0, scaleTo);
+                onJumpToDest(pageIndex, bottomOffset, 0, scaleTo);
             });
     };
 
