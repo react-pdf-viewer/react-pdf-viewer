@@ -7,6 +7,7 @@
  */
 
 import * as React from 'react';
+import Spinner from '../components/Spinner';
 
 import ThemeContext from '../theme/ThemeContext';
 import LayerRenderStatus from '../types/LayerRenderStatus';
@@ -29,10 +30,14 @@ const CanvasLayer: React.FC<CanvasLayerProps> = ({ height, page, pageIndex, plug
     const canvasRef = React.createRef<HTMLCanvasElement>();
     const renderTask = React.useRef<PdfJs.PageRenderTask>();
 
+    const [rendered, setRendered] = React.useState(false);
+
     // Support high DPI screen
     const devicePixelRatio = window.devicePixelRatio || 1;
 
     const renderCanvas = (): void => {
+        setRendered(false);
+
         const task = renderTask.current;
         if (task) {
             task.cancel();
@@ -64,6 +69,7 @@ const CanvasLayer: React.FC<CanvasLayerProps> = ({ height, page, pageIndex, plug
         renderTask.current = page.render({ canvasContext, viewport });
         renderTask.current.promise.then(
             (): void => {
+                setRendered(true);
                 canvasEle.style.removeProperty('opacity');
                 plugins.forEach(plugin => {
                     if (plugin.onCanvasLayerRender) {
@@ -77,7 +83,9 @@ const CanvasLayer: React.FC<CanvasLayerProps> = ({ height, page, pageIndex, plug
                     }
                 });
             },
-            (): void => {/**/},
+            (): void => {
+                setRendered(true);
+            },
         );
     };
 
@@ -90,13 +98,20 @@ const CanvasLayer: React.FC<CanvasLayerProps> = ({ height, page, pageIndex, plug
                     width: `${width}px`,
                 }}
             >
-            <canvas
-                ref={canvasRef}
-                style={{
-                    transform: `scale(${1 / devicePixelRatio})`,
-                    transformOrigin: `top left`,
-                }}
-            />
+                {
+                    !rendered && (
+                        <div className={`${theme.prefixClass}-canvas-layer-loader`}>                    
+                            <Spinner />
+                        </div>
+                    )
+                }
+                <canvas
+                    ref={canvasRef}
+                    style={{
+                        transform: `scale(${1 / devicePixelRatio})`,
+                        transformOrigin: `top left`,
+                    }}
+                />
             </div>
         </WithScale>
     );
