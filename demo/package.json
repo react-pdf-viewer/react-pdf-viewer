@@ -8,17 +8,17 @@
         "dev": "rm -rf dist && mkdir dist && npm run copyasset && NODE_ENV=development webpack serve"
     },
     "dependencies": {
-        "@react-pdf-viewer/core": "2.4.2",
-        "@react-pdf-viewer/default-layout": "2.4.2",
-        "@react-pdf-viewer/full-screen": "2.4.2",
-        "@react-pdf-viewer/highlight": "2.4.2",
-        "@react-pdf-viewer/page-navigation": "2.4.2",
-        "@react-pdf-viewer/open": "2.4.2",
-        "@react-pdf-viewer/print": "2.4.2",
-        "@react-pdf-viewer/scroll-mode": "2.4.2",
-        "@react-pdf-viewer/search": "2.4.2",
-        "@react-pdf-viewer/toolbar": "2.4.2",
-        "@react-pdf-viewer/zoom": "2.4.2"
+        "@react-pdf-viewer/core": "2.4.3",
+        "@react-pdf-viewer/default-layout": "2.4.3",
+        "@react-pdf-viewer/full-screen": "2.4.3",
+        "@react-pdf-viewer/highlight": "2.4.3",
+        "@react-pdf-viewer/page-navigation": "2.4.3",
+        "@react-pdf-viewer/open": "2.4.3",
+        "@react-pdf-viewer/print": "2.4.3",
+        "@react-pdf-viewer/scroll-mode": "2.4.3",
+        "@react-pdf-viewer/search": "2.4.3",
+        "@react-pdf-viewer/toolbar": "2.4.3",
+        "@react-pdf-viewer/zoom": "2.4.3"
     },
     "devDependencies": {
         "@babel/core": "^7.13.15",

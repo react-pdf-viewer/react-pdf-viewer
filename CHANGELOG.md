@@ -1,8 +1,8 @@
 # CHANGELOG
 
-## v2.4.3 [WIP]
+## v2.4.3
 
-**Bug fixes**
+**Bug fix**
 - Clicking on an internal link jumps to an incorrect page (one page after the destination one)
 
 **Improvements**
