@@ -8,19 +8,55 @@
 
 // Scroll the `ele` element if it's not visible in its scrollable `container`
 const scrollToBeVisible = (ele: HTMLElement, container: HTMLElement): void => {
-    const eleTop = ele.offsetTop;
-    const eleBottom = eleTop + ele.clientHeight;
+    // Calculate the distance from top of element to the top side of container
+    const top =
+        ele.getBoundingClientRect().top - container.getBoundingClientRect().top;
+    const eleHeight = ele.clientHeight;
+    const containerHeight = container.clientHeight;
 
-    const containerTop = container.scrollTop;
-    const containerBottom = containerTop + container.clientHeight;
-
-    if (eleTop < containerTop) {
-        // Scroll to the top of container
-        container.scrollTop -= containerTop - eleTop;
-    } else if (eleBottom > containerBottom) {
-        // Scroll to the bottom of container
-        container.scrollTop += eleBottom - containerBottom;
+    // 1) Must scroll to the top to see the element
+    //      ┌───────────────┐
+    //      |               |
+    // ┌────┼───────────────┼───────┐
+    // |    |               |       |
+    // |    |               |       |
+    // |    └───────────────┘       |
+    // |                            |
+    // |                            |
+    // └────────────────────────────┘
+    if (top < 0) {
+        container.scrollTop += top;
+        return;
     }
+
+    // 2) Element is visible completely within the container
+    // ┌────────────────────────────┐
+    // |                            |
+    // |    ┌───────────────┐       |
+    // |    |               |       |
+    // |    |               |       |
+    // |    |               |       |
+    // |    |               |       |
+    // |    └───────────────┘       |
+    // |                            |
+    // └────────────────────────────┘
+    if (top + eleHeight <= containerHeight) {
+        return;
+    }
+
+    // 3) Must scroll to the bottom to see the element
+    // ┌────────────────────────────┐
+    // |                            |
+    // |                            |
+    // |                            |
+    // |                            |
+    // |    ┌───────────────┐       |
+    // |    |               |       |
+    // |    |               |       |
+    // └────┼───────────────┼───────┘
+    //      |               |
+    //      └───────────────┘
+    container.scrollTop += top + eleHeight - containerHeight;
 };
 
 export default scrollToBeVisible;
