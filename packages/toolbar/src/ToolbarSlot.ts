@@ -7,7 +7,7 @@
  */
 
 import * as React from 'react';
-import { EnterFullScreenProps } from '@react-pdf-viewer/full-screen';
+import { EnterFullScreenMenuItemProps, EnterFullScreenProps } from '@react-pdf-viewer/full-screen';
 import { DownloadProps } from '@react-pdf-viewer/get-file';
 import { OpenProps } from '@react-pdf-viewer/open';
 import {
@@ -47,6 +47,7 @@ export default interface ToolbarSlot {
     CurrentScale(props: CurrentScaleProps): React.ReactElement;
     Download(props: DownloadProps): React.ReactElement;
     EnterFullScreen(props: EnterFullScreenProps): React.ReactElement;
+    EnterFullScreenMenuItem(props: EnterFullScreenMenuItemProps): React.ReactElement;
     GoToFirstPage(props: GoToFirstPageProps): React.ReactElement;
     GoToFirstPageMenuItem(
         props: GoToFirstPageMenuItemProps
