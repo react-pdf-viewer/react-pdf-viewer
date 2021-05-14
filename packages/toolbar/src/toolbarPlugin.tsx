@@ -85,7 +85,7 @@ const toolbarPlugin = (props?: ToolbarPluginProps): ToolbarPlugin => {
             CurrentPageInput, CurrentPageLabel, GoToFirstPage, GoToFirstPageMenuItem, GoToLastPage,
             GoToLastPageMenuItem, GoToNextPage, GoToPreviousPage,
         } = pageNavigationPluginInstance;
-        const { Print } = printPluginInstance;
+        const { Print, PrintMenuItem } = printPluginInstance;
         const { ShowProperties, ShowPropertiesMenuItem } = propertiesPluginInstance;
         const { Rotate, RotateBackwardMenuItem, RotateForwardMenuItem } = rotatePluginInstance;
         const { SwitchScrollMode, SwitchScrollModeMenuItem } = scrollModePluginInstance;
@@ -119,6 +119,7 @@ const toolbarPlugin = (props?: ToolbarPluginProps): ToolbarPlugin => {
                     NumberOfPages,
                     Open,
                     Print,
+                    PrintMenuItem,
                     Rotate,
                     RotateBackwardMenuItem,
                     RotateForwardMenuItem,
