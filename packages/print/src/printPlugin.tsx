@@ -12,6 +12,7 @@ import { createStore, Plugin, RenderViewer, Slot } from '@react-pdf-viewer/core'
 import Print, { PrintProps } from './Print';
 import PrintButton from './PrintButton';
 import PrintContainer from './PrintContainer';
+import PrintMenuItem, { PrintMenuItemProps } from './PrintMenuItem';
 import PrintStatus from './PrintStatus';
 import ShortcutHandler from './ShortcutHandler';
 import StoreProps from './StoreProps';
@@ -19,6 +20,7 @@ import StoreProps from './StoreProps';
 interface PrintPlugin extends Plugin {
     Print: (props: PrintProps) => React.ReactElement;
     PrintButton: () => React.ReactElement;
+    PrintMenuItem: (props: PrintMenuItemProps) => React.ReactElement;
 }
 
 const printPlugin = (): PrintPlugin => {
@@ -35,6 +37,12 @@ const printPlugin = (): PrintPlugin => {
             {
                 (props) => <PrintButton {...props} />
             }
+        </PrintDecorator>
+    );
+
+    const PrintMenuItemDecorator = (props: PrintMenuItemProps) => (
+        <PrintDecorator>
+            {(p) => <PrintMenuItem onClick={() => { p.onClick(); props.onClick(); }} />}
         </PrintDecorator>
     );
 
@@ -65,6 +73,7 @@ const printPlugin = (): PrintPlugin => {
         renderViewer,
         Print: PrintDecorator,
         PrintButton: PrintButtonDecorator,
+        PrintMenuItem: PrintMenuItemDecorator,
     };
 };
 
