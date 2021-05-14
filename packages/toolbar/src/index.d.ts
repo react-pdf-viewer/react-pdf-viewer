@@ -15,6 +15,7 @@ import type {
     FullScreenPluginProps,
 } from '@react-pdf-viewer/full-screen';
 import type {
+    DownloadMenuItemProps,
     DownloadProps,
     GetFilePlugin,
     GetFilePluginProps,
@@ -72,6 +73,7 @@ export interface ToolbarSlot {
     CurrentPageLabel(props: CurrentPageLabelProps): React.ReactElement;
     CurrentScale(props: CurrentScaleProps): React.ReactElement;
     Download(props: DownloadProps): React.ReactElement;
+    DownloadMenuItem(props: DownloadMenuItemProps): React.ReactElement;
     EnterFullScreen(props: EnterFullScreenProps): React.ReactElement;
     EnterFullScreenMenuItem(props: EnterFullScreenMenuItemProps): React.ReactElement;
     GoToFirstPage(props: GoToFirstPageProps): React.ReactElement;
