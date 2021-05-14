@@ -15,7 +15,7 @@ import {
     DownloadMenuItemProps,
     DownloadProps,
 } from '@react-pdf-viewer/get-file';
-import { OpenProps } from '@react-pdf-viewer/open';
+import { OpenMenuItemProps, OpenProps } from '@react-pdf-viewer/open';
 import {
     CurrentPageLabelProps,
     GoToFirstPageMenuItemProps,
@@ -67,6 +67,7 @@ export default interface ToolbarSlot {
     GoToPreviousPage(props: GoToPreviousPageProps): React.ReactElement;
     NumberOfPages(): React.ReactElement;
     Open(props: OpenProps): React.ReactElement;
+    OpenMenuItem(props: OpenMenuItemProps): React.ReactElement;
     Print(props: PrintProps): React.ReactElement;
     PrintMenuItem(props: PrintMenuItemProps): React.ReactElement;
     Rotate(props: RotateProps): React.ReactElement;
