@@ -13,10 +13,6 @@ export interface RenderOpenProps {
     onClick: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-export interface OpenMenuItemProps {
-    onClick(): void;
-}
-
 export interface OpenProps {
     children?: (props: RenderOpenProps) => React.ReactElement;
 }
@@ -24,7 +20,7 @@ export interface OpenProps {
 export interface OpenPlugin extends Plugin {
     Open: (props: OpenProps) => React.ReactElement;
     OpenButton: () => React.ReactElement;
-    OpenMenuItem: (props: OpenMenuItemProps) => React.ReactElement;
+    OpenMenuItem: () => React.ReactElement;
 }
 
 export function openPlugin(): OpenPlugin;

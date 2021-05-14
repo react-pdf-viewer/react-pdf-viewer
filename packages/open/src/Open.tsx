@@ -27,6 +27,7 @@ const Open: React.FC<{
     store: Store<StoreProps>,
 }> = ({ store, children }) => {
     const handleOpenFiles = (e: React.ChangeEvent<HTMLInputElement>): void => {
+        console.log('Open file');
         const files = e.target.files;
         if (!files || !files.length) {
             return;

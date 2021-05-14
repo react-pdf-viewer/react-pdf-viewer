@@ -9,28 +9,22 @@
 import * as React from 'react';
 import { LocalizationContext, MenuItem } from '@react-pdf-viewer/core';
 
+import { RenderOpenProps } from './Open';
 import OpenFileIcon from './OpenFileIcon';
 
-export interface OpenMenuItemProps {
-    onClick(): void;
-}
-
-const OpenMenuItem: React.FC<{
-    onClick(): void,
-    onOpenFile: (e: React.ChangeEvent<HTMLInputElement>) => void,
-}> = ({ onClick, onOpenFile }) => {
+const OpenMenuItem: React.FC<RenderOpenProps> = ({ onClick }) => {
     const l10n = React.useContext(LocalizationContext);
     const label = l10n && l10n.open ? l10n.open.openFile : 'Open file';
 
     return (
-        <MenuItem icon={<OpenFileIcon />} onClick={onClick}>
+        <MenuItem icon={<OpenFileIcon />} onClick={() => {}}>
             <div className='rpv-open-menu-item'>
                 <input
                     className='rpv-open-input'
                     multiple={false}
                     type='file'
                     title=''
-                    onChange={onOpenFile}
+                    onChange={onClick}
                 />
                 {label}
             </div>
