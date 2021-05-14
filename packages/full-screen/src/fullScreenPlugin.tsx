@@ -11,6 +11,7 @@ import { createStore, Plugin, PluginFunctions, RenderViewer, Slot } from '@react
 
 import EnterFullScreen, { EnterFullScreenProps } from './EnterFullScreen';
 import EnterFullScreenButton from './EnterFullScreenButton';
+import EnterFullScreenMenuItem, { EnterFullScreenMenuItemProps } from './EnterFullScreenMenuItem';
 import ExitFullScreenButton from './ExitFullScreenButton';
 import type { Zoom } from './types';
 
@@ -19,6 +20,7 @@ import StoreProps from './StoreProps';
 interface FullScreenPlugin extends Plugin {
     EnterFullScreen: (props: EnterFullScreenProps) => React.ReactElement;
     EnterFullScreenButton: () => React.ReactElement;
+    EnterFullScreenMenuItem: (props: EnterFullScreenMenuItemProps) => React.ReactElement;
 }
 
 export interface FullScreenPluginProps {
@@ -43,6 +45,12 @@ const fullScreenPlugin = (props?: FullScreenPluginProps): FullScreenPlugin => {
             {
                 (renderProps) => <EnterFullScreenButton {...renderProps} />
             }
+        </EnterFullScreenDecorator>
+    );
+
+    const EnterFullScreenMenuItemDecorator = (props: EnterFullScreenMenuItemProps) => (
+        <EnterFullScreenDecorator>
+            {(p) => <EnterFullScreenMenuItem onClick={() => { p.onClick(); props.onClick(); }} />}
         </EnterFullScreenDecorator>
     );
 
@@ -72,6 +80,7 @@ const fullScreenPlugin = (props?: FullScreenPluginProps): FullScreenPlugin => {
         renderViewer,
         EnterFullScreen: EnterFullScreenDecorator,
         EnterFullScreenButton: EnterFullScreenButtonDecorator,
+        EnterFullScreenMenuItem: EnterFullScreenMenuItemDecorator,
     };
 };
 

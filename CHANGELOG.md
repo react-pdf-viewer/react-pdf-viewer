@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## v2.5.0
+
+**New features**
+Provide more reusable menu items:
+
+| Component                 | Provided by plugin                                                | Description                   |
+|---------------------------|-------------------------------------------------------------------|-------------------------------|
+| `EnterFullScreenMenuItem` | [Full screen](https://react-pdf-viewer.dev/plugins/full-screen)   | Enter the full screen mode    |
+
+These components are available as [Toolbar slots](https://react-pdf-viewer.dev/plugins/toolbar), so it's possible to add them to a custom toolbar.
+
 ## v2.4.3
 
 **Bug fix**
