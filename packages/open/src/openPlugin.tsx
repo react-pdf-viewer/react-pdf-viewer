@@ -10,12 +10,14 @@ import * as React from 'react';
 import { createStore, Plugin, PluginFunctions } from '@react-pdf-viewer/core';
 
 import Open, { OpenProps } from './Open';
+import OpenMenuItem from './OpenMenuItem';
 
 import StoreProps from './StoreProps';
 
 interface OpenPlugin extends Plugin {
     Open: (props: OpenProps) => React.ReactElement;
     OpenButton: () => React.ReactElement;
+    OpenMenuItem: () => React.ReactElement;
 }
 
 const openPlugin = (): OpenPlugin => {
@@ -27,12 +29,19 @@ const openPlugin = (): OpenPlugin => {
 
     const OpenButtonDecorator = () => <OpenDecorator />;
 
+    const OpenMenuItemDecorator = () => (
+        <OpenDecorator>
+            {(p) => <OpenMenuItem onClick={p.onClick} />}
+        </OpenDecorator>
+    );
+
     return {
         install: (pluginFunctions: PluginFunctions) => {
             store.update('openFile', pluginFunctions.openFile);
         },
         Open: OpenDecorator,
         OpenButton: OpenButtonDecorator,
+        OpenMenuItem: OpenMenuItemDecorator,
     };
 };
 

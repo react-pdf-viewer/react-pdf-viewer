@@ -10,6 +10,7 @@ Provide more reusable components:
 |---------------------------|-------------------------------------------------------------------|-------------------------------|
 | `DownloadMenuItem`        | [Get File](https://react-pdf-viewer.dev/plugins/get-file)         | Download the current file     |
 | `EnterFullScreenMenuItem` | [Full screen](https://react-pdf-viewer.dev/plugins/full-screen)   | Enter the full screen mode    |
+| `OpenMenuItem`            | [Open](https://react-pdf-viewer.dev/plugins/open)                 | Open a new file               |
 | `PrintMenuItem`           | [Print](https://react-pdf-viewer.dev/plugins/print)               | Print the current file        |
 
 These components are available as [Toolbar slots](https://react-pdf-viewer.dev/plugins/toolbar), so it's possible to add them to a custom toolbar.

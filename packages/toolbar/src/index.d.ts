@@ -92,6 +92,7 @@ export interface ToolbarSlot {
     GoToPreviousPage(props: GoToPreviousPageProps): React.ReactElement;
     NumberOfPages(): React.ReactElement;
     Open(props: OpenProps): React.ReactElement;
+    OpenMenuItem(): React.ReactElement;
     Print(props: PrintProps): React.ReactElement;
     PrintMenuItem(props: PrintMenuItemProps): React.ReactElement;
     Rotate(props: RotateProps): React.ReactElement;

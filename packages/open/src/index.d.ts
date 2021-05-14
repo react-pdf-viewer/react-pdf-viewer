@@ -20,6 +20,7 @@ export interface OpenProps {
 export interface OpenPlugin extends Plugin {
     Open: (props: OpenProps) => React.ReactElement;
     OpenButton: () => React.ReactElement;
+    OpenMenuItem: () => React.ReactElement;
 }
 
 export function openPlugin(): OpenPlugin;

@@ -25,7 +25,7 @@ const OpenButton: React.FC<RenderOpenProps> = ({ onClick }) => {
             target={(
                 <div className='rpv-open-button'>
                     <input
-                        className='rpv-open-button-input'
+                        className='rpv-open-input'
                         multiple={false}
                         type='file'
                         title=''

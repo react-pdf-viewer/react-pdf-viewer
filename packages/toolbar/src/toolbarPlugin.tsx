@@ -80,7 +80,7 @@ const toolbarPlugin = (props?: ToolbarPluginProps): ToolbarPlugin => {
     const ToolbarDecorator = (props: ToolbarProps) => {
         const { EnterFullScreen, EnterFullScreenMenuItem } = fullScreenPluginInstance;
         const { Download, DownloadMenuItem } = getFilePluginInstance;
-        const { Open } = openPluginInstance;
+        const { Open, OpenMenuItem } = openPluginInstance;
         const {
             CurrentPageInput, CurrentPageLabel, GoToFirstPage, GoToFirstPageMenuItem, GoToLastPage,
             GoToLastPageMenuItem, GoToNextPage, GoToPreviousPage,
@@ -118,6 +118,7 @@ const toolbarPlugin = (props?: ToolbarPluginProps): ToolbarPlugin => {
                     GoToPreviousPage,
                     NumberOfPages,
                     Open,
+                    OpenMenuItem,
                     Print,
                     PrintMenuItem,
                     Rotate,
