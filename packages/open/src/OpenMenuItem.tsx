@@ -13,12 +13,14 @@ import OpenFileIcon from './OpenFileIcon';
 
 export interface OpenMenuItemProps {
     onClick(): void;
-    onOpenFile: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-const OpenMenuItem: React.FC<OpenMenuItemProps> = ({ onClick, onOpenFile }) => {
+const OpenMenuItem: React.FC<{
+    onClick(): void,
+    onOpenFile: (e: React.ChangeEvent<HTMLInputElement>) => void,
+}> = ({ onClick, onOpenFile }) => {
     const l10n = React.useContext(LocalizationContext);
-    const label = l10n && l10n.print ? l10n.print.print : 'Print';
+    const label = l10n && l10n.open ? l10n.open.openFile : 'Open file';
 
     return (
         <MenuItem icon={<OpenFileIcon />} onClick={onClick}>

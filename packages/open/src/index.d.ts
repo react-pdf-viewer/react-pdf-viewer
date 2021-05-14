@@ -15,7 +15,6 @@ export interface RenderOpenProps {
 
 export interface OpenMenuItemProps {
     onClick(): void;
-    onOpenFile: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 export interface OpenProps {
