@@ -31,7 +31,11 @@ import type {
     GoToPreviousPageProps,
     PageNavigationPlugin,
 } from '@react-pdf-viewer/page-navigation';
-import type { PrintPlugin, PrintProps } from '@react-pdf-viewer/print';
+import type {
+    PrintMenuItemProps,
+    PrintPlugin,
+    PrintProps,
+} from '@react-pdf-viewer/print';
 import type {
     PropertiesPlugin,
     ShowPropertiesProps,
@@ -75,7 +79,9 @@ export interface ToolbarSlot {
     Download(props: DownloadProps): React.ReactElement;
     DownloadMenuItem(props: DownloadMenuItemProps): React.ReactElement;
     EnterFullScreen(props: EnterFullScreenProps): React.ReactElement;
-    EnterFullScreenMenuItem(props: EnterFullScreenMenuItemProps): React.ReactElement;
+    EnterFullScreenMenuItem(
+        props: EnterFullScreenMenuItemProps
+    ): React.ReactElement;
     GoToFirstPage(props: GoToFirstPageProps): React.ReactElement;
     GoToFirstPageMenuItem(
         props: GoToFirstPageMenuItemProps
@@ -87,6 +93,7 @@ export interface ToolbarSlot {
     NumberOfPages(): React.ReactElement;
     Open(props: OpenProps): React.ReactElement;
     Print(props: PrintProps): React.ReactElement;
+    PrintMenuItem(props: PrintMenuItemProps): React.ReactElement;
     Rotate(props: RotateProps): React.ReactElement;
     RotateBackwardMenuItem(props: RotateDecoratorProps): React.ReactElement;
     RotateForwardMenuItem(props: RotateDecoratorProps): React.ReactElement;

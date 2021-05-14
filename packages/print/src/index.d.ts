@@ -13,6 +13,10 @@ export interface RenderPrintProps {
     onClick: () => void;
 }
 
+export interface PrintMenuItemProps {
+    onClick(): void;
+}
+
 export interface PrintProps {
     children?: (props: RenderPrintProps) => React.ReactElement;
 }
@@ -20,6 +24,7 @@ export interface PrintProps {
 export interface PrintPlugin extends Plugin {
     Print: (props: PrintProps) => React.ReactElement;
     PrintButton: () => React.ReactElement;
+    PrintMenuItem: (props: PrintMenuItemProps) => React.ReactElement;
 }
 
 export function printPlugin(): PrintPlugin;
