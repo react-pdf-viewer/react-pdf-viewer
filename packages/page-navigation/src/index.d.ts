@@ -98,6 +98,7 @@ export interface PageNavigationPlugin extends Plugin {
     GoToNextPageButton: () => React.ReactElement;
     GoToPreviousPage: (props: GoToPreviousPageProps) => React.ReactElement;
     GoToPreviousPageButton: () => React.ReactElement;
+    GoToPreviousPageMenuItem: (props: RenderGoToPreviousPageProps) => React.ReactElement;
 }
 
 export function pageNavigationPlugin(): PageNavigationPlugin;
