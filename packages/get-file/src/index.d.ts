@@ -13,6 +13,10 @@ export interface RenderDownloadProps {
     onClick(): void;
 }
 
+export interface DownloadMenuItemProps {
+    onClick(): void;
+}
+
 export interface DownloadProps {
     children?(props: RenderDownloadProps): React.ReactElement;
 }
@@ -20,6 +24,7 @@ export interface DownloadProps {
 export interface GetFilePlugin extends Plugin {
     Download(props: DownloadProps): React.ReactElement;
     DownloadButton(): React.ReactElement;
+    DownloadMenuItem(props: DownloadMenuItemProps): React.ReactElement;
 }
 
 export interface GetFilePluginProps {

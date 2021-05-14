@@ -11,6 +11,7 @@ import { createStore, OpenFile, Plugin, ViewerState } from '@react-pdf-viewer/co
 
 import Download, { DownloadProps } from './Download';
 import DownloadButton from './DownloadButton';
+import DownloadMenuItem, { DownloadMenuItemProps } from './DownloadMenuItem';
 import getFileName from './getFileName';
 
 import StoreProps from './StoreProps';
@@ -18,6 +19,7 @@ import StoreProps from './StoreProps';
 interface GetFilePlugin extends Plugin {
     Download: (props: DownloadProps) => React.ReactElement;
     DownloadButton: () => React.ReactElement;
+    DownloadMenuItem: (props: DownloadMenuItemProps) => React.ReactElement;
 }
 
 export interface GetFilePluginProps {
@@ -44,6 +46,12 @@ const getFilePlugin = (props?: GetFilePluginProps): GetFilePlugin => {
         </DownloadDecorator>
     );
 
+    const DownloadMenuItemDecorator = (props: DownloadMenuItemProps) => (
+        <DownloadDecorator>
+            { (p) => <DownloadMenuItem onClick={() => { p.onClick(); props.onClick(); }} /> }
+        </DownloadDecorator>
+    );
+
     return {
         onViewerStateChange: (viewerState: ViewerState): ViewerState => {
             store.update('file', viewerState.file);
@@ -51,6 +59,7 @@ const getFilePlugin = (props?: GetFilePluginProps): GetFilePlugin => {
         },
         Download: DownloadDecorator,
         DownloadButton: DownloadButtonDecorator,
+        DownloadMenuItem: DownloadMenuItemDecorator,
     };
 };
 
