@@ -9,6 +9,10 @@
 import * as React from 'react';
 import { Plugin, SpecialZoomLevel } from '@react-pdf-viewer/core';
 
+export interface ZoomMenuItemProps {
+    onClick: () => void;
+}
+
 // ------------------------
 // Render zooming in button
 // ------------------------
@@ -67,8 +71,10 @@ export interface ZoomPlugin extends Plugin {
     CurrentScale: (props: CurrentScaleProps) => React.ReactElement;
     ZoomIn: (props: ZoomInProps) => React.ReactElement;
     ZoomInButton: () => React.ReactElement;
+    ZoomInMenuItem: (props: ZoomMenuItemProps) => React.ReactElement;
     ZoomOut: (props: ZoomOutProps) => React.ReactElement;
     ZoomOutButton: () => React.ReactElement;
+    ZoomOutMenuItem: (props: ZoomMenuItemProps) => React.ReactElement;
     Zoom: (props: ZoomProps) => React.ReactElement;
     ZoomPopover: () => React.ReactElement;
 }

@@ -62,7 +62,8 @@ import type {
 } from '@react-pdf-viewer/selection-mode';
 import type {
     CurrentScaleProps,
-    ZoomInProps,
+    ZoomInProps,    
+    ZoomMenuItemProps,
     ZoomOutProps,
     ZoomPlugin,
     ZoomProps,
@@ -110,7 +111,9 @@ export interface ToolbarSlot {
     ): React.ReactElement;
     Zoom(props: ZoomProps): React.ReactElement;
     ZoomIn(props: ZoomInProps): React.ReactElement;
+    ZoomInMenuItem(props: ZoomMenuItemProps): React.ReactElement;
     ZoomOut(props: ZoomOutProps): React.ReactElement;
+    ZoomOutMenuItem(props: ZoomMenuItemProps): React.ReactElement;
 }
 
 export interface ToolbarProps {

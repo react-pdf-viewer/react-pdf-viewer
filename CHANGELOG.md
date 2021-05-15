@@ -14,6 +14,8 @@ Provide more reusable components:
 | `GoToPreviousPageMenuItem`    | [Page Navigation](https://react-pdf-viewer.dev/plugins/page-navigation)   | Go to the previous page       |
 | `OpenMenuItem`                | [Open](https://react-pdf-viewer.dev/plugins/open)                         | Open a new file               |
 | `PrintMenuItem`               | [Print](https://react-pdf-viewer.dev/plugins/print)                       | Print the current file        |
+| `ZoomInMenuItem`              | [Zoom](https://react-pdf-viewer.dev/plugins/zoom)                         | Zoom in the current file      |
+| `ZoomOutMenuItem`             | [Zoom](https://react-pdf-viewer.dev/plugins/zoom)                         | Zoom out the current file     |
 
 These components are available as [Toolbar slots](https://react-pdf-viewer.dev/plugins/toolbar), so it's possible to add them to a custom toolbar.
 
