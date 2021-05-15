@@ -23,7 +23,7 @@ const PORTAL_OFFSET = { left: 0, top: 8 };
 const MoreActionsPopover: React.FC<MoreActionsPopoverProps> = ({ toolbarSlot }) => {
     const l10n = React.useContext(LocalizationContext);
     const {
-        GoToFirstPageMenuItem, GoToLastPageMenuItem, RotateBackwardMenuItem, RotateForwardMenuItem, ShowPropertiesMenuItem,
+        DownloadMenuItem, EnterFullScreenMenuItem, GoToFirstPageMenuItem, GoToLastPageMenuItem, GoToNextPageMenuItem, GoToPreviousPageMenuItem, OpenMenuItem, PrintMenuItem, RotateBackwardMenuItem, RotateForwardMenuItem, ShowPropertiesMenuItem,
         SwitchScrollModeMenuItem, SwitchSelectionModeMenuItem,
     } = toolbarSlot;
 
@@ -43,7 +43,30 @@ const MoreActionsPopover: React.FC<MoreActionsPopoverProps> = ({ toolbarSlot }) 
     const renderContent = (toggle: Toggle): React.ReactElement => {
         return (
             <Menu>
+                {/* These items will be hidden on the larger screens */}
+                <div className="rpv-core-display-block rpv-core-display-hidden-medium">
+                    <EnterFullScreenMenuItem onClick={toggle} />
+                </div>
+                <div className="rpv-core-display-block rpv-core-display-hidden-medium">
+                    <OpenMenuItem />
+                </div>
+                <div className="rpv-core-display-block rpv-core-display-hidden-medium">
+                    <PrintMenuItem onClick={toggle} />
+                </div>
+                <div className="rpv-core-display-block rpv-core-display-hidden-medium">
+                    <DownloadMenuItem onClick={toggle} />
+                </div>
+                <div className="rpv-core-display-block rpv-core-display-hidden-medium">
+                    <MenuDivider />
+                </div>
+
                 <GoToFirstPageMenuItem onClick={toggle} />
+                <div className="rpv-core-display-block rpv-core-display-hidden-medium">
+                    <GoToPreviousPageMenuItem onClick={toggle} />
+                </div>
+                <div className="rpv-core-display-block rpv-core-display-hidden-medium">
+                    <GoToNextPageMenuItem onClick={toggle} />
+                </div>
                 <GoToLastPageMenuItem onClick={toggle} />
                 <MenuDivider />
                 <RotateForwardMenuItem onClick={toggle} />
