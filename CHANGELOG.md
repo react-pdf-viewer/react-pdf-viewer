@@ -3,8 +3,8 @@
 ## v2.5.0 [WIP]
 
 **New features**
-
-Provide more reusable components:
+- The default layout is responsive in different screen sizes
+- Provide more reusable components:
 
 | Component                     | Provided by plugin                                                        | Description                   |
 |-------------------------------|---------------------------------------------------------------------------|-------------------------------|
