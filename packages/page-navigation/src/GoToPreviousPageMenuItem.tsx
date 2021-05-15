@@ -12,7 +12,7 @@ import { LocalizationContext, MenuItem } from '@react-pdf-viewer/core';
 import { RenderGoToPreviousPageProps } from './GoToPreviousPage';
 import PreviousIcon from './PreviousIcon';
 
-const GoToPrevPageMenuItem: React.FC<RenderGoToPreviousPageProps> = ({ onClick }) => {
+const GoToPreviousPageMenuItem: React.FC<RenderGoToPreviousPageProps> = ({ isDisabled, onClick }) => {
     const l10n = React.useContext(LocalizationContext);
     const label = l10n && l10n.pageNavigation ? l10n.pageNavigation.goToPreviousPage : 'Previous page';
 
@@ -23,4 +23,4 @@ const GoToPrevPageMenuItem: React.FC<RenderGoToPreviousPageProps> = ({ onClick }
     );
 };
 
-export default GoToPrevPageMenuItem;
+export default GoToPreviousPageMenuItem;
