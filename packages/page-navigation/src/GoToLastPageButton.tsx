@@ -14,14 +14,14 @@ import { RenderGoToLastPageProps } from './GoToLastPage';
 
 const TOOLTIP_OFFSET = { left: 0, top: 8 };
 
-const GoToLastPageButton: React.FC<RenderGoToLastPageProps> = ({ onClick }) => {
+const GoToLastPageButton: React.FC<RenderGoToLastPageProps> = ({ isDisabled, onClick }) => {
     const l10n = React.useContext(LocalizationContext);
     const label = l10n && l10n.pageNavigation ? l10n.pageNavigation.goToLastPage : 'Last page';
 
     return (
         <Tooltip
             position={Position.BottomCenter}
-            target={<Button onClick={onClick}><DownArrowIcon /></Button>}
+            target={<Button isDisabled={isDisabled} onClick={onClick}><DownArrowIcon /></Button>}
             content={() => label}
             offset={TOOLTIP_OFFSET}
         />

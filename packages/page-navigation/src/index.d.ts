@@ -27,10 +27,12 @@ export interface CurrentPageLabelProps {
 // -------------------------------------
 
 export interface GoToFirstPageMenuItemProps {
+    isDisabled: boolean;
     onClick: () => void;
 }
 
 export interface RenderGoToFirstPageProps {
+    isDisabled: boolean;
     onClick: () => void;
 }
 
@@ -43,10 +45,12 @@ export interface GoToFirstPageProps {
 // -------------------------------------
 
 export interface GoToLastPageMenuItemProps {
+    isDisabled: boolean;
     onClick(): void;
 }
 
 export interface RenderGoToLastPageProps {
+    isDisabled: boolean;
     onClick: () => void;
 }
 

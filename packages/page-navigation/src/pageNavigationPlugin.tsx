@@ -70,7 +70,7 @@ const pageNavigationPlugin = (): PageNavigationPlugin => {
 
     const GoToFirstPageMenuItemDecorator = (props: GoToFirstPageMenuItemProps) => (
         <GoToFirstPageDecorator>
-            {(p) => <GoToFirstPageMenuItem onClick={() => { p.onClick(); props.onClick(); }} />}
+            {(p) => <GoToFirstPageMenuItem isDisabled={p.isDisabled} onClick={() => { p.onClick(); props.onClick(); }} />}
         </GoToFirstPageDecorator>
     );
 
@@ -86,7 +86,7 @@ const pageNavigationPlugin = (): PageNavigationPlugin => {
 
     const GoToLastPageMenuItemDecorator = (props: GoToLastPageMenuItemProps) => (
         <GoToLastPageDecorator>
-            {(p) => <GoToLastPageMenuItem onClick={() => { p.onClick(); props.onClick(); }} />}
+            {(p) => <GoToLastPageMenuItem isDisabled={p.isDisabled} onClick={() => { p.onClick(); props.onClick(); }} />}
         </GoToLastPageDecorator>
     );
 

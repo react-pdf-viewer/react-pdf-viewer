@@ -14,7 +14,7 @@ import UpArrowIcon from './UpArrowIcon';
 
 const TOOLTIP_OFFSET = { left: 0, top: 8 };
 
-const GoToFirstPageButton: React.FC<RenderGoToFirstPageProps> = ({ onClick }) => {
+const GoToFirstPageButton: React.FC<RenderGoToFirstPageProps> = ({ isDisabled, onClick }) => {
     const l10n = React.useContext(LocalizationContext);
 
     const label = l10n && l10n.pageNavigation ? l10n.pageNavigation.goToFirstPage : 'First page';
@@ -22,7 +22,7 @@ const GoToFirstPageButton: React.FC<RenderGoToFirstPageProps> = ({ onClick }) =>
     return (
         <Tooltip
             position={Position.BottomCenter}
-            target={<Button onClick={onClick}><UpArrowIcon /></Button>}
+            target={<Button isDisabled={isDisabled} onClick={onClick}><UpArrowIcon /></Button>}
             content={() => label}
             offset={TOOLTIP_OFFSET}
         />

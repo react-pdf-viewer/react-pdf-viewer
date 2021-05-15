@@ -12,15 +12,16 @@ import { LocalizationContext, MenuItem } from '@react-pdf-viewer/core';
 import UpArrowIcon from './UpArrowIcon';
 
 export interface GoToFirstPageMenuItemProps {
+    isDisabled: boolean;
     onClick(): void;
 }
 
-const GoToFirstPageMenuItem: React.FC<GoToFirstPageMenuItemProps> = ({ onClick }) => {
+const GoToFirstPageMenuItem: React.FC<GoToFirstPageMenuItemProps> = ({ isDisabled, onClick }) => {
     const l10n = React.useContext(LocalizationContext);
     const label = l10n && l10n.pageNavigation ? l10n.pageNavigation.goToFirstPage : 'First page';
 
     return (
-        <MenuItem icon={<UpArrowIcon />} onClick={onClick}>
+        <MenuItem icon={<UpArrowIcon />} isDisabled={isDisabled} onClick={onClick}>
             {label}
         </MenuItem>
     );

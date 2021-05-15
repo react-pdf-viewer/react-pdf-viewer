@@ -11,8 +11,10 @@ import { Store } from '@react-pdf-viewer/core';
 
 import GoToFirstPageButton from './GoToFirstPageButton';
 import StoreProps from './StoreProps';
+import useCurrentPage from './useCurrentPage';
 
 export interface RenderGoToFirstPageProps {
+    isDisabled: boolean;
     onClick: () => void;
 }
 
@@ -26,6 +28,7 @@ const GoToFirstPage: React.FC<{
     children?: RenderGoToFirstPage,
     store: Store<StoreProps>,
 }> = ({ children, store }) => {
+    const { currentPage } = useCurrentPage(store);
     const goToFirstPage = () => {
         const jumpToPage = store.get('jumpToPage');
         if (jumpToPage) {
@@ -33,10 +36,11 @@ const GoToFirstPage: React.FC<{
         }
     };
 
-    const defaultChildren = (props: RenderGoToFirstPageProps) => <GoToFirstPageButton onClick={props.onClick} />;
+    const defaultChildren = (props: RenderGoToFirstPageProps) => <GoToFirstPageButton isDisabled={props.isDisabled} onClick={props.onClick} />;
     const render = children || defaultChildren;
 
     return render({
+        isDisabled: currentPage === 0,
         onClick: goToFirstPage,
     });
 };
