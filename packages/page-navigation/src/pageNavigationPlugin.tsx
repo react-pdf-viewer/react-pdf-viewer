@@ -17,13 +17,21 @@ import GoToFirstPageMenuItem, { GoToFirstPageMenuItemProps } from './GoToFirstPa
 import GoToLastPage, { GoToLastPageProps } from './GoToLastPage';
 import GoToLastPageButton from './GoToLastPageButton';
 import GoToLastPageMenuItem, { GoToLastPageMenuItemProps } from './GoToLastPageMenuItem';
-import GoToNextPage, { GoToNextPageProps, RenderGoToNextPageProps } from './GoToNextPage';
+import GoToNextPage, { GoToNextPageProps } from './GoToNextPage';
 import GoToNextPageButton from './GoToNextPageButton';
 import GoToNextPageMenuItem from './GoToNextPageMenuItem';
-import GoToPreviousPage, { GoToPreviousPageProps, RenderGoToPreviousPageProps } from './GoToPreviousPage';
+import GoToPreviousPage, { GoToPreviousPageProps } from './GoToPreviousPage';
 import GoToPreviousPageMenuItem from './GoToPreviousPageMenuItem';
 import GoToPreviousPageButton from './GoToPreviousPageButton';
 import StoreProps from './StoreProps';
+
+interface GoToNextPageMenuItemProps {
+    onClick(): void;
+}
+
+interface GoToPreviousPageMenuItemProps {
+    onClick(): void;
+}
 
 export interface PageNavigationPlugin extends Plugin {
     jumpToPage: (pageIndex: number) => void;
@@ -37,10 +45,10 @@ export interface PageNavigationPlugin extends Plugin {
     GoToLastPageMenuItem: (props: GoToLastPageMenuItemProps) => React.ReactElement;
     GoToNextPage: (props: GoToNextPageProps) => React.ReactElement;
     GoToNextPageButton: () => React.ReactElement;
-    GoToNextPageMenuItem: (props: RenderGoToNextPageProps) => React.ReactElement;
+    GoToNextPageMenuItem: (props: GoToNextPageMenuItemProps) => React.ReactElement;
     GoToPreviousPage: (props: GoToPreviousPageProps) => React.ReactElement;
     GoToPreviousPageButton: () => React.ReactElement;
-    GoToPreviousPageMenuItem: (props: RenderGoToPreviousPageProps) => React.ReactElement;
+    GoToPreviousPageMenuItem: (props: GoToPreviousPageMenuItemProps) => React.ReactElement;
 }
 
 const pageNavigationPlugin = (): PageNavigationPlugin => {
@@ -92,9 +100,9 @@ const pageNavigationPlugin = (): PageNavigationPlugin => {
         </GoToNextPageDecorator>
     );
 
-    const GoToNextPageMenuItemDecorator = (props: RenderGoToNextPageProps) => (
+    const GoToNextPageMenuItemDecorator = (props: GoToNextPageMenuItemProps) => (
         <GoToNextPageDecorator>
-            {(p) => <GoToNextPageMenuItem isDisabled={props.isDisabled} onClick={() => { p.onClick(); props.onClick(); }} />}
+            {(p) => <GoToNextPageMenuItem isDisabled={p.isDisabled} onClick={() => { p.onClick(); props.onClick(); }} />}
         </GoToNextPageDecorator>
     );
 
@@ -108,9 +116,9 @@ const pageNavigationPlugin = (): PageNavigationPlugin => {
         </GoToPreviousPageDecorator>
     );
 
-    const GoToPreviousPageMenuItemDecorator = (props: RenderGoToPreviousPageProps) => (
+    const GoToPreviousPageMenuItemDecorator = (props: GoToPreviousPageMenuItemProps) => (
         <GoToPreviousPageDecorator>
-            {(p) => <GoToPreviousPageMenuItem isDisabled={props.isDisabled} onClick={() => { p.onClick(); props.onClick(); }} />}
+            {(p) => <GoToPreviousPageMenuItem isDisabled={p.isDisabled} onClick={() => { p.onClick(); props.onClick(); }} />}
         </GoToPreviousPageDecorator>
     );
 

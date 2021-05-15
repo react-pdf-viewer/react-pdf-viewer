@@ -277,6 +277,7 @@ export class MenuDivider extends React.Component {}
 export interface MenuItemProps {
     checked?: boolean;
     icon?: React.ReactElement;
+    isDisabled?: boolean;
     onClick(): void;
 }
 
