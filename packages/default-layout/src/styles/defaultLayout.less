@@ -7,22 +7,26 @@
  */
 
 .rpv-default-layout-container {
-    border: 1px solid rgba(0, 0, 0, 0.3);
+    /* Border */
+    border: 1px solid rgba(0, 0, 0, .3);
+    box-sizing: border-box;
     display: flex;
     flex-direction: column;
-    height: 100%;
     position: relative;
+
+    /* Full size */
+    height: 100%;
     width: 100%;
 }
 
 .rpv-default-layout-toolbar {
     background-color: rgb(238, 238, 238);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-    padding: 4px;
+    border-bottom: 1px solid rgba(0, 0, 0, .1);
+    padding: .25rem;
 }
 
 .rpv-default-layout-sidebar {
-    border-right: 1px solid rgba(0, 0, 0, 0.2);
+    border-right: 1px solid rgba(0, 0, 0, .2);
 
     &-opened {
         /* Absolute position */
@@ -55,6 +59,12 @@
 .rpv-default-layout-body {
     flex: 1;
     overflow: auto;
+}
+
+@media (min-width: 768px) {
+    .rpv-default-layout-sidebar-opened {
+        width: 16rem;
+    }
 }
 
 @media (min-width: 1024px) {
