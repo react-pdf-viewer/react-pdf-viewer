@@ -254,6 +254,7 @@ export enum AnnotationType {
 
 // Button
 export interface ButtonProps {
+    isDisabled?: boolean;
     isSelected?: boolean;
     onClick(): void;
 }

@@ -9,12 +9,12 @@
 import * as React from 'react';
 import { Button, LocalizationContext, Position, Tooltip } from '@react-pdf-viewer/core';
 
-import { RenderGoToFirstPageProps } from './GoToFirstPage';
+import { RenderGoToPageProps } from './types/index';
 import UpArrowIcon from './UpArrowIcon';
 
 const TOOLTIP_OFFSET = { left: 0, top: 8 };
 
-const GoToFirstPageButton: React.FC<RenderGoToFirstPageProps> = ({ onClick }) => {
+const GoToFirstPageButton: React.FC<RenderGoToPageProps> = ({ isDisabled, onClick }) => {
     const l10n = React.useContext(LocalizationContext);
 
     const label = l10n && l10n.pageNavigation ? l10n.pageNavigation.goToFirstPage : 'First page';
@@ -22,7 +22,7 @@ const GoToFirstPageButton: React.FC<RenderGoToFirstPageProps> = ({ onClick }) =>
     return (
         <Tooltip
             position={Position.BottomCenter}
-            target={<Button onClick={onClick}><UpArrowIcon /></Button>}
+            target={<Button isDisabled={isDisabled} onClick={onClick}><UpArrowIcon /></Button>}
             content={() => label}
             offset={TOOLTIP_OFFSET}
         />

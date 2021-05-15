@@ -11,22 +11,15 @@ import { Store } from '@react-pdf-viewer/core';
 
 import GoToLastPageButton from './GoToLastPageButton';
 import StoreProps from './StoreProps';
+import { RenderGoToPage, RenderGoToPageProps } from './types/index';
+import useCurrentPage from './useCurrentPage';
 import useNumberOfPages from './useNumberOfPages';
 
-export interface RenderGoToLastPageProps {
-    onClick: () => void;
-}
-
-type RenderGoToLastPage = (props: RenderGoToLastPageProps) => React.ReactElement;
-
-export interface GoToLastPageProps {
-    children?: RenderGoToLastPage;
-}
-
 const GoToLastPage: React.FC<{
-    children?: RenderGoToLastPage,
+    children?: RenderGoToPage,
     store: Store<StoreProps>,
 }> = ({ children, store }) => {
+    const { currentPage } = useCurrentPage(store);
     const { numberOfPages } = useNumberOfPages(store);
 
     const goToLastPage = () => {
@@ -36,10 +29,11 @@ const GoToLastPage: React.FC<{
         }
     };
 
-    const defaultChildren = (props: RenderGoToLastPageProps) => <GoToLastPageButton onClick={props.onClick} />;
+    const defaultChildren = (props: RenderGoToPageProps) => <GoToLastPageButton isDisabled={props.isDisabled} onClick={props.onClick} />;
     const render = children || defaultChildren;
 
     return render({
+        isDisabled: currentPage + 1 >= numberOfPages,
         onClick: goToLastPage,
     });
 };
