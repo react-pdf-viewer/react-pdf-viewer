@@ -27,11 +27,11 @@ import type {
     GoToFirstPageMenuItemProps,
     GoToLastPageProps,
     GoToLastPageMenuItemProps,
+    GoToNextPageMenuItemProps,
     GoToNextPageProps,
     GoToPreviousPageMenuItemProps,
     GoToPreviousPageProps,
-    PageNavigationPlugin,
-    RenderGoToNextPageProps,    
+    PageNavigationPlugin,    
 } from '@react-pdf-viewer/page-navigation';
 import type {
     PrintMenuItemProps,
@@ -91,7 +91,7 @@ export interface ToolbarSlot {
     GoToLastPage(props: GoToLastPageProps): React.ReactElement;
     GoToLastPageMenuItem(props: GoToLastPageMenuItemProps): React.ReactElement;
     GoToNextPage(props: GoToNextPageProps): React.ReactElement;
-    GoToNextPageMenuItem(props: RenderGoToNextPageProps): React.ReactElement;
+    GoToNextPageMenuItem(props: GoToNextPageMenuItemProps): React.ReactElement;
     GoToPreviousPage(props: GoToPreviousPageProps): React.ReactElement;
     GoToPreviousPageMenuItem(props: GoToPreviousPageMenuItemProps): React.ReactElement;
     NumberOfPages(): React.ReactElement;

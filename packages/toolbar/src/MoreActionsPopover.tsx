@@ -23,6 +23,7 @@ const PORTAL_OFFSET = { left: 0, top: 8 };
 const MoreActionsPopover: React.FC<MoreActionsPopoverProps> = ({ toolbarSlot }) => {
     const l10n = React.useContext(LocalizationContext);
     const {
+        GoToNextPageMenuItem,
         GoToPreviousPageMenuItem,
         GoToFirstPageMenuItem, GoToLastPageMenuItem, RotateBackwardMenuItem, RotateForwardMenuItem, ShowPropertiesMenuItem,
         SwitchScrollModeMenuItem, SwitchSelectionModeMenuItem,
@@ -45,6 +46,7 @@ const MoreActionsPopover: React.FC<MoreActionsPopoverProps> = ({ toolbarSlot }) 
         return (
             <Menu>
                 <GoToPreviousPageMenuItem onClick={toggle} />
+                <GoToNextPageMenuItem onClick={toggle} />
                 <GoToFirstPageMenuItem onClick={toggle} />
                 <GoToLastPageMenuItem onClick={toggle} />
                 <MenuDivider />

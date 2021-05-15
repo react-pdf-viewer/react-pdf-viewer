@@ -58,6 +58,10 @@ export interface GoToLastPageProps {
 // Render button to go to the next page
 // ------------------------------------
 
+export interface GoToNextPageMenuItemProps {
+    onClick(): void;
+}
+
 export interface RenderGoToNextPageProps {
     isDisabled: boolean;
     onClick: () => void;
@@ -100,7 +104,7 @@ export interface PageNavigationPlugin extends Plugin {
     GoToLastPageMenuItem: () => React.ReactElement;
     GoToNextPage: (props: GoToNextPageProps) => React.ReactElement;
     GoToNextPageButton: () => React.ReactElement;
-    GoToNextPageMenuItem: (props: RenderGoToNextPageProps) => React.ReactElement;
+    GoToNextPageMenuItem: (props: GoToNextPageMenuItemProps) => React.ReactElement;
     GoToPreviousPage: (props: GoToPreviousPageProps) => React.ReactElement;
     GoToPreviousPageButton: () => React.ReactElement;
     GoToPreviousPageMenuItem: (props: GoToPreviousPageMenuItemProps) => React.ReactElement;
