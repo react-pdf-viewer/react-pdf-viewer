@@ -12,11 +12,12 @@ import ThemeContext from '../theme/ThemeContext';
 import classNames from '../utils/classNames';
 
 interface ButtonProps {
+    isDisabled?: boolean;
     isSelected?: boolean;
     onClick(): void;
 }
 
-const Button: React.FC<ButtonProps> = ({ children, isSelected = false, onClick }) => {
+const Button: React.FC<ButtonProps> = ({ children, isDisabled = false, isSelected = false, onClick }) => {
     const theme = React.useContext(ThemeContext);
 
     return (
@@ -24,6 +25,7 @@ const Button: React.FC<ButtonProps> = ({ children, isSelected = false, onClick }
             className={
                 classNames({
                     [`${theme.prefixClass}-button`]: true,
+                    [`${theme.prefixClass}-button-disabled`]: isDisabled,
                     [`${theme.prefixClass}-button-selected`]: isSelected,
                 })
             }

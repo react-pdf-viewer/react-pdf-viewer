@@ -9,15 +9,18 @@
 .rpv-core-button {
     background-color: transparent;
     border: none;
-    border-radius: 4px;
+    border-radius: .25rem;
     cursor: pointer;
-    padding: 8px;
+    padding: .5rem;
 
     &:hover {
-        background-color: rgba(0, 0, 0, 0.1);
+        background-color: rgba(0, 0, 0, .1);
+    }
+    &-disabled {
+        color: rgba(0, 0, 0, .3);
     }
     &-selected {
-        background-color: rgba(0, 0, 0, 0.1);
+        background-color: rgba(0, 0, 0, .1);
     }
 }
 
