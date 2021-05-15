@@ -9,6 +9,7 @@
 import * as React from 'react';
 
 import useClickOutside from '../hooks/useClickOutside';
+import useIsomorphicLayoutEffect from '../hooks/useIsomorphicLayoutEffect';
 import usePosition from '../hooks/usePosition';
 import ThemeContext from '../theme/ThemeContext';
 import Arrow from './Arrow';
@@ -28,10 +29,25 @@ const PopoverBody: React.FC<PopoverBodyProps> = ({
 }) => {
     const theme = React.useContext(ThemeContext);
     const contentRef = React.createRef<HTMLDivElement>();
+    const innerRef = React.createRef<HTMLDivElement>();
     const anchorRef = React.createRef<HTMLDivElement>();
 
     useClickOutside(closeOnClickOutside, contentRef, onClose);
     usePosition(contentRef, targetRef, anchorRef, position, offset);
+
+    useIsomorphicLayoutEffect(() => {
+        const innerContentEle = innerRef.current;        
+        if (!innerContentEle) {
+            return;
+        }
+
+        // Limit the height of popover content
+        const maxHeight = document.body.clientHeight * 0.75;
+        if (innerContentEle.getBoundingClientRect().height >= maxHeight) {
+            innerContentEle.style.overflow = 'auto';
+            innerContentEle.style.maxHeight = `${maxHeight}px`;
+        }
+    }, []);
 
     return (
         <>
@@ -41,7 +57,9 @@ const PopoverBody: React.FC<PopoverBodyProps> = ({
         />
         <div className={`${theme.prefixClass}-popover-body`} ref={contentRef}>
             <Arrow customClassName={`${theme.prefixClass}-popover-body-arrow`} position={position} />
-            {children}
+            <div ref={innerRef}>
+                {children}
+            </div>
         </div>
         </>
     );

@@ -7,37 +7,71 @@
  */
 
 .rpv-default-layout-container {
-    border: 1px solid rgba(0, 0, 0, 0.3);
+    /* Border */
+    border: 1px solid rgba(0, 0, 0, .3);
+    box-sizing: border-box;
     display: flex;
     flex-direction: column;
-    height: 100%;
     position: relative;
+
+    /* Full size */
+    height: 100%;
     width: 100%;
 }
 
 .rpv-default-layout-toolbar {
     background-color: rgb(238, 238, 238);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-    padding: 4px;
+    border-bottom: 1px solid rgba(0, 0, 0, .1);
+    padding: .25rem;
 }
 
 .rpv-default-layout-sidebar {
-    border-right: 1px solid rgba(0, 0, 0, 0.2);
+    border-right: 1px solid rgba(0, 0, 0, .2);
 
     &-opened {
-        width: 30%;
+        /* Absolute position */
+        left: 0;
+        position: absolute;
+        top: 0;
+
+        /* Size */
+        height: 100%;
+        width: 12rem;
+
+        /* Display it on top of pages */
+        background-color: #FFF;
+        z-index: 1;
     }
 }
 
 .rpv-default-layout-main {
     display: flex;
     flex-grow: 1;
+    
     /* Fix the scroll issue on Safari */
     height: 100%;
     overflow: hidden;
+
+    /* Used to position the sidebar */
+    position: relative;
 }
 
 .rpv-default-layout-body {
     flex: 1;
     overflow: auto;
+}
+
+@media (min-width: 768px) {
+    .rpv-default-layout-sidebar-opened {
+        width: 16rem;
+    }
+}
+
+@media (min-width: 1024px) {
+    .rpv-default-layout-sidebar-opened {
+        background: inherit;
+        position: inherit;
+        width: 20rem;
+        z-index: inherit;
+    }
 }
