@@ -23,73 +23,22 @@ export interface CurrentPageLabelProps {
 }
 
 // -------------------------------------
-// Render button to go to the first page
+// Page navigation
 // -------------------------------------
 
-export interface GoToFirstPageMenuItemProps {
+export interface GoToPageMenuItemProps {
+    onClick: () => void;
+}
+
+export interface RenderGoToPageProps {
     isDisabled: boolean;
     onClick: () => void;
 }
 
-export interface RenderGoToFirstPageProps {
-    isDisabled: boolean;
-    onClick: () => void;
-}
+export type RenderGoToPage = (props: RenderGoToPageProps) => React.ReactElement;
 
-export interface GoToFirstPageProps {
-    children?: (props: RenderGoToFirstPageProps) => React.ReactElement;
-}
-
-// -------------------------------------
-// Render button to go the the last page
-// -------------------------------------
-
-export interface GoToLastPageMenuItemProps {
-    isDisabled: boolean;
-    onClick(): void;
-}
-
-export interface RenderGoToLastPageProps {
-    isDisabled: boolean;
-    onClick: () => void;
-}
-
-export interface GoToLastPageProps {
-    children?: (props: RenderGoToLastPageProps) => React.ReactElement;
-}
-
-// ------------------------------------
-// Render button to go to the next page
-// ------------------------------------
-
-export interface GoToNextPageMenuItemProps {
-    onClick(): void;
-}
-
-export interface RenderGoToNextPageProps {
-    isDisabled: boolean;
-    onClick: () => void;
-}
-
-export interface GoToNextPageProps {
-    children?: (props: RenderGoToNextPageProps) => React.ReactElement;
-}
-
-// ----------------------------------------
-// Render button to go to the previous page
-// ----------------------------------------
-
-export interface GoToPreviousPageMenuItemProps {
-    onClick(): void;
-}
-
-export interface RenderGoToPreviousPageProps {
-    isDisabled: boolean;
-    onClick: () => void;
-}
-
-export interface GoToPreviousPageProps {
-    children?: (props: RenderGoToPreviousPageProps) => React.ReactElement;
+export interface GoToPageProps {
+    children?: RenderGoToPage;
 }
 
 // ------
@@ -100,18 +49,20 @@ export interface PageNavigationPlugin extends Plugin {
     jumpToPage: (pageIndex: number) => void;
     CurrentPageInput: () => React.ReactElement;
     CurrentPageLabel: (props: CurrentPageLabelProps) => React.ReactElement;
-    GoToFirstPage: (props: GoToFirstPageProps) => React.ReactElement;
+    GoToFirstPage: (props: GoToPageProps) => React.ReactElement;
     GoToFirstPageButton: () => React.ReactElement;
-    GoToFirstPageMenuItem: () => React.ReactElement;
-    GoToLastPage: (props: GoToLastPageProps) => React.ReactElement;
+    GoToFirstPageMenuItem: (props: GoToPageMenuItemProps) => React.ReactElement;
+    GoToLastPage: (props: GoToPageProps) => React.ReactElement;
     GoToLastPageButton: () => React.ReactElement;
-    GoToLastPageMenuItem: () => React.ReactElement;
-    GoToNextPage: (props: GoToNextPageProps) => React.ReactElement;
+    GoToLastPageMenuItem: (props: GoToPageMenuItemProps) => React.ReactElement;
+    GoToNextPage: (props: GoToPageProps) => React.ReactElement;
     GoToNextPageButton: () => React.ReactElement;
-    GoToNextPageMenuItem: (props: GoToNextPageMenuItemProps) => React.ReactElement;
-    GoToPreviousPage: (props: GoToPreviousPageProps) => React.ReactElement;
+    GoToNextPageMenuItem: (props: GoToPageMenuItemProps) => React.ReactElement;
+    GoToPreviousPage: (props: GoToPageProps) => React.ReactElement;
     GoToPreviousPageButton: () => React.ReactElement;
-    GoToPreviousPageMenuItem: (props: GoToPreviousPageMenuItemProps) => React.ReactElement;
+    GoToPreviousPageMenuItem: (
+        props: GoToPageMenuItemProps
+    ) => React.ReactElement;
 }
 
 export function pageNavigationPlugin(): PageNavigationPlugin;

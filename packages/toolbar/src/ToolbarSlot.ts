@@ -18,14 +18,8 @@ import {
 import { OpenProps } from '@react-pdf-viewer/open';
 import {
     CurrentPageLabelProps,
-    GoToFirstPageMenuItemProps,
-    GoToFirstPageProps,
-    GoToLastPageMenuItemProps,
-    GoToLastPageProps,
-    GoToNextPageMenuItemProps,
-    GoToNextPageProps,
-    GoToPreviousPageMenuItemProps,
-    GoToPreviousPageProps,
+    GoToPageMenuItemProps,
+    GoToPageProps,
 } from '@react-pdf-viewer/page-navigation';
 import { PrintMenuItemProps, PrintProps } from '@react-pdf-viewer/print';
 import {
@@ -59,16 +53,14 @@ export default interface ToolbarSlot {
     EnterFullScreenMenuItem(
         props: EnterFullScreenMenuItemProps
     ): React.ReactElement;
-    GoToFirstPage(props: GoToFirstPageProps): React.ReactElement;
-    GoToFirstPageMenuItem(
-        props: GoToFirstPageMenuItemProps
-    ): React.ReactElement;
-    GoToLastPage(props: GoToLastPageProps): React.ReactElement;
-    GoToLastPageMenuItem(props: GoToLastPageMenuItemProps): React.ReactElement;
-    GoToNextPage(props: GoToNextPageProps): React.ReactElement;
-    GoToNextPageMenuItem(props: GoToNextPageMenuItemProps): React.ReactElement;
-    GoToPreviousPage(props: GoToPreviousPageProps): React.ReactElement;
-    GoToPreviousPageMenuItem(props: GoToPreviousPageMenuItemProps): React.ReactElement;
+    GoToFirstPage(props: GoToPageProps): React.ReactElement;
+    GoToFirstPageMenuItem(props: GoToPageMenuItemProps): React.ReactElement;
+    GoToLastPage(props: GoToPageProps): React.ReactElement;
+    GoToLastPageMenuItem(props: GoToPageMenuItemProps): React.ReactElement;
+    GoToNextPage(props: GoToPageProps): React.ReactElement;
+    GoToNextPageMenuItem(props: GoToPageMenuItemProps): React.ReactElement;
+    GoToPreviousPage(props: GoToPageProps): React.ReactElement;
+    GoToPreviousPageMenuItem(props: GoToPageMenuItemProps): React.ReactElement;
     NumberOfPages(): React.ReactElement;
     Open(props: OpenProps): React.ReactElement;
     OpenMenuItem(): React.ReactElement;

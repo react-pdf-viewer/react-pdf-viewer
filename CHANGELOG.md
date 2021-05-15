@@ -20,6 +20,20 @@ These components are available as [Toolbar slots](https://react-pdf-viewer.dev/p
 **Improvements**
 - The `Button` and `MenuItem` component have disabled state. For example, the button for going to the first page will be disabled if we're at the first page
 
+**Breaking changes**
+- If you are creating a custom toolbar or buttons to go to particular pages, then the following props are renamed:
+
+| Old name                      | New name              |
+|-------------------------------|-----------------------|
+| `GoToFirstPageProps`          | `GoToPageProps`       |
+| `GoToLastPageProps`           | `GoToPageProps`       |
+| `GoToNextPageProps`           | `GoToPageProps`       |
+| `GoToPreviousPageProps`       | `GoToPageProps`       |
+| `RenderGoToFirstPageProps`    | `RenderGoToPageProps` |
+| `RenderGoToLastPageProps`     | `RenderGoToPageProps` |
+| `RenderGoToNextPageProps`     | `RenderGoToPageProps` |
+| `RenderGoToPreviousPageProps` | `RenderGoToPageProps` |
+
 ## v2.4.3
 
 **Bug fix**

@@ -11,21 +11,11 @@ import { Store } from '@react-pdf-viewer/core';
 
 import GoToPreviousPageButton from './GoToPreviousPageButton';
 import StoreProps from './StoreProps';
+import { RenderGoToPage, RenderGoToPageProps } from './types/index';
 import useCurrentPage from './useCurrentPage';
 
-export interface RenderGoToPreviousPageProps {
-    isDisabled: boolean;
-    onClick: () => void;
-}
-
-type RenderGoToPreviousPage = (props: RenderGoToPreviousPageProps) => React.ReactElement;
-
-export interface GoToPreviousPageProps {
-    children?: RenderGoToPreviousPage;
-}
-
 const GoToPreviousPage: React.FC<{
-    children?: RenderGoToPreviousPage,
+    children?: RenderGoToPage,
     store: Store<StoreProps>,
 }> = ({ store, children }) => {
     const { currentPage } = useCurrentPage(store);
@@ -37,7 +27,7 @@ const GoToPreviousPage: React.FC<{
         }
     };
 
-    const defaultChildren = (props: RenderGoToPreviousPageProps) => (
+    const defaultChildren = (props: RenderGoToPageProps) => (
         <GoToPreviousPageButton isDisabled={props.isDisabled} onClick={props.onClick} />
     );
     const render = children || defaultChildren;
