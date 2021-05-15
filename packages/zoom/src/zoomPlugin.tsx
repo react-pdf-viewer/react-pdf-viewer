@@ -12,11 +12,14 @@ import { createStore, Plugin, PluginFunctions, RenderViewer, Slot, SpecialZoomLe
 import CurrentScale, { CurrentScaleProps } from './CurrentScale';
 import ShortcutHandler from './ShortcutHandler';
 import StoreProps from './StoreProps';
+import { ZoomMenuItemProps } from './types';
 import Zoom, { ZoomProps } from './Zoom';
 import ZoomIn, { ZoomInProps } from './ZoomIn';
 import ZoomOut, { ZoomOutProps } from './ZoomOut';
 import ZoomInButton from './ZoomInButton';
+import ZoomInMenuItem from './ZoomInMenuItem';
 import ZoomOutButton from './ZoomOutButton';
+import ZoomOutMenuItem from './ZoomOutMenuItem';
 import ZoomPopover from './ZoomPopover';
 
 interface ZoomPlugin extends Plugin {
@@ -24,8 +27,10 @@ interface ZoomPlugin extends Plugin {
     CurrentScale: (props: CurrentScaleProps) => React.ReactElement;
     ZoomIn: (props: ZoomInProps) => React.ReactElement;
     ZoomInButton: () => React.ReactElement;
+    ZoomInMenuItem: (props: ZoomMenuItemProps) => React.ReactElement;
     ZoomOut: (props: ZoomOutProps) => React.ReactElement;
     ZoomOutButton: () => React.ReactElement;
+    ZoomOutMenuItem: (props: ZoomMenuItemProps) => React.ReactElement;
     Zoom: (props: ZoomProps) => React.ReactElement;
     ZoomPopover: () => React.ReactElement;
 }
@@ -47,6 +52,12 @@ const zoomPlugin = (): ZoomPlugin => {
         </ZoomInDecorator>
     );
 
+    const ZoomInMenuItemDecorator = (props: ZoomMenuItemProps) => (
+        <ZoomInDecorator>
+            {p => <ZoomInMenuItem onClick={() => { p.onClick(); props.onClick(); }} />}
+        </ZoomInDecorator>
+    );
+
     const ZoomOutDecorator = (props: ZoomOutProps) => (
         <ZoomOut {...props} store={store} />
     );
@@ -54,6 +65,12 @@ const zoomPlugin = (): ZoomPlugin => {
     const ZoomOutButtonDecorator = () => (
         <ZoomOutDecorator>
             {props => <ZoomOutButton {...props} />}
+        </ZoomOutDecorator>
+    );
+
+    const ZoomOutMenuItemDecorator = (props: ZoomMenuItemProps) => (
+        <ZoomOutDecorator>
+            {p => <ZoomOutMenuItem onClick={() => { p.onClick(); props.onClick(); }} />}
         </ZoomOutDecorator>
     );
 
@@ -99,10 +116,12 @@ const zoomPlugin = (): ZoomPlugin => {
         CurrentScale: CurrentScaleDecorator,
         ZoomIn: ZoomInDecorator,
         ZoomInButton: ZoomInButtonDecorator,
+        ZoomInMenuItem: ZoomInMenuItemDecorator,
         ZoomOut: ZoomOutDecorator,
         ZoomOutButton: ZoomOutButtonDecorator,
+        ZoomOutMenuItem: ZoomOutMenuItemDecorator,
         Zoom: ZoomDecorator,
-        ZoomPopover: ZoomPopoverDecorator,
+        ZoomPopover: ZoomPopoverDecorator,        
     };
 };
 
