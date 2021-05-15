@@ -83,7 +83,7 @@ const toolbarPlugin = (props?: ToolbarPluginProps): ToolbarPlugin => {
         const { Open, OpenMenuItem } = openPluginInstance;
         const {
             CurrentPageInput, CurrentPageLabel, GoToFirstPage, GoToFirstPageMenuItem, GoToLastPage,
-            GoToLastPageMenuItem, GoToNextPage, GoToPreviousPage, GoToPreviousPageMenuItem,
+            GoToLastPageMenuItem, GoToNextPage, GoToNextPageMenuItem, GoToPreviousPage, GoToPreviousPageMenuItem,
         } = pageNavigationPluginInstance;
         const { Print, PrintMenuItem } = printPluginInstance;
         const { ShowProperties, ShowPropertiesMenuItem } = propertiesPluginInstance;
@@ -115,6 +115,7 @@ const toolbarPlugin = (props?: ToolbarPluginProps): ToolbarPlugin => {
                     GoToLastPage,
                     GoToLastPageMenuItem,
                     GoToNextPage,
+                    GoToNextPageMenuItem,
                     GoToPreviousPage,
                     GoToPreviousPageMenuItem,
                     NumberOfPages,
