@@ -91,7 +91,7 @@ const toolbarPlugin = (props?: ToolbarPluginProps): ToolbarPlugin => {
         const { SwitchScrollMode, SwitchScrollModeMenuItem } = scrollModePluginInstance;
         const { Search, ShowSearchPopover } = searchPluginInstance;
         const { SwitchSelectionMode, SwitchSelectionModeMenuItem } = selectionModePluginInstance;
-        const { CurrentScale, Zoom, ZoomIn, ZoomOut } = zoomPluginInstance;
+        const { CurrentScale, Zoom, ZoomIn, ZoomInMenuItem, ZoomOut, ZoomOutMenuItem } = zoomPluginInstance;
 
         const NumberOfPages = () => (
             <CurrentPageLabel>
@@ -136,7 +136,9 @@ const toolbarPlugin = (props?: ToolbarPluginProps): ToolbarPlugin => {
                     SwitchSelectionModeMenuItem,
                     Zoom,
                     ZoomIn,
+                    ZoomInMenuItem,
                     ZoomOut,
+                    ZoomOutMenuItem,
                 }}
             />
         );
