@@ -14,14 +14,14 @@ import NextIcon from './NextIcon';
 
 const TOOLTIP_OFFSET = { left: 0, top: 8 };
 
-const GoToNextPageButton: React.FC<RenderGoToNextPageProps> = ({ onClick }) => {
+const GoToNextPageButton: React.FC<RenderGoToNextPageProps> = ({ isDisabled, onClick }) => {
     const l10n = React.useContext(LocalizationContext);
     const label = l10n && l10n.pageNavigation ? l10n.pageNavigation.goToNextPage : 'Next page';
 
     return (
         <Tooltip
             position={Position.BottomCenter}
-            target={<Button onClick={onClick}><NextIcon /></Button>}
+            target={<Button isDisabled={isDisabled} onClick={onClick}><NextIcon /></Button>}
             content={() => label}
             offset={TOOLTIP_OFFSET}
         />

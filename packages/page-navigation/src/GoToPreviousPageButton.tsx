@@ -14,14 +14,14 @@ import PreviousIcon from './PreviousIcon';
 
 const TOOLTIP_OFFSET = { left: 0, top: 8 };
 
-const GoToPreviousPageButton: React.FC<RenderGoToPreviousPageProps> = ({ onClick }) => {
+const GoToPreviousPageButton: React.FC<RenderGoToPreviousPageProps> = ({ isDisabled, onClick }) => {
     const l10n = React.useContext(LocalizationContext);
     const label = l10n && l10n.pageNavigation ? l10n.pageNavigation.goToPreviousPage : 'Previous page';
 
     return (
         <Tooltip
             position={Position.BottomCenter}
-            target={<Button onClick={onClick}><PreviousIcon /></Button>}
+            target={<Button isDisabled={isDisabled} onClick={onClick}><PreviousIcon /></Button>}
             content={() => label}
             offset={TOOLTIP_OFFSET}
         />
