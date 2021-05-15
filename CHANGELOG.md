@@ -10,7 +10,8 @@ Provide more reusable components:
 |-------------------------------|---------------------------------------------------------------------------|-------------------------------|
 | `DownloadMenuItem`            | [Get File](https://react-pdf-viewer.dev/plugins/get-file)                 | Download the current file     |
 | `EnterFullScreenMenuItem`     | [Full screen](https://react-pdf-viewer.dev/plugins/full-screen)           | Enter the full screen mode    |
-| `GoToPreviousPageMenuItem`    | [page Navigation](https://react-pdf-viewer.dev/plugins/page-navigation)   | Go to the previous page       |
+| `GoToNextPageMenuItem`        | [Page Navigation](https://react-pdf-viewer.dev/plugins/page-navigation)   | Go to the next page           |
+| `GoToPreviousPageMenuItem`    | [Page Navigation](https://react-pdf-viewer.dev/plugins/page-navigation)   | Go to the previous page       |
 | `OpenMenuItem`                | [Open](https://react-pdf-viewer.dev/plugins/open)                         | Open a new file               |
 | `PrintMenuItem`               | [Print](https://react-pdf-viewer.dev/plugins/print)                       | Print the current file        |
 
