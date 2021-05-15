@@ -24,7 +24,7 @@ const defaultToolbar = (toolbarSlot: ToolbarSlot): React.ReactElement => {
                 <div className='rpv-toolbar-item'>
                     <ShowSearchPopover />
                 </div>
-                <div className="rpv-core-display-hidden rpv-core-display-block-medium">
+                <div className="rpv-core-display-hidden rpv-core-display-block-small">
                     <div className='rpv-toolbar-item'>
                         <GoToPreviousPage />
                     </div>
@@ -32,7 +32,7 @@ const defaultToolbar = (toolbarSlot: ToolbarSlot): React.ReactElement => {
                 <div className='rpv-toolbar-item'>
                     <CurrentPageInput /> / <NumberOfPages />
                 </div>
-                <div className="rpv-core-display-hidden rpv-core-display-block-medium">
+                <div className="rpv-core-display-hidden rpv-core-display-block-small">
                     <div className='rpv-toolbar-item'>
                         <GoToNextPage />
                     </div>
@@ -42,7 +42,7 @@ const defaultToolbar = (toolbarSlot: ToolbarSlot): React.ReactElement => {
                 <div className='rpv-toolbar-item'>
                     <ZoomOut />
                 </div>
-                <div className="rpv-core-display-hidden rpv-core-display-block-medium">
+                <div className="rpv-core-display-hidden rpv-core-display-block-small">
                     <div className='rpv-toolbar-item'>
                         <Zoom />
                     </div>
