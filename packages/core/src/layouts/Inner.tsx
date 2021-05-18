@@ -26,7 +26,6 @@ const SCROLL_BAR_WIDTH = 17;
 const PAGE_PADDING = 8;
 
 interface InnerProps {
-    defaultScale?: number | SpecialZoomLevel;
     doc: PdfJs.PdfDocument;
     initialPage?: number;
     pageSize: PageSize;
@@ -40,7 +39,7 @@ interface InnerProps {
 }
 
 const Inner: React.FC<InnerProps> = ({
-    defaultScale, doc, initialPage, pageSize, plugins, renderPage, viewerState,
+    doc, initialPage, pageSize, plugins, renderPage, viewerState,
     onDocumentLoad, onOpenFile, onPageChange, onZoom,
 }) => {
     const theme = React.useContext(ThemeContext);
@@ -254,13 +253,6 @@ const Inner: React.FC<InnerProps> = ({
             scale,
         });
     }, [currentPage]);
-
-    React.useEffect(() => {
-        // If the default scale is set
-        if (defaultScale) {
-            zoom(defaultScale);
-        }
-    }, []);
 
     const pageVisibilityChanged = (pageIndex: number, ratio: number): void => {
         pageVisibility[pageIndex] = ratio;

@@ -155,7 +155,6 @@ const Viewer: React.FC<ViewerProps> = ({
                                         doc={doc}
                                         render={(ps: PageSize) => (
                                             <Inner
-                                                defaultScale={defaultScale}
                                                 doc={doc}
                                                 initialPage={initialPage}
                                                 pageSize={ps}
