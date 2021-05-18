@@ -86,25 +86,6 @@ describe('Test Viewer', () => {
         expect(text).toHaveTextContent('Adobe Acrobat SDK');
     });
 
-    test('Calculate page size', async () => {
-        const rawSamplePdf = fs.readFileSync(path.resolve(__dirname, '../../../assets/sample.pdf'));
-        const App = () => (
-            <div style={{ height: '720px', width: '600px' }}>
-                <Viewer
-                    fileUrl={new Uint8Array(rawSamplePdf)}
-                />
-            </div>
-        );
-        const { getByTestId, findByTestId } = render(<App />);
-        mockIsIntersecting(getByTestId('viewer'), true);
-        
-        const firstPage = await findByTestId('viewer-page-layer-0');
-        mockIsIntersecting(firstPage, true);
-        
-        expect(parseInt(firstPage.style.width, 10)).toEqual(535);
-        expect(parseInt(firstPage.style.height, 10)).toEqual(757);
-    });
-
     test('defaultScale option', async () => {
         const rawSamplePdf = fs.readFileSync(path.resolve(__dirname, '../../../assets/sample.pdf'));
         const App = () => (
