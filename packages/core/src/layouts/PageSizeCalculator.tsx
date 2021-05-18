@@ -9,17 +9,20 @@
 import * as React from 'react';
 
 import Spinner from '../components/Spinner';
+import SpecialZoomLevel from '../SpecialZoomLevel';
 import ThemeContext from '../theme/ThemeContext';
 import PdfJs from '../vendors/PdfJs';
 import { decrease } from '../zoom/zoomingLevel';
+import calculateScale from './calculateScale';
 import PageSize from './PageSize';
 
 interface PageSizeCalculatorProps {
+    defaultScale?: number | SpecialZoomLevel;
     doc: PdfJs.PdfDocument;
     render(pageSize: PageSize): React.ReactElement;
 }
 
-const PageSizeCalculator: React.FC<PageSizeCalculatorProps> = ({ doc, render }) => {
+const PageSizeCalculator: React.FC<PageSizeCalculatorProps> = ({ defaultScale, doc, render }) => {
     const theme = React.useContext(ThemeContext);
     const pagesRef = React.useRef<HTMLDivElement | null>(null);
     const [pageSize, setPageSize] = React.useState<PageSize>({
@@ -43,7 +46,10 @@ const PageSizeCalculator: React.FC<PageSizeCalculatorProps> = ({ doc, render }) 
             // Determine the best scale that fits the document within the container
             // We spend 50 pixels in the left and right sides for other parts such as sidebar
             const scaled = (pagesEle.clientWidth - 2 * 50) / w;
-            const scale = decrease(scaled);
+            
+            let scale = typeof defaultScale === 'string'
+                        ? calculateScale(pagesEle, h, w, defaultScale)
+                        : decrease(scaled);
 
             setPageSize({
                 pageHeight: h,

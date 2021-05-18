@@ -151,6 +151,7 @@ const Viewer: React.FC<ViewerProps> = ({
                                 httpHeaders={httpHeaders}
                                 render={(doc: PdfJs.PdfDocument) => (
                                     <PageSizeCalculator
+                                        defaultScale={defaultScale}
                                         doc={doc}
                                         render={(ps: PageSize) => (
                                             <Inner

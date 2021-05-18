@@ -20,10 +20,11 @@
 These components are available as [Toolbar slots](https://react-pdf-viewer.dev/plugins/toolbar), so it's possible to add them to a custom toolbar.
 
 **Improvements**
+- Decrease the number of renders from twice to once when setting the default scale
 - The `Button` and `MenuItem` component have disabled state. For example, the button for going to the first page will be disabled if we're at the first page
 - The icons use the current color instead of hard coded one. It's more easy for us to create themes.
 
-**Bug fix**
+**Bug fixes**
 - There are big spaces between thumbnails
 - Zoom the document best inside the container initially
 

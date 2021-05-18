@@ -62,7 +62,7 @@ import type {
 } from '@react-pdf-viewer/selection-mode';
 import type {
     CurrentScaleProps,
-    ZoomInProps,    
+    ZoomInProps,
     ZoomMenuItemProps,
     ZoomOutProps,
     ZoomPlugin,
