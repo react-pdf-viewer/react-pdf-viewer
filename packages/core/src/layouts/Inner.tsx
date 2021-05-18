@@ -18,6 +18,7 @@ import ViewerState from '../types/ViewerState';
 import PdfJs from '../vendors/PdfJs';
 import getFileExt from '../utils/fileExt';
 import { DocumentLoadEvent, PageChangeEvent, ZoomEvent } from '../Viewer';
+import calculateScale from './calculateScale';
 import PageSize from './PageSize';
 import { RenderPage } from './RenderPage';
 
@@ -44,11 +45,11 @@ const Inner: React.FC<InnerProps> = ({
 }) => {
     const theme = React.useContext(ThemeContext);
     const containerRef = React.useRef<HTMLDivElement | null>(null);
-    const pagesRef = React.useRef<HTMLDivElement | null>(null);
-    const [scale, setScale] = React.useState(pageSize.scale);
+    const pagesRef = React.useRef<HTMLDivElement | null>(null);    
     const [currentPage, setCurrentPage] = React.useState(0);
     const [rotation, setRotation] = React.useState(0);
     const stateRef = React.useRef<ViewerState>(viewerState);
+    const [scale, setScale] = React.useState(pageSize.scale);
 
     const { numPages } = doc;
     const { pageWidth, pageHeight } = pageSize;
@@ -105,7 +106,7 @@ const Inner: React.FC<InnerProps> = ({
                     zoom(SpecialZoomLevel.PageFit);
                     break;
                 case SpecialZoomLevel.PageWidth:
-                    updateScale = calculateScale(SpecialZoomLevel.PageWidth);
+                    updateScale = calculateScale(pagesContainer, pageHeight, pageWidth, SpecialZoomLevel.PageWidth);
                     top = (viewport.height - bottom) * updateScale;
                     left = left * updateScale;
                     zoom(updateScale);
@@ -165,41 +166,11 @@ const Inner: React.FC<InnerProps> = ({
         });
     };
 
-    // Calculate the new scale
-    const calculateScale = (newScale: number | SpecialZoomLevel): number => {
-        const pagesEle = pagesRef.current;
-        const currentState = stateRef.current;
-        if (!pagesEle || !currentState) {
-            return 1;
-        }
-
-        let updateScale = 1;
-        switch (newScale) {
-            case SpecialZoomLevel.ActualSize:
-                updateScale = 1;
-                break;
-
-            case SpecialZoomLevel.PageFit:
-                updateScale = Math.min(
-                    (pagesEle.clientWidth - SCROLL_BAR_WIDTH) / pageWidth,
-                    (pagesEle.clientHeight - 2 * PAGE_PADDING) / pageHeight
-                );
-                break;
-
-            case SpecialZoomLevel.PageWidth:
-                updateScale = (pagesEle.clientWidth - SCROLL_BAR_WIDTH) / pageWidth;
-                break;
-
-            default:
-                updateScale = newScale;
-                break;
-        }
-
-        return updateScale;
-    };
-
     const zoom = (newScale: number | SpecialZoomLevel): void => {
-        const updateScale = calculateScale(newScale);
+        const pagesEle = pagesRef.current;
+        let updateScale = pagesEle
+                            ? (typeof newScale === 'string' ? calculateScale(pagesEle, pageHeight, pageWidth, newScale) : newScale)
+                            : 1;
         setScale(updateScale);
         onZoom({ doc, scale: updateScale });
     };
