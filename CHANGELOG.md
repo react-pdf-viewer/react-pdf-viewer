@@ -25,6 +25,7 @@ These components are available as [Toolbar slots](https://react-pdf-viewer.dev/p
 - The icons use the current color instead of hard coded one. It's more easy for us to create themes.
 
 **Bug fixes**
+- Some bookmarks are hidden initially
 - The `initialPage` and `defaultScale` options don't work together
 - There are big spaces between thumbnails
 - Zoom the document best inside the container initially
