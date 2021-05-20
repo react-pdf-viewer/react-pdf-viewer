@@ -15,6 +15,18 @@ import * as React from 'react';
 export declare namespace PdfJs {
     type FileData = string | Uint8Array;
 
+    // Worker
+    interface PDFWorkerConstructorParams {
+        name: string;
+    }
+
+    class PDFWorker {
+        destroyed: boolean;
+        constructor(params: PDFWorkerConstructorParams);
+        destroy(): void;
+    }
+
+    // Document
     interface PdfDocument {
         numPages: number;
         getAttachments(): Promise<{ [filename: string]: Attachment }>;
@@ -25,8 +37,17 @@ export declare namespace PdfJs {
         getPage(pageIndex: number): Promise<Page>;
         getPageIndex(ref: OutlineRef): Promise<number>;
     }
+    interface GetDocumentParams {
+        data?: FileData;
+        cMapUrl?: string;
+        cMapPacked?: boolean;
+        httpHeaders?: Record<string, string | string[]>;
+        url?: string;
+        withCredentials?: boolean;
+        worker?: PDFWorker;
+    }
 
-    // View port
+    // Viewport
     interface ViewPortParams {
         rotation?: number;
         scale: number;
@@ -565,6 +586,7 @@ export interface ViewerProps {
     renderError?: RenderError;
     renderPage?: RenderPage;
     renderLoader?(percentages: number): React.ReactElement;
+    transformGetDocumentParams?(options: PdfJs.GetDocumentParams): PdfJs.GetDocumentParams;
     // Indicate the cross-site requests should be made with credentials such as cookie and authorization headers.
     // The default value is `false`
     withCredentials?: boolean;

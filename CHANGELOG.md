@@ -4,6 +4,20 @@
 
 **New features**
 - The default layout is responsive in different screen sizes
+- You can add more options that will be passed to the [pdf.js `getDocument`](https://mozilla.github.io/pdf.js/api/draft/module-pdfjsLib.html) API:
+
+```js
+<Viewer
+    fileUrl='...'
+    transformGetDocumentParams={(options: PdfJs.GetDocumentParams) => (
+        Object.assign({}, options, {
+            disableRange: false,
+            disableStream: false,
+        })
+    )}
+/>
+```
+
 - Provide more reusable components:
 
 | Component                     | Provided by plugin                                                        | Description                   |
