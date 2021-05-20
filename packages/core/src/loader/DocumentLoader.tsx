@@ -29,13 +29,14 @@ interface DocumentLoaderProps {
     characterMap?: CharacterMap;
     file: PdfJs.FileData;
     httpHeaders?: Record<string, string | string[]>;
-    renderError?: RenderError;
-    renderLoader?(percentages: number): React.ReactElement;
     render(doc: PdfJs.PdfDocument): React.ReactElement;
+    renderError?: RenderError;
+    renderLoader?(percentages: number): React.ReactElement;    
+    transformGetDocumentParams?(options: PdfJs.GetDocumentParams): PdfJs.GetDocumentParams;
     withCredentials: boolean;
 }
 
-const DocumentLoader: React.FC<DocumentLoaderProps> = ({ characterMap, file, httpHeaders, render, renderError, renderLoader, withCredentials }) => {
+const DocumentLoader: React.FC<DocumentLoaderProps> = ({ characterMap, file, httpHeaders, render, renderError, renderLoader, transformGetDocumentParams, withCredentials }) => {
     const theme = React.useContext(ThemeContext);
     const [status, setStatus] = React.useState<LoadingStatus>(new LoadingState(0));
 
@@ -65,8 +66,9 @@ const DocumentLoader: React.FC<DocumentLoaderProps> = ({ characterMap, file, htt
             ('string' === typeof file) ? { url: file } : { data: file },
             characterMap ? { cMapUrl: characterMap.url, cMapPacked: characterMap.isCompressed } : {}
         );
+        const transformParams = transformGetDocumentParams ? transformGetDocumentParams(params) : params;
 
-        const loadingTask = PdfJs.getDocument(params);
+        const loadingTask = PdfJs.getDocument(transformParams);
         loadingTask.onPassword = (verifyPassword: VerifyPassword, reason: string): void => {
             switch (reason) {
                 case PdfJs.PasswordResponses.NEED_PASSWORD:

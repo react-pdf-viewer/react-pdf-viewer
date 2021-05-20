@@ -58,11 +58,10 @@ export interface ViewerProps {
     renderError?: RenderError;
     renderPage?: RenderPage;
     renderLoader?(percentages: number): React.ReactElement;
+    transformGetDocumentParams?(options: PdfJs.GetDocumentParams): PdfJs.GetDocumentParams;
     // Indicate the cross-site requests should be made with credentials such as cookie and authorization headers.
     // The default value is `false` 
     withCredentials?: boolean;
-    // The text selection mode
-    selectionMode?: SelectionMode;
     onDocumentLoad?(e: DocumentLoadEvent): void;
     onPageChange?(e: PageChangeEvent): void;
     onZoom?(e: ZoomEvent): void;
@@ -86,6 +85,7 @@ const Viewer: React.FC<ViewerProps> = ({
     renderError,
     renderPage,
     renderLoader,
+    transformGetDocumentParams,
     withCredentials = false,
     onDocumentLoad = () => {/**/},
     onPageChange = () => {/**/},
@@ -178,6 +178,7 @@ const Viewer: React.FC<ViewerProps> = ({
                                 )}
                                 renderError={renderError}
                                 renderLoader={renderLoader}
+                                transformGetDocumentParams={transformGetDocumentParams}
                                 withCredentials={withCredentials}
                             />
                         )
