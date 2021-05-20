@@ -586,7 +586,9 @@ export interface ViewerProps {
     renderError?: RenderError;
     renderPage?: RenderPage;
     renderLoader?(percentages: number): React.ReactElement;
-    transformGetDocumentParams?(options: PdfJs.GetDocumentParams): PdfJs.GetDocumentParams;
+    transformGetDocumentParams?(
+        options: PdfJs.GetDocumentParams
+    ): PdfJs.GetDocumentParams;
     // Indicate the cross-site requests should be made with credentials such as cookie and authorization headers.
     // The default value is `false`
     withCredentials?: boolean;

@@ -40,10 +40,6 @@ export interface CharacterMap {
     url: string;
 }
 
-export interface GetDocumentOptions {
-
-}
-
 export interface ViewerProps {
     characterMap?: CharacterMap;
     // The default zoom level
@@ -61,9 +57,7 @@ export interface ViewerProps {
     prefixClass?: string;
     renderError?: RenderError;
     renderPage?: RenderPage;
-    renderLoader?(percentages: number): React.ReactElement;    
-    // The text selection mode
-    selectionMode?: SelectionMode;
+    renderLoader?(percentages: number): React.ReactElement;
     transformGetDocumentParams?(options: PdfJs.GetDocumentParams): PdfJs.GetDocumentParams;
     // Indicate the cross-site requests should be made with credentials such as cookie and authorization headers.
     // The default value is `false` 
