@@ -85,7 +85,8 @@ const triggerIntersection = (
                     toJSON(): any {},
                 },
             isIntersecting,
-            rootBounds: observer.root ? observer.root.getBoundingClientRect() : null,
+            // To get rid of `Property 'getBoundingClientRect' does not exist on type 'Document'` error
+            rootBounds: observer.root && observer.root['getBoundingClientRect'] ? observer.root['getBoundingClientRect']() : null,
             target: element,
             time: Date.now() - item.created,
         });
