@@ -17,7 +17,7 @@ interface ShortcutHandlerProps {
     store: Store<StoreProps>;
 }
 
-const isMac = /(Mac|iPhone|iPod|iPad)/i.test(navigator.platform);
+const isMac = () => (typeof window !== "undefined") ? /(Mac|iPhone|iPod|iPad)/i.test(navigator.platform) : false;
 
 const ShortcutHandler: React.FC<ShortcutHandlerProps> = ({ containerRef, store }) => {
     const keydownHandler = (e: KeyboardEvent) => {
@@ -25,7 +25,7 @@ const ShortcutHandler: React.FC<ShortcutHandlerProps> = ({ containerRef, store }
             return;
         }
 
-        const isCommandPressed = isMac ? e.metaKey : e.ctrlKey;
+        const isCommandPressed = isMac() ? e.metaKey : e.ctrlKey;
         if (!isCommandPressed) {
             return;
         }
