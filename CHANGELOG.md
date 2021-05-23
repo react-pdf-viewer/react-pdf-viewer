@@ -8,35 +8,35 @@
 
 ```js
 <Viewer
-    fileUrl='...'
-    transformGetDocumentParams={(options: PdfJs.GetDocumentParams) => (
-        Object.assign({}, options, {
-            disableRange: false,
-            disableStream: false,
-        })
-    )}
+    fileUrl='...'
+    transformGetDocumentParams={(options: PdfJs.GetDocumentParams) => (
+        Object.assign({}, options, {
+            disableRange: false,
+            disableStream: false,
+        })
+    )}
 />
 ```
 
 - Provide more reusable components:
 
-| Component                     | Provided by plugin                                                        | Description                   |
+| Component                     | Provided by plugin                                                        | Description                   |
 |-------------------------------|---------------------------------------------------------------------------|-------------------------------|
-| `DownloadMenuItem`            | [Get File](https://react-pdf-viewer.dev/plugins/get-file)                 | Download the current file     |
-| `EnterFullScreenMenuItem`     | [Full screen](https://react-pdf-viewer.dev/plugins/full-screen)           | Enter the full screen mode    |
-| `GoToNextPageMenuItem`        | [Page Navigation](https://react-pdf-viewer.dev/plugins/page-navigation)   | Go to the next page           |
-| `GoToPreviousPageMenuItem`    | [Page Navigation](https://react-pdf-viewer.dev/plugins/page-navigation)   | Go to the previous page       |
-| `OpenMenuItem`                | [Open](https://react-pdf-viewer.dev/plugins/open)                         | Open a new file               |
-| `PrintMenuItem`               | [Print](https://react-pdf-viewer.dev/plugins/print)                       | Print the current file        |
-| `ZoomInMenuItem`              | [Zoom](https://react-pdf-viewer.dev/plugins/zoom)                         | Zoom in the current file      |
-| `ZoomOutMenuItem`             | [Zoom](https://react-pdf-viewer.dev/plugins/zoom)                         | Zoom out the current file     |
+| `DownloadMenuItem`            | [Get File](https://react-pdf-viewer.dev/plugins/get-file)                 | Download the current file     |
+| `EnterFullScreenMenuItem`     | [Full screen](https://react-pdf-viewer.dev/plugins/full-screen)           | Enter the full screen mode    |
+| `GoToNextPageMenuItem`        | [Page Navigation](https://react-pdf-viewer.dev/plugins/page-navigation)   | Go to the next page           |
+| `GoToPreviousPageMenuItem`    | [Page Navigation](https://react-pdf-viewer.dev/plugins/page-navigation)   | Go to the previous page       |
+| `OpenMenuItem`                | [Open](https://react-pdf-viewer.dev/plugins/open)                         | Open a new file               |
+| `PrintMenuItem`               | [Print](https://react-pdf-viewer.dev/plugins/print)                       | Print the current file        |
+| `ZoomInMenuItem`              | [Zoom](https://react-pdf-viewer.dev/plugins/zoom)                         | Zoom in the current file      |
+| `ZoomOutMenuItem`             | [Zoom](https://react-pdf-viewer.dev/plugins/zoom)                         | Zoom out the current file     |
 
 These components are available as [Toolbar slots](https://react-pdf-viewer.dev/plugins/toolbar), so it's possible to add them to a custom toolbar.
 
 **Improvements**
 - Decrease the number of renders from twice to once when setting the default scale
-- The `Button` and `MenuItem` component have disabled state. For example, the button for going to the first page will be disabled if we're at the first page
-- The icons use the current color instead of hard coded one. It's more easy for us to create themes.
+- The `Button` and `MenuItem` components have disabled state. For example, the button for going to the first page will be disabled if we're at the first page
+- The icons use the current color instead of hard coded one. It's easier for us to create themes.
 
 **Bug fixes**
 - Doesn't work with NextJS because `navigator` isn't defined
@@ -48,15 +48,15 @@ These components are available as [Toolbar slots](https://react-pdf-viewer.dev/p
 **Breaking changes**
 - If you are creating a custom toolbar or buttons to go to particular pages, then the following props are renamed:
 
-| Old name                      | New name              |
+| Old name                      | New name              |
 |-------------------------------|-----------------------|
-| `GoToFirstPageProps`          | `GoToPageProps`       |
-| `GoToLastPageProps`           | `GoToPageProps`       |
-| `GoToNextPageProps`           | `GoToPageProps`       |
-| `GoToPreviousPageProps`       | `GoToPageProps`       |
-| `RenderGoToFirstPageProps`    | `RenderGoToPageProps` |
-| `RenderGoToLastPageProps`     | `RenderGoToPageProps` |
-| `RenderGoToNextPageProps`     | `RenderGoToPageProps` |
+| `GoToFirstPageProps`          | `GoToPageProps`       |
+| `GoToLastPageProps`           | `GoToPageProps`       |
+| `GoToNextPageProps`           | `GoToPageProps`       |
+| `GoToPreviousPageProps`       | `GoToPageProps`       |
+| `RenderGoToFirstPageProps`    | `RenderGoToPageProps` |
+| `RenderGoToLastPageProps`     | `RenderGoToPageProps` |
+| `RenderGoToNextPageProps`     | `RenderGoToPageProps` |
 | `RenderGoToPreviousPageProps` | `RenderGoToPageProps` |
 
 ## v2.4.3
