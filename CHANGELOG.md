@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## v2.5.0 [WIP]
+## v2.5.0
 
 **New features**
 - The default layout is responsive in different screen sizes
@@ -31,12 +31,12 @@
 | `ZoomInMenuItem`              | [Zoom](https://react-pdf-viewer.dev/plugins/zoom)                         | Zoom in the current file      |
 | `ZoomOutMenuItem`             | [Zoom](https://react-pdf-viewer.dev/plugins/zoom)                         | Zoom out the current file     |
 
-These components are available as [Toolbar slots](https://react-pdf-viewer.dev/plugins/toolbar), so it's possible to add them to a custom toolbar.
+These components are available as [Toolbar slots](https://react-pdf-viewer.dev/plugins/toolbar), so it's possible to add them to a custom toolbar
 
 **Improvements**
 - Decrease the number of renders from twice to once when setting the default scale
 - The `Button` and `MenuItem` components have disabled state. For example, the button for going to the first page will be disabled if we're at the first page
-- The icons use the current color instead of hard coded one. It's easier for us to create themes.
+- The icons use the current color instead of hard coded one. It's easier for us to create themes
 
 **Bug fixes**
 - Doesn't work with NextJS because `navigator` isn't defined
