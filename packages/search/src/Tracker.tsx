@@ -108,7 +108,7 @@ const Tracker: React.FC<{
             return;
         }
 
-        const spans: HTMLElement[] = [].slice.call(containerEle.querySelectorAll('.rpv-core-text'));
+        const spans: HTMLElement[] = [].slice.call(containerEle.querySelectorAll('.rpv-core__text-layer-text'));
 
         // Generate the full text of page
         const fullText = charIndexes.map(item => item.char).join('');
@@ -189,7 +189,7 @@ const Tracker: React.FC<{
         }
 
         const containerEle = renderStatus.ele;
-        const spans: HTMLElement[] = [].slice.call(containerEle.querySelectorAll('.rpv-core-text'));
+        const spans: HTMLElement[] = [].slice.call(containerEle.querySelectorAll('.rpv-core__text-layer-text'));
 
         const charIndexes: CharIndex[] = spans.map(span => span.textContent)
             .reduce(
