@@ -78,7 +78,7 @@ const CurrentPageInput: React.FC<{
 
     return (
         <input
-            className='rpv-current-page-input'
+            className='rpv-page-navigation__current-page-input'
             type='text'
             value={editingPage}
             onChange={changePage}
