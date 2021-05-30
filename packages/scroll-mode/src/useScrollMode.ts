@@ -33,21 +33,21 @@ const useScrollMode = (store: Store<StoreProps>): UseScrollMode => {
         }
         switch (newScrollMode) {
             case ScrollMode.Vertical:
-                pagesEle.classList.add('rpv-scroll-mode-vertical');
-                pagesEle.classList.remove('rpv-scroll-mode-horizontal');
-                pagesEle.classList.remove('rpv-scroll-mode-wrapped');
+                pagesEle.classList.add('rpv-scroll-mode__vertical');
+                pagesEle.classList.remove('rpv-scroll-mode__horizontal');
+                pagesEle.classList.remove('rpv-scroll-mode__wrapped');
                 break;
 
             case ScrollMode.Horizontal:
-                pagesEle.classList.add('rpv-scroll-mode-horizontal');
-                pagesEle.classList.remove('rpv-scroll-mode-vertical');
-                pagesEle.classList.remove('rpv-scroll-mode-wrapped');
+                pagesEle.classList.add('rpv-scroll-mode__horizontal');
+                pagesEle.classList.remove('rpv-scroll-mode__vertical');
+                pagesEle.classList.remove('rpv-scroll-mode__wrapped');
                 break;
 
             case ScrollMode.Wrapped:
-                pagesEle.classList.add('rpv-scroll-mode-wrapped');
-                pagesEle.classList.remove('rpv-scroll-mode-vertical');
-                pagesEle.classList.remove('rpv-scroll-mode-horizontal');
+                pagesEle.classList.add('rpv-scroll-mode__wrapped');
+                pagesEle.classList.remove('rpv-scroll-mode__vertical');
+                pagesEle.classList.remove('rpv-scroll-mode__horizontal');
                 break;
 
             default:
