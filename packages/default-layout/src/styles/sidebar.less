@@ -6,30 +6,30 @@
  * @copyright 2019-2021 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-.rpv-default-layout-sidebar-tabs {
+.rpv-default-layout__sidebar-tabs {
     display: flex;
     height: 100%;
     width: 100%;
 }
 
-.rpv-default-layout-sidebar-headers {
+.rpv-default-layout__sidebar-headers {
     align-items: center;
     background-color: rgb(238, 238, 238);
-    border-right: 1px solid rgba(0, 0, 0, 0.1);
-    padding: 4px;
+    border-right: 1px solid rgba(0, 0, 0, .1);
+    padding: .25rem;
 }
 
-.rpv-default-layout-sidebar-header {
-    padding: 2px;
+.rpv-default-layout__sidebar-header {
+    padding: .125rem;
 }
 
-.rpv-default-layout-sidebar-content {
+.rpv-default-layout__sidebar-content {
     display: none;
     flex-grow: 1;
     flex-shrink: 1;    
-    padding: 8px 0px;
+    padding: .5rem 0;
 
-    &-opened {        
+    &--opened {
         display: flex;
         overflow: hidden;
     }

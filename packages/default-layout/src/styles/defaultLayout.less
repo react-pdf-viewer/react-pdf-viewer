@@ -6,7 +6,7 @@
  * @copyright 2019-2021 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-.rpv-default-layout-container {
+.rpv-default-layout__container {
     /* Border */
     border: 1px solid rgba(0, 0, 0, .3);
     box-sizing: border-box;
@@ -19,13 +19,13 @@
     width: 100%;
 }
 
-.rpv-default-layout-toolbar {
+.rpv-default-layout__toolbar {
     background-color: rgb(238, 238, 238);
     border-bottom: 1px solid rgba(0, 0, 0, .1);
     padding: .25rem;
 }
 
-.rpv-default-layout-sidebar {
+.rpv-default-layout__sidebar {
     border-right: 1px solid rgba(0, 0, 0, .2);
 
     &-opened {
@@ -44,7 +44,7 @@
     }
 }
 
-.rpv-default-layout-main {
+.rpv-default-layout__main {
     display: flex;
     flex-grow: 1;
     
@@ -56,19 +56,19 @@
     position: relative;
 }
 
-.rpv-default-layout-body {
+.rpv-default-layout__body {
     flex: 1;
     overflow: auto;
 }
 
 @media (min-width: 768px) {
-    .rpv-default-layout-sidebar-opened {
+    .rpv-default-layout__sidebar--opened {
         width: 16rem;
     }
 }
 
 @media (min-width: 1024px) {
-    .rpv-default-layout-sidebar-opened {
+    .rpv-default-layout__sidebar--opened {
         background: inherit;
         position: inherit;
         width: 20rem;
