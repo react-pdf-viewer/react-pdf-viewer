@@ -8,7 +8,6 @@
 
 import * as React from 'react';
 
-import ThemeContext from '../theme/ThemeContext';
 import LayerRenderStatus from '../types/LayerRenderStatus';
 import { Plugin } from '../types/Plugin';
 import PdfJs from '../vendors/PdfJs';
@@ -23,7 +22,6 @@ interface TextLayerProps {
 }
 
 const TextLayer: React.FC<TextLayerProps> = ({ page, pageIndex, plugins, rotation, scale }) => {
-    const theme = React.useContext(ThemeContext);
     const containerRef = React.createRef<HTMLDivElement>();
     const renderTask = React.useRef<PdfJs.PageRenderTask>();
 
@@ -32,7 +30,7 @@ const TextLayer: React.FC<TextLayerProps> = ({ page, pageIndex, plugins, rotatio
         if (!containerEle) {
             return;
         }
-        const spans = containerEle.querySelectorAll(`span.${theme.prefixClass}-text`);
+        const spans = containerEle.querySelectorAll('span.rpv-core__text-layer-text');
         const numSpans = spans.length;
         for (let i = 0; i < numSpans; i++) {
             const span = spans[i];
@@ -75,7 +73,7 @@ const TextLayer: React.FC<TextLayerProps> = ({ page, pageIndex, plugins, rotatio
                     const numSpans = spans.length;
                     for (let i = 0; i < numSpans; i++) {
                         const span = spans[i] as HTMLElement;
-                        span.classList.add(`${theme.prefixClass}-text`);
+                        span.classList.add('rpv-core__text-layer-text');
                     }
                     plugins.forEach(plugin => {
                         if (plugin.onTextLayerRender) {
@@ -95,7 +93,7 @@ const TextLayer: React.FC<TextLayerProps> = ({ page, pageIndex, plugins, rotatio
 
     return (
         <WithScale callback={renderText} rotation={rotation} scale={scale}>
-            <div className={`${theme.prefixClass}-text-layer`} ref={containerRef} />
+            <div className='rpv-core__text-layer' ref={containerRef} />
         </WithScale>
     );
 };

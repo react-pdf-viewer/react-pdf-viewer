@@ -13,7 +13,6 @@ import Spinner from '../components/Spinner';
 import useIntersectionObserver, { VisibilityChanged } from '../hooks/useIntersectionObserver';
 import RenderPageProps, { RenderPage } from '../layouts/RenderPage';
 import SpecialZoomLevel from '../SpecialZoomLevel';
-import ThemeContext from '../theme/ThemeContext';
 import { Plugin } from '../types/Plugin';
 import PdfJs from '../vendors/PdfJs';
 import CanvasLayer from './CanvasLayer';
@@ -48,7 +47,6 @@ const PageLayer: React.FC<PageLayerProps> = ({
     currentPage, doc, height, pageIndex, plugins, renderPage, rotation, scale, width,
     onExecuteNamedAction, onJumpToDest, onPageVisibilityChanged,
 }) => {
-    const theme = React.useContext(ThemeContext);
     const [pageSize, setPageSize] = React.useState<PageSizeState>({
         page: null,
         pageHeight: height,
@@ -121,7 +119,7 @@ const PageLayer: React.FC<PageLayerProps> = ({
     return (
         <div
             ref={containerRef}
-            className={`${theme.prefixClass}-page-layer`}
+            className='rpv-core__page-layer'
             data-testid={`viewer-page-layer-${pageIndex}`}
             style={{
                 height: `${h}px`,

@@ -9,7 +9,6 @@
 import * as React from 'react';
 import Spinner from '../components/Spinner';
 
-import ThemeContext from '../theme/ThemeContext';
 import LayerRenderStatus from '../types/LayerRenderStatus';
 import { Plugin } from '../types/Plugin';
 import PdfJs from '../vendors/PdfJs';
@@ -26,7 +25,6 @@ interface CanvasLayerProps {
 }
 
 const CanvasLayer: React.FC<CanvasLayerProps> = ({ height, page, pageIndex, plugins, rotation, scale, width }) => {
-    const theme = React.useContext(ThemeContext);
     const canvasRef = React.createRef<HTMLCanvasElement>();
     const renderTask = React.useRef<PdfJs.PageRenderTask>();
 
@@ -92,7 +90,7 @@ const CanvasLayer: React.FC<CanvasLayerProps> = ({ height, page, pageIndex, plug
     return (
         <WithScale callback={renderCanvas} rotation={rotation} scale={scale}>
             <div
-                className={`${theme.prefixClass}-canvas-layer`}
+                className='rpv-core__canvas-layer'
                 style={{
                     height: `${height}px`,
                     width: `${width}px`,
@@ -100,7 +98,7 @@ const CanvasLayer: React.FC<CanvasLayerProps> = ({ height, page, pageIndex, plug
             >
                 {
                     !rendered && (
-                        <div className={`${theme.prefixClass}-canvas-layer-loader`}>                    
+                        <div className='rpv-core__canvas-layer-loader'>
                             <Spinner />
                         </div>
                     )

@@ -6,33 +6,33 @@
  * @copyright 2019-2021 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-.rpv-core-text-layer {
+.rpv-core__text-layer {
     height: 100%;
-    left: 0px;
+    left: 0;
     line-height: 1;
     position: absolute;
-    top: 0px;
+    top: 0;
     width: 100%;
 }
 
-.rpv-core-text {
+.rpv-core__text-layer-text {
     color: transparent;
     cursor: text;
-    opacity: 0.2;
+    opacity: .2;
     position: absolute;
     transform-origin: 0% 0%;
     white-space: pre;
 
     &::selection {
-        background: rgb(0, 0, 255, 0.5);
+        background: rgb(0, 0, 255, .5);
         color: transparent;
     }
 
+    // TODO: Remove this?
     &-highlight {
         background-color: rgb(180, 0, 170);
-        border-radius: 4px;
+        border-radius: .25rem;
         margin: -1px;
         padding: 1px;
     }
 }
-
