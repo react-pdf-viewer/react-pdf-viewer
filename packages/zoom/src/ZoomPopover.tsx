@@ -31,9 +31,9 @@ const ZoomPopover: React.FC<RenderZoomProps> = ({ scale, onZoom }) => {
     const renderTarget = (toggle: Toggle): React.ReactElement => {
         const click = (): void => { toggle(); };
         return (
-            <span className='rpv-zoom-popover-target' onClick={click}>
-                <span className='rpv-zoom-popover-target-scale'>{Math.round(scale * 100)}%</span>
-                <span className='rpv-zoom-popover-target-arrow' />
+            <span className='rpv-zoom__popover-target' onClick={click}>
+                <span className='rpv-zoom__popover-target-scale'>{Math.round(scale * 100)}%</span>
+                <span className='rpv-zoom__popover-target-arrow' />
             </span>
         );
     };
