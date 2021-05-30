@@ -87,7 +87,7 @@ const ThumbnailContainer: React.FC<ThumbnailContainerProps> = ({ doc, isActive, 
 
     return (
         <div
-            className='rpv-thumbnail-container'
+            className='rpv-thumbnail__container'
             ref={containerRef}
             style={{
                 height: `${h}px`,

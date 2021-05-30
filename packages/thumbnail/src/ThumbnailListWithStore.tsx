@@ -82,7 +82,7 @@ const ThumbnailListWithStore: React.FC<{
                 onJumpToPage={jump}
             />
         )
-        : <div className='rpv-thumbnail-list-loader'><Spinner /></div>
+        : <div className='rpv-thumbnail__loader'><Spinner /></div>
     );
 };
 
