@@ -23,7 +23,7 @@ const AttachmentList: React.FC<AttachmentListProps> = ({ files }) => {
         const onClick = (): void => downloadFile(file.fileName, file.data);
         return (
             <li
-                className='rpv-attachment-item'
+                className='rpv-attachment__item'
                 key={`attachment-${file.fileName}`}
                 title={
                     (
@@ -41,15 +41,15 @@ const AttachmentList: React.FC<AttachmentListProps> = ({ files }) => {
 
     return (
         files.length === 0
-            ? <div className='rpv-attachment-list-empty'>
+            ? <div className='rpv-attachment__empty'>
                 {
                     l10n && l10n.attachment
-                    ? l10n.attachment.noAttachment
-                    : 'There is no attachment'
+                        ? l10n.attachment.noAttachment
+                        : 'There is no attachment'
                 }
             </div>
             : (
-                <ul className='rpv-attachment-list'>
+                <ul className='rpv-attachment__list'>
                     {
                         files.map(renderItem)
                     }

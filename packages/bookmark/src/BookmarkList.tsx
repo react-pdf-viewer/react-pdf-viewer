@@ -27,7 +27,7 @@ const BookmarkList: React.FC<BookmarkListProps> = ({ bookmarks, depth = 0, doc, 
     };
 
     return (
-        <ul className='rpv-bookmark-list'>
+        <ul className='rpv-bookmark__list'>
         {
             bookmarks.map((bookmark, index) => {
                 return (
