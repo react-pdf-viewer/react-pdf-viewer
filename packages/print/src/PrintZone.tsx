@@ -29,16 +29,16 @@ const PrintZone: React.FC<PrintZoneProps> = ({ doc, numLoadedPages, pageHeight, 
 
     React.useEffect(() => {
         if (printStatus === PrintStatus.Ready) {
-            document.documentElement.classList.add('rpv-html-printing');
-            document.body.classList.add('rpv-body-printing');
+            document.documentElement.classList.add('rpv-print__html-printing');
+            document.body.classList.add('rpv-print__body-printing');
             window.print();
         }
 
         // Handle the case user clicks the `Cancel` button in the print window
         const handler = (): void => {
             if (printStatus === PrintStatus.Ready) {
-                document.documentElement.classList.remove('rpv-html-printing');
-                document.body.classList.remove('rpv-body-printing');
+                document.documentElement.classList.remove('rpv-print__html-printing');
+                document.body.classList.remove('rpv-print__body-printing');
 
                 // Cleanup
                 canvas.height = 0;
@@ -56,7 +56,7 @@ const PrintZone: React.FC<PrintZoneProps> = ({ doc, numLoadedPages, pageHeight, 
         createPortal(
             (
                 <>
-                <div className='rpv-print-zone'>
+                <div className='rpv-print__zone'>
                     {
                         Array(Math.min(numLoadedPages + 1, doc.numPages)).fill(0).map((_, index) => (
                             <PageThumbnailContainer

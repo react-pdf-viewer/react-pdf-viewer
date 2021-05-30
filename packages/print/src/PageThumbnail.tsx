@@ -61,7 +61,7 @@ const PageThumbnail: React.FC<PageThumbnailProps> = ({
 
     return (
         src && (
-            <div className='rpv-print-page-thumbnail'>
+            <div className='rpv-print__page'>
                 <img src={src} onLoad={() => onLoad()} />
             </div>
         )
