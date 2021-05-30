@@ -8,7 +8,6 @@
 
 import * as React from 'react';
 
-import ThemeContext from '../theme/ThemeContext';
 import classNames from '../utils/classNames';
 import Position from './Position';
 
@@ -17,31 +16,27 @@ interface ArrowProps {
     position: Position;
 }
 
-const Arrow: React.FC<ArrowProps> = ({ customClassName, position }) => {
-    const theme = React.useContext(ThemeContext);
-
-    return (
-        <div
-            className={
-                classNames({
-                    [`${theme.prefixClass}-arrow`]: true,
-                    [`${theme.prefixClass}-arrow-tl`]: position === Position.TopLeft,
-                    [`${theme.prefixClass}-arrow-tc`]: position === Position.TopCenter,
-                    [`${theme.prefixClass}-arrow-tr`]: position === Position.TopRight,
-                    [`${theme.prefixClass}-arrow-rt`]: position === Position.RightTop,
-                    [`${theme.prefixClass}-arrow-rc`]: position === Position.RightCenter,
-                    [`${theme.prefixClass}-arrow-rb`]: position === Position.RightBottom,
-                    [`${theme.prefixClass}-arrow-bl`]: position === Position.BottomLeft,
-                    [`${theme.prefixClass}-arrow-bc`]: position === Position.BottomCenter,
-                    [`${theme.prefixClass}-arrow-br`]: position === Position.BottomRight,
-                    [`${theme.prefixClass}-arrow-lt`]: position === Position.LeftTop,
-                    [`${theme.prefixClass}-arrow-lc`]: position === Position.LeftCenter,
-                    [`${theme.prefixClass}-arrow-lb`]: position === Position.LeftBottom,
-                    [`${customClassName}`]: customClassName !== '',
-                })
-            }
-        />
-    );
-};
+const Arrow: React.FC<ArrowProps> = ({ customClassName, position }) => (
+    <div
+        className={
+            classNames({
+                'rpv-core__arrow': true,
+                'rpv-core__arrow--tl': position === Position.TopLeft,
+                'rpv-core__arrow--tc': position === Position.TopCenter,
+                'rpv-core__arrow--tr': position === Position.TopRight,
+                'rpv-core__arrow--rt': position === Position.RightTop,
+                'rpv-core__arrow--rc': position === Position.RightCenter,
+                'rpv-core__arrow--rb': position === Position.RightBottom,
+                'rpv-core__arrow--bl': position === Position.BottomLeft,
+                'rpv-core__arrow--bc': position === Position.BottomCenter,
+                'rpv-core__arrow--br': position === Position.BottomRight,
+                'rpv-core__arrow--lt': position === Position.LeftTop,
+                'rpv-core__arrow--lc': position === Position.LeftCenter,
+                'rpv-core__arrow--lb': position === Position.LeftBottom,
+                [`${customClassName}`]: customClassName !== '',
+            })
+        }
+    />
+);
 
 export default Arrow;

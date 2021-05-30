@@ -11,7 +11,6 @@ import * as React from 'react';
 import useClickOutside from '../hooks/useClickOutside';
 import useIsomorphicLayoutEffect from '../hooks/useIsomorphicLayoutEffect';
 import usePosition from '../hooks/usePosition';
-import ThemeContext from '../theme/ThemeContext';
 import Arrow from './Arrow';
 import Offset from './Offset';
 import Position from './Position';
@@ -27,7 +26,6 @@ interface PopoverBodyProps {
 const PopoverBody: React.FC<PopoverBodyProps> = ({
     children, closeOnClickOutside, offset, position, targetRef, onClose,
 }) => {
-    const theme = React.useContext(ThemeContext);
     const contentRef = React.createRef<HTMLDivElement>();
     const innerRef = React.createRef<HTMLDivElement>();
     const anchorRef = React.createRef<HTMLDivElement>();
@@ -55,8 +53,8 @@ const PopoverBody: React.FC<PopoverBodyProps> = ({
             ref={anchorRef}
             style={{ left: 0, position: 'absolute', top: 0 }}
         />
-        <div className={`${theme.prefixClass}-popover-body`} ref={contentRef}>
-            <Arrow customClassName={`${theme.prefixClass}-popover-body-arrow`} position={position} />
+        <div className='rpv-core__popover-body' ref={contentRef}>
+            <Arrow customClassName='rpv-core__popover-body-arrow' position={position} />
             <div ref={innerRef}>
                 {children}
             </div>
