@@ -8,20 +8,14 @@
 
 import * as React from 'react';
 
-import ThemeContext from '../theme/ThemeContext';
-
 interface MenuProps {
     children?: React.ReactNode;
 }
 
-const Menu: React.FC<MenuProps> = ({ children }) => {
-    const theme = React.useContext(ThemeContext);
-
-    return (
-        <ul className={`${theme.prefixClass}-menu`}>
-            {children}
-        </ul>
-    );
-};
+const Menu: React.FC<MenuProps> = ({ children }) => (
+    <ul className='rpv-core__menu'>
+        {children}
+    </ul>
+);
 
 export default Menu;

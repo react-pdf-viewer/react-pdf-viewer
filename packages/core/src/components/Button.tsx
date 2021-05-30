@@ -8,7 +8,6 @@
 
 import * as React from 'react';
 
-import ThemeContext from '../theme/ThemeContext';
 import classNames from '../utils/classNames';
 
 interface ButtonProps {
@@ -17,23 +16,19 @@ interface ButtonProps {
     onClick(): void;
 }
 
-const Button: React.FC<ButtonProps> = ({ children, isDisabled = false, isSelected = false, onClick }) => {
-    const theme = React.useContext(ThemeContext);
-
-    return (
-        <button
-            className={
-                classNames({
-                    [`${theme.prefixClass}-button`]: true,
-                    [`${theme.prefixClass}-button-disabled`]: isDisabled,
-                    [`${theme.prefixClass}-button-selected`]: isSelected,
-                })
-            }
-            onClick={onClick}
-        >
-            {children}
-        </button>
-    );
-};
+const Button: React.FC<ButtonProps> = ({ children, isDisabled = false, isSelected = false, onClick }) => (
+    <button
+        className={
+            classNames({
+                'rpv-core__button': true,
+                'rpv-core__button--disabled': isDisabled,
+                'rpv-core__button--selected': isSelected,
+            })
+        }
+        onClick={onClick}
+    >
+        {children}
+    </button>
+);
 
 export default Button;
