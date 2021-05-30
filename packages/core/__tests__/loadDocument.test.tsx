@@ -20,5 +20,5 @@ test('Load document successfully', async () => {
     mockAllIsIntersecting(true);
     
     const firstText = await findByText('Adobe Acrobat PDF Files');
-    expect(firstText).toHaveClass('rpv-core-text');
+    expect(firstText).toHaveClass('rpv-core__text-layer-text');
 });
