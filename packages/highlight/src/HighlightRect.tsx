@@ -18,7 +18,7 @@ interface HighlightRectProps {
 
 const HighlightRect: React.FC<HighlightRectProps> = ({ area, rotation }) => (
     <div
-        className='rpv-highlight-rect'
+        className='rpv-highlight__selected-text'
         style={getCssProperties(area, rotation)}
     />
 );
