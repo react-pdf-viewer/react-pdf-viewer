@@ -32,7 +32,7 @@ const PropertiesModal: React.FC<PropertiesModalProps> = ({ doc, fileName, onTogg
 
     const renderData = (data: PropertiesData): React.ReactElement => (
         <>
-            <div className='rpv-properties-modal-group'>
+            <div className='rpv-properties__modal-section'>
                 <PropertyItem
                     label={(l10n && l10n.properties ? l10n.properties.fileName : 'File name') as string}
                     value={data.fileName || getFileName(fileName)}
@@ -43,7 +43,7 @@ const PropertiesModal: React.FC<PropertiesModalProps> = ({ doc, fileName, onTogg
                 />
             </div>
             <Separator />
-            <div className='rpv-properties-modal-group'>
+            <div className='rpv-properties__modal-section'>
                 <PropertyItem
                     label={(l10n && l10n.properties ? l10n.properties.title : 'Title') as string}
                     value={data.info.Title}
@@ -74,7 +74,7 @@ const PropertiesModal: React.FC<PropertiesModalProps> = ({ doc, fileName, onTogg
                 />
             </div>
             <Separator />
-            <div className='rpv-properties-modal-group'>
+            <div className='rpv-properties__modal-section'>
                 <PropertyItem
                     label={(l10n && l10n.properties ? l10n.properties.pdfProducer : 'PDF producer') as string}
                     value={data.info.Producer}
@@ -92,12 +92,12 @@ const PropertiesModal: React.FC<PropertiesModalProps> = ({ doc, fileName, onTogg
     );
 
     return (
-        <div className='rpv-properties-modal'>
+        <div className='rpv-properties__modal'>
             <PropertiesLoader
                 doc={doc}
                 render={renderData}
             />
-            <div className='rpv-properties-modal-footer'>
+            <div className='rpv-properties__modal-footer'>
                 <PrimaryButton onClick={onToggle}>
                     {l10n && l10n.properties ? l10n.properties.close : 'Close'}
                 </PrimaryButton>

@@ -36,7 +36,7 @@ const PropertiesLoader: React.FC<PropertiesLoaderProps> = ({ doc, render }) => {
     }, []);
 
     return (
-        data ? render(data) : <div className='rpv-properties-loader'><Spinner /></div>
+        data ? render(data) : <div className='rpv-properties__loader'><Spinner /></div>
     );
 };
 
