@@ -9,7 +9,6 @@
 import * as React from 'react';
 
 import useKeyUp from '../hooks/useKeyUp';
-import ThemeContext from '../theme/ThemeContext';
 
 interface PopoverOverlayProps {
     closeOnEscape: boolean;
@@ -17,12 +16,10 @@ interface PopoverOverlayProps {
 }
 
 const PopoverOverlay: React.FC<PopoverOverlayProps> = ({ closeOnEscape, onClose }) => {
-    const theme = React.useContext(ThemeContext);
-
     useKeyUp(27, () => closeOnEscape && onClose());
 
     return (
-        <div className={`${theme.prefixClass}-popover-overlay`} />
+        <div className='rpv-core__popover-overlay' />
     );
 };
 

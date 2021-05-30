@@ -12,7 +12,6 @@ import useClickOutside from '../hooks/useClickOutside';
 import useIsomorphicLayoutEffect from '../hooks/useIsomorphicLayoutEffect';
 import useKeyUp from '../hooks/useKeyUp';
 import useLockScroll from '../hooks/useLockScroll';
-import ThemeContext from '../theme/ThemeContext';
 
 interface ModalBodyProps {
     closeOnClickOutside: boolean;
@@ -21,7 +20,6 @@ interface ModalBodyProps {
 }
 
 const ModalBody: React.FC<ModalBodyProps> = ({ children, closeOnClickOutside, closeOnEscape, onToggle }) => {
-    const theme = React.useContext(ThemeContext);
     const contentRef = React.createRef<HTMLDivElement>();
 
     useLockScroll();
@@ -43,7 +41,7 @@ const ModalBody: React.FC<ModalBodyProps> = ({ children, closeOnClickOutside, cl
     }, []);
 
     return (
-        <div className={`${theme.prefixClass}-modal-body`} ref={contentRef}>
+        <div className='rpv-core__modal-body' ref={contentRef}>
             {children}
         </div>
     );

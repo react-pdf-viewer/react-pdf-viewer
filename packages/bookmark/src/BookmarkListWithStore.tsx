@@ -44,7 +44,7 @@ const BookmarkListWithStore: React.FC<{
                 onJumpToDest={jump}
             />
         )
-        : <div className='rpv-bookmark-list-loader'><Spinner /></div>
+        : <div className='rpv-bookmark__loader'><Spinner /></div>
     );
 };
 

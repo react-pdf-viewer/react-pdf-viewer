@@ -20,13 +20,13 @@ test('Lazy load page', async () => {
     mockIsIntersecting(getByTestId('viewer'), true);
 
     let text = await findByText('Parameters for Opening PDF Files');
-    expect(text).toHaveClass('rpv-core-text');
+    expect(text).toHaveClass('rpv-core__text-layer-text');
 
     // Set the second page as visible
     mockIsIntersecting(getByTestId('viewer-page-layer-1'), true);
 
     text = await findByText('2007 Adobe Systems', { exact: false });
-    expect(text).toHaveClass('rpv-core-text');
+    expect(text).toHaveClass('rpv-core__text-layer-text');
     expect(text).toHaveTextContent('© 2007 Adobe Systems Incorporated. All rights reserved.');
 
     const lastPage = getByTestId('viewer-page-layer-7');

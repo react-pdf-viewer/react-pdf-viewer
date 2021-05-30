@@ -8,20 +8,14 @@
 
 import * as React from 'react';
 
-import ThemeContext from '../theme/ThemeContext';
-
 interface ModalOverlayProps {
     children?: React.ReactNode;
 }
 
-const ModalOverlay: React.FC<ModalOverlayProps> = ({ children }) => {
-    const theme = React.useContext(ThemeContext);
-
-    return (
-        <div className={`${theme.prefixClass}-modal-overlay`}>
-            {children}
-        </div>
-    );
-};
+const ModalOverlay: React.FC<ModalOverlayProps> = ({ children }) => (
+    <div className='rpv-core__modal-overlay'>
+        {children}
+    </div>
+);
 
 export default ModalOverlay;

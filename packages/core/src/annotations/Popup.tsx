@@ -9,7 +9,6 @@
 import * as React from 'react';
 
 import useIsomorphicLayoutEffect from '../hooks/useIsomorphicLayoutEffect';
-import ThemeContext from '../theme/ThemeContext';
 import PdfJs from '../vendors/PdfJs';
 import Annotation from './Annotation';
 import PopupWrapper from './PopupWrapper';
@@ -21,7 +20,6 @@ interface PopupProps {
 }
 
 const Popup: React.FC<PopupProps> = ({ annotation, page, viewport }) => {
-    const theme = React.useContext(ThemeContext);
     const isRenderable = !!(annotation.title || annotation.contents);
 
     // Don't render the popup for annotation whose parent renders the annotation themselves
@@ -50,7 +48,7 @@ const Popup: React.FC<PopupProps> = ({ annotation, page, viewport }) => {
             {(props): React.ReactElement => (
                 <div
                     {...props.slot.attrs}
-                    className={`${theme.prefixClass}-annotation ${theme.prefixClass}-annotation-popup`}
+                    className='rpv-core__annotation rpv-core__annotation--popup'
                     data-annotation-id={annotation.id}
                 >
                     <PopupWrapper annotation={annotation} />

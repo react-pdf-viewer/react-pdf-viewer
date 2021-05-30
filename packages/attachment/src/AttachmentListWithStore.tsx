@@ -32,7 +32,7 @@ const AttachmentListWithStore: React.FC<{
     return (
         currentDoc 
         ? <AttachmentLoader doc={currentDoc} />
-        : <div className='rpv-attachment-list-loader'><Spinner /></div>
+        : <div className='rpv-attachment__loader'><Spinner /></div>
     );
 };
 

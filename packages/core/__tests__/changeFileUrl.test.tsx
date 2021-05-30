@@ -20,11 +20,11 @@ test('fileUrl as a prop', async () => {
     mockAllIsIntersecting(true);
     
     const firstText = await findByText('Adobe Acrobat PDF Files');
-    expect(firstText).toHaveClass('rpv-core-text');
+    expect(firstText).toHaveClass('rpv-core__text-layer-text');
 
     rerender(<App fileUrl={rawSamplePdf2} />);
     const text = await findByText('Parameters for Opening PDF Files');
-    expect(text).toHaveClass('rpv-core-text');
+    expect(text).toHaveClass('rpv-core__text-layer-text');
 });
 
 test('fileUrl as a state', async () => {
@@ -51,15 +51,15 @@ test('fileUrl as a state', async () => {
     mockAllIsIntersecting(true);
     
     let firstText = await findByText('Hello, world!');
-    expect(firstText).toHaveClass('rpv-core-text');    
+    expect(firstText).toHaveClass('rpv-core__text-layer-text');    
 
     // Click the `Load document 1` button
     fireEvent.click(getByText('Load document 1'));
     firstText = await findByText('Adobe Acrobat PDF Files');
-    expect(firstText).toHaveClass('rpv-core-text');
+    expect(firstText).toHaveClass('rpv-core__text-layer-text');
 
     // Click the `Load document 2` button
     fireEvent.click(getByText('Load document 2'));
     const text = await findByText('Parameters for Opening PDF Files');
-    expect(text).toHaveClass('rpv-core-text');
+    expect(text).toHaveClass('rpv-core__text-layer-text');
 });

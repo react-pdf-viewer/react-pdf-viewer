@@ -88,15 +88,15 @@ const defaultLayoutPlugin = (props?: DefaultLayoutPluginProps): DefaultLayoutPlu
                 : {};
 
             slot.children = (
-                <div className='rpv-default-layout-container'>
-                    <div className='rpv-default-layout-toolbar'>
+                <div className='rpv-default-layout__container'>
+                    <div className='rpv-default-layout__toolbar'>
                         {
                             props && props.renderToolbar
                                 ? props.renderToolbar(Toolbar)
                                 : <Toolbar />
                         }
                     </div>
-                    <div className='rpv-default-layout-main'>
+                    <div className='rpv-default-layout__main'>
                         <Sidebar
                             attachmentTabContent={<Attachments />}
                             bookmarkTabContent={<Bookmarks />}
@@ -105,7 +105,7 @@ const defaultLayoutPlugin = (props?: DefaultLayoutPluginProps): DefaultLayoutPlu
                             tabs={sidebarTabs}
                         />
                         <div
-                            className='rpv-default-layout-body'
+                            className='rpv-default-layout__body'
                             {...mergeSubSlot}
                         >
                             {slot.subSlot.children}

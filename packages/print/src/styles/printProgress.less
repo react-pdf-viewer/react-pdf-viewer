@@ -6,31 +6,31 @@
  * @copyright 2019-2021 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-.rpv-print-progress {
+.rpv-print__progress {
     align-items: center;
-    background-color: rgba(0, 0, 0, 0.2);
+    background-color: rgba(0, 0, 0, .2);
     display: flex;
     height: 100%;
     justify-content: center;
-    left: 0px;
+    left: 0;
     position: absolute;
-    top: 0px;
+    top: 0;
     width: 100%;
     z-index: 9999;
 
     &-inner {
         background-color: rgb(255, 255, 255);
-        border-radius: 4px;
-        padding: 24px;
+        border-radius: .25rem;
+        padding: 1.5rem;
         text-align: center;
-        width: 240px;
+        width: 15rem;
     }
 
     &-bar {
-        margin-bottom: 16px;
+        margin-bottom: 1rem;
     }
 
     &-message {
-        margin-bottom: 8px;
+        margin-bottom: .5rem;
     }
 }

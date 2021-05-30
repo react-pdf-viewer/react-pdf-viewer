@@ -8,20 +8,14 @@
 
 import * as React from 'react';
 
-import ThemeContext from '../theme/ThemeContext';
-
 interface PrimaryButtonProps {
     onClick(): void;
 }
 
-const PrimaryButton: React.FC<PrimaryButtonProps> = ({ children, onClick }) => {
-    const theme = React.useContext(ThemeContext);
-
-    return (
-        <button className={`${theme.prefixClass}-primary-button`} onClick={onClick}>
-            {children}
-        </button>
-    );
-};
+const PrimaryButton: React.FC<PrimaryButtonProps> = ({ children, onClick }) => (
+    <button className='rpv-core__primary-button' onClick={onClick}>
+        {children}
+    </button>
+);
 
 export default PrimaryButton;

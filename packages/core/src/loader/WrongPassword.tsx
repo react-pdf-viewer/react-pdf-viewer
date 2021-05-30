@@ -9,7 +9,6 @@
 import * as React from 'react';
 
 import LocalizationContext from '../localization/LocalizationContext';
-import ThemeContext from '../theme/ThemeContext';
 import { VerifyPassword } from './LoadingStatus';
 
 interface WrongPasswordProps {
@@ -18,23 +17,22 @@ interface WrongPasswordProps {
 
 const WrongPassword: React.FC<WrongPasswordProps> = ({ verifyPasswordFn }) => {
     const l10n = React.useContext(LocalizationContext);
-    const theme = React.useContext(ThemeContext);
     const [password, setPassword] = React.useState('');
 
     const changePassword = (e: React.ChangeEvent<HTMLInputElement>): void => setPassword(e.target.value);
     const submit = (): void => verifyPasswordFn(password);
 
     return (
-        <div className={`${theme.prefixClass}-asking-password`}>
+        <div className='rpv-core__asking-password'>
             <div>
-                <div className={`${theme.prefixClass}-asking-password-message`}>{l10n.core.wrongPassword.tryAgain}:</div>
-                <div className={`${theme.prefixClass}-asking-password-input-container`}>
+                <div className='rpv-core__asking-password-message'>{l10n.core.wrongPassword.tryAgain}:</div>
+                <div className='rpv-core__asking-password-body'>
                     <input
-                        className={`${theme.prefixClass}-asking-password-input`}
+                        className='rpv-core__asking-password-input'
                         type="password"
                         onChange={changePassword}
                     />
-                    <button className={`${theme.prefixClass}-asking-password-button`} onClick={submit}>
+                    <button className='rpv-core__asking-password-button' onClick={submit}>
                         {l10n.core.wrongPassword.submit}
                     </button>
                 </div>

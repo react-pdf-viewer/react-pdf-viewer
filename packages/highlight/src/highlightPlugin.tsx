@@ -90,7 +90,7 @@ const highlightPlugin = (props?: HighlightPluginProps): HighlightPlugin => {
 
                 // Set some special attributes so we can query the text later
                 textEle.setAttribute(HIGHLIGHT_LAYER_ATTR, 'true');
-                textEle.querySelectorAll('.rpv-core-text').forEach(span => span.setAttribute(HIGHLIGHT_PAGE_ATTR, `${e.pageIndex}`));
+                textEle.querySelectorAll('.rpv-core__text-layer-text').forEach(span => span.setAttribute(HIGHLIGHT_PAGE_ATTR, `${e.pageIndex}`));
                 break;
             default:
                 break;

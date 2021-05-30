@@ -45,11 +45,11 @@ const BookmarkLoader: React.FC<BookmarkLoaderProps> = ({ doc, onJumpToDest }) =>
             ? <Spinner />
             : (
                 bookmarks.items.length === 0
-                    ? <div className='rpv-bookmark-empty'>
+                    ? <div className='rpv-bookmark__empty'>
                         {l10n && l10n.bookmark ? l10n.bookmark.noBookmark : 'There is no bookmark'}
                     </div>
                     : (
-                        <div className='rpv-bookmark-container'>
+                        <div className='rpv-bookmark__container'>
                             <BookmarkList
                                 bookmarks={bookmarks.items}
                                 depth={0}

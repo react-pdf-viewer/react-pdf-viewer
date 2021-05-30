@@ -8,14 +8,8 @@
 
 import * as React from 'react';
 
-import ThemeContext from '../theme/ThemeContext';
-
-const Separator: React.FC = () => {
-    const theme = React.useContext(ThemeContext);
-
-    return (
-        <div className={`${theme.prefixClass}-separator`} />
-    );
-};
+const Separator: React.FC = () => (
+    <div className='rpv-core__separator' />
+);
 
 export default Separator;

@@ -1,5 +1,29 @@
 # CHANGELOG
 
+## v2.6.0 [WIP]
+
+From this version, all the components use the BEM naming convention for CSS classes. So if you override the styles of given class, you need to change the class.
+
+The CSS classes are named as `rpv-PACKAGE__COMPONENT`, `rpv-PACKAGE__COMPONENT--STATE`. For example:
+
+```css
+/* Old version */
+.rpv-search-highlight {
+    ...
+}
+.rpv-search-highlight-current {
+    ...
+}
+
+/* From v2.6.0 */
+.rpv-search__highlight {
+    ...
+}
+.rpv-search__highlight--current {
+    ...
+}
+```
+
 ## v2.5.0
 
 **New features**

@@ -10,7 +10,6 @@ import * as React from 'react';
 
 import Spinner from '../components/Spinner';
 import useIsMounted from '../hooks/useIsMounted';
-import ThemeContext from '../theme/ThemeContext';
 import PdfJs from '../vendors/PdfJs';
 import { CharacterMap } from '../Viewer';
 import AskForPasswordState from './AskForPasswordState';
@@ -37,7 +36,6 @@ interface DocumentLoaderProps {
 }
 
 const DocumentLoader: React.FC<DocumentLoaderProps> = ({ characterMap, file, httpHeaders, render, renderError, renderLoader, transformGetDocumentParams, withCredentials }) => {
-    const theme = React.useContext(ThemeContext);
     const [status, setStatus] = React.useState<LoadingStatus>(new LoadingState(0));
 
     const [percentages, setPercentages] = React.useState(0);
@@ -121,15 +119,15 @@ const DocumentLoader: React.FC<DocumentLoaderProps> = ({ characterMap, file, htt
             return renderError
                 ? renderError((status as FailureState).error)
                 : (
-                    <div className={`${theme.prefixClass}-doc-error`}>
-                        <div className={`${theme.prefixClass}-doc-error-text`}>
+                    <div className='rpv-core__doc-error'>
+                        <div className='rpv-core__doc-error-text'>
                             {(status as FailureState).error.message}
                         </div>
                     </div>
                 );
         case (status instanceof LoadingState):
             return (
-                <div className={`${theme.prefixClass}-doc-loading`}>
+                <div className='rpv-core__doc-loading'>
                     {
                         renderLoader ? renderLoader((status as LoadingState).percentages) : <Spinner />
                     }
@@ -137,7 +135,7 @@ const DocumentLoader: React.FC<DocumentLoaderProps> = ({ characterMap, file, htt
             );
         default:
             return (
-                <div className={`${theme.prefixClass}-doc-loading`}>
+                <div className='rpv-core__doc-loading'>
                     <Spinner />
                 </div>
             );

@@ -11,7 +11,6 @@ import * as React from 'react';
 import PageLayer from '../layers/PageLayer';
 import Slot from '../layouts/Slot';
 import SpecialZoomLevel from '../SpecialZoomLevel';
-import ThemeContext from '../theme/ThemeContext';
 import { Plugin } from '../types/Plugin';
 import PluginFunctions from '../types/PluginFunctions';
 import ViewerState from '../types/ViewerState';
@@ -42,7 +41,6 @@ const Inner: React.FC<InnerProps> = ({
     doc, initialPage, pageSize, plugins, renderPage, viewerState,
     onDocumentLoad, onOpenFile, onPageChange, onZoom,
 }) => {
-    const theme = React.useContext(ThemeContext);
     const containerRef = React.useRef<HTMLDivElement | null>(null);
     const pagesRef = React.useRef<HTMLDivElement | null>(null);    
     const [currentPage, setCurrentPage] = React.useState(0);
@@ -309,7 +307,7 @@ const Inner: React.FC<InnerProps> = ({
                         Array(numPages).fill(0).map((_, index) => {
                             return (
                                 <div
-                                    className={`${theme.prefixClass}-inner-page`}
+                                    className='rpv-core__inner-page'
                                     key={`pagelayer-${index}`}
                                     ref={(ref): void => {
                                         pageRefs[index].current = ref as HTMLDivElement;

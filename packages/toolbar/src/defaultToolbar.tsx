@@ -20,59 +20,59 @@ const defaultToolbar = (toolbarSlot: ToolbarSlot): React.ReactElement => {
 
     return (
         <div className='rpv-toolbar'>
-            <div className='rpv-toolbar-left'>
-                <div className='rpv-toolbar-item'>
+            <div className='rpv-toolbar__left'>
+                <div className='rpv-toolbar__item'>
                     <ShowSearchPopover />
                 </div>
-                <div className="rpv-core-display-hidden rpv-core-display-block-small">
-                    <div className='rpv-toolbar-item'>
+                <div className="rpv-core__display--hidden rpv-core__display--block-small">
+                    <div className='rpv-toolbar__item'>
                         <GoToPreviousPage />
                     </div>
                 </div>
-                <div className='rpv-toolbar-item'>
+                <div className='rpv-toolbar__item'>
                     <CurrentPageInput /> / <NumberOfPages />
                 </div>
-                <div className="rpv-core-display-hidden rpv-core-display-block-small">
-                    <div className='rpv-toolbar-item'>
+                <div className="rpv-core__display--hidden rpv-core__display--block-small">
+                    <div className='rpv-toolbar__item'>
                         <GoToNextPage />
                     </div>
                 </div>
             </div>
-            <div className='rpv-toolbar-center'>
-                <div className='rpv-toolbar-item'>
+            <div className='rpv-toolbar__center'>
+                <div className='rpv-toolbar__item'>
                     <ZoomOut />
                 </div>
-                <div className="rpv-core-display-hidden rpv-core-display-block-small">
-                    <div className='rpv-toolbar-item'>
+                <div className="rpv-core__display--hidden rpv-core__display--block-small">
+                    <div className='rpv-toolbar__item'>
                         <Zoom />
                     </div>
                 </div>
-                <div className='rpv-toolbar-item'>
+                <div className='rpv-toolbar__item'>
                     <ZoomIn />
                 </div>
             </div>
-            <div className='rpv-toolbar-right'>
-                <div className="rpv-core-display-hidden rpv-core-display-block-medium">
-                    <div className='rpv-toolbar-item'>
+            <div className='rpv-toolbar__right'>
+                <div className="rpv-core__display--hidden rpv-core__display--block-medium">
+                    <div className='rpv-toolbar__item'>
                         <EnterFullScreen />
                     </div>
                 </div>
-                <div className="rpv-core-display-hidden rpv-core-display-block-medium">
-                    <div className='rpv-toolbar-item'>
+                <div className="rpv-core__display--hidden rpv-core__display--block-medium">
+                    <div className='rpv-toolbar__item'>
                         <Open />
                     </div>
                 </div>
-                <div className="rpv-core-display-hidden rpv-core-display-block-medium">
-                    <div className='rpv-toolbar-item'>
+                <div className="rpv-core__display--hidden rpv-core__display--block-medium">
+                    <div className='rpv-toolbar__item'>
                         <Download />
                     </div>
                 </div>
-                <div className="rpv-core-display-hidden rpv-core-display-block-medium">
-                    <div className='rpv-toolbar-item'>
+                <div className="rpv-core__display--hidden rpv-core__display--block-medium">
+                    <div className='rpv-toolbar__item'>
                         <Print />
                     </div>
                 </div>
-                <div className='rpv-toolbar-item'>
+                <div className='rpv-toolbar__item'>
                     <MoreActionsPopover toolbarSlot={toolbarSlot} />
                 </div>
             </div>

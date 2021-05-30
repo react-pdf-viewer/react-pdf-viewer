@@ -53,7 +53,7 @@ const Tracker: React.FC<{
     const characterIndexesRef = React.useRef<CharIndex[]>([]);
 
     const unhighlightAll = (containerEle: HTMLElement): void => {
-        const highlightNodes = containerEle.querySelectorAll('span.rpv-search-text-highlight');
+        const highlightNodes = containerEle.querySelectorAll('span.rpv-search__highlight');
         const total = highlightNodes.length;
         for (let i = 0; i < total; i++) {
             highlightNodes[i].parentElement.removeChild(highlightNodes[i]);
@@ -89,7 +89,7 @@ const Tracker: React.FC<{
         highlightEle.style.top = `${100 * (wrapperRect.top - containerRect.top) / containerRect.height}%`;
         highlightEle.style.width = `${100 * (wrapperRect.width) / containerRect.width}%`;
         highlightEle.style.height = `${100 * (wrapperRect.height) / containerRect.height}%`;
-        highlightEle.classList.add('rpv-search-text-highlight');
+        highlightEle.classList.add('rpv-search__highlight');
         highlightEle.setAttribute('title', keyword.source.trim());
 
         unwrap(wrapper);
@@ -108,7 +108,7 @@ const Tracker: React.FC<{
             return;
         }
 
-        const spans: HTMLElement[] = [].slice.call(containerEle.querySelectorAll('.rpv-core-text'));
+        const spans: HTMLElement[] = [].slice.call(containerEle.querySelectorAll('.rpv-core__text-layer-text'));
 
         // Generate the full text of page
         const fullText = charIndexes.map(item => item.char).join('');
@@ -189,7 +189,7 @@ const Tracker: React.FC<{
         }
 
         const containerEle = renderStatus.ele;
-        const spans: HTMLElement[] = [].slice.call(containerEle.querySelectorAll('.rpv-core-text'));
+        const spans: HTMLElement[] = [].slice.call(containerEle.querySelectorAll('.rpv-core__text-layer-text'));
 
         const charIndexes: CharIndex[] = spans.map(span => span.textContent)
             .reduce(
@@ -234,7 +234,7 @@ const Tracker: React.FC<{
         }
         
         const container = renderStatus.ele;
-        const spans = container.querySelectorAll('.rpv-search-text-highlight');
+        const spans = container.querySelectorAll('.rpv-search__highlight');
         if (match.matchIndex < spans.length) {
             const span = spans[match.matchIndex] as HTMLElement;
             const { left, top } = calculateOffset(span, container);
@@ -242,10 +242,10 @@ const Tracker: React.FC<{
             if (jump) {
                 jump(pageIndex, (container.getBoundingClientRect().height - top) / renderStatus.scale, left / renderStatus.scale, renderStatus.scale);
                 if (currentMatchRef.current) {
-                    currentMatchRef.current.classList.remove('rpv-search-text-highlight-current');
+                    currentMatchRef.current.classList.remove('rpv-search__highlight--current');
                 }
                 currentMatchRef.current = span;
-                span.classList.add('rpv-search-text-highlight-current');
+                span.classList.add('rpv-search__highlight--current');
             }
         }
     };

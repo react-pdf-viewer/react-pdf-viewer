@@ -39,15 +39,15 @@ const ThumbnailList: React.FC<ThumbnailListProps> = ({
     return (
         <div
             ref={containerRef}
-            className='rpv-thumbnail-list'
+            className='rpv-thumbnail__list'
         >
         {
             Array(numPages).fill(0).map((_, index) => (
                 <div                    
                     className={
                         classNames({
-                            ['rpv-thumbnail-item']: true,
-                            ['rpv-thumbnail-item-selected']: currentPage === index,
+                            'rpv-thumbnail__item': true,
+                            'rpv-thumbnail__item--selected': currentPage === index,
                         })
                     }
                     key={`thumbnail-${index}`}

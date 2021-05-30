@@ -44,27 +44,27 @@ const MoreActionsPopover: React.FC<MoreActionsPopoverProps> = ({ toolbarSlot }) 
         return (
             <Menu>
                 {/* These items will be hidden on the larger screens */}
-                <div className="rpv-core-display-block rpv-core-display-hidden-medium">
+                <div className="rpv-core__display--block rpv-core__display--hidden-medium">
                     <EnterFullScreenMenuItem onClick={toggle} />
                 </div>
-                <div className="rpv-core-display-block rpv-core-display-hidden-medium">
+                <div className="rpv-core__display--block rpv-core__display--hidden-medium">
                     <OpenMenuItem />
                 </div>
-                <div className="rpv-core-display-block rpv-core-display-hidden-medium">
+                <div className="rpv-core__display--block rpv-core__display--hidden-medium">
                     <PrintMenuItem onClick={toggle} />
                 </div>
-                <div className="rpv-core-display-block rpv-core-display-hidden-medium">
+                <div className="rpv-core__display--block rpv-core__display--hidden-medium">
                     <DownloadMenuItem onClick={toggle} />
                 </div>
-                <div className="rpv-core-display-block rpv-core-display-hidden-medium">
+                <div className="rpv-core__display--block rpv-core__display--hidden-medium">
                     <MenuDivider />
                 </div>
 
                 <GoToFirstPageMenuItem onClick={toggle} />
-                <div className="rpv-core-display-block rpv-core-display-hidden-medium">
+                <div className="rpv-core__display--block rpv-core__display--hidden-medium">
                     <GoToPreviousPageMenuItem onClick={toggle} />
                 </div>
-                <div className="rpv-core-display-block rpv-core-display-hidden-medium">
+                <div className="rpv-core__display--block rpv-core__display--hidden-medium">
                     <GoToNextPageMenuItem onClick={toggle} />
                 </div>
                 <GoToLastPageMenuItem onClick={toggle} />

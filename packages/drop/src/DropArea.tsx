@@ -28,7 +28,7 @@ const DropArea: React.FC<DropAreaProps> = ({ containerRef, openFile }) => {
     return (
         <>
         {isDragging && (
-            <div className='rpv-drop-area'>
+            <div className='rpv-drop__area'>
                 {
                     l10n && l10n.drop ? l10n.drop.dragDropFile : 'Drag and drop a PDF document here'
                 }

@@ -74,12 +74,12 @@ const Sidebar: React.FC<SidebarProps> = ({ attachmentTabContent, bookmarkTabCont
     }, []);
 
     return (
-        <div className={`rpv-default-layout-sidebar ${opened ? 'rpv-default-layout-sidebar-opened' : ''}`}>
-            <div className='rpv-default-layout-sidebar-tabs'>
-                <div className='rpv-default-layout-sidebar-headers'>
+        <div className={`rpv-default-layout__sidebar ${opened ? 'rpv-default-layout__sidebar--opened' : ''}`}>
+            <div className='rpv-default-layout__sidebar-tabs'>
+                <div className='rpv-default-layout__sidebar-headers'>
                     {
                         listTabs.map((tab, index) => (
-                            <div key={index} className='rpv-default-layout-sidebar-header'>
+                            <div key={index} className='rpv-default-layout__sidebar-header'>
                                 <Tooltip
                                     position={Position.RightCenter}
                                     target={(
@@ -94,7 +94,7 @@ const Sidebar: React.FC<SidebarProps> = ({ attachmentTabContent, bookmarkTabCont
                         ))
                     }
                 </div>
-                <div className={`rpv-default-layout-sidebar-content ${opened ? 'rpv-default-layout-sidebar-content-opened' : ''}`}>
+                <div className={`rpv-default-layout__sidebar-content ${opened ? 'rpv-default-layout__sidebar-content--opened' : ''}`}>
                     {listTabs[currentTab].content}
                 </div>
             </div>

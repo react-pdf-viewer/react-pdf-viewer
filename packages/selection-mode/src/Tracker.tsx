@@ -35,8 +35,8 @@ const Tracker: React.FC<{
             return;
         }
 
-        ele.classList.add('rpv-selection-mode-grab');
-        ele.classList.remove('rpv-selection-mode-grabbing');
+        ele.classList.add('rpv-selection-mode__grab');
+        ele.classList.remove('rpv-selection-mode__grabbing');
 
         document.removeEventListener('mousemove', onMouseMoveHandler);
         document.removeEventListener('mouseup', onMouseUpHandler);
@@ -48,8 +48,8 @@ const Tracker: React.FC<{
             return;
         }
 
-        ele.classList.remove('rpv-selection-mode-grab');
-        ele.classList.add('rpv-selection-mode-grabbing');
+        ele.classList.remove('rpv-selection-mode__grab');
+        ele.classList.add('rpv-selection-mode__grabbing');
 
         e.preventDefault();
         e.stopPropagation();
@@ -80,8 +80,8 @@ const Tracker: React.FC<{
         }
 
         selectionMode === SelectionMode.Hand
-            ? ele.classList.add('rpv-selection-mode-grab')
-            : ele.classList.remove('rpv-selection-mode-grab');
+            ? ele.classList.add('rpv-selection-mode__grab')
+            : ele.classList.remove('rpv-selection-mode__grab');
 
         ele.addEventListener('mousedown', onMouseDownHandler);
         return (): void => {

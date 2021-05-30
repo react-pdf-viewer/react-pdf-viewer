@@ -70,13 +70,13 @@ test('highlight() method', async () => {
     let highlights = await findAllByTitle(page, 'document');
     expect(highlights.length).toEqual(8);
     expect(highlights[0].getAttribute('title')).toEqual('document');
-    expect(highlights[0]).toHaveClass('rpv-search-text-highlight');
+    expect(highlights[0]).toHaveClass('rpv-search__highlight');
 
     // Found 9 texts that match `PDF`
     highlights = getAllByTitle(page, 'PDF');
     expect(highlights.length).toEqual(9);
     expect(highlights[0].getAttribute('title')).toEqual('PDF');
-    expect(highlights[0]).toHaveClass('rpv-search-text-highlight');
+    expect(highlights[0]).toHaveClass('rpv-search__highlight');
 
-    expect(page.querySelectorAll('.rpv-search-text-highlight[title="pdf"]').length).toEqual(0);
+    expect(page.querySelectorAll('.rpv-search__highlight[title="pdf"]').length).toEqual(0);
 });

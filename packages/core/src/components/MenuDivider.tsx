@@ -8,13 +8,8 @@
 
 import * as React from 'react';
 
-import ThemeContext from '../theme/ThemeContext';
-
-const MenuDivider: React.FC = () => {
-    const theme = React.useContext(ThemeContext);
-    return (
-        <li className={`${theme.prefixClass}-menu-divider`} />
-    );
-};
+const MenuDivider: React.FC = () => (
+    <li className='rpv-core__menu-divider' />
+);
 
 export default MenuDivider;

@@ -54,7 +54,7 @@ test('keyword with flag matchCase=false', async () => {
     const highlights = await findAllByTitle(page, flagKeyword.keyword);
     expect(highlights.length).toEqual(13);
     expect(highlights[0].getAttribute('title')).toEqual(flagKeyword.keyword);
-    expect(highlights[0]).toHaveClass('rpv-search-text-highlight');
+    expect(highlights[0]).toHaveClass('rpv-search__highlight');
 });
 
 test('keyword with flag matchCase=true', async () => {
@@ -76,5 +76,5 @@ test('keyword with flag matchCase=true', async () => {
     const highlights = await findAllByTitle(page, flagKeyword.keyword);
     expect(highlights.length).toEqual(2);
     expect(highlights[0].getAttribute('title')).toEqual(flagKeyword.keyword);
-    expect(highlights[0]).toHaveClass('rpv-search-text-highlight');
+    expect(highlights[0]).toHaveClass('rpv-search__highlight');
 });

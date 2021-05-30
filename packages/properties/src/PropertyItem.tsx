@@ -15,11 +15,11 @@ interface PropertyItemProps {
 
 const PropertyItem: React.FC<PropertyItemProps> = ({ label, value }) => {
     return (
-        <dl className='rpv-property-item'>
-            <dt className='rpv-property-item-label'>
+        <dl className='rpv-properties__item'>
+            <dt className='rpv-properties__item-label'>
                 {label}:
             </dt>
-            <dd className='rpv-property-item-value'>
+            <dd className='rpv-properties__item-value'>
                 {value || '-'}
             </dd>
         </dl>

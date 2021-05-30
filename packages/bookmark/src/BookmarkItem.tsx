@@ -34,7 +34,7 @@ const BookmarkItem: React.FC<BookmarkItemProps> = ({ bookmark, depth, doc, onCli
             return;
         }
         subItemsEle.style.display = subItemsDisplayed.current ? 'block' : 'none';
-        toggleEle.classList.toggle('rpv-bookmark-toggle-expanded');
+        toggleEle.classList.toggle('rpv-bookmark__toggle--expanded');
     };
 
     const clickBookmak = (): void => {
@@ -51,7 +51,7 @@ const BookmarkItem: React.FC<BookmarkItemProps> = ({ bookmark, depth, doc, onCli
     return (
         <>
             <div
-                className='rpv-bookmark-item'
+                className='rpv-bookmark__item'
                 style={{
                     paddingLeft: `${depth * 20 + 4}px`,
                 }}
@@ -61,7 +61,7 @@ const BookmarkItem: React.FC<BookmarkItemProps> = ({ bookmark, depth, doc, onCli
                     hasSubItems && (
                         <span
                             ref={toggleRef}
-                            className='rpv-bookmark-toggle'
+                            className='rpv-bookmark__toggle'
                             onClick={toggleSubItems}
                         >
                             ►
@@ -72,7 +72,7 @@ const BookmarkItem: React.FC<BookmarkItemProps> = ({ bookmark, depth, doc, onCli
                     bookmark.url
                     ? (
                         <a
-                            className='rpv-bookmark-title'
+                            className='rpv-bookmark__title'
                             href={bookmark.url}
                             rel='noopener noreferrer nofollow'
                             target={bookmark.newWindow ? '_blank' : ''}
@@ -82,7 +82,7 @@ const BookmarkItem: React.FC<BookmarkItemProps> = ({ bookmark, depth, doc, onCli
                     )
                     : (
                         <div
-                            className='rpv-bookmark-title'
+                            className='rpv-bookmark__title'
                             onClick={clickBookmak}
                         >
                             {bookmark.title}

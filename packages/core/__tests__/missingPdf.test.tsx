@@ -16,5 +16,5 @@ test('Render document that does not exist', async () => {
     mockAllIsIntersecting(true);
     
     const errorMessage = await findByText('Missing PDF "/assets/not-found.pdf".');
-    expect(errorMessage).toHaveClass('rpv-core-doc-error-text');
+    expect(errorMessage).toHaveClass('rpv-core__doc-error-text');
 });
