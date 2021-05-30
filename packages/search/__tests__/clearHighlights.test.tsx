@@ -86,5 +86,5 @@ test('clearHighlights() method', async () => {
     const clearButton = await screen.findByText('Clear highlights');
     fireEvent.click(clearButton);
 
-    expect(page.querySelectorAll('.rpv-search-text-highlight').length).toEqual(0);
+    expect(page.querySelectorAll('.rpv-search__highlight').length).toEqual(0);
 });

@@ -51,5 +51,5 @@ test('keyword belongs to multiple spans', async () => {
     const highlights = await findAllByTitle(page, keyword);
     expect(highlights.length).toEqual(2);
     expect(highlights[0].getAttribute('title')).toEqual(keyword);
-    expect(highlights[0]).toHaveClass('rpv-search-text-highlight');
+    expect(highlights[0]).toHaveClass('rpv-search__highlight');
 });

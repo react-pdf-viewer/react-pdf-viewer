@@ -66,38 +66,38 @@ const SearchPopover: React.FC<SearchPopoverProps> = ({ store, onToggle }) => {
     };
 
     return (
-        <div className='rpv-search-popover'>
-            <div className='rpv-search-popover-input-counter'>
+        <div className='rpv-search__popover'>
+            <div className='rpv-search__popover-input-counter'>
                 <input
-                    className='rpv-search-popover-input'
+                    className='rpv-search__popover-input'
                     placeholder={(l10n && l10n.search ? l10n.search.enterToSearch : 'Enter to search') as string}
                     type="text"
                     value={keyword}
                     onChange={onChangeKeyword}
                     onKeyDown={onKeydownSearch}
                 />
-                <div className='rpv-search-popover-counter'>
+                <div className='rpv-search__popover-counter'>
                     {currentMatch}/{numberOfMatches}
                 </div>
             </div>
-            <label className='rpv-search-popover-label'>
+            <label className='rpv-search__popover-label'>
                 <input
-                    className='rpv-search-popover-label-checkbox'
+                    className='rpv-search__popover-label-checkbox'
                     checked={matchCase}
                     type="checkbox"
                     onChange={onChangeMatchCase}
                 /> {l10n && l10n.search ? l10n.search.matchCase : 'Match case'}
             </label>
-            <label className='rpv-search-popover-label'>
+            <label className='rpv-search__popover-label'>
                 <input
-                    className='rpv-search-popover-label-checkbox'
+                    className='rpv-search__popover-label-checkbox'
                     checked={wholeWords}
                     type="checkbox"
                     onChange={onChangeWholeWords}
                 /> {l10n && l10n.search ? l10n.search.wholeWords : 'Whole words'}
             </label>
-            <div className='rpv-search-popover-footer'>
-                <div className='rpv-search-popover-footer-item'>
+            <div className='rpv-search__popover-footer'>
+                <div className='rpv-search__popover-footer-item'>
                     <Tooltip
                         position={Position.BottomCenter}
                         target={<Button onClick={jumpToPreviousMatch}><PreviousIcon /></Button>}
@@ -105,7 +105,7 @@ const SearchPopover: React.FC<SearchPopoverProps> = ({ store, onToggle }) => {
                         offset={PORTAL_OFFSET}
                     />
                 </div>
-                <div className='rpv-search-popover-footer-item'>
+                <div className='rpv-search__popover-footer-item'>
                     <Tooltip
                         position={Position.BottomCenter}
                         target={<Button onClick={jumpToNextMatch}><NextIcon /></Button>}
@@ -113,7 +113,7 @@ const SearchPopover: React.FC<SearchPopoverProps> = ({ store, onToggle }) => {
                         offset={PORTAL_OFFSET}
                     />
                 </div>
-                <div className='rpv-search-popover-footer-button'>
+                <div className='rpv-search__popover-footer-button'>
                     <PrimaryButton onClick={onClose}>
                         {l10n && l10n.search ? l10n.search.close : 'Close'}
                     </PrimaryButton>
