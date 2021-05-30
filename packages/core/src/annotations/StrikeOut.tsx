@@ -8,7 +8,6 @@
 
 import * as React from 'react';
 
-import ThemeContext from '../theme/ThemeContext';
 import PdfJs from '../vendors/PdfJs';
 import Annotation from './Annotation';
 
@@ -19,7 +18,6 @@ interface StrikeOutProps {
 }
 
 const StrikeOut: React.FC<StrikeOutProps> = ({ annotation, page, viewport }) => {
-    const theme = React.useContext(ThemeContext);
     const hasPopup = annotation.hasPopup === false;
     const isRenderable = !!(annotation.hasPopup || annotation.title || annotation.contents);
 
@@ -28,7 +26,7 @@ const StrikeOut: React.FC<StrikeOutProps> = ({ annotation, page, viewport }) => 
             {(props): React.ReactElement => (
                 <div
                     {...props.slot.attrs}
-                    className={`${theme.prefixClass}-annotation ${theme.prefixClass}-annotation-strike-out`}
+                    className='rpv-core__annotation rpv-core__annotation--strike-out'
                     data-annotation-id={annotation.id}
                     onClick={props.popup.toggleOnClick}
                     onMouseEnter={props.popup.openOnHover}

@@ -8,7 +8,6 @@
 
 import * as React from 'react';
 
-import ThemeContext from '../theme/ThemeContext';
 import SpecialZoomLevel from '../SpecialZoomLevel';
 import { Plugin } from '../types/Plugin';
 import PdfJs from '../vendors/PdfJs';
@@ -27,7 +26,6 @@ interface AnnotationLayerProps {
 }
 
 const AnnotationLayer: React.FC<AnnotationLayerProps> = ({ doc, page, pageIndex, plugins, rotation, scale, onExecuteNamedAction, onJumpToDest }) => {
-    const theme = React.useContext(ThemeContext);
     const containerRef = React.createRef<HTMLDivElement>();
 
     const renderAnnotations = (annotations: PdfJs.Annotation[]): React.ReactElement => {
@@ -48,7 +46,7 @@ const AnnotationLayer: React.FC<AnnotationLayerProps> = ({ doc, page, pageIndex,
     };
 
     return (
-        <div ref={containerRef} className={`${theme.prefixClass}-annotation-layer`}>
+        <div ref={containerRef} className='rpv-core__annotation-layer'>
             <AnnotationLoader page={page} renderAnnotations={renderAnnotations} />
         </div>
     );
