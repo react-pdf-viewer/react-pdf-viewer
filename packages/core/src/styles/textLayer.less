@@ -24,15 +24,7 @@
     white-space: pre;
 
     &::selection {
-        background: rgb(0, 0, 255, .5);
-        color: transparent;
-    }
-
-    // TODO: Remove this?
-    &-highlight {
-        background-color: rgb(180, 0, 170);
-        border-radius: .25rem;
-        margin: -1px;
-        padding: 1px;
+        background-color: var(--rpv-core__text-layer-text--selection-background-color);
+        color: var(--rpv-core__text-layer-text--selection-color);
     }
 }
