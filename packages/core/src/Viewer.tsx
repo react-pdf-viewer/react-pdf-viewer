@@ -137,6 +137,7 @@ const Viewer: React.FC<ViewerProps> = ({
                 {(_) => ( // eslint-disable-line @typescript-eslint/no-unused-vars
                     <div
                         ref={containerRef}
+                        className='rpv-core__viewer'
                         data-testid='viewer'
                         style={{
                             height: '100%',
