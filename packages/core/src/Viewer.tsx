@@ -56,6 +56,8 @@ export interface ViewerProps {
     renderPage?: RenderPage;
     renderLoader?(percentages: number): React.ReactElement;
     transformGetDocumentParams?(options: PdfJs.GetDocumentParams): PdfJs.GetDocumentParams;
+    // Theme
+    theme?: string;
     // Indicate the cross-site requests should be made with credentials such as cookie and authorization headers.
     // The default value is `false` 
     withCredentials?: boolean;
@@ -82,6 +84,7 @@ const Viewer: React.FC<ViewerProps> = ({
     renderPage,
     renderLoader,
     transformGetDocumentParams,
+    theme,
     withCredentials = false,
     onDocumentLoad = () => {/**/},
     onPageChange = () => {/**/},
@@ -132,7 +135,7 @@ const Viewer: React.FC<ViewerProps> = ({
             {(_) => ( // eslint-disable-line @typescript-eslint/no-unused-vars
                 <div
                     ref={containerRef}
-                    className='rpv-core__viewer'
+                    className={`rpv-core__viewer ${theme ? `rpv-core__viewer--${theme}` : ''}`}
                     data-testid='viewer'
                     style={{
                         height: '100%',

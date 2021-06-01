@@ -24,6 +24,22 @@ The CSS classes are named as `rpv-PACKAGE__COMPONENT`, `rpv-PACKAGE__COMPONENT--
 }
 ```
 
+**New features**
+- Support themes. You can create a custom theme with new `theme` option:
+
+```js
+<Viewer theme='bootstrap' />
+```
+
+The main viewer then will have the class `rpv-core__viewer--bootstrap`. You can set the value for CSS variables which are provided by plugins:
+
+```css
+.rpv-core__viewer--bootstrap {
+    /* Custom the background color of toolbar in the default layout */
+    --rpv-default-layout__toolbar-background-color: #eee;
+}
+```
+
 **Breaking change**
 - The option `prefixClass` is removed
 
