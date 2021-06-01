@@ -18,7 +18,6 @@ import DocumentLoader, { RenderError } from './loader/DocumentLoader';
 import LocalizationMap from './localization/LocalizationMap';
 import LocalizationProvider from './localization/LocalizationProvider';
 import SpecialZoomLevel from './SpecialZoomLevel';
-import ThemeProvider from './theme/ThemeProvider';
 import isSameUrl from './utils/isSameUrl';
 import PdfJs from './vendors/PdfJs';
 import { Plugin } from './types/Plugin';
@@ -53,8 +52,6 @@ export interface ViewerProps {
     // Plugins
     plugins?: Plugin[];
     localization?: LocalizationMap;
-    // The prefix for CSS classes
-    prefixClass?: string;
     renderError?: RenderError;
     renderPage?: RenderPage;
     renderLoader?(percentages: number): React.ReactElement;
@@ -81,7 +78,6 @@ const Viewer: React.FC<ViewerProps> = ({
     initialPage = 0,
     localization,
     plugins = [],
-    prefixClass,
     renderError,
     renderPage,
     renderLoader,
@@ -132,62 +128,60 @@ const Viewer: React.FC<ViewerProps> = ({
     });
 
     return (
-        <ThemeProvider prefixClass={prefixClass}>
-            <LocalizationProvider localization={localization}>
-                {(_) => ( // eslint-disable-line @typescript-eslint/no-unused-vars
-                    <div
-                        ref={containerRef}
-                        className='rpv-core__viewer'
-                        data-testid='viewer'
-                        style={{
-                            height: '100%',
-                            width: '100%',
-                        }}
-                    >
-                    {
-                        file.shouldLoad && (
-                            <DocumentLoader
-                                characterMap={characterMap}
-                                file={file.data}
-                                httpHeaders={httpHeaders}
-                                render={(doc: PdfJs.PdfDocument) => (
-                                    <PageSizeCalculator
-                                        defaultScale={defaultScale}
-                                        doc={doc}
-                                        render={(ps: PageSize) => (
-                                            <Inner
-                                                doc={doc}
-                                                initialPage={initialPage}
-                                                pageSize={ps}
-                                                plugins={plugins}
-                                                renderPage={renderPage}
-                                                viewerState={{
-                                                    file,
-                                                    pageIndex: initialPage,
-                                                    pageHeight: ps.pageHeight,
-                                                    pageWidth: ps.pageWidth,
-                                                    rotation: 0,
-                                                    scale: ps.scale,
-                                                }}
-                                                onDocumentLoad={onDocumentLoad}
-                                                onOpenFile={openFile}
-                                                onPageChange={onPageChange}
-                                                onZoom={onZoom}
-                                            />
-                                        )}
-                                    />
-                                )}
-                                renderError={renderError}
-                                renderLoader={renderLoader}
-                                transformGetDocumentParams={transformGetDocumentParams}
-                                withCredentials={withCredentials}
-                            />
-                        )
-                    }
-                    </div>
-                )}
-            </LocalizationProvider>
-        </ThemeProvider>
+        <LocalizationProvider localization={localization}>
+            {(_) => ( // eslint-disable-line @typescript-eslint/no-unused-vars
+                <div
+                    ref={containerRef}
+                    className='rpv-core__viewer'
+                    data-testid='viewer'
+                    style={{
+                        height: '100%',
+                        width: '100%',
+                    }}
+                >
+                {
+                    file.shouldLoad && (
+                        <DocumentLoader
+                            characterMap={characterMap}
+                            file={file.data}
+                            httpHeaders={httpHeaders}
+                            render={(doc: PdfJs.PdfDocument) => (
+                                <PageSizeCalculator
+                                    defaultScale={defaultScale}
+                                    doc={doc}
+                                    render={(ps: PageSize) => (
+                                        <Inner
+                                            doc={doc}
+                                            initialPage={initialPage}
+                                            pageSize={ps}
+                                            plugins={plugins}
+                                            renderPage={renderPage}
+                                            viewerState={{
+                                                file,
+                                                pageIndex: initialPage,
+                                                pageHeight: ps.pageHeight,
+                                                pageWidth: ps.pageWidth,
+                                                rotation: 0,
+                                                scale: ps.scale,
+                                            }}
+                                            onDocumentLoad={onDocumentLoad}
+                                            onOpenFile={openFile}
+                                            onPageChange={onPageChange}
+                                            onZoom={onZoom}
+                                        />
+                                    )}
+                                />
+                            )}
+                            renderError={renderError}
+                            renderLoader={renderLoader}
+                            transformGetDocumentParams={transformGetDocumentParams}
+                            withCredentials={withCredentials}
+                        />
+                    )
+                }
+                </div>
+            )}
+        </LocalizationProvider>
     );
 };
 

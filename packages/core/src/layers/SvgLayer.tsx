@@ -8,7 +8,6 @@
 
 import * as React from 'react';
 
-import ThemeContext from '../theme/ThemeContext';
 import PdfJs from '../vendors/PdfJs';
 import WithScale from './WithScale';
 
@@ -21,7 +20,6 @@ interface SvgLayerProps {
 }
 
 const SvgLayer: React.FC<SvgLayerProps> = ({ height, page, rotation, scale, width }) => {
-    const theme = React.useContext(ThemeContext);
     const containerRef = React.createRef<HTMLDivElement>();
 
     const empty = (): void => {
@@ -52,7 +50,7 @@ const SvgLayer: React.FC<SvgLayerProps> = ({ height, page, rotation, scale, widt
     return (
         <WithScale callback={renderSvg} rotation={rotation} scale={scale}>
             <div
-                className={`${theme.prefixClass}-svg-layer`}
+                className='rpv-core__svg-layer'
                 ref={containerRef}
             />
         </WithScale>
