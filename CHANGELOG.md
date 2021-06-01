@@ -24,6 +24,9 @@ The CSS classes are named as `rpv-PACKAGE__COMPONENT`, `rpv-PACKAGE__COMPONENT--
 }
 ```
 
+**Breaking change**
+- The option `prefixClass` is removed
+
 ## v2.5.0
 
 **New features**

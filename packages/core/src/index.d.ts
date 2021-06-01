@@ -581,8 +581,6 @@ export interface ViewerProps {
     // Plugins
     plugins?: Plugin[];
     localization?: LocalizationMap;
-    // The prefix for CSS classes
-    prefixClass?: string;
     renderError?: RenderError;
     renderPage?: RenderPage;
     renderLoader?(percentages: number): React.ReactElement;
