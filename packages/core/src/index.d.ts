@@ -584,6 +584,8 @@ export interface ViewerProps {
     renderError?: RenderError;
     renderPage?: RenderPage;
     renderLoader?(percentages: number): React.ReactElement;
+    // Theme
+    theme?: string;
     transformGetDocumentParams?(
         options: PdfJs.GetDocumentParams
     ): PdfJs.GetDocumentParams;
