@@ -7,16 +7,29 @@
  */
 
 .rpv-drop__area {
-    align-items: center;
     background-color: var(--rpv-drop__area-background-color);
-    border: 2px dashed var(--rpv-drop__area-border-color);
+
+    // Position
     bottom: 0;
-    display: flex;
-    font-size: 1.5rem;
-    justify-content: center;
     left: 0;
     position: absolute;
     right: 0;
     top: 0;
+    
+    padding: .5rem;
     z-index: 9999;
+
+    &-body {
+        border: 2px dashed var(--rpv-drop__area-body-border-color);
+        color: var(--rpv-drop__area-body-color);
+        font-size: 1.5rem;
+        
+        // Center the content
+        align-items: center;
+        display: flex;
+        justify-content: center;
+
+        // Take the full height
+        height: 100%;
+    }
 }
