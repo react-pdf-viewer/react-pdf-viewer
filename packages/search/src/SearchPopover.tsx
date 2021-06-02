@@ -7,7 +7,7 @@
  */
 
 import * as React from 'react';
-import { Button, LocalizationContext, Position, PrimaryButton, Store, Tooltip } from '@react-pdf-viewer/core';
+import { Button, LocalizationContext, Position, PrimaryButton, Store, TextBox, Tooltip } from '@react-pdf-viewer/core';
 
 import NextIcon from './NextIcon';
 import PreviousIcon from './PreviousIcon';
@@ -40,10 +40,6 @@ const SearchPopover: React.FC<SearchPopoverProps> = ({ store, onToggle }) => {
         setKeyword,
     } = useSearch(store);
 
-    const onChangeKeyword = (e: React.ChangeEvent<HTMLInputElement>): void => {
-        setKeyword(e.target.value);
-    };
-
     const onKeydownSearch = (e: React.KeyboardEvent<HTMLInputElement>): void => {
         // Press the Enter key
         if (e.keyCode !== 13 || !keyword) {
@@ -68,12 +64,11 @@ const SearchPopover: React.FC<SearchPopoverProps> = ({ store, onToggle }) => {
     return (
         <div className='rpv-search__popover'>
             <div className='rpv-search__popover-input-counter'>
-                <input
-                    className='rpv-search__popover-input'
+                <TextBox
                     placeholder={(l10n && l10n.search ? l10n.search.enterToSearch : 'Enter to search') as string}
-                    type="text"
+                    type='text'
                     value={keyword}
-                    onChange={onChangeKeyword}
+                    onChange={setKeyword}
                     onKeyDown={onKeydownSearch}
                 />
                 <div className='rpv-search__popover-counter'>
@@ -84,7 +79,7 @@ const SearchPopover: React.FC<SearchPopoverProps> = ({ store, onToggle }) => {
                 <input
                     className='rpv-search__popover-label-checkbox'
                     checked={matchCase}
-                    type="checkbox"
+                    type='checkbox'
                     onChange={onChangeMatchCase}
                 /> {l10n && l10n.search ? l10n.search.matchCase : 'Match case'}
             </label>
@@ -92,7 +87,7 @@ const SearchPopover: React.FC<SearchPopoverProps> = ({ store, onToggle }) => {
                 <input
                     className='rpv-search__popover-label-checkbox'
                     checked={wholeWords}
-                    type="checkbox"
+                    type='checkbox'
                     onChange={onChangeWholeWords}
                 /> {l10n && l10n.search ? l10n.search.wholeWords : 'Whole words'}
             </label>
