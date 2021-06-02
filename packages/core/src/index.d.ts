@@ -351,6 +351,16 @@ export class Separator extends React.Component {}
 // Spinner
 export class Spinner extends React.Component {}
 
+// Textbox
+export interface TextBoxProps {
+    placeholder?: string;
+    type?: string;
+    value?: string;
+    onChange: (value: string) => void;
+    onKeyDown?: (e: React.KeyboardEvent) => void;
+}
+export class TextBox extends React.Component<TextBoxProps> {}
+
 // Tooltip
 export type RenderTooltipContent = () => React.ReactNode;
 
