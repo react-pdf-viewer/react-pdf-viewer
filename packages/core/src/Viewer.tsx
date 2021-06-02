@@ -97,7 +97,6 @@ const Viewer: React.FC<ViewerProps> = ({
     });
 
     const openFile = (fileName: string, data: Uint8Array) => {
-        console.log(fileName, data);
         setFile({
             data,
             name: fileName,
