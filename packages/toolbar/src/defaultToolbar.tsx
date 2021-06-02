@@ -30,7 +30,7 @@ const defaultToolbar = (toolbarSlot: ToolbarSlot): React.ReactElement => {
                     </div>
                 </div>
                 <div className='rpv-toolbar__item'>
-                    <CurrentPageInput /> / <NumberOfPages />
+                    <CurrentPageInput /> <span className='rpv-toolbar__label'>/ <NumberOfPages /></span>
                 </div>
                 <div className="rpv-core__display--hidden rpv-core__display--block-small">
                     <div className='rpv-toolbar__item'>
