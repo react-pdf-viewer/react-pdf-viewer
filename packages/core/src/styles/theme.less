@@ -7,22 +7,23 @@
  */
 
 .rpv-core__viewer {
-    --rpv-core__arrow-border-color: rgba(0, 0, 0, .3);
-
-    --rpv-core__asking-password-border-color: rgba(0, 0, 0, .3);
-    --rpv-core__asking-password-input-border-color: rgba(0, 0, 0, .2);
-    --rpv-core__asking-password-button-background-color: #357edd;
-    --rpv-core__asking-password-button-border-color: rgba(0, 0, 0, .2);
-    --rpv-core__asking-password-button-color: #fff;
-
+    --rpv-core__arrow-border-color: rgba(0, 0, 0, .3);    
+    
+    --rpv-core__asking-password-color: #000;
+    --rpv-core__asking-password-wrapper-background-color: #fff;
+    --rpv-core__asking-password-wrapper-border-color: rgba(0, 0, 0, .3);
+    
+    --rpv-core__button-color: #000;
     --rpv-core__button--hover-background-color: rgba(0, 0, 0, .1);
     --rpv-core__button--disabled-color: rgba(0, 0, 0, .3);
     --rpv-core__button--selected-background-color: rgba(0, 0, 0, .1);
 
     --rpv-core__canvas-layer-loader-background-color: #fff;
 
-    --rpv-core__doc-error-text-background-color: #e53e3e;
+    --rpv-core__doc-error-background-color: #fff;
+    --rpv-core__doc-error-text-background-color: #c02424;
     --rpv-core__doc-error-text-color: #fff;
+    --rpv-core__doc-loading-background-color: #fff;
 
     --rpv-core__inner-page-background-color: #fff;
 
@@ -41,25 +42,70 @@
     --rpv-core__popover-body-background-color: #fff;
     --rpv-core__popover-body-border-color: rgba(0, 0, 0, .3);
     --rpv-core__popover-body-arrow-background-color: #fff;
+    --rpv-core__popover-body-color: #000;
 
     --rpv-core__annotation-popup-wrapper-background-color: #faf089;
     --rpv-core__annotation-popup-wrapper-box-shadow: 0 10px 15px -3px rgba(0, 0, 0, .1), 0 4px 6px -2px rgba(0, 0, 0, .05);
     --rpv-core__annotation-popup-wrapper-content-border-top-color: #1a202c;
 
-    --rpv-core__primary-button-background-color: rgb(53, 126, 221);
+    --rpv-core__primary-button-background-color: #2566e8;
     --rpv-core__primary-button-color: #fff;
 
     --rpv-core__progress-bar-background-color: rgba(0, 0, 0, .1);
-    --rpv-core__progress-bar-progress-background-color: rgb(53, 126, 221);
+    --rpv-core__progress-bar-progress-background-color: #2566e8;
     --rpv-core__progress-bar-progress-color: #fff;
 
     --rpv-core__separator-border-bottom-color: rgba(0, 0, 0, .3);
 
     --rpv-core__spinner-circle-stroke: rgba(0, 0, 0, .4);
 
+    --rpv-core__textbox-background-color: #fff;
+    --rpv-core__textbox-border-color: rgba(0, 0, 0, .2);
+    --rpv-core__textbox-color: #000;
+
     --rpv-core__text-layer-text--selection-background-color: rgb(0, 0, 255, .5);
     --rpv-core__text-layer-text--selection-color: transparent;
 
     --rpv-core__tooltip-body-background-color: #000;
     --rpv-core__tooltip-body-color: #fff;
+}
+
+/* Dark theme */
+.rpv-core__viewer--dark {
+    --rpv-core__asking-password-background-color: #363636;
+    --rpv-core__asking-password-color: #fff;
+    --rpv-core__asking-password-wrapper-border-color: #1a1a1a;
+    --rpv-core__asking-password-wrapper-background-color: #1a1a1a;
+
+    --rpv-core__button-color: #fff;
+    --rpv-core__button--disabled-color: #5d5d5d;
+    --rpv-core__button--hover-background-color: #171717;
+    --rpv-core__button--selected-background-color: #171717;
+
+    --rpv-core__doc-error-background-color: #1a1a1a;
+    --rpv-core__doc-loading-background-color: #1a1a1a;
+
+    --rpv-core__inner-page-background-color: #1a1a1a;
+
+    --rpv-core__menu-divider-border-bottom-color: #000;
+    --rpv-core__menu-item--hover-background-color: #131313;
+    --rpv-core__menu-item--disabled-color: #5d5d5d;
+    
+    --rpv-core__modal-body-background-color: #363636;
+
+    --rpv-core__primary-button-background-color: #171717;
+
+    --rpv-core__popover-body-background-color: #363636;
+    --rpv-core__popover-body-arrow-background-color: #363636;
+    --rpv-core__popover-body-color: #fff;
+
+    --rpv-core__progress-bar-background-color: #000;
+
+    --rpv-core__spinner-circle-stroke: #fff;
+
+    --rpv-core__textbox-background-color: #131313;
+    --rpv-core__textbox-border-color: #131313;
+    --rpv-core__textbox-color: #fff;
+
+    --rpv-core__tooltip-body-background-color: #414141;
 }
