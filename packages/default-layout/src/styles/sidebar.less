@@ -13,14 +13,13 @@
 }
 
 .rpv-default-layout__sidebar-headers {
-    align-items: center;
     background-color: var(--rpv-default-layout__sidebar-headers-background-color);
     border-right: 1px solid var(--rpv-default-layout__sidebar-headers-border-right-color);
     padding: .25rem;
 }
 
 .rpv-default-layout__sidebar-header {
-    padding: .125rem;
+    padding: .125rem;    
 }
 
 .rpv-default-layout__sidebar-content {
@@ -30,6 +29,8 @@
     padding: .5rem 0;
 
     &--opened {
+        background-color: var(--rpv-default-layout__sidebar-content--opened-background-color);
+        color: var(--rpv-default-layout__sidebar-content--opened-color);
         display: flex;
         overflow: hidden;
     }

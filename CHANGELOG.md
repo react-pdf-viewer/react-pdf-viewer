@@ -25,6 +25,7 @@ The CSS classes are named as `rpv-PACKAGE__COMPONENT`, `rpv-PACKAGE__COMPONENT--
 ```
 
 **New features**
+- The core package provides new `TextBox` component
 - Support themes. You can create a custom theme with new `theme` option:
 
 ```js

@@ -8,6 +8,8 @@
 
 import * as React from 'react';
 
+import PrimaryButton from '../components/PrimaryButton';
+import TextBox from '../components/TextBox';
 import LocalizationContext from '../localization/LocalizationContext';
 import { VerifyPassword } from './LoadingStatus';
 
@@ -19,22 +21,23 @@ const AskingPassword: React.FC<AskingPasswordProps> = ({ verifyPasswordFn }) => 
     const l10n = React.useContext(LocalizationContext);
     const [password, setPassword] = React.useState('');
 
-    const changePassword = (e: React.ChangeEvent<HTMLInputElement>): void => setPassword(e.target.value);
     const submit = (): void => verifyPasswordFn(password);
 
     return (
-        <div className='rpv-core__asking-password'>
-            <div>
+        <div className='rpv-core__asking-password-wrapper'>
+            <div className='rpv-core__asking-password'>
                 <div className='rpv-core__asking-password-message'>{l10n.core.askingPassword.requirePasswordToOpen}:</div>
                 <div className='rpv-core__asking-password-body'>
-                    <input
-                        className='rpv-core__asking-password-input'
-                        type="password"
-                        onChange={changePassword}
-                    />
-                    <button className='rpv-core__asking-password-button' onClick={submit}>
+                    <div className='rpv-core__asking-password-input'>
+                        <TextBox
+                            type='password'
+                            value={password}
+                            onChange={setPassword}
+                        />
+                    </div>
+                    <PrimaryButton onClick={submit}>
                         {l10n.core.askingPassword.submit}
-                    </button>
+                    </PrimaryButton>
                 </div>
             </div>
         </div>

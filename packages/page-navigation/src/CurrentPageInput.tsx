@@ -7,7 +7,7 @@
  */
 
 import * as React from 'react';
-import { Store } from '@react-pdf-viewer/core';
+import { Store, TextBox } from '@react-pdf-viewer/core';
 
 import StoreProps from './StoreProps';
 import useCurrentPage from './useCurrentPage';
@@ -22,10 +22,6 @@ const CurrentPageInput: React.FC<{
     const { numberOfPages } = useNumberOfPages(store);
 
     React.useEffect(() => setEditingPage(`${currentPage + 1}`), [currentPage]);
-
-    const changePage = (e: React.ChangeEvent<HTMLInputElement>): void => {
-        setEditingPage(e.target.value);
-    };
 
     const gotoNextPage = (): void => {
         const nextPage = currentPage + 1;
@@ -77,13 +73,14 @@ const CurrentPageInput: React.FC<{
     };
 
     return (
-        <input
-            className='rpv-page-navigation__current-page-input'
-            type='text'
-            value={editingPage}
-            onChange={changePage}
-            onKeyDown={keydownPage}
-        />
+        <span className='rpv-page-navigation__current-page-input'>
+            <TextBox
+                type='text'
+                value={editingPage}
+                onChange={setEditingPage}
+                onKeyDown={keydownPage}
+            />
+        </span>
     );
 };
 
