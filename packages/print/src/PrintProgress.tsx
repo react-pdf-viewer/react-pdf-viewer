@@ -21,7 +21,7 @@ const PrintProgress: React.FC<PrintProgressProps> = ({ numLoadedPages, numPages,
 
     return (
         <div className='rpv-print__progress'>
-            <div className='rpv-print__progress-inner'>
+            <div className='rpv-print__progress-body'>
                 <div className='rpv-print__progress-message'>
                     {
                         l10n && l10n.print ? l10n.print.preparingDocument : 'Preparing document ...'
