@@ -193,6 +193,7 @@ export declare namespace PdfJs {
 // Interfaces and types
 // --------------------
 
+// Localization provider
 export interface LocalizationMap {
     [key: string]: LocalizationMap;
 }
@@ -206,6 +207,18 @@ export interface LocalizationProviderProps {
 }
 
 export class LocalizationProvider extends React.Component<LocalizationProviderProps> {}
+
+// Theme provider
+export const ThemeContext: React.Context<string>;
+
+export type SetTheme = (theme: string) => void;
+
+export interface ThemeProviderProps {
+    children: (currentTheme: string, setTheme: SetTheme) => React.ReactElement;
+    theme?: string;
+}
+
+export class ThemeProvider extends React.Component<ThemeProviderProps> {}
 
 export interface Offset {
     left: number;

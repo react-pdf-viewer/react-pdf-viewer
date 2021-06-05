@@ -27,6 +27,8 @@ export { default as Position } from './portal/Position';
 export { default as Tooltip } from './portal/Tooltip';
 export { default as SpecialZoomLevel } from './SpecialZoomLevel';
 export { default as createStore } from './store/createStore';
+export { default as ThemeContext } from './theme/ThemeContext';
+export { default as ThemeProvider } from './theme/ThemeProvider';
 export { default as LayerRenderStatus } from './types/LayerRenderStatus';
 export { default as Viewer } from './Viewer';
 export { default as Worker } from './Worker';
