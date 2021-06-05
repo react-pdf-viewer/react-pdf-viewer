@@ -18,6 +18,7 @@ import DocumentLoader, { RenderError } from './loader/DocumentLoader';
 import LocalizationMap from './localization/LocalizationMap';
 import LocalizationProvider from './localization/LocalizationProvider';
 import SpecialZoomLevel from './SpecialZoomLevel';
+import ThemeProvider from './theme/ThemeProvider';
 import isSameUrl from './utils/isSameUrl';
 import PdfJs from './vendors/PdfJs';
 import { Plugin } from './types/Plugin';
@@ -130,60 +131,64 @@ const Viewer: React.FC<ViewerProps> = ({
     });
 
     return (
-        <LocalizationProvider localization={localization}>
-            {(_) => ( // eslint-disable-line @typescript-eslint/no-unused-vars
-                <div
-                    ref={containerRef}
-                    className={`rpv-core__viewer ${theme ? `rpv-core__viewer--${theme}` : ''}`}
-                    data-testid='viewer'
-                    style={{
-                        height: '100%',
-                        width: '100%',
-                    }}
-                >
-                {
-                    file.shouldLoad && (
-                        <DocumentLoader
-                            characterMap={characterMap}
-                            file={file.data}
-                            httpHeaders={httpHeaders}
-                            render={(doc: PdfJs.PdfDocument) => (
-                                <PageSizeCalculator
-                                    defaultScale={defaultScale}
-                                    doc={doc}
-                                    render={(ps: PageSize) => (
-                                        <Inner
-                                            doc={doc}
-                                            initialPage={initialPage}
-                                            pageSize={ps}
-                                            plugins={plugins}
-                                            renderPage={renderPage}
-                                            viewerState={{
-                                                file,
-                                                pageIndex: initialPage,
-                                                pageHeight: ps.pageHeight,
-                                                pageWidth: ps.pageWidth,
-                                                rotation: 0,
-                                                scale: ps.scale,
-                                            }}
-                                            onDocumentLoad={onDocumentLoad}
-                                            onOpenFile={openFile}
-                                            onPageChange={onPageChange}
-                                            onZoom={onZoom}
-                                        />
-                                    )}
-                                />
-                            )}
-                            renderError={renderError}
-                            renderLoader={renderLoader}
-                            transformGetDocumentParams={transformGetDocumentParams}
-                            withCredentials={withCredentials}
-                        />
-                    )
-                }
-                </div>
+        <ThemeProvider theme={theme}>
+            {(_) => (
+                <LocalizationProvider localization={localization}>
+                {(_) => ( // eslint-disable-line @typescript-eslint/no-unused-vars
+                    <div
+                        ref={containerRef}
+                        className={`rpv-core__viewer ${theme ? `rpv-core__viewer--${theme}` : ''}`}
+                        data-testid='viewer'
+                        style={{
+                            height: '100%',
+                            width: '100%',
+                        }}
+                    >
+                    {
+                        file.shouldLoad && (
+                            <DocumentLoader
+                                characterMap={characterMap}
+                                file={file.data}
+                                httpHeaders={httpHeaders}
+                                render={(doc: PdfJs.PdfDocument) => (
+                                    <PageSizeCalculator
+                                        defaultScale={defaultScale}
+                                        doc={doc}
+                                        render={(ps: PageSize) => (
+                                            <Inner
+                                                doc={doc}
+                                                initialPage={initialPage}
+                                                pageSize={ps}
+                                                plugins={plugins}
+                                                renderPage={renderPage}
+                                                viewerState={{
+                                                    file,
+                                                    pageIndex: initialPage,
+                                                    pageHeight: ps.pageHeight,
+                                                    pageWidth: ps.pageWidth,
+                                                    rotation: 0,
+                                                    scale: ps.scale,
+                                                }}
+                                                onDocumentLoad={onDocumentLoad}
+                                                onOpenFile={openFile}
+                                                onPageChange={onPageChange}
+                                                onZoom={onZoom}
+                                            />
+                                        )}
+                                    />
+                                )}
+                                renderError={renderError}
+                                renderLoader={renderLoader}
+                                transformGetDocumentParams={transformGetDocumentParams}
+                                withCredentials={withCredentials}
+                            />
+                        )
+                    }
+                    </div>
+                )}
+                </LocalizationProvider>
             )}
-        </LocalizationProvider>
+        </ThemeProvider>
     );
 };
 
