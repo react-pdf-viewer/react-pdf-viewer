@@ -61,6 +61,11 @@ import type {
     SwitchSelectionModeProps,
 } from '@react-pdf-viewer/selection-mode';
 import type {
+    SwitchThemeProps,
+    SwitchThemeMenuItemProps,
+    ThemePlugin,
+} from '@react-pdf-viewer/theme';
+import type {
     CurrentScaleProps,
     ZoomInProps,
     ZoomMenuItemProps,
@@ -73,12 +78,6 @@ export interface ToolbarSlot {
     CurrentPageInput(): React.ReactElement;
     CurrentPageLabel(props: CurrentPageLabelProps): React.ReactElement;
     CurrentScale(props: CurrentScaleProps): React.ReactElement;
-    Download(props: DownloadProps): React.ReactElement;
-    DownloadMenuItem(props: DownloadMenuItemProps): React.ReactElement;
-    EnterFullScreen(props: EnterFullScreenProps): React.ReactElement;
-    EnterFullScreenMenuItem(
-        props: EnterFullScreenMenuItemProps
-    ): React.ReactElement;
     GoToFirstPage(props: GoToPageProps): React.ReactElement;
     GoToFirstPageMenuItem(props: GoToPageMenuItemProps): React.ReactElement;
     GoToLastPage(props: GoToPageProps): React.ReactElement;
@@ -88,19 +87,33 @@ export interface ToolbarSlot {
     GoToPreviousPage(props: GoToPageProps): React.ReactElement;
     GoToPreviousPageMenuItem(props: GoToPageMenuItemProps): React.ReactElement;
     NumberOfPages(): React.ReactElement;
+
+    Download(props: DownloadProps): React.ReactElement;
+    DownloadMenuItem(props: DownloadMenuItemProps): React.ReactElement;
+
+    EnterFullScreen(props: EnterFullScreenProps): React.ReactElement;
+    EnterFullScreenMenuItem(
+        props: EnterFullScreenMenuItemProps
+    ): React.ReactElement;
+
     Open(props: OpenProps): React.ReactElement;
     OpenMenuItem(): React.ReactElement;
+
     Print(props: PrintProps): React.ReactElement;
     PrintMenuItem(props: PrintMenuItemProps): React.ReactElement;
+
     Rotate(props: RotateProps): React.ReactElement;
     RotateBackwardMenuItem(props: RotateDecoratorProps): React.ReactElement;
     RotateForwardMenuItem(props: RotateDecoratorProps): React.ReactElement;
+
     Search(props: SearchProps): React.ReactElement;
+    ShowSearchPopover(props: ShowSearchPopoverProps): React.ReactElement;
+
     ShowProperties(props: ShowPropertiesProps): React.ReactElement;
     ShowPropertiesMenuItem(
         props: ShowPropertiesMenuItemProps
     ): React.ReactElement;
-    ShowSearchPopover(props: ShowSearchPopoverProps): React.ReactElement;
+
     SwitchScrollMode(props: SwitchScrollModeProps): React.ReactElement;
     SwitchScrollModeMenuItem(
         props: SwitchScrollModeMenuItemProps
@@ -109,6 +122,10 @@ export interface ToolbarSlot {
     SwitchSelectionModeMenuItem(
         props: SwitchSelectionModeMenuItemProps
     ): React.ReactElement;
+
+    SwitchTheme(props: SwitchThemeProps): React.ReactElement;
+    SwitchThemeMenuItem(props: SwitchThemeMenuItemProps): React.ReactElement;
+
     Zoom(props: ZoomProps): React.ReactElement;
     ZoomIn(props: ZoomInProps): React.ReactElement;
     ZoomInMenuItem(props: ZoomMenuItemProps): React.ReactElement;
@@ -134,6 +151,7 @@ export interface ToolbarPlugin extends Plugin {
     scrollModePluginInstance: ScrollModePlugin;
     searchPluginInstance: SearchPlugin;
     selectionModePluginInstance: SelectionModePlugin;
+    themePluginInstance: ThemePlugin;
     zoomPluginInstance: ZoomPlugin;
 }
 

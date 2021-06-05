@@ -19,6 +19,7 @@ import { rotatePlugin, RotatePlugin } from '@react-pdf-viewer/rotate';
 import { scrollModePlugin, ScrollModePlugin, ScrollModePluginProps } from '@react-pdf-viewer/scroll-mode';
 import { searchPlugin, SearchPlugin, SearchPluginProps } from '@react-pdf-viewer/search';
 import { selectionModePlugin, SelectionModePlugin, SelectionModePluginProps } from '@react-pdf-viewer/selection-mode';
+import { themePlugin, ThemePlugin } from '@react-pdf-viewer/theme';
 import { zoomPlugin, ZoomPlugin } from '@react-pdf-viewer/zoom';
 
 import Toolbar, { ToolbarProps } from './Toolbar';
@@ -37,6 +38,7 @@ interface ToolbarPlugin extends Plugin {
     scrollModePluginInstance: ScrollModePlugin;
     searchPluginInstance: SearchPlugin;
     selectionModePluginInstance: SelectionModePlugin;
+    themePluginInstance: ThemePlugin;
     zoomPluginInstance: ZoomPlugin;
 }
 
@@ -60,6 +62,7 @@ const toolbarPlugin = (props?: ToolbarPluginProps): ToolbarPlugin => {
     const scrollModePluginInstance = scrollModePlugin(props ? props.scrollModePlugin : {});
     const searchPluginInstance = searchPlugin(props ? props.searchPlugin : {});
     const selectionModePluginInstance = selectionModePlugin(props ? props.selectionModePlugin : {});
+    const themePluginInstance = themePlugin();
     const zoomPluginInstance = zoomPlugin();
 
     const plugins = [
@@ -74,6 +77,7 @@ const toolbarPlugin = (props?: ToolbarPluginProps): ToolbarPlugin => {
         scrollModePluginInstance,
         searchPluginInstance,
         selectionModePluginInstance,
+        themePluginInstance,
         zoomPluginInstance,
     ];
 
@@ -91,6 +95,7 @@ const toolbarPlugin = (props?: ToolbarPluginProps): ToolbarPlugin => {
         const { SwitchScrollMode, SwitchScrollModeMenuItem } = scrollModePluginInstance;
         const { Search, ShowSearchPopover } = searchPluginInstance;
         const { SwitchSelectionMode, SwitchSelectionModeMenuItem } = selectionModePluginInstance;
+        const { SwitchTheme, SwitchThemeMenuItem } = themePluginInstance;
         const { CurrentScale, Zoom, ZoomIn, ZoomInMenuItem, ZoomOut, ZoomOutMenuItem } = zoomPluginInstance;
 
         const NumberOfPages = () => (
@@ -134,6 +139,8 @@ const toolbarPlugin = (props?: ToolbarPluginProps): ToolbarPlugin => {
                     SwitchScrollModeMenuItem,
                     SwitchSelectionMode,
                     SwitchSelectionModeMenuItem,
+                    SwitchTheme,
+                    SwitchThemeMenuItem,
                     Zoom,
                     ZoomIn,
                     ZoomInMenuItem,
@@ -157,6 +164,7 @@ const toolbarPlugin = (props?: ToolbarPluginProps): ToolbarPlugin => {
         scrollModePluginInstance,
         searchPluginInstance,
         selectionModePluginInstance,
+        themePluginInstance,
         zoomPluginInstance,
         install: (pluginFunctions: PluginFunctions) => {
             // Install plugins

@@ -24,7 +24,7 @@ const MoreActionsPopover: React.FC<MoreActionsPopoverProps> = ({ toolbarSlot }) 
     const l10n = React.useContext(LocalizationContext);
     const {
         DownloadMenuItem, EnterFullScreenMenuItem, GoToFirstPageMenuItem, GoToLastPageMenuItem, GoToNextPageMenuItem, GoToPreviousPageMenuItem, OpenMenuItem, PrintMenuItem, RotateBackwardMenuItem, RotateForwardMenuItem, ShowPropertiesMenuItem,
-        SwitchScrollModeMenuItem, SwitchSelectionModeMenuItem,
+        SwitchScrollModeMenuItem, SwitchSelectionModeMenuItem, SwitchThemeMenuItem,
     } = toolbarSlot;
 
     const renderTarget = (toggle: Toggle, opened: boolean): React.ReactElement => {
@@ -44,6 +44,9 @@ const MoreActionsPopover: React.FC<MoreActionsPopoverProps> = ({ toolbarSlot }) 
         return (
             <Menu>
                 {/* These items will be hidden on the larger screens */}
+                <div className="rpv-core__display--block rpv-core__display--hidden-medium">
+                    <SwitchThemeMenuItem onClick={toggle} />
+                </div>
                 <div className="rpv-core__display--block rpv-core__display--hidden-medium">
                     <EnterFullScreenMenuItem onClick={toggle} />
                 </div>

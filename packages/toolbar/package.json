@@ -45,6 +45,7 @@
         "@react-pdf-viewer/scroll-mode": "2.5.0",
         "@react-pdf-viewer/search": "2.5.0",
         "@react-pdf-viewer/selection-mode": "2.5.0",
+        "@react-pdf-viewer/theme": "2.5.0",
         "@react-pdf-viewer/zoom": "2.5.0"
     },
     "peerDependencies": {

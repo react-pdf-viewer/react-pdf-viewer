@@ -41,6 +41,9 @@ The main viewer then will have the class `rpv-core__viewer--bootstrap`. You can 
 }
 ```
 
+- Add new theme plugin that provides components for switching between the dark and light themes
+- The toolbar Slot has new `SwitchTheme` and `SwitchThemeMenuItem`
+
 **Breaking change**
 - The option `prefixClass` is removed
 

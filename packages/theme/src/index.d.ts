@@ -24,7 +24,9 @@ export interface SwitchThemeProps {
 export interface ThemePlugin extends Plugin {
     SwitchTheme: (props: SwitchThemeProps) => React.ReactElement;
     SwitchThemeButton: () => React.ReactElement;
-    SwitchThemeMenuItem: (props: SwitchThemeMenuItemProps) => React.ReactElement;
+    SwitchThemeMenuItem: (
+        props: SwitchThemeMenuItemProps
+    ) => React.ReactElement;
 }
 
 export function themePlugin(): ThemePlugin;
