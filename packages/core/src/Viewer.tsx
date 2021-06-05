@@ -18,10 +18,11 @@ import DocumentLoader, { RenderError } from './loader/DocumentLoader';
 import LocalizationMap from './localization/LocalizationMap';
 import LocalizationProvider from './localization/LocalizationProvider';
 import SpecialZoomLevel from './SpecialZoomLevel';
+import ThemeContext from './theme/ThemeContext';
 import ThemeProvider from './theme/ThemeProvider';
+import { Plugin } from './types/Plugin';
 import isSameUrl from './utils/isSameUrl';
 import PdfJs from './vendors/PdfJs';
-import { Plugin } from './types/Plugin';
 
 export interface DocumentLoadEvent {
     doc: PdfJs.PdfDocument;
@@ -132,12 +133,13 @@ const Viewer: React.FC<ViewerProps> = ({
 
     return (
         <ThemeProvider theme={theme}>
-            {(_) => (
-                <LocalizationProvider localization={localization}>
-                {(_) => ( // eslint-disable-line @typescript-eslint/no-unused-vars
+            <LocalizationProvider localization={localization}>
+            {(_) => { // eslint-disable-line @typescript-eslint/no-unused-vars
+                const themeContext = React.useContext(ThemeContext);
+                return (
                     <div
                         ref={containerRef}
-                        className={`rpv-core__viewer ${theme ? `rpv-core__viewer--${theme}` : ''}`}
+                        className={`rpv-core__viewer ${themeContext.currentTheme ? `rpv-core__viewer--${themeContext.currentTheme}` : ''}`}
                         data-testid='viewer'
                         style={{
                             height: '100%',
@@ -185,9 +187,9 @@ const Viewer: React.FC<ViewerProps> = ({
                         )
                     }
                     </div>
-                )}
-                </LocalizationProvider>
-            )}
+                );
+            }}
+            </LocalizationProvider>
         </ThemeProvider>
     );
 };

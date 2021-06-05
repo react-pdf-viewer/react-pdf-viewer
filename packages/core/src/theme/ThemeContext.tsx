@@ -8,6 +8,13 @@
 
 import * as React from 'react';
 
-const ThemeContext = React.createContext<string>('');
+export interface ThemeContextProps {
+    currentTheme: string;
+    setCurrentTheme: (theme: string) => void;
+}
+const ThemeContext = React.createContext<ThemeContextProps>({
+    currentTheme: '',
+    setCurrentTheme: () => {},
+});
 
 export default ThemeContext;

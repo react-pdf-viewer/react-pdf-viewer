@@ -209,12 +209,13 @@ export interface LocalizationProviderProps {
 export class LocalizationProvider extends React.Component<LocalizationProviderProps> {}
 
 // Theme provider
-export const ThemeContext: React.Context<string>;
-
-export type SetTheme = (theme: string) => void;
+export interface ThemeContextProps {
+    currentTheme: string;
+    setCurrentTheme: (theme: string) => void;
+}
+export const ThemeContext: React.Context<ThemeContextProps>;
 
 export interface ThemeProviderProps {
-    children: (currentTheme: string, setTheme: SetTheme) => React.ReactElement;
     theme?: string;
 }
 

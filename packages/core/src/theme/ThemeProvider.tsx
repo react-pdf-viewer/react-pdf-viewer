@@ -8,21 +8,22 @@
 
 import * as React from 'react';
 
-import ThemeContext from './ThemeContext';
-
-type SetTheme = (theme: string) => void;
+import ThemeContext, { ThemeContextProps } from './ThemeContext';
 
 interface ThemeProviderProps {
-    children: (currentTheme: string, setTheme: SetTheme) => React.ReactElement;
     theme?: string;
 }
 
 const ThemeProvider: React.FC<ThemeProviderProps> = ({ children, theme }) => {
     const [currentTheme, setCurrentTheme] = React.useState(theme || '');
+    const initialContext: ThemeContextProps = {
+        currentTheme,
+        setCurrentTheme,
+    };
 
     return (
-        <ThemeContext.Provider value={currentTheme}>
-            {children(currentTheme, setCurrentTheme)}
+        <ThemeContext.Provider value={initialContext}>
+            {children}
         </ThemeContext.Provider>
     );
 };
