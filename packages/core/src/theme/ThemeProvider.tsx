@@ -9,13 +9,16 @@
 import * as React from 'react';
 
 import ThemeContext, { ThemeContextProps } from './ThemeContext';
+import isDarkMode from '../utils/isDarkMode';
 
 interface ThemeProviderProps {
     theme?: string;
 }
 
 const ThemeProvider: React.FC<ThemeProviderProps> = ({ children, theme }) => {
-    const [currentTheme, setCurrentTheme] = React.useState(theme || '');
+    const initialTheme = React.useMemo(() => theme === 'auto' ? (isDarkMode() ? 'dark' : '') : theme, []);
+
+    const [currentTheme, setCurrentTheme] = React.useState(initialTheme);
     const initialContext: ThemeContextProps = {
         currentTheme,
         setCurrentTheme,
