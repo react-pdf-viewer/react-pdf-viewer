@@ -17,7 +17,7 @@ const OpenMenuItem: React.FC<RenderOpenProps> = ({ onClick }) => {
     const label = l10n && l10n.open ? l10n.open.openFile : 'Open file';
 
     return (
-        <MenuItem icon={<OpenFileIcon />} onClick={() => {}}>
+        <MenuItem icon={<OpenFileIcon />} onClick={() => {/**/}}>
             <div className='rpv-open__input-wrapper'>
                 <input
                     className='rpv-open__input'
