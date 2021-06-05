@@ -17,8 +17,22 @@ interface ThemeProviderProps {
 
 const ThemeProvider: React.FC<ThemeProviderProps> = ({ children, theme }) => {
     const initialTheme = React.useMemo(() => theme === 'auto' ? (isDarkMode() ? 'dark' : '') : theme, []);
-
     const [currentTheme, setCurrentTheme] = React.useState(initialTheme);
+
+    React.useEffect(() => {
+        if (theme !== 'auto') {
+            return;
+        }
+
+        const media = window.matchMedia('(prefers-color-scheme: dark)');
+        const handler = (e: MediaQueryListEvent) => {
+            setCurrentTheme(e.matches ? 'dark' : '');
+        };
+
+        media.addEventListener('change', handler);
+        return () => media.removeEventListener('change', handler);
+    }, []);
+
     const initialContext: ThemeContextProps = {
         currentTheme,
         setCurrentTheme,

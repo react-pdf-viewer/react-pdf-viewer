@@ -21,7 +21,7 @@ const App = () => {
                     fileUrl='pdf-open-parameters.pdf'
                     initialPage={3}
                     theme='auto'
-                    // defaultScale={1.2}                    
+                    // defaultScale={1.2}     
                     plugins={[
                         defaultLayoutPluginInstance,
                     ]}
