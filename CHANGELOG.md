@@ -41,6 +41,14 @@ The main viewer then will have the class `rpv-core__viewer--bootstrap`. You can 
 }
 ```
 
+The following built-in themes are provided:
+
+| Theme                     | Description                                                                   |
+|---------------------------|-------------------------------------------------------------------------------|
+| `<Viewer theme='auto' />` | Switch to the dark or light mode automatically based on the system setting    |
+| `<Viewer theme='dark' />` | The dark theme                                                                |
+| `<Viewer theme='' />`     | The light theme (default)                                                     |
+
 - Add new theme plugin that provides components for switching between the dark and light themes
 - The toolbar Slot has new `SwitchTheme` and `SwitchThemeMenuItem`
 

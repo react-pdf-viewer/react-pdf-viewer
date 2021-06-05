@@ -20,7 +20,8 @@ const App = () => {
                 <Viewer
                     fileUrl='pdf-open-parameters.pdf'
                     initialPage={3}
-                    // defaultScale={1.2}                    
+                    theme='auto'
+                    // defaultScale={1.2}     
                     plugins={[
                         defaultLayoutPluginInstance,
                     ]}
