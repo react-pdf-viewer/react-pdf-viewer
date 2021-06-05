@@ -14,7 +14,7 @@ import ToolbarSlot from './ToolbarSlot';
 const defaultToolbar = (toolbarSlot: ToolbarSlot): React.ReactElement => {
     const {
         CurrentPageInput, Download, EnterFullScreen, GoToNextPage, GoToPreviousPage,
-        NumberOfPages, Open, Print, ShowSearchPopover, Zoom, ZoomIn,
+        NumberOfPages, Open, Print, ShowSearchPopover, SwitchTheme, Zoom, ZoomIn,
         ZoomOut,
     } = toolbarSlot;
 
@@ -54,6 +54,11 @@ const defaultToolbar = (toolbarSlot: ToolbarSlot): React.ReactElement => {
             <div className='rpv-toolbar__right'>
                 <div className="rpv-core__display--hidden rpv-core__display--block-medium">
                     <div className='rpv-toolbar__item'>
+                        <SwitchTheme />
+                    </div>
+                </div>
+                <div className="rpv-core__display--hidden rpv-core__display--block-medium">
+                    <div className='rpv-toolbar__item'>
                         <EnterFullScreen />
                     </div>
                 </div>
@@ -71,7 +76,7 @@ const defaultToolbar = (toolbarSlot: ToolbarSlot): React.ReactElement => {
                     <div className='rpv-toolbar__item'>
                         <Print />
                     </div>
-                </div>
+                </div>                
                 <div className='rpv-toolbar__item'>
                     <MoreActionsPopover toolbarSlot={toolbarSlot} />
                 </div>
