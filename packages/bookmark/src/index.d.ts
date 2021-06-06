@@ -14,3 +14,7 @@ export interface BookmarkPlugin extends Plugin {
 }
 
 export function bookmarkPlugin(): BookmarkPlugin;
+
+// Icons
+export class DownArrowIcon extends React.Component {}
+export class RightArrowIcon extends React.Component {}
