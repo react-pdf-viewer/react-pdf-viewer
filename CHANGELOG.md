@@ -52,6 +52,9 @@ The following built-in themes are provided:
 - Add new theme plugin that provides components for switching between the dark and light themes
 - The toolbar Slot has new `SwitchTheme` and `SwitchThemeMenuItem`
 
+**Bug fixes**
+- Icons in menu items aren't centered horizontally
+
 **Breaking change**
 - The option `prefixClass` is removed
 
