@@ -7,6 +7,8 @@
  */
 
 .rpv-core__viewer {
+    --rpv-default-layout__body-background-color: #fff;
+
     --rpv-default-layout__container-border-color: rgba(0, 0, 0, .3);
     
     --rpv-default-layout__toolbar-background-color: #eee;
@@ -23,11 +25,17 @@
 
 /* Dark theme */
 .rpv-core__viewer--dark {
-    --rpv-default-layout__toolbar-background-color: #252628;
+    --rpv-default-layout__body-background-color: #212224;
 
-    --rpv-default-layout__sidebar-border-right-color: #1c1d1f;
+    --rpv-default-layout__container-border-color: #454647;
+
+    --rpv-default-layout__toolbar-background-color: #252628;
+    --rpv-default-layout__toolbar-border-bottom-color: #000;
+
+    --rpv-default-layout__sidebar-border-right-color: #000;
     --rpv-default-layout__sidebar--opened-background-color: #fff;
     --rpv-default-layout__sidebar-headers-background-color: #252628;
+    --rpv-default-layout__sidebar-headers-border-right-color: #000;
     --rpv-default-layout__sidebar-content--opened-background-color: #22282e;
     --rpv-default-layout__sidebar-content--opened-color: #fff;
 }
