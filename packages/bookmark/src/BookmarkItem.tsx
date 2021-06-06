@@ -10,6 +10,7 @@ import * as React from 'react';
 import { PdfJs, SpecialZoomLevel } from '@react-pdf-viewer/core';
 
 import BookmarkList from './BookmarkList';
+import RightArrowIcon from './RightArrowIcon';
 
 interface BookmarkItemProps {
     bookmark: PdfJs.Outline;
@@ -64,7 +65,7 @@ const BookmarkItem: React.FC<BookmarkItemProps> = ({ bookmark, depth, doc, onCli
                             className='rpv-bookmark__toggle'
                             onClick={toggleSubItems}
                         >
-                            ►
+                            <RightArrowIcon />
                         </span>
                     )
                 }
