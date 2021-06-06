@@ -63,7 +63,7 @@ const useSearch = (store: Store<StoreProps>): UseSearch => {
     };
 
     const jumpToPreviousMatch = (): void => {
-        if (keywords.length === 0) {
+        if (keywords.length === 0 || found.length === 0) {
             return;
         }
         const prev = currentMatch - 1;
@@ -73,7 +73,7 @@ const useSearch = (store: Store<StoreProps>): UseSearch => {
     };
 
     const jumpToNextMatch = (): void => {
-        if (keywords.length === 0) {
+        if (keywords.length === 0 || found.length === 0) {
             return;
         }
         const next = currentMatch + 1;

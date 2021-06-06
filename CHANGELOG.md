@@ -58,6 +58,7 @@ The following built-in themes are provided:
 
 **Bug fixes**
 - Icons in menu items aren't centered horizontally
+- There is an exception when jumping to the next or previous match if the keyword isn't found
 
 **Breaking change**
 - The option `prefixClass` is removed
