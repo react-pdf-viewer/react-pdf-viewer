@@ -7,3 +7,5 @@
  */
 
 export { default as bookmarkPlugin } from './bookmarkPlugin';
+export { default as DownArrowIcon } from './DownArrowIcon';
+export { default as RightArrowIcon } from './RightArrowIcon';
