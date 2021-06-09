@@ -7,24 +7,31 @@
  */
 
 .rpv-core__text-layer {
-    height: 100%;
+    // Absolute position
     left: 0;
-    line-height: 1;
     position: absolute;
     top: 0;
+
+    // Take the full size
+    height: 100%;
     width: 100%;
+
+    // Improve the text selection
+    opacity: .2;
+
+    // Misc
+    line-height: 1;
+}
+
+.rpv-core__text-layer ::selection {
+    background-color: var(--rpv-core__text-layer-text--selection-background-color);
+    color: var(--rpv-core__text-layer-text--selection-color);
 }
 
 .rpv-core__text-layer-text {
     color: transparent;
-    cursor: text;
-    opacity: .2;
+    cursor: text;    
     position: absolute;
     transform-origin: 0% 0%;
     white-space: pre;
-
-    &::selection {
-        background-color: var(--rpv-core__text-layer-text--selection-background-color);
-        color: var(--rpv-core__text-layer-text--selection-color);
-    }
 }

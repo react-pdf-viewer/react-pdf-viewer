@@ -155,6 +155,7 @@ declare module 'pdfjs-dist' {
         textContent: PageTextContent;
         container: HTMLDivElement;
         viewport: ViewPort;
+        enhanceTextSelection?: boolean;
     }
     interface PageTextContent {
         items: PageTextItem[];

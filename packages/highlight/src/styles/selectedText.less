@@ -9,3 +9,20 @@
 .rpv-highlight__selected-text {
     background-color: var(--rpv-highlight__selected-text-background-color);
 }
+
+.rpv-highlight__selected-end {
+    display: block;
+
+    // Absolute position
+    bottom: 0;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 100%;
+
+    // Make it hidden
+    z-index: -1;
+
+    // And unselectable
+    user-select: none;
+}
