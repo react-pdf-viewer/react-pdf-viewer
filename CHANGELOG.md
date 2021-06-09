@@ -54,7 +54,8 @@ The following built-in themes are provided:
 
 **Improvements**
 - Tweak toggle icons in bookmark items
-- The bookmark plugins provide new icons: `DownArrowIcon` and `RightArrowIcon`
+- The [bookmark plugin](https://react-pdf-viewer.dev/plugins/bookmark) provide new icons: `DownArrowIcon` and `RightArrowIcon`
+- Improve text selection in the [highlight plugin](https://react-pdf-viewer.dev/plugins/highlight)
 
 **Bug fixes**
 - Icons in menu items aren't centered horizontally

@@ -29,6 +29,8 @@ export interface HighlightPluginProps {
     renderHighlights?(props: RenderHighlightsProps): React.ReactElement;
 }
 
+const TEXT_LAYER_END_SELECTOR = 'rpv-highlight__selected-end';
+
 const highlightPlugin = (props?: HighlightPluginProps): HighlightPlugin => {
     const store = React.useMemo(() => createStore<StoreProps>({
         selectionState: NO_SELECTION_STATE,
@@ -49,7 +51,8 @@ const highlightPlugin = (props?: HighlightPluginProps): HighlightPlugin => {
     };
 
     const handleMouseDown = (textLayerRender: PluginOnTextLayerRender) => (e: MouseEvent) => {
-        const pageRect = textLayerRender.ele.getBoundingClientRect();
+        const textLayer = textLayerRender.ele;
+        const pageRect = textLayer.getBoundingClientRect();
         const selectionState = store.get('selectionState');
         if (selectionState instanceof SelectedState) {
             const mouseTop = e.clientY - pageRect.top;
@@ -75,25 +78,49 @@ const highlightPlugin = (props?: HighlightPluginProps): HighlightPlugin => {
         } else {
             store.update('selectionState', NO_SELECTION_STATE);
         }
+        
+        // Create an invisible element from the current position to the end of page
+        // It prevents users from selecting the forward text
+        const selectionTop = (e.clientY - pageRect.top) * 100 / pageRect.height;
+        const selectEnd = textLayer.querySelector(`.${TEXT_LAYER_END_SELECTOR}`);
+        if (selectEnd && e.target !== textLayer) {
+            (selectEnd as HTMLElement).style.top = `${Math.max(0, selectionTop)}%`;
+        }
+    };
+
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const handleMouseUp = (textLayerRender: PluginOnTextLayerRender) => (e: MouseEvent) => {
+        const selectEnd = textLayerRender.ele.querySelector(`.${TEXT_LAYER_END_SELECTOR}`);
+        if (selectEnd) {
+            (selectEnd as HTMLElement).style.removeProperty('top');
+        }
     };
 
     const onTextLayerRender = (e: PluginOnTextLayerRender) => {
         const mouseDownHandler = handleMouseDown(e);
+        const mouseUpHandler = handleMouseUp(e);
         const textEle = e.ele;
 
-        switch (e.status) {
-            case LayerRenderStatus.PreRender:
-                textEle.removeEventListener('mousedown', mouseDownHandler);
-                break;
-            case LayerRenderStatus.DidRender:
-                textEle.addEventListener('mousedown', mouseDownHandler);
+        if (e.status === LayerRenderStatus.PreRender) {
+            textEle.removeEventListener('mousedown', mouseDownHandler);
+            textEle.removeEventListener('mouseup', mouseUpHandler);
 
-                // Set some special attributes so we can query the text later
-                textEle.setAttribute(HIGHLIGHT_LAYER_ATTR, 'true');
-                textEle.querySelectorAll('.rpv-core__text-layer-text').forEach(span => span.setAttribute(HIGHLIGHT_PAGE_ATTR, `${e.pageIndex}`));
-                break;
-            default:
-                break;
+            const selectEndEle = textEle.querySelector(`.${TEXT_LAYER_END_SELECTOR}`);
+            if (selectEndEle) {
+                textEle.removeChild(selectEndEle);
+            }
+        } else if (e.status === LayerRenderStatus.DidRender) {
+            textEle.addEventListener('mousedown', mouseDownHandler);
+            textEle.addEventListener('mouseup', mouseUpHandler);
+
+            // Set some special attributes so we can query the text later
+            textEle.setAttribute(HIGHLIGHT_LAYER_ATTR, 'true');
+            textEle.querySelectorAll('.rpv-core__text-layer-text').forEach(span => span.setAttribute(HIGHLIGHT_PAGE_ATTR, `${e.pageIndex}`));
+
+            // Create an element that improves the text selection
+            const selectEnd = document.createElement('div');
+            selectEnd.classList.add(TEXT_LAYER_END_SELECTOR);
+            textEle.appendChild(selectEnd);
         }
     };
 

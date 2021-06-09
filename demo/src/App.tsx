@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { PdfJs, SpecialZoomLevel, Viewer, Worker } from '@react-pdf-viewer/core';
+import { SpecialZoomLevel, Viewer, Worker } from '@react-pdf-viewer/core';
 import { defaultLayoutPlugin } from '@react-pdf-viewer/default-layout';
 
 import '@react-pdf-viewer/core/lib/styles/index.css';
@@ -20,8 +20,8 @@ const App = () => {
                 <Viewer
                     fileUrl='pdf-open-parameters.pdf'
                     initialPage={3}
-                    theme='auto'
-                    // defaultScale={1.2}     
+                    //theme='auto'
+                    defaultScale={SpecialZoomLevel.PageFit}
                     plugins={[
                         defaultLayoutPluginInstance,
                     ]}
