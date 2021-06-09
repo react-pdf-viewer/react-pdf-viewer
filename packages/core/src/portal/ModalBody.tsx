@@ -20,7 +20,7 @@ interface ModalBodyProps {
 }
 
 const ModalBody: React.FC<ModalBodyProps> = ({ children, closeOnClickOutside, closeOnEscape, onToggle }) => {
-    const contentRef = React.createRef<HTMLDivElement>();
+    const contentRef = React.useRef<HTMLDivElement>();
 
     useLockScroll();
     useKeyUp(27, () => closeOnEscape && onToggle());

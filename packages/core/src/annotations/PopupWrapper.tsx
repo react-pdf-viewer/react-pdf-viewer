@@ -17,7 +17,7 @@ interface PopupWrapperProps {
 }
 
 const PopupWrapper: React.FC<PopupWrapperProps> = ({ annotation }) => {
-    const containerRef = React.createRef<HTMLDivElement>();
+    const containerRef = React.useRef<HTMLDivElement>();
     let dateStr = '';
     if (annotation.modificationDate) {
         const date = convertDate(annotation.modificationDate);

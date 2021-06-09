@@ -26,9 +26,9 @@ interface PopoverBodyProps {
 const PopoverBody: React.FC<PopoverBodyProps> = ({
     children, closeOnClickOutside, offset, position, targetRef, onClose,
 }) => {
-    const contentRef = React.createRef<HTMLDivElement>();
-    const innerRef = React.createRef<HTMLDivElement>();
-    const anchorRef = React.createRef<HTMLDivElement>();
+    const contentRef = React.useRef<HTMLDivElement>();
+    const innerRef = React.useRef<HTMLDivElement>();
+    const anchorRef = React.useRef<HTMLDivElement>();
 
     useClickOutside(closeOnClickOutside, contentRef, onClose);
     usePosition(contentRef, targetRef, anchorRef, position, offset);

@@ -21,8 +21,8 @@ interface BookmarkItemProps {
 }
 
 const BookmarkItem: React.FC<BookmarkItemProps> = ({ bookmark, depth, doc, onClick, onJumpToDest }) => {
-    const toggleRef = React.createRef<HTMLSpanElement>();
-    const subItemRef = React.createRef<HTMLDivElement>();
+    const toggleRef = React.useRef<HTMLSpanElement>();
+    const subItemRef = React.useRef<HTMLDivElement>();
     const subItemsDisplayed = React.useRef(true);
 
     const hasSubItems = bookmark.items && bookmark.items.length > 0;

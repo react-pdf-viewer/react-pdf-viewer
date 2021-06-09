@@ -58,6 +58,7 @@ The following built-in themes are provided:
 - Improve text selection in the [highlight plugin](https://react-pdf-viewer.dev/plugins/highlight)
 
 **Bug fixes**
+- Can't close popovers after scrolling
 - Icons in menu items aren't centered horizontally
 - There is an exception when jumping to the next or previous match if the keyword isn't found
 
