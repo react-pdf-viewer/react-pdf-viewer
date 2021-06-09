@@ -66,6 +66,7 @@ const TextLayer: React.FC<TextLayerProps> = ({ page, pageIndex, plugins, rotatio
                 container: containerEle,
                 textContent,
                 viewport,
+                enhanceTextSelection: true,
             });
             renderTask.current.promise.then(
                 () => {
