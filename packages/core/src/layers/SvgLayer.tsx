@@ -20,7 +20,7 @@ interface SvgLayerProps {
 }
 
 const SvgLayer: React.FC<SvgLayerProps> = ({ height, page, rotation, scale, width }) => {
-    const containerRef = React.createRef<HTMLDivElement>();
+    const containerRef = React.useRef<HTMLDivElement>();
 
     const empty = (): void => {
         const containerEle = containerRef.current;

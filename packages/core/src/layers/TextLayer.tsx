@@ -22,7 +22,7 @@ interface TextLayerProps {
 }
 
 const TextLayer: React.FC<TextLayerProps> = ({ page, pageIndex, plugins, rotation, scale }) => {
-    const containerRef = React.createRef<HTMLDivElement>();
+    const containerRef = React.useRef<HTMLDivElement>();
     const renderTask = React.useRef<PdfJs.PageRenderTask>();
 
     const empty = (): void => {

@@ -25,7 +25,7 @@ interface PopoverProps {
 }
 
 const Popover: React.FC<PopoverProps> = ({ closeOnClickOutside, closeOnEscape, content, offset, position, target }) => {
-    const targetRef = React.createRef<HTMLDivElement>();
+    const targetRef = React.useRef<HTMLDivElement>();
 
     const renderTarget = (toggle: Toggle, opened: boolean): React.ReactElement => (<div ref={targetRef}>{target(toggle, opened)}</div>);
 

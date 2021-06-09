@@ -25,7 +25,7 @@ interface CanvasLayerProps {
 }
 
 const CanvasLayer: React.FC<CanvasLayerProps> = ({ height, page, pageIndex, plugins, rotation, scale, width }) => {
-    const canvasRef = React.createRef<HTMLCanvasElement>();
+    const canvasRef = React.useRef<HTMLCanvasElement>();
     const renderTask = React.useRef<PdfJs.PageRenderTask>();
 
     const [rendered, setRendered] = React.useState(false);

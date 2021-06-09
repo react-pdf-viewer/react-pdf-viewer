@@ -20,8 +20,8 @@ interface TooltipBodyProps {
 }
 
 const TooltipBody: React.FC<TooltipBodyProps> = ({ children, offset, position, targetRef }) => {
-    const contentRef = React.createRef<HTMLDivElement>();
-    const anchorRef = React.createRef<HTMLDivElement>();
+    const contentRef = React.useRef<HTMLDivElement>();
+    const anchorRef = React.useRef<HTMLDivElement>();
 
     usePosition(contentRef, targetRef, anchorRef, position, offset);
 
