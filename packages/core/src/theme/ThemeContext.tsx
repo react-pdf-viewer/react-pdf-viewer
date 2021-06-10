@@ -13,7 +13,7 @@ export interface ThemeContextProps {
     setCurrentTheme: (theme: string) => void;
 }
 const ThemeContext = React.createContext<ThemeContextProps>({
-    currentTheme: '',
+    currentTheme: 'light',
     setCurrentTheme: () => {},
 });
 

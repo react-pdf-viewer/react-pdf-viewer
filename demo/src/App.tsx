@@ -13,14 +13,15 @@ const App = () => {
         <Worker workerUrl="https://unpkg.com/pdfjs-dist@2.7.570/build/pdf.worker.js">
             <div
                 style={{
-                    height: '100%',
+                    marginTop: '100px',
+                    height: '720px',
                     width: '100%',
                 }}
             >
                 <Viewer
                     fileUrl='pdf-open-parameters.pdf'
                     initialPage={3}
-                    //theme='auto'
+                    // theme='auto'
                     defaultScale={SpecialZoomLevel.PageFit}
                     plugins={[
                         defaultLayoutPluginInstance,
