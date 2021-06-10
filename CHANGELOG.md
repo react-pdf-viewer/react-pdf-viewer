@@ -60,6 +60,7 @@ The following built-in themes are provided:
 
 **Bug fixes**
 - Can't close popovers after scrolling
+- Can't open any popover after printing
 - Icons in menu items aren't centered horizontally
 - There is an exception when jumping to the next or previous match if the keyword isn't found
 

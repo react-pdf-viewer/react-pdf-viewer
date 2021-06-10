@@ -27,6 +27,13 @@ interface PrintZoneProps {
 const PrintZone: React.FC<PrintZoneProps> = ({ doc, numLoadedPages, pageHeight, pageWidth, printStatus, rotation, onCancel, onLoad }) => {
     const canvas = React.useMemo(() => document.createElement('canvas') as HTMLCanvasElement, []);
 
+    const container = React.useMemo(() => {
+        const div = document.createElement('div');
+        div.classList.add('rpv-print__zone');
+        document.body.appendChild(div);
+        return div;
+    }, []);
+
     React.useEffect(() => {
         if (printStatus === PrintStatus.Ready) {
             document.documentElement.classList.add('rpv-print__html-printing');
@@ -40,9 +47,17 @@ const PrintZone: React.FC<PrintZoneProps> = ({ doc, numLoadedPages, pageHeight, 
                 document.documentElement.classList.remove('rpv-print__html-printing');
                 document.body.classList.remove('rpv-print__body-printing');
 
+                // Remove the container
+                if (container.parentElement) {
+                    container.parentElement.removeChild(container);
+                }
+
                 // Cleanup
                 canvas.height = 0;
                 canvas.width = 0;
+
+                // Remove the handler
+                document.removeEventListener('mousemove', handler);
 
                 onCancel();
             }
@@ -52,26 +67,26 @@ const PrintZone: React.FC<PrintZoneProps> = ({ doc, numLoadedPages, pageHeight, 
         return (): void => document.removeEventListener('mousemove', handler);
     }, [printStatus]);
 
+    // Don't append the pages to the `body` directly
+    // Otherwise, it will cause a weird issue such as we can't open any popover
     return (
         createPortal(
             (
                 <>
-                <div className='rpv-print__zone'>
-                    {
-                        Array(Math.min(numLoadedPages + 1, doc.numPages)).fill(0).map((_, index) => (
-                            <PageThumbnailContainer
-                                key={index}
-                                canvas={canvas}
-                                doc={doc}
-                                pageHeight={pageHeight}
-                                pageIndex={index}
-                                pageWidth={pageWidth}
-                                rotation={rotation}
-                                onLoad={onLoad}
-                            />
-                        ))
-                    }
-                </div>
+                {
+                    Array(Math.min(numLoadedPages + 1, doc.numPages)).fill(0).map((_, index) => (
+                        <PageThumbnailContainer
+                            key={index}
+                            canvas={canvas}
+                            doc={doc}
+                            pageHeight={pageHeight}
+                            pageIndex={index}
+                            pageWidth={pageWidth}
+                            rotation={rotation}
+                            onLoad={onLoad}
+                        />
+                    ))
+                }
                 <style
                     dangerouslySetInnerHTML={{
                         __html: `@page { size: ${pageWidth}pt ${pageHeight}pt }`
@@ -80,7 +95,7 @@ const PrintZone: React.FC<PrintZoneProps> = ({ doc, numLoadedPages, pageHeight, 
                 </style>
                 </>
             ),
-            document.body
+            container
         )
     );
 };
