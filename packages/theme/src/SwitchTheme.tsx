@@ -29,7 +29,7 @@ const SwitchTheme: React.FC<{
     const render = children || defaultChildern;
 
     return render({
-        onClick: () => theme.setCurrentTheme(theme.currentTheme === 'dark' ? '' : 'dark'),
+        onClick: () => theme.setCurrentTheme(theme.currentTheme === 'dark' ? 'light' : 'dark'),
     });
 };
 

@@ -86,7 +86,7 @@ const Viewer: React.FC<ViewerProps> = ({
     renderPage,
     renderLoader,
     transformGetDocumentParams,
-    theme,
+    theme = 'light',
     withCredentials = false,
     onDocumentLoad = () => {/**/},
     onPageChange = () => {/**/},
@@ -139,7 +139,7 @@ const Viewer: React.FC<ViewerProps> = ({
                 return (
                     <div
                         ref={containerRef}
-                        className={`rpv-core__viewer ${themeContext.currentTheme ? `rpv-core__viewer--${themeContext.currentTheme}` : ''}`}
+                        className={`rpv-core__viewer rpv-core__viewer--${themeContext.currentTheme}`}
                         data-testid='viewer'
                         style={{
                             height: '100%',

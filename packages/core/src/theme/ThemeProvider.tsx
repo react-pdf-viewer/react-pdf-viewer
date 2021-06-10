@@ -12,11 +12,11 @@ import ThemeContext, { ThemeContextProps } from './ThemeContext';
 import isDarkMode from '../utils/isDarkMode';
 
 interface ThemeProviderProps {
-    theme?: string;
+    theme: string;
 }
 
 const ThemeProvider: React.FC<ThemeProviderProps> = ({ children, theme }) => {
-    const initialTheme = React.useMemo(() => theme === 'auto' ? (isDarkMode() ? 'dark' : '') : theme, []);
+    const initialTheme = React.useMemo(() => theme === 'auto' ? (isDarkMode() ? 'dark' : 'light') : theme, []);
     const [currentTheme, setCurrentTheme] = React.useState(initialTheme);
 
     React.useEffect(() => {
@@ -26,7 +26,7 @@ const ThemeProvider: React.FC<ThemeProviderProps> = ({ children, theme }) => {
 
         const media = window.matchMedia('(prefers-color-scheme: dark)');
         const handler = (e: MediaQueryListEvent) => {
-            setCurrentTheme(e.matches ? 'dark' : '');
+            setCurrentTheme(e.matches ? 'dark' : 'light');
         };
 
         media.addEventListener('change', handler);
