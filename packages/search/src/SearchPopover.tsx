@@ -7,7 +7,7 @@
  */
 
 import * as React from 'react';
-import { LocalizationContext, MinimalButton, Position, PrimaryButton, Store, TextBox, Tooltip } from '@react-pdf-viewer/core';
+import { Button, LocalizationContext, MinimalButton, Position, Store, TextBox, Tooltip } from '@react-pdf-viewer/core';
 
 import NextIcon from './NextIcon';
 import PreviousIcon from './PreviousIcon';
@@ -109,9 +109,9 @@ const SearchPopover: React.FC<SearchPopoverProps> = ({ store, onToggle }) => {
                     />
                 </div>
                 <div className='rpv-search__popover-footer-button'>
-                    <PrimaryButton onClick={onClose}>
+                    <Button onClick={onClose}>
                         {l10n && l10n.search ? l10n.search.close : 'Close'}
-                    </PrimaryButton>
+                    </Button>
                 </div>
             </div>
         </div>

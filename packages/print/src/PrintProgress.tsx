@@ -7,7 +7,7 @@
  */
 
 import * as React from 'react';
-import { LocalizationContext, PrimaryButton, ProgressBar } from '@react-pdf-viewer/core';
+import { Button, LocalizationContext, ProgressBar } from '@react-pdf-viewer/core';
 
 interface PrintProgressProps {
     numLoadedPages: number;
@@ -30,11 +30,11 @@ const PrintProgress: React.FC<PrintProgressProps> = ({ numLoadedPages, numPages,
                 <div className='rpv-print__progress-bar'>
                     <ProgressBar progress={progress} />
                 </div>
-                <PrimaryButton onClick={onCancel}>
+                <Button onClick={onCancel}>
                     {
                         l10n && l10n.print ? l10n.print.cancel : 'Cancel'
                     }
-                </PrimaryButton>
+                </Button>
             </div>
         </div>
     );
