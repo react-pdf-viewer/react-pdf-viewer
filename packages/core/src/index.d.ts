@@ -287,7 +287,7 @@ export enum AnnotationType {
 // Components
 // ----------
 
-// Button
+// Minimal Button
 export interface MinimalButtonProps {
     isDisabled?: boolean;
     isSelected?: boolean;
@@ -295,6 +295,13 @@ export interface MinimalButtonProps {
 }
 
 export class MinimalButton extends React.Component<MinimalButtonProps> {}
+
+// Normal button
+export interface ButtonProps {
+    onClick(): void;
+}
+
+export class Button extends React.Component<ButtonProps> {}
 
 // Icon
 export interface IconProps {
