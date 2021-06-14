@@ -7,7 +7,7 @@
  */
 
 import * as React from 'react';
-import { Button, LocalizationContext, Position, Tooltip } from '@react-pdf-viewer/core';
+import { LocalizationContext, MinimalButton, Position, Tooltip } from '@react-pdf-viewer/core';
 
 import NextIcon from './NextIcon';
 import { RenderGoToPageProps } from './types/index';
@@ -21,7 +21,7 @@ const GoToNextPageButton: React.FC<RenderGoToPageProps> = ({ isDisabled, onClick
     return (
         <Tooltip
             position={Position.BottomCenter}
-            target={<Button isDisabled={isDisabled} onClick={onClick}><NextIcon /></Button>}
+            target={<MinimalButton isDisabled={isDisabled} onClick={onClick}><NextIcon /></MinimalButton>}
             content={() => label}
             offset={TOOLTIP_OFFSET}
         />

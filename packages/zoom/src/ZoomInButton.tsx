@@ -7,7 +7,7 @@
  */
 
 import * as React from 'react';
-import { Button, LocalizationContext, Position, Tooltip } from '@react-pdf-viewer/core';
+import { LocalizationContext, MinimalButton, Position, Tooltip } from '@react-pdf-viewer/core';
 
 import { RenderZoomInProps } from './ZoomIn';
 import ZoomInIcon from './ZoomInIcon';
@@ -21,7 +21,7 @@ const ZoomInButton: React.FC<RenderZoomInProps> = ({ onClick }) => {
     return (
         <Tooltip
             position={Position.BottomCenter}
-            target={<Button onClick={onClick}><ZoomInIcon /></Button>}
+            target={<MinimalButton onClick={onClick}><ZoomInIcon /></MinimalButton>}
             content={() => label}
             offset={TOOLTIP_OFFSET}
         />

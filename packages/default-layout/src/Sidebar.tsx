@@ -7,7 +7,7 @@
  */
 
 import * as React from 'react';
-import { Button, LocalizationContext, Position, Store, Tooltip } from '@react-pdf-viewer/core';
+import { LocalizationContext, MinimalButton, Position, Store, Tooltip } from '@react-pdf-viewer/core';
 
 import BookmarkIcon from './BookmarkIcon';
 import FileIcon from './FileIcon';
@@ -83,9 +83,9 @@ const Sidebar: React.FC<SidebarProps> = ({ attachmentTabContent, bookmarkTabCont
                                 <Tooltip
                                     position={Position.RightCenter}
                                     target={(
-                                        <Button onClick={() => switchToTab(index)} isSelected={currentTab === index}>
+                                        <MinimalButton onClick={() => switchToTab(index)} isSelected={currentTab === index}>
                                             {tab.icon}
-                                        </Button>
+                                        </MinimalButton>
                                     )}
                                     content={() => tab.title}
                                     offset={TOOLTIP_OFFSET}

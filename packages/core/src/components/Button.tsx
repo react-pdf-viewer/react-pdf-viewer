@@ -8,25 +8,12 @@
 
 import * as React from 'react';
 
-import classNames from '../utils/classNames';
-
 interface ButtonProps {
-    isDisabled?: boolean;
-    isSelected?: boolean;
     onClick(): void;
 }
 
-const Button: React.FC<ButtonProps> = ({ children, isDisabled = false, isSelected = false, onClick }) => (
-    <button
-        className={
-            classNames({
-                'rpv-core__button': true,
-                'rpv-core__button--disabled': isDisabled,
-                'rpv-core__button--selected': isSelected,
-            })
-        }
-        onClick={onClick}
-    >
+const Button: React.FC<ButtonProps> = ({ children, onClick }) => (
+    <button className='rpv-core__button' onClick={onClick}>
         {children}
     </button>
 );

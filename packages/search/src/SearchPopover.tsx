@@ -7,7 +7,7 @@
  */
 
 import * as React from 'react';
-import { Button, LocalizationContext, Position, PrimaryButton, Store, TextBox, Tooltip } from '@react-pdf-viewer/core';
+import { Button, LocalizationContext, MinimalButton, Position, Store, TextBox, Tooltip } from '@react-pdf-viewer/core';
 
 import NextIcon from './NextIcon';
 import PreviousIcon from './PreviousIcon';
@@ -95,7 +95,7 @@ const SearchPopover: React.FC<SearchPopoverProps> = ({ store, onToggle }) => {
                 <div className='rpv-search__popover-footer-item'>
                     <Tooltip
                         position={Position.BottomCenter}
-                        target={<Button onClick={jumpToPreviousMatch}><PreviousIcon /></Button>}
+                        target={<MinimalButton onClick={jumpToPreviousMatch}><PreviousIcon /></MinimalButton>}
                         content={() => (l10n && l10n.search ? l10n.search.previousMatch : 'Previous match')}
                         offset={PORTAL_OFFSET}
                     />
@@ -103,15 +103,15 @@ const SearchPopover: React.FC<SearchPopoverProps> = ({ store, onToggle }) => {
                 <div className='rpv-search__popover-footer-item'>
                     <Tooltip
                         position={Position.BottomCenter}
-                        target={<Button onClick={jumpToNextMatch}><NextIcon /></Button>}
+                        target={<MinimalButton onClick={jumpToNextMatch}><NextIcon /></MinimalButton>}
                         content={() => (l10n && l10n.search ? l10n.search.nextMatch : 'Next match')}
                         offset={PORTAL_OFFSET}
                     />
                 </div>
                 <div className='rpv-search__popover-footer-button'>
-                    <PrimaryButton onClick={onClose}>
+                    <Button onClick={onClose}>
                         {l10n && l10n.search ? l10n.search.close : 'Close'}
-                    </PrimaryButton>
+                    </Button>
                 </div>
             </div>
         </div>

@@ -7,7 +7,7 @@
  */
 
 import * as React from 'react';
-import { Button, LocalizationContext, Position, Tooltip } from '@react-pdf-viewer/core';
+import { LocalizationContext, MinimalButton, Position, Tooltip } from '@react-pdf-viewer/core';
 
 import { RenderPrintProps } from './Print';
 import PrintIcon from './PrintIcon';
@@ -21,7 +21,7 @@ const PrintButton: React.FC<RenderPrintProps> = ({ onClick }) => {
     return (
         <Tooltip
             position={Position.BottomCenter}
-            target={<Button onClick={onClick}><PrintIcon /></Button>}
+            target={<MinimalButton onClick={onClick}><PrintIcon /></MinimalButton>}
             content={() => label}
             offset={TOOLTIP_OFFSET}
         />

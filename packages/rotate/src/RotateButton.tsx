@@ -7,7 +7,7 @@
  */
 
 import * as React from 'react';
-import { Button, LocalizationContext, Position, Tooltip } from '@react-pdf-viewer/core';
+import { LocalizationContext, MinimalButton, Position, Tooltip } from '@react-pdf-viewer/core';
 
 import { RenderRotateProps } from './Rotate';
 import RotateBackwardIcon from './RotateBackwardIcon';
@@ -27,7 +27,7 @@ const RotateButton: React.FC<RenderRotateProps> = ({ direction, onClick }) => {
     return (
         <Tooltip
             position={Position.BottomCenter}
-            target={<Button onClick={onClick}>{icon}</Button>}
+            target={<MinimalButton onClick={onClick}>{icon}</MinimalButton>}
             content={() => label}
             offset={TOOLTIP_OFFSET}
         />
