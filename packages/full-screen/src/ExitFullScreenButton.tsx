@@ -7,7 +7,7 @@
  */
 
 import * as React from 'react';
-import { Button, Store } from '@react-pdf-viewer/core';
+import { MinimalButton, Store } from '@react-pdf-viewer/core';
 
 import ExitFullScreenIcon from './ExitFullScreenIcon';
 import { exitFullScreen, getFullScreenElement } from './fullScreen';
@@ -54,7 +54,7 @@ const ExitFullScreenButton: React.FC<{
             isFullScreen &&
             <div className='rpv-full-screen__exit-button'>
                 <div className='rpv-full-screen__exit-button-content'>
-                    <Button onClick={handleExitFullScreen}><ExitFullScreenIcon /></Button>
+                    <MinimalButton onClick={handleExitFullScreen}><ExitFullScreenIcon /></MinimalButton>
                 </div>
             </div>
         }

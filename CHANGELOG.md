@@ -65,6 +65,7 @@ The following built-in themes are provided:
 - There is an exception when jumping to the next or previous match if the keyword isn't found
 
 **Breaking change**
+- `Button` is renamed to `MinimalButton`
 - The option `prefixClass` is removed
 
 ## v2.5.0

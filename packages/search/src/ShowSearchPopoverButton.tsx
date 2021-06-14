@@ -7,7 +7,7 @@
  */
 
 import * as React from 'react';
-import { Button, Position, Tooltip } from '@react-pdf-viewer/core';
+import { MinimalButton, Position, Tooltip } from '@react-pdf-viewer/core';
 
 import { RenderShowSearchPopoverProps } from './ShowSearchPopover';
 import ShowSearchPopoverDecorator from './ShowSearchPopoverDecorator';
@@ -20,7 +20,7 @@ const ShowSearchPopoverButton: React.FC<RenderShowSearchPopoverProps> = ({ onCli
         (p) => (
             <Tooltip
                 position={Position.BottomCenter}
-                target={<Button onClick={onClick}>{p.icon}</Button>}
+                target={<MinimalButton onClick={onClick}>{p.icon}</MinimalButton>}
                 content={() => p.label}
                 offset={TOOLTIP_OFFSET}
             />

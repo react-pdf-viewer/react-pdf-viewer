@@ -7,7 +7,7 @@
  */
 
 import * as React from 'react';
-import { LocalizationContext, PdfJs, PrimaryButton, Separator } from '@react-pdf-viewer/core';
+import { LocalizationContext, MinimalButton, PdfJs, Separator } from '@react-pdf-viewer/core';
 
 import PropertiesData from './PropertiesData';
 import PropertiesLoader from './PropertiesLoader';
@@ -98,9 +98,9 @@ const PropertiesModal: React.FC<PropertiesModalProps> = ({ doc, fileName, onTogg
                 render={renderData}
             />
             <div className='rpv-properties__modal-footer'>
-                <PrimaryButton onClick={onToggle}>
+                <MinimalButton onClick={onToggle}>
                     {l10n && l10n.properties ? l10n.properties.close : 'Close'}
-                </PrimaryButton>
+                </MinimalButton>
             </div>
         </div>
     );

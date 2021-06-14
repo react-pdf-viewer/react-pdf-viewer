@@ -7,7 +7,7 @@
  */
 
 import * as React from 'react';
-import { Button, LocalizationContext, Position, Tooltip } from '@react-pdf-viewer/core';
+import { LocalizationContext, MinimalButton, Position, Tooltip } from '@react-pdf-viewer/core';
 
 import { RenderZoomOutProps } from './ZoomOut';
 import ZoomOutIcon from './ZoomOutIcon';
@@ -21,7 +21,7 @@ const ZoomOutButton: React.FC<RenderZoomOutProps> = ({ onClick }) => {
     return (
         <Tooltip
             position={Position.BottomCenter}
-            target={<Button onClick={onClick}><ZoomOutIcon /></Button>}
+            target={<MinimalButton onClick={onClick}><ZoomOutIcon /></MinimalButton>}
             content={() => label}
             offset={TOOLTIP_OFFSET}
         />

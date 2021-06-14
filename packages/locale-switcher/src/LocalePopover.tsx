@@ -7,7 +7,7 @@
  */
 
 import * as React from 'react';
-import { Button, LocalizationContext, LocalizationMap, MenuItem, Popover, Position, Toggle, Tooltip } from '@react-pdf-viewer/core';
+import { LocalizationContext, LocalizationMap, MenuItem, MinimalButton, Popover, Position, Toggle, Tooltip } from '@react-pdf-viewer/core';
 
 import LocaleIcon from './LocaleIcon';
 
@@ -34,7 +34,7 @@ const LocalePopover: React.FC<LocalePopoverProps> = ({ initialLocale = 'en_US', 
         return (
             <Tooltip
                 position={Position.BottomCenter}
-                target={<Button onClick={toggle} isSelected={opened}><LocaleIcon /></Button>}
+                target={<MinimalButton onClick={toggle} isSelected={opened}><LocaleIcon /></MinimalButton>}
                 content={() => label}
                 offset={{ left: 0, top: 8 }}
             />

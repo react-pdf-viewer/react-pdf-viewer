@@ -7,7 +7,7 @@
  */
 
 import * as React from 'react';
-import { Button, Position, Tooltip } from '@react-pdf-viewer/core';
+import { MinimalButton, Position, Tooltip } from '@react-pdf-viewer/core';
 
 import { RenderSwitchSelectionModeProps } from './SwitchSelectionMode';
 import SwitchSelectionModeDecorator from './SwitchSelectionModeDecorator';
@@ -20,7 +20,7 @@ const SwitchSelectionModeButton: React.FC<RenderSwitchSelectionModeProps> = ({ i
             (props) => (
                 <Tooltip
                     position={Position.BottomCenter}
-                    target={<Button isSelected={isSelected} onClick={props.onClick}>{props.icon}</Button>}
+                    target={<MinimalButton isSelected={isSelected} onClick={props.onClick}>{props.icon}</MinimalButton>}
                     content={() => props.label}
                     offset={TOOLTIP_OFFSET}
                 />

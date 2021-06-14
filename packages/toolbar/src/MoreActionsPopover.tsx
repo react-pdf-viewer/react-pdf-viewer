@@ -7,7 +7,7 @@
  */
 
 import * as React from 'react';
-import { Button, LocalizationContext, Menu, MenuDivider, Popover, Position, Toggle, Tooltip } from '@react-pdf-viewer/core';
+import { LocalizationContext, Menu, MenuDivider, MinimalButton, Popover, Position, Toggle, Tooltip } from '@react-pdf-viewer/core';
 import { ScrollMode } from '@react-pdf-viewer/scroll-mode';
 import { SelectionMode } from '@react-pdf-viewer/selection-mode';
 
@@ -33,7 +33,7 @@ const MoreActionsPopover: React.FC<MoreActionsPopoverProps> = ({ toolbarSlot }) 
         return (
             <Tooltip
                 position={Position.BottomRight}
-                target={<Button onClick={toggle} isSelected={opened}><MoreIcon /></Button>}
+                target={<MinimalButton onClick={toggle} isSelected={opened}><MoreIcon /></MinimalButton>}
                 content={() => label}
                 offset={PORTAL_OFFSET}
             />

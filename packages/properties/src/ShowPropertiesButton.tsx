@@ -7,7 +7,7 @@
  */
 
 import * as React from 'react';
-import { Button, LocalizationContext, Position, Tooltip } from '@react-pdf-viewer/core';
+import { LocalizationContext, MinimalButton, Position, Tooltip } from '@react-pdf-viewer/core';
 
 import InfoIcon from './InfoIcon';
 import { RenderShowPropertiesProps } from './ShowProperties';
@@ -21,7 +21,7 @@ const ShowPropertiesButton: React.FC<RenderShowPropertiesProps> = ({ onClick }) 
     return (
         <Tooltip
             position={Position.BottomCenter}
-            target={<Button onClick={onClick}><InfoIcon /></Button>}
+            target={<MinimalButton onClick={onClick}><InfoIcon /></MinimalButton>}
             content={() => label}
             offset={TOOLTIP_OFFSET}
         />

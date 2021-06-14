@@ -7,7 +7,7 @@
  */
 
 import * as React from 'react';
-import { Button, LocalizationContext, Position, Tooltip } from '@react-pdf-viewer/core';
+import { LocalizationContext, MinimalButton, Position, Tooltip } from '@react-pdf-viewer/core';
 
 import { RenderDownloadProps } from './Download';
 import DownloadIcon from './DownloadIcon';
@@ -22,7 +22,7 @@ const DownloadButton: React.FC<RenderDownloadProps> = ({ onClick }) => {
     return (
         <Tooltip
             position={Position.BottomCenter}
-            target={<Button onClick={onClick}><DownloadIcon /></Button>}
+            target={<MinimalButton onClick={onClick}><DownloadIcon /></MinimalButton>}
             content={() => label}
             offset={TOOLTIP_OFFSET}
         />

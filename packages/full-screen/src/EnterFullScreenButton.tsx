@@ -7,7 +7,7 @@
  */
 
 import * as React from 'react';
-import { Button, LocalizationContext, Position, Tooltip } from '@react-pdf-viewer/core';
+import { LocalizationContext, MinimalButton, Position, Tooltip } from '@react-pdf-viewer/core';
 
 import { RenderEnterFullScreenProps } from './EnterFullScreen';
 import FullScreenIcon from './FullScreenIcon';
@@ -22,7 +22,7 @@ const EnterFullScreenButton: React.FC<RenderEnterFullScreenProps> = ({ onClick }
     return (
         <Tooltip
             position={Position.BottomCenter}
-            target={<Button onClick={onClick}><FullScreenIcon /></Button>}
+            target={<MinimalButton onClick={onClick}><FullScreenIcon /></MinimalButton>}
             content={() => label}
             offset={TOOLTIP_OFFSET}
         />
