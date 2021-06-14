@@ -287,7 +287,7 @@ export enum AnnotationType {
 // Components
 // ----------
 
-// Minimal Button
+// Minimal button
 export interface MinimalButtonProps {
     isDisabled?: boolean;
     isSelected?: boolean;
@@ -302,6 +302,13 @@ export interface ButtonProps {
 }
 
 export class Button extends React.Component<ButtonProps> {}
+
+// Primary button
+export interface PrimaryButtonProps {
+    onClick(): void;
+}
+
+export class PrimaryButton extends React.Component<PrimaryButtonProps> {}
 
 // Icon
 export interface IconProps {
@@ -351,13 +358,6 @@ export class Popover extends React.Component<PopoverProps> {}
 // Portal
 export type RenderContent = (toggle: Toggle) => React.ReactNode;
 export type RenderTarget = (toggle: Toggle, opened: boolean) => React.ReactNode;
-
-// Primary button
-export interface PrimaryButtonProps {
-    onClick(): void;
-}
-
-export class PrimaryButton extends React.Component<PrimaryButtonProps> {}
 
 // Progress bar
 export interface ProgressBarProps {
