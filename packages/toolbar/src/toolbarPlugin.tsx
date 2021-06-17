@@ -8,7 +8,6 @@
 
 import * as React from 'react';
 import { Plugin, PluginFunctions, PluginOnDocumentLoad, RenderViewer, ViewerState, PluginOnTextLayerRender } from '@react-pdf-viewer/core';
-import { dropPlugin } from '@react-pdf-viewer/drop';
 import { fullScreenPlugin, FullScreenPlugin, FullScreenPluginProps } from '@react-pdf-viewer/full-screen';
 import { getFilePlugin, GetFilePlugin, GetFilePluginProps } from '@react-pdf-viewer/get-file';
 import { openPlugin, OpenPlugin } from '@react-pdf-viewer/open';
@@ -27,7 +26,6 @@ import Toolbar, { ToolbarProps } from './Toolbar';
 interface ToolbarPlugin extends Plugin {
     Toolbar: (props: ToolbarProps) => React.ReactElement;
     // Plugins instance
-    dropPluginInstance: Plugin;
     fullScreenPluginInstance: FullScreenPlugin;
     getFilePluginInstance: GetFilePlugin;
     openPluginInstance: OpenPlugin;
@@ -51,7 +49,6 @@ export interface ToolbarPluginProps {
 }
 
 const toolbarPlugin = (props?: ToolbarPluginProps): ToolbarPlugin => {
-    const dropPluginInstance = dropPlugin();
     const fullScreenPluginInstance = fullScreenPlugin(props ? props.fullScreenPlugin : {});
     const getFilePluginInstance = getFilePlugin(props ? props.getFilePlugin : {});
     const openPluginInstance = openPlugin();
@@ -66,7 +63,6 @@ const toolbarPlugin = (props?: ToolbarPluginProps): ToolbarPlugin => {
     const zoomPluginInstance = zoomPlugin();
 
     const plugins = [
-        dropPluginInstance,
         fullScreenPluginInstance,
         getFilePluginInstance,
         openPluginInstance,
@@ -153,7 +149,6 @@ const toolbarPlugin = (props?: ToolbarPluginProps): ToolbarPlugin => {
 
     return {
         // Plugin instances
-        dropPluginInstance,
         fullScreenPluginInstance,
         getFilePluginInstance,
         openPluginInstance,

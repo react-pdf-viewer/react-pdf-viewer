@@ -65,6 +65,7 @@ The following built-in themes are provided:
 - There is an exception when jumping to the next or previous match if the keyword isn't found
 
 **Breaking change**
+- The `toolbar` plugin doesn't include the `drop` plugin anymore. In order to use the drop plugin, you have to register it
 - `Button` is renamed to `MinimalButton`
 - The option `prefixClass` is removed
 
