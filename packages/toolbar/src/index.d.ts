@@ -140,7 +140,6 @@ export interface ToolbarProps {
 export interface ToolbarPlugin extends Plugin {
     Toolbar: (props: ToolbarProps) => React.ReactElement;
     // Plugins instance
-    dropPluginInstance: Plugin;
     fullScreenPluginInstance: FullScreenPlugin;
     getFilePluginInstance: GetFilePlugin;
     openPluginInstance: OpenPlugin;

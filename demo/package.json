@@ -10,6 +10,7 @@
     "dependencies": {
         "@react-pdf-viewer/core": "2.5.0",
         "@react-pdf-viewer/default-layout": "2.5.0",
+        "@react-pdf-viewer/drop": "2.5.0",
         "@react-pdf-viewer/full-screen": "2.5.0",
         "@react-pdf-viewer/highlight": "2.5.0",
         "@react-pdf-viewer/page-navigation": "2.5.0",
