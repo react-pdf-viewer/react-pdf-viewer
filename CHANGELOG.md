@@ -57,6 +57,14 @@ The following built-in themes are provided:
 - Tweak toggle icons in bookmark items
 - The [bookmark plugin](https://react-pdf-viewer.dev/plugins/bookmark) provide new icons: `DownArrowIcon` and `RightArrowIcon`
 - Improve text selection in the [highlight plugin](https://react-pdf-viewer.dev/plugins/highlight)
+- You can enable or disable shortcuts in the zoom plugin:
+
+```js
+const zoomPluginInstance = zoomPlugin({
+    // The shortcuts are enabled by default
+    enableShortcuts: false,
+});
+```
 
 **Bug fixes**
 - Can't close popovers after scrolling

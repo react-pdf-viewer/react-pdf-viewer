@@ -35,7 +35,12 @@ interface ZoomPlugin extends Plugin {
     ZoomPopover: () => React.ReactElement;
 }
 
-const zoomPlugin = (): ZoomPlugin => {
+export interface ZoomPluginProps {
+    enableShortcuts: boolean;
+}
+
+const zoomPlugin = (props?: ZoomPluginProps): ZoomPlugin => {
+    const zoomPluginProps = React.useMemo(() => Object.assign({}, props, { enableShortcuts: true }), []);
     const store = React.useMemo(() => createStore<StoreProps>({}), []);
 
     const CurrentScaleDecorator = (props: CurrentScaleProps) => (
@@ -84,6 +89,10 @@ const zoomPlugin = (): ZoomPlugin => {
 
     const renderViewer = (props: RenderViewer): Slot => {
         const { slot } = props;
+        if (!zoomPluginProps.enableShortcuts) {
+            return slot;
+        }
+
         const updateSlot: Slot = {
             children: (
                 <>
