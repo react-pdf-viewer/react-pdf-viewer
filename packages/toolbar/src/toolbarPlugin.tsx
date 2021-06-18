@@ -12,7 +12,7 @@ import { fullScreenPlugin, FullScreenPlugin, FullScreenPluginProps } from '@reac
 import { getFilePlugin, GetFilePlugin, GetFilePluginProps } from '@react-pdf-viewer/get-file';
 import { openPlugin, OpenPlugin } from '@react-pdf-viewer/open';
 import { pageNavigationPlugin, PageNavigationPlugin } from '@react-pdf-viewer/page-navigation';
-import { printPlugin, PrintPlugin } from '@react-pdf-viewer/print';
+import { printPlugin, PrintPlugin, PrintPluginProps } from '@react-pdf-viewer/print';
 import { propertiesPlugin, PropertiesPlugin } from '@react-pdf-viewer/properties';
 import { rotatePlugin, RotatePlugin } from '@react-pdf-viewer/rotate';
 import { scrollModePlugin, ScrollModePlugin, ScrollModePluginProps } from '@react-pdf-viewer/scroll-mode';
@@ -43,6 +43,7 @@ interface ToolbarPlugin extends Plugin {
 export interface ToolbarPluginProps {
     fullScreenPlugin?: FullScreenPluginProps;
     getFilePlugin?: GetFilePluginProps;
+    printPlugin?: PrintPluginProps;
     scrollModePlugin?: ScrollModePluginProps;
     searchPlugin?: SearchPluginProps;
     selectionModePlugin?: SelectionModePluginProps;
@@ -54,7 +55,7 @@ const toolbarPlugin = (props?: ToolbarPluginProps): ToolbarPlugin => {
     const getFilePluginInstance = getFilePlugin(props ? props.getFilePlugin : {});
     const openPluginInstance = openPlugin();
     const pageNavigationPluginInstance = pageNavigationPlugin();
-    const printPluginInstance = printPlugin();
+    const printPluginInstance = printPlugin(props ? props.printPlugin : {});
     const propertiesPluginInstance = propertiesPlugin();
     const rotatePluginInstance = rotatePlugin();
     const scrollModePluginInstance = scrollModePlugin(props ? props.scrollModePlugin : {});
