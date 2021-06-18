@@ -19,7 +19,7 @@ import { scrollModePlugin, ScrollModePlugin, ScrollModePluginProps } from '@reac
 import { searchPlugin, SearchPlugin, SearchPluginProps } from '@react-pdf-viewer/search';
 import { selectionModePlugin, SelectionModePlugin, SelectionModePluginProps } from '@react-pdf-viewer/selection-mode';
 import { themePlugin, ThemePlugin } from '@react-pdf-viewer/theme';
-import { zoomPlugin, ZoomPlugin } from '@react-pdf-viewer/zoom';
+import { zoomPlugin, ZoomPlugin, ZoomPluginProps } from '@react-pdf-viewer/zoom';
 
 import Toolbar, { ToolbarProps } from './Toolbar';
 
@@ -46,6 +46,7 @@ export interface ToolbarPluginProps {
     scrollModePlugin?: ScrollModePluginProps;
     searchPlugin?: SearchPluginProps;
     selectionModePlugin?: SelectionModePluginProps;
+    zoomPlugin?: ZoomPluginProps;
 }
 
 const toolbarPlugin = (props?: ToolbarPluginProps): ToolbarPlugin => {
@@ -60,7 +61,7 @@ const toolbarPlugin = (props?: ToolbarPluginProps): ToolbarPlugin => {
     const searchPluginInstance = searchPlugin(props ? props.searchPlugin : {});
     const selectionModePluginInstance = selectionModePlugin(props ? props.selectionModePlugin : {});
     const themePluginInstance = themePlugin();
-    const zoomPluginInstance = zoomPlugin();
+    const zoomPluginInstance = zoomPlugin(props ? props.zoomPlugin : {});
 
     const plugins = [
         fullScreenPluginInstance,

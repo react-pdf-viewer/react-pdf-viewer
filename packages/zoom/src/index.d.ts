@@ -67,7 +67,7 @@ export interface ZoomProps {
 // ------
 
 export interface ZoomPluginProps {
-    enableShortcuts: boolean;
+    enableShortcuts?: boolean;
 }
 
 export interface ZoomPlugin extends Plugin {

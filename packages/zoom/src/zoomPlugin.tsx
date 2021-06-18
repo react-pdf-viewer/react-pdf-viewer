@@ -36,11 +36,11 @@ interface ZoomPlugin extends Plugin {
 }
 
 export interface ZoomPluginProps {
-    enableShortcuts: boolean;
+    enableShortcuts?: boolean;
 }
 
 const zoomPlugin = (props?: ZoomPluginProps): ZoomPlugin => {
-    const zoomPluginProps = React.useMemo(() => Object.assign({}, props, { enableShortcuts: true }), []);
+    const zoomPluginProps = React.useMemo(() => Object.assign({}, { enableShortcuts: true }, props), []);
     const store = React.useMemo(() => createStore<StoreProps>({}), []);
 
     const CurrentScaleDecorator = (props: CurrentScaleProps) => (
@@ -89,6 +89,7 @@ const zoomPlugin = (props?: ZoomPluginProps): ZoomPlugin => {
 
     const renderViewer = (props: RenderViewer): Slot => {
         const { slot } = props;
+        console.log(zoomPluginProps);
         if (!zoomPluginProps.enableShortcuts) {
             return slot;
         }
