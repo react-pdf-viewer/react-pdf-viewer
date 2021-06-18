@@ -71,6 +71,7 @@ import type {
     ZoomMenuItemProps,
     ZoomOutProps,
     ZoomPlugin,
+    ZoomPluginProps,
     ZoomProps,
 } from '@react-pdf-viewer/zoom';
 
@@ -160,6 +161,7 @@ export interface ToolbarPluginProps {
     scrollModePlugin?: ScrollModePluginProps;
     searchPlugin?: SearchPluginProps;
     selectionModePlugin?: SelectionModePluginProps;
+    zoomPlugin?: ZoomPluginProps;
 }
 
 export function toolbarPlugin(props?: ToolbarPluginProps): ToolbarPlugin;

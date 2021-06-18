@@ -7,7 +7,13 @@ import '@react-pdf-viewer/print/lib/styles/index.css';
 import '@react-pdf-viewer/default-layout/lib/styles/index.css';
 
 const App = () => {
-    const defaultLayoutPluginInstance = defaultLayoutPlugin();
+    const defaultLayoutPluginInstance = defaultLayoutPlugin({
+        toolbarPlugin: {
+            zoomPlugin: {
+                enableShortcuts: true,
+            },
+        },
+    });
 
     return (
         <Worker workerUrl="https://unpkg.com/pdfjs-dist@2.7.570/build/pdf.worker.js">

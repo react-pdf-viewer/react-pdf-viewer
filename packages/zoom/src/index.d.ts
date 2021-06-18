@@ -66,6 +66,10 @@ export interface ZoomProps {
 // Plugin
 // ------
 
+export interface ZoomPluginProps {
+    enableShortcuts?: boolean;
+}
+
 export interface ZoomPlugin extends Plugin {
     zoomTo: (scale: number | SpecialZoomLevel) => void;
     CurrentScale: (props: CurrentScaleProps) => React.ReactElement;
@@ -79,6 +83,6 @@ export interface ZoomPlugin extends Plugin {
     ZoomPopover: () => React.ReactElement;
 }
 
-export function zoomPlugin(): ZoomPlugin;
+export function zoomPlugin(props?: ZoomPluginProps): ZoomPlugin;
 export class ZoomInIcon extends React.Component {}
 export class ZoomOutIcon extends React.Component {}
