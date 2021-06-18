@@ -27,6 +27,10 @@ export interface PrintPlugin extends Plugin {
     PrintMenuItem: (props: PrintMenuItemProps) => React.ReactElement;
 }
 
-export function printPlugin(): PrintPlugin;
+export interface PrintPluginProps {
+    enableShortcuts?: boolean;
+}
+
+export function printPlugin(props?: PrintPluginProps): PrintPlugin;
 
 export class PrintIcon extends React.Component {}

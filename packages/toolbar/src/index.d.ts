@@ -30,6 +30,7 @@ import type {
 import type {
     PrintMenuItemProps,
     PrintPlugin,
+    PrintPluginProps,
     PrintProps,
 } from '@react-pdf-viewer/print';
 import type {
@@ -158,6 +159,7 @@ export interface ToolbarPlugin extends Plugin {
 export interface ToolbarPluginProps {
     fullScreenPlugin?: FullScreenPluginProps;
     getFilePlugin?: GetFilePluginProps;
+    printPlugin?: PrintPluginProps;
     scrollModePlugin?: ScrollModePluginProps;
     searchPlugin?: SearchPluginProps;
     selectionModePlugin?: SelectionModePluginProps;
