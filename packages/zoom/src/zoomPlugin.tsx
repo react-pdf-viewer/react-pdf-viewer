@@ -89,7 +89,6 @@ const zoomPlugin = (props?: ZoomPluginProps): ZoomPlugin => {
 
     const renderViewer = (props: RenderViewer): Slot => {
         const { slot } = props;
-        console.log(zoomPluginProps);
         if (!zoomPluginProps.enableShortcuts) {
             return slot;
         }

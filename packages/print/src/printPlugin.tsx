@@ -23,7 +23,12 @@ interface PrintPlugin extends Plugin {
     PrintMenuItem: (props: PrintMenuItemProps) => React.ReactElement;
 }
 
-const printPlugin = (): PrintPlugin => {
+export interface PrintPluginProps {
+    enableShortcuts?: boolean;
+}
+
+const printPlugin = (props?: PrintPluginProps): PrintPlugin => {
+    const printPluginProps = React.useMemo(() => Object.assign({}, { enableShortcuts: true }, props), []);
     const store = React.useMemo(() => createStore<StoreProps>({
         printStatus: PrintStatus.Inactive,
     }), []);
@@ -51,10 +56,12 @@ const printPlugin = (): PrintPlugin => {
         const updateSlot: Slot = {
             children: (
                 <>
-                <ShortcutHandler
-                    containerRef={props.containerRef}
-                    store={store}
-                />
+                {printPluginProps.enableShortcuts && (
+                    <ShortcutHandler
+                        containerRef={props.containerRef}
+                        store={store}
+                    />
+                )}
                 <PrintContainer
                     doc={props.doc}
                     pageHeight={props.pageHeight}
