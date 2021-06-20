@@ -30,7 +30,7 @@ const App = () => {
                 <Viewer
                     fileUrl='pdf-open-parameters.pdf'
                     initialPage={3}
-                    // theme='auto'
+                    theme='dark'
                     defaultScale={SpecialZoomLevel.PageFit}
                     plugins={[
                         defaultLayoutPluginInstance,
