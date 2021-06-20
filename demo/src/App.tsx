@@ -19,7 +19,7 @@ const App = () => {
     });
 
     return (
-        <Worker workerUrl="https://unpkg.com/pdfjs-dist@2.7.570/build/pdf.worker.js">
+        <Worker workerUrl="https://unpkg.com/pdfjs-dist@2.8.335/build/pdf.worker.js">
             <div
                 style={{
                     marginTop: '100px',

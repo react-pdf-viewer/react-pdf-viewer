@@ -38,17 +38,17 @@
 		"@testing-library/react": "^11.2.7",
 		"@types/jest": "^26.0.23",
 		"@types/react": "^17.0.11",
-		"@types/react-dom": "^17.0.7",
+		"@types/react-dom": "^17.0.8",
 		"@typescript-eslint/eslint-plugin": "^4.27.0",
 		"@typescript-eslint/parser": "^4.27.0",
 		"cssnano": "^5.0.6",
-		"eslint": "^7.28.0",
+		"eslint": "^7.29.0",
 		"eslint-plugin-react": "^7.24.0",
 		"jest": "^27.0.4",
 		"jest-canvas-mock": "^2.3.1",
 		"lerna": "^4.0.0",
 		"less": "^4.1.1",
-		"pdfjs-dist": "^2.7.570",
+		"pdfjs-dist": "^2.8.335",
 		"postcss": "^8.3.5",
 		"postcss-cli": "^8.3.1",
 		"postcss-import": "^14.0.2",
@@ -58,7 +58,7 @@
 		"rollup": "^2.52.1",
 		"rollup-plugin-terser": "^7.0.2",
 		"ts-jest": "^27.0.3",
-		"typescript": "^4.3.3"
+		"typescript": "^4.3.4"
 	},
 	"dependencies": {
 		"build": "^0.1.4"
