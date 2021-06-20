@@ -8,18 +8,18 @@
         "dev": "rm -rf dist && mkdir dist && npm run copyasset && NODE_ENV=development webpack serve"
     },
     "dependencies": {
-        "@react-pdf-viewer/core": "2.5.0",
-        "@react-pdf-viewer/default-layout": "2.5.0",
-        "@react-pdf-viewer/drop": "2.5.0",
-        "@react-pdf-viewer/full-screen": "2.5.0",
-        "@react-pdf-viewer/highlight": "2.5.0",
-        "@react-pdf-viewer/page-navigation": "2.5.0",
-        "@react-pdf-viewer/open": "2.5.0",
-        "@react-pdf-viewer/print": "2.5.0",
-        "@react-pdf-viewer/scroll-mode": "2.5.0",
-        "@react-pdf-viewer/search": "2.5.0",
-        "@react-pdf-viewer/toolbar": "2.5.0",
-        "@react-pdf-viewer/zoom": "2.5.0"
+        "@react-pdf-viewer/core": "2.6.0",
+        "@react-pdf-viewer/default-layout": "2.6.0",
+        "@react-pdf-viewer/drop": "2.6.0",
+        "@react-pdf-viewer/full-screen": "2.6.0",
+        "@react-pdf-viewer/highlight": "2.6.0",
+        "@react-pdf-viewer/page-navigation": "2.6.0",
+        "@react-pdf-viewer/open": "2.6.0",
+        "@react-pdf-viewer/print": "2.6.0",
+        "@react-pdf-viewer/scroll-mode": "2.6.0",
+        "@react-pdf-viewer/search": "2.6.0",
+        "@react-pdf-viewer/toolbar": "2.6.0",
+        "@react-pdf-viewer/zoom": "2.6.0"
     },
     "devDependencies": {
         "@babel/core": "^7.14.6",

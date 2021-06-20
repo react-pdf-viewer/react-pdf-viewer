@@ -1,4 +1,5 @@
 # React PDF viewer
+
 A React component to view a PDF document. It's written in TypeScript, and powered by React hooks completely.
 
 ![React PDF viewer](https://raw.githubusercontent.com/react-pdf-viewer/react-pdf-viewer/master/assets/screenshot.png)
@@ -47,14 +48,12 @@ __Basic features__
 * [x] View the document properties
 * [x] Support SSR
 * [x] Print
+* [x] Theming
+* [x] Dark mode
 
 __Customization__
 * [x] The toolbar can be customized easily
 * [x] All text items can be localized in another language
-
-__Coming soon__
-* [ ] Theming
-* [ ] Darkmode
 
 ## License
 
