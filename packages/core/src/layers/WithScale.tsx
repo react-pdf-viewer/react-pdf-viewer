@@ -20,7 +20,7 @@ const WithScale: React.FC<WithScaleProps> = ({ callback, children, rotation, sca
     useIsomorphicLayoutEffect(() => {
         callback();
     }, [rotation, scale]);
-    return (<>{children}</>);
+    return <>{children}</>;
 };
 
 export default WithScale;

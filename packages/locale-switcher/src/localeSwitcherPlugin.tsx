@@ -16,9 +16,7 @@ interface LocaleSwitcherPlugin extends Plugin {
 }
 
 const localeSwitcherPlugin = (): LocaleSwitcherPlugin => {
-    const LocalePopoverDecorator = (props: LocalePopoverProps) => (
-        <LocalePopover {...props} />
-    );
+    const LocalePopoverDecorator = (props: LocalePopoverProps) => <LocalePopover {...props} />;
 
     return {
         LocalePopover: LocalePopoverDecorator,

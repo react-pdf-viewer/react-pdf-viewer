@@ -29,12 +29,7 @@ const usePosition = (
         }
 
         const anchorRect = anchorEle.getBoundingClientRect();
-        const { top, left } = calculatePosition(
-            contentEle,
-            targetEle,
-            position,
-            offset
-        );
+        const { top, left } = calculatePosition(contentEle, targetEle, position, offset);
         contentEle.style.top = `${top - anchorRect.top}px`;
         contentEle.style.left = `${left - anchorRect.left}px`;
     }, []);

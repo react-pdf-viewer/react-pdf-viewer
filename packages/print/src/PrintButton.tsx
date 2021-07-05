@@ -21,7 +21,11 @@ const PrintButton: React.FC<RenderPrintProps> = ({ onClick }) => {
     return (
         <Tooltip
             position={Position.BottomCenter}
-            target={<MinimalButton onClick={onClick}><PrintIcon /></MinimalButton>}
+            target={
+                <MinimalButton onClick={onClick}>
+                    <PrintIcon />
+                </MinimalButton>
+            }
             content={() => label}
             offset={TOOLTIP_OFFSET}
         />

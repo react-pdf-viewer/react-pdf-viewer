@@ -28,35 +28,49 @@ export interface RotatePlugin extends Plugin {
 }
 
 const rotatePlugin = (): RotatePlugin => {
-    const store = React.useMemo(() => createStore<StoreProps>({
-        rotation: 0,
-    }), []);
-
-    const RotateDecorator = (props: RotateProps) => (
-        <Rotate {...props} store={store} />
+    const store = React.useMemo(
+        () =>
+            createStore<StoreProps>({
+                rotation: 0,
+            }),
+        []
     );
 
+    const RotateDecorator = (props: RotateProps) => <Rotate {...props} store={store} />;
+
     const RotateBackwardButtonDecorator = () => (
-        <RotateDecorator direction={RotateDirection.Backward}>
-            {(props) => <RotateButton {...props} />}
-        </RotateDecorator>
+        <RotateDecorator direction={RotateDirection.Backward}>{(props) => <RotateButton {...props} />}</RotateDecorator>
     );
 
     const RotateBackwardMenuItemDecorator = (props: RotateDecoratorProps) => (
         <RotateDecorator direction={RotateDirection.Backward}>
-            {(p) => <RotateMenuItem direction={p.direction} onClick={() => { p.onClick(); props.onClick(); }} />}
+            {(p) => (
+                <RotateMenuItem
+                    direction={p.direction}
+                    onClick={() => {
+                        p.onClick();
+                        props.onClick();
+                    }}
+                />
+            )}
         </RotateDecorator>
     );
 
     const RotateForwardButtonDecorator = () => (
-        <RotateDecorator direction={RotateDirection.Forward}>
-            {(props) => <RotateButton {...props} />}
-        </RotateDecorator>
+        <RotateDecorator direction={RotateDirection.Forward}>{(props) => <RotateButton {...props} />}</RotateDecorator>
     );
 
     const RotateForwardMenuItemDecorator = (props: RotateDecoratorProps) => (
         <RotateDecorator direction={RotateDirection.Forward}>
-            {(p) => <RotateMenuItem direction={p.direction} onClick={() => { p.onClick(); props.onClick(); }} />}
+            {(p) => (
+                <RotateMenuItem
+                    direction={p.direction}
+                    onClick={() => {
+                        p.onClick();
+                        props.onClick();
+                    }}
+                />
+            )}
         </RotateDecorator>
     );
 

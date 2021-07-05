@@ -13,11 +13,8 @@ interface ProgressBarProps {
 }
 
 const ProgressBar: React.FC<ProgressBarProps> = ({ progress }) => (
-    <div className='rpv-core__progress-bar'>
-        <div
-            className='rpv-core__progress-bar-progress'
-            style={{ width: `${progress}%` }}
-        >
+    <div className="rpv-core__progress-bar">
+        <div className="rpv-core__progress-bar-progress" style={{ width: `${progress}%` }}>
             {progress}%
         </div>
     </div>

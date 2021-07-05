@@ -14,7 +14,7 @@ import DropArea from './DropArea';
 const dropPlugin = (): Plugin => {
     const renderViewer = (props: RenderViewer): Slot => {
         const { slot } = props;
-        
+
         if (slot.attrs) {
             const styles = slot.attrs && slot.attrs.style ? slot.attrs.style : {};
             const updateStyle: React.CSSProperties = {
@@ -23,15 +23,15 @@ const dropPlugin = (): Plugin => {
                     height: '100%',
                     position: 'relative',
                     width: '100%',
-                }
+                },
             };
             slot.attrs.style = updateStyle;
         }
 
         slot.children = (
             <>
-            <DropArea containerRef={props.containerRef} openFile={props.openFile} />
-            {slot.children}
+                <DropArea containerRef={props.containerRef} openFile={props.openFile} />
+                {slot.children}
             </>
         );
 

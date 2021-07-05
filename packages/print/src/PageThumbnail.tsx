@@ -18,9 +18,7 @@ interface PageThumbnailProps {
     onLoad(): void;
 }
 
-const PageThumbnail: React.FC<PageThumbnailProps> = ({
-    canvas, page, pageHeight, pageWidth, rotation, onLoad,
-}) => {
+const PageThumbnail: React.FC<PageThumbnailProps> = ({ canvas, page, pageHeight, pageWidth, rotation, onLoad }) => {
     const renderTask = React.useRef<PdfJs.PageRenderTask>();
     const [src, setSrc] = React.useState('');
 
@@ -49,19 +47,21 @@ const PageThumbnail: React.FC<PageThumbnailProps> = ({
         });
         renderTask.current.promise.then(
             () => {
-                ('toBlob' in canvas)
+                'toBlob' in canvas
                     ? canvas.toBlob((blob) => {
-                        setSrc(URL.createObjectURL(blob));
-                    })
+                          setSrc(URL.createObjectURL(blob));
+                      })
                     : setSrc((canvas as HTMLCanvasElement).toDataURL());
             },
-            () => {/**/},
+            () => {
+                /**/
+            }
         );
     }, []);
 
     return (
         src && (
-            <div className='rpv-print__page'>
+            <div className="rpv-print__page">
                 <img src={src} onLoad={() => onLoad()} />
             </div>
         )

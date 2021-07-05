@@ -38,11 +38,19 @@ interface InnerProps {
 }
 
 const Inner: React.FC<InnerProps> = ({
-    doc, initialPage, pageSize, plugins, renderPage, viewerState,
-    onDocumentLoad, onOpenFile, onPageChange, onZoom,
+    doc,
+    initialPage,
+    pageSize,
+    plugins,
+    renderPage,
+    viewerState,
+    onDocumentLoad,
+    onOpenFile,
+    onPageChange,
+    onZoom,
 }) => {
     const containerRef = React.useRef<HTMLDivElement | null>(null);
-    const pagesRef = React.useRef<HTMLDivElement | null>(null);    
+    const pagesRef = React.useRef<HTMLDivElement | null>(null);
     const [currentPage, setCurrentPage] = React.useState(0);
     const [rotation, setRotation] = React.useState(0);
     const stateRef = React.useRef<ViewerState>(viewerState);
@@ -62,7 +70,7 @@ const Inner: React.FC<InnerProps> = ({
     const setViewerState = (viewerState: ViewerState) => {
         let newState = viewerState;
         // Loop over the plugins and notify the state changed
-        plugins.forEach(plugin => {
+        plugins.forEach((plugin) => {
             if (plugin.onViewerStateChange) {
                 newState = plugin.onViewerStateChange(newState);
             }
@@ -81,7 +89,12 @@ const Inner: React.FC<InnerProps> = ({
 
     const getViewerState = () => stateRef.current;
 
-    const jumpToDestination = (pageIndex: number, bottomOffset: number, leftOffset: number, scaleTo: number | SpecialZoomLevel): void => {
+    const jumpToDestination = (
+        pageIndex: number,
+        bottomOffset: number,
+        leftOffset: number,
+        scaleTo: number | SpecialZoomLevel
+    ): void => {
         const pagesContainer = pagesRef.current;
         const currentState = stateRef.current;
         if (!pagesContainer || !currentState) {
@@ -166,8 +179,10 @@ const Inner: React.FC<InnerProps> = ({
     const zoom = (newScale: number | SpecialZoomLevel): void => {
         const pagesEle = pagesRef.current;
         let updateScale = pagesEle
-                            ? (typeof newScale === 'string' ? calculateScale(pagesEle, pageHeight, pageWidth, newScale) : newScale)
-                            : 1;
+            ? typeof newScale === 'string'
+                ? calculateScale(pagesEle, pageHeight, pageWidth, newScale)
+                : newScale
+            : 1;
         setScale(updateScale);
         onZoom({ doc, scale: updateScale });
     };
@@ -180,9 +195,9 @@ const Inner: React.FC<InnerProps> = ({
         }
 
         // Keep the current scroll position
-        pagesEle.scrollTop = pagesEle.scrollTop * scale / currentState.scale;
-        pagesEle.scrollLeft = pagesEle.scrollLeft * scale / currentState.scale;
-        
+        pagesEle.scrollTop = (pagesEle.scrollTop * scale) / currentState.scale;
+        pagesEle.scrollLeft = (pagesEle.scrollLeft * scale) / currentState.scale;
+
         setViewerState({
             file: viewerState.file,
             // Keep the current page after zooming
@@ -232,7 +247,7 @@ const Inner: React.FC<InnerProps> = ({
     React.useEffect(() => {
         onDocumentLoad({ doc });
         // Loop over the plugins
-        plugins.forEach(plugin => {
+        plugins.forEach((plugin) => {
             plugin.onDocumentLoad && plugin.onDocumentLoad({ doc });
         });
         if (initialPage) {
@@ -272,10 +287,10 @@ const Inner: React.FC<InnerProps> = ({
                 jumpToPage(numPages - 1);
                 break;
             case 'NextPage':
-                (nextPage < numPages) && jumpToPage(nextPage);
+                nextPage < numPages && jumpToPage(nextPage);
                 break;
             case 'PrevPage':
-                (previousPage >= 0) && jumpToPage(previousPage);
+                previousPage >= 0 && jumpToPage(previousPage);
                 break;
             default:
                 break;
@@ -303,40 +318,40 @@ const Inner: React.FC<InnerProps> = ({
                 },
                 children: (
                     <>
-                    {
-                        Array(numPages).fill(0).map((_, index) => {
-                            return (
-                                <div
-                                    className='rpv-core__inner-page'
-                                    key={`pagelayer-${index}`}
-                                    ref={(ref): void => {
-                                        pageRefs[index].current = ref as HTMLDivElement;
-                                    }}
-                                >
-                                    <PageLayer
-                                        currentPage={currentPage}
-                                        doc={doc}
-                                        height={pageHeight}
-                                        pageIndex={index}
-                                        plugins={plugins}
-                                        renderPage={renderPage}
-                                        rotation={rotation}
-                                        scale={scale}
-                                        width={pageWidth}
-                                        onExecuteNamedAction={executeNamedAction}
-                                        onJumpToDest={jumpToDestination}
-                                        onPageVisibilityChanged={pageVisibilityChanged}
-                                    />
-                                </div>
-                            );
-                        })
-                    }
+                        {Array(numPages)
+                            .fill(0)
+                            .map((_, index) => {
+                                return (
+                                    <div
+                                        className="rpv-core__inner-page"
+                                        key={`pagelayer-${index}`}
+                                        ref={(ref): void => {
+                                            pageRefs[index].current = ref as HTMLDivElement;
+                                        }}
+                                    >
+                                        <PageLayer
+                                            currentPage={currentPage}
+                                            doc={doc}
+                                            height={pageHeight}
+                                            pageIndex={index}
+                                            plugins={plugins}
+                                            renderPage={renderPage}
+                                            rotation={rotation}
+                                            scale={scale}
+                                            width={pageWidth}
+                                            onExecuteNamedAction={executeNamedAction}
+                                            onJumpToDest={jumpToDestination}
+                                            onPageVisibilityChanged={pageVisibilityChanged}
+                                        />
+                                    </div>
+                                );
+                            })}
                     </>
                 ),
             },
         };
 
-        plugins.forEach(plugin => {
+        plugins.forEach((plugin) => {
             if (plugin.renderViewer) {
                 slot = plugin.renderViewer({
                     containerRef,

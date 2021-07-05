@@ -21,11 +21,16 @@ const SwitchThemeMenuItem: React.FC<SwitchThemeMenuItemProps> = ({ onClick }) =>
     const l10n = React.useContext(LocalizationContext);
     const isDarkTheme = theme.currentTheme === 'dark';
 
-    const label = l10n && l10n.theme
-        ? (isDarkTheme ? l10n.theme.switchLightTheme : l10n.theme.switchDarkTheme)
-        : (isDarkTheme ? 'Switch to the light theme' : 'Switch to the dark theme');
+    const label =
+        l10n && l10n.theme
+            ? isDarkTheme
+                ? l10n.theme.switchLightTheme
+                : l10n.theme.switchDarkTheme
+            : isDarkTheme
+            ? 'Switch to the light theme'
+            : 'Switch to the dark theme';
 
-    return (        
+    return (
         <MenuItem icon={isDarkTheme ? <LightIcon /> : <DarkIcon />} onClick={onClick}>
             {label}
         </MenuItem>

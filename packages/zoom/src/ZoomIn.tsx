@@ -25,8 +25,8 @@ export interface ZoomInProps {
 }
 
 const ZoomIn: React.FC<{
-    children?: RenderZoomIn,
-    store: Store<StoreProps>,
+    children?: RenderZoomIn;
+    store: Store<StoreProps>;
 }> = ({ children, store }) => {
     const { scale } = useZoom(store);
 
@@ -38,7 +38,7 @@ const ZoomIn: React.FC<{
         }
     };
 
-    const defaultChildren = (props: RenderZoomInProps) => <ZoomInButton onClick={props.onClick} />
+    const defaultChildren = (props: RenderZoomInProps) => <ZoomInButton onClick={props.onClick} />;
     const render = children || defaultChildren;
 
     return render({

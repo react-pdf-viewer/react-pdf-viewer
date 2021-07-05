@@ -11,10 +11,7 @@ import * as React from 'react';
 import HighlightArea from './HighlightArea';
 
 interface RenderHighlightsProps {
-    getCssProperties(
-        area: HighlightArea,
-        rotation: number
-    ): React.CSSProperties;
+    getCssProperties(area: HighlightArea, rotation: number): React.CSSProperties;
     pageIndex: number;
     rotation: number;
 }

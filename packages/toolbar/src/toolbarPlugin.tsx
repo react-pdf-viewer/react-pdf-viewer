@@ -7,7 +7,14 @@
  */
 
 import * as React from 'react';
-import { Plugin, PluginFunctions, PluginOnDocumentLoad, RenderViewer, ViewerState, PluginOnTextLayerRender } from '@react-pdf-viewer/core';
+import {
+    Plugin,
+    PluginFunctions,
+    PluginOnDocumentLoad,
+    RenderViewer,
+    ViewerState,
+    PluginOnTextLayerRender,
+} from '@react-pdf-viewer/core';
 import { fullScreenPlugin, FullScreenPlugin, FullScreenPluginProps } from '@react-pdf-viewer/full-screen';
 import { getFilePlugin, GetFilePlugin, GetFilePluginProps } from '@react-pdf-viewer/get-file';
 import { openPlugin, OpenPlugin } from '@react-pdf-viewer/open';
@@ -84,8 +91,16 @@ const toolbarPlugin = (props?: ToolbarPluginProps): ToolbarPlugin => {
         const { Download, DownloadMenuItem } = getFilePluginInstance;
         const { Open, OpenMenuItem } = openPluginInstance;
         const {
-            CurrentPageInput, CurrentPageLabel, GoToFirstPage, GoToFirstPageMenuItem, GoToLastPage,
-            GoToLastPageMenuItem, GoToNextPage, GoToNextPageMenuItem, GoToPreviousPage, GoToPreviousPageMenuItem,
+            CurrentPageInput,
+            CurrentPageLabel,
+            GoToFirstPage,
+            GoToFirstPageMenuItem,
+            GoToLastPage,
+            GoToLastPageMenuItem,
+            GoToNextPage,
+            GoToNextPageMenuItem,
+            GoToPreviousPage,
+            GoToPreviousPageMenuItem,
         } = pageNavigationPluginInstance;
         const { Print, PrintMenuItem } = printPluginInstance;
         const { ShowProperties, ShowPropertiesMenuItem } = propertiesPluginInstance;
@@ -96,11 +111,7 @@ const toolbarPlugin = (props?: ToolbarPluginProps): ToolbarPlugin => {
         const { SwitchTheme, SwitchThemeMenuItem } = themePluginInstance;
         const { CurrentScale, Zoom, ZoomIn, ZoomInMenuItem, ZoomOut, ZoomOutMenuItem } = zoomPluginInstance;
 
-        const NumberOfPages = () => (
-            <CurrentPageLabel>
-                {(props) => <>{props.numberOfPages}</>}
-            </CurrentPageLabel>
-        );
+        const NumberOfPages = () => <CurrentPageLabel>{(props) => <>{props.numberOfPages}</>}</CurrentPageLabel>;
 
         return (
             <Toolbar
@@ -165,7 +176,7 @@ const toolbarPlugin = (props?: ToolbarPluginProps): ToolbarPlugin => {
         zoomPluginInstance,
         install: (pluginFunctions: PluginFunctions) => {
             // Install plugins
-            plugins.forEach(plugin => {
+            plugins.forEach((plugin) => {
                 if (plugin.install) {
                     plugin.install(pluginFunctions);
                 }
@@ -173,30 +184,30 @@ const toolbarPlugin = (props?: ToolbarPluginProps): ToolbarPlugin => {
         },
         renderViewer: (props: RenderViewer) => {
             let { slot } = props;
-            plugins.forEach(plugin => {
+            plugins.forEach((plugin) => {
                 if (plugin.renderViewer) {
-                    slot = plugin.renderViewer({...props, slot});
+                    slot = plugin.renderViewer({ ...props, slot });
                 }
             });
             return slot;
         },
         uninstall: (pluginFunctions: PluginFunctions) => {
             // Unistall plugins
-            plugins.forEach(plugin => {
+            plugins.forEach((plugin) => {
                 if (plugin.uninstall) {
                     plugin.uninstall(pluginFunctions);
                 }
             });
         },
         onDocumentLoad: (props: PluginOnDocumentLoad) => {
-            plugins.forEach(plugin => {
+            plugins.forEach((plugin) => {
                 if (plugin.onDocumentLoad) {
                     plugin.onDocumentLoad(props);
                 }
             });
         },
         onTextLayerRender: (props: PluginOnTextLayerRender) => {
-            plugins.forEach(plugin => {
+            plugins.forEach((plugin) => {
                 if (plugin.onTextLayerRender) {
                     plugin.onTextLayerRender(props);
                 }
@@ -204,7 +215,7 @@ const toolbarPlugin = (props?: ToolbarPluginProps): ToolbarPlugin => {
         },
         onViewerStateChange: (viewerState: ViewerState) => {
             let newState = viewerState;
-            plugins.forEach(plugin => {
+            plugins.forEach((plugin) => {
                 if (plugin.onViewerStateChange) {
                     newState = plugin.onViewerStateChange(newState);
                 }

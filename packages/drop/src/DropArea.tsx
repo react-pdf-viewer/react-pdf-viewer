@@ -27,15 +27,13 @@ const DropArea: React.FC<DropAreaProps> = ({ containerRef, openFile }) => {
 
     return (
         <>
-        {isDragging && (
-            <div className='rpv-drop__area'>
-                <div className='rpv-drop__area-body'>
-                {
-                    l10n && l10n.drop ? l10n.drop.dragDropFile : 'Drag and drop a PDF document here'
-                }
+            {isDragging && (
+                <div className="rpv-drop__area">
+                    <div className="rpv-drop__area-body">
+                        {l10n && l10n.drop ? l10n.drop.dragDropFile : 'Drag and drop a PDF document here'}
+                    </div>
                 </div>
-            </div>
-        )}
+            )}
         </>
     );
 };

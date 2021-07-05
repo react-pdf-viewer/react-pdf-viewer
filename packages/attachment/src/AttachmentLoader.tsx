@@ -31,11 +31,11 @@ const AttachmentLoader: React.FC<AttachmentLoaderProps> = ({ doc }) => {
         doc.getAttachments().then((response) => {
             const files = response
                 ? Object.keys(response).map((file) => {
-                    return {
-                        data: response[file].content,
-                        fileName: response[file].filename,
-                    };
-                })
+                      return {
+                          data: response[file].content,
+                          fileName: response[file].filename,
+                      };
+                  })
                 : [];
             setAttachments({
                 files,
@@ -44,11 +44,7 @@ const AttachmentLoader: React.FC<AttachmentLoaderProps> = ({ doc }) => {
         });
     }, [doc]);
 
-    return (
-        !attachments.isLoaded
-            ? <Spinner />
-            : <AttachmentList files={attachments.files} />
-    );
+    return !attachments.isLoaded ? <Spinner /> : <AttachmentList files={attachments.files} />;
 };
 
 export default AttachmentLoader;

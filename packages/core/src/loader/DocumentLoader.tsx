@@ -30,12 +30,21 @@ interface DocumentLoaderProps {
     httpHeaders?: Record<string, string | string[]>;
     render(doc: PdfJs.PdfDocument): React.ReactElement;
     renderError?: RenderError;
-    renderLoader?(percentages: number): React.ReactElement;    
+    renderLoader?(percentages: number): React.ReactElement;
     transformGetDocumentParams?(options: PdfJs.GetDocumentParams): PdfJs.GetDocumentParams;
     withCredentials: boolean;
 }
 
-const DocumentLoader: React.FC<DocumentLoaderProps> = ({ characterMap, file, httpHeaders, render, renderError, renderLoader, transformGetDocumentParams, withCredentials }) => {
+const DocumentLoader: React.FC<DocumentLoaderProps> = ({
+    characterMap,
+    file,
+    httpHeaders,
+    render,
+    renderError,
+    renderLoader,
+    transformGetDocumentParams,
+    withCredentials,
+}) => {
     const [status, setStatus] = React.useState<LoadingStatus>(new LoadingState(0));
 
     const [percentages, setPercentages] = React.useState(0);
@@ -61,8 +70,13 @@ const DocumentLoader: React.FC<DocumentLoaderProps> = ({ characterMap, file, htt
                 withCredentials,
                 worker,
             },
-            ('string' === typeof file) ? { url: file } : { data: file },
-            characterMap ? { cMapUrl: characterMap.url, cMapPacked: characterMap.isCompressed } : {}
+            'string' === typeof file ? { url: file } : { data: file },
+            characterMap
+                ? {
+                      cMapUrl: characterMap.url,
+                      cMapPacked: characterMap.isCompressed,
+                  }
+                : {}
         );
         const transformParams = transformGetDocumentParams ? transformGetDocumentParams(params) : params;
 
@@ -81,16 +95,21 @@ const DocumentLoader: React.FC<DocumentLoaderProps> = ({ characterMap, file, htt
         };
         loadingTask.onProgress = (progress) => {
             progress.total > 0
-                // It seems weird but there is a case that `loaded` is greater than `total`
-                ? isMounted.current && setPercentages(Math.min(100, 100 * progress.loaded / progress.total))
+                ? // It seems weird but there is a case that `loaded` is greater than `total`
+                  isMounted.current && setPercentages(Math.min(100, (100 * progress.loaded) / progress.total))
                 : isMounted.current && setPercentages(100);
         };
         loadingTask.promise.then(
             (doc) => isMounted.current && setLoadedDocument(doc),
-            (err) => isMounted.current && !worker.destroyed && setStatus(new FailureState({
-                message: err.message || 'Cannot load document',
-                name: err.name,
-            })),
+            (err) =>
+                isMounted.current &&
+                !worker.destroyed &&
+                setStatus(
+                    new FailureState({
+                        message: err.message || 'Cannot load document',
+                        name: err.name,
+                    })
+                )
         );
 
         return (): void => {
@@ -103,39 +122,35 @@ const DocumentLoader: React.FC<DocumentLoaderProps> = ({ characterMap, file, htt
     // (numOfPercentages does not reach 100 yet)
     // So, we have to check both `percentages` and `loaded`
     React.useEffect(() => {
-        (percentages === 100 && loadedDocument)
+        percentages === 100 && loadedDocument
             ? isMounted.current && setStatus(new CompletedState(loadedDocument))
             : isMounted.current && setStatus(new LoadingState(percentages));
     }, [percentages, loadedDocument]);
 
     switch (true) {
-        case (status instanceof AskForPasswordState):
+        case status instanceof AskForPasswordState:
             return <AskingPassword verifyPasswordFn={(status as AskForPasswordState).verifyPasswordFn} />;
-        case (status instanceof WrongPasswordState):
+        case status instanceof WrongPasswordState:
             return <WrongPassword verifyPasswordFn={(status as WrongPasswordState).verifyPasswordFn} />;
-        case (status instanceof CompletedState):
+        case status instanceof CompletedState:
             return render((status as CompletedState).doc);
-        case (status instanceof FailureState):
-            return renderError
-                ? renderError((status as FailureState).error)
-                : (
-                    <div className='rpv-core__doc-error'>
-                        <div className='rpv-core__doc-error-text'>
-                            {(status as FailureState).error.message}
-                        </div>
-                    </div>
-                );
-        case (status instanceof LoadingState):
+        case status instanceof FailureState:
+            return renderError ? (
+                renderError((status as FailureState).error)
+            ) : (
+                <div className="rpv-core__doc-error">
+                    <div className="rpv-core__doc-error-text">{(status as FailureState).error.message}</div>
+                </div>
+            );
+        case status instanceof LoadingState:
             return (
-                <div className='rpv-core__doc-loading'>
-                    {
-                        renderLoader ? renderLoader((status as LoadingState).percentages) : <Spinner />
-                    }
+                <div className="rpv-core__doc-loading">
+                    {renderLoader ? renderLoader((status as LoadingState).percentages) : <Spinner />}
                 </div>
             );
         default:
             return (
-                <div className='rpv-core__doc-loading'>
+                <div className="rpv-core__doc-loading">
                     <Spinner />
                 </div>
             );

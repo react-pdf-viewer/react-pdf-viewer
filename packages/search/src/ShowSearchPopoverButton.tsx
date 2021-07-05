@@ -16,16 +16,14 @@ const TOOLTIP_OFFSET = { left: 0, top: 8 };
 
 const ShowSearchPopoverButton: React.FC<RenderShowSearchPopoverProps> = ({ onClick }) => (
     <ShowSearchPopoverDecorator onClick={onClick}>
-    {
-        (p) => (
+        {(p) => (
             <Tooltip
                 position={Position.BottomCenter}
                 target={<MinimalButton onClick={onClick}>{p.icon}</MinimalButton>}
                 content={() => p.label}
                 offset={TOOLTIP_OFFSET}
             />
-        )   
-    }
+        )}
     </ShowSearchPopoverDecorator>
 );
 

@@ -25,8 +25,8 @@ export interface CurrentPageLabelProps {
 }
 
 const CurrentPageLabel: React.FC<{
-    children?: RenderCurrentPageLabel,
-    store: Store<StoreProps>,
+    children?: RenderCurrentPageLabel;
+    store: Store<StoreProps>;
 }> = ({ children, store }) => {
     const { currentPage } = useCurrentPage(store);
     const { numberOfPages } = useNumberOfPages(store);

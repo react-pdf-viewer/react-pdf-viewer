@@ -16,9 +16,15 @@ interface TextBoxProps {
     onKeyDown?: (e: React.KeyboardEvent) => void;
 }
 
-const TextBox: React.FC<TextBoxProps> = ({ placeholder = '', type = 'text', value = '', onChange, onKeyDown = () => {} }) => (
+const TextBox: React.FC<TextBoxProps> = ({
+    placeholder = '',
+    type = 'text',
+    value = '',
+    onChange,
+    onKeyDown = () => {},
+}) => (
     <input
-        className='rpv-core__textbox'
+        className="rpv-core__textbox"
         placeholder={placeholder}
         type={type}
         value={value}

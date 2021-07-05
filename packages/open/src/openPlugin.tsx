@@ -23,17 +23,11 @@ interface OpenPlugin extends Plugin {
 const openPlugin = (): OpenPlugin => {
     const store = React.useMemo(() => createStore<StoreProps>({}), []);
 
-    const OpenDecorator = (props: OpenProps) => (
-        <Open {...props} store={store} />
-    );
+    const OpenDecorator = (props: OpenProps) => <Open {...props} store={store} />;
 
     const OpenButtonDecorator = () => <OpenDecorator />;
 
-    const OpenMenuItemDecorator = () => (
-        <OpenDecorator>
-            {(p) => <OpenMenuItem onClick={p.onClick} />}
-        </OpenDecorator>
-    );
+    const OpenMenuItemDecorator = () => <OpenDecorator>{(p) => <OpenMenuItem onClick={p.onClick} />}</OpenDecorator>;
 
     return {
         install: (pluginFunctions: PluginFunctions) => {

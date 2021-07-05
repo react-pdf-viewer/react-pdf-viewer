@@ -28,11 +28,18 @@ const Square: React.FC<SquareProps> = ({ annotation, page, viewport }) => {
     const borderWidth = annotation.borderStyle.width;
 
     return (
-        <Annotation annotation={annotation} hasPopup={hasPopup} ignoreBorder={true} isRenderable={isRenderable} page={page} viewport={viewport}>
+        <Annotation
+            annotation={annotation}
+            hasPopup={hasPopup}
+            ignoreBorder={true}
+            isRenderable={isRenderable}
+            page={page}
+            viewport={viewport}
+        >
             {(props): React.ReactElement => (
                 <div
                     {...props.slot.attrs}
-                    className='rpv-core__annotation rpv-core__annotation--square'
+                    className="rpv-core__annotation rpv-core__annotation--square"
                     data-annotation-id={annotation.id}
                     onClick={props.popup.toggleOnClick}
                     onMouseEnter={props.popup.openOnHover}
@@ -40,15 +47,15 @@ const Square: React.FC<SquareProps> = ({ annotation, page, viewport }) => {
                 >
                     <svg
                         height={`${height}px`}
-                        preserveAspectRatio='none'
-                        version='1.1'
+                        preserveAspectRatio="none"
+                        version="1.1"
                         viewBox={`0 0 ${width} ${height}`}
                         width={`${width}px`}
                     >
                         <rect
                             height={height - borderWidth}
-                            fill='none'
-                            stroke='transparent'
+                            fill="none"
+                            stroke="transparent"
                             strokeWidth={borderWidth || 1}
                             x={borderWidth / 2}
                             y={borderWidth / 2}

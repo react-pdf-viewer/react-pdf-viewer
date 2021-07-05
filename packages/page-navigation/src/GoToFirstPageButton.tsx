@@ -22,7 +22,11 @@ const GoToFirstPageButton: React.FC<RenderGoToPageProps> = ({ isDisabled, onClic
     return (
         <Tooltip
             position={Position.BottomCenter}
-            target={<MinimalButton isDisabled={isDisabled} onClick={onClick}><UpArrowIcon /></MinimalButton>}
+            target={
+                <MinimalButton isDisabled={isDisabled} onClick={onClick}>
+                    <UpArrowIcon />
+                </MinimalButton>
+            }
             content={() => label}
             offset={TOOLTIP_OFFSET}
         />

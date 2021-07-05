@@ -24,9 +24,7 @@ export interface EnterFullScreenMenuItemProps {
 export interface FullScreenPlugin extends Plugin {
     EnterFullScreen(props: EnterFullScreenProps): React.ReactElement;
     EnterFullScreenButton(): React.ReactElement;
-    EnterFullScreenMenuItem: (
-        props: EnterFullScreenMenuItemProps
-    ) => React.ReactElement;
+    EnterFullScreenMenuItem: (props: EnterFullScreenMenuItemProps) => React.ReactElement;
 }
 
 export type Zoom = (scale: number | SpecialZoomLevel) => void;
@@ -36,9 +34,7 @@ export interface FullScreenPluginProps {
     onExitFullScreen?(zoom: Zoom): void;
 }
 
-export function fullScreenPlugin(
-    props?: FullScreenPluginProps
-): FullScreenPlugin;
+export function fullScreenPlugin(props?: FullScreenPluginProps): FullScreenPlugin;
 
 export class ExitFullScreenIcon extends React.Component {}
 export class FullScreenIcon extends React.Component {}

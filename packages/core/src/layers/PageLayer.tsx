@@ -44,8 +44,18 @@ interface PageSizeState {
 const NUMBER_OF_OVERSCAN_PAGES = 2;
 
 const PageLayer: React.FC<PageLayerProps> = ({
-    currentPage, doc, height, pageIndex, plugins, renderPage, rotation, scale, width,
-    onExecuteNamedAction, onJumpToDest, onPageVisibilityChanged,
+    currentPage,
+    doc,
+    height,
+    pageIndex,
+    plugins,
+    renderPage,
+    rotation,
+    scale,
+    width,
+    onExecuteNamedAction,
+    onJumpToDest,
+    onPageVisibilityChanged,
 }) => {
     const [pageSize, setPageSize] = React.useState<PageSizeState>({
         page: null,
@@ -58,7 +68,9 @@ const PageLayer: React.FC<PageLayerProps> = ({
 
     const prevIsCalculated = React.useRef(false);
 
-    const intersectionThreshold = Array(10).fill(null).map((_, i) => i / 10);
+    const intersectionThreshold = Array(10)
+        .fill(null)
+        .map((_, i) => i / 10);
 
     const scaledWidth = pageWidth * scale;
     const scaledHeight = pageHeight * scale;
@@ -111,7 +123,10 @@ const PageLayer: React.FC<PageLayerProps> = ({
     });
 
     React.useEffect(() => {
-        if (currentPage - NUMBER_OF_OVERSCAN_PAGES <= pageIndex && pageIndex <= currentPage + NUMBER_OF_OVERSCAN_PAGES) {
+        if (
+            currentPage - NUMBER_OF_OVERSCAN_PAGES <= pageIndex &&
+            pageIndex <= currentPage + NUMBER_OF_OVERSCAN_PAGES
+        ) {
             determinePageSize();
         }
     }, [currentPage]);
@@ -119,95 +134,90 @@ const PageLayer: React.FC<PageLayerProps> = ({
     return (
         <div
             ref={containerRef}
-            className='rpv-core__page-layer'
+            className="rpv-core__page-layer"
             data-testid={`viewer-page-layer-${pageIndex}`}
             style={{
                 height: `${h}px`,
                 width: `${w}px`,
             }}
         >
-            {
-                !page
-                    ? <Spinner />
-                    : <>
-                    {
-                        renderPageLayer({
-                            annotationLayer: {
-                                attrs: {},
-                                children: (
-                                    <AnnotationLayer
-                                        doc={doc}
-                                        page={page}
-                                        pageIndex={pageIndex}
-                                        plugins={plugins}
-                                        rotation={rotationNumber}
-                                        scale={scale}
-                                        onExecuteNamedAction={onExecuteNamedAction}
-                                        onJumpToDest={onJumpToDest}
-                                    />
-                                )
-                            },
-                            canvasLayer: {
-                                attrs: {},
-                                children: (
-                                    <CanvasLayer
-                                        height={h}
-                                        page={page}
-                                        pageIndex={pageIndex}
-                                        plugins={plugins}
-                                        rotation={rotationNumber}
-                                        scale={scale}
-                                        width={w}
-                                    />
-                                ),
-                            },
-                            doc,
-                            height: h,
-                            pageIndex,
-                            rotation,
-                            scale,
-                            svgLayer: {
-                                attrs: {},
-                                children: (
-                                    <SvgLayer height={h} page={page} rotation={rotationNumber} scale={scale} width={w} />
-                                ),
-                            },
-                            textLayer: {
-                                attrs: {},
-                                children: (
-                                    <TextLayer
-                                        page={page}
-                                        pageIndex={pageIndex}
-                                        plugins={plugins}
-                                        rotation={rotationNumber}
-                                        scale={scale}
-                                    />
-                                )
-                            },
-                            width: w,
-                        })
-                    }
-                    {
-                        plugins.map((plugin, idx) => 
-                            plugin.renderPageLayer
-                            ? 
-                                <React.Fragment key={idx}>
-                                {
-                                    plugin.renderPageLayer({
-                                        doc,
-                                        height: h,
-                                        pageIndex,
-                                        rotation,
-                                        scale,
-                                        width: w,
-                                    })
-                                }
-                                </React.Fragment>
-                            : <React.Fragment key={idx}></React.Fragment>
+            {!page ? (
+                <Spinner />
+            ) : (
+                <>
+                    {renderPageLayer({
+                        annotationLayer: {
+                            attrs: {},
+                            children: (
+                                <AnnotationLayer
+                                    doc={doc}
+                                    page={page}
+                                    pageIndex={pageIndex}
+                                    plugins={plugins}
+                                    rotation={rotationNumber}
+                                    scale={scale}
+                                    onExecuteNamedAction={onExecuteNamedAction}
+                                    onJumpToDest={onJumpToDest}
+                                />
+                            ),
+                        },
+                        canvasLayer: {
+                            attrs: {},
+                            children: (
+                                <CanvasLayer
+                                    height={h}
+                                    page={page}
+                                    pageIndex={pageIndex}
+                                    plugins={plugins}
+                                    rotation={rotationNumber}
+                                    scale={scale}
+                                    width={w}
+                                />
+                            ),
+                        },
+                        doc,
+                        height: h,
+                        pageIndex,
+                        rotation,
+                        scale,
+                        svgLayer: {
+                            attrs: {},
+                            children: (
+                                <SvgLayer height={h} page={page} rotation={rotationNumber} scale={scale} width={w} />
+                            ),
+                        },
+                        textLayer: {
+                            attrs: {},
+                            children: (
+                                <TextLayer
+                                    page={page}
+                                    pageIndex={pageIndex}
+                                    plugins={plugins}
+                                    rotation={rotationNumber}
+                                    scale={scale}
+                                />
+                            ),
+                        },
+                        width: w,
+                    })}
+                    {plugins.map((plugin, idx) =>
+                        plugin.renderPageLayer ? (
+                            <React.Fragment key={idx}>
+                                {plugin.renderPageLayer({
+                                    doc,
+                                    height: h,
+                                    pageIndex,
+                                    rotation,
+                                    scale,
+                                    width: w,
+                                })}
+                            </React.Fragment>
+                        ) : (
+                            <React.Fragment key={idx}></React.Fragment>
                         )
-                    }
-                    </>
-            }
+                    )}
+                </>
+            )}
         </div>
     );
 };

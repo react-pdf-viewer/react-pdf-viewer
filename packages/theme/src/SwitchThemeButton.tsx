@@ -23,16 +23,19 @@ const SwitchThemeButton: React.FC<SwitchThemeButtonProps> = ({ onClick }) => {
     const l10n = React.useContext(LocalizationContext);
     const isDarkTheme = theme.currentTheme === 'dark';
 
-    const label = l10n && l10n.theme
-        ? (isDarkTheme ? l10n.theme.switchLightTheme : l10n.theme.switchDarkTheme)
-        : (isDarkTheme ? 'Switch to the light theme' : 'Switch to the dark theme');
+    const label =
+        l10n && l10n.theme
+            ? isDarkTheme
+                ? l10n.theme.switchLightTheme
+                : l10n.theme.switchDarkTheme
+            : isDarkTheme
+            ? 'Switch to the light theme'
+            : 'Switch to the dark theme';
 
     return (
         <Tooltip
             position={Position.BottomCenter}
-            target={<MinimalButton onClick={onClick}>
-                {isDarkTheme ? <LightIcon /> : <DarkIcon />}
-            </MinimalButton>}
+            target={<MinimalButton onClick={onClick}>{isDarkTheme ? <LightIcon /> : <DarkIcon />}</MinimalButton>}
             content={() => label}
             offset={TOOLTIP_OFFSET}
         />

@@ -24,23 +24,21 @@ interface PropertiesPlugin extends Plugin {
 }
 
 const propertiesPlugin = (): PropertiesPlugin => {
-    const store = React.useMemo(() => createStore<StoreProps>({
-        fileName: '',
-    }), []);
-
-    const ShowPropertiesDecorator = (props: ShowPropertiesProps) => (
-        <ShowProperties {...props} store={store} />
+    const store = React.useMemo(
+        () =>
+            createStore<StoreProps>({
+                fileName: '',
+            }),
+        []
     );
 
-    const ShowPropertiesButtonDecorator = () => (
-        <ShowProperties store={store} />
-    );
+    const ShowPropertiesDecorator = (props: ShowPropertiesProps) => <ShowProperties {...props} store={store} />;
+
+    const ShowPropertiesButtonDecorator = () => <ShowProperties store={store} />;
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const ShowPropertiesMenuItemDecorator = (props: ShowPropertiesMenuItemProps) => (
-        <ShowPropertiesDecorator>
-            {(p) => <ShowPropertiesMenuItem {...p} />}
-        </ShowPropertiesDecorator>
+        <ShowPropertiesDecorator>{(p) => <ShowPropertiesMenuItem {...p} />}</ShowPropertiesDecorator>
     );
 
     return {

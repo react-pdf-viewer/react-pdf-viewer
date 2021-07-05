@@ -10,8 +10,8 @@ import { Viewer } from '@react-pdf-viewer/core';
 import { searchPlugin } from '../src/index';
 
 const TestKeywordMultipleSpansOption: React.FC<{
-    fileUrl: Uint8Array,
-    keyword: string,
+    fileUrl: Uint8Array;
+    keyword: string;
 }> = ({ fileUrl, keyword }) => {
     const searchPluginInstance = searchPlugin({
         keyword,
@@ -25,12 +25,7 @@ const TestKeywordMultipleSpansOption: React.FC<{
                 width: '720px',
             }}
         >
-            <Viewer
-                fileUrl={fileUrl}
-                plugins={[
-                    searchPluginInstance,
-                ]}
-            />
+            <Viewer fileUrl={fileUrl} plugins={[searchPluginInstance]} />
         </div>
     );
 };
@@ -40,12 +35,14 @@ test('keyword belongs to multiple spans', async () => {
 
     const keyword = 'supported by';
 
-    const { findByText, findAllByTestId, findByTestId, getByTestId } = render(<TestKeywordMultipleSpansOption fileUrl={new Uint8Array(rawSamplePdf)} keyword={keyword} />);
+    const { findByText, findAllByTestId, findByTestId, getByTestId } = render(
+        <TestKeywordMultipleSpansOption fileUrl={new Uint8Array(rawSamplePdf)} keyword={keyword} />
+    );
     mockIsIntersecting(getByTestId('viewer'), true);
-    
+
     const page = await findByTestId('viewer-page-layer-4');
     mockIsIntersecting(page, true);
-    
+
     await findByText('Parameters for Opening PDF Files');
 
     const highlights = await findAllByTitle(page, keyword);

@@ -16,16 +16,18 @@ const TOOLTIP_OFFSET = { left: 0, top: 8 };
 
 const SwitchScrollModeButton: React.FC<RenderSwitchScrollModeProps> = ({ isSelected, mode, onClick }) => (
     <SwitchScrollModeDecorator mode={mode} onClick={onClick}>
-        {
-            (props) => (
-                <Tooltip
-                    position={Position.BottomCenter}
-                    target={<MinimalButton isSelected={isSelected} onClick={props.onClick}>{props.icon}</MinimalButton>}
-                    content={() => props.label}
-                    offset={TOOLTIP_OFFSET}
-                />
-            )
-        }
+        {(props) => (
+            <Tooltip
+                position={Position.BottomCenter}
+                target={
+                    <MinimalButton isSelected={isSelected} onClick={props.onClick}>
+                        {props.icon}
+                    </MinimalButton>
+                }
+                content={() => props.label}
+                offset={TOOLTIP_OFFSET}
+            />
+        )}
     </SwitchScrollModeDecorator>
 );
 

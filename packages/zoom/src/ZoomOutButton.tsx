@@ -21,7 +21,11 @@ const ZoomOutButton: React.FC<RenderZoomOutProps> = ({ onClick }) => {
     return (
         <Tooltip
             position={Position.BottomCenter}
-            target={<MinimalButton onClick={onClick}><ZoomOutIcon /></MinimalButton>}
+            target={
+                <MinimalButton onClick={onClick}>
+                    <ZoomOutIcon />
+                </MinimalButton>
+            }
             content={() => label}
             offset={TOOLTIP_OFFSET}
         />

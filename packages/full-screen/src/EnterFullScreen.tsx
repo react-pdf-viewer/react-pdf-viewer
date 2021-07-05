@@ -25,12 +25,14 @@ export interface EnterFullScreenProps {
 }
 
 const EnterFullScreen: React.FC<{
-    children?: RenderEnterFullScreen,
-    store: Store<StoreProps>,
-    onEnterFullScreen(zoom: Zoom): void,
-    onExitFullScreen(zoom: Zoom): void,
+    children?: RenderEnterFullScreen;
+    store: Store<StoreProps>;
+    onEnterFullScreen(zoom: Zoom): void;
+    onExitFullScreen(zoom: Zoom): void;
 }> = ({ children, store, onEnterFullScreen, onExitFullScreen }) => {
-    const pagesRef = React.useRef<HTMLElement | null>(store.get('getPagesContainer') ? store.get('getPagesContainer')() : null);
+    const pagesRef = React.useRef<HTMLElement | null>(
+        store.get('getPagesContainer') ? store.get('getPagesContainer')() : null
+    );
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const closeOtherFullScreen = (): Promise<any> => {
@@ -40,9 +42,7 @@ const EnterFullScreen: React.FC<{
         }
 
         const ele = getFullScreenElement();
-        return (ele && ele !== pagesEle)
-                ? exitFullScreen(ele)
-                : Promise.resolve();
+        return ele && ele !== pagesEle ? exitFullScreen(ele) : Promise.resolve();
     };
 
     const enterFullScreen = () => {

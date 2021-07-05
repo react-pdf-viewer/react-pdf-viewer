@@ -15,10 +15,7 @@ interface JumpToDestination {
     scaleTo: number | SpecialZoomLevel;
 }
 
-const parse = (
-    pageIndex: number,
-    destArray: PdfJs.OutlineDestination
-): JumpToDestination => {
+const parse = (pageIndex: number, destArray: PdfJs.OutlineDestination): JumpToDestination => {
     let bottomOffset;
     let scale;
     switch (destArray[1].name) {
@@ -53,10 +50,7 @@ const parse = (
     }
 };
 
-const getDestination = (
-    doc: PdfJs.PdfDocument,
-    dest: PdfJs.OutlineDestinationType
-): Promise<JumpToDestination> => {
+const getDestination = (doc: PdfJs.PdfDocument, dest: PdfJs.OutlineDestinationType): Promise<JumpToDestination> => {
     return new Promise<JumpToDestination>((res) => {
         new Promise<PdfJs.OutlineDestination>((resolve) => {
             if (typeof dest === 'string') {
@@ -69,11 +63,7 @@ const getDestination = (
         })
             .then((destArray) =>
                 'object' === typeof destArray[0]
-                    ? doc
-                          .getPageIndex(destArray[0])
-                          .then((pageIndex) =>
-                              Promise.resolve({ pageIndex, destArray })
-                          )
+                    ? doc.getPageIndex(destArray[0]).then((pageIndex) => Promise.resolve({ pageIndex, destArray }))
                     : Promise.resolve({
                           pageIndex: destArray[0],
                           destArray,

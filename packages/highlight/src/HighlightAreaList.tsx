@@ -19,11 +19,11 @@ import RenderHighlightsProps from './types/RenderHighlightsProps';
 import useRotation from './useRotation';
 
 const HighlightAreaList: React.FC<{
-    pageIndex: number,
-    renderHighlightContent?(props: RenderHighlightContentProps): React.ReactElement,
-    renderHighlightTarget?(props: RenderHighlightTargetProps): React.ReactElement,
-    renderHighlights?(props: RenderHighlightsProps): React.ReactElement,
-    store: Store<StoreProps>,
+    pageIndex: number;
+    renderHighlightContent?(props: RenderHighlightContentProps): React.ReactElement;
+    renderHighlightTarget?(props: RenderHighlightTargetProps): React.ReactElement;
+    renderHighlights?(props: RenderHighlightsProps): React.ReactElement;
+    store: Store<StoreProps>;
 }> = ({ pageIndex, renderHighlightContent, renderHighlightTarget, renderHighlights, store }) => {
     const [selectionState, setSelectionState] = React.useState<SelectionState>(store.get('selectionState'));
     const { rotation } = useRotation(store);
@@ -45,14 +45,16 @@ const HighlightAreaList: React.FC<{
     }, []);
 
     // Filter the selections
-    const listAreas = selectionState instanceof HighlightState
-        ? selectionState.highlightAreas.filter(s => s.pageIndex === pageIndex)
-        : [];
+    const listAreas =
+        selectionState instanceof HighlightState
+            ? selectionState.highlightAreas.filter((s) => s.pageIndex === pageIndex)
+            : [];
 
     return (
         <>
-        {
-            renderHighlightTarget && (selectionState instanceof SelectedState) && (selectionState.selectionRegion.pageIndex === pageIndex) && (
+            {renderHighlightTarget &&
+                selectionState instanceof SelectedState &&
+                selectionState.selectionRegion.pageIndex === pageIndex &&
                 renderHighlightTarget({
                     highlightAreas: selectionState.highlightAreas,
                     selectedText: selectionState.selectedText,
@@ -60,42 +62,41 @@ const HighlightAreaList: React.FC<{
                     selectionData: selectionState.selectionData,
                     cancel,
                     toggle: () => {
-                        store.update('selectionState', new HighlightState(
-                            selectionState.selectedText,
-                            selectionState.highlightAreas,
-                            selectionState.selectionData,
-                            selectionState.selectionRegion
-                        ));
+                        store.update(
+                            'selectionState',
+                            new HighlightState(
+                                selectionState.selectedText,
+                                selectionState.highlightAreas,
+                                selectionState.selectionData,
+                                selectionState.selectionRegion
+                            )
+                        );
                         window.getSelection().removeAllRanges();
                     },
-                })
-            )
-        }
-        {
-            renderHighlightContent && (selectionState instanceof HighlightState) && (selectionState.selectionRegion.pageIndex === pageIndex) && (
+                })}
+            {renderHighlightContent &&
+                selectionState instanceof HighlightState &&
+                selectionState.selectionRegion.pageIndex === pageIndex &&
                 renderHighlightContent({
                     highlightAreas: selectionState.highlightAreas,
                     selectedText: selectionState.selectedText,
                     selectionRegion: selectionState.selectionRegion,
                     selectionData: selectionState.selectionData,
                     cancel,
-                })
-            )
-        }
-        {
-            listAreas.length > 0 && (
+                })}
+            {listAreas.length > 0 && (
                 <div>
-                    {listAreas.map((area, idx) => <HighlightRect key={idx} area={area} rotation={rotation} />)}
+                    {listAreas.map((area, idx) => (
+                        <HighlightRect key={idx} area={area} rotation={rotation} />
+                    ))}
                 </div>
-            )
-        }
-        {
-            renderHighlights && renderHighlights({
-                pageIndex,
-                rotation,
-                getCssProperties,
-            })
-        }
+            )}
+            {renderHighlights &&
+                renderHighlights({
+                    pageIndex,
+                    rotation,
+                    getCssProperties,
+                })}
         </>
     );
 };

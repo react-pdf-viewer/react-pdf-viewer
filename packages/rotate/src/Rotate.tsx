@@ -27,9 +27,9 @@ export interface RotateProps {
 }
 
 const Rotate: React.FC<{
-    children?: RenderRotate,
-    direction: RotateDirection,
-    store: Store<StoreProps>,
+    children?: RenderRotate;
+    direction: RotateDirection;
+    store: Store<StoreProps>;
 }> = ({ children, direction, store }) => {
     const { rotation } = useRotation(store);
 
@@ -37,12 +37,14 @@ const Rotate: React.FC<{
         const rotate = store.get('rotate');
         if (rotate) {
             const degrees = direction === RotateDirection.Backward ? -90 : 90;
-            const updateRotation = (rotation === 360 || rotation === -360) ? degrees : rotation + degrees;
+            const updateRotation = rotation === 360 || rotation === -360 ? degrees : rotation + degrees;
             rotate(updateRotation);
         }
     };
 
-    const defaultChildren = (props: RenderRotateProps) => <RotateButton direction={props.direction} onClick={props.onClick} />;
+    const defaultChildren = (props: RenderRotateProps) => (
+        <RotateButton direction={props.direction} onClick={props.onClick} />
+    );
     const render = children || defaultChildren;
 
     return render({

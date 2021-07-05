@@ -15,8 +15,8 @@ import { RenderGoToPage, RenderGoToPageProps } from './types/index';
 import useCurrentPage from './useCurrentPage';
 
 const GoToFirstPage: React.FC<{
-    children?: RenderGoToPage,
-    store: Store<StoreProps>,
+    children?: RenderGoToPage;
+    store: Store<StoreProps>;
 }> = ({ children, store }) => {
     const { currentPage } = useCurrentPage(store);
     const goToFirstPage = () => {
@@ -26,7 +26,9 @@ const GoToFirstPage: React.FC<{
         }
     };
 
-    const defaultChildren = (props: RenderGoToPageProps) => <GoToFirstPageButton isDisabled={props.isDisabled} onClick={props.onClick} />;
+    const defaultChildren = (props: RenderGoToPageProps) => (
+        <GoToFirstPageButton isDisabled={props.isDisabled} onClick={props.onClick} />
+    );
     const render = children || defaultChildren;
 
     return render({

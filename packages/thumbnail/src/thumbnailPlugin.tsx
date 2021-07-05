@@ -19,9 +19,7 @@ interface ThumbnailPlugin extends Plugin {
 const thumbnailPlugin = (): ThumbnailPlugin => {
     const store = React.useMemo(() => createStore<StoreProps>({}), []);
 
-    const ThumbnailsDecorator = () => (
-        <ThumbnailListWithStore store={store} />
-    );
+    const ThumbnailsDecorator = () => <ThumbnailListWithStore store={store} />;
 
     return {
         install: (pluginFunctions: PluginFunctions) => {

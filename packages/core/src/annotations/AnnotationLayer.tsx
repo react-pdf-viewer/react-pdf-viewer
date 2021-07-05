@@ -25,7 +25,16 @@ interface AnnotationLayerProps {
     onJumpToDest(pageIndex: number, bottomOffset: number, leftOffset: number, scaleTo: number | SpecialZoomLevel): void;
 }
 
-const AnnotationLayer: React.FC<AnnotationLayerProps> = ({ doc, page, pageIndex, plugins, rotation, scale, onExecuteNamedAction, onJumpToDest }) => {
+const AnnotationLayer: React.FC<AnnotationLayerProps> = ({
+    doc,
+    page,
+    pageIndex,
+    plugins,
+    rotation,
+    scale,
+    onExecuteNamedAction,
+    onJumpToDest,
+}) => {
     const containerRef = React.useRef<HTMLDivElement>();
 
     const renderAnnotations = (annotations: PdfJs.Annotation[]): React.ReactElement => {
@@ -46,7 +55,7 @@ const AnnotationLayer: React.FC<AnnotationLayerProps> = ({ doc, page, pageIndex,
     };
 
     return (
-        <div ref={containerRef} className='rpv-core__annotation-layer'>
+        <div ref={containerRef} className="rpv-core__annotation-layer">
             <AnnotationLoader page={page} renderAnnotations={renderAnnotations} />
         </div>
     );

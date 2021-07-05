@@ -16,8 +16,8 @@ import useCurrentPage from './useCurrentPage';
 import useNumberOfPages from './useNumberOfPages';
 
 const GoToNextPage: React.FC<{
-    children?: RenderGoToPage,
-    store: Store<StoreProps>,
+    children?: RenderGoToPage;
+    store: Store<StoreProps>;
 }> = ({ children, store }) => {
     const { currentPage } = useCurrentPage(store);
     const { numberOfPages } = useNumberOfPages(store);

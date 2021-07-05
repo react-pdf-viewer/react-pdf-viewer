@@ -20,23 +20,30 @@ const PropertiesLoader: React.FC<PropertiesLoaderProps> = ({ doc, render }) => {
     const [data, setData] = React.useState<PropertiesData>();
 
     React.useEffect(() => {
-        doc.getMetadata().then((meta) => {
-            return Promise.resolve(meta);
-        }).then((meta) => {
-            return doc.getDownloadInfo().then((d) => {
-                return Promise.resolve({
-                    fileName: meta.contentDispositionFilename || '',
-                    info: meta.info,
-                    length: d.length,
+        doc.getMetadata()
+            .then((meta) => {
+                return Promise.resolve(meta);
+            })
+            .then((meta) => {
+                return doc.getDownloadInfo().then((d) => {
+                    return Promise.resolve({
+                        fileName: meta.contentDispositionFilename || '',
+                        info: meta.info,
+                        length: d.length,
+                    });
                 });
+            })
+            .then((response) => {
+                setData(response);
             });
-        }).then((response) => {
-            setData(response);
-        });
     }, []);
 
-    return (
-        data ? render(data) : <div className='rpv-properties__loader'><Spinner /></div>
+    return data ? (
+        render(data)
+    ) : (
+        <div className="rpv-properties__loader">
+            <Spinner />
+        </div>
     );
 };
 

@@ -21,12 +21,7 @@ const dateRegex = new RegExp(
         "'?"
 );
 
-const parse = (
-    value: string,
-    min: number,
-    max: number,
-    defaultValue: number
-): number => {
+const parse = (value: string, min: number, max: number, defaultValue: number): number => {
     const parsed = parseInt(value, 10);
     return parsed >= min && parsed <= max ? parsed : defaultValue;
 };

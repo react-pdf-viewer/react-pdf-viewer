@@ -28,7 +28,15 @@ interface PageState {
     width: number;
 }
 
-const PageThumbnailContainer: React.FC<PageThumbnailContainerProps> = ({ canvas, doc, pageHeight, pageIndex, pageWidth, rotation, onLoad }) => {
+const PageThumbnailContainer: React.FC<PageThumbnailContainerProps> = ({
+    canvas,
+    doc,
+    pageHeight,
+    pageIndex,
+    pageWidth,
+    rotation,
+    onLoad,
+}) => {
     const [pageSize, setPageSize] = React.useState<PageState>({
         height: pageHeight,
         page: null,

@@ -24,9 +24,9 @@ export interface DownloadProps {
 }
 
 const Download: React.FC<{
-    children?: RenderDownload,
-    fileNameGenerator: (file: OpenFile) => string,
-    store: Store<StoreProps>,
+    children?: RenderDownload;
+    fileNameGenerator: (file: OpenFile) => string;
+    store: Store<StoreProps>;
 }> = ({ children, fileNameGenerator, store }) => {
     const [currentFile, setCurrentFile] = React.useState<OpenFile>(store.get('file'));
 

@@ -37,34 +37,42 @@ const fullScreenPlugin = (props?: FullScreenPluginProps): FullScreenPlugin => {
     /* eslint-enable @typescript-eslint/no-empty-function */
 
     const EnterFullScreenDecorator = (props: EnterFullScreenProps) => (
-        <EnterFullScreen {...props} store={store} onEnterFullScreen={onEnterFullScreen} onExitFullScreen={onExitFullScreen} />
+        <EnterFullScreen
+            {...props}
+            store={store}
+            onEnterFullScreen={onEnterFullScreen}
+            onExitFullScreen={onExitFullScreen}
+        />
     );
 
     const EnterFullScreenButtonDecorator = () => (
         <EnterFullScreenDecorator>
-            {
-                (renderProps) => <EnterFullScreenButton {...renderProps} />
-            }
+            {(renderProps) => <EnterFullScreenButton {...renderProps} />}
         </EnterFullScreenDecorator>
     );
 
     const EnterFullScreenMenuItemDecorator = (props: EnterFullScreenMenuItemProps) => (
         <EnterFullScreenDecorator>
-            {(p) => <EnterFullScreenMenuItem onClick={() => { p.onClick(); props.onClick(); }} />}
+            {(p) => (
+                <EnterFullScreenMenuItem
+                    onClick={() => {
+                        p.onClick();
+                        props.onClick();
+                    }}
+                />
+            )}
         </EnterFullScreenDecorator>
     );
 
-    const ExitFullScreenDecorator = () => (
-        <ExitFullScreenButton store={store} />
-    );
+    const ExitFullScreenDecorator = () => <ExitFullScreenButton store={store} />;
 
     const renderViewer = (props: RenderViewer): Slot => {
         const currentSlot = props.slot;
         if (currentSlot.subSlot) {
             currentSlot.subSlot.children = (
                 <>
-                <ExitFullScreenDecorator />
-                {currentSlot.subSlot.children}
+                    <ExitFullScreenDecorator />
+                    {currentSlot.subSlot.children}
                 </>
             );
         }

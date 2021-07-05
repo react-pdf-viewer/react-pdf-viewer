@@ -52,57 +52,37 @@ const BookmarkItem: React.FC<BookmarkItemProps> = ({ bookmark, depth, doc, onCli
     return (
         <>
             <div
-                className='rpv-bookmark__item'
+                className="rpv-bookmark__item"
                 style={{
                     paddingLeft: `${depth * 20 + 4}px`,
                 }}
                 onClick={clickItem}
             >
-                {
-                    hasSubItems && (
-                        <span
-                            ref={toggleRef}
-                            className='rpv-bookmark__toggle'
-                            onClick={toggleSubItems}
-                        >
-                            <RightArrowIcon />
-                        </span>
-                    )
-                }
-                {
-                    bookmark.url
-                    ? (
-                        <a
-                            className='rpv-bookmark__title'
-                            href={bookmark.url}
-                            rel='noopener noreferrer nofollow'
-                            target={bookmark.newWindow ? '_blank' : ''}
-                        >
-                            {bookmark.title}
-                        </a>
-                    )
-                    : (
-                        <div
-                            className='rpv-bookmark__title'
-                            onClick={clickBookmak}
-                        >
-                            {bookmark.title}
-                        </div>
-                    )
-                }
-            </div>
-            {
-                hasSubItems && (
-                    <div ref={subItemRef}>
-                        <BookmarkList
-                            bookmarks={bookmark.items}
-                            depth={depth + 1}
-                            doc={doc}
-                            onJumpToDest={onJumpToDest}
-                        />
+                {hasSubItems && (
+                    <span ref={toggleRef} className="rpv-bookmark__toggle" onClick={toggleSubItems}>
+                        <RightArrowIcon />
+                    </span>
+                )}
+                {bookmark.url ? (
+                    <a
+                        className="rpv-bookmark__title"
+                        href={bookmark.url}
+                        rel="noopener noreferrer nofollow"
+                        target={bookmark.newWindow ? '_blank' : ''}
+                    >
+                        {bookmark.title}
+                    </a>
+                ) : (
+                    <div className="rpv-bookmark__title" onClick={clickBookmak}>
+                        {bookmark.title}
                     </div>
-                )
-            }
+                )}
+            </div>
+            {hasSubItems && (
+                <div ref={subItemRef}>
+                    <BookmarkList bookmarks={bookmark.items} depth={depth + 1} doc={doc} onJumpToDest={onJumpToDest} />
+                </div>
+            )}
         </>
     );
 };

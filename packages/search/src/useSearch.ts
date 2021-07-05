@@ -29,11 +29,7 @@ interface UseSearch {
     wholeWords: boolean;
     search(): void;
     setKeywords(keyword: SingleKeyword[]): void;
-    searchFor(
-        keyword: SingleKeyword[],
-        matchCase?: boolean,
-        wholeWords?: boolean
-    ): void;
+    searchFor(keyword: SingleKeyword[], matchCase?: boolean, wholeWords?: boolean): void;
     // Compatible with the single keyword search
     keyword: string;
     setKeyword(keyword: string): void;
@@ -98,8 +94,7 @@ const useSearch = (store: Store<StoreProps>): UseSearch => {
 
     const search = () => searchFor(keywords, matchCase, wholeWords);
 
-    const setKeyword = (keyword: string) =>
-        setKeywords(keyword === '' ? [] : [keyword]);
+    const setKeyword = (keyword: string) => setKeywords(keyword === '' ? [] : [keyword]);
 
     // Private
     // -------
@@ -118,9 +113,7 @@ const useSearch = (store: Store<StoreProps>): UseSearch => {
                         return page.getTextContent();
                     })
                     .then((content) => {
-                        const pageContent = content.items
-                            .map((item) => item.str || '')
-                            .join('');
+                        const pageContent = content.items.map((item) => item.str || '').join('');
                         return Promise.resolve({
                             pageContent,
                             pageIndex,
@@ -151,14 +144,8 @@ const useSearch = (store: Store<StoreProps>): UseSearch => {
         return keyword.keyword;
     };
 
-    const searchFor = (
-        keywordParam: SingleKeyword[],
-        matchCaseParam?: boolean,
-        wholeWordsParam?: boolean
-    ): void => {
-        const keywords = keywordParam.map((k) =>
-            normalizeSingleKeyword(k, matchCaseParam, wholeWordsParam)
-        );
+    const searchFor = (keywordParam: SingleKeyword[], matchCaseParam?: boolean, wholeWordsParam?: boolean): void => {
+        const keywords = keywordParam.map((k) => normalizeSingleKeyword(k, matchCaseParam, wholeWordsParam));
         store.update('keyword', keywords);
 
         setCurrentMatch(0);
@@ -175,14 +162,8 @@ const useSearch = (store: Store<StoreProps>): UseSearch => {
         promise.then((response) => {
             const arr: Match[] = [];
             response.forEach((item, pageIndex) => {
-                const numMatches = keywords
-                    .map((k) => (item.match(k) || []).length)
-                    .reduce((a, b) => a + b, 0);
-                for (
-                    let matchIndex = 0;
-                    matchIndex < numMatches;
-                    matchIndex++
-                ) {
+                const numMatches = keywords.map((k) => (item.match(k) || []).length).reduce((a, b) => a + b, 0);
+                for (let matchIndex = 0; matchIndex < numMatches; matchIndex++) {
                     arr.push({
                         matchIndex,
                         pageIndex,

@@ -21,7 +21,11 @@ const GoToLastPageButton: React.FC<RenderGoToPageProps> = ({ isDisabled, onClick
     return (
         <Tooltip
             position={Position.BottomCenter}
-            target={<MinimalButton isDisabled={isDisabled} onClick={onClick}><DownArrowIcon /></MinimalButton>}
+            target={
+                <MinimalButton isDisabled={isDisabled} onClick={onClick}>
+                    <DownArrowIcon />
+                </MinimalButton>
+            }
             content={() => label}
             offset={TOOLTIP_OFFSET}
         />

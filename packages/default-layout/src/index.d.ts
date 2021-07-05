@@ -11,12 +11,7 @@ import type { Plugin, ViewerProps } from '@react-pdf-viewer/core';
 import type { AttachmentPlugin } from '@react-pdf-viewer/attachment';
 import type { BookmarkPlugin } from '@react-pdf-viewer/bookmark';
 import type { ThumbnailPlugin } from '@react-pdf-viewer/thumbnail';
-import type {
-    ToolbarPlugin,
-    ToolbarPluginProps,
-    ToolbarProps,
-    ToolbarSlot,
-} from '@react-pdf-viewer/toolbar';
+import type { ToolbarPlugin, ToolbarPluginProps, ToolbarProps, ToolbarSlot } from '@react-pdf-viewer/toolbar';
 
 export type { ToolbarPluginProps, ToolbarProps, ToolbarSlot };
 
@@ -40,15 +35,11 @@ export interface DefaultLayoutProps extends ViewerProps {
 
 export interface DefaultLayoutPluginProps {
     toolbarPlugin?: ToolbarPluginProps;
-    renderToolbar?: (
-        Toolbar: (props: ToolbarProps) => React.ReactElement
-    ) => React.ReactElement;
+    renderToolbar?: (Toolbar: (props: ToolbarProps) => React.ReactElement) => React.ReactElement;
     sidebarTabs?: (defaultTabs: SidebarTab[]) => SidebarTab[];
 }
 
-export function defaultLayoutPlugin(
-    props?: DefaultLayoutPluginProps
-): DefaultLayoutPlugin;
+export function defaultLayoutPlugin(props?: DefaultLayoutPluginProps): DefaultLayoutPlugin;
 
 // -----
 // Icons

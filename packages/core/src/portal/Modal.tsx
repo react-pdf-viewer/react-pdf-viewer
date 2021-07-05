@@ -23,22 +23,13 @@ interface ModalProps {
 const Modal: React.FC<ModalProps> = ({ closeOnClickOutside, closeOnEscape, content, target }) => {
     const renderContent = (toggle: Toggle): React.ReactElement => (
         <ModalOverlay>
-            <ModalBody
-                closeOnClickOutside={closeOnClickOutside}
-                closeOnEscape={closeOnEscape}
-                onToggle={toggle}
-            >
+            <ModalBody closeOnClickOutside={closeOnClickOutside} closeOnEscape={closeOnEscape} onToggle={toggle}>
                 {content(toggle)}
             </ModalBody>
         </ModalOverlay>
     );
 
-    return (
-        <Portal
-            target={target}
-            content={renderContent}
-        />
-    );
+    return <Portal target={target} content={renderContent} />;
 };
 
 export default Modal;

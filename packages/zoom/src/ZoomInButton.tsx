@@ -21,7 +21,11 @@ const ZoomInButton: React.FC<RenderZoomInProps> = ({ onClick }) => {
     return (
         <Tooltip
             position={Position.BottomCenter}
-            target={<MinimalButton onClick={onClick}><ZoomInIcon /></MinimalButton>}
+            target={
+                <MinimalButton onClick={onClick}>
+                    <ZoomInIcon />
+                </MinimalButton>
+            }
             content={() => label}
             offset={TOOLTIP_OFFSET}
         />

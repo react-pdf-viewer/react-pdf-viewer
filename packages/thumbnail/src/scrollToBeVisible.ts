@@ -9,8 +9,7 @@
 // Scroll the `ele` element if it's not visible in its scrollable `container`
 const scrollToBeVisible = (ele: HTMLElement, container: HTMLElement): void => {
     // Calculate the distance from top of element to the top side of container
-    const top =
-        ele.getBoundingClientRect().top - container.getBoundingClientRect().top;
+    const top = ele.getBoundingClientRect().top - container.getBoundingClientRect().top;
     const eleHeight = ele.clientHeight;
     const containerHeight = container.clientHeight;
 

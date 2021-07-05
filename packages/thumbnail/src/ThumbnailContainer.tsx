@@ -13,7 +13,7 @@ import ThumbnailItem from './ThumbnailItem';
 
 const THUMBNAIL_WIDTH = 100;
 
-interface ThumbnailContainerProps {    
+interface ThumbnailContainerProps {
     doc: PdfJs.PdfDocument;
     isActive: boolean;
     pageHeight: number;
@@ -31,7 +31,15 @@ interface PageState {
     width: number;
 }
 
-const ThumbnailContainer: React.FC<ThumbnailContainerProps> = ({ doc, isActive, pageHeight, pageIndex, pageWidth, rotation, onActive }) => {
+const ThumbnailContainer: React.FC<ThumbnailContainerProps> = ({
+    doc,
+    isActive,
+    pageHeight,
+    pageIndex,
+    pageWidth,
+    rotation,
+    onActive,
+}) => {
     const [pageSize, setPageSize] = React.useState<PageState>({
         height: pageHeight,
         isCalculated: false,
@@ -47,8 +55,8 @@ const ThumbnailContainer: React.FC<ThumbnailContainerProps> = ({ doc, isActive, 
 
     const scale = width / height;
     const isVertical = Math.abs(rotation) % 180 === 0;
-    const w = isVertical ? THUMBNAIL_WIDTH : (THUMBNAIL_WIDTH / scale);
-    const h = isVertical ? (THUMBNAIL_WIDTH / scale) : THUMBNAIL_WIDTH;
+    const w = isVertical ? THUMBNAIL_WIDTH : THUMBNAIL_WIDTH / scale;
+    const h = isVertical ? THUMBNAIL_WIDTH / scale : THUMBNAIL_WIDTH;
 
     React.useLayoutEffect(() => {
         if (!isActive) {
@@ -87,27 +95,25 @@ const ThumbnailContainer: React.FC<ThumbnailContainerProps> = ({ doc, isActive, 
 
     return (
         <div
-            className='rpv-thumbnail__container'
+            className="rpv-thumbnail__container"
             ref={containerRef}
             style={{
                 height: `${h}px`,
                 width: `${w}px`,
             }}
         >
-            {
-                !page
-                    ? <Spinner />
-                    : (
-                        <ThumbnailItem
-                            page={page}
-                            pageHeight={isVertical ? height : width}
-                            pageWidth={isVertical ? width : height}
-                            rotation={rotationNumber}
-                            thumbnailHeight={h}
-                            thumbnailWidth={w}
-                        />
-                    )
-            }
+            {!page ? (
+                <Spinner />
+            ) : (
+                <ThumbnailItem
+                    page={page}
+                    pageHeight={isVertical ? height : width}
+                    pageWidth={isVertical ? width : height}
+                    rotation={rotationNumber}
+                    thumbnailHeight={h}
+                    thumbnailWidth={w}
+                />
+            )}
         </div>
     );
 };

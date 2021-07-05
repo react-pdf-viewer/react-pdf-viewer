@@ -8,22 +8,19 @@ import { mockIsIntersecting } from '../../../test-utils/mockIntersectionObserver
 import Viewer from '../src/Viewer';
 
 const TestOnDocumentLoad: React.FC<{
-    fileUrl: Uint8Array
+    fileUrl: Uint8Array;
 }> = ({ fileUrl }) => {
     const [numPages, setNumPages] = React.useState(0);
 
     return (
         <>
-        <div data-testid='num-pages'>{numPages}</div>
-        <div style={{ height: '720px' }}>
-            <Viewer
-                fileUrl={fileUrl}
-                onDocumentLoad={(e) => setNumPages(e.doc.numPages)}
-            />
-        </div>
+            <div data-testid="num-pages">{numPages}</div>
+            <div style={{ height: '720px' }}>
+                <Viewer fileUrl={fileUrl} onDocumentLoad={(e) => setNumPages(e.doc.numPages)} />
+            </div>
         </>
     );
-};   
+};
 
 test('onDocumentLoad() callback', async () => {
     const rawSamplePdf = fs.readFileSync(path.resolve(__dirname, '../../../assets/pdf-open-parameters.pdf'));
@@ -32,5 +29,5 @@ test('onDocumentLoad() callback', async () => {
     mockIsIntersecting(getByTestId('viewer'), true);
 
     const numPagesLabel = await findByTestId('num-pages');
-    expect(numPagesLabel.textContent).toEqual("8");
+    expect(numPagesLabel.textContent).toEqual('8');
 });

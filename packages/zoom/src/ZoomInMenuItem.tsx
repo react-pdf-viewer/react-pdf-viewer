@@ -24,4 +24,3 @@ const ZoomInMenuItem: React.FC<ZoomMenuItemProps> = ({ onClick }) => {
 };
 
 export default ZoomInMenuItem;
- 

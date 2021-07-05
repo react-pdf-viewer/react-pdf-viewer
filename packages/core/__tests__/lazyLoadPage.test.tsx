@@ -11,9 +11,7 @@ test('Lazy load page', async () => {
     const rawSamplePdf = fs.readFileSync(path.resolve(__dirname, '../../../assets/pdf-open-parameters.pdf'));
     const App = () => (
         <div style={{ height: '720px' }}>
-            <Viewer
-                fileUrl={new Uint8Array(rawSamplePdf)}
-            />
+            <Viewer fileUrl={new Uint8Array(rawSamplePdf)} />
         </div>
     );
     const { findByText, getByTestId } = render(<App />);

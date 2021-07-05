@@ -62,56 +62,64 @@ const SearchPopover: React.FC<SearchPopoverProps> = ({ store, onToggle }) => {
     };
 
     return (
-        <div className='rpv-search__popover'>
-            <div className='rpv-search__popover-input-counter'>
+        <div className="rpv-search__popover">
+            <div className="rpv-search__popover-input-counter">
                 <TextBox
                     placeholder={(l10n && l10n.search ? l10n.search.enterToSearch : 'Enter to search') as string}
-                    type='text'
+                    type="text"
                     value={keyword}
                     onChange={setKeyword}
                     onKeyDown={onKeydownSearch}
                 />
-                <div className='rpv-search__popover-counter'>
+                <div className="rpv-search__popover-counter">
                     {currentMatch}/{numberOfMatches}
                 </div>
             </div>
-            <label className='rpv-search__popover-label'>
+            <label className="rpv-search__popover-label">
                 <input
-                    className='rpv-search__popover-label-checkbox'
+                    className="rpv-search__popover-label-checkbox"
                     checked={matchCase}
-                    type='checkbox'
+                    type="checkbox"
                     onChange={onChangeMatchCase}
-                /> {l10n && l10n.search ? l10n.search.matchCase : 'Match case'}
+                />{' '}
+                {l10n && l10n.search ? l10n.search.matchCase : 'Match case'}
             </label>
-            <label className='rpv-search__popover-label'>
+            <label className="rpv-search__popover-label">
                 <input
-                    className='rpv-search__popover-label-checkbox'
+                    className="rpv-search__popover-label-checkbox"
                     checked={wholeWords}
-                    type='checkbox'
+                    type="checkbox"
                     onChange={onChangeWholeWords}
-                /> {l10n && l10n.search ? l10n.search.wholeWords : 'Whole words'}
+                />{' '}
+                {l10n && l10n.search ? l10n.search.wholeWords : 'Whole words'}
             </label>
-            <div className='rpv-search__popover-footer'>
-                <div className='rpv-search__popover-footer-item'>
+            <div className="rpv-search__popover-footer">
+                <div className="rpv-search__popover-footer-item">
                     <Tooltip
                         position={Position.BottomCenter}
-                        target={<MinimalButton onClick={jumpToPreviousMatch}><PreviousIcon /></MinimalButton>}
+                        target={
+                            <MinimalButton onClick={jumpToPreviousMatch}>
+                                <PreviousIcon />
+                            </MinimalButton>
+                        }
                         content={() => (l10n && l10n.search ? l10n.search.previousMatch : 'Previous match')}
                         offset={PORTAL_OFFSET}
                     />
                 </div>
-                <div className='rpv-search__popover-footer-item'>
+                <div className="rpv-search__popover-footer-item">
                     <Tooltip
                         position={Position.BottomCenter}
-                        target={<MinimalButton onClick={jumpToNextMatch}><NextIcon /></MinimalButton>}
+                        target={
+                            <MinimalButton onClick={jumpToNextMatch}>
+                                <NextIcon />
+                            </MinimalButton>
+                        }
                         content={() => (l10n && l10n.search ? l10n.search.nextMatch : 'Next match')}
                         offset={PORTAL_OFFSET}
                     />
                 </div>
-                <div className='rpv-search__popover-footer-button'>
-                    <Button onClick={onClose}>
-                        {l10n && l10n.search ? l10n.search.close : 'Close'}
-                    </Button>
+                <div className="rpv-search__popover-footer-button">
+                    <Button onClick={onClose}>{l10n && l10n.search ? l10n.search.close : 'Close'}</Button>
                 </div>
             </div>
         </div>

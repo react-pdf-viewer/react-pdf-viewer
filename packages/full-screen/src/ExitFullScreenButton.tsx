@@ -14,7 +14,7 @@ import { exitFullScreen, getFullScreenElement } from './fullScreen';
 import StoreProps from './StoreProps';
 
 const ExitFullScreenButton: React.FC<{
-    store: Store<StoreProps>
+    store: Store<StoreProps>;
 }> = ({ store }) => {
     const [isFullScreen, setFullScreen] = React.useState(false);
 
@@ -39,7 +39,7 @@ const ExitFullScreenButton: React.FC<{
         if (ele && ele === pagesEle) {
             exitFullScreen(document);
         }
-    }
+    };
 
     React.useEffect(() => {
         store.subscribe('isFullScreen', handleFullScreen);
@@ -50,14 +50,15 @@ const ExitFullScreenButton: React.FC<{
 
     return (
         <>
-        {
-            isFullScreen &&
-            <div className='rpv-full-screen__exit-button'>
-                <div className='rpv-full-screen__exit-button-content'>
-                    <MinimalButton onClick={handleExitFullScreen}><ExitFullScreenIcon /></MinimalButton>
+            {isFullScreen && (
+                <div className="rpv-full-screen__exit-button">
+                    <div className="rpv-full-screen__exit-button-content">
+                        <MinimalButton onClick={handleExitFullScreen}>
+                            <ExitFullScreenIcon />
+                        </MinimalButton>
+                    </div>
                 </div>
-            </div>
-        }
+            )}
         </>
     );
 };

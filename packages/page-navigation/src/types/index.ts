@@ -23,9 +23,4 @@ interface GoToPageProps {
     children?: RenderGoToPage;
 }
 
-export type {
-    GoToPageMenuItemProps,
-    GoToPageProps,
-    RenderGoToPage,
-    RenderGoToPageProps,
-};
+export type { GoToPageMenuItemProps, GoToPageProps, RenderGoToPage, RenderGoToPageProps };

@@ -15,8 +15,8 @@ import { RenderGoToPage, RenderGoToPageProps } from './types/index';
 import useCurrentPage from './useCurrentPage';
 
 const GoToPreviousPage: React.FC<{
-    children?: RenderGoToPage,
-    store: Store<StoreProps>,
+    children?: RenderGoToPage;
+    store: Store<StoreProps>;
 }> = ({ store, children }) => {
     const { currentPage } = useCurrentPage(store);
 

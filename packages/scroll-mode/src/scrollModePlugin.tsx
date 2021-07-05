@@ -36,39 +36,42 @@ export interface ScrollModePluginProps {
 }
 
 const scrollModePlugin = (props?: ScrollModePluginProps): ScrollModePlugin => {
-    const store = React.useMemo(() => createStore<StoreProps>({
-        scrollMode: props && props.scrollMode ? props.scrollMode : ScrollMode.Vertical,
-    }), []);
-
-    const SwitchScrollModeDecorator = (props: SwitchScrollModeProps) => (
-        <SwitchScrollMode {...props} store={store} />
+    const store = React.useMemo(
+        () =>
+            createStore<StoreProps>({
+                scrollMode: props && props.scrollMode ? props.scrollMode : ScrollMode.Vertical,
+            }),
+        []
     );
+
+    const SwitchScrollModeDecorator = (props: SwitchScrollModeProps) => <SwitchScrollMode {...props} store={store} />;
 
     const SwitchScrollModeButtonDecorator = (props: SwitchScrollModeButtonProps) => (
         <SwitchScrollModeDecorator mode={props.mode}>
-            {
-                (p) => (
-                    <SwitchScrollModeButton
-                        isSelected={p.isSelected}
-                        mode={p.mode}
-                        onClick={() => { p.onClick(); }}
-                    />
-                )
-            }
+            {(p) => (
+                <SwitchScrollModeButton
+                    isSelected={p.isSelected}
+                    mode={p.mode}
+                    onClick={() => {
+                        p.onClick();
+                    }}
+                />
+            )}
         </SwitchScrollModeDecorator>
     );
 
     const SwitchScrollModeMenuItemDecorator = (props: SwitchScrollModeMenuItemProps) => (
         <SwitchScrollModeDecorator mode={props.mode}>
-            {
-                (p) => (
-                    <SwitchScrollModeMenuItem
-                        isSelected={p.isSelected}
-                        mode={p.mode}
-                        onClick={() => { p.onClick(); props.onClick(); }}
-                    />
-                )
-            }
+            {(p) => (
+                <SwitchScrollModeMenuItem
+                    isSelected={p.isSelected}
+                    mode={p.mode}
+                    onClick={() => {
+                        p.onClick();
+                        props.onClick();
+                    }}
+                />
+            )}
         </SwitchScrollModeDecorator>
     );
 
@@ -77,8 +80,8 @@ const scrollModePlugin = (props?: ScrollModePluginProps): ScrollModePlugin => {
         if (currentSlot && currentSlot.children) {
             currentSlot.children = (
                 <>
-                <Tracker store={store} />
-                {currentSlot.children}
+                    <Tracker store={store} />
+                    {currentSlot.children}
                 </>
             );
         }

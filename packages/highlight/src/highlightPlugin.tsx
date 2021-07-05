@@ -7,7 +7,17 @@
  */
 
 import * as React from 'react';
-import { createStore, LayerRenderStatus, PluginOnTextLayerRender, Plugin, PluginFunctions, PluginRenderPageLayer, RenderViewer, Slot, ViewerState } from '@react-pdf-viewer/core';
+import {
+    createStore,
+    LayerRenderStatus,
+    PluginOnTextLayerRender,
+    Plugin,
+    PluginFunctions,
+    PluginRenderPageLayer,
+    RenderViewer,
+    Slot,
+    ViewerState,
+} from '@react-pdf-viewer/core';
 
 import { HIGHLIGHT_LAYER_ATTR, HIGHLIGHT_PAGE_ATTR } from './constants';
 import HighlightAreaList from './HighlightAreaList';
@@ -32,17 +42,21 @@ export interface HighlightPluginProps {
 const TEXT_LAYER_END_SELECTOR = 'rpv-highlight__selected-end';
 
 const highlightPlugin = (props?: HighlightPluginProps): HighlightPlugin => {
-    const store = React.useMemo(() => createStore<StoreProps>({
-        selectionState: NO_SELECTION_STATE,
-    }), []);
+    const store = React.useMemo(
+        () =>
+            createStore<StoreProps>({
+                selectionState: NO_SELECTION_STATE,
+            }),
+        []
+    );
 
     const renderViewer = (props: RenderViewer): Slot => {
         const currentSlot = props.slot;
         if (currentSlot.subSlot && currentSlot.subSlot.children) {
             currentSlot.subSlot.children = (
                 <>
-                <Tracker store={store} />
-                {currentSlot.subSlot.children}
+                    <Tracker store={store} />
+                    {currentSlot.subSlot.children}
                 </>
             );
         }
@@ -60,13 +74,13 @@ const highlightPlugin = (props?: HighlightPluginProps): HighlightPlugin => {
 
             // Check if the user clicks inside a highlighting area
             const userClickedInsideArea = selectionState.highlightAreas
-                .filter(area => area.pageIndex === textLayerRender.pageIndex)
-                .find(area => {
-                    const t = area.top * pageRect.height / 100;
-                    const l = area.left * pageRect.width / 100;
-                    const h = area.height * pageRect.height / 100;
-                    const w = area.width * pageRect.width / 100;
-                    return (t <= mouseTop) && (mouseTop <= t + h) && (l <= mouseLeft) && (mouseLeft <= l + w);
+                .filter((area) => area.pageIndex === textLayerRender.pageIndex)
+                .find((area) => {
+                    const t = (area.top * pageRect.height) / 100;
+                    const l = (area.left * pageRect.width) / 100;
+                    const h = (area.height * pageRect.height) / 100;
+                    const w = (area.width * pageRect.width) / 100;
+                    return t <= mouseTop && mouseTop <= t + h && l <= mouseLeft && mouseLeft <= l + w;
                 });
             if (userClickedInsideArea) {
                 // Cancel the selection
@@ -78,10 +92,10 @@ const highlightPlugin = (props?: HighlightPluginProps): HighlightPlugin => {
         } else {
             store.update('selectionState', NO_SELECTION_STATE);
         }
-        
+
         // Create an invisible element from the current position to the end of page
         // It prevents users from selecting the forward text
-        const selectionTop = (e.clientY - pageRect.top) * 100 / pageRect.height;
+        const selectionTop = ((e.clientY - pageRect.top) * 100) / pageRect.height;
         const selectEnd = textLayer.querySelector(`.${TEXT_LAYER_END_SELECTOR}`);
         if (selectEnd && e.target !== textLayer) {
             (selectEnd as HTMLElement).style.top = `${Math.max(0, selectionTop)}%`;
@@ -115,7 +129,9 @@ const highlightPlugin = (props?: HighlightPluginProps): HighlightPlugin => {
 
             // Set some special attributes so we can query the text later
             textEle.setAttribute(HIGHLIGHT_LAYER_ATTR, 'true');
-            textEle.querySelectorAll('.rpv-core__text-layer-text').forEach(span => span.setAttribute(HIGHLIGHT_PAGE_ATTR, `${e.pageIndex}`));
+            textEle
+                .querySelectorAll('.rpv-core__text-layer-text')
+                .forEach((span) => span.setAttribute(HIGHLIGHT_PAGE_ATTR, `${e.pageIndex}`));
 
             // Create an element that improves the text selection
             const selectEnd = document.createElement('div');
@@ -147,7 +163,7 @@ const highlightPlugin = (props?: HighlightPluginProps): HighlightPlugin => {
         }
 
         const targetPage = getPageElement(area.pageIndex);
-        pagesEle.scrollTop = targetPage.offsetTop + area.top * targetPage.clientHeight / 100 - pagesEle.offsetTop;
+        pagesEle.scrollTop = targetPage.offsetTop + (area.top * targetPage.clientHeight) / 100 - pagesEle.offsetTop;
     };
 
     return {

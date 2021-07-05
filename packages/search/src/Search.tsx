@@ -35,23 +35,19 @@ export interface SearchProps {
 }
 
 const Inner: React.FC<{
-    children: RenderSearch,
-    store: Store<StoreProps>,
+    children: RenderSearch;
+    store: Store<StoreProps>;
 }> = ({ children, store }) => {
     const result = useSearch(store);
-    return children({...result});
+    return children({ ...result });
 };
 
 const Search: React.FC<{
-    children: RenderSearch,
-    store: Store<StoreProps>
+    children: RenderSearch;
+    store: Store<StoreProps>;
 }> = ({ children, store }) => {
     const { currentDoc } = useDocument(store);
-    return (
-        currentDoc
-            ? <Inner store={store}>{children}</Inner>
-            : <></>
-    );
+    return currentDoc ? <Inner store={store}>{children}</Inner> : <></>;
 };
 
 export default Search;

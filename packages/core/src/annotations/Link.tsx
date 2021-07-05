@@ -28,35 +28,40 @@ const Link: React.FC<LinkProps> = ({ annotation, doc, page, viewport, onExecuteN
         annotation.action
             ? onExecuteNamedAction(annotation.action)
             : getDestination(doc, annotation.dest).then((target) => {
-                const { pageIndex, bottomOffset, scaleTo } = target;
-                onJumpToDest(bottomOffset ? pageIndex + 1 : pageIndex, bottomOffset, 0, scaleTo);
-            });
+                  const { pageIndex, bottomOffset, scaleTo } = target;
+                  onJumpToDest(bottomOffset ? pageIndex + 1 : pageIndex, bottomOffset, 0, scaleTo);
+              });
     };
 
     const isRenderable = !!(annotation.url || annotation.dest || annotation.action);
     const attrs = annotation.url
         ? {
-            href: annotation.url,
-            rel: 'noopener noreferrer nofollow',
-            target: annotation.newWindow ? '_blank' : '',
-            title: annotation.url,
-        }
+              href: annotation.url,
+              rel: 'noopener noreferrer nofollow',
+              target: annotation.newWindow ? '_blank' : '',
+              title: annotation.url,
+          }
         : {
-            href: '',
-            onClick: link,
-        };
+              href: '',
+              onClick: link,
+          };
 
     return (
-        <Annotation annotation={annotation} hasPopup={false} ignoreBorder={false} isRenderable={isRenderable} page={page} viewport={viewport}>
+        <Annotation
+            annotation={annotation}
+            hasPopup={false}
+            ignoreBorder={false}
+            isRenderable={isRenderable}
+            page={page}
+            viewport={viewport}
+        >
             {(props): React.ReactElement => (
                 <div
                     {...props.slot.attrs}
-                    className='rpv-core__annotation rpv-core__annotation--link'
+                    className="rpv-core__annotation rpv-core__annotation--link"
                     data-annotation-id={annotation.id}
                 >
-                    <a
-                        {...attrs}
-                    />
+                    <a {...attrs} />
                 </div>
             )}
         </Annotation>

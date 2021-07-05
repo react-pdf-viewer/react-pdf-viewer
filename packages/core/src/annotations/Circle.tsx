@@ -28,11 +28,18 @@ const Circle: React.FC<CircleProps> = ({ annotation, page, viewport }) => {
     const borderWidth = annotation.borderStyle.width;
 
     return (
-        <Annotation annotation={annotation} hasPopup={hasPopup} ignoreBorder={true} isRenderable={isRenderable} page={page} viewport={viewport}>
+        <Annotation
+            annotation={annotation}
+            hasPopup={hasPopup}
+            ignoreBorder={true}
+            isRenderable={isRenderable}
+            page={page}
+            viewport={viewport}
+        >
             {(props): React.ReactElement => (
                 <div
                     {...props.slot.attrs}
-                    className='rpv-core__annotation rpv-core__annotation--circle'
+                    className="rpv-core__annotation rpv-core__annotation--circle"
                     data-annotation-id={annotation.id}
                     onClick={props.popup.toggleOnClick}
                     onMouseEnter={props.popup.openOnHover}
@@ -40,17 +47,17 @@ const Circle: React.FC<CircleProps> = ({ annotation, page, viewport }) => {
                 >
                     <svg
                         height={`${height}px`}
-                        preserveAspectRatio='none'
-                        version='1.1'
+                        preserveAspectRatio="none"
+                        version="1.1"
                         viewBox={`0 0 ${width} ${height}`}
                         width={`${width}px`}
                     >
                         <circle
                             cy={height / 2}
-                            fill='none'
+                            fill="none"
                             rx={width / 2 - borderWidth / 2}
                             ry={height / 2 - borderWidth / 2}
-                            stroke='transparent'
+                            stroke="transparent"
                             strokeWidth={borderWidth || 1}
                         />
                     </svg>

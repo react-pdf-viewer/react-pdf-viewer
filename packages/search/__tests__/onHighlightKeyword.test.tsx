@@ -11,8 +11,8 @@ import { searchPlugin } from '../src/index';
 import OnHighlightKeyword from '../src/types/OnHighlightKeyword';
 
 const TestOnHighlightKeywordOption: React.FC<{
-    fileUrl: Uint8Array,
-    keyword: string,
+    fileUrl: Uint8Array;
+    keyword: string;
 }> = ({ fileUrl, keyword }) => {
     const searchPluginInstance = searchPlugin({
         keyword,
@@ -31,12 +31,7 @@ const TestOnHighlightKeywordOption: React.FC<{
                 width: '720px',
             }}
         >
-            <Viewer
-                fileUrl={fileUrl}
-                plugins={[
-                    searchPluginInstance,
-                ]}
-            />
+            <Viewer fileUrl={fileUrl} plugins={[searchPluginInstance]} />
         </div>
     );
 };
@@ -46,12 +41,14 @@ test('onHighlightKeyword option', async () => {
 
     const keyword = 'document';
 
-    const { findByText, findAllByTestId, findByTestId, getByTestId } = render(<TestOnHighlightKeywordOption fileUrl={new Uint8Array(rawSamplePdf)} keyword={keyword} />);
+    const { findByText, findAllByTestId, findByTestId, getByTestId } = render(
+        <TestOnHighlightKeywordOption fileUrl={new Uint8Array(rawSamplePdf)} keyword={keyword} />
+    );
     mockIsIntersecting(getByTestId('viewer'), true);
-    
+
     const page = await findByTestId('viewer-page-layer-3');
     mockIsIntersecting(page, true);
-    
+
     await findByText('Who should read this guide?');
 
     const highlights = await findAllByTitle(page, keyword);

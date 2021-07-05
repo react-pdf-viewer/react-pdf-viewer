@@ -7,7 +7,17 @@
  */
 
 import * as React from 'react';
-import { LocalizationContext, LocalizationMap, Menu, MenuDivider, MenuItem, Popover, Position, SpecialZoomLevel, Toggle } from '@react-pdf-viewer/core';
+import {
+    LocalizationContext,
+    LocalizationMap,
+    Menu,
+    MenuDivider,
+    MenuItem,
+    Popover,
+    Position,
+    SpecialZoomLevel,
+    Toggle,
+} from '@react-pdf-viewer/core';
 
 import { RenderZoomProps } from './Zoom';
 
@@ -29,39 +39,43 @@ const ZoomPopover: React.FC<RenderZoomProps> = ({ scale, onZoom }) => {
     };
 
     const renderTarget = (toggle: Toggle): React.ReactElement => {
-        const click = (): void => { toggle(); };
+        const click = (): void => {
+            toggle();
+        };
         return (
-            <span className='rpv-zoom__popover-target' onClick={click}>
-                <span className='rpv-zoom__popover-target-scale'>{Math.round(scale * 100)}%</span>
-                <span className='rpv-zoom__popover-target-arrow' />
+            <span className="rpv-zoom__popover-target" onClick={click}>
+                <span className="rpv-zoom__popover-target-scale">{Math.round(scale * 100)}%</span>
+                <span className="rpv-zoom__popover-target-arrow" />
             </span>
         );
     };
 
     const renderContent = (toggle: Toggle): React.ReactElement => (
         <Menu>
-            {
-                Object.keys(SpecialZoomLevel).map((k) => {
-                    const level = k as SpecialZoomLevel;
-                    const clickMenuItem = (): void => { toggle(); onZoom(level); };
-                    return (
-                        <MenuItem key={level} onClick={clickMenuItem}>
-                            {getSpcialLevelLabel(level)}
-                        </MenuItem>
-                    );
-                })
-            }
+            {Object.keys(SpecialZoomLevel).map((k) => {
+                const level = k as SpecialZoomLevel;
+                const clickMenuItem = (): void => {
+                    toggle();
+                    onZoom(level);
+                };
+                return (
+                    <MenuItem key={level} onClick={clickMenuItem}>
+                        {getSpcialLevelLabel(level)}
+                    </MenuItem>
+                );
+            })}
             <MenuDivider />
-            {
-                LEVELS.map((level) => {
-                    const clickMenuItem = (): void => { toggle(); onZoom(level); };
-                    return (
-                        <MenuItem key={level} onClick={clickMenuItem}>
-                            {`${Math.round(level * 100)}%`}
-                        </MenuItem>
-                    );
-                })
-            }
+            {LEVELS.map((level) => {
+                const clickMenuItem = (): void => {
+                    toggle();
+                    onZoom(level);
+                };
+                return (
+                    <MenuItem key={level} onClick={clickMenuItem}>
+                        {`${Math.round(level * 100)}%`}
+                    </MenuItem>
+                );
+            })}
         </Menu>
     );
 

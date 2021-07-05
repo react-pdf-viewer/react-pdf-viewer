@@ -6,11 +6,7 @@
  * @copyright 2019-2021 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-const wrap = (
-    ele: Node,
-    startOffset: number,
-    endOffset: number
-): HTMLElement => {
+const wrap = (ele: Node, startOffset: number, endOffset: number): HTMLElement => {
     const range = new Range();
     range.setStart(ele, startOffset);
     range.setEnd(ele, endOffset);

@@ -11,8 +11,8 @@ import { searchPlugin } from '../src/index';
 import SingleKeyword from '../src/types/SingleKeyword';
 
 const TestHighlight: React.FC<{
-    fileUrl: Uint8Array,
-    keywords: SingleKeyword[],
+    fileUrl: Uint8Array;
+    keywords: SingleKeyword[];
 }> = ({ fileUrl, keywords }) => {
     const searchPluginInstance = searchPlugin();
     const { highlight } = searchPluginInstance;
@@ -20,11 +20,7 @@ const TestHighlight: React.FC<{
     return (
         <div>
             <div style={{ marginRight: '8px' }}>
-                <button
-                    onClick={() => highlight(keywords)}
-                >
-                    Highlight keywords
-                </button>
+                <button onClick={() => highlight(keywords)}>Highlight keywords</button>
             </div>
             <div
                 style={{
@@ -33,12 +29,7 @@ const TestHighlight: React.FC<{
                     width: '720px',
                 }}
             >
-                <Viewer
-                    fileUrl={fileUrl}
-                    plugins={[
-                        searchPluginInstance,
-                    ]}
-                />
+                <Viewer fileUrl={fileUrl} plugins={[searchPluginInstance]} />
             </div>
         </div>
     );
@@ -55,15 +46,17 @@ test('highlight() method', async () => {
         },
     ];
 
-    const { findByText, findAllByTestId, findByTestId, getByTestId } = render(<TestHighlight fileUrl={new Uint8Array(rawSamplePdf)} keywords={keywords} />);
+    const { findByText, findAllByTestId, findByTestId, getByTestId } = render(
+        <TestHighlight fileUrl={new Uint8Array(rawSamplePdf)} keywords={keywords} />
+    );
     mockIsIntersecting(getByTestId('viewer'), true);
 
     const highlightButton = await screen.findByText('Highlight keywords');
     fireEvent.click(highlightButton);
-    
+
     const page = await findByTestId('viewer-page-layer-4');
     mockIsIntersecting(page, true);
-    
+
     await findByText('Parameters for Opening PDF Files');
 
     // Found 8 texts that match `document`

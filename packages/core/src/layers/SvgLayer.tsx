@@ -33,7 +33,7 @@ const SvgLayer: React.FC<SvgLayerProps> = ({ height, page, rotation, scale, widt
     const renderSvg = (): void => {
         const containerEle = containerRef.current as HTMLDivElement;
         const viewport = page.getViewport({ rotation, scale });
-        
+
         page.getOperatorList().then((operatorList) => {
             empty();
             const graphic = new PdfJs.SVGGraphics(page.commonObjs, page.objs);
@@ -49,10 +49,7 @@ const SvgLayer: React.FC<SvgLayerProps> = ({ height, page, rotation, scale, widt
 
     return (
         <WithScale callback={renderSvg} rotation={rotation} scale={scale}>
-            <div
-                className='rpv-core__svg-layer'
-                ref={containerRef}
-            />
+            <div className="rpv-core__svg-layer" ref={containerRef} />
         </WithScale>
     );
 };

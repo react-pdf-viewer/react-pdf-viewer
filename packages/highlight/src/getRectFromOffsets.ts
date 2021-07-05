@@ -6,11 +6,7 @@
  * @copyright 2019-2021 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-const getRectFromOffsets = (
-    textDiv: HTMLElement,
-    startOffset: number,
-    endOffset: number
-): DOMRect => {
+const getRectFromOffsets = (textDiv: HTMLElement, startOffset: number, endOffset: number): DOMRect => {
     const clonedEle = textDiv.cloneNode(true);
     textDiv.parentNode.appendChild(clonedEle);
 

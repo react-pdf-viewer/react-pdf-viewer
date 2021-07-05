@@ -34,10 +34,18 @@ interface AnnotationProps {
     children(props: RenderChildrenProps): React.ReactElement;
 }
 
-const Annotation: React.FC<AnnotationProps> = ({ annotation, children, ignoreBorder, hasPopup, isRenderable, page, viewport }) => {
+const Annotation: React.FC<AnnotationProps> = ({
+    annotation,
+    children,
+    ignoreBorder,
+    hasPopup,
+    isRenderable,
+    page,
+    viewport,
+}) => {
     const { rect } = annotation;
     const { closeOnHover, opened, openOnHover, toggleOnClick } = useTogglePopup();
-    
+
     const normalizeRect = (r: number[]): number[] => [
         Math.min(r[0], r[2]),
         Math.min(r[1], r[3]),
@@ -72,9 +80,12 @@ const Annotation: React.FC<AnnotationProps> = ({ annotation, children, ignoreBor
                 styles.borderStyle = 'solid';
                 break;
             case AnnotationBorderStyleType.Underline:
-                styles = Object.assign({
-                    borderBottomStyle: 'solid',
-                }, styles);
+                styles = Object.assign(
+                    {
+                        borderBottomStyle: 'solid',
+                    },
+                    styles
+                );
                 break;
             case AnnotationBorderStyleType.Beveled:
             case AnnotationBorderStyleType.Inset:
@@ -83,7 +94,7 @@ const Annotation: React.FC<AnnotationProps> = ({ annotation, children, ignoreBor
         }
 
         // Border with
-        const borderWidth = annotation.borderStyle.width; 
+        const borderWidth = annotation.borderStyle.width;
         styles.borderWidth = `${borderWidth}px`;
         if (annotation.borderStyle.style !== AnnotationBorderStyleType.Underline) {
             width = width - 2 * borderWidth;
@@ -98,45 +109,40 @@ const Annotation: React.FC<AnnotationProps> = ({ annotation, children, ignoreBor
 
         // Border color
         annotation.color
-            ? (styles.borderColor = `rgb(${annotation.color[0] | 0}, ${annotation.color[1] | 0}, ${annotation.color[2] | 0})`)
-            // Reset the border width
-            : (styles.borderWidth = '0');
-    }    
+            ? (styles.borderColor = `rgb(${annotation.color[0] | 0}, ${annotation.color[1] | 0}, ${
+                  annotation.color[2] | 0
+              })`)
+            : // Reset the border width
+              (styles.borderWidth = '0');
+    }
 
     return (
         <>
-        {
-            isRenderable &&
-            children({
-                popup: {
-                    opened,
-                    closeOnHover,
-                    openOnHover,
-                    toggleOnClick,
-                },
-                slot: {
-                    attrs: {
-                        style: Object.assign({
-                            height: `${height}px`,
-                            left: `${bound[0]}px`,
-                            top: `${bound[1]}px`,
-                            transform: `matrix(${viewport.transform.join(',')})`,
-                            transformOrigin: `-${bound[0]}px -${bound[1]}px`,
-                            width: `${width}px`,
-                        }, styles),
+            {isRenderable &&
+                children({
+                    popup: {
+                        opened,
+                        closeOnHover,
+                        openOnHover,
+                        toggleOnClick,
                     },
-                    children: (
-                        <>
-                        {hasPopup && opened && (
-                            <PopupWrapper
-                                annotation={annotation}
-                            />
-                        )}
-                        </>
-                    ),
-                }
-            })
-        }
+                    slot: {
+                        attrs: {
+                            style: Object.assign(
+                                {
+                                    height: `${height}px`,
+                                    left: `${bound[0]}px`,
+                                    top: `${bound[1]}px`,
+                                    transform: `matrix(${viewport.transform.join(',')})`,
+                                    transformOrigin: `-${bound[0]}px -${bound[1]}px`,
+                                    width: `${width}px`,
+                                },
+                                styles
+                            ),
+                        },
+                        children: <>{hasPopup && opened && <PopupWrapper annotation={annotation} />}</>,
+                    },
+                })}
         </>
     );
 };

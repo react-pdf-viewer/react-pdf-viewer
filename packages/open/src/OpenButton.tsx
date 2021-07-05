@@ -22,18 +22,12 @@ const OpenButton: React.FC<RenderOpenProps> = ({ onClick }) => {
     return (
         <Tooltip
             position={Position.BottomCenter}
-            target={(
-                <div className='rpv-open__button rpv-open__input-wrapper'>
-                    <input
-                        className='rpv-open__input'
-                        multiple={false}
-                        type='file'
-                        title=''
-                        onChange={onClick}
-                    />
+            target={
+                <div className="rpv-open__button rpv-open__input-wrapper">
+                    <input className="rpv-open__input" multiple={false} type="file" title="" onChange={onClick} />
                     <OpenFileIcon />
                 </div>
-            )}
+            }
             content={() => label}
             offset={TOOLTIP_OFFSET}
         />

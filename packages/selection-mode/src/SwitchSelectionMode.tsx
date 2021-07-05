@@ -27,9 +27,9 @@ export interface SwitchSelectionModeProps {
 }
 
 const SwitchSelectionMode: React.FC<{
-    children?: RenderSwitchSelectionMode,
-    mode: SelectionMode,
-    store: Store<StoreProps>,
+    children?: RenderSwitchSelectionMode;
+    mode: SelectionMode;
+    store: Store<StoreProps>;
 }> = ({ children, mode, store }) => {
     const onClick = () => store.update('selectionMode', mode);
 

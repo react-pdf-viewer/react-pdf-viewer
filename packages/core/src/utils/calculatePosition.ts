@@ -9,12 +9,7 @@
 import Offset from '../portal/Offset';
 import Position from '../portal/Position';
 
-const calculatePosition = (
-    content: HTMLElement,
-    target: HTMLElement,
-    position: Position,
-    offset: Offset
-): Offset => {
+const calculatePosition = (content: HTMLElement, target: HTMLElement, position: Position, offset: Offset): Offset => {
     const targetRect = target.getBoundingClientRect();
     const contentRect = content.getBoundingClientRect();
     const { height, width } = contentRect;

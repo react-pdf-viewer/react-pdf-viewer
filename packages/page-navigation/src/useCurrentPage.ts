@@ -7,22 +7,14 @@
  */
 
 import * as React from 'react';
-import {
-    Store,
-    StoreHandler,
-    useIsomorphicLayoutEffect,
-} from '@react-pdf-viewer/core';
+import { Store, StoreHandler, useIsomorphicLayoutEffect } from '@react-pdf-viewer/core';
 
 import StoreProps from './StoreProps';
 
 const useCurrentPage = (store: Store<StoreProps>): { currentPage: number } => {
-    const [currentPage, setCurrentPage] = React.useState(
-        store.get('currentPage') || 0
-    );
+    const [currentPage, setCurrentPage] = React.useState(store.get('currentPage') || 0);
 
-    const handleCurrentPageChanged: StoreHandler<number> = (
-        currentPageIndex: number
-    ) => {
+    const handleCurrentPageChanged: StoreHandler<number> = (currentPageIndex: number) => {
         setCurrentPage(currentPageIndex);
     };
 

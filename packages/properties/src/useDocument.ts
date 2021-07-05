@@ -11,14 +11,10 @@ import { PdfJs, Store, StoreHandler } from '@react-pdf-viewer/core';
 
 import StoreProps from './StoreProps';
 
-const useDocument = (
-    store: Store<StoreProps>
-): { currentDoc: PdfJs.PdfDocument } => {
+const useDocument = (store: Store<StoreProps>): { currentDoc: PdfJs.PdfDocument } => {
     const [currentDoc, setCurrentDoc] = React.useState(store.get('doc'));
 
-    const handleDocumentChanged: StoreHandler<PdfJs.PdfDocument> = (
-        doc: PdfJs.PdfDocument
-    ) => {
+    const handleDocumentChanged: StoreHandler<PdfJs.PdfDocument> = (doc: PdfJs.PdfDocument) => {
         setCurrentDoc(doc);
     };
 

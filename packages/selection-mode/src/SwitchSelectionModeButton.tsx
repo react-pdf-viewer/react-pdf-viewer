@@ -16,16 +16,18 @@ const TOOLTIP_OFFSET = { left: 0, top: 8 };
 
 const SwitchSelectionModeButton: React.FC<RenderSwitchSelectionModeProps> = ({ isSelected, mode, onClick }) => (
     <SwitchSelectionModeDecorator mode={mode} onClick={onClick}>
-        {
-            (props) => (
-                <Tooltip
-                    position={Position.BottomCenter}
-                    target={<MinimalButton isSelected={isSelected} onClick={props.onClick}>{props.icon}</MinimalButton>}
-                    content={() => props.label}
-                    offset={TOOLTIP_OFFSET}
-                />
-            )
-        }
+        {(props) => (
+            <Tooltip
+                position={Position.BottomCenter}
+                target={
+                    <MinimalButton isSelected={isSelected} onClick={props.onClick}>
+                        {props.icon}
+                    </MinimalButton>
+                }
+                content={() => props.label}
+                offset={TOOLTIP_OFFSET}
+            />
+        )}
     </SwitchSelectionModeDecorator>
 );
 

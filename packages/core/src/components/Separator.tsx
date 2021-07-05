@@ -8,8 +8,6 @@
 
 import * as React from 'react';
 
-const Separator: React.FC = () => (
-    <div className='rpv-core__separator' />
-);
+const Separator: React.FC = () => <div className="rpv-core__separator" />;
 
 export default Separator;
