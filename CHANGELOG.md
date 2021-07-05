@@ -3,6 +3,7 @@
 ## v2.6.1 [WIP]
 
 **Improvement**
+- Move the CSS variables of the default theme to `:root`, so we can use components (`Button`, `Menu`, `Tooltip`, etc.) outside of the `Viewer`
 - Update the `DownloadIcon`, `ExitFullScreenIcon`, `FullScreenIcon` and `OpenFileIcon` icons
 
 **Bug fixes**
