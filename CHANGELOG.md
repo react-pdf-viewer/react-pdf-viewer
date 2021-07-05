@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## v2.6.1 [WIP]
+
+**Bug fix**
+- The [Search plugin](/https://react-pdf-viewer.dev/plugins/search) can cause a re-render
+
 ## v2.6.0
 
 From this version, all the components use the BEM naming convention for CSS classes. So if you override the styles of given class, you need to change the class.

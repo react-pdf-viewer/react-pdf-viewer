@@ -14,12 +14,14 @@ import StoreProps from './types/StoreProps';
 const useDocument = (
     store: Store<StoreProps>
 ): { currentDoc: PdfJs.PdfDocument } => {
-    const [currentDoc, setCurrentDoc] = React.useState(store.get('doc'));
+    // We use a _ref_ here to track the current document instead of `useState`
+    // Because `useDocument` is used directly in `searchPlugin`, it can cause a re-render
+    const currentDocRef = React.useRef(store.get('doc'));
 
     const handleDocumentChanged: StoreHandler<PdfJs.PdfDocument> = (
         doc: PdfJs.PdfDocument
     ) => {
-        setCurrentDoc(doc);
+        currentDocRef.current = doc;
     };
 
     React.useEffect(() => {
@@ -30,7 +32,7 @@ const useDocument = (
         };
     }, []);
 
-    return { currentDoc };
+    return { currentDoc: currentDocRef.current };
 };
 
 export default useDocument;
