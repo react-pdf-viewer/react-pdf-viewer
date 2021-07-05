@@ -33,37 +33,40 @@ const Text: React.FC<TextProps> = ({ annotation, childAnnotation, page, viewport
     const name = annotation.name ? annotation.name.toLowerCase() : '';
 
     return (
-        <Annotation annotation={annotation} hasPopup={hasPopup} ignoreBorder={false} isRenderable={isRenderable} page={page} viewport={viewport}>
+        <Annotation
+            annotation={annotation}
+            hasPopup={hasPopup}
+            ignoreBorder={false}
+            isRenderable={isRenderable}
+            page={page}
+            viewport={viewport}
+        >
             {(props): React.ReactElement => (
                 <>
-                <div
-                    {...props.slot.attrs}
-                    className='rpv-core__annotation rpv-core__annotation--text'
-                    data-annotation-id={annotation.id}
-                    onClick={props.popup.toggleOnClick}
-                    onMouseEnter={props.popup.openOnHover}
-                    onMouseLeave={props.popup.closeOnHover}
-                >
-                    {name && (
-                        <div className='rpv-core__annotation-text-icon'>
-                            {name === 'check' && <CheckIcon />}
-                            {name === 'comment' && <CommentIcon />}
-                            {name === 'help' && <HelpIcon />}
-                            {name === 'insert' && <TriangleIcon />}
-                            {name === 'key' && <KeyIcon />}
-                            {name === 'note' && <NoteIcon />}
-                            {(name === 'newparagraph' || name === 'paragraph') && <ParagraphIcon />}
-                        </div>
-                    )}
-                    {props.slot.children}
-                </div>
-                {childAnnotation && childAnnotation.annotationType === AnnotationType.Popup && props.popup.opened && (
-                    <Popup
-                        annotation={childAnnotation}
-                        page={page}
-                        viewport={viewport}
-                    />
-                )}
+                    <div
+                        {...props.slot.attrs}
+                        className="rpv-core__annotation rpv-core__annotation--text"
+                        data-annotation-id={annotation.id}
+                        onClick={props.popup.toggleOnClick}
+                        onMouseEnter={props.popup.openOnHover}
+                        onMouseLeave={props.popup.closeOnHover}
+                    >
+                        {name && (
+                            <div className="rpv-core__annotation-text-icon">
+                                {name === 'check' && <CheckIcon />}
+                                {name === 'comment' && <CommentIcon />}
+                                {name === 'help' && <HelpIcon />}
+                                {name === 'insert' && <TriangleIcon />}
+                                {name === 'key' && <KeyIcon />}
+                                {name === 'note' && <NoteIcon />}
+                                {(name === 'newparagraph' || name === 'paragraph') && <ParagraphIcon />}
+                            </div>
+                        )}
+                        {props.slot.children}
+                    </div>
+                    {childAnnotation &&
+                        childAnnotation.annotationType === AnnotationType.Popup &&
+                        props.popup.opened && <Popup annotation={childAnnotation} page={page} viewport={viewport} />}
                 </>
             )}
         </Annotation>

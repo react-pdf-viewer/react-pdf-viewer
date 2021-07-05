@@ -21,7 +21,7 @@ import SelectionRange from './types/SelectionRange';
 import useRotation from './useRotation';
 
 const Tracker: React.FC<{
-    store: Store<StoreProps>,
+    store: Store<StoreProps>;
 }> = ({ store }) => {
     const { rotation } = useRotation(store);
     const pagesRef = React.useRef<HTMLElement | null>(null);
@@ -38,8 +38,10 @@ const Tracker: React.FC<{
         const selection = document.getSelection();
 
         const selectionState = store.get('selectionState');
-        const hasSelection = (selectionState === NO_SELECTION_STATE || selectionState === SELECTING_STATE) &&
-                            selection.rangeCount > 0 && selection.toString() !== '';
+        const hasSelection =
+            (selectionState === NO_SELECTION_STATE || selectionState === SELECTING_STATE) &&
+            selection.rangeCount > 0 &&
+            selection.toString() !== '';
         if (!hasSelection) {
             return;
         }
@@ -47,7 +49,8 @@ const Tracker: React.FC<{
         const range = selection.getRangeAt(0);
         const startDiv = range.startContainer.parentNode;
         const parentEndContainer = range.endContainer.parentNode;
-        const shouldIgnoreEndContainer = (parentEndContainer instanceof HTMLElement) && parentEndContainer.hasAttribute(HIGHLIGHT_LAYER_ATTR);
+        const shouldIgnoreEndContainer =
+            parentEndContainer instanceof HTMLElement && parentEndContainer.hasAttribute(HIGHLIGHT_LAYER_ATTR);
 
         let endDiv: Node, endOffset: number;
         if (shouldIgnoreEndContainer && range.endOffset == 0) {
@@ -72,19 +75,21 @@ const Tracker: React.FC<{
         const endTextLayer = endDiv.parentElement;
 
         const startPageRect = startTextLayer.getBoundingClientRect();
-        const startDivSiblings: HTMLElement[] = [].slice.call(startTextLayer.querySelectorAll(`[${HIGHLIGHT_PAGE_ATTR}]`));
+        const startDivSiblings: HTMLElement[] = [].slice.call(
+            startTextLayer.querySelectorAll(`[${HIGHLIGHT_PAGE_ATTR}]`)
+        );
         const startDivIdx = startDivSiblings.indexOf(startDiv);
 
         const endPageRect = endTextLayer.getBoundingClientRect();
         const endDivSiblings: HTMLElement[] = [].slice.call(endTextLayer.querySelectorAll(`[${HIGHLIGHT_PAGE_ATTR}]`));
         const endDivIdx = endDivSiblings.indexOf(endDiv);
 
-        let rangeType: SelectionRange = SelectionRange.DifferentPages; 
+        let rangeType: SelectionRange = SelectionRange.DifferentPages;
         switch (true) {
-            case (startPageIdx === endPageIdx && startDivIdx === endDivIdx):
+            case startPageIdx === endPageIdx && startDivIdx === endDivIdx:
                 rangeType = SelectionRange.SameDiv;
                 break;
-            case (startPageIdx === endPageIdx && startDivIdx < endDivIdx):
+            case startPageIdx === endPageIdx && startDivIdx < endDivIdx:
                 rangeType = SelectionRange.DifferentDivs;
                 break;
             default:
@@ -92,34 +97,38 @@ const Tracker: React.FC<{
                 break;
         }
 
-        const getRectBetween = (min: number, max: number, eleArray: HTMLElement[]) => Array(max - min + 1).fill(0)
-            .map((_, i) => eleArray[min + i].getBoundingClientRect());
+        const getRectBetween = (min: number, max: number, eleArray: HTMLElement[]) =>
+            Array(max - min + 1)
+                .fill(0)
+                .map((_, i) => eleArray[min + i].getBoundingClientRect());
 
         let highlightAreas: HighlightArea[] = [];
         switch (rangeType) {
             case SelectionRange.SameDiv:
                 // eslint-disable-next-line no-case-declarations
                 const rect = getRectFromOffsets(startDiv, range.startOffset, endOffset);
-                highlightAreas = [{
-                    height: rect.height * 100 / startPageRect.height,
-                    left: (rect.left - startPageRect.left) * 100 / startPageRect.width,
-                    pageIndex: startPageIdx,
-                    top: (rect.top - startPageRect.top) * 100 / startPageRect.height,
-                    width: rect.width * 100 / startPageRect.width,
-                }];
+                highlightAreas = [
+                    {
+                        height: (rect.height * 100) / startPageRect.height,
+                        left: ((rect.left - startPageRect.left) * 100) / startPageRect.width,
+                        pageIndex: startPageIdx,
+                        top: ((rect.top - startPageRect.top) * 100) / startPageRect.height,
+                        width: (rect.width * 100) / startPageRect.width,
+                    },
+                ];
                 break;
 
             case SelectionRange.DifferentDivs:
                 highlightAreas = [getRectFromOffsets(startDiv, range.startOffset, startDiv.textContent.length)]
                     .concat(getRectBetween(startDivIdx + 1, endDivIdx - 1, startDivSiblings))
                     .concat([getRectFromOffsets(endDiv, 0, endOffset)])
-                    .map(rect => {
+                    .map((rect) => {
                         return {
-                            height: rect.height * 100 / startPageRect.height,
-                            left: (rect.left - startPageRect.left) * 100 / startPageRect.width,
+                            height: (rect.height * 100) / startPageRect.height,
+                            left: ((rect.left - startPageRect.left) * 100) / startPageRect.width,
                             pageIndex: startPageIdx,
-                            top: (rect.top - startPageRect.top) * 100 / startPageRect.height,
-                            width: rect.width * 100 / startPageRect.width,
+                            top: ((rect.top - startPageRect.top) * 100) / startPageRect.height,
+                            width: (rect.width * 100) / startPageRect.width,
                         };
                     });
                 break;
@@ -128,25 +137,25 @@ const Tracker: React.FC<{
                 // eslint-disable-next-line no-case-declarations
                 const startAreas = [getRectFromOffsets(startDiv, range.startOffset, startDiv.textContent.length)]
                     .concat(getRectBetween(startDivIdx + 1, startDivSiblings.length - 1, startDivSiblings))
-                    .map(rect => {
+                    .map((rect) => {
                         return {
-                            height: rect.height * 100 / startPageRect.height,
-                            left: (rect.left - startPageRect.left) * 100 / startPageRect.width,
+                            height: (rect.height * 100) / startPageRect.height,
+                            left: ((rect.left - startPageRect.left) * 100) / startPageRect.width,
                             pageIndex: startPageIdx,
-                            top: (rect.top - startPageRect.top) * 100 / startPageRect.height,
-                            width: rect.width * 100 / startPageRect.width,
+                            top: ((rect.top - startPageRect.top) * 100) / startPageRect.height,
+                            width: (rect.width * 100) / startPageRect.width,
                         };
                     });
                 // eslint-disable-next-line no-case-declarations
                 const endAreas = getRectBetween(0, endDivIdx - 1, endDivSiblings)
                     .concat([getRectFromOffsets(endDiv, 0, endOffset)])
-                    .map(rect => {
+                    .map((rect) => {
                         return {
-                            height: rect.height * 100 / endPageRect.height,
-                            left: (rect.left - endPageRect.left) * 100 / endPageRect.width,
+                            height: (rect.height * 100) / endPageRect.height,
+                            left: ((rect.left - endPageRect.left) * 100) / endPageRect.width,
                             pageIndex: endPageIdx,
-                            top: (rect.top - endPageRect.top) * 100 / endPageRect.height,
-                            width: rect.width * 100 / endPageRect.width,
+                            top: ((rect.top - endPageRect.top) * 100) / endPageRect.height,
+                            width: (rect.width * 100) / endPageRect.width,
                         };
                     });
                 highlightAreas = startAreas.concat(endAreas);
@@ -157,7 +166,13 @@ const Tracker: React.FC<{
         let selectedText = '';
         switch (rangeType) {
             case SelectionRange.SameDiv:
-                selectedText = getTextFromOffsets(startTextLayer, startDivIdx, range.startOffset, startDivIdx, endOffset);
+                selectedText = getTextFromOffsets(
+                    startTextLayer,
+                    startDivIdx,
+                    range.startOffset,
+                    startDivIdx,
+                    endOffset
+                );
                 break;
 
             case SelectionRange.DifferentDivs:
@@ -166,11 +181,16 @@ const Tracker: React.FC<{
 
             case SelectionRange.DifferentPages:
                 // eslint-disable-next-line no-case-declarations
-                const startText = getTextFromOffsets(startTextLayer, startDivIdx, range.startOffset, startDivSiblings.length);
-                
+                const startText = getTextFromOffsets(
+                    startTextLayer,
+                    startDivIdx,
+                    range.startOffset,
+                    startDivSiblings.length
+                );
+
                 // eslint-disable-next-line no-case-declarations
                 const endText = getTextFromOffsets(endTextLayer, 0, 0, endDivIdx, endOffset);
-                
+
                 selectedText = `${startText}\n${endText}`;
                 break;
         }
@@ -181,11 +201,11 @@ const Tracker: React.FC<{
         } else {
             const endDivRect = endDiv.getBoundingClientRect();
             selectionRegion = {
-                height: endDivRect.height * 100 / endPageRect.height,
-                left: (endDivRect.left - endPageRect.left) * 100 / endPageRect.width,
+                height: (endDivRect.height * 100) / endPageRect.height,
+                left: ((endDivRect.left - endPageRect.left) * 100) / endPageRect.width,
                 pageIndex: endPageIdx,
-                top: (endDivRect.top - endPageRect.top) * 100 / endPageRect.height,
-                width: endDivRect.width * 100 / endPageRect.width,
+                top: ((endDivRect.top - endPageRect.top) * 100) / endPageRect.height,
+                width: (endDivRect.width * 100) / endPageRect.width,
             };
         }
 
@@ -195,12 +215,18 @@ const Tracker: React.FC<{
             startOffset: range.startOffset,
             startDivIndex: startDivIdx,
             endOffset,
-            endDivIndex: endDivIdx
+            endDivIndex: endDivIdx,
         };
 
-        store.update('selectionState', new SelectedState(
-            selectedText, highlightAreas.map(area => transformArea(area, rotation)), selectionData, selectionRegion
-        ));
+        store.update(
+            'selectionState',
+            new SelectedState(
+                selectedText,
+                highlightAreas.map((area) => transformArea(area, rotation)),
+                selectionData,
+                selectionRegion
+            )
+        );
     };
 
     React.useEffect(() => {

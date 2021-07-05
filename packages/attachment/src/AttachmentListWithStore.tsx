@@ -13,7 +13,7 @@ import AttachmentLoader from './AttachmentLoader';
 import StoreProps from './StoreProps';
 
 const AttachmentListWithStore: React.FC<{
-    store: Store<StoreProps>,
+    store: Store<StoreProps>;
 }> = ({ store }) => {
     const [currentDoc, setCurrentDoc] = React.useState(store.get('doc'));
 
@@ -29,10 +29,12 @@ const AttachmentListWithStore: React.FC<{
         };
     }, []);
 
-    return (
-        currentDoc 
-        ? <AttachmentLoader doc={currentDoc} />
-        : <div className='rpv-attachment__loader'><Spinner /></div>
+    return currentDoc ? (
+        <AttachmentLoader doc={currentDoc} />
+    ) : (
+        <div className="rpv-attachment__loader">
+            <Spinner />
+        </div>
     );
 };
 

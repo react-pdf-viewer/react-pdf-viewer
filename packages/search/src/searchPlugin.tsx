@@ -7,7 +7,15 @@
  */
 
 import * as React from 'react';
-import { createStore, Plugin, PluginFunctions, PluginOnDocumentLoad, PluginOnTextLayerRender, RenderViewer, Slot } from '@react-pdf-viewer/core';
+import {
+    createStore,
+    Plugin,
+    PluginFunctions,
+    PluginOnDocumentLoad,
+    PluginOnTextLayerRender,
+    RenderViewer,
+    Slot,
+} from '@react-pdf-viewer/core';
 
 import { EMPTY_KEYWORD_REGEXP } from './constants';
 import { normalizeSingleKeyword } from './normalizeKeyword';
@@ -38,24 +46,27 @@ export interface SearchPluginProps {
 
 const searchPlugin = (props?: SearchPluginProps): SearchPlugin => {
     // eslint-disable-next-line @typescript-eslint/no-empty-function
-    const onHighlightKeyword = React.useMemo(() => props && props.onHighlightKeyword ? props.onHighlightKeyword : () => {}, []);
-    const store = React.useMemo(() => createStore<StoreProps>({
-        renderStatus: new Map<number, PluginOnTextLayerRender>(),
-    }), []);
+    const onHighlightKeyword = React.useMemo(
+        () => (props && props.onHighlightKeyword ? props.onHighlightKeyword : () => {}),
+        []
+    );
+    const store = React.useMemo(
+        () =>
+            createStore<StoreProps>({
+                renderStatus: new Map<number, PluginOnTextLayerRender>(),
+            }),
+        []
+    );
     const { clearKeyword, jumpToNextMatch, jumpToPreviousMatch, searchFor, setKeywords } = useSearch(store);
 
-    const SearchDecorator = (props: SearchProps) => (
-        <Search {...props} store={store} />
-    );
+    const SearchDecorator = (props: SearchProps) => <Search {...props} store={store} />;
 
     const ShowSearchPopoverDecorator = (props: ShowSearchPopoverProps) => (
         <ShowSearchPopover {...props} store={store} />
     );
 
     const ShowSearchPopoverButtonDecorator = () => (
-        <ShowSearchPopoverDecorator>
-            {(props) => <ShowSearchPopoverButton {...props} />}
-        </ShowSearchPopoverDecorator>
+        <ShowSearchPopoverDecorator>{(props) => <ShowSearchPopoverButton {...props} />}</ShowSearchPopoverDecorator>
     );
 
     const renderViewer = (renderViewerProps: RenderViewer): Slot => {
@@ -63,12 +74,17 @@ const searchPlugin = (props?: SearchPluginProps): SearchPlugin => {
         if (currentSlot.subSlot) {
             currentSlot.subSlot.children = (
                 <>
-                {
-                    Array(renderViewerProps.doc.numPages).fill(0).map((_, index) => (
-                        <Tracker key={index} pageIndex={index} store={store} onHighlightKeyword={onHighlightKeyword} />
-                    ))
-                }
-                {currentSlot.subSlot.children}
+                    {Array(renderViewerProps.doc.numPages)
+                        .fill(0)
+                        .map((_, index) => (
+                            <Tracker
+                                key={index}
+                                pageIndex={index}
+                                store={store}
+                                onHighlightKeyword={onHighlightKeyword}
+                            />
+                        ))}
+                    {currentSlot.subSlot.children}
                 </>
             );
         }
@@ -76,11 +92,8 @@ const searchPlugin = (props?: SearchPluginProps): SearchPlugin => {
         return currentSlot;
     };
 
-    const normalizeKeywords = (keyword?: SingleKeyword | SingleKeyword[]): RegExp[] => (
-        Array.isArray(keyword)
-            ? keyword.map(k => normalizeSingleKeyword(k))
-            : [normalizeSingleKeyword(keyword)]
-    );
+    const normalizeKeywords = (keyword?: SingleKeyword | SingleKeyword[]): RegExp[] =>
+        Array.isArray(keyword) ? keyword.map((k) => normalizeSingleKeyword(k)) : [normalizeSingleKeyword(keyword)];
 
     return {
         install: (pluginFunctions: PluginFunctions) => {

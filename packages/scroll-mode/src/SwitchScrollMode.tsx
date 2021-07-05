@@ -28,9 +28,9 @@ export interface SwitchScrollModeProps {
 }
 
 const SwitchScrollMode: React.FC<{
-    children?: RenderSwitchScrollMode,
-    mode: ScrollMode,
-    store: Store<StoreProps>,
+    children?: RenderSwitchScrollMode;
+    mode: ScrollMode;
+    store: Store<StoreProps>;
 }> = ({ children, mode, store }) => {
     const { scrollMode, switchTo } = useScrollMode(store);
 

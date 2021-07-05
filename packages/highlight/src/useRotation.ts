@@ -14,9 +14,7 @@ import StoreProps from './StoreProps';
 const useRotation = (store: Store<StoreProps>): { rotation: number } => {
     const [rotation, setRotation] = React.useState(store.get('rotation') || 0);
 
-    const handleRotationChanged: StoreHandler<number> = (
-        currentRotation: number
-    ) => setRotation(currentRotation);
+    const handleRotationChanged: StoreHandler<number> = (currentRotation: number) => setRotation(currentRotation);
 
     React.useEffect(() => {
         store.subscribe('rotation', handleRotationChanged);

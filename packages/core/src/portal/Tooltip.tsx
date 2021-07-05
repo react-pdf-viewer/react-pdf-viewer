@@ -27,35 +27,26 @@ const Tooltip: React.FC<TooltipProps> = ({ content, offset, position, target }) 
     const targetRef = React.useRef<HTMLDivElement>();
 
     const renderTarget = (toggle: Toggle): React.ReactElement => {
-        const show = (): void => { toggle(ToggleStatus.Open); };
-        const hide = (): void => { toggle(ToggleStatus.Close); };
+        const show = (): void => {
+            toggle(ToggleStatus.Open);
+        };
+        const hide = (): void => {
+            toggle(ToggleStatus.Close);
+        };
         return (
-            <div
-                ref={targetRef}
-                onMouseEnter={show}
-                onMouseLeave={hide}
-            >
+            <div ref={targetRef} onMouseEnter={show} onMouseLeave={hide}>
                 {target}
             </div>
         );
     };
 
     const renderContent = (): React.ReactElement => (
-        <TooltipBody
-            offset={offset}
-            position={position}
-            targetRef={targetRef}
-        >
+        <TooltipBody offset={offset} position={position} targetRef={targetRef}>
             {content()}
         </TooltipBody>
     );
 
-    return (
-        <Portal
-            target={renderTarget}
-            content={renderContent}
-        />
-    );
+    return <Portal target={renderTarget} content={renderContent} />;
 };
 
 export default Tooltip;

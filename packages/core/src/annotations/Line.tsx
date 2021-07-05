@@ -28,11 +28,18 @@ const Line: React.FC<LineProps> = ({ annotation, page, viewport }) => {
     const borderWidth = annotation.borderStyle.width;
 
     return (
-        <Annotation annotation={annotation} hasPopup={hasPopup} ignoreBorder={true} isRenderable={isRenderable} page={page} viewport={viewport}>
+        <Annotation
+            annotation={annotation}
+            hasPopup={hasPopup}
+            ignoreBorder={true}
+            isRenderable={isRenderable}
+            page={page}
+            viewport={viewport}
+        >
             {(props): React.ReactElement => (
                 <div
                     {...props.slot.attrs}
-                    className='rpv-core__annotation rpv-core__annotation--line'                    
+                    className="rpv-core__annotation rpv-core__annotation--line"
                     data-annotation-id={annotation.id}
                     onClick={props.popup.toggleOnClick}
                     onMouseEnter={props.popup.openOnHover}
@@ -40,13 +47,13 @@ const Line: React.FC<LineProps> = ({ annotation, page, viewport }) => {
                 >
                     <svg
                         height={`${height}px`}
-                        preserveAspectRatio='none'
-                        version='1.1'
+                        preserveAspectRatio="none"
+                        version="1.1"
                         viewBox={`0 0 ${width} ${height}`}
                         width={`${width}px`}
                     >
                         <line
-                            stroke='transparent'
+                            stroke="transparent"
                             strokeWidth={borderWidth || 1}
                             x1={rect[2] - annotation.lineCoordinates[0]}
                             x2={rect[2] - annotation.lineCoordinates[2]}

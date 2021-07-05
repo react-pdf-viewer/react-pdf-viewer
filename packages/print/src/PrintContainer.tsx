@@ -34,7 +34,7 @@ const PrintContainer: React.FC<PrintContainerProps> = ({ doc, pageHeight, pageWi
     const handlePrintStatus: StoreHandler<PrintStatus> = (status: PrintStatus) => setPrintStatus(status);
 
     const onLoadPage = () => {
-        const total = numLoadedPagesForPrint + 1;        
+        const total = numLoadedPagesForPrint + 1;
         if (total <= doc.numPages) {
             setNumLoadedPagesForPrint(total);
             total === doc.numPages && setPrintStatus(PrintStatus.Ready);
@@ -50,25 +50,26 @@ const PrintContainer: React.FC<PrintContainerProps> = ({ doc, pageHeight, pageWi
 
     return (
         <>
-        {printStatus === PrintStatus.Preparing && (
-            <PrintProgress
-                numLoadedPages={numLoadedPagesForPrint}
-                numPages={doc.numPages}
-                onCancel={cancelPrinting}
-            />
-        )}
-        {(printStatus === PrintStatus.Preparing || printStatus === PrintStatus.Ready) && (numLoadedPagesForPrint <= doc.numPages) && (
-            <PrintZone
-                doc={doc}
-                numLoadedPages={numLoadedPagesForPrint}
-                pageHeight={pageHeight}
-                pageWidth={pageWidth}
-                printStatus={printStatus}
-                rotation={rotation}
-                onCancel={cancelPrinting}
-                onLoad={onLoadPage}
-            />
-        )}
+            {printStatus === PrintStatus.Preparing && (
+                <PrintProgress
+                    numLoadedPages={numLoadedPagesForPrint}
+                    numPages={doc.numPages}
+                    onCancel={cancelPrinting}
+                />
+            )}
+            {(printStatus === PrintStatus.Preparing || printStatus === PrintStatus.Ready) &&
+                numLoadedPagesForPrint <= doc.numPages && (
+                    <PrintZone
+                        doc={doc}
+                        numLoadedPages={numLoadedPagesForPrint}
+                        pageHeight={pageHeight}
+                        pageWidth={pageWidth}
+                        printStatus={printStatus}
+                        rotation={rotation}
+                        onCancel={cancelPrinting}
+                        onLoad={onLoadPage}
+                    />
+                )}
         </>
     );
 };

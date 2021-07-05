@@ -7,7 +7,15 @@
  */
 
 import * as React from 'react';
-import { createStore, Plugin, PluginFunctions, RenderViewer, Slot, SpecialZoomLevel, ViewerState } from '@react-pdf-viewer/core';
+import {
+    createStore,
+    Plugin,
+    PluginFunctions,
+    RenderViewer,
+    Slot,
+    SpecialZoomLevel,
+    ViewerState,
+} from '@react-pdf-viewer/core';
 
 import CurrentScale, { CurrentScaleProps } from './CurrentScale';
 import ShortcutHandler from './ShortcutHandler';
@@ -43,49 +51,45 @@ const zoomPlugin = (props?: ZoomPluginProps): ZoomPlugin => {
     const zoomPluginProps = React.useMemo(() => Object.assign({}, { enableShortcuts: true }, props), []);
     const store = React.useMemo(() => createStore<StoreProps>({}), []);
 
-    const CurrentScaleDecorator = (props: CurrentScaleProps) => (
-        <CurrentScale {...props} store={store} />
-    );
+    const CurrentScaleDecorator = (props: CurrentScaleProps) => <CurrentScale {...props} store={store} />;
 
-    const ZoomInDecorator = (props: ZoomInProps) => (
-        <ZoomIn {...props} store={store} />
-    );
+    const ZoomInDecorator = (props: ZoomInProps) => <ZoomIn {...props} store={store} />;
 
-    const ZoomInButtonDecorator = () => (
-        <ZoomInDecorator>
-            {props => <ZoomInButton {...props} />}
-        </ZoomInDecorator>
-    );
+    const ZoomInButtonDecorator = () => <ZoomInDecorator>{(props) => <ZoomInButton {...props} />}</ZoomInDecorator>;
 
     const ZoomInMenuItemDecorator = (props: ZoomMenuItemProps) => (
         <ZoomInDecorator>
-            {p => <ZoomInMenuItem onClick={() => { p.onClick(); props.onClick(); }} />}
+            {(p) => (
+                <ZoomInMenuItem
+                    onClick={() => {
+                        p.onClick();
+                        props.onClick();
+                    }}
+                />
+            )}
         </ZoomInDecorator>
     );
 
-    const ZoomOutDecorator = (props: ZoomOutProps) => (
-        <ZoomOut {...props} store={store} />
-    );
+    const ZoomOutDecorator = (props: ZoomOutProps) => <ZoomOut {...props} store={store} />;
 
-    const ZoomOutButtonDecorator = () => (
-        <ZoomOutDecorator>
-            {props => <ZoomOutButton {...props} />}
-        </ZoomOutDecorator>
-    );
+    const ZoomOutButtonDecorator = () => <ZoomOutDecorator>{(props) => <ZoomOutButton {...props} />}</ZoomOutDecorator>;
 
     const ZoomOutMenuItemDecorator = (props: ZoomMenuItemProps) => (
         <ZoomOutDecorator>
-            {p => <ZoomOutMenuItem onClick={() => { p.onClick(); props.onClick(); }} />}
+            {(p) => (
+                <ZoomOutMenuItem
+                    onClick={() => {
+                        p.onClick();
+                        props.onClick();
+                    }}
+                />
+            )}
         </ZoomOutDecorator>
     );
 
     const ZoomDecorator = (props: ZoomProps) => <Zoom {...props} store={store} />;
 
-    const ZoomPopoverDecorator = () => (
-        <ZoomDecorator>
-            {props => <ZoomPopover {...props} />}
-        </ZoomDecorator>
-    );
+    const ZoomPopoverDecorator = () => <ZoomDecorator>{(props) => <ZoomPopover {...props} />}</ZoomDecorator>;
 
     const renderViewer = (props: RenderViewer): Slot => {
         const { slot } = props;
@@ -96,15 +100,12 @@ const zoomPlugin = (props?: ZoomPluginProps): ZoomPlugin => {
         const updateSlot: Slot = {
             children: (
                 <>
-                <ShortcutHandler
-                    containerRef={props.containerRef}
-                    store={store}
-                />
-                {slot.children}
+                    <ShortcutHandler containerRef={props.containerRef} store={store} />
+                    {slot.children}
                 </>
-            )
+            ),
         };
-        return {...slot, ...updateSlot};
+        return { ...slot, ...updateSlot };
     };
 
     return {
@@ -130,7 +131,7 @@ const zoomPlugin = (props?: ZoomPluginProps): ZoomPlugin => {
         ZoomOutButton: ZoomOutButtonDecorator,
         ZoomOutMenuItem: ZoomOutMenuItemDecorator,
         Zoom: ZoomDecorator,
-        ZoomPopover: ZoomPopoverDecorator,        
+        ZoomPopover: ZoomPopoverDecorator,
     };
 };
 

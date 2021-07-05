@@ -16,8 +16,8 @@ import useCurrentPage from './useCurrentPage';
 import useNumberOfPages from './useNumberOfPages';
 
 const GoToLastPage: React.FC<{
-    children?: RenderGoToPage,
-    store: Store<StoreProps>,
+    children?: RenderGoToPage;
+    store: Store<StoreProps>;
 }> = ({ children, store }) => {
     const { currentPage } = useCurrentPage(store);
     const { numberOfPages } = useNumberOfPages(store);
@@ -29,7 +29,9 @@ const GoToLastPage: React.FC<{
         }
     };
 
-    const defaultChildren = (props: RenderGoToPageProps) => <GoToLastPageButton isDisabled={props.isDisabled} onClick={props.onClick} />;
+    const defaultChildren = (props: RenderGoToPageProps) => (
+        <GoToLastPageButton isDisabled={props.isDisabled} onClick={props.onClick} />
+    );
     const render = children || defaultChildren;
 
     return render({

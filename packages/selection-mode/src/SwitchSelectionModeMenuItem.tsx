@@ -14,17 +14,11 @@ import SwitchSelectionModeDecorator from './SwitchSelectionModeDecorator';
 
 const SwitchSelectionModeMenuItem: React.FC<RenderSwitchSelectionModeProps> = ({ isSelected, mode, onClick }) => (
     <SwitchSelectionModeDecorator mode={mode} onClick={onClick}>
-        {
-            (props) => (
-                <MenuItem
-                    checked={isSelected}
-                    icon={props.icon}
-                    onClick={props.onClick}
-                >
-                    {props.label}
-                </MenuItem>
-            )
-        }
+        {(props) => (
+            <MenuItem checked={isSelected} icon={props.icon} onClick={props.onClick}>
+                {props.label}
+            </MenuItem>
+        )}
     </SwitchSelectionModeDecorator>
 );
 

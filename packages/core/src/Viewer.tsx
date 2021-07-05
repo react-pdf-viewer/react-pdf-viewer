@@ -11,7 +11,7 @@ import * as React from 'react';
 import useIntersectionObserver, { VisibilityChanged } from './hooks/useIntersectionObserver';
 import usePrevious from './hooks/usePrevious';
 import Inner from './layouts/Inner';
-import PageSize from './layouts/PageSize'; 
+import PageSize from './layouts/PageSize';
 import PageSizeCalculator from './layouts/PageSizeCalculator';
 import { RenderPage } from './layouts/RenderPage';
 import DocumentLoader, { RenderError } from './loader/DocumentLoader';
@@ -61,7 +61,7 @@ export interface ViewerProps {
     // Theme
     theme?: string;
     // Indicate the cross-site requests should be made with credentials such as cookie and authorization headers.
-    // The default value is `false` 
+    // The default value is `false`
     withCredentials?: boolean;
     onDocumentLoad?(e: DocumentLoadEvent): void;
     onPageChange?(e: PageChangeEvent): void;
@@ -88,14 +88,20 @@ const Viewer: React.FC<ViewerProps> = ({
     transformGetDocumentParams,
     theme = 'light',
     withCredentials = false,
-    onDocumentLoad = () => {/**/},
-    onPageChange = () => {/**/},
-    onZoom = () => {/**/},
+    onDocumentLoad = () => {
+        /**/
+    },
+    onPageChange = () => {
+        /**/
+    },
+    onZoom = () => {
+        /**/
+    },
 }) => {
     const [file, setFile] = React.useState<FileState>({
         data: fileUrl,
-        name: (typeof fileUrl === 'string') ? fileUrl : '',
-        shouldLoad: false, 
+        name: typeof fileUrl === 'string' ? fileUrl : '',
+        shouldLoad: false,
     });
 
     const openFile = (fileName: string, data: Uint8Array) => {
@@ -114,7 +120,7 @@ const Viewer: React.FC<ViewerProps> = ({
         if (!isSameUrl(prevFile.data, fileUrl)) {
             setFile({
                 data: fileUrl,
-                name: (typeof fileUrl === 'string') ? fileUrl : '',
+                name: typeof fileUrl === 'string' ? fileUrl : '',
                 shouldLoad: visible,
             });
         }
@@ -123,7 +129,7 @@ const Viewer: React.FC<ViewerProps> = ({
     const visibilityChanged = (params: VisibilityChanged): void => {
         setVisible(params.isVisible);
         if (params.isVisible) {
-            setFile(currentFile => Object.assign({}, currentFile, { shouldLoad: true }));
+            setFile((currentFile) => Object.assign({}, currentFile, { shouldLoad: true }));
         }
     };
 
@@ -134,61 +140,60 @@ const Viewer: React.FC<ViewerProps> = ({
     return (
         <ThemeProvider theme={theme}>
             <LocalizationProvider localization={localization}>
-            {(_) => { // eslint-disable-line @typescript-eslint/no-unused-vars
-                const themeContext = React.useContext(ThemeContext);
-                return (
-                    <div
-                        ref={containerRef}
-                        className={`rpv-core__viewer rpv-core__viewer--${themeContext.currentTheme}`}
-                        data-testid='viewer'
-                        style={{
-                            height: '100%',
-                            width: '100%',
-                        }}
-                    >
-                    {
-                        file.shouldLoad && (
-                            <DocumentLoader
-                                characterMap={characterMap}
-                                file={file.data}
-                                httpHeaders={httpHeaders}
-                                render={(doc: PdfJs.PdfDocument) => (
-                                    <PageSizeCalculator
-                                        defaultScale={defaultScale}
-                                        doc={doc}
-                                        render={(ps: PageSize) => (
-                                            <Inner
-                                                doc={doc}
-                                                initialPage={initialPage}
-                                                pageSize={ps}
-                                                plugins={plugins}
-                                                renderPage={renderPage}
-                                                viewerState={{
-                                                    file,
-                                                    pageIndex: initialPage,
-                                                    pageHeight: ps.pageHeight,
-                                                    pageWidth: ps.pageWidth,
-                                                    rotation: 0,
-                                                    scale: ps.scale,
-                                                }}
-                                                onDocumentLoad={onDocumentLoad}
-                                                onOpenFile={openFile}
-                                                onPageChange={onPageChange}
-                                                onZoom={onZoom}
-                                            />
-                                        )}
-                                    />
-                                )}
-                                renderError={renderError}
-                                renderLoader={renderLoader}
-                                transformGetDocumentParams={transformGetDocumentParams}
-                                withCredentials={withCredentials}
-                            />
-                        )
-                    }
-                    </div>
-                );
-            }}
+                {(_) => {
+                    // eslint-disable-line @typescript-eslint/no-unused-vars
+                    const themeContext = React.useContext(ThemeContext);
+                    return (
+                        <div
+                            ref={containerRef}
+                            className={`rpv-core__viewer rpv-core__viewer--${themeContext.currentTheme}`}
+                            data-testid="viewer"
+                            style={{
+                                height: '100%',
+                                width: '100%',
+                            }}
+                        >
+                            {file.shouldLoad && (
+                                <DocumentLoader
+                                    characterMap={characterMap}
+                                    file={file.data}
+                                    httpHeaders={httpHeaders}
+                                    render={(doc: PdfJs.PdfDocument) => (
+                                        <PageSizeCalculator
+                                            defaultScale={defaultScale}
+                                            doc={doc}
+                                            render={(ps: PageSize) => (
+                                                <Inner
+                                                    doc={doc}
+                                                    initialPage={initialPage}
+                                                    pageSize={ps}
+                                                    plugins={plugins}
+                                                    renderPage={renderPage}
+                                                    viewerState={{
+                                                        file,
+                                                        pageIndex: initialPage,
+                                                        pageHeight: ps.pageHeight,
+                                                        pageWidth: ps.pageWidth,
+                                                        rotation: 0,
+                                                        scale: ps.scale,
+                                                    }}
+                                                    onDocumentLoad={onDocumentLoad}
+                                                    onOpenFile={openFile}
+                                                    onPageChange={onPageChange}
+                                                    onZoom={onZoom}
+                                                />
+                                            )}
+                                        />
+                                    )}
+                                    renderError={renderError}
+                                    renderLoader={renderLoader}
+                                    transformGetDocumentParams={transformGetDocumentParams}
+                                    withCredentials={withCredentials}
+                                />
+                            )}
+                        </div>
+                    );
+                }}
             </LocalizationProvider>
         </ThemeProvider>
     );

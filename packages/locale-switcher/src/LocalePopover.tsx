@@ -7,34 +7,50 @@
  */
 
 import * as React from 'react';
-import { LocalizationContext, LocalizationMap, MenuItem, MinimalButton, Popover, Position, Toggle, Tooltip } from '@react-pdf-viewer/core';
+import {
+    LocalizationContext,
+    LocalizationMap,
+    MenuItem,
+    MinimalButton,
+    Popover,
+    Position,
+    Toggle,
+    Tooltip,
+} from '@react-pdf-viewer/core';
 
 import LocaleIcon from './LocaleIcon';
 
 export interface LocalePopoverProps {
     initialLocale?: string;
     locales: {
-        [locale: string]: string,
+        [locale: string]: string;
     };
     localizations: {
-        [locale: string]: LocalizationMap,
+        [locale: string]: LocalizationMap;
     };
     onUpdateLocalization: (localization: LocalizationMap) => void;
 }
 
-const LocalePopover: React.FC<LocalePopoverProps> = ({ initialLocale = 'en_US', locales, localizations, onUpdateLocalization }) => {
+const LocalePopover: React.FC<LocalePopoverProps> = ({
+    initialLocale = 'en_US',
+    locales,
+    localizations,
+    onUpdateLocalization,
+}) => {
     const l10n = React.useContext(LocalizationContext);
     const [locale, setLocale] = React.useState(initialLocale);
 
     const renderTarget = (toggle: Toggle, opened: boolean) => {
-        const label = l10n && l10n.localeSwitcher
-            ? l10n.localeSwitcher.switchLocale
-            : 'Switch locale';
+        const label = l10n && l10n.localeSwitcher ? l10n.localeSwitcher.switchLocale : 'Switch locale';
 
         return (
             <Tooltip
                 position={Position.BottomCenter}
-                target={<MinimalButton onClick={toggle} isSelected={opened}><LocaleIcon /></MinimalButton>}
+                target={
+                    <MinimalButton onClick={toggle} isSelected={opened}>
+                        <LocaleIcon />
+                    </MinimalButton>
+                }
                 content={() => label}
                 offset={{ left: 0, top: 8 }}
             />
@@ -56,19 +72,13 @@ const LocalePopover: React.FC<LocalePopoverProps> = ({ initialLocale = 'en_US', 
                     padding: 0,
                 }}
             >
-                {
-                    Object.keys(locales).map(loc => {
-                        return (
-                            <MenuItem
-                                key={loc}
-                                checked={locale === loc}
-                                onClick={() => changeLocale(loc)}
-                            >
-                                {locales[loc]}
-                            </MenuItem>
-                        );
-                    })
-                }
+                {Object.keys(locales).map((loc) => {
+                    return (
+                        <MenuItem key={loc} checked={locale === loc} onClick={() => changeLocale(loc)}>
+                            {locales[loc]}
+                        </MenuItem>
+                    );
+                })}
             </ul>
         );
     };

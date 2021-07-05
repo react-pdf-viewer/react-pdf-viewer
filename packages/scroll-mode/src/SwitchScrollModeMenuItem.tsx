@@ -14,17 +14,11 @@ import SwitchScrollModeDecorator from './SwitchScrollModeDecorator';
 
 const SwitchScrollModeMenuItem: React.FC<RenderSwitchScrollModeProps> = ({ isSelected, mode, onClick }) => (
     <SwitchScrollModeDecorator mode={mode} onClick={onClick}>
-        {
-            (props) => (
-                <MenuItem
-                    checked={isSelected}
-                    icon={props.icon}
-                    onClick={props.onClick}
-                >
-                    {props.label}
-                </MenuItem>
-            )
-        }
+        {(props) => (
+            <MenuItem checked={isSelected} icon={props.icon} onClick={props.onClick}>
+                {props.label}
+            </MenuItem>
+        )}
     </SwitchScrollModeDecorator>
 );
 

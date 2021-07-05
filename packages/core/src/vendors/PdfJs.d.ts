@@ -140,10 +140,7 @@ declare module 'pdfjs-dist' {
 
     // Render SVG
     interface SVGGraphics {
-        getSVG(
-            operatorList: PageOperatorList,
-            viewport: ViewPort
-        ): Promise<SVGElement>;
+        getSVG(operatorList: PageOperatorList, viewport: ViewPort): Promise<SVGElement>;
     }
     interface SVGGraphicsConstructor {
         new (commonObjs: PageCommonObjects, objs: PageObjects): SVGGraphics;

@@ -13,7 +13,7 @@ import StoreProps from './StoreProps';
 import ThumbnailList from './ThumbnailList';
 
 const ThumbnailListWithStore: React.FC<{
-    store: Store<StoreProps>,
+    store: Store<StoreProps>;
 }> = ({ store }) => {
     const [currentDoc, setCurrentDoc] = React.useState(store.get('doc'));
     const [currentPage, setCurrentPage] = React.useState(store.get('currentPage') || 0);
@@ -70,19 +70,19 @@ const ThumbnailListWithStore: React.FC<{
         };
     }, []);
 
-    return (
-        currentDoc 
-        ? (
-            <ThumbnailList
-                currentPage={currentPage}
-                doc={currentDoc}
-                pageHeight={pageHeight}
-                pageWidth={pageWidth}
-                rotation={rotation}
-                onJumpToPage={jump}
-            />
-        )
-        : <div className='rpv-thumbnail__loader'><Spinner /></div>
+    return currentDoc ? (
+        <ThumbnailList
+            currentPage={currentPage}
+            doc={currentDoc}
+            pageHeight={pageHeight}
+            pageWidth={pageWidth}
+            rotation={rotation}
+            onJumpToPage={jump}
+        />
+    ) : (
+        <div className="rpv-thumbnail__loader">
+            <Spinner />
+        </div>
     );
 };
 

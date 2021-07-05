@@ -22,7 +22,11 @@ const DownloadButton: React.FC<RenderDownloadProps> = ({ onClick }) => {
     return (
         <Tooltip
             position={Position.BottomCenter}
-            target={<MinimalButton onClick={onClick}><DownloadIcon /></MinimalButton>}
+            target={
+                <MinimalButton onClick={onClick}>
+                    <DownloadIcon />
+                </MinimalButton>
+            }
             content={() => label}
             offset={TOOLTIP_OFFSET}
         />

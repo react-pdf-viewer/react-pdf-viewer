@@ -27,11 +27,18 @@ const FileAttachment: React.FC<FileAttachmentProps> = ({ annotation, page, viewp
     };
 
     return (
-        <Annotation annotation={annotation} hasPopup={hasPopup} ignoreBorder={true} isRenderable={true} page={page} viewport={viewport}>
+        <Annotation
+            annotation={annotation}
+            hasPopup={hasPopup}
+            ignoreBorder={true}
+            isRenderable={true}
+            page={page}
+            viewport={viewport}
+        >
             {(props): React.ReactElement => (
                 <div
                     {...props.slot.attrs}
-                    className='rpv-core__annotation rpv-core__annotation--file-attachment'
+                    className="rpv-core__annotation rpv-core__annotation--file-attachment"
                     data-annotation-id={annotation.id}
                     onClick={props.popup.toggleOnClick}
                     onDoubleClick={doubleClick}

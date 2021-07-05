@@ -25,8 +25,8 @@ export interface ZoomOutProps {
 }
 
 const ZoomOut: React.FC<{
-    children?: RenderZoomOut,
-    store: Store<StoreProps>,
+    children?: RenderZoomOut;
+    store: Store<StoreProps>;
 }> = ({ children, store }) => {
     const { scale } = useZoom(store);
 
@@ -38,7 +38,7 @@ const ZoomOut: React.FC<{
         }
     };
 
-    const defaultChildren = (props: RenderZoomOutProps) => <ZoomOutButton onClick={props.onClick} />
+    const defaultChildren = (props: RenderZoomOutProps) => <ZoomOutButton onClick={props.onClick} />;
     const render = children || defaultChildren;
 
     return render({

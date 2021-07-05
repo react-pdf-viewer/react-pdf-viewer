@@ -11,11 +11,11 @@ import { searchPlugin } from '../src/index';
 import FlagKeyword from '../src/types/FlagKeyword';
 
 const TestKeywordFlag: React.FC<{
-    fileUrl: Uint8Array,
-    keyword: FlagKeyword,
+    fileUrl: Uint8Array;
+    keyword: FlagKeyword;
 }> = ({ fileUrl, keyword }) => {
     const searchPluginInstance = searchPlugin({
-        keyword
+        keyword,
     });
 
     return (
@@ -26,12 +26,7 @@ const TestKeywordFlag: React.FC<{
                 width: '720px',
             }}
         >
-            <Viewer
-                fileUrl={fileUrl}
-                plugins={[
-                    searchPluginInstance,
-                ]}
-            />
+            <Viewer fileUrl={fileUrl} plugins={[searchPluginInstance]} />
         </div>
     );
 };
@@ -43,12 +38,14 @@ test('keyword with flag matchCase=false', async () => {
         keyword: 'PDF',
     };
 
-    const { findByText, findAllByTestId, findByTestId, getByTestId } = render(<TestKeywordFlag fileUrl={new Uint8Array(rawSamplePdf)} keyword={flagKeyword} />);
+    const { findByText, findAllByTestId, findByTestId, getByTestId } = render(
+        <TestKeywordFlag fileUrl={new Uint8Array(rawSamplePdf)} keyword={flagKeyword} />
+    );
     mockIsIntersecting(getByTestId('viewer'), true);
-    
+
     const page = await findByTestId('viewer-page-layer-7');
     mockIsIntersecting(page, true);
-    
+
     await findByText('URL examples');
 
     const highlights = await findAllByTitle(page, flagKeyword.keyword);
@@ -65,12 +62,14 @@ test('keyword with flag matchCase=true', async () => {
         matchCase: true,
     };
 
-    const { findByText, findAllByTestId, findByTestId, getByTestId } = render(<TestKeywordFlag fileUrl={new Uint8Array(rawSamplePdf)} keyword={flagKeyword} />);
+    const { findByText, findAllByTestId, findByTestId, getByTestId } = render(
+        <TestKeywordFlag fileUrl={new Uint8Array(rawSamplePdf)} keyword={flagKeyword} />
+    );
     mockIsIntersecting(getByTestId('viewer'), true);
-    
+
     const page = await findByTestId('viewer-page-layer-7');
     mockIsIntersecting(page, true);
-    
+
     await findByText('URL examples');
 
     const highlights = await findAllByTitle(page, flagKeyword.keyword);

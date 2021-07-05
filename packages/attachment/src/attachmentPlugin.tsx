@@ -19,9 +19,7 @@ interface AttachmentPlugin extends Plugin {
 const attachmentPlugin = (): AttachmentPlugin => {
     const store = React.useMemo(() => createStore<StoreProps>({}), []);
 
-    const AttachmentsDecorator = () => (
-        <AttachmentListWithStore store={store} />
-    );
+    const AttachmentsDecorator = () => <AttachmentListWithStore store={store} />;
 
     return {
         onDocumentLoad: (props: PluginOnDocumentLoad) => {

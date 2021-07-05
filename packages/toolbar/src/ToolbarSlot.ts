@@ -7,46 +7,18 @@
  */
 
 import * as React from 'react';
-import {
-    EnterFullScreenMenuItemProps,
-    EnterFullScreenProps,
-} from '@react-pdf-viewer/full-screen';
-import {
-    DownloadMenuItemProps,
-    DownloadProps,
-} from '@react-pdf-viewer/get-file';
+import { EnterFullScreenMenuItemProps, EnterFullScreenProps } from '@react-pdf-viewer/full-screen';
+import { DownloadMenuItemProps, DownloadProps } from '@react-pdf-viewer/get-file';
 import { OpenProps } from '@react-pdf-viewer/open';
-import {
-    CurrentPageLabelProps,
-    GoToPageMenuItemProps,
-    GoToPageProps,
-} from '@react-pdf-viewer/page-navigation';
+import { CurrentPageLabelProps, GoToPageMenuItemProps, GoToPageProps } from '@react-pdf-viewer/page-navigation';
 import { PrintMenuItemProps, PrintProps } from '@react-pdf-viewer/print';
-import {
-    ShowPropertiesProps,
-    ShowPropertiesMenuItemProps,
-} from '@react-pdf-viewer/properties';
+import { ShowPropertiesProps, ShowPropertiesMenuItemProps } from '@react-pdf-viewer/properties';
 import { RotateDecoratorProps, RotateProps } from '@react-pdf-viewer/rotate';
-import {
-    SwitchScrollModeMenuItemProps,
-    SwitchScrollModeProps,
-} from '@react-pdf-viewer/scroll-mode';
+import { SwitchScrollModeMenuItemProps, SwitchScrollModeProps } from '@react-pdf-viewer/scroll-mode';
 import { SearchProps, ShowSearchPopoverProps } from '@react-pdf-viewer/search';
-import {
-    SwitchSelectionModeMenuItemProps,
-    SwitchSelectionModeProps,
-} from '@react-pdf-viewer/selection-mode';
-import type {
-    SwitchThemeProps,
-    SwitchThemeMenuItemProps,
-} from '@react-pdf-viewer/theme';
-import {
-    CurrentScaleProps,
-    ZoomInProps,
-    ZoomMenuItemProps,
-    ZoomOutProps,
-    ZoomProps,
-} from '@react-pdf-viewer/zoom';
+import { SwitchSelectionModeMenuItemProps, SwitchSelectionModeProps } from '@react-pdf-viewer/selection-mode';
+import type { SwitchThemeProps, SwitchThemeMenuItemProps } from '@react-pdf-viewer/theme';
+import { CurrentScaleProps, ZoomInProps, ZoomMenuItemProps, ZoomOutProps, ZoomProps } from '@react-pdf-viewer/zoom';
 
 export default interface ToolbarSlot {
     CurrentPageInput(): React.ReactElement;
@@ -66,9 +38,7 @@ export default interface ToolbarSlot {
     DownloadMenuItem(props: DownloadMenuItemProps): React.ReactElement;
 
     EnterFullScreen(props: EnterFullScreenProps): React.ReactElement;
-    EnterFullScreenMenuItem(
-        props: EnterFullScreenMenuItemProps
-    ): React.ReactElement;
+    EnterFullScreenMenuItem(props: EnterFullScreenMenuItemProps): React.ReactElement;
 
     Open(props: OpenProps): React.ReactElement;
     OpenMenuItem(): React.ReactElement;
@@ -84,18 +54,12 @@ export default interface ToolbarSlot {
     ShowSearchPopover(props: ShowSearchPopoverProps): React.ReactElement;
 
     ShowProperties(props: ShowPropertiesProps): React.ReactElement;
-    ShowPropertiesMenuItem(
-        props: ShowPropertiesMenuItemProps
-    ): React.ReactElement;
+    ShowPropertiesMenuItem(props: ShowPropertiesMenuItemProps): React.ReactElement;
 
     SwitchScrollMode(props: SwitchScrollModeProps): React.ReactElement;
-    SwitchScrollModeMenuItem(
-        props: SwitchScrollModeMenuItemProps
-    ): React.ReactElement;
+    SwitchScrollModeMenuItem(props: SwitchScrollModeMenuItemProps): React.ReactElement;
     SwitchSelectionMode(props: SwitchSelectionModeProps): React.ReactElement;
-    SwitchSelectionModeMenuItem(
-        props: SwitchSelectionModeMenuItemProps
-    ): React.ReactElement;
+    SwitchSelectionModeMenuItem(props: SwitchSelectionModeMenuItemProps): React.ReactElement;
 
     SwitchTheme(props: SwitchThemeProps): React.ReactElement;
     SwitchThemeMenuItem(props: SwitchThemeMenuItemProps): React.ReactElement;

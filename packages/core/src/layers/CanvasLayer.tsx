@@ -43,7 +43,7 @@ const CanvasLayer: React.FC<CanvasLayerProps> = ({ height, page, pageIndex, plug
 
         const canvasEle = canvasRef.current as HTMLCanvasElement;
 
-        plugins.forEach(plugin => {
+        plugins.forEach((plugin) => {
             if (plugin.onCanvasLayerRender) {
                 plugin.onCanvasLayerRender({
                     ele: canvasEle,
@@ -61,15 +61,20 @@ const CanvasLayer: React.FC<CanvasLayerProps> = ({ height, page, pageIndex, plug
         canvasEle.width = width * devicePixelRatio;
         canvasEle.style.opacity = '0';
 
-        const canvasContext = canvasEle.getContext('2d', { alpha: false }) as CanvasRenderingContext2D;
+        const canvasContext = canvasEle.getContext('2d', {
+            alpha: false,
+        }) as CanvasRenderingContext2D;
 
-        const viewport = page.getViewport({ rotation, scale: scale * devicePixelRatio });
+        const viewport = page.getViewport({
+            rotation,
+            scale: scale * devicePixelRatio,
+        });
         renderTask.current = page.render({ canvasContext, viewport });
         renderTask.current.promise.then(
             (): void => {
                 setRendered(true);
                 canvasEle.style.removeProperty('opacity');
-                plugins.forEach(plugin => {
+                plugins.forEach((plugin) => {
                     if (plugin.onCanvasLayerRender) {
                         plugin.onCanvasLayerRender({
                             ele: canvasEle,
@@ -83,26 +88,24 @@ const CanvasLayer: React.FC<CanvasLayerProps> = ({ height, page, pageIndex, plug
             },
             (): void => {
                 setRendered(true);
-            },
+            }
         );
     };
 
     return (
         <WithScale callback={renderCanvas} rotation={rotation} scale={scale}>
             <div
-                className='rpv-core__canvas-layer'
+                className="rpv-core__canvas-layer"
                 style={{
                     height: `${height}px`,
                     width: `${width}px`,
                 }}
             >
-                {
-                    !rendered && (
-                        <div className='rpv-core__canvas-layer-loader'>
-                            <Spinner />
-                        </div>
-                    )
-                }
+                {!rendered && (
+                    <div className="rpv-core__canvas-layer-loader">
+                        <Spinner />
+                    </div>
+                )}
                 <canvas
                     ref={canvasRef}
                     style={{

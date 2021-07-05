@@ -577,14 +577,8 @@ export type StoreKey<T extends StoreState> = string & keyof T;
 export type StoreHandler<T> = (params: T) => void;
 
 export interface Store<T extends StoreState> {
-    subscribe<K extends StoreKey<T>>(
-        eventName: K,
-        handler: StoreHandler<NonNullable<T[K]>>
-    ): void;
-    unsubscribe<K extends StoreKey<T>>(
-        eventName: K,
-        handler: StoreHandler<NonNullable<T[K]>>
-    ): void;
+    subscribe<K extends StoreKey<T>>(eventName: K, handler: StoreHandler<NonNullable<T[K]>>): void;
+    unsubscribe<K extends StoreKey<T>>(eventName: K, handler: StoreHandler<NonNullable<T[K]>>): void;
     update<K extends StoreKey<T>>(eventName: K, params: T[K]): void;
     get<K extends StoreKey<T>>(eventName: K): T[K] | undefined;
 }
@@ -617,9 +611,7 @@ export interface ViewerProps {
     renderLoader?(percentages: number): React.ReactElement;
     // Theme
     theme?: string;
-    transformGetDocumentParams?(
-        options: PdfJs.GetDocumentParams
-    ): PdfJs.GetDocumentParams;
+    transformGetDocumentParams?(options: PdfJs.GetDocumentParams): PdfJs.GetDocumentParams;
     // Indicate the cross-site requests should be made with credentials such as cookie and authorization headers.
     // The default value is `false`
     withCredentials?: boolean;
@@ -641,14 +633,9 @@ export interface UseIntersectionObserverProps {
     threshold?: number | number[];
     onVisibilityChanged(params: VisibilityChanged): void;
 }
-export function useIntersectionObserver(
-    props: UseIntersectionObserverProps
-): React.MutableRefObject<HTMLDivElement>;
+export function useIntersectionObserver(props: UseIntersectionObserverProps): React.MutableRefObject<HTMLDivElement>;
 
-export function useIsomorphicLayoutEffect(
-    effect: React.EffectCallback,
-    deps?: React.DependencyList
-): void;
+export function useIsomorphicLayoutEffect(effect: React.EffectCallback, deps?: React.DependencyList): void;
 
 // Utils
 // -----
@@ -659,7 +646,4 @@ export interface JumpToDestination {
     scaleTo: number | SpecialZoomLevel;
 }
 
-export function getDestination(
-    doc: PdfJs.PdfDocument,
-    dest: PdfJs.OutlineDestinationType
-): Promise<JumpToDestination>;
+export function getDestination(doc: PdfJs.PdfDocument, dest: PdfJs.OutlineDestinationType): Promise<JumpToDestination>;

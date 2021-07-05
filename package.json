@@ -28,7 +28,7 @@
 		"dev": "lerna run dev",
 		"test": "lerna run test",
 		"lint": "eslint packages/**/src/*.ts packages/**/src/*.tsx",
-		"format": "prettier --write \"packages/**/*.+(js|jsx|json|css|md|ts)\"",
+		"format": "prettier --write \"packages/**/*.+(css|js|json|jsx|less|md|ts|tsx)\"",
 		"release": "npm run build && lerna publish from-package"
 	},
 	"devDependencies": {

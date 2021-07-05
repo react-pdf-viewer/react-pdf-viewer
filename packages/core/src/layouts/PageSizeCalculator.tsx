@@ -38,15 +38,17 @@ const PageSizeCalculator: React.FC<PageSizeCalculatorProps> = ({ defaultScale, d
             const pagesEle = pagesRef.current;
             if (!pagesEle) {
                 return;
-            }            
+            }
 
             // Determine the best scale that fits the document within the container
             // We spend 50 pixels in the left and right sides for other parts such as sidebar
             const scaled = (pagesEle.clientWidth - 2 * 50) / w;
-            
+
             let scale = defaultScale
-                        ? (typeof defaultScale === 'string' ? calculateScale(pagesEle, h, w, defaultScale) : defaultScale)
-                        : decrease(scaled);
+                ? typeof defaultScale === 'string'
+                    ? calculateScale(pagesEle, h, w, defaultScale)
+                    : defaultScale
+                : decrease(scaled);
 
             setPageSize({
                 pageHeight: h,
@@ -57,14 +59,12 @@ const PageSizeCalculator: React.FC<PageSizeCalculatorProps> = ({ defaultScale, d
     }, [doc]);
 
     const { pageWidth } = pageSize;
-    return (
-        pageWidth === 0
-            ? (
-                <div className='rpv-core__page-size-calculator' ref={pagesRef}>
-                    <Spinner />
-                </div>
-            )
-            : render(pageSize)
+    return pageWidth === 0 ? (
+        <div className="rpv-core__page-size-calculator" ref={pagesRef}>
+            <Spinner />
+        </div>
+    ) : (
+        render(pageSize)
     );
 };
 

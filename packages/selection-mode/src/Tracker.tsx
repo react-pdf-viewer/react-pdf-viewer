@@ -13,7 +13,7 @@ import SelectionMode from './SelectionMode';
 import StoreProps from './StoreProps';
 
 const Tracker: React.FC<{
-    store: Store<StoreProps>,
+    store: Store<StoreProps>;
 }> = ({ store }) => {
     const pagesRef = React.useRef<HTMLElement | null>(null);
     const [selectionMode, setSelectionMode] = React.useState<SelectionMode>(SelectionMode.Text);

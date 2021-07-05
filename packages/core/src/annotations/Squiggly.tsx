@@ -22,11 +22,18 @@ const Squiggly: React.FC<SquigglyProps> = ({ annotation, page, viewport }) => {
     const isRenderable = !!(annotation.hasPopup || annotation.title || annotation.contents);
 
     return (
-        <Annotation annotation={annotation} hasPopup={hasPopup} ignoreBorder={true} isRenderable={isRenderable} page={page} viewport={viewport}>
+        <Annotation
+            annotation={annotation}
+            hasPopup={hasPopup}
+            ignoreBorder={true}
+            isRenderable={isRenderable}
+            page={page}
+            viewport={viewport}
+        >
             {(props): React.ReactElement => (
                 <div
                     {...props.slot.attrs}
-                    className='rpv-core__annotation rpv-core__annotation--squiggly'
+                    className="rpv-core__annotation rpv-core__annotation--squiggly"
                     data-annotation-id={annotation.id}
                     onClick={props.popup.toggleOnClick}
                     onMouseEnter={props.popup.openOnHover}

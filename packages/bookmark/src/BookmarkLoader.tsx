@@ -40,25 +40,16 @@ const BookmarkLoader: React.FC<BookmarkLoaderProps> = ({ doc, onJumpToDest }) =>
         });
     }, [doc]);
 
-    return (
-        !bookmarks.isLoaded
-            ? <Spinner />
-            : (
-                bookmarks.items.length === 0
-                    ? <div className='rpv-bookmark__empty'>
-                        {l10n && l10n.bookmark ? l10n.bookmark.noBookmark : 'There is no bookmark'}
-                    </div>
-                    : (
-                        <div className='rpv-bookmark__container'>
-                            <BookmarkList
-                                bookmarks={bookmarks.items}
-                                depth={0}
-                                doc={doc}
-                                onJumpToDest={onJumpToDest}
-                            />
-                        </div>
-                    )
-            )
+    return !bookmarks.isLoaded ? (
+        <Spinner />
+    ) : bookmarks.items.length === 0 ? (
+        <div className="rpv-bookmark__empty">
+            {l10n && l10n.bookmark ? l10n.bookmark.noBookmark : 'There is no bookmark'}
+        </div>
+    ) : (
+        <div className="rpv-bookmark__container">
+            <BookmarkList bookmarks={bookmarks.items} depth={0} doc={doc} onJumpToDest={onJumpToDest} />
+        </div>
     );
 };
 

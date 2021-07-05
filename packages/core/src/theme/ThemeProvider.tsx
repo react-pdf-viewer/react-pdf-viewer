@@ -16,7 +16,7 @@ interface ThemeProviderProps {
 }
 
 const ThemeProvider: React.FC<ThemeProviderProps> = ({ children, theme }) => {
-    const initialTheme = React.useMemo(() => theme === 'auto' ? (isDarkMode() ? 'dark' : 'light') : theme, []);
+    const initialTheme = React.useMemo(() => (theme === 'auto' ? (isDarkMode() ? 'dark' : 'light') : theme), []);
     const [currentTheme, setCurrentTheme] = React.useState(initialTheme);
 
     React.useEffect(() => {
@@ -38,11 +38,7 @@ const ThemeProvider: React.FC<ThemeProviderProps> = ({ children, theme }) => {
         setCurrentTheme,
     };
 
-    return (
-        <ThemeContext.Provider value={initialContext}>
-            {children}
-        </ThemeContext.Provider>
-    );
+    return <ThemeContext.Provider value={initialContext}>{children}</ThemeContext.Provider>;
 };
 
 export default ThemeProvider;

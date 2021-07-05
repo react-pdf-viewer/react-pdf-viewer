@@ -7,7 +7,16 @@
  */
 
 import * as React from 'react';
-import { LocalizationContext, Menu, MenuDivider, MinimalButton, Popover, Position, Toggle, Tooltip } from '@react-pdf-viewer/core';
+import {
+    LocalizationContext,
+    Menu,
+    MenuDivider,
+    MinimalButton,
+    Popover,
+    Position,
+    Toggle,
+    Tooltip,
+} from '@react-pdf-viewer/core';
 import { ScrollMode } from '@react-pdf-viewer/scroll-mode';
 import { SelectionMode } from '@react-pdf-viewer/selection-mode';
 
@@ -23,8 +32,20 @@ const PORTAL_OFFSET = { left: 0, top: 8 };
 const MoreActionsPopover: React.FC<MoreActionsPopoverProps> = ({ toolbarSlot }) => {
     const l10n = React.useContext(LocalizationContext);
     const {
-        DownloadMenuItem, EnterFullScreenMenuItem, GoToFirstPageMenuItem, GoToLastPageMenuItem, GoToNextPageMenuItem, GoToPreviousPageMenuItem, OpenMenuItem, PrintMenuItem, RotateBackwardMenuItem, RotateForwardMenuItem, ShowPropertiesMenuItem,
-        SwitchScrollModeMenuItem, SwitchSelectionModeMenuItem, SwitchThemeMenuItem,
+        DownloadMenuItem,
+        EnterFullScreenMenuItem,
+        GoToFirstPageMenuItem,
+        GoToLastPageMenuItem,
+        GoToNextPageMenuItem,
+        GoToPreviousPageMenuItem,
+        OpenMenuItem,
+        PrintMenuItem,
+        RotateBackwardMenuItem,
+        RotateForwardMenuItem,
+        ShowPropertiesMenuItem,
+        SwitchScrollModeMenuItem,
+        SwitchSelectionModeMenuItem,
+        SwitchThemeMenuItem,
     } = toolbarSlot;
 
     const renderTarget = (toggle: Toggle, opened: boolean): React.ReactElement => {
@@ -33,7 +54,11 @@ const MoreActionsPopover: React.FC<MoreActionsPopoverProps> = ({ toolbarSlot }) 
         return (
             <Tooltip
                 position={Position.BottomRight}
-                target={<MinimalButton onClick={toggle} isSelected={opened}><MoreIcon /></MinimalButton>}
+                target={
+                    <MinimalButton onClick={toggle} isSelected={opened}>
+                        <MoreIcon />
+                    </MinimalButton>
+                }
                 content={() => label}
                 offset={PORTAL_OFFSET}
             />

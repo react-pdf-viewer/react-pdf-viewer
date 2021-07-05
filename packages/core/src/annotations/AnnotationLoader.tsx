@@ -24,7 +24,7 @@ const AnnotationLoader: React.FC<AnnotationLayerProps> = ({ page, renderAnnotati
     const [status, setStatus] = React.useState<Status>({
         loading: true,
         annotations: [],
-    })
+    });
 
     React.useEffect(() => {
         page.getAnnotations({ intent: 'display' }).then((result) => {
@@ -35,11 +35,7 @@ const AnnotationLoader: React.FC<AnnotationLayerProps> = ({ page, renderAnnotati
         });
     }, []);
 
-    return (
-        status.loading
-            ? <></>
-            : renderAnnotations(status.annotations)
-    );
+    return status.loading ? <></> : renderAnnotations(status.annotations);
 };
 
 export default AnnotationLoader;

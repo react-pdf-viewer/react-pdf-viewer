@@ -23,7 +23,12 @@ interface ThumbnailListProps {
 }
 
 const ThumbnailList: React.FC<ThumbnailListProps> = ({
-    currentPage, doc, pageHeight, pageWidth, rotation, onJumpToPage,
+    currentPage,
+    doc,
+    pageHeight,
+    pageWidth,
+    rotation,
+    onJumpToPage,
 }) => {
     const { numPages } = doc;
     const containerRef = React.useRef<HTMLDivElement | null>(null);
@@ -37,34 +42,29 @@ const ThumbnailList: React.FC<ThumbnailListProps> = ({
     };
 
     return (
-        <div
-            ref={containerRef}
-            className='rpv-thumbnail__list'
-        >
-        {
-            Array(numPages).fill(0).map((_, index) => (
-                <div                    
-                    className={
-                        classNames({
+        <div ref={containerRef} className="rpv-thumbnail__list">
+            {Array(numPages)
+                .fill(0)
+                .map((_, index) => (
+                    <div
+                        className={classNames({
                             'rpv-thumbnail__item': true,
                             'rpv-thumbnail__item--selected': currentPage === index,
-                        })
-                    }
-                    key={`thumbnail-${index}`}
-                    onClick={() => onJumpToPage(index)}
-                >
-                    <ThumbnailContainer
-                        doc={doc}
-                        isActive={currentPage === index}
-                        pageHeight={pageHeight}
-                        pageIndex={index}
-                        pageWidth={pageWidth}
-                        rotation={rotation}
-                        onActive={scrollToThumbnail}
-                    />
-                </div>
-            ))
-        }
+                        })}
+                        key={`thumbnail-${index}`}
+                        onClick={() => onJumpToPage(index)}
+                    >
+                        <ThumbnailContainer
+                            doc={doc}
+                            isActive={currentPage === index}
+                            pageHeight={pageHeight}
+                            pageIndex={index}
+                            pageWidth={pageWidth}
+                            rotation={rotation}
+                            onActive={scrollToThumbnail}
+                        />
+                    </div>
+                ))}
         </div>
     );
 };

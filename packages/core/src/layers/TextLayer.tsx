@@ -50,7 +50,7 @@ const TextLayer: React.FC<TextLayerProps> = ({ page, pageIndex, plugins, rotatio
         }
         const viewport = page.getViewport({ rotation, scale });
 
-        plugins.forEach(plugin => {
+        plugins.forEach((plugin) => {
             if (plugin.onTextLayerRender) {
                 plugin.onTextLayerRender({
                     ele: containerEle,
@@ -76,7 +76,7 @@ const TextLayer: React.FC<TextLayerProps> = ({ page, pageIndex, plugins, rotatio
                         const span = spans[i] as HTMLElement;
                         span.classList.add('rpv-core__text-layer-text');
                     }
-                    plugins.forEach(plugin => {
+                    plugins.forEach((plugin) => {
                         if (plugin.onTextLayerRender) {
                             plugin.onTextLayerRender({
                                 ele: containerEle,
@@ -87,14 +87,16 @@ const TextLayer: React.FC<TextLayerProps> = ({ page, pageIndex, plugins, rotatio
                         }
                     });
                 },
-                () => {/**/},
+                () => {
+                    /**/
+                }
             );
         });
     };
 
     return (
         <WithScale callback={renderText} rotation={rotation} scale={scale}>
-            <div className='rpv-core__text-layer' ref={containerRef} />
+            <div className="rpv-core__text-layer" ref={containerRef} />
         </WithScale>
     );
 };

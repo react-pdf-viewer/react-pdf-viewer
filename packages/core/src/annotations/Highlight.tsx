@@ -28,22 +28,17 @@ const Highlight: React.FC<HighlightProps> = ({ annotation, childAnnotation, page
     const hasQuadPoints = annotation.quadPoints && annotation.quadPoints.length > 0;
 
     if (hasQuadPoints) {
-        const annotations = annotation.quadPoints.map(quadPoint => (
-            Object.assign({}, annotation, {
-                rect: [
-                    quadPoint[2].x,
-                    quadPoint[2].y,
-                    quadPoint[1].x,
-                    quadPoint[1].y,
-                ],
-                // Reset the `quadPoints` property to avoid the infinitive loop
-                quadPoints: [],
-            }) as PdfJs.Annotation
-        ));
+        const annotations = annotation.quadPoints.map(
+            (quadPoint) =>
+                Object.assign({}, annotation, {
+                    rect: [quadPoint[2].x, quadPoint[2].y, quadPoint[1].x, quadPoint[1].y],
+                    // Reset the `quadPoints` property to avoid the infinitive loop
+                    quadPoints: [],
+                }) as PdfJs.Annotation
+        );
         return (
             <>
-            {
-                annotations.map((ann, index) => (
+                {annotations.map((ann, index) => (
                     <Highlight
                         key={index}
                         annotation={ann}
@@ -51,33 +46,35 @@ const Highlight: React.FC<HighlightProps> = ({ annotation, childAnnotation, page
                         page={page}
                         viewport={viewport}
                     />
-                ))
-            }
+                ))}
             </>
         );
     }
 
     return (
-        <Annotation annotation={annotation} hasPopup={hasPopup} ignoreBorder={true} isRenderable={isRenderable} page={page} viewport={viewport}>
+        <Annotation
+            annotation={annotation}
+            hasPopup={hasPopup}
+            ignoreBorder={true}
+            isRenderable={isRenderable}
+            page={page}
+            viewport={viewport}
+        >
             {(props): React.ReactElement => (
                 <>
-                <div
-                    {...props.slot.attrs}
-                    className='rpv-core__annotation rpv-core__annotation--highlight'
-                    data-annotation-id={annotation.id}
-                    onClick={props.popup.toggleOnClick}
-                    onMouseEnter={props.popup.openOnHover}
-                    onMouseLeave={props.popup.closeOnHover}
-                >
-                    {props.slot.children}
-                </div>
-                {childAnnotation && childAnnotation.annotationType === AnnotationType.Popup && props.popup.opened && (
-                    <Popup
-                        annotation={childAnnotation}
-                        page={page}
-                        viewport={viewport}
-                    />
-                )}
+                    <div
+                        {...props.slot.attrs}
+                        className="rpv-core__annotation rpv-core__annotation--highlight"
+                        data-annotation-id={annotation.id}
+                        onClick={props.popup.toggleOnClick}
+                        onMouseEnter={props.popup.openOnHover}
+                        onMouseLeave={props.popup.closeOnHover}
+                    >
+                        {props.slot.children}
+                    </div>
+                    {childAnnotation &&
+                        childAnnotation.annotationType === AnnotationType.Popup &&
+                        props.popup.opened && <Popup annotation={childAnnotation} page={page} viewport={viewport} />}
                 </>
             )}
         </Annotation>

@@ -24,7 +24,12 @@ interface PopoverBodyProps {
 }
 
 const PopoverBody: React.FC<PopoverBodyProps> = ({
-    children, closeOnClickOutside, offset, position, targetRef, onClose,
+    children,
+    closeOnClickOutside,
+    offset,
+    position,
+    targetRef,
+    onClose,
 }) => {
     const contentRef = React.useRef<HTMLDivElement>();
     const innerRef = React.useRef<HTMLDivElement>();
@@ -34,7 +39,7 @@ const PopoverBody: React.FC<PopoverBodyProps> = ({
     usePosition(contentRef, targetRef, anchorRef, position, offset);
 
     useIsomorphicLayoutEffect(() => {
-        const innerContentEle = innerRef.current;        
+        const innerContentEle = innerRef.current;
         if (!innerContentEle) {
             return;
         }
@@ -49,16 +54,11 @@ const PopoverBody: React.FC<PopoverBodyProps> = ({
 
     return (
         <>
-        <div
-            ref={anchorRef}
-            style={{ left: 0, position: 'absolute', top: 0 }}
-        />
-        <div className='rpv-core__popover-body' ref={contentRef}>
-            <Arrow customClassName='rpv-core__popover-body-arrow' position={position} />
-            <div ref={innerRef}>
-                {children}
+            <div ref={anchorRef} style={{ left: 0, position: 'absolute', top: 0 }} />
+            <div className="rpv-core__popover-body" ref={contentRef}>
+                <Arrow customClassName="rpv-core__popover-body-arrow" position={position} />
+                <div ref={innerRef}>{children}</div>
             </div>
-        </div>
         </>
     );
 };

@@ -12,10 +12,7 @@ interface DropHook {
     isDragging: boolean;
 }
 
-const useDrop = (
-    ref: React.RefObject<HTMLDivElement>,
-    onDrop: (files: FileList) => void
-): DropHook => {
+const useDrop = (ref: React.RefObject<HTMLDivElement>, onDrop: (files: FileList) => void): DropHook => {
     const dragCount = React.useRef(0);
     const [isDragging, setDragging] = React.useState(false);
 

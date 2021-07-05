@@ -24,8 +24,8 @@ export interface PrintProps {
 }
 
 const Print: React.FC<{
-    children?: RenderPrint,
-    store: Store<StoreProps>,
+    children?: RenderPrint;
+    store: Store<StoreProps>;
 }> = ({ children, store }) => {
     const print = () => {
         store.update('printStatus', PrintStatus.Preparing);

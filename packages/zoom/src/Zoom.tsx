@@ -25,8 +25,8 @@ export interface ZoomProps {
 }
 
 const Zoom: React.FC<{
-    children?: RenderZoom,
-    store: Store<StoreProps>,
+    children?: RenderZoom;
+    store: Store<StoreProps>;
 }> = ({ children, store }) => {
     const { scale } = useZoom(store);
 

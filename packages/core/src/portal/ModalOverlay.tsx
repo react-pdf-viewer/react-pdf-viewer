@@ -13,9 +13,7 @@ interface ModalOverlayProps {
 }
 
 const ModalOverlay: React.FC<ModalOverlayProps> = ({ children }) => (
-    <div className='rpv-core__modal-overlay'>
-        {children}
-    </div>
+    <div className="rpv-core__modal-overlay">{children}</div>
 );
 
 export default ModalOverlay;

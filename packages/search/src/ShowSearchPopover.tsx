@@ -27,34 +27,28 @@ export interface ShowSearchPopoverProps {
 const PORTAL_OFFSET = { left: 0, top: 8 };
 
 const ShowSearchPopover: React.FC<{
-    children?: RenderShowSearchPopover,
-    store: Store<StoreProps>,
+    children?: RenderShowSearchPopover;
+    store: Store<StoreProps>;
 }> = ({ children, store }) => {
     const { currentDoc } = useDocument(store);
-    const defaultChildren = (props: RenderShowSearchPopoverProps) => (
-        <ShowSearchPopoverButton {...props} />
-    );
+    const defaultChildren = (props: RenderShowSearchPopoverProps) => <ShowSearchPopoverButton {...props} />;
     const render = children || defaultChildren;
 
-    return (
-        currentDoc
-            ? (
-                <Popover
-                    position={Position.BottomLeft}
-                    target={
-                        (toggle: Toggle) => render({
-                            onClick: toggle,
-                        })
-                    }
-                    content={
-                        (toggle: Toggle) => <SearchPopover store={store} onToggle={toggle} />
-                    }
-                    offset={PORTAL_OFFSET}
-                    closeOnClickOutside={false}
-                    closeOnEscape={true}
-                />
-            )
-            : <></>
+    return currentDoc ? (
+        <Popover
+            position={Position.BottomLeft}
+            target={(toggle: Toggle) =>
+                render({
+                    onClick: toggle,
+                })
+            }
+            content={(toggle: Toggle) => <SearchPopover store={store} onToggle={toggle} />}
+            offset={PORTAL_OFFSET}
+            closeOnClickOutside={false}
+            closeOnEscape={true}
+        />
+    ) : (
+        <></>
     );
 };
 

@@ -22,11 +22,18 @@ const Underline: React.FC<UnderlineProps> = ({ annotation, page, viewport }) => 
     const isRenderable = !!(annotation.hasPopup || annotation.title || annotation.contents);
 
     return (
-        <Annotation annotation={annotation} hasPopup={hasPopup} ignoreBorder={true} isRenderable={isRenderable} page={page} viewport={viewport}>
+        <Annotation
+            annotation={annotation}
+            hasPopup={hasPopup}
+            ignoreBorder={true}
+            isRenderable={isRenderable}
+            page={page}
+            viewport={viewport}
+        >
             {(props): React.ReactElement => (
                 <div
                     {...props.slot.attrs}
-                    className='rpv-core__annotation rpv-core__annotation--underline'
+                    className="rpv-core__annotation rpv-core__annotation--underline"
                     data-annotation-id={annotation.id}
                     onClick={props.popup.toggleOnClick}
                     onMouseEnter={props.popup.openOnHover}

@@ -29,25 +29,28 @@ export interface PrintPluginProps {
 
 const printPlugin = (props?: PrintPluginProps): PrintPlugin => {
     const printPluginProps = React.useMemo(() => Object.assign({}, { enableShortcuts: true }, props), []);
-    const store = React.useMemo(() => createStore<StoreProps>({
-        printStatus: PrintStatus.Inactive,
-    }), []);
-
-    const PrintDecorator = (props: PrintProps) => (
-        <Print {...props} store={store} />
+    const store = React.useMemo(
+        () =>
+            createStore<StoreProps>({
+                printStatus: PrintStatus.Inactive,
+            }),
+        []
     );
 
-    const PrintButtonDecorator = () => (
-        <PrintDecorator>
-            {
-                (props) => <PrintButton {...props} />
-            }
-        </PrintDecorator>
-    );
+    const PrintDecorator = (props: PrintProps) => <Print {...props} store={store} />;
+
+    const PrintButtonDecorator = () => <PrintDecorator>{(props) => <PrintButton {...props} />}</PrintDecorator>;
 
     const PrintMenuItemDecorator = (props: PrintMenuItemProps) => (
         <PrintDecorator>
-            {(p) => <PrintMenuItem onClick={() => { p.onClick(); props.onClick(); }} />}
+            {(p) => (
+                <PrintMenuItem
+                    onClick={() => {
+                        p.onClick();
+                        props.onClick();
+                    }}
+                />
+            )}
         </PrintDecorator>
     );
 
@@ -56,24 +59,21 @@ const printPlugin = (props?: PrintPluginProps): PrintPlugin => {
         const updateSlot: Slot = {
             children: (
                 <>
-                {printPluginProps.enableShortcuts && (
-                    <ShortcutHandler
-                        containerRef={props.containerRef}
+                    {printPluginProps.enableShortcuts && (
+                        <ShortcutHandler containerRef={props.containerRef} store={store} />
+                    )}
+                    <PrintContainer
+                        doc={props.doc}
+                        pageHeight={props.pageHeight}
+                        pageWidth={props.pageWidth}
+                        rotation={props.rotation}
                         store={store}
                     />
-                )}
-                <PrintContainer
-                    doc={props.doc}
-                    pageHeight={props.pageHeight}
-                    pageWidth={props.pageWidth}
-                    rotation={props.rotation}
-                    store={store}
-                />
-                {slot.children}
+                    {slot.children}
                 </>
-            )
+            ),
         };
-        return {...slot, ...updateSlot};
+        return { ...slot, ...updateSlot };
     };
 
     return {

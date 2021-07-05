@@ -11,8 +11,8 @@ import { searchPlugin } from '../src/index';
 import SingleKeyword from '../src/types/SingleKeyword';
 
 const TestClearHighlights: React.FC<{
-    fileUrl: Uint8Array,
-    keywords: SingleKeyword[],
+    fileUrl: Uint8Array;
+    keywords: SingleKeyword[];
 }> = ({ fileUrl, keywords }) => {
     const searchPluginInstance = searchPlugin();
     const { clearHighlights, highlight } = searchPluginInstance;
@@ -25,16 +25,10 @@ const TestClearHighlights: React.FC<{
                     marginBottom: '16px',
                 }}
             >
-                <button
-                    style={{ marginRight: '8px' }}
-                    onClick={() => highlight(keywords)}
-                >
+                <button style={{ marginRight: '8px' }} onClick={() => highlight(keywords)}>
                     Highlight keywords
                 </button>
-                <button
-                    style={{ marginRight: '8px' }}
-                    onClick={() => clearHighlights()}
-                >
+                <button style={{ marginRight: '8px' }} onClick={() => clearHighlights()}>
                     Clear highlights
                 </button>
             </div>
@@ -45,12 +39,7 @@ const TestClearHighlights: React.FC<{
                     width: '720px',
                 }}
             >
-                <Viewer
-                    fileUrl={fileUrl}
-                    plugins={[
-                        searchPluginInstance,
-                    ]}
-                />
+                <Viewer fileUrl={fileUrl} plugins={[searchPluginInstance]} />
             </div>
         </div>
     );
@@ -67,15 +56,17 @@ test('clearHighlights() method', async () => {
         },
     ];
 
-    const { findByText, findAllByTestId, findByTestId, getByTestId } = render(<TestClearHighlights fileUrl={new Uint8Array(rawSamplePdf)} keywords={keywords} />);
+    const { findByText, findAllByTestId, findByTestId, getByTestId } = render(
+        <TestClearHighlights fileUrl={new Uint8Array(rawSamplePdf)} keywords={keywords} />
+    );
     mockIsIntersecting(getByTestId('viewer'), true);
 
     const highlightButton = await screen.findByText('Highlight keywords');
     fireEvent.click(highlightButton);
-    
+
     const page = await findByTestId('viewer-page-layer-4');
     mockIsIntersecting(page, true);
-    
+
     await findByText('Parameters for Opening PDF Files');
 
     // Found 8 texts that match `document`

@@ -25,34 +25,28 @@ export interface ShowPropertiesProps {
 }
 
 const ShowProperties: React.FC<{
-    children?: RenderShowProperties,
-    store: Store<StoreProps>,
+    children?: RenderShowProperties;
+    store: Store<StoreProps>;
 }> = ({ children, store }) => {
     const { currentDoc } = useDocument(store);
     const fileName = store.get('fileName') || '';
 
-    const defaultChildren = (props: RenderShowPropertiesProps) => (
-        <ShowPropertiesButton {...props} />
-    );
+    const defaultChildren = (props: RenderShowPropertiesProps) => <ShowPropertiesButton {...props} />;
     const render = children || defaultChildren;
 
-    return (
-        currentDoc
-            ? (
-                <Modal
-                    target={
-                        (toggle: Toggle) => render({
-                            onClick: toggle,
-                        })
-                    }
-                    content={
-                        (toggle: Toggle) => <PropertiesModal doc={currentDoc} fileName={fileName} onToggle={toggle} />
-                    }
-                    closeOnClickOutside={true}
-                    closeOnEscape={true}
-                />
-            )
-            : <></>
+    return currentDoc ? (
+        <Modal
+            target={(toggle: Toggle) =>
+                render({
+                    onClick: toggle,
+                })
+            }
+            content={(toggle: Toggle) => <PropertiesModal doc={currentDoc} fileName={fileName} onToggle={toggle} />}
+            closeOnClickOutside={true}
+            closeOnEscape={true}
+        />
+    ) : (
+        <></>
     );
 };
 

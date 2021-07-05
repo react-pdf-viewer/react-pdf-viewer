@@ -23,18 +23,14 @@ const WrongPassword: React.FC<WrongPasswordProps> = ({ verifyPasswordFn }) => {
     const submit = (): void => verifyPasswordFn(password);
 
     return (
-        <div className='rpv-core__asking-password-wrapper'>
-            <div className='rpv-core__asking-password'>
-                <div className='rpv-core__asking-password-message'>{l10n.core.wrongPassword.tryAgain}:</div>
-                <div className='rpv-core__asking-password-body'>
-                    <div className='rpv-core__asking-password-input'>
-                        <TextBox
-                            type='password'
-                            value={password}
-                            onChange={setPassword}
-                        />
+        <div className="rpv-core__asking-password-wrapper">
+            <div className="rpv-core__asking-password">
+                <div className="rpv-core__asking-password-message">{l10n.core.wrongPassword.tryAgain}:</div>
+                <div className="rpv-core__asking-password-body">
+                    <div className="rpv-core__asking-password-input">
+                        <TextBox type="password" value={password} onChange={setPassword} />
                     </div>
-                    <button className='rpv-core__asking-password-button' onClick={submit}>
+                    <button className="rpv-core__asking-password-button" onClick={submit}>
                         {l10n.core.wrongPassword.submit}
                     </button>
                 </div>

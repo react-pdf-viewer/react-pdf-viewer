@@ -13,11 +13,11 @@ import PrintStatus from './PrintStatus';
 import StoreProps from './StoreProps';
 
 interface ShortcutHandlerProps {
-    containerRef: React.RefObject<HTMLDivElement>
+    containerRef: React.RefObject<HTMLDivElement>;
     store: Store<StoreProps>;
 }
 
-const isMac = () => (typeof window !== "undefined") ? /(Mac|iPhone|iPod|iPad)/i.test(navigator.platform) : false;
+const isMac = () => (typeof window !== 'undefined' ? /(Mac|iPhone|iPod|iPad)/i.test(navigator.platform) : false);
 
 const ShortcutHandler: React.FC<ShortcutHandlerProps> = ({ containerRef, store }) => {
     const keydownHandler = (e: KeyboardEvent) => {
@@ -51,8 +51,7 @@ const ShortcutHandler: React.FC<ShortcutHandlerProps> = ({ containerRef, store }
         };
     }, [containerRef.current]);
 
-    return (<></>);
+    return <></>;
 };
 
 export default ShortcutHandler;
- 

@@ -24,9 +24,7 @@ interface UsePopupResult {
 
 const useTogglePopup = (): UsePopupResult => {
     const { opened, toggle } = useToggle();
-    const [togglePopupBy, setTooglePopupBy] = React.useState(
-        TogglePopupBy.Hover
-    );
+    const [togglePopupBy, setTooglePopupBy] = React.useState(TogglePopupBy.Hover);
 
     const toggleOnClick = (): void => {
         switch (togglePopupBy) {

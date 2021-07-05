@@ -23,14 +23,20 @@ export interface SidebarTab {
 interface SidebarProps {
     attachmentTabContent: React.ReactElement;
     bookmarkTabContent: React.ReactElement;
-    store: Store<StoreProps>,
+    store: Store<StoreProps>;
     thumbnailTabContent: React.ReactElement;
     tabs?: (defaultTabs: SidebarTab[]) => SidebarTab[];
 }
 
 const TOOLTIP_OFFSET = { left: 8, top: 0 };
 
-const Sidebar: React.FC<SidebarProps> = ({ attachmentTabContent, bookmarkTabContent, store, thumbnailTabContent, tabs }) => {
+const Sidebar: React.FC<SidebarProps> = ({
+    attachmentTabContent,
+    bookmarkTabContent,
+    store,
+    thumbnailTabContent,
+    tabs,
+}) => {
     const l10n = React.useContext(LocalizationContext);
     const [opened, setOpened] = React.useState(false);
     const [currentTab, setCurrentTab] = React.useState(store.get('currentTab') || 0);
@@ -39,7 +45,7 @@ const Sidebar: React.FC<SidebarProps> = ({ attachmentTabContent, bookmarkTabCont
         {
             content: thumbnailTabContent,
             icon: <ThumbnailIcon />,
-            title: <>{(l10n && l10n.defaultLayout ? l10n.defaultLayout.thumbnail : 'Thumbnail')}</>,
+            title: <>{l10n && l10n.defaultLayout ? l10n.defaultLayout.thumbnail : 'Thumbnail'}</>,
         },
         {
             content: bookmarkTabContent,
@@ -58,7 +64,7 @@ const Sidebar: React.FC<SidebarProps> = ({ attachmentTabContent, bookmarkTabCont
     const switchToTab = (index: number) => {
         if (currentTab === index) {
             // Toggle the current tab
-            setOpened(isOpened => !isOpened);
+            setOpened((isOpened) => !isOpened);
         } else {
             setOpened(true);
             setCurrentTab(index);
@@ -75,26 +81,28 @@ const Sidebar: React.FC<SidebarProps> = ({ attachmentTabContent, bookmarkTabCont
 
     return (
         <div className={`rpv-default-layout__sidebar ${opened ? 'rpv-default-layout__sidebar--opened' : ''}`}>
-            <div className='rpv-default-layout__sidebar-tabs'>
-                <div className='rpv-default-layout__sidebar-headers'>
-                    {
-                        listTabs.map((tab, index) => (
-                            <div key={index} className='rpv-default-layout__sidebar-header'>
-                                <Tooltip
-                                    position={Position.RightCenter}
-                                    target={(
-                                        <MinimalButton onClick={() => switchToTab(index)} isSelected={currentTab === index}>
-                                            {tab.icon}
-                                        </MinimalButton>
-                                    )}
-                                    content={() => tab.title}
-                                    offset={TOOLTIP_OFFSET}
-                                />
-                            </div>
-                        ))
-                    }
+            <div className="rpv-default-layout__sidebar-tabs">
+                <div className="rpv-default-layout__sidebar-headers">
+                    {listTabs.map((tab, index) => (
+                        <div key={index} className="rpv-default-layout__sidebar-header">
+                            <Tooltip
+                                position={Position.RightCenter}
+                                target={
+                                    <MinimalButton onClick={() => switchToTab(index)} isSelected={currentTab === index}>
+                                        {tab.icon}
+                                    </MinimalButton>
+                                }
+                                content={() => tab.title}
+                                offset={TOOLTIP_OFFSET}
+                            />
+                        </div>
+                    ))}
                 </div>
-                <div className={`rpv-default-layout__sidebar-content ${opened ? 'rpv-default-layout__sidebar-content--opened' : ''}`}>
+                <div
+                    className={`rpv-default-layout__sidebar-content ${
+                        opened ? 'rpv-default-layout__sidebar-content--opened' : ''
+                    }`}
+                >
                     {listTabs[currentTab].content}
                 </div>
             </div>

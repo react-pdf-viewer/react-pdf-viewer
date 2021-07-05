@@ -45,10 +45,7 @@ export interface RenderHighlightContentProps {
 }
 
 export interface RenderHighlightsProps {
-    getCssProperties(
-        area: HighlightArea,
-        rotation: number
-    ): React.CSSProperties;
+    getCssProperties(area: HighlightArea, rotation: number): React.CSSProperties;
     pageIndex: number;
     rotation: number;
 }
@@ -58,12 +55,8 @@ export interface HighlightPlugin extends Plugin {
 }
 
 export interface HighlightPluginProps {
-    renderHighlightTarget?(
-        props: RenderHighlightTargetProps
-    ): React.ReactElement;
-    renderHighlightContent?(
-        props: RenderHighlightContentProps
-    ): React.ReactElement;
+    renderHighlightTarget?(props: RenderHighlightTargetProps): React.ReactElement;
+    renderHighlightContent?(props: RenderHighlightContentProps): React.ReactElement;
     renderHighlights?(props: RenderHighlightsProps): React.ReactElement;
 }
 

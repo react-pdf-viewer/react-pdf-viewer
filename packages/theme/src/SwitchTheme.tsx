@@ -22,7 +22,7 @@ export interface SwitchThemeProps {
 }
 
 const SwitchTheme: React.FC<{
-    children?: RenderSwitchTheme,
+    children?: RenderSwitchTheme;
 }> = ({ children }) => {
     const theme = React.useContext(ThemeContext);
     const defaultChildern = (props: RenderSwitchThemeProps) => <SwitchThemeButton onClick={props.onClick} />;

@@ -21,7 +21,11 @@ const ShowPropertiesButton: React.FC<RenderShowPropertiesProps> = ({ onClick }) 
     return (
         <Tooltip
             position={Position.BottomCenter}
-            target={<MinimalButton onClick={onClick}><InfoIcon /></MinimalButton>}
+            target={
+                <MinimalButton onClick={onClick}>
+                    <InfoIcon />
+                </MinimalButton>
+            }
             content={() => label}
             offset={TOOLTIP_OFFSET}
         />

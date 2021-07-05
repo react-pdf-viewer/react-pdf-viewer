@@ -23,8 +23,8 @@ export interface CurrentScaleProps {
 }
 
 const CurrentScale: React.FC<{
-    children?: RenderCurrentScale,
-    store: Store<StoreProps>,
+    children?: RenderCurrentScale;
+    store: Store<StoreProps>;
 }> = ({ children, store }) => {
     const { scale } = useZoom(store);
 

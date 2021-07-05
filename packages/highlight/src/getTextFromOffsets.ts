@@ -28,19 +28,12 @@ const getTextFromOffsets = (
 
         const endDivText = nodes
             .slice(endDivIdx, endDivIdx + 1)
-            .map((endDiv) =>
-                endDiv.textContent.substring(
-                    0,
-                    endOffset || endDiv.textContent.length
-                )
-            )
+            .map((endDiv) => endDiv.textContent.substring(0, endOffset || endDiv.textContent.length))
             .join(' ');
         return `${startDivText} ${middleDivText} ${endDivText}`;
     } else {
         const div = nodes[startDivIdx];
-        return div.textContent
-            .substring(startOffset, endOffset || div.textContent.length)
-            .trim();
+        return div.textContent.substring(startOffset, endOffset || div.textContent.length).trim();
     }
 };
 

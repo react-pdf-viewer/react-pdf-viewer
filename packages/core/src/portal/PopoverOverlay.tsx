@@ -18,9 +18,7 @@ interface PopoverOverlayProps {
 const PopoverOverlay: React.FC<PopoverOverlayProps> = ({ closeOnEscape, onClose }) => {
     useKeyUp(27, () => closeOnEscape && onClose());
 
-    return (
-        <div className='rpv-core__popover-overlay' />
-    );
+    return <div className="rpv-core__popover-overlay" />;
 };
 
 export default PopoverOverlay;

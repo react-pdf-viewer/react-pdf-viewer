@@ -14,7 +14,7 @@ import StoreProps from './StoreProps';
 import useScrollMode from './useScrollMode';
 
 const Tracker: React.FC<{
-    store: Store<StoreProps>,
+    store: Store<StoreProps>;
 }> = ({ store }) => {
     const { switchTo } = useScrollMode(store);
 

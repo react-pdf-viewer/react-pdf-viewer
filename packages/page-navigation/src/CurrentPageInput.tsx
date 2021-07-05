@@ -14,7 +14,7 @@ import useCurrentPage from './useCurrentPage';
 import useNumberOfPages from './useNumberOfPages';
 
 const CurrentPageInput: React.FC<{
-    store: Store<StoreProps>
+    store: Store<StoreProps>;
 }> = ({ store }) => {
     const [editingPage, setEditingPage] = React.useState('1');
 
@@ -38,7 +38,7 @@ const CurrentPageInput: React.FC<{
             jumpTo(previousPage);
         }
     };
-    
+
     const jumpTo = (page: number): void => {
         const jumpToPage = store.get('jumpToPage');
         if (jumpToPage) {
@@ -48,7 +48,7 @@ const CurrentPageInput: React.FC<{
 
     const jump = () => {
         const newPage = parseInt(editingPage, 10);
-        (editingPage === '' || newPage < 1 || newPage > numberOfPages)
+        editingPage === '' || newPage < 1 || newPage > numberOfPages
             ? setEditingPage(`${currentPage + 1}`)
             : jumpTo(newPage - 1);
     };
@@ -73,13 +73,8 @@ const CurrentPageInput: React.FC<{
     };
 
     return (
-        <span className='rpv-page-navigation__current-page-input'>
-            <TextBox
-                type='text'
-                value={editingPage}
-                onChange={setEditingPage}
-                onKeyDown={keydownPage}
-            />
+        <span className="rpv-page-navigation__current-page-input">
+            <TextBox type="text" value={editingPage} onChange={setEditingPage} onKeyDown={keydownPage} />
         </span>
     );
 };

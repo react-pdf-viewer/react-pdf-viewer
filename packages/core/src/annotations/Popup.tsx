@@ -35,7 +35,7 @@ const Popup: React.FC<PopupProps> = ({ annotation, page, viewport }) => {
         if (!parent || !container) {
             return;
         }
-        const left = parseFloat(parent.style.left)
+        const left = parseFloat(parent.style.left);
         const top = parseFloat(parent.style.top) + parseFloat(parent.style.height);
 
         container.style.left = `${left}px`;
@@ -44,11 +44,18 @@ const Popup: React.FC<PopupProps> = ({ annotation, page, viewport }) => {
     }, []);
 
     return (
-        <Annotation annotation={annotation} hasPopup={hasPopup} ignoreBorder={false} isRenderable={isRenderable} page={page} viewport={viewport}>
+        <Annotation
+            annotation={annotation}
+            hasPopup={hasPopup}
+            ignoreBorder={false}
+            isRenderable={isRenderable}
+            page={page}
+            viewport={viewport}
+        >
             {(props): React.ReactElement => (
                 <div
                     {...props.slot.attrs}
-                    className='rpv-core__annotation rpv-core__annotation--popup'
+                    className="rpv-core__annotation rpv-core__annotation--popup"
                     data-annotation-id={annotation.id}
                 >
                     <PopupWrapper annotation={annotation} />

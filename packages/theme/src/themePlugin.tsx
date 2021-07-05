@@ -20,21 +20,22 @@ interface ThemePlugin extends Plugin {
 }
 
 const themePlugin = (): ThemePlugin => {
-    const SwitchThemeDecorator = (props: SwitchThemeProps) => (
-        <SwitchTheme {...props} />
-    );
+    const SwitchThemeDecorator = (props: SwitchThemeProps) => <SwitchTheme {...props} />;
 
     const SwitchThemeButtonDecorator = () => (
-        <SwitchThemeDecorator>
-            {
-                (props) => <SwitchThemeButton {...props} />
-            }
-        </SwitchThemeDecorator>
+        <SwitchThemeDecorator>{(props) => <SwitchThemeButton {...props} />}</SwitchThemeDecorator>
     );
 
     const SwitchThemeMenuItemDecorator = (props: SwitchThemeMenuItemProps) => (
         <SwitchThemeDecorator>
-            {(p) => <SwitchThemeMenuItem onClick={() => { p.onClick(); props.onClick(); }} />}
+            {(p) => (
+                <SwitchThemeMenuItem
+                    onClick={() => {
+                        p.onClick();
+                        props.onClick();
+                    }}
+                />
+            )}
         </SwitchThemeDecorator>
     );
 

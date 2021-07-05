@@ -23,8 +23,8 @@ export interface OpenProps {
 }
 
 const Open: React.FC<{
-    children?: RenderOpen,
-    store: Store<StoreProps>,
+    children?: RenderOpen;
+    store: Store<StoreProps>;
 }> = ({ store, children }) => {
     const handleOpenFiles = (e: React.ChangeEvent<HTMLInputElement>): void => {
         const files = e.target.files;

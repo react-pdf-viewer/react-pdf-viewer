@@ -21,8 +21,8 @@ const RotateButton: React.FC<RenderRotateProps> = ({ direction, onClick }) => {
 
     const backwardLabel = l10n && l10n.rotate ? l10n.rotate.rotateBackward : 'Rotate counterclockwise';
     const forwardLabel = l10n && l10n.rotate ? l10n.rotate.rotateForward : 'Rotate clockwise';
-    const label = (direction === RotateDirection.Backward) ? backwardLabel : forwardLabel;
-    const icon = (direction === RotateDirection.Backward) ? <RotateBackwardIcon /> : <RotateForwardIcon />;
+    const label = direction === RotateDirection.Backward ? backwardLabel : forwardLabel;
+    const icon = direction === RotateDirection.Backward ? <RotateBackwardIcon /> : <RotateForwardIcon />;
 
     return (
         <Tooltip

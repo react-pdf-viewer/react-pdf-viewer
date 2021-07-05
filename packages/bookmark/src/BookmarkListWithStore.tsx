@@ -13,7 +13,7 @@ import StoreProps from './StoreProps';
 import BookmarkLoader from './BookmarkLoader';
 
 const BookmarkListWithStore: React.FC<{
-    store: Store<StoreProps>,
+    store: Store<StoreProps>;
 }> = ({ store }) => {
     const [currentDoc, setCurrentDoc] = React.useState(store.get('doc'));
 
@@ -36,15 +36,12 @@ const BookmarkListWithStore: React.FC<{
         };
     }, []);
 
-    return (
-        currentDoc 
-        ? (
-            <BookmarkLoader
-                doc={currentDoc}
-                onJumpToDest={jump}
-            />
-        )
-        : <div className='rpv-bookmark__loader'><Spinner /></div>
+    return currentDoc ? (
+        <BookmarkLoader doc={currentDoc} onJumpToDest={jump} />
+    ) : (
+        <div className="rpv-bookmark__loader">
+            <Spinner />
+        </div>
     );
 };
 

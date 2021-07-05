@@ -35,9 +35,9 @@ interface CharIndex {
 }
 
 const Tracker: React.FC<{
-    pageIndex: number,
-    store: Store<StoreProps>,
-    onHighlightKeyword?(props: OnHighlightKeyword): void,
+    pageIndex: number;
+    store: Store<StoreProps>;
+    onHighlightKeyword?(props: OnHighlightKeyword): void;
 }> = ({ pageIndex, store, onHighlightKeyword }) => {
     const [match, setMatch] = React.useState<Match>({
         matchIndex: -1,
@@ -67,11 +67,10 @@ const Tracker: React.FC<{
         if (!firstChild) {
             return;
         }
-        
+
         const startOffset = charIndexSpan[0].charIndexInSpan;
-        const endOffset = charIndexSpan.length === 1
-                        ? startOffset
-                        : charIndexSpan[charIndexSpan.length - 1].charIndexInSpan;
+        const endOffset =
+            charIndexSpan.length === 1 ? startOffset : charIndexSpan[charIndexSpan.length - 1].charIndexInSpan;
 
         range.setStart(firstChild, startOffset);
         range.setEnd(firstChild, endOffset + 1);
@@ -85,10 +84,10 @@ const Tracker: React.FC<{
         const highlightEle = document.createElement('span');
         containerEle.appendChild(highlightEle);
 
-        highlightEle.style.left = `${100 * (wrapperRect.left - containerRect.left) / containerRect.width}%`;
-        highlightEle.style.top = `${100 * (wrapperRect.top - containerRect.top) / containerRect.height}%`;
-        highlightEle.style.width = `${100 * (wrapperRect.width) / containerRect.width}%`;
-        highlightEle.style.height = `${100 * (wrapperRect.height) / containerRect.height}%`;
+        highlightEle.style.left = `${(100 * (wrapperRect.left - containerRect.left)) / containerRect.width}%`;
+        highlightEle.style.top = `${(100 * (wrapperRect.top - containerRect.top)) / containerRect.height}%`;
+        highlightEle.style.width = `${(100 * wrapperRect.width) / containerRect.width}%`;
+        highlightEle.style.height = `${(100 * wrapperRect.height) / containerRect.height}%`;
         highlightEle.classList.add('rpv-search__highlight');
         highlightEle.setAttribute('title', keyword.source.trim());
 
@@ -111,9 +110,9 @@ const Tracker: React.FC<{
         const spans: HTMLElement[] = [].slice.call(containerEle.querySelectorAll('.rpv-core__text-layer-text'));
 
         // Generate the full text of page
-        const fullText = charIndexes.map(item => item.char).join('');
+        const fullText = charIndexes.map((item) => item.char).join('');
 
-        keywordRegexp.forEach(keyword => {
+        keywordRegexp.forEach((keyword) => {
             const keywordStr = keyword.source;
             if (!keywordStr.trim()) {
                 return;
@@ -134,22 +133,21 @@ const Tracker: React.FC<{
                 });
             }
 
-            matches.map(item => ({
-                keyword: item.keyword, 
-                indexes: charIndexes.slice(item.startIndex, item.endIndex)
-            })).forEach(item => {
-                // Group by the span index
-                const spanIndexes = item.indexes.reduce(
-                    (acc, item) => {
+            matches
+                .map((item) => ({
+                    keyword: item.keyword,
+                    indexes: charIndexes.slice(item.startIndex, item.endIndex),
+                }))
+                .forEach((item) => {
+                    // Group by the span index
+                    const spanIndexes = item.indexes.reduce((acc, item) => {
                         acc[item.spanIndex] = [...(acc[item.spanIndex] || []), item];
                         return acc;
-                    },
-                    {} as { [spanIndex: number]: CharIndex[] }
-                );
-                Object.values(spanIndexes).forEach(charIndexSpan => {
-                    highlight(item.keyword, containerEle, spans[charIndexSpan[0].spanIndex], charIndexSpan);
+                    }, {} as { [spanIndex: number]: CharIndex[] });
+                    Object.values(spanIndexes).forEach((charIndexSpan) => {
+                        highlight(item.keyword, containerEle, spans[charIndexSpan[0].spanIndex], charIndexSpan);
+                    });
                 });
-            });
         });
     };
 
@@ -178,32 +176,41 @@ const Tracker: React.FC<{
         }
     };
 
-    const isEmptyKeyword = () => keywordRegexp.length === 0 || (keywordRegexp.length === 1 && keywordRegexp[0].source.trim() === '');
+    const isEmptyKeyword = () =>
+        keywordRegexp.length === 0 || (keywordRegexp.length === 1 && keywordRegexp[0].source.trim() === '');
 
     // Prepare the characters indexes
     // The order of hooks are important. Since `charIndexes` will be used when we highlight matching items,
     // this hook is put at the top
     React.useEffect(() => {
-        if (isEmptyKeyword() || renderStatus.status !== LayerRenderStatus.DidRender || characterIndexesRef.current.length) {
+        if (
+            isEmptyKeyword() ||
+            renderStatus.status !== LayerRenderStatus.DidRender ||
+            characterIndexesRef.current.length
+        ) {
             return;
         }
 
         const containerEle = renderStatus.ele;
         const spans: HTMLElement[] = [].slice.call(containerEle.querySelectorAll('.rpv-core__text-layer-text'));
 
-        const charIndexes: CharIndex[] = spans.map(span => span.textContent)
+        const charIndexes: CharIndex[] = spans
+            .map((span) => span.textContent)
             .reduce(
-                (prev, curr, index) => prev.concat(curr.split('').map((c, i) => ({
-                    char: c,
-                    charIndexInSpan: i,
-                    spanIndex: index,
-                }))),
+                (prev, curr, index) =>
+                    prev.concat(
+                        curr.split('').map((c, i) => ({
+                            char: c,
+                            charIndexInSpan: i,
+                            spanIndex: index,
+                        }))
+                    ),
                 [
                     {
                         char: '',
                         charIndexInSpan: 0,
                         spanIndex: 0,
-                    }
+                    },
                 ]
             )
             .slice(1);
@@ -215,7 +222,7 @@ const Tracker: React.FC<{
         if (isEmptyKeyword() || !renderStatus.ele || renderStatus.status !== LayerRenderStatus.DidRender) {
             return;
         }
-        
+
         const containerEle = renderStatus.ele;
         unhighlightAll(containerEle);
         highlightAll(containerEle);
@@ -232,7 +239,7 @@ const Tracker: React.FC<{
         if (match.pageIndex !== pageIndex || !renderStatus.ele || renderStatus.status !== LayerRenderStatus.DidRender) {
             return;
         }
-        
+
         const container = renderStatus.ele;
         const spans = container.querySelectorAll('.rpv-search__highlight');
         if (match.matchIndex < spans.length) {
@@ -240,7 +247,12 @@ const Tracker: React.FC<{
             const { left, top } = calculateOffset(span, container);
             const jump = store.get('jumpToDestination');
             if (jump) {
-                jump(pageIndex, (container.getBoundingClientRect().height - top) / renderStatus.scale, left / renderStatus.scale, renderStatus.scale);
+                jump(
+                    pageIndex,
+                    (container.getBoundingClientRect().height - top) / renderStatus.scale,
+                    left / renderStatus.scale,
+                    renderStatus.scale
+                );
                 if (currentMatchRef.current) {
                     currentMatchRef.current.classList.remove('rpv-search__highlight--current');
                 }
@@ -249,7 +261,7 @@ const Tracker: React.FC<{
             }
         }
     };
-    
+
     React.useEffect(() => {
         store.subscribe('keyword', handleKeywordChanged);
         store.subscribe('match', handleMatchChanged);
@@ -261,7 +273,7 @@ const Tracker: React.FC<{
             store.unsubscribe('renderStatus', handleRenderStatusChanged);
         };
     }, []);
-    
+
     return <></>;
 };
 

@@ -38,7 +38,7 @@ const PopupWrapper: React.FC<PopupWrapperProps> = ({ annotation }) => {
             return;
         }
 
-        const ele = (annotationEle as HTMLElement);
+        const ele = annotationEle as HTMLElement;
         ele.style.zIndex += 1;
 
         return () => {
@@ -50,24 +50,25 @@ const PopupWrapper: React.FC<PopupWrapperProps> = ({ annotation }) => {
     return (
         <div
             ref={containerRef}
-            className='rpv-core__annotation-popup-wrapper'
+            className="rpv-core__annotation-popup-wrapper"
             style={{
                 top: annotation.annotationType === AnnotationType.Popup ? '' : '100%',
             }}
         >
-            {(annotation.title) && (
-                <div className='rpv-core__annotation-popup-header'>
-                    <div className='rpv-core__annotation-popup-title'>
-                        {annotation.title}
-                    </div>
-                    <span className='rpv-core__annotation-popup-date'>
-                        {dateStr}
-                    </span>
+            {annotation.title && (
+                <div className="rpv-core__annotation-popup-header">
+                    <div className="rpv-core__annotation-popup-title">{annotation.title}</div>
+                    <span className="rpv-core__annotation-popup-date">{dateStr}</span>
                 </div>
             )}
             {annotation.contents && (
-                <div className='rpv-core__annotation-popup-content'>
-                    {annotation.contents.split('\n').map((item, index) => <React.Fragment key={index}>{item}<br /></React.Fragment>)}
+                <div className="rpv-core__annotation-popup-content">
+                    {annotation.contents.split('\n').map((item, index) => (
+                        <React.Fragment key={index}>
+                            {item}
+                            <br />
+                        </React.Fragment>
+                    ))}
                 </div>
             )}
         </div>

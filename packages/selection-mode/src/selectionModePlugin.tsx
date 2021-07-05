@@ -44,29 +44,30 @@ const selectionModePlugin = (props?: SelectionModePluginProps): SelectionModePlu
 
     const SwitchSelectionModeButtonDecorator = (props: SwitchSelectionModeButtonProps) => (
         <SwitchSelectionModeDecorator mode={props.mode}>
-            {
-                (p) => (
-                    <SwitchSelectionModeButton
-                        isSelected={p.isSelected}
-                        mode={p.mode}
-                        onClick={() => { p.onClick(); }}
-                    />
-                )
-            }
+            {(p) => (
+                <SwitchSelectionModeButton
+                    isSelected={p.isSelected}
+                    mode={p.mode}
+                    onClick={() => {
+                        p.onClick();
+                    }}
+                />
+            )}
         </SwitchSelectionModeDecorator>
     );
 
     const SwitchSelectionModeMenuItemDecorator = (props: SwitchSelectionModeMenuItemProps) => (
         <SwitchSelectionModeDecorator mode={props.mode}>
-            {
-                (p) => (
-                    <SwitchSelectionModeMenuItem
-                        isSelected={p.isSelected}
-                        mode={p.mode}
-                        onClick={() => { p.onClick(); props.onClick(); }}
-                    />
-                )
-            }
+            {(p) => (
+                <SwitchSelectionModeMenuItem
+                    isSelected={p.isSelected}
+                    mode={p.mode}
+                    onClick={() => {
+                        p.onClick();
+                        props.onClick();
+                    }}
+                />
+            )}
         </SwitchSelectionModeDecorator>
     );
 
@@ -75,8 +76,8 @@ const selectionModePlugin = (props?: SelectionModePluginProps): SelectionModePlu
         if (currentSlot.subSlot && currentSlot.subSlot.children) {
             currentSlot.subSlot.children = (
                 <>
-                <Tracker store={store} />
-                {currentSlot.subSlot.children}
+                    <Tracker store={store} />
+                    {currentSlot.subSlot.children}
                 </>
             );
         }

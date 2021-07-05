@@ -28,11 +28,18 @@ const Polygon: React.FC<PolygonProps> = ({ annotation, page, viewport }) => {
     const borderWidth = annotation.borderStyle.width;
 
     return (
-        <Annotation annotation={annotation} hasPopup={hasPopup} ignoreBorder={true} isRenderable={isRenderable} page={page} viewport={viewport}>
+        <Annotation
+            annotation={annotation}
+            hasPopup={hasPopup}
+            ignoreBorder={true}
+            isRenderable={isRenderable}
+            page={page}
+            viewport={viewport}
+        >
             {(props): React.ReactElement => (
                 <div
                     {...props.slot.attrs}
-                    className='rpv-core__annotation rpv-core__annotation--polygon'
+                    className="rpv-core__annotation rpv-core__annotation--polygon"
                     data-annotation-id={annotation.id}
                     onClick={props.popup.toggleOnClick}
                     onMouseEnter={props.popup.openOnHover}
@@ -41,16 +48,18 @@ const Polygon: React.FC<PolygonProps> = ({ annotation, page, viewport }) => {
                     {annotation.vertices && annotation.vertices.length && (
                         <svg
                             height={`${height}px`}
-                            preserveAspectRatio='none'
-                            version='1.1'
+                            preserveAspectRatio="none"
+                            version="1.1"
                             viewBox={`0 0 ${width} ${height}`}
                             width={`${width}px`}
                         >
                             <polygon
-                                fill='none'
-                                stroke='transparent'
+                                fill="none"
+                                stroke="transparent"
                                 strokeWidth={borderWidth || 1}
-                                points={annotation.vertices.map((item) => `${item.x - rect[0]},${rect[3] - item.y}`).join(' ')}
+                                points={annotation.vertices
+                                    .map((item) => `${item.x - rect[0]},${rect[3] - item.y}`)
+                                    .join(' ')}
                             />
                         </svg>
                     )}

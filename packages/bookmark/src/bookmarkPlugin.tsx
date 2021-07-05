@@ -19,9 +19,7 @@ interface BookmarkPlugin extends Plugin {
 const bookmarkPlugin = (): BookmarkPlugin => {
     const store = React.useMemo(() => createStore<StoreProps>({}), []);
 
-    const BookmarksDecorator = () => (
-        <BookmarkListWithStore store={store} />
-    );
+    const BookmarksDecorator = () => <BookmarkListWithStore store={store} />;
 
     return {
         install: (pluginFunctions: PluginFunctions) => {

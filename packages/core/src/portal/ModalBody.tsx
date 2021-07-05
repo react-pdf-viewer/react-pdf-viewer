@@ -27,7 +27,7 @@ const ModalBody: React.FC<ModalBodyProps> = ({ children, closeOnClickOutside, cl
     useClickOutside(closeOnClickOutside, contentRef, onToggle);
 
     useIsomorphicLayoutEffect(() => {
-        const contentEle = contentRef.current;        
+        const contentEle = contentRef.current;
         if (!contentEle) {
             return;
         }
@@ -41,7 +41,7 @@ const ModalBody: React.FC<ModalBodyProps> = ({ children, closeOnClickOutside, cl
     }, []);
 
     return (
-        <div className='rpv-core__modal-body' ref={contentRef}>
+        <div className="rpv-core__modal-body" ref={contentRef}>
             {children}
         </div>
     );

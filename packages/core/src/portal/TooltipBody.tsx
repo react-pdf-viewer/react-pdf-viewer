@@ -27,15 +27,10 @@ const TooltipBody: React.FC<TooltipBodyProps> = ({ children, offset, position, t
 
     return (
         <>
-            <div
-                ref={anchorRef}
-                style={{ left: 0, position: 'absolute', top: 0 }}
-            />
-            <div className='rpv-core__tooltip-body' ref={contentRef}>
-                <Arrow customClassName='rpv-core__tooltip-body-arrow' position={position} />
-                <div className='rpv-core__tooltip-body-content'>
-                    {children}
-                </div>
+            <div ref={anchorRef} style={{ left: 0, position: 'absolute', top: 0 }} />
+            <div className="rpv-core__tooltip-body" ref={contentRef}>
+                <Arrow customClassName="rpv-core__tooltip-body-arrow" position={position} />
+                <div className="rpv-core__tooltip-body-content">{children}</div>
             </div>
         </>
     );

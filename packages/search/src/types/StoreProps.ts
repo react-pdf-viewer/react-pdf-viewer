@@ -6,11 +6,7 @@
  * @copyright 2019-2021 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import {
-    PdfJs,
-    PluginOnTextLayerRender,
-    SpecialZoomLevel,
-} from '@react-pdf-viewer/core';
+import { PdfJs, PluginOnTextLayerRender, SpecialZoomLevel } from '@react-pdf-viewer/core';
 
 import Match from './Match';
 

@@ -9,7 +9,15 @@
 import * as React from 'react';
 import { attachmentPlugin, AttachmentPlugin } from '@react-pdf-viewer/attachment';
 import { bookmarkPlugin, BookmarkPlugin } from '@react-pdf-viewer/bookmark';
-import { createStore, Plugin, PluginFunctions, PluginOnDocumentLoad, RenderViewer, ViewerState, PluginOnTextLayerRender } from '@react-pdf-viewer/core';
+import {
+    createStore,
+    Plugin,
+    PluginFunctions,
+    PluginOnDocumentLoad,
+    RenderViewer,
+    ViewerState,
+    PluginOnTextLayerRender,
+} from '@react-pdf-viewer/core';
 import { thumbnailPlugin, ThumbnailPlugin } from '@react-pdf-viewer/thumbnail';
 import { toolbarPlugin, ToolbarPlugin, ToolbarPluginProps, ToolbarProps } from '@react-pdf-viewer/toolbar';
 
@@ -26,14 +34,18 @@ export interface DefaultLayoutPlugin extends Plugin {
 
 export interface DefaultLayoutPluginProps {
     toolbarPlugin?: ToolbarPluginProps;
-    renderToolbar?: (Toolbar: ((props: ToolbarProps) => React.ReactElement)) => React.ReactElement;
+    renderToolbar?: (Toolbar: (props: ToolbarProps) => React.ReactElement) => React.ReactElement;
     sidebarTabs?: (defaultTabs: SidebarTab[]) => SidebarTab[];
 }
 
 const defaultLayoutPlugin = (props?: DefaultLayoutPluginProps): DefaultLayoutPlugin => {
-    const store = React.useMemo(() => createStore<StoreProps>({
-        currentTab: 0,
-    }), []);
+    const store = React.useMemo(
+        () =>
+            createStore<StoreProps>({
+                currentTab: 0,
+            }),
+        []
+    );
 
     const attachmentPluginInstance = attachmentPlugin();
     const bookmarkPluginInstance = bookmarkPlugin();
@@ -47,12 +59,7 @@ const defaultLayoutPlugin = (props?: DefaultLayoutPluginProps): DefaultLayoutPlu
 
     const sidebarTabs = props ? props.sidebarTabs : (defaultTabs: SidebarTab[]) => defaultTabs;
 
-    const plugins = [
-        attachmentPluginInstance,
-        bookmarkPluginInstance,
-        thumbnailPluginInstance,
-        toolbarPluginInstance,
-    ];
+    const plugins = [attachmentPluginInstance, bookmarkPluginInstance, thumbnailPluginInstance, toolbarPluginInstance];
 
     return {
         // The plugin instances
@@ -65,7 +72,7 @@ const defaultLayoutPlugin = (props?: DefaultLayoutPluginProps): DefaultLayoutPlu
         },
         install: (pluginFunctions: PluginFunctions) => {
             // Install plugins
-            plugins.forEach(plugin => {
+            plugins.forEach((plugin) => {
                 if (plugin.install) {
                     plugin.install(pluginFunctions);
                 }
@@ -73,30 +80,26 @@ const defaultLayoutPlugin = (props?: DefaultLayoutPluginProps): DefaultLayoutPlu
         },
         renderViewer: (renderProps: RenderViewer) => {
             let { slot } = renderProps;
-            plugins.forEach(plugin => {
+            plugins.forEach((plugin) => {
                 if (plugin.renderViewer) {
-                    slot = plugin.renderViewer({...renderProps, slot});
+                    slot = plugin.renderViewer({ ...renderProps, slot });
                 }
             });
 
             const mergeSubSlot =
                 slot.subSlot && slot.subSlot.attrs
-                ? {
-                    ref: slot.subSlot.attrs.ref,
-                    style: slot.subSlot.attrs.style
-                }
-                : {};
+                    ? {
+                          ref: slot.subSlot.attrs.ref,
+                          style: slot.subSlot.attrs.style,
+                      }
+                    : {};
 
             slot.children = (
-                <div className='rpv-default-layout__container'>
-                    <div className='rpv-default-layout__toolbar'>
-                        {
-                            props && props.renderToolbar
-                                ? props.renderToolbar(Toolbar)
-                                : <Toolbar />
-                        }
+                <div className="rpv-default-layout__container">
+                    <div className="rpv-default-layout__toolbar">
+                        {props && props.renderToolbar ? props.renderToolbar(Toolbar) : <Toolbar />}
                     </div>
-                    <div className='rpv-default-layout__main'>
+                    <div className="rpv-default-layout__main">
                         <Sidebar
                             attachmentTabContent={<Attachments />}
                             bookmarkTabContent={<Bookmarks />}
@@ -104,17 +107,14 @@ const defaultLayoutPlugin = (props?: DefaultLayoutPluginProps): DefaultLayoutPlu
                             thumbnailTabContent={<Thumbnails />}
                             tabs={sidebarTabs}
                         />
-                        <div
-                            className='rpv-default-layout__body'
-                            {...mergeSubSlot}
-                        >
+                        <div className="rpv-default-layout__body" {...mergeSubSlot}>
                             {slot.subSlot.children}
                         </div>
                     </div>
                     {slot.children}
                 </div>
             );
-            
+
             // Reset the sub slot
             slot.subSlot.attrs = {};
             slot.subSlot.children = <></>;
@@ -123,21 +123,21 @@ const defaultLayoutPlugin = (props?: DefaultLayoutPluginProps): DefaultLayoutPlu
         },
         uninstall: (pluginFunctions: PluginFunctions) => {
             // Unistall plugins
-            plugins.forEach(plugin => {
+            plugins.forEach((plugin) => {
                 if (plugin.uninstall) {
                     plugin.uninstall(pluginFunctions);
                 }
             });
         },
         onDocumentLoad: (props: PluginOnDocumentLoad) => {
-            plugins.forEach(plugin => {
+            plugins.forEach((plugin) => {
                 if (plugin.onDocumentLoad) {
                     plugin.onDocumentLoad(props);
                 }
             });
         },
         onTextLayerRender: (props: PluginOnTextLayerRender) => {
-            plugins.forEach(plugin => {
+            plugins.forEach((plugin) => {
                 if (plugin.onTextLayerRender) {
                     plugin.onTextLayerRender(props);
                 }
@@ -145,7 +145,7 @@ const defaultLayoutPlugin = (props?: DefaultLayoutPluginProps): DefaultLayoutPlu
         },
         onViewerStateChange: (viewerState: ViewerState) => {
             let newState = viewerState;
-            plugins.forEach(plugin => {
+            plugins.forEach((plugin) => {
                 if (plugin.onViewerStateChange) {
                     newState = plugin.onViewerStateChange(newState);
                 }

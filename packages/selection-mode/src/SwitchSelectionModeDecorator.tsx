@@ -33,17 +33,15 @@ const SwitchSelectionModeDecorator: React.FC<SwitchSelectionModeDecoratorProps> 
 
     switch (mode) {
         case SelectionMode.Hand:
-            label = (l10n && l10n.selectionMode
-                    ? l10n.selectionMode.handTool
-                    : 'Hand tool') as string;
+            label = (l10n && l10n.selectionMode ? l10n.selectionMode.handTool : 'Hand tool') as string;
             icon = <HandToolIcon />;
             break;
 
         case SelectionMode.Text:
         default:
-            label = (l10n && l10n.selectionMode
-                    ? l10n.selectionMode.textSelectionTool
-                    : 'Text selection tool') as string;
+            label = (
+                l10n && l10n.selectionMode ? l10n.selectionMode.textSelectionTool : 'Text selection tool'
+            ) as string;
             icon = <TextSelectionIcon />;
             break;
     }
