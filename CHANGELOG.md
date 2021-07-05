@@ -3,6 +3,8 @@
 ## v2.6.1 [WIP]
 
 **Bug fix**
+- Remove duplicate borders of keyword input
+- Search results are not highlighted
 - The [Search plugin](/https://react-pdf-viewer.dev/plugins/search) can cause a re-render
 
 ## v2.6.0
