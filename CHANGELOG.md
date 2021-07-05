@@ -4,6 +4,7 @@
 
 **Bug fix**
 - The [Search plugin](/https://react-pdf-viewer.dev/plugins/search) can cause a re-render
+- Search results are not highlighted
 
 ## v2.6.0
 
