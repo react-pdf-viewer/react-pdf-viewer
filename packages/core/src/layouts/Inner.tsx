@@ -21,9 +21,6 @@ import calculateScale from './calculateScale';
 import PageSize from './PageSize';
 import { RenderPage } from './RenderPage';
 
-const SCROLL_BAR_WIDTH = 17;
-const PAGE_PADDING = 8;
-
 interface InnerProps {
     doc: PdfJs.PdfDocument;
     initialPage?: number;
