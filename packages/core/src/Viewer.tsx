@@ -140,8 +140,8 @@ const Viewer: React.FC<ViewerProps> = ({
     return (
         <ThemeProvider theme={theme}>
             <LocalizationProvider localization={localization}>
+                {/* eslint-disable-next-line @typescript-eslint/no-unused-vars */}
                 {(_) => {
-                    // eslint-disable-line @typescript-eslint/no-unused-vars
                     const themeContext = React.useContext(ThemeContext);
                     return (
                         <div

@@ -45,8 +45,8 @@ export interface SearchPluginProps {
 }
 
 const searchPlugin = (props?: SearchPluginProps): SearchPlugin => {
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
     const onHighlightKeyword = React.useMemo(
+        // eslint-disable-next-line @typescript-eslint/no-empty-function
         () => (props && props.onHighlightKeyword ? props.onHighlightKeyword : () => {}),
         []
     );
