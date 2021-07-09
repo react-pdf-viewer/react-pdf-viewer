@@ -291,6 +291,7 @@ export enum AnnotationType {
 export interface MinimalButtonProps {
     isDisabled?: boolean;
     isSelected?: boolean;
+    label?: string;
     onClick(): void;
 }
 
