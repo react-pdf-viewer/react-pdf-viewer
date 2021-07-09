@@ -7,7 +7,7 @@
  */
 
 import * as React from 'react';
-import { Store, TextBox } from '@react-pdf-viewer/core';
+import { LocalizationContext, Store, TextBox } from '@react-pdf-viewer/core';
 
 import StoreProps from './StoreProps';
 import useCurrentPage from './useCurrentPage';
@@ -16,6 +16,7 @@ import useNumberOfPages from './useNumberOfPages';
 const CurrentPageInput: React.FC<{
     store: Store<StoreProps>;
 }> = ({ store }) => {
+    const l10n = React.useContext(LocalizationContext);
     const [editingPage, setEditingPage] = React.useState('1');
 
     const { currentPage } = useCurrentPage(store);
@@ -72,9 +73,11 @@ const CurrentPageInput: React.FC<{
         }
     };
 
+    const label = l10n && l10n.pageNavigation ? l10n.pageNavigation.enterPageNumber : 'Enter a page number';
+
     return (
         <span className="rpv-page-navigation__current-page-input">
-            <TextBox type="text" value={editingPage} onChange={setEditingPage} onKeyDown={keydownPage} />
+            <TextBox label={label as string} type="text" value={editingPage} onChange={setEditingPage} onKeyDown={keydownPage} />
         </span>
     );
 };
