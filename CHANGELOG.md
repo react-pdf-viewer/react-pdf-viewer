@@ -1,8 +1,13 @@
 # CHANGELOG
 
+## v2.6.2 [WIP]
+
+**Improvements**
+- The `MinimalButton` component has new `label` property which is used as the `aria-label` attribute
+
 ## v2.6.1
 
-**Improvement**
+**Improvements**
 - Move the CSS variables of the default theme to `:root`, so we can use components (`Button`, `Menu`, `Tooltip`, etc.) outside of the `Viewer`
 - Update the `DownloadIcon`, `ExitFullScreenIcon`, `FullScreenIcon` and `OpenFileIcon` icons
 

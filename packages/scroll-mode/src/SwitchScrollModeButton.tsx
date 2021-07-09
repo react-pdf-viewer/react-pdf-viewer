@@ -20,7 +20,7 @@ const SwitchScrollModeButton: React.FC<RenderSwitchScrollModeProps> = ({ isSelec
             <Tooltip
                 position={Position.BottomCenter}
                 target={
-                    <MinimalButton isSelected={isSelected} onClick={props.onClick}>
+                    <MinimalButton label={props.label} isSelected={isSelected} onClick={props.onClick}>
                         {props.icon}
                     </MinimalButton>
                 }

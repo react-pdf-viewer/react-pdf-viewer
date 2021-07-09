@@ -55,7 +55,7 @@ const MoreActionsPopover: React.FC<MoreActionsPopoverProps> = ({ toolbarSlot }) 
             <Tooltip
                 position={Position.BottomRight}
                 target={
-                    <MinimalButton onClick={toggle} isSelected={opened}>
+                    <MinimalButton label={label as string} onClick={toggle} isSelected={opened}>
                         <MoreIcon />
                     </MinimalButton>
                 }

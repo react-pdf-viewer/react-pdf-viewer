@@ -16,14 +16,13 @@ const TOOLTIP_OFFSET = { left: 0, top: 8 };
 
 const GoToFirstPageButton: React.FC<RenderGoToPageProps> = ({ isDisabled, onClick }) => {
     const l10n = React.useContext(LocalizationContext);
-
     const label = l10n && l10n.pageNavigation ? l10n.pageNavigation.goToFirstPage : 'First page';
 
     return (
         <Tooltip
             position={Position.BottomCenter}
             target={
-                <MinimalButton isDisabled={isDisabled} onClick={onClick}>
+                <MinimalButton label={label as string} isDisabled={isDisabled} onClick={onClick}>
                     <UpArrowIcon />
                 </MinimalButton>
             }
