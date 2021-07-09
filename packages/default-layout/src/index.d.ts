@@ -18,7 +18,7 @@ export type { ToolbarPluginProps, ToolbarProps, ToolbarSlot };
 export interface SidebarTab {
     content: React.ReactElement;
     icon: React.ReactElement;
-    title: React.ReactElement;
+    title: string;
 }
 
 export interface DefaultLayoutPlugin extends Plugin {
