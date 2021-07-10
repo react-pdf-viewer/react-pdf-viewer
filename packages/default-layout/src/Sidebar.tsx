@@ -88,7 +88,11 @@ const Sidebar: React.FC<SidebarProps> = ({
                             <Tooltip
                                 position={Position.RightCenter}
                                 target={
-                                    <MinimalButton label={tab.title} onClick={() => switchToTab(index)} isSelected={currentTab === index}>
+                                    <MinimalButton
+                                        label={tab.title}
+                                        onClick={() => switchToTab(index)}
+                                        isSelected={currentTab === index}
+                                    >
                                         {tab.icon}
                                     </MinimalButton>
                                 }

@@ -17,7 +17,13 @@ interface MinimalButtonProps {
     onClick(): void;
 }
 
-const MinimalButton: React.FC<MinimalButtonProps> = ({ children, isDisabled = false, isSelected = false, label = '', onClick }) => (
+const MinimalButton: React.FC<MinimalButtonProps> = ({
+    children,
+    isDisabled = false,
+    isSelected = false,
+    label = '',
+    onClick,
+}) => (
     <button
         className={classNames({
             'rpv-core__minimal-button': true,

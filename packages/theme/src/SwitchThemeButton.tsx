@@ -35,7 +35,11 @@ const SwitchThemeButton: React.FC<SwitchThemeButtonProps> = ({ onClick }) => {
     return (
         <Tooltip
             position={Position.BottomCenter}
-            target={<MinimalButton label={label as string} onClick={onClick}>{isDarkTheme ? <LightIcon /> : <DarkIcon />}</MinimalButton>}
+            target={
+                <MinimalButton label={label as string} onClick={onClick}>
+                    {isDarkTheme ? <LightIcon /> : <DarkIcon />}
+                </MinimalButton>
+            }
             content={() => label}
             offset={TOOLTIP_OFFSET}
         />

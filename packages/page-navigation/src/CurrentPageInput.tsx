@@ -77,7 +77,13 @@ const CurrentPageInput: React.FC<{
 
     return (
         <span className="rpv-page-navigation__current-page-input">
-            <TextBox label={label as string} type="text" value={editingPage} onChange={setEditingPage} onKeyDown={keydownPage} />
+            <TextBox
+                label={label as string}
+                type="text"
+                value={editingPage}
+                onChange={setEditingPage}
+                onKeyDown={keydownPage}
+            />
         </span>
     );
 };

@@ -27,7 +27,11 @@ const RotateButton: React.FC<RenderRotateProps> = ({ direction, onClick }) => {
     return (
         <Tooltip
             position={Position.BottomCenter}
-            target={<MinimalButton label={label as string} onClick={onClick}>{icon}</MinimalButton>}
+            target={
+                <MinimalButton label={label as string} onClick={onClick}>
+                    {icon}
+                </MinimalButton>
+            }
             content={() => label}
             offset={TOOLTIP_OFFSET}
         />
