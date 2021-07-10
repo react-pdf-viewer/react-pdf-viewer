@@ -19,7 +19,7 @@ interface MenuItemProps {
 }
 
 const MenuItem: React.FC<MenuItemProps> = ({ checked = false, children, icon = null, isDisabled = false, onClick }) => (
-    <li
+    <button
         className={classNames({
             'rpv-core__menu-item': true,
             'rpv-core__menu-item--disabled': isDisabled,
@@ -29,7 +29,7 @@ const MenuItem: React.FC<MenuItemProps> = ({ checked = false, children, icon = n
         <div className="rpv-core__menu-item-icon">{icon}</div>
         <div className="rpv-core__menu-item-label">{children}</div>
         <div className="rpv-core__menu-item-check">{checked && <CheckIcon />}</div>
-    </li>
+    </button>
 );
 
 export default MenuItem;
