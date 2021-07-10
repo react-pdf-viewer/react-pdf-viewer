@@ -24,6 +24,7 @@ const MenuItem: React.FC<MenuItemProps> = ({ checked = false, children, icon = n
             'rpv-core__menu-item': true,
             'rpv-core__menu-item--disabled': isDisabled,
         })}
+        role="menuitem"
         onClick={onClick}
     >
         <div className="rpv-core__menu-item-icon">{icon}</div>
