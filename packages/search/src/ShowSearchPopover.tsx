@@ -36,6 +36,7 @@ const ShowSearchPopover: React.FC<{
 
     return currentDoc ? (
         <Popover
+            ariaControlsSuffix="search"
             position={Position.BottomLeft}
             target={(toggle: Toggle) =>
                 render({

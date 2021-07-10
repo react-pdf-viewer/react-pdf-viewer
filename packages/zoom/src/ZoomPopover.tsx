@@ -85,6 +85,7 @@ const ZoomPopover: React.FC<RenderZoomProps> = ({ scale, onZoom }) => {
 
     return (
         <Popover
+            ariaControlsSuffix="zoom"
             position={Position.BottomCenter}
             target={renderTarget}
             content={renderContent}

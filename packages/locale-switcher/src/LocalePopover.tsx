@@ -85,6 +85,7 @@ const LocalePopover: React.FC<LocalePopoverProps> = ({
 
     return (
         <Popover
+            ariaControlsSuffix="locale-switcher"
             position={Position.BottomRight}
             target={renderTarget}
             content={renderContent}
