@@ -14,12 +14,19 @@ import useKeyUp from '../hooks/useKeyUp';
 import useLockScroll from '../hooks/useLockScroll';
 
 interface ModalBodyProps {
+    ariaControlsSuffix: string;
     closeOnClickOutside: boolean;
     closeOnEscape: boolean;
     onToggle(): void;
 }
 
-const ModalBody: React.FC<ModalBodyProps> = ({ children, closeOnClickOutside, closeOnEscape, onToggle }) => {
+const ModalBody: React.FC<ModalBodyProps> = ({
+    ariaControlsSuffix,
+    children,
+    closeOnClickOutside,
+    closeOnEscape,
+    onToggle,
+}) => {
     const contentRef = React.useRef<HTMLDivElement>();
 
     useLockScroll();
@@ -41,7 +48,14 @@ const ModalBody: React.FC<ModalBodyProps> = ({ children, closeOnClickOutside, cl
     }, []);
 
     return (
-        <div className="rpv-core__modal-body" ref={contentRef}>
+        <div
+            aria-modal="true"
+            className="rpv-core__modal-body"
+            id={`rpv-core__modal-body-${ariaControlsSuffix}`}
+            ref={contentRef}
+            role="dialog"
+            tabIndex={-1}
+        >
             {children}
         </div>
     );

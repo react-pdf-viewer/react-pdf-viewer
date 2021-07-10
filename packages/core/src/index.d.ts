@@ -336,6 +336,7 @@ export class MenuItem extends React.Component<MenuItemProps> {}
 
 // Modal
 export interface ModalProps {
+    ariaControlsSuffix?: string;
     closeOnClickOutside: boolean;
     closeOnEscape: boolean;
     content: RenderContent;
