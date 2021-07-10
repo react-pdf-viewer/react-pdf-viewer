@@ -13,6 +13,7 @@ import {
     Menu,
     MenuDivider,
     MenuItem,
+    MinimalButton,
     Popover,
     Position,
     SpecialZoomLevel,
@@ -37,16 +38,19 @@ const ZoomPopover: React.FC<RenderZoomProps> = ({ scale, onZoom }) => {
                 return l10n && l10n.zoom ? l10n.zoom.pageWidth : 'Page width';
         }
     };
+    const zoomDocumentLabel = l10n && l10n.zoom ? l10n.zoom.zoomDocument : 'Zoom document';
 
     const renderTarget = (toggle: Toggle): React.ReactElement => {
         const click = (): void => {
             toggle();
         };
         return (
-            <span className="rpv-zoom__popover-target" onClick={click}>
-                <span className="rpv-zoom__popover-target-scale">{Math.round(scale * 100)}%</span>
-                <span className="rpv-zoom__popover-target-arrow" />
-            </span>
+            <MinimalButton ariaLabel={zoomDocumentLabel as string} onClick={click}>
+                <span className="rpv-zoom__popover-target">
+                    <span className="rpv-zoom__popover-target-scale">{Math.round(scale * 100)}%</span>
+                    <span className="rpv-zoom__popover-target-arrow" />
+                </span>
+            </MinimalButton>
         );
     };
 
