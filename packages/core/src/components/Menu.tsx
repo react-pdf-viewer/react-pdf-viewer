@@ -12,6 +12,10 @@ interface MenuProps {
     children?: React.ReactNode;
 }
 
-const Menu: React.FC<MenuProps> = ({ children }) => <ul className="rpv-core__menu">{children}</ul>;
+const Menu: React.FC<MenuProps> = ({ children }) => (
+    <div aria-orientation="vertical" className="rpv-core__menu" role="menu" tabIndex={-1}>
+        {children}
+    </div>
+);
 
 export default Menu;

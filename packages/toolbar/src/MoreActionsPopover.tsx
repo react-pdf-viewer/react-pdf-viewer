@@ -115,6 +115,7 @@ const MoreActionsPopover: React.FC<MoreActionsPopoverProps> = ({ toolbarSlot }) 
     return (
         <Popover
             ariaControlsSuffix="toolbar-more-actions"
+            ariaHasPopup="menu"
             position={Position.BottomRight}
             target={renderTarget}
             content={renderContent}

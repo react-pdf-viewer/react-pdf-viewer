@@ -3,8 +3,7 @@
 ## v2.6.2 [WIP]
 
 **Improvements**
-- The `MinimalButton`, `TextBox` components have new `ariaLabel` property which is used as the `aria-label` attribute
-- The accessible components include `Modal`, `Popover`
+- The accessible components include `Menu`, `MenuItem`, `MinimalButton`, `Modal`, `Popover`, `TextBox`
 
 ## v2.6.1
 

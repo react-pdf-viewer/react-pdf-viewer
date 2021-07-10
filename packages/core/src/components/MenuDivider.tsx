@@ -8,6 +8,6 @@
 
 import * as React from 'react';
 
-const MenuDivider: React.FC = () => <li className="rpv-core__menu-divider" />;
+const MenuDivider: React.FC = () => <div className="rpv-core__menu-divider" />;
 
 export default MenuDivider;

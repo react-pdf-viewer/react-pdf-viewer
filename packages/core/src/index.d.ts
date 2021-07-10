@@ -348,6 +348,7 @@ export class Modal extends React.Component<ModalProps> {}
 // Popover
 export interface PopoverProps {
     ariaControlsSuffix?: string;
+    ariaHasPopup?: 'dialog' | 'menu';
     closeOnClickOutside: boolean;
     closeOnEscape: boolean;
     content: RenderContent;
