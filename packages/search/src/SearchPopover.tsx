@@ -61,6 +61,9 @@ const SearchPopover: React.FC<SearchPopoverProps> = ({ store, onToggle }) => {
         clearKeyword();
     };
 
+    const previousMatchLabel = l10n && l10n.search ? l10n.search.previousMatch : 'Previous match';
+    const nextMatchLabel = l10n && l10n.search ? l10n.search.nextMatch : 'Next match';
+
     return (
         <div className="rpv-search__popover">
             <div className="rpv-search__popover-input-counter">
@@ -98,11 +101,11 @@ const SearchPopover: React.FC<SearchPopoverProps> = ({ store, onToggle }) => {
                     <Tooltip
                         position={Position.BottomCenter}
                         target={
-                            <MinimalButton onClick={jumpToPreviousMatch}>
+                            <MinimalButton label={previousMatchLabel as string} onClick={jumpToPreviousMatch}>
                                 <PreviousIcon />
                             </MinimalButton>
                         }
-                        content={() => (l10n && l10n.search ? l10n.search.previousMatch : 'Previous match')}
+                        content={() => previousMatchLabel}
                         offset={PORTAL_OFFSET}
                     />
                 </div>
@@ -110,11 +113,11 @@ const SearchPopover: React.FC<SearchPopoverProps> = ({ store, onToggle }) => {
                     <Tooltip
                         position={Position.BottomCenter}
                         target={
-                            <MinimalButton onClick={jumpToNextMatch}>
+                            <MinimalButton label={nextMatchLabel as string} onClick={jumpToNextMatch}>
                                 <NextIcon />
                             </MinimalButton>
                         }
-                        content={() => (l10n && l10n.search ? l10n.search.nextMatch : 'Next match')}
+                        content={() => nextMatchLabel}
                         offset={PORTAL_OFFSET}
                     />
                 </div>

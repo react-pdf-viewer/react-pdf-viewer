@@ -9,6 +9,7 @@
 import * as React from 'react';
 
 interface TextBoxProps {
+    label?: string;
     placeholder?: string;
     type?: string;
     value?: string;
@@ -17,6 +18,7 @@ interface TextBoxProps {
 }
 
 const TextBox: React.FC<TextBoxProps> = ({
+    label = '',
     placeholder = '',
     type = 'text',
     value = '',
@@ -24,6 +26,7 @@ const TextBox: React.FC<TextBoxProps> = ({
     onKeyDown = () => {},
 }) => (
     <input
+        aria-label={label}
         className="rpv-core__textbox"
         placeholder={placeholder}
         type={type}

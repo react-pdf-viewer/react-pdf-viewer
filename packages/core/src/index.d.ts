@@ -291,6 +291,7 @@ export enum AnnotationType {
 export interface MinimalButtonProps {
     isDisabled?: boolean;
     isSelected?: boolean;
+    label?: string;
     onClick(): void;
 }
 
@@ -374,6 +375,7 @@ export class Spinner extends React.Component {}
 
 // Textbox
 export interface TextBoxProps {
+    label?: string;
     placeholder?: string;
     type?: string;
     value?: string;

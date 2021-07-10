@@ -17,7 +17,7 @@ import ThumbnailIcon from './ThumbnailIcon';
 export interface SidebarTab {
     content: React.ReactElement;
     icon: React.ReactElement;
-    title: React.ReactElement;
+    title: string;
 }
 
 interface SidebarProps {
@@ -45,17 +45,17 @@ const Sidebar: React.FC<SidebarProps> = ({
         {
             content: thumbnailTabContent,
             icon: <ThumbnailIcon />,
-            title: <>{l10n && l10n.defaultLayout ? l10n.defaultLayout.thumbnail : 'Thumbnail'}</>,
+            title: (l10n && l10n.defaultLayout ? l10n.defaultLayout.thumbnail : 'Thumbnail') as string,
         },
         {
             content: bookmarkTabContent,
             icon: <BookmarkIcon />,
-            title: <>{l10n && l10n.defaultLayout ? l10n.defaultLayout.bookmark : 'Bookmark'}</>,
+            title: (l10n && l10n.defaultLayout ? l10n.defaultLayout.bookmark : 'Bookmark') as string,
         },
         {
             content: attachmentTabContent,
             icon: <FileIcon />,
-            title: <>{l10n && l10n.defaultLayout ? l10n.defaultLayout.attachment : 'Attachment'}</>,
+            title: (l10n && l10n.defaultLayout ? l10n.defaultLayout.attachment : 'Attachment') as string,
         },
     ];
 
@@ -88,7 +88,11 @@ const Sidebar: React.FC<SidebarProps> = ({
                             <Tooltip
                                 position={Position.RightCenter}
                                 target={
-                                    <MinimalButton onClick={() => switchToTab(index)} isSelected={currentTab === index}>
+                                    <MinimalButton
+                                        label={tab.title}
+                                        onClick={() => switchToTab(index)}
+                                        isSelected={currentTab === index}
+                                    >
                                         {tab.icon}
                                     </MinimalButton>
                                 }

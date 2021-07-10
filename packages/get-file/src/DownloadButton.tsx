@@ -16,14 +16,13 @@ const TOOLTIP_OFFSET = { left: 0, top: 8 };
 
 const DownloadButton: React.FC<RenderDownloadProps> = ({ onClick }) => {
     const l10n = React.useContext(LocalizationContext);
-
     const label = l10n && l10n.download ? l10n.download.download : 'Download';
 
     return (
         <Tooltip
             position={Position.BottomCenter}
             target={
-                <MinimalButton onClick={onClick}>
+                <MinimalButton label={label as string} onClick={onClick}>
                     <DownloadIcon />
                 </MinimalButton>
             }

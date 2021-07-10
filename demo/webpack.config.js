@@ -45,6 +45,10 @@ module.exports = {
         // Otherwise, we will see "Invalid hook call" error
         alias: {
             "react": path.join(__dirname, '../node_modules/react')
+        },
+        fallback: {
+            // To make `@axe-core/react` work
+            crypto: false,
         }
     },
     devServer: {

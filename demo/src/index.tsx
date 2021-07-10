@@ -1,7 +1,11 @@
-import * as React from 'react';
-import { render } from 'react-dom';
+import React from 'react';
+import ReactDOM from 'react-dom';
 
 import App from './App';
 
-const rootElement = document.getElementById('root');
-render(<App />, rootElement);
+if (process.env.NODE_ENV === 'development') {
+    const axe = require('@axe-core/react');
+    axe(React, ReactDOM, 1000);
+}
+
+ReactDOM.render(<App />, document.getElementById('root'));

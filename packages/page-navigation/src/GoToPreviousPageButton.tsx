@@ -22,7 +22,7 @@ const GoToPreviousPageButton: React.FC<RenderGoToPageProps> = ({ isDisabled, onC
         <Tooltip
             position={Position.BottomCenter}
             target={
-                <MinimalButton isDisabled={isDisabled} onClick={onClick}>
+                <MinimalButton label={label as string} isDisabled={isDisabled} onClick={onClick}>
                     <PreviousIcon />
                 </MinimalButton>
             }

@@ -47,7 +47,7 @@ const LocalePopover: React.FC<LocalePopoverProps> = ({
             <Tooltip
                 position={Position.BottomCenter}
                 target={
-                    <MinimalButton onClick={toggle} isSelected={opened}>
+                    <MinimalButton label={label as string} onClick={toggle} isSelected={opened}>
                         <LocaleIcon />
                     </MinimalButton>
                 }

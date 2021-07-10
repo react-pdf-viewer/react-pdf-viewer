@@ -17,21 +17,25 @@ const App = () => {
             },
         },
     });
+    const { activateTab } = defaultLayoutPluginInstance;
 
     return (
         <Worker workerUrl="https://unpkg.com/pdfjs-dist@2.8.335/build/pdf.worker.js">
             <div
                 style={{
-                    marginTop: '100px',
-                    height: '720px',
+                    // marginTop: '100px',
+                    height: '100%',
                     width: '100%',
                 }}
             >
                 <Viewer
                     fileUrl='pdf-open-parameters.pdf'
                     initialPage={3}
+                    onDocumentLoad={() => {
+                        activateTab(1);
+                    }}
                     // theme='dark'
-                    defaultScale={SpecialZoomLevel.PageFit}
+                    // defaultScale={SpecialZoomLevel.PageFit}
                     plugins={[
                         defaultLayoutPluginInstance,
                     ]}
