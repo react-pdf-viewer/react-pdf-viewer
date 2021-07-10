@@ -10,6 +10,7 @@ import * as React from 'react';
 import {
     LocalizationContext,
     LocalizationMap,
+    Menu,
     MenuItem,
     MinimalButton,
     Popover,
@@ -65,13 +66,7 @@ const LocalePopover: React.FC<LocalePopoverProps> = ({
         };
 
         return (
-            <ul
-                style={{
-                    listStyleType: 'none',
-                    margin: 0,
-                    padding: 0,
-                }}
-            >
+            <Menu>
                 {Object.keys(locales).map((loc) => {
                     return (
                         <MenuItem key={loc} checked={locale === loc} onClick={() => changeLocale(loc)}>
@@ -79,13 +74,14 @@ const LocalePopover: React.FC<LocalePopoverProps> = ({
                         </MenuItem>
                     );
                 })}
-            </ul>
+            </Menu>
         );
     };
 
     return (
         <Popover
             ariaControlsSuffix="locale-switcher"
+            ariaHasPopup="menu"
             position={Position.BottomRight}
             target={renderTarget}
             content={renderContent}

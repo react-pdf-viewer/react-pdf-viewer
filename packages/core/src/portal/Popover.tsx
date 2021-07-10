@@ -18,6 +18,7 @@ import uniqueId from '../utils/uniqueId';
 
 interface PopoverProps {
     ariaControlsSuffix?: string;
+    ariaHasPopup?: 'dialog' | 'menu';
     closeOnClickOutside: boolean;
     closeOnEscape: boolean;
     content: RenderContent;
@@ -27,6 +28,7 @@ interface PopoverProps {
 }
 
 const Popover: React.FC<PopoverProps> = ({
+    ariaHasPopup = 'dialog',
     ariaControlsSuffix,
     closeOnClickOutside,
     closeOnEscape,
@@ -42,7 +44,7 @@ const Popover: React.FC<PopoverProps> = ({
         <div
             ref={targetRef}
             aria-expanded={opened ? 'true' : 'false'}
-            aria-haspopup="dialog"
+            aria-haspopup={ariaHasPopup}
             aria-controls={`rpv-core__popver-body-${controlsSuffix}`}
         >
             {target(toggle, opened)}
