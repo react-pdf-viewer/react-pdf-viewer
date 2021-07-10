@@ -63,7 +63,6 @@ const zoomPlugin = (props?: ZoomPluginProps): ZoomPlugin => {
         <ZoomInDecorator>
             {(p) => (
                 <ZoomInMenuItem
-                    enableShortcuts={zoomPluginProps.enableShortcuts}
                     onClick={() => {
                         p.onClick();
                         props.onClick();
@@ -83,7 +82,6 @@ const zoomPlugin = (props?: ZoomPluginProps): ZoomPlugin => {
         <ZoomOutDecorator>
             {(p) => (
                 <ZoomOutMenuItem
-                    enableShortcuts={zoomPluginProps.enableShortcuts}
                     onClick={() => {
                         p.onClick();
                         props.onClick();

@@ -15,7 +15,6 @@ export interface RenderPrintProps {
 }
 
 export interface PrintMenuItemProps {
-    enableShortcuts: boolean;
     onClick(): void;
 }
 
