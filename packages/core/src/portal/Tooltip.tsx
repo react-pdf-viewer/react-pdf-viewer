@@ -40,6 +40,8 @@ const Tooltip: React.FC<TooltipProps> = ({ ariaControlsSuffix, content, offset, 
             <div
                 aria-describedby={`rpv-core__tooltip-body-${controlsSuffix}`}
                 ref={targetRef}
+                onBlur={hide}
+                onFocus={show}
                 onMouseEnter={show}
                 onMouseLeave={hide}
             >
