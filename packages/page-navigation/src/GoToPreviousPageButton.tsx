@@ -20,6 +20,7 @@ const GoToPreviousPageButton: React.FC<RenderGoToPageProps> = ({ isDisabled, onC
 
     return (
         <Tooltip
+            ariaControlsSuffix="page-navigation-previous"
             position={Position.BottomCenter}
             target={
                 <MinimalButton ariaLabel={label as string} isDisabled={isDisabled} onClick={onClick}>

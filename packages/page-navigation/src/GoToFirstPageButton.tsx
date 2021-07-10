@@ -20,6 +20,7 @@ const GoToFirstPageButton: React.FC<RenderGoToPageProps> = ({ isDisabled, onClic
 
     return (
         <Tooltip
+            ariaControlsSuffix="page-navigation-first"
             position={Position.BottomCenter}
             target={
                 <MinimalButton ariaLabel={label as string} isDisabled={isDisabled} onClick={onClick}>

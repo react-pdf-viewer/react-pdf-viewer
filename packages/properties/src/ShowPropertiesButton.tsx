@@ -20,6 +20,7 @@ const ShowPropertiesButton: React.FC<RenderShowPropertiesProps> = ({ onClick }) 
 
     return (
         <Tooltip
+            ariaControlsSuffix="properties"
             position={Position.BottomCenter}
             target={
                 <MinimalButton ariaLabel={label as string} onClick={onClick}>

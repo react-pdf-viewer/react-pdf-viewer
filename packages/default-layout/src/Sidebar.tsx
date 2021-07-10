@@ -86,6 +86,7 @@ const Sidebar: React.FC<SidebarProps> = ({
                     {listTabs.map((tab, index) => (
                         <div key={index} className="rpv-default-layout__sidebar-header">
                             <Tooltip
+                                ariaControlsSuffix={`default-layout-sidebar-tab-${index}`}
                                 position={Position.RightCenter}
                                 target={
                                     <MinimalButton

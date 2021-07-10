@@ -26,6 +26,7 @@ const RotateButton: React.FC<RenderRotateProps> = ({ direction, onClick }) => {
 
     return (
         <Tooltip
+            ariaControlsSuffix="rotate"
             position={Position.BottomCenter}
             target={
                 <MinimalButton ariaLabel={label as string} onClick={onClick}>

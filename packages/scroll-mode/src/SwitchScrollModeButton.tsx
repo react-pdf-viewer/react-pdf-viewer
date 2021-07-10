@@ -18,6 +18,7 @@ const SwitchScrollModeButton: React.FC<RenderSwitchScrollModeProps> = ({ isSelec
     <SwitchScrollModeDecorator mode={mode} onClick={onClick}>
         {(props) => (
             <Tooltip
+                ariaControlsSuffix="scroll-mode-switch"
                 position={Position.BottomCenter}
                 target={
                     <MinimalButton ariaLabel={props.label} isSelected={isSelected} onClick={props.onClick}>

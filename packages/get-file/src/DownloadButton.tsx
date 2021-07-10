@@ -20,6 +20,7 @@ const DownloadButton: React.FC<RenderDownloadProps> = ({ onClick }) => {
 
     return (
         <Tooltip
+            ariaControlsSuffix="get-file"
             position={Position.BottomCenter}
             target={
                 <MinimalButton ariaLabel={label as string} onClick={onClick}>
