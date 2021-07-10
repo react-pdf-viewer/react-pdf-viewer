@@ -11,19 +11,21 @@ import { LocalizationContext, MinimalButton, Position, Tooltip } from '@react-pd
 
 import { RenderPrintProps } from './Print';
 import PrintIcon from './PrintIcon';
+import isMac from './utils/isMac';
 
 const TOOLTIP_OFFSET = { left: 0, top: 8 };
 
-const PrintButton: React.FC<RenderPrintProps> = ({ onClick }) => {
+const PrintButton: React.FC<RenderPrintProps> = ({ enableShortcuts, onClick }) => {
     const l10n = React.useContext(LocalizationContext);
     const label = l10n && l10n.print ? l10n.print.print : 'Print';
+    const ariaKeyShortcuts = enableShortcuts ? (isMac() ? 'Meta+p' : 'Ctrl+p') : '';
 
     return (
         <Tooltip
             ariaControlsSuffix="print"
             position={Position.BottomCenter}
             target={
-                <MinimalButton ariaLabel={label as string} onClick={onClick}>
+                <MinimalButton ariaKeyShortcuts={ariaKeyShortcuts} ariaLabel={label as string} onClick={onClick}>
                     <PrintIcon />
                 </MinimalButton>
             }

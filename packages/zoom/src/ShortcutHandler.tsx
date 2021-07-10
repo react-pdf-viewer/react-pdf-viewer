@@ -10,14 +10,13 @@ import * as React from 'react';
 import { Store } from '@react-pdf-viewer/core';
 
 import StoreProps from './StoreProps';
+import isMac from './utils/isMac';
 import { decrease, increase } from './zoomingLevel';
 
 interface ShortcutHandlerProps {
     containerRef: React.RefObject<HTMLDivElement>;
     store: Store<StoreProps>;
 }
-
-const isMac = () => (typeof window !== 'undefined' ? /(Mac|iPhone|iPod|iPad)/i.test(navigator.platform) : false);
 
 const ShortcutHandler: React.FC<ShortcutHandlerProps> = ({ containerRef, store }) => {
     const keydownHandler = (e: KeyboardEvent) => {

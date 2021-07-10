@@ -6,8 +6,6 @@
  * @copyright 2019-2021 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-interface ZoomMenuItemProps {
-    enableShortcuts: boolean;
-    onClick: () => void;
-}
-export type { ZoomMenuItemProps };
+const isMac = () => (typeof window !== 'undefined' ? /(Mac|iPhone|iPod|iPad)/i.test(navigator.platform) : false);
+
+export default isMac;

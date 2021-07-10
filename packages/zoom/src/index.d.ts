@@ -10,6 +10,7 @@ import * as React from 'react';
 import { Plugin, SpecialZoomLevel } from '@react-pdf-viewer/core';
 
 export interface ZoomMenuItemProps {
+    enableShortcuts: boolean;
     onClick: () => void;
 }
 
@@ -18,6 +19,7 @@ export interface ZoomMenuItemProps {
 // ------------------------
 
 export interface RenderZoomInProps {
+    enableShortcuts: boolean;
     onClick: () => void;
 }
 
@@ -30,6 +32,7 @@ export interface ZoomInProps {
 // -------------------------
 
 export interface RenderZoomOutProps {
+    enableShortcuts: boolean;
     onClick: () => void;
 }
 

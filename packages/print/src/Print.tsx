@@ -14,6 +14,7 @@ import PrintStatus from './PrintStatus';
 import StoreProps from './StoreProps';
 
 export interface RenderPrintProps {
+    enableShortcuts: boolean;
     onClick: () => void;
 }
 
@@ -25,16 +26,17 @@ export interface PrintProps {
 
 const Print: React.FC<{
     children?: RenderPrint;
+    enableShortcuts: boolean;
     store: Store<StoreProps>;
-}> = ({ children, store }) => {
+}> = ({ children, enableShortcuts, store }) => {
     const print = () => {
         store.update('printStatus', PrintStatus.Preparing);
     };
 
-    const defaultChildern = (props: RenderPrintProps) => <PrintButton onClick={props.onClick} />;
-    const render = children || defaultChildern;
+    const render = children || PrintButton;
 
     return render({
+        enableShortcuts,
         onClick: print,
     });
 };

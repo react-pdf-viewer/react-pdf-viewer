@@ -10,6 +10,7 @@
     * Closed when pressing the `Escape` key
 - Add ARIA attributes to pages and thumbnails
 - Add ARIA attributes to internal links of the document
+- When the shortcuts are enabled, the associal buttons will have the `aria-keyshortcuts` attributes
 
 ## v2.6.1
 
