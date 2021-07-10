@@ -89,7 +89,7 @@ const Sidebar: React.FC<SidebarProps> = ({
                                 position={Position.RightCenter}
                                 target={
                                     <MinimalButton
-                                        label={tab.title}
+                                        ariaLabel={tab.title}
                                         onClick={() => switchToTab(index)}
                                         isSelected={currentTab === index}
                                     >
