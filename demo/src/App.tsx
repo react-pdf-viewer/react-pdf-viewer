@@ -10,7 +10,7 @@ const App = () => {
     const defaultLayoutPluginInstance = defaultLayoutPlugin({
         toolbarPlugin: {
             printPlugin: {
-                enableShortcuts: false,
+                enableShortcuts: true,
             },
             zoomPlugin: {
                 enableShortcuts: true,

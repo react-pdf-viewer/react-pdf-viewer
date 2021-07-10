@@ -10,10 +10,12 @@ import * as React from 'react';
 import { Plugin } from '@react-pdf-viewer/core';
 
 export interface RenderPrintProps {
+    enableShortcuts: boolean;
     onClick: () => void;
 }
 
 export interface PrintMenuItemProps {
+    enableShortcuts: boolean;
     onClick(): void;
 }
 

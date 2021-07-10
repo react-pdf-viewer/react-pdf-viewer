@@ -37,7 +37,9 @@ const printPlugin = (props?: PrintPluginProps): PrintPlugin => {
         []
     );
 
-    const PrintDecorator = (props: PrintProps) => <Print {...props} store={store} />;
+    const PrintDecorator = (props: PrintProps) => (
+        <Print enableShortcuts={printPluginProps.enableShortcuts} {...props} store={store} />
+    );
 
     const PrintButtonDecorator = () => <PrintDecorator>{(props) => <PrintButton {...props} />}</PrintDecorator>;
 
@@ -45,6 +47,7 @@ const printPlugin = (props?: PrintPluginProps): PrintPlugin => {
         <PrintDecorator>
             {(p) => (
                 <PrintMenuItem
+                    enableShortcuts={printPluginProps.enableShortcuts}
                     onClick={() => {
                         p.onClick();
                         props.onClick();

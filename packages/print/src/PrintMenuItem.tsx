@@ -12,6 +12,7 @@ import { LocalizationContext, MenuItem } from '@react-pdf-viewer/core';
 import PrintIcon from './PrintIcon';
 
 export interface PrintMenuItemProps {
+    enableShortcuts: boolean;
     onClick(): void;
 }
 
