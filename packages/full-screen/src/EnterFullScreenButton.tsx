@@ -22,7 +22,7 @@ const EnterFullScreenButton: React.FC<RenderEnterFullScreenProps> = ({ onClick }
         <Tooltip
             position={Position.BottomCenter}
             target={
-                <MinimalButton label={label as string} onClick={onClick}>
+                <MinimalButton ariaLabel={label as string} onClick={onClick}>
                     <FullScreenIcon />
                 </MinimalButton>
             }

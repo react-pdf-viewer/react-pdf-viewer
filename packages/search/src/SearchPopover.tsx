@@ -101,7 +101,7 @@ const SearchPopover: React.FC<SearchPopoverProps> = ({ store, onToggle }) => {
                     <Tooltip
                         position={Position.BottomCenter}
                         target={
-                            <MinimalButton label={previousMatchLabel as string} onClick={jumpToPreviousMatch}>
+                            <MinimalButton ariaLabel={previousMatchLabel as string} onClick={jumpToPreviousMatch}>
                                 <PreviousIcon />
                             </MinimalButton>
                         }
@@ -113,7 +113,7 @@ const SearchPopover: React.FC<SearchPopoverProps> = ({ store, onToggle }) => {
                     <Tooltip
                         position={Position.BottomCenter}
                         target={
-                            <MinimalButton label={nextMatchLabel as string} onClick={jumpToNextMatch}>
+                            <MinimalButton ariaLabel={nextMatchLabel as string} onClick={jumpToNextMatch}>
                                 <NextIcon />
                             </MinimalButton>
                         }

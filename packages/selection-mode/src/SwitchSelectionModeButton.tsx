@@ -20,7 +20,7 @@ const SwitchSelectionModeButton: React.FC<RenderSwitchSelectionModeProps> = ({ i
             <Tooltip
                 position={Position.BottomCenter}
                 target={
-                    <MinimalButton label={props.label} isSelected={isSelected} onClick={props.onClick}>
+                    <MinimalButton ariaLabel={props.label} isSelected={isSelected} onClick={props.onClick}>
                         {props.icon}
                     </MinimalButton>
                 }

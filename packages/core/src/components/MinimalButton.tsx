@@ -11,17 +11,17 @@ import * as React from 'react';
 import classNames from '../utils/classNames';
 
 interface MinimalButtonProps {
+    ariaLabel?: string;
     isDisabled?: boolean;
     isSelected?: boolean;
-    label?: string;
     onClick(): void;
 }
 
 const MinimalButton: React.FC<MinimalButtonProps> = ({
+    ariaLabel = '',
     children,
     isDisabled = false,
     isSelected = false,
-    label = '',
     onClick,
 }) => (
     <button
@@ -31,7 +31,7 @@ const MinimalButton: React.FC<MinimalButtonProps> = ({
             'rpv-core__minimal-button--selected': isSelected,
         })}
         onClick={onClick}
-        aria-label={label}
+        aria-label={ariaLabel}
     >
         {children}
     </button>

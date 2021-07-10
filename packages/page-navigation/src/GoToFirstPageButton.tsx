@@ -22,7 +22,7 @@ const GoToFirstPageButton: React.FC<RenderGoToPageProps> = ({ isDisabled, onClic
         <Tooltip
             position={Position.BottomCenter}
             target={
-                <MinimalButton label={label as string} isDisabled={isDisabled} onClick={onClick}>
+                <MinimalButton ariaLabel={label as string} isDisabled={isDisabled} onClick={onClick}>
                     <UpArrowIcon />
                 </MinimalButton>
             }
