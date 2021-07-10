@@ -36,6 +36,7 @@ const ShowProperties: React.FC<{
 
     return currentDoc ? (
         <Modal
+            ariaControlsSuffix="properties"
             target={(toggle: Toggle) =>
                 render({
                     onClick: toggle,
