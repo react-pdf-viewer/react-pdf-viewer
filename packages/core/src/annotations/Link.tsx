@@ -43,6 +43,7 @@ const Link: React.FC<LinkProps> = ({ annotation, doc, page, viewport, onExecuteN
           }
         : {
               href: '',
+              'data-annotation-link-dest': annotation.dest,
               onClick: link,
           };
 

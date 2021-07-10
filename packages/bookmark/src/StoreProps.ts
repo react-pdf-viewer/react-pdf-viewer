@@ -10,6 +10,8 @@ import { PdfJs, SpecialZoomLevel } from '@react-pdf-viewer/core';
 
 export default interface StoreProps {
     doc?: PdfJs.PdfDocument;
+    // Map from dest to the annotation container
+    linkAnnotations: Record<string, HTMLElement>;
     jumpToDestination?: (
         pageIndex: number,
         bottomOffset: number,

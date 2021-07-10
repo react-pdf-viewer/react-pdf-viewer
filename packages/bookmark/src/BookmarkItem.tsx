@@ -7,20 +7,22 @@
  */
 
 import * as React from 'react';
-import { PdfJs, SpecialZoomLevel } from '@react-pdf-viewer/core';
+import { PdfJs, SpecialZoomLevel, Store } from '@react-pdf-viewer/core';
 
 import BookmarkList from './BookmarkList';
+import StoreProps from './StoreProps';
 import RightArrowIcon from './RightArrowIcon';
 
 interface BookmarkItemProps {
     bookmark: PdfJs.Outline;
     depth: number;
     doc: PdfJs.PdfDocument;
+    store: Store<StoreProps>;
     onClick(dest: PdfJs.OutlineDestinationType): void;
     onJumpToDest(pageIndex: number, bottomOffset: number, scaleTo: number | SpecialZoomLevel): void;
 }
 
-const BookmarkItem: React.FC<BookmarkItemProps> = ({ bookmark, depth, doc, onClick, onJumpToDest }) => {
+const BookmarkItem: React.FC<BookmarkItemProps> = ({ bookmark, depth, doc, store, onClick, onJumpToDest }) => {
     const toggleRef = React.useRef<HTMLSpanElement>();
     const subItemRef = React.useRef<HTMLDivElement>();
     const subItemsDisplayed = React.useRef(true);
@@ -80,7 +82,13 @@ const BookmarkItem: React.FC<BookmarkItemProps> = ({ bookmark, depth, doc, onCli
             </div>
             {hasSubItems && (
                 <div ref={subItemRef}>
-                    <BookmarkList bookmarks={bookmark.items} depth={depth + 1} doc={doc} onJumpToDest={onJumpToDest} />
+                    <BookmarkList
+                        bookmarks={bookmark.items}
+                        depth={depth + 1}
+                        doc={doc}
+                        store={store}
+                        onJumpToDest={onJumpToDest}
+                    />
                 </div>
             )}
         </>
