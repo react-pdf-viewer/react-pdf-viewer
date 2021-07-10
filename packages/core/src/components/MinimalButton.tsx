@@ -25,13 +25,14 @@ const MinimalButton: React.FC<MinimalButtonProps> = ({
     onClick,
 }) => (
     <button
+        aria-label={ariaLabel}
         className={classNames({
             'rpv-core__minimal-button': true,
             'rpv-core__minimal-button--disabled': isDisabled,
             'rpv-core__minimal-button--selected': isSelected,
         })}
+        type="button"
         onClick={onClick}
-        aria-label={ariaLabel}
     >
         {children}
     </button>

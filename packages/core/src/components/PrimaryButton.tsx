@@ -13,7 +13,7 @@ interface PrimaryButtonProps {
 }
 
 const PrimaryButton: React.FC<PrimaryButtonProps> = ({ children, onClick }) => (
-    <button className="rpv-core__primary-button" onClick={onClick}>
+    <button className="rpv-core__primary-button" type="button" onClick={onClick}>
         {children}
     </button>
 );
