@@ -12,6 +12,7 @@ import classNames from '../utils/classNames';
 
 interface MinimalButtonProps {
     ariaLabel?: string;
+    ariaKeyShortcuts?: string;
     isDisabled?: boolean;
     isSelected?: boolean;
     onClick(): void;
@@ -19,6 +20,7 @@ interface MinimalButtonProps {
 
 const MinimalButton: React.FC<MinimalButtonProps> = ({
     ariaLabel = '',
+    ariaKeyShortcuts = '',
     children,
     isDisabled = false,
     isSelected = false,
@@ -26,6 +28,7 @@ const MinimalButton: React.FC<MinimalButtonProps> = ({
 }) => (
     <button
         aria-label={ariaLabel}
+        {...(ariaKeyShortcuts && { 'aria-keyshortcuts': ariaKeyShortcuts })}
         className={classNames({
             'rpv-core__minimal-button': true,
             'rpv-core__minimal-button--disabled': isDisabled,

@@ -290,6 +290,7 @@ export enum AnnotationType {
 // Minimal button
 export interface MinimalButtonProps {
     ariaLabel?: string;
+    ariaKeyShortcuts?: string;
     isDisabled?: boolean;
     isSelected?: boolean;
     onClick(): void;
