@@ -61,6 +61,7 @@ const SearchPopover: React.FC<SearchPopoverProps> = ({ store, onToggle }) => {
         clearKeyword();
     };
 
+    const searchLabel = (l10n && l10n.search ? l10n.search.enterToSearch : 'Enter to search') as string;
     const previousMatchLabel = l10n && l10n.search ? l10n.search.previousMatch : 'Previous match';
     const nextMatchLabel = l10n && l10n.search ? l10n.search.nextMatch : 'Next match';
 
@@ -68,7 +69,8 @@ const SearchPopover: React.FC<SearchPopoverProps> = ({ store, onToggle }) => {
         <div className="rpv-search__popover">
             <div className="rpv-search__popover-input-counter">
                 <TextBox
-                    placeholder={(l10n && l10n.search ? l10n.search.enterToSearch : 'Enter to search') as string}
+                    ariaLabel={searchLabel}
+                    placeholder={searchLabel}
                     type="text"
                     value={keyword}
                     onChange={setKeyword}

@@ -375,7 +375,7 @@ export class Spinner extends React.Component {}
 
 // Textbox
 export interface TextBoxProps {
-    label?: string;
+    ariaLabel?: string;
     placeholder?: string;
     type?: string;
     value?: string;
