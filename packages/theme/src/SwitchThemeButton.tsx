@@ -34,6 +34,7 @@ const SwitchThemeButton: React.FC<SwitchThemeButtonProps> = ({ onClick }) => {
 
     return (
         <Tooltip
+            ariaControlsSuffix="theme-switch"
             position={Position.BottomCenter}
             target={
                 <MinimalButton ariaLabel={label as string} onClick={onClick}>

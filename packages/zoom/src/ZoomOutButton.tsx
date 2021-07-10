@@ -20,6 +20,7 @@ const ZoomOutButton: React.FC<RenderZoomOutProps> = ({ onClick }) => {
 
     return (
         <Tooltip
+            ariaControlsSuffix="zoom-out"
             position={Position.BottomCenter}
             target={
                 <MinimalButton ariaLabel={label as string} onClick={onClick}>

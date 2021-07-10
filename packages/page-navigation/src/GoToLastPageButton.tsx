@@ -20,6 +20,7 @@ const GoToLastPageButton: React.FC<RenderGoToPageProps> = ({ isDisabled, onClick
 
     return (
         <Tooltip
+            ariaControlsSuffix="page-navigation-last"
             position={Position.BottomCenter}
             target={
                 <MinimalButton ariaLabel={label as string} isDisabled={isDisabled} onClick={onClick}>

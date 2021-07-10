@@ -18,6 +18,7 @@ const ShowSearchPopoverButton: React.FC<RenderShowSearchPopoverProps> = ({ onCli
     <ShowSearchPopoverDecorator onClick={onClick}>
         {(p) => (
             <Tooltip
+                ariaControlsSuffix="search-popover"
                 position={Position.BottomCenter}
                 target={
                     <MinimalButton ariaLabel={p.label} onClick={onClick}>

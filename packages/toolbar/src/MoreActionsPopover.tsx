@@ -53,6 +53,7 @@ const MoreActionsPopover: React.FC<MoreActionsPopoverProps> = ({ toolbarSlot }) 
 
         return (
             <Tooltip
+                ariaControlsSuffix="toolbar-more-actions"
                 position={Position.BottomRight}
                 target={
                     <MinimalButton ariaLabel={label as string} onClick={toggle} isSelected={opened}>

@@ -20,6 +20,7 @@ const ZoomInButton: React.FC<RenderZoomInProps> = ({ onClick }) => {
 
     return (
         <Tooltip
+            ariaControlsSuffix="zoom-in"
             position={Position.BottomCenter}
             target={
                 <MinimalButton ariaLabel={label as string} onClick={onClick}>

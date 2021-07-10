@@ -20,6 +20,7 @@ const PrintButton: React.FC<RenderPrintProps> = ({ onClick }) => {
 
     return (
         <Tooltip
+            ariaControlsSuffix="print"
             position={Position.BottomCenter}
             target={
                 <MinimalButton ariaLabel={label as string} onClick={onClick}>

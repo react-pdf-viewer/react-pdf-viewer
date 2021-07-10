@@ -21,6 +21,7 @@ const OpenButton: React.FC<RenderOpenProps> = ({ onClick }) => {
 
     return (
         <Tooltip
+            ariaControlsSuffix="open"
             position={Position.BottomCenter}
             target={
                 <div className="rpv-open__button rpv-open__input-wrapper">

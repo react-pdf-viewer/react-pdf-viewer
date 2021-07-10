@@ -46,6 +46,7 @@ const LocalePopover: React.FC<LocalePopoverProps> = ({
 
         return (
             <Tooltip
+                ariaControlsSuffix="locale-switcher"
                 position={Position.BottomCenter}
                 target={
                     <MinimalButton ariaLabel={label as string} onClick={toggle} isSelected={opened}>
