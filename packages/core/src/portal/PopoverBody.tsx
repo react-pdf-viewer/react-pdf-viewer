@@ -16,6 +16,7 @@ import Offset from './Offset';
 import Position from './Position';
 
 interface PopoverBodyProps {
+    ariaControlsSuffix: string;
     closeOnClickOutside: boolean;
     offset: Offset;
     position: Position;
@@ -24,6 +25,7 @@ interface PopoverBodyProps {
 }
 
 const PopoverBody: React.FC<PopoverBodyProps> = ({
+    ariaControlsSuffix,
     children,
     closeOnClickOutside,
     offset,
@@ -52,12 +54,22 @@ const PopoverBody: React.FC<PopoverBodyProps> = ({
         }
     }, []);
 
+    const innerId = `rpv-core__popover-body-inner-${ariaControlsSuffix}`;
+
     return (
         <>
             <div ref={anchorRef} style={{ left: 0, position: 'absolute', top: 0 }} />
-            <div className="rpv-core__popover-body" ref={contentRef}>
+            <div
+                aria-describedby={innerId}
+                className="rpv-core__popover-body"
+                id={`rpv-core__popover-body-${ariaControlsSuffix}`}
+                ref={contentRef}
+                role="dialog"
+            >
                 <Arrow customClassName="rpv-core__popover-body-arrow" position={position} />
-                <div ref={innerRef}>{children}</div>
+                <div id={innerId} ref={innerRef}>
+                    {children}
+                </div>
             </div>
         </>
     );

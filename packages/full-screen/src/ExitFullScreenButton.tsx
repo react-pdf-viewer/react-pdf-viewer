@@ -56,7 +56,7 @@ const ExitFullScreenButton: React.FC<{
             {isFullScreen && (
                 <div className="rpv-full-screen__exit-button">
                     <div className="rpv-full-screen__exit-button-content">
-                        <MinimalButton label={exitFullScreenLabel as string} onClick={handleExitFullScreen}>
+                        <MinimalButton ariaLabel={exitFullScreenLabel as string} onClick={handleExitFullScreen}>
                             <ExitFullScreenIcon />
                         </MinimalButton>
                     </div>

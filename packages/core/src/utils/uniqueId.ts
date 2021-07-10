@@ -6,11 +6,7 @@
  * @copyright 2019-2021 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-:root {
-    --rpv-zoom__popover-target-arrow-border-color: rgba(0, 0, 0, 0.6);
-}
+let id = 0;
+const uniqueId = (): number => id++;
 
-/* Dark theme */
-.rpv-core__viewer--dark {
-    --rpv-zoom__popover-target-arrow-border-color: #fff;
-}
+export default uniqueId;

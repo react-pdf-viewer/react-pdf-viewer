@@ -289,9 +289,9 @@ export enum AnnotationType {
 
 // Minimal button
 export interface MinimalButtonProps {
+    ariaLabel?: string;
     isDisabled?: boolean;
     isSelected?: boolean;
-    label?: string;
     onClick(): void;
 }
 
@@ -346,6 +346,7 @@ export class Modal extends React.Component<ModalProps> {}
 
 // Popover
 export interface PopoverProps {
+    ariaControlsSuffix?: string;
     closeOnClickOutside: boolean;
     closeOnEscape: boolean;
     content: RenderContent;
@@ -375,7 +376,7 @@ export class Spinner extends React.Component {}
 
 // Textbox
 export interface TextBoxProps {
-    label?: string;
+    ariaLabel?: string;
     placeholder?: string;
     type?: string;
     value?: string;

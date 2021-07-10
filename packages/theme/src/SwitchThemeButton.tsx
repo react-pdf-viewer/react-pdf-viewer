@@ -36,7 +36,7 @@ const SwitchThemeButton: React.FC<SwitchThemeButtonProps> = ({ onClick }) => {
         <Tooltip
             position={Position.BottomCenter}
             target={
-                <MinimalButton label={label as string} onClick={onClick}>
+                <MinimalButton ariaLabel={label as string} onClick={onClick}>
                     {isDarkTheme ? <LightIcon /> : <DarkIcon />}
                 </MinimalButton>
             }
