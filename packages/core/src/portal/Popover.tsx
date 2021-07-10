@@ -28,7 +28,13 @@ const Popover: React.FC<PopoverProps> = ({ closeOnClickOutside, closeOnEscape, c
     const targetRef = React.useRef<HTMLDivElement>();
 
     const renderTarget = (toggle: Toggle, opened: boolean): React.ReactElement => (
-        <div ref={targetRef}>{target(toggle, opened)}</div>
+        <div
+            ref={targetRef}
+            aria-expanded={opened ? 'true' : 'false'}
+            aria-haspopup='dialog'
+        >
+            {target(toggle, opened)}
+        </div>
     );
 
     const renderContent = (toggle: Toggle): React.ReactElement => (
