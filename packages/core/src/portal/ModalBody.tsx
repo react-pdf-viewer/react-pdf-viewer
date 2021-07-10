@@ -41,7 +41,7 @@ const ModalBody: React.FC<ModalBodyProps> = ({ children, closeOnClickOutside, cl
     }, []);
 
     return (
-        <div className="rpv-core__modal-body" ref={contentRef}>
+        <div aria-modal="true" className="rpv-core__modal-body" ref={contentRef} role="dialog" tabIndex={-1}>
             {children}
         </div>
     );
