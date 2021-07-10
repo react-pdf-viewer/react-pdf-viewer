@@ -108,6 +108,7 @@ const ThumbnailContainer: React.FC<ThumbnailContainerProps> = ({
                 <ThumbnailItem
                     page={page}
                     pageHeight={isVertical ? height : width}
+                    pageIndex={pageIndex}
                     pageWidth={isVertical ? width : height}
                     rotation={rotationNumber}
                     thumbnailHeight={h}

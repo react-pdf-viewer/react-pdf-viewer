@@ -16,6 +16,7 @@ import {
     PluginOnDocumentLoad,
     RenderViewer,
     ViewerState,
+    PluginOnAnnotationLayerRender,
     PluginOnTextLayerRender,
 } from '@react-pdf-viewer/core';
 import { thumbnailPlugin, ThumbnailPlugin } from '@react-pdf-viewer/thumbnail';
@@ -133,6 +134,13 @@ const defaultLayoutPlugin = (props?: DefaultLayoutPluginProps): DefaultLayoutPlu
             plugins.forEach((plugin) => {
                 if (plugin.onDocumentLoad) {
                     plugin.onDocumentLoad(props);
+                }
+            });
+        },
+        onAnnotationLayerRender: (props: PluginOnAnnotationLayerRender) => {
+            plugins.forEach((plugin) => {
+                if (plugin.onAnnotationLayerRender) {
+                    plugin.onAnnotationLayerRender(props);
                 }
             });
         },

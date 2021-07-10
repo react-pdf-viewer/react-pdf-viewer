@@ -8,6 +8,8 @@
     * Shown when being focused
     * Closed when being blured
     * Closed when pressing the `Escape` key
+- Add ARIA attributes to pages and thumbnails
+- Add ARIA attributes to internal links of the document
 
 ## v2.6.1
 

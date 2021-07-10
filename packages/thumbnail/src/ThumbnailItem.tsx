@@ -7,11 +7,12 @@
  */
 
 import * as React from 'react';
-import { PdfJs, Spinner } from '@react-pdf-viewer/core';
+import { PdfJs, LocalizationContext, Spinner } from '@react-pdf-viewer/core';
 
 interface ThumbnailItemProps {
     page: PdfJs.Page;
     pageHeight: number;
+    pageIndex: number;
     pageWidth: number;
     rotation: number;
     thumbnailHeight: number;
@@ -21,13 +22,19 @@ interface ThumbnailItemProps {
 const ThumbnailItem: React.FC<ThumbnailItemProps> = ({
     page,
     pageHeight,
+    pageIndex,
     pageWidth,
     rotation,
     thumbnailHeight,
     thumbnailWidth,
 }) => {
+    const l10n = React.useContext(LocalizationContext);
     const renderTask = React.useRef<PdfJs.PageRenderTask>();
     const [src, setSrc] = React.useState('');
+
+    const thumbnailLabel = (
+        l10n && l10n.thumbnail ? l10n.thumbnail.thumbnailLabel : 'Thumbnail of page {{pageIndex}}'
+    ) as string;
 
     React.useEffect(() => {
         const task = renderTask.current;
@@ -59,7 +66,16 @@ const ThumbnailItem: React.FC<ThumbnailItemProps> = ({
         );
     }, [rotation]);
 
-    return !src ? <Spinner /> : <img src={src} height={`${thumbnailHeight}px`} width={`${thumbnailWidth}px`} />;
+    return !src ? (
+        <Spinner />
+    ) : (
+        <img
+            aria-label={thumbnailLabel.replace('{{pageIndex}}', `${pageIndex + 1}`)}
+            src={src}
+            height={`${thumbnailHeight}px`}
+            width={`${thumbnailWidth}px`}
+        />
+    );
 };
 
 export default ThumbnailItem;

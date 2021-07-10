@@ -37,7 +37,7 @@ const BookmarkListWithStore: React.FC<{
     }, []);
 
     return currentDoc ? (
-        <BookmarkLoader doc={currentDoc} onJumpToDest={jump} />
+        <BookmarkLoader doc={currentDoc} store={store} onJumpToDest={jump} />
     ) : (
         <div className="rpv-bookmark__loader">
             <Spinner />
