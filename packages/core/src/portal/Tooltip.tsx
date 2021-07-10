@@ -8,6 +8,7 @@
 
 import * as React from 'react';
 
+import useKeyUp from '../hooks/useKeyUp';
 import { Toggle, ToggleStatus } from '../hooks/useToggle';
 import Offset from './Offset';
 import Portal from './Portal';
@@ -30,6 +31,12 @@ const Tooltip: React.FC<TooltipProps> = ({ ariaControlsSuffix, content, offset, 
     const controlsSuffix = ariaControlsSuffix || `${uniqueId()}`;
 
     const renderTarget = (toggle: Toggle): React.ReactElement => {
+        useKeyUp(27, () => {
+            if (targetRef.current && document.activeElement && targetRef.current.contains(document.activeElement)) {
+                hide();
+            }
+        });
+
         const show = (): void => {
             toggle(ToggleStatus.Open);
         };

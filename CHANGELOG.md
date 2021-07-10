@@ -6,7 +6,8 @@
 - Add _WAI-ARIA_ attributes to `Menu`, `MenuDivider`, `MenuItem`, `MinimalButton`, `Modal`, `Popover`, `TextBox`, `Tooltip` components
 - Improve the accessibility of the `Tooltip` component
     * Shown when being focused
-    * Hidden when being blured
+    * Closed when being blured
+    * Closed when pressing the `Escape` key
 
 ## v2.6.1
 
