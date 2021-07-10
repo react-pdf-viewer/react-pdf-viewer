@@ -7,7 +7,6 @@
  */
 
 interface ZoomMenuItemProps {
-    enableShortcuts: boolean;
     onClick: () => void;
 }
 export type { ZoomMenuItemProps };

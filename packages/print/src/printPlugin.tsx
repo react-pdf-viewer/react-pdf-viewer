@@ -47,7 +47,6 @@ const printPlugin = (props?: PrintPluginProps): PrintPlugin => {
         <PrintDecorator>
             {(p) => (
                 <PrintMenuItem
-                    enableShortcuts={printPluginProps.enableShortcuts}
                     onClick={() => {
                         p.onClick();
                         props.onClick();
