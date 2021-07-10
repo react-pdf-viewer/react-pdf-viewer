@@ -15,6 +15,7 @@ import ZoomInButton from './ZoomInButton';
 import { increase } from './zoomingLevel';
 
 export interface RenderZoomInProps {
+    enableShortcuts: boolean;
     onClick: () => void;
 }
 
@@ -26,8 +27,9 @@ export interface ZoomInProps {
 
 const ZoomIn: React.FC<{
     children?: RenderZoomIn;
+    enableShortcuts: boolean;
     store: Store<StoreProps>;
-}> = ({ children, store }) => {
+}> = ({ children, enableShortcuts, store }) => {
     const { scale } = useZoom(store);
 
     const zoomIn = () => {
@@ -38,10 +40,10 @@ const ZoomIn: React.FC<{
         }
     };
 
-    const defaultChildren = (props: RenderZoomInProps) => <ZoomInButton onClick={props.onClick} />;
-    const render = children || defaultChildren;
+    const render = children || ZoomInButton;
 
     return render({
+        enableShortcuts,
         onClick: zoomIn,
     });
 };
