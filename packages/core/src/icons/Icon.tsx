@@ -17,7 +17,14 @@ const Icon: React.FC<IconProps> = ({ children, size = 24 }) => {
     const width = `${size || 24}px`;
 
     return (
-        <svg className="rpv-core__icon" height={width} viewBox="0 0 24 24" width={width}>
+        <svg
+            aria-hidden="true"
+            className="rpv-core__icon"
+            focusable="false"
+            height={width}
+            viewBox="0 0 24 24"
+            width={width}
+        >
             {children}
         </svg>
     );

@@ -3,7 +3,7 @@
 ## v2.6.2 [WIP]
 
 **Improvements**
-- Add _WAI-ARIA_ attributes to `Menu`, `MenuDivider`, `MenuItem`, `MinimalButton`, `Modal`, `Popover`, `TextBox`, `Tooltip` components
+- Add _WAI-ARIA_ attributes to `Icon`, `Menu`, `MenuDivider`, `MenuItem`, `MinimalButton`, `Modal`, `Popover`, `TextBox`, `Tooltip` components
 - Improve the accessibility of the `Tooltip` component
     * Shown when being focused
     * Closed when being blured
