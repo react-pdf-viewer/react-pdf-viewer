@@ -14,8 +14,10 @@ import PopoverBody from './PopoverBody';
 import PopoverOverlay from './PopoverOverlay';
 import Portal, { RenderContent, RenderTarget } from './Portal';
 import Position from './Position';
+import uniqueId from '../utils/uniqueId';
 
 interface PopoverProps {
+    ariaControlsSuffix?: string;
     closeOnClickOutside: boolean;
     closeOnEscape: boolean;
     content: RenderContent;
@@ -24,14 +26,24 @@ interface PopoverProps {
     target: RenderTarget;
 }
 
-const Popover: React.FC<PopoverProps> = ({ closeOnClickOutside, closeOnEscape, content, offset, position, target }) => {
+const Popover: React.FC<PopoverProps> = ({
+    ariaControlsSuffix,
+    closeOnClickOutside,
+    closeOnEscape,
+    content,
+    offset,
+    position,
+    target,
+}) => {
     const targetRef = React.useRef<HTMLDivElement>();
+    const controlsSuffix = ariaControlsSuffix || `${uniqueId()}`;
 
     const renderTarget = (toggle: Toggle, opened: boolean): React.ReactElement => (
         <div
             ref={targetRef}
             aria-expanded={opened ? 'true' : 'false'}
-            aria-haspopup='dialog'
+            aria-haspopup="dialog"
+            aria-controls={`rpv-core__popver-body-${controlsSuffix}`}
         >
             {target(toggle, opened)}
         </div>
@@ -41,6 +53,7 @@ const Popover: React.FC<PopoverProps> = ({ closeOnClickOutside, closeOnEscape, c
         <>
             <PopoverOverlay closeOnEscape={closeOnEscape} onClose={toggle} />
             <PopoverBody
+                ariaControlsSuffix={controlsSuffix}
                 closeOnClickOutside={closeOnClickOutside}
                 offset={offset}
                 position={position}
