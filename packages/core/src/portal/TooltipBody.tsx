@@ -14,12 +14,13 @@ import Offset from './Offset';
 import Position from './Position';
 
 interface TooltipBodyProps {
+    ariaControlsSuffix: string;
     offset: Offset;
     position: Position;
     targetRef: React.RefObject<HTMLElement>;
 }
 
-const TooltipBody: React.FC<TooltipBodyProps> = ({ children, offset, position, targetRef }) => {
+const TooltipBody: React.FC<TooltipBodyProps> = ({ ariaControlsSuffix, children, offset, position, targetRef }) => {
     const contentRef = React.useRef<HTMLDivElement>();
     const anchorRef = React.useRef<HTMLDivElement>();
 
@@ -28,7 +29,12 @@ const TooltipBody: React.FC<TooltipBodyProps> = ({ children, offset, position, t
     return (
         <>
             <div ref={anchorRef} style={{ left: 0, position: 'absolute', top: 0 }} />
-            <div className="rpv-core__tooltip-body" ref={contentRef}>
+            <div
+                className="rpv-core__tooltip-body"
+                id={`rpv-core__tooltip-body-${ariaControlsSuffix}`}
+                ref={contentRef}
+                role="tooltip"
+            >
                 <Arrow customClassName="rpv-core__tooltip-body-arrow" position={position} />
                 <div className="rpv-core__tooltip-body-content">{children}</div>
             </div>

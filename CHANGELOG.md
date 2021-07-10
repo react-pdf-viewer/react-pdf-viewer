@@ -3,7 +3,7 @@
 ## v2.6.2 [WIP]
 
 **Improvements**
-- The accessible components include `Menu`, `MenuDivider`, `MenuItem`, `MinimalButton`, `Modal`, `Popover`, `TextBox`
+- The accessible components include `Menu`, `MenuDivider`, `MenuItem`, `MinimalButton`, `Modal`, `Popover`, `TextBox`, `Tooltip`
 
 ## v2.6.1
 
