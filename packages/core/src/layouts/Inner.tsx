@@ -10,6 +10,7 @@ import * as React from 'react';
 
 import PageLayer from '../layers/PageLayer';
 import Slot from '../layouts/Slot';
+import LocalizationContext from '../localization/LocalizationContext';
 import SpecialZoomLevel from '../SpecialZoomLevel';
 import { Plugin } from '../types/Plugin';
 import PluginFunctions from '../types/PluginFunctions';
@@ -46,6 +47,7 @@ const Inner: React.FC<InnerProps> = ({
     onPageChange,
     onZoom,
 }) => {
+    const l10n = React.useContext(LocalizationContext);
     const containerRef = React.useRef<HTMLDivElement | null>(null);
     const pagesRef = React.useRef<HTMLDivElement | null>(null);
     const [currentPage, setCurrentPage] = React.useState(0);
@@ -294,6 +296,8 @@ const Inner: React.FC<InnerProps> = ({
         }
     };
 
+    const pageLabel = (l10n && l10n.core ? l10n.core.pageLabel : 'Page {{pageIndex}}') as string;
+
     const renderViewer = (): Slot => {
         let slot: Slot = {
             attrs: {
@@ -320,11 +324,13 @@ const Inner: React.FC<InnerProps> = ({
                             .map((_, index) => {
                                 return (
                                     <div
+                                        aria-label={pageLabel.replace('{{pageIndex}}', `${index + 1}`)}
                                         className="rpv-core__inner-page"
                                         key={`pagelayer-${index}`}
                                         ref={(ref): void => {
                                             pageRefs[index].current = ref as HTMLDivElement;
                                         }}
+                                        role="region"
                                     >
                                         <PageLayer
                                             currentPage={currentPage}

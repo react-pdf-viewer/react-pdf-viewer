@@ -14,7 +14,8 @@
         "wrongPassword": {
             "submit": "Submit",
             "tryAgain": "The password is wrong. Please try again"
-        }
+        },
+        "pageLabel": "Page {{pageIndex}}"
     },
     "defaultLayout": {
         "attachment": "Attachment",
@@ -90,6 +91,9 @@
     "theme": {
         "switchDarkTheme": "Switch to the dark theme",
         "switchLightTheme": "Switch to the light theme"
+    },
+    "thumbnail": {
+        "thumbnailLabel": "Thumbnail of page {{pageIndex}}"
     },
     "toolbar": {
         "moreActions": "More actions"
