@@ -65,6 +65,7 @@ const PopoverBody: React.FC<PopoverBodyProps> = ({
                 id={`rpv-core__popover-body-${ariaControlsSuffix}`}
                 ref={contentRef}
                 role="dialog"
+                tabIndex={-1}
             >
                 <Arrow customClassName="rpv-core__popover-body-arrow" position={position} />
                 <div id={innerId} ref={innerRef}>
