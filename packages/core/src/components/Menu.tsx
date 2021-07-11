@@ -18,7 +18,62 @@ const Menu: React.FC<MenuProps> = ({ children }) => {
     const containerRef = React.useRef<HTMLDivElement>();
 
     const handleKeyDown = (e: KeyboardEvent) => {
-        console.log(e.key);
+        switch (e.key) {
+            case 'Tab':
+                e.preventDefault();
+                break;
+
+            case 'ArrowDown':
+                activateNextItem();
+                break;
+
+            case 'ArrowUp':
+                activatePreviousItem();
+                break;
+
+            default:
+                break;
+        }
+    };
+
+    const activatePreviousItem = () => {
+        const container = containerRef.current;
+        if (!container) {
+            return;
+        }
+
+        const items = Array.from(container.querySelectorAll('.rpv-core__menu-item[role="menuitem"]'));
+        const currentIndex = items.findIndex((item) => item.getAttribute('tabindex') === '0');
+        const prevItem = currentIndex - 1;
+
+        if (prevItem >= 0) {
+            if (currentIndex >= 0) {
+                items[currentIndex].setAttribute('tabindex', '-1');
+            }
+
+            items[prevItem].setAttribute('tabindex', '0');
+            (items[prevItem] as HTMLElement).focus();
+        }
+    };
+
+    const activateNextItem = () => {
+        const container = containerRef.current;
+        if (!container) {
+            return;
+        }
+
+        const items = Array.from(container.querySelectorAll('.rpv-core__menu-item[role="menuitem"]'));
+        const currentIndex = items.findIndex((item) => item.getAttribute('tabindex') === '0');
+        const nextItem = currentIndex + 1;
+
+        if (nextItem < items.length) {
+            if (currentIndex >= 0) {
+                items[currentIndex].setAttribute('tabindex', '-1');
+            }
+
+            items[nextItem].setAttribute('tabindex', '0');
+            (items[nextItem] as HTMLElement).focus();
+        }
     };
 
     useIsomorphicLayoutEffect(() => {
@@ -31,6 +86,7 @@ const Menu: React.FC<MenuProps> = ({ children }) => {
         const firstItem = container.querySelector('.rpv-core__menu-item[role="menuitem"]');
         if (firstItem) {
             (firstItem as HTMLElement).focus();
+            firstItem.setAttribute('tabindex', '0');
         }
 
         container.addEventListener('keydown', handleKeyDown);

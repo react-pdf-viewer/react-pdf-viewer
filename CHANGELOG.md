@@ -11,8 +11,8 @@
     * Closed when being blured
     * Closed when pressing the `Escape` key
 - Improve the accessibility of the `Menu` component
-    * Activate the previous or next menu item when pressing `Up` or `Down` key
-    * Trigger click when pressing the `Enter` key
+    * Activate the next menu item when pressing the `ArrowDown` key
+    * Activate the previous menu item when pressing the `ArrowUp` key    
 - When the shortcuts are enabled, the associal buttons will have the `aria-keyshortcuts` attributes
 
 ## v2.6.1

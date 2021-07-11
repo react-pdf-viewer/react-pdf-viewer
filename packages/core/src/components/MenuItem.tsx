@@ -25,6 +25,7 @@ const MenuItem: React.FC<MenuItemProps> = ({ checked = false, children, icon = n
             'rpv-core__menu-item--disabled': isDisabled,
         })}
         role="menuitem"
+        tabIndex={-1}
         type="button"
         onClick={onClick}
     >
