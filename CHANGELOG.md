@@ -4,12 +4,15 @@
 
 **Improvements**
 - Add _WAI-ARIA_ attributes to `Icon`, `Menu`, `MenuDivider`, `MenuItem`, `MinimalButton`, `Modal`, `Popover`, `TextBox`, `Tooltip` components
+- Add ARIA attributes to pages and thumbnails
+- Add ARIA attributes to internal links of the document
 - Improve the accessibility of the `Tooltip` component
     * Shown when being focused
     * Closed when being blured
     * Closed when pressing the `Escape` key
-- Add ARIA attributes to pages and thumbnails
-- Add ARIA attributes to internal links of the document
+- Improve the accessibility of the `Menu` component
+    * Activate the previous or next menu item when pressing `Up` or `Down` key
+    * Trigger click when pressing the `Enter` key
 - When the shortcuts are enabled, the associal buttons will have the `aria-keyshortcuts` attributes
 
 ## v2.6.1
