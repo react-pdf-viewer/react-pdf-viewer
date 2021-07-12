@@ -9,7 +9,6 @@
 import * as React from 'react';
 import {
     createStore,
-    PdfJs,
     Plugin,
     PluginFunctions,
     PluginOnAnnotationLayerRender,
