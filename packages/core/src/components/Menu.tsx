@@ -16,6 +16,7 @@ interface MenuProps {
 
 const Menu: React.FC<MenuProps> = ({ children }) => {
     const containerRef = React.useRef<HTMLDivElement>();
+    const visibleMenuItemsRef = React.useRef<HTMLElement[]>([]);
 
     const handleKeyDown = (e: KeyboardEvent) => {
         switch (e.key) {
@@ -42,7 +43,7 @@ const Menu: React.FC<MenuProps> = ({ children }) => {
             return;
         }
 
-        const items = Array.from(container.querySelectorAll('.rpv-core__menu-item[role="menuitem"]'));
+        const items = visibleMenuItemsRef.current;
         const currentIndex = items.findIndex((item) => item.getAttribute('tabindex') === '0');
         const prevItem = currentIndex - 1;
 
@@ -62,7 +63,7 @@ const Menu: React.FC<MenuProps> = ({ children }) => {
             return;
         }
 
-        const items = Array.from(container.querySelectorAll('.rpv-core__menu-item[role="menuitem"]'));
+        const items = visibleMenuItemsRef.current;
         const currentIndex = items.findIndex((item) => item.getAttribute('tabindex') === '0');
         const nextItem = currentIndex + 1;
 
@@ -76,20 +77,52 @@ const Menu: React.FC<MenuProps> = ({ children }) => {
         }
     };
 
+    // Query the visible menu items
+    const findVisibleItems = (container: HTMLElement): HTMLElement[] => {
+        const visibleItems: HTMLElement[] = [];
+
+        container.querySelectorAll('.rpv-core__menu-item[role="menuitem"]').forEach((item) => {
+            if (item instanceof HTMLElement) {
+                const parent = item.parentElement;
+                if (parent === container) {
+                    visibleItems.push(item);
+                } else {
+                    // The menu item can be placed inside a responsive container such as
+                    //  <div className="rpv-core__display--block rpv-core__display--hidden-medium">
+                    //      <MenuItem />
+                    //  </div>
+                    if (window.getComputedStyle(parent).display !== 'none') {
+                        visibleItems.push(item);
+                    }
+                }
+            }
+        });
+
+        return visibleItems;
+    };
+
     useIsomorphicLayoutEffect(() => {
         const container = containerRef.current;
         if (!container) {
             return;
         }
 
+        // Query the visible menu items
+        const visibleItems = findVisibleItems(container);
+
+        // Cache them
+        visibleMenuItemsRef.current = visibleItems;
+
         // Focus the first menu item automatically
-        const firstItem = container.querySelector('.rpv-core__menu-item[role="menuitem"]');
-        if (firstItem) {
-            (firstItem as HTMLElement).focus();
+        if (visibleItems.length > 0) {
+            const firstItem = visibleItems[0];
+            firstItem.focus();
             firstItem.setAttribute('tabindex', '0');
         }
 
+        // Handle the `keydown` event
         container.addEventListener('keydown', handleKeyDown);
+
         return () => container.removeEventListener('keydown', handleKeyDown);
     }, []);
 
