@@ -15,13 +15,20 @@ import Position from './Position';
 
 interface TooltipBodyProps {
     ariaControlsSuffix: string;
+    contentRef: React.RefObject<HTMLDivElement>;
     offset: Offset;
     position: Position;
     targetRef: React.RefObject<HTMLElement>;
 }
 
-const TooltipBody: React.FC<TooltipBodyProps> = ({ ariaControlsSuffix, children, offset, position, targetRef }) => {
-    const contentRef = React.useRef<HTMLDivElement>();
+const TooltipBody: React.FC<TooltipBodyProps> = ({
+    ariaControlsSuffix,
+    children,
+    contentRef,
+    offset,
+    position,
+    targetRef,
+}) => {
     const anchorRef = React.useRef<HTMLDivElement>();
 
     usePosition(contentRef, targetRef, anchorRef, position, offset);

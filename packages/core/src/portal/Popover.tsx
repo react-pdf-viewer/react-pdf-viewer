@@ -8,7 +8,7 @@
 
 import * as React from 'react';
 
-import { Toggle } from '../hooks/useToggle';
+import useToggle, { Toggle } from '../hooks/useToggle';
 import Offset from './Offset';
 import PopoverBody from './PopoverBody';
 import PopoverOverlay from './PopoverOverlay';
@@ -37,10 +37,11 @@ const Popover: React.FC<PopoverProps> = ({
     position,
     target,
 }) => {
+    const { opened, toggle } = useToggle();
     const targetRef = React.useRef<HTMLDivElement>();
     const controlsSuffix = ariaControlsSuffix || `${uniqueId()}`;
 
-    const renderTarget = (toggle: Toggle, opened: boolean): React.ReactElement => (
+    return (
         <div
             ref={targetRef}
             aria-expanded={opened ? 'true' : 'false'}
@@ -48,26 +49,24 @@ const Popover: React.FC<PopoverProps> = ({
             aria-controls={`rpv-core__popver-body-${controlsSuffix}`}
         >
             {target(toggle, opened)}
+
+            {opened && (
+                <>
+                    <PopoverOverlay closeOnEscape={closeOnEscape} onClose={toggle} />
+                    <PopoverBody
+                        ariaControlsSuffix={controlsSuffix}
+                        closeOnClickOutside={closeOnClickOutside}
+                        offset={offset}
+                        position={position}
+                        targetRef={targetRef}
+                        onClose={toggle}
+                    >
+                        {content(toggle)}
+                    </PopoverBody>
+                </>
+            )}
         </div>
     );
-
-    const renderContent = (toggle: Toggle): React.ReactElement => (
-        <>
-            <PopoverOverlay closeOnEscape={closeOnEscape} onClose={toggle} />
-            <PopoverBody
-                ariaControlsSuffix={controlsSuffix}
-                closeOnClickOutside={closeOnClickOutside}
-                offset={offset}
-                position={position}
-                targetRef={targetRef}
-                onClose={toggle}
-            >
-                {content(toggle)}
-            </PopoverBody>
-        </>
-    );
-
-    return <Portal content={renderContent} target={renderTarget} />;
 };
 
 export default Popover;

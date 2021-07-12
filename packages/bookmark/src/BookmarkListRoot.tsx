@@ -7,7 +7,7 @@
  */
 
 import * as React from 'react';
-import { getDestination, PdfJs, SpecialZoomLevel, Store } from '@react-pdf-viewer/core';
+import { PdfJs, SpecialZoomLevel, Store } from '@react-pdf-viewer/core';
 
 import BookmarkList from './BookmarkList';
 import StoreProps from './StoreProps';

@@ -19,6 +19,7 @@ export { default as Spinner } from './components/Spinner';
 export { default as TextBox } from './components/TextBox';
 export { default as useIntersectionObserver } from './hooks/useIntersectionObserver';
 export { default as useIsomorphicLayoutEffect } from './hooks/useIsomorphicLayoutEffect';
+export { ToggleStatus } from './hooks/useToggle';
 export { default as Icon } from './icons/Icon';
 export { default as LocalizationContext } from './localization/LocalizationContext';
 export { default as LocalizationProvider } from './localization/LocalizationProvider';
