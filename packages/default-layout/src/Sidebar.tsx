@@ -82,17 +82,24 @@ const Sidebar: React.FC<SidebarProps> = ({
     return (
         <div className={`rpv-default-layout__sidebar ${opened ? 'rpv-default-layout__sidebar--opened' : ''}`}>
             <div className="rpv-default-layout__sidebar-tabs">
-                <div className="rpv-default-layout__sidebar-headers">
+                <div className="rpv-default-layout__sidebar-headers" role="tablist" aria-orientation="vertical">
                     {listTabs.map((tab, index) => (
-                        <div key={index} className="rpv-default-layout__sidebar-header">
+                        <div
+                            aria-controls="rpv-default-layout__sidebar-content"
+                            aria-selected={currentTab === index}
+                            key={index}
+                            className="rpv-default-layout__sidebar-header"
+                            id={`rpv-default-layout__sidebar-tab-${index}`}
+                            role="tab"
+                        >
                             <Tooltip
                                 ariaControlsSuffix={`default-layout-sidebar-tab-${index}`}
                                 position={Position.RightCenter}
                                 target={
                                     <MinimalButton
                                         ariaLabel={tab.title}
-                                        onClick={() => switchToTab(index)}
                                         isSelected={currentTab === index}
+                                        onClick={() => switchToTab(index)}
                                     >
                                         {tab.icon}
                                     </MinimalButton>
@@ -104,9 +111,13 @@ const Sidebar: React.FC<SidebarProps> = ({
                     ))}
                 </div>
                 <div
+                    aria-labelledby={`rpv-default-layout__sidebar-tab-${currentTab}`}
+                    id="rpv-default-layout__sidebar-content"
                     className={`rpv-default-layout__sidebar-content ${
                         opened ? 'rpv-default-layout__sidebar-content--opened' : ''
                     }`}
+                    role="tabpanel"
+                    tabIndex={0}
                 >
                     {listTabs[currentTab].content}
                 </div>
