@@ -29,7 +29,7 @@ const defaultToolbar = (toolbarSlot: ToolbarSlot): React.ReactElement => {
     } = toolbarSlot;
 
     return (
-        <div className="rpv-toolbar">
+        <div className="rpv-toolbar" role="toolbar" aria-orientation="horizontal">
             <div className="rpv-toolbar__left">
                 <div className="rpv-toolbar__item">
                     <ShowSearchPopover />
