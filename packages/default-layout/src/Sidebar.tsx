@@ -117,7 +117,7 @@ const Sidebar: React.FC<SidebarProps> = ({
                         opened ? 'rpv-default-layout__sidebar-content--opened' : ''
                     }`}
                     role="tabpanel"
-                    tabIndex={0}
+                    tabIndex={-1}
                 >
                     {listTabs[currentTab].content}
                 </div>
