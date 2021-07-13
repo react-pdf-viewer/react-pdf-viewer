@@ -36,4 +36,5 @@ export { default as Viewer } from './Viewer';
 export { default as Worker } from './Worker';
 
 // Utils
+export { default as classNames } from './utils/classNames';
 export { default as getDestination } from './utils/getDestination';
