@@ -18,7 +18,7 @@ const Menu: React.FC<MenuProps> = ({ children }) => {
     const containerRef = React.useRef<HTMLDivElement>();
     const visibleMenuItemsRef = React.useRef<HTMLElement[]>([]);
 
-    const handleKeyDown = (e: KeyboardEvent) => {
+    const handleKeyDown = (e: React.KeyboardEvent) => {
         switch (e.key) {
             case 'Tab':
                 e.preventDefault();
@@ -119,15 +119,10 @@ const Menu: React.FC<MenuProps> = ({ children }) => {
             firstItem.focus();
             firstItem.setAttribute('tabindex', '0');
         }
-
-        // Handle the `keydown` event
-        container.addEventListener('keydown', handleKeyDown);
-
-        return () => container.removeEventListener('keydown', handleKeyDown);
     }, []);
 
     return (
-        <div ref={containerRef} aria-orientation="vertical" className="rpv-core__menu" role="menu" tabIndex={-1}>
+        <div ref={containerRef} aria-orientation="vertical" className="rpv-core__menu" role="menu" tabIndex={-1} onKeyDown={handleKeyDown}>
             {children}
         </div>
     );

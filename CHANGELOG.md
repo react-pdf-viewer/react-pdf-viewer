@@ -12,7 +12,9 @@
     * Closed when pressing the `Escape` key
 - Improve the accessibility of the `Menu` component
     * Activate the next menu item when pressing the `ArrowDown` key
-    * Activate the previous menu item when pressing the `ArrowUp` key    
+    * Activate the previous menu item when pressing the `ArrowUp` key
+- Improve the accessibility of the list of thumbnails
+    * Focus on the previous or next thumbnail using the `ArrowUp` and `ArrowDown` key
 - When the shortcuts are enabled, the associal buttons will have the `aria-keyshortcuts` attributes
 
 ## v2.6.1

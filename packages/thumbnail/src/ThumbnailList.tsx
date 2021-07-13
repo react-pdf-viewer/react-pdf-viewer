@@ -7,7 +7,7 @@
  */
 
 import * as React from 'react';
-import { classNames, PdfJs } from '@react-pdf-viewer/core';
+import { classNames, PdfJs, useIsomorphicLayoutEffect } from '@react-pdf-viewer/core';
 
 import scrollToBeVisible from './scrollToBeVisible';
 import ThumbnailContainer from './ThumbnailContainer';
@@ -31,6 +31,7 @@ const ThumbnailList: React.FC<ThumbnailListProps> = ({
 }) => {
     const { numPages } = doc;
     const containerRef = React.useRef<HTMLDivElement | null>(null);
+    const thumbnailsRef = React.useRef<HTMLElement[]>([]);
 
     // Scroll to the thumbnail that represents the current page
     const scrollToThumbnail = (target: HTMLElement) => {
@@ -40,17 +41,84 @@ const ThumbnailList: React.FC<ThumbnailListProps> = ({
         }
     };
 
+    const handleKeyDown = (e: React.KeyboardEvent) => {
+        switch (e.key) {
+            case 'ArrowDown':
+                activateNextItem();           
+                break;
+
+            case 'ArrowUp':
+                activatePreviousItem();
+                break;
+
+            default:
+                break;
+        }
+    };
+
+    const activateNextItem = () => {
+        const container = containerRef.current;
+        if (!container) {
+            return;
+        }
+
+        const items = thumbnailsRef.current;
+        const currentIndex = items.findIndex((item) => item.getAttribute('tabindex') === '0');
+        const nextItem = currentIndex + 1;
+
+        if (nextItem < items.length) {
+            if (currentIndex >= 0) {
+                items[currentIndex].setAttribute('tabindex', '-1');
+            }
+
+            items[nextItem].setAttribute('tabindex', '0');
+            items[nextItem].focus();
+        }
+    };
+
+    const activatePreviousItem = () => {
+        const container = containerRef.current;
+        if (!container) {
+            return;
+        }
+
+        const items = thumbnailsRef.current;
+        const currentIndex = items.findIndex((item) => item.getAttribute('tabindex') === '0');
+        const prevItem = currentIndex - 1;
+
+        if (prevItem >= 0) {
+            if (currentIndex >= 0) {
+                items[currentIndex].setAttribute('tabindex', '-1');
+            }
+
+            items[prevItem].setAttribute('tabindex', '0');
+            items[prevItem].focus();
+        }
+    };
+
+    useIsomorphicLayoutEffect(() => {
+        const container = containerRef.current;
+        if (!container) {
+            return;
+        }
+
+        // Cache thumbnail elements
+        thumbnailsRef.current = Array.from(container.querySelectorAll('.rpv-thumbnail__item'));
+    }, []);
+
     return (
-        <div ref={containerRef} className="rpv-thumbnail__list">
+        <div ref={containerRef} className="rpv-thumbnail__list" onKeyDown={handleKeyDown}>
             {Array(numPages)
                 .fill(0)
                 .map((_, index) => (
-                    <div
+                    <div                        
                         className={classNames({
                             'rpv-thumbnail__item': true,
                             'rpv-thumbnail__item--selected': currentPage === index,
-                        })}
+                        })}                        
                         key={`thumbnail-${index}`}
+                        role="button"
+                        tabIndex={currentPage === index ? 0 : -1}
                         onClick={() => onJumpToPage(index)}
                     >
                         <ThumbnailContainer
