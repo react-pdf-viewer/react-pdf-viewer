@@ -32,6 +32,7 @@ const ThumbnailList: React.FC<ThumbnailListProps> = ({
     const { numPages } = doc;
     const containerRef = React.useRef<HTMLDivElement | null>(null);
     const thumbnailsRef = React.useRef<HTMLElement[]>([]);
+    const [currentFocused, setCurrentFocused] = React.useState(currentPage);
 
     // Scroll to the thumbnail that represents the current page
     const scrollToThumbnail = (target: HTMLElement) => {
@@ -44,11 +45,15 @@ const ThumbnailList: React.FC<ThumbnailListProps> = ({
     const handleKeyDown = (e: React.KeyboardEvent) => {
         switch (e.key) {
             case 'ArrowDown':
-                activateNextItem();           
+                activateNextItem();
                 break;
 
             case 'ArrowUp':
                 activatePreviousItem();
+                break;
+
+            case 'Enter':
+                jumpToFocusedPage();
                 break;
 
             default:
@@ -63,16 +68,13 @@ const ThumbnailList: React.FC<ThumbnailListProps> = ({
         }
 
         const items = thumbnailsRef.current;
-        const currentIndex = items.findIndex((item) => item.getAttribute('tabindex') === '0');
-        const nextItem = currentIndex + 1;
+        const nextItem = currentFocused + 1;
 
         if (nextItem < items.length) {
-            if (currentIndex >= 0) {
-                items[currentIndex].setAttribute('tabindex', '-1');
+            if (currentFocused >= 0) {
+                items[currentFocused].setAttribute('tabindex', '-1');
             }
-
-            items[nextItem].setAttribute('tabindex', '0');
-            items[nextItem].focus();
+            setCurrentFocused(nextItem);
         }
     };
 
@@ -83,16 +85,19 @@ const ThumbnailList: React.FC<ThumbnailListProps> = ({
         }
 
         const items = thumbnailsRef.current;
-        const currentIndex = items.findIndex((item) => item.getAttribute('tabindex') === '0');
-        const prevItem = currentIndex - 1;
+        const prevItem = currentFocused - 1;
 
         if (prevItem >= 0) {
-            if (currentIndex >= 0) {
-                items[currentIndex].setAttribute('tabindex', '-1');
+            if (currentFocused >= 0) {
+                items[currentFocused].setAttribute('tabindex', '-1');
             }
+            setCurrentFocused(prevItem);
+        }
+    };
 
-            items[prevItem].setAttribute('tabindex', '0');
-            items[prevItem].focus();
+    const jumpToFocusedPage = () => {
+        if (currentFocused >= 0 && currentFocused < numPages) {
+            onJumpToPage(currentFocused);
         }
     };
 
@@ -106,16 +111,27 @@ const ThumbnailList: React.FC<ThumbnailListProps> = ({
         thumbnailsRef.current = Array.from(container.querySelectorAll('.rpv-thumbnail__item'));
     }, []);
 
+    React.useEffect(() => {
+        const thumbnails = thumbnailsRef.current;
+        if (thumbnails.length === 0 || currentFocused < 0 || currentFocused > thumbnails.length) {
+            return;
+        }
+
+        const thumbnailEle = thumbnails[currentFocused];
+        thumbnailEle.setAttribute('tabindex', '0');
+        thumbnailEle.focus();
+    }, [currentFocused]);
+
     return (
         <div ref={containerRef} className="rpv-thumbnail__list" onKeyDown={handleKeyDown}>
             {Array(numPages)
                 .fill(0)
                 .map((_, index) => (
-                    <div                        
+                    <div
                         className={classNames({
                             'rpv-thumbnail__item': true,
                             'rpv-thumbnail__item--selected': currentPage === index,
-                        })}                        
+                        })}
                         key={`thumbnail-${index}`}
                         role="button"
                         tabIndex={currentPage === index ? 0 : -1}

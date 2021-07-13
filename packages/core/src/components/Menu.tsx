@@ -122,7 +122,14 @@ const Menu: React.FC<MenuProps> = ({ children }) => {
     }, []);
 
     return (
-        <div ref={containerRef} aria-orientation="vertical" className="rpv-core__menu" role="menu" tabIndex={-1} onKeyDown={handleKeyDown}>
+        <div
+            ref={containerRef}
+            aria-orientation="vertical"
+            className="rpv-core__menu"
+            role="menu"
+            tabIndex={-1}
+            onKeyDown={handleKeyDown}
+        >
             {children}
         </div>
     );
