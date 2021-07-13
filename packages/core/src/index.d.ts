@@ -647,6 +647,8 @@ export function useIsomorphicLayoutEffect(effect: React.EffectCallback, deps?: R
 // Utils
 // -----
 
+export function classNames(classes: { [clazz: string]: boolean }): string;
+
 export interface JumpToDestination {
     bottomOffset: number;
     pageIndex: number;

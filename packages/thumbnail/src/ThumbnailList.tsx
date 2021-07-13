@@ -7,9 +7,8 @@
  */
 
 import * as React from 'react';
-import { PdfJs } from '@react-pdf-viewer/core';
+import { classNames, PdfJs } from '@react-pdf-viewer/core';
 
-import classNames from './classNames';
 import scrollToBeVisible from './scrollToBeVisible';
 import ThumbnailContainer from './ThumbnailContainer';
 

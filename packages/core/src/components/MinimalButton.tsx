@@ -29,6 +29,7 @@ const MinimalButton: React.FC<MinimalButtonProps> = ({
     <button
         aria-label={ariaLabel}
         {...(ariaKeyShortcuts && { 'aria-keyshortcuts': ariaKeyShortcuts })}
+        {...(isDisabled && { 'aria-disabled': true })}
         className={classNames({
             'rpv-core__minimal-button': true,
             'rpv-core__minimal-button--disabled': isDisabled,
