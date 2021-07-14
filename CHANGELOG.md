@@ -17,6 +17,9 @@
     * Focus on the previous or next thumbnail using the `ArrowUp` and `ArrowDown` key
 - When the shortcuts are enabled, the associal buttons will have the `aria-keyshortcuts` attributes
 
+**Bug fix**
+- Custom search control isn't rendered
+
 ## v2.6.1
 
 **Improvements**

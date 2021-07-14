@@ -10,7 +10,6 @@ import * as React from 'react';
 import { Store } from '@react-pdf-viewer/core';
 
 import StoreProps from './types/StoreProps';
-import useDocument from './useDocument';
 import useSearch from './useSearch';
 
 interface RenderSearchProps {
@@ -34,20 +33,12 @@ export interface SearchProps {
     children: RenderSearch;
 }
 
-const Inner: React.FC<{
+const Search: React.FC<{
     children: RenderSearch;
     store: Store<StoreProps>;
 }> = ({ children, store }) => {
     const result = useSearch(store);
     return children({ ...result });
-};
-
-const Search: React.FC<{
-    children: RenderSearch;
-    store: Store<StoreProps>;
-}> = ({ children, store }) => {
-    const { currentDoc } = useDocument(store);
-    return currentDoc ? <Inner store={store}>{children}</Inner> : <></>;
 };
 
 export default Search;
