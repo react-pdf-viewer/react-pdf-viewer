@@ -9,6 +9,11 @@
 import * as React from 'react';
 import { Plugin } from '@react-pdf-viewer/core';
 
+export interface Match {
+    matchIndex: number;
+    pageIndex: number;
+}
+
 export interface RenderShowSearchPopoverProps {
     onClick: () => void;
 }
@@ -24,7 +29,7 @@ export interface RenderSearchProps {
     matchCase: boolean;
     numberOfMatches: number;
     wholeWords: boolean;
-    search(): void;
+    search(): Promise<Match[]>;
     setKeyword(keyword: string): void;
 }
 
@@ -41,7 +46,7 @@ export interface SearchPlugin extends Plugin {
     ShowSearchPopover: (props: ShowSearchPopoverProps) => React.ReactElement;
     ShowSearchPopoverButton(): React.ReactElement;
     clearHighlights(): void;
-    highlight(keyword: SingleKeyword | SingleKeyword[]): void;
+    highlight(keyword: SingleKeyword | SingleKeyword[]): Promise<Match[]>;
     jumpToNextMatch(): void;
     jumpToPreviousMatch(): void;
 }

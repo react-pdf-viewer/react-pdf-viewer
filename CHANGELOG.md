@@ -3,6 +3,7 @@
 ## v2.6.2 [WIP]
 
 **Improvements**
+_Accessibility_
 - Add _WAI-ARIA_ attributes to `Icon`, `Menu`, `MenuDivider`, `MenuItem`, `MinimalButton`, `Modal`, `Popover`, `TextBox`, `Tooltip` components
 - Add ARIA attributes to pages and thumbnails
 - Add ARIA attributes to internal links of the document
@@ -16,6 +17,9 @@
 - Improve the accessibility of the list of thumbnails
     * Focus on the previous or next thumbnail using the `ArrowUp` and `ArrowDown` key
 - When the shortcuts are enabled, the associal buttons will have the `aria-keyshortcuts` attributes
+
+_Improve the search plugin_
+- The `highlight` function now returns a `Promise` that holds the matches
 
 **Bug fix**
 - Custom search control isn't rendered

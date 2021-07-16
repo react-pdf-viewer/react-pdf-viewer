@@ -27,9 +27,9 @@ interface UseSearch {
     matchCase: boolean;
     numberOfMatches: number;
     wholeWords: boolean;
-    search(): void;
+    search(): Promise<Match[]>;
     setKeywords(keyword: SingleKeyword[]): void;
-    searchFor(keyword: SingleKeyword[], matchCase?: boolean, wholeWords?: boolean): void;
+    searchFor(keyword: SingleKeyword[], matchCase?: boolean, wholeWords?: boolean): Promise<Match[]>;
     // Compatible with the single keyword search
     keyword: string;
     setKeyword(keyword: string): void;
@@ -144,37 +144,45 @@ const useSearch = (store: Store<StoreProps>): UseSearch => {
         return keyword.keyword;
     };
 
-    const searchFor = (keywordParam: SingleKeyword[], matchCaseParam?: boolean, wholeWordsParam?: boolean): void => {
+    const searchFor = (
+        keywordParam: SingleKeyword[],
+        matchCaseParam?: boolean,
+        wholeWordsParam?: boolean
+    ): Promise<Match[]> => {
         const keywords = keywordParam.map((k) => normalizeSingleKeyword(k, matchCaseParam, wholeWordsParam));
         store.update('keyword', keywords);
 
         setCurrentMatch(0);
         setFound([]);
 
-        const promise =
-            textContents.current.length === 0
-                ? getTextContents().then((response) => {
-                      textContents.current = response;
-                      return Promise.resolve(response);
-                  })
-                : Promise.resolve(textContents.current);
+        return new Promise((resolve, _) => {
+            const getTextPromise =
+                textContents.current.length === 0
+                    ? getTextContents().then((response) => {
+                          textContents.current = response;
+                          return Promise.resolve(response);
+                      })
+                    : Promise.resolve(textContents.current);
 
-        promise.then((response) => {
-            const arr: Match[] = [];
-            response.forEach((item, pageIndex) => {
-                const numMatches = keywords.map((k) => (item.match(k) || []).length).reduce((a, b) => a + b, 0);
-                for (let matchIndex = 0; matchIndex < numMatches; matchIndex++) {
-                    arr.push({
-                        matchIndex,
-                        pageIndex,
-                    });
+            getTextPromise.then((response) => {
+                const arr: Match[] = [];
+                response.forEach((item, pageIndex) => {
+                    const numMatches = keywords.map((k) => (item.match(k) || []).length).reduce((a, b) => a + b, 0);
+                    for (let matchIndex = 0; matchIndex < numMatches; matchIndex++) {
+                        arr.push({
+                            matchIndex,
+                            pageIndex,
+                        });
+                    }
+                });
+                setFound(arr);
+                if (arr.length > 0) {
+                    setCurrentMatch(1);
+                    jumpToMatch(arr[0]);
                 }
+
+                resolve(arr);
             });
-            setFound(arr);
-            if (arr.length > 0) {
-                setCurrentMatch(1);
-                jumpToMatch(arr[0]);
-            }
         });
     };
 
