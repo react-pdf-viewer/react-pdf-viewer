@@ -11,7 +11,6 @@ import { Store } from '@react-pdf-viewer/core';
 
 import { EMPTY_KEYWORD_REGEXP } from './constants';
 import { normalizeSingleKeyword } from './normalizeKeyword';
-import GetMatchSample from './types/GetMatchSample';
 import Match from './types/Match';
 import SingleKeyword from './types/SingleKeyword';
 import StoreProps from './types/StoreProps';
@@ -37,7 +36,7 @@ interface UseSearch {
     setKeyword(keyword: string): void;
 }
 
-const useSearch = (store: Store<StoreProps>, getMatchSample?: (props: GetMatchSample) => string): UseSearch => {
+const useSearch = (store: Store<StoreProps>): UseSearch => {
     const { currentDoc } = useDocument(store);
     const [keywords, setKeywords] = React.useState<SingleKeyword[]>([]);
     const [found, setFound] = React.useState<Match[]>([]);
@@ -45,9 +44,6 @@ const useSearch = (store: Store<StoreProps>, getMatchSample?: (props: GetMatchSa
     const [matchCase, setMatchCase] = React.useState(false);
     const textContents = React.useRef<string[]>([]);
     const [wholeWords, setWholeWords] = React.useState(false);
-    const matchSample = React.useCallback(getMatchSample || ((props: GetMatchSample) => props.keyword.source), [
-        getMatchSample,
-    ]);
 
     const changeMatchCase = (isChecked: boolean): void => {
         setMatchCase(isChecked);
@@ -172,21 +168,18 @@ const useSearch = (store: Store<StoreProps>, getMatchSample?: (props: GetMatchSa
 
             getTextPromise.then((response) => {
                 const arr: Match[] = [];
-                response.forEach((item, pageIndex) => {
+                response.forEach((pageText, pageIndex) => {
                     keywords.forEach((keyword) => {
                         let matchIndex = 0;
                         let matches: RegExpExecArray | null;
-                        while ((matches = keyword.exec(item)) !== null) {
+                        while ((matches = keyword.exec(pageText)) !== null) {
                             arr.push({
                                 keyword,
                                 matchIndex,
-                                matchSample: matchSample({
-                                    keyword,
-                                    pageText: item,
-                                    startIndex: matches.index,
-                                    endIndex: keyword.lastIndex,
-                                }),
                                 pageIndex,
+                                pageText,
+                                startIndex: matches.index,
+                                endIndex: keyword.lastIndex,
                             });
                             matchIndex++;
                         }

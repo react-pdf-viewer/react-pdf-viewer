@@ -14,10 +14,11 @@ export interface Match {
     // The index of match in the page
     // Each page may have multiple matches
     matchIndex: number;
-    // A sample of matching text that is extracted from the page's content
-    // It's useful when we want to display the sample text in the front-end
-    matchSample: string;
     pageIndex: number;
+    pageText: string;
+    // Position of matching
+    startIndex: number;
+    endIndex: number;
 }
 
 export interface RenderShowSearchPopoverProps {
@@ -72,17 +73,7 @@ export interface OnHighlightKeyword {
     keyword: RegExp;
 }
 
-// Extract a sample of matching text from the page's content
-export interface GetMatchSample {
-    keyword: RegExp;
-    pageText: string;
-    // Position of matching
-    startIndex: number;
-    endIndex: number;
-}
-
 export interface SearchPluginProps {
-    getMatchSample?: (props: GetMatchSample) => string;
     // The keyword that will be highlighted in all pages
     keyword?: SingleKeyword | SingleKeyword[];
     onHighlightKeyword?(props: OnHighlightKeyword): void;
