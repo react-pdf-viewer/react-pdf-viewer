@@ -67,29 +67,17 @@ const useSearch = (store: Store<StoreProps>, getMatchSample?: (props: GetMatchSa
         if (keywords.length === 0 || found.length === 0) {
             return null;
         }
-        setCurrentMatch(index);
-        return jumpToGivenMatch(found[index - 1]);
+
+        // Make sure that the `index` is in the range of 0 and `found.length - 1`
+        const normalizedIndex = Math.max(0, Math.min(found.length - 1, index));
+
+        setCurrentMatch(normalizedIndex);
+        return jumpToGivenMatch(found[normalizedIndex]);
     };
 
-    const jumpToPreviousMatch = (): Match | null => {
-        if (keywords.length === 0 || found.length === 0) {
-            return null;
-        }
-        const prev = currentMatch - 1;
-        const updated = prev > 0 ? prev : found.length;
-        setCurrentMatch(updated);
-        return jumpToGivenMatch(found[updated - 1]);
-    };
+    const jumpToPreviousMatch = (): Match | null => jumpToMatch(currentMatch - 1);
 
-    const jumpToNextMatch = (): Match | null => {
-        if (keywords.length === 0 || found.length === 0) {
-            return null;
-        }
-        const next = currentMatch + 1;
-        const updated = next <= found.length ? next : 1;
-        setCurrentMatch(updated);
-        return jumpToGivenMatch(found[updated - 1]);
-    };
+    const jumpToNextMatch = (): Match | null => jumpToMatch(currentMatch + 1);
 
     const clearKeyword = (): void => {
         if (keywords.length === 0) {
@@ -206,7 +194,7 @@ const useSearch = (store: Store<StoreProps>, getMatchSample?: (props: GetMatchSa
                 });
                 setFound(arr);
                 if (arr.length > 0) {
-                    setCurrentMatch(1);
+                    setCurrentMatch(0);
                     jumpToGivenMatch(arr[0]);
                 }
 
