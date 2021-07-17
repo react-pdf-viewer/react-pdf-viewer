@@ -22,7 +22,6 @@ import { normalizeSingleKeyword } from './normalizeKeyword';
 import Search, { SearchProps } from './Search';
 import ShowSearchPopover, { ShowSearchPopoverProps } from './ShowSearchPopover';
 import ShowSearchPopoverButton from './ShowSearchPopoverButton';
-import GetMatchSample from './types/GetMatchSample';
 import Match from './types/Match';
 import SingleKeyword from './types/SingleKeyword';
 import StoreProps from './types/StoreProps';
@@ -42,8 +41,6 @@ interface SearchPlugin extends Plugin {
 }
 
 export interface SearchPluginProps {
-    // Extract a sample of matching text from the page's content
-    getMatchSample?: (props: GetMatchSample) => string;
     // The keyword that will be highlighted in all pages
     keyword?: SingleKeyword | SingleKeyword[];
     onHighlightKeyword?(props: OnHighlightKeyword): void;
@@ -62,10 +59,8 @@ const searchPlugin = (props?: SearchPluginProps): SearchPlugin => {
             }),
         []
     );
-    const { clearKeyword, jumpToMatch, jumpToNextMatch, jumpToPreviousMatch, searchFor, setKeywords } = useSearch(
-        store,
-        props?.getMatchSample
-    );
+    const { clearKeyword, jumpToMatch, jumpToNextMatch, jumpToPreviousMatch, searchFor, setKeywords } =
+        useSearch(store);
 
     const SearchDecorator = (props: SearchProps) => <Search {...props} store={store} />;
 
