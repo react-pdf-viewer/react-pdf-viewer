@@ -22,6 +22,8 @@ import { normalizeSingleKeyword } from './normalizeKeyword';
 import Search, { SearchProps } from './Search';
 import ShowSearchPopover, { ShowSearchPopoverProps } from './ShowSearchPopover';
 import ShowSearchPopoverButton from './ShowSearchPopoverButton';
+import GetMatchSample from './types/GetMatchSample';
+import Match from './types/Match';
 import SingleKeyword from './types/SingleKeyword';
 import StoreProps from './types/StoreProps';
 import OnHighlightKeyword from './types/OnHighlightKeyword';
@@ -33,12 +35,15 @@ interface SearchPlugin extends Plugin {
     ShowSearchPopover(props: ShowSearchPopoverProps): React.ReactElement;
     ShowSearchPopoverButton(): React.ReactElement;
     clearHighlights(): void;
-    highlight(keyword: SingleKeyword | SingleKeyword[]): void;
-    jumpToNextMatch(): void;
-    jumpToPreviousMatch(): void;
+    highlight(keyword: SingleKeyword | SingleKeyword[]): Promise<Match[]>;
+    jumpToMatch(index: number): Match | null;
+    jumpToNextMatch(): Match | null;
+    jumpToPreviousMatch(): Match | null;
 }
 
 export interface SearchPluginProps {
+    // Extract a sample of matching text from the page's content
+    getMatchSample?: (props: GetMatchSample) => string;
     // The keyword that will be highlighted in all pages
     keyword?: SingleKeyword | SingleKeyword[];
     onHighlightKeyword?(props: OnHighlightKeyword): void;
@@ -57,7 +62,10 @@ const searchPlugin = (props?: SearchPluginProps): SearchPlugin => {
             }),
         []
     );
-    const { clearKeyword, jumpToNextMatch, jumpToPreviousMatch, searchFor, setKeywords } = useSearch(store);
+    const { clearKeyword, jumpToMatch, jumpToNextMatch, jumpToPreviousMatch, searchFor, setKeywords } = useSearch(
+        store,
+        props?.getMatchSample
+    );
 
     const SearchDecorator = (props: SearchProps) => <Search {...props} store={store} />;
 
@@ -104,7 +112,7 @@ const searchPlugin = (props?: SearchPluginProps): SearchPlugin => {
             store.update('keyword', keyword);
         },
         renderViewer,
-        // eslint-disable-next-line  @typescript-eslint/no-unused-vars
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         uninstall: (props: PluginFunctions) => {
             const renderStatus = store.get('renderStatus');
             if (renderStatus) {
@@ -130,8 +138,9 @@ const searchPlugin = (props?: SearchPluginProps): SearchPlugin => {
         highlight: (keyword: SingleKeyword | SingleKeyword[]) => {
             const keywords = Array.isArray(keyword) ? keyword : [keyword];
             setKeywords(keywords);
-            searchFor(keywords);
+            return searchFor(keywords);
         },
+        jumpToMatch,
         jumpToNextMatch,
         jumpToPreviousMatch,
     };

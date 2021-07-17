@@ -9,6 +9,7 @@
 import * as React from 'react';
 import { Store } from '@react-pdf-viewer/core';
 
+import Match from './types/Match';
 import StoreProps from './types/StoreProps';
 import useSearch from './useSearch';
 
@@ -17,13 +18,14 @@ interface RenderSearchProps {
     changeMatchCase(matchCase: boolean): void;
     changeWholeWords(wholeWords: boolean): void;
     currentMatch: number;
-    jumpToNextMatch(): void;
-    jumpToPreviousMatch(): void;
+    jumpToMatch(matchIndex: number, pageIndex: number): Match | null;
+    jumpToNextMatch(): Match | null;
+    jumpToPreviousMatch(): Match | null;
     keyword: string;
     matchCase: boolean;
     numberOfMatches: number;
     wholeWords: boolean;
-    search(): void;
+    search(): Promise<Match[]>;
     setKeyword(keyword: string): void;
 }
 

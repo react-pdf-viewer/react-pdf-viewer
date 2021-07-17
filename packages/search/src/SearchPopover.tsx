@@ -19,7 +19,6 @@ interface SearchPopoverProps {
     onToggle(): void;
 }
 
-// `new RegExp('')` will treat the source as `(?:)` which is not an empty string
 const PORTAL_OFFSET = { left: 0, top: 8 };
 
 const SearchPopover: React.FC<SearchPopoverProps> = ({ store, onToggle }) => {

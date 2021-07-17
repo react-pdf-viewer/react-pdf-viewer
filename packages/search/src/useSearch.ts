@@ -11,6 +11,7 @@ import { Store } from '@react-pdf-viewer/core';
 
 import { EMPTY_KEYWORD_REGEXP } from './constants';
 import { normalizeSingleKeyword } from './normalizeKeyword';
+import GetMatchSample from './types/GetMatchSample';
 import Match from './types/Match';
 import SingleKeyword from './types/SingleKeyword';
 import StoreProps from './types/StoreProps';
@@ -21,21 +22,22 @@ interface UseSearch {
     changeMatchCase(matchCase: boolean): void;
     changeWholeWords(wholeWords: boolean): void;
     currentMatch: number;
-    jumpToNextMatch(): void;
-    jumpToPreviousMatch(): void;
+    jumpToMatch(index: number): Match | null;
+    jumpToNextMatch(): Match | null;
+    jumpToPreviousMatch(): Match | null;
     keywords: SingleKeyword[];
     matchCase: boolean;
     numberOfMatches: number;
     wholeWords: boolean;
-    search(): void;
+    search(): Promise<Match[]>;
     setKeywords(keyword: SingleKeyword[]): void;
-    searchFor(keyword: SingleKeyword[], matchCase?: boolean, wholeWords?: boolean): void;
+    searchFor(keyword: SingleKeyword[], matchCase?: boolean, wholeWords?: boolean): Promise<Match[]>;
     // Compatible with the single keyword search
     keyword: string;
     setKeyword(keyword: string): void;
 }
 
-const useSearch = (store: Store<StoreProps>): UseSearch => {
+const useSearch = (store: Store<StoreProps>, getMatchSample?: (props: GetMatchSample) => string): UseSearch => {
     const { currentDoc } = useDocument(store);
     const [keywords, setKeywords] = React.useState<SingleKeyword[]>([]);
     const [found, setFound] = React.useState<Match[]>([]);
@@ -43,6 +45,9 @@ const useSearch = (store: Store<StoreProps>): UseSearch => {
     const [matchCase, setMatchCase] = React.useState(false);
     const textContents = React.useRef<string[]>([]);
     const [wholeWords, setWholeWords] = React.useState(false);
+    const matchSample = React.useCallback(getMatchSample || ((props: GetMatchSample) => props.keyword.source), [
+        getMatchSample,
+    ]);
 
     const changeMatchCase = (isChecked: boolean): void => {
         setMatchCase(isChecked);
@@ -58,24 +63,32 @@ const useSearch = (store: Store<StoreProps>): UseSearch => {
         }
     };
 
-    const jumpToPreviousMatch = (): void => {
+    const jumpToMatch = (index: number): Match | null => {
         if (keywords.length === 0 || found.length === 0) {
-            return;
+            return null;
+        }
+        setCurrentMatch(index);
+        return jumpToGivenMatch(found[index - 1]);
+    };
+
+    const jumpToPreviousMatch = (): Match | null => {
+        if (keywords.length === 0 || found.length === 0) {
+            return null;
         }
         const prev = currentMatch - 1;
         const updated = prev > 0 ? prev : found.length;
         setCurrentMatch(updated);
-        jumpToMatch(found[updated - 1]);
+        return jumpToGivenMatch(found[updated - 1]);
     };
 
-    const jumpToNextMatch = (): void => {
+    const jumpToNextMatch = (): Match | null => {
         if (keywords.length === 0 || found.length === 0) {
-            return;
+            return null;
         }
         const next = currentMatch + 1;
         const updated = next <= found.length ? next : 1;
         setCurrentMatch(updated);
-        jumpToMatch(found[updated - 1]);
+        return jumpToGivenMatch(found[updated - 1]);
     };
 
     const clearKeyword = (): void => {
@@ -126,12 +139,16 @@ const useSearch = (store: Store<StoreProps>): UseSearch => {
         });
     };
 
-    const jumpToMatch = (match: Match) => {
+    const jumpToGivenMatch = (match: Match): Match => {
         const jumpToPage = store.get('jumpToPage');
         if (jumpToPage) {
             jumpToPage(match.pageIndex);
         }
-        store.update('match', match);
+        store.update('matchPosition', {
+            matchIndex: match.matchIndex,
+            pageIndex: match.pageIndex,
+        });
+        return match;
     };
 
     const getKeywordSource = (keyword: SingleKeyword): string => {
@@ -144,37 +161,57 @@ const useSearch = (store: Store<StoreProps>): UseSearch => {
         return keyword.keyword;
     };
 
-    const searchFor = (keywordParam: SingleKeyword[], matchCaseParam?: boolean, wholeWordsParam?: boolean): void => {
+    const searchFor = (
+        keywordParam: SingleKeyword[],
+        matchCaseParam?: boolean,
+        wholeWordsParam?: boolean
+    ): Promise<Match[]> => {
         const keywords = keywordParam.map((k) => normalizeSingleKeyword(k, matchCaseParam, wholeWordsParam));
         store.update('keyword', keywords);
 
         setCurrentMatch(0);
         setFound([]);
 
-        const promise =
-            textContents.current.length === 0
-                ? getTextContents().then((response) => {
-                      textContents.current = response;
-                      return Promise.resolve(response);
-                  })
-                : Promise.resolve(textContents.current);
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        return new Promise((resolve, _) => {
+            const getTextPromise =
+                textContents.current.length === 0
+                    ? getTextContents().then((response) => {
+                          textContents.current = response;
+                          return Promise.resolve(response);
+                      })
+                    : Promise.resolve(textContents.current);
 
-        promise.then((response) => {
-            const arr: Match[] = [];
-            response.forEach((item, pageIndex) => {
-                const numMatches = keywords.map((k) => (item.match(k) || []).length).reduce((a, b) => a + b, 0);
-                for (let matchIndex = 0; matchIndex < numMatches; matchIndex++) {
-                    arr.push({
-                        matchIndex,
-                        pageIndex,
+            getTextPromise.then((response) => {
+                const arr: Match[] = [];
+                response.forEach((item, pageIndex) => {
+                    keywords.forEach((keyword) => {
+                        let matchIndex = 0;
+                        let matches: RegExpExecArray | null;
+                        while ((matches = keyword.exec(item)) !== null) {
+                            arr.push({
+                                keyword,
+                                matchIndex,
+                                matchSample: matchSample({
+                                    keyword,
+                                    pageText: item,
+                                    startIndex: matches.index,
+                                    endIndex: keyword.lastIndex,
+                                }),
+                                pageIndex,
+                            });
+                            matchIndex++;
+                        }
                     });
+                });
+                setFound(arr);
+                if (arr.length > 0) {
+                    setCurrentMatch(1);
+                    jumpToGivenMatch(arr[0]);
                 }
+
+                resolve(arr);
             });
-            setFound(arr);
-            if (arr.length > 0) {
-                setCurrentMatch(1);
-                jumpToMatch(arr[0]);
-            }
         });
     };
 
@@ -188,6 +225,7 @@ const useSearch = (store: Store<StoreProps>): UseSearch => {
         changeMatchCase,
         changeWholeWords,
         currentMatch,
+        jumpToMatch,
         jumpToNextMatch,
         jumpToPreviousMatch,
         keywords,
