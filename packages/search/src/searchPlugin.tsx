@@ -22,7 +22,8 @@ import { normalizeSingleKeyword } from './normalizeKeyword';
 import Search, { SearchProps } from './Search';
 import ShowSearchPopover, { ShowSearchPopoverProps } from './ShowSearchPopover';
 import ShowSearchPopoverButton from './ShowSearchPopoverButton';
-import Match from './types/Match';
+import GetMatchSample from './types/GetMatchSample';
+import Result from './types/Result';
 import SingleKeyword from './types/SingleKeyword';
 import StoreProps from './types/StoreProps';
 import OnHighlightKeyword from './types/OnHighlightKeyword';
@@ -34,12 +35,14 @@ interface SearchPlugin extends Plugin {
     ShowSearchPopover(props: ShowSearchPopoverProps): React.ReactElement;
     ShowSearchPopoverButton(): React.ReactElement;
     clearHighlights(): void;
-    highlight(keyword: SingleKeyword | SingleKeyword[]): Promise<Match[]>;
+    highlight(keyword: SingleKeyword | SingleKeyword[]): Promise<Result[]>;
     jumpToNextMatch(): void;
     jumpToPreviousMatch(): void;
 }
 
 export interface SearchPluginProps {
+    // Extract a sample of matching text from the page's content
+    getMatchSample?: (props: GetMatchSample) => string;
     // The keyword that will be highlighted in all pages
     keyword?: SingleKeyword | SingleKeyword[];
     onHighlightKeyword?(props: OnHighlightKeyword): void;
@@ -58,7 +61,10 @@ const searchPlugin = (props?: SearchPluginProps): SearchPlugin => {
             }),
         []
     );
-    const { clearKeyword, jumpToNextMatch, jumpToPreviousMatch, searchFor, setKeywords } = useSearch(store);
+    const { clearKeyword, jumpToNextMatch, jumpToPreviousMatch, searchFor, setKeywords } = useSearch(
+        store,
+        props?.getMatchSample
+    );
 
     const SearchDecorator = (props: SearchProps) => <Search {...props} store={store} />;
 

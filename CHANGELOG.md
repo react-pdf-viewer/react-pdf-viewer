@@ -19,7 +19,7 @@ _Accessibility_
 - When the shortcuts are enabled, the associal buttons will have the `aria-keyshortcuts` attributes
 
 _Improve the search plugin_
-- The `highlight` function now returns a `Promise` that holds the matches
+- The `highlight` function now returns a `Promise` that holds the results. Each result also contains the matching text
 
 **Bug fix**
 - Custom search control isn't rendered

@@ -9,8 +9,14 @@
 import * as React from 'react';
 import { Plugin } from '@react-pdf-viewer/core';
 
-export interface Match {
+export interface Result {
+    keyword: RegExp;
+    // The index of match in the page
+    // Each page may have multiple matches
     matchIndex: number;
+    // A sample of matching text that is extracted from the page's content
+    // It's useful when we want to display the sample text in the front-end
+    matchSample: string;
     pageIndex: number;
 }
 
@@ -29,7 +35,7 @@ export interface RenderSearchProps {
     matchCase: boolean;
     numberOfMatches: number;
     wholeWords: boolean;
-    search(): Promise<Match[]>;
+    search(): Promise<Result[]>;
     setKeyword(keyword: string): void;
 }
 
@@ -46,7 +52,7 @@ export interface SearchPlugin extends Plugin {
     ShowSearchPopover: (props: ShowSearchPopoverProps) => React.ReactElement;
     ShowSearchPopoverButton(): React.ReactElement;
     clearHighlights(): void;
-    highlight(keyword: SingleKeyword | SingleKeyword[]): Promise<Match[]>;
+    highlight(keyword: SingleKeyword | SingleKeyword[]): Promise<Result[]>;
     jumpToNextMatch(): void;
     jumpToPreviousMatch(): void;
 }
@@ -64,7 +70,17 @@ export interface OnHighlightKeyword {
     keyword: RegExp;
 }
 
+// Extract a sample of matching text from the page's content
+export interface GetMatchSample {
+    keyword: RegExp;
+    pageText: string;
+    // Position of matching
+    startIndex: number;
+    endIndex: number;
+}
+
 export interface SearchPluginProps {
+    getMatchSample?: (props: GetMatchSample) => string;
     // The keyword that will be highlighted in all pages
     keyword?: SingleKeyword | SingleKeyword[];
     onHighlightKeyword?(props: OnHighlightKeyword): void;

@@ -11,7 +11,9 @@ import { Store } from '@react-pdf-viewer/core';
 
 import { EMPTY_KEYWORD_REGEXP } from './constants';
 import { normalizeSingleKeyword } from './normalizeKeyword';
+import GetMatchSample from './types/GetMatchSample';
 import Match from './types/Match';
+import Result from './types/Result';
 import SingleKeyword from './types/SingleKeyword';
 import StoreProps from './types/StoreProps';
 import useDocument from './useDocument';
@@ -27,22 +29,25 @@ interface UseSearch {
     matchCase: boolean;
     numberOfMatches: number;
     wholeWords: boolean;
-    search(): Promise<Match[]>;
+    search(): Promise<Result[]>;
     setKeywords(keyword: SingleKeyword[]): void;
-    searchFor(keyword: SingleKeyword[], matchCase?: boolean, wholeWords?: boolean): Promise<Match[]>;
+    searchFor(keyword: SingleKeyword[], matchCase?: boolean, wholeWords?: boolean): Promise<Result[]>;
     // Compatible with the single keyword search
     keyword: string;
     setKeyword(keyword: string): void;
 }
 
-const useSearch = (store: Store<StoreProps>): UseSearch => {
+const useSearch = (store: Store<StoreProps>, getMatchSample?: (props: GetMatchSample) => string): UseSearch => {
     const { currentDoc } = useDocument(store);
     const [keywords, setKeywords] = React.useState<SingleKeyword[]>([]);
-    const [found, setFound] = React.useState<Match[]>([]);
+    const [found, setFound] = React.useState<Result[]>([]);
     const [currentMatch, setCurrentMatch] = React.useState(0);
     const [matchCase, setMatchCase] = React.useState(false);
     const textContents = React.useRef<string[]>([]);
     const [wholeWords, setWholeWords] = React.useState(false);
+    const matchSample = React.useCallback(getMatchSample || ((props: GetMatchSample) => props.keyword.source), [
+        getMatchSample,
+    ]);
 
     const changeMatchCase = (isChecked: boolean): void => {
         setMatchCase(isChecked);
@@ -148,7 +153,7 @@ const useSearch = (store: Store<StoreProps>): UseSearch => {
         keywordParam: SingleKeyword[],
         matchCaseParam?: boolean,
         wholeWordsParam?: boolean
-    ): Promise<Match[]> => {
+    ): Promise<Result[]> => {
         const keywords = keywordParam.map((k) => normalizeSingleKeyword(k, matchCaseParam, wholeWordsParam));
         store.update('keyword', keywords);
 
@@ -165,20 +170,34 @@ const useSearch = (store: Store<StoreProps>): UseSearch => {
                     : Promise.resolve(textContents.current);
 
             getTextPromise.then((response) => {
-                const arr: Match[] = [];
+                const arr: Result[] = [];
                 response.forEach((item, pageIndex) => {
-                    const numMatches = keywords.map((k) => (item.match(k) || []).length).reduce((a, b) => a + b, 0);
-                    for (let matchIndex = 0; matchIndex < numMatches; matchIndex++) {
-                        arr.push({
-                            matchIndex,
-                            pageIndex,
-                        });
-                    }
+                    keywords.forEach((keyword) => {
+                        let matchIndex = -1;
+                        let matches: RegExpExecArray | null;
+                        while ((matches = keyword.exec(item)) !== null) {
+                            matchIndex++;
+                            arr.push({
+                                keyword,
+                                matchIndex,
+                                matchSample: matchSample({
+                                    keyword,
+                                    pageText: item,
+                                    startIndex: matches.index,
+                                    endIndex: keyword.lastIndex,
+                                }),
+                                pageIndex,
+                            });
+                        }
+                    });
                 });
                 setFound(arr);
                 if (arr.length > 0) {
                     setCurrentMatch(1);
-                    jumpToMatch(arr[0]);
+                    jumpToMatch({
+                        matchIndex: arr[0].matchIndex,
+                        pageIndex: arr[0].pageIndex,
+                    });
                 }
 
                 resolve(arr);
