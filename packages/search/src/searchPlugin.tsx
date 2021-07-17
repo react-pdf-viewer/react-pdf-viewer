@@ -23,7 +23,7 @@ import Search, { SearchProps } from './Search';
 import ShowSearchPopover, { ShowSearchPopoverProps } from './ShowSearchPopover';
 import ShowSearchPopoverButton from './ShowSearchPopoverButton';
 import GetMatchSample from './types/GetMatchSample';
-import Result from './types/Result';
+import Match from './types/Match';
 import SingleKeyword from './types/SingleKeyword';
 import StoreProps from './types/StoreProps';
 import OnHighlightKeyword from './types/OnHighlightKeyword';
@@ -35,9 +35,10 @@ interface SearchPlugin extends Plugin {
     ShowSearchPopover(props: ShowSearchPopoverProps): React.ReactElement;
     ShowSearchPopoverButton(): React.ReactElement;
     clearHighlights(): void;
-    highlight(keyword: SingleKeyword | SingleKeyword[]): Promise<Result[]>;
-    jumpToNextMatch(): void;
-    jumpToPreviousMatch(): void;
+    highlight(keyword: SingleKeyword | SingleKeyword[]): Promise<Match[]>;
+    jumpToMatch(index: number): Match | null;
+    jumpToNextMatch(): Match | null;
+    jumpToPreviousMatch(): Match | null;
 }
 
 export interface SearchPluginProps {
@@ -61,7 +62,7 @@ const searchPlugin = (props?: SearchPluginProps): SearchPlugin => {
             }),
         []
     );
-    const { clearKeyword, jumpToNextMatch, jumpToPreviousMatch, searchFor, setKeywords } = useSearch(
+    const { clearKeyword, jumpToMatch, jumpToNextMatch, jumpToPreviousMatch, searchFor, setKeywords } = useSearch(
         store,
         props?.getMatchSample
     );
@@ -111,7 +112,7 @@ const searchPlugin = (props?: SearchPluginProps): SearchPlugin => {
             store.update('keyword', keyword);
         },
         renderViewer,
-        // eslint-disable-next-line  @typescript-eslint/no-unused-vars
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         uninstall: (props: PluginFunctions) => {
             const renderStatus = store.get('renderStatus');
             if (renderStatus) {
@@ -139,6 +140,7 @@ const searchPlugin = (props?: SearchPluginProps): SearchPlugin => {
             setKeywords(keywords);
             return searchFor(keywords);
         },
+        jumpToMatch,
         jumpToNextMatch,
         jumpToPreviousMatch,
     };

@@ -11,7 +11,7 @@ import { PluginOnTextLayerRender, LayerRenderStatus, Store } from '@react-pdf-vi
 
 import calculateOffset from './calculateOffset';
 import { EMPTY_KEYWORD_REGEXP } from './constants';
-import Match from './types/Match';
+import MatchPosition from './types/MatchPosition';
 import OnHighlightKeyword from './types/OnHighlightKeyword';
 import StoreProps from './types/StoreProps';
 import unwrap from './unwrap';
@@ -39,7 +39,7 @@ const Tracker: React.FC<{
     store: Store<StoreProps>;
     onHighlightKeyword?(props: OnHighlightKeyword): void;
 }> = ({ pageIndex, store, onHighlightKeyword }) => {
-    const [match, setMatch] = React.useState<Match>({
+    const [matchPosition, setMatchPosition] = React.useState<MatchPosition>({
         matchIndex: -1,
         pageIndex: -1,
     });
@@ -157,9 +157,7 @@ const Tracker: React.FC<{
         }
     };
 
-    const handleMatchChanged = (currentMatch: Match) => {
-        setMatch(currentMatch);
-    };
+    const handleMatchPositionChanged = (currentPosition: MatchPosition) => setMatchPosition(currentPosition);
 
     const handleRenderStatusChanged = (status: Map<number, PluginOnTextLayerRender>) => {
         if (!status.has(pageIndex)) {
@@ -227,7 +225,7 @@ const Tracker: React.FC<{
         unhighlightAll(containerEle);
         highlightAll(containerEle);
         scrollToMatch();
-    }, [keywordRegexp, match, renderStatus.status, characterIndexesRef.current]);
+    }, [keywordRegexp, matchPosition, renderStatus.status, characterIndexesRef.current]);
 
     React.useEffect(() => {
         if (isEmptyKeyword() && renderStatus.ele && renderStatus.status === LayerRenderStatus.DidRender) {
@@ -236,14 +234,18 @@ const Tracker: React.FC<{
     }, [keywordRegexp, renderStatus.status]);
 
     const scrollToMatch = (): void => {
-        if (match.pageIndex !== pageIndex || !renderStatus.ele || renderStatus.status !== LayerRenderStatus.DidRender) {
+        if (
+            matchPosition.pageIndex !== pageIndex ||
+            !renderStatus.ele ||
+            renderStatus.status !== LayerRenderStatus.DidRender
+        ) {
             return;
         }
 
         const container = renderStatus.ele;
         const spans = container.querySelectorAll('.rpv-search__highlight');
-        if (match.matchIndex < spans.length) {
-            const span = spans[match.matchIndex] as HTMLElement;
+        if (matchPosition.matchIndex < spans.length) {
+            const span = spans[matchPosition.matchIndex] as HTMLElement;
             const { left, top } = calculateOffset(span, container);
             const jump = store.get('jumpToDestination');
             if (jump) {
@@ -264,12 +266,12 @@ const Tracker: React.FC<{
 
     React.useEffect(() => {
         store.subscribe('keyword', handleKeywordChanged);
-        store.subscribe('match', handleMatchChanged);
+        store.subscribe('matchPosition', handleMatchPositionChanged);
         store.subscribe('renderStatus', handleRenderStatusChanged);
 
         return () => {
             store.unsubscribe('keyword', handleKeywordChanged);
-            store.unsubscribe('match', handleMatchChanged);
+            store.unsubscribe('matchPosition', handleMatchPositionChanged);
             store.unsubscribe('renderStatus', handleRenderStatusChanged);
         };
     }, []);

@@ -9,7 +9,7 @@
 import * as React from 'react';
 import { Plugin } from '@react-pdf-viewer/core';
 
-export interface Result {
+export interface Match {
     keyword: RegExp;
     // The index of match in the page
     // Each page may have multiple matches
@@ -29,13 +29,14 @@ export interface RenderSearchProps {
     changeMatchCase(matchCase: boolean): void;
     changeWholeWords(wholeWords: boolean): void;
     currentMatch: number;
-    jumpToNextMatch(): void;
-    jumpToPreviousMatch(): void;
+    jumpToMatch(index: number): Match | null;
+    jumpToNextMatch(): Match | null;
+    jumpToPreviousMatch(): Match | null;
     keyword: string;
     matchCase: boolean;
     numberOfMatches: number;
     wholeWords: boolean;
-    search(): Promise<Result[]>;
+    search(): Promise<Match[]>;
     setKeyword(keyword: string): void;
 }
 
@@ -52,9 +53,10 @@ export interface SearchPlugin extends Plugin {
     ShowSearchPopover: (props: ShowSearchPopoverProps) => React.ReactElement;
     ShowSearchPopoverButton(): React.ReactElement;
     clearHighlights(): void;
-    highlight(keyword: SingleKeyword | SingleKeyword[]): Promise<Result[]>;
-    jumpToNextMatch(): void;
-    jumpToPreviousMatch(): void;
+    highlight(keyword: SingleKeyword | SingleKeyword[]): Promise<Match[]>;
+    jumpToMatch(index: number): Match | null;
+    jumpToNextMatch(): Match | null;
+    jumpToPreviousMatch(): Match | null;
 }
 
 export interface FlagKeyword {

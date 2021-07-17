@@ -4,7 +4,7 @@
 
 **Improvements**
 _Accessibility_
-- Add _WAI-ARIA_ attributes to `Icon`, `Menu`, `MenuDivider`, `MenuItem`, `MinimalButton`, `Modal`, `Popover`, `TextBox`, `Tooltip` components
+- Add ARIA attributes to `Icon`, `Menu`, `MenuDivider`, `MenuItem`, `MinimalButton`, `Modal`, `Popover`, `TextBox`, `Tooltip` components
 - Add ARIA attributes to pages and thumbnails
 - Add ARIA attributes to internal links of the document
 - Improve the accessibility of the `Tooltip` component
@@ -19,6 +19,7 @@ _Accessibility_
 - When the shortcuts are enabled, the associal buttons will have the `aria-keyshortcuts` attributes
 
 _Improve the search plugin_
+- Add new `jumpToMatch` function which jumps to the given match
 - The `highlight` function now returns a `Promise` that holds the results. Each result also contains the matching text
 
 **Bug fix**

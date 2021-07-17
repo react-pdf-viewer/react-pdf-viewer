@@ -8,12 +8,12 @@
 
 import { PdfJs, PluginOnTextLayerRender, SpecialZoomLevel } from '@react-pdf-viewer/core';
 
-import Match from './Match';
+import MatchPosition from './MatchPosition';
 
 export default interface StoreProps {
     doc?: PdfJs.PdfDocument;
     keyword?: RegExp[];
-    match?: Match;
+    matchPosition?: MatchPosition;
     renderStatus: Map<number, PluginOnTextLayerRender>;
     jumpToDestination?(
         pageIndex: number,
