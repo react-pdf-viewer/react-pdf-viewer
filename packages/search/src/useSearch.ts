@@ -37,7 +37,7 @@ interface UseSearch {
 }
 
 const useSearch = (store: Store<StoreProps>): UseSearch => {
-    const { currentDoc } = useDocument(store);
+    const currentDocRef = useDocument(store);
     const [keywords, setKeywords] = React.useState<SingleKeyword[]>([]);
     const [found, setFound] = React.useState<Match[]>([]);
     const [currentMatch, setCurrentMatch] = React.useState(0);
@@ -97,6 +97,7 @@ const useSearch = (store: Store<StoreProps>): UseSearch => {
     // -------
 
     const getTextContents = (): Promise<string[]> => {
+        const currentDoc = currentDocRef.current;
         if (!currentDoc) {
             return Promise.resolve([]);
         }
@@ -199,7 +200,7 @@ const useSearch = (store: Store<StoreProps>): UseSearch => {
     React.useEffect(() => {
         // Reset the text contents when the document changes
         textContents.current = [];
-    }, [currentDoc]);
+    }, [currentDocRef.current]);
 
     return {
         clearKeyword,
