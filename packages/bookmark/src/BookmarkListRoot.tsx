@@ -7,7 +7,7 @@
  */
 
 import * as React from 'react';
-import { PdfJs, SpecialZoomLevel, Store } from '@react-pdf-viewer/core';
+import { getDestination, PdfJs, SpecialZoomLevel, Store } from '@react-pdf-viewer/core';
 
 import BookmarkList from './BookmarkList';
 import StoreProps from './StoreProps';
@@ -44,6 +44,13 @@ const BookmarkListRoot: React.FC<BookmarkListRootProps> = ({ bookmarks, doc, sto
         bookmarks.forEach((bookmark) => updateLinkAnnotation(bookmark, links));
     };
 
+    const jumpToDest = (dest: PdfJs.OutlineDestinationType): void => {
+        getDestination(doc, dest).then((target) => {
+            const { pageIndex, bottomOffset, scaleTo } = target;
+            onJumpToDest(pageIndex + 1, bottomOffset, scaleTo);
+        });
+    };
+
     React.useEffect(() => {
         store.subscribe('linkAnnotations', handleLinkAnnotationsChanged);
 
@@ -72,7 +79,7 @@ const BookmarkListRoot: React.FC<BookmarkListRootProps> = ({ bookmarks, doc, sto
 
     return (
         <div ref={containerRef}>
-            <BookmarkList bookmarks={bookmarks} depth={0} doc={doc} isRoot={true} store={store} onJumpToDest={onJumpToDest} />
+            <BookmarkList bookmarks={bookmarks} depth={0} doc={doc} isRoot={true} store={store} onJumpToDest={jumpToDest} />
         </div>
     );
 };

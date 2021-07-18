@@ -7,7 +7,7 @@
  */
 
 import * as React from 'react';
-import { PdfJs, SpecialZoomLevel, Store } from '@react-pdf-viewer/core';
+import { PdfJs, Store } from '@react-pdf-viewer/core';
 
 import BookmarkList from './BookmarkList';
 import DownArrowIcon from './DownArrowIcon';
@@ -19,11 +19,10 @@ interface BookmarkItemProps {
     depth: number;
     doc: PdfJs.PdfDocument;
     store: Store<StoreProps>;
-    onClick(dest: PdfJs.OutlineDestinationType): void;
-    onJumpToDest(pageIndex: number, bottomOffset: number, scaleTo: number | SpecialZoomLevel): void;
+    onJumpToDest(dest: PdfJs.OutlineDestinationType): void;
 }
 
-const BookmarkItem: React.FC<BookmarkItemProps> = ({ bookmark, depth, doc, store, onClick, onJumpToDest }) => {
+const BookmarkItem: React.FC<BookmarkItemProps> = ({ bookmark, depth, doc, store, onJumpToDest }) => {
     const [expanded, setExpanded] = React.useState(true);
     
     const hasSubItems = bookmark.items && bookmark.items.length > 0;
@@ -32,12 +31,12 @@ const BookmarkItem: React.FC<BookmarkItemProps> = ({ bookmark, depth, doc, store
 
     const clickBookmak = (): void => {
         if (hasSubItems && bookmark.dest) {
-            onClick(bookmark.dest);
+            onJumpToDest(bookmark.dest);
         }
     };
     const clickItem = (): void => {
         if (!hasSubItems && bookmark.dest) {
-            onClick(bookmark.dest);
+            onJumpToDest(bookmark.dest);
         }
     };
 
