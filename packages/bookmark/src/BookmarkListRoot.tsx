@@ -20,6 +20,9 @@ interface BookmarkListRootProps {
 }
 
 const BookmarkListRoot: React.FC<BookmarkListRootProps> = ({ bookmarks, doc, store, onJumpToDest }) => {
+    const containerRef = React.useRef<HTMLDivElement>();
+    const bookmarkElementsRef = React.useRef<HTMLLIElement[]>([]);
+
     const updateLinkAnnotation = (bookmark: PdfJs.Outline, links: Record<string, HTMLElement>): void => {
         const dest = bookmark.dest;
         if (!dest || typeof dest !== 'string' || !links[dest]) {
@@ -49,7 +52,29 @@ const BookmarkListRoot: React.FC<BookmarkListRootProps> = ({ bookmarks, doc, sto
         };
     }, []);
 
-    return <BookmarkList bookmarks={bookmarks} depth={0} isRoot={true} doc={doc} store={store} onJumpToDest={onJumpToDest} />;
+    React.useEffect(() => {
+        const container = containerRef.current;
+        if (!container) {
+            return;
+        }
+
+        const bookmarkElements: HTMLLIElement[] = [].slice.call(container.querySelectorAll('li[role="treeitem"]'));
+
+        // Cache all bookmark elements
+        bookmarkElementsRef.current = bookmarkElements;
+
+        // Focus on the first bookmark item
+        if (bookmarkElements.length > 0) {
+            bookmarkElements[0].focus();
+            bookmarkElements[0].setAttribute('tabindex', '0');
+        }
+    }, []);
+
+    return (
+        <div ref={containerRef}>
+            <BookmarkList bookmarks={bookmarks} depth={0} doc={doc} isRoot={true} store={store} onJumpToDest={onJumpToDest} />
+        </div>
+    );
 };
 
 export default BookmarkListRoot;

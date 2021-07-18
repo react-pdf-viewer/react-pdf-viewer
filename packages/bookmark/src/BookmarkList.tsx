@@ -30,7 +30,7 @@ const BookmarkList: React.FC<BookmarkListProps> = ({ bookmarks, depth = 0, doc, 
     };
 
     return (
-        <ul className="rpv-bookmark__list" role={isRoot ? 'tree' : 'group'} tabIndex={isRoot ? 0 : -1}>
+        <ul className="rpv-bookmark__list" role={isRoot ? 'tree' : 'group'} tabIndex={-1}>
         {
             bookmarks.map((bookmark, index) => (         
                 <BookmarkItem

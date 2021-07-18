@@ -6,14 +6,23 @@
  * @copyright 2019-2021 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
+.rpv-bookmark__wrapper {
+    &:focus {
+        outline: 0;
+    }
+    &:focus > .rpv-bookmark__item {
+        background-color: var(--rpv-bookmark__item--hover-background-color);
+    }
+}
+
 .rpv-bookmark__item {
     align-items: center;
     color: var(--rpv-bookmark__item-color);
     cursor: pointer;
     display: flex;
-    padding-bottom: 0.25rem;
-    padding-right: 0.25rem;
-    padding-top: 0.25rem;
+    padding-bottom: .25rem;
+    padding-right: .25rem;
+    padding-top: .25rem;
 
     &:hover {
         background-color: var(--rpv-bookmark__item--hover-background-color);
@@ -24,7 +33,7 @@
     // Center the icon
     align-items: center;
     display: flex;
-    margin-right: 0.25rem;
+    margin-right: .25rem;
 }
 
 .rpv-bookmark__title {
