@@ -14,7 +14,7 @@ import StoreProps from './StoreProps';
 
 interface BookmarkListProps {
     bookmarks: PdfJs.Outline[];
-    depth: number;    
+    depth: number;
     doc: PdfJs.PdfDocument;
     isRoot: boolean;
     store: Store<StoreProps>;
@@ -23,8 +23,7 @@ interface BookmarkListProps {
 
 const BookmarkList: React.FC<BookmarkListProps> = ({ bookmarks, depth = 0, doc, isRoot, store, onJumpToDest }) => (
     <ul className="rpv-bookmark__list" role={isRoot ? 'tree' : 'group'} tabIndex={-1}>
-    {
-        bookmarks.map((bookmark, index) => (
+        {bookmarks.map((bookmark, index) => (
             <BookmarkItem
                 bookmark={bookmark}
                 depth={depth}
@@ -33,8 +32,7 @@ const BookmarkList: React.FC<BookmarkListProps> = ({ bookmarks, depth = 0, doc, 
                 store={store}
                 onJumpToDest={onJumpToDest}
             />
-        ))
-    }
+        ))}
     </ul>
 );
 

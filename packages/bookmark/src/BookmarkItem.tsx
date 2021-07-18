@@ -24,10 +24,10 @@ interface BookmarkItemProps {
 
 const BookmarkItem: React.FC<BookmarkItemProps> = ({ bookmark, depth, doc, store, onJumpToDest }) => {
     const [expanded, setExpanded] = React.useState(true);
-    
+
     const hasSubItems = bookmark.items && bookmark.items.length > 0;
 
-    const toggleSubItems = (): void => setExpanded(expanded => !expanded);
+    const toggleSubItems = (): void => setExpanded((expanded) => !expanded);
 
     const clickBookmak = (): void => {
         if (hasSubItems && bookmark.dest) {
@@ -41,7 +41,13 @@ const BookmarkItem: React.FC<BookmarkItemProps> = ({ bookmark, depth, doc, store
     };
 
     return (
-        <li aria-expanded={expanded ? 'true' : 'false'} aria-label={bookmark.title} className="rpv-bookmark__wrapper" role="treeitem" tabIndex={-1}>
+        <li
+            aria-expanded={expanded ? 'true' : 'false'}
+            aria-label={bookmark.title}
+            className="rpv-bookmark__wrapper"
+            role="treeitem"
+            tabIndex={-1}
+        >
             <div
                 className="rpv-bookmark__item"
                 style={{
@@ -50,10 +56,7 @@ const BookmarkItem: React.FC<BookmarkItemProps> = ({ bookmark, depth, doc, store
                 onClick={clickItem}
             >
                 {hasSubItems && (
-                    <span
-                        className='rpv-bookmark__toggle'
-                        onClick={toggleSubItems}
-                    >
+                    <span className="rpv-bookmark__toggle" onClick={toggleSubItems}>
                         {expanded ? <DownArrowIcon /> : <RightArrowIcon />}
                     </span>
                 )}

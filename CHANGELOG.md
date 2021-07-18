@@ -12,11 +12,11 @@ _Accessibility_
     * Closed when being blured
     * Closed when pressing the `Escape` key
 - Improve the accessibility of the `Menu` component
-    * Activate the next menu item when pressing the `ArrowDown` key
-    * Activate the previous menu item when pressing the `ArrowUp` key
+    * Navigate between menu items using the `ArrowUp` and `ArrowDown` keys
 - Improve the accessibility of the list of thumbnails
-    * Focus on the previous or next thumbnail using the `ArrowUp` and `ArrowDown` key
+    * Navigate between thumbnails using the `ArrowUp` and `ArrowDown` keys
 - Improve the accessibility of the list of bookmarks
+    * Navigate between bookmarks using the `ArrowUp` and `ArrowDown` keys
 - When the shortcuts are enabled, the associal buttons will have the `aria-keyshortcuts` attributes
 
 _Improve the search plugin_
