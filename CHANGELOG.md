@@ -16,7 +16,9 @@ _Accessibility_
 - Improve the accessibility of the list of thumbnails
     * Navigate between thumbnails using the `ArrowUp` and `ArrowDown` keys
 - Improve the accessibility of the list of bookmarks
-    * Navigate between bookmarks using the `ArrowUp` and `ArrowDown` keys
+    * Collapse the current node using the `ArrowLeft` key
+    * Expand the current node using the `ArrowRight` key    
+    * Navigate between bookmarks using the `ArrowUp` and `ArrowDown` keys    
 - When the shortcuts are enabled, the associal buttons will have the `aria-keyshortcuts` attributes
 
 _Improve the search plugin_

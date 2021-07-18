@@ -19,10 +19,17 @@ interface BookmarkListRootProps {
     onJumpToDest(pageIndex: number, bottomOffset: number, scaleTo: number | SpecialZoomLevel): void;
 }
 
+enum Direction {
+    Down,
+    Up,
+}
+enum Toggle {
+    Collapse,
+    Expand,
+}
+
 const BookmarkListRoot: React.FC<BookmarkListRootProps> = ({ bookmarks, doc, store, onJumpToDest }) => {
     const containerRef = React.useRef<HTMLDivElement>();
-    const bookmarkElementsRef = React.useRef<HTMLLIElement[]>([]);
-    const [currentFocused, setCurrentFocused] = React.useState(0);
 
     const updateLinkAnnotation = (bookmark: PdfJs.Outline, links: Record<string, HTMLElement>): void => {
         const dest = bookmark.dest;
@@ -52,14 +59,31 @@ const BookmarkListRoot: React.FC<BookmarkListRootProps> = ({ bookmarks, doc, sto
         });
     };
 
-    const handleKeyDown = (e: React.KeyboardEvent) => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+        const container = containerRef.current;
+        if (!container || !(e.target instanceof HTMLElement) || !container.contains(e.target)) {
+            return;
+        }
+
         switch (e.key) {
             case 'ArrowDown':
-                activateNextItem();
+                e.preventDefault();
+                move(Direction.Down);
+                break;
+
+            case 'ArrowLeft':
+                e.preventDefault();
+                toggle(Toggle.Collapse);
+                break;
+
+            case 'ArrowRight':
+                e.preventDefault();
+                toggle(Toggle.Expand);
                 break;
 
             case 'ArrowUp':
-                activatePreviousItem();
+                e.preventDefault;
+                move(Direction.Up);
                 break;
 
             default:
@@ -67,44 +91,51 @@ const BookmarkListRoot: React.FC<BookmarkListRootProps> = ({ bookmarks, doc, sto
         }
     };
 
-    const activateNextItem = () => {
+    const move = (direction: Direction) => {
         const container = containerRef.current;
-        if (!container) {
+        const bookmarkElements: Element[] = [].slice.call(container.getElementsByClassName('rpv-bookmark__item'));
+        if (bookmarkElements.length === 0) {
             return;
         }
 
-        const items = bookmarkElementsRef.current;
-        const nextItem = currentFocused + 1;
+        const increment = direction === Direction.Down ? 1 : -1;
 
-        if (nextItem < items.length) {
-            if (currentFocused >= 0) {
-                items[currentFocused].setAttribute('tabindex', '-1');
-            }
-            setCurrentFocused(nextItem);
-        }
+        const activeEle = document.activeElement;
+
+        const currentIndex = bookmarkElements.indexOf(activeEle);
+        const nextIndex = Math.min(bookmarkElements.length - 1, Math.max(0, currentIndex + increment));
+
+        const targetEle = bookmarkElements[nextIndex];
+
+        activeEle.setAttribute('tabindex', '-1');
+        targetEle.setAttribute('tabindex', '0');
+        (targetEle as HTMLElement).focus();
     };
 
-    const activatePreviousItem = () => {
+    const toggle = (toggle: Toggle) => {
         const container = containerRef.current;
-        if (!container) {
+        const bookmarkElements: Element[] = [].slice.call(container.getElementsByClassName('rpv-bookmark__item'));
+        if (bookmarkElements.length === 0) {
             return;
         }
 
-        const items = bookmarkElementsRef.current;
-        const prevItem = currentFocused - 1;
-
-        if (prevItem >= 0) {
-            if (currentFocused >= 0) {
-                items[currentFocused].setAttribute('tabindex', '-1');
+        const closestItem = document.activeElement.closest('.rpv-bookmark__item');
+        const expanedAttribute = toggle === Toggle.Collapse ? 'true' : 'false';
+        if (closestItem && closestItem.parentElement.getAttribute('aria-expanded') === expanedAttribute) {
+            // Toggle the current node
+            const toggleEle = closestItem.querySelector('.rpv-bookmark__toggle');
+            if (toggleEle) {
+                (toggleEle as HTMLElement).click();
             }
-            setCurrentFocused(prevItem);
         }
     };
 
     React.useEffect(() => {
+        document.addEventListener('keydown', handleKeyDown);
         store.subscribe('linkAnnotations', handleLinkAnnotationsChanged);
 
         return () => {
+            document.removeEventListener('keydown', handleKeyDown);
             store.unsubscribe('linkAnnotations', handleLinkAnnotationsChanged);
         };
     }, []);
@@ -115,10 +146,7 @@ const BookmarkListRoot: React.FC<BookmarkListRootProps> = ({ bookmarks, doc, sto
             return;
         }
 
-        const bookmarkElements: HTMLLIElement[] = [].slice.call(container.querySelectorAll('li[role="treeitem"]'));
-
-        // Cache all bookmark elements
-        bookmarkElementsRef.current = bookmarkElements;
+        const bookmarkElements: HTMLElement[] = [].slice.call(container.getElementsByClassName('rpv-bookmark__item'));
 
         // Focus on the first bookmark item
         if (bookmarkElements.length > 0) {
@@ -127,19 +155,8 @@ const BookmarkListRoot: React.FC<BookmarkListRootProps> = ({ bookmarks, doc, sto
         }
     }, []);
 
-    React.useEffect(() => {
-        const bookmarkElements = bookmarkElementsRef.current;
-        if (bookmarkElements.length === 0 || currentFocused < 0 || currentFocused > bookmarkElements.length) {
-            return;
-        }
-
-        const bookmarkEle = bookmarkElements[currentFocused];
-        bookmarkEle.setAttribute('tabindex', '0');
-        bookmarkEle.focus();
-    }, [currentFocused]);
-
     return (
-        <div ref={containerRef} onKeyDown={handleKeyDown}>
+        <div ref={containerRef}>
             <BookmarkList
                 bookmarks={bookmarks}
                 depth={0}

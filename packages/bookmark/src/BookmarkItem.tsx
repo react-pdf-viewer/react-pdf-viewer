@@ -11,8 +11,8 @@ import { PdfJs, Store } from '@react-pdf-viewer/core';
 
 import BookmarkList from './BookmarkList';
 import DownArrowIcon from './DownArrowIcon';
-import StoreProps from './StoreProps';
 import RightArrowIcon from './RightArrowIcon';
+import StoreProps from './StoreProps';
 
 interface BookmarkItemProps {
     bookmark: PdfJs.Outline;
@@ -41,13 +41,7 @@ const BookmarkItem: React.FC<BookmarkItemProps> = ({ bookmark, depth, doc, store
     };
 
     return (
-        <li
-            aria-expanded={expanded ? 'true' : 'false'}
-            aria-label={bookmark.title}
-            className="rpv-bookmark__wrapper"
-            role="treeitem"
-            tabIndex={-1}
-        >
+        <li aria-expanded={expanded ? 'true' : 'false'} aria-label={bookmark.title} role="treeitem" tabIndex={-1}>
             <div
                 className="rpv-bookmark__item"
                 style={{
@@ -75,17 +69,15 @@ const BookmarkItem: React.FC<BookmarkItemProps> = ({ bookmark, depth, doc, store
                     </div>
                 )}
             </div>
-            {hasSubItems && (
-                <div style={{ display: expanded ? 'block' : 'none' }}>
-                    <BookmarkList
-                        bookmarks={bookmark.items}
-                        depth={depth + 1}
-                        doc={doc}
-                        isRoot={false}
-                        store={store}
-                        onJumpToDest={onJumpToDest}
-                    />
-                </div>
+            {hasSubItems && expanded && (
+                <BookmarkList
+                    bookmarks={bookmark.items}
+                    depth={depth + 1}
+                    doc={doc}
+                    isRoot={false}
+                    store={store}
+                    onJumpToDest={onJumpToDest}
+                />
             )}
         </li>
     );
