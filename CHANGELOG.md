@@ -16,6 +16,7 @@ _Accessibility_
     * Activate the previous menu item when pressing the `ArrowUp` key
 - Improve the accessibility of the list of thumbnails
     * Focus on the previous or next thumbnail using the `ArrowUp` and `ArrowDown` key
+- Improve the accessibility of the list of bookmarks
 - When the shortcuts are enabled, the associal buttons will have the `aria-keyshortcuts` attributes
 
 _Improve the search plugin_

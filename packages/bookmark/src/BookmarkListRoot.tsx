@@ -49,7 +49,7 @@ const BookmarkListRoot: React.FC<BookmarkListRootProps> = ({ bookmarks, doc, sto
         };
     }, []);
 
-    return <BookmarkList bookmarks={bookmarks} depth={0} doc={doc} store={store} onJumpToDest={onJumpToDest} />;
+    return <BookmarkList bookmarks={bookmarks} depth={0} isRoot={true} doc={doc} store={store} onJumpToDest={onJumpToDest} />;
 };
 
 export default BookmarkListRoot;

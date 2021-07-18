@@ -10,6 +10,7 @@ import * as React from 'react';
 import { PdfJs, SpecialZoomLevel, Store } from '@react-pdf-viewer/core';
 
 import BookmarkList from './BookmarkList';
+import DownArrowIcon from './DownArrowIcon';
 import StoreProps from './StoreProps';
 import RightArrowIcon from './RightArrowIcon';
 
@@ -23,22 +24,11 @@ interface BookmarkItemProps {
 }
 
 const BookmarkItem: React.FC<BookmarkItemProps> = ({ bookmark, depth, doc, store, onClick, onJumpToDest }) => {
-    const toggleRef = React.useRef<HTMLSpanElement>();
-    const subItemRef = React.useRef<HTMLDivElement>();
-    const subItemsDisplayed = React.useRef(true);
-
+    const [expanded, setExpanded] = React.useState(true);
+    
     const hasSubItems = bookmark.items && bookmark.items.length > 0;
 
-    const toggleSubItems = (): void => {
-        subItemsDisplayed.current = !subItemsDisplayed.current;
-        const subItemsEle = subItemRef.current;
-        const toggleEle = toggleRef.current;
-        if (!subItemsEle || !toggleEle) {
-            return;
-        }
-        subItemsEle.style.display = subItemsDisplayed.current ? 'block' : 'none';
-        toggleEle.classList.toggle('rpv-bookmark__toggle--expanded');
-    };
+    const toggleSubItems = (): void => setExpanded(expanded => !expanded);
 
     const clickBookmak = (): void => {
         if (hasSubItems && bookmark.dest) {
@@ -52,17 +42,20 @@ const BookmarkItem: React.FC<BookmarkItemProps> = ({ bookmark, depth, doc, store
     };
 
     return (
-        <>
+        <li aria-expanded={expanded ? 'true' : 'false'} aria-label={bookmark.title} role="treeitem" tabIndex={-1}>
             <div
                 className="rpv-bookmark__item"
                 style={{
-                    paddingLeft: `${depth * 20 + 4}px`,
+                    paddingLeft: `${depth * 1.25}rem`,
                 }}
                 onClick={clickItem}
             >
                 {hasSubItems && (
-                    <span ref={toggleRef} className="rpv-bookmark__toggle" onClick={toggleSubItems}>
-                        <RightArrowIcon />
+                    <span
+                        className='rpv-bookmark__toggle'
+                        onClick={toggleSubItems}
+                    >
+                        {expanded ? <DownArrowIcon /> : <RightArrowIcon />}
                     </span>
                 )}
                 {bookmark.url ? (
@@ -81,17 +74,18 @@ const BookmarkItem: React.FC<BookmarkItemProps> = ({ bookmark, depth, doc, store
                 )}
             </div>
             {hasSubItems && (
-                <div ref={subItemRef}>
+                <div style={{ display: expanded ? 'block' : 'none' }}>
                     <BookmarkList
                         bookmarks={bookmark.items}
                         depth={depth + 1}
                         doc={doc}
+                        isRoot={false}
                         store={store}
                         onJumpToDest={onJumpToDest}
                     />
                 </div>
             )}
-        </>
+        </li>
     );
 };
 

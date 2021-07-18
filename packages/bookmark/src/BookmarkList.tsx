@@ -14,13 +14,14 @@ import StoreProps from './StoreProps';
 
 interface BookmarkListProps {
     bookmarks: PdfJs.Outline[];
-    depth: number;
+    depth: number;    
     doc: PdfJs.PdfDocument;
+    isRoot: boolean;
     store: Store<StoreProps>;
     onJumpToDest(pageIndex: number, bottomOffset: number, scaleTo: number | SpecialZoomLevel): void;
 }
 
-const BookmarkList: React.FC<BookmarkListProps> = ({ bookmarks, depth = 0, doc, store, onJumpToDest }) => {
+const BookmarkList: React.FC<BookmarkListProps> = ({ bookmarks, depth = 0, doc, isRoot, store, onJumpToDest }) => {
     const jumpToDest = (dest: PdfJs.OutlineDestinationType): void => {
         getDestination(doc, dest).then((target) => {
             const { pageIndex, bottomOffset, scaleTo } = target;
@@ -29,21 +30,20 @@ const BookmarkList: React.FC<BookmarkListProps> = ({ bookmarks, depth = 0, doc, 
     };
 
     return (
-        <ul className="rpv-bookmark__list">
-            {bookmarks.map((bookmark, index) => {
-                return (
-                    <li key={index}>
-                        <BookmarkItem
-                            bookmark={bookmark}
-                            depth={depth}
-                            doc={doc}
-                            store={store}
-                            onClick={jumpToDest}
-                            onJumpToDest={onJumpToDest}
-                        />
-                    </li>
-                );
-            })}
+        <ul className="rpv-bookmark__list" role={isRoot ? 'tree' : 'group'} tabIndex={isRoot ? 0 : -1}>
+        {
+            bookmarks.map((bookmark, index) => (         
+                <BookmarkItem
+                    bookmark={bookmark}
+                    depth={depth}                        
+                    doc={doc}
+                    key={index}
+                    store={store}
+                    onClick={jumpToDest}
+                    onJumpToDest={onJumpToDest}
+                />
+            ))
+        }
         </ul>
     );
 };
