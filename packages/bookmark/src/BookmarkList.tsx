@@ -7,7 +7,7 @@
  */
 
 import * as React from 'react';
-import { getDestination, PdfJs, SpecialZoomLevel, Store } from '@react-pdf-viewer/core';
+import { PdfJs, Store } from '@react-pdf-viewer/core';
 
 import BookmarkItem from './BookmarkItem';
 import StoreProps from './StoreProps';
@@ -16,36 +16,26 @@ interface BookmarkListProps {
     bookmarks: PdfJs.Outline[];
     depth: number;
     doc: PdfJs.PdfDocument;
+    isRoot: boolean;
     store: Store<StoreProps>;
-    onJumpToDest(pageIndex: number, bottomOffset: number, scaleTo: number | SpecialZoomLevel): void;
+    onJumpToDest(dest: PdfJs.OutlineDestinationType): void;
 }
 
-const BookmarkList: React.FC<BookmarkListProps> = ({ bookmarks, depth = 0, doc, store, onJumpToDest }) => {
-    const jumpToDest = (dest: PdfJs.OutlineDestinationType): void => {
-        getDestination(doc, dest).then((target) => {
-            const { pageIndex, bottomOffset, scaleTo } = target;
-            onJumpToDest(pageIndex + 1, bottomOffset, scaleTo);
-        });
-    };
-
-    return (
-        <ul className="rpv-bookmark__list">
-            {bookmarks.map((bookmark, index) => {
-                return (
-                    <li key={index}>
-                        <BookmarkItem
-                            bookmark={bookmark}
-                            depth={depth}
-                            doc={doc}
-                            store={store}
-                            onClick={jumpToDest}
-                            onJumpToDest={onJumpToDest}
-                        />
-                    </li>
-                );
-            })}
-        </ul>
-    );
-};
+const BookmarkList: React.FC<BookmarkListProps> = ({ bookmarks, depth = 0, doc, isRoot, store, onJumpToDest }) => (
+    <ul className="rpv-bookmark__list" role={isRoot ? 'tree' : 'group'} tabIndex={-1}>
+        {bookmarks.map((bookmark, index) => (
+            <BookmarkItem
+                bookmark={bookmark}
+                depth={depth}
+                doc={doc}
+                index={index}
+                key={index}
+                numberOfSiblings={bookmarks.length}
+                store={store}
+                onJumpToDest={onJumpToDest}
+            />
+        ))}
+    </ul>
+);
 
 export default BookmarkList;

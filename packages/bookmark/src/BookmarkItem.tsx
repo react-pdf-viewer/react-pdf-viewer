@@ -7,62 +7,69 @@
  */
 
 import * as React from 'react';
-import { PdfJs, SpecialZoomLevel, Store } from '@react-pdf-viewer/core';
+import { PdfJs, Store } from '@react-pdf-viewer/core';
 
 import BookmarkList from './BookmarkList';
-import StoreProps from './StoreProps';
+import DownArrowIcon from './DownArrowIcon';
 import RightArrowIcon from './RightArrowIcon';
+import StoreProps from './StoreProps';
 
 interface BookmarkItemProps {
     bookmark: PdfJs.Outline;
     depth: number;
     doc: PdfJs.PdfDocument;
+    index: number;
+    numberOfSiblings: number;
     store: Store<StoreProps>;
-    onClick(dest: PdfJs.OutlineDestinationType): void;
-    onJumpToDest(pageIndex: number, bottomOffset: number, scaleTo: number | SpecialZoomLevel): void;
+    onJumpToDest(dest: PdfJs.OutlineDestinationType): void;
 }
 
-const BookmarkItem: React.FC<BookmarkItemProps> = ({ bookmark, depth, doc, store, onClick, onJumpToDest }) => {
-    const toggleRef = React.useRef<HTMLSpanElement>();
-    const subItemRef = React.useRef<HTMLDivElement>();
-    const subItemsDisplayed = React.useRef(true);
+const BookmarkItem: React.FC<BookmarkItemProps> = ({
+    bookmark,
+    depth,
+    doc,
+    index,
+    numberOfSiblings,
+    store,
+    onJumpToDest,
+}) => {
+    const [expanded, setExpanded] = React.useState(true);
 
     const hasSubItems = bookmark.items && bookmark.items.length > 0;
 
-    const toggleSubItems = (): void => {
-        subItemsDisplayed.current = !subItemsDisplayed.current;
-        const subItemsEle = subItemRef.current;
-        const toggleEle = toggleRef.current;
-        if (!subItemsEle || !toggleEle) {
-            return;
-        }
-        subItemsEle.style.display = subItemsDisplayed.current ? 'block' : 'none';
-        toggleEle.classList.toggle('rpv-bookmark__toggle--expanded');
-    };
+    const toggleSubItems = (): void => setExpanded((expanded) => !expanded);
 
     const clickBookmak = (): void => {
         if (hasSubItems && bookmark.dest) {
-            onClick(bookmark.dest);
+            onJumpToDest(bookmark.dest);
         }
     };
     const clickItem = (): void => {
         if (!hasSubItems && bookmark.dest) {
-            onClick(bookmark.dest);
+            onJumpToDest(bookmark.dest);
         }
     };
 
     return (
-        <>
+        <li
+            aria-expanded={expanded ? 'true' : 'false'}
+            aria-label={bookmark.title}
+            aria-level={depth + 1}
+            aria-posinset={index + 1}
+            aria-setsize={numberOfSiblings}
+            role="treeitem"
+            tabIndex={-1}
+        >
             <div
                 className="rpv-bookmark__item"
                 style={{
-                    paddingLeft: `${depth * 20 + 4}px`,
+                    paddingLeft: `${depth * 1.25}rem`,
                 }}
                 onClick={clickItem}
             >
                 {hasSubItems && (
-                    <span ref={toggleRef} className="rpv-bookmark__toggle" onClick={toggleSubItems}>
-                        <RightArrowIcon />
+                    <span className="rpv-bookmark__toggle" onClick={toggleSubItems}>
+                        {expanded ? <DownArrowIcon /> : <RightArrowIcon />}
                     </span>
                 )}
                 {bookmark.url ? (
@@ -80,18 +87,17 @@ const BookmarkItem: React.FC<BookmarkItemProps> = ({ bookmark, depth, doc, store
                     </div>
                 )}
             </div>
-            {hasSubItems && (
-                <div ref={subItemRef}>
-                    <BookmarkList
-                        bookmarks={bookmark.items}
-                        depth={depth + 1}
-                        doc={doc}
-                        store={store}
-                        onJumpToDest={onJumpToDest}
-                    />
-                </div>
+            {hasSubItems && expanded && (
+                <BookmarkList
+                    bookmarks={bookmark.items}
+                    depth={depth + 1}
+                    doc={doc}
+                    isRoot={false}
+                    store={store}
+                    onJumpToDest={onJumpToDest}
+                />
             )}
-        </>
+        </li>
     );
 };
 

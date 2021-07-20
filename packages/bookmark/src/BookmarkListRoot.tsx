@@ -7,7 +7,7 @@
  */
 
 import * as React from 'react';
-import { PdfJs, SpecialZoomLevel, Store } from '@react-pdf-viewer/core';
+import { getDestination, PdfJs, SpecialZoomLevel, Store } from '@react-pdf-viewer/core';
 
 import BookmarkList from './BookmarkList';
 import StoreProps from './StoreProps';
@@ -19,7 +19,14 @@ interface BookmarkListRootProps {
     onJumpToDest(pageIndex: number, bottomOffset: number, scaleTo: number | SpecialZoomLevel): void;
 }
 
+enum Toggle {
+    Collapse,
+    Expand,
+}
+
 const BookmarkListRoot: React.FC<BookmarkListRootProps> = ({ bookmarks, doc, store, onJumpToDest }) => {
+    const containerRef = React.useRef<HTMLDivElement>();
+
     const updateLinkAnnotation = (bookmark: PdfJs.Outline, links: Record<string, HTMLElement>): void => {
         const dest = bookmark.dest;
         if (!dest || typeof dest !== 'string' || !links[dest]) {
@@ -41,15 +48,145 @@ const BookmarkListRoot: React.FC<BookmarkListRootProps> = ({ bookmarks, doc, sto
         bookmarks.forEach((bookmark) => updateLinkAnnotation(bookmark, links));
     };
 
+    const jumpToDest = (dest: PdfJs.OutlineDestinationType): void => {
+        getDestination(doc, dest).then((target) => {
+            const { pageIndex, bottomOffset, scaleTo } = target;
+            onJumpToDest(pageIndex + 1, bottomOffset, scaleTo);
+        });
+    };
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+        const container = containerRef.current;
+        if (!container || !(e.target instanceof HTMLElement) || !container.contains(e.target)) {
+            return;
+        }
+
+        switch (e.key) {
+            case 'ArrowDown':
+                e.preventDefault();
+                moveToItem((bookmarkElements, activeEle) => bookmarkElements.indexOf(activeEle) + 1);
+                break;
+
+            case 'ArrowLeft':
+                e.preventDefault();
+                toggle(Toggle.Collapse);
+                break;
+
+            case 'ArrowRight':
+                e.preventDefault();
+                toggle(Toggle.Expand);
+                break;
+
+            case 'ArrowUp':
+                e.preventDefault;
+                moveToItem((bookmarkElements, activeEle) => bookmarkElements.indexOf(activeEle) - 1);
+                break;
+
+            case 'End':
+                e.preventDefault();
+                moveToItem((bookmarkElements, _) => bookmarkElements.length - 1);
+                break;
+
+            case ' ':
+            case 'Enter':
+            case 'Space':
+                e.preventDefault();
+                clickBookmark();
+                break;
+
+            case 'Home':
+                e.preventDefault();
+                moveToItem((_, __) => 0);
+                break;
+
+            default:
+                break;
+        }
+    };
+
+    const clickBookmark = () => {
+        const closestItem = document.activeElement.closest('.rpv-bookmark__item');
+        const titleEle = closestItem.querySelector('.rpv-bookmark__title');
+        if (titleEle) {
+            (titleEle as HTMLElement).click();
+        }
+    };
+
+    const moveToItem = (getItemIndex: (bookmarkElements: Element[], activeElement: Element) => number) => {
+        const container = containerRef.current;
+        const bookmarkElements: Element[] = [].slice.call(container.getElementsByClassName('rpv-bookmark__item'));
+        if (bookmarkElements.length === 0) {
+            return;
+        }
+
+        const activeEle = document.activeElement;
+
+        const targetIndex = Math.min(
+            bookmarkElements.length - 1,
+            Math.max(0, getItemIndex(bookmarkElements, activeEle as HTMLElement))
+        );
+        const targetEle = bookmarkElements[targetIndex];
+
+        activeEle.setAttribute('tabindex', '-1');
+        targetEle.setAttribute('tabindex', '0');
+        (targetEle as HTMLElement).focus();
+    };
+
+    const toggle = (toggle: Toggle) => {
+        const container = containerRef.current;
+        const bookmarkElements: Element[] = [].slice.call(container.getElementsByClassName('rpv-bookmark__item'));
+        if (bookmarkElements.length === 0) {
+            return;
+        }
+
+        const closestItem = document.activeElement.closest('.rpv-bookmark__item');
+        const expanedAttribute = toggle === Toggle.Collapse ? 'true' : 'false';
+        if (closestItem && closestItem.parentElement.getAttribute('aria-expanded') === expanedAttribute) {
+            // Toggle the current node
+            const toggleEle = closestItem.querySelector('.rpv-bookmark__toggle');
+            if (toggleEle) {
+                (toggleEle as HTMLElement).click();
+            }
+        }
+    };
+
     React.useEffect(() => {
+        document.addEventListener('keydown', handleKeyDown);
         store.subscribe('linkAnnotations', handleLinkAnnotationsChanged);
 
         return () => {
+            document.removeEventListener('keydown', handleKeyDown);
             store.unsubscribe('linkAnnotations', handleLinkAnnotationsChanged);
         };
     }, []);
 
-    return <BookmarkList bookmarks={bookmarks} depth={0} doc={doc} store={store} onJumpToDest={onJumpToDest} />;
+    React.useEffect(() => {
+        const container = containerRef.current;
+        if (!container) {
+            return;
+        }
+
+        const bookmarkElements: HTMLElement[] = [].slice.call(container.getElementsByClassName('rpv-bookmark__item'));
+
+        // Focus on the first bookmark item
+        if (bookmarkElements.length > 0) {
+            bookmarkElements[0].focus();
+            bookmarkElements[0].setAttribute('tabindex', '0');
+        }
+    }, []);
+
+    return (
+        <div ref={containerRef}>
+            <BookmarkList
+                bookmarks={bookmarks}
+                depth={0}
+                doc={doc}
+                isRoot={true}
+                store={store}
+                onJumpToDest={jumpToDest}
+            />
+        </div>
+    );
 };
 
 export default BookmarkListRoot;
