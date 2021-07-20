@@ -18,11 +18,21 @@ interface BookmarkItemProps {
     bookmark: PdfJs.Outline;
     depth: number;
     doc: PdfJs.PdfDocument;
+    index: number;
+    numberOfSiblings: number;
     store: Store<StoreProps>;
     onJumpToDest(dest: PdfJs.OutlineDestinationType): void;
 }
 
-const BookmarkItem: React.FC<BookmarkItemProps> = ({ bookmark, depth, doc, store, onJumpToDest }) => {
+const BookmarkItem: React.FC<BookmarkItemProps> = ({
+    bookmark,
+    depth,
+    doc,
+    index,
+    numberOfSiblings,
+    store,
+    onJumpToDest,
+}) => {
     const [expanded, setExpanded] = React.useState(true);
 
     const hasSubItems = bookmark.items && bookmark.items.length > 0;
@@ -41,7 +51,15 @@ const BookmarkItem: React.FC<BookmarkItemProps> = ({ bookmark, depth, doc, store
     };
 
     return (
-        <li aria-expanded={expanded ? 'true' : 'false'} aria-label={bookmark.title} role="treeitem" tabIndex={-1}>
+        <li
+            aria-expanded={expanded ? 'true' : 'false'}
+            aria-label={bookmark.title}
+            aria-level={depth + 1}
+            aria-posinset={index + 1}
+            aria-setsize={numberOfSiblings}
+            role="treeitem"
+            tabIndex={-1}
+        >
             <div
                 className="rpv-bookmark__item"
                 style={{

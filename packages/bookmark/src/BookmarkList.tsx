@@ -28,7 +28,9 @@ const BookmarkList: React.FC<BookmarkListProps> = ({ bookmarks, depth = 0, doc, 
                 bookmark={bookmark}
                 depth={depth}
                 doc={doc}
+                index={index}
                 key={index}
+                numberOfSiblings={bookmarks.length}
                 store={store}
                 onJumpToDest={onJumpToDest}
             />
