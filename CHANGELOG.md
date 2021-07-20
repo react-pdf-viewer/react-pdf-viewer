@@ -21,7 +21,9 @@ _Accessibility_
     |               | `ArrowRight`  | Expand the current bookmark                   |
     |               | `ArrowUp`     | Focus on the previous bookmark                |
     |               | `End`         | Focus on the last bookmark                    |
+    |               | `Enter`       | Click the current focused bookmark            |
     |               | `Home`        | Focus on the first bookmark                   |
+    |               | `Space`       | Click the current focused bookmark            |
     | `Menu`        | `ArrowDown`   | Focus on the next menu item                   |
     |               | `ArrowUp`     | Focus on the previous menu item               |
     |               | `Enter`       | Click the current focused item                |

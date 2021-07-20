@@ -87,6 +87,13 @@ const BookmarkListRoot: React.FC<BookmarkListRootProps> = ({ bookmarks, doc, sto
                 moveToItem((bookmarkElements, _) => bookmarkElements.length - 1);
                 break;
 
+            case ' ':
+            case 'Enter':
+            case 'Space':
+                e.preventDefault();
+                clickBookmark();
+                break;
+
             case 'Home':
                 e.preventDefault();
                 moveToItem((_, __) => 0);
@@ -94,6 +101,14 @@ const BookmarkListRoot: React.FC<BookmarkListRootProps> = ({ bookmarks, doc, sto
 
             default:
                 break;
+        }
+    };
+
+    const clickBookmark = () => {
+        const closestItem = document.activeElement.closest('.rpv-bookmark__item');
+        const titleEle = closestItem.querySelector('.rpv-bookmark__title');
+        if (titleEle) {
+            (titleEle as HTMLElement).click();
         }
     };
 
