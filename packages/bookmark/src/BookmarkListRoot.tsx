@@ -19,10 +19,6 @@ interface BookmarkListRootProps {
     onJumpToDest(pageIndex: number, bottomOffset: number, scaleTo: number | SpecialZoomLevel): void;
 }
 
-enum Direction {
-    Down,
-    Up,
-}
 enum Toggle {
     Collapse,
     Expand,
@@ -68,7 +64,7 @@ const BookmarkListRoot: React.FC<BookmarkListRootProps> = ({ bookmarks, doc, sto
         switch (e.key) {
             case 'ArrowDown':
                 e.preventDefault();
-                move(Direction.Down);
+                moveToItem((bookmarkElements, activeEle) => bookmarkElements.indexOf(activeEle) + 1);
                 break;
 
             case 'ArrowLeft':
@@ -83,7 +79,17 @@ const BookmarkListRoot: React.FC<BookmarkListRootProps> = ({ bookmarks, doc, sto
 
             case 'ArrowUp':
                 e.preventDefault;
-                move(Direction.Up);
+                moveToItem((bookmarkElements, activeEle) => bookmarkElements.indexOf(activeEle) - 1);
+                break;
+
+            case 'End':
+                e.preventDefault();
+                moveToItem((bookmarkElements, _) => bookmarkElements.length - 1);
+                break;
+
+            case 'Home':
+                e.preventDefault();
+                moveToItem((_, __) => 0);
                 break;
 
             default:
@@ -91,21 +97,20 @@ const BookmarkListRoot: React.FC<BookmarkListRootProps> = ({ bookmarks, doc, sto
         }
     };
 
-    const move = (direction: Direction) => {
+    const moveToItem = (getItemIndex: (bookmarkElements: Element[], activeElement: Element) => number) => {
         const container = containerRef.current;
         const bookmarkElements: Element[] = [].slice.call(container.getElementsByClassName('rpv-bookmark__item'));
         if (bookmarkElements.length === 0) {
             return;
         }
 
-        const increment = direction === Direction.Down ? 1 : -1;
-
         const activeEle = document.activeElement;
 
-        const currentIndex = bookmarkElements.indexOf(activeEle);
-        const nextIndex = Math.min(bookmarkElements.length - 1, Math.max(0, currentIndex + increment));
-
-        const targetEle = bookmarkElements[nextIndex];
+        const targetIndex = Math.min(
+            bookmarkElements.length - 1,
+            Math.max(0, getItemIndex(bookmarkElements, activeEle as HTMLElement))
+        );
+        const targetEle = bookmarkElements[targetIndex];
 
         activeEle.setAttribute('tabindex', '-1');
         targetEle.setAttribute('tabindex', '0');
