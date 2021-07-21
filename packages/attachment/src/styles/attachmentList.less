@@ -14,17 +14,28 @@
 }
 
 .rpv-attachment__list {
+    display: flex;
     height: 100%;
-    list-style-type: none;
-    margin: 0;
+    flex-direction: column;
     overflow: auto;
-    padding: 0;
     width: 100%;
 }
 
 .rpv-attachment__item {
+    align-items: center;
+    background-color: transparent;
+    border: none;
     color: var(--rpv-attachment__item-color);
+    cursor: pointer;
+    display: flex;
     padding: 0.5rem;
+    text-align: left;
+    width: 100%;
+
+    &:focus {
+        background-color: var(--rpv-attachment__item--hover-background-color);
+        outline: 0;
+    }
 
     &:hover {
         background-color: var(--rpv-attachment__item--hover-background-color);

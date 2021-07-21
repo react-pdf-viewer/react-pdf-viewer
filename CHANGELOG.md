@@ -33,7 +33,12 @@ _Accessibility_
 
     | Component     | Press key     | Action                                        |
     |---------------|---------------|-----------------------------------------------|
-    | Bookmarks     | `ArrowDown`   | Focus on the next bookmark                    |
+    | `Attachments` | `ArrowDown`   | Focus on the next attachment                  |    
+    |               | `ArrowUp`     | Focus on the previous attachment              |
+    |               | `End`         | Focus on the last attachment                  |
+    |               | `Enter`       | Download the current focused attachment       |
+    |               | `Home`        | Focus on the first attachment                 |
+    | `Bookmark`    | `ArrowDown`   | Focus on the next bookmark                    |
     |               | `ArrowLeft`   | Collapse the current bookmark                 |
     |               | `ArrowRight`  | Expand the current bookmark                   |
     |               | `ArrowUp`     | Focus on the previous bookmark                |
@@ -44,7 +49,7 @@ _Accessibility_
     | `Menu`        | `ArrowDown`   | Focus on the next menu item                   |
     |               | `ArrowUp`     | Focus on the previous menu item               |
     |               | `Enter`       | Click the current focused item                |
-    | Thumbnails    | `ArrowDown`   | Focus on the thumbnail of next page           |
+    | `Thumbnails`  | `ArrowDown`   | Focus on the thumbnail of next page           |
     |               | `ArrowUp`     | Focus on the thumbnail of the previous page   |
     |               | `Enter`       | Jump to the associate page                    |
     | `Tooltip`     | `Escape`      | Close                                         |
