@@ -624,6 +624,8 @@ export interface ViewerProps {
     withCredentials?: boolean;
     onDocumentLoad?(e: DocumentLoadEvent): void;
     onPageChange?(e: PageChangeEvent): void;
+    // Invoked after switching to `theme`
+    onSwitchTheme?(theme: string): void;
     onZoom?(e: ZoomEvent): void;
 }
 export class Viewer extends React.Component<ViewerProps> {}

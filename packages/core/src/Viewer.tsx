@@ -65,6 +65,8 @@ export interface ViewerProps {
     withCredentials?: boolean;
     onDocumentLoad?(e: DocumentLoadEvent): void;
     onPageChange?(e: PageChangeEvent): void;
+    // Invoked after switching to `theme`
+    onSwitchTheme?(theme: string): void;
     onZoom?(e: ZoomEvent): void;
 }
 
@@ -92,6 +94,9 @@ const Viewer: React.FC<ViewerProps> = ({
         /**/
     },
     onPageChange = () => {
+        /**/
+    },
+    onSwitchTheme = () => {
         /**/
     },
     onZoom = () => {
@@ -138,7 +143,7 @@ const Viewer: React.FC<ViewerProps> = ({
     });
 
     return (
-        <ThemeProvider theme={theme}>
+        <ThemeProvider theme={theme} onSwitchTheme={onSwitchTheme}>
             <LocalizationProvider localization={localization}>
                 {/* eslint-disable-next-line @typescript-eslint/no-unused-vars */}
                 {(_) => {

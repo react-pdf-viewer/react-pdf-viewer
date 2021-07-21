@@ -13,9 +13,10 @@ import isDarkMode from '../utils/isDarkMode';
 
 interface ThemeProviderProps {
     theme: string;
+    onSwitchTheme?(theme: string): void;
 }
 
-const ThemeProvider: React.FC<ThemeProviderProps> = ({ children, theme }) => {
+const ThemeProvider: React.FC<ThemeProviderProps> = ({ children, theme, onSwitchTheme }) => {
     const initialTheme = React.useMemo(() => (theme === 'auto' ? (isDarkMode() ? 'dark' : 'light') : theme), []);
     const [currentTheme, setCurrentTheme] = React.useState(initialTheme);
 
@@ -32,6 +33,12 @@ const ThemeProvider: React.FC<ThemeProviderProps> = ({ children, theme }) => {
         media.addEventListener('change', handler);
         return () => media.removeEventListener('change', handler);
     }, []);
+
+    React.useEffect(() => {
+        if (onSwitchTheme) {
+            onSwitchTheme(currentTheme);
+        }
+    }, [currentTheme]);
 
     const initialContext: ThemeContextProps = {
         currentTheme,
