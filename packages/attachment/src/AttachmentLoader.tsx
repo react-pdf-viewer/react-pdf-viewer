@@ -7,7 +7,7 @@
  */
 
 import * as React from 'react';
-import { PdfJs, Spinner } from '@react-pdf-viewer/core';
+import { LocalizationContext, PdfJs, Spinner } from '@react-pdf-viewer/core';
 
 import AttachmentList from './AttachmentList';
 import FileItem from './FileItem';
@@ -22,6 +22,9 @@ interface AttachmentState {
 }
 
 const AttachmentLoader: React.FC<AttachmentLoaderProps> = ({ doc }) => {
+    const l10n = React.useContext(LocalizationContext);
+    const noAttachmentLabel = l10n && l10n.attachment ? l10n.attachment.noAttachment : 'There is no attachment';
+
     const [attachments, setAttachments] = React.useState<AttachmentState>({
         files: [],
         isLoaded: false,
@@ -44,7 +47,13 @@ const AttachmentLoader: React.FC<AttachmentLoaderProps> = ({ doc }) => {
         });
     }, [doc]);
 
-    return !attachments.isLoaded ? <Spinner /> : <AttachmentList files={attachments.files} />;
+    return !attachments.isLoaded ? (
+        <Spinner />
+    ) : attachments.files.length === 0 ? (
+        <div className="rpv-attachment__empty">{noAttachmentLabel}</div>
+    ) : (
+        <AttachmentList files={attachments.files} />
+    );
 };
 
 export default AttachmentLoader;

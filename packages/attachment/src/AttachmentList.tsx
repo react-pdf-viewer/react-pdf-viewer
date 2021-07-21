@@ -7,7 +7,7 @@
  */
 
 import * as React from 'react';
-import { LocalizationContext } from '@react-pdf-viewer/core';
+import { LocalizationContext, useIsomorphicLayoutEffect } from '@react-pdf-viewer/core';
 
 import downloadFile from './downloadFile';
 import FileItem from './FileItem';
@@ -17,14 +17,31 @@ interface AttachmentListProps {
 }
 
 const AttachmentList: React.FC<AttachmentListProps> = ({ files }) => {
+    const containerRef = React.useRef<HTMLDivElement>();
     const l10n = React.useContext(LocalizationContext);
-    const noAttachmentLabel = l10n && l10n.attachment ? l10n.attachment.noAttachment : 'There is no attachment';
+    const attachmentItemsRef = React.useRef<HTMLElement[]>([]);
+
     const clickDownloadLabel = l10n && l10n.attachment ? l10n.attachment.clickToDownload : 'Click to download';
 
-    return files.length === 0 ? (
-        <div className="rpv-attachment__empty">{noAttachmentLabel}</div>
-    ) : (
-        <div className="rpv-attachment__list">
+    useIsomorphicLayoutEffect(() => {
+        const container = containerRef.current;
+        if (!container) {
+            return;
+        }
+
+        const items: HTMLElement[] = [].slice.call(container.getElementsByClassName('rpv-attachment__item'));
+        attachmentItemsRef.current = items;
+
+        // Focus the first attachment item automatically
+        if (items.length > 0) {
+            const firstItem = items[0];
+            firstItem.focus();
+            firstItem.setAttribute('tabindex', '0');
+        }
+    }, []);
+
+    return (
+        <div className="rpv-attachment__list" ref={containerRef}>
             {files.map((file) => (
                 <button
                     className="rpv-attachment__item"
