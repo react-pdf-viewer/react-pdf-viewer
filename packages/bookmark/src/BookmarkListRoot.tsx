@@ -26,6 +26,7 @@ enum Toggle {
 
 const BookmarkListRoot: React.FC<BookmarkListRootProps> = ({ bookmarks, doc, store, onJumpToDest }) => {
     const containerRef = React.useRef<HTMLDivElement>();
+    const [links, setLinks] = React.useState(store.get('linkAnnotations') || {});
 
     const updateLinkAnnotation = (bookmark: PdfJs.Outline, links: Record<string, HTMLElement>): void => {
         const dest = bookmark.dest;
@@ -44,9 +45,7 @@ const BookmarkListRoot: React.FC<BookmarkListRootProps> = ({ bookmarks, doc, sto
         bookmark.items.forEach((item) => updateLinkAnnotation(item, links));
     };
 
-    const handleLinkAnnotationsChanged = (links: Record<string, HTMLElement>): void => {
-        bookmarks.forEach((bookmark) => updateLinkAnnotation(bookmark, links));
-    };
+    const handleLinkAnnotationsChanged = (links: Record<string, HTMLElement>) => setLinks(links);
 
     const jumpToDest = (dest: PdfJs.OutlineDestinationType): void => {
         getDestination(doc, dest).then((target) => {
@@ -159,6 +158,10 @@ const BookmarkListRoot: React.FC<BookmarkListRootProps> = ({ bookmarks, doc, sto
             store.unsubscribe('linkAnnotations', handleLinkAnnotationsChanged);
         };
     }, []);
+
+    React.useEffect(() => {
+        bookmarks.forEach((bookmark) => updateLinkAnnotation(bookmark, links));
+    }, [links]);
 
     React.useEffect(() => {
         const container = containerRef.current;
