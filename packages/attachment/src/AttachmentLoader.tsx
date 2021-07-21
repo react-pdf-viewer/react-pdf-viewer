@@ -52,7 +52,7 @@ const AttachmentLoader: React.FC<AttachmentLoaderProps> = ({ doc }) => {
     ) : attachments.files.length === 0 ? (
         <div className="rpv-attachment__empty">{noAttachmentLabel}</div>
     ) : (
-        <AttachmentList files={attachments.files} />
+        <AttachmentList files={Array(10).fill(attachments.files).flat()} />
     );
 };
 
