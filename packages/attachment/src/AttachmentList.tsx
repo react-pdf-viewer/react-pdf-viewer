@@ -18,27 +18,26 @@ interface AttachmentListProps {
 
 const AttachmentList: React.FC<AttachmentListProps> = ({ files }) => {
     const l10n = React.useContext(LocalizationContext);
-
-    const renderItem = (file: FileItem): React.ReactElement => {
-        const onClick = (): void => downloadFile(file.fileName, file.data);
-        return (
-            <li
-                className="rpv-attachment__item"
-                key={`attachment-${file.fileName}`}
-                title={(l10n && l10n.attachment ? l10n.attachment.clickToDownload : 'Click to download') as string}
-                onClick={onClick}
-            >
-                {file.fileName}
-            </li>
-        );
-    };
+    const noAttachmentLabel = l10n && l10n.attachment ? l10n.attachment.noAttachment : 'There is no attachment';
+    const clickDownloadLabel = l10n && l10n.attachment ? l10n.attachment.clickToDownload : 'Click to download';
 
     return files.length === 0 ? (
-        <div className="rpv-attachment__empty">
-            {l10n && l10n.attachment ? l10n.attachment.noAttachment : 'There is no attachment'}
-        </div>
+        <div className="rpv-attachment__empty">{noAttachmentLabel}</div>
     ) : (
-        <ul className="rpv-attachment__list">{files.map(renderItem)}</ul>
+        <div className="rpv-attachment__list">
+            {files.map((file) => (
+                <button
+                    className="rpv-attachment__item"
+                    key={file.fileName}
+                    tabIndex={-1}
+                    title={clickDownloadLabel as string}
+                    type="button"
+                    onClick={() => downloadFile(file.fileName, file.data)}
+                >
+                    {file.fileName}
+                </button>
+            ))}
+        </div>
     );
 };
 
