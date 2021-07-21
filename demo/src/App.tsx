@@ -7,6 +7,10 @@ import '@react-pdf-viewer/default-layout/lib/styles/index.css';
 
 const App = () => {
     const defaultLayoutPluginInstance = defaultLayoutPlugin();
+    const handleSwitchTheme = (theme: string) => {
+        localStorage.setItem('theme', theme);
+    };
+    const theme = localStorage.getItem('theme') || '';
 
     return (
         <Viewer
@@ -14,6 +18,8 @@ const App = () => {
             plugins={[
                 defaultLayoutPluginInstance,
             ]}
+            theme={theme}
+            onSwitchTheme={handleSwitchTheme}
         />
     );
 };

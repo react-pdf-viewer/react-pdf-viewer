@@ -1,14 +1,31 @@
 # CHANGELOG
 
-## v2.6.2 [WIP]
+## v2.7.0 [WIP]
 
 **New features**
+- Add new `onSwitchTheme` option that allows to track if users switch theme. The following snippet demonstrates an example that the current theme is stored in the local storage, and is loaded back in the next user's visit:
+
+```js
+const handleSwitchTheme = (theme: string) => {
+    localStorage.setItem('theme', theme);
+};
+const theme = localStorage.getItem('theme') || 'light';
+
+<Viewer
+    theme={theme}
+    onSwitchTheme={handleSwitchTheme}
+/>
+```
+
 _Improve the search plugin_
+
 - Add new `jumpToMatch` function which jumps to the given match
 - The `highlight` function now returns a `Promise` that holds the results. Each result also contains the matching text
 
 **Improvements**
+
 _Accessibility_
+
 - Add ARIA attributes to `Icon`, `Menu`, `MenuDivider`, `MenuItem`, `MinimalButton`, `Modal`, `Popover`, `TextBox`, `Tooltip` components
 - Add ARIA attributes to pages and thumbnails
 - Add ARIA attributes to internal links of the document
