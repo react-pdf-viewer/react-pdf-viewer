@@ -103,7 +103,11 @@ const SearchPopover: React.FC<SearchPopoverProps> = ({ store, onToggle }) => {
                         ariaControlsSuffix="search-previous-match"
                         position={Position.BottomCenter}
                         target={
-                            <MinimalButton ariaLabel={previousMatchLabel as string} isDisabled={currentMatch <= 1} onClick={jumpToPreviousMatch}>
+                            <MinimalButton
+                                ariaLabel={previousMatchLabel as string}
+                                isDisabled={currentMatch <= 1}
+                                onClick={jumpToPreviousMatch}
+                            >
                                 <PreviousIcon />
                             </MinimalButton>
                         }
@@ -116,7 +120,11 @@ const SearchPopover: React.FC<SearchPopoverProps> = ({ store, onToggle }) => {
                         ariaControlsSuffix="search-next-match"
                         position={Position.BottomCenter}
                         target={
-                            <MinimalButton ariaLabel={nextMatchLabel as string} isDisabled={currentMatch > numberOfMatches - 1} onClick={jumpToNextMatch}>
+                            <MinimalButton
+                                ariaLabel={nextMatchLabel as string}
+                                isDisabled={currentMatch > numberOfMatches - 1}
+                                onClick={jumpToNextMatch}
+                            >
                                 <NextIcon />
                             </MinimalButton>
                         }
