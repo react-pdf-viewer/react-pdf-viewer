@@ -57,6 +57,7 @@ _Accessibility_
     |               |               | Close when being blured                       |
 
 - When the shortcuts are enabled, the associal buttons will have the `aria-keyshortcuts` attributes
+- Add a background color to the current search highlight
 
 **Bug fixes**
 - Custom search control isn't rendered

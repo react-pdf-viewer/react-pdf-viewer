@@ -64,11 +64,11 @@ const useSearch = (store: Store<StoreProps>): UseSearch => {
             return null;
         }
 
-        // Make sure that the `index` is in the range of 0 and `found.length - 1`
-        const normalizedIndex = Math.max(0, Math.min(found.length - 1, index));
+        // Make sure that the `index` is in the range of 1 and `found.length`
+        const normalizedIndex = Math.max(1, Math.min(found.length, index));
 
         setCurrentMatch(normalizedIndex);
-        return jumpToGivenMatch(found[normalizedIndex]);
+        return jumpToGivenMatch(found[normalizedIndex - 1]);
     };
 
     const jumpToPreviousMatch = (): Match | null => jumpToMatch(currentMatch - 1);
@@ -188,7 +188,7 @@ const useSearch = (store: Store<StoreProps>): UseSearch => {
                 });
                 setFound(arr);
                 if (arr.length > 0) {
-                    setCurrentMatch(0);
+                    setCurrentMatch(1);
                     jumpToGivenMatch(arr[0]);
                 }
 
