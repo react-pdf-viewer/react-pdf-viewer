@@ -37,11 +37,13 @@ const AttachmentList: React.FC<AttachmentListProps> = ({ files }) => {
 
             case 'End':
                 e.preventDefault();
+                // eslint-disable-next-line @typescript-eslint/no-unused-vars
                 moveToItem((items, _) => items.length - 1);
                 break;
 
             case 'Home':
                 e.preventDefault();
+                // eslint-disable-next-line @typescript-eslint/no-unused-vars
                 moveToItem((_, __) => 0);
                 break;
 
