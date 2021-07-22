@@ -83,6 +83,7 @@ const BookmarkListRoot: React.FC<BookmarkListRootProps> = ({ bookmarks, doc, sto
 
             case 'End':
                 e.preventDefault();
+                // eslint-disable-next-line @typescript-eslint/no-unused-vars
                 moveToItem((bookmarkElements, _) => bookmarkElements.length - 1);
                 break;
 
@@ -95,6 +96,7 @@ const BookmarkListRoot: React.FC<BookmarkListRootProps> = ({ bookmarks, doc, sto
 
             case 'Home':
                 e.preventDefault();
+                // eslint-disable-next-line @typescript-eslint/no-unused-vars
                 moveToItem((_, __) => 0);
                 break;
 

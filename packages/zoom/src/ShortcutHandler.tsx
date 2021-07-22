@@ -29,7 +29,7 @@ const ShortcutHandler: React.FC<ShortcutHandlerProps> = ({ containerRef, store }
         }
 
         const containerEle = containerRef.current;
-        if (!containerEle || !document.activeElement || !document.activeElement.contains(containerEle)) {
+        if (!containerEle || !document.activeElement || !containerEle.contains(document.activeElement)) {
             return;
         }
 
