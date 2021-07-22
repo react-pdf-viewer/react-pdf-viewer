@@ -7,5 +7,5 @@
  */
 
 export default interface LocalizationMap {
-    [key: string]: LocalizationMap;
+    [key: string]: LocalizationMap | string;
 }
