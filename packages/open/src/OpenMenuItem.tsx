@@ -16,15 +16,27 @@ const OpenMenuItem: React.FC<RenderOpenProps> = ({ onClick }) => {
     const l10n = React.useContext(LocalizationContext);
     const label = l10n && l10n.open ? l10n.open.openFile : 'Open file';
 
+    const inputRef = React.createRef<HTMLInputElement>();
+
+    const openFileDialog = () => {
+        const inputEle = inputRef.current;
+        if (inputEle) {
+            inputEle.click();
+        }
+    };
+
     return (
-        <MenuItem
-            icon={<OpenFileIcon />}
-            onClick={() => {
-                /**/
-            }}
-        >
+        <MenuItem icon={<OpenFileIcon />} onClick={openFileDialog}>
             <div className="rpv-open__input-wrapper">
-                <input className="rpv-open__input" multiple={false} type="file" title="" onChange={onClick} />
+                <input
+                    ref={inputRef}
+                    className="rpv-open__input"
+                    multiple={false}
+                    tabIndex={-1}
+                    title=""
+                    type="file"
+                    onChange={onClick}
+                />
                 {label}
             </div>
         </MenuItem>
