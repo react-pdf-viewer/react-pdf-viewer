@@ -8,10 +8,12 @@
 
 import * as React from 'react';
 
-const Spinner: React.FC = () => (
-    <svg className="rpv-core__spinner" width="64px" height="64px" viewBox="0 0 32 32">
-        <circle className="rpv-core__spinner-circle" cx="16" cy="16" r="12" strokeDasharray={Math.PI * 2 * 9} />
-    </svg>
+interface SpinnerProps {
+    size?: string;
+}
+
+const Spinner: React.FC<SpinnerProps> = ({ size = '4rem' }) => (
+    <div className="rpv-core__spinner" style={{ height: size, width: size }} />
 );
 
 export default Spinner;

@@ -375,7 +375,10 @@ export class ProgressBar extends React.Component<ProgressBarProps> {}
 export class Separator extends React.Component {}
 
 // Spinner
-export class Spinner extends React.Component {}
+export interface SpinnerProps {
+    size?: string;
+}
+export class Spinner extends React.Component<SpinnerProps> {}
 
 // Textbox
 export interface TextBoxProps {
