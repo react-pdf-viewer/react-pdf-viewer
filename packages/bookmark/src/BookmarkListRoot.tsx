@@ -49,7 +49,8 @@ const BookmarkListRoot: React.FC<BookmarkListRootProps> = ({ bookmarks, doc, sto
     const handleLinkAnnotationsChanged = (links: Record<string, HTMLElement>) => setLinks(links);
 
     const jumpToDest = (dest: PdfJs.OutlineDestinationType): void => {
-        getDestination(doc, dest).then((target) => {
+        // Use `any` to get rid of the warning that `PdfDocument` doesn't match with the type provided by pdfjs-dist
+        getDestination(doc as any, dest).then((target) => {
             const { pageIndex, bottomOffset, scaleTo } = target;
             onJumpToDest(pageIndex + 1, bottomOffset, scaleTo);
         });
