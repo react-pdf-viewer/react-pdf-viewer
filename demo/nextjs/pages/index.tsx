@@ -4,21 +4,17 @@ import { defaultLayoutPlugin } from '@react-pdf-viewer/default-layout';
 
 const Index = () => {
     const defaultLayoutPluginInstance = defaultLayoutPlugin();
-    const handleSwitchTheme = (theme: string) => {
-        localStorage.setItem('theme', theme);
-    };
-    const theme = localStorage.getItem('theme') || '';
-
+    
     return (
-        <Worker workerUrl="https://unpkg.com/pdfjs-dist@2.8.335/build/pdf.worker.js">
-            <Viewer
-                fileUrl='pdf-open-parameters.pdf'
-                plugins={[
-                    defaultLayoutPluginInstance,
-                ]}
-                theme={theme}
-                onSwitchTheme={handleSwitchTheme}
-            />
+        <Worker workerUrl="https://unpkg.com/pdfjs-dist@2.6.347/build/pdf.worker.js">
+            <div className="demo">
+                <Viewer
+                    fileUrl='pdf-open-parameters.pdf'
+                    plugins={[
+                        defaultLayoutPluginInstance,
+                    ]}
+                />
+            </div>
         </Worker>
     );
 };
