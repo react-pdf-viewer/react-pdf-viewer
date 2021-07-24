@@ -10,7 +10,7 @@ import * as React from 'react';
 
 import useClickOutside from '../hooks/useClickOutside';
 import useIsomorphicLayoutEffect from '../hooks/useIsomorphicLayoutEffect';
-import useKeyUp from '../hooks/useKeyUp';
+import useEscape from '../hooks/useEscape';
 import useLockScroll from '../hooks/useLockScroll';
 
 interface ModalBodyProps {
@@ -30,7 +30,7 @@ const ModalBody: React.FC<ModalBodyProps> = ({
     const contentRef = React.useRef<HTMLDivElement>();
 
     useLockScroll();
-    useKeyUp(27, () => closeOnEscape && onToggle());
+    useEscape(() => closeOnEscape && onToggle());
     useClickOutside(closeOnClickOutside, contentRef, onToggle);
 
     useIsomorphicLayoutEffect(() => {
