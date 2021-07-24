@@ -58,6 +58,7 @@ _Accessibility_
 
 - When the shortcuts are enabled, the associal buttons will have the `aria-keyshortcuts` attributes
 - Add a background color to the current search highlight
+- The `Spinner` component adds new `size` property
 
 **Bug fixes**
 - Custom search control isn't rendered
