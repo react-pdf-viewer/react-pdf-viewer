@@ -7,26 +7,40 @@
  */
 
 import * as React from 'react';
-import {
+
+import { fullScreenPlugin } from '@react-pdf-viewer/full-screen';
+import { getFilePlugin } from '@react-pdf-viewer/get-file';
+import { openPlugin } from '@react-pdf-viewer/open';
+import { pageNavigationPlugin } from '@react-pdf-viewer/page-navigation';
+import { printPlugin } from '@react-pdf-viewer/print';
+import { propertiesPlugin } from '@react-pdf-viewer/properties';
+import { rotatePlugin } from '@react-pdf-viewer/rotate';
+import { scrollModePlugin } from '@react-pdf-viewer/scroll-mode';
+import { searchPlugin } from '@react-pdf-viewer/search';
+import { selectionModePlugin } from '@react-pdf-viewer/selection-mode';
+import { themePlugin } from '@react-pdf-viewer/theme';
+import { zoomPlugin } from '@react-pdf-viewer/zoom';
+
+import type {
     Plugin,
     PluginFunctions,
     PluginOnDocumentLoad,
     RenderViewer,
     ViewerState,
     PluginOnTextLayerRender,
-} from '@react-pdf-viewer/core';
-import { fullScreenPlugin, FullScreenPlugin, FullScreenPluginProps } from '@react-pdf-viewer/full-screen';
-import { getFilePlugin, GetFilePlugin, GetFilePluginProps } from '@react-pdf-viewer/get-file';
-import { openPlugin, OpenPlugin } from '@react-pdf-viewer/open';
-import { pageNavigationPlugin, PageNavigationPlugin } from '@react-pdf-viewer/page-navigation';
-import { printPlugin, PrintPlugin, PrintPluginProps } from '@react-pdf-viewer/print';
-import { propertiesPlugin, PropertiesPlugin } from '@react-pdf-viewer/properties';
-import { rotatePlugin, RotatePlugin } from '@react-pdf-viewer/rotate';
-import { scrollModePlugin, ScrollModePlugin, ScrollModePluginProps } from '@react-pdf-viewer/scroll-mode';
-import { searchPlugin, SearchPlugin, SearchPluginProps } from '@react-pdf-viewer/search';
-import { selectionModePlugin, SelectionModePlugin, SelectionModePluginProps } from '@react-pdf-viewer/selection-mode';
-import { themePlugin, ThemePlugin } from '@react-pdf-viewer/theme';
-import { zoomPlugin, ZoomPlugin, ZoomPluginProps } from '@react-pdf-viewer/zoom';
+} from '@react-pdf-viewer/core/lib';
+import type { FullScreenPlugin, FullScreenPluginProps } from '@react-pdf-viewer/full-screen/lib';
+import type { GetFilePlugin, GetFilePluginProps } from '@react-pdf-viewer/get-file/lib';
+import type { OpenPlugin } from '@react-pdf-viewer/open/lib';
+import type { PageNavigationPlugin } from '@react-pdf-viewer/page-navigation/lib';
+import type { PrintPlugin, PrintPluginProps } from '@react-pdf-viewer/print/lib';
+import type { PropertiesPlugin } from '@react-pdf-viewer/properties/lib';
+import type { RotatePlugin } from '@react-pdf-viewer/rotate/lib';
+import type { ScrollModePlugin, ScrollModePluginProps } from '@react-pdf-viewer/scroll-mode/lib';
+import type { SearchPlugin, SearchPluginProps } from '@react-pdf-viewer/search/lib';
+import type { SelectionModePlugin, SelectionModePluginProps } from '@react-pdf-viewer/selection-mode/lib';
+import type { ThemePlugin } from '@react-pdf-viewer/theme/lib';
+import type { ZoomPlugin, ZoomPluginProps } from '@react-pdf-viewer/zoom/lib';
 
 import Toolbar, { ToolbarProps } from './Toolbar';
 

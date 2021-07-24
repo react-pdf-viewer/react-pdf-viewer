@@ -14,9 +14,9 @@ import {
     MinimalButton,
     Popover,
     Position,
-    Toggle,
     Tooltip,
 } from '@react-pdf-viewer/core';
+import type { Toggle } from '@react-pdf-viewer/core/lib';
 import { ScrollMode } from '@react-pdf-viewer/scroll-mode';
 import { SelectionMode } from '@react-pdf-viewer/selection-mode';
 

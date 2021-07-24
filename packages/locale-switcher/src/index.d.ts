@@ -7,7 +7,7 @@
  */
 
 import * as React from 'react';
-import { LocalizationMap, Plugin } from '@react-pdf-viewer/core';
+import type { LocalizationMap, Plugin } from '@react-pdf-viewer/core/lib';
 
 export interface LocaleSwitcherPlugin extends Plugin {
     LocalePopover: (props: LocalePopoverProps) => React.ReactElement;

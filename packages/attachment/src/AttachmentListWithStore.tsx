@@ -7,7 +7,8 @@
  */
 
 import * as React from 'react';
-import { PdfJs, Spinner, Store, StoreHandler } from '@react-pdf-viewer/core';
+import { Spinner } from '@react-pdf-viewer/core';
+import type { PdfJs, Store, StoreHandler } from '@react-pdf-viewer/core/lib';
 
 import AttachmentLoader from './AttachmentLoader';
 import StoreProps from './StoreProps';

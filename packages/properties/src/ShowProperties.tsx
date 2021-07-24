@@ -7,7 +7,8 @@
  */
 
 import * as React from 'react';
-import { Modal, Store, Toggle } from '@react-pdf-viewer/core';
+import { Modal } from '@react-pdf-viewer/core';
+import type { Store, Toggle } from '@react-pdf-viewer/core/lib';
 
 import PropertiesModal from './PropertiesModal';
 import ShowPropertiesButton from './ShowPropertiesButton';

@@ -7,7 +7,8 @@
  */
 
 import * as React from 'react';
-import { Store, StoreHandler, useIsomorphicLayoutEffect } from '@react-pdf-viewer/core';
+import { useIsomorphicLayoutEffect } from '@react-pdf-viewer/core';
+import type { Store, StoreHandler } from '@react-pdf-viewer/core/lib';
 
 import StoreProps from './StoreProps';
 

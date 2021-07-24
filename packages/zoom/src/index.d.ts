@@ -7,7 +7,8 @@
  */
 
 import * as React from 'react';
-import { Plugin, SpecialZoomLevel } from '@react-pdf-viewer/core';
+import { SpecialZoomLevel } from '@react-pdf-viewer/core';
+import type { Plugin } from '@react-pdf-viewer/core/lib';
 
 export interface ZoomMenuItemProps {
     onClick: () => void;

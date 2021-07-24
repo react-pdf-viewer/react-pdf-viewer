@@ -7,7 +7,8 @@
  */
 
 import * as React from 'react';
-import { LocalizationContext, Store, TextBox } from '@react-pdf-viewer/core';
+import { LocalizationContext, TextBox } from '@react-pdf-viewer/core';
+import type { Store } from '@react-pdf-viewer/core/lib';
 
 import StoreProps from './StoreProps';
 import useCurrentPage from './useCurrentPage';

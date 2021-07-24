@@ -7,7 +7,8 @@
  */
 
 import * as React from 'react';
-import { LocalizationContext, PdfJs, SpecialZoomLevel, Spinner, Store } from '@react-pdf-viewer/core';
+import { LocalizationContext, SpecialZoomLevel, Spinner } from '@react-pdf-viewer/core';
+import type { PdfJs, Store } from '@react-pdf-viewer/core/lib';
 
 import BookmarkListRoot from './BookmarkListRoot';
 import StoreProps from './StoreProps';

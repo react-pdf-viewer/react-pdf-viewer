@@ -7,11 +7,11 @@
  */
 
 import * as React from 'react';
-import type { Plugin, ViewerProps } from '@react-pdf-viewer/core';
-import type { AttachmentPlugin } from '@react-pdf-viewer/attachment';
-import type { BookmarkPlugin } from '@react-pdf-viewer/bookmark';
-import type { ThumbnailPlugin } from '@react-pdf-viewer/thumbnail';
-import type { ToolbarPlugin, ToolbarPluginProps, ToolbarProps, ToolbarSlot } from '@react-pdf-viewer/toolbar';
+import type { Plugin, ViewerProps } from '@react-pdf-viewer/core/lib';
+import type { AttachmentPlugin } from '@react-pdf-viewer/attachment/lib';
+import type { BookmarkPlugin } from '@react-pdf-viewer/bookmark/lib';
+import type { ThumbnailPlugin } from '@react-pdf-viewer/thumbnail/lib';
+import type { ToolbarPlugin, ToolbarPluginProps, ToolbarProps, ToolbarSlot } from '@react-pdf-viewer/toolbar/lib';
 
 export type { ToolbarPluginProps, ToolbarProps, ToolbarSlot };
 

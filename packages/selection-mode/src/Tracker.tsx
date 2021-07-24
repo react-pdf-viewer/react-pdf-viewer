@@ -7,7 +7,7 @@
  */
 
 import * as React from 'react';
-import { Store } from '@react-pdf-viewer/core';
+import type { Store } from '@react-pdf-viewer/core/lib';
 
 import SelectionMode from './SelectionMode';
 import StoreProps from './StoreProps';

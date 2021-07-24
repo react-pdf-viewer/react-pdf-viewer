@@ -7,7 +7,7 @@
  */
 
 import * as React from 'react';
-import { PdfJs } from '@react-pdf-viewer/core';
+import type { PdfJs } from '@react-pdf-viewer/core/lib';
 
 import PageThumbnail from './PageThumbnail';
 

@@ -7,7 +7,8 @@
  */
 
 import * as React from 'react';
-import { SpecialZoomLevel, Store } from '@react-pdf-viewer/core';
+import { SpecialZoomLevel } from '@react-pdf-viewer/core';
+import type { Store } from '@react-pdf-viewer/core/lib';
 
 import StoreProps from './StoreProps';
 import useZoom from './useZoom';

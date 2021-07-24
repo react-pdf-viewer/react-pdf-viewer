@@ -9,7 +9,6 @@
 import * as React from 'react';
 import {
     LocalizationContext,
-    LocalizationMap,
     Menu,
     MenuDivider,
     MenuItem,
@@ -17,8 +16,8 @@ import {
     Popover,
     Position,
     SpecialZoomLevel,
-    Toggle,
 } from '@react-pdf-viewer/core';
+import { LocalizationMap, Toggle } from '@react-pdf-viewer/core/lib';
 
 import { RenderZoomProps } from './Zoom';
 

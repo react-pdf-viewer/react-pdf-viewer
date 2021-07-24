@@ -8,7 +8,7 @@
 
 import * as React from 'react';
 import { createPortal } from 'react-dom';
-import { PdfJs } from '@react-pdf-viewer/core';
+import type { PdfJs } from '@react-pdf-viewer/core/lib';
 
 import PageThumbnailContainer from './PageThumbnailContainer';
 import PrintStatus from './PrintStatus';

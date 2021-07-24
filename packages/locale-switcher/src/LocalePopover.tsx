@@ -9,15 +9,14 @@
 import * as React from 'react';
 import {
     LocalizationContext,
-    LocalizationMap,
     Menu,
     MenuItem,
     MinimalButton,
     Popover,
     Position,
-    Toggle,
     Tooltip,
 } from '@react-pdf-viewer/core';
+import type { LocalizationMap, Toggle } from '@react-pdf-viewer/core/lib';
 
 import LocaleIcon from './LocaleIcon';
 

@@ -7,7 +7,7 @@
  */
 
 import * as React from 'react';
-import { PdfJs, Store } from '@react-pdf-viewer/core';
+import type { PdfJs, Store } from '@react-pdf-viewer/core/lib';
 
 import BookmarkItem from './BookmarkItem';
 import StoreProps from './StoreProps';

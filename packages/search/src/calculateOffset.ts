@@ -6,7 +6,7 @@
  * @copyright 2019-2021 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import { Offset } from '@react-pdf-viewer/core';
+import type { Offset } from '@react-pdf-viewer/core/lib';
 
 const calculateOffset = (children: HTMLElement, parent: HTMLElement): Offset => {
     let top = children.offsetTop;

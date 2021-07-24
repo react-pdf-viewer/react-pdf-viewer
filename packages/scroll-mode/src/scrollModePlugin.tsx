@@ -7,7 +7,8 @@
  */
 
 import * as React from 'react';
-import { createStore, Plugin, PluginFunctions, RenderViewer, Slot } from '@react-pdf-viewer/core';
+import { createStore } from '@react-pdf-viewer/core';
+import type { Plugin, PluginFunctions, RenderViewer, Slot } from '@react-pdf-viewer/core/lib';
 
 import ScrollMode from './ScrollMode';
 import StoreProps from './StoreProps';

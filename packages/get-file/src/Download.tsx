@@ -7,7 +7,7 @@
  */
 
 import * as React from 'react';
-import { OpenFile, Store, StoreHandler } from '@react-pdf-viewer/core';
+import type { OpenFile, Store, StoreHandler } from '@react-pdf-viewer/core/lib';
 
 import DownloadButton from './DownloadButton';
 import downloadFile from './downloadFile';

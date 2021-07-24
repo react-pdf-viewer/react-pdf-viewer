@@ -7,7 +7,8 @@
  */
 
 import * as React from 'react';
-import { createStore, Plugin, PluginFunctions } from '@react-pdf-viewer/core';
+import { createStore } from '@react-pdf-viewer/core';
+import type { Plugin, PluginFunctions } from '@react-pdf-viewer/core/lib';
 
 import Open, { OpenProps } from './Open';
 import OpenMenuItem from './OpenMenuItem';

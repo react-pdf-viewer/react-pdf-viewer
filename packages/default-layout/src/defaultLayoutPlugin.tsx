@@ -7,10 +7,15 @@
  */
 
 import * as React from 'react';
-import { attachmentPlugin, AttachmentPlugin } from '@react-pdf-viewer/attachment';
-import { bookmarkPlugin, BookmarkPlugin } from '@react-pdf-viewer/bookmark';
-import {
-    createStore,
+import { attachmentPlugin } from '@react-pdf-viewer/attachment';
+import { bookmarkPlugin } from '@react-pdf-viewer/bookmark';
+import { createStore } from '@react-pdf-viewer/core';
+import { thumbnailPlugin } from '@react-pdf-viewer/thumbnail';
+import { toolbarPlugin } from '@react-pdf-viewer/toolbar';
+
+import type { AttachmentPlugin } from '@react-pdf-viewer/attachment/lib';
+import type { BookmarkPlugin } from '@react-pdf-viewer/bookmark/lib';
+import type {
     Plugin,
     PluginFunctions,
     PluginOnDocumentLoad,
@@ -18,9 +23,9 @@ import {
     ViewerState,
     PluginOnAnnotationLayerRender,
     PluginOnTextLayerRender,
-} from '@react-pdf-viewer/core';
-import { thumbnailPlugin, ThumbnailPlugin } from '@react-pdf-viewer/thumbnail';
-import { toolbarPlugin, ToolbarPlugin, ToolbarPluginProps, ToolbarProps } from '@react-pdf-viewer/toolbar';
+} from '@react-pdf-viewer/core/lib';
+import type { ThumbnailPlugin } from '@react-pdf-viewer/thumbnail/lib';
+import type { ToolbarPlugin, ToolbarPluginProps, ToolbarProps } from '@react-pdf-viewer/toolbar/lib';
 
 import Sidebar, { SidebarTab } from './Sidebar';
 import StoreProps from './StoreProps';

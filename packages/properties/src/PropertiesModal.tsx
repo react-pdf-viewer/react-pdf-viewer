@@ -7,7 +7,8 @@
  */
 
 import * as React from 'react';
-import { Button, LocalizationContext, PdfJs, Separator } from '@react-pdf-viewer/core';
+import { Button, LocalizationContext, Separator } from '@react-pdf-viewer/core';
+import type { PdfJs } from '@react-pdf-viewer/core/lib';
 
 import PropertiesData from './PropertiesData';
 import PropertiesLoader from './PropertiesLoader';

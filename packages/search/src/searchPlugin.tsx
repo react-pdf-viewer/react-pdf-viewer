@@ -7,15 +7,15 @@
  */
 
 import * as React from 'react';
-import {
-    createStore,
+import { createStore } from '@react-pdf-viewer/core';
+import type {
     Plugin,
     PluginFunctions,
     PluginOnDocumentLoad,
     PluginOnTextLayerRender,
     RenderViewer,
     Slot,
-} from '@react-pdf-viewer/core';
+} from '@react-pdf-viewer/core/lib';
 
 import { EMPTY_KEYWORD_REGEXP } from './constants';
 import { normalizeSingleKeyword } from './normalizeKeyword';

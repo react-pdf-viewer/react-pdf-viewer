@@ -7,7 +7,8 @@
  */
 
 import * as React from 'react';
-import { useIntersectionObserver, PdfJs, Spinner, VisibilityChanged } from '@react-pdf-viewer/core';
+import { useIntersectionObserver, Spinner } from '@react-pdf-viewer/core';
+import type { PdfJs, VisibilityChanged } from '@react-pdf-viewer/core/lib';
 
 import ThumbnailItem from './ThumbnailItem';
 

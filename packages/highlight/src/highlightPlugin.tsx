@@ -7,8 +7,8 @@
  */
 
 import * as React from 'react';
-import {
-    createStore,
+import { createStore } from '@react-pdf-viewer/core';
+import type {
     LayerRenderStatus,
     PluginOnTextLayerRender,
     Plugin,
@@ -17,7 +17,7 @@ import {
     RenderViewer,
     Slot,
     ViewerState,
-} from '@react-pdf-viewer/core';
+} from '@react-pdf-viewer/core/lib';
 
 import { HIGHLIGHT_LAYER_ATTR, HIGHLIGHT_PAGE_ATTR } from './constants';
 import HighlightAreaList from './HighlightAreaList';

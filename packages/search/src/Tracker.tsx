@@ -7,7 +7,8 @@
  */
 
 import * as React from 'react';
-import { PluginOnTextLayerRender, LayerRenderStatus, Store } from '@react-pdf-viewer/core';
+import { LayerRenderStatus } from '@react-pdf-viewer/core';
+import type { PluginOnTextLayerRender, Store } from '@react-pdf-viewer/core/lib';
 
 import calculateOffset from './calculateOffset';
 import { EMPTY_KEYWORD_REGEXP } from './constants';

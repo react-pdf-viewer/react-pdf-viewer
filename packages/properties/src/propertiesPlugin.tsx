@@ -7,7 +7,8 @@
  */
 
 import * as React from 'react';
-import { createStore, Plugin, PluginOnDocumentLoad, ViewerState } from '@react-pdf-viewer/core';
+import { createStore } from '@react-pdf-viewer/core';
+import type { Plugin, PluginOnDocumentLoad, ViewerState } from '@react-pdf-viewer/core/lib';
 
 import ShowProperties, { ShowPropertiesProps } from './ShowProperties';
 import ShowPropertiesMenuItem from './ShowPropertiesMenuItem';

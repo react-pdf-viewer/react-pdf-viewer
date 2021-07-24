@@ -7,7 +7,8 @@
  */
 
 import * as React from 'react';
-import { createStore, Plugin, PluginFunctions, ViewerState } from '@react-pdf-viewer/core';
+import { createStore } from '@react-pdf-viewer/core';
+import type { Plugin, PluginFunctions, ViewerState } from '@react-pdf-viewer/core/lib';
 
 import Rotate, { RotateProps } from './Rotate';
 import RotateButton from './RotateButton';

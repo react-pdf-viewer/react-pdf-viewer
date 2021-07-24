@@ -6,7 +6,7 @@
  * @copyright 2019-2021 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import { OpenFile } from '@react-pdf-viewer/core';
+import type { OpenFile } from '@react-pdf-viewer/core/lib';
 
 const downloadFile = (file: OpenFile, saveAs: string): void => {
     const blobUrl =

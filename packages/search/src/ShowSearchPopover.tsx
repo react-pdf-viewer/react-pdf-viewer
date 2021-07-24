@@ -7,7 +7,8 @@
  */
 
 import * as React from 'react';
-import { Popover, Position, Store, Toggle } from '@react-pdf-viewer/core';
+import { Popover, Position } from '@react-pdf-viewer/core';
+import type { Store, Toggle } from '@react-pdf-viewer/core/lib';
 
 import SearchPopover from './SearchPopover';
 import ShowSearchPopoverButton from './ShowSearchPopoverButton';

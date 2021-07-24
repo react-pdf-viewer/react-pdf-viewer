@@ -7,7 +7,7 @@
  */
 
 import * as React from 'react';
-import type { Plugin, RenderViewer, Slot } from '@react-pdf-viewer/core';
+import type { Plugin, RenderViewer, Slot } from '@react-pdf-viewer/core/lib';
 
 import DropArea from './DropArea';
 

@@ -7,13 +7,13 @@
  */
 
 import * as React from 'react';
-import {
-    createStore,
+import { createStore } from '@react-pdf-viewer/core';
+import type {
     Plugin,
     PluginFunctions,
     PluginOnAnnotationLayerRender,
     PluginOnDocumentLoad,
-} from '@react-pdf-viewer/core';
+} from '@react-pdf-viewer/core/lib';
 
 import BookmarkListWithStore from './BookmarkListWithStore';
 import StoreProps from './StoreProps';

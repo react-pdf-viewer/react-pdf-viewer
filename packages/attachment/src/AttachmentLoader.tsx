@@ -7,7 +7,8 @@
  */
 
 import * as React from 'react';
-import { LocalizationContext, PdfJs, Spinner } from '@react-pdf-viewer/core';
+import { LocalizationContext, Spinner } from '@react-pdf-viewer/core';
+import type { PdfJs } from '@react-pdf-viewer/core/lib';
 
 import AttachmentList from './AttachmentList';
 import FileItem from './FileItem';
@@ -52,7 +53,7 @@ const AttachmentLoader: React.FC<AttachmentLoaderProps> = ({ doc }) => {
     ) : attachments.files.length === 0 ? (
         <div className="rpv-attachment__empty">{noAttachmentLabel}</div>
     ) : (
-        <AttachmentList files={Array(10).fill(attachments.files).flat()} />
+        <AttachmentList files={attachments.files} />
     );
 };
 

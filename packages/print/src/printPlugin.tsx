@@ -7,7 +7,8 @@
  */
 
 import * as React from 'react';
-import { createStore, Plugin, RenderViewer, Slot } from '@react-pdf-viewer/core';
+import { createStore } from '@react-pdf-viewer/core';
+import type { Plugin, RenderViewer, Slot } from '@react-pdf-viewer/core/lib';
 
 import Print, { PrintProps } from './Print';
 import PrintButton from './PrintButton';

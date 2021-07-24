@@ -7,7 +7,7 @@
  */
 
 import * as React from 'react';
-import { Store, StoreHandler } from '@react-pdf-viewer/core';
+import type { Store, StoreHandler } from '@react-pdf-viewer/core/lib';
 
 import ScrollMode from './ScrollMode';
 import StoreProps from './StoreProps';

@@ -7,7 +7,8 @@
  */
 
 import * as React from 'react';
-import { PdfJs, Spinner, Store, StoreHandler, useIsomorphicLayoutEffect } from '@react-pdf-viewer/core';
+import { Spinner, useIsomorphicLayoutEffect } from '@react-pdf-viewer/core';
+import type { PdfJs, Store, StoreHandler } from '@react-pdf-viewer/core/lib';
 
 import StoreProps from './StoreProps';
 import ThumbnailList from './ThumbnailList';

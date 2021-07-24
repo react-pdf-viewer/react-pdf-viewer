@@ -7,7 +7,8 @@
  */
 
 import * as React from 'react';
-import { LocalizationContext, MinimalButton, Store } from '@react-pdf-viewer/core';
+import { LocalizationContext, MinimalButton } from '@react-pdf-viewer/core';
+import type { Store } from '@react-pdf-viewer/core/lib';
 
 import ExitFullScreenIcon from './ExitFullScreenIcon';
 import { exitFullScreen, getFullScreenElement } from './fullScreen';

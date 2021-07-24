@@ -7,7 +7,8 @@
  */
 
 import * as React from 'react';
-import { Button, LocalizationContext, MinimalButton, Position, Store, TextBox, Tooltip } from '@react-pdf-viewer/core';
+import { Button, LocalizationContext, MinimalButton, Position, TextBox, Tooltip } from '@react-pdf-viewer/core';
+import type { Store } from '@react-pdf-viewer/core/lib';
 
 import NextIcon from './NextIcon';
 import PreviousIcon from './PreviousIcon';

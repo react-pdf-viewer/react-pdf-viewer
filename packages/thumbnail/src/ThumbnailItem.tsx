@@ -7,7 +7,8 @@
  */
 
 import * as React from 'react';
-import { PdfJs, LocalizationContext, Spinner } from '@react-pdf-viewer/core';
+import { LocalizationContext, Spinner } from '@react-pdf-viewer/core';
+import type { PdfJs } from '@react-pdf-viewer/core/lib';
 
 interface ThumbnailItemProps {
     page: PdfJs.Page;

@@ -7,43 +7,43 @@
  */
 
 import * as React from 'react';
-import type { Plugin } from '@react-pdf-viewer/core';
+import type { Plugin } from '@react-pdf-viewer/core/lib';
 import type {
     EnterFullScreenMenuItemProps,
     EnterFullScreenProps,
     FullScreenPlugin,
     FullScreenPluginProps,
-} from '@react-pdf-viewer/full-screen';
+} from '@react-pdf-viewer/full-screen/lib';
 import type {
     DownloadMenuItemProps,
     DownloadProps,
     GetFilePlugin,
     GetFilePluginProps,
-} from '@react-pdf-viewer/get-file';
-import type { OpenPlugin, OpenProps } from '@react-pdf-viewer/open';
+} from '@react-pdf-viewer/get-file/lib';
+import type { OpenPlugin, OpenProps } from '@react-pdf-viewer/open/lib';
 import type {
     CurrentPageLabelProps,
     GoToPageProps,
     GoToPageMenuItemProps,
     PageNavigationPlugin,
-} from '@react-pdf-viewer/page-navigation';
-import type { PrintMenuItemProps, PrintPlugin, PrintPluginProps, PrintProps } from '@react-pdf-viewer/print';
-import type { PropertiesPlugin, ShowPropertiesProps, ShowPropertiesMenuItemProps } from '@react-pdf-viewer/properties';
-import type { RotateDecoratorProps, RotatePlugin, RotateProps } from '@react-pdf-viewer/rotate';
+} from '@react-pdf-viewer/page-navigation/lib';
+import type { PrintMenuItemProps, PrintPlugin, PrintPluginProps, PrintProps } from '@react-pdf-viewer/print/lib';
+import type { PropertiesPlugin, ShowPropertiesProps, ShowPropertiesMenuItemProps } from '@react-pdf-viewer/properties/lib';
+import type { RotateDecoratorProps, RotatePlugin, RotateProps } from '@react-pdf-viewer/rotate/lib';
 import type {
     ScrollModePlugin,
     ScrollModePluginProps,
     SwitchScrollModeMenuItemProps,
     SwitchScrollModeProps,
-} from '@react-pdf-viewer/scroll-mode';
-import type { SearchPlugin, SearchPluginProps, SearchProps, ShowSearchPopoverProps } from '@react-pdf-viewer/search';
+} from '@react-pdf-viewer/scroll-mode/lib';
+import type { SearchPlugin, SearchPluginProps, SearchProps, ShowSearchPopoverProps } from '@react-pdf-viewer/search/lib';
 import type {
     SelectionModePlugin,
     SelectionModePluginProps,
     SwitchSelectionModeMenuItemProps,
     SwitchSelectionModeProps,
-} from '@react-pdf-viewer/selection-mode';
-import type { SwitchThemeProps, SwitchThemeMenuItemProps, ThemePlugin } from '@react-pdf-viewer/theme';
+} from '@react-pdf-viewer/selection-mode/lib';
+import type { SwitchThemeProps, SwitchThemeMenuItemProps, ThemePlugin } from '@react-pdf-viewer/theme/lib';
 import type {
     CurrentScaleProps,
     ZoomInProps,
@@ -52,7 +52,7 @@ import type {
     ZoomPlugin,
     ZoomPluginProps,
     ZoomProps,
-} from '@react-pdf-viewer/zoom';
+} from '@react-pdf-viewer/zoom/lib';
 
 export interface ToolbarSlot {
     CurrentPageInput(): React.ReactElement;

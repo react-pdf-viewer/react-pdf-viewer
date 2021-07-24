@@ -7,7 +7,7 @@
  */
 
 import * as React from 'react';
-import { Store, StoreHandler } from '@react-pdf-viewer/core';
+import type { Store, StoreHandler } from '@react-pdf-viewer/core/lib';
 
 import StoreProps from './StoreProps';
 

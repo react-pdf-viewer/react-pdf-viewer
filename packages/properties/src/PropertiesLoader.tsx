@@ -7,7 +7,8 @@
  */
 
 import * as React from 'react';
-import { PdfJs, Spinner } from '@react-pdf-viewer/core';
+import { Spinner } from '@react-pdf-viewer/core';
+import type { PdfJs } from '@react-pdf-viewer/core/lib';
 
 import PropertiesData from './PropertiesData';
 
