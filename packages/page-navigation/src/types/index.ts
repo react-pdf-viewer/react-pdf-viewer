@@ -8,19 +8,17 @@
 
 import * as React from 'react';
 
-interface GoToPageMenuItemProps {
+export interface GoToPageMenuItemProps {
     onClick: () => void;
 }
 
-interface RenderGoToPageProps {
+export interface RenderGoToPageProps {
     isDisabled: boolean;
     onClick: () => void;
 }
 
-type RenderGoToPage = (props: RenderGoToPageProps) => React.ReactElement;
+export type RenderGoToPage = (props: RenderGoToPageProps) => React.ReactElement;
 
-interface GoToPageProps {
+export interface GoToPageProps {
     children?: RenderGoToPage;
 }
-
-export type { GoToPageMenuItemProps, GoToPageProps, RenderGoToPage, RenderGoToPageProps };

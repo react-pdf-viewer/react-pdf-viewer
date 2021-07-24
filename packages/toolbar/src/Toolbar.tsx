@@ -8,21 +8,19 @@
 
 import * as React from 'react';
 
-import defaultToolbar from './defaultToolbar';
-import ToolbarSlot from './ToolbarSlot';
+import { defaultToolbar } from './defaultToolbar';
+import type { ToolbarSlot } from './types/ToolbarSlot';
 
-type RenderToolbarSlot = (toolbarSlot: ToolbarSlot) => React.ReactElement;
+export type RenderToolbarSlot = (toolbarSlot: ToolbarSlot) => React.ReactElement;
 
 export interface ToolbarProps {
     children?: RenderToolbarSlot;
 }
 
-const Toolbar: React.FC<{
+export const Toolbar: React.FC<{
     children?: RenderToolbarSlot;
     slot: ToolbarSlot;
 }> = ({ children, slot }) => {
     const render = children || defaultToolbar;
     return render(slot);
 };
-
-export default Toolbar;

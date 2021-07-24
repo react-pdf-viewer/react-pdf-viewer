@@ -6,13 +6,13 @@
  * @copyright 2019-2021 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import SpecialZoomLevel from '../SpecialZoomLevel';
+import { SpecialZoomLevel } from '../struct/SpecialZoomLevel';
 
 const SCROLL_BAR_WIDTH = 17;
 const PAGE_PADDING = 8;
 
 // Calculate the scale when user zooms the document to given level
-const calculateScale = (
+export const calculateScale = (
     container: HTMLElement,
     pageHeight: number,
     pageWidth: number,
@@ -32,5 +32,3 @@ const calculateScale = (
             return (container.clientWidth - SCROLL_BAR_WIDTH) / pageWidth;
     }
 };
-
-export default calculateScale;

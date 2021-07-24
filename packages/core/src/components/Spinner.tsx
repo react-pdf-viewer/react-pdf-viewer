@@ -8,12 +8,8 @@
 
 import * as React from 'react';
 
-interface SpinnerProps {
+export const Spinner: React.FC<{
     size?: string;
-}
-
-const Spinner: React.FC<SpinnerProps> = ({ size = '4rem' }) => (
+}> = ({ size = '4rem' }) => (
     <div className="rpv-core__spinner" style={{ height: size, width: size }} />
 );
-
-export default Spinner;

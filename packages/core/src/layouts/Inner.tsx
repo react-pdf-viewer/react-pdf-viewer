@@ -8,21 +8,22 @@
 
 import * as React from 'react';
 
-import PageLayer from '../layers/PageLayer';
-import Slot from '../layouts/Slot';
-import LocalizationContext from '../localization/LocalizationContext';
-import SpecialZoomLevel from '../SpecialZoomLevel';
-import { Plugin } from '../types/Plugin';
-import PluginFunctions from '../types/PluginFunctions';
-import ViewerState from '../types/ViewerState';
-import PdfJs from '../vendors/PdfJs';
-import getFileExt from '../utils/fileExt';
+import { PageLayer } from '../layers/PageLayer';
+import { LocalizationContext } from '../localization/LocalizationContext';
+import { SpecialZoomLevel } from '../struct/SpecialZoomLevel';
+import { getFileExt } from '../utils/getFileExt';
+import { PdfJs } from '../vendors/PdfJs';
 import { DocumentLoadEvent, PageChangeEvent, ZoomEvent } from '../Viewer';
-import calculateScale from './calculateScale';
-import PageSize from './PageSize';
-import { RenderPage } from './RenderPage';
+import { calculateScale } from './calculateScale';
 
-interface InnerProps {
+import type { PageSize } from '../types/PageSize';
+import type { Plugin } from '../types/Plugin';
+import type { PluginFunctions } from '../types/PluginFunctions';
+import type { RenderPage } from '../types/RenderPage';
+import type { Slot } from '../types/Slot';
+import type { ViewerState } from '../types/ViewerState';
+
+export const Inner: React.FC<{
     doc: PdfJs.PdfDocument;
     initialPage?: number;
     pageSize: PageSize;
@@ -33,9 +34,7 @@ interface InnerProps {
     onOpenFile(fileName: string, data: Uint8Array): void;
     onPageChange(e: PageChangeEvent): void;
     onZoom(e: ZoomEvent): void;
-}
-
-const Inner: React.FC<InnerProps> = ({
+}> = ({
     doc,
     initialPage,
     pageSize,
@@ -383,5 +382,3 @@ const Inner: React.FC<InnerProps> = ({
 
     return renderSlot(renderViewer());
 };
-
-export default Inner;

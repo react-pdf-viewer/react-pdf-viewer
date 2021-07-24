@@ -7,11 +7,11 @@
  */
 
 import * as React from 'react';
-import type { Store } from '@react-pdf-viewer/core/lib';
+import type { Store } from '@react-pdf-viewer/core';
 
-import Match from './types/Match';
-import StoreProps from './types/StoreProps';
-import useSearch from './useSearch';
+import { useSearch } from './useSearch';
+import type { Match } from './types/Match';
+import type { StoreProps } from './types/StoreProps';
 
 interface RenderSearchProps {
     clearKeyword(): void;
@@ -35,12 +35,10 @@ export interface SearchProps {
     children: RenderSearch;
 }
 
-const Search: React.FC<{
+export const Search: React.FC<{
     children: RenderSearch;
     store: Store<StoreProps>;
 }> = ({ children, store }) => {
     const result = useSearch(store);
     return children({ ...result });
 };
-
-export default Search;

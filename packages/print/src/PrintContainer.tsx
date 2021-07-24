@@ -7,22 +7,20 @@
  */
 
 import * as React from 'react';
-import type { PdfJs, Store, StoreHandler } from '@react-pdf-viewer/core/lib';
+import type { PdfJs, Store, StoreHandler } from '@react-pdf-viewer/core';
 
-import PrintProgress from './PrintProgress';
-import PrintStatus from './PrintStatus';
-import PrintZone from './PrintZone';
-import StoreProps from './StoreProps';
+import { PrintProgress } from './PrintProgress';
+import { PrintStatus } from './structs/PrintStatus';
+import { PrintZone } from './PrintZone';
+import type { StoreProps } from './types/StoreProps';
 
-interface PrintContainerProps {
+export const PrintContainer: React.FC<{
     doc: PdfJs.PdfDocument;
     pageHeight: number;
     pageWidth: number;
     rotation: number;
     store: Store<StoreProps>;
-}
-
-const PrintContainer: React.FC<PrintContainerProps> = ({ doc, pageHeight, pageWidth, rotation, store }) => {
+}> = ({ doc, pageHeight, pageWidth, rotation, store }) => {
     const [printStatus, setPrintStatus] = React.useState(PrintStatus.Inactive);
     const [numLoadedPagesForPrint, setNumLoadedPagesForPrint] = React.useState(0);
 
@@ -73,5 +71,3 @@ const PrintContainer: React.FC<PrintContainerProps> = ({ doc, pageHeight, pageWi
         </>
     );
 };
-
-export default PrintContainer;

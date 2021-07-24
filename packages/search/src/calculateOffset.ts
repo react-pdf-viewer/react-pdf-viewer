@@ -6,9 +6,9 @@
  * @copyright 2019-2021 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import type { Offset } from '@react-pdf-viewer/core/lib';
+import type { Offset } from '@react-pdf-viewer/core';
 
-const calculateOffset = (children: HTMLElement, parent: HTMLElement): Offset => {
+export const calculateOffset = (children: HTMLElement, parent: HTMLElement): Offset => {
     let top = children.offsetTop;
     let left = children.offsetLeft;
 
@@ -23,5 +23,3 @@ const calculateOffset = (children: HTMLElement, parent: HTMLElement): Offset => 
         top,
     };
 };
-
-export default calculateOffset;

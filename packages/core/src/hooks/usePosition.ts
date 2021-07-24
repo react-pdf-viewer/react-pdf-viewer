@@ -8,12 +8,12 @@
 
 import * as React from 'react';
 
-import useIsomorphicLayoutEffect from '../hooks/useIsomorphicLayoutEffect';
-import Offset from '../portal/Offset';
-import Position from '../portal/Position';
-import calculatePosition from '../utils/calculatePosition';
+import { useIsomorphicLayoutEffect } from '../hooks/useIsomorphicLayoutEffect';
+import { Position } from '../struct/Position';
+import { calculatePosition } from '../utils/calculatePosition';
+import type { Offset } from '../types/Offset';
 
-const usePosition = (
+export const usePosition = (
     contentRef: React.RefObject<HTMLElement>,
     targetRef: React.RefObject<HTMLElement>,
     anchorRef: React.RefObject<HTMLElement>,
@@ -34,5 +34,3 @@ const usePosition = (
         contentEle.style.left = `${left - anchorRect.left}px`;
     }, []);
 };
-
-export default usePosition;

@@ -7,11 +7,11 @@
  */
 
 import { SpecialZoomLevel } from '@react-pdf-viewer/core';
-import type { PdfJs, PluginOnTextLayerRender } from '@react-pdf-viewer/core/lib';
+import type { PdfJs, PluginOnTextLayerRender } from '@react-pdf-viewer/core';
 
-import MatchPosition from './MatchPosition';
+import type { MatchPosition } from './MatchPosition';
 
-export default interface StoreProps {
+export interface StoreProps {
     doc?: PdfJs.PdfDocument;
     keyword?: RegExp[];
     matchPosition?: MatchPosition;

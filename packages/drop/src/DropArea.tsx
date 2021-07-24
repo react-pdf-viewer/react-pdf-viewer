@@ -9,14 +9,14 @@
 import * as React from 'react';
 import { LocalizationContext } from '@react-pdf-viewer/core';
 
-import useDrop from './useDrop';
+import { useDrop } from './useDrop';
 
 interface DropAreaProps {
     containerRef: React.RefObject<HTMLDivElement>;
     openFile(file: File): void;
 }
 
-const DropArea: React.FC<DropAreaProps> = ({ containerRef, openFile }) => {
+export const DropArea: React.FC<DropAreaProps> = ({ containerRef, openFile }) => {
     const { isDragging } = useDrop(containerRef, (files) => {
         if (files.length === 0) {
             return;
@@ -37,5 +37,3 @@ const DropArea: React.FC<DropAreaProps> = ({ containerRef, openFile }) => {
         </>
     );
 };
-
-export default DropArea;

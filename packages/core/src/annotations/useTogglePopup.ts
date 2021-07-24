@@ -8,21 +8,20 @@
 
 import * as React from 'react';
 
-import useToggle, { ToggleStatus } from '../hooks/useToggle';
+import { ToggleStatus } from '../struct/ToggleStatus';
+import { useToggle } from '../hooks/useToggle';
 
 enum TogglePopupBy {
     Click = 'Click',
     Hover = 'Hover',
 }
 
-interface UsePopupResult {
+export const useTogglePopup = (): {
     opened: boolean;
     closeOnHover: () => void;
     openOnHover: () => void;
     toggleOnClick: () => void;
-}
-
-const useTogglePopup = (): UsePopupResult => {
+} => {
     const { opened, toggle } = useToggle();
     const [togglePopupBy, setTooglePopupBy] = React.useState(TogglePopupBy.Hover);
 
@@ -54,5 +53,3 @@ const useTogglePopup = (): UsePopupResult => {
         toggleOnClick,
     };
 };
-
-export default useTogglePopup;

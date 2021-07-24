@@ -6,6 +6,6 @@
  * @copyright 2019-2021 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import type { Plugin } from '@react-pdf-viewer/core/lib';
+import type { Plugin } from '@react-pdf-viewer/core';
 
 export function dropPlugin(): Plugin;

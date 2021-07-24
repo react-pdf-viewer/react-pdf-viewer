@@ -8,15 +8,15 @@
 
 import * as React from 'react';
 
-import useToggle, { Toggle } from '../hooks/useToggle';
-import Offset from './Offset';
-import PopoverBody from './PopoverBody';
-import PopoverOverlay from './PopoverOverlay';
-import Portal, { RenderContent, RenderTarget } from './Portal';
-import Position from './Position';
-import uniqueId from '../utils/uniqueId';
+import { useToggle } from '../hooks/useToggle';
+import { PopoverBody } from './PopoverBody';
+import { PopoverOverlay } from './PopoverOverlay';
+import { RenderContent, RenderTarget } from './Portal';
+import { Position } from '../struct/Position';
+import { uniqueId } from '../utils/uniqueId';
+import type { Offset } from '../types/Offset';
 
-interface PopoverProps {
+export const Popover: React.FC<{
     ariaControlsSuffix?: string;
     ariaHasPopup?: 'dialog' | 'menu';
     closeOnClickOutside: boolean;
@@ -25,9 +25,7 @@ interface PopoverProps {
     offset: Offset;
     position: Position;
     target: RenderTarget;
-}
-
-const Popover: React.FC<PopoverProps> = ({
+}> = ({
     ariaHasPopup = 'dialog',
     ariaControlsSuffix,
     closeOnClickOutside,
@@ -68,5 +66,3 @@ const Popover: React.FC<PopoverProps> = ({
         </div>
     );
 };
-
-export default Popover;

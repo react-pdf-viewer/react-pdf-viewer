@@ -7,6 +7,4 @@
  */
 
 let id = 0;
-const uniqueId = (): number => id++;
-
-export default uniqueId;
+export const uniqueId = (): number => id++;

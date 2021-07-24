@@ -8,19 +8,17 @@
 
 import * as React from 'react';
 
-import PdfJs from '../vendors/PdfJs';
-import Annotation from './Annotation';
-import AnnotationType from './AnnotationType';
-import Popup from './Popup';
+import { PdfJs } from '../vendors/PdfJs';
+import { Annotation } from './Annotation';
+import { AnnotationType } from './AnnotationType';
+import { Popup } from './Popup';
 
-interface HighlightProps {
+export const Highlight: React.FC<{
     annotation: PdfJs.Annotation;
     childAnnotation?: PdfJs.Annotation;
     page: PdfJs.Page;
     viewport: PdfJs.ViewPort;
-}
-
-const Highlight: React.FC<HighlightProps> = ({ annotation, childAnnotation, page, viewport }) => {
+}> = ({ annotation, childAnnotation, page, viewport }) => {
     const hasPopup = annotation.hasPopup === false;
     const isRenderable = !!(annotation.hasPopup || annotation.title || annotation.contents);
 
@@ -80,5 +78,3 @@ const Highlight: React.FC<HighlightProps> = ({ annotation, childAnnotation, page
         </Annotation>
     );
 };
-
-export default Highlight;

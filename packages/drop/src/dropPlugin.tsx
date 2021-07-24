@@ -7,11 +7,11 @@
  */
 
 import * as React from 'react';
-import type { Plugin, RenderViewer, Slot } from '@react-pdf-viewer/core/lib';
+import type { Plugin, RenderViewer, Slot } from '@react-pdf-viewer/core';
 
-import DropArea from './DropArea';
+import { DropArea } from './DropArea';
 
-const dropPlugin = (): Plugin => {
+export const dropPlugin = (): Plugin => {
     const renderViewer = (props: RenderViewer): Slot => {
         const { slot } = props;
 
@@ -42,5 +42,3 @@ const dropPlugin = (): Plugin => {
         renderViewer,
     };
 };
-
-export default dropPlugin;

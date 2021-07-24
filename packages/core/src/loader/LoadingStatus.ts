@@ -8,6 +8,4 @@
 
 export type VerifyPassword = (password: string) => void;
 
-class LoadingStatus {}
-
-export default LoadingStatus;
+export class LoadingStatus {}

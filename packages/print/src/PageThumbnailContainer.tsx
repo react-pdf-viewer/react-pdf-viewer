@@ -7,19 +7,9 @@
  */
 
 import * as React from 'react';
-import type { PdfJs } from '@react-pdf-viewer/core/lib';
+import type { PdfJs } from '@react-pdf-viewer/core';
 
-import PageThumbnail from './PageThumbnail';
-
-interface PageThumbnailContainerProps {
-    canvas: HTMLCanvasElement;
-    doc: PdfJs.PdfDocument;
-    pageHeight: number;
-    pageIndex: number;
-    pageWidth: number;
-    rotation: number;
-    onLoad(): void;
-}
+import { PageThumbnail } from './PageThumbnail';
 
 interface PageState {
     height: number;
@@ -28,7 +18,15 @@ interface PageState {
     width: number;
 }
 
-const PageThumbnailContainer: React.FC<PageThumbnailContainerProps> = ({
+export const PageThumbnailContainer: React.FC<{
+    canvas: HTMLCanvasElement;
+    doc: PdfJs.PdfDocument;
+    pageHeight: number;
+    pageIndex: number;
+    pageWidth: number;
+    rotation: number;
+    onLoad(): void;
+}> = ({
     canvas,
     doc,
     pageHeight,
@@ -75,5 +73,3 @@ const PageThumbnailContainer: React.FC<PageThumbnailContainerProps> = ({
         )
     );
 };
-
-export default PageThumbnailContainer;

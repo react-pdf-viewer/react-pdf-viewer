@@ -8,16 +8,21 @@
 
 import * as React from 'react';
 import { createStore } from '@react-pdf-viewer/core';
-import type { OpenFile, Plugin, ViewerState } from '@react-pdf-viewer/core/lib';
+import type { OpenFile, Plugin, ViewerState } from '@react-pdf-viewer/core';
 
-import Download, { DownloadProps } from './Download';
-import DownloadButton from './DownloadButton';
-import DownloadMenuItem, { DownloadMenuItemProps } from './DownloadMenuItem';
-import getFileName from './getFileName';
+import { Download, DownloadProps } from './Download';
+import { DownloadButton } from './DownloadButton';
+import { DownloadMenuItem, DownloadMenuItemProps } from './DownloadMenuItem';
+import { getFileName } from './getFileName';
+import type { StoreProps } from './types/StoreProps';
 
-import StoreProps from './StoreProps';
+// Export types
+export type {
+    DownloadMenuItemProps,
+    DownloadProps,
+}
 
-interface GetFilePlugin extends Plugin {
+export interface GetFilePlugin extends Plugin {
     Download: (props: DownloadProps) => React.ReactElement;
     DownloadButton: () => React.ReactElement;
     DownloadMenuItem: (props: DownloadMenuItemProps) => React.ReactElement;
@@ -28,7 +33,7 @@ export interface GetFilePluginProps {
     fileNameGenerator?: (file: OpenFile) => string;
 }
 
-const getFilePlugin = (props?: GetFilePluginProps): GetFilePlugin => {
+export const getFilePlugin = (props?: GetFilePluginProps): GetFilePlugin => {
     const store = React.useMemo(() => createStore<StoreProps>({}), []);
 
     const defaultFileNameGenerator = (file: OpenFile) =>
@@ -69,5 +74,3 @@ const getFilePlugin = (props?: GetFilePluginProps): GetFilePlugin => {
         DownloadMenuItem: DownloadMenuItemDecorator,
     };
 };
-
-export default getFilePlugin;

@@ -8,11 +8,9 @@
 
 import * as React from 'react';
 
-interface DropHook {
+export const useDrop = (ref: React.RefObject<HTMLDivElement>, onDrop: (files: FileList) => void): {
     isDragging: boolean;
-}
-
-const useDrop = (ref: React.RefObject<HTMLDivElement>, onDrop: (files: FileList) => void): DropHook => {
+} => {
     const dragCount = React.useRef(0);
     const [isDragging, setDragging] = React.useState(false);
 
@@ -67,5 +65,3 @@ const useDrop = (ref: React.RefObject<HTMLDivElement>, onDrop: (files: FileList)
 
     return { isDragging };
 };
-
-export default useDrop;

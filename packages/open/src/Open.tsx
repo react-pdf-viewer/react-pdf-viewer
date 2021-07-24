@@ -7,14 +7,11 @@
  */
 
 import * as React from 'react';
-import type { Store } from '@react-pdf-viewer/core/lib';
+import type { Store } from '@react-pdf-viewer/core';
 
-import OpenButton from './OpenButton';
-import StoreProps from './StoreProps';
-
-export interface RenderOpenProps {
-    onClick: (e: React.ChangeEvent<HTMLInputElement>) => void;
-}
+import { OpenButton } from './OpenButton';
+import type { RenderOpenProps } from './types/RenderOpenProps';
+import type { StoreProps } from './types/StoreProps';
 
 type RenderOpen = (props: RenderOpenProps) => React.ReactElement;
 
@@ -22,7 +19,7 @@ export interface OpenProps {
     children?: RenderOpen;
 }
 
-const Open: React.FC<{
+export const Open: React.FC<{
     children?: RenderOpen;
     store: Store<StoreProps>;
 }> = ({ store, children }) => {
@@ -44,5 +41,3 @@ const Open: React.FC<{
         onClick: handleOpenFiles,
     });
 };
-
-export default Open;

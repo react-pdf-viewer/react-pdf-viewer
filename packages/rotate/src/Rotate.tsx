@@ -7,17 +7,13 @@
  */
 
 import * as React from 'react';
-import type { Store } from '@react-pdf-viewer/core/lib';
+import type { Store } from '@react-pdf-viewer/core';
 
-import RotateButton from './RotateButton';
-import RotateDirection from './RotateDirection';
-import StoreProps from './StoreProps';
-import useRotation from './useRotation';
-
-export interface RenderRotateProps {
-    direction: RotateDirection;
-    onClick(): void;
-}
+import { RotateButton } from './RotateButton';
+import { RotateDirection } from './structs/RotateDirection';
+import { useRotation } from './useRotation';
+import type { RenderRotateProps } from './types/RenderRotateProps';
+import type { StoreProps } from './types/StoreProps';
 
 type RenderRotate = (props: RenderRotateProps) => React.ReactElement;
 
@@ -26,7 +22,7 @@ export interface RotateProps {
     direction: RotateDirection;
 }
 
-const Rotate: React.FC<{
+export const Rotate: React.FC<{
     children?: RenderRotate;
     direction: RotateDirection;
     store: Store<StoreProps>;
@@ -52,5 +48,3 @@ const Rotate: React.FC<{
         onClick,
     });
 };
-
-export default Rotate;

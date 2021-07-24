@@ -8,16 +8,14 @@
 
 import * as React from 'react';
 
-import PdfJs from '../vendors/PdfJs';
-import Annotation from './Annotation';
+import { PdfJs } from '../vendors/PdfJs';
+import { Annotation } from './Annotation';
 
-interface StampProps {
+export const Stamp: React.FC<{
     annotation: PdfJs.Annotation;
     page: PdfJs.Page;
     viewport: PdfJs.ViewPort;
-}
-
-const Stamp: React.FC<StampProps> = ({ annotation, page, viewport }) => {
+}> = ({ annotation, page, viewport }) => {
     const hasPopup = annotation.hasPopup === false;
     const isRenderable = !!(annotation.hasPopup || annotation.title || annotation.contents);
 
@@ -45,5 +43,3 @@ const Stamp: React.FC<StampProps> = ({ annotation, page, viewport }) => {
         </Annotation>
     );
 };
-
-export default Stamp;

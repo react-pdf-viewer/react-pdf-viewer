@@ -9,10 +9,10 @@
 import * as React from 'react';
 import { LocalizationContext, MenuItem } from '@react-pdf-viewer/core';
 
-import { RenderOpenProps } from './Open';
-import OpenFileIcon from './OpenFileIcon';
+import { OpenFileIcon } from './OpenFileIcon';
+import type { RenderOpenProps } from './types/RenderOpenProps';
 
-const OpenMenuItem: React.FC<RenderOpenProps> = ({ onClick }) => {
+export const OpenMenuItem: React.FC<RenderOpenProps> = ({ onClick }) => {
     const l10n = React.useContext(LocalizationContext);
     const label = l10n && l10n.open ? l10n.open.openFile : 'Open file';
 
@@ -42,5 +42,3 @@ const OpenMenuItem: React.FC<RenderOpenProps> = ({ onClick }) => {
         </MenuItem>
     );
 };
-
-export default OpenMenuItem;

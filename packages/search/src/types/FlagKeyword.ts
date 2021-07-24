@@ -6,7 +6,7 @@
  * @copyright 2019-2021 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-export default interface FlagKeyword {
+export interface FlagKeyword {
     keyword: string;
     matchCase?: boolean; // `false` by default
     wholeWords?: boolean; // `false` by default

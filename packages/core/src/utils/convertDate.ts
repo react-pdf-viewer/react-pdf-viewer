@@ -26,7 +26,7 @@ const parse = (value: string, min: number, max: number, defaultValue: number): n
     return parsed >= min && parsed <= max ? parsed : defaultValue;
 };
 
-const convertDate = (input: string): Date | null => {
+export const convertDate = (input: string): Date | null => {
     const matches = dateRegex.exec(input);
     if (!matches) {
         return null;
@@ -58,5 +58,3 @@ const convertDate = (input: string): Date | null => {
 
     return new Date(Date.UTC(year, month, day, hour, minute, second));
 };
-
-export default convertDate;

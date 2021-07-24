@@ -9,10 +9,10 @@
 import * as React from 'react';
 import { LocalizationContext, MenuItem } from '@react-pdf-viewer/core';
 
-import NextIcon from './NextIcon';
-import { RenderGoToPageProps } from './types/index';
+import { NextIcon } from './NextIcon';
+import type { RenderGoToPageProps } from './types/index';
 
-const GoToNextPageMenuItem: React.FC<RenderGoToPageProps> = ({ isDisabled, onClick }) => {
+export const GoToNextPageMenuItem: React.FC<RenderGoToPageProps> = ({ isDisabled, onClick }) => {
     const l10n = React.useContext(LocalizationContext);
     const label = l10n && l10n.pageNavigation ? l10n.pageNavigation.goToNextPage : 'Next page';
 
@@ -22,5 +22,3 @@ const GoToNextPageMenuItem: React.FC<RenderGoToPageProps> = ({ isDisabled, onCli
         </MenuItem>
     );
 };
-
-export default GoToNextPageMenuItem;

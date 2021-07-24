@@ -6,5 +6,7 @@
  * @copyright 2019-2021 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-export { default as highlightPlugin } from './highlightPlugin';
-export { default as MessageIcon } from './MessageIcon';
+export * from './highlightPlugin';
+
+// Components
+export { MessageIcon } from './MessageIcon';

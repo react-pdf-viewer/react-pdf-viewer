@@ -8,17 +8,15 @@
 
 import * as React from 'react';
 
-import classNames from '../utils/classNames';
+import { classNames } from '../utils/classNames';
 
-interface MinimalButtonProps {
+export const MinimalButton: React.FC<{
     ariaLabel?: string;
     ariaKeyShortcuts?: string;
     isDisabled?: boolean;
     isSelected?: boolean;
     onClick(): void;
-}
-
-const MinimalButton: React.FC<MinimalButtonProps> = ({
+}> = ({
     ariaLabel = '',
     ariaKeyShortcuts = '',
     children,
@@ -41,5 +39,3 @@ const MinimalButton: React.FC<MinimalButtonProps> = ({
         {children}
     </button>
 );
-
-export default MinimalButton;

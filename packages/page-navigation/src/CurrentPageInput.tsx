@@ -8,13 +8,13 @@
 
 import * as React from 'react';
 import { LocalizationContext, TextBox } from '@react-pdf-viewer/core';
-import type { Store } from '@react-pdf-viewer/core/lib';
+import type { Store } from '@react-pdf-viewer/core';
 
-import StoreProps from './StoreProps';
-import useCurrentPage from './useCurrentPage';
-import useNumberOfPages from './useNumberOfPages';
+import { useCurrentPage } from './useCurrentPage';
+import { useNumberOfPages } from './useNumberOfPages';
+import type { StoreProps } from './types/StoreProps';
 
-const CurrentPageInput: React.FC<{
+export const CurrentPageInput: React.FC<{
     store: Store<StoreProps>;
 }> = ({ store }) => {
     const l10n = React.useContext(LocalizationContext);
@@ -88,5 +88,3 @@ const CurrentPageInput: React.FC<{
         </span>
     );
 };
-
-export default CurrentPageInput;

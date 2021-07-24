@@ -8,7 +8,7 @@
 
 import * as React from 'react';
 
-const useEscape = (handler: () => void): void => {
+export const useEscape = (handler: () => void): void => {
     const keyUpHandler = (e: KeyboardEvent): void => {
         if (e.key === 'Escape') {
             handler();
@@ -22,5 +22,3 @@ const useEscape = (handler: () => void): void => {
         };
     }, []);
 };
-
-export default useEscape;

@@ -7,7 +7,7 @@
  */
 
 import * as React from 'react';
-import type { Plugin } from '@react-pdf-viewer/core/lib';
+import type { Plugin } from '@react-pdf-viewer/core';
 
 export interface BookmarkPlugin extends Plugin {
     Bookmarks: () => React.ReactElement;
@@ -15,6 +15,6 @@ export interface BookmarkPlugin extends Plugin {
 
 export function bookmarkPlugin(): BookmarkPlugin;
 
-// Icons
+// Components
 export class DownArrowIcon extends React.Component {}
 export class RightArrowIcon extends React.Component {}

@@ -8,7 +8,7 @@
 
 import * as React from 'react';
 
-const useClickOutside = (
+export const useClickOutside = (
     closeOnClickOutside: boolean,
     targetRef: React.RefObject<HTMLElement>,
     onClickOutside: () => void
@@ -31,5 +31,3 @@ const useClickOutside = (
         };
     }, []);
 };
-
-export default useClickOutside;

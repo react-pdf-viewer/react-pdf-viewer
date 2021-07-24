@@ -8,8 +8,6 @@
 
 import * as React from 'react';
 
-import LocalizationMap from './LocalizationMap';
+import type { LocalizationMap } from '../types/LocalizationMap';
 
-const LocalizationContext = React.createContext<LocalizationMap>({});
-
-export default LocalizationContext;
+export const LocalizationContext = React.createContext<LocalizationMap>({});

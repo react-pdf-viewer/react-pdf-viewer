@@ -7,21 +7,19 @@
  */
 
 import * as React from 'react';
-import type { PdfJs, Store } from '@react-pdf-viewer/core/lib';
+import type { PdfJs, Store } from '@react-pdf-viewer/core';
 
-import BookmarkItem from './BookmarkItem';
-import StoreProps from './StoreProps';
+import { BookmarkItem } from './BookmarkItem';
+import type { StoreProps } from './types/StoreProps';
 
-interface BookmarkListProps {
+export const BookmarkList: React.FC<{
     bookmarks: PdfJs.Outline[];
     depth: number;
     doc: PdfJs.PdfDocument;
     isRoot: boolean;
     store: Store<StoreProps>;
     onJumpToDest(dest: PdfJs.OutlineDestinationType): void;
-}
-
-const BookmarkList: React.FC<BookmarkListProps> = ({ bookmarks, depth = 0, doc, isRoot, store, onJumpToDest }) => (
+}> = ({ bookmarks, depth = 0, doc, isRoot, store, onJumpToDest }) => (
     <ul className="rpv-bookmark__list" role={isRoot ? 'tree' : 'group'} tabIndex={-1}>
         {bookmarks.map((bookmark, index) => (
             <BookmarkItem
@@ -37,5 +35,3 @@ const BookmarkList: React.FC<BookmarkListProps> = ({ bookmarks, depth = 0, doc, 
         ))}
     </ul>
 );
-
-export default BookmarkList;

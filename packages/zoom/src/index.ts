@@ -6,6 +6,8 @@
  * @copyright 2019-2021 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-export { default as ZoomInIcon } from './ZoomInIcon';
-export { default as ZoomOutIcon } from './ZoomOutIcon';
-export { default as zoomPlugin } from './zoomPlugin';
+export * from './zoomPlugin';
+
+// Components
+export { ZoomInIcon } from './ZoomInIcon';
+export { ZoomOutIcon } from './ZoomOutIcon';

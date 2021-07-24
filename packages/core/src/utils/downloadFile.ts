@@ -6,11 +6,10 @@
  * @copyright 2019-2021 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import getFileName from './fileName';
+import { getFileName } from './getFileName';
+import { PdfJs } from '../vendors/PdfJs';
 
-import PdfJs from '../vendors/PdfJs';
-
-const downloadFile = (url: string, data: PdfJs.FileData): void => {
+export const downloadFile = (url: string, data: PdfJs.FileData): void => {
     const blobUrl = typeof data === 'string' ? '' : URL.createObjectURL(new Blob([data], { type: '' }));
     const link = document.createElement('a');
     link.style.display = 'none';
@@ -25,5 +24,3 @@ const downloadFile = (url: string, data: PdfJs.FileData): void => {
         URL.revokeObjectURL(blobUrl);
     }
 };
-
-export default downloadFile;

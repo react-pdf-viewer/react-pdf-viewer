@@ -28,23 +28,26 @@ import type {
     RenderViewer,
     ViewerState,
     PluginOnTextLayerRender,
-} from '@react-pdf-viewer/core/lib';
-import type { FullScreenPlugin, FullScreenPluginProps } from '@react-pdf-viewer/full-screen/lib';
-import type { GetFilePlugin, GetFilePluginProps } from '@react-pdf-viewer/get-file/lib';
-import type { OpenPlugin } from '@react-pdf-viewer/open/lib';
-import type { PageNavigationPlugin } from '@react-pdf-viewer/page-navigation/lib';
-import type { PrintPlugin, PrintPluginProps } from '@react-pdf-viewer/print/lib';
-import type { PropertiesPlugin } from '@react-pdf-viewer/properties/lib';
-import type { RotatePlugin } from '@react-pdf-viewer/rotate/lib';
-import type { ScrollModePlugin, ScrollModePluginProps } from '@react-pdf-viewer/scroll-mode/lib';
-import type { SearchPlugin, SearchPluginProps } from '@react-pdf-viewer/search/lib';
-import type { SelectionModePlugin, SelectionModePluginProps } from '@react-pdf-viewer/selection-mode/lib';
-import type { ThemePlugin } from '@react-pdf-viewer/theme/lib';
-import type { ZoomPlugin, ZoomPluginProps } from '@react-pdf-viewer/zoom/lib';
+} from '@react-pdf-viewer/core';
+import type { FullScreenPlugin, FullScreenPluginProps } from '@react-pdf-viewer/full-screen';
+import type { GetFilePlugin, GetFilePluginProps } from '@react-pdf-viewer/get-file';
+import type { OpenPlugin } from '@react-pdf-viewer/open';
+import type { PageNavigationPlugin } from '@react-pdf-viewer/page-navigation';
+import type { PrintPlugin, PrintPluginProps } from '@react-pdf-viewer/print';
+import type { PropertiesPlugin } from '@react-pdf-viewer/properties';
+import type { RotatePlugin } from '@react-pdf-viewer/rotate';
+import type { ScrollModePlugin, ScrollModePluginProps } from '@react-pdf-viewer/scroll-mode';
+import type { SearchPlugin, SearchPluginProps } from '@react-pdf-viewer/search';
+import type { SelectionModePlugin, SelectionModePluginProps } from '@react-pdf-viewer/selection-mode';
+import type { ThemePlugin } from '@react-pdf-viewer/theme';
+import type { ZoomPlugin, ZoomPluginProps } from '@react-pdf-viewer/zoom';
 
-import Toolbar, { ToolbarProps } from './Toolbar';
+import { Toolbar, ToolbarProps } from './Toolbar';
 
-interface ToolbarPlugin extends Plugin {
+// Export types
+export type { ToolbarProps };
+
+export interface ToolbarPlugin extends Plugin {
     Toolbar: (props: ToolbarProps) => React.ReactElement;
     // Plugins instance
     fullScreenPluginInstance: FullScreenPlugin;
@@ -71,7 +74,7 @@ export interface ToolbarPluginProps {
     zoomPlugin?: ZoomPluginProps;
 }
 
-const toolbarPlugin = (props?: ToolbarPluginProps): ToolbarPlugin => {
+export const toolbarPlugin = (props?: ToolbarPluginProps): ToolbarPlugin => {
     const fullScreenPluginInstance = fullScreenPlugin(props ? props.fullScreenPlugin : {});
     const getFilePluginInstance = getFilePlugin(props ? props.getFilePlugin : {});
     const openPluginInstance = openPlugin();
@@ -239,5 +242,3 @@ const toolbarPlugin = (props?: ToolbarPluginProps): ToolbarPlugin => {
         Toolbar: ToolbarDecorator,
     };
 };
-
-export default toolbarPlugin;

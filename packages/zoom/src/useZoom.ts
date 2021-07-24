@@ -7,11 +7,11 @@
  */
 
 import * as React from 'react';
-import type { Store, StoreHandler } from '@react-pdf-viewer/core/lib';
+import type { Store, StoreHandler } from '@react-pdf-viewer/core';
 
-import StoreProps from './StoreProps';
+import type { StoreProps } from './types/StoreProps';
 
-const useZoom = (store: Store<StoreProps>): { scale: number } => {
+export const useZoom = (store: Store<StoreProps>): { scale: number } => {
     const [scale, setScale] = React.useState(store.get('scale') || 0);
 
     const handleScaleChanged: StoreHandler<number> = (currentScale: number) => {
@@ -28,5 +28,3 @@ const useZoom = (store: Store<StoreProps>): { scale: number } => {
 
     return { scale };
 };
-
-export default useZoom;

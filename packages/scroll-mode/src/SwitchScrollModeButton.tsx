@@ -9,12 +9,12 @@
 import * as React from 'react';
 import { MinimalButton, Position, Tooltip } from '@react-pdf-viewer/core';
 
-import { RenderSwitchScrollModeProps } from './SwitchScrollMode';
-import SwitchScrollModeDecorator from './SwitchScrollModeDecorator';
+import { SwitchScrollModeDecorator } from './SwitchScrollModeDecorator';
+import type { RenderSwitchScrollModeProps } from './types/RenderSwitchScrollModeProps';
 
 const TOOLTIP_OFFSET = { left: 0, top: 8 };
 
-const SwitchScrollModeButton: React.FC<RenderSwitchScrollModeProps> = ({ isSelected, mode, onClick }) => (
+export const SwitchScrollModeButton: React.FC<RenderSwitchScrollModeProps> = ({ isSelected, mode, onClick }) => (
     <SwitchScrollModeDecorator mode={mode} onClick={onClick}>
         {(props) => (
             <Tooltip
@@ -31,5 +31,3 @@ const SwitchScrollModeButton: React.FC<RenderSwitchScrollModeProps> = ({ isSelec
         )}
     </SwitchScrollModeDecorator>
 );
-
-export default SwitchScrollModeButton;

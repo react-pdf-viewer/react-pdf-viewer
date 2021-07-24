@@ -8,22 +8,31 @@
 
 import * as React from 'react';
 import { createStore, SpecialZoomLevel } from '@react-pdf-viewer/core';
-import type { Plugin, PluginFunctions, RenderViewer, Slot, ViewerState } from '@react-pdf-viewer/core/lib';
+import type { Plugin, PluginFunctions, RenderViewer, Slot, ViewerState } from '@react-pdf-viewer/core';
 
-import CurrentScale, { CurrentScaleProps } from './CurrentScale';
-import ShortcutHandler from './ShortcutHandler';
-import StoreProps from './StoreProps';
-import { ZoomMenuItemProps } from './types';
-import Zoom, { ZoomProps } from './Zoom';
-import ZoomIn, { ZoomInProps } from './ZoomIn';
-import ZoomOut, { ZoomOutProps } from './ZoomOut';
-import ZoomInButton from './ZoomInButton';
-import ZoomInMenuItem from './ZoomInMenuItem';
-import ZoomOutButton from './ZoomOutButton';
-import ZoomOutMenuItem from './ZoomOutMenuItem';
-import ZoomPopover from './ZoomPopover';
+import { CurrentScale, CurrentScaleProps } from './CurrentScale';
+import { ShortcutHandler } from './ShortcutHandler';
+import { Zoom, ZoomProps } from './Zoom';
+import { ZoomIn, ZoomInProps } from './ZoomIn';
+import { ZoomOut, ZoomOutProps } from './ZoomOut';
+import { ZoomInButton } from './ZoomInButton';
+import { ZoomInMenuItem } from './ZoomInMenuItem';
+import { ZoomOutButton } from './ZoomOutButton';
+import { ZoomOutMenuItem } from './ZoomOutMenuItem';
+import { ZoomPopover } from './ZoomPopover';
+import type { StoreProps } from './types/StoreProps';
+import type { ZoomMenuItemProps } from './types/ZoomMenuItemProps';
 
-interface ZoomPlugin extends Plugin {
+// Export types
+export type {
+    CurrentScaleProps,
+    ZoomInProps,
+    ZoomMenuItemProps,
+    ZoomOutProps,
+    ZoomProps,
+};
+
+export interface ZoomPlugin extends Plugin {
     zoomTo: (scale: number | SpecialZoomLevel) => void;
     CurrentScale: (props: CurrentScaleProps) => React.ReactElement;
     ZoomIn: (props: ZoomInProps) => React.ReactElement;
@@ -40,7 +49,7 @@ export interface ZoomPluginProps {
     enableShortcuts?: boolean;
 }
 
-const zoomPlugin = (props?: ZoomPluginProps): ZoomPlugin => {
+export const zoomPlugin = (props?: ZoomPluginProps): ZoomPlugin => {
     const zoomPluginProps = React.useMemo(() => Object.assign({}, { enableShortcuts: true }, props), []);
     const store = React.useMemo(() => createStore<StoreProps>({}), []);
 
@@ -131,5 +140,3 @@ const zoomPlugin = (props?: ZoomPluginProps): ZoomPlugin => {
         ZoomPopover: ZoomPopoverDecorator,
     };
 };
-
-export default zoomPlugin;

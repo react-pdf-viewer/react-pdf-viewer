@@ -7,11 +7,11 @@
  */
 
 import * as React from 'react';
-import type { PdfJs, Store, StoreHandler } from '@react-pdf-viewer/core/lib';
+import type { PdfJs, Store, StoreHandler } from '@react-pdf-viewer/core';
 
-import StoreProps from './types/StoreProps';
+import type { StoreProps } from './types/StoreProps';
 
-const useDocument = (store: Store<StoreProps>): React.MutableRefObject<PdfJs.PdfDocument> => {
+export const useDocument = (store: Store<StoreProps>): React.MutableRefObject<PdfJs.PdfDocument> => {
     // We use a _ref_ here to track the current document instead of `useState`
     // Because `useDocument` is used directly in `searchPlugin`, it can cause a re-render
     const currentDocRef = React.useRef(store.get('doc'));
@@ -30,5 +30,3 @@ const useDocument = (store: Store<StoreProps>): React.MutableRefObject<PdfJs.Pdf
 
     return currentDocRef;
 };
-
-export default useDocument;

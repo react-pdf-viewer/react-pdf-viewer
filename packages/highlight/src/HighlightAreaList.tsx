@@ -7,18 +7,18 @@
  */
 
 import * as React from 'react';
-import type { Store } from '@react-pdf-viewer/core/lib';
+import type { Store } from '@react-pdf-viewer/core';
 
 import { getCssProperties } from './transformArea';
-import HighlightRect from './HighlightRect';
+import { HighlightRect } from './HighlightRect';
 import { NO_SELECTION_STATE, HighlightState, SelectedState, SelectionState } from './SelectionState';
-import StoreProps from './StoreProps';
-import RenderHighlightContentProps from './types/RenderHighlightContentProps';
-import RenderHighlightTargetProps from './types/RenderHighlightTargetProps';
-import RenderHighlightsProps from './types/RenderHighlightsProps';
-import useRotation from './useRotation';
+import { useRotation } from './useRotation';
+import type { RenderHighlightContentProps } from './types/RenderHighlightContentProps';
+import type { RenderHighlightTargetProps } from './types/RenderHighlightTargetProps';
+import type { RenderHighlightsProps } from './types/RenderHighlightsProps';
+import type { StoreProps } from './types/StoreProps';
 
-const HighlightAreaList: React.FC<{
+export const HighlightAreaList: React.FC<{
     pageIndex: number;
     renderHighlightContent?(props: RenderHighlightContentProps): React.ReactElement;
     renderHighlightTarget?(props: RenderHighlightTargetProps): React.ReactElement;
@@ -100,5 +100,3 @@ const HighlightAreaList: React.FC<{
         </>
     );
 };
-
-export default HighlightAreaList;

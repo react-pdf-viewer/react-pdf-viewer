@@ -8,12 +8,12 @@
 
 import * as React from 'react';
 import { Spinner } from '@react-pdf-viewer/core';
-import type { PdfJs, Store, StoreHandler } from '@react-pdf-viewer/core/lib';
+import type { PdfJs, Store, StoreHandler } from '@react-pdf-viewer/core';
 
-import AttachmentLoader from './AttachmentLoader';
-import StoreProps from './StoreProps';
+import { AttachmentLoader } from './AttachmentLoader';
+import type { StoreProps } from './types/StoreProps';
 
-const AttachmentListWithStore: React.FC<{
+export const AttachmentListWithStore: React.FC<{
     store: Store<StoreProps>;
 }> = ({ store }) => {
     const [currentDoc, setCurrentDoc] = React.useState(store.get('doc'));
@@ -38,5 +38,3 @@ const AttachmentListWithStore: React.FC<{
         </div>
     );
 };
-
-export default AttachmentListWithStore;

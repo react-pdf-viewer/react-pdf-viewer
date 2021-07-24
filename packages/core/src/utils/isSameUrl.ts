@@ -6,10 +6,10 @@
  * @copyright 2019-2021 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import PdfJs from '../vendors/PdfJs';
+import { PdfJs } from '../vendors/PdfJs';
 
 // Return `true` if `a` is the same as `b`
-const isSameUrl = (a: PdfJs.FileData, b: PdfJs.FileData): boolean => {
+export const isSameUrl = (a: PdfJs.FileData, b: PdfJs.FileData): boolean => {
     const typeA = typeof a;
     const typeB = typeof b;
 
@@ -21,5 +21,3 @@ const isSameUrl = (a: PdfJs.FileData, b: PdfJs.FileData): boolean => {
     }
     return false;
 };
-
-export default isSameUrl;

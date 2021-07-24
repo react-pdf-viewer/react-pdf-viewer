@@ -7,7 +7,7 @@
  */
 
 import * as React from 'react';
-import type { OpenFile, Plugin } from '@react-pdf-viewer/core/lib';
+import type { OpenFile, Plugin } from '@react-pdf-viewer/core';
 
 export interface RenderDownloadProps {
     onClick(): void;

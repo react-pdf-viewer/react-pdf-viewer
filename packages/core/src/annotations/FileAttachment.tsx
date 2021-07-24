@@ -8,17 +8,15 @@
 
 import * as React from 'react';
 
-import downloadFile from '../utils/downloadFile';
-import PdfJs from '../vendors/PdfJs';
-import Annotation from './Annotation';
+import { downloadFile } from '../utils/downloadFile';
+import { PdfJs } from '../vendors/PdfJs';
+import { Annotation } from './Annotation';
 
-interface FileAttachmentProps {
+export const FileAttachment: React.FC<{
     annotation: PdfJs.Annotation;
     page: PdfJs.Page;
     viewport: PdfJs.ViewPort;
-}
-
-const FileAttachment: React.FC<FileAttachmentProps> = ({ annotation, page, viewport }) => {
+}> = ({ annotation, page, viewport }) => {
     const hasPopup = annotation.hasPopup === false && (!!annotation.title || !!annotation.contents);
 
     const doubleClick = (): void => {
@@ -51,5 +49,3 @@ const FileAttachment: React.FC<FileAttachmentProps> = ({ annotation, page, viewp
         </Annotation>
     );
 };
-
-export default FileAttachment;

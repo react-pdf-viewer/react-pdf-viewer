@@ -8,12 +8,6 @@
 
 import * as React from 'react';
 
-interface ModalOverlayProps {
-    children?: React.ReactNode;
-}
-
-const ModalOverlay: React.FC<ModalOverlayProps> = ({ children }) => (
+export const ModalOverlay: React.FC = ({ children }) => (
     <div className="rpv-core__modal-overlay">{children}</div>
 );
-
-export default ModalOverlay;

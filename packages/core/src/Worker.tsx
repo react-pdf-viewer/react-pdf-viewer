@@ -8,15 +8,11 @@
 
 import * as React from 'react';
 
-import PdfJs from './vendors/PdfJs';
+import { PdfJs } from './vendors/PdfJs';
 
-interface WorkerProps {
+export const Worker: React.FC<{
     workerUrl: string;
-}
-
-const Worker: React.FC<WorkerProps> = ({ children, workerUrl }) => {
+}> = ({ children, workerUrl }) => {
     PdfJs.GlobalWorkerOptions.workerSrc = workerUrl;
     return <>{children}</>;
 };
-
-export default Worker;

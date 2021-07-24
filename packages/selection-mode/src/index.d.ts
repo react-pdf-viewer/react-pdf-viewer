@@ -7,7 +7,7 @@
  */
 
 import * as React from 'react';
-import type { Plugin } from '@react-pdf-viewer/core/lib';
+import type { Plugin } from '@react-pdf-viewer/core';
 
 export enum SelectionMode {
     Hand = 'Hand',
@@ -46,9 +46,8 @@ export interface SelectionModePluginProps {
 
 export function selectionModePlugin(props?: SelectionModePluginProps): SelectionModePlugin;
 
-// -----
-// Icons
-// -----
+// Components
+// ----------
 
 export class HandToolIcon extends React.Component {}
 export class TextSelectionIcon extends React.Component {}

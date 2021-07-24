@@ -7,7 +7,7 @@
  */
 
 import * as React from 'react';
-import type { Plugin } from '@react-pdf-viewer/core/lib';
+import type { Plugin } from '@react-pdf-viewer/core';
 
 export interface ShowPropertiesMenuItemProps {
     onClick: () => void;

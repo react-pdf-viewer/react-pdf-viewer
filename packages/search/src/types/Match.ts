@@ -6,7 +6,7 @@
  * @copyright 2019-2021 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-export default interface Result {
+export interface Match {
     keyword: RegExp;
     // The index of match in the page
     // Each page may have multiple matches

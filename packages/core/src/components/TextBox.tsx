@@ -8,16 +8,14 @@
 
 import * as React from 'react';
 
-interface TextBoxProps {
+export const TextBox: React.FC<{
     ariaLabel?: string;
     placeholder?: string;
     type?: string;
     value?: string;
     onChange: (value: string) => void;
     onKeyDown?: (e: React.KeyboardEvent) => void;
-}
-
-const TextBox: React.FC<TextBoxProps> = ({
+}> = ({
     ariaLabel = '',
     placeholder = '',
     type = 'text',
@@ -35,5 +33,3 @@ const TextBox: React.FC<TextBoxProps> = ({
         onKeyDown={onKeyDown}
     />
 );
-
-export default TextBox;

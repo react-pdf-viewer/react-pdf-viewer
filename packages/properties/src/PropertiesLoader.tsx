@@ -8,16 +8,14 @@
 
 import * as React from 'react';
 import { Spinner } from '@react-pdf-viewer/core';
-import type { PdfJs } from '@react-pdf-viewer/core/lib';
+import type { PdfJs } from '@react-pdf-viewer/core';
 
-import PropertiesData from './PropertiesData';
+import type { PropertiesData } from './types/PropertiesData';
 
-interface PropertiesLoaderProps {
+export const PropertiesLoader: React.FC<{
     doc: PdfJs.PdfDocument;
     render(doc: PropertiesData): React.ReactElement;
-}
-
-const PropertiesLoader: React.FC<PropertiesLoaderProps> = ({ doc, render }) => {
+}> = ({ doc, render }) => {
     const [data, setData] = React.useState<PropertiesData>();
 
     React.useEffect(() => {
@@ -47,5 +45,3 @@ const PropertiesLoader: React.FC<PropertiesLoaderProps> = ({ doc, render }) => {
         </div>
     );
 };
-
-export default PropertiesLoader;

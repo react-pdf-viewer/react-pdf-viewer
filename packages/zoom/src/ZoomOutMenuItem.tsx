@@ -9,10 +9,10 @@
 import * as React from 'react';
 import { LocalizationContext, MenuItem } from '@react-pdf-viewer/core';
 
-import { ZoomMenuItemProps } from './types';
-import ZoomOutIcon from './ZoomOutIcon';
+import { ZoomOutIcon } from './ZoomOutIcon';
+import type { ZoomMenuItemProps } from './types/ZoomMenuItemProps';
 
-const ZoomOutMenuItem: React.FC<ZoomMenuItemProps> = ({ onClick }) => {
+export const ZoomOutMenuItem: React.FC<ZoomMenuItemProps> = ({ onClick }) => {
     const l10n = React.useContext(LocalizationContext);
     const label = l10n && l10n.zoom ? l10n.zoom.zoomOut : 'Zoom out';
 
@@ -22,5 +22,3 @@ const ZoomOutMenuItem: React.FC<ZoomMenuItemProps> = ({ onClick }) => {
         </MenuItem>
     );
 };
-
-export default ZoomOutMenuItem;

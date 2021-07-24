@@ -8,12 +8,9 @@
 
 import * as React from 'react';
 
-interface IconProps {
-    children?: React.ReactNode;
+export const Icon: React.FC<{
     size?: number;
-}
-
-const Icon: React.FC<IconProps> = ({ children, size = 24 }) => {
+}> = ({ children, size = 24 }) => {
     const width = `${size || 24}px`;
 
     return (
@@ -29,5 +26,3 @@ const Icon: React.FC<IconProps> = ({ children, size = 24 }) => {
         </svg>
     );
 };
-
-export default Icon;

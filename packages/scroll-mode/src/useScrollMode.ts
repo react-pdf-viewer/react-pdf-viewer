@@ -7,17 +7,15 @@
  */
 
 import * as React from 'react';
-import type { Store, StoreHandler } from '@react-pdf-viewer/core/lib';
+import type { Store, StoreHandler } from '@react-pdf-viewer/core';
 
-import ScrollMode from './ScrollMode';
-import StoreProps from './StoreProps';
+import { ScrollMode } from './structs/ScrollMode';
+import type { StoreProps } from './types/StoreProps';
 
-interface UseScrollMode {
+export const useScrollMode = (store: Store<StoreProps>): {
     scrollMode: ScrollMode;
     switchTo: (newScrollMode: ScrollMode) => void;
-}
-
-const useScrollMode = (store: Store<StoreProps>): UseScrollMode => {
+} => {
     const [scrollMode, setScrollMode] = React.useState(store.get('scrollMode') || ScrollMode.Vertical);
 
     const switchTo = (newScrollMode: ScrollMode) => {
@@ -69,5 +67,3 @@ const useScrollMode = (store: Store<StoreProps>): UseScrollMode => {
 
     return { scrollMode, switchTo };
 };
-
-export default useScrollMode;

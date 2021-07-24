@@ -8,29 +8,29 @@
 
 import * as React from 'react';
 
-import SpecialZoomLevel from '../SpecialZoomLevel';
-import { Plugin } from '../types/Plugin';
-import PdfJs from '../vendors/PdfJs';
-import AnnotationType from './AnnotationType';
-import Caret from './Caret';
-import Circle from './Circle';
-import FileAttachment from './FileAttachment';
-import FreeText from './FreeText';
-import Highlight from './Highlight';
-import Ink from './Ink';
-import Line from './Line';
-import Link from './Link';
-import Polygon from './Polygon';
-import Polyline from './Polyline';
-import Popup from './Popup';
-import Square from './Square';
-import Squiggly from './Squiggly';
-import Stamp from './Stamp';
-import StrikeOut from './StrikeOut';
-import Text from './Text';
-import Underline from './Underline';
+import { SpecialZoomLevel } from '../struct/SpecialZoomLevel';
+import { PdfJs } from '../vendors/PdfJs';
+import { AnnotationType } from './AnnotationType';
+import { Caret } from './Caret';
+import { Circle } from './Circle';
+import { FileAttachment } from './FileAttachment';
+import { FreeText } from './FreeText';
+import { Highlight } from './Highlight';
+import { Ink } from './Ink';
+import { Line } from './Line';
+import { Link } from './Link';
+import { Polygon } from './Polygon';
+import { Polyline } from './Polyline';
+import { Popup } from './Popup';
+import { Square } from './Square';
+import { Squiggly } from './Squiggly';
+import { Stamp } from './Stamp';
+import { StrikeOut } from './StrikeOut';
+import { Text } from './Text';
+import { Underline } from './Underline';
+import type { Plugin } from '../types/Plugin';
 
-interface AnnotationLayerBodyProps {
+export const AnnotationLayerBody: React.FC<{
     annotations: PdfJs.Annotation[];
     containerRef: React.RefObject<HTMLDivElement | null>;
     doc: PdfJs.PdfDocument;
@@ -41,9 +41,7 @@ interface AnnotationLayerBodyProps {
     scale: number;
     onExecuteNamedAction(action: string): void;
     onJumpToDest(pageIndex: number, bottomOffset: number, leftOffset: number, scaleTo: number | SpecialZoomLevel): void;
-}
-
-const AnnotationLayerBody: React.FC<AnnotationLayerBodyProps> = ({
+}> = ({
     annotations,
     containerRef,
     doc,
@@ -214,5 +212,3 @@ const AnnotationLayerBody: React.FC<AnnotationLayerBodyProps> = ({
         </>
     );
 };
-
-export default AnnotationLayerBody;

@@ -9,10 +9,10 @@
 import * as React from 'react';
 import { LocalizationContext } from '@react-pdf-viewer/core';
 
-import HorizontalScrollingIcon from './HorizontalScrollingIcon';
-import ScrollMode from './ScrollMode';
-import VerticalScrollingIcon from './VerticalScrollingIcon';
-import WrappedScrollingIcon from './WrappedScrollingIcon';
+import { HorizontalScrollingIcon } from './HorizontalScrollingIcon';
+import { ScrollMode } from './structs/ScrollMode';
+import { VerticalScrollingIcon } from './VerticalScrollingIcon';
+import { WrappedScrollingIcon } from './WrappedScrollingIcon';
 
 interface RenderChildren {
     icon: React.ReactElement;
@@ -20,13 +20,11 @@ interface RenderChildren {
     onClick(): void;
 }
 
-interface SwitchScrollModeDecoratorProps {
+export const SwitchScrollModeDecorator: React.FC<{
     children(props: RenderChildren): React.ReactElement;
     mode: ScrollMode;
     onClick(): void;
-}
-
-const SwitchScrollModeDecorator: React.FC<SwitchScrollModeDecoratorProps> = ({ children, mode, onClick }) => {
+}> = ({ children, mode, onClick }) => {
     const l10n = React.useContext(LocalizationContext);
 
     let label = '';
@@ -52,5 +50,3 @@ const SwitchScrollModeDecorator: React.FC<SwitchScrollModeDecoratorProps> = ({ c
 
     return children({ icon, label, onClick });
 };
-
-export default SwitchScrollModeDecorator;

@@ -7,11 +7,11 @@
  */
 
 import * as React from 'react';
-import type { Store, StoreHandler } from '@react-pdf-viewer/core/lib';
+import type { Store, StoreHandler } from '@react-pdf-viewer/core';
 
-import StoreProps from './StoreProps';
+import type { StoreProps } from './types/StoreProps';
 
-const useNumberOfPages = (store: Store<StoreProps>): { numberOfPages: number } => {
+export const useNumberOfPages = (store: Store<StoreProps>): { numberOfPages: number } => {
     // It's safer to set the initial state from `store.get('numberOfPages')` instead of `0`.
     // There's a case that a component is loaded within a portal
     // so the hook `useEffect` usage below isn't triggered
@@ -31,5 +31,3 @@ const useNumberOfPages = (store: Store<StoreProps>): { numberOfPages: number } =
 
     return { numberOfPages };
 };
-
-export default useNumberOfPages;

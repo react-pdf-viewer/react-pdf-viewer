@@ -7,14 +7,13 @@
  */
 
 import * as React from 'react';
-import { attachmentPlugin } from '@react-pdf-viewer/attachment';
+import * as Attachment from '@react-pdf-viewer/attachment';
 import { bookmarkPlugin } from '@react-pdf-viewer/bookmark';
 import { createStore } from '@react-pdf-viewer/core';
 import { thumbnailPlugin } from '@react-pdf-viewer/thumbnail';
 import { toolbarPlugin } from '@react-pdf-viewer/toolbar';
 
-import type { AttachmentPlugin } from '@react-pdf-viewer/attachment/lib';
-import type { BookmarkPlugin } from '@react-pdf-viewer/bookmark/lib';
+import type { BookmarkPlugin } from '@react-pdf-viewer/bookmark';
 import type {
     Plugin,
     PluginFunctions,
@@ -23,16 +22,16 @@ import type {
     ViewerState,
     PluginOnAnnotationLayerRender,
     PluginOnTextLayerRender,
-} from '@react-pdf-viewer/core/lib';
-import type { ThumbnailPlugin } from '@react-pdf-viewer/thumbnail/lib';
-import type { ToolbarPlugin, ToolbarPluginProps, ToolbarProps } from '@react-pdf-viewer/toolbar/lib';
+} from '@react-pdf-viewer/core';
+import type { ThumbnailPlugin } from '@react-pdf-viewer/thumbnail';
+import type { ToolbarPlugin, ToolbarPluginProps, ToolbarProps } from '@react-pdf-viewer/toolbar';
 
-import Sidebar, { SidebarTab } from './Sidebar';
-import StoreProps from './StoreProps';
+import { Sidebar, SidebarTab } from './Sidebar';
+import type { StoreProps } from './types/StoreProps';
 
 export interface DefaultLayoutPlugin extends Plugin {
     activateTab(index: number): void;
-    attachmentPluginInstance: AttachmentPlugin;
+    attachmentPluginInstance: Attachment.AttachmentPlugin;
     bookmarkPluginInstance: BookmarkPlugin;
     thumbnailPluginInstance: ThumbnailPlugin;
     toolbarPluginInstance: ToolbarPlugin;
@@ -44,7 +43,7 @@ export interface DefaultLayoutPluginProps {
     sidebarTabs?: (defaultTabs: SidebarTab[]) => SidebarTab[];
 }
 
-const defaultLayoutPlugin = (props?: DefaultLayoutPluginProps): DefaultLayoutPlugin => {
+export const defaultLayoutPlugin = (props?: DefaultLayoutPluginProps): DefaultLayoutPlugin => {
     const store = React.useMemo(
         () =>
             createStore<StoreProps>({
@@ -53,7 +52,7 @@ const defaultLayoutPlugin = (props?: DefaultLayoutPluginProps): DefaultLayoutPlu
         []
     );
 
-    const attachmentPluginInstance = attachmentPlugin();
+    const attachmentPluginInstance = Attachment.attachmentPlugin();
     const bookmarkPluginInstance = bookmarkPlugin();
     const thumbnailPluginInstance = thumbnailPlugin();
     const toolbarPluginInstance = toolbarPlugin(props ? props.toolbarPlugin : {});
@@ -167,5 +166,3 @@ const defaultLayoutPlugin = (props?: DefaultLayoutPluginProps): DefaultLayoutPlu
         },
     };
 };
-
-export default defaultLayoutPlugin;

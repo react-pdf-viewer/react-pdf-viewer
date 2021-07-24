@@ -9,12 +9,12 @@
 import * as React from 'react';
 import { LocalizationContext, MinimalButton, Position, Tooltip } from '@react-pdf-viewer/core';
 
-import { RenderOpenProps } from './Open';
-import OpenFileIcon from './OpenFileIcon';
+import { OpenFileIcon } from './OpenFileIcon';
+import type { RenderOpenProps } from './types/RenderOpenProps';
 
 const TOOLTIP_OFFSET = { left: 0, top: 8 };
 
-const OpenButton: React.FC<RenderOpenProps> = ({ onClick }) => {
+export const OpenButton: React.FC<RenderOpenProps> = ({ onClick }) => {
     const l10n = React.useContext(LocalizationContext);
     const label = l10n && l10n.open ? l10n.open.openFile : 'Open file';
 
@@ -52,5 +52,3 @@ const OpenButton: React.FC<RenderOpenProps> = ({ onClick }) => {
         />
     );
 };
-
-export default OpenButton;

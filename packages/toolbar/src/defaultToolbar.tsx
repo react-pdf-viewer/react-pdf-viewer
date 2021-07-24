@@ -8,10 +8,10 @@
 
 import * as React from 'react';
 
-import MoreActionsPopover from './MoreActionsPopover';
-import ToolbarSlot from './ToolbarSlot';
+import { MoreActionsPopover } from './MoreActionsPopover';
+import type { ToolbarSlot } from './types/ToolbarSlot';
 
-const defaultToolbar = (toolbarSlot: ToolbarSlot): React.ReactElement => {
+export const defaultToolbar = (toolbarSlot: ToolbarSlot): React.ReactElement => {
     const {
         CurrentPageInput,
         Download,
@@ -97,5 +97,3 @@ const defaultToolbar = (toolbarSlot: ToolbarSlot): React.ReactElement => {
         </div>
     );
 };
-
-export default defaultToolbar;

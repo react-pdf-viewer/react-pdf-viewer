@@ -8,17 +8,15 @@
 
 import * as React from 'react';
 
-import CheckIcon from '../icons/CheckIcon';
-import classNames from '../utils/classNames';
+import { CheckIcon } from '../icons/CheckIcon';
+import { classNames } from '../utils/classNames';
 
-interface MenuItemProps {
+export const MenuItem: React.FC<{
     checked?: boolean;
     icon?: React.ReactElement;
     isDisabled?: boolean;
     onClick(): void;
-}
-
-const MenuItem: React.FC<MenuItemProps> = ({ checked = false, children, icon = null, isDisabled = false, onClick }) => (
+}> = ({ checked = false, children, icon = null, isDisabled = false, onClick }) => (
     <button
         className={classNames({
             'rpv-core__menu-item': true,
@@ -34,5 +32,3 @@ const MenuItem: React.FC<MenuItemProps> = ({ checked = false, children, icon = n
         <div className="rpv-core__menu-item-check">{checked && <CheckIcon />}</div>
     </button>
 );
-
-export default MenuItem;

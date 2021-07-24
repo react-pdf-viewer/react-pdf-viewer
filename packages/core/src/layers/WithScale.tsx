@@ -8,19 +8,16 @@
 
 import * as React from 'react';
 
-import useIsomorphicLayoutEffect from '../hooks/useIsomorphicLayoutEffect';
+import { useIsomorphicLayoutEffect } from '../hooks/useIsomorphicLayoutEffect';
 
-interface WithScaleProps {
+export const WithScale: React.FC<{
     rotation: number;
     scale: number;
     callback(): void;
-}
-
-const WithScale: React.FC<WithScaleProps> = ({ callback, children, rotation, scale }) => {
+}> = ({ callback, children, rotation, scale }) => {
     useIsomorphicLayoutEffect(() => {
         callback();
     }, [rotation, scale]);
+
     return <>{children}</>;
 };
-
-export default WithScale;

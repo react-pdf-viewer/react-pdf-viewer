@@ -6,12 +6,10 @@
  * @copyright 2019-2021 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-interface HighlightArea {
+export interface HighlightArea {
     height: number;
     left: number;
     pageIndex: number;
     top: number;
     width: number;
 }
-
-export default HighlightArea;

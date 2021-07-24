@@ -8,20 +8,22 @@
 
 import * as React from 'react';
 import { createStore } from '@react-pdf-viewer/core';
-import type { Plugin, PluginFunctions } from '@react-pdf-viewer/core/lib';
+import type { Plugin, PluginFunctions } from '@react-pdf-viewer/core';
 
-import Open, { OpenProps } from './Open';
-import OpenMenuItem from './OpenMenuItem';
+import { Open, OpenProps } from './Open';
+import { OpenMenuItem } from './OpenMenuItem';
+import type { StoreProps } from './types/StoreProps';
 
-import StoreProps from './StoreProps';
+// Export types
+export type { OpenProps };
 
-interface OpenPlugin extends Plugin {
+export interface OpenPlugin extends Plugin {
     Open: (props: OpenProps) => React.ReactElement;
     OpenButton: () => React.ReactElement;
     OpenMenuItem: () => React.ReactElement;
 }
 
-const openPlugin = (): OpenPlugin => {
+export const openPlugin = (): OpenPlugin => {
     const store = React.useMemo(() => createStore<StoreProps>({}), []);
 
     const OpenDecorator = (props: OpenProps) => <Open {...props} store={store} />;
@@ -39,5 +41,3 @@ const openPlugin = (): OpenPlugin => {
         OpenMenuItem: OpenMenuItemDecorator,
     };
 };
-
-export default openPlugin;

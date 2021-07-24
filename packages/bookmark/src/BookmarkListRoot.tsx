@@ -8,24 +8,27 @@
 
 import * as React from 'react';
 import { getDestination, SpecialZoomLevel } from '@react-pdf-viewer/core';
-import type { PdfJs, Store } from '@react-pdf-viewer/core/lib';
+import type { PdfJs, Store } from '@react-pdf-viewer/core';
 
-import BookmarkList from './BookmarkList';
-import StoreProps from './StoreProps';
-
-interface BookmarkListRootProps {
-    bookmarks: PdfJs.Outline[];
-    doc: PdfJs.PdfDocument;
-    store: Store<StoreProps>;
-    onJumpToDest(pageIndex: number, bottomOffset: number, scaleTo: number | SpecialZoomLevel): void;
-}
+import { BookmarkList } from './BookmarkList';
+import type { StoreProps } from './types/StoreProps';
 
 enum Toggle {
     Collapse,
     Expand,
 }
 
-const BookmarkListRoot: React.FC<BookmarkListRootProps> = ({ bookmarks, doc, store, onJumpToDest }) => {
+export const BookmarkListRoot: React.FC<{
+    bookmarks: PdfJs.Outline[];
+    doc: PdfJs.PdfDocument;
+    store: Store<StoreProps>;
+    onJumpToDest(pageIndex: number, bottomOffset: number, scaleTo: number | SpecialZoomLevel): void;
+}> = ({
+    bookmarks,
+    doc,
+    store,
+    onJumpToDest
+}) => {
     const containerRef = React.useRef<HTMLDivElement>();
     const [links, setLinks] = React.useState(store.get('linkAnnotations') || {});
 
@@ -195,5 +198,3 @@ const BookmarkListRoot: React.FC<BookmarkListRootProps> = ({ bookmarks, doc, sto
         </div>
     );
 };
-
-export default BookmarkListRoot;

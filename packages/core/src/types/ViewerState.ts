@@ -6,9 +6,9 @@
  * @copyright 2019-2021 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import OpenFile from '../OpenFile';
+import type { OpenFile } from './OpenFile';
 
-export default interface ViewerState {
+export interface ViewerState {
     // The current opened file. It can be changed from outside, such as user drags and drops an external file
     // or user opens a file from toolbar
     file: OpenFile;

@@ -8,17 +8,16 @@
 
 import * as React from 'react';
 
-import useToggle, { Toggle } from '../hooks/useToggle';
+import { useToggle } from '../hooks/useToggle';
+import type { Toggle } from '../types/Toggle';
 
 export type RenderContent = (toggle: Toggle) => React.ReactNode;
 export type RenderTarget = (toggle: Toggle, opened: boolean) => React.ReactNode;
 
-interface PortalProps {
+export const Portal: React.FC<{
     content: RenderContent;
     target: RenderTarget;
-}
-
-const Portal: React.FC<PortalProps> = ({ content, target }) => {
+}> = ({ content, target }) => {
     const { opened, toggle } = useToggle();
     return (
         <>
@@ -27,5 +26,3 @@ const Portal: React.FC<PortalProps> = ({ content, target }) => {
         </>
     );
 };
-
-export default Portal;

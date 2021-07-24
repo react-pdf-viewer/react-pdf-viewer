@@ -9,13 +9,13 @@
 import * as React from 'react';
 import { LocalizationContext, MenuItem } from '@react-pdf-viewer/core';
 
-import FullScreenIcon from './FullScreenIcon';
+import { FullScreenIcon } from './FullScreenIcon';
 
 export interface EnterFullScreenMenuItemProps {
     onClick(): void;
 }
 
-const EnterFullScreenMenuItem: React.FC<EnterFullScreenMenuItemProps> = ({ onClick }) => {
+export const EnterFullScreenMenuItem: React.FC<EnterFullScreenMenuItemProps> = ({ onClick }) => {
     const l10n = React.useContext(LocalizationContext);
     const label = l10n && l10n.fullScreen ? l10n.fullScreen.enterFullScreen : 'Full screen';
 
@@ -25,5 +25,3 @@ const EnterFullScreenMenuItem: React.FC<EnterFullScreenMenuItemProps> = ({ onCli
         </MenuItem>
     );
 };
-
-export default EnterFullScreenMenuItem;

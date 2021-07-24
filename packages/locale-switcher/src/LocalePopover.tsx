@@ -8,9 +8,9 @@
 
 import * as React from 'react';
 import { LocalizationContext, Menu, MenuItem, MinimalButton, Popover, Position, Tooltip } from '@react-pdf-viewer/core';
-import type { LocalizationMap, Toggle } from '@react-pdf-viewer/core/lib';
+import type { LocalizationMap, Toggle } from '@react-pdf-viewer/core';
 
-import LocaleIcon from './LocaleIcon';
+import { LocaleIcon } from './LocaleIcon';
 
 export interface LocalePopoverProps {
     initialLocale?: string;
@@ -23,7 +23,7 @@ export interface LocalePopoverProps {
     onUpdateLocalization: (localization: LocalizationMap) => void;
 }
 
-const LocalePopover: React.FC<LocalePopoverProps> = ({
+export const LocalePopover: React.FC<LocalePopoverProps> = ({
     initialLocale = 'en_US',
     locales,
     localizations,
@@ -83,5 +83,3 @@ const LocalePopover: React.FC<LocalePopoverProps> = ({
         />
     );
 };
-
-export default LocalePopover;

@@ -7,17 +7,12 @@
  */
 
 import * as React from 'react';
-import type { Store } from '@react-pdf-viewer/core/lib';
+import type { Store } from '@react-pdf-viewer/core';
 
-import SelectionMode from './SelectionMode';
-import StoreProps from './StoreProps';
-import SwitchSelectionModeButton from './SwitchSelectionModeButton';
-
-export interface RenderSwitchSelectionModeProps {
-    isSelected: boolean;
-    mode: SelectionMode;
-    onClick(): void;
-}
+import { SelectionMode } from './structs/SelectionMode';
+import { SwitchSelectionModeButton } from './SwitchSelectionModeButton';
+import type { RenderSwitchSelectionModeProps } from './types/RenderSwitchSelectionModeProps';
+import type { StoreProps } from './types/StoreProps';
 
 type RenderSwitchSelectionMode = (props: RenderSwitchSelectionModeProps) => React.ReactElement;
 
@@ -26,7 +21,7 @@ export interface SwitchSelectionModeProps {
     mode: SelectionMode;
 }
 
-const SwitchSelectionMode: React.FC<{
+export const SwitchSelectionMode: React.FC<{
     children?: RenderSwitchSelectionMode;
     mode: SelectionMode;
     store: Store<StoreProps>;
@@ -46,5 +41,3 @@ const SwitchSelectionMode: React.FC<{
         onClick,
     });
 };
-
-export default SwitchSelectionMode;

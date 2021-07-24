@@ -6,16 +6,16 @@
  * @copyright 2019-2021 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import HighlightArea from './types/HighlightArea';
-import SelectionData from './types/SelectionData';
+import type { HighlightArea } from './types/HighlightArea';
+import type { SelectionData } from './types/SelectionData';
 
-class SelectionState {}
+export class SelectionState {}
 
 class NoSelectionState extends SelectionState {}
 
 class SelectingState extends SelectionState {}
 
-class SelectedState extends SelectionState {
+export class SelectedState extends SelectionState {
     public selectedText: string;
     public selectionData: SelectionData;
     public selectionRegion: HighlightArea;
@@ -35,7 +35,7 @@ class SelectedState extends SelectionState {
     }
 }
 
-class HighlightState extends SelectionState {
+export class HighlightState extends SelectionState {
     public selectedText: string;
     public selectionData: SelectionData;
     public selectionRegion: HighlightArea;
@@ -56,7 +56,5 @@ class HighlightState extends SelectionState {
 }
 
 // Create some instances
-const NO_SELECTION_STATE = new NoSelectionState();
-const SELECTING_STATE = new SelectingState();
-
-export { NO_SELECTION_STATE, SELECTING_STATE, HighlightState, SelectedState, SelectionState };
+export const NO_SELECTION_STATE = new NoSelectionState();
+export const SELECTING_STATE = new SelectingState();

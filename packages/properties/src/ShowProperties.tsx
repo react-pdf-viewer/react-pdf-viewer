@@ -8,16 +8,13 @@
 
 import * as React from 'react';
 import { Modal } from '@react-pdf-viewer/core';
-import type { Store, Toggle } from '@react-pdf-viewer/core/lib';
+import type { Store, Toggle } from '@react-pdf-viewer/core';
 
-import PropertiesModal from './PropertiesModal';
-import ShowPropertiesButton from './ShowPropertiesButton';
-import StoreProps from './StoreProps';
-import useDocument from './useDocument';
-
-export interface RenderShowPropertiesProps {
-    onClick(): void;
-}
+import { PropertiesModal } from './PropertiesModal';
+import { ShowPropertiesButton } from './ShowPropertiesButton';
+import { useDocument } from './useDocument';
+import type { RenderShowPropertiesProps } from './types/RenderShowPropertiesProps';
+import type { StoreProps } from './types/StoreProps';
 
 type RenderShowProperties = (props: RenderShowPropertiesProps) => React.ReactElement;
 
@@ -25,7 +22,7 @@ export interface ShowPropertiesProps {
     children?: RenderShowProperties;
 }
 
-const ShowProperties: React.FC<{
+export const ShowProperties: React.FC<{
     children?: RenderShowProperties;
     store: Store<StoreProps>;
 }> = ({ children, store }) => {
@@ -51,5 +48,3 @@ const ShowProperties: React.FC<{
         <></>
     );
 };
-
-export default ShowProperties;

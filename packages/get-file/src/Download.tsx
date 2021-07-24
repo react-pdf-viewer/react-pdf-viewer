@@ -7,15 +7,12 @@
  */
 
 import * as React from 'react';
-import type { OpenFile, Store, StoreHandler } from '@react-pdf-viewer/core/lib';
+import type { OpenFile, Store, StoreHandler } from '@react-pdf-viewer/core';
 
-import DownloadButton from './DownloadButton';
-import downloadFile from './downloadFile';
-import StoreProps from './StoreProps';
-
-export interface RenderDownloadProps {
-    onClick: () => void;
-}
+import { DownloadButton } from './DownloadButton';
+import { downloadFile } from './downloadFile';
+import type { RenderDownloadProps } from './types/RenderDownloadProps';
+import type { StoreProps } from './types/StoreProps';
 
 export type RenderDownload = (props: RenderDownloadProps) => React.ReactElement;
 
@@ -23,7 +20,7 @@ export interface DownloadProps {
     children?: RenderDownload;
 }
 
-const Download: React.FC<{
+export const Download: React.FC<{
     children?: RenderDownload;
     fileNameGenerator: (file: OpenFile) => string;
     store: Store<StoreProps>;
@@ -55,5 +52,3 @@ const Download: React.FC<{
         onClick: download,
     });
 };
-
-export default Download;

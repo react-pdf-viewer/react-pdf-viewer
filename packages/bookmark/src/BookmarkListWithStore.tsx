@@ -8,12 +8,12 @@
 
 import * as React from 'react';
 import { SpecialZoomLevel, Spinner } from '@react-pdf-viewer/core';
-import type { PdfJs, Store, StoreHandler } from '@react-pdf-viewer/core/lib';
+import type { PdfJs, Store, StoreHandler } from '@react-pdf-viewer/core';
 
-import StoreProps from './StoreProps';
-import BookmarkLoader from './BookmarkLoader';
+import { BookmarkLoader } from './BookmarkLoader';
+import type { StoreProps } from './types/StoreProps';
 
-const BookmarkListWithStore: React.FC<{
+export const BookmarkListWithStore: React.FC<{
     store: Store<StoreProps>;
 }> = ({ store }) => {
     const [currentDoc, setCurrentDoc] = React.useState(store.get('doc'));
@@ -45,5 +45,3 @@ const BookmarkListWithStore: React.FC<{
         </div>
     );
 };
-
-export default BookmarkListWithStore;

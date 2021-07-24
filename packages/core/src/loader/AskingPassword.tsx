@@ -8,16 +8,14 @@
 
 import * as React from 'react';
 
-import PrimaryButton from '../components/PrimaryButton';
-import TextBox from '../components/TextBox';
-import LocalizationContext from '../localization/LocalizationContext';
-import { VerifyPassword } from './LoadingStatus';
+import { PrimaryButton } from '../components/PrimaryButton';
+import { TextBox } from '../components/TextBox';
+import { LocalizationContext } from '../localization/LocalizationContext';
+import type { VerifyPassword } from './LoadingStatus';
 
-interface AskingPasswordProps {
+export const AskingPassword: React.FC<{
     verifyPasswordFn: VerifyPassword;
-}
-
-const AskingPassword: React.FC<AskingPasswordProps> = ({ verifyPasswordFn }) => {
+}> = ({ verifyPasswordFn }) => {
     const l10n = React.useContext(LocalizationContext);
     const [password, setPassword] = React.useState('');
 
@@ -39,5 +37,3 @@ const AskingPassword: React.FC<AskingPasswordProps> = ({ verifyPasswordFn }) => 
         </div>
     );
 };
-
-export default AskingPassword;

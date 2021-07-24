@@ -9,10 +9,10 @@
 import * as React from 'react';
 import { LocalizationContext, MenuItem } from '@react-pdf-viewer/core';
 
-import { ZoomMenuItemProps } from './types';
-import ZoomInIcon from './ZoomInIcon';
+import { ZoomInIcon } from './ZoomInIcon';
+import type { ZoomMenuItemProps } from './types/ZoomMenuItemProps';
 
-const ZoomInMenuItem: React.FC<ZoomMenuItemProps> = ({ onClick }) => {
+export const ZoomInMenuItem: React.FC<ZoomMenuItemProps> = ({ onClick }) => {
     const l10n = React.useContext(LocalizationContext);
     const label = l10n && l10n.zoom ? l10n.zoom.zoomIn : 'Zoom in';
 
@@ -22,5 +22,3 @@ const ZoomInMenuItem: React.FC<ZoomMenuItemProps> = ({ onClick }) => {
         </MenuItem>
     );
 };
-
-export default ZoomInMenuItem;

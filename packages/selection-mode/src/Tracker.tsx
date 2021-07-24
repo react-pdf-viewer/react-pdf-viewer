@@ -7,12 +7,12 @@
  */
 
 import * as React from 'react';
-import type { Store } from '@react-pdf-viewer/core/lib';
+import type { Store } from '@react-pdf-viewer/core';
 
-import SelectionMode from './SelectionMode';
-import StoreProps from './StoreProps';
+import { SelectionMode } from './structs/SelectionMode';
+import type { StoreProps } from './types/StoreProps';
 
-const Tracker: React.FC<{
+export const Tracker: React.FC<{
     store: Store<StoreProps>;
 }> = ({ store }) => {
     const pagesRef = React.useRef<HTMLElement | null>(null);
@@ -101,5 +101,3 @@ const Tracker: React.FC<{
 
     return <></>;
 };
-
-export default Tracker;

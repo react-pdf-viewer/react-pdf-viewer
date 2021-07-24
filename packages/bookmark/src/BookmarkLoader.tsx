@@ -8,22 +8,25 @@
 
 import * as React from 'react';
 import { LocalizationContext, SpecialZoomLevel, Spinner } from '@react-pdf-viewer/core';
-import type { PdfJs, Store } from '@react-pdf-viewer/core/lib';
+import type { PdfJs, Store } from '@react-pdf-viewer/core';
 
-import BookmarkListRoot from './BookmarkListRoot';
-import StoreProps from './StoreProps';
+import { BookmarkListRoot } from './BookmarkListRoot';
+import type { StoreProps } from './types/StoreProps';
 
-interface BookmarkLoaderProps {
-    doc: PdfJs.PdfDocument;
-    store: Store<StoreProps>;
-    onJumpToDest(pageIndex: number, bottomOffset: number, scaleTo: number | SpecialZoomLevel): void;
-}
 interface BookmarkState {
     isLoaded: boolean;
     items: PdfJs.Outline[];
 }
 
-const BookmarkLoader: React.FC<BookmarkLoaderProps> = ({ doc, store, onJumpToDest }) => {
+export const BookmarkLoader: React.FC<{
+    doc: PdfJs.PdfDocument;
+    store: Store<StoreProps>;
+    onJumpToDest(pageIndex: number, bottomOffset: number, scaleTo: number | SpecialZoomLevel): void;
+}> = ({
+    doc,
+    store,
+    onJumpToDest,
+}) => {
     const l10n = React.useContext(LocalizationContext);
     const [bookmarks, setBookmarks] = React.useState<BookmarkState>({
         isLoaded: false,
@@ -55,5 +58,3 @@ const BookmarkLoader: React.FC<BookmarkLoaderProps> = ({ doc, store, onJumpToDes
         </div>
     );
 };
-
-export default BookmarkLoader;

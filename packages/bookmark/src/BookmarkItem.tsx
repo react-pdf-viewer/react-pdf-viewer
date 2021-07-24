@@ -7,14 +7,14 @@
  */
 
 import * as React from 'react';
-import type { PdfJs, Store } from '@react-pdf-viewer/core/lib';
+import type { PdfJs, Store } from '@react-pdf-viewer/core';
 
-import BookmarkList from './BookmarkList';
-import DownArrowIcon from './DownArrowIcon';
-import RightArrowIcon from './RightArrowIcon';
-import StoreProps from './StoreProps';
+import { BookmarkList } from './BookmarkList';
+import { DownArrowIcon } from './DownArrowIcon';
+import { RightArrowIcon } from './RightArrowIcon';
+import type { StoreProps } from './types/StoreProps';
 
-interface BookmarkItemProps {
+export const BookmarkItem: React.FC<{
     bookmark: PdfJs.Outline;
     depth: number;
     doc: PdfJs.PdfDocument;
@@ -22,9 +22,7 @@ interface BookmarkItemProps {
     numberOfSiblings: number;
     store: Store<StoreProps>;
     onJumpToDest(dest: PdfJs.OutlineDestinationType): void;
-}
-
-const BookmarkItem: React.FC<BookmarkItemProps> = ({
+}> = ({
     bookmark,
     depth,
     doc,
@@ -100,5 +98,3 @@ const BookmarkItem: React.FC<BookmarkItemProps> = ({
         </li>
     );
 };
-
-export default BookmarkItem;

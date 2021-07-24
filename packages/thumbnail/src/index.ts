@@ -6,4 +6,4 @@
  * @copyright 2019-2021 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-export { default as thumbnailPlugin } from './thumbnailPlugin';
+export * from './thumbnailPlugin';

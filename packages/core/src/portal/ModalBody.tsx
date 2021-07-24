@@ -8,19 +8,17 @@
 
 import * as React from 'react';
 
-import useClickOutside from '../hooks/useClickOutside';
-import useIsomorphicLayoutEffect from '../hooks/useIsomorphicLayoutEffect';
-import useEscape from '../hooks/useEscape';
-import useLockScroll from '../hooks/useLockScroll';
+import { useClickOutside } from '../hooks/useClickOutside';
+import { useIsomorphicLayoutEffect } from '../hooks/useIsomorphicLayoutEffect';
+import { useEscape } from '../hooks/useEscape';
+import { useLockScroll } from '../hooks/useLockScroll';
 
-interface ModalBodyProps {
+export const ModalBody: React.FC<{
     ariaControlsSuffix: string;
     closeOnClickOutside: boolean;
     closeOnEscape: boolean;
     onToggle(): void;
-}
-
-const ModalBody: React.FC<ModalBodyProps> = ({
+}> = ({
     ariaControlsSuffix,
     children,
     closeOnClickOutside,
@@ -60,5 +58,3 @@ const ModalBody: React.FC<ModalBodyProps> = ({
         </div>
     );
 };
-
-export default ModalBody;

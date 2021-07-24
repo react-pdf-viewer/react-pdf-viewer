@@ -8,17 +8,20 @@
 
 import * as React from 'react';
 import { createStore } from '@react-pdf-viewer/core';
-import type { Plugin, RenderViewer, Slot } from '@react-pdf-viewer/core/lib';
+import type { Plugin, RenderViewer, Slot } from '@react-pdf-viewer/core';
 
-import Print, { PrintProps } from './Print';
-import PrintButton from './PrintButton';
-import PrintContainer from './PrintContainer';
-import PrintMenuItem, { PrintMenuItemProps } from './PrintMenuItem';
-import PrintStatus from './PrintStatus';
-import ShortcutHandler from './ShortcutHandler';
-import StoreProps from './StoreProps';
+import { Print, PrintProps } from './Print';
+import { PrintButton } from './PrintButton';
+import { PrintContainer } from './PrintContainer';
+import { PrintMenuItem, PrintMenuItemProps } from './PrintMenuItem';
+import { PrintStatus } from './structs/PrintStatus';
+import { ShortcutHandler } from './ShortcutHandler';
+import type { StoreProps } from './types/StoreProps';
 
-interface PrintPlugin extends Plugin {
+// Export types
+export type { PrintMenuItemProps, PrintProps };
+
+export interface PrintPlugin extends Plugin {
     Print: (props: PrintProps) => React.ReactElement;
     PrintButton: () => React.ReactElement;
     PrintMenuItem: (props: PrintMenuItemProps) => React.ReactElement;
@@ -28,7 +31,7 @@ export interface PrintPluginProps {
     enableShortcuts?: boolean;
 }
 
-const printPlugin = (props?: PrintPluginProps): PrintPlugin => {
+export const printPlugin = (props?: PrintPluginProps): PrintPlugin => {
     const printPluginProps = React.useMemo(() => Object.assign({}, { enableShortcuts: true }, props), []);
     const store = React.useMemo(
         () =>
@@ -86,5 +89,3 @@ const printPlugin = (props?: PrintPluginProps): PrintPlugin => {
         PrintMenuItem: PrintMenuItemDecorator,
     };
 };
-
-export default printPlugin;

@@ -8,12 +8,12 @@
 
 import * as React from 'react';
 import { createPortal } from 'react-dom';
-import type { PdfJs } from '@react-pdf-viewer/core/lib';
+import type { PdfJs } from '@react-pdf-viewer/core';
 
-import PageThumbnailContainer from './PageThumbnailContainer';
-import PrintStatus from './PrintStatus';
+import { PageThumbnailContainer } from './PageThumbnailContainer';
+import { PrintStatus } from './structs/PrintStatus';
 
-interface PrintZoneProps {
+export const PrintZone: React.FC<{
     doc: PdfJs.PdfDocument;
     numLoadedPages: number;
     pageHeight: number;
@@ -22,9 +22,7 @@ interface PrintZoneProps {
     rotation: number;
     onCancel(): void;
     onLoad(): void;
-}
-
-const PrintZone: React.FC<PrintZoneProps> = ({
+}> = ({
     doc,
     numLoadedPages,
     pageHeight,
@@ -103,5 +101,3 @@ const PrintZone: React.FC<PrintZoneProps> = ({
         container
     );
 };
-
-export default PrintZone;

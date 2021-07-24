@@ -8,7 +8,7 @@
 
 import * as React from 'react';
 
-const useIsMounted = () => {
+export const useIsMounted = () => {
     const isMountedRef = React.useRef(false);
 
     React.useEffect(() => {
@@ -20,5 +20,3 @@ const useIsMounted = () => {
 
     return isMountedRef;
 };
-
-export default useIsMounted;

@@ -9,14 +9,14 @@
 import * as React from 'react';
 import { LocalizationContext, MenuItem, ThemeContext } from '@react-pdf-viewer/core';
 
-import DarkIcon from './DarkIcon';
-import LightIcon from './LightIcon';
+import { DarkIcon } from './DarkIcon';
+import { LightIcon } from './LightIcon';
 
 export interface SwitchThemeMenuItemProps {
     onClick(): void;
 }
 
-const SwitchThemeMenuItem: React.FC<SwitchThemeMenuItemProps> = ({ onClick }) => {
+export const SwitchThemeMenuItem: React.FC<SwitchThemeMenuItemProps> = ({ onClick }) => {
     const theme = React.useContext(ThemeContext);
     const l10n = React.useContext(LocalizationContext);
     const isDarkTheme = theme.currentTheme === 'dark';
@@ -36,5 +36,3 @@ const SwitchThemeMenuItem: React.FC<SwitchThemeMenuItemProps> = ({ onClick }) =>
         </MenuItem>
     );
 };
-
-export default SwitchThemeMenuItem;

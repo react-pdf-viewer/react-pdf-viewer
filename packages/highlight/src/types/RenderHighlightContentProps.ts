@@ -6,15 +6,13 @@
  * @copyright 2019-2021 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import HighlightArea from './HighlightArea';
-import SelectionData from './SelectionData';
+import type { HighlightArea } from './HighlightArea';
+import type { SelectionData } from './SelectionData';
 
-interface RenderHighlightContentProps {
+export interface RenderHighlightContentProps {
     highlightAreas: HighlightArea[];
     selectedText: string;
     selectionRegion: HighlightArea;
     selectionData: SelectionData;
     cancel(): void;
 }
-
-export default RenderHighlightContentProps;

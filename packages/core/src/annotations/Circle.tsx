@@ -8,16 +8,14 @@
 
 import * as React from 'react';
 
-import PdfJs from '../vendors/PdfJs';
-import Annotation from './Annotation';
+import { PdfJs } from '../vendors/PdfJs';
+import { Annotation } from './Annotation';
 
-interface CircleProps {
+export const Circle: React.FC<{
     annotation: PdfJs.Annotation;
     page: PdfJs.Page;
     viewport: PdfJs.ViewPort;
-}
-
-const Circle: React.FC<CircleProps> = ({ annotation, page, viewport }) => {
+}> = ({ annotation, page, viewport }) => {
     const hasPopup = annotation.hasPopup === false;
     const isRenderable = !!(annotation.hasPopup || annotation.title || annotation.contents);
 
@@ -67,5 +65,3 @@ const Circle: React.FC<CircleProps> = ({ annotation, page, viewport }) => {
         </Annotation>
     );
 };
-
-export default Circle;

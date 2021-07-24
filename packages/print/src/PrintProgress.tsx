@@ -9,13 +9,11 @@
 import * as React from 'react';
 import { Button, LocalizationContext, ProgressBar } from '@react-pdf-viewer/core';
 
-interface PrintProgressProps {
+export const PrintProgress: React.FC<{
     numLoadedPages: number;
     numPages: number;
     onCancel(): void;
-}
-
-const PrintProgress: React.FC<PrintProgressProps> = ({ numLoadedPages, numPages, onCancel }) => {
+}> = ({ numLoadedPages, numPages, onCancel }) => {
     const l10n = React.useContext(LocalizationContext);
     const progress = Math.floor((numLoadedPages * 100) / numPages);
 
@@ -33,5 +31,3 @@ const PrintProgress: React.FC<PrintProgressProps> = ({ numLoadedPages, numPages,
         </div>
     );
 };
-
-export default PrintProgress;

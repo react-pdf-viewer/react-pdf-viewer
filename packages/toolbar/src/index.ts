@@ -6,6 +6,7 @@
  * @copyright 2019-2021 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-export { default as MoreActionsPopover } from './MoreActionsPopover';
-export { default as MoreIcon } from './MoreIcon';
-export { default as toolbarPlugin } from './toolbarPlugin';
+export * from './toolbarPlugin';
+
+// Components
+export { MoreActionsPopover } from './MoreActionsPopover';

@@ -8,7 +8,7 @@
 
 import * as React from 'react';
 
-import useIsomorphicLayoutEffect from '../hooks/useIsomorphicLayoutEffect';
+import { useIsomorphicLayoutEffect } from '../hooks/useIsomorphicLayoutEffect';
 
 export interface VisibilityChanged {
     isVisible: boolean;
@@ -20,7 +20,7 @@ interface UseIntersectionObserverProps {
     onVisibilityChanged(params: VisibilityChanged): void;
 }
 
-const useIntersectionObserver = (props: UseIntersectionObserverProps) => {
+export const useIntersectionObserver = (props: UseIntersectionObserverProps) => {
     const containerRef = React.useRef<HTMLDivElement | null>(null);
 
     const { threshold, onVisibilityChanged } = props;
@@ -51,5 +51,3 @@ const useIntersectionObserver = (props: UseIntersectionObserverProps) => {
 
     return containerRef;
 };
-
-export default useIntersectionObserver;

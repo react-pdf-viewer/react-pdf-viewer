@@ -8,11 +8,11 @@
 
 import * as React from 'react';
 
-import Slot from '../layouts/Slot';
-import SpecialZoomLevel from '../SpecialZoomLevel';
-import PdfJs from '../vendors/PdfJs';
+import { SpecialZoomLevel } from '../struct/SpecialZoomLevel';
+import { PdfJs } from '../vendors/PdfJs';
+import type { Slot } from './Slot';
 
-export default interface RenderViewer {
+export interface RenderViewer {
     containerRef: React.RefObject<HTMLDivElement>;
     doc: PdfJs.PdfDocument;
     pageHeight: number;

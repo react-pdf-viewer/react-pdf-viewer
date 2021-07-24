@@ -8,20 +8,18 @@
 
 import * as React from 'react';
 
-import LayerRenderStatus from '../types/LayerRenderStatus';
-import { Plugin } from '../types/Plugin';
-import PdfJs from '../vendors/PdfJs';
-import WithScale from './WithScale';
+import { LayerRenderStatus } from '../struct/LayerRenderStatus';
+import { PdfJs } from '../vendors/PdfJs';
+import { WithScale } from './WithScale';
+import type { Plugin } from '../types/Plugin';
 
-interface TextLayerProps {
+export const TextLayer: React.FC<{
     page: PdfJs.Page;
     pageIndex: number;
     plugins: Plugin[];
     rotation: number;
     scale: number;
-}
-
-const TextLayer: React.FC<TextLayerProps> = ({ page, pageIndex, plugins, rotation, scale }) => {
+}> = ({ page, pageIndex, plugins, rotation, scale }) => {
     const containerRef = React.useRef<HTMLDivElement>();
     const renderTask = React.useRef<PdfJs.PageRenderTask>();
 
@@ -98,5 +96,3 @@ const TextLayer: React.FC<TextLayerProps> = ({ page, pageIndex, plugins, rotatio
         </WithScale>
     );
 };
-
-export default TextLayer;

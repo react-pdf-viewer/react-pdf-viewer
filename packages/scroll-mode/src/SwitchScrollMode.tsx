@@ -7,18 +7,13 @@
  */
 
 import * as React from 'react';
-import type { Store } from '@react-pdf-viewer/core/lib';
+import type { Store } from '@react-pdf-viewer/core';
 
-import ScrollMode from './ScrollMode';
-import StoreProps from './StoreProps';
-import SwitchScrollModeButton from './SwitchScrollModeButton';
-import useScrollMode from './useScrollMode';
-
-export interface RenderSwitchScrollModeProps {
-    isSelected: boolean;
-    mode: ScrollMode;
-    onClick(): void;
-}
+import { ScrollMode } from './structs/ScrollMode';
+import { SwitchScrollModeButton } from './SwitchScrollModeButton';
+import { useScrollMode } from './useScrollMode';
+import type { RenderSwitchScrollModeProps } from './types/RenderSwitchScrollModeProps';
+import type { StoreProps } from './types/StoreProps';
 
 type RenderSwitchScrollMode = (props: RenderSwitchScrollModeProps) => React.ReactElement;
 
@@ -27,7 +22,7 @@ export interface SwitchScrollModeProps {
     mode: ScrollMode;
 }
 
-const SwitchScrollMode: React.FC<{
+export const SwitchScrollMode: React.FC<{
     children?: RenderSwitchScrollMode;
     mode: ScrollMode;
     store: Store<StoreProps>;
@@ -49,5 +44,3 @@ const SwitchScrollMode: React.FC<{
         onClick,
     });
 };
-
-export default SwitchScrollMode;

@@ -7,16 +7,16 @@
  */
 
 import * as React from 'react';
-import type { Store } from '@react-pdf-viewer/core/lib';
+import type { Store } from '@react-pdf-viewer/core';
 
 import { EMPTY_KEYWORD_REGEXP } from './constants';
 import { normalizeSingleKeyword } from './normalizeKeyword';
-import Match from './types/Match';
-import SingleKeyword from './types/SingleKeyword';
-import StoreProps from './types/StoreProps';
-import useDocument from './useDocument';
+import { useDocument } from './useDocument';
+import type { Match } from './types/Match';
+import type { SingleKeyword } from './types/SingleKeyword';
+import type { StoreProps } from './types/StoreProps';
 
-interface UseSearch {
+export const useSearch = (store: Store<StoreProps>): {
     clearKeyword(): void;
     changeMatchCase(matchCase: boolean): void;
     changeWholeWords(wholeWords: boolean): void;
@@ -34,9 +34,7 @@ interface UseSearch {
     // Compatible with the single keyword search
     keyword: string;
     setKeyword(keyword: string): void;
-}
-
-const useSearch = (store: Store<StoreProps>): UseSearch => {
+} => {
     const currentDocRef = useDocument(store);
     const [keywords, setKeywords] = React.useState<SingleKeyword[]>([]);
     const [found, setFound] = React.useState<Match[]>([]);
@@ -222,5 +220,3 @@ const useSearch = (store: Store<StoreProps>): UseSearch => {
         setKeyword,
     };
 };
-
-export default useSearch;

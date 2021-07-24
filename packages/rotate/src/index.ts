@@ -6,7 +6,9 @@
  * @copyright 2019-2021 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-export { default as RotateBackwardIcon } from './RotateBackwardIcon';
-export { default as RotateForwardIcon } from './RotateForwardIcon';
-export { default as RotateDirection } from './RotateDirection';
-export { default as rotatePlugin } from './rotatePlugin';
+export * from './rotatePlugin';
+export { RotateDirection } from './structs/RotateDirection';
+
+// Components
+export { RotateBackwardIcon } from './RotateBackwardIcon';
+export { RotateForwardIcon } from './RotateForwardIcon';

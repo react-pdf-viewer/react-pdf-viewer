@@ -8,16 +8,14 @@
 
 import * as React from 'react';
 
-import PdfJs from '../vendors/PdfJs';
-import Annotation from './Annotation';
+import { PdfJs } from '../vendors/PdfJs';
+import { Annotation } from './Annotation';
 
-interface InkProps {
+export const Ink: React.FC<{
     annotation: PdfJs.Annotation;
     page: PdfJs.Page;
     viewport: PdfJs.ViewPort;
-}
-
-const Ink: React.FC<InkProps> = ({ annotation, page, viewport }) => {
+}> = ({ annotation, page, viewport }) => {
     const hasPopup = annotation.hasPopup === false;
     const isRenderable = !!(annotation.hasPopup || annotation.title || annotation.contents);
 
@@ -70,5 +68,3 @@ const Ink: React.FC<InkProps> = ({ annotation, page, viewport }) => {
         </Annotation>
     );
 };
-
-export default Ink;

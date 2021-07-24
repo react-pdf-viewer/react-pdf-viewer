@@ -7,17 +7,13 @@
  */
 
 import * as React from 'react';
-import type { Store } from '@react-pdf-viewer/core/lib';
+import type { Store } from '@react-pdf-viewer/core';
 
-import StoreProps from './StoreProps';
-import useZoom from './useZoom';
-import ZoomInButton from './ZoomInButton';
+import { useZoom } from './useZoom';
+import { ZoomInButton } from './ZoomInButton';
 import { increase } from './zoomingLevel';
-
-export interface RenderZoomInProps {
-    enableShortcuts: boolean;
-    onClick: () => void;
-}
+import type { RenderZoomInProps } from './types/RenderZoomInProps';
+import type { StoreProps } from './types/StoreProps';
 
 type RenderZoomIn = (props: RenderZoomInProps) => React.ReactElement;
 
@@ -25,7 +21,7 @@ export interface ZoomInProps {
     children?: RenderZoomIn;
 }
 
-const ZoomIn: React.FC<{
+export const ZoomIn: React.FC<{
     children?: RenderZoomIn;
     enableShortcuts: boolean;
     store: Store<StoreProps>;
@@ -47,5 +43,3 @@ const ZoomIn: React.FC<{
         onClick: zoomIn,
     });
 };
-
-export default ZoomIn;

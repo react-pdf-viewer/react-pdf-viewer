@@ -8,23 +8,23 @@
 
 import * as React from 'react';
 
-import Spinner from '../components/Spinner';
-import useIsMounted from '../hooks/useIsMounted';
-import PdfJs from '../vendors/PdfJs';
+import { Spinner } from '../components/Spinner';
+import { useIsMounted } from '../hooks/useIsMounted';
+import { PdfJs } from '../vendors/PdfJs';
 import { CharacterMap } from '../Viewer';
-import AskForPasswordState from './AskForPasswordState';
-import AskingPassword from './AskingPassword';
-import CompletedState from './CompletedState';
-import FailureState from './FailureState';
-import LoadError from './LoadError';
-import LoadingState from './LoadingState';
-import LoadingStatus, { VerifyPassword } from './LoadingStatus';
-import WrongPassword from './WrongPassword';
-import WrongPasswordState from './WrongPasswordState';
+import { AskForPasswordState } from './AskForPasswordState';
+import { AskingPassword } from './AskingPassword';
+import { CompletedState } from './CompletedState';
+import { FailureState } from './FailureState';
+import { LoadingState } from './LoadingState';
+import { LoadingStatus, VerifyPassword } from './LoadingStatus';
+import { WrongPassword } from './WrongPassword';
+import { WrongPasswordState } from './WrongPasswordState';
+import type { LoadError } from './LoadError';
 
 export type RenderError = (error: LoadError) => React.ReactElement;
 
-interface DocumentLoaderProps {
+export const DocumentLoader: React.FC<{
     characterMap?: CharacterMap;
     file: PdfJs.FileData;
     httpHeaders?: Record<string, string | string[]>;
@@ -33,9 +33,7 @@ interface DocumentLoaderProps {
     renderLoader?(percentages: number): React.ReactElement;
     transformGetDocumentParams?(options: PdfJs.GetDocumentParams): PdfJs.GetDocumentParams;
     withCredentials: boolean;
-}
-
-const DocumentLoader: React.FC<DocumentLoaderProps> = ({
+}> = ({
     characterMap,
     file,
     httpHeaders,
@@ -156,5 +154,3 @@ const DocumentLoader: React.FC<DocumentLoaderProps> = ({
             );
     }
 };
-
-export default DocumentLoader;

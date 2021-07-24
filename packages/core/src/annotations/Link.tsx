@@ -8,21 +8,19 @@
 
 import * as React from 'react';
 
-import SpecialZoomLevel from '../SpecialZoomLevel';
-import getDestination from '../utils/getDestination';
-import PdfJs from '../vendors/PdfJs';
-import Annotation from './Annotation';
+import { SpecialZoomLevel } from '../struct/SpecialZoomLevel';
+import { getDestination } from '../utils/getDestination';
+import { PdfJs } from '../vendors/PdfJs';
+import { Annotation } from './Annotation';
 
-interface LinkProps {
+export const Link: React.FC<{
     annotation: PdfJs.Annotation;
     doc: PdfJs.PdfDocument;
     page: PdfJs.Page;
     viewport: PdfJs.ViewPort;
     onExecuteNamedAction(action: string): void;
     onJumpToDest(pageIndex: number, bottomOffset: number, leftOffset: number, scaleTo: number | SpecialZoomLevel): void;
-}
-
-const Link: React.FC<LinkProps> = ({ annotation, doc, page, viewport, onExecuteNamedAction, onJumpToDest }) => {
+}> = ({ annotation, doc, page, viewport, onExecuteNamedAction, onJumpToDest }) => {
     const link = (e: React.MouseEvent): void => {
         e.preventDefault();
         annotation.action
@@ -68,5 +66,3 @@ const Link: React.FC<LinkProps> = ({ annotation, doc, page, viewport, onExecuteN
         </Annotation>
     );
 };
-
-export default Link;

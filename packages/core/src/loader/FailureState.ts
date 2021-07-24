@@ -6,10 +6,10 @@
  * @copyright 2019-2021 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import LoadError from './LoadError';
-import LoadingStatus from './LoadingStatus';
+import { LoadError } from './LoadError';
+import { LoadingStatus } from './LoadingStatus';
 
-class FailureState extends LoadingStatus {
+export class FailureState extends LoadingStatus {
     public error: LoadError;
 
     constructor(error: LoadError) {
@@ -17,5 +17,3 @@ class FailureState extends LoadingStatus {
         this.error = error;
     }
 }
-
-export default FailureState;

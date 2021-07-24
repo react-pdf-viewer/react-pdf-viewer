@@ -8,20 +8,18 @@
 
 import * as React from 'react';
 
-import Spinner from '../components/Spinner';
-import SpecialZoomLevel from '../SpecialZoomLevel';
-import PdfJs from '../vendors/PdfJs';
+import { Spinner } from '../components/Spinner';
+import { SpecialZoomLevel } from '../struct/SpecialZoomLevel';
+import { PdfJs } from '../vendors/PdfJs';
 import { decrease } from '../zoom/zoomingLevel';
-import calculateScale from './calculateScale';
-import PageSize from './PageSize';
+import { calculateScale } from './calculateScale';
+import type { PageSize } from '../types/PageSize';
 
-interface PageSizeCalculatorProps {
+export const PageSizeCalculator: React.FC<{
     defaultScale?: number | SpecialZoomLevel;
     doc: PdfJs.PdfDocument;
     render(pageSize: PageSize): React.ReactElement;
-}
-
-const PageSizeCalculator: React.FC<PageSizeCalculatorProps> = ({ defaultScale, doc, render }) => {
+}> = ({ defaultScale, doc, render }) => {
     const pagesRef = React.useRef<HTMLDivElement | null>(null);
     const [pageSize, setPageSize] = React.useState<PageSize>({
         pageHeight: 0,
@@ -67,5 +65,3 @@ const PageSizeCalculator: React.FC<PageSizeCalculatorProps> = ({ defaultScale, d
         render(pageSize)
     );
 };
-
-export default PageSizeCalculator;

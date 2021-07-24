@@ -8,18 +8,16 @@
 
 import * as React from 'react';
 
-import PdfJs from '../vendors/PdfJs';
-import WithScale from './WithScale';
+import { PdfJs } from '../vendors/PdfJs';
+import { WithScale } from './WithScale';
 
-interface SvgLayerProps {
+export const SvgLayer: React.FC<{
     height: number;
     page: PdfJs.Page;
     rotation: number;
     scale: number;
     width: number;
-}
-
-const SvgLayer: React.FC<SvgLayerProps> = ({ height, page, rotation, scale, width }) => {
+}> = ({ height, page, rotation, scale, width }) => {
     const containerRef = React.useRef<HTMLDivElement>();
 
     const empty = (): void => {
@@ -53,5 +51,3 @@ const SvgLayer: React.FC<SvgLayerProps> = ({ height, page, rotation, scale, widt
         </WithScale>
     );
 };
-
-export default SvgLayer;

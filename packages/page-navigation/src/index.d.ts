@@ -7,7 +7,7 @@
  */
 
 import * as React from 'react';
-import type { Plugin } from '@react-pdf-viewer/core/lib';
+import type { Plugin } from '@react-pdf-viewer/core';
 
 // -------------------
 // Render current page
@@ -65,9 +65,8 @@ export interface PageNavigationPlugin extends Plugin {
 
 export function pageNavigationPlugin(): PageNavigationPlugin;
 
-// -----
-// Icons
-// -----
+// Components
+// ----------
 
 export class DownArrowIcon extends React.Component {}
 export class NextIcon extends React.Component {}
