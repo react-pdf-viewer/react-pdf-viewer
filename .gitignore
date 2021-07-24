@@ -1,6 +1,5 @@
 .DS_Store
-demo/dist
-demo/node_modules
+demo/nextjs/.next
 lerna-debug.log
 node_modules
 package-lock.json
