@@ -1,35 +1,17 @@
 {
+  "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "outDir": "./dist/",
-    "esModuleInterop": true,
-    "sourceMap": true,
-    "noImplicitAny": true,
-    "module": "esnext",
-    "moduleResolution": "node",
-    "resolveJsonModule": true,
-    "target": "esnext",
-    "jsx": "preserve",
-    "baseUrl": ".",
-    "paths": {
-      "@react-pdf-viewer/*": [
-        "packages/*/src"
-      ],
-      "*": [
-        "node_modules",
-        "packages"
-      ]
-    },
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": false,
     "forceConsistentCasingInFileNames": true,
     "noEmit": true,
-    "isolatedModules": true
+    "module": "esnext",
+    "jsx": "preserve",
+    "lib": [
+      "dom",
+      "esnext"
+    ]
   },
   "include": [
     "next-env.d.ts",
