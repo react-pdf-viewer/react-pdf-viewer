@@ -8,7 +8,7 @@
 
 import * as React from 'react';
 
-import useKeyUp from '../hooks/useKeyUp';
+import useEscape from '../hooks/useEscape';
 import useToggle, { ToggleStatus } from '../hooks/useToggle';
 import Offset from './Offset';
 import Position from './Position';
@@ -31,7 +31,7 @@ const Tooltip: React.FC<TooltipProps> = ({ ariaControlsSuffix, content, offset, 
     const contentRef = React.useRef<HTMLDivElement>();
     const controlsSuffix = ariaControlsSuffix || `${uniqueId()}`;
 
-    useKeyUp(27, () => {
+    useEscape(() => {
         if (targetRef.current && document.activeElement && targetRef.current.contains(document.activeElement)) {
             close();
         }

@@ -8,7 +8,7 @@
 
 import * as React from 'react';
 
-import useKeyUp from '../hooks/useKeyUp';
+import useEscape from '../hooks/useEscape';
 
 interface PopoverOverlayProps {
     closeOnEscape: boolean;
@@ -16,7 +16,7 @@ interface PopoverOverlayProps {
 }
 
 const PopoverOverlay: React.FC<PopoverOverlayProps> = ({ closeOnEscape, onClose }) => {
-    useKeyUp(27, () => closeOnEscape && onClose());
+    useEscape(() => closeOnEscape && onClose());
 
     return <div className="rpv-core__popover-overlay" />;
 };

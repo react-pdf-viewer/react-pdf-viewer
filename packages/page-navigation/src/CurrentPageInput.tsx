@@ -55,17 +55,17 @@ const CurrentPageInput: React.FC<{
     };
 
     const keydownPage = (e: React.KeyboardEvent): void => {
-        switch (e.keyCode) {
+        switch (e.key) {
             // Up key is pressed
-            case 38:
+            case 'ArrowUp':
                 gotoPreviousPage();
                 break;
             // Down key
-            case 40:
+            case 'ArrowDown':
                 gotoNextPage();
                 break;
             // Enter key
-            case 13:
+            case 'Enter':
                 jump();
                 break;
             default:

@@ -41,10 +41,9 @@ const SearchPopover: React.FC<SearchPopoverProps> = ({ store, onToggle }) => {
 
     const onKeydownSearch = (e: React.KeyboardEvent<HTMLInputElement>): void => {
         // Press the Enter key
-        if (e.keyCode !== 13 || !keyword) {
-            return;
+        if (e.key === 'Enter' && keyword) {
+            search();
         }
-        search();
     };
 
     const onChangeMatchCase = (e: React.ChangeEvent<HTMLInputElement>): void => {
