@@ -7,15 +7,7 @@
  */
 
 import * as React from 'react';
-import {
-    LocalizationContext,
-    Menu,
-    MenuItem,
-    MinimalButton,
-    Popover,
-    Position,
-    Tooltip,
-} from '@react-pdf-viewer/core';
+import { LocalizationContext, Menu, MenuItem, MinimalButton, Popover, Position, Tooltip } from '@react-pdf-viewer/core';
 import type { LocalizationMap, Toggle } from '@react-pdf-viewer/core/lib';
 
 import LocaleIcon from './LocaleIcon';

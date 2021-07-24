@@ -11,16 +11,9 @@
         "target": "es5",
         "baseUrl": ".",
         "paths": {
-            "@react-pdf-viewer/*": [
-              "packages/*/src"
-            ],
-            "*": [
-              "node_modules",
-              "packages"
-            ]
+            "@react-pdf-viewer/*": ["packages/*/src"],
+            "*": ["node_modules", "packages"]
         }
     },
-    "exclude": [
-        "node_modules"
-    ]
+    "exclude": ["node_modules"]
 }

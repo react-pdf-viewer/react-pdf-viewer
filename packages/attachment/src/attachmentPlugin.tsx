@@ -7,7 +7,7 @@
  */
 
 import * as React from 'react';
-import { createStore, } from '@react-pdf-viewer/core';
+import { createStore } from '@react-pdf-viewer/core';
 import type { Plugin, PluginOnDocumentLoad } from '@react-pdf-viewer/core/lib';
 
 import AttachmentListWithStore from './AttachmentListWithStore';

@@ -8,13 +8,7 @@
 
 import * as React from 'react';
 import { createStore, SpecialZoomLevel } from '@react-pdf-viewer/core';
-import type {
-    Plugin,
-    PluginFunctions,
-    RenderViewer,
-    Slot,
-    ViewerState,
-} from '@react-pdf-viewer/core/lib';
+import type { Plugin, PluginFunctions, RenderViewer, Slot, ViewerState } from '@react-pdf-viewer/core/lib';
 
 import CurrentScale, { CurrentScaleProps } from './CurrentScale';
 import ShortcutHandler from './ShortcutHandler';
