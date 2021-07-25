@@ -7,7 +7,15 @@
  */
 
 import * as React from 'react';
-import { Button, LocalizationContext, MinimalButton, Position, TextBox, Tooltip } from '@react-pdf-viewer/core';
+import {
+    Button,
+    LocalizationContext,
+    MinimalButton,
+    Position,
+    Spinner,
+    TextBox,
+    Tooltip,
+} from '@react-pdf-viewer/core';
 import type { Store } from '@react-pdf-viewer/core';
 
 import { NextIcon } from './NextIcon';
@@ -22,6 +30,7 @@ export const SearchPopover: React.FC<{
     onToggle(): void;
 }> = ({ store, onToggle }) => {
     const l10n = React.useContext(LocalizationContext);
+    const [isQuerying, setIsQuerying] = React.useState(false);
 
     const {
         clearKeyword,
@@ -41,7 +50,9 @@ export const SearchPopover: React.FC<{
     const onKeydownSearch = (e: React.KeyboardEvent<HTMLInputElement>): void => {
         // Press the Enter key
         if (e.key === 'Enter' && keyword) {
-            search();
+            setIsQuerying(true);
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
+            search().then((_) => setIsQuerying(false));
         }
     };
 
@@ -74,7 +85,12 @@ export const SearchPopover: React.FC<{
                     onKeyDown={onKeydownSearch}
                 />
                 <div className="rpv-search__popover-counter">
-                    {currentMatch}/{numberOfMatches}
+                    {isQuerying && <Spinner size="1rem" />}
+                    {!isQuerying && (
+                        <span>
+                            {currentMatch}/{numberOfMatches}
+                        </span>
+                    )}
                 </div>
             </div>
             <label className="rpv-search__popover-label">
