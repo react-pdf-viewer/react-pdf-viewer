@@ -8,7 +8,7 @@ import { render } from '@testing-library/react';
 import { mockIsIntersecting } from '../../../test-utils/mockIntersectionObserver';
 import { Viewer } from '@react-pdf-viewer/core';
 import { searchPlugin } from '../src/index';
-import FlagKeyword from '../src/types/FlagKeyword';
+import type { FlagKeyword } from '../src/types/FlagKeyword';
 
 const TestKeywordFlag: React.FC<{
     fileUrl: Uint8Array;

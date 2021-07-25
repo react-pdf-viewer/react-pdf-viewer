@@ -5,7 +5,7 @@ import * as React from 'react';
 import { fireEvent, render } from '@testing-library/react';
 
 import { mockAllIsIntersecting, mockIsIntersecting } from '../../../test-utils/mockIntersectionObserver';
-import Viewer from '../src/Viewer';
+import { Viewer } from '../src/Viewer';
 
 test('fileUrl as a prop', async () => {
     const rawSamplePdf1 = new Uint8Array(fs.readFileSync(path.resolve(__dirname, '../../../assets/sample.pdf')));

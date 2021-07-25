@@ -8,7 +8,7 @@ import { render } from '@testing-library/react';
 import { mockIsIntersecting } from '../../../test-utils/mockIntersectionObserver';
 import { Viewer } from '@react-pdf-viewer/core';
 import { searchPlugin } from '../src/index';
-import OnHighlightKeyword from '../src/types/OnHighlightKeyword';
+import type { OnHighlightKeyword } from '../src/types/OnHighlightKeyword';
 
 const TestOnHighlightKeywordOption: React.FC<{
     fileUrl: Uint8Array;
