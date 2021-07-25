@@ -51,7 +51,8 @@ test('SwitchThemeButton() component', async () => {
     expect(viewerEle.classList.contains('rpv-core__viewer--dark')).toEqual(true);
 
     // Click again to switch back to the light theme
-    fireEvent.click(switchButton);
+    const switchLightButton = await getByLabelText('Switch to the light theme');
+    fireEvent.click(switchLightButton);
     expect(viewerEle.classList.contains('rpv-core__viewer--dark')).toEqual(false);
     expect(viewerEle.classList.contains('rpv-core__viewer--light')).toEqual(true);
 });
