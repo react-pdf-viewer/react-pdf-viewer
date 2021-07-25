@@ -22,16 +22,7 @@ export const PrintZone: React.FC<{
     rotation: number;
     onCancel(): void;
     onLoad(): void;
-}> = ({
-    doc,
-    numLoadedPages,
-    pageHeight,
-    pageWidth,
-    printStatus,
-    rotation,
-    onCancel,
-    onLoad,
-}) => {
+}> = ({ doc, numLoadedPages, pageHeight, pageWidth, printStatus, rotation, onCancel, onLoad }) => {
     const canvas = React.useMemo(() => document.createElement('canvas') as HTMLCanvasElement, []);
 
     const container = React.useMemo(() => {

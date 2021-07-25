@@ -8,8 +8,9 @@
 
 import * as React from 'react';
 
-import { LayerRenderStatus } from '../struct/LayerRenderStatus';
+import { LayerRenderStatus } from '../structs/LayerRenderStatus';
 import { WithScale } from './WithScale';
+import { PdfJsApi } from '../vendors/PdfJsApi';
 import type { PdfJs } from '../types/PdfJs';
 import type { Plugin } from '../types/Plugin';
 
@@ -61,10 +62,10 @@ export const TextLayer: React.FC<{
         });
         page.getTextContent().then((textContent) => {
             empty();
-            renderTask.current = PdfJs.renderTextLayer({
+            renderTask.current = PdfJsApi.renderTextLayer({
                 container: containerEle,
-                textContent,
-                viewport,
+                textContent: textContent as any,
+                viewport: viewport as any,
                 enhanceTextSelection: true,
             });
             renderTask.current.promise.then(

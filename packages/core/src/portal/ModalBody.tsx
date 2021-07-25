@@ -18,13 +18,7 @@ export const ModalBody: React.FC<{
     closeOnClickOutside: boolean;
     closeOnEscape: boolean;
     onToggle(): void;
-}> = ({
-    ariaControlsSuffix,
-    children,
-    closeOnClickOutside,
-    closeOnEscape,
-    onToggle,
-}) => {
+}> = ({ ariaControlsSuffix, children, closeOnClickOutside, closeOnEscape, onToggle }) => {
     const contentRef = React.useRef<HTMLDivElement>();
 
     useLockScroll();

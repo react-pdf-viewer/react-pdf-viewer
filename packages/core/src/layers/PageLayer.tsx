@@ -11,7 +11,7 @@ import * as React from 'react';
 import { AnnotationLayer } from '../annotations/AnnotationLayer';
 import { Spinner } from '../components/Spinner';
 import { useIntersectionObserver } from '../hooks/useIntersectionObserver';
-import { SpecialZoomLevel } from '../struct/SpecialZoomLevel';
+import { SpecialZoomLevel } from '../structs/SpecialZoomLevel';
 import { CanvasLayer } from './CanvasLayer';
 import { SvgLayer } from './SvgLayer';
 import { TextLayer } from './TextLayer';

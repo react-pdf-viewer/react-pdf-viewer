@@ -8,7 +8,7 @@
 
 import * as React from 'react';
 
-import { Position } from '../struct/Position';
+import { Position } from '../structs/Position';
 import { classNames } from '../utils/classNames';
 
 export const Arrow: React.FC<{

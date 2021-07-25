@@ -8,7 +8,10 @@
 
 import * as React from 'react';
 
-export const useDrop = (ref: React.RefObject<HTMLDivElement>, onDrop: (files: FileList) => void): {
+export const useDrop = (
+    ref: React.RefObject<HTMLDivElement>,
+    onDrop: (files: FileList) => void
+): {
     isDragging: boolean;
 } => {
     const dragCount = React.useRef(0);

@@ -24,14 +24,14 @@ export { LocalizationContext } from './localization/LocalizationContext';
 export { LocalizationProvider } from './localization/LocalizationProvider';
 export { Modal } from './portal/Modal';
 export { Popover } from './portal/Popover';
-export { Position } from './struct/Position';
+export { Position } from './structs/Position';
 export { Tooltip } from './portal/Tooltip';
-export { SpecialZoomLevel } from './struct/SpecialZoomLevel';
-export { ToggleStatus } from './struct/ToggleStatus';
+export { SpecialZoomLevel } from './structs/SpecialZoomLevel';
+export { ToggleStatus } from './structs/ToggleStatus';
 export { createStore } from './store/createStore';
 export { ThemeContext } from './theme/ThemeContext';
 export { ThemeProvider } from './theme/ThemeProvider';
-export { LayerRenderStatus } from './struct/LayerRenderStatus';
+export { LayerRenderStatus } from './structs/LayerRenderStatus';
 export { Viewer } from './Viewer';
 export { Worker } from './Worker';
 

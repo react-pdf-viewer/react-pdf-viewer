@@ -6,7 +6,7 @@
  * @copyright 2019-2021 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import { SpecialZoomLevel } from '../struct/SpecialZoomLevel';
+import { SpecialZoomLevel } from '../structs/SpecialZoomLevel';
 
 const SCROLL_BAR_WIDTH = 17;
 const PAGE_PADDING = 8;

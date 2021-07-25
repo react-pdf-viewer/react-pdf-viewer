@@ -23,12 +23,7 @@ export const BookmarkListRoot: React.FC<{
     doc: PdfJs.PdfDocument;
     store: Store<StoreProps>;
     onJumpToDest(pageIndex: number, bottomOffset: number, scaleTo: number | SpecialZoomLevel): void;
-}> = ({
-    bookmarks,
-    doc,
-    store,
-    onJumpToDest
-}) => {
+}> = ({ bookmarks, doc, store, onJumpToDest }) => {
     const containerRef = React.useRef<HTMLDivElement>();
     const [links, setLinks] = React.useState(store.get('linkAnnotations') || {});
 
@@ -53,7 +48,7 @@ export const BookmarkListRoot: React.FC<{
 
     const jumpToDest = (dest: PdfJs.OutlineDestinationType): void => {
         // Use `any` to get rid of the warning that `PdfDocument` doesn't match with the type provided by pdfjs-dist
-        getDestination(doc as any, dest).then((target) => {
+        getDestination(doc, dest).then((target) => {
             const { pageIndex, bottomOffset, scaleTo } = target;
             onJumpToDest(pageIndex + 1, bottomOffset, scaleTo);
         });

@@ -15,14 +15,7 @@ export const TextBox: React.FC<{
     value?: string;
     onChange: (value: string) => void;
     onKeyDown?: (e: React.KeyboardEvent) => void;
-}> = ({
-    ariaLabel = '',
-    placeholder = '',
-    type = 'text',
-    value = '',
-    onChange,
-    onKeyDown = () => {},
-}) => (
+}> = ({ ariaLabel = '', placeholder = '', type = 'text', value = '', onChange, onKeyDown = () => {} }) => (
     <input
         aria-label={ariaLabel}
         className="rpv-core__textbox"

@@ -12,7 +12,7 @@ import { useToggle } from '../hooks/useToggle';
 import { PopoverBody } from './PopoverBody';
 import { PopoverOverlay } from './PopoverOverlay';
 import { RenderContent, RenderTarget } from './Portal';
-import { Position } from '../struct/Position';
+import { Position } from '../structs/Position';
 import { uniqueId } from '../utils/uniqueId';
 import type { Offset } from '../types/Offset';
 

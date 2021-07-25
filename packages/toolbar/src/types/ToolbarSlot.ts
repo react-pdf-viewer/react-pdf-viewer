@@ -10,11 +10,7 @@ import * as React from 'react';
 import type { EnterFullScreenMenuItemProps, EnterFullScreenProps } from '@react-pdf-viewer/full-screen';
 import type { DownloadMenuItemProps, DownloadProps } from '@react-pdf-viewer/get-file';
 import type { OpenProps } from '@react-pdf-viewer/open';
-import type {
-    CurrentPageLabelProps,
-    GoToPageMenuItemProps,
-    GoToPageProps,
-} from '@react-pdf-viewer/page-navigation';
+import type { CurrentPageLabelProps, GoToPageMenuItemProps, GoToPageProps } from '@react-pdf-viewer/page-navigation';
 import type { PrintMenuItemProps, PrintProps } from '@react-pdf-viewer/print';
 import type { ShowPropertiesProps, ShowPropertiesMenuItemProps } from '@react-pdf-viewer/properties';
 import type { RotateDecoratorProps, RotateProps } from '@react-pdf-viewer/rotate';

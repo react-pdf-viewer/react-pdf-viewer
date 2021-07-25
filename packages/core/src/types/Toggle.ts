@@ -6,6 +6,6 @@
  * @copyright 2019-2021 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import { ToggleStatus } from '../struct/ToggleStatus';
+import { ToggleStatus } from '../structs/ToggleStatus';
 
 export type Toggle = (status?: ToggleStatus) => void;

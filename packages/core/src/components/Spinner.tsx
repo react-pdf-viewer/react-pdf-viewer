@@ -10,6 +10,4 @@ import * as React from 'react';
 
 export const Spinner: React.FC<{
     size?: string;
-}> = ({ size = '4rem' }) => (
-    <div className="rpv-core__spinner" style={{ height: size, width: size }} />
-);
+}> = ({ size = '4rem' }) => <div className="rpv-core__spinner" style={{ height: size, width: size }} />;

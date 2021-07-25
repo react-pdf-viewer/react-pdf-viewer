@@ -32,15 +32,7 @@ export const Annotation: React.FC<{
     page: PdfJs.Page;
     viewport: PdfJs.ViewPort;
     children(props: RenderChildrenProps): React.ReactElement;
-}> = ({
-    annotation,
-    children,
-    ignoreBorder,
-    hasPopup,
-    isRenderable,
-    page,
-    viewport,
-}) => {
+}> = ({ annotation, children, ignoreBorder, hasPopup, isRenderable, page, viewport }) => {
     const { rect } = annotation;
     const { closeOnHover, opened, openOnHover, toggleOnClick } = useTogglePopup();
 

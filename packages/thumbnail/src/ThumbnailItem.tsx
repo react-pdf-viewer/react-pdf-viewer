@@ -18,15 +18,7 @@ export const ThumbnailItem: React.FC<{
     rotation: number;
     thumbnailHeight: number;
     thumbnailWidth: number;
-}> = ({
-    page,
-    pageHeight,
-    pageIndex,
-    pageWidth,
-    rotation,
-    thumbnailHeight,
-    thumbnailWidth,
-}) => {
+}> = ({ page, pageHeight, pageIndex, pageWidth, rotation, thumbnailHeight, thumbnailWidth }) => {
     const l10n = React.useContext(LocalizationContext);
     const renderTask = React.useRef<PdfJs.PageRenderTask>();
     const [src, setSrc] = React.useState('');

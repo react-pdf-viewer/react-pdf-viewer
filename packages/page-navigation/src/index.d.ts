@@ -9,7 +9,6 @@
 import * as React from 'react';
 import type { Plugin } from '@react-pdf-viewer/core';
 
-// -------------------
 // Render current page
 // -------------------
 
@@ -22,9 +21,8 @@ export interface CurrentPageLabelProps {
     children?: (props: RenderCurrentPageLabelProps) => React.ReactElement;
 }
 
-// -------------------------------------
 // Page navigation
-// -------------------------------------
+// ---------------
 
 export interface GoToPageMenuItemProps {
     onClick: () => void;
@@ -41,7 +39,6 @@ export interface GoToPageProps {
     children?: RenderGoToPage;
 }
 
-// ------
 // Plugin
 // ------
 

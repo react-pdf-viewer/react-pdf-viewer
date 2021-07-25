@@ -10,7 +10,7 @@ import * as React from 'react';
 
 import { PageLayer } from '../layers/PageLayer';
 import { LocalizationContext } from '../localization/LocalizationContext';
-import { SpecialZoomLevel } from '../struct/SpecialZoomLevel';
+import { SpecialZoomLevel } from '../structs/SpecialZoomLevel';
 import { getFileExt } from '../utils/getFileExt';
 import { DocumentLoadEvent, PageChangeEvent, ZoomEvent } from '../Viewer';
 import { calculateScale } from './calculateScale';
@@ -60,7 +60,6 @@ export const Inner: React.FC<{
     const pageVisibility = arr.map(() => 0);
     const pageRefs = arr.map(() => React.useRef<HTMLDivElement>());
 
-    // -------------------------------------
     // The methods that a plugin can hook on
     // -------------------------------------
 

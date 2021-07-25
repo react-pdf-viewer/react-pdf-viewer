@@ -8,7 +8,7 @@
 
 import * as React from 'react';
 
-import { SpecialZoomLevel } from '../struct/SpecialZoomLevel';
+import { SpecialZoomLevel } from '../structs/SpecialZoomLevel';
 import { AnnotationType } from './AnnotationType';
 import { Caret } from './Caret';
 import { Circle } from './Circle';

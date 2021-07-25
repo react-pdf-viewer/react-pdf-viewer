@@ -30,15 +30,7 @@ export const ThumbnailContainer: React.FC<{
     pageWidth: number;
     rotation: number;
     onActive(target: HTMLElement): void;
-}> = ({
-    doc,
-    isActive,
-    pageHeight,
-    pageIndex,
-    pageWidth,
-    rotation,
-    onActive,
-}) => {
+}> = ({ doc, isActive, pageHeight, pageIndex, pageWidth, rotation, onActive }) => {
     const [pageSize, setPageSize] = React.useState<PageState>({
         height: pageHeight,
         isCalculated: false,

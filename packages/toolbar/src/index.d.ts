@@ -28,11 +28,7 @@ import type {
     PageNavigationPlugin,
 } from '@react-pdf-viewer/page-navigation';
 import type { PrintMenuItemProps, PrintPlugin, PrintPluginProps, PrintProps } from '@react-pdf-viewer/print';
-import type {
-    PropertiesPlugin,
-    ShowPropertiesProps,
-    ShowPropertiesMenuItemProps,
-} from '@react-pdf-viewer/properties';
+import type { PropertiesPlugin, ShowPropertiesProps, ShowPropertiesMenuItemProps } from '@react-pdf-viewer/properties';
 import type { RotateDecoratorProps, RotatePlugin, RotateProps } from '@react-pdf-viewer/rotate';
 import type {
     ScrollModePlugin,
@@ -40,12 +36,7 @@ import type {
     SwitchScrollModeMenuItemProps,
     SwitchScrollModeProps,
 } from '@react-pdf-viewer/scroll-mode';
-import type {
-    SearchPlugin,
-    SearchPluginProps,
-    SearchProps,
-    ShowSearchPopoverProps,
-} from '@react-pdf-viewer/search';
+import type { SearchPlugin, SearchPluginProps, SearchProps, ShowSearchPopoverProps } from '@react-pdf-viewer/search';
 import type {
     SelectionModePlugin,
     SelectionModePluginProps,

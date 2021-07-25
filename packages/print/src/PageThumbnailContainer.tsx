@@ -26,15 +26,7 @@ export const PageThumbnailContainer: React.FC<{
     pageWidth: number;
     rotation: number;
     onLoad(): void;
-}> = ({
-    canvas,
-    doc,
-    pageHeight,
-    pageIndex,
-    pageWidth,
-    rotation,
-    onLoad,
-}) => {
+}> = ({ canvas, doc, pageHeight, pageIndex, pageWidth, rotation, onLoad }) => {
     const [pageSize, setPageSize] = React.useState<PageState>({
         height: pageHeight,
         page: null,

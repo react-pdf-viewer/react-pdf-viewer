@@ -6,7 +6,7 @@
  * @copyright 2019-2021 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
- export declare namespace PdfJs {
+export declare namespace PdfJs {
     // Worker
     const GlobalWorkerOptions: GlobalWorker;
     interface GlobalWorker {

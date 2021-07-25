@@ -22,15 +22,7 @@ export const BookmarkItem: React.FC<{
     numberOfSiblings: number;
     store: Store<StoreProps>;
     onJumpToDest(dest: PdfJs.OutlineDestinationType): void;
-}> = ({
-    bookmark,
-    depth,
-    doc,
-    index,
-    numberOfSiblings,
-    store,
-    onJumpToDest,
-}) => {
+}> = ({ bookmark, depth, doc, index, numberOfSiblings, store, onJumpToDest }) => {
     const [expanded, setExpanded] = React.useState(true);
 
     const hasSubItems = bookmark.items && bookmark.items.length > 0;

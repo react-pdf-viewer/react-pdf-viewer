@@ -16,14 +16,7 @@ export const MinimalButton: React.FC<{
     isDisabled?: boolean;
     isSelected?: boolean;
     onClick(): void;
-}> = ({
-    ariaLabel = '',
-    ariaKeyShortcuts = '',
-    children,
-    isDisabled = false,
-    isSelected = false,
-    onClick,
-}) => (
+}> = ({ ariaLabel = '', ariaKeyShortcuts = '', children, isDisabled = false, isSelected = false, onClick }) => (
     <button
         aria-label={ariaLabel}
         {...(ariaKeyShortcuts && { 'aria-keyshortcuts': ariaKeyShortcuts })}

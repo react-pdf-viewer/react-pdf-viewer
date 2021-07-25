@@ -6,10 +6,15 @@
  * @copyright 2019-2021 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import { Position } from '../struct/Position';
+import { Position } from '../structs/Position';
 import type { Offset } from '../types/Offset';
 
-export const calculatePosition = (content: HTMLElement, target: HTMLElement, position: Position, offset: Offset): Offset => {
+export const calculatePosition = (
+    content: HTMLElement,
+    target: HTMLElement,
+    position: Position,
+    offset: Offset
+): Offset => {
     const targetRect = target.getBoundingClientRect();
     const contentRect = content.getBoundingClientRect();
     const { height, width } = contentRect;

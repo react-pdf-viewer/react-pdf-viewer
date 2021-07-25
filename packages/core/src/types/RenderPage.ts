@@ -8,7 +8,7 @@
 
 import * as React from 'react';
 
-import type { PdfJs } from '../types/PdfJs';
+import type { PdfJs } from './PdfJs';
 import type { Slot } from './Slot';
 
 export interface RenderPageProps {

@@ -9,7 +9,7 @@
 import * as React from 'react';
 
 import { Spinner } from '../components/Spinner';
-import { SpecialZoomLevel } from '../struct/SpecialZoomLevel';
+import { SpecialZoomLevel } from '../structs/SpecialZoomLevel';
 import { decrease } from '../zoom/zoomingLevel';
 import { calculateScale } from './calculateScale';
 import type { PageSize } from '../types/PageSize';

@@ -12,7 +12,9 @@ import type { Store, StoreHandler } from '@react-pdf-viewer/core';
 import { ScrollMode } from './structs/ScrollMode';
 import type { StoreProps } from './types/StoreProps';
 
-export const useScrollMode = (store: Store<StoreProps>): {
+export const useScrollMode = (
+    store: Store<StoreProps>
+): {
     scrollMode: ScrollMode;
     switchTo: (newScrollMode: ScrollMode) => void;
 } => {

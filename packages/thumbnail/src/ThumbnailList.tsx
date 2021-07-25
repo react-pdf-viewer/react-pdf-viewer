@@ -20,14 +20,7 @@ export const ThumbnailList: React.FC<{
     pageWidth: number;
     rotation: number;
     onJumpToPage(pageIndex: number): void;
-}> = ({
-    currentPage,
-    doc,
-    pageHeight,
-    pageWidth,
-    rotation,
-    onJumpToPage,
-}) => {
+}> = ({ currentPage, doc, pageHeight, pageWidth, rotation, onJumpToPage }) => {
     const { numPages } = doc;
     const containerRef = React.useRef<HTMLDivElement | null>(null);
     const thumbnailsRef = React.useRef<HTMLElement[]>([]);

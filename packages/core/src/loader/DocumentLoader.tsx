@@ -79,7 +79,7 @@ export const DocumentLoader: React.FC<{
         );
         const transformParams = transformGetDocumentParams ? transformGetDocumentParams(params) : params;
 
-        const loadingTask = (PdfJsApi.getDocument(transformParams) as unknown) as PdfJs.LoadingTask;
+        const loadingTask = PdfJsApi.getDocument(transformParams) as unknown as PdfJs.LoadingTask;
         loadingTask.onPassword = (verifyPassword: VerifyPassword, reason: string): void => {
             switch (reason) {
                 case PdfJs.PasswordResponses.NEED_PASSWORD:

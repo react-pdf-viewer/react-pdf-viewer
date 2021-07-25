@@ -14,7 +14,7 @@ import { Inner } from './layouts/Inner';
 import { PageSizeCalculator } from './layouts/PageSizeCalculator';
 import { DocumentLoader, RenderError } from './loader/DocumentLoader';
 import { LocalizationProvider } from './localization/LocalizationProvider';
-import { SpecialZoomLevel } from './struct/SpecialZoomLevel';
+import { SpecialZoomLevel } from './structs/SpecialZoomLevel';
 import { ThemeContext } from './theme/ThemeContext';
 import { ThemeProvider } from './theme/ThemeProvider';
 import { Plugin } from './types/Plugin';

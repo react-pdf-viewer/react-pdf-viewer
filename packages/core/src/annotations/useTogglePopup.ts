@@ -8,8 +8,8 @@
 
 import * as React from 'react';
 
-import { ToggleStatus } from '../struct/ToggleStatus';
 import { useToggle } from '../hooks/useToggle';
+import { ToggleStatus } from '../structs/ToggleStatus';
 
 enum TogglePopupBy {
     Click = 'Click',

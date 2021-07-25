@@ -16,7 +16,9 @@ import type { Match } from './types/Match';
 import type { SingleKeyword } from './types/SingleKeyword';
 import type { StoreProps } from './types/StoreProps';
 
-export const useSearch = (store: Store<StoreProps>): {
+export const useSearch = (
+    store: Store<StoreProps>
+): {
     clearKeyword(): void;
     changeMatchCase(matchCase: boolean): void;
     changeWholeWords(wholeWords: boolean): void;

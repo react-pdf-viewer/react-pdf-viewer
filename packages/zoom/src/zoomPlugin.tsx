@@ -24,13 +24,7 @@ import type { StoreProps } from './types/StoreProps';
 import type { ZoomMenuItemProps } from './types/ZoomMenuItemProps';
 
 // Export types
-export type {
-    CurrentScaleProps,
-    ZoomInProps,
-    ZoomMenuItemProps,
-    ZoomOutProps,
-    ZoomProps,
-};
+export type { CurrentScaleProps, ZoomInProps, ZoomMenuItemProps, ZoomOutProps, ZoomProps };
 
 export interface ZoomPlugin extends Plugin {
     zoomTo: (scale: number | SpecialZoomLevel) => void;

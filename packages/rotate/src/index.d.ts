@@ -28,7 +28,6 @@ export interface RotateProps {
     direction: RotateDirection;
 }
 
-// ------
 // Plugin
 // ------
 

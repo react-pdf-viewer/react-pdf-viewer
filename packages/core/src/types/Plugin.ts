@@ -8,7 +8,7 @@
 
 import * as React from 'react';
 
-import { LayerRenderStatus } from '../struct/LayerRenderStatus';
+import { LayerRenderStatus } from '../structs/LayerRenderStatus';
 import type { PdfJs } from '../types/PdfJs';
 import type { PluginFunctions } from './PluginFunctions';
 import type { RenderViewer } from './RenderViewer';

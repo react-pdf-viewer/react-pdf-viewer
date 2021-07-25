@@ -8,7 +8,7 @@
 
 import * as React from 'react';
 
-import { SpecialZoomLevel } from '../struct/SpecialZoomLevel';
+import { SpecialZoomLevel } from '../structs/SpecialZoomLevel';
 import type { PdfJs } from '../types/PdfJs';
 import type { Slot } from './Slot';
 

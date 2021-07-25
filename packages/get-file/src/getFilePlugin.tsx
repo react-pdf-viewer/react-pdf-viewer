@@ -17,10 +17,7 @@ import { getFileName } from './getFileName';
 import type { StoreProps } from './types/StoreProps';
 
 // Export types
-export type {
-    DownloadMenuItemProps,
-    DownloadProps,
-}
+export type { DownloadMenuItemProps, DownloadProps };
 
 export interface GetFilePlugin extends Plugin {
     Download: (props: DownloadProps) => React.ReactElement;

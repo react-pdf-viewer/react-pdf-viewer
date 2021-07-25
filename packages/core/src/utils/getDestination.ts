@@ -6,7 +6,7 @@
  * @copyright 2019-2021 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import { SpecialZoomLevel } from '../struct/SpecialZoomLevel';
+import { SpecialZoomLevel } from '../structs/SpecialZoomLevel';
 import type { PdfJs } from '../types/PdfJs';
 
 interface JumpToDestination {
@@ -50,7 +50,10 @@ const parse = (pageIndex: number, destArray: PdfJs.OutlineDestination): JumpToDe
     }
 };
 
-export const getDestination = (doc: PdfJs.PdfDocument, dest: PdfJs.OutlineDestinationType): Promise<JumpToDestination> => {
+export const getDestination = (
+    doc: PdfJs.PdfDocument,
+    dest: PdfJs.OutlineDestinationType
+): Promise<JumpToDestination> => {
     return new Promise<JumpToDestination>((res) => {
         new Promise<PdfJs.OutlineDestination>((resolve) => {
             if (typeof dest === 'string') {

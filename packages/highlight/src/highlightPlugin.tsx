@@ -24,7 +24,7 @@ import { NO_SELECTION_STATE, SELECTING_STATE, SelectedState } from './SelectionS
 import { Tracker } from './Tracker';
 import type { HighlightArea } from './types/HighlightArea';
 import type { RenderHighlightsProps } from './types/RenderHighlightsProps';
-import type {  RenderHighlightContentProps } from './types/RenderHighlightContentProps';
+import type { RenderHighlightContentProps } from './types/RenderHighlightContentProps';
 import type { RenderHighlightTargetProps } from './types/RenderHighlightTargetProps';
 import type { StoreProps } from './types/StoreProps';
 

@@ -9,7 +9,7 @@
 import * as React from 'react';
 
 import { usePosition } from '../hooks/usePosition';
-import { Position } from '../struct/Position';
+import { Position } from '../structs/Position';
 import { Arrow } from './Arrow';
 import type { Offset } from '../types/Offset';
 
@@ -19,14 +19,7 @@ export const TooltipBody: React.FC<{
     offset: Offset;
     position: Position;
     targetRef: React.RefObject<HTMLElement>;
-}> = ({
-    ariaControlsSuffix,
-    children,
-    contentRef,
-    offset,
-    position,
-    targetRef,
-}) => {
+}> = ({ ariaControlsSuffix, children, contentRef, offset, position, targetRef }) => {
     const anchorRef = React.useRef<HTMLDivElement>();
 
     usePosition(contentRef, targetRef, anchorRef, position, offset);

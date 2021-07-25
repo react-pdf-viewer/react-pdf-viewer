@@ -7,5 +7,7 @@
  */
 
 export * from './bookmarkPlugin';
+
+// Components
 export * from './DownArrowIcon';
 export * from './RightArrowIcon';

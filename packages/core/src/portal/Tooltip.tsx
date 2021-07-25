@@ -10,8 +10,8 @@ import * as React from 'react';
 
 import { useEscape } from '../hooks/useEscape';
 import { useToggle } from '../hooks/useToggle';
-import { ToggleStatus } from '../struct/ToggleStatus';
-import { Position } from '../struct/Position';
+import { ToggleStatus } from '../structs/ToggleStatus';
+import { Position } from '../structs/Position';
 import { TooltipBody } from './TooltipBody';
 import { uniqueId } from '../utils/uniqueId';
 import type { Offset } from '../types/Offset';
