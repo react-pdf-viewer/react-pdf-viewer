@@ -8,8 +8,8 @@
 
 import * as React from 'react';
 
-import { PdfJs } from '../vendors/PdfJs';
 import { WithScale } from './WithScale';
+import type { PdfJs } from '../types/PdfJs';
 
 export const SvgLayer: React.FC<{
     height: number;

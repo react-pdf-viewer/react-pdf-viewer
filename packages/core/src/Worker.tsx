@@ -8,11 +8,11 @@
 
 import * as React from 'react';
 
-import { PdfJs } from './vendors/PdfJs';
+import { PdfJsApi } from './vendors/PdfJsApi';
 
 export const Worker: React.FC<{
     workerUrl: string;
 }> = ({ children, workerUrl }) => {
-    PdfJs.GlobalWorkerOptions.workerSrc = workerUrl;
+    PdfJsApi.GlobalWorkerOptions.workerSrc = workerUrl;
     return <>{children}</>;
 };

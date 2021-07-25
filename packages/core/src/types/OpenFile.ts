@@ -6,7 +6,7 @@
  * @copyright 2019-2021 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import { PdfJs } from '../vendors/PdfJs';
+import type { PdfJs } from '../types/PdfJs';
 
 export interface OpenFile {
     data: PdfJs.FileData;

@@ -12,10 +12,10 @@ import { AnnotationLayer } from '../annotations/AnnotationLayer';
 import { Spinner } from '../components/Spinner';
 import { useIntersectionObserver, VisibilityChanged } from '../hooks/useIntersectionObserver';
 import { SpecialZoomLevel } from '../struct/SpecialZoomLevel';
-import { PdfJs } from '../vendors/PdfJs';
 import { CanvasLayer } from './CanvasLayer';
 import { SvgLayer } from './SvgLayer';
 import { TextLayer } from './TextLayer';
+import type { PdfJs } from '../types/PdfJs';
 import type { Plugin } from '../types/Plugin';
 import type { RenderPage, RenderPageProps } from '../types/RenderPage';
 

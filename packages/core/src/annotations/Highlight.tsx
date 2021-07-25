@@ -8,10 +8,10 @@
 
 import * as React from 'react';
 
-import { PdfJs } from '../vendors/PdfJs';
 import { Annotation } from './Annotation';
 import { AnnotationType } from './AnnotationType';
 import { Popup } from './Popup';
+import type { PdfJs } from '../types/PdfJs';
 
 export const Highlight: React.FC<{
     annotation: PdfJs.Annotation;

@@ -7,7 +7,7 @@
  */
 
 import { getFileName } from './getFileName';
-import { PdfJs } from '../vendors/PdfJs';
+import type { PdfJs } from '../types/PdfJs';
 
 export const downloadFile = (url: string, data: PdfJs.FileData): void => {
     const blobUrl = typeof data === 'string' ? '' : URL.createObjectURL(new Blob([data], { type: '' }));

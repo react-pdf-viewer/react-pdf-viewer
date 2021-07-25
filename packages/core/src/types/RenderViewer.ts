@@ -9,7 +9,7 @@
 import * as React from 'react';
 
 import { SpecialZoomLevel } from '../struct/SpecialZoomLevel';
-import { PdfJs } from '../vendors/PdfJs';
+import type { PdfJs } from '../types/PdfJs';
 import type { Slot } from './Slot';
 
 export interface RenderViewer {

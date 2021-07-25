@@ -9,6 +9,7 @@
 export * from './LocalizationMap';
 export * from './Offset';
 export * from './OpenFile';
+export * from './PdfJs';
 export * from './PageSize';
 export * from './Plugin';
 export * from './PluginFunctions';

@@ -8,7 +8,7 @@
 
 import * as React from 'react';
 
-import { PdfJs } from '../vendors/PdfJs';
+import type { PdfJs } from '../types/PdfJs';
 
 interface Status {
     loading: boolean;

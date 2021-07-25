@@ -9,7 +9,6 @@
 import * as React from 'react';
 
 import { SpecialZoomLevel } from '../struct/SpecialZoomLevel';
-import { PdfJs } from '../vendors/PdfJs';
 import { AnnotationType } from './AnnotationType';
 import { Caret } from './Caret';
 import { Circle } from './Circle';
@@ -28,6 +27,7 @@ import { Stamp } from './Stamp';
 import { StrikeOut } from './StrikeOut';
 import { Text } from './Text';
 import { Underline } from './Underline';
+import type { PdfJs } from '../types/PdfJs';
 import type { Plugin } from '../types/Plugin';
 
 export const AnnotationLayerBody: React.FC<{

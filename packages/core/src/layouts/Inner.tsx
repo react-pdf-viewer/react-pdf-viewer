@@ -12,11 +12,10 @@ import { PageLayer } from '../layers/PageLayer';
 import { LocalizationContext } from '../localization/LocalizationContext';
 import { SpecialZoomLevel } from '../struct/SpecialZoomLevel';
 import { getFileExt } from '../utils/getFileExt';
-import { PdfJs } from '../vendors/PdfJs';
 import { DocumentLoadEvent, PageChangeEvent, ZoomEvent } from '../Viewer';
 import { calculateScale } from './calculateScale';
-
 import type { PageSize } from '../types/PageSize';
+import type { PdfJs } from '../types/PdfJs';
 import type { Plugin } from '../types/Plugin';
 import type { PluginFunctions } from '../types/PluginFunctions';
 import type { RenderPage } from '../types/RenderPage';

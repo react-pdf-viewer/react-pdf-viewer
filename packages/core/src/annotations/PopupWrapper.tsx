@@ -9,8 +9,8 @@
 import * as React from 'react';
 
 import { convertDate } from '../utils/convertDate';
-import { PdfJs } from '../vendors/PdfJs';
 import { AnnotationType } from './AnnotationType';
+import type { PdfJs } from '../types/PdfJs';
 
 export const PopupWrapper: React.FC<{
     annotation: PdfJs.Annotation;

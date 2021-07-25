@@ -8,8 +8,8 @@
 
 import * as React from 'react';
 
-import { PdfJs } from '../vendors/PdfJs';
 import { LayerRenderStatus } from '../struct/LayerRenderStatus';
+import type { PdfJs } from '../types/PdfJs';
 import type { PluginFunctions } from './PluginFunctions';
 import type { RenderViewer } from './RenderViewer';
 import type { Slot } from './Slot';

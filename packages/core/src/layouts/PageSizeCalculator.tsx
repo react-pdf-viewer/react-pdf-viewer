@@ -10,10 +10,10 @@ import * as React from 'react';
 
 import { Spinner } from '../components/Spinner';
 import { SpecialZoomLevel } from '../struct/SpecialZoomLevel';
-import { PdfJs } from '../vendors/PdfJs';
 import { decrease } from '../zoom/zoomingLevel';
 import { calculateScale } from './calculateScale';
 import type { PageSize } from '../types/PageSize';
+import type { PdfJs } from '../types/PdfJs';
 
 export const PageSizeCalculator: React.FC<{
     defaultScale?: number | SpecialZoomLevel;

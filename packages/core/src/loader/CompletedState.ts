@@ -6,8 +6,8 @@
  * @copyright 2019-2021 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import { PdfJs } from '../vendors/PdfJs';
 import { LoadingStatus } from './LoadingStatus';
+import type { PdfJs } from '../types/PdfJs';
 
 export class CompletedState extends LoadingStatus {
     public doc: PdfJs.PdfDocument;

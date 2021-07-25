@@ -19,9 +19,9 @@ import { ThemeContext } from './theme/ThemeContext';
 import { ThemeProvider } from './theme/ThemeProvider';
 import { Plugin } from './types/Plugin';
 import { isSameUrl } from './utils/isSameUrl';
-import { PdfJs } from './vendors/PdfJs';
 import type { LocalizationMap } from './types/LocalizationMap';
 import type { PageSize } from './types/PageSize';
+import type { PdfJs } from './types/PdfJs';
 import type { RenderPage } from './types/RenderPage';
 
 export interface DocumentLoadEvent {

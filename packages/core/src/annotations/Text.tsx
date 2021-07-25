@@ -15,10 +15,10 @@ import { KeyIcon } from '../icons/KeyIcon';
 import { NoteIcon } from '../icons/NoteIcon';
 import { ParagraphIcon } from '../icons/ParagraphIcon';
 import { TriangleIcon } from '../icons/TriangleIcon';
-import { PdfJs } from '../vendors/PdfJs';
 import { Annotation } from './Annotation';
 import { AnnotationType } from './AnnotationType';
 import { Popup } from './Popup';
+import type { PdfJs } from '../types/PdfJs';
 
 export const Text: React.FC<{
     annotation: PdfJs.Annotation;

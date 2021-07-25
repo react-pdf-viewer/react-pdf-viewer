@@ -8,10 +8,10 @@
 
 import * as React from 'react';
 
-import { PdfJs } from '../vendors/PdfJs';
 import { AnnotationBorderStyleType } from './AnnotationBorderStyleType';
 import { PopupWrapper } from './PopupWrapper';
 import { useTogglePopup } from './useTogglePopup';
+import type { PdfJs } from '../types/PdfJs';
 import type { Slot } from '../types/Slot';
 
 interface RenderChildrenProps {

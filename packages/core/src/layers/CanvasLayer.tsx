@@ -10,8 +10,8 @@ import * as React from 'react';
 
 import { Spinner } from '../components/Spinner';
 import { LayerRenderStatus } from '../struct/LayerRenderStatus';
-import { PdfJs } from '../vendors/PdfJs';
 import { WithScale } from './WithScale';
+import type { PdfJs } from '../types/PdfJs';
 import type { Plugin } from '../types/Plugin';
 
 export const CanvasLayer: React.FC<{

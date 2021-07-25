@@ -7,7 +7,7 @@
  */
 
 import { SpecialZoomLevel } from '../struct/SpecialZoomLevel';
-import { PdfJs } from '../vendors/PdfJs';
+import type { PdfJs } from '../types/PdfJs';
 
 interface JumpToDestination {
     bottomOffset: number;

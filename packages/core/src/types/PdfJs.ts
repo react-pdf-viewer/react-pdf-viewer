@@ -6,7 +6,7 @@
  * @copyright 2019-2021 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-declare module 'pdfjs-dist' {
+ export declare namespace PdfJs {
     // Worker
     const GlobalWorkerOptions: GlobalWorker;
     interface GlobalWorker {

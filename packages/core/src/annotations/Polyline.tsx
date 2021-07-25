@@ -8,8 +8,8 @@
 
 import * as React from 'react';
 
-import { PdfJs } from '../vendors/PdfJs';
 import { Annotation } from './Annotation';
+import type { PdfJs } from '../types/PdfJs';
 
 export const Polyline: React.FC<{
     annotation: PdfJs.Annotation;

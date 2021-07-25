@@ -9,9 +9,9 @@
 import * as React from 'react';
 
 import { SpecialZoomLevel } from '../struct/SpecialZoomLevel';
-import { PdfJs } from '../vendors/PdfJs';
 import { AnnotationLayerBody } from './AnnotationLayerBody';
 import { AnnotationLoader } from './AnnotationLoader';
+import type { PdfJs } from '../types/PdfJs';
 import type { Plugin } from '../types/Plugin';
 
 export const AnnotationLayer: React.FC<{
