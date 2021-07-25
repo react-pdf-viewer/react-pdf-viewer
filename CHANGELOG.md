@@ -20,6 +20,8 @@ _Improve the search plugin_
 -   Add new `jumpToMatch` function which jumps to the given match
 -   The `highlight` function now returns a `Promise` that holds the results. Each result also contains the matching text
 
+-   The `core` package provides `isMac` function
+
 **Improvements**
 
 _Accessibility_

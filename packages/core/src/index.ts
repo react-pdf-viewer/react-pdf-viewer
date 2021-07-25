@@ -38,6 +38,7 @@ export { Worker } from './Worker';
 // Utils
 export { classNames } from './utils/classNames';
 export { getDestination } from './utils/getDestination';
+export { isMac } from './utils/isMac';
 
 // Types
 export * from './types/index';

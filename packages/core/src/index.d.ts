@@ -655,3 +655,5 @@ export interface JumpToDestination {
 }
 
 export function getDestination(doc: PdfJs.PdfDocument, dest: PdfJs.OutlineDestinationType): Promise<JumpToDestination>;
+
+export function isMac(): boolean;
