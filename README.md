@@ -51,6 +51,7 @@ const defaultLayoutPluginInstance = defaultLayoutPlugin();
 -   [x] Print
 -   [x] Theming
 -   [x] Dark mode
+-   [x] Accessibility
 
 **Customization**
 

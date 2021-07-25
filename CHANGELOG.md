@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## v2.7.0 [WIP]
+## v2.7.0
 
 **New features**
 
