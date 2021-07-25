@@ -6,6 +6,10 @@
  * @copyright 2019-2021 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
+// Types
+export type { LocalePopoverProps } from './LocalePopover';
+
+// Plugin
 export * from './localeSwitcherPlugin';
 
 // Components

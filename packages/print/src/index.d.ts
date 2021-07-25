@@ -9,6 +9,7 @@
 import * as React from 'react';
 import type { Plugin } from '@react-pdf-viewer/core';
 
+// Types
 export interface RenderPrintProps {
     enableShortcuts: boolean;
     onClick: () => void;
@@ -22,6 +23,7 @@ export interface PrintProps {
     children?: (props: RenderPrintProps) => React.ReactElement;
 }
 
+// Plugin
 export interface PrintPlugin extends Plugin {
     Print: (props: PrintProps) => React.ReactElement;
     PrintButton: () => React.ReactElement;
@@ -34,4 +36,5 @@ export interface PrintPluginProps {
 
 export function printPlugin(props?: PrintPluginProps): PrintPlugin;
 
+// Components
 export class PrintIcon extends React.Component {}

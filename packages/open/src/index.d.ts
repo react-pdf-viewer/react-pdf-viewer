@@ -9,14 +9,16 @@
 import * as React from 'react';
 import type { Plugin } from '@react-pdf-viewer/core';
 
-export interface RenderOpenProps {
-    onClick: (e: React.ChangeEvent<HTMLInputElement>) => void;
-}
-
+// Types
 export interface OpenProps {
     children?: (props: RenderOpenProps) => React.ReactElement;
 }
 
+export interface RenderOpenProps {
+    onClick: (e: React.ChangeEvent<HTMLInputElement>) => void;
+}
+
+// Plugin
 export interface OpenPlugin extends Plugin {
     Open: (props: OpenProps) => React.ReactElement;
     OpenButton: () => React.ReactElement;
@@ -24,4 +26,6 @@ export interface OpenPlugin extends Plugin {
 }
 
 export function openPlugin(): OpenPlugin;
+
+// Components
 export class OpenFileIcon extends React.Component {}

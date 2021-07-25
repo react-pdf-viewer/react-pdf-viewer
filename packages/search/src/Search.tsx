@@ -13,7 +13,7 @@ import { useSearch } from './useSearch';
 import type { Match } from './types/Match';
 import type { StoreProps } from './types/StoreProps';
 
-interface RenderSearchProps {
+export interface RenderSearchProps {
     clearKeyword(): void;
     changeMatchCase(matchCase: boolean): void;
     changeWholeWords(wholeWords: boolean): void;

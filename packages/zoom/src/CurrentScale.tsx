@@ -12,7 +12,7 @@ import type { Store } from '@react-pdf-viewer/core';
 import { useZoom } from './useZoom';
 import type { StoreProps } from './types/StoreProps';
 
-interface RenderCurrentScaleProps {
+export interface RenderCurrentScaleProps {
     scale: number;
 }
 

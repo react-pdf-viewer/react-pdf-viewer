@@ -43,10 +43,6 @@ import type { ThemePlugin } from '@react-pdf-viewer/theme';
 import type { ZoomPlugin, ZoomPluginProps } from '@react-pdf-viewer/zoom';
 
 import { Toolbar, ToolbarProps } from './Toolbar';
-import type { ToolbarSlot } from './types/ToolbarSlot';
-
-// Export types
-export type { ToolbarProps, ToolbarSlot };
 
 export interface ToolbarPlugin extends Plugin {
     Toolbar: (props: ToolbarProps) => React.ReactElement;

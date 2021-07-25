@@ -14,9 +14,6 @@ import { Open, OpenProps } from './Open';
 import { OpenMenuItem } from './OpenMenuItem';
 import type { StoreProps } from './types/StoreProps';
 
-// Export types
-export type { OpenProps };
-
 export interface OpenPlugin extends Plugin {
     Open: (props: OpenProps) => React.ReactElement;
     OpenButton: () => React.ReactElement;

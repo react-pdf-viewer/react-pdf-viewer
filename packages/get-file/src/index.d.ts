@@ -9,18 +9,20 @@
 import * as React from 'react';
 import type { OpenFile, Plugin } from '@react-pdf-viewer/core';
 
-export interface RenderDownloadProps {
-    onClick(): void;
+// Types
+export interface DownloadProps {
+    children?(props: RenderDownloadProps): React.ReactElement;
 }
 
 export interface DownloadMenuItemProps {
     onClick(): void;
 }
 
-export interface DownloadProps {
-    children?(props: RenderDownloadProps): React.ReactElement;
+export interface RenderDownloadProps {
+    onClick(): void;
 }
 
+// Plugin
 export interface GetFilePlugin extends Plugin {
     Download(props: DownloadProps): React.ReactElement;
     DownloadButton(): React.ReactElement;
@@ -34,4 +36,5 @@ export interface GetFilePluginProps {
 
 export function getFilePlugin(props?: GetFilePluginProps): GetFilePlugin;
 
+// Components
 export class DownloadIcon extends React.Component {}

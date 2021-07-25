@@ -6,6 +6,14 @@
  * @copyright 2019-2021 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
+// Types
+export type { HighlightArea } from './types/HighlightArea';
+export type { RenderHighlightContentProps } from './types/RenderHighlightContentProps';
+export type { RenderHighlightsProps } from './types/RenderHighlightsProps';
+export type { RenderHighlightTargetProps } from './types/RenderHighlightTargetProps';
+export type { SelectionData } from './types/SelectionData';
+
+// Plugin
 export * from './highlightPlugin';
 
 // Components

@@ -6,6 +6,17 @@
  * @copyright 2019-2021 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
+// Types
+export type { FlagKeyword } from './types/FlagKeyword';
+export type { Match } from './types/Match';
+export type { MatchPosition } from './types/MatchPosition';
+export type { OnHighlightKeyword } from './types/OnHighlightKeyword';
+export type { RenderShowSearchPopoverProps } from './types/RenderShowSearchPopoverProps';
+export type { SingleKeyword } from './types/SingleKeyword';
+export type { RenderSearchProps, SearchProps } from './Search';
+export type { ShowSearchPopoverProps } from './ShowSearchPopover';
+
+// Plugin
 export * from './searchPlugin';
 
 // Components

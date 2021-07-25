@@ -9,6 +9,7 @@
 import * as React from 'react';
 import type { Plugin } from '@react-pdf-viewer/core';
 
+// Plugin
 export interface AttachmentPlugin extends Plugin {
     Attachments: () => React.ReactElement;
 }

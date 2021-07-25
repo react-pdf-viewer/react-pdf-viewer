@@ -29,9 +29,6 @@ import type { Match } from './types/Match';
 import type { SingleKeyword } from './types/SingleKeyword';
 import type { StoreProps } from './types/StoreProps';
 
-// Export types
-export type { SearchProps, ShowSearchPopoverProps };
-
 export interface SearchPlugin extends Plugin {
     Search(props: SearchProps): React.ReactElement;
     ShowSearchPopover(props: ShowSearchPopoverProps): React.ReactElement;

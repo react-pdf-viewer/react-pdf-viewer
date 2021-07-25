@@ -6,6 +6,11 @@
  * @copyright 2019-2021 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
+// Types
+export type { CurrentPageLabelProps, RenderCurrentPageLabelProps } from './CurrentPageLabel';
+export type { GoToPageMenuItemProps, GoToPageProps, RenderGoToPage, RenderGoToPageProps } from './types';
+
+// Plugin
 export * from './pageNavigationPlugin';
 
 // Components

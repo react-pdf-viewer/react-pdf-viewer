@@ -6,6 +6,11 @@
  * @copyright 2019-2021 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
+// Types
+export type { EnterFullScreenProps, RenderEnterFullScreenProps } from './EnterFullScreen';
+export type { EnterFullScreenMenuItemProps } from './EnterFullScreenMenuItem';
+
+// Plugin
 export * from './fullScreenPlugin';
 
 // Components

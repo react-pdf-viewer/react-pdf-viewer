@@ -9,18 +9,20 @@
 import * as React from 'react';
 import type { Plugin } from '@react-pdf-viewer/core';
 
+// Types
 export interface ShowPropertiesMenuItemProps {
     onClick: () => void;
-}
-
-export interface RenderShowPropertiesProps {
-    onClick(): void;
 }
 
 export interface ShowPropertiesProps {
     children?: (props: RenderShowPropertiesProps) => React.ReactElement;
 }
 
+export interface RenderShowPropertiesProps {
+    onClick(): void;
+}
+
+// Plugin
 export interface PropertiesPlugin extends Plugin {
     ShowProperties: (props: ShowPropertiesProps) => React.ReactElement;
     ShowPropertiesButton(): React.ReactElement;
@@ -29,4 +31,5 @@ export interface PropertiesPlugin extends Plugin {
 
 export function propertiesPlugin(): PropertiesPlugin;
 
+// Components
 export class InfoIcon extends React.Component {}

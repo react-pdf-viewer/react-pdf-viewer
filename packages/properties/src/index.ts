@@ -6,6 +6,12 @@
  * @copyright 2019-2021 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
+// Types
+export type { ShowPropertiesMenuItemProps } from './propertiesPlugin';
+export type { ShowPropertiesProps } from './ShowProperties';
+export type { RenderShowPropertiesProps } from './types/RenderShowPropertiesProps';
+
+// Plugin
 export * from './propertiesPlugin';
 
 // Components
