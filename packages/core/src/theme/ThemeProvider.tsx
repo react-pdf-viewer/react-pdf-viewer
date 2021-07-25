@@ -9,6 +9,7 @@
 import * as React from 'react';
 
 import { ThemeContext, ThemeContextProps } from './ThemeContext';
+import { usePrevious } from '../hooks/usePrevious';
 import { isDarkMode } from '../utils/isDarkMode';
 
 export const ThemeProvider: React.FC<{
@@ -17,6 +18,7 @@ export const ThemeProvider: React.FC<{
 }> = ({ children, theme, onSwitchTheme }) => {
     const initialTheme = React.useMemo(() => (theme === 'auto' ? (isDarkMode() ? 'dark' : 'light') : theme), []);
     const [currentTheme, setCurrentTheme] = React.useState(initialTheme);
+    const prevTheme = usePrevious(currentTheme);
 
     React.useEffect(() => {
         if (theme !== 'auto') {
@@ -33,7 +35,7 @@ export const ThemeProvider: React.FC<{
     }, []);
 
     React.useEffect(() => {
-        if (onSwitchTheme) {
+        if (currentTheme !== prevTheme && onSwitchTheme) {
             onSwitchTheme(currentTheme);
         }
     }, [currentTheme]);
