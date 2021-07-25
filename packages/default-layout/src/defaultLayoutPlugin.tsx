@@ -24,10 +24,13 @@ import type {
     PluginOnTextLayerRender,
 } from '@react-pdf-viewer/core';
 import type { ThumbnailPlugin } from '@react-pdf-viewer/thumbnail';
-import type { ToolbarPlugin, ToolbarPluginProps, ToolbarProps } from '@react-pdf-viewer/toolbar';
+import type { ToolbarPlugin, ToolbarPluginProps, ToolbarProps, ToolbarSlot } from '@react-pdf-viewer/toolbar';
 
 import { Sidebar, SidebarTab } from './Sidebar';
 import type { StoreProps } from './types/StoreProps';
+
+// Export types
+export type { ToolbarPluginProps, ToolbarProps, ToolbarSlot };
 
 export interface DefaultLayoutPlugin extends Plugin {
     activateTab(index: number): void;
