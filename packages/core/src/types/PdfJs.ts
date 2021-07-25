@@ -25,8 +25,8 @@ export declare namespace PdfJs {
     // Loading task
     const PasswordResponses: PasswordResponsesValue;
     interface PasswordResponsesValue {
-        NEED_PASSWORD: string;
-        INCORRECT_PASSWORD: string;
+        NEED_PASSWORD: number;
+        INCORRECT_PASSWORD: number;
     }
 
     type VerifyPassword = (password: string) => void;
@@ -38,7 +38,7 @@ export declare namespace PdfJs {
     }
 
     interface LoadingTask {
-        onPassword: (verifyPassword: VerifyPassword, reason: string) => void;
+        onPassword: (verifyPassword: VerifyPassword, reason: number) => void;
         onProgress: (progress: LoadingTaskProgress) => void;
         promise: Promise<PdfDocument>;
         destroy(): void;

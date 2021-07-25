@@ -9,7 +9,8 @@
 import * as React from 'react';
 
 import { WithScale } from './WithScale';
-import { PdfJs } from '../types/PdfJs';
+import { PdfJsApi } from '../vendors/PdfJsApi';
+import type { PdfJs } from '../types/PdfJs';
 
 export const SvgLayer: React.FC<{
     height: number;
@@ -34,7 +35,7 @@ export const SvgLayer: React.FC<{
 
         page.getOperatorList().then((operatorList) => {
             empty();
-            const graphic = new PdfJs.SVGGraphics(page.commonObjs, page.objs);
+            const graphic = new PdfJsApi.SVGGraphics(page.commonObjs, page.objs) as PdfJs.SVGGraphics;
             graphic.getSVG(operatorList, viewport).then((svg) => {
                 // It seems that we don't have to set the size for `svg`
                 svg.style.height = `${height}px`;

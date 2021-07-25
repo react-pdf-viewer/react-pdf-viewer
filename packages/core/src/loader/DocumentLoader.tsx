@@ -20,8 +20,8 @@ import { LoadingState } from './LoadingState';
 import { LoadingStatus, VerifyPassword } from './LoadingStatus';
 import { WrongPassword } from './WrongPassword';
 import { WrongPasswordState } from './WrongPasswordState';
-import { PdfJs } from '../types/PdfJs';
 import type { LoadError } from './LoadError';
+import type { PdfJs } from '../types/PdfJs';
 
 export type RenderError = (error: LoadError) => React.ReactElement;
 
@@ -80,12 +80,12 @@ export const DocumentLoader: React.FC<{
         const transformParams = transformGetDocumentParams ? transformGetDocumentParams(params) : params;
 
         const loadingTask = PdfJsApi.getDocument(transformParams) as unknown as PdfJs.LoadingTask;
-        loadingTask.onPassword = (verifyPassword: VerifyPassword, reason: string): void => {
+        loadingTask.onPassword = (verifyPassword: VerifyPassword, reason: number): void => {
             switch (reason) {
-                case PdfJs.PasswordResponses.NEED_PASSWORD:
+                case PdfJsApi.PasswordResponses.NEED_PASSWORD:
                     isMounted.current && setStatus(new AskForPasswordState(verifyPassword));
                     break;
-                case PdfJs.PasswordResponses.INCORRECT_PASSWORD:
+                case PdfJsApi.PasswordResponses.INCORRECT_PASSWORD:
                     isMounted.current && setStatus(new WrongPasswordState(verifyPassword));
                     break;
                 default:
