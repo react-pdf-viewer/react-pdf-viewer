@@ -29,6 +29,7 @@ _Accessibility_
 -   Add ARIA attributes to `Icon`, `Menu`, `MenuDivider`, `MenuItem`, `MinimalButton`, `Modal`, `Popover`, `TextBox`, `Tooltip` components
 -   Add ARIA attributes to pages and thumbnails
 -   Add ARIA attributes to internal links of the document
+-   When the shortcuts are enabled, the associal buttons will have the `aria-keyshortcuts` attributes
 -   Use the keyboard to navigate between components:
 
 | Component     | Press key    | Action                                      |
@@ -56,8 +57,8 @@ _Accessibility_
 |               | `Tab`        | Show when being focused                     |
 |               |              | Close when being blured                     |
 
--   When the shortcuts are enabled, the associal buttons will have the `aria-keyshortcuts` attributes
 -   Add a background color to the current search highlight
+-   Show a loading indicator while searching for a keyword
 -   The `Spinner` component adds new `size` property
 
 **Bug fixes**
