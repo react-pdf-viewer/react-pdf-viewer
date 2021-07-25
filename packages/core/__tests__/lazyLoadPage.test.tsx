@@ -1,17 +1,13 @@
-const fs = require('fs');
-const path = require('path');
-
 import * as React from 'react';
 import { render } from '@testing-library/react';
 
 import { mockIsIntersecting } from '../../../test-utils/mockIntersectionObserver';
-import Viewer from '../src/Viewer';
+import { Viewer } from '../src/Viewer';
 
 test('Lazy load page', async () => {
-    const rawSamplePdf = fs.readFileSync(path.resolve(__dirname, '../../../assets/pdf-open-parameters.pdf'));
     const App = () => (
         <div style={{ height: '720px' }}>
-            <Viewer fileUrl={new Uint8Array(rawSamplePdf)} />
+            <Viewer fileUrl={new Uint8Array(global.__OPEN_PARAMETERS_PDF__)} />
         </div>
     );
     const { findByText, getByTestId } = render(<App />);

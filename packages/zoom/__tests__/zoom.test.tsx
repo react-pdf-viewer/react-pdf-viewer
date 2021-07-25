@@ -1,6 +1,3 @@
-const fs = require('fs');
-const path = require('path');
-
 import * as React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 
@@ -37,9 +34,7 @@ const TestCallZoomMethod: React.FC<{
 };
 
 test('call zoom() method', async () => {
-    const rawSamplePdf = fs.readFileSync(path.resolve(__dirname, '../../../assets/pdf-open-parameters.pdf'));
-
-    const { findByText, getByTestId } = render(<TestCallZoomMethod fileUrl={new Uint8Array(rawSamplePdf)} />);
+    const { findByText, getByTestId } = render(<TestCallZoomMethod fileUrl={global.__OPEN_PARAMETERS_PDF__} />);
     mockIsIntersecting(getByTestId('viewer'), true);
 
     // Now zoom the document

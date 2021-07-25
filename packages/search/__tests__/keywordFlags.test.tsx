@@ -1,6 +1,3 @@
-const fs = require('fs');
-const path = require('path');
-
 import * as React from 'react';
 import { findAllByTitle } from '@testing-library/dom';
 import { render } from '@testing-library/react';
@@ -8,7 +5,7 @@ import { render } from '@testing-library/react';
 import { mockIsIntersecting } from '../../../test-utils/mockIntersectionObserver';
 import { Viewer } from '@react-pdf-viewer/core';
 import { searchPlugin } from '../src/index';
-import FlagKeyword from '../src/types/FlagKeyword';
+import type { FlagKeyword } from '../src/types/FlagKeyword';
 
 const TestKeywordFlag: React.FC<{
     fileUrl: Uint8Array;
@@ -32,14 +29,12 @@ const TestKeywordFlag: React.FC<{
 };
 
 test('keyword with flag matchCase=false', async () => {
-    const rawSamplePdf = fs.readFileSync(path.resolve(__dirname, '../../../assets/pdf-open-parameters.pdf'));
-
     const flagKeyword = {
         keyword: 'PDF',
     };
 
-    const { findByText, findAllByTestId, findByTestId, getByTestId } = render(
-        <TestKeywordFlag fileUrl={new Uint8Array(rawSamplePdf)} keyword={flagKeyword} />
+    const { findByText, findByTestId, getByTestId } = render(
+        <TestKeywordFlag fileUrl={global.__OPEN_PARAMETERS_PDF__} keyword={flagKeyword} />
     );
     mockIsIntersecting(getByTestId('viewer'), true);
 
@@ -55,15 +50,13 @@ test('keyword with flag matchCase=false', async () => {
 });
 
 test('keyword with flag matchCase=true', async () => {
-    const rawSamplePdf = fs.readFileSync(path.resolve(__dirname, '../../../assets/pdf-open-parameters.pdf'));
-
     const flagKeyword = {
         keyword: 'PDF',
         matchCase: true,
     };
 
-    const { findByText, findAllByTestId, findByTestId, getByTestId } = render(
-        <TestKeywordFlag fileUrl={new Uint8Array(rawSamplePdf)} keyword={flagKeyword} />
+    const { findByText, findByTestId, getByTestId } = render(
+        <TestKeywordFlag fileUrl={global.__OPEN_PARAMETERS_PDF__} keyword={flagKeyword} />
     );
     mockIsIntersecting(getByTestId('viewer'), true);
 

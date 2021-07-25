@@ -3,7 +3,8 @@
     "private": true,
     "version": "0.0.0",
     "scripts": {
-        "dev": "next dev"
+        "copy": "rm -rf public/*.pdf && cp -r ../../assets/*.pdf public",
+        "dev": "npm run copy && next dev"
     },
     "dependencies": {
         "@react-pdf-viewer/core": "2.6.1",

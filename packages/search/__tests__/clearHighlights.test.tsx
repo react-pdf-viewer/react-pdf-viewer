@@ -1,14 +1,11 @@
-const fs = require('fs');
-const path = require('path');
-
 import * as React from 'react';
-import { findAllByTitle, getAllByTitle } from '@testing-library/dom';
+import { findAllByTitle } from '@testing-library/dom';
 import { fireEvent, render, screen } from '@testing-library/react';
 
 import { mockIsIntersecting } from '../../../test-utils/mockIntersectionObserver';
 import { Viewer } from '@react-pdf-viewer/core';
 import { searchPlugin } from '../src/index';
-import SingleKeyword from '../src/types/SingleKeyword';
+import type { SingleKeyword } from '../src/types/SingleKeyword';
 
 const TestClearHighlights: React.FC<{
     fileUrl: Uint8Array;
@@ -46,8 +43,6 @@ const TestClearHighlights: React.FC<{
 };
 
 test('clearHighlights() method', async () => {
-    const rawSamplePdf = fs.readFileSync(path.resolve(__dirname, '../../../assets/pdf-open-parameters.pdf'));
-
     const keywords = [
         'document',
         {
@@ -56,8 +51,8 @@ test('clearHighlights() method', async () => {
         },
     ];
 
-    const { findByText, findAllByTestId, findByTestId, getByTestId } = render(
-        <TestClearHighlights fileUrl={new Uint8Array(rawSamplePdf)} keywords={keywords} />
+    const { findByText, findByTestId, getByTestId } = render(
+        <TestClearHighlights fileUrl={global.__OPEN_PARAMETERS_PDF__} keywords={keywords} />
     );
     mockIsIntersecting(getByTestId('viewer'), true);
 
