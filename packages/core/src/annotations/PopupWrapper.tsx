@@ -8,15 +8,13 @@
 
 import * as React from 'react';
 
-import convertDate from '../utils/convertDate';
-import PdfJs from '../vendors/PdfJs';
-import AnnotationType from './AnnotationType';
+import { convertDate } from '../utils/convertDate';
+import { AnnotationType } from './AnnotationType';
+import type { PdfJs } from '../types/PdfJs';
 
-interface PopupWrapperProps {
+export const PopupWrapper: React.FC<{
     annotation: PdfJs.Annotation;
-}
-
-const PopupWrapper: React.FC<PopupWrapperProps> = ({ annotation }) => {
+}> = ({ annotation }) => {
     const containerRef = React.useRef<HTMLDivElement>();
     let dateStr = '';
     if (annotation.modificationDate) {
@@ -74,5 +72,3 @@ const PopupWrapper: React.FC<PopupWrapperProps> = ({ annotation }) => {
         </div>
     );
 };
-
-export default PopupWrapper;

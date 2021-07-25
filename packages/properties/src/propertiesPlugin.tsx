@@ -7,23 +7,27 @@
  */
 
 import * as React from 'react';
-import { createStore, Plugin, PluginOnDocumentLoad, ViewerState } from '@react-pdf-viewer/core';
+import { createStore } from '@react-pdf-viewer/core';
+import type { Plugin, PluginOnDocumentLoad, ViewerState } from '@react-pdf-viewer/core';
 
-import ShowProperties, { ShowPropertiesProps } from './ShowProperties';
-import ShowPropertiesMenuItem from './ShowPropertiesMenuItem';
-import StoreProps from './StoreProps';
+import { ShowProperties, ShowPropertiesProps } from './ShowProperties';
+import { ShowPropertiesMenuItem } from './ShowPropertiesMenuItem';
+import type { StoreProps } from './types/StoreProps';
+
+// Export types
+export type { ShowPropertiesProps };
 
 export interface ShowPropertiesMenuItemProps {
     onClick: () => void;
 }
 
-interface PropertiesPlugin extends Plugin {
+export interface PropertiesPlugin extends Plugin {
     ShowProperties(props: ShowPropertiesProps): React.ReactElement;
     ShowPropertiesButton(): React.ReactElement;
     ShowPropertiesMenuItem(props: ShowPropertiesMenuItemProps): React.ReactElement;
 }
 
-const propertiesPlugin = (): PropertiesPlugin => {
+export const propertiesPlugin = (): PropertiesPlugin => {
     const store = React.useMemo(
         () =>
             createStore<StoreProps>({
@@ -54,5 +58,3 @@ const propertiesPlugin = (): PropertiesPlugin => {
         ShowPropertiesMenuItem: ShowPropertiesMenuItemDecorator,
     };
 };
-
-export default propertiesPlugin;

@@ -9,10 +9,10 @@
 import * as React from 'react';
 import { MenuItem } from '@react-pdf-viewer/core';
 
-import { RenderSwitchScrollModeProps } from './SwitchScrollMode';
-import SwitchScrollModeDecorator from './SwitchScrollModeDecorator';
+import { SwitchScrollModeDecorator } from './SwitchScrollModeDecorator';
+import type { RenderSwitchScrollModeProps } from './types/RenderSwitchScrollModeProps';
 
-const SwitchScrollModeMenuItem: React.FC<RenderSwitchScrollModeProps> = ({ isSelected, mode, onClick }) => (
+export const SwitchScrollModeMenuItem: React.FC<RenderSwitchScrollModeProps> = ({ isSelected, mode, onClick }) => (
     <SwitchScrollModeDecorator mode={mode} onClick={onClick}>
         {(props) => (
             <MenuItem checked={isSelected} icon={props.icon} onClick={props.onClick}>
@@ -21,5 +21,3 @@ const SwitchScrollModeMenuItem: React.FC<RenderSwitchScrollModeProps> = ({ isSel
         )}
     </SwitchScrollModeDecorator>
 );
-
-export default SwitchScrollModeMenuItem;

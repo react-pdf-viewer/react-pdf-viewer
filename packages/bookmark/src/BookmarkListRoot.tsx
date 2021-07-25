@@ -7,24 +7,23 @@
  */
 
 import * as React from 'react';
-import { getDestination, PdfJs, SpecialZoomLevel, Store } from '@react-pdf-viewer/core';
+import { getDestination, SpecialZoomLevel } from '@react-pdf-viewer/core';
+import type { PdfJs, Store } from '@react-pdf-viewer/core';
 
-import BookmarkList from './BookmarkList';
-import StoreProps from './StoreProps';
-
-interface BookmarkListRootProps {
-    bookmarks: PdfJs.Outline[];
-    doc: PdfJs.PdfDocument;
-    store: Store<StoreProps>;
-    onJumpToDest(pageIndex: number, bottomOffset: number, scaleTo: number | SpecialZoomLevel): void;
-}
+import { BookmarkList } from './BookmarkList';
+import type { StoreProps } from './types/StoreProps';
 
 enum Toggle {
     Collapse,
     Expand,
 }
 
-const BookmarkListRoot: React.FC<BookmarkListRootProps> = ({ bookmarks, doc, store, onJumpToDest }) => {
+export const BookmarkListRoot: React.FC<{
+    bookmarks: PdfJs.Outline[];
+    doc: PdfJs.PdfDocument;
+    store: Store<StoreProps>;
+    onJumpToDest(pageIndex: number, bottomOffset: number, scaleTo: number | SpecialZoomLevel): void;
+}> = ({ bookmarks, doc, store, onJumpToDest }) => {
     const containerRef = React.useRef<HTMLDivElement>();
     const [links, setLinks] = React.useState(store.get('linkAnnotations') || {});
 
@@ -48,6 +47,7 @@ const BookmarkListRoot: React.FC<BookmarkListRootProps> = ({ bookmarks, doc, sto
     const handleLinkAnnotationsChanged = (links: Record<string, HTMLElement>) => setLinks(links);
 
     const jumpToDest = (dest: PdfJs.OutlineDestinationType): void => {
+        // Use `any` to get rid of the warning that `PdfDocument` doesn't match with the type provided by pdfjs-dist
         getDestination(doc, dest).then((target) => {
             const { pageIndex, bottomOffset, scaleTo } = target;
             onJumpToDest(pageIndex + 1, bottomOffset, scaleTo);
@@ -193,5 +193,3 @@ const BookmarkListRoot: React.FC<BookmarkListRootProps> = ({ bookmarks, doc, sto
         </div>
     );
 };
-
-export default BookmarkListRoot;

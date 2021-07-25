@@ -7,13 +7,13 @@
  */
 
 import * as React from 'react';
-import { Plugin, SpecialZoomLevel } from '@react-pdf-viewer/core';
+import { SpecialZoomLevel } from '@react-pdf-viewer/core';
+import type { Plugin } from '@react-pdf-viewer/core';
 
 export interface ZoomMenuItemProps {
     onClick: () => void;
 }
 
-// ------------------------
 // Render zooming in button
 // ------------------------
 
@@ -26,7 +26,6 @@ export interface ZoomInProps {
     children?: (props: RenderZoomInProps) => React.ReactElement;
 }
 
-// -------------------------
 // Render zooming out button
 // -------------------------
 
@@ -39,7 +38,6 @@ export interface ZoomOutProps {
     children?: (props: RenderZoomOutProps) => React.ReactNode;
 }
 
-// -------------
 // Current scale
 // -------------
 
@@ -51,7 +49,6 @@ export interface CurrentScaleProps {
     children?: (props: RenderCurrentScaleProps) => React.ReactElement;
 }
 
-// -------------------
 // Zoom to given scale
 // -------------------
 
@@ -64,7 +61,6 @@ export interface ZoomProps {
     children?: (props: RenderZoomProps) => React.ReactElement;
 }
 
-// ------
 // Plugin
 // ------
 

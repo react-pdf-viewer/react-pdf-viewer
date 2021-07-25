@@ -9,13 +9,13 @@
 import * as React from 'react';
 import { LocalizationContext, MenuItem } from '@react-pdf-viewer/core';
 
-import PrintIcon from './PrintIcon';
+import { PrintIcon } from './PrintIcon';
 
 export interface PrintMenuItemProps {
     onClick(): void;
 }
 
-const PrintMenuItem: React.FC<PrintMenuItemProps> = ({ onClick }) => {
+export const PrintMenuItem: React.FC<PrintMenuItemProps> = ({ onClick }) => {
     const l10n = React.useContext(LocalizationContext);
     const label = l10n && l10n.print ? l10n.print.print : 'Print';
 
@@ -25,5 +25,3 @@ const PrintMenuItem: React.FC<PrintMenuItemProps> = ({ onClick }) => {
         </MenuItem>
     );
 };
-
-export default PrintMenuItem;

@@ -6,8 +6,10 @@
  * @copyright 2019-2021 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-export { default as DownArrowIcon } from './DownArrowIcon';
-export { default as NextIcon } from './NextIcon';
-export { default as pageNavigationPlugin } from './pageNavigationPlugin';
-export { default as PreviousIcon } from './PreviousIcon';
-export { default as UpArrowIcon } from './UpArrowIcon';
+export * from './pageNavigationPlugin';
+
+// Components
+export { DownArrowIcon } from './DownArrowIcon';
+export { NextIcon } from './NextIcon';
+export { PreviousIcon } from './PreviousIcon';
+export { UpArrowIcon } from './UpArrowIcon';

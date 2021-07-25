@@ -41,9 +41,8 @@ export interface DefaultLayoutPluginProps {
 
 export function defaultLayoutPlugin(props?: DefaultLayoutPluginProps): DefaultLayoutPlugin;
 
-// -----
-// Icons
-// -----
+// Components
+// ----------
 
 export class BookmarkIcon extends React.Component {}
 export class FileIcon extends React.Component {}

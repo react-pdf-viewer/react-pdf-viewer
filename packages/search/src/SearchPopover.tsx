@@ -7,21 +7,20 @@
  */
 
 import * as React from 'react';
-import { Button, LocalizationContext, MinimalButton, Position, Store, TextBox, Tooltip } from '@react-pdf-viewer/core';
+import { Button, LocalizationContext, MinimalButton, Position, TextBox, Tooltip } from '@react-pdf-viewer/core';
+import type { Store } from '@react-pdf-viewer/core';
 
-import NextIcon from './NextIcon';
-import PreviousIcon from './PreviousIcon';
-import StoreProps from './types/StoreProps';
-import useSearch from './useSearch';
-
-interface SearchPopoverProps {
-    store: Store<StoreProps>;
-    onToggle(): void;
-}
+import { NextIcon } from './NextIcon';
+import { PreviousIcon } from './PreviousIcon';
+import { useSearch } from './useSearch';
+import type { StoreProps } from './types/StoreProps';
 
 const PORTAL_OFFSET = { left: 0, top: 8 };
 
-const SearchPopover: React.FC<SearchPopoverProps> = ({ store, onToggle }) => {
+export const SearchPopover: React.FC<{
+    store: Store<StoreProps>;
+    onToggle(): void;
+}> = ({ store, onToggle }) => {
     const l10n = React.useContext(LocalizationContext);
 
     const {
@@ -138,5 +137,3 @@ const SearchPopover: React.FC<SearchPopoverProps> = ({ store, onToggle }) => {
         </div>
     );
 };
-
-export default SearchPopover;

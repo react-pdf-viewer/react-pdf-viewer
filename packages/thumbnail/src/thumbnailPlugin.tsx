@@ -7,16 +7,17 @@
  */
 
 import * as React from 'react';
-import { createStore, Plugin, PluginFunctions, PluginOnDocumentLoad, ViewerState } from '@react-pdf-viewer/core';
+import { createStore } from '@react-pdf-viewer/core';
+import type { Plugin, PluginFunctions, PluginOnDocumentLoad, ViewerState } from '@react-pdf-viewer/core';
 
-import ThumbnailListWithStore from './ThumbnailListWithStore';
-import StoreProps from './StoreProps';
+import { ThumbnailListWithStore } from './ThumbnailListWithStore';
+import type { StoreProps } from './types/StoreProps';
 
-interface ThumbnailPlugin extends Plugin {
+export interface ThumbnailPlugin extends Plugin {
     Thumbnails: () => React.ReactElement;
 }
 
-const thumbnailPlugin = (): ThumbnailPlugin => {
+export const thumbnailPlugin = (): ThumbnailPlugin => {
     const store = React.useMemo(() => createStore<StoreProps>({}), []);
 
     const ThumbnailsDecorator = () => <ThumbnailListWithStore store={store} />;
@@ -37,5 +38,3 @@ const thumbnailPlugin = (): ThumbnailPlugin => {
         Thumbnails: ThumbnailsDecorator,
     };
 };
-
-export default thumbnailPlugin;

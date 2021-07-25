@@ -7,14 +7,18 @@
  */
 
 import * as React from 'react';
-import { createStore, Plugin, PluginFunctions, RenderViewer, Slot } from '@react-pdf-viewer/core';
+import { createStore } from '@react-pdf-viewer/core';
+import type { Plugin, PluginFunctions, RenderViewer, Slot } from '@react-pdf-viewer/core';
 
-import ScrollMode from './ScrollMode';
-import StoreProps from './StoreProps';
-import SwitchScrollMode, { SwitchScrollModeProps } from './SwitchScrollMode';
-import SwitchScrollModeButton from './SwitchScrollModeButton';
-import SwitchScrollModeMenuItem from './SwitchScrollModeMenuItem';
-import Tracker from './Tracker';
+import { ScrollMode } from './structs/ScrollMode';
+import { SwitchScrollMode, SwitchScrollModeProps } from './SwitchScrollMode';
+import { SwitchScrollModeButton } from './SwitchScrollModeButton';
+import { SwitchScrollModeMenuItem } from './SwitchScrollModeMenuItem';
+import { Tracker } from './Tracker';
+import type { StoreProps } from './types/StoreProps';
+
+// Export types
+export type { SwitchScrollModeProps };
 
 export interface SwitchScrollModeButtonProps {
     mode: ScrollMode;
@@ -25,7 +29,7 @@ export interface SwitchScrollModeMenuItemProps {
     onClick(): void;
 }
 
-interface ScrollModePlugin extends Plugin {
+export interface ScrollModePlugin extends Plugin {
     SwitchScrollMode(props: SwitchScrollModeProps): React.ReactElement;
     SwitchScrollModeButton(props: SwitchScrollModeButtonProps): React.ReactElement;
     SwitchScrollModeMenuItem(props: SwitchScrollModeMenuItemProps): React.ReactElement;
@@ -35,7 +39,7 @@ export interface ScrollModePluginProps {
     scrollMode?: ScrollMode;
 }
 
-const scrollModePlugin = (props?: ScrollModePluginProps): ScrollModePlugin => {
+export const scrollModePlugin = (props?: ScrollModePluginProps): ScrollModePlugin => {
     const store = React.useMemo(
         () =>
             createStore<StoreProps>({
@@ -99,5 +103,3 @@ const scrollModePlugin = (props?: ScrollModePluginProps): ScrollModePlugin => {
         SwitchScrollModeMenuItem: SwitchScrollModeMenuItemDecorator,
     };
 };
-
-export default scrollModePlugin;

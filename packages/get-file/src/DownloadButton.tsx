@@ -9,12 +9,12 @@
 import * as React from 'react';
 import { LocalizationContext, MinimalButton, Position, Tooltip } from '@react-pdf-viewer/core';
 
-import { RenderDownloadProps } from './Download';
-import DownloadIcon from './DownloadIcon';
+import { DownloadIcon } from './DownloadIcon';
+import type { RenderDownloadProps } from './types/RenderDownloadProps';
 
 const TOOLTIP_OFFSET = { left: 0, top: 8 };
 
-const DownloadButton: React.FC<RenderDownloadProps> = ({ onClick }) => {
+export const DownloadButton: React.FC<RenderDownloadProps> = ({ onClick }) => {
     const l10n = React.useContext(LocalizationContext);
     const label = l10n && l10n.download ? l10n.download.download : 'Download';
 
@@ -32,5 +32,3 @@ const DownloadButton: React.FC<RenderDownloadProps> = ({ onClick }) => {
         />
     );
 };
-
-export default DownloadButton;

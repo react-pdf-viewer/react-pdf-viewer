@@ -8,11 +8,11 @@
 
 import * as React from 'react';
 
-import Slot from '../layouts/Slot';
-import PdfJs from '../vendors/PdfJs';
-import AnnotationBorderStyleType from './AnnotationBorderStyleType';
-import PopupWrapper from './PopupWrapper';
-import useTogglePopup from './useTogglePopup';
+import { AnnotationBorderStyleType } from './AnnotationBorderStyleType';
+import { PopupWrapper } from './PopupWrapper';
+import { useTogglePopup } from './useTogglePopup';
+import type { PdfJs } from '../types/PdfJs';
+import type { Slot } from '../types/Slot';
 
 interface RenderChildrenProps {
     popup: {
@@ -24,7 +24,7 @@ interface RenderChildrenProps {
     slot: Slot;
 }
 
-interface AnnotationProps {
+export const Annotation: React.FC<{
     annotation: PdfJs.Annotation;
     hasPopup: boolean;
     ignoreBorder: boolean;
@@ -32,17 +32,7 @@ interface AnnotationProps {
     page: PdfJs.Page;
     viewport: PdfJs.ViewPort;
     children(props: RenderChildrenProps): React.ReactElement;
-}
-
-const Annotation: React.FC<AnnotationProps> = ({
-    annotation,
-    children,
-    ignoreBorder,
-    hasPopup,
-    isRenderable,
-    page,
-    viewport,
-}) => {
+}> = ({ annotation, children, ignoreBorder, hasPopup, isRenderable, page, viewport }) => {
     const { rect } = annotation;
     const { closeOnHover, opened, openOnHover, toggleOnClick } = useTogglePopup();
 
@@ -146,5 +136,3 @@ const Annotation: React.FC<AnnotationProps> = ({
         </>
     );
 };
-
-export default Annotation;

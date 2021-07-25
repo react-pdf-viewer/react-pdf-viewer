@@ -8,15 +8,13 @@
 
 import * as React from 'react';
 
-import classNames from '../utils/classNames';
-import Position from './Position';
+import { Position } from '../structs/Position';
+import { classNames } from '../utils/classNames';
 
-interface ArrowProps {
+export const Arrow: React.FC<{
     customClassName?: string;
     position: Position;
-}
-
-const Arrow: React.FC<ArrowProps> = ({ customClassName, position }) => (
+}> = ({ customClassName, position }) => (
     <div
         className={classNames({
             'rpv-core__arrow': true,
@@ -36,5 +34,3 @@ const Arrow: React.FC<ArrowProps> = ({ customClassName, position }) => (
         })}
     />
 );
-
-export default Arrow;

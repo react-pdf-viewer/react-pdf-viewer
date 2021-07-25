@@ -9,13 +9,13 @@
 import * as React from 'react';
 import { LocalizationContext, MenuItem } from '@react-pdf-viewer/core';
 
-import DownloadIcon from './DownloadIcon';
+import { DownloadIcon } from './DownloadIcon';
 
 export interface DownloadMenuItemProps {
     onClick(): void;
 }
 
-const DownloadMenuItem: React.FC<DownloadMenuItemProps> = ({ onClick }) => {
+export const DownloadMenuItem: React.FC<DownloadMenuItemProps> = ({ onClick }) => {
     const l10n = React.useContext(LocalizationContext);
     const label = l10n && l10n.download ? l10n.download.download : 'Download';
 
@@ -25,5 +25,3 @@ const DownloadMenuItem: React.FC<DownloadMenuItemProps> = ({ onClick }) => {
         </MenuItem>
     );
 };
-
-export default DownloadMenuItem;

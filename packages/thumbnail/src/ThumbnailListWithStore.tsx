@@ -7,12 +7,13 @@
  */
 
 import * as React from 'react';
-import { PdfJs, Spinner, Store, StoreHandler, useIsomorphicLayoutEffect } from '@react-pdf-viewer/core';
+import { Spinner, useIsomorphicLayoutEffect } from '@react-pdf-viewer/core';
+import type { PdfJs, Store, StoreHandler } from '@react-pdf-viewer/core';
 
-import StoreProps from './StoreProps';
-import ThumbnailList from './ThumbnailList';
+import { ThumbnailList } from './ThumbnailList';
+import type { StoreProps } from './types/StoreProps';
 
-const ThumbnailListWithStore: React.FC<{
+export const ThumbnailListWithStore: React.FC<{
     store: Store<StoreProps>;
 }> = ({ store }) => {
     const [currentDoc, setCurrentDoc] = React.useState(store.get('doc'));
@@ -85,5 +86,3 @@ const ThumbnailListWithStore: React.FC<{
         </div>
     );
 };
-
-export default ThumbnailListWithStore;

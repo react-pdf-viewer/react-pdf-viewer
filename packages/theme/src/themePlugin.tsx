@@ -7,19 +7,22 @@
  */
 
 import * as React from 'react';
-import { Plugin } from '@react-pdf-viewer/core';
+import type { Plugin } from '@react-pdf-viewer/core';
 
-import SwitchTheme, { SwitchThemeProps } from './SwitchTheme';
-import SwitchThemeButton from './SwitchThemeButton';
-import SwitchThemeMenuItem, { SwitchThemeMenuItemProps } from './SwitchThemeMenuItem';
+import { SwitchTheme, SwitchThemeProps } from './SwitchTheme';
+import { SwitchThemeButton } from './SwitchThemeButton';
+import { SwitchThemeMenuItem, SwitchThemeMenuItemProps } from './SwitchThemeMenuItem';
 
-interface ThemePlugin extends Plugin {
+// Export types
+export type { SwitchThemeProps, SwitchThemeMenuItemProps };
+
+export interface ThemePlugin extends Plugin {
     SwitchTheme: (props: SwitchThemeProps) => React.ReactElement;
     SwitchThemeButton: () => React.ReactElement;
     SwitchThemeMenuItem: (props: SwitchThemeMenuItemProps) => React.ReactElement;
 }
 
-const themePlugin = (): ThemePlugin => {
+export const themePlugin = (): ThemePlugin => {
     const SwitchThemeDecorator = (props: SwitchThemeProps) => <SwitchTheme {...props} />;
 
     const SwitchThemeButtonDecorator = () => (
@@ -45,5 +48,3 @@ const themePlugin = (): ThemePlugin => {
         SwitchThemeMenuItem: SwitchThemeMenuItemDecorator,
     };
 };
-
-export default themePlugin;

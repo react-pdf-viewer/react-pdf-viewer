@@ -9,7 +9,7 @@
 import * as React from 'react';
 import { LocalizationContext } from '@react-pdf-viewer/core';
 
-import SearchIcon from './SearchIcon';
+import { SearchIcon } from './SearchIcon';
 
 interface RenderChildren {
     icon: React.ReactElement;
@@ -17,17 +17,13 @@ interface RenderChildren {
     onClick(): void;
 }
 
-interface ShowSearchPopoverDecoratorProps {
+export const ShowSearchPopoverDecorator: React.FC<{
     children(props: RenderChildren): React.ReactElement;
     onClick(): void;
-}
-
-const ShowSearchPopoverDecorator: React.FC<ShowSearchPopoverDecoratorProps> = ({ children, onClick }) => {
+}> = ({ children, onClick }) => {
     const l10n = React.useContext(LocalizationContext);
     const label = (l10n && l10n.search ? l10n.search.search : 'Search') as string;
     const icon = <SearchIcon />;
 
     return children({ icon, label, onClick });
 };
-
-export default ShowSearchPopoverDecorator;

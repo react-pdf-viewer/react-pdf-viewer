@@ -7,16 +7,12 @@
  */
 
 import * as React from 'react';
-import { Store } from '@react-pdf-viewer/core';
+import type { Store } from '@react-pdf-viewer/core';
 
-import PrintButton from './PrintButton';
-import PrintStatus from './PrintStatus';
-import StoreProps from './StoreProps';
-
-export interface RenderPrintProps {
-    enableShortcuts: boolean;
-    onClick: () => void;
-}
+import { PrintButton } from './PrintButton';
+import { PrintStatus } from './structs/PrintStatus';
+import type { RenderPrintProps } from './types/RenderPrintProps';
+import type { StoreProps } from './types/StoreProps';
 
 type RenderPrint = (props: RenderPrintProps) => React.ReactElement;
 
@@ -24,7 +20,7 @@ export interface PrintProps {
     children?: RenderPrint;
 }
 
-const Print: React.FC<{
+export const Print: React.FC<{
     children?: RenderPrint;
     enableShortcuts: boolean;
     store: Store<StoreProps>;
@@ -40,5 +36,3 @@ const Print: React.FC<{
         onClick: print,
     });
 };
-
-export default Print;

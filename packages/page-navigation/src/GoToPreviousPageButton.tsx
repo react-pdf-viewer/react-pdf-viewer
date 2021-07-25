@@ -9,12 +9,12 @@
 import * as React from 'react';
 import { LocalizationContext, MinimalButton, Position, Tooltip } from '@react-pdf-viewer/core';
 
-import PreviousIcon from './PreviousIcon';
-import { RenderGoToPageProps } from './types/index';
+import { PreviousIcon } from './PreviousIcon';
+import type { RenderGoToPageProps } from './types/index';
 
 const TOOLTIP_OFFSET = { left: 0, top: 8 };
 
-const GoToPreviousPageButton: React.FC<RenderGoToPageProps> = ({ isDisabled, onClick }) => {
+export const GoToPreviousPageButton: React.FC<RenderGoToPageProps> = ({ isDisabled, onClick }) => {
     const l10n = React.useContext(LocalizationContext);
     const label = l10n && l10n.pageNavigation ? l10n.pageNavigation.goToPreviousPage : 'Previous page';
 
@@ -32,5 +32,3 @@ const GoToPreviousPageButton: React.FC<RenderGoToPageProps> = ({ isDisabled, onC
         />
     );
 };
-
-export default GoToPreviousPageButton;

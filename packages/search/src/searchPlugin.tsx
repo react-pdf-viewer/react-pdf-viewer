@@ -7,8 +7,8 @@
  */
 
 import * as React from 'react';
-import {
-    createStore,
+import { createStore } from '@react-pdf-viewer/core';
+import type {
     Plugin,
     PluginFunctions,
     PluginOnDocumentLoad,
@@ -19,17 +19,20 @@ import {
 
 import { EMPTY_KEYWORD_REGEXP } from './constants';
 import { normalizeSingleKeyword } from './normalizeKeyword';
-import Search, { SearchProps } from './Search';
-import ShowSearchPopover, { ShowSearchPopoverProps } from './ShowSearchPopover';
-import ShowSearchPopoverButton from './ShowSearchPopoverButton';
-import Match from './types/Match';
-import SingleKeyword from './types/SingleKeyword';
-import StoreProps from './types/StoreProps';
-import OnHighlightKeyword from './types/OnHighlightKeyword';
-import Tracker from './Tracker';
-import useSearch from './useSearch';
+import { Search, SearchProps } from './Search';
+import { ShowSearchPopover, ShowSearchPopoverProps } from './ShowSearchPopover';
+import { ShowSearchPopoverButton } from './ShowSearchPopoverButton';
+import { Tracker } from './Tracker';
+import { useSearch } from './useSearch';
+import type { OnHighlightKeyword } from './types/OnHighlightKeyword';
+import type { Match } from './types/Match';
+import type { SingleKeyword } from './types/SingleKeyword';
+import type { StoreProps } from './types/StoreProps';
 
-interface SearchPlugin extends Plugin {
+// Export types
+export type { SearchProps, ShowSearchPopoverProps };
+
+export interface SearchPlugin extends Plugin {
     Search(props: SearchProps): React.ReactElement;
     ShowSearchPopover(props: ShowSearchPopoverProps): React.ReactElement;
     ShowSearchPopoverButton(): React.ReactElement;
@@ -46,7 +49,7 @@ export interface SearchPluginProps {
     onHighlightKeyword?(props: OnHighlightKeyword): void;
 }
 
-const searchPlugin = (props?: SearchPluginProps): SearchPlugin => {
+export const searchPlugin = (props?: SearchPluginProps): SearchPlugin => {
     const onHighlightKeyword = React.useMemo(
         // eslint-disable-next-line @typescript-eslint/no-empty-function
         () => (props && props.onHighlightKeyword ? props.onHighlightKeyword : () => {}),
@@ -140,5 +143,3 @@ const searchPlugin = (props?: SearchPluginProps): SearchPlugin => {
         jumpToPreviousMatch,
     };
 };
-
-export default searchPlugin;

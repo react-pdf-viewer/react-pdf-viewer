@@ -7,17 +7,20 @@
  */
 
 import * as React from 'react';
-import { createStore, Plugin, PluginFunctions, RenderViewer, Slot } from '@react-pdf-viewer/core';
+import { createStore } from '@react-pdf-viewer/core';
+import type { Plugin, PluginFunctions, RenderViewer, Slot } from '@react-pdf-viewer/core';
 
-import EnterFullScreen, { EnterFullScreenProps } from './EnterFullScreen';
-import EnterFullScreenButton from './EnterFullScreenButton';
-import EnterFullScreenMenuItem, { EnterFullScreenMenuItemProps } from './EnterFullScreenMenuItem';
-import ExitFullScreenButton from './ExitFullScreenButton';
-import type { Zoom } from './types';
+import { EnterFullScreen, EnterFullScreenProps } from './EnterFullScreen';
+import { EnterFullScreenButton } from './EnterFullScreenButton';
+import { EnterFullScreenMenuItem, EnterFullScreenMenuItemProps } from './EnterFullScreenMenuItem';
+import { ExitFullScreenButton } from './ExitFullScreenButton';
+import type { StoreProps } from './types/StoreProps';
+import type { Zoom } from './types/Zoom';
 
-import StoreProps from './StoreProps';
+// Export types
+export type { EnterFullScreenMenuItemProps, EnterFullScreenProps };
 
-interface FullScreenPlugin extends Plugin {
+export interface FullScreenPlugin extends Plugin {
     EnterFullScreen: (props: EnterFullScreenProps) => React.ReactElement;
     EnterFullScreenButton: () => React.ReactElement;
     EnterFullScreenMenuItem: (props: EnterFullScreenMenuItemProps) => React.ReactElement;
@@ -28,7 +31,7 @@ export interface FullScreenPluginProps {
     onExitFullScreen?(zoom: Zoom): void;
 }
 
-const fullScreenPlugin = (props?: FullScreenPluginProps): FullScreenPlugin => {
+export const fullScreenPlugin = (props?: FullScreenPluginProps): FullScreenPlugin => {
     const store = React.useMemo(() => createStore<StoreProps>({}), []);
 
     /* eslint-disable @typescript-eslint/no-empty-function */
@@ -91,5 +94,3 @@ const fullScreenPlugin = (props?: FullScreenPluginProps): FullScreenPlugin => {
         EnterFullScreenMenuItem: EnterFullScreenMenuItemDecorator,
     };
 };
-
-export default fullScreenPlugin;

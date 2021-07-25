@@ -8,15 +8,13 @@
 
 import * as React from 'react';
 
-import ThemeContext, { ThemeContextProps } from './ThemeContext';
-import isDarkMode from '../utils/isDarkMode';
+import { ThemeContext, ThemeContextProps } from './ThemeContext';
+import { isDarkMode } from '../utils/isDarkMode';
 
-interface ThemeProviderProps {
+export const ThemeProvider: React.FC<{
     theme: string;
     onSwitchTheme?(theme: string): void;
-}
-
-const ThemeProvider: React.FC<ThemeProviderProps> = ({ children, theme, onSwitchTheme }) => {
+}> = ({ children, theme, onSwitchTheme }) => {
     const initialTheme = React.useMemo(() => (theme === 'auto' ? (isDarkMode() ? 'dark' : 'light') : theme), []);
     const [currentTheme, setCurrentTheme] = React.useState(initialTheme);
 
@@ -47,5 +45,3 @@ const ThemeProvider: React.FC<ThemeProviderProps> = ({ children, theme, onSwitch
 
     return <ThemeContext.Provider value={initialContext}>{children}</ThemeContext.Provider>;
 };
-
-export default ThemeProvider;

@@ -6,7 +6,9 @@
  * @copyright 2019-2021 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-export { default as HandToolIcon } from './HandToolIcon';
-export { default as SelectionMode } from './SelectionMode';
-export { default as selectionModePlugin } from './selectionModePlugin';
-export { default as TextSelectionIcon } from './TextSelectionIcon';
+export * from './selectionModePlugin';
+export { SelectionMode } from './structs/SelectionMode';
+
+// Components
+export { HandToolIcon } from './HandToolIcon';
+export { TextSelectionIcon } from './TextSelectionIcon';

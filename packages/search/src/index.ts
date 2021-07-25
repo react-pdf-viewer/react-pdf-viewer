@@ -6,7 +6,9 @@
  * @copyright 2019-2021 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-export { default as NextIcon } from './NextIcon';
-export { default as PreviousIcon } from './PreviousIcon';
-export { default as SearchIcon } from './SearchIcon';
-export { default as searchPlugin } from './searchPlugin';
+export * from './searchPlugin';
+
+// Components
+export { NextIcon } from './NextIcon';
+export { PreviousIcon } from './PreviousIcon';
+export { SearchIcon } from './SearchIcon';

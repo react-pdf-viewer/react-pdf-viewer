@@ -8,20 +8,19 @@
 
 import * as React from 'react';
 
-import LayerRenderStatus from '../types/LayerRenderStatus';
-import { Plugin } from '../types/Plugin';
-import PdfJs from '../vendors/PdfJs';
-import WithScale from './WithScale';
+import { LayerRenderStatus } from '../structs/LayerRenderStatus';
+import { WithScale } from './WithScale';
+import { PdfJsApi } from '../vendors/PdfJsApi';
+import type { PdfJs } from '../types/PdfJs';
+import type { Plugin } from '../types/Plugin';
 
-interface TextLayerProps {
+export const TextLayer: React.FC<{
     page: PdfJs.Page;
     pageIndex: number;
     plugins: Plugin[];
     rotation: number;
     scale: number;
-}
-
-const TextLayer: React.FC<TextLayerProps> = ({ page, pageIndex, plugins, rotation, scale }) => {
+}> = ({ page, pageIndex, plugins, rotation, scale }) => {
     const containerRef = React.useRef<HTMLDivElement>();
     const renderTask = React.useRef<PdfJs.PageRenderTask>();
 
@@ -63,10 +62,10 @@ const TextLayer: React.FC<TextLayerProps> = ({ page, pageIndex, plugins, rotatio
         });
         page.getTextContent().then((textContent) => {
             empty();
-            renderTask.current = PdfJs.renderTextLayer({
+            renderTask.current = PdfJsApi.renderTextLayer({
                 container: containerEle,
-                textContent,
-                viewport,
+                textContent: textContent as any,
+                viewport: viewport as any,
                 enhanceTextSelection: true,
             });
             renderTask.current.promise.then(
@@ -98,5 +97,3 @@ const TextLayer: React.FC<TextLayerProps> = ({ page, pageIndex, plugins, rotatio
         </WithScale>
     );
 };
-
-export default TextLayer;

@@ -7,13 +7,17 @@
  */
 
 import * as React from 'react';
-import { createStore, Plugin, PluginFunctions, ViewerState } from '@react-pdf-viewer/core';
+import { createStore } from '@react-pdf-viewer/core';
+import type { Plugin, PluginFunctions, ViewerState } from '@react-pdf-viewer/core';
 
-import Rotate, { RotateProps } from './Rotate';
-import RotateButton from './RotateButton';
-import RotateMenuItem from './RotateMenuItem';
-import RotateDirection from './RotateDirection';
-import StoreProps from './StoreProps';
+import { Rotate, RotateProps } from './Rotate';
+import { RotateButton } from './RotateButton';
+import { RotateMenuItem } from './RotateMenuItem';
+import { RotateDirection } from './structs/RotateDirection';
+import type { StoreProps } from './types/StoreProps';
+
+// Export types
+export type { RotateProps };
 
 export interface RotateDecoratorProps {
     onClick(): void;
@@ -27,7 +31,7 @@ export interface RotatePlugin extends Plugin {
     RotateForwardMenuItem(props: RotateDecoratorProps): React.ReactElement;
 }
 
-const rotatePlugin = (): RotatePlugin => {
+export const rotatePlugin = (): RotatePlugin => {
     const store = React.useMemo(
         () =>
             createStore<StoreProps>({
@@ -89,5 +93,3 @@ const rotatePlugin = (): RotatePlugin => {
         RotateForwardMenuItem: RotateForwardMenuItemDecorator,
     };
 };
-
-export default rotatePlugin;

@@ -8,18 +8,16 @@
 
 import * as React from 'react';
 
-import useIsomorphicLayoutEffect from '../hooks/useIsomorphicLayoutEffect';
-import PdfJs from '../vendors/PdfJs';
-import Annotation from './Annotation';
-import PopupWrapper from './PopupWrapper';
+import { useIsomorphicLayoutEffect } from '../hooks/useIsomorphicLayoutEffect';
+import { Annotation } from './Annotation';
+import { PopupWrapper } from './PopupWrapper';
+import type { PdfJs } from '../types/PdfJs';
 
-interface PopupProps {
+export const Popup: React.FC<{
     annotation: PdfJs.Annotation;
     page: PdfJs.Page;
     viewport: PdfJs.ViewPort;
-}
-
-const Popup: React.FC<PopupProps> = ({ annotation, page, viewport }) => {
+}> = ({ annotation, page, viewport }) => {
     const isRenderable = !!(annotation.title || annotation.contents);
 
     // Don't render the popup for annotation whose parent renders the annotation themselves
@@ -64,5 +62,3 @@ const Popup: React.FC<PopupProps> = ({ annotation, page, viewport }) => {
         </Annotation>
     );
 };
-
-export default Popup;

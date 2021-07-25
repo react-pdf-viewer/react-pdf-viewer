@@ -22,7 +22,7 @@ const replaceNode = (replacementNode: Node, node: Node): void => {
     removeNode(node);
 };
 
-const unwrap = (ele: Node): void => {
+export const unwrap = (ele: Node): void => {
     const parent = ele.parentNode;
     if (!parent) {
         return;
@@ -36,5 +36,3 @@ const unwrap = (ele: Node): void => {
     // Merge the text nodes
     parent.normalize();
 };
-
-export default unwrap;

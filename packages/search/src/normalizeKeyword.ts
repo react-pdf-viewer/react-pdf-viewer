@@ -7,16 +7,16 @@
  */
 
 import { EMPTY_KEYWORD_REGEXP } from './constants';
-import FlagKeyword from './types/FlagKeyword';
-import SingleKeyword from './types/SingleKeyword';
+import type { FlagKeyword } from './types/FlagKeyword';
+import type { SingleKeyword } from './types/SingleKeyword';
 
-const normalizeFlagKeyword = (flagKeyword: FlagKeyword): RegExp => {
+export const normalizeFlagKeyword = (flagKeyword: FlagKeyword): RegExp => {
     const source = flagKeyword.wholeWords ? ` ${flagKeyword.keyword} ` : flagKeyword.keyword;
     const flags = flagKeyword.matchCase ? 'g' : 'gi';
     return new RegExp(source, flags);
 };
 
-const normalizeSingleKeyword = (keyword: SingleKeyword, matchCase?: boolean, wholeWords?: boolean): RegExp => {
+export const normalizeSingleKeyword = (keyword: SingleKeyword, matchCase?: boolean, wholeWords?: boolean): RegExp => {
     if (keyword instanceof RegExp) {
         return keyword;
     }
@@ -41,5 +41,3 @@ const normalizeSingleKeyword = (keyword: SingleKeyword, matchCase?: boolean, who
     }
     return normalizeFlagKeyword(keyword);
 };
-
-export { normalizeFlagKeyword, normalizeSingleKeyword };

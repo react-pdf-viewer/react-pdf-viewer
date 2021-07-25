@@ -7,9 +7,8 @@
  */
 
 import * as React from 'react';
-import { Plugin } from '@react-pdf-viewer/core';
+import type { Plugin } from '@react-pdf-viewer/core';
 
-// -------------------
 // Render current page
 // -------------------
 
@@ -22,9 +21,8 @@ export interface CurrentPageLabelProps {
     children?: (props: RenderCurrentPageLabelProps) => React.ReactElement;
 }
 
-// -------------------------------------
 // Page navigation
-// -------------------------------------
+// ---------------
 
 export interface GoToPageMenuItemProps {
     onClick: () => void;
@@ -41,7 +39,6 @@ export interface GoToPageProps {
     children?: RenderGoToPage;
 }
 
-// ------
 // Plugin
 // ------
 
@@ -65,9 +62,8 @@ export interface PageNavigationPlugin extends Plugin {
 
 export function pageNavigationPlugin(): PageNavigationPlugin;
 
-// -----
-// Icons
-// -----
+// Components
+// ----------
 
 export class DownArrowIcon extends React.Component {}
 export class NextIcon extends React.Component {}

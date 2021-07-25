@@ -7,9 +7,8 @@
  */
 
 import * as React from 'react';
-import {
-    createStore,
-    LayerRenderStatus,
+import { createStore, LayerRenderStatus } from '@react-pdf-viewer/core';
+import type {
     PluginOnTextLayerRender,
     Plugin,
     PluginFunctions,
@@ -20,14 +19,14 @@ import {
 } from '@react-pdf-viewer/core';
 
 import { HIGHLIGHT_LAYER_ATTR, HIGHLIGHT_PAGE_ATTR } from './constants';
-import HighlightAreaList from './HighlightAreaList';
+import { HighlightAreaList } from './HighlightAreaList';
 import { NO_SELECTION_STATE, SELECTING_STATE, SelectedState } from './SelectionState';
-import StoreProps from './StoreProps';
-import Tracker from './Tracker';
-import HighlightArea from './types/HighlightArea';
-import RenderHighlightsProps from './types/RenderHighlightsProps';
-import RenderHighlightContentProps from './types/RenderHighlightContentProps';
-import RenderHighlightTargetProps from './types/RenderHighlightTargetProps';
+import { Tracker } from './Tracker';
+import type { HighlightArea } from './types/HighlightArea';
+import type { RenderHighlightsProps } from './types/RenderHighlightsProps';
+import type { RenderHighlightContentProps } from './types/RenderHighlightContentProps';
+import type { RenderHighlightTargetProps } from './types/RenderHighlightTargetProps';
+import type { StoreProps } from './types/StoreProps';
 
 export interface HighlightPlugin extends Plugin {
     jumpToHighlightArea(area: HighlightArea): void;
@@ -41,7 +40,7 @@ export interface HighlightPluginProps {
 
 const TEXT_LAYER_END_SELECTOR = 'rpv-highlight__selected-end';
 
-const highlightPlugin = (props?: HighlightPluginProps): HighlightPlugin => {
+export const highlightPlugin = (props?: HighlightPluginProps): HighlightPlugin => {
     const store = React.useMemo(
         () =>
             createStore<StoreProps>({
@@ -181,5 +180,3 @@ const highlightPlugin = (props?: HighlightPluginProps): HighlightPlugin => {
         renderViewer,
     };
 };
-
-export default highlightPlugin;

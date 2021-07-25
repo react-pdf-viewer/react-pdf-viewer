@@ -6,7 +6,7 @@
  * @copyright 2019-2021 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-const getTextFromOffsets = (
+export const getTextFromOffsets = (
     textLayerDiv: HTMLElement,
     startDivIdx: number,
     startOffset: number,
@@ -36,5 +36,3 @@ const getTextFromOffsets = (
         return div.textContent.substring(startOffset, endOffset || div.textContent.length).trim();
     }
 };
-
-export default getTextFromOffsets;

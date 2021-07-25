@@ -6,9 +6,9 @@
  * @copyright 2019-2021 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import LoadingStatus, { VerifyPassword } from './LoadingStatus';
+import { LoadingStatus, VerifyPassword } from './LoadingStatus';
 
-class WrongPasswordState extends LoadingStatus {
+export class WrongPasswordState extends LoadingStatus {
     public verifyPasswordFn: VerifyPassword;
 
     constructor(verifyPasswordFn: VerifyPassword) {
@@ -16,5 +16,3 @@ class WrongPasswordState extends LoadingStatus {
         this.verifyPasswordFn = verifyPasswordFn;
     }
 }
-
-export default WrongPasswordState;

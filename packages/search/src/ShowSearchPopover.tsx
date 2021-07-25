@@ -7,15 +7,13 @@
  */
 
 import * as React from 'react';
-import { Popover, Position, Store, Toggle } from '@react-pdf-viewer/core';
+import { Popover, Position } from '@react-pdf-viewer/core';
+import type { Store, Toggle } from '@react-pdf-viewer/core';
 
-import SearchPopover from './SearchPopover';
-import ShowSearchPopoverButton from './ShowSearchPopoverButton';
-import StoreProps from './types/StoreProps';
-
-export interface RenderShowSearchPopoverProps {
-    onClick(): void;
-}
+import { SearchPopover } from './SearchPopover';
+import { ShowSearchPopoverButton } from './ShowSearchPopoverButton';
+import type { RenderShowSearchPopoverProps } from './types/RenderShowSearchPopoverProps';
+import type { StoreProps } from './types/StoreProps';
 
 type RenderShowSearchPopover = (props: RenderShowSearchPopoverProps) => React.ReactElement;
 
@@ -25,7 +23,7 @@ export interface ShowSearchPopoverProps {
 
 const PORTAL_OFFSET = { left: 0, top: 8 };
 
-const ShowSearchPopover: React.FC<{
+export const ShowSearchPopover: React.FC<{
     children?: RenderShowSearchPopover;
     store: Store<StoreProps>;
 }> = ({ children, store }) => {
@@ -48,5 +46,3 @@ const ShowSearchPopover: React.FC<{
         />
     );
 };
-
-export default ShowSearchPopover;

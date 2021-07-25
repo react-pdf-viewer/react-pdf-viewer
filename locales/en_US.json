@@ -39,7 +39,7 @@
         "openFile": "Open file"
     },
     "pageNavigation": {
-        "enterPageNumber" : "Enter a page number",
+        "enterPageNumber": "Enter a page number",
         "goToFirstPage": "First page",
         "goToLastPage": "Last page",
         "goToNextPage": "Next page",

@@ -7,21 +7,12 @@
  */
 
 import * as React from 'react';
-import { useIntersectionObserver, PdfJs, Spinner, VisibilityChanged } from '@react-pdf-viewer/core';
+import { useIntersectionObserver, Spinner } from '@react-pdf-viewer/core';
+import type { PdfJs, VisibilityChanged } from '@react-pdf-viewer/core';
 
-import ThumbnailItem from './ThumbnailItem';
+import { ThumbnailItem } from './ThumbnailItem';
 
 const THUMBNAIL_WIDTH = 100;
-
-interface ThumbnailContainerProps {
-    doc: PdfJs.PdfDocument;
-    isActive: boolean;
-    pageHeight: number;
-    pageIndex: number;
-    pageWidth: number;
-    rotation: number;
-    onActive(target: HTMLElement): void;
-}
 
 interface PageState {
     height: number;
@@ -31,15 +22,15 @@ interface PageState {
     width: number;
 }
 
-const ThumbnailContainer: React.FC<ThumbnailContainerProps> = ({
-    doc,
-    isActive,
-    pageHeight,
-    pageIndex,
-    pageWidth,
-    rotation,
-    onActive,
-}) => {
+export const ThumbnailContainer: React.FC<{
+    doc: PdfJs.PdfDocument;
+    isActive: boolean;
+    pageHeight: number;
+    pageIndex: number;
+    pageWidth: number;
+    rotation: number;
+    onActive(target: HTMLElement): void;
+}> = ({ doc, isActive, pageHeight, pageIndex, pageWidth, rotation, onActive }) => {
     const [pageSize, setPageSize] = React.useState<PageState>({
         height: pageHeight,
         isCalculated: false,
@@ -118,5 +109,3 @@ const ThumbnailContainer: React.FC<ThumbnailContainerProps> = ({
         </div>
     );
 };
-
-export default ThumbnailContainer;

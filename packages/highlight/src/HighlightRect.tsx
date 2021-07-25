@@ -9,15 +9,9 @@
 import * as React from 'react';
 
 import { getCssProperties } from './transformArea';
-import HighlightArea from './types/HighlightArea';
+import type { HighlightArea } from './types/HighlightArea';
 
-interface HighlightRectProps {
+export const HighlightRect: React.FC<{
     area: HighlightArea;
     rotation: number;
-}
-
-const HighlightRect: React.FC<HighlightRectProps> = ({ area, rotation }) => (
-    <div className="rpv-highlight__selected-text" style={getCssProperties(area, rotation)} />
-);
-
-export default HighlightRect;
+}> = ({ area, rotation }) => <div className="rpv-highlight__selected-text" style={getCssProperties(area, rotation)} />;

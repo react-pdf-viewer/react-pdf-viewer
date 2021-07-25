@@ -8,27 +8,18 @@
 
 import * as React from 'react';
 
-import usePosition from '../hooks/usePosition';
-import Arrow from './Arrow';
-import Offset from './Offset';
-import Position from './Position';
+import { usePosition } from '../hooks/usePosition';
+import { Position } from '../structs/Position';
+import { Arrow } from './Arrow';
+import type { Offset } from '../types/Offset';
 
-interface TooltipBodyProps {
+export const TooltipBody: React.FC<{
     ariaControlsSuffix: string;
     contentRef: React.RefObject<HTMLDivElement>;
     offset: Offset;
     position: Position;
     targetRef: React.RefObject<HTMLElement>;
-}
-
-const TooltipBody: React.FC<TooltipBodyProps> = ({
-    ariaControlsSuffix,
-    children,
-    contentRef,
-    offset,
-    position,
-    targetRef,
-}) => {
+}> = ({ ariaControlsSuffix, children, contentRef, offset, position, targetRef }) => {
     const anchorRef = React.useRef<HTMLDivElement>();
 
     usePosition(contentRef, targetRef, anchorRef, position, offset);
@@ -48,5 +39,3 @@ const TooltipBody: React.FC<TooltipBodyProps> = ({
         </>
     );
 };
-
-export default TooltipBody;

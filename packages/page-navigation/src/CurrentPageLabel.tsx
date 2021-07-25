@@ -7,11 +7,11 @@
  */
 
 import * as React from 'react';
-import { Store } from '@react-pdf-viewer/core';
+import type { Store } from '@react-pdf-viewer/core';
 
-import StoreProps from './StoreProps';
-import useCurrentPage from './useCurrentPage';
-import useNumberOfPages from './useNumberOfPages';
+import { useCurrentPage } from './useCurrentPage';
+import { useNumberOfPages } from './useNumberOfPages';
+import type { StoreProps } from './types/StoreProps';
 
 interface RenderCurrentPageLabelProps {
     currentPage: number;
@@ -24,7 +24,7 @@ export interface CurrentPageLabelProps {
     children?: RenderCurrentPageLabel;
 }
 
-const CurrentPageLabel: React.FC<{
+export const CurrentPageLabel: React.FC<{
     children?: RenderCurrentPageLabel;
     store: Store<StoreProps>;
 }> = ({ children, store }) => {
@@ -39,5 +39,3 @@ const CurrentPageLabel: React.FC<{
         numberOfPages,
     });
 };
-
-export default CurrentPageLabel;

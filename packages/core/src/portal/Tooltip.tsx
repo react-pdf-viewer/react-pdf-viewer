@@ -8,24 +8,23 @@
 
 import * as React from 'react';
 
-import useEscape from '../hooks/useEscape';
-import useToggle, { ToggleStatus } from '../hooks/useToggle';
-import Offset from './Offset';
-import Position from './Position';
-import TooltipBody from './TooltipBody';
-import uniqueId from '../utils/uniqueId';
+import { useEscape } from '../hooks/useEscape';
+import { useToggle } from '../hooks/useToggle';
+import { ToggleStatus } from '../structs/ToggleStatus';
+import { Position } from '../structs/Position';
+import { TooltipBody } from './TooltipBody';
+import { uniqueId } from '../utils/uniqueId';
+import type { Offset } from '../types/Offset';
 
 type RenderTooltipContent = () => React.ReactNode;
 
-interface TooltipProps {
+export const Tooltip: React.FC<{
     ariaControlsSuffix?: string;
     content: RenderTooltipContent;
     offset: Offset;
     position: Position;
     target: React.ReactElement;
-}
-
-const Tooltip: React.FC<TooltipProps> = ({ ariaControlsSuffix, content, offset, position, target }) => {
+}> = ({ ariaControlsSuffix, content, offset, position, target }) => {
     const { opened, toggle } = useToggle();
     const targetRef = React.useRef<HTMLDivElement>();
     const contentRef = React.useRef<HTMLDivElement>();
@@ -111,5 +110,3 @@ const Tooltip: React.FC<TooltipProps> = ({ ariaControlsSuffix, content, offset, 
         </>
     );
 };
-
-export default Tooltip;

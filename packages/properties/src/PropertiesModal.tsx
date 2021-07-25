@@ -7,22 +7,21 @@
  */
 
 import * as React from 'react';
-import { Button, LocalizationContext, PdfJs, Separator } from '@react-pdf-viewer/core';
+import { Button, LocalizationContext, Separator } from '@react-pdf-viewer/core';
+import type { PdfJs } from '@react-pdf-viewer/core';
 
-import PropertiesData from './PropertiesData';
-import PropertiesLoader from './PropertiesLoader';
-import PropertyItem from './PropertyItem';
-import convertDate from './utils/convertDate';
-import getFileName from './utils/fileName';
-import getFileSize from './utils/fileSize';
+import { PropertiesLoader } from './PropertiesLoader';
+import { PropertyItem } from './PropertyItem';
+import { convertDate } from './utils/convertDate';
+import { getFileName } from './utils/getFileName';
+import { getFileSize } from './utils/getFileSize';
+import type { PropertiesData } from './types/PropertiesData';
 
-interface PropertiesModalProps {
+export const PropertiesModal: React.FC<{
     doc: PdfJs.PdfDocument;
     fileName: string;
     onToggle(): void;
-}
-
-const PropertiesModal: React.FC<PropertiesModalProps> = ({ doc, fileName, onToggle }) => {
+}> = ({ doc, fileName, onToggle }) => {
     const l10n = React.useContext(LocalizationContext);
 
     const formatDate = (input: string): string => {
@@ -100,5 +99,3 @@ const PropertiesModal: React.FC<PropertiesModalProps> = ({ doc, fileName, onTogg
         </div>
     );
 };
-
-export default PropertiesModal;

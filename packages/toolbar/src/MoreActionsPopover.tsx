@@ -14,22 +14,20 @@ import {
     MinimalButton,
     Popover,
     Position,
-    Toggle,
     Tooltip,
 } from '@react-pdf-viewer/core';
+import type { Toggle } from '@react-pdf-viewer/core';
 import { ScrollMode } from '@react-pdf-viewer/scroll-mode';
 import { SelectionMode } from '@react-pdf-viewer/selection-mode';
 
-import MoreIcon from './MoreIcon';
-import ToolbarSlot from './ToolbarSlot';
-
-interface MoreActionsPopoverProps {
-    toolbarSlot: ToolbarSlot;
-}
+import { MoreIcon } from './MoreIcon';
+import type { ToolbarSlot } from './types/ToolbarSlot';
 
 const PORTAL_OFFSET = { left: 0, top: 8 };
 
-const MoreActionsPopover: React.FC<MoreActionsPopoverProps> = ({ toolbarSlot }) => {
+export const MoreActionsPopover: React.FC<{
+    toolbarSlot: ToolbarSlot;
+}> = ({ toolbarSlot }) => {
     const l10n = React.useContext(LocalizationContext);
     const {
         DownloadMenuItem,
@@ -126,5 +124,3 @@ const MoreActionsPopover: React.FC<MoreActionsPopoverProps> = ({ toolbarSlot }) 
         />
     );
 };
-
-export default MoreActionsPopover;

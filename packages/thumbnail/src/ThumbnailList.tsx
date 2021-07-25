@@ -7,28 +7,20 @@
  */
 
 import * as React from 'react';
-import { classNames, PdfJs, useIsomorphicLayoutEffect } from '@react-pdf-viewer/core';
+import { classNames, useIsomorphicLayoutEffect } from '@react-pdf-viewer/core';
+import type { PdfJs } from '@react-pdf-viewer/core';
 
-import scrollToBeVisible from './scrollToBeVisible';
-import ThumbnailContainer from './ThumbnailContainer';
+import { scrollToBeVisible } from './scrollToBeVisible';
+import { ThumbnailContainer } from './ThumbnailContainer';
 
-interface ThumbnailListProps {
+export const ThumbnailList: React.FC<{
     currentPage: number;
     doc: PdfJs.PdfDocument;
     pageHeight: number;
     pageWidth: number;
     rotation: number;
     onJumpToPage(pageIndex: number): void;
-}
-
-const ThumbnailList: React.FC<ThumbnailListProps> = ({
-    currentPage,
-    doc,
-    pageHeight,
-    pageWidth,
-    rotation,
-    onJumpToPage,
-}) => {
+}> = ({ currentPage, doc, pageHeight, pageWidth, rotation, onJumpToPage }) => {
     const { numPages } = doc;
     const containerRef = React.useRef<HTMLDivElement | null>(null);
     const thumbnailsRef = React.useRef<HTMLElement[]>([]);
@@ -151,5 +143,3 @@ const ThumbnailList: React.FC<ThumbnailListProps> = ({
         </div>
     );
 };
-
-export default ThumbnailList;

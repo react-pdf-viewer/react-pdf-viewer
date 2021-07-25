@@ -8,23 +8,24 @@
 
 import * as React from 'react';
 
-import Spinner from '../components/Spinner';
-import useIsMounted from '../hooks/useIsMounted';
-import PdfJs from '../vendors/PdfJs';
+import { Spinner } from '../components/Spinner';
+import { useIsMounted } from '../hooks/useIsMounted';
+import { PdfJsApi } from '../vendors/PdfJsApi';
 import { CharacterMap } from '../Viewer';
-import AskForPasswordState from './AskForPasswordState';
-import AskingPassword from './AskingPassword';
-import CompletedState from './CompletedState';
-import FailureState from './FailureState';
-import LoadError from './LoadError';
-import LoadingState from './LoadingState';
-import LoadingStatus, { VerifyPassword } from './LoadingStatus';
-import WrongPassword from './WrongPassword';
-import WrongPasswordState from './WrongPasswordState';
+import { AskForPasswordState } from './AskForPasswordState';
+import { AskingPassword } from './AskingPassword';
+import { CompletedState } from './CompletedState';
+import { FailureState } from './FailureState';
+import { LoadingState } from './LoadingState';
+import { LoadingStatus, VerifyPassword } from './LoadingStatus';
+import { WrongPassword } from './WrongPassword';
+import { WrongPasswordState } from './WrongPasswordState';
+import type { LoadError } from './LoadError';
+import type { PdfJs } from '../types/PdfJs';
 
 export type RenderError = (error: LoadError) => React.ReactElement;
 
-interface DocumentLoaderProps {
+export const DocumentLoader: React.FC<{
     characterMap?: CharacterMap;
     file: PdfJs.FileData;
     httpHeaders?: Record<string, string | string[]>;
@@ -33,9 +34,7 @@ interface DocumentLoaderProps {
     renderLoader?(percentages: number): React.ReactElement;
     transformGetDocumentParams?(options: PdfJs.GetDocumentParams): PdfJs.GetDocumentParams;
     withCredentials: boolean;
-}
-
-const DocumentLoader: React.FC<DocumentLoaderProps> = ({
+}> = ({
     characterMap,
     file,
     httpHeaders,
@@ -62,7 +61,7 @@ const DocumentLoader: React.FC<DocumentLoaderProps> = ({
         setStatus(new LoadingState(0));
 
         // Create a new worker
-        const worker = new PdfJs.PDFWorker({ name: `PDFWorker_${Date.now()}` });
+        const worker = new PdfJsApi.PDFWorker({ name: `PDFWorker_${Date.now()}` }) as PdfJs.PDFWorker;
 
         const params: PdfJs.GetDocumentParams = Object.assign(
             {
@@ -80,13 +79,13 @@ const DocumentLoader: React.FC<DocumentLoaderProps> = ({
         );
         const transformParams = transformGetDocumentParams ? transformGetDocumentParams(params) : params;
 
-        const loadingTask = PdfJs.getDocument(transformParams);
-        loadingTask.onPassword = (verifyPassword: VerifyPassword, reason: string): void => {
+        const loadingTask = PdfJsApi.getDocument(transformParams) as unknown as PdfJs.LoadingTask;
+        loadingTask.onPassword = (verifyPassword: VerifyPassword, reason: number): void => {
             switch (reason) {
-                case PdfJs.PasswordResponses.NEED_PASSWORD:
+                case PdfJsApi.PasswordResponses.NEED_PASSWORD:
                     isMounted.current && setStatus(new AskForPasswordState(verifyPassword));
                     break;
-                case PdfJs.PasswordResponses.INCORRECT_PASSWORD:
+                case PdfJsApi.PasswordResponses.INCORRECT_PASSWORD:
                     isMounted.current && setStatus(new WrongPasswordState(verifyPassword));
                     break;
                 default:
@@ -156,5 +155,3 @@ const DocumentLoader: React.FC<DocumentLoaderProps> = ({
             );
     }
 };
-
-export default DocumentLoader;

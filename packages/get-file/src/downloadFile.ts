@@ -6,9 +6,9 @@
  * @copyright 2019-2021 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import { OpenFile } from '@react-pdf-viewer/core';
+import type { OpenFile } from '@react-pdf-viewer/core';
 
-const downloadFile = (file: OpenFile, saveAs: string): void => {
+export const downloadFile = (file: OpenFile, saveAs: string): void => {
     const blobUrl =
         typeof file.data === 'string' ? '' : URL.createObjectURL(new Blob([file.data], { type: 'application/pdf' }));
     const link = document.createElement('a');
@@ -24,5 +24,3 @@ const downloadFile = (file: OpenFile, saveAs: string): void => {
         URL.revokeObjectURL(blobUrl);
     }
 };
-
-export default downloadFile;

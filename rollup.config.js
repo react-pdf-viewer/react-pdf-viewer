@@ -10,15 +10,9 @@ const pkg = require(path.join(rootPackagePath, 'package.json'));
 const outputDir = path.join(rootPackagePath, 'lib');
 const pgkName = pkg.name.split('/').pop();
 
-const external = [
-    ...Object.keys(pkg.dependencies || {}),
-    ...Object.keys(pkg.peerDependencies || {}),
-];
+const external = [...Object.keys(pkg.dependencies || {}), ...Object.keys(pkg.peerDependencies || {})];
 
-const plugins = [
-    json(),
-    typescript(),
-];
+const plugins = [json(), typescript()];
 
 export default [
     // CJS
@@ -42,8 +36,6 @@ export default [
             format: 'cjs',
         },
         external,
-        plugins: plugins.concat([
-            terser(),
-        ]),
-    }
+        plugins: plugins.concat([terser()]),
+    },
 ];

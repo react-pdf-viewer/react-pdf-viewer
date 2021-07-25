@@ -7,14 +7,18 @@
  */
 
 import * as React from 'react';
-import { createStore, Plugin, PluginFunctions, RenderViewer, Slot } from '@react-pdf-viewer/core';
+import { createStore } from '@react-pdf-viewer/core';
+import type { Plugin, PluginFunctions, RenderViewer, Slot } from '@react-pdf-viewer/core';
 
-import SelectionMode from './SelectionMode';
-import StoreProps from './StoreProps';
-import SwitchSelectionMode, { SwitchSelectionModeProps } from './SwitchSelectionMode';
-import SwitchSelectionModeButton from './SwitchSelectionModeButton';
-import SwitchSelectionModeMenuItem from './SwitchSelectionModeMenuItem';
-import Tracker from './Tracker';
+import { SelectionMode } from './structs/SelectionMode';
+import { SwitchSelectionMode, SwitchSelectionModeProps } from './SwitchSelectionMode';
+import { SwitchSelectionModeButton } from './SwitchSelectionModeButton';
+import { SwitchSelectionModeMenuItem } from './SwitchSelectionModeMenuItem';
+import { Tracker } from './Tracker';
+import type { StoreProps } from './types/StoreProps';
+
+// Export types
+export type { SwitchSelectionModeProps };
 
 export interface SwitchSelectionModeButtonProps {
     mode: SelectionMode;
@@ -25,7 +29,7 @@ export interface SwitchSelectionModeMenuItemProps {
     onClick(): void;
 }
 
-interface SelectionModePlugin extends Plugin {
+export interface SelectionModePlugin extends Plugin {
     SwitchSelectionMode(props: SwitchSelectionModeProps): React.ReactElement;
     SwitchSelectionModeButton(props: SwitchSelectionModeButtonProps): React.ReactElement;
     SwitchSelectionModeMenuItem(props: SwitchSelectionModeMenuItemProps): React.ReactElement;
@@ -35,7 +39,7 @@ export interface SelectionModePluginProps {
     selectionMode?: SelectionMode;
 }
 
-const selectionModePlugin = (props?: SelectionModePluginProps): SelectionModePlugin => {
+export const selectionModePlugin = (props?: SelectionModePluginProps): SelectionModePlugin => {
     const store = React.useMemo(() => createStore<StoreProps>(), []);
 
     const SwitchSelectionModeDecorator = (props: SwitchSelectionModeProps) => (
@@ -96,5 +100,3 @@ const selectionModePlugin = (props?: SelectionModePluginProps): SelectionModePlu
         SwitchSelectionModeMenuItem: SwitchSelectionModeMenuItemDecorator,
     };
 };
-
-export default selectionModePlugin;

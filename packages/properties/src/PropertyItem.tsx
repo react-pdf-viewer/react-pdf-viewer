@@ -8,18 +8,12 @@
 
 import * as React from 'react';
 
-interface PropertyItemProps {
+export const PropertyItem: React.FC<{
     label: string;
     value: string;
-}
-
-const PropertyItem: React.FC<PropertyItemProps> = ({ label, value }) => {
-    return (
-        <dl className="rpv-properties__item">
-            <dt className="rpv-properties__item-label">{label}:</dt>
-            <dd className="rpv-properties__item-value">{value || '-'}</dd>
-        </dl>
-    );
-};
-
-export default PropertyItem;
+}> = ({ label, value }) => (
+    <dl className="rpv-properties__item">
+        <dt className="rpv-properties__item-label">{label}:</dt>
+        <dd className="rpv-properties__item-value">{value || '-'}</dd>
+    </dl>
+);

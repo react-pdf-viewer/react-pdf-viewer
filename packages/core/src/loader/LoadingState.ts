@@ -6,14 +6,12 @@
  * @copyright 2019-2021 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import LoadingStatus from './LoadingStatus';
+import { LoadingStatus } from './LoadingStatus';
 
-class LoadingState extends LoadingStatus {
+export class LoadingState extends LoadingStatus {
     public percentages: number;
     constructor(percentages: number) {
         super();
         this.percentages = percentages;
     }
 }
-
-export default LoadingState;

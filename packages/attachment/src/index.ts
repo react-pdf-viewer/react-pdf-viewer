@@ -6,4 +6,4 @@
  * @copyright 2019-2021 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-export { default as attachmentPlugin } from './attachmentPlugin';
+export * from './attachmentPlugin';

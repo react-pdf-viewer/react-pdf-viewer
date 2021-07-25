@@ -6,7 +6,7 @@
  * @copyright 2019-2021 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-interface SelectionData {
+export interface SelectionData {
     startPageIndex: number;
     endPageIndex: number;
     startOffset: number;
@@ -14,5 +14,3 @@ interface SelectionData {
     endOffset: number;
     endDivIndex: number;
 }
-
-export default SelectionData;

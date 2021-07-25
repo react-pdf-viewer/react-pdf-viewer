@@ -6,5 +6,7 @@
  * @copyright 2019-2021 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-export { default as PrintIcon } from './PrintIcon';
-export { default as printPlugin } from './printPlugin';
+export * from './printPlugin';
+
+// Components
+export { PrintIcon } from './PrintIcon';

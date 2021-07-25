@@ -8,13 +8,9 @@
 
 import * as React from 'react';
 
-import useIsomorphicLayoutEffect from '../hooks/useIsomorphicLayoutEffect';
+import { useIsomorphicLayoutEffect } from '../hooks/useIsomorphicLayoutEffect';
 
-interface MenuProps {
-    children?: React.ReactNode;
-}
-
-const Menu: React.FC<MenuProps> = ({ children }) => {
+export const Menu: React.FC = ({ children }) => {
     const containerRef = React.useRef<HTMLDivElement>();
     const visibleMenuItemsRef = React.useRef<HTMLElement[]>([]);
 
@@ -134,5 +130,3 @@ const Menu: React.FC<MenuProps> = ({ children }) => {
         </div>
     );
 };
-
-export default Menu;

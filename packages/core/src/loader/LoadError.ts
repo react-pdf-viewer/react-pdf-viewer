@@ -7,7 +7,7 @@
  */
 
 // Represents the error in case the document can't be loaded
-interface LoadError {
+export interface LoadError {
     message?: string;
     // Some possible values for `name` are
     // - AbortException
@@ -19,5 +19,3 @@ interface LoadError {
     // - UnknownErrorException
     name?: string;
 }
-
-export default LoadError;

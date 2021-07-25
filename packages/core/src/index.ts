@@ -6,35 +6,38 @@
  * @copyright 2019-2021 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-export { default as AnnotationType } from './annotations/AnnotationType';
-export { default as Button } from './components/Button';
-export { default as Menu } from './components/Menu';
-export { default as MenuDivider } from './components/MenuDivider';
-export { default as MenuItem } from './components/MenuItem';
-export { default as MinimalButton } from './components/MinimalButton';
-export { default as PrimaryButton } from './components/PrimaryButton';
-export { default as ProgressBar } from './components/ProgressBar';
-export { default as Separator } from './components/Separator';
-export { default as Spinner } from './components/Spinner';
-export { default as TextBox } from './components/TextBox';
-export { default as useIntersectionObserver } from './hooks/useIntersectionObserver';
-export { default as useIsomorphicLayoutEffect } from './hooks/useIsomorphicLayoutEffect';
-export { ToggleStatus } from './hooks/useToggle';
-export { default as Icon } from './icons/Icon';
-export { default as LocalizationContext } from './localization/LocalizationContext';
-export { default as LocalizationProvider } from './localization/LocalizationProvider';
-export { default as Modal } from './portal/Modal';
-export { default as Popover } from './portal/Popover';
-export { default as Position } from './portal/Position';
-export { default as Tooltip } from './portal/Tooltip';
-export { default as SpecialZoomLevel } from './SpecialZoomLevel';
-export { default as createStore } from './store/createStore';
-export { default as ThemeContext } from './theme/ThemeContext';
-export { default as ThemeProvider } from './theme/ThemeProvider';
-export { default as LayerRenderStatus } from './types/LayerRenderStatus';
-export { default as Viewer } from './Viewer';
-export { default as Worker } from './Worker';
+export { AnnotationType } from './annotations/AnnotationType';
+export { Button } from './components/Button';
+export { Menu } from './components/Menu';
+export { MenuDivider } from './components/MenuDivider';
+export { MenuItem } from './components/MenuItem';
+export { MinimalButton } from './components/MinimalButton';
+export { PrimaryButton } from './components/PrimaryButton';
+export { ProgressBar } from './components/ProgressBar';
+export { Separator } from './components/Separator';
+export { Spinner } from './components/Spinner';
+export { TextBox } from './components/TextBox';
+export { useIntersectionObserver } from './hooks/useIntersectionObserver';
+export { useIsomorphicLayoutEffect } from './hooks/useIsomorphicLayoutEffect';
+export { Icon } from './icons/Icon';
+export { LocalizationContext } from './localization/LocalizationContext';
+export { LocalizationProvider } from './localization/LocalizationProvider';
+export { Modal } from './portal/Modal';
+export { Popover } from './portal/Popover';
+export { Position } from './structs/Position';
+export { Tooltip } from './portal/Tooltip';
+export { SpecialZoomLevel } from './structs/SpecialZoomLevel';
+export { ToggleStatus } from './structs/ToggleStatus';
+export { createStore } from './store/createStore';
+export { ThemeContext } from './theme/ThemeContext';
+export { ThemeProvider } from './theme/ThemeProvider';
+export { LayerRenderStatus } from './structs/LayerRenderStatus';
+export { Viewer } from './Viewer';
+export { Worker } from './Worker';
 
 // Utils
-export { default as classNames } from './utils/classNames';
-export { default as getDestination } from './utils/getDestination';
+export { classNames } from './utils/classNames';
+export { getDestination } from './utils/getDestination';
+
+// Types
+export * from './types/index';

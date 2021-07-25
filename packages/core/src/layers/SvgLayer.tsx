@@ -8,18 +8,17 @@
 
 import * as React from 'react';
 
-import PdfJs from '../vendors/PdfJs';
-import WithScale from './WithScale';
+import { WithScale } from './WithScale';
+import { PdfJsApi } from '../vendors/PdfJsApi';
+import type { PdfJs } from '../types/PdfJs';
 
-interface SvgLayerProps {
+export const SvgLayer: React.FC<{
     height: number;
     page: PdfJs.Page;
     rotation: number;
     scale: number;
     width: number;
-}
-
-const SvgLayer: React.FC<SvgLayerProps> = ({ height, page, rotation, scale, width }) => {
+}> = ({ height, page, rotation, scale, width }) => {
     const containerRef = React.useRef<HTMLDivElement>();
 
     const empty = (): void => {
@@ -36,7 +35,7 @@ const SvgLayer: React.FC<SvgLayerProps> = ({ height, page, rotation, scale, widt
 
         page.getOperatorList().then((operatorList) => {
             empty();
-            const graphic = new PdfJs.SVGGraphics(page.commonObjs, page.objs);
+            const graphic = new PdfJsApi.SVGGraphics(page.commonObjs, page.objs) as PdfJs.SVGGraphics;
             graphic.getSVG(operatorList, viewport).then((svg) => {
                 // It seems that we don't have to set the size for `svg`
                 svg.style.height = `${height}px`;
@@ -53,5 +52,3 @@ const SvgLayer: React.FC<SvgLayerProps> = ({ height, page, rotation, scale, widt
         </WithScale>
     );
 };
-
-export default SvgLayer;

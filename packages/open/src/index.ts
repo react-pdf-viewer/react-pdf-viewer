@@ -6,5 +6,7 @@
  * @copyright 2019-2021 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-export { default as OpenFileIcon } from './OpenFileIcon';
-export { default as openPlugin } from './openPlugin';
+export * from './openPlugin';
+
+// Components
+export { OpenFileIcon } from './OpenFileIcon';

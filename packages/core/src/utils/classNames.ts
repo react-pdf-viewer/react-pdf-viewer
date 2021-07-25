@@ -6,7 +6,7 @@
  * @copyright 2019-2021 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-const classNames = (classes: { [clazz: string]: boolean }): string => {
+export const classNames = (classes: { [clazz: string]: boolean }): string => {
     const result: string[] = [];
 
     Object.keys(classes).forEach((clazz) => {
@@ -17,5 +17,3 @@ const classNames = (classes: { [clazz: string]: boolean }): string => {
 
     return result.join(' ');
 };
-
-export default classNames;

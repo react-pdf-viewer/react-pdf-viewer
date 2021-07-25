@@ -6,7 +6,5 @@
  * @copyright 2019-2021 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-const HIGHLIGHT_LAYER_ATTR = 'data-highlight-text-layer';
-const HIGHLIGHT_PAGE_ATTR = 'data-highlight-text-page';
-
-export { HIGHLIGHT_LAYER_ATTR, HIGHLIGHT_PAGE_ATTR };
+export const HIGHLIGHT_LAYER_ATTR = 'data-highlight-text-layer';
+export const HIGHLIGHT_PAGE_ATTR = 'data-highlight-text-page';

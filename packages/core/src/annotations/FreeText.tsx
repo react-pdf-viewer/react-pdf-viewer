@@ -8,16 +8,14 @@
 
 import * as React from 'react';
 
-import PdfJs from '../vendors/PdfJs';
-import Annotation from './Annotation';
+import { Annotation } from './Annotation';
+import type { PdfJs } from '../types/PdfJs';
 
-interface FreeTextProps {
+export const FreeText: React.FC<{
     annotation: PdfJs.Annotation;
     page: PdfJs.Page;
     viewport: PdfJs.ViewPort;
-}
-
-const FreeText: React.FC<FreeTextProps> = ({ annotation, page, viewport }) => {
+}> = ({ annotation, page, viewport }) => {
     const hasPopup = annotation.hasPopup === false;
     const isRenderable = !!(annotation.hasPopup || annotation.title || annotation.contents);
 
@@ -45,5 +43,3 @@ const FreeText: React.FC<FreeTextProps> = ({ annotation, page, viewport }) => {
         </Annotation>
     );
 };
-
-export default FreeText;

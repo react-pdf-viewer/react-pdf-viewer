@@ -6,5 +6,7 @@
  * @copyright 2019-2021 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-export { default as LocaleIcon } from './LocaleIcon';
-export { default as localeSwitcherPlugin } from './localeSwitcherPlugin';
+export * from './localeSwitcherPlugin';
+
+// Components
+export { LocaleIcon } from './LocaleIcon';

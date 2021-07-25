@@ -9,14 +9,12 @@
 import * as React from 'react';
 import { LocalizationContext, useIsomorphicLayoutEffect } from '@react-pdf-viewer/core';
 
-import downloadFile from './downloadFile';
-import FileItem from './FileItem';
+import { downloadFile } from './downloadFile';
+import type { FileItem } from './types/FileItem';
 
-interface AttachmentListProps {
+export const AttachmentList: React.FC<{
     files: FileItem[];
-}
-
-const AttachmentList: React.FC<AttachmentListProps> = ({ files }) => {
+}> = ({ files }) => {
     const containerRef = React.useRef<HTMLDivElement>();
     const l10n = React.useContext(LocalizationContext);
     const attachmentItemsRef = React.useRef<HTMLElement[]>([]);
@@ -106,5 +104,3 @@ const AttachmentList: React.FC<AttachmentListProps> = ({ files }) => {
         </div>
     );
 };
-
-export default AttachmentList;

@@ -8,17 +8,13 @@
 
 import * as React from 'react';
 
-import useEscape from '../hooks/useEscape';
+import { useEscape } from '../hooks/useEscape';
 
-interface PopoverOverlayProps {
+export const PopoverOverlay: React.FC<{
     closeOnEscape: boolean;
     onClose(): void;
-}
-
-const PopoverOverlay: React.FC<PopoverOverlayProps> = ({ closeOnEscape, onClose }) => {
+}> = ({ closeOnEscape, onClose }) => {
     useEscape(() => closeOnEscape && onClose());
 
     return <div className="rpv-core__popover-overlay" />;
 };
-
-export default PopoverOverlay;

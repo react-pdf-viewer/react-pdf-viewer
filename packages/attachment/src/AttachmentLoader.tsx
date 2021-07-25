@@ -7,21 +7,20 @@
  */
 
 import * as React from 'react';
-import { LocalizationContext, PdfJs, Spinner } from '@react-pdf-viewer/core';
+import { LocalizationContext, Spinner } from '@react-pdf-viewer/core';
+import type { PdfJs } from '@react-pdf-viewer/core';
 
-import AttachmentList from './AttachmentList';
-import FileItem from './FileItem';
-
-interface AttachmentLoaderProps {
-    doc: PdfJs.PdfDocument;
-}
+import { AttachmentList } from './AttachmentList';
+import type { FileItem } from './types/FileItem';
 
 interface AttachmentState {
     files: FileItem[];
     isLoaded: boolean;
 }
 
-const AttachmentLoader: React.FC<AttachmentLoaderProps> = ({ doc }) => {
+export const AttachmentLoader: React.FC<{
+    doc: PdfJs.PdfDocument;
+}> = ({ doc }) => {
     const l10n = React.useContext(LocalizationContext);
     const noAttachmentLabel = l10n && l10n.attachment ? l10n.attachment.noAttachment : 'There is no attachment';
 
@@ -52,8 +51,6 @@ const AttachmentLoader: React.FC<AttachmentLoaderProps> = ({ doc }) => {
     ) : attachments.files.length === 0 ? (
         <div className="rpv-attachment__empty">{noAttachmentLabel}</div>
     ) : (
-        <AttachmentList files={Array(10).fill(attachments.files).flat()} />
+        <AttachmentList files={attachments.files} />
     );
 };
-
-export default AttachmentLoader;

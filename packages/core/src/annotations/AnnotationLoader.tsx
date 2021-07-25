@@ -8,19 +8,17 @@
 
 import * as React from 'react';
 
-import PdfJs from '../vendors/PdfJs';
-
-interface AnnotationLayerProps {
-    page: PdfJs.Page;
-    renderAnnotations(annotations: PdfJs.Annotation[]): React.ReactElement;
-}
+import type { PdfJs } from '../types/PdfJs';
 
 interface Status {
     loading: boolean;
     annotations: PdfJs.Annotation[];
 }
 
-const AnnotationLoader: React.FC<AnnotationLayerProps> = ({ page, renderAnnotations }) => {
+export const AnnotationLoader: React.FC<{
+    page: PdfJs.Page;
+    renderAnnotations(annotations: PdfJs.Annotation[]): React.ReactElement;
+}> = ({ page, renderAnnotations }) => {
     const [status, setStatus] = React.useState<Status>({
         loading: true,
         annotations: [],
@@ -37,5 +35,3 @@ const AnnotationLoader: React.FC<AnnotationLayerProps> = ({ page, renderAnnotati
 
     return status.loading ? <></> : renderAnnotations(status.annotations);
 };
-
-export default AnnotationLoader;

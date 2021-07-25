@@ -6,6 +6,8 @@
  * @copyright 2019-2021 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-export { default as bookmarkPlugin } from './bookmarkPlugin';
-export { default as DownArrowIcon } from './DownArrowIcon';
-export { default as RightArrowIcon } from './RightArrowIcon';
+export * from './bookmarkPlugin';
+
+// Components
+export * from './DownArrowIcon';
+export * from './RightArrowIcon';

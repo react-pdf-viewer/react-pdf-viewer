@@ -7,20 +7,18 @@
  */
 
 import * as React from 'react';
-import { Plugin } from '@react-pdf-viewer/core';
+import type { Plugin } from '@react-pdf-viewer/core';
 
-import LocalePopover, { LocalePopoverProps } from './LocalePopover';
+import { LocalePopover, LocalePopoverProps } from './LocalePopover';
 
-interface LocaleSwitcherPlugin extends Plugin {
+export interface LocaleSwitcherPlugin extends Plugin {
     LocalePopover: (props: LocalePopoverProps) => React.ReactElement;
 }
 
-const localeSwitcherPlugin = (): LocaleSwitcherPlugin => {
+export const localeSwitcherPlugin = (): LocaleSwitcherPlugin => {
     const LocalePopoverDecorator = (props: LocalePopoverProps) => <LocalePopover {...props} />;
 
     return {
         LocalePopover: LocalePopoverDecorator,
     };
 };
-
-export default localeSwitcherPlugin;

@@ -6,7 +6,7 @@
  * @copyright 2019-2021 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-enum AnnotationType {
+export enum AnnotationType {
     Text = 1,
     Link = 2,
     FreeText = 3,
@@ -25,5 +25,3 @@ enum AnnotationType {
     Popup = 16,
     FileAttachment = 17,
 }
-
-export default AnnotationType;

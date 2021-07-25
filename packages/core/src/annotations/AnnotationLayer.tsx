@@ -8,13 +8,13 @@
 
 import * as React from 'react';
 
-import SpecialZoomLevel from '../SpecialZoomLevel';
-import { Plugin } from '../types/Plugin';
-import PdfJs from '../vendors/PdfJs';
-import AnnotationLayerBody from './AnnotationLayerBody';
-import AnnotationLoader from './AnnotationLoader';
+import { SpecialZoomLevel } from '../structs/SpecialZoomLevel';
+import { AnnotationLayerBody } from './AnnotationLayerBody';
+import { AnnotationLoader } from './AnnotationLoader';
+import type { PdfJs } from '../types/PdfJs';
+import type { Plugin } from '../types/Plugin';
 
-interface AnnotationLayerProps {
+export const AnnotationLayer: React.FC<{
     doc: PdfJs.PdfDocument;
     page: PdfJs.Page;
     pageIndex: number;
@@ -23,18 +23,7 @@ interface AnnotationLayerProps {
     scale: number;
     onExecuteNamedAction(action: string): void;
     onJumpToDest(pageIndex: number, bottomOffset: number, leftOffset: number, scaleTo: number | SpecialZoomLevel): void;
-}
-
-const AnnotationLayer: React.FC<AnnotationLayerProps> = ({
-    doc,
-    page,
-    pageIndex,
-    plugins,
-    rotation,
-    scale,
-    onExecuteNamedAction,
-    onJumpToDest,
-}) => {
+}> = ({ doc, page, pageIndex, plugins, rotation, scale, onExecuteNamedAction, onJumpToDest }) => {
     const containerRef = React.useRef<HTMLDivElement>();
 
     const renderAnnotations = (annotations: PdfJs.Annotation[]): React.ReactElement => {
@@ -60,5 +49,3 @@ const AnnotationLayer: React.FC<AnnotationLayerProps> = ({
         </div>
     );
 };
-
-export default AnnotationLayer;

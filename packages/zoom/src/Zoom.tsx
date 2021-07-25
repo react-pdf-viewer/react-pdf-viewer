@@ -7,16 +7,13 @@
  */
 
 import * as React from 'react';
-import { SpecialZoomLevel, Store } from '@react-pdf-viewer/core';
+import { SpecialZoomLevel } from '@react-pdf-viewer/core';
+import type { Store } from '@react-pdf-viewer/core';
 
-import StoreProps from './StoreProps';
-import useZoom from './useZoom';
-import ZoomPopover from './ZoomPopover';
-
-export interface RenderZoomProps {
-    scale: number;
-    onZoom(newScale: number | SpecialZoomLevel): void;
-}
+import { useZoom } from './useZoom';
+import { ZoomPopover } from './ZoomPopover';
+import type { RenderZoomProps } from './types/RenderZoomProps';
+import type { StoreProps } from './types/StoreProps';
 
 type RenderZoom = (props: RenderZoomProps) => React.ReactElement;
 
@@ -24,7 +21,7 @@ export interface ZoomProps {
     children?: RenderZoom;
 }
 
-const Zoom: React.FC<{
+export const Zoom: React.FC<{
     children?: RenderZoom;
     store: Store<StoreProps>;
 }> = ({ children, store }) => {
@@ -45,5 +42,3 @@ const Zoom: React.FC<{
         onZoom: zoomTo,
     });
 };
-
-export default Zoom;

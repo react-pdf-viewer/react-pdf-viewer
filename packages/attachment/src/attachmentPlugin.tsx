@@ -7,16 +7,17 @@
  */
 
 import * as React from 'react';
-import { createStore, Plugin, PluginOnDocumentLoad } from '@react-pdf-viewer/core';
+import { createStore } from '@react-pdf-viewer/core';
+import type { Plugin, PluginOnDocumentLoad } from '@react-pdf-viewer/core';
 
-import AttachmentListWithStore from './AttachmentListWithStore';
-import StoreProps from './StoreProps';
+import { AttachmentListWithStore } from './AttachmentListWithStore';
+import type { StoreProps } from './types/StoreProps';
 
-interface AttachmentPlugin extends Plugin {
+export interface AttachmentPlugin extends Plugin {
     Attachments: () => React.ReactElement;
 }
 
-const attachmentPlugin = (): AttachmentPlugin => {
+export const attachmentPlugin = (): AttachmentPlugin => {
     const store = React.useMemo(() => createStore<StoreProps>({}), []);
 
     const AttachmentsDecorator = () => <AttachmentListWithStore store={store} />;
@@ -28,5 +29,3 @@ const attachmentPlugin = (): AttachmentPlugin => {
         Attachments: AttachmentsDecorator,
     };
 };
-
-export default attachmentPlugin;

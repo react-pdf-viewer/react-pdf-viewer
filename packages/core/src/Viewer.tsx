@@ -8,21 +8,22 @@
 
 import * as React from 'react';
 
-import useIntersectionObserver, { VisibilityChanged } from './hooks/useIntersectionObserver';
-import usePrevious from './hooks/usePrevious';
-import Inner from './layouts/Inner';
-import PageSize from './layouts/PageSize';
-import PageSizeCalculator from './layouts/PageSizeCalculator';
-import { RenderPage } from './layouts/RenderPage';
-import DocumentLoader, { RenderError } from './loader/DocumentLoader';
-import LocalizationMap from './localization/LocalizationMap';
-import LocalizationProvider from './localization/LocalizationProvider';
-import SpecialZoomLevel from './SpecialZoomLevel';
-import ThemeContext from './theme/ThemeContext';
-import ThemeProvider from './theme/ThemeProvider';
+import { useIntersectionObserver } from './hooks/useIntersectionObserver';
+import { usePrevious } from './hooks/usePrevious';
+import { Inner } from './layouts/Inner';
+import { PageSizeCalculator } from './layouts/PageSizeCalculator';
+import { DocumentLoader, RenderError } from './loader/DocumentLoader';
+import { LocalizationProvider } from './localization/LocalizationProvider';
+import { SpecialZoomLevel } from './structs/SpecialZoomLevel';
+import { ThemeContext } from './theme/ThemeContext';
+import { ThemeProvider } from './theme/ThemeProvider';
 import { Plugin } from './types/Plugin';
-import isSameUrl from './utils/isSameUrl';
-import PdfJs from './vendors/PdfJs';
+import { isSameUrl } from './utils/isSameUrl';
+import type { LocalizationMap } from './types/LocalizationMap';
+import type { PageSize } from './types/PageSize';
+import type { PdfJs } from './types/PdfJs';
+import type { RenderPage } from './types/RenderPage';
+import type { VisibilityChanged } from './types/VisibilityChanged';
 
 export interface DocumentLoadEvent {
     doc: PdfJs.PdfDocument;
@@ -41,7 +42,13 @@ export interface CharacterMap {
     url: string;
 }
 
-export interface ViewerProps {
+interface FileState {
+    data: PdfJs.FileData;
+    name: string;
+    shouldLoad: boolean;
+}
+
+export const Viewer: React.FC<{
     characterMap?: CharacterMap;
     // The default zoom level
     // If it's not set, the initial zoom level will be calculated based on the dimesion of page and the container width
@@ -68,15 +75,7 @@ export interface ViewerProps {
     // Invoked after switching to `theme`
     onSwitchTheme?(theme: string): void;
     onZoom?(e: ZoomEvent): void;
-}
-
-interface FileState {
-    data: PdfJs.FileData;
-    name: string;
-    shouldLoad: boolean;
-}
-
-const Viewer: React.FC<ViewerProps> = ({
+}> = ({
     characterMap,
     defaultScale,
     fileUrl,
@@ -203,5 +202,3 @@ const Viewer: React.FC<ViewerProps> = ({
         </ThemeProvider>
     );
 };
-
-export default Viewer;

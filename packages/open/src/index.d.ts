@@ -7,7 +7,7 @@
  */
 
 import * as React from 'react';
-import { Plugin } from '@react-pdf-viewer/core';
+import type { Plugin } from '@react-pdf-viewer/core';
 
 export interface RenderOpenProps {
     onClick: (e: React.ChangeEvent<HTMLInputElement>) => void;

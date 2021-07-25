@@ -8,16 +8,14 @@
 
 import * as React from 'react';
 
-import PdfJs from '../vendors/PdfJs';
-import Annotation from './Annotation';
+import { Annotation } from './Annotation';
+import type { PdfJs } from '../types/PdfJs';
 
-interface SquareProps {
+export const Square: React.FC<{
     annotation: PdfJs.Annotation;
     page: PdfJs.Page;
     viewport: PdfJs.ViewPort;
-}
-
-const Square: React.FC<SquareProps> = ({ annotation, page, viewport }) => {
+}> = ({ annotation, page, viewport }) => {
     const hasPopup = annotation.hasPopup === false;
     const isRenderable = !!(annotation.hasPopup || annotation.title || annotation.contents);
 
@@ -68,5 +66,3 @@ const Square: React.FC<SquareProps> = ({ annotation, page, viewport }) => {
         </Annotation>
     );
 };
-
-export default Square;

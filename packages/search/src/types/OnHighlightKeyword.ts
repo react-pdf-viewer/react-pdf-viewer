@@ -6,7 +6,7 @@
  * @copyright 2019-2021 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-export default interface OnHighlightKeyword {
+export interface OnHighlightKeyword {
     highlightEle: HTMLElement;
     keyword: RegExp;
 }

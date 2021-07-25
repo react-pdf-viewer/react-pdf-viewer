@@ -9,10 +9,14 @@
 import * as React from 'react';
 import { MenuItem } from '@react-pdf-viewer/core';
 
-import { RenderSwitchSelectionModeProps } from './SwitchSelectionMode';
-import SwitchSelectionModeDecorator from './SwitchSelectionModeDecorator';
+import { SwitchSelectionModeDecorator } from './SwitchSelectionModeDecorator';
+import { RenderSwitchSelectionModeProps } from './types/RenderSwitchSelectionModeProps';
 
-const SwitchSelectionModeMenuItem: React.FC<RenderSwitchSelectionModeProps> = ({ isSelected, mode, onClick }) => (
+export const SwitchSelectionModeMenuItem: React.FC<RenderSwitchSelectionModeProps> = ({
+    isSelected,
+    mode,
+    onClick,
+}) => (
     <SwitchSelectionModeDecorator mode={mode} onClick={onClick}>
         {(props) => (
             <MenuItem checked={isSelected} icon={props.icon} onClick={props.onClick}>
@@ -21,5 +25,3 @@ const SwitchSelectionModeMenuItem: React.FC<RenderSwitchSelectionModeProps> = ({
         )}
     </SwitchSelectionModeDecorator>
 );
-
-export default SwitchSelectionModeMenuItem;

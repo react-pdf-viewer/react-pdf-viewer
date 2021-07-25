@@ -9,14 +9,14 @@
 import * as React from 'react';
 import { LocalizationContext, MinimalButton, Position, Tooltip } from '@react-pdf-viewer/core';
 
-import { RenderRotateProps } from './Rotate';
-import RotateBackwardIcon from './RotateBackwardIcon';
-import RotateForwardIcon from './RotateForwardIcon';
-import RotateDirection from './RotateDirection';
+import { RotateBackwardIcon } from './RotateBackwardIcon';
+import { RotateForwardIcon } from './RotateForwardIcon';
+import { RotateDirection } from './structs/RotateDirection';
+import type { RenderRotateProps } from './types/RenderRotateProps';
 
 const TOOLTIP_OFFSET = { left: 0, top: 8 };
 
-const RotateButton: React.FC<RenderRotateProps> = ({ direction, onClick }) => {
+export const RotateButton: React.FC<RenderRotateProps> = ({ direction, onClick }) => {
     const l10n = React.useContext(LocalizationContext);
 
     const backwardLabel = l10n && l10n.rotate ? l10n.rotate.rotateBackward : 'Rotate counterclockwise';
@@ -38,5 +38,3 @@ const RotateButton: React.FC<RenderRotateProps> = ({ direction, onClick }) => {
         />
     );
 };
-
-export default RotateButton;

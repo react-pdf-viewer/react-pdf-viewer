@@ -7,9 +7,10 @@
  */
 
 import * as React from 'react';
-import { PdfJs, LocalizationContext, Spinner } from '@react-pdf-viewer/core';
+import { LocalizationContext, Spinner } from '@react-pdf-viewer/core';
+import type { PdfJs } from '@react-pdf-viewer/core';
 
-interface ThumbnailItemProps {
+export const ThumbnailItem: React.FC<{
     page: PdfJs.Page;
     pageHeight: number;
     pageIndex: number;
@@ -17,17 +18,7 @@ interface ThumbnailItemProps {
     rotation: number;
     thumbnailHeight: number;
     thumbnailWidth: number;
-}
-
-const ThumbnailItem: React.FC<ThumbnailItemProps> = ({
-    page,
-    pageHeight,
-    pageIndex,
-    pageWidth,
-    rotation,
-    thumbnailHeight,
-    thumbnailWidth,
-}) => {
+}> = ({ page, pageHeight, pageIndex, pageWidth, rotation, thumbnailHeight, thumbnailWidth }) => {
     const l10n = React.useContext(LocalizationContext);
     const renderTask = React.useRef<PdfJs.PageRenderTask>();
     const [src, setSrc] = React.useState('');
@@ -77,5 +68,3 @@ const ThumbnailItem: React.FC<ThumbnailItemProps> = ({
         />
     );
 };
-
-export default ThumbnailItem;

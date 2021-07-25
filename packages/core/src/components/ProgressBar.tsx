@@ -8,16 +8,12 @@
 
 import * as React from 'react';
 
-interface ProgressBarProps {
+export const ProgressBar: React.FC<{
     progress: number;
-}
-
-const ProgressBar: React.FC<ProgressBarProps> = ({ progress }) => (
+}> = ({ progress }) => (
     <div className="rpv-core__progress-bar">
         <div className="rpv-core__progress-bar-progress" style={{ width: `${progress}%` }}>
             {progress}%
         </div>
     </div>
 );
-
-export default ProgressBar;

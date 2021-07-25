@@ -7,11 +7,11 @@
  */
 
 import * as React from 'react';
-import { PdfJs, Store, StoreHandler } from '@react-pdf-viewer/core';
+import type { PdfJs, Store, StoreHandler } from '@react-pdf-viewer/core';
 
-import StoreProps from './StoreProps';
+import type { StoreProps } from './types/StoreProps';
 
-const useDocument = (store: Store<StoreProps>): { currentDoc: PdfJs.PdfDocument } => {
+export const useDocument = (store: Store<StoreProps>): { currentDoc: PdfJs.PdfDocument } => {
     const [currentDoc, setCurrentDoc] = React.useState(store.get('doc'));
 
     const handleDocumentChanged: StoreHandler<PdfJs.PdfDocument> = (doc: PdfJs.PdfDocument) => {
@@ -28,5 +28,3 @@ const useDocument = (store: Store<StoreProps>): { currentDoc: PdfJs.PdfDocument 
 
     return { currentDoc };
 };
-
-export default useDocument;

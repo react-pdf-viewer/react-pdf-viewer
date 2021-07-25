@@ -8,14 +8,10 @@
 
 import * as React from 'react';
 
-interface PrimaryButtonProps {
+export const PrimaryButton: React.FC<{
     onClick(): void;
-}
-
-const PrimaryButton: React.FC<PrimaryButtonProps> = ({ children, onClick }) => (
+}> = ({ children, onClick }) => (
     <button className="rpv-core__primary-button" type="button" onClick={onClick}>
         {children}
     </button>
 );
-
-export default PrimaryButton;

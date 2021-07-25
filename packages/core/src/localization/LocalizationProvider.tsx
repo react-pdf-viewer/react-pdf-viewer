@@ -9,17 +9,15 @@
 import * as React from 'react';
 
 import enUs from './en_US.json';
-import LocalizationContext from './LocalizationContext';
-import LocalizationMap from './LocalizationMap';
+import { LocalizationContext } from './LocalizationContext';
+import type { LocalizationMap } from '../types/LocalizationMap';
 
 type SetLocalization = (l10n: LocalizationMap) => void;
 
-interface LocalizationProviderProps {
+export const LocalizationProvider: React.FC<{
     children: (setLocalization: SetLocalization) => React.ReactElement;
     localization?: LocalizationMap;
-}
-
-const LocalizationProvider: React.FC<LocalizationProviderProps> = ({ children, localization }) => {
+}> = ({ children, localization }) => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const defaultL10n = enUs as any as LocalizationMap;
 
@@ -28,5 +26,3 @@ const LocalizationProvider: React.FC<LocalizationProviderProps> = ({ children, l
 
     return <LocalizationContext.Provider value={l10nData}>{children(setLocalization)}</LocalizationContext.Provider>;
 };
-
-export default LocalizationProvider;

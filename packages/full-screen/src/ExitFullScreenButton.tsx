@@ -7,13 +7,14 @@
  */
 
 import * as React from 'react';
-import { LocalizationContext, MinimalButton, Store } from '@react-pdf-viewer/core';
+import { LocalizationContext, MinimalButton } from '@react-pdf-viewer/core';
+import type { Store } from '@react-pdf-viewer/core';
 
-import ExitFullScreenIcon from './ExitFullScreenIcon';
+import { ExitFullScreenIcon } from './ExitFullScreenIcon';
 import { exitFullScreen, getFullScreenElement } from './fullScreen';
-import StoreProps from './StoreProps';
+import type { StoreProps } from './types/StoreProps';
 
-const ExitFullScreenButton: React.FC<{
+export const ExitFullScreenButton: React.FC<{
     store: Store<StoreProps>;
 }> = ({ store }) => {
     const [isFullScreen, setFullScreen] = React.useState(false);
@@ -65,5 +66,3 @@ const ExitFullScreenButton: React.FC<{
         </>
     );
 };
-
-export default ExitFullScreenButton;

@@ -7,14 +7,15 @@
  */
 
 import * as React from 'react';
-import { PluginOnTextLayerRender, LayerRenderStatus, Store } from '@react-pdf-viewer/core';
+import { LayerRenderStatus } from '@react-pdf-viewer/core';
+import type { PluginOnTextLayerRender, Store } from '@react-pdf-viewer/core';
 
-import calculateOffset from './calculateOffset';
+import { calculateOffset } from './calculateOffset';
 import { EMPTY_KEYWORD_REGEXP } from './constants';
-import MatchPosition from './types/MatchPosition';
-import OnHighlightKeyword from './types/OnHighlightKeyword';
-import StoreProps from './types/StoreProps';
-import unwrap from './unwrap';
+import { unwrap } from './unwrap';
+import type { MatchPosition } from './types/MatchPosition';
+import type { OnHighlightKeyword } from './types/OnHighlightKeyword';
+import type { StoreProps } from './types/StoreProps';
 
 interface RenderStatus {
     ele?: HTMLElement;
@@ -34,7 +35,7 @@ interface CharIndex {
     spanIndex: number;
 }
 
-const Tracker: React.FC<{
+export const Tracker: React.FC<{
     pageIndex: number;
     store: Store<StoreProps>;
     onHighlightKeyword?(props: OnHighlightKeyword): void;
@@ -278,5 +279,3 @@ const Tracker: React.FC<{
 
     return <></>;
 };
-
-export default Tracker;

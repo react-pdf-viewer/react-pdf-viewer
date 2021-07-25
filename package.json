@@ -1,66 +1,66 @@
 {
-	"name": "@react-pdf-viewer/root",
-	"version": "0.0.0",
-	"description": "A React component to view a PDF document",
-	"license": "https://react-pdf-viewer.dev/license",
-	"author": {
-		"name": "Nguyen Huu Phuoc",
-		"email": "me@phuoc.ng",
-		"url": "https://twitter.com/nghuuphuoc"
-	},
-	"homepage": "https://react-pdf-viewer.dev",
-	"keywords": [
-		"react",
-		"react.js",
-		"pdf",
-		"pdf.js",
-		"pdf viewer"
-	],
-	"private": "true",
-	"workspaces": [
-		"packages/*"
-	],
-	"scripts": {
-		"bootstrap": "lerna bootstrap --hoist",
-		"postinstall": "npm run bootstrap",
-		"clean": "lerna run clean",
-		"build": "lerna run build",
-		"dev": "lerna run dev",
-		"test": "lerna run test",
-		"lint": "eslint packages/**/src/*.ts packages/**/src/*.tsx",
-		"format": "prettier --write \"packages/**/*.+(css|js|json|jsx|less|md|ts|tsx)\"",
-		"release": "npm run build && lerna publish from-package"
-	},
-	"devDependencies": {
-		"@rollup/plugin-json": "^4.1.0",
-		"@rollup/plugin-typescript": "^8.2.1",
-		"@testing-library/jest-dom": "^5.14.1",
-		"@testing-library/react": "^11.2.7",
-		"@types/jest": "^26.0.23",
-		"@types/react": "^17.0.11",
-		"@types/react-dom": "^17.0.8",
-		"@typescript-eslint/eslint-plugin": "^4.27.0",
-		"@typescript-eslint/parser": "^4.27.0",
-		"cssnano": "^5.0.6",
-		"eslint": "^7.29.0",
-		"eslint-plugin-react": "^7.24.0",
-		"jest": "^27.0.4",
-		"jest-canvas-mock": "^2.3.1",
-		"lerna": "^4.0.0",
-		"less": "^4.1.1",
-		"pdfjs-dist": "^2.6.347",
-		"postcss": "^8.3.5",
-		"postcss-cli": "^8.3.1",
-		"postcss-import": "^14.0.2",
-		"prettier": "^2.3.1",
-		"react": "^16.8.0 || ^17.0.2",
-		"react-dom": "^16.8.0 || ^17.0.2",
-		"rollup": "^2.52.1",
-		"rollup-plugin-terser": "^7.0.2",
-		"ts-jest": "^27.0.3",
-		"typescript": "^4.3.4"
-	},
-	"dependencies": {
-		"build": "^0.1.4"
-	}
+    "name": "@react-pdf-viewer/root",
+    "version": "0.0.0",
+    "description": "A React component to view a PDF document",
+    "license": "https://react-pdf-viewer.dev/license",
+    "author": {
+        "name": "Nguyen Huu Phuoc",
+        "email": "me@phuoc.ng",
+        "url": "https://twitter.com/nghuuphuoc"
+    },
+    "homepage": "https://react-pdf-viewer.dev",
+    "keywords": [
+        "react",
+        "react.js",
+        "pdf",
+        "pdf.js",
+        "pdf viewer"
+    ],
+    "private": "true",
+    "workspaces": [
+        "packages/*"
+    ],
+    "scripts": {
+        "bootstrap": "lerna bootstrap --hoist",
+        "postinstall": "npm run bootstrap",
+        "clean": "lerna run clean",
+        "build": "lerna run build",
+        "dev": "lerna run dev",
+        "test": "lerna run test",
+        "lint": "eslint packages/**/src/*.ts packages/**/src/*.tsx",
+        "format": "prettier --write \"**/*.+(css|js|json|jsx|less|md|ts|tsx)\"",
+        "release": "npm run build && lerna publish from-package"
+    },
+    "devDependencies": {
+        "@rollup/plugin-json": "^4.1.0",
+        "@rollup/plugin-typescript": "^8.2.1",
+        "@testing-library/jest-dom": "^5.14.1",
+        "@testing-library/react": "^11.2.7",
+        "@types/jest": "^26.0.23",
+        "@types/react": "^17.0.11",
+        "@types/react-dom": "^17.0.8",
+        "@typescript-eslint/eslint-plugin": "^4.27.0",
+        "@typescript-eslint/parser": "^4.27.0",
+        "cssnano": "^5.0.6",
+        "eslint": "^7.29.0",
+        "eslint-plugin-react": "^7.24.0",
+        "jest": "^27.0.4",
+        "jest-canvas-mock": "^2.3.1",
+        "lerna": "^4.0.0",
+        "less": "^4.1.1",
+        "pdfjs-dist": "2.6.347",
+        "postcss": "^8.3.5",
+        "postcss-cli": "^8.3.1",
+        "postcss-import": "^14.0.2",
+        "prettier": "^2.3.1",
+        "react": "^16.8.0 || ^17.0.2",
+        "react-dom": "^16.8.0 || ^17.0.2",
+        "rollup": "^2.52.1",
+        "rollup-plugin-terser": "^7.0.2",
+        "ts-jest": "^27.0.3",
+        "typescript": "^4.3.4"
+    },
+    "dependencies": {
+        "build": "^0.1.4"
+    }
 }

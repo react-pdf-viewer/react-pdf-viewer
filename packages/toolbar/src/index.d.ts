@@ -143,8 +143,7 @@ export interface MoreActionsPopoverProps {
 }
 export class MoreActionsPopover extends React.Component<MoreActionsPopoverProps> {}
 
-// ----
-// Icon
-// ----
+// Components
+// ----------
 
 export class MoreIcon extends React.Component {}

@@ -9,7 +9,7 @@
 import * as React from 'react';
 import { ThemeContext } from '@react-pdf-viewer/core';
 
-import SwitchThemeButton from './SwitchThemeButton';
+import { SwitchThemeButton } from './SwitchThemeButton';
 
 export interface RenderSwitchThemeProps {
     onClick: () => void;
@@ -21,7 +21,7 @@ export interface SwitchThemeProps {
     children?: RenderSwitchTheme;
 }
 
-const SwitchTheme: React.FC<{
+export const SwitchTheme: React.FC<{
     children?: RenderSwitchTheme;
 }> = ({ children }) => {
     const theme = React.useContext(ThemeContext);
@@ -32,5 +32,3 @@ const SwitchTheme: React.FC<{
         onClick: () => theme.setCurrentTheme(theme.currentTheme === 'dark' ? 'light' : 'dark'),
     });
 };
-
-export default SwitchTheme;

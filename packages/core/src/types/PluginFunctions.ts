@@ -6,10 +6,10 @@
  * @copyright 2019-2021 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import SpecialZoomLevel from '../SpecialZoomLevel';
-import ViewerState from './ViewerState';
+import { SpecialZoomLevel } from '../structs/SpecialZoomLevel';
+import type { ViewerState } from './ViewerState';
 
-export default interface PluginFunctions {
+export interface PluginFunctions {
     getPageElement(pageIndex: number): HTMLElement | null;
     getPagesContainer(): HTMLElement;
     getViewerState(): ViewerState;

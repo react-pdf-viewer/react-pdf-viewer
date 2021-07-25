@@ -9,9 +9,9 @@
 import * as React from 'react';
 import { LocalizationContext } from '@react-pdf-viewer/core';
 
-import HandToolIcon from './HandToolIcon';
-import SelectionMode from './SelectionMode';
-import TextSelectionIcon from './TextSelectionIcon';
+import { HandToolIcon } from './HandToolIcon';
+import { SelectionMode } from './structs/SelectionMode';
+import { TextSelectionIcon } from './TextSelectionIcon';
 
 interface RenderChildren {
     icon: React.ReactElement;
@@ -19,13 +19,11 @@ interface RenderChildren {
     onClick(): void;
 }
 
-interface SwitchSelectionModeDecoratorProps {
+export const SwitchSelectionModeDecorator: React.FC<{
     children(props: RenderChildren): React.ReactElement;
     mode: SelectionMode;
     onClick(): void;
-}
-
-const SwitchSelectionModeDecorator: React.FC<SwitchSelectionModeDecoratorProps> = ({ children, mode, onClick }) => {
+}> = ({ children, mode, onClick }) => {
     const l10n = React.useContext(LocalizationContext);
 
     let label = '';
@@ -48,5 +46,3 @@ const SwitchSelectionModeDecorator: React.FC<SwitchSelectionModeDecoratorProps> 
 
     return children({ icon, label, onClick });
 };
-
-export default SwitchSelectionModeDecorator;

@@ -7,22 +7,22 @@
  */
 
 import * as React from 'react';
-import {
-    createStore,
+import { createStore } from '@react-pdf-viewer/core';
+import type {
     Plugin,
     PluginFunctions,
     PluginOnAnnotationLayerRender,
     PluginOnDocumentLoad,
 } from '@react-pdf-viewer/core';
 
-import BookmarkListWithStore from './BookmarkListWithStore';
-import StoreProps from './StoreProps';
+import { BookmarkListWithStore } from './BookmarkListWithStore';
+import type { StoreProps } from './types/StoreProps';
 
-interface BookmarkPlugin extends Plugin {
+export interface BookmarkPlugin extends Plugin {
     Bookmarks: () => React.ReactElement;
 }
 
-const bookmarkPlugin = (): BookmarkPlugin => {
+export const bookmarkPlugin = (): BookmarkPlugin => {
     const store = React.useMemo(
         () =>
             createStore<StoreProps>({
@@ -60,5 +60,3 @@ const bookmarkPlugin = (): BookmarkPlugin => {
         onAnnotationLayerRender,
     };
 };
-
-export default bookmarkPlugin;

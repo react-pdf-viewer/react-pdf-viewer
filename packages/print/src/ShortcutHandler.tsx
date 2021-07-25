@@ -7,18 +7,16 @@
  */
 
 import * as React from 'react';
-import { Store } from '@react-pdf-viewer/core';
+import type { Store } from '@react-pdf-viewer/core';
 
-import PrintStatus from './PrintStatus';
-import StoreProps from './StoreProps';
-import isMac from './utils/isMac';
+import { PrintStatus } from './structs/PrintStatus';
+import { isMac } from './utils/isMac';
+import type { StoreProps } from './types/StoreProps';
 
-interface ShortcutHandlerProps {
+export const ShortcutHandler: React.FC<{
     containerRef: React.RefObject<HTMLDivElement>;
     store: Store<StoreProps>;
-}
-
-const ShortcutHandler: React.FC<ShortcutHandlerProps> = ({ containerRef, store }) => {
+}> = ({ containerRef, store }) => {
     const keydownHandler = (e: KeyboardEvent) => {
         if (e.shiftKey || e.altKey || e.key !== 'p') {
             return;
@@ -52,5 +50,3 @@ const ShortcutHandler: React.FC<ShortcutHandlerProps> = ({ containerRef, store }
 
     return <></>;
 };
-
-export default ShortcutHandler;

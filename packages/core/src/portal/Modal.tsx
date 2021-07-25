@@ -8,21 +8,19 @@
 
 import * as React from 'react';
 
-import { Toggle } from '../hooks/useToggle';
-import ModalBody from './ModalBody';
-import ModalOverlay from './ModalOverlay';
-import Portal, { RenderContent, RenderTarget } from './Portal';
-import uniqueId from '../utils/uniqueId';
+import { ModalBody } from './ModalBody';
+import { ModalOverlay } from './ModalOverlay';
+import { Portal, RenderContent, RenderTarget } from './Portal';
+import { uniqueId } from '../utils/uniqueId';
+import type { Toggle } from '../types/Toggle';
 
-interface ModalProps {
+export const Modal: React.FC<{
     ariaControlsSuffix?: string;
     closeOnClickOutside: boolean;
     closeOnEscape: boolean;
     content: RenderContent;
     target: RenderTarget;
-}
-
-const Modal: React.FC<ModalProps> = ({ ariaControlsSuffix, closeOnClickOutside, closeOnEscape, content, target }) => {
+}> = ({ ariaControlsSuffix, closeOnClickOutside, closeOnEscape, content, target }) => {
     const controlsSuffix = ariaControlsSuffix || `${uniqueId()}`;
 
     const renderTarget = (toggle: Toggle, opened: boolean): React.ReactElement => (
@@ -50,5 +48,3 @@ const Modal: React.FC<ModalProps> = ({ ariaControlsSuffix, closeOnClickOutside, 
 
     return <Portal target={renderTarget} content={renderContent} />;
 };
-
-export default Modal;

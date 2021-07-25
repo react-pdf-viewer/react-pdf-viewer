@@ -7,15 +7,15 @@
  */
 
 import * as React from 'react';
-import { Store } from '@react-pdf-viewer/core';
+import type { Store } from '@react-pdf-viewer/core';
 
-import GoToLastPageButton from './GoToLastPageButton';
-import StoreProps from './StoreProps';
-import { RenderGoToPage, RenderGoToPageProps } from './types/index';
-import useCurrentPage from './useCurrentPage';
-import useNumberOfPages from './useNumberOfPages';
+import { GoToLastPageButton } from './GoToLastPageButton';
+import { useCurrentPage } from './useCurrentPage';
+import { useNumberOfPages } from './useNumberOfPages';
+import type { RenderGoToPage, RenderGoToPageProps } from './types/index';
+import type { StoreProps } from './types/StoreProps';
 
-const GoToLastPage: React.FC<{
+export const GoToLastPage: React.FC<{
     children?: RenderGoToPage;
     store: Store<StoreProps>;
 }> = ({ children, store }) => {
@@ -39,5 +39,3 @@ const GoToLastPage: React.FC<{
         onClick: goToLastPage,
     });
 };
-
-export default GoToLastPage;

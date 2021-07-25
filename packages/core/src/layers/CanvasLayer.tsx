@@ -7,14 +7,14 @@
  */
 
 import * as React from 'react';
-import Spinner from '../components/Spinner';
 
-import LayerRenderStatus from '../types/LayerRenderStatus';
-import { Plugin } from '../types/Plugin';
-import PdfJs from '../vendors/PdfJs';
-import WithScale from './WithScale';
+import { Spinner } from '../components/Spinner';
+import { LayerRenderStatus } from '../structs/LayerRenderStatus';
+import { WithScale } from './WithScale';
+import type { PdfJs } from '../types/PdfJs';
+import type { Plugin } from '../types/Plugin';
 
-interface CanvasLayerProps {
+export const CanvasLayer: React.FC<{
     height: number;
     page: PdfJs.Page;
     pageIndex: number;
@@ -22,9 +22,7 @@ interface CanvasLayerProps {
     rotation: number;
     scale: number;
     width: number;
-}
-
-const CanvasLayer: React.FC<CanvasLayerProps> = ({ height, page, pageIndex, plugins, rotation, scale, width }) => {
+}> = ({ height, page, pageIndex, plugins, rotation, scale, width }) => {
     const canvasRef = React.useRef<HTMLCanvasElement>();
     const renderTask = React.useRef<PdfJs.PageRenderTask>();
 
@@ -117,5 +115,3 @@ const CanvasLayer: React.FC<CanvasLayerProps> = ({ height, page, pageIndex, plug
         </WithScale>
     );
 };
-
-export default CanvasLayer;

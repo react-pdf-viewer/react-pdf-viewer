@@ -8,7 +8,6 @@
 
 import * as React from 'react';
 
-// ---------------
 // PDFjs namespace
 // ---------------
 
@@ -189,7 +188,6 @@ export declare namespace PdfJs {
     }
 }
 
-// --------------------
 // Interfaces and types
 // --------------------
 
@@ -283,7 +281,6 @@ export enum AnnotationType {
     FileAttachment = 17,
 }
 
-// ----------
 // Components
 // ----------
 
@@ -460,7 +457,6 @@ export interface RenderPageProps {
 }
 export type RenderPage = (props: RenderPageProps) => React.ReactElement;
 
-// ------
 // Events
 // ------
 
@@ -482,7 +478,6 @@ export interface ZoomEvent {
     scale: number;
 }
 
-// -------
 // Plugins
 // -------
 
@@ -576,7 +571,6 @@ export interface Plugin {
     onViewerStateChange?(viewerState: ViewerState): ViewerState;
 }
 
-// -----
 // Store
 // -----
 

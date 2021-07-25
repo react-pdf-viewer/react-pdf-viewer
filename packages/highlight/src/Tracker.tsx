@@ -7,20 +7,20 @@
  */
 
 import * as React from 'react';
-import { Store } from '@react-pdf-viewer/core';
+import type { Store } from '@react-pdf-viewer/core';
 
 import { HIGHLIGHT_LAYER_ATTR, HIGHLIGHT_PAGE_ATTR } from './constants';
-import getRectFromOffsets from './getRectFromOffsets';
-import getTextFromOffsets from './getTextFromOffsets';
+import { getRectFromOffsets } from './getRectFromOffsets';
+import { getTextFromOffsets } from './getTextFromOffsets';
 import { NO_SELECTION_STATE, SELECTING_STATE, SelectedState } from './SelectionState';
-import StoreProps from './StoreProps';
+import { SelectionRange } from './structs/SelectionRange';
 import { transformArea } from './transformArea';
-import HighlightArea from './types/HighlightArea';
-import SelectionData from './types/SelectionData';
-import SelectionRange from './types/SelectionRange';
-import useRotation from './useRotation';
+import { useRotation } from './useRotation';
+import type { HighlightArea } from './types/HighlightArea';
+import type { SelectionData } from './types/SelectionData';
+import type { StoreProps } from './types/StoreProps';
 
-const Tracker: React.FC<{
+export const Tracker: React.FC<{
     store: Store<StoreProps>;
 }> = ({ store }) => {
     const { rotation } = useRotation(store);
@@ -251,5 +251,3 @@ const Tracker: React.FC<{
 
     return <></>;
 };
-
-export default Tracker;

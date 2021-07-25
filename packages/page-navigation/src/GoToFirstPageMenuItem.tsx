@@ -9,10 +9,10 @@
 import * as React from 'react';
 import { LocalizationContext, MenuItem } from '@react-pdf-viewer/core';
 
-import { RenderGoToPageProps } from './types/index';
-import UpArrowIcon from './UpArrowIcon';
+import { UpArrowIcon } from './UpArrowIcon';
+import type { RenderGoToPageProps } from './types/index';
 
-const GoToFirstPageMenuItem: React.FC<RenderGoToPageProps> = ({ isDisabled, onClick }) => {
+export const GoToFirstPageMenuItem: React.FC<RenderGoToPageProps> = ({ isDisabled, onClick }) => {
     const l10n = React.useContext(LocalizationContext);
     const label = l10n && l10n.pageNavigation ? l10n.pageNavigation.goToFirstPage : 'First page';
 
@@ -22,5 +22,3 @@ const GoToFirstPageMenuItem: React.FC<RenderGoToPageProps> = ({ isDisabled, onCl
         </MenuItem>
     );
 };
-
-export default GoToFirstPageMenuItem;

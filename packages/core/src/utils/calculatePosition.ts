@@ -6,10 +6,15 @@
  * @copyright 2019-2021 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import Offset from '../portal/Offset';
-import Position from '../portal/Position';
+import { Position } from '../structs/Position';
+import type { Offset } from '../types/Offset';
 
-const calculatePosition = (content: HTMLElement, target: HTMLElement, position: Position, offset: Offset): Offset => {
+export const calculatePosition = (
+    content: HTMLElement,
+    target: HTMLElement,
+    position: Position,
+    offset: Offset
+): Offset => {
     const targetRect = target.getBoundingClientRect();
     const contentRect = content.getBoundingClientRect();
     const { height, width } = contentRect;
@@ -79,5 +84,3 @@ const calculatePosition = (content: HTMLElement, target: HTMLElement, position: 
         top: top + (offset.top || 0),
     };
 };
-
-export default calculatePosition;

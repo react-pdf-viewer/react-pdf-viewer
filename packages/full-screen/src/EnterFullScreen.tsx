@@ -7,12 +7,12 @@
  */
 
 import * as React from 'react';
-import { Store } from '@react-pdf-viewer/core';
+import type { Store } from '@react-pdf-viewer/core';
 
-import EnterFullScreenButton from './EnterFullScreenButton';
+import { EnterFullScreenButton } from './EnterFullScreenButton';
 import { addFullScreenChangeListener, exitFullScreen, getFullScreenElement, requestFullScreen } from './fullScreen';
-import StoreProps from './StoreProps';
-import type { Zoom } from './types';
+import type { StoreProps } from './types/StoreProps';
+import type { Zoom } from './types/Zoom';
 
 export interface RenderEnterFullScreenProps {
     onClick(): void;
@@ -24,7 +24,7 @@ export interface EnterFullScreenProps {
     children?: RenderEnterFullScreen;
 }
 
-const EnterFullScreen: React.FC<{
+export const EnterFullScreen: React.FC<{
     children?: RenderEnterFullScreen;
     store: Store<StoreProps>;
     onEnterFullScreen(zoom: Zoom): void;
@@ -86,5 +86,3 @@ const EnterFullScreen: React.FC<{
         onClick: enterFullScreen,
     });
 };
-
-export default EnterFullScreen;

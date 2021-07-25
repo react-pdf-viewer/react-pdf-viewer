@@ -8,9 +8,12 @@
         "moduleResolution": "node",
         "removeComments": true,
         "resolveJsonModule": true,
-        "target": "es5"
+        "target": "es5",
+        "baseUrl": ".",
+        "paths": {
+            "@react-pdf-viewer/*": ["packages/*/src"],
+            "*": ["node_modules", "packages"]
+        }
     },
-    "exclude": [
-        "node_modules"
-    ]
+    "exclude": ["node_modules"]
 }

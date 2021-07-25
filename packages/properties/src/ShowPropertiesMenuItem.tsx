@@ -9,10 +9,10 @@
 import * as React from 'react';
 import { LocalizationContext, MenuItem } from '@react-pdf-viewer/core';
 
-import InfoIcon from './InfoIcon';
-import { RenderShowPropertiesProps } from './ShowProperties';
+import { InfoIcon } from './InfoIcon';
+import type { RenderShowPropertiesProps } from './types/RenderShowPropertiesProps';
 
-const ShowPropertiesMenuItem: React.FC<RenderShowPropertiesProps> = ({ onClick }) => {
+export const ShowPropertiesMenuItem: React.FC<RenderShowPropertiesProps> = ({ onClick }) => {
     const l10n = React.useContext(LocalizationContext);
     const label = l10n && l10n.properties ? l10n.properties.showProperties : 'Show properties';
 
@@ -22,5 +22,3 @@ const ShowPropertiesMenuItem: React.FC<RenderShowPropertiesProps> = ({ onClick }
         </MenuItem>
     );
 };
-
-export default ShowPropertiesMenuItem;

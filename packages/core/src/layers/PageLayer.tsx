@@ -8,18 +8,28 @@
 
 import * as React from 'react';
 
-import AnnotationLayer from '../annotations/AnnotationLayer';
-import Spinner from '../components/Spinner';
-import useIntersectionObserver, { VisibilityChanged } from '../hooks/useIntersectionObserver';
-import RenderPageProps, { RenderPage } from '../layouts/RenderPage';
-import SpecialZoomLevel from '../SpecialZoomLevel';
-import { Plugin } from '../types/Plugin';
-import PdfJs from '../vendors/PdfJs';
-import CanvasLayer from './CanvasLayer';
-import SvgLayer from './SvgLayer';
-import TextLayer from './TextLayer';
+import { AnnotationLayer } from '../annotations/AnnotationLayer';
+import { Spinner } from '../components/Spinner';
+import { useIntersectionObserver } from '../hooks/useIntersectionObserver';
+import { SpecialZoomLevel } from '../structs/SpecialZoomLevel';
+import { CanvasLayer } from './CanvasLayer';
+import { SvgLayer } from './SvgLayer';
+import { TextLayer } from './TextLayer';
+import type { PdfJs } from '../types/PdfJs';
+import type { Plugin } from '../types/Plugin';
+import type { RenderPage, RenderPageProps } from '../types/RenderPage';
+import type { VisibilityChanged } from '../types/VisibilityChanged';
 
-interface PageLayerProps {
+interface PageSizeState {
+    page?: PdfJs.Page | null;
+    pageHeight: number;
+    pageWidth: number;
+    viewportRotation: number;
+}
+
+const NUMBER_OF_OVERSCAN_PAGES = 2;
+
+export const PageLayer: React.FC<{
     currentPage: number;
     doc: PdfJs.PdfDocument;
     height: number;
@@ -32,18 +42,7 @@ interface PageLayerProps {
     onExecuteNamedAction(action: string): void;
     onJumpToDest(pageIndex: number, bottomOffset: number, leftOffset: number, scaleTo: number | SpecialZoomLevel): void;
     onPageVisibilityChanged(pageIndex: number, ratio: number): void;
-}
-
-interface PageSizeState {
-    page?: PdfJs.Page | null;
-    pageHeight: number;
-    pageWidth: number;
-    viewportRotation: number;
-}
-
-const NUMBER_OF_OVERSCAN_PAGES = 2;
-
-const PageLayer: React.FC<PageLayerProps> = ({
+}> = ({
     currentPage,
     doc,
     height,
@@ -221,5 +220,3 @@ const PageLayer: React.FC<PageLayerProps> = ({
         </div>
     );
 };
-
-export default PageLayer;

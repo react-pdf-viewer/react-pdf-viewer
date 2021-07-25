@@ -6,7 +6,5 @@
  * @copyright 2019-2021 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-const isDarkMode = () =>
+export const isDarkMode = () =>
     typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-
-export default isDarkMode;

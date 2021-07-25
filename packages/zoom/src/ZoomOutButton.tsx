@@ -9,13 +9,13 @@
 import * as React from 'react';
 import { LocalizationContext, MinimalButton, Position, Tooltip } from '@react-pdf-viewer/core';
 
-import isMac from './utils/isMac';
-import { RenderZoomOutProps } from './ZoomOut';
-import ZoomOutIcon from './ZoomOutIcon';
+import { isMac } from './utils/isMac';
+import { ZoomOutIcon } from './ZoomOutIcon';
+import type { RenderZoomOutProps } from './types/RenderZoomOutProps';
 
 const TOOLTIP_OFFSET = { left: 0, top: 8 };
 
-const ZoomOutButton: React.FC<RenderZoomOutProps> = ({ enableShortcuts, onClick }) => {
+export const ZoomOutButton: React.FC<RenderZoomOutProps> = ({ enableShortcuts, onClick }) => {
     const l10n = React.useContext(LocalizationContext);
     const label = l10n && l10n.zoom ? l10n.zoom.zoomOut : 'Zoom out';
     const ariaKeyShortcuts = enableShortcuts ? (isMac() ? 'Meta+-' : 'Ctrl+-') : '';
@@ -34,5 +34,3 @@ const ZoomOutButton: React.FC<RenderZoomOutProps> = ({ enableShortcuts, onClick 
         />
     );
 };
-
-export default ZoomOutButton;

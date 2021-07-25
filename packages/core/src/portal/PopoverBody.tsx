@@ -8,31 +8,21 @@
 
 import * as React from 'react';
 
-import useClickOutside from '../hooks/useClickOutside';
-import useIsomorphicLayoutEffect from '../hooks/useIsomorphicLayoutEffect';
-import usePosition from '../hooks/usePosition';
-import Arrow from './Arrow';
-import Offset from './Offset';
-import Position from './Position';
+import { useClickOutside } from '../hooks/useClickOutside';
+import { useIsomorphicLayoutEffect } from '../hooks/useIsomorphicLayoutEffect';
+import { usePosition } from '../hooks/usePosition';
+import { Arrow } from './Arrow';
+import { Position } from '../structs/Position';
+import type { Offset } from '../types/Offset';
 
-interface PopoverBodyProps {
+export const PopoverBody: React.FC<{
     ariaControlsSuffix: string;
     closeOnClickOutside: boolean;
     offset: Offset;
     position: Position;
     targetRef: React.RefObject<HTMLElement>;
     onClose(): void;
-}
-
-const PopoverBody: React.FC<PopoverBodyProps> = ({
-    ariaControlsSuffix,
-    children,
-    closeOnClickOutside,
-    offset,
-    position,
-    targetRef,
-    onClose,
-}) => {
+}> = ({ ariaControlsSuffix, children, closeOnClickOutside, offset, position, targetRef, onClose }) => {
     const contentRef = React.useRef<HTMLDivElement>();
     const innerRef = React.useRef<HTMLDivElement>();
     const anchorRef = React.useRef<HTMLDivElement>();
@@ -75,5 +65,3 @@ const PopoverBody: React.FC<PopoverBodyProps> = ({
         </>
     );
 };
-
-export default PopoverBody;

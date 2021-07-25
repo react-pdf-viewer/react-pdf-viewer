@@ -9,16 +9,14 @@
 import * as React from 'react';
 import { LocalizationContext, MinimalButton, Position, ThemeContext, Tooltip } from '@react-pdf-viewer/core';
 
-import DarkIcon from './DarkIcon';
-import LightIcon from './LightIcon';
-
-interface SwitchThemeButtonProps {
-    onClick(): void;
-}
+import { DarkIcon } from './DarkIcon';
+import { LightIcon } from './LightIcon';
 
 const TOOLTIP_OFFSET = { left: 0, top: 8 };
 
-const SwitchThemeButton: React.FC<SwitchThemeButtonProps> = ({ onClick }) => {
+export const SwitchThemeButton: React.FC<{
+    onClick(): void;
+}> = ({ onClick }) => {
     const theme = React.useContext(ThemeContext);
     const l10n = React.useContext(LocalizationContext);
     const isDarkTheme = theme.currentTheme === 'dark';
@@ -46,5 +44,3 @@ const SwitchThemeButton: React.FC<SwitchThemeButtonProps> = ({ onClick }) => {
         />
     );
 };
-
-export default SwitchThemeButton;

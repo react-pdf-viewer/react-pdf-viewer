@@ -7,15 +7,15 @@
  */
 
 import * as React from 'react';
-import { Store } from '@react-pdf-viewer/core';
+import type { Store } from '@react-pdf-viewer/core';
 
-import GoToNextPageButton from './GoToNextPageButton';
-import StoreProps from './StoreProps';
-import { RenderGoToPage, RenderGoToPageProps } from './types/index';
-import useCurrentPage from './useCurrentPage';
-import useNumberOfPages from './useNumberOfPages';
+import { GoToNextPageButton } from './GoToNextPageButton';
+import { useCurrentPage } from './useCurrentPage';
+import { useNumberOfPages } from './useNumberOfPages';
+import type { RenderGoToPage, RenderGoToPageProps } from './types/index';
+import type { StoreProps } from './types/StoreProps';
 
-const GoToNextPage: React.FC<{
+export const GoToNextPage: React.FC<{
     children?: RenderGoToPage;
     store: Store<StoreProps>;
 }> = ({ children, store }) => {
@@ -39,5 +39,3 @@ const GoToNextPage: React.FC<{
         onClick: goToNextPage,
     });
 };
-
-export default GoToNextPage;

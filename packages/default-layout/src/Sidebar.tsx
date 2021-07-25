@@ -7,12 +7,13 @@
  */
 
 import * as React from 'react';
-import { LocalizationContext, MinimalButton, Position, Store, Tooltip } from '@react-pdf-viewer/core';
+import { LocalizationContext, MinimalButton, Position, Tooltip } from '@react-pdf-viewer/core';
+import type { Store } from '@react-pdf-viewer/core';
 
-import BookmarkIcon from './BookmarkIcon';
-import FileIcon from './FileIcon';
-import StoreProps from './StoreProps';
-import ThumbnailIcon from './ThumbnailIcon';
+import { BookmarkIcon } from './BookmarkIcon';
+import { FileIcon } from './FileIcon';
+import { ThumbnailIcon } from './ThumbnailIcon';
+import type { StoreProps } from './types/StoreProps';
 
 export interface SidebarTab {
     content: React.ReactElement;
@@ -30,7 +31,7 @@ interface SidebarProps {
 
 const TOOLTIP_OFFSET = { left: 8, top: 0 };
 
-const Sidebar: React.FC<SidebarProps> = ({
+export const Sidebar: React.FC<SidebarProps> = ({
     attachmentTabContent,
     bookmarkTabContent,
     store,
@@ -125,5 +126,3 @@ const Sidebar: React.FC<SidebarProps> = ({
         </div>
     );
 };
-
-export default Sidebar;

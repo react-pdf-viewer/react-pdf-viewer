@@ -6,7 +6,7 @@
  * @copyright 2019-2021 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-export default interface MatchPosition {
+export interface MatchPosition {
     // The index of match in the page
     // Each page may have multiple matches
     matchIndex: number;

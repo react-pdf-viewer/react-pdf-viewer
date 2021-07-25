@@ -6,6 +6,8 @@
  * @copyright 2019-2021 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-export { default as DarkIcon } from './DarkIcon';
-export { default as LightIcon } from './LightIcon';
-export { default as themePlugin } from './themePlugin';
+export * from './themePlugin';
+
+// Components
+export { DarkIcon } from './DarkIcon';
+export { LightIcon } from './LightIcon';

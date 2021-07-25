@@ -8,14 +8,10 @@
 
 import * as React from 'react';
 
-enum ToggleStatus {
-    Close = 'Close',
-    Open = 'Open',
-    Toggle = 'Toggle',
-}
-export type Toggle = (status?: ToggleStatus) => void;
+import { ToggleStatus } from '../structs/ToggleStatus';
+import type { Toggle } from '../types/Toggle';
 
-const useToggle = (): { opened: boolean; toggle: Toggle } => {
+export const useToggle = (): { opened: boolean; toggle: Toggle } => {
     const [opened, setOpened] = React.useState(false);
     const toggle: Toggle = (status?: ToggleStatus) => {
         switch (status) {
@@ -34,6 +30,3 @@ const useToggle = (): { opened: boolean; toggle: Toggle } => {
 
     return { opened, toggle };
 };
-
-export { ToggleStatus };
-export default useToggle;

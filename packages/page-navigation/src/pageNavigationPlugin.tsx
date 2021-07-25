@@ -7,25 +7,29 @@
  */
 
 import * as React from 'react';
-import { createStore, Plugin, PluginFunctions, PluginOnDocumentLoad, ViewerState } from '@react-pdf-viewer/core';
+import { createStore } from '@react-pdf-viewer/core';
+import type { Plugin, PluginFunctions, PluginOnDocumentLoad, ViewerState } from '@react-pdf-viewer/core';
 
-import CurrentPageInput from './CurrentPageInput';
-import CurrentPageLabel, { CurrentPageLabelProps } from './CurrentPageLabel';
-import GoToFirstPage from './GoToFirstPage';
-import GoToFirstPageButton from './GoToFirstPageButton';
-import GoToFirstPageMenuItem from './GoToFirstPageMenuItem';
-import GoToLastPage from './GoToLastPage';
-import GoToLastPageButton from './GoToLastPageButton';
-import GoToLastPageMenuItem from './GoToLastPageMenuItem';
-import GoToNextPage from './GoToNextPage';
-import GoToNextPageButton from './GoToNextPageButton';
-import GoToNextPageMenuItem from './GoToNextPageMenuItem';
-import GoToPreviousPage from './GoToPreviousPage';
-import GoToPreviousPageMenuItem from './GoToPreviousPageMenuItem';
-import GoToPreviousPageButton from './GoToPreviousPageButton';
-import StoreProps from './StoreProps';
+import { CurrentPageInput } from './CurrentPageInput';
+import { CurrentPageLabel, CurrentPageLabelProps } from './CurrentPageLabel';
+import { GoToFirstPage } from './GoToFirstPage';
+import { GoToFirstPageButton } from './GoToFirstPageButton';
+import { GoToFirstPageMenuItem } from './GoToFirstPageMenuItem';
+import { GoToLastPage } from './GoToLastPage';
+import { GoToLastPageButton } from './GoToLastPageButton';
+import { GoToLastPageMenuItem } from './GoToLastPageMenuItem';
+import { GoToNextPage } from './GoToNextPage';
+import { GoToNextPageButton } from './GoToNextPageButton';
+import { GoToNextPageMenuItem } from './GoToNextPageMenuItem';
+import { GoToPreviousPage } from './GoToPreviousPage';
+import { GoToPreviousPageMenuItem } from './GoToPreviousPageMenuItem';
+import { GoToPreviousPageButton } from './GoToPreviousPageButton';
 
 import type { GoToPageMenuItemProps, GoToPageProps } from './types';
+import type { StoreProps } from './types/StoreProps';
+
+// Export types
+export type { CurrentPageLabelProps, GoToPageMenuItemProps, GoToPageProps };
 
 export interface PageNavigationPlugin extends Plugin {
     jumpToPage: (pageIndex: number) => void;
@@ -45,7 +49,7 @@ export interface PageNavigationPlugin extends Plugin {
     GoToPreviousPageMenuItem: (props: GoToPageMenuItemProps) => React.ReactElement;
 }
 
-const pageNavigationPlugin = (): PageNavigationPlugin => {
+export const pageNavigationPlugin = (): PageNavigationPlugin => {
     const store = React.useMemo(() => createStore<StoreProps>(), []);
 
     const CurrentPageInputDecorator = () => <CurrentPageInput store={store} />;
@@ -165,5 +169,3 @@ const pageNavigationPlugin = (): PageNavigationPlugin => {
         GoToPreviousPageMenuItem: GoToPreviousPageMenuItemDecorator,
     };
 };
-
-export default pageNavigationPlugin;

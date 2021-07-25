@@ -7,7 +7,7 @@
  */
 
 import * as React from 'react';
-import { Plugin } from '@react-pdf-viewer/core';
+import type { Plugin } from '@react-pdf-viewer/core';
 
 export enum ScrollMode {
     Horizontal = 'Horizontal',
@@ -47,9 +47,8 @@ export interface ScrollModePluginProps {
 
 export function scrollModePlugin(props?: ScrollModePluginProps): ScrollModePlugin;
 
-// -----
-// Icons
-// -----
+// Components
+// ----------
 
 export class HorizontalScrollingIcon extends React.Component {}
 export class VerticalScrollingIcon extends React.Component {}

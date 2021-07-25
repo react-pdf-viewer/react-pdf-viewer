@@ -9,10 +9,10 @@
 import * as React from 'react';
 import { LocalizationContext, MenuItem } from '@react-pdf-viewer/core';
 
-import DownArrowIcon from './DownArrowIcon';
-import { RenderGoToPageProps } from './types/index';
+import { DownArrowIcon } from './DownArrowIcon';
+import type { RenderGoToPageProps } from './types/index';
 
-const GoToLastPageMenuItem: React.FC<RenderGoToPageProps> = ({ isDisabled, onClick }) => {
+export const GoToLastPageMenuItem: React.FC<RenderGoToPageProps> = ({ isDisabled, onClick }) => {
     const l10n = React.useContext(LocalizationContext);
     const label = l10n && l10n.pageNavigation ? l10n.pageNavigation.goToLastPage : 'Last page';
 
@@ -22,5 +22,3 @@ const GoToLastPageMenuItem: React.FC<RenderGoToPageProps> = ({ isDisabled, onCli
         </MenuItem>
     );
 };
-
-export default GoToLastPageMenuItem;
