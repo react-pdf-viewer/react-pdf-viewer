@@ -7,9 +7,9 @@
  */
 
 import * as React from 'react';
+import { isMac } from '@react-pdf-viewer/core';
 import type { Store } from '@react-pdf-viewer/core';
 
-import { isMac } from './utils/isMac';
 import { decrease, increase } from './zoomingLevel';
 import type { StoreProps } from './types/StoreProps';
 

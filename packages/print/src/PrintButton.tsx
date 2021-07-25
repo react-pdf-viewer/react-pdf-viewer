@@ -7,10 +7,9 @@
  */
 
 import * as React from 'react';
-import { LocalizationContext, MinimalButton, Position, Tooltip } from '@react-pdf-viewer/core';
+import { isMac, LocalizationContext, MinimalButton, Position, Tooltip } from '@react-pdf-viewer/core';
 
 import { PrintIcon } from './PrintIcon';
-import { isMac } from './utils/isMac';
 import type { RenderPrintProps } from './types/RenderPrintProps';
 
 const TOOLTIP_OFFSET = { left: 0, top: 8 };

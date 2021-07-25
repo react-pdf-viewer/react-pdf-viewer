@@ -7,10 +7,10 @@
  */
 
 import * as React from 'react';
+import { isMac } from '@react-pdf-viewer/core';
 import type { Store } from '@react-pdf-viewer/core';
 
 import { PrintStatus } from './structs/PrintStatus';
-import { isMac } from './utils/isMac';
 import type { StoreProps } from './types/StoreProps';
 
 export const ShortcutHandler: React.FC<{
