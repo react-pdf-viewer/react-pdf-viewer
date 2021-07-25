@@ -1,6 +1,3 @@
-const fs = require('fs');
-const path = require('path');
-
 import * as React from 'react';
 import { findAllByTitle } from '@testing-library/dom';
 import { render } from '@testing-library/react';
@@ -37,12 +34,10 @@ const TestOnHighlightKeywordOption: React.FC<{
 };
 
 test('onHighlightKeyword option', async () => {
-    const rawSamplePdf = fs.readFileSync(path.resolve(__dirname, '../../../assets/pdf-open-parameters.pdf'));
-
     const keyword = 'document';
 
-    const { findByText, findAllByTestId, findByTestId, getByTestId } = render(
-        <TestOnHighlightKeywordOption fileUrl={new Uint8Array(rawSamplePdf)} keyword={keyword} />
+    const { findByText, findByTestId, getByTestId } = render(
+        <TestOnHighlightKeywordOption fileUrl={global.__OPEN_PARAMETERS_PDF__} keyword={keyword} />
     );
     mockIsIntersecting(getByTestId('viewer'), true);
 

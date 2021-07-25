@@ -1,6 +1,3 @@
-const fs = require('fs');
-const path = require('path');
-
 import * as React from 'react';
 import { findAllByTitle } from '@testing-library/dom';
 import { render } from '@testing-library/react';
@@ -31,12 +28,10 @@ const TestKeywordMultipleSpansOption: React.FC<{
 };
 
 test('keyword belongs to multiple spans', async () => {
-    const rawSamplePdf = fs.readFileSync(path.resolve(__dirname, '../../../assets/pdf-open-parameters.pdf'));
-
     const keyword = 'supported by';
 
-    const { findByText, findAllByTestId, findByTestId, getByTestId } = render(
-        <TestKeywordMultipleSpansOption fileUrl={new Uint8Array(rawSamplePdf)} keyword={keyword} />
+    const { findByText, findByTestId, getByTestId } = render(
+        <TestKeywordMultipleSpansOption fileUrl={global.__OPEN_PARAMETERS_PDF__} keyword={keyword} />
     );
     mockIsIntersecting(getByTestId('viewer'), true);
 
