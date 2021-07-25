@@ -8,7 +8,7 @@
 
 import * as React from 'react';
 
-import { useIntersectionObserver, VisibilityChanged } from './hooks/useIntersectionObserver';
+import { useIntersectionObserver } from './hooks/useIntersectionObserver';
 import { usePrevious } from './hooks/usePrevious';
 import { Inner } from './layouts/Inner';
 import { PageSizeCalculator } from './layouts/PageSizeCalculator';
@@ -23,6 +23,7 @@ import type { LocalizationMap } from './types/LocalizationMap';
 import type { PageSize } from './types/PageSize';
 import type { PdfJs } from './types/PdfJs';
 import type { RenderPage } from './types/RenderPage';
+import type { VisibilityChanged } from './types/VisibilityChanged';
 
 export interface DocumentLoadEvent {
     doc: PdfJs.PdfDocument;

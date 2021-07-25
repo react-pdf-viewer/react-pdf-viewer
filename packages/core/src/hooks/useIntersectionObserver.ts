@@ -9,11 +9,7 @@
 import * as React from 'react';
 
 import { useIsomorphicLayoutEffect } from '../hooks/useIsomorphicLayoutEffect';
-
-export interface VisibilityChanged {
-    isVisible: boolean;
-    ratio: number;
-}
+import type { VisibilityChanged } from '../types/VisibilityChanged';
 
 interface UseIntersectionObserverProps {
     threshold?: number | number[];

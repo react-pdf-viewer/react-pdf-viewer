@@ -19,3 +19,4 @@ export * from './Slot';
 export * from './Store';
 export * from './Toggle';
 export * from './ViewerState';
+export * from './VisibilityChanged';
