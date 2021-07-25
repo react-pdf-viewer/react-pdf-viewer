@@ -9,31 +9,13 @@
 import * as React from 'react';
 import type { Plugin } from '@react-pdf-viewer/core';
 
+// Types
 export interface HighlightArea {
     height: number;
     left: number;
     pageIndex: number;
     top: number;
     width: number;
-}
-
-export interface SelectionData {
-    startPageIndex: number;
-    endPageIndex: number;
-    startOffset: number;
-    startDivIndex: number;
-    endOffset: number;
-    endDivIndex: number;
-}
-
-export interface RenderHighlightTargetProps {
-    highlightAreas: HighlightArea[];
-    selectedText: string;
-    selectionRegion: HighlightArea;
-    selectionData: SelectionData;
-    cancel(): void;
-    // Switch to the hightlighting state
-    toggle(): void;
 }
 
 export interface RenderHighlightContentProps {
@@ -50,6 +32,26 @@ export interface RenderHighlightsProps {
     rotation: number;
 }
 
+export interface RenderHighlightTargetProps {
+    highlightAreas: HighlightArea[];
+    selectedText: string;
+    selectionRegion: HighlightArea;
+    selectionData: SelectionData;
+    cancel(): void;
+    // Switch to the hightlighting state
+    toggle(): void;
+}
+
+export interface SelectionData {
+    startPageIndex: number;
+    endPageIndex: number;
+    startOffset: number;
+    startDivIndex: number;
+    endOffset: number;
+    endDivIndex: number;
+}
+
+// Plugin
 export interface HighlightPlugin extends Plugin {
     jumpToHighlightArea(area: HighlightArea): void;
 }
@@ -61,4 +63,6 @@ export interface HighlightPluginProps {
 }
 
 export function highlightPlugin(props?: HighlightPluginProps): HighlightPlugin;
+
+// Components
 export class MessageIcon extends React.Component {}

@@ -9,10 +9,7 @@
 import * as React from 'react';
 import type { LocalizationMap, Plugin } from '@react-pdf-viewer/core';
 
-export interface LocaleSwitcherPlugin extends Plugin {
-    LocalePopover: (props: LocalePopoverProps) => React.ReactElement;
-}
-
+// Types
 export interface LocalePopoverProps {
     initialLocale?: string;
     locales: {
@@ -24,6 +21,12 @@ export interface LocalePopoverProps {
     onUpdateLocalization: (localization: LocalizationMap) => void;
 }
 
+// Plugin
+export interface LocaleSwitcherPlugin extends Plugin {
+    LocalePopover: (props: LocalePopoverProps) => React.ReactElement;
+}
+
 export function localeSwitcherPlugin(): LocaleSwitcherPlugin;
 
+// Components
 export class LocaleIcon extends React.Component {}

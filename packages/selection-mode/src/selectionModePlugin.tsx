@@ -17,9 +17,6 @@ import { SwitchSelectionModeMenuItem } from './SwitchSelectionModeMenuItem';
 import { Tracker } from './Tracker';
 import type { StoreProps } from './types/StoreProps';
 
-// Export types
-export type { SwitchSelectionModeProps };
-
 export interface SwitchSelectionModeButtonProps {
     mode: SelectionMode;
 }

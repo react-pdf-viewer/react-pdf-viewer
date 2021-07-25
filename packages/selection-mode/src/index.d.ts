@@ -9,20 +9,16 @@
 import * as React from 'react';
 import type { Plugin } from '@react-pdf-viewer/core';
 
-export enum SelectionMode {
-    Hand = 'Hand',
-    Text = 'Text',
+// Types
+export interface SwitchSelectionModeProps {
+    children?: (props: RenderSwitchSelectionModeProps) => React.ReactElement;
+    mode: SelectionMode;
 }
 
 export interface RenderSwitchSelectionModeProps {
     isSelected: boolean;
     mode: SelectionMode;
     onClick(): void;
-}
-
-export interface SwitchSelectionModeProps {
-    children?: (props: RenderSwitchSelectionModeProps) => React.ReactElement;
-    mode: SelectionMode;
 }
 
 export interface SwitchSelectionModeButtonProps {
@@ -34,6 +30,13 @@ export interface SwitchSelectionModeMenuItemProps {
     onClick(): void;
 }
 
+// Structs
+export enum SelectionMode {
+    Hand = 'Hand',
+    Text = 'Text',
+}
+
+// Plugin
 export interface SelectionModePlugin extends Plugin {
     SwitchSelectionMode(props: SwitchSelectionModeProps): React.ReactElement;
     SwitchSelectionModeButton(props: SwitchSelectionModeButtonProps): React.ReactElement;
@@ -47,7 +50,5 @@ export interface SelectionModePluginProps {
 export function selectionModePlugin(props?: SelectionModePluginProps): SelectionModePlugin;
 
 // Components
-// ----------
-
 export class HandToolIcon extends React.Component {}
 export class TextSelectionIcon extends React.Component {}

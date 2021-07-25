@@ -13,7 +13,7 @@ import { useCurrentPage } from './useCurrentPage';
 import { useNumberOfPages } from './useNumberOfPages';
 import type { StoreProps } from './types/StoreProps';
 
-interface RenderCurrentPageLabelProps {
+export interface RenderCurrentPageLabelProps {
     currentPage: number;
     numberOfPages: number;
 }

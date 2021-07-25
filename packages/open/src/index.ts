@@ -6,6 +6,11 @@
  * @copyright 2019-2021 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
+// Types
+export type { OpenProps } from './Open';
+export type { RenderOpenProps } from './types/RenderOpenProps';
+
+// Plugin
 export * from './openPlugin';
 
 // Components

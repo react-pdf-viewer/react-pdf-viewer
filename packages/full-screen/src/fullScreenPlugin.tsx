@@ -17,9 +17,6 @@ import { ExitFullScreenButton } from './ExitFullScreenButton';
 import type { StoreProps } from './types/StoreProps';
 import type { Zoom } from './types/Zoom';
 
-// Export types
-export type { EnterFullScreenMenuItemProps, EnterFullScreenProps };
-
 export interface FullScreenPlugin extends Plugin {
     EnterFullScreen: (props: EnterFullScreenProps) => React.ReactElement;
     EnterFullScreenButton: () => React.ReactElement;

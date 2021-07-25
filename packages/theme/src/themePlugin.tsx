@@ -13,9 +13,6 @@ import { SwitchTheme, SwitchThemeProps } from './SwitchTheme';
 import { SwitchThemeButton } from './SwitchThemeButton';
 import { SwitchThemeMenuItem, SwitchThemeMenuItemProps } from './SwitchThemeMenuItem';
 
-// Export types
-export type { SwitchThemeProps, SwitchThemeMenuItemProps };
-
 export interface ThemePlugin extends Plugin {
     SwitchTheme: (props: SwitchThemeProps) => React.ReactElement;
     SwitchThemeButton: () => React.ReactElement;

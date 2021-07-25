@@ -6,8 +6,15 @@
  * @copyright 2019-2021 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-export * from './rotatePlugin';
+// Types
+export type { RotateProps } from './Rotate';
+export type { RenderRotateProps } from './types/RenderRotateProps';
+
+// Structs
 export { RotateDirection } from './structs/RotateDirection';
+
+// Plugin
+export * from './rotatePlugin';
 
 // Components
 export { RotateBackwardIcon } from './RotateBackwardIcon';

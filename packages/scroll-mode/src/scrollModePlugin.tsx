@@ -17,9 +17,6 @@ import { SwitchScrollModeMenuItem } from './SwitchScrollModeMenuItem';
 import { Tracker } from './Tracker';
 import type { StoreProps } from './types/StoreProps';
 
-// Export types
-export type { SwitchScrollModeProps };
-
 export interface SwitchScrollModeButtonProps {
     mode: ScrollMode;
 }

@@ -54,6 +54,11 @@ import type {
     ZoomProps,
 } from '@react-pdf-viewer/zoom';
 
+// Types
+export interface ToolbarProps {
+    children?: (toolbarSlot: ToolbarSlot) => React.ReactElement;
+}
+
 export interface ToolbarSlot {
     CurrentPageInput(): React.ReactElement;
     CurrentPageLabel(props: CurrentPageLabelProps): React.ReactElement;
@@ -105,10 +110,7 @@ export interface ToolbarSlot {
     ZoomOutMenuItem(props: ZoomMenuItemProps): React.ReactElement;
 }
 
-export interface ToolbarProps {
-    children?: (toolbarSlot: ToolbarSlot) => React.ReactElement;
-}
-
+// Plugin
 export interface ToolbarPlugin extends Plugin {
     Toolbar: (props: ToolbarProps) => React.ReactElement;
     // Plugins instance
@@ -138,12 +140,10 @@ export interface ToolbarPluginProps {
 
 export function toolbarPlugin(props?: ToolbarPluginProps): ToolbarPlugin;
 
+// Components
 export interface MoreActionsPopoverProps {
     toolbarSlot: ToolbarSlot;
 }
 export class MoreActionsPopover extends React.Component<MoreActionsPopoverProps> {}
-
-// Components
-// ----------
 
 export class MoreIcon extends React.Component {}

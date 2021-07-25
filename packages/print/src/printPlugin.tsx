@@ -18,9 +18,6 @@ import { PrintStatus } from './structs/PrintStatus';
 import { ShortcutHandler } from './ShortcutHandler';
 import type { StoreProps } from './types/StoreProps';
 
-// Export types
-export type { PrintMenuItemProps, PrintProps };
-
 export interface PrintPlugin extends Plugin {
     Print: (props: PrintProps) => React.ReactElement;
     PrintButton: () => React.ReactElement;

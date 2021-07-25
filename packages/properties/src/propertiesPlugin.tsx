@@ -14,9 +14,6 @@ import { ShowProperties, ShowPropertiesProps } from './ShowProperties';
 import { ShowPropertiesMenuItem } from './ShowPropertiesMenuItem';
 import type { StoreProps } from './types/StoreProps';
 
-// Export types
-export type { ShowPropertiesProps };
-
 export interface ShowPropertiesMenuItemProps {
     onClick: () => void;
 }

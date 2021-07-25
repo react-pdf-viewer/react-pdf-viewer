@@ -7,12 +7,13 @@
  */
 
 import * as React from 'react';
-import type { Plugin, ViewerProps } from '@react-pdf-viewer/core';
+import type { Plugin } from '@react-pdf-viewer/core';
 import type { AttachmentPlugin } from '@react-pdf-viewer/attachment';
 import type { BookmarkPlugin } from '@react-pdf-viewer/bookmark';
 import type { ThumbnailPlugin } from '@react-pdf-viewer/thumbnail';
 import type { ToolbarPlugin, ToolbarPluginProps, ToolbarProps, ToolbarSlot } from '@react-pdf-viewer/toolbar';
 
+// Types
 export type { ToolbarPluginProps, ToolbarProps, ToolbarSlot };
 
 export interface SidebarTab {
@@ -21,16 +22,13 @@ export interface SidebarTab {
     title: string;
 }
 
+// Plugin
 export interface DefaultLayoutPlugin extends Plugin {
     activateTab(index: number): void;
     attachmentPluginInstance: AttachmentPlugin;
     bookmarkPluginInstance: BookmarkPlugin;
     thumbnailPluginInstance: ThumbnailPlugin;
     toolbarPluginInstance: ToolbarPlugin;
-}
-
-export interface DefaultLayoutProps extends ViewerProps {
-    toolbarPlugin?: ToolbarPluginProps;
 }
 
 export interface DefaultLayoutPluginProps {
@@ -42,8 +40,6 @@ export interface DefaultLayoutPluginProps {
 export function defaultLayoutPlugin(props?: DefaultLayoutPluginProps): DefaultLayoutPlugin;
 
 // Components
-// ----------
-
 export class BookmarkIcon extends React.Component {}
 export class FileIcon extends React.Component {}
 export class ThumbnailIcon extends React.Component {}

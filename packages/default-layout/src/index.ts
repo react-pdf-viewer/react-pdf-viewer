@@ -6,6 +6,11 @@
  * @copyright 2019-2021 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
+// Types
+export type { ToolbarPluginProps, ToolbarProps, ToolbarSlot } from '@react-pdf-viewer/toolbar';
+export type { SidebarTab } from './Sidebar';
+
+// Plugin
 export * from './defaultLayoutPlugin';
 
 // Components

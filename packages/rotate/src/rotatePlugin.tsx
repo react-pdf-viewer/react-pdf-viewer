@@ -16,9 +16,6 @@ import { RotateMenuItem } from './RotateMenuItem';
 import { RotateDirection } from './structs/RotateDirection';
 import type { StoreProps } from './types/StoreProps';
 
-// Export types
-export type { RotateProps };
-
 export interface RotateDecoratorProps {
     onClick(): void;
 }

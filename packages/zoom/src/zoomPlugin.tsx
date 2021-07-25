@@ -23,9 +23,6 @@ import { ZoomPopover } from './ZoomPopover';
 import type { StoreProps } from './types/StoreProps';
 import type { ZoomMenuItemProps } from './types/ZoomMenuItemProps';
 
-// Export types
-export type { CurrentScaleProps, ZoomInProps, ZoomMenuItemProps, ZoomOutProps, ZoomProps };
-
 export interface ZoomPlugin extends Plugin {
     zoomTo: (scale: number | SpecialZoomLevel) => void;
     CurrentScale: (props: CurrentScaleProps) => React.ReactElement;

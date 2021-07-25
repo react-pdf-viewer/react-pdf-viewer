@@ -9,6 +9,11 @@
 import * as React from 'react';
 import type { Plugin } from '@react-pdf-viewer/core';
 
+// Types
+export interface SwitchThemeProps {
+    children?: (props: RenderSwitchThemeProps) => React.ReactElement;
+}
+
 export interface SwitchThemeMenuItemProps {
     onClick(): void;
 }
@@ -17,10 +22,7 @@ export interface RenderSwitchThemeProps {
     onClick(): void;
 }
 
-export interface SwitchThemeProps {
-    children?: (props: RenderSwitchThemeProps) => React.ReactElement;
-}
-
+// Plugin
 export interface ThemePlugin extends Plugin {
     SwitchTheme: (props: SwitchThemeProps) => React.ReactElement;
     SwitchThemeButton: () => React.ReactElement;
@@ -29,5 +31,6 @@ export interface ThemePlugin extends Plugin {
 
 export function themePlugin(): ThemePlugin;
 
+// Components
 export class DarkIcon extends React.Component {}
 export class LightIcon extends React.Component {}

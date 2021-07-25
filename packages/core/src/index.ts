@@ -6,7 +6,17 @@
  * @copyright 2019-2021 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
+// Types
+export * from './types/index';
+
+// Structs
 export { AnnotationType } from './annotations/AnnotationType';
+export { LayerRenderStatus } from './structs/LayerRenderStatus';
+export { Position } from './structs/Position';
+export { SpecialZoomLevel } from './structs/SpecialZoomLevel';
+export { ToggleStatus } from './structs/ToggleStatus';
+
+// Components
 export { Button } from './components/Button';
 export { Menu } from './components/Menu';
 export { MenuDivider } from './components/MenuDivider';
@@ -17,28 +27,29 @@ export { ProgressBar } from './components/ProgressBar';
 export { Separator } from './components/Separator';
 export { Spinner } from './components/Spinner';
 export { TextBox } from './components/TextBox';
-export { useIntersectionObserver } from './hooks/useIntersectionObserver';
-export { useIsomorphicLayoutEffect } from './hooks/useIsomorphicLayoutEffect';
 export { Icon } from './icons/Icon';
-export { LocalizationContext } from './localization/LocalizationContext';
-export { LocalizationProvider } from './localization/LocalizationProvider';
 export { Modal } from './portal/Modal';
 export { Popover } from './portal/Popover';
-export { Position } from './structs/Position';
 export { Tooltip } from './portal/Tooltip';
-export { SpecialZoomLevel } from './structs/SpecialZoomLevel';
-export { ToggleStatus } from './structs/ToggleStatus';
+
+// Store
 export { createStore } from './store/createStore';
+
+// Contexts
+export { LocalizationContext } from './localization/LocalizationContext';
+export { LocalizationProvider } from './localization/LocalizationProvider';
 export { ThemeContext } from './theme/ThemeContext';
 export { ThemeProvider } from './theme/ThemeProvider';
-export { LayerRenderStatus } from './structs/LayerRenderStatus';
+
+// Viewer
 export { Viewer } from './Viewer';
 export { Worker } from './Worker';
+
+// Hooks
+export { useIntersectionObserver } from './hooks/useIntersectionObserver';
+export { useIsomorphicLayoutEffect } from './hooks/useIsomorphicLayoutEffect';
 
 // Utils
 export { classNames } from './utils/classNames';
 export { getDestination } from './utils/getDestination';
 export { isMac } from './utils/isMac';
-
-// Types
-export * from './types/index';

@@ -28,9 +28,6 @@ import { GoToPreviousPageButton } from './GoToPreviousPageButton';
 import type { GoToPageMenuItemProps, GoToPageProps } from './types';
 import type { StoreProps } from './types/StoreProps';
 
-// Export types
-export type { CurrentPageLabelProps, GoToPageMenuItemProps, GoToPageProps };
-
 export interface PageNavigationPlugin extends Plugin {
     jumpToPage: (pageIndex: number) => void;
     CurrentPageInput: () => React.ReactElement;

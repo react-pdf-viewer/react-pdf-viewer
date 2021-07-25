@@ -9,6 +9,13 @@
 import * as React from 'react';
 import type { Plugin } from '@react-pdf-viewer/core';
 
+// Types
+export interface FlagKeyword {
+    keyword: string;
+    matchCase?: boolean; // `false` by default
+    wholeWords?: boolean; // `false` by default
+}
+
 export interface Match {
     keyword: RegExp;
     // The index of match in the page
@@ -21,9 +28,23 @@ export interface Match {
     endIndex: number;
 }
 
+export interface MatchPosition {
+    // The index of match in the page
+    // Each page may have multiple matches
+    matchIndex: number;
+    pageIndex: number;
+}
+
+export interface OnHighlightKeyword {
+    highlightEle: HTMLElement;
+    keyword: RegExp;
+}
+
 export interface RenderShowSearchPopoverProps {
     onClick: () => void;
 }
+
+export type SingleKeyword = string | RegExp | FlagKeyword;
 
 export interface RenderSearchProps {
     clearKeyword(): void;
@@ -41,14 +62,15 @@ export interface RenderSearchProps {
     setKeyword(keyword: string): void;
 }
 
-export interface ShowSearchPopoverProps {
-    children?: (props: RenderShowSearchPopoverProps) => React.ReactElement;
-}
-
 export interface SearchProps {
     children?: (props: RenderSearchProps) => React.ReactElement;
 }
 
+export interface ShowSearchPopoverProps {
+    children?: (props: RenderShowSearchPopoverProps) => React.ReactElement;
+}
+
+// Plugin
 export interface SearchPlugin extends Plugin {
     Search: (props: SearchProps) => React.ReactElement;
     ShowSearchPopover: (props: ShowSearchPopoverProps) => React.ReactElement;
@@ -60,19 +82,6 @@ export interface SearchPlugin extends Plugin {
     jumpToPreviousMatch(): Match | null;
 }
 
-export interface FlagKeyword {
-    keyword: string;
-    matchCase?: boolean; // `false` by default
-    wholeWords?: boolean; // `false` by default
-}
-
-export type SingleKeyword = string | RegExp | FlagKeyword;
-
-export interface OnHighlightKeyword {
-    highlightEle: HTMLElement;
-    keyword: RegExp;
-}
-
 export interface SearchPluginProps {
     // The keyword that will be highlighted in all pages
     keyword?: SingleKeyword | SingleKeyword[];
@@ -81,6 +90,7 @@ export interface SearchPluginProps {
 
 export function searchPlugin(props?: SearchPluginProps): SearchPlugin;
 
+// Components
 export class NextIcon extends React.Component {}
 export class PreviousIcon extends React.Component {}
 export class SearchIcon extends React.Component {}

@@ -6,6 +6,11 @@
  * @copyright 2019-2021 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
+// Types
+export type { RenderSwitchThemeProps, SwitchThemeProps } from './SwitchTheme';
+export type { SwitchThemeMenuItemProps } from './SwitchThemeMenuItem';
+
+// Plugin
 export * from './themePlugin';
 
 // Components
