@@ -14,7 +14,12 @@ export const PopoverOverlay: React.FC<{
     closeOnEscape: boolean;
     onClose(): void;
 }> = ({ closeOnEscape, onClose }) => {
-    useEscape(() => closeOnEscape && onClose());
+    const containerRef = React.useRef<HTMLDivElement>();
+    useEscape(() => {
+        if (containerRef.current && closeOnEscape) {
+            onClose();
+        }
+    });
 
-    return <div className="rpv-core__popover-overlay" />;
+    return <div className="rpv-core__popover-overlay" ref={containerRef} />;
 };

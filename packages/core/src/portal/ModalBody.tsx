@@ -22,7 +22,11 @@ export const ModalBody: React.FC<{
     const contentRef = React.useRef<HTMLDivElement>();
 
     useLockScroll();
-    useEscape(() => closeOnEscape && onToggle());
+    useEscape(() => {
+        if (contentRef.current && closeOnEscape) {
+            onToggle();
+        }
+    });
     useClickOutside(closeOnClickOutside, contentRef, onToggle);
 
     useIsomorphicLayoutEffect(() => {
