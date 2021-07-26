@@ -26,12 +26,26 @@ export const Menu: React.FC = ({ children }) => {
 
             case 'ArrowDown':
                 e.preventDefault();
-                moveToItem((currentIndex) => currentIndex + 1);
+                // eslint-disable-next-line @typescript-eslint/no-unused-vars
+                moveToItem((_, currentIndex) => currentIndex + 1);
                 break;
 
             case 'ArrowUp':
                 e.preventDefault();
-                moveToItem((currentIndex) => currentIndex - 1);
+                // eslint-disable-next-line @typescript-eslint/no-unused-vars
+                moveToItem((_, currentIndex) => currentIndex - 1);
+                break;
+
+            case 'End':
+                e.preventDefault();
+                // eslint-disable-next-line @typescript-eslint/no-unused-vars
+                moveToItem((items, _) => items.length - 1);
+                break;
+
+            case 'Home':
+                e.preventDefault();
+                // eslint-disable-next-line @typescript-eslint/no-unused-vars
+                moveToItem((_, __) => 0);
                 break;
 
             default:
@@ -39,7 +53,7 @@ export const Menu: React.FC = ({ children }) => {
         }
     };
 
-    const moveToItem = (getNextItem: (currentIndex: number) => number) => {
+    const moveToItem = (getNextItem: (items: HTMLElement[], currentIndex: number) => number) => {
         const container = containerRef.current;
         if (!container) {
             return;
@@ -48,7 +62,7 @@ export const Menu: React.FC = ({ children }) => {
         const items = visibleMenuItemsRef.current;
 
         const currentIndex = items.findIndex((item) => item.getAttribute('tabindex') === '0');
-        const targetIndex = Math.min(items.length - 1, Math.max(0, getNextItem(currentIndex)));
+        const targetIndex = Math.min(items.length - 1, Math.max(0, getNextItem(items, currentIndex)));
 
         if (currentIndex >= 0 && currentIndex <= items.length - 1) {
             items[currentIndex].setAttribute('tabindex', '-1');

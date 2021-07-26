@@ -2,6 +2,15 @@
 
 ## v2.7.1
 
+**Improvement**
+
+Continue improving the accessibility:
+
+| Component | Press key | Action                       |
+| --------- | --------- | ---------------------------- |
+| `Menu`    | `End`     | Focus on the last menu item  |
+|           | `Home`    | Focus on the first menu item |
+
 **Bug fix**
 
 -   Automatically scroll to the top of page when opening a menu
