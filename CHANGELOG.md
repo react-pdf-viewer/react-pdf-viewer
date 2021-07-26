@@ -11,9 +11,10 @@ Continue improving the accessibility:
 | `Menu`    | `End`     | Focus on the last menu item  |
 |           | `Home`    | Focus on the first menu item |
 
-**Bug fix**
+**Bug fixes**
 
 -   Automatically scroll to the top of page when opening a menu
+-   Fix the warning when pressing the _Escape_ key to close a modal
 
 ## v2.7.0
 
