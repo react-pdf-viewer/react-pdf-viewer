@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## v2.7.1
+
+**Bug fix**
+
+-   Automatically scroll to the top of page when opening a menu
+
 ## v2.7.0
 
 **New features**

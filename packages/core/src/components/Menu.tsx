@@ -14,18 +14,24 @@ export const Menu: React.FC = ({ children }) => {
     const containerRef = React.useRef<HTMLDivElement>();
     const visibleMenuItemsRef = React.useRef<HTMLElement[]>([]);
 
-    const handleKeyDown = (e: React.KeyboardEvent) => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+        const container = containerRef.current;
+        if (!container) {
+            return;
+        }
         switch (e.key) {
             case 'Tab':
                 e.preventDefault();
                 break;
 
             case 'ArrowDown':
-                activateNextItem();
+                e.preventDefault();
+                moveToItem((currentIndex) => currentIndex + 1);
                 break;
 
             case 'ArrowUp':
-                activatePreviousItem();
+                e.preventDefault();
+                moveToItem((currentIndex) => currentIndex - 1);
                 break;
 
             default:
@@ -33,44 +39,22 @@ export const Menu: React.FC = ({ children }) => {
         }
     };
 
-    const activatePreviousItem = () => {
+    const moveToItem = (getNextItem: (currentIndex: number) => number) => {
         const container = containerRef.current;
         if (!container) {
             return;
         }
 
         const items = visibleMenuItemsRef.current;
+
         const currentIndex = items.findIndex((item) => item.getAttribute('tabindex') === '0');
-        const prevItem = currentIndex - 1;
+        const targetIndex = Math.min(items.length - 1, Math.max(0, getNextItem(currentIndex)));
 
-        if (prevItem >= 0) {
-            if (currentIndex >= 0) {
-                items[currentIndex].setAttribute('tabindex', '-1');
-            }
-
-            items[prevItem].setAttribute('tabindex', '0');
-            (items[prevItem] as HTMLElement).focus();
+        if (currentIndex >= 0 && currentIndex <= items.length - 1) {
+            items[currentIndex].setAttribute('tabindex', '-1');
         }
-    };
-
-    const activateNextItem = () => {
-        const container = containerRef.current;
-        if (!container) {
-            return;
-        }
-
-        const items = visibleMenuItemsRef.current;
-        const currentIndex = items.findIndex((item) => item.getAttribute('tabindex') === '0');
-        const nextItem = currentIndex + 1;
-
-        if (nextItem < items.length) {
-            if (currentIndex >= 0) {
-                items[currentIndex].setAttribute('tabindex', '-1');
-            }
-
-            items[nextItem].setAttribute('tabindex', '0');
-            (items[nextItem] as HTMLElement).focus();
-        }
+        items[targetIndex].setAttribute('tabindex', '0');
+        (items[targetIndex] as HTMLElement).focus();
     };
 
     // Query the visible menu items
@@ -108,24 +92,18 @@ export const Menu: React.FC = ({ children }) => {
 
         // Cache them
         visibleMenuItemsRef.current = visibleItems;
+    }, []);
 
-        // Focus the first menu item automatically
-        if (visibleItems.length > 0) {
-            const firstItem = visibleItems[0];
-            firstItem.focus();
-            firstItem.setAttribute('tabindex', '0');
-        }
+    useIsomorphicLayoutEffect(() => {
+        document.addEventListener('keydown', handleKeyDown);
+
+        return () => {
+            document.removeEventListener('keydown', handleKeyDown);
+        };
     }, []);
 
     return (
-        <div
-            ref={containerRef}
-            aria-orientation="vertical"
-            className="rpv-core__menu"
-            role="menu"
-            tabIndex={-1}
-            onKeyDown={handleKeyDown}
-        >
+        <div ref={containerRef} aria-orientation="vertical" className="rpv-core__menu" role="menu" tabIndex={0}>
             {children}
         </div>
     );
