@@ -16,7 +16,7 @@ export interface EnterFullScreenMenuItemProps {
 }
 
 export const EnterFullScreenMenuItem: React.FC<EnterFullScreenMenuItemProps> = ({ onClick }) => {
-    const l10n = React.useContext(LocalizationContext);
+    const { l10n } = React.useContext(LocalizationContext);
     const label = l10n && l10n.fullScreen ? l10n.fullScreen.enterFullScreen : 'Full screen';
 
     return (

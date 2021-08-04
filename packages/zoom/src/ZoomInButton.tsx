@@ -15,7 +15,7 @@ import type { RenderZoomInProps } from './types/RenderZoomInProps';
 const TOOLTIP_OFFSET = { left: 0, top: 8 };
 
 export const ZoomInButton: React.FC<RenderZoomInProps> = ({ enableShortcuts, onClick }) => {
-    const l10n = React.useContext(LocalizationContext);
+    const { l10n } = React.useContext(LocalizationContext);
     const label = l10n && l10n.zoom ? l10n.zoom.zoomIn : 'Zoom in';
     const ariaKeyShortcuts = enableShortcuts ? (isMac() ? 'Meta+=' : 'Ctrl+=') : '';
 

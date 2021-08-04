@@ -18,7 +18,7 @@ export const ExitFullScreenButton: React.FC<{
     store: Store<StoreProps>;
 }> = ({ store }) => {
     const [isFullScreen, setFullScreen] = React.useState(false);
-    const l10n = React.useContext(LocalizationContext);
+    const { l10n } = React.useContext(LocalizationContext);
 
     const exitFullScreenLabel = l10n && l10n.fullScreen ? l10n.fullScreen.exitFullScreen : 'Exit full screen';
 

@@ -25,7 +25,7 @@ export const SwitchScrollModeDecorator: React.FC<{
     mode: ScrollMode;
     onClick(): void;
 }> = ({ children, mode, onClick }) => {
-    const l10n = React.useContext(LocalizationContext);
+    const { l10n } = React.useContext(LocalizationContext);
 
     let label = '';
     let icon = <VerticalScrollingIcon />;

@@ -15,7 +15,7 @@ import type { RenderShowPropertiesProps } from './types/RenderShowPropertiesProp
 const TOOLTIP_OFFSET = { left: 0, top: 8 };
 
 export const ShowPropertiesButton: React.FC<RenderShowPropertiesProps> = ({ onClick }) => {
-    const l10n = React.useContext(LocalizationContext);
+    const { l10n } = React.useContext(LocalizationContext);
     const label = l10n && l10n.properties ? l10n.properties.showProperties : 'Show properties';
 
     return (

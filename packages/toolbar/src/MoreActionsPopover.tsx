@@ -28,7 +28,7 @@ const PORTAL_OFFSET = { left: 0, top: 8 };
 export const MoreActionsPopover: React.FC<{
     toolbarSlot: ToolbarSlot;
 }> = ({ toolbarSlot }) => {
-    const l10n = React.useContext(LocalizationContext);
+    const { l10n } = React.useContext(LocalizationContext);
     const {
         DownloadMenuItem,
         EnterFullScreenMenuItem,

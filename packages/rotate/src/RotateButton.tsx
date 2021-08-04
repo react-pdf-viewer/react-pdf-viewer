@@ -17,7 +17,7 @@ import type { RenderRotateProps } from './types/RenderRotateProps';
 const TOOLTIP_OFFSET = { left: 0, top: 8 };
 
 export const RotateButton: React.FC<RenderRotateProps> = ({ direction, onClick }) => {
-    const l10n = React.useContext(LocalizationContext);
+    const { l10n } = React.useContext(LocalizationContext);
 
     const backwardLabel = l10n && l10n.rotate ? l10n.rotate.rotateBackward : 'Rotate counterclockwise';
     const forwardLabel = l10n && l10n.rotate ? l10n.rotate.rotateForward : 'Rotate clockwise';

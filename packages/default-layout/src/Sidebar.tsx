@@ -38,7 +38,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
     thumbnailTabContent,
     tabs,
 }) => {
-    const l10n = React.useContext(LocalizationContext);
+    const { l10n } = React.useContext(LocalizationContext);
     const [opened, setOpened] = React.useState(false);
     const [currentTab, setCurrentTab] = React.useState(store.get('currentTab') || 0);
 

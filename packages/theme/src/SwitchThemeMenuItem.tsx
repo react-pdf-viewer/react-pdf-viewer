@@ -18,7 +18,7 @@ export interface SwitchThemeMenuItemProps {
 
 export const SwitchThemeMenuItem: React.FC<SwitchThemeMenuItemProps> = ({ onClick }) => {
     const theme = React.useContext(ThemeContext);
-    const l10n = React.useContext(LocalizationContext);
+    const { l10n } = React.useContext(LocalizationContext);
     const isDarkTheme = theme.currentTheme === 'dark';
 
     const label =

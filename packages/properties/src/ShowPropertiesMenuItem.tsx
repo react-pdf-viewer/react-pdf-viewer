@@ -13,7 +13,7 @@ import { InfoIcon } from './InfoIcon';
 import type { RenderShowPropertiesProps } from './types/RenderShowPropertiesProps';
 
 export const ShowPropertiesMenuItem: React.FC<RenderShowPropertiesProps> = ({ onClick }) => {
-    const l10n = React.useContext(LocalizationContext);
+    const { l10n } = React.useContext(LocalizationContext);
     const label = l10n && l10n.properties ? l10n.properties.showProperties : 'Show properties';
 
     return (

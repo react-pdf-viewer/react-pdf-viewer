@@ -25,7 +25,7 @@ const LEVELS = [0.5, 0.75, 1, 1.25, 1.5, 2, 3, 4];
 const PORTAL_OFFSET = { left: 0, top: 8 };
 
 export const ZoomPopover: React.FC<RenderZoomProps> = ({ scale, onZoom }) => {
-    const l10n = React.useContext(LocalizationContext);
+    const { l10n } = React.useContext(LocalizationContext);
 
     const getSpcialLevelLabel = (level: SpecialZoomLevel): string | LocalizationMap => {
         switch (level) {

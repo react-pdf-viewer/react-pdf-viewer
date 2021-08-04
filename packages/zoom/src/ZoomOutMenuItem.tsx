@@ -13,7 +13,7 @@ import { ZoomOutIcon } from './ZoomOutIcon';
 import type { ZoomMenuItemProps } from './types/ZoomMenuItemProps';
 
 export const ZoomOutMenuItem: React.FC<ZoomMenuItemProps> = ({ onClick }) => {
-    const l10n = React.useContext(LocalizationContext);
+    const { l10n } = React.useContext(LocalizationContext);
     const label = l10n && l10n.zoom ? l10n.zoom.zoomOut : 'Zoom out';
 
     return (

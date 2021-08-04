@@ -45,7 +45,7 @@ export const Inner: React.FC<{
     onPageChange,
     onZoom,
 }) => {
-    const l10n = React.useContext(LocalizationContext);
+    const { l10n } = React.useContext(LocalizationContext);
     const containerRef = React.useRef<HTMLDivElement | null>(null);
     const pagesRef = React.useRef<HTMLDivElement | null>(null);
     const [currentPage, setCurrentPage] = React.useState(0);

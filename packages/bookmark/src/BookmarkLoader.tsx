@@ -23,7 +23,7 @@ export const BookmarkLoader: React.FC<{
     store: Store<StoreProps>;
     onJumpToDest(pageIndex: number, bottomOffset: number, scaleTo: number | SpecialZoomLevel): void;
 }> = ({ doc, store, onJumpToDest }) => {
-    const l10n = React.useContext(LocalizationContext);
+    const { l10n } = React.useContext(LocalizationContext);
     const [bookmarks, setBookmarks] = React.useState<BookmarkState>({
         isLoaded: false,
         items: [],

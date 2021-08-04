@@ -14,7 +14,7 @@ export const PrintProgress: React.FC<{
     numPages: number;
     onCancel(): void;
 }> = ({ numLoadedPages, numPages, onCancel }) => {
-    const l10n = React.useContext(LocalizationContext);
+    const { l10n } = React.useContext(LocalizationContext);
     const progress = Math.floor((numLoadedPages * 100) / numPages);
 
     return (

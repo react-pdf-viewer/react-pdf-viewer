@@ -15,7 +15,7 @@ import type { VerifyPassword } from './LoadingStatus';
 export const WrongPassword: React.FC<{
     verifyPasswordFn: VerifyPassword;
 }> = ({ verifyPasswordFn }) => {
-    const l10n = React.useContext(LocalizationContext);
+    const { l10n } = React.useContext(LocalizationContext);
     const [password, setPassword] = React.useState('');
 
     const submit = (): void => verifyPasswordFn(password);

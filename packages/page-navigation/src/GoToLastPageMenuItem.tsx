@@ -13,7 +13,7 @@ import { DownArrowIcon } from './DownArrowIcon';
 import type { RenderGoToPageProps } from './types/index';
 
 export const GoToLastPageMenuItem: React.FC<RenderGoToPageProps> = ({ isDisabled, onClick }) => {
-    const l10n = React.useContext(LocalizationContext);
+    const { l10n } = React.useContext(LocalizationContext);
     const label = l10n && l10n.pageNavigation ? l10n.pageNavigation.goToLastPage : 'Last page';
 
     return (
