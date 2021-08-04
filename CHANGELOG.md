@@ -2,6 +2,10 @@
 
 ## v2.7.2
 
+**Improvement**
+
+- Allow to change the localization from outside of the `Viewer` component
+
 **Bug fix**
 
 -   The `LocalePopover` component doesn't update the localization

@@ -1,0 +1,109 @@
+{
+    "attachment": {
+        "clickToDownload": "Zum Herunterladen klicken",
+        "noAttachment": "Es gibt keinen Anhang"
+    },
+    "bookmark": {
+        "noBookmark": "Es gibt kein Lesezeichen"
+    },
+    "core": {
+        "askingPassword": {
+            "requirePasswordToOpen": "Zum Öffnen dieses Dokuments ist ein Passwort erforderlich",
+            "submit": "Einreichen"
+        },
+        "wrongPassword": {
+            "submit": "Einreichen",
+            "tryAgain": "Das Passwort ist falsch. Bitte versuchen Sie es erneut"
+        },
+        "pageLabel": "Seite {{pageIndex}}"
+    },
+    "defaultLayout": {
+        "attachment": "Anhang",
+        "bookmark": "Lesezeichen",
+        "thumbnail": "Vorschaubild"
+    },
+    "download": {
+        "download": "Herunterladen"
+    },
+    "drop": {
+        "dragDropFile": "Ziehen Sie ein PDF-Dokument per Drag & Drop hierher"
+    },
+    "fullScreen": {
+        "enterFullScreen": "Voller Bildschirm",
+        "exitFullScreen": "Vollbildmodus beenden"
+    },
+    "localeSwitcher": {
+        "switchLocale": "Gebietsschema ändern"
+    },
+    "open": {
+        "openFile": "Datei öffnen"
+    },
+    "pageNavigation": {
+        "enterPageNumber": "Seitenzahl einfügen",
+        "goToFirstPage": "Erste Seite",
+        "goToLastPage": "Letzte Seite",
+        "goToNextPage": "Nächste Seite",
+        "goToPreviousPage": "Vorherige Seite"
+    },
+    "print": {
+        "cancel": "Abbrechen",
+        "preparingDocument": "Dokument vorbereiten...",
+        "print": "Drucken"
+    },
+    "properties": {
+        "author": "Autor",
+        "close": "Schließen",
+        "creationDate": "Erstellungsdatum",
+        "creator": "Ersteller",
+        "fileName": "Dateiname",
+        "fileSize": "Dateigröße",
+        "keywords": "Schlüsselwörter",
+        "modificationDate": "Änderungsdatum",
+        "pageCount": "Seitenzahl",
+        "pdfProducer": "PDF-Erzeuger",
+        "pdfVersion": "PDF Version",
+        "showProperties": "Eigenschaften anzeigen",
+        "subject": "Thema",
+        "title": "Titel"
+    },
+    "rotate": {
+        "rotateBackward": "Gegen den Uhrzeigersinn drehen",
+        "rotateForward": "Im Uhrzeigersinn drehen"
+    },
+    "scrollMode": {
+        "horizontalScrolling": "Horizontales Scrollen",
+        "verticalScrolling": "Vertikales Scrollen",
+        "wrappedScrolling": "Umwickeltes Scrollen"
+    },
+    "search": {
+        "close": "Schließen",
+        "enterToSearch": "Zur Suche eingeben",
+        "matchCase": "Groß- / Kleinschreibung",
+        "nextMatch": "Nächstes Spiel",
+        "previousMatch": "Vorheriges Spiel",
+        "search": "Suchen",
+        "wholeWords": "Ganze Wörter"
+    },
+    "selectionMode": {
+        "handTool": "Handwerkzeug",
+        "textSelectionTool": "Textauswahl-Werkzeug"
+    },
+    "theme": {
+        "switchDarkTheme": "Zum dunklen Thema wechseln",
+        "switchLightTheme": "Zum hellen Thema wechseln"
+    },
+    "thumbnail": {
+        "thumbnailLabel": "Vorschaubild der Seite {{pageIndex}}"
+    },
+    "toolbar": {
+        "moreActions": "Mehr Aktionen"
+    },
+    "zoom": {
+        "actualSize": "Tatsächliche Größe",
+        "pageFit": "Seitenanpassung",
+        "pageWidth": "Seitenbreite",
+        "zoomDocument": "Dokument zoomen",
+        "zoomIn": "Vergrößern",
+        "zoomOut": "Verkleinern"
+    }
+}

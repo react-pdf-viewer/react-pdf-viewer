@@ -1,0 +1,109 @@
+{
+    "attachment": {
+        "clickToDownload": "Click to download",
+        "noAttachment": "There is no attachment"
+    },
+    "bookmark": {
+        "noBookmark": "There is no bookmark"
+    },
+    "core": {
+        "askingPassword": {
+            "requirePasswordToOpen": "This document requires a password to open",
+            "submit": "Submit"
+        },
+        "wrongPassword": {
+            "submit": "Submit",
+            "tryAgain": "The password is wrong. Please try again"
+        },
+        "pageLabel": "Page {{pageIndex}}"
+    },
+    "defaultLayout": {
+        "attachment": "Attachment",
+        "bookmark": "Bookmark",
+        "thumbnail": "Thumbnail"
+    },
+    "download": {
+        "download": "Download"
+    },
+    "drop": {
+        "dragDropFile": "Drag and drop a PDF document here"
+    },
+    "fullScreen": {
+        "enterFullScreen": "Full screen",
+        "exitFullScreen": "Exit full screen"
+    },
+    "localeSwitcher": {
+        "switchLocale": "Switch locale"
+    },
+    "open": {
+        "openFile": "Open file"
+    },
+    "pageNavigation": {
+        "enterPageNumber": "Enter a page number",
+        "goToFirstPage": "First page",
+        "goToLastPage": "Last page",
+        "goToNextPage": "Next page",
+        "goToPreviousPage": "Previous page"
+    },
+    "print": {
+        "cancel": "Cancel",
+        "preparingDocument": "Preparing document ...",
+        "print": "Print"
+    },
+    "properties": {
+        "author": "Author",
+        "close": "Close",
+        "creationDate": "Creation date",
+        "creator": "Creator",
+        "fileName": "File name",
+        "fileSize": "File size",
+        "keywords": "Keywords",
+        "modificationDate": "Modification date",
+        "pageCount": "Page count",
+        "pdfProducer": "PDF producer",
+        "pdfVersion": "PDF version",
+        "showProperties": "Show properties",
+        "subject": "Subject",
+        "title": "Title"
+    },
+    "rotate": {
+        "rotateBackward": "Rotate counterclockwise",
+        "rotateForward": "Rotate clockwise"
+    },
+    "scrollMode": {
+        "horizontalScrolling": "Horizontal scrolling",
+        "verticalScrolling": "Vertical scrolling",
+        "wrappedScrolling": "Wrapped scrolling"
+    },
+    "search": {
+        "close": "Close",
+        "enterToSearch": "Enter to search",
+        "matchCase": "Match case",
+        "nextMatch": "Next match",
+        "previousMatch": "Previous match",
+        "search": "Search",
+        "wholeWords": "Whole words"
+    },
+    "selectionMode": {
+        "handTool": "Hand tool",
+        "textSelectionTool": "Text selection tool"
+    },
+    "theme": {
+        "switchDarkTheme": "Switch to the dark theme",
+        "switchLightTheme": "Switch to the light theme"
+    },
+    "thumbnail": {
+        "thumbnailLabel": "Thumbnail of page {{pageIndex}}"
+    },
+    "toolbar": {
+        "moreActions": "More actions"
+    },
+    "zoom": {
+        "actualSize": "Actual size",
+        "pageFit": "Page fit",
+        "pageWidth": "Page width",
+        "zoomDocument": "Zoom document",
+        "zoomIn": "Zoom in",
+        "zoomOut": "Zoom out"
+    }
+}

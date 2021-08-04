@@ -1,0 +1,109 @@
+{
+    "attachment": {
+        "clickToDownload": "Nhấn vào để tải về",
+        "noAttachment": "Không có tập tin đính kèm nào"
+    },
+    "bookmark": {
+        "noBookmark": "Không có đánh dấu nào"
+    },
+    "core": {
+        "askingPassword": {
+            "requirePasswordToOpen": "Tập tin yêu cầu mật khẩu để mở",
+            "submit": "Gửi đi"
+        },
+        "wrongPassword": {
+            "submit": "Gửi đi",
+            "tryAgain": "Mật khẩu không đúng. Xin thử lại"
+        },
+        "pageLabel": "Trang {{pageIndex}}"
+    },
+    "defaultLayout": {
+        "attachment": "Đính kèm",
+        "bookmark": "Đánh dấu",
+        "thumbnail": "Hình nhỏ"
+    },
+    "download": {
+        "download": "Tải về"
+    },
+    "drop": {
+        "dragDropFile": "Kéo và thả tập tin PDF ở đây"
+    },
+    "fullScreen": {
+        "enterFullScreen": "Toàn màn hình",
+        "exitFullScreen": "Thoát chế độ toàn màn hình"
+    },
+    "localeSwitcher": {
+        "switchLocale": "Chuyển ngôn ngữ"
+    },
+    "open": {
+        "openFile": "Mở tập tin"
+    },
+    "pageNavigation": {
+        "enterPageNumber": "Nhập số trang",
+        "goToFirstPage": "Trang đầu",
+        "goToLastPage": "Trang cuối",
+        "goToNextPage": "Trang kế",
+        "goToPreviousPage": "Trang trước"
+    },
+    "print": {
+        "cancel": "Huỷ",
+        "preparingDocument": "Chuẩn bị tài liệu ...",
+        "print": "In"
+    },
+    "properties": {
+        "author": "Tác giả",
+        "close": "Đóng",
+        "creationDate": "Ngày tạo",
+        "creator": "Người tạo",
+        "fileName": "Tên tệp tin",
+        "fileSize": "Kích thước tệp tin",
+        "keywords": "Từ khoá",
+        "modificationDate": "Ngày chỉnh sửa",
+        "pageCount": "Số trang",
+        "pdfProducer": "Phần mềm tạo PDF",
+        "pdfVersion": "Phiên bản PDF",
+        "showProperties": "Thông tin tập tin",
+        "subject": "Chủ đề",
+        "title": "Tiêu đề"
+    },
+    "rotate": {
+        "rotateBackward": "Xoay ngược chiều kim đồng hồ",
+        "rotateForward": "Xoay chiều kim đồng hồ"
+    },
+    "scrollMode": {
+        "horizontalScrolling": "Cuộn ngang",
+        "verticalScrolling": "Cuộn dọc",
+        "wrappedScrolling": "Cuộn lưới"
+    },
+    "search": {
+        "close": "Đóng",
+        "enterToSearch": "Nhấn Enter để tìm",
+        "matchCase": "Giống chữ hoa thường",
+        "nextMatch": "Kết quả tiếp theo",
+        "previousMatch": "Kết quả trước",
+        "search": "Tìm kiếm",
+        "wholeWords": "Toàn bộ từ"
+    },
+    "selectionMode": {
+        "handTool": "Cầm tay",
+        "textSelectionTool": "Chọn văn bản"
+    },
+    "theme": {
+        "switchDarkTheme": "Giao diện tối",
+        "switchLightTheme": "Giao diện sáng"
+    },
+    "thumbnail": {
+        "thumbnailLabel": "Ảnh đại diện của trang {{pageIndex}}"
+    },
+    "toolbar": {
+        "moreActions": "Nhiều tác vụ khác"
+    },
+    "zoom": {
+        "actualSize": "Kích thước thực sự",
+        "pageFit": "Vừa trang",
+        "pageWidth": "Vừa chiều rộng",
+        "zoomDocument": "Thu phóng văn bản",
+        "zoomIn": "Phóng to",
+        "zoomOut": "Thu nhỏ"
+    }
+}
