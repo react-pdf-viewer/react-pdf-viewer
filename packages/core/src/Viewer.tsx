@@ -16,7 +16,7 @@ import { DocumentLoader, RenderError } from './loader/DocumentLoader';
 import { LocalizationContext } from './localization/LocalizationContext';
 import { SpecialZoomLevel } from './structs/SpecialZoomLevel';
 import { ThemeContext } from './theme/ThemeContext';
-import { ThemeProvider } from './theme/ThemeProvider';
+import { withTheme } from './theme/withTheme';
 import { Plugin } from './types/Plugin';
 import { isSameUrl } from './utils/isSameUrl';
 import type { LocalizationMap } from './types/LocalizationMap';
@@ -143,16 +143,16 @@ export const Viewer: React.FC<{
 
     // Manage contexts
     const [l10n, setL10n] = React.useState(localization);
-    const themeContext = React.useContext(ThemeContext);
     const localizationContext = { l10n, setL10n };
+    const themeContext = withTheme(theme, onSwitchTheme);
 
     React.useEffect(() => {
         setL10n(localization);
     }, [localization]);
 
     return (
-        <ThemeProvider theme={theme} onSwitchTheme={onSwitchTheme}>
-            <LocalizationContext.Provider value={localizationContext}>
+        <LocalizationContext.Provider value={localizationContext}>
+            <ThemeContext.Provider value={themeContext}>
                 <div
                     ref={containerRef}
                     className={`rpv-core__viewer rpv-core__viewer--${themeContext.currentTheme}`}
@@ -201,7 +201,7 @@ export const Viewer: React.FC<{
                         />
                     )}
                 </div>
-            </LocalizationContext.Provider>
-        </ThemeProvider>
+            </ThemeContext.Provider>
+        </LocalizationContext.Provider>
     );
 };
