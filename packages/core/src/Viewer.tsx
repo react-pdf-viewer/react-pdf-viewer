@@ -144,7 +144,7 @@ export const Viewer: React.FC<{
     // Manage contexts
     const [l10n, setL10n] = React.useState(localization);
     const themeContext = React.useContext(ThemeContext);
-    const localizationContext = { l10n, setL10n };    
+    const localizationContext = { l10n, setL10n };
 
     React.useEffect(() => {
         setL10n(localization);

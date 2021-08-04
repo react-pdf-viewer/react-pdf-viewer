@@ -17,6 +17,6 @@ export interface LocalizationContextProps {
 }
 
 export const LocalizationContext = React.createContext<LocalizationContextProps>({
-    l10n: (enUs as unknown) as LocalizationMap,
+    l10n: enUs as unknown as LocalizationMap,
     setL10n: () => {},
 });
