@@ -311,10 +311,6 @@ export interface ThemeContextProps {
     setCurrentTheme: (theme: string) => void;
 }
 export const ThemeContext: React.Context<ThemeContextProps>;
-export interface ThemeProviderProps {
-    theme?: string;
-}
-export class ThemeProvider extends React.Component<ThemeProviderProps> {}
 
 // Viewer
 // The character maps that can be downloaded from

@@ -8,14 +8,15 @@
 
 import * as React from 'react';
 
-import { ThemeContext, ThemeContextProps } from './ThemeContext';
 import { usePrevious } from '../hooks/usePrevious';
 import { isDarkMode } from '../utils/isDarkMode';
 
-export const ThemeProvider: React.FC<{
-    theme: string;
-    onSwitchTheme?(theme: string): void;
-}> = ({ children, theme, onSwitchTheme }) => {
+export interface RenderThemeChildrenProps {
+    currentTheme: string;
+    setCurrentTheme(theme: string): void;
+}
+
+export const withTheme = (theme: string, onSwitchTheme?: (theme: string) => void) => {
     const initialTheme = React.useMemo(() => (theme === 'auto' ? (isDarkMode() ? 'dark' : 'light') : theme), []);
     const [currentTheme, setCurrentTheme] = React.useState(initialTheme);
     const prevTheme = usePrevious(currentTheme);
@@ -40,10 +41,14 @@ export const ThemeProvider: React.FC<{
         }
     }, [currentTheme]);
 
-    const initialContext: ThemeContextProps = {
+    React.useEffect(() => {
+        if (theme !== currentTheme) {
+            setCurrentTheme(theme);
+        }
+    }, [theme]);
+
+    return {
         currentTheme,
         setCurrentTheme,
     };
-
-    return <ThemeContext.Provider value={initialContext}>{children}</ThemeContext.Provider>;
 };
