@@ -22,7 +22,7 @@ export const PropertiesModal: React.FC<{
     fileName: string;
     onToggle(): void;
 }> = ({ doc, fileName, onToggle }) => {
-    const l10n = React.useContext(LocalizationContext);
+    const { l10n } = React.useContext(LocalizationContext);
 
     const formatDate = (input: string): string => {
         const date = convertDate(input);

@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## v2.7.2
+
+**Bug fix**
+
+-   The `LocalePopover` component doesn't update the localization
+
 ## v2.7.1
 
 **Improvement**

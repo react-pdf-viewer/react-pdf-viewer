@@ -24,7 +24,7 @@ export const SwitchSelectionModeDecorator: React.FC<{
     mode: SelectionMode;
     onClick(): void;
 }> = ({ children, mode, onClick }) => {
-    const l10n = React.useContext(LocalizationContext);
+    const { l10n } = React.useContext(LocalizationContext);
 
     let label = '';
     let icon = <TextSelectionIcon />;

@@ -13,7 +13,7 @@ import { PreviousIcon } from './PreviousIcon';
 import type { RenderGoToPageProps } from './types/index';
 
 export const GoToPreviousPageMenuItem: React.FC<RenderGoToPageProps> = ({ isDisabled, onClick }) => {
-    const l10n = React.useContext(LocalizationContext);
+    const { l10n } = React.useContext(LocalizationContext);
     const label = l10n && l10n.pageNavigation ? l10n.pageNavigation.goToPreviousPage : 'Previous page';
 
     return (

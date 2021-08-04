@@ -18,7 +18,7 @@ export interface LocalePopoverProps {
     localizations: {
         [locale: string]: LocalizationMap;
     };
-    onUpdateLocalization: (localization: LocalizationMap) => void;
+    onUpdateLocalization: (locale: string, localization: LocalizationMap) => void;
 }
 
 // Plugin

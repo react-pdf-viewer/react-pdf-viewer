@@ -300,13 +300,11 @@ export function createStore<T extends StoreState>(initialState?: T): Store<T>;
 export interface LocalizationMap {
     [key: string]: LocalizationMap;
 }
-export const LocalizationContext: React.Context<LocalizationMap>;
-export type SetLocalization = (l10n: LocalizationMap) => void;
-export interface LocalizationProviderProps {
-    children: (setLocalization: SetLocalization) => React.ReactElement;
-    localization?: LocalizationMap;
+export interface LocalizationContextProps {
+    l10n: LocalizationMap;
+    setL10n(l10n: LocalizationMap): void;
 }
-export class LocalizationProvider extends React.Component<LocalizationProviderProps> {}
+export const LocalizationContext: React.Context<LocalizationContextProps>;
 
 export interface ThemeContextProps {
     currentTheme: string;

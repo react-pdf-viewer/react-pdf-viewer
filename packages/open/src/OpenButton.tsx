@@ -15,7 +15,7 @@ import type { RenderOpenProps } from './types/RenderOpenProps';
 const TOOLTIP_OFFSET = { left: 0, top: 8 };
 
 export const OpenButton: React.FC<RenderOpenProps> = ({ onClick }) => {
-    const l10n = React.useContext(LocalizationContext);
+    const { l10n } = React.useContext(LocalizationContext);
     const label = l10n && l10n.open ? l10n.open.openFile : 'Open file';
 
     const inputRef = React.createRef<HTMLInputElement>();

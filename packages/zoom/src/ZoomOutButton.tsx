@@ -15,7 +15,7 @@ import type { RenderZoomOutProps } from './types/RenderZoomOutProps';
 const TOOLTIP_OFFSET = { left: 0, top: 8 };
 
 export const ZoomOutButton: React.FC<RenderZoomOutProps> = ({ enableShortcuts, onClick }) => {
-    const l10n = React.useContext(LocalizationContext);
+    const { l10n } = React.useContext(LocalizationContext);
     const label = l10n && l10n.zoom ? l10n.zoom.zoomOut : 'Zoom out';
     const ariaKeyShortcuts = enableShortcuts ? (isMac() ? 'Meta+-' : 'Ctrl+-') : '';
 

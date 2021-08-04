@@ -13,7 +13,7 @@ import { usePrevious } from './hooks/usePrevious';
 import { Inner } from './layouts/Inner';
 import { PageSizeCalculator } from './layouts/PageSizeCalculator';
 import { DocumentLoader, RenderError } from './loader/DocumentLoader';
-import { LocalizationProvider } from './localization/LocalizationProvider';
+import { LocalizationContext } from './localization/LocalizationContext';
 import { SpecialZoomLevel } from './structs/SpecialZoomLevel';
 import { ThemeContext } from './theme/ThemeContext';
 import { ThemeProvider } from './theme/ThemeProvider';
@@ -141,64 +141,67 @@ export const Viewer: React.FC<{
         onVisibilityChanged: visibilityChanged,
     });
 
+    // Manage contexts
+    const [l10n, setL10n] = React.useState(localization);
+    const themeContext = React.useContext(ThemeContext);
+    const localizationContext = { l10n, setL10n };
+
+    React.useEffect(() => {
+        setL10n(localization);
+    }, [localization]);
+
     return (
         <ThemeProvider theme={theme} onSwitchTheme={onSwitchTheme}>
-            <LocalizationProvider localization={localization}>
-                {/* eslint-disable-next-line @typescript-eslint/no-unused-vars */}
-                {(_) => {
-                    const themeContext = React.useContext(ThemeContext);
-                    return (
-                        <div
-                            ref={containerRef}
-                            className={`rpv-core__viewer rpv-core__viewer--${themeContext.currentTheme}`}
-                            data-testid="viewer"
-                            style={{
-                                height: '100%',
-                                width: '100%',
-                            }}
-                        >
-                            {file.shouldLoad && (
-                                <DocumentLoader
-                                    characterMap={characterMap}
-                                    file={file.data}
-                                    httpHeaders={httpHeaders}
-                                    render={(doc: PdfJs.PdfDocument) => (
-                                        <PageSizeCalculator
-                                            defaultScale={defaultScale}
+            <LocalizationContext.Provider value={localizationContext}>
+                <div
+                    ref={containerRef}
+                    className={`rpv-core__viewer rpv-core__viewer--${themeContext.currentTheme}`}
+                    data-testid="viewer"
+                    style={{
+                        height: '100%',
+                        width: '100%',
+                    }}
+                >
+                    {file.shouldLoad && (
+                        <DocumentLoader
+                            characterMap={characterMap}
+                            file={file.data}
+                            httpHeaders={httpHeaders}
+                            render={(doc: PdfJs.PdfDocument) => (
+                                <PageSizeCalculator
+                                    defaultScale={defaultScale}
+                                    doc={doc}
+                                    render={(ps: PageSize) => (
+                                        <Inner
                                             doc={doc}
-                                            render={(ps: PageSize) => (
-                                                <Inner
-                                                    doc={doc}
-                                                    initialPage={initialPage}
-                                                    pageSize={ps}
-                                                    plugins={plugins}
-                                                    renderPage={renderPage}
-                                                    viewerState={{
-                                                        file,
-                                                        pageIndex: initialPage,
-                                                        pageHeight: ps.pageHeight,
-                                                        pageWidth: ps.pageWidth,
-                                                        rotation: 0,
-                                                        scale: ps.scale,
-                                                    }}
-                                                    onDocumentLoad={onDocumentLoad}
-                                                    onOpenFile={openFile}
-                                                    onPageChange={onPageChange}
-                                                    onZoom={onZoom}
-                                                />
-                                            )}
+                                            initialPage={initialPage}
+                                            pageSize={ps}
+                                            plugins={plugins}
+                                            renderPage={renderPage}
+                                            viewerState={{
+                                                file,
+                                                pageIndex: initialPage,
+                                                pageHeight: ps.pageHeight,
+                                                pageWidth: ps.pageWidth,
+                                                rotation: 0,
+                                                scale: ps.scale,
+                                            }}
+                                            onDocumentLoad={onDocumentLoad}
+                                            onOpenFile={openFile}
+                                            onPageChange={onPageChange}
+                                            onZoom={onZoom}
                                         />
                                     )}
-                                    renderError={renderError}
-                                    renderLoader={renderLoader}
-                                    transformGetDocumentParams={transformGetDocumentParams}
-                                    withCredentials={withCredentials}
                                 />
                             )}
-                        </div>
-                    );
-                }}
-            </LocalizationProvider>
+                            renderError={renderError}
+                            renderLoader={renderLoader}
+                            transformGetDocumentParams={transformGetDocumentParams}
+                            withCredentials={withCredentials}
+                        />
+                    )}
+                </div>
+            </LocalizationContext.Provider>
         </ThemeProvider>
     );
 };

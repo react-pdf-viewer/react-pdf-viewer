@@ -17,7 +17,7 @@ import type { StoreProps } from './types/StoreProps';
 export const CurrentPageInput: React.FC<{
     store: Store<StoreProps>;
 }> = ({ store }) => {
-    const l10n = React.useContext(LocalizationContext);
+    const { l10n } = React.useContext(LocalizationContext);
     const [editingPage, setEditingPage] = React.useState('1');
 
     const { currentPage } = useCurrentPage(store);

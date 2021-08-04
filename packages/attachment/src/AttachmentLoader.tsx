@@ -21,7 +21,7 @@ interface AttachmentState {
 export const AttachmentLoader: React.FC<{
     doc: PdfJs.PdfDocument;
 }> = ({ doc }) => {
-    const l10n = React.useContext(LocalizationContext);
+    const { l10n } = React.useContext(LocalizationContext);
     const noAttachmentLabel = l10n && l10n.attachment ? l10n.attachment.noAttachment : 'There is no attachment';
 
     const [attachments, setAttachments] = React.useState<AttachmentState>({

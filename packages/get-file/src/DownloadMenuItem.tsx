@@ -16,7 +16,7 @@ export interface DownloadMenuItemProps {
 }
 
 export const DownloadMenuItem: React.FC<DownloadMenuItemProps> = ({ onClick }) => {
-    const l10n = React.useContext(LocalizationContext);
+    const { l10n } = React.useContext(LocalizationContext);
     const label = l10n && l10n.download ? l10n.download.download : 'Download';
 
     return (

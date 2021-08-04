@@ -15,7 +15,7 @@ import type { RenderPrintProps } from './types/RenderPrintProps';
 const TOOLTIP_OFFSET = { left: 0, top: 8 };
 
 export const PrintButton: React.FC<RenderPrintProps> = ({ enableShortcuts, onClick }) => {
-    const l10n = React.useContext(LocalizationContext);
+    const { l10n } = React.useContext(LocalizationContext);
     const label = l10n && l10n.print ? l10n.print.print : 'Print';
     const ariaKeyShortcuts = enableShortcuts ? (isMac() ? 'Meta+p' : 'Ctrl+p') : '';
 

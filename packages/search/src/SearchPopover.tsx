@@ -29,7 +29,7 @@ export const SearchPopover: React.FC<{
     store: Store<StoreProps>;
     onToggle(): void;
 }> = ({ store, onToggle }) => {
-    const l10n = React.useContext(LocalizationContext);
+    const { l10n } = React.useContext(LocalizationContext);
     const [isQuerying, setIsQuerying] = React.useState(false);
 
     const {

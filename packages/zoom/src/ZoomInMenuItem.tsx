@@ -13,7 +13,7 @@ import { ZoomInIcon } from './ZoomInIcon';
 import type { ZoomMenuItemProps } from './types/ZoomMenuItemProps';
 
 export const ZoomInMenuItem: React.FC<ZoomMenuItemProps> = ({ onClick }) => {
-    const l10n = React.useContext(LocalizationContext);
+    const { l10n } = React.useContext(LocalizationContext);
     const label = l10n && l10n.zoom ? l10n.zoom.zoomIn : 'Zoom in';
 
     return (

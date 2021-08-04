@@ -21,7 +21,7 @@ export const DropArea: React.FC<{
         }
         openFile(files[0]);
     });
-    const l10n = React.useContext(LocalizationContext);
+    const { l10n } = React.useContext(LocalizationContext);
 
     return (
         <>

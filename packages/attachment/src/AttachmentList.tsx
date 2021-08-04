@@ -16,7 +16,7 @@ export const AttachmentList: React.FC<{
     files: FileItem[];
 }> = ({ files }) => {
     const containerRef = React.useRef<HTMLDivElement>();
-    const l10n = React.useContext(LocalizationContext);
+    const { l10n } = React.useContext(LocalizationContext);
     const attachmentItemsRef = React.useRef<HTMLElement[]>([]);
 
     const clickDownloadLabel = l10n && l10n.attachment ? l10n.attachment.clickToDownload : 'Click to download';
