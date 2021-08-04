@@ -20,7 +20,7 @@ export interface LocalePopoverProps {
     localizations: {
         [locale: string]: LocalizationMap;
     };
-    onUpdateLocalization: (localization: LocalizationMap) => void;
+    onUpdateLocalization: (locale: string, localization: LocalizationMap) => void;
 }
 
 export const LocalePopover: React.FC<LocalePopoverProps> = ({
@@ -29,8 +29,7 @@ export const LocalePopover: React.FC<LocalePopoverProps> = ({
     localizations,
     onUpdateLocalization,
 }) => {
-    const l10n = React.useContext(LocalizationContext);
-    const [locale, setLocale] = React.useState(initialLocale);
+    const { l10n } = React.useContext(LocalizationContext);
 
     const renderTarget = (toggle: Toggle, opened: boolean) => {
         const label = l10n && l10n.localeSwitcher ? l10n.localeSwitcher.switchLocale : 'Switch locale';
@@ -52,8 +51,7 @@ export const LocalePopover: React.FC<LocalePopoverProps> = ({
 
     const renderContent = (toggle: Toggle) => {
         const changeLocale = (newLocale: string) => {
-            setLocale(newLocale);
-            onUpdateLocalization(localizations[newLocale] || {});
+            onUpdateLocalization(newLocale, localizations[newLocale] || {});
             toggle();
         };
 
@@ -61,7 +59,7 @@ export const LocalePopover: React.FC<LocalePopoverProps> = ({
             <Menu>
                 {Object.keys(locales).map((loc) => {
                     return (
-                        <MenuItem key={loc} checked={locale === loc} onClick={() => changeLocale(loc)}>
+                        <MenuItem key={loc} checked={initialLocale === loc} onClick={() => changeLocale(loc)}>
                             {locales[loc]}
                         </MenuItem>
                     );
