@@ -4,7 +4,6 @@
 
 **Improvement**
 
--   Allow to change the localization from outside of the `Viewer` component
 -   Allow to change the theme from outside of the `Viewer` component
 
 **Bug fix**
