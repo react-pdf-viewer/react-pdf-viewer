@@ -6,8 +6,9 @@
 
 -   Allow to change the theme from outside of the `Viewer` component
 
-**Bug fix**
+**Bug fixes**
 
+-   Can't close the menu when using with the [Fluent UI](https://developer.microsoft.com/en-us/fluentui)
 -   The `LocalePopover` component doesn't update the localization
 
 ## v2.7.1

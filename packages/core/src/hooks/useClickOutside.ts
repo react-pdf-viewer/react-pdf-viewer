@@ -24,10 +24,12 @@ export const useClickOutside = (
         if (!closeOnClickOutside) {
             return;
         }
-
-        document.addEventListener('click', clickHandler);
+        const eventOptions = {
+            capture: true,
+        };
+        document.addEventListener('click', clickHandler, eventOptions);
         return (): void => {
-            document.removeEventListener('click', clickHandler);
+            document.removeEventListener('click', clickHandler, eventOptions);
         };
     }, []);
 };
