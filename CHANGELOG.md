@@ -9,6 +9,7 @@
 **Bug fixes**
 
 -   Can't close the menu when using with the [Fluent UI](https://developer.microsoft.com/en-us/fluentui)
+-   The `activateTab()` method provided by the [default layout](https://react-pdf-viewer.dev/plugins/default-layout) plugin shouldn't toggle the tab
 -   The `LocalePopover` component doesn't update the localization
 
 ## v2.7.1
