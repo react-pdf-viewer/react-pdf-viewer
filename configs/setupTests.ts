@@ -41,7 +41,7 @@ const OPEN_PARAMETERS_PDF = new Uint8Array(
 );
 
 beforeAll(() => {
-    global.__HELLO_PDF__ = HELLO_PDF;
-    global.__SAMPLE_PDF__ = SAMPLE_PDF;
-    global.__OPEN_PARAMETERS_PDF__ = OPEN_PARAMETERS_PDF;
+    global['__HELLO_PDF__'] = HELLO_PDF;
+    global['__SAMPLE_PDF__'] = SAMPLE_PDF;
+    global['__OPEN_PARAMETERS_PDF__'] = OPEN_PARAMETERS_PDF;
 });

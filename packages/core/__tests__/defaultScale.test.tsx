@@ -7,7 +7,7 @@ import { Viewer } from '../src/Viewer';
 test('defaultScale option', async () => {
     const App = () => (
         <div style={{ height: '720px', width: '600px' }}>
-            <Viewer fileUrl={global.__SAMPLE_PDF__} defaultScale={1.5} />
+            <Viewer fileUrl={global['__SAMPLE_PDF__']} defaultScale={1.5} />
         </div>
     );
     const { getByTestId, findByTestId } = render(<App />);

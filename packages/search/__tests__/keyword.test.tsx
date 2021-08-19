@@ -31,7 +31,7 @@ test('keyword option', async () => {
     const keyword = 'document';
 
     const { findByText, findByTestId, getByTestId } = render(
-        <TestKeywordOption fileUrl={global.__OPEN_PARAMETERS_PDF__} keyword={keyword} />
+        <TestKeywordOption fileUrl={global['__OPEN_PARAMETERS_PDF__']} keyword={keyword} />
     );
     mockIsIntersecting(getByTestId('viewer'), true);
 

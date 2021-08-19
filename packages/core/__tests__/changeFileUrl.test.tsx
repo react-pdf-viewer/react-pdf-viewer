@@ -10,25 +10,25 @@ test('fileUrl as a prop', async () => {
             <Viewer fileUrl={fileUrl} />
         </div>
     );
-    const { findByText, rerender } = render(<App fileUrl={global.__SAMPLE_PDF__} />);
+    const { findByText, rerender } = render(<App fileUrl={global['__SAMPLE_PDF__']} />);
     mockAllIsIntersecting(true);
 
     const firstText = await findByText('Adobe Acrobat PDF Files');
     expect(firstText).toHaveClass('rpv-core__text-layer-text');
 
-    rerender(<App fileUrl={global.__OPEN_PARAMETERS_PDF__} />);
+    rerender(<App fileUrl={global['__OPEN_PARAMETERS_PDF__']} />);
     const text = await findByText('Parameters for Opening PDF Files');
     expect(text).toHaveClass('rpv-core__text-layer-text');
 });
 
 test('fileUrl as a state', async () => {
     const App = () => {
-        const [fileUrl, setFileUrl] = React.useState(global.__HELLO_PDF__);
+        const [fileUrl, setFileUrl] = React.useState(global['__HELLO_PDF__']);
         return (
             <>
                 <div style={{ marginRight: '8px' }}>
-                    <button onClick={() => setFileUrl(global.__SAMPLE_PDF__)}>Load document 1</button>
-                    <button onClick={() => setFileUrl(global.__OPEN_PARAMETERS_PDF__)}>Load document 2</button>
+                    <button onClick={() => setFileUrl(global['__SAMPLE_PDF__'])}>Load document 1</button>
+                    <button onClick={() => setFileUrl(global['__OPEN_PARAMETERS_PDF__'])}>Load document 2</button>
                 </div>
                 <div style={{ height: '720px' }}>
                     <Viewer fileUrl={fileUrl} />

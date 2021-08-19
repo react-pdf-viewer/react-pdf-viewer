@@ -7,7 +7,7 @@ import { Viewer } from '../src/Viewer';
 test('Lazy load page', async () => {
     const App = () => (
         <div style={{ height: '720px' }}>
-            <Viewer fileUrl={new Uint8Array(global.__OPEN_PARAMETERS_PDF__)} />
+            <Viewer fileUrl={new Uint8Array(global['__OPEN_PARAMETERS_PDF__'])} />
         </div>
     );
     const { findByText, getByTestId } = render(<App />);

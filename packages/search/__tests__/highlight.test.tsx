@@ -42,7 +42,7 @@ test('highlight() method', async () => {
     ];
 
     const { findByText, findByTestId, getByTestId } = render(
-        <TestHighlight fileUrl={global.__OPEN_PARAMETERS_PDF__} keywords={keywords} />
+        <TestHighlight fileUrl={global['__OPEN_PARAMETERS_PDF__']} keywords={keywords} />
     );
     mockIsIntersecting(getByTestId('viewer'), true);
 

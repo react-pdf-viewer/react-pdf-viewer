@@ -34,7 +34,7 @@ const TestCallZoomMethod: React.FC<{
 };
 
 test('call zoom() method', async () => {
-    const { findByText, getByTestId } = render(<TestCallZoomMethod fileUrl={global.__OPEN_PARAMETERS_PDF__} />);
+    const { findByText, getByTestId } = render(<TestCallZoomMethod fileUrl={global['__OPEN_PARAMETERS_PDF__']} />);
     mockIsIntersecting(getByTestId('viewer'), true);
 
     // Now zoom the document

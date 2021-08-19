@@ -52,7 +52,7 @@ test('clearHighlights() method', async () => {
     ];
 
     const { findByText, findByTestId, getByTestId } = render(
-        <TestClearHighlights fileUrl={global.__OPEN_PARAMETERS_PDF__} keywords={keywords} />
+        <TestClearHighlights fileUrl={global['__OPEN_PARAMETERS_PDF__']} keywords={keywords} />
     );
     mockIsIntersecting(getByTestId('viewer'), true);
 

@@ -31,7 +31,7 @@ test('keyword belongs to multiple spans', async () => {
     const keyword = 'supported by';
 
     const { findByText, findByTestId, getByTestId } = render(
-        <TestKeywordMultipleSpansOption fileUrl={global.__OPEN_PARAMETERS_PDF__} keyword={keyword} />
+        <TestKeywordMultipleSpansOption fileUrl={global['__OPEN_PARAMETERS_PDF__']} keyword={keyword} />
     );
     mockIsIntersecting(getByTestId('viewer'), true);
 
