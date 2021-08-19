@@ -28,17 +28,17 @@ const TestKeywordMultipleSpansOption: React.FC<{
 };
 
 test('keyword belongs to multiple spans', async () => {
-    const keyword = 'supported by';
+    const keyword = 'anywhere can';
 
     const { findByText, findByTestId, getByTestId } = render(
-        <TestKeywordMultipleSpansOption fileUrl={global['__OPEN_PARAMETERS_PDF__']} keyword={keyword} />
+        <TestKeywordMultipleSpansOption fileUrl={global['__SAMPLE_PDF__']} keyword={keyword} />
     );
     mockIsIntersecting(getByTestId('viewer'), true);
 
-    const page = await findByTestId('viewer-page-layer-4');
+    const page = await findByTestId('viewer-page-layer-0');
     mockIsIntersecting(page, true);
 
-    await findByText('Parameters for Opening PDF Files');
+    await findByText('Adobe Acrobat PDF Files');
 
     const highlights = await findAllByTitle(page, keyword);
     expect(highlights.length).toEqual(2);

@@ -16,8 +16,8 @@ test('fileUrl as a prop', async () => {
     const firstText = await findByText('Adobe Acrobat PDF Files');
     expect(firstText).toHaveClass('rpv-core__text-layer-text');
 
-    rerender(<App fileUrl={global['__OPEN_PARAMETERS_PDF__']} />);
-    const text = await findByText('Parameters for Opening PDF Files');
+    rerender(<App fileUrl={global['__MULTIPLE_PAGES_PDF__']} />);
+    const text = await findByText('A Simple PDF File');
     expect(text).toHaveClass('rpv-core__text-layer-text');
 });
 
@@ -28,7 +28,7 @@ test('fileUrl as a state', async () => {
             <>
                 <div style={{ marginRight: '8px' }}>
                     <button onClick={() => setFileUrl(global['__SAMPLE_PDF__'])}>Load document 1</button>
-                    <button onClick={() => setFileUrl(global['__OPEN_PARAMETERS_PDF__'])}>Load document 2</button>
+                    <button onClick={() => setFileUrl(global['__MULTIPLE_PAGES_PDF__'])}>Load document 2</button>
                 </div>
                 <div style={{ height: '720px' }}>
                     <Viewer fileUrl={fileUrl} />
@@ -49,6 +49,6 @@ test('fileUrl as a state', async () => {
 
     // Click the `Load document 2` button
     fireEvent.click(getByText('Load document 2'));
-    const text = await findByText('Parameters for Opening PDF Files');
+    const text = await findByText('A Simple PDF File');
     expect(text).toHaveClass('rpv-core__text-layer-text');
 });
