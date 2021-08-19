@@ -62,14 +62,15 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
     const listTabs = tabs ? tabs(defaultTabs) : defaultTabs;
 
+    const toggleTab = (index: number) => {
+        currentTab === index
+            ? setOpened((isOpened) => !isOpened)
+            : switchToTab(index);
+    };
+
     const switchToTab = (index: number) => {
-        if (currentTab === index) {
-            // Toggle the current tab
-            setOpened((isOpened) => !isOpened);
-        } else {
-            setOpened(true);
-            setCurrentTab(index);
-        }
+        setOpened(true);
+        setCurrentTab(index);
     };
 
     React.useEffect(() => {
@@ -100,7 +101,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                                     <MinimalButton
                                         ariaLabel={tab.title}
                                         isSelected={currentTab === index}
-                                        onClick={() => switchToTab(index)}
+                                        onClick={() => toggleTab(index)}
                                     >
                                         {tab.icon}
                                     </MinimalButton>
