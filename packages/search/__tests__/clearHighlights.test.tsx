@@ -44,29 +44,29 @@ const TestClearHighlights: React.FC<{
 
 test('clearHighlights() method', async () => {
     const keywords = [
-        'document',
+        'text',
         {
-            keyword: 'PDF',
+            keyword: 'Boring',
             matchCase: true,
         },
     ];
 
     const { findByText, findByTestId, getByTestId } = render(
-        <TestClearHighlights fileUrl={global.__OPEN_PARAMETERS_PDF__} keywords={keywords} />
+        <TestClearHighlights fileUrl={global['__MULTIPLE_PAGES_PDF__']} keywords={keywords} />
     );
     mockIsIntersecting(getByTestId('viewer'), true);
 
     const highlightButton = await screen.findByText('Highlight keywords');
     fireEvent.click(highlightButton);
 
-    const page = await findByTestId('viewer-page-layer-4');
+    const page = await findByTestId('viewer-page-layer-1');
     mockIsIntersecting(page, true);
 
-    await findByText('Parameters for Opening PDF Files');
+    await findByText('Simple PDF File 2');
 
-    // Found 8 texts that match `document`
-    let highlights = await findAllByTitle(page, 'document');
-    expect(highlights.length).toEqual(8);
+    // Found 13 texts that match `PDF`
+    let highlights = await findAllByTitle(page, 'text');
+    expect(highlights.length).toEqual(13);
 
     // Click the `Clear highlights` button
     const clearButton = await screen.findByText('Clear highlights');

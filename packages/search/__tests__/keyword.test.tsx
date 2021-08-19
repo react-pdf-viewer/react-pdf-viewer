@@ -28,20 +28,20 @@ const TestKeywordOption: React.FC<{
 };
 
 test('keyword option', async () => {
-    const keyword = 'document';
+    const keyword = 'text';
 
     const { findByText, findByTestId, getByTestId } = render(
-        <TestKeywordOption fileUrl={global.__OPEN_PARAMETERS_PDF__} keyword={keyword} />
+        <TestKeywordOption fileUrl={global['__MULTIPLE_PAGES_PDF__']} keyword={keyword} />
     );
     mockIsIntersecting(getByTestId('viewer'), true);
 
-    const page = await findByTestId('viewer-page-layer-4');
+    const page = await findByTestId('viewer-page-layer-1');
     mockIsIntersecting(page, true);
 
-    await findByText('Parameters for Opening PDF Files');
+    await findByText('Simple PDF File 2');
 
     const highlights = await findAllByTitle(page, keyword);
-    expect(highlights.length).toEqual(8);
+    expect(highlights.length).toEqual(13);
     expect(highlights[0].getAttribute('title')).toEqual(keyword);
     expect(highlights[0]).toHaveClass('rpv-search__highlight');
 });

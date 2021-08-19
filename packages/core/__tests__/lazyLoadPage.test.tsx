@@ -7,27 +7,19 @@ import { Viewer } from '../src/Viewer';
 test('Lazy load page', async () => {
     const App = () => (
         <div style={{ height: '720px' }}>
-            <Viewer fileUrl={new Uint8Array(global.__OPEN_PARAMETERS_PDF__)} />
+            <Viewer fileUrl={new Uint8Array(global['__MULTIPLE_PAGES_PDF__'])} />
         </div>
     );
     const { findByText, getByTestId } = render(<App />);
     mockIsIntersecting(getByTestId('viewer'), true);
 
-    let text = await findByText('Parameters for Opening PDF Files');
+    let text = await findByText('A Simple PDF File');
     expect(text).toHaveClass('rpv-core__text-layer-text');
 
     // Set the second page as visible
     mockIsIntersecting(getByTestId('viewer-page-layer-1'), true);
 
-    text = await findByText('2007 Adobe Systems', { exact: false });
+    text = await findByText('continued from page 1', { exact: false });
     expect(text).toHaveClass('rpv-core__text-layer-text');
-    expect(text).toHaveTextContent('© 2007 Adobe Systems Incorporated. All rights reserved.');
-
-    const lastPage = getByTestId('viewer-page-layer-7');
-    expect(lastPage).not.toHaveTextContent('URL examples');
-
-    // Set the last page as visible
-    mockIsIntersecting(lastPage, true);
-    text = await findByText('Acrobat SDK', { exact: false });
-    expect(text).toHaveTextContent('Adobe Acrobat SDK');
+    expect(text).toHaveTextContent('...continued from page 1. Yet more text. And more text. And more text.');
 });

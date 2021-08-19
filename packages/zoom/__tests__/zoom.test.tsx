@@ -34,23 +34,23 @@ const TestCallZoomMethod: React.FC<{
 };
 
 test('call zoom() method', async () => {
-    const { findByText, getByTestId } = render(<TestCallZoomMethod fileUrl={global.__OPEN_PARAMETERS_PDF__} />);
+    const { findByText, getByTestId } = render(<TestCallZoomMethod fileUrl={global['__MULTIPLE_PAGES_PDF__']} />);
     mockIsIntersecting(getByTestId('viewer'), true);
 
     // Now zoom the document
     const zoomButton = await screen.findByText('Zoom to 150%');
     fireEvent.click(zoomButton);
 
-    const lastPage = getByTestId('viewer-page-layer-7');
+    const lastPage = getByTestId('viewer-page-layer-1');
 
     // Set the last page as visible
     mockIsIntersecting(lastPage, true);
 
     // Check the page size
-    expect(parseInt(lastPage.style.width, 10)).toEqual(891);
+    expect(parseInt(lastPage.style.width, 10)).toEqual(918);
     expect(parseInt(lastPage.style.height, 10)).toEqual(1188);
 
     // Check font size of a given text
-    const text = await findByText('URL examples');
-    expect(text.style.fontSize).toEqual('22.5px');
+    const text = await findByText('Simple PDF File 2');
+    expect(text).toHaveClass('rpv-core__text-layer-text');
 });

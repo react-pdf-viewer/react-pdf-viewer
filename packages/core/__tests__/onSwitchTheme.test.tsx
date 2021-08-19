@@ -28,7 +28,7 @@ const TestOnSwitchTheme: React.FC<{
 
 test('onSwitchTheme() callback', async () => {
     const { findByTestId, findByText, getByLabelText, getByTestId } = render(
-        <TestOnSwitchTheme fileUrl={global.__SAMPLE_PDF__} />
+        <TestOnSwitchTheme fileUrl={global['__SAMPLE_PDF__']} />
     );
     const viewerEle = getByTestId('viewer');
 

@@ -68,7 +68,7 @@ const TestSwitchThemeButtonWithoutDefaultLayout: React.FC<{
 
 test('SwitchThemeButton() component with the default layout', async () => {
     const { findByText, getByLabelText, getByTestId } = render(
-        <TestSwitchThemeButtonWithDefaultLayout fileUrl={global.__HELLO_PDF__} />
+        <TestSwitchThemeButtonWithDefaultLayout fileUrl={global['__HELLO_PDF__']} />
     );
     const viewerEle = getByTestId('viewer');
 
@@ -91,7 +91,7 @@ test('SwitchThemeButton() component with the default layout', async () => {
 
 test('SwitchThemeButton() component without the default layout', async () => {
     const { findByText, getByLabelText, getByTestId } = render(
-        <TestSwitchThemeButtonWithoutDefaultLayout fileUrl={global.__HELLO_PDF__} />
+        <TestSwitchThemeButtonWithoutDefaultLayout fileUrl={global['__HELLO_PDF__']} />
     );
     const viewerEle = getByTestId('viewer');
 

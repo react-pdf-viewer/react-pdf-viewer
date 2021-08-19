@@ -34,37 +34,37 @@ const TestHighlight: React.FC<{
 
 test('highlight() method', async () => {
     const keywords = [
-        'document',
+        'text',
         {
-            keyword: 'PDF',
+            keyword: 'Boring',
             matchCase: true,
         },
     ];
 
     const { findByText, findByTestId, getByTestId } = render(
-        <TestHighlight fileUrl={global.__OPEN_PARAMETERS_PDF__} keywords={keywords} />
+        <TestHighlight fileUrl={global['__MULTIPLE_PAGES_PDF__']} keywords={keywords} />
     );
     mockIsIntersecting(getByTestId('viewer'), true);
 
     const highlightButton = await screen.findByText('Highlight keywords');
     fireEvent.click(highlightButton);
 
-    const page = await findByTestId('viewer-page-layer-4');
+    const page = await findByTestId('viewer-page-layer-1');
     mockIsIntersecting(page, true);
 
-    await findByText('Parameters for Opening PDF Files');
+    await findByText('Simple PDF File 2');
 
-    // Found 8 texts that match `document`
-    let highlights = await findAllByTitle(page, 'document');
-    expect(highlights.length).toEqual(8);
-    expect(highlights[0].getAttribute('title')).toEqual('document');
+    // Found 13 texts that match `text`
+    let highlights = await findAllByTitle(page, 'text');
+    expect(highlights.length).toEqual(13);
+    expect(highlights[0].getAttribute('title')).toEqual('text');
     expect(highlights[0]).toHaveClass('rpv-search__highlight');
 
-    // Found 9 texts that match `PDF`
-    highlights = getAllByTitle(page, 'PDF');
-    expect(highlights.length).toEqual(9);
-    expect(highlights[0].getAttribute('title')).toEqual('PDF');
+    // Found 1 text that match `Boring`
+    highlights = getAllByTitle(page, 'Boring');
+    expect(highlights.length).toEqual(1);
+    expect(highlights[0].getAttribute('title')).toEqual('Boring');
     expect(highlights[0]).toHaveClass('rpv-search__highlight');
 
-    expect(page.querySelectorAll('.rpv-search__highlight[title="pdf"]').length).toEqual(0);
+    expect(page.querySelectorAll('.rpv-search__highlight[title="text"]').length).toEqual(13);
 });

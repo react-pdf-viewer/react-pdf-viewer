@@ -30,43 +30,43 @@ const TestKeywordFlag: React.FC<{
 
 test('keyword with flag matchCase=false', async () => {
     const flagKeyword = {
-        keyword: 'PDF',
+        keyword: 'more text',
     };
 
     const { findByText, findByTestId, getByTestId } = render(
-        <TestKeywordFlag fileUrl={global.__OPEN_PARAMETERS_PDF__} keyword={flagKeyword} />
+        <TestKeywordFlag fileUrl={global['__MULTIPLE_PAGES_PDF__']} keyword={flagKeyword} />
     );
     mockIsIntersecting(getByTestId('viewer'), true);
 
-    const page = await findByTestId('viewer-page-layer-7');
+    const page = await findByTestId('viewer-page-layer-1');
     mockIsIntersecting(page, true);
 
-    await findByText('URL examples');
+    await findByText('Simple PDF File 2');
 
     const highlights = await findAllByTitle(page, flagKeyword.keyword);
-    expect(highlights.length).toEqual(13);
+    expect(highlights.length).toEqual(12);
     expect(highlights[0].getAttribute('title')).toEqual(flagKeyword.keyword);
     expect(highlights[0]).toHaveClass('rpv-search__highlight');
 });
 
 test('keyword with flag matchCase=true', async () => {
     const flagKeyword = {
-        keyword: 'PDF',
+        keyword: 'More',
         matchCase: true,
     };
 
     const { findByText, findByTestId, getByTestId } = render(
-        <TestKeywordFlag fileUrl={global.__OPEN_PARAMETERS_PDF__} keyword={flagKeyword} />
+        <TestKeywordFlag fileUrl={global['__MULTIPLE_PAGES_PDF__']} keyword={flagKeyword} />
     );
     mockIsIntersecting(getByTestId('viewer'), true);
 
-    const page = await findByTestId('viewer-page-layer-7');
+    const page = await findByTestId('viewer-page-layer-1');
     mockIsIntersecting(page, true);
 
-    await findByText('URL examples');
+    await findByText('Simple PDF File 2');
 
     const highlights = await findAllByTitle(page, flagKeyword.keyword);
-    expect(highlights.length).toEqual(2);
+    expect(highlights.length).toEqual(1);
     expect(highlights[0].getAttribute('title')).toEqual(flagKeyword.keyword);
     expect(highlights[0]).toHaveClass('rpv-search__highlight');
 });

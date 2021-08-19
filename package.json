@@ -26,7 +26,7 @@
         "clean": "lerna run clean",
         "build": "lerna run build",
         "dev": "lerna run dev",
-        "test": "lerna run test",
+        "test": "jest --runInBand --config jest.config.js",
         "lint": "eslint packages/**/src/*.ts packages/**/src/*.tsx",
         "format": "prettier --write \"**/*.+(css|js|json|jsx|less|md|ts|tsx)\"",
         "release": "npm run build && lerna publish from-package"
