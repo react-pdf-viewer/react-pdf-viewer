@@ -37,7 +37,7 @@ export { createStore } from './store/createStore';
 
 // Contexts
 export { LocalizationContext } from './localization/LocalizationContext';
-export { ThemeContext } from './theme/ThemeContext';
+export { TextDirection, ThemeContext } from './theme/ThemeContext';
 
 // Viewer
 export { Viewer } from './Viewer';

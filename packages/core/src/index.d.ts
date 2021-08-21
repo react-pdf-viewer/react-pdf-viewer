@@ -307,8 +307,13 @@ export interface LocalizationContextProps {
 }
 export const LocalizationContext: React.Context<LocalizationContextProps>;
 
+export enum TextDirection {
+    RightToLeft = 'RTL',
+    LeftToRight = 'LTR',
+}
 export interface ThemeContextProps {
     currentTheme: string;
+    direction?: TextDirection;
     setCurrentTheme: (theme: string) => void;
 }
 export const ThemeContext: React.Context<ThemeContextProps>;
