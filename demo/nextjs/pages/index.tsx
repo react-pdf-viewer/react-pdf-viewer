@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Viewer, Worker } from '@react-pdf-viewer/core';
+import { TextDirection, Viewer, Worker } from '@react-pdf-viewer/core';
 import { defaultLayoutPlugin } from '@react-pdf-viewer/default-layout';
 
 const Index = () => {
@@ -8,7 +8,13 @@ const Index = () => {
     return (
         <Worker workerUrl="https://unpkg.com/pdfjs-dist@2.6.347/build/pdf.worker.js">
             <div className="demo">
-                <Viewer fileUrl="pdf-open-parameters.pdf" plugins={[defaultLayoutPluginInstance]} />
+                <Viewer
+                    fileUrl="pdf-open-parameters.pdf"
+                    theme={{
+                        direction: TextDirection.RightToLeft,
+                    }}
+                    plugins={[defaultLayoutPluginInstance]}
+                />
             </div>
         </Worker>
     );
