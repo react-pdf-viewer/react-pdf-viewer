@@ -8,6 +8,7 @@
 
 import * as React from 'react';
 import {
+    classNames,
     LocalizationContext,
     Menu,
     MenuDivider,
@@ -16,6 +17,8 @@ import {
     Popover,
     Position,
     SpecialZoomLevel,
+    TextDirection,
+    ThemeContext,
 } from '@react-pdf-viewer/core';
 import type { LocalizationMap, Toggle } from '@react-pdf-viewer/core';
 
@@ -26,6 +29,8 @@ const PORTAL_OFFSET = { left: 0, top: 8 };
 
 export const ZoomPopover: React.FC<RenderZoomProps> = ({ scale, onZoom }) => {
     const { l10n } = React.useContext(LocalizationContext);
+    const { direction } = React.useContext(ThemeContext);
+    const isRtl = direction === TextDirection.RightToLeft;
 
     const getSpcialLevelLabel = (level: SpecialZoomLevel): string | LocalizationMap => {
         switch (level) {
@@ -46,7 +51,16 @@ export const ZoomPopover: React.FC<RenderZoomProps> = ({ scale, onZoom }) => {
         return (
             <MinimalButton ariaLabel={zoomDocumentLabel as string} onClick={click}>
                 <span className="rpv-zoom__popover-target">
-                    <span className="rpv-zoom__popover-target-scale" data-testid="zoom__popover-target-scale">
+                    <span
+                        data-testid="zoom__popover-target-scale"
+                        className={
+                            classNames({
+                                'rpv-zoom__popover-target-scale': true,
+                                'rpv-zoom__popover-target-scale--ltr': !isRtl,
+                                'rpv-zoom__popover-target-scale--rtl': isRtl,
+                            })
+                        }
+                    >
                         {Math.round(scale * 100)}%
                     </span>
                     <span className="rpv-zoom__popover-target-arrow" />
