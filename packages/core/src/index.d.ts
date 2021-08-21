@@ -360,6 +360,11 @@ export interface ZoomEvent {
     scale: number;
 }
 
+export interface ThemeProps {
+    direction?: TextDirection;
+    theme?: string;
+}
+
 export interface ViewerProps {
     characterMap?: CharacterMap;
     // The default zoom level
@@ -378,7 +383,7 @@ export interface ViewerProps {
     renderPage?: RenderPage;
     renderLoader?(percentages: number): React.ReactElement;
     // Theme
-    theme?: string;
+    theme?: string | ThemeProps;
     transformGetDocumentParams?(options: PdfJs.GetDocumentParams): PdfJs.GetDocumentParams;
     // Indicate the cross-site requests should be made with credentials such as cookie and authorization headers.
     // The default value is `false`

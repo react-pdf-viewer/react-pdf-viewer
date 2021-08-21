@@ -15,7 +15,7 @@ import { PageSizeCalculator } from './layouts/PageSizeCalculator';
 import { DocumentLoader, RenderError } from './loader/DocumentLoader';
 import { DefaultLocalization, LocalizationContext } from './localization/LocalizationContext';
 import { SpecialZoomLevel } from './structs/SpecialZoomLevel';
-import { ThemeContext } from './theme/ThemeContext';
+import { TextDirection, ThemeContext } from './theme/ThemeContext';
 import { withTheme } from './theme/withTheme';
 import { Plugin } from './types/Plugin';
 import { isSameUrl } from './utils/isSameUrl';
@@ -39,6 +39,11 @@ interface FileState {
     shouldLoad: boolean;
 }
 
+export interface ThemeProps {
+    direction?: TextDirection;
+    theme?: string;
+}
+
 export const Viewer: React.FC<{
     characterMap?: CharacterMap;
     // The default zoom level
@@ -57,7 +62,7 @@ export const Viewer: React.FC<{
     renderLoader?(percentages: number): React.ReactElement;
     transformGetDocumentParams?(options: PdfJs.GetDocumentParams): PdfJs.GetDocumentParams;
     // Theme
-    theme?: string;
+    theme?: string | ThemeProps;
     // Indicate the cross-site requests should be made with credentials such as cookie and authorization headers.
     // The default value is `false`
     withCredentials?: boolean;
@@ -78,7 +83,10 @@ export const Viewer: React.FC<{
     renderPage,
     renderLoader,
     transformGetDocumentParams,
-    theme = 'light',
+    theme = {
+        direction: TextDirection.LeftToRight,
+        theme: 'light',
+    },
     withCredentials = false,
     onDocumentLoad = () => {
         /**/
@@ -132,10 +140,11 @@ export const Viewer: React.FC<{
         onVisibilityChanged: visibilityChanged,
     });
 
-    // Manage contexts
+    // Manage contexts    
+    const themeProps = (typeof theme === 'string') ? { direction: TextDirection.LeftToRight, theme } : theme;
     const [l10n, setL10n] = React.useState(localization || DefaultLocalization);
     const localizationContext = { l10n, setL10n };
-    const themeContext = withTheme(theme, onSwitchTheme);
+    const themeContext = Object.assign({}, { direction: themeProps.direction }, withTheme(themeProps.theme, onSwitchTheme));
 
     React.useEffect(() => {
         if (localization) {
