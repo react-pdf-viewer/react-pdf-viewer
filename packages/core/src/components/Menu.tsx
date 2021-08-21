@@ -9,10 +9,14 @@
 import * as React from 'react';
 
 import { useIsomorphicLayoutEffect } from '../hooks/useIsomorphicLayoutEffect';
+import { TextDirection, ThemeContext } from '../theme/ThemeContext';
+import { classNames } from '../utils/classNames';
 
 export const Menu: React.FC = ({ children }) => {
     const containerRef = React.useRef<HTMLDivElement>();
     const visibleMenuItemsRef = React.useRef<HTMLElement[]>([]);
+    const { direction } = React.useContext(ThemeContext);
+    const isRtl = direction === TextDirection.RightToLeft;
 
     const handleKeyDown = (e: KeyboardEvent) => {
         const container = containerRef.current;
@@ -117,7 +121,18 @@ export const Menu: React.FC = ({ children }) => {
     }, []);
 
     return (
-        <div ref={containerRef} aria-orientation="vertical" className="rpv-core__menu" role="menu" tabIndex={0}>
+        <div
+            ref={containerRef}
+            aria-orientation="vertical"
+            className={
+                classNames({
+                    'rpv-core__menu': true,
+                    'rpv-core__menu--rtl': isRtl,
+                })
+            }
+            role="menu"
+            tabIndex={0}
+        >
             {children}
         </div>
     );
