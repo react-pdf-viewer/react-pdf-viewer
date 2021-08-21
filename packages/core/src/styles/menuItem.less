@@ -15,7 +15,6 @@
     display: flex;
     justify-content: center;
     padding: 0.25rem 0;
-    text-align: left;
 
     // The menu item can be placed inside a container, such as a modal target
     width: 100%;
@@ -33,20 +32,33 @@
         // Center the icon
         align-items: center;
         display: flex;
-
+    }
+    &-icon--ltr {
         padding-left: 1rem;
         padding-right: 0.5rem;
+    }
+    &-icon--rtl {
+        padding-left: 0.5rem;
+        padding-right: 1rem;
     }
 
     &-label {
         flex-grow: 1;
-        flex-shrink: 1;
-        padding-right: 2rem;
+        flex-shrink: 1;        
         white-space: nowrap;
     }
+    &-label--ltr {
+        padding-right: 2rem;
+    }
+    &-label--rtl {
+        padding-left: 2rem;
+    }
 
-    &-check {
+    &-check--ltr {
         padding-right: 1rem;
+    }
+    &-check--rtl {
+        padding-left: 1rem;
     }
 
     &--disabled {
@@ -55,5 +67,14 @@
 
     &--disabled:hover {
         background-color: transparent;
+    }
+
+    &--ltr {
+        text-align: left;
+    }
+    
+    &--rtl {
+        direction: rtl;
+        text-align: right;
     }
 }
