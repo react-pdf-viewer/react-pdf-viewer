@@ -7,7 +7,7 @@
  */
 
 import * as React from 'react';
-import { LocalizationContext, MinimalButton, Position, Tooltip } from '@react-pdf-viewer/core';
+import { classNames, LocalizationContext, MinimalButton, Position, TextDirection, ThemeContext, Tooltip } from '@react-pdf-viewer/core';
 import type { Store } from '@react-pdf-viewer/core';
 
 import { BookmarkIcon } from './BookmarkIcon';
@@ -29,7 +29,8 @@ interface SidebarProps {
     tabs?: (defaultTabs: SidebarTab[]) => SidebarTab[];
 }
 
-const TOOLTIP_OFFSET = { left: 8, top: 0 };
+const TOOLTIP_OFFSET_LTR = { left: 8, top: 0 };
+const TOOLTIP_OFFSET_RTL = { left: -8, top: 0 };
 
 export const Sidebar: React.FC<SidebarProps> = ({
     attachmentTabContent,
@@ -38,9 +39,11 @@ export const Sidebar: React.FC<SidebarProps> = ({
     thumbnailTabContent,
     tabs,
 }) => {
-    const { l10n } = React.useContext(LocalizationContext);
+    const { l10n } = React.useContext(LocalizationContext);    
     const [opened, setOpened] = React.useState(false);
     const [currentTab, setCurrentTab] = React.useState(store.get('currentTab') || 0);
+    const { direction } = React.useContext(ThemeContext);
+    const isRtl = direction === TextDirection.RightToLeft;
 
     const defaultTabs: SidebarTab[] = [
         {
@@ -80,7 +83,16 @@ export const Sidebar: React.FC<SidebarProps> = ({
     }, []);
 
     return (
-        <div className={`rpv-default-layout__sidebar ${opened ? 'rpv-default-layout__sidebar--opened' : ''}`}>
+        <div
+            className={
+                classNames({
+                    'rpv-default-layout__sidebar': true,
+                    'rpv-default-layout__sidebar--opened': opened,
+                    'rpv-default-layout__sidebar--ltr': !isRtl,
+                    'rpv-default-layout__sidebar--rtl': isRtl,
+                })
+            }
+        >
             <div className="rpv-default-layout__sidebar-tabs">
                 <div className="rpv-default-layout__sidebar-headers" role="tablist" aria-orientation="vertical">
                     {listTabs.map((tab, index) => (
@@ -94,7 +106,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                         >
                             <Tooltip
                                 ariaControlsSuffix={`default-layout-sidebar-tab-${index}`}
-                                position={Position.RightCenter}
+                                position={isRtl ? Position.LeftCenter : Position.RightCenter}
                                 target={
                                     <MinimalButton
                                         ariaLabel={tab.title}
@@ -105,7 +117,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                                     </MinimalButton>
                                 }
                                 content={() => tab.title}
-                                offset={TOOLTIP_OFFSET}
+                                offset={isRtl ? TOOLTIP_OFFSET_RTL : TOOLTIP_OFFSET_LTR}
                             />
                         </div>
                     ))}
@@ -113,9 +125,14 @@ export const Sidebar: React.FC<SidebarProps> = ({
                 <div
                     aria-labelledby={`rpv-default-layout__sidebar-tab-${currentTab}`}
                     id="rpv-default-layout__sidebar-content"
-                    className={`rpv-default-layout__sidebar-content ${
-                        opened ? 'rpv-default-layout__sidebar-content--opened' : ''
-                    }`}
+                    className={
+                        classNames({
+                            'rpv-default-layout__sidebar-content': true,
+                            'rpv-default-layout__sidebar-content--opened': opened,
+                            'rpv-default-layout__sidebar-content--ltr': !isRtl,
+                            'rpv-default-layout__sidebar-content--rtl': isRtl,
+                        })
+                    }
                     role="tabpanel"
                     tabIndex={-1}
                 >

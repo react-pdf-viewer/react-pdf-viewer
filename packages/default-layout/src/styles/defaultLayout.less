@@ -26,8 +26,6 @@
 }
 
 .rpv-default-layout__sidebar {
-    border-right: 1px solid var(--rpv-default-layout__sidebar-border-right-color);
-
     &--opened {
         /* Absolute position */
         left: 0;
@@ -41,6 +39,13 @@
         /* Display it on top of pages */
         background-color: var(--rpv-default-layout__sidebar--opened-background-color);
         z-index: 1;
+    }
+
+    &--ltr {
+        border-right: 1px solid var(--rpv-default-layout__sidebar-border-color);
+    }
+    &--rtl {
+        border-left: 1px solid var(--rpv-default-layout__sidebar-border-color);
     }
 }
 
