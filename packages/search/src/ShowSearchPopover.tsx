@@ -7,7 +7,7 @@
  */
 
 import * as React from 'react';
-import { Popover, Position } from '@react-pdf-viewer/core';
+import { Popover, Position, TextDirection, ThemeContext } from '@react-pdf-viewer/core';
 import type { Store, Toggle } from '@react-pdf-viewer/core';
 
 import { SearchPopover } from './SearchPopover';
@@ -27,13 +27,15 @@ export const ShowSearchPopover: React.FC<{
     children?: RenderShowSearchPopover;
     store: Store<StoreProps>;
 }> = ({ children, store }) => {
+    const { direction } = React.useContext(ThemeContext);
+    const portalPosition = direction === TextDirection.RightToLeft ? Position.BottomRight : Position.BottomLeft;
     const defaultChildren = (props: RenderShowSearchPopoverProps) => <ShowSearchPopoverButton {...props} />;
     const render = children || defaultChildren;
 
     return (
         <Popover
             ariaControlsSuffix="search"
-            position={Position.BottomLeft}
+            position={portalPosition}
             target={(toggle: Toggle) =>
                 render({
                     onClick: toggle,
