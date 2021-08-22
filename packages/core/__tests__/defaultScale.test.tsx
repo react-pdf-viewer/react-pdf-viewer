@@ -13,11 +13,7 @@ const TestDefaultScaleSpecialZoomLevel: React.FC<{
     const defaultLayoutPluginInstance = defaultLayoutPlugin();
 
     return (
-        <Viewer
-            fileUrl={fileUrl}
-            defaultScale={SpecialZoomLevel.PageWidth}
-            plugins={[defaultLayoutPluginInstance]}
-        />
+        <Viewer fileUrl={fileUrl} defaultScale={SpecialZoomLevel.PageWidth} plugins={[defaultLayoutPluginInstance]} />
     );
 };
 
@@ -61,6 +57,33 @@ test('Set defaultScale as a special zoom level', async () => {
 
     // Users shouldn't see a scrollbar
     // See the issue #698
-    const pagesContainer = await findByTestId('zoom__popover-target-scale');
-    expect(pagesContainer.innerHTML).toEqual('107%');
+    const currentScale = await findByTestId('zoom__popover-target-scale');
+    expect(currentScale.innerHTML).toEqual('107%');
+});
+
+test('Keep special defaultScale after resizing', async () => {
+    const App = () => (
+        <div style={{ height: '720px', width: '720px' }}>
+            <TestDefaultScaleSpecialZoomLevel fileUrl={global['__MULTIPLE_PAGES_PDF__']} />
+        </div>
+    );
+    const { getByTestId, findByTestId, findByText } = render(<App />);
+    const rootEle = getByTestId('viewer');
+    mockIsIntersecting(rootEle, true);
+
+    rootEle['__jsdomMockClientHeight'] = 720;
+    rootEle['__jsdomMockClientWidth'] = 720;
+
+    const firstPage = await findByTestId('viewer-page-layer-0');
+    mockIsIntersecting(firstPage, true);
+
+    const layoutBody = await findByTestId('default-layout__body');
+
+    // Resize
+    layoutBody['__jsdomMockClientHeight'] = 677;
+    layoutBody['__jsdomMockClientWidth'] = 553;
+    mockResize(layoutBody);
+
+    const currentScale = await findByTestId('zoom__popover-target-scale');
+    expect(currentScale.innerHTML).toEqual('88%');
 });

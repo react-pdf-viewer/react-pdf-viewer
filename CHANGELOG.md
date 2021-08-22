@@ -21,6 +21,7 @@ setTargetPages((targetPage) => targetPage.pageIndex === 3);
 **Improvement**
 
 -   Allow to change the theme from outside of the `Viewer` component
+-   When the default scale is set to a special zoom level, we should keep it when resizing the window
 -   The `onDocumentLoad` event and plugins' `PluginOnDocumentLoad` callback provide access to the current opened file which contains the `data` and `name` properties:
 
 ```js
