@@ -12,17 +12,21 @@ import { PageLayer } from '../layers/PageLayer';
 import { LocalizationContext } from '../localization/LocalizationContext';
 import { SpecialZoomLevel } from '../structs/SpecialZoomLevel';
 import { getFileExt } from '../utils/getFileExt';
-import { DocumentLoadEvent, PageChangeEvent, ZoomEvent } from '../Viewer';
 import { calculateScale } from './calculateScale';
 import type { PageSize } from '../types/PageSize';
+import type { DocumentLoadEvent } from '../types/DocumentLoadEvent';
+import type { OpenFile } from '../types/OpenFile';
+import type { PageChangeEvent } from '../types/PageChangeEvent';
 import type { PdfJs } from '../types/PdfJs';
 import type { Plugin } from '../types/Plugin';
 import type { PluginFunctions } from '../types/PluginFunctions';
 import type { RenderPage } from '../types/RenderPage';
 import type { Slot } from '../types/Slot';
 import type { ViewerState } from '../types/ViewerState';
+import type { ZoomEvent } from '../types/ZoomEvent';
 
 export const Inner: React.FC<{
+    currentFile: OpenFile;
     doc: PdfJs.PdfDocument;
     initialPage?: number;
     pageSize: PageSize;
@@ -34,6 +38,7 @@ export const Inner: React.FC<{
     onPageChange(e: PageChangeEvent): void;
     onZoom(e: ZoomEvent): void;
 }> = ({
+    currentFile,
     doc,
     initialPage,
     pageSize,
@@ -241,10 +246,10 @@ export const Inner: React.FC<{
     }, []);
 
     React.useEffect(() => {
-        onDocumentLoad({ doc });
+        onDocumentLoad({ doc, file: currentFile });
         // Loop over the plugins
         plugins.forEach((plugin) => {
-            plugin.onDocumentLoad && plugin.onDocumentLoad({ doc });
+            plugin.onDocumentLoad && plugin.onDocumentLoad({ doc, file: currentFile });
         });
         if (initialPage) {
             jumpToPage(initialPage);

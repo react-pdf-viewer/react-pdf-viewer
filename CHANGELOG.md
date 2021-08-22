@@ -21,6 +21,15 @@ setTargetPages((targetPage) => targetPage.pageIndex === 3);
 **Improvement**
 
 -   Allow to change the theme from outside of the `Viewer` component
+-   The `onDocumentLoad` event and plugins' `PluginOnDocumentLoad` callback provide access to the current opened file which contains the `data` and `name` properties:
+
+```js
+const handleDocumentLoad = (e: DocumentLoadEvent) => {
+    console.log(e.file.name, e.file.data);
+};
+
+<Viewer onDocumentLoad={handleDocumentLoad} />;
+```
 
 **Bug fixes**
 
