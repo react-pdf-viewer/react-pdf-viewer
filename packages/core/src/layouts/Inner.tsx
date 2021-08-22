@@ -8,6 +8,7 @@
 
 import * as React from 'react';
 
+import { useTrackResize } from '../hooks/useTrackResize';
 import { PageLayer } from '../layers/PageLayer';
 import { LocalizationContext } from '../localization/LocalizationContext';
 import { SpecialZoomLevel } from '../structs/SpecialZoomLevel';
@@ -27,6 +28,7 @@ import type { ZoomEvent } from '../types/ZoomEvent';
 
 export const Inner: React.FC<{
     currentFile: OpenFile;
+    defaultScale?: number | SpecialZoomLevel;
     doc: PdfJs.PdfDocument;
     initialPage?: number;
     pageSize: PageSize;
@@ -39,6 +41,7 @@ export const Inner: React.FC<{
     onZoom(e: ZoomEvent): void;
 }> = ({
     currentFile,
+    defaultScale,
     doc,
     initialPage,
     pageSize,
@@ -57,6 +60,17 @@ export const Inner: React.FC<{
     const [rotation, setRotation] = React.useState(0);
     const stateRef = React.useRef<ViewerState>(viewerState);
     const [scale, setScale] = React.useState(pageSize.scale);
+
+    const handlePagesResize = (target: Element) => {
+        if (typeof defaultScale === 'string') {
+            zoom(defaultScale);
+        }
+    };
+
+    useTrackResize({
+        targetRef: pagesRef,
+        onResize: handlePagesResize,
+    });
 
     const { numPages } = doc;
     const { pageWidth, pageHeight } = pageSize;
@@ -184,6 +198,7 @@ export const Inner: React.FC<{
                 ? calculateScale(pagesEle, pageHeight, pageWidth, newScale)
                 : newScale
             : 1;
+
         setScale(updateScale);
         onZoom({ doc, scale: updateScale });
     };

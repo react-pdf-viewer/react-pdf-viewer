@@ -1,10 +1,25 @@
-const fs = require('fs');
-const path = require('path');
-
 import '@testing-library/jest-dom/extend-expect';
 
 // The main viewer renders a canvas which uses the Canvas API
 import 'jest-canvas-mock';
+
+import { SimpleMockResizeObserver } from './SimpleMockResizeObserver';
+global.ResizeObserver = SimpleMockResizeObserver;
+
+// Mock clientWidth, clientHeight
+Object.defineProperty(window.HTMLElement.prototype, 'clientHeight', {
+    get: function () {
+        return this.__jsdomMockClientHeight || 0;
+    },
+});
+Object.defineProperty(window.HTMLElement.prototype, 'clientWidth', {
+    get: function () {
+        return this.__jsdomMockClientWidth || 0;
+    },
+});
+
+const fs = require('fs');
+const path = require('path');
 
 // Read data from files and make them available for all tests
 const HELLO_PDF = new Uint8Array([
