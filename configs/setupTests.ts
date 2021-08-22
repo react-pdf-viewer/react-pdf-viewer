@@ -1,10 +1,13 @@
-const fs = require('fs');
-const path = require('path');
-
 import '@testing-library/jest-dom/extend-expect';
+import { MockResizeObserver } from './mockResizeObserver';
 
 // The main viewer renders a canvas which uses the Canvas API
 import 'jest-canvas-mock';
+
+global.ResizeObserver = MockResizeObserver;
+
+const fs = require('fs');
+const path = require('path');
 
 // Read data from files and make them available for all tests
 const HELLO_PDF = new Uint8Array([
