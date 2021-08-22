@@ -60,10 +60,13 @@ export const Inner: React.FC<{
     const [rotation, setRotation] = React.useState(0);
     const stateRef = React.useRef<ViewerState>(viewerState);
     const [scale, setScale] = React.useState(pageSize.scale);
+    const keepSpecialZoomLevelRef = React.useRef<SpecialZoomLevel | null>(
+        typeof defaultScale === 'string' ? defaultScale : null
+    );
 
     const handlePagesResize = (target: Element) => {
-        if (typeof defaultScale === 'string') {
-            zoom(defaultScale);
+        if (keepSpecialZoomLevelRef.current) {
+            zoom(keepSpecialZoomLevelRef.current);
         }
     };
 
@@ -198,6 +201,8 @@ export const Inner: React.FC<{
                 ? calculateScale(pagesEle, pageHeight, pageWidth, newScale)
                 : newScale
             : 1;
+
+        keepSpecialZoomLevelRef.current = typeof newScale === 'string' ? newScale : null;
 
         setScale(updateScale);
         onZoom({ doc, scale: updateScale });

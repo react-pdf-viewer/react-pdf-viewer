@@ -13,11 +13,7 @@ const TestDefaultScaleSpecialZoomLevel: React.FC<{
     const defaultLayoutPluginInstance = defaultLayoutPlugin();
 
     return (
-        <Viewer
-            fileUrl={fileUrl}
-            defaultScale={SpecialZoomLevel.PageWidth}
-            plugins={[defaultLayoutPluginInstance]}
-        />
+        <Viewer fileUrl={fileUrl} defaultScale={SpecialZoomLevel.PageWidth} plugins={[defaultLayoutPluginInstance]} />
     );
 };
 
