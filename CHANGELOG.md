@@ -2,6 +2,22 @@
 
 ## v2.7.2
 
+**New feature**
+The `Search` plugin provides new function named `setTargetPages` which sets the pages that you want to search in.
+
+```js
+import { searchPlugin } from '@react-pdf-viewer/search';
+
+const searchPluginInstance = searchPlugin();
+const { setTargetPages } = searchPluginInstance;
+
+// Only search in even pages
+setTargetPages((targetPage) => targetPage.pageIndex % 2 === 0);
+
+// Only search in the page 4
+setTargetPages((targetPage) => targetPage.pageIndex === 3);
+```
+
 **Improvement**
 
 -   Allow to change the theme from outside of the `Viewer` component

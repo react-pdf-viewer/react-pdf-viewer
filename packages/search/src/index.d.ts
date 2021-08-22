@@ -46,6 +46,12 @@ export interface RenderShowSearchPopoverProps {
 
 export type SingleKeyword = string | RegExp | FlagKeyword;
 
+export interface SearchTargetPage {
+    numPages: number;
+    pageIndex: number;
+}
+export type SearchTargetPageFilter = (targetPage: SearchTargetPage) => boolean;
+
 export interface RenderSearchProps {
     clearKeyword(): void;
     changeMatchCase(matchCase: boolean): void;
@@ -60,6 +66,7 @@ export interface RenderSearchProps {
     wholeWords: boolean;
     search(): Promise<Match[]>;
     setKeyword(keyword: string): void;
+    setTargetPages(targetPageFilter: SearchTargetPageFilter): void;
 }
 
 export interface SearchProps {
@@ -80,6 +87,7 @@ export interface SearchPlugin extends Plugin {
     jumpToMatch(index: number): Match | null;
     jumpToNextMatch(): Match | null;
     jumpToPreviousMatch(): Match | null;
+    setTargetPages(targetPageFilter: SearchTargetPageFilter): void;
 }
 
 export interface SearchPluginProps {

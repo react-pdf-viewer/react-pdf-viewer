@@ -10,6 +10,7 @@ import { SpecialZoomLevel } from '@react-pdf-viewer/core';
 import type { PdfJs, PluginOnTextLayerRender } from '@react-pdf-viewer/core';
 
 import type { MatchPosition } from './MatchPosition';
+import type { SearchTargetPageFilter } from './SearchTargetPage';
 
 export interface StoreProps {
     doc?: PdfJs.PdfDocument;
@@ -23,4 +24,5 @@ export interface StoreProps {
         scaleTo: number | SpecialZoomLevel
     ): void;
     jumpToPage?(pageIndex: number): void;
+    targetPageFilter?: SearchTargetPageFilter;
 }
