@@ -6,7 +6,7 @@ const Index = () => {
     const defaultLayoutPluginInstance = defaultLayoutPlugin();
 
     return (
-        <Worker workerUrl="https://unpkg.com/pdfjs-dist@2.6.347/build/pdf.worker.js">
+        <Worker workerUrl="https://unpkg.com/pdfjs-dist@2.9.359/build/pdf.worker.js">
             <div className="demo">
                 <Viewer fileUrl="pdf-open-parameters.pdf" plugins={[defaultLayoutPluginInstance]} />
             </div>
