@@ -1,10 +1,19 @@
 import '@testing-library/jest-dom/extend-expect';
-import { MockResizeObserver } from './mockResizeObserver';
 
 // The main viewer renders a canvas which uses the Canvas API
 import 'jest-canvas-mock';
 
-global.ResizeObserver = MockResizeObserver;
+// Mock clientWidth, clientHeight
+Object.defineProperty(window.HTMLElement.prototype, 'clientHeight', {
+    get: function () {
+        return this.__jsdomMockClientHeight || 0;
+    },
+});
+Object.defineProperty(window.HTMLElement.prototype, 'clientWidth', {
+    get: function () {
+        return this.__jsdomMockClientWidth || 0;
+    },
+});
 
 const fs = require('fs');
 const path = require('path');

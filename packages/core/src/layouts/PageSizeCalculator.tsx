@@ -37,14 +37,16 @@ export const PageSizeCalculator: React.FC<{
             if (!pagesEle) {
                 return;
             }
+            // The `pagesRef` element will be destroyed when the size calculation is completed
+            // To make it more easy for testing, we take the parent element which is always visible
+            const parentEle = pagesEle.parentElement;
 
             // Determine the best scale that fits the document within the container
-            // We spend 50 pixels in the left and right sides for other parts such as sidebar
-            const scaled = (pagesEle.clientWidth - 2 * 50) / w;
+            const scaled = parentEle.clientWidth / w;
 
             let scale = defaultScale
                 ? typeof defaultScale === 'string'
-                    ? calculateScale(pagesEle, h, w, defaultScale)
+                    ? calculateScale(parentEle, h, w, defaultScale)
                     : defaultScale
                 : decrease(scaled);
 

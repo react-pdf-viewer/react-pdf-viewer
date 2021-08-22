@@ -46,7 +46,9 @@ export const ZoomPopover: React.FC<RenderZoomProps> = ({ scale, onZoom }) => {
         return (
             <MinimalButton ariaLabel={zoomDocumentLabel as string} onClick={click}>
                 <span className="rpv-zoom__popover-target">
-                    <span className="rpv-zoom__popover-target-scale">{Math.round(scale * 100)}%</span>
+                    <span className="rpv-zoom__popover-target-scale" data-testid="zoom__popover-target-scale">
+                        {Math.round(scale * 100)}%
+                    </span>
                     <span className="rpv-zoom__popover-target-arrow" />
                 </span>
             </MinimalButton>
