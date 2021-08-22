@@ -168,6 +168,7 @@ export const Viewer: React.FC<{
                                                 data: file.data,
                                                 name: file.name,
                                             }}
+                                            defaultScale={defaultScale}
                                             doc={doc}
                                             initialPage={initialPage}
                                             pageSize={ps}
