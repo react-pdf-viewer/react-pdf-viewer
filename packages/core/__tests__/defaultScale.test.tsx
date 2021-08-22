@@ -15,7 +15,6 @@ const TestDefaultScaleSpecialZoomLevel: React.FC<{
     return (
         <Viewer
             fileUrl={fileUrl}
-            // defaultScale={SpecialZoomLevel.PageWidth}
             defaultScale={SpecialZoomLevel.PageWidth}
             plugins={[defaultLayoutPluginInstance]}
         />
