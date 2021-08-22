@@ -51,6 +51,7 @@ export interface PluginFunctions {
 }
 export interface PluginOnDocumentLoad {
     doc: PdfJs.PdfDocument;
+    file: OpenFile;
 }
 export interface PluginOnTextLayerRender {
     ele: HTMLElement;
@@ -338,6 +339,7 @@ export type RenderError = (error: LoadError) => React.ReactElement;
 // Invoked when the document is loaded successfully
 export interface DocumentLoadEvent {
     doc: PdfJs.PdfDocument;
+    file: OpenFile;
 }
 
 // Invoked when users change the current page

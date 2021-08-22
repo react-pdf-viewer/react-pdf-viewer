@@ -6,9 +6,11 @@
  * @copyright 2019-2021 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
+export * from './DocumentLoadEvent';
 export * from './LocalizationMap';
 export * from './Offset';
 export * from './OpenFile';
+export * from './PageChangeEvent';
 export * from './PdfJs';
 export * from './PageSize';
 export * from './Plugin';
@@ -20,3 +22,4 @@ export * from './Store';
 export * from './Toggle';
 export * from './ViewerState';
 export * from './VisibilityChanged';
+export * from './ZoomEvent';

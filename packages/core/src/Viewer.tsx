@@ -19,23 +19,14 @@ import { ThemeContext } from './theme/ThemeContext';
 import { withTheme } from './theme/withTheme';
 import { Plugin } from './types/Plugin';
 import { isSameUrl } from './utils/isSameUrl';
+import type { DocumentLoadEvent } from './types/DocumentLoadEvent';
 import type { LocalizationMap } from './types/LocalizationMap';
+import type { PageChangeEvent } from './types/PageChangeEvent';
 import type { PageSize } from './types/PageSize';
 import type { PdfJs } from './types/PdfJs';
 import type { RenderPage } from './types/RenderPage';
 import type { VisibilityChanged } from './types/VisibilityChanged';
-
-export interface DocumentLoadEvent {
-    doc: PdfJs.PdfDocument;
-}
-export interface PageChangeEvent {
-    currentPage: number;
-    doc: PdfJs.PdfDocument;
-}
-export interface ZoomEvent {
-    doc: PdfJs.PdfDocument;
-    scale: number;
-}
+import type { ZoomEvent } from './types/ZoomEvent';
 
 export interface CharacterMap {
     isCompressed: boolean;
@@ -173,6 +164,10 @@ export const Viewer: React.FC<{
                                     doc={doc}
                                     render={(ps: PageSize) => (
                                         <Inner
+                                            currentFile={{
+                                                data: file.data,
+                                                name: file.name,
+                                            }}
                                             doc={doc}
                                             initialPage={initialPage}
                                             pageSize={ps}
