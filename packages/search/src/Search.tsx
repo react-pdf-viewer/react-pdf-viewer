@@ -11,6 +11,7 @@ import type { Store } from '@react-pdf-viewer/core';
 
 import { useSearch } from './useSearch';
 import type { Match } from './types/Match';
+import type { SearchTargetPageFilter } from './types/SearchTargetPage';
 import type { StoreProps } from './types/StoreProps';
 
 export interface RenderSearchProps {
@@ -27,6 +28,7 @@ export interface RenderSearchProps {
     wholeWords: boolean;
     search(): Promise<Match[]>;
     setKeyword(keyword: string): void;
+    setTargetPages(targetPageFilter: SearchTargetPageFilter): void;
 }
 
 type RenderSearch = (props: RenderSearchProps) => React.ReactElement;

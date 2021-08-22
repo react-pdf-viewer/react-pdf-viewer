@@ -13,6 +13,7 @@ import { EMPTY_KEYWORD_REGEXP } from './constants';
 import { normalizeSingleKeyword } from './normalizeKeyword';
 import { useDocument } from './useDocument';
 import type { Match } from './types/Match';
+import type { SearchTargetPageFilter } from './types/SearchTargetPage';
 import type { SingleKeyword } from './types/SingleKeyword';
 import type { StoreProps } from './types/StoreProps';
 
@@ -33,6 +34,7 @@ export const useSearch = (
     search(): Promise<Match[]>;
     setKeywords(keyword: SingleKeyword[]): void;
     searchFor(keyword: SingleKeyword[], matchCase?: boolean, wholeWords?: boolean): Promise<Match[]>;
+    setTargetPages(targetPageFilter: SearchTargetPageFilter): void;
     // Compatible with the single keyword search
     keyword: string;
     setKeyword(keyword: string): void;
@@ -44,6 +46,12 @@ export const useSearch = (
     const [matchCase, setMatchCase] = React.useState(false);
     const textContents = React.useRef<string[]>([]);
     const [wholeWords, setWholeWords] = React.useState(false);
+
+    const defaultTargetPageFilter = () => true;
+    const targetPageFilter = React.useCallback(
+        () => store.get('targetPageFilter') || defaultTargetPageFilter,
+        [store.get('targetPageFilter')]
+    );
 
     const changeMatchCase = (isChecked: boolean): void => {
         setMatchCase(isChecked);
@@ -92,6 +100,10 @@ export const useSearch = (
     const search = () => searchFor(keywords, matchCase, wholeWords);
 
     const setKeyword = (keyword: string) => setKeywords(keyword === '' ? [] : [keyword]);
+
+    const setTargetPages = (targetPageFilter: SearchTargetPageFilter) => {
+        store.update('targetPageFilter', targetPageFilter);
+    };
 
     // Private
     // -------
@@ -151,6 +163,12 @@ export const useSearch = (
         matchCaseParam?: boolean,
         wholeWordsParam?: boolean
     ): Promise<Match[]> => {
+        const currentDoc = currentDocRef.current;
+        if (!currentDoc) {
+            return Promise.resolve([]);
+        }
+
+        const numPages = currentDoc.numPages;
         const keywords = keywordParam.map((k) => normalizeSingleKeyword(k, matchCaseParam, wholeWordsParam));
         store.update('keyword', keywords);
 
@@ -170,21 +188,23 @@ export const useSearch = (
             getTextPromise.then((response) => {
                 const arr: Match[] = [];
                 response.forEach((pageText, pageIndex) => {
-                    keywords.forEach((keyword) => {
-                        let matchIndex = 0;
-                        let matches: RegExpExecArray | null;
-                        while ((matches = keyword.exec(pageText)) !== null) {
-                            arr.push({
-                                keyword,
-                                matchIndex,
-                                pageIndex,
-                                pageText,
-                                startIndex: matches.index,
-                                endIndex: keyword.lastIndex,
-                            });
-                            matchIndex++;
-                        }
-                    });
+                    if (targetPageFilter()({ pageIndex, numPages })) {
+                        keywords.forEach((keyword) => {
+                            let matchIndex = 0;
+                            let matches: RegExpExecArray | null;
+                            while ((matches = keyword.exec(pageText)) !== null) {
+                                arr.push({
+                                    keyword,
+                                    matchIndex,
+                                    pageIndex,
+                                    pageText,
+                                    startIndex: matches.index,
+                                    endIndex: keyword.lastIndex,
+                                });
+                                matchIndex++;
+                            }
+                        });
+                    }
                 });
                 setFound(arr);
                 if (arr.length > 0) {
@@ -220,5 +240,6 @@ export const useSearch = (
         // Compatible with the single keyword search
         keyword: keywords.length === 0 ? '' : getKeywordSource(keywords[0]),
         setKeyword,
+        setTargetPages,
     };
 };

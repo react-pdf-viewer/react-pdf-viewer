@@ -63,9 +63,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
     const listTabs = tabs ? tabs(defaultTabs) : defaultTabs;
 
     const toggleTab = (index: number) => {
-        currentTab === index
-            ? setOpened((isOpened) => !isOpened)
-            : switchToTab(index);
+        currentTab === index ? setOpened((isOpened) => !isOpened) : switchToTab(index);
     };
 
     const switchToTab = (index: number) => {

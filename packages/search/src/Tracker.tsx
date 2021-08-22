@@ -36,10 +36,11 @@ interface CharIndex {
 }
 
 export const Tracker: React.FC<{
+    numPages: number;
     pageIndex: number;
     store: Store<StoreProps>;
     onHighlightKeyword?(props: OnHighlightKeyword): void;
-}> = ({ pageIndex, store, onHighlightKeyword }) => {
+}> = ({ numPages, pageIndex, store, onHighlightKeyword }) => {
     const [matchPosition, setMatchPosition] = React.useState<MatchPosition>({
         matchIndex: -1,
         pageIndex: -1,
@@ -52,6 +53,12 @@ export const Tracker: React.FC<{
     });
     const currentMatchRef = React.useRef<HTMLElement | null>(null);
     const characterIndexesRef = React.useRef<CharIndex[]>([]);
+
+    const defaultTargetPageFilter = () => true;
+    const targetPageFilter = React.useCallback(
+        () => store.get('targetPageFilter') || defaultTargetPageFilter,
+        [store.get('targetPageFilter')]
+    );
 
     const unhighlightAll = (containerEle: HTMLElement): void => {
         const highlightNodes = containerEle.querySelectorAll('span.rpv-search__highlight');
@@ -218,7 +225,12 @@ export const Tracker: React.FC<{
     }, [keywordRegexp, renderStatus.status]);
 
     React.useEffect(() => {
-        if (isEmptyKeyword() || !renderStatus.ele || renderStatus.status !== LayerRenderStatus.DidRender) {
+        if (
+            isEmptyKeyword() ||
+            !renderStatus.ele ||
+            renderStatus.status !== LayerRenderStatus.DidRender ||
+            !targetPageFilter()({ pageIndex, numPages })
+        ) {
             return;
         }
 

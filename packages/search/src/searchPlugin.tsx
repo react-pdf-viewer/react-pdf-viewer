@@ -26,6 +26,7 @@ import { Tracker } from './Tracker';
 import { useSearch } from './useSearch';
 import type { OnHighlightKeyword } from './types/OnHighlightKeyword';
 import type { Match } from './types/Match';
+import type { SearchTargetPageFilter } from './types/SearchTargetPage';
 import type { SingleKeyword } from './types/SingleKeyword';
 import type { StoreProps } from './types/StoreProps';
 
@@ -38,6 +39,7 @@ export interface SearchPlugin extends Plugin {
     jumpToMatch(index: number): Match | null;
     jumpToNextMatch(): Match | null;
     jumpToPreviousMatch(): Match | null;
+    setTargetPages(targetPageFilter: SearchTargetPageFilter): void;
 }
 
 export interface SearchPluginProps {
@@ -59,7 +61,7 @@ export const searchPlugin = (props?: SearchPluginProps): SearchPlugin => {
             }),
         []
     );
-    const { clearKeyword, jumpToMatch, jumpToNextMatch, jumpToPreviousMatch, searchFor, setKeywords } =
+    const { clearKeyword, jumpToMatch, jumpToNextMatch, jumpToPreviousMatch, searchFor, setKeywords, setTargetPages } =
         useSearch(store);
 
     const SearchDecorator = (props: SearchProps) => <Search {...props} store={store} />;
@@ -82,6 +84,7 @@ export const searchPlugin = (props?: SearchPluginProps): SearchPlugin => {
                         .map((_, index) => (
                             <Tracker
                                 key={index}
+                                numPages={renderViewerProps.doc.numPages}
                                 pageIndex={index}
                                 store={store}
                                 onHighlightKeyword={onHighlightKeyword}
@@ -138,5 +141,6 @@ export const searchPlugin = (props?: SearchPluginProps): SearchPlugin => {
         jumpToMatch,
         jumpToNextMatch,
         jumpToPreviousMatch,
+        setTargetPages,
     };
 };
