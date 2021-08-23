@@ -3,6 +3,7 @@
 ## v2.7.2
 
 **New feature**
+
 The `Search` plugin provides new function named `setTargetPages` which sets the pages that you want to search in.
 
 ```js
@@ -18,7 +19,7 @@ setTargetPages((targetPage) => targetPage.pageIndex % 2 === 0);
 setTargetPages((targetPage) => targetPage.pageIndex === 3);
 ```
 
-**Improvement**
+**Improvements**
 
 -   Allow to change the theme from outside of the `Viewer` component
 -   When the default scale is set to a special zoom level, we should keep it when resizing the window
