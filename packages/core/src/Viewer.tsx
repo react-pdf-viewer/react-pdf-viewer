@@ -13,7 +13,7 @@ import { usePrevious } from './hooks/usePrevious';
 import { Inner } from './layouts/Inner';
 import { PageSizeCalculator } from './layouts/PageSizeCalculator';
 import { DocumentLoader, RenderError } from './loader/DocumentLoader';
-import { LocalizationContext } from './localization/LocalizationContext';
+import { DefaultLocalization, LocalizationContext } from './localization/LocalizationContext';
 import { SpecialZoomLevel } from './structs/SpecialZoomLevel';
 import { ThemeContext } from './theme/ThemeContext';
 import { withTheme } from './theme/withTheme';
@@ -133,12 +133,14 @@ export const Viewer: React.FC<{
     });
 
     // Manage contexts
-    const [l10n, setL10n] = React.useState(localization);
+    const [l10n, setL10n] = React.useState(localization || DefaultLocalization);
     const localizationContext = { l10n, setL10n };
     const themeContext = withTheme(theme, onSwitchTheme);
 
     React.useEffect(() => {
-        setL10n(localization);
+        if (localization) {
+            setL10n(localization);
+        }
     }, [localization]);
 
     return (

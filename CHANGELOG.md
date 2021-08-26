@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## v2.8.0 [WIP]
+
+**Bug fix**
+
+-   There is an exception when opening a password protected document
+
 ## v2.7.2
 
 **New feature**
