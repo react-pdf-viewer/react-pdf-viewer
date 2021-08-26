@@ -8,15 +8,26 @@
 
 import * as React from 'react';
 
+import { TextDirection, ThemeContext } from '../theme/ThemeContext';
+import { classNames } from '../utils/classNames';
+
 export const Icon: React.FC<{
+    // If this option is `true`, the icon will not be flipped
+    ignoreDirection?: boolean;
     size?: number;
-}> = ({ children, size = 24 }) => {
+}> = ({ children, ignoreDirection = false, size = 24 }) => {
+    const { direction } = React.useContext(ThemeContext);
+    const isRtl = !ignoreDirection && direction === TextDirection.RightToLeft;
+
     const width = `${size || 24}px`;
 
     return (
         <svg
             aria-hidden="true"
-            className="rpv-core__icon"
+            className={classNames({
+                'rpv-core__icon': true,
+                'rpv-core__icon--rtl': isRtl,
+            })}
             focusable="false"
             height={width}
             viewBox="0 0 24 24"

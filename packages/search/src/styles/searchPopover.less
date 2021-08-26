@@ -21,10 +21,16 @@
         align-items: center;
         bottom: 0;
         display: flex;
-        padding-right: 0.25rem;
         position: absolute;
-        right: 0;
         top: 0;
+    }
+    &-counter--ltr {
+        padding-right: 0.25rem;
+        right: 0;
+    }
+    &-counter--rtl {
+        left: 0;
+        padding-left: 0.25rem;
     }
 
     &-label {
@@ -46,7 +52,10 @@
         padding: 0 0.25rem;
     }
 
-    &-footer-button {
+    &-footer-button--ltr {
         margin-left: auto;
+    }
+    &-footer-button--rtl {
+        margin-right: auto;
     }
 }

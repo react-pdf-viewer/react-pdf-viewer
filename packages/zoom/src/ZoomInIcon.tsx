@@ -10,7 +10,7 @@ import * as React from 'react';
 import { Icon } from '@react-pdf-viewer/core';
 
 export const ZoomInIcon: React.FC = () => (
-    <Icon size={16}>
+    <Icon ignoreDirection={true} size={16}>
         <path
             d={`M10.5,0.499c5.523,0,10,4.477,10,10s-4.477,10-10,10s-10-4.477-10-10S4.977,0.499,10.5,0.499z
             M23.5,23.499

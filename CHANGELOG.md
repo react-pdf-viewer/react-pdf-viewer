@@ -2,6 +2,22 @@
 
 ## v2.8.0 [WIP]
 
+**New features**
+
+-   Support RTL
+
+```js
+import { TextDirection, Viewer } from '@react-pdf-viewer/core';
+
+<Viewer
+    theme={{
+        direction: TextDirection.RightToLeft,
+    }}
+/>;
+```
+
+-   The `RenderViewer` type includes the theme context
+
 **Bug fix**
 
 -   There is an exception when opening a password protected document

@@ -8,12 +8,15 @@
 
 import * as React from 'react';
 import {
+    classNames,
     Button,
     LocalizationContext,
     MinimalButton,
     Position,
     Spinner,
     TextBox,
+    TextDirection,
+    ThemeContext,
     Tooltip,
 } from '@react-pdf-viewer/core';
 import type { Store } from '@react-pdf-viewer/core';
@@ -30,7 +33,9 @@ export const SearchPopover: React.FC<{
     onToggle(): void;
 }> = ({ store, onToggle }) => {
     const { l10n } = React.useContext(LocalizationContext);
+    const { direction } = React.useContext(ThemeContext);
     const [isQuerying, setIsQuerying] = React.useState(false);
+    const isRtl = direction === TextDirection.RightToLeft;
 
     const {
         clearKeyword,
@@ -84,7 +89,13 @@ export const SearchPopover: React.FC<{
                     onChange={setKeyword}
                     onKeyDown={onKeydownSearch}
                 />
-                <div className="rpv-search__popover-counter">
+                <div
+                    className={classNames({
+                        'rpv-search__popover-counter': true,
+                        'rpv-search__popover-counter--ltr': !isRtl,
+                        'rpv-search__popover-counter--rtl': isRtl,
+                    })}
+                >
                     {isQuerying && <Spinner size="1rem" />}
                     {!isQuerying && (
                         <span>
@@ -115,7 +126,7 @@ export const SearchPopover: React.FC<{
                 <div className="rpv-search__popover-footer-item">
                     <Tooltip
                         ariaControlsSuffix="search-previous-match"
-                        position={Position.BottomCenter}
+                        position={isRtl ? Position.BottomRight : Position.BottomCenter}
                         target={
                             <MinimalButton
                                 ariaLabel={previousMatchLabel as string}
@@ -146,7 +157,13 @@ export const SearchPopover: React.FC<{
                         offset={PORTAL_OFFSET}
                     />
                 </div>
-                <div className="rpv-search__popover-footer-button">
+                <div
+                    className={classNames({
+                        'rpv-search__popover-footer-button': true,
+                        'rpv-search__popover-footer-button--ltr': !isRtl,
+                        'rpv-search__popover-footer-button--rtl': isRtl,
+                    })}
+                >
                     <Button onClick={onClose}>{l10n && l10n.search ? l10n.search.close : 'Close'}</Button>
                 </div>
             </div>

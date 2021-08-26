@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { SpecialZoomLevel, Viewer, Worker } from '@react-pdf-viewer/core';
+import { SpecialZoomLevel, TextDirection, Viewer, Worker } from '@react-pdf-viewer/core';
 import { defaultLayoutPlugin } from '@react-pdf-viewer/default-layout';
 
 const Index = () => {
@@ -11,6 +11,9 @@ const Index = () => {
                 <Viewer
                     fileUrl="pdf-open-parameters.pdf"
                     defaultScale={SpecialZoomLevel.PageWidth}
+                    theme={{
+                        direction: TextDirection.RightToLeft,
+                    }}
                     plugins={[defaultLayoutPluginInstance]}
                 />
             </div>

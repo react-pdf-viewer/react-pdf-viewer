@@ -14,6 +14,8 @@ import {
     MinimalButton,
     Popover,
     Position,
+    TextDirection,
+    ThemeContext,
     Tooltip,
 } from '@react-pdf-viewer/core';
 import type { Toggle } from '@react-pdf-viewer/core';
@@ -29,6 +31,8 @@ export const MoreActionsPopover: React.FC<{
     toolbarSlot: ToolbarSlot;
 }> = ({ toolbarSlot }) => {
     const { l10n } = React.useContext(LocalizationContext);
+    const { direction } = React.useContext(ThemeContext);
+    const portalPosition = direction === TextDirection.RightToLeft ? Position.BottomLeft : Position.BottomRight;
     const {
         DownloadMenuItem,
         EnterFullScreenMenuItem,
@@ -52,7 +56,7 @@ export const MoreActionsPopover: React.FC<{
         return (
             <Tooltip
                 ariaControlsSuffix="toolbar-more-actions"
-                position={Position.BottomRight}
+                position={portalPosition}
                 target={
                     <MinimalButton ariaLabel={label as string} onClick={toggle} isSelected={opened}>
                         <MoreIcon />
@@ -115,7 +119,7 @@ export const MoreActionsPopover: React.FC<{
         <Popover
             ariaControlsSuffix="toolbar-more-actions"
             ariaHasPopup="menu"
-            position={Position.BottomRight}
+            position={portalPosition}
             target={renderTarget}
             content={renderContent}
             offset={PORTAL_OFFSET}

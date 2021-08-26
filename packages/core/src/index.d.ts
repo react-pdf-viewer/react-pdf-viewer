@@ -102,6 +102,7 @@ export interface RenderViewer {
     pageWidth: number;
     rotation: number;
     slot: Slot;
+    themeContext: ThemeContextProps;
     openFile(file: File): void;
     // Jump to given page
     // `page` is zero-index based
@@ -247,6 +248,8 @@ export interface TextBoxProps {
 export class TextBox extends React.Component<TextBoxProps> {}
 
 export interface IconProps {
+    // If this option is `true`, the icon will not be flipped
+    ignoreDirection?: boolean;
     size?: number;
 }
 export class Icon extends React.Component<IconProps> {}
@@ -307,8 +310,13 @@ export interface LocalizationContextProps {
 }
 export const LocalizationContext: React.Context<LocalizationContextProps>;
 
+export enum TextDirection {
+    RightToLeft = 'RTL',
+    LeftToRight = 'LTR',
+}
 export interface ThemeContextProps {
     currentTheme: string;
+    direction?: TextDirection;
     setCurrentTheme: (theme: string) => void;
 }
 export const ThemeContext: React.Context<ThemeContextProps>;
@@ -355,6 +363,11 @@ export interface ZoomEvent {
     scale: number;
 }
 
+export interface ThemeProps {
+    direction?: TextDirection;
+    theme?: string;
+}
+
 export interface ViewerProps {
     characterMap?: CharacterMap;
     // The default zoom level
@@ -373,7 +386,7 @@ export interface ViewerProps {
     renderPage?: RenderPage;
     renderLoader?(percentages: number): React.ReactElement;
     // Theme
-    theme?: string;
+    theme?: string | ThemeProps;
     transformGetDocumentParams?(options: PdfJs.GetDocumentParams): PdfJs.GetDocumentParams;
     // Indicate the cross-site requests should be made with credentials such as cookie and authorization headers.
     // The default value is `false`

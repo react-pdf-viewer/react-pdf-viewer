@@ -7,11 +7,14 @@
  */
 
 import * as React from 'react';
+import { classNames, TextDirection, ThemeContext } from '@react-pdf-viewer/core';
 
 import { MoreActionsPopover } from './MoreActionsPopover';
 import type { ToolbarSlot } from './types/ToolbarSlot';
 
 export const defaultToolbar = (toolbarSlot: ToolbarSlot): React.ReactElement => {
+    const { direction } = React.useContext(ThemeContext);
+    const isRtl = direction === TextDirection.RightToLeft;
     const {
         CurrentPageInput,
         Download,
@@ -29,7 +32,14 @@ export const defaultToolbar = (toolbarSlot: ToolbarSlot): React.ReactElement => 
     } = toolbarSlot;
 
     return (
-        <div className="rpv-toolbar" role="toolbar" aria-orientation="horizontal">
+        <div
+            className={classNames({
+                'rpv-toolbar': true,
+                'rpv-toolbar--rtl': isRtl,
+            })}
+            role="toolbar"
+            aria-orientation="horizontal"
+        >
             <div className="rpv-toolbar__left">
                 <div className="rpv-toolbar__item">
                     <ShowSearchPopover />
@@ -40,7 +50,7 @@ export const defaultToolbar = (toolbarSlot: ToolbarSlot): React.ReactElement => 
                     </div>
                 </div>
                 <div className="rpv-toolbar__item">
-                    <CurrentPageInput />{' '}
+                    <CurrentPageInput />
                     <span className="rpv-toolbar__label">
                         / <NumberOfPages />
                     </span>
