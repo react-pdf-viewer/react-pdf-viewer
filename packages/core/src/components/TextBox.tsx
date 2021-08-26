@@ -21,16 +21,14 @@ export const TextBox: React.FC<{
 }> = ({ ariaLabel = '', placeholder = '', type = 'text', value = '', onChange, onKeyDown = () => {} }) => {
     const { direction } = React.useContext(ThemeContext);
     const isRtl = direction === TextDirection.RightToLeft;
-    
+
     return (
         <input
             aria-label={ariaLabel}
-            className={
-                classNames({
-                    'rpv-core__textbox': true,
-                    'rpv-core__textbox--rtl': isRtl,
-                })
-            }
+            className={classNames({
+                'rpv-core__textbox': true,
+                'rpv-core__textbox--rtl': isRtl,
+            })}
             placeholder={placeholder}
             type={type}
             value={value}

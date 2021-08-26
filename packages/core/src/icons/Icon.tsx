@@ -24,12 +24,10 @@ export const Icon: React.FC<{
     return (
         <svg
             aria-hidden="true"
-            className={
-                classNames({
-                    'rpv-core__icon': true,
-                    'rpv-core__icon--rtl': isRtl,
-                })
-            }
+            className={classNames({
+                'rpv-core__icon': true,
+                'rpv-core__icon--rtl': isRtl,
+            })}
             focusable="false"
             height={width}
             viewBox="0 0 24 24"

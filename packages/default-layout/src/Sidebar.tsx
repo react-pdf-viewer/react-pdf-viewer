@@ -7,7 +7,15 @@
  */
 
 import * as React from 'react';
-import { classNames, LocalizationContext, MinimalButton, Position, TextDirection, ThemeContext, Tooltip } from '@react-pdf-viewer/core';
+import {
+    classNames,
+    LocalizationContext,
+    MinimalButton,
+    Position,
+    TextDirection,
+    ThemeContext,
+    Tooltip,
+} from '@react-pdf-viewer/core';
 import type { Store } from '@react-pdf-viewer/core';
 
 import { BookmarkIcon } from './BookmarkIcon';
@@ -39,7 +47,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
     thumbnailTabContent,
     tabs,
 }) => {
-    const { l10n } = React.useContext(LocalizationContext);    
+    const { l10n } = React.useContext(LocalizationContext);
     const [opened, setOpened] = React.useState(false);
     const [currentTab, setCurrentTab] = React.useState(store.get('currentTab') || 0);
     const { direction } = React.useContext(ThemeContext);
@@ -84,14 +92,12 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
     return (
         <div
-            className={
-                classNames({
-                    'rpv-default-layout__sidebar': true,
-                    'rpv-default-layout__sidebar--opened': opened,
-                    'rpv-default-layout__sidebar--ltr': !isRtl,
-                    'rpv-default-layout__sidebar--rtl': isRtl,
-                })
-            }
+            className={classNames({
+                'rpv-default-layout__sidebar': true,
+                'rpv-default-layout__sidebar--opened': opened,
+                'rpv-default-layout__sidebar--ltr': !isRtl,
+                'rpv-default-layout__sidebar--rtl': isRtl,
+            })}
         >
             <div className="rpv-default-layout__sidebar-tabs">
                 <div className="rpv-default-layout__sidebar-headers" role="tablist" aria-orientation="vertical">
@@ -125,14 +131,12 @@ export const Sidebar: React.FC<SidebarProps> = ({
                 <div
                     aria-labelledby={`rpv-default-layout__sidebar-tab-${currentTab}`}
                     id="rpv-default-layout__sidebar-content"
-                    className={
-                        classNames({
-                            'rpv-default-layout__sidebar-content': true,
-                            'rpv-default-layout__sidebar-content--opened': opened,
-                            'rpv-default-layout__sidebar-content--ltr': !isRtl,
-                            'rpv-default-layout__sidebar-content--rtl': isRtl,
-                        })
-                    }
+                    className={classNames({
+                        'rpv-default-layout__sidebar-content': true,
+                        'rpv-default-layout__sidebar-content--opened': opened,
+                        'rpv-default-layout__sidebar-content--ltr': !isRtl,
+                        'rpv-default-layout__sidebar-content--rtl': isRtl,
+                    })}
                     role="tabpanel"
                     tabIndex={-1}
                 >

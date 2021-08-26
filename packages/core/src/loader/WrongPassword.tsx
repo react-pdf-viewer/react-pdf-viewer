@@ -30,27 +30,21 @@ export const WrongPassword: React.FC<{
             <div className="rpv-core__asking-password">
                 <div className="rpv-core__asking-password-message">{l10n.core.wrongPassword.tryAgain}:</div>
                 <div
-                    className={
-                        classNames({
-                            'rpv-core__asking-password-body': true,
-                            'rpv-core__asking-password-body--rtl': isRtl,
-                        })
-                    }
+                    className={classNames({
+                        'rpv-core__asking-password-body': true,
+                        'rpv-core__asking-password-body--rtl': isRtl,
+                    })}
                 >
                     <div
-                        className={
-                            classNames({
-                                'rpv-core__asking-password-input': true,
-                                'rpv-core__asking-password-input--ltr': !isRtl,
-                                'rpv-core__asking-password-input--rtl': isRtl,
-                            })
-                        }
+                        className={classNames({
+                            'rpv-core__asking-password-input': true,
+                            'rpv-core__asking-password-input--ltr': !isRtl,
+                            'rpv-core__asking-password-input--rtl': isRtl,
+                        })}
                     >
                         <TextBox type="password" value={password} onChange={setPassword} />
                     </div>
-                    <PrimaryButton onClick={submit}>
-                        {l10n.core.wrongPassword.submit}
-                    </PrimaryButton>
+                    <PrimaryButton onClick={submit}>{l10n.core.wrongPassword.submit}</PrimaryButton>
                 </div>
             </div>
         </div>

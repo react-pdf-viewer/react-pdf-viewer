@@ -140,11 +140,15 @@ export const Viewer: React.FC<{
         onVisibilityChanged: visibilityChanged,
     });
 
-    // Manage contexts    
-    const themeProps = (typeof theme === 'string') ? { direction: TextDirection.LeftToRight, theme } : theme;
+    // Manage contexts
+    const themeProps = typeof theme === 'string' ? { direction: TextDirection.LeftToRight, theme } : theme;
     const [l10n, setL10n] = React.useState(localization || DefaultLocalization);
     const localizationContext = { l10n, setL10n };
-    const themeContext = Object.assign({}, { direction: themeProps.direction }, withTheme(themeProps.theme, onSwitchTheme));
+    const themeContext = Object.assign(
+        {},
+        { direction: themeProps.direction },
+        withTheme(themeProps.theme, onSwitchTheme)
+    );
 
     React.useEffect(() => {
         if (localization) {

@@ -32,21 +32,17 @@ export const AskingPassword: React.FC<{
                     {l10n.core.askingPassword.requirePasswordToOpen}:
                 </div>
                 <div
-                    className={
-                        classNames({
-                            'rpv-core__asking-password-body': true,
-                            'rpv-core__asking-password-body--rtl': isRtl,
-                        })
-                    }
+                    className={classNames({
+                        'rpv-core__asking-password-body': true,
+                        'rpv-core__asking-password-body--rtl': isRtl,
+                    })}
                 >
                     <div
-                        className={
-                            classNames({
-                                'rpv-core__asking-password-input': true,
-                                'rpv-core__asking-password-input--ltr': !isRtl,
-                                'rpv-core__asking-password-input--rtl': isRtl,
-                            })
-                        }
+                        className={classNames({
+                            'rpv-core__asking-password-input': true,
+                            'rpv-core__asking-password-input--ltr': !isRtl,
+                            'rpv-core__asking-password-input--rtl': isRtl,
+                        })}
                     >
                         <TextBox type="password" value={password} onChange={setPassword} />
                     </div>

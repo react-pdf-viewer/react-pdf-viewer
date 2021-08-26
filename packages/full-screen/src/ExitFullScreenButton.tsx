@@ -58,13 +58,11 @@ export const ExitFullScreenButton: React.FC<{
         <>
             {isFullScreen && (
                 <div
-                    className={
-                        classNames({
-                            'rpv-full-screen__exit-button': true,
-                            'rpv-full-screen__exit-button--ltr': !isRtl,
-                            'rpv-full-screen__exit-button--rtl': isRtl,
-                        })
-                    }
+                    className={classNames({
+                        'rpv-full-screen__exit-button': true,
+                        'rpv-full-screen__exit-button--ltr': !isRtl,
+                        'rpv-full-screen__exit-button--rtl': isRtl,
+                    })}
                 >
                     <div className="rpv-full-screen__exit-button-content">
                         <MinimalButton ariaLabel={exitFullScreenLabel as string} onClick={handleExitFullScreen}>

@@ -10,7 +10,7 @@ import * as React from 'react';
 import { Icon } from '@react-pdf-viewer/core';
 
 export const RotateBackwardIcon: React.FC = () => (
-    <Icon size={16}>
+    <Icon ignoreDirection={true} size={16}>
         <path
             d={`M3.434,10.537c0.141-0.438,0.316-0.864,0.523-1.274
             M3.069,14.425C3.023,14.053,3,13.679,3,13.305 c0-0.291,0.014-0.579,0.041-0.863

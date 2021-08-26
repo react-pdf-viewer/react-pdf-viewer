@@ -34,7 +34,7 @@ export const MenuItem: React.FC<{
             type="button"
             onClick={onClick}
         >
-            <div 
+            <div
                 className={classNames({
                     'rpv-core__menu-item-icon': true,
                     'rpv-core__menu-item-icon--ltr': !isRtl,
@@ -43,7 +43,7 @@ export const MenuItem: React.FC<{
             >
                 {icon}
             </div>
-            <div 
+            <div
                 className={classNames({
                     'rpv-core__menu-item-label': true,
                     'rpv-core__menu-item-label--ltr': !isRtl,
@@ -57,7 +57,7 @@ export const MenuItem: React.FC<{
                     'rpv-core__menu-item-check': true,
                     'rpv-core__menu-item-check--ltr': !isRtl,
                     'rpv-core__menu-item-check--rtl': isRtl,
-                })}            
+                })}
             >
                 {checked && <CheckIcon />}
             </div>

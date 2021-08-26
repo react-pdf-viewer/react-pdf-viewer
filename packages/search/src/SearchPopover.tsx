@@ -90,13 +90,11 @@ export const SearchPopover: React.FC<{
                     onKeyDown={onKeydownSearch}
                 />
                 <div
-                    className={
-                        classNames({
-                            'rpv-search__popover-counter': true,
-                            'rpv-search__popover-counter--ltr': !isRtl,
-                            'rpv-search__popover-counter--rtl': isRtl,
-                        })
-                    }
+                    className={classNames({
+                        'rpv-search__popover-counter': true,
+                        'rpv-search__popover-counter--ltr': !isRtl,
+                        'rpv-search__popover-counter--rtl': isRtl,
+                    })}
                 >
                     {isQuerying && <Spinner size="1rem" />}
                     {!isQuerying && (
@@ -160,13 +158,11 @@ export const SearchPopover: React.FC<{
                     />
                 </div>
                 <div
-                    className={
-                        classNames({
-                            'rpv-search__popover-footer-button': true,
-                            'rpv-search__popover-footer-button--ltr': !isRtl,
-                            'rpv-search__popover-footer-button--rtl': isRtl,
-                        })
-                    }
+                    className={classNames({
+                        'rpv-search__popover-footer-button': true,
+                        'rpv-search__popover-footer-button--ltr': !isRtl,
+                        'rpv-search__popover-footer-button--rtl': isRtl,
+                    })}
                 >
                     <Button onClick={onClose}>{l10n && l10n.search ? l10n.search.close : 'Close'}</Button>
                 </div>

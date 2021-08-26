@@ -105,12 +105,11 @@ export const defaultLayoutPlugin = (props?: DefaultLayoutPluginProps): DefaultLa
                         {props && props.renderToolbar ? props.renderToolbar(Toolbar) : <Toolbar />}
                     </div>
                     <div
-                        className={
-                            classNames({
-                                'rpv-default-layout__main': true,
-                                'rpv-default-layout__main--rtl': renderProps.themeContext.direction === TextDirection.RightToLeft,
-                            })
-                        }
+                        className={classNames({
+                            'rpv-default-layout__main': true,
+                            'rpv-default-layout__main--rtl':
+                                renderProps.themeContext.direction === TextDirection.RightToLeft,
+                        })}
                     >
                         <Sidebar
                             attachmentTabContent={<Attachments />}

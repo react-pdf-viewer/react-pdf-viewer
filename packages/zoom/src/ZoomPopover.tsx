@@ -53,13 +53,11 @@ export const ZoomPopover: React.FC<RenderZoomProps> = ({ scale, onZoom }) => {
                 <span className="rpv-zoom__popover-target">
                     <span
                         data-testid="zoom__popover-target-scale"
-                        className={
-                            classNames({
-                                'rpv-zoom__popover-target-scale': true,
-                                'rpv-zoom__popover-target-scale--ltr': !isRtl,
-                                'rpv-zoom__popover-target-scale--rtl': isRtl,
-                            })
-                        }
+                        className={classNames({
+                            'rpv-zoom__popover-target-scale': true,
+                            'rpv-zoom__popover-target-scale--ltr': !isRtl,
+                            'rpv-zoom__popover-target-scale--rtl': isRtl,
+                        })}
                     >
                         {Math.round(scale * 100)}%
                     </span>

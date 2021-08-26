@@ -2,9 +2,21 @@
 
 ## v2.8.0 [WIP]
 
-**New feature**
+**New features**
 
-The `RenderViewer` type includes the theme context.
+-   Support RTL
+
+```js
+import { TextDirection, Viewer } from '@react-pdf-viewer/core';
+
+<Viewer
+    theme={{
+        direction: TextDirection.RightToLeft,
+    }}
+/>;
+```
+
+-   The `RenderViewer` type includes the theme context
 
 **Bug fix**
 

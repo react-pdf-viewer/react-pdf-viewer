@@ -16,7 +16,7 @@ import {
     Position,
     TextDirection,
     ThemeContext,
-    Tooltip,    
+    Tooltip,
 } from '@react-pdf-viewer/core';
 import type { Toggle } from '@react-pdf-viewer/core';
 import { ScrollMode } from '@react-pdf-viewer/scroll-mode';

@@ -124,12 +124,10 @@ export const Menu: React.FC = ({ children }) => {
         <div
             ref={containerRef}
             aria-orientation="vertical"
-            className={
-                classNames({
-                    'rpv-core__menu': true,
-                    'rpv-core__menu--rtl': isRtl,
-                })
-            }
+            className={classNames({
+                'rpv-core__menu': true,
+                'rpv-core__menu--rtl': isRtl,
+            })}
             role="menu"
             tabIndex={0}
         >

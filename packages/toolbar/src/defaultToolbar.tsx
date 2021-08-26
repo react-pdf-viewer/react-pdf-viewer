@@ -32,13 +32,11 @@ export const defaultToolbar = (toolbarSlot: ToolbarSlot): React.ReactElement => 
     } = toolbarSlot;
 
     return (
-        <div 
-            className={
-                classNames({
-                    'rpv-toolbar': true,
-                    'rpv-toolbar--rtl': isRtl,
-                })
-            }
+        <div
+            className={classNames({
+                'rpv-toolbar': true,
+                'rpv-toolbar--rtl': isRtl,
+            })}
             role="toolbar"
             aria-orientation="horizontal"
         >

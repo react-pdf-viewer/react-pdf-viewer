@@ -390,7 +390,7 @@ export const Inner: React.FC<{
                     themeContext,
                     jumpToPage,
                     openFile,
-                    rotate,                    
+                    rotate,
                     zoom,
                 });
             }

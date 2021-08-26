@@ -19,12 +19,10 @@ export const ProgressBar: React.FC<{
 
     return (
         <div
-            className={
-                classNames({
-                    'rpv-core__progress-bar': true,
-                    'rpv-core__progress-bar--rtl': isRtl,
-                })
-            }
+            className={classNames({
+                'rpv-core__progress-bar': true,
+                'rpv-core__progress-bar--rtl': isRtl,
+            })}
         >
             <div className="rpv-core__progress-bar-progress" style={{ width: `${progress}%` }}>
                 {progress}%
