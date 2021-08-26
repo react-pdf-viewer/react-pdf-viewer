@@ -11,6 +11,8 @@ import * as React from 'react';
 import { PrimaryButton } from '../components/PrimaryButton';
 import { TextBox } from '../components/TextBox';
 import { LocalizationContext } from '../localization/LocalizationContext';
+import { TextDirection, ThemeContext } from '../theme/ThemeContext';
+import { classNames } from '../utils/classNames';
 import type { VerifyPassword } from './LoadingStatus';
 
 export const AskingPassword: React.FC<{
@@ -18,6 +20,8 @@ export const AskingPassword: React.FC<{
 }> = ({ verifyPasswordFn }) => {
     const { l10n } = React.useContext(LocalizationContext);
     const [password, setPassword] = React.useState('');
+    const { direction } = React.useContext(ThemeContext);
+    const isRtl = direction === TextDirection.RightToLeft;
 
     const submit = (): void => verifyPasswordFn(password);
 
@@ -27,8 +31,23 @@ export const AskingPassword: React.FC<{
                 <div className="rpv-core__asking-password-message">
                     {l10n.core.askingPassword.requirePasswordToOpen}:
                 </div>
-                <div className="rpv-core__asking-password-body">
-                    <div className="rpv-core__asking-password-input">
+                <div
+                    className={
+                        classNames({
+                            'rpv-core__asking-password-body': true,
+                            'rpv-core__asking-password-body--rtl': isRtl,
+                        })
+                    }
+                >
+                    <div
+                        className={
+                            classNames({
+                                'rpv-core__asking-password-input': true,
+                                'rpv-core__asking-password-input--ltr': !isRtl,
+                                'rpv-core__asking-password-input--rtl': isRtl,
+                            })
+                        }
+                    >
                         <TextBox type="password" value={password} onChange={setPassword} />
                     </div>
                     <PrimaryButton onClick={submit}>{l10n.core.askingPassword.submit}</PrimaryButton>
