@@ -52,7 +52,7 @@ export const defaultToolbar = (toolbarSlot: ToolbarSlot): React.ReactElement => 
                     </div>
                 </div>
                 <div className="rpv-toolbar__item">
-                    <CurrentPageInput />{' '}
+                    <CurrentPageInput />
                     <span className="rpv-toolbar__label">
                         / <NumberOfPages />
                     </span>
