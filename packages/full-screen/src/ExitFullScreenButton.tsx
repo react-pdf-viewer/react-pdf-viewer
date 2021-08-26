@@ -7,7 +7,7 @@
  */
 
 import * as React from 'react';
-import { LocalizationContext, MinimalButton } from '@react-pdf-viewer/core';
+import { classNames, LocalizationContext, MinimalButton, TextDirection, ThemeContext } from '@react-pdf-viewer/core';
 import type { Store } from '@react-pdf-viewer/core';
 
 import { ExitFullScreenIcon } from './ExitFullScreenIcon';
@@ -19,6 +19,8 @@ export const ExitFullScreenButton: React.FC<{
 }> = ({ store }) => {
     const [isFullScreen, setFullScreen] = React.useState(false);
     const { l10n } = React.useContext(LocalizationContext);
+    const { direction } = React.useContext(ThemeContext);
+    const isRtl = direction === TextDirection.RightToLeft;
 
     const exitFullScreenLabel = l10n && l10n.fullScreen ? l10n.fullScreen.exitFullScreen : 'Exit full screen';
 
@@ -55,7 +57,15 @@ export const ExitFullScreenButton: React.FC<{
     return (
         <>
             {isFullScreen && (
-                <div className="rpv-full-screen__exit-button">
+                <div
+                    className={
+                        classNames({
+                            'rpv-full-screen__exit-button': true,
+                            'rpv-full-screen__exit-button--ltr': !isRtl,
+                            'rpv-full-screen__exit-button--rtl': isRtl,
+                        })
+                    }
+                >
                     <div className="rpv-full-screen__exit-button-content">
                         <MinimalButton ariaLabel={exitFullScreenLabel as string} onClick={handleExitFullScreen}>
                             <ExitFullScreenIcon />

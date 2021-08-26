@@ -9,10 +9,16 @@
 .rpv-full-screen__exit-button {
     bottom: 0;
     padding: 0.5rem;
-    position: fixed;
-    right: 0;
+    position: fixed;    
 
     &-content {
         background-color: var(--rpv-full-screen__exit-button-content-background-color);
+    }
+
+    &--ltr {
+        right: 0;
+    }
+    &--rtl {
+        left: 0;
     }
 }
