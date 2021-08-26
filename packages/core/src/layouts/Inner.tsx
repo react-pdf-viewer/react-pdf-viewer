@@ -12,6 +12,7 @@ import { useTrackResize } from '../hooks/useTrackResize';
 import { PageLayer } from '../layers/PageLayer';
 import { LocalizationContext } from '../localization/LocalizationContext';
 import { SpecialZoomLevel } from '../structs/SpecialZoomLevel';
+import { TextDirection, ThemeContext } from '../theme/ThemeContext';
 import { getFileExt } from '../utils/getFileExt';
 import { calculateScale } from './calculateScale';
 import type { PageSize } from '../types/PageSize';
@@ -54,6 +55,7 @@ export const Inner: React.FC<{
     onZoom,
 }) => {
     const { l10n } = React.useContext(LocalizationContext);
+    const themeContext = React.useContext(ThemeContext);
     const containerRef = React.useRef<HTMLDivElement | null>(null);
     const pagesRef = React.useRef<HTMLDivElement | null>(null);
     const [currentPage, setCurrentPage] = React.useState(0);
@@ -385,9 +387,10 @@ export const Inner: React.FC<{
                     pageWidth,
                     rotation,
                     slot,
+                    themeContext,
                     jumpToPage,
                     openFile,
-                    rotate,
+                    rotate,                    
                     zoom,
                 });
             }

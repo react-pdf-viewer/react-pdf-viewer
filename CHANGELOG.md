@@ -2,6 +2,10 @@
 
 ## v2.8.0 [WIP]
 
+**New feature**
+
+The `RenderViewer` type includes the theme context.
+
 **Bug fix**
 
 -   There is an exception when opening a password protected document

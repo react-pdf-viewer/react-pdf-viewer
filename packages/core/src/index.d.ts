@@ -102,6 +102,7 @@ export interface RenderViewer {
     pageWidth: number;
     rotation: number;
     slot: Slot;
+    themeContext: ThemeContextProps;
     openFile(file: File): void;
     // Jump to given page
     // `page` is zero-index based
