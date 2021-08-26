@@ -9,7 +9,7 @@
 import * as React from 'react';
 import * as Attachment from '@react-pdf-viewer/attachment';
 import { bookmarkPlugin } from '@react-pdf-viewer/bookmark';
-import { createStore } from '@react-pdf-viewer/core';
+import { classNames, createStore, TextDirection } from '@react-pdf-viewer/core';
 import { thumbnailPlugin } from '@react-pdf-viewer/thumbnail';
 import { toolbarPlugin } from '@react-pdf-viewer/toolbar';
 
@@ -104,7 +104,14 @@ export const defaultLayoutPlugin = (props?: DefaultLayoutPluginProps): DefaultLa
                     <div className="rpv-default-layout__toolbar">
                         {props && props.renderToolbar ? props.renderToolbar(Toolbar) : <Toolbar />}
                     </div>
-                    <div className="rpv-default-layout__main">
+                    <div
+                        className={
+                            classNames({
+                                'rpv-default-layout__main': true,
+                                'rpv-default-layout__main--rtl': renderProps.themeContext.direction === TextDirection.RightToLeft,
+                            })
+                        }
+                    >
                         <Sidebar
                             attachmentTabContent={<Attachments />}
                             bookmarkTabContent={<Bookmarks />}
