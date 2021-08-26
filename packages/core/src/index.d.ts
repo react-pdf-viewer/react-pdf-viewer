@@ -248,6 +248,8 @@ export interface TextBoxProps {
 export class TextBox extends React.Component<TextBoxProps> {}
 
 export interface IconProps {
+    // If this option is `true`, the icon will not be flipped
+    ignoreDirection?: boolean;
     size?: number;
 }
 export class Icon extends React.Component<IconProps> {}
