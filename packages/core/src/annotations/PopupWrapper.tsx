@@ -8,6 +8,8 @@
 
 import * as React from 'react';
 
+import { TextDirection, ThemeContext } from '../theme/ThemeContext';
+import { classNames } from '../utils/classNames';
 import { convertDate } from '../utils/convertDate';
 import { AnnotationType } from './AnnotationType';
 import type { PdfJs } from '../types/PdfJs';
@@ -15,6 +17,9 @@ import type { PdfJs } from '../types/PdfJs';
 export const PopupWrapper: React.FC<{
     annotation: PdfJs.Annotation;
 }> = ({ annotation }) => {
+    const { direction } = React.useContext(ThemeContext);
+    const isRtl = direction === TextDirection.RightToLeft;
+
     const containerRef = React.useRef<HTMLDivElement>();
     let dateStr = '';
     if (annotation.modificationDate) {
@@ -48,16 +53,27 @@ export const PopupWrapper: React.FC<{
     return (
         <div
             ref={containerRef}
-            className="rpv-core__annotation-popup-wrapper"
+            className={classNames({
+                'rpv-core__annotation-popup-wrapper': true,
+                'rpv-core__annotation-popup-wrapper--rtl': isRtl,
+            })}
             style={{
                 top: annotation.annotationType === AnnotationType.Popup ? '' : '100%',
             }}
         >
             {annotation.title && (
-                <div className="rpv-core__annotation-popup-header">
-                    <div className="rpv-core__annotation-popup-title">{annotation.title}</div>
-                    <span className="rpv-core__annotation-popup-date">{dateStr}</span>
-                </div>
+                <>
+                    <div
+                        className={classNames({
+                            'rpv-core__annotation-popup-title': true,
+                            'rpv-core__annotation-popup-title--ltr': !isRtl,
+                            'rpv-core__annotation-popup-title--rtl': isRtl,
+                        })}
+                    >
+                        {annotation.title}
+                    </div>
+                    <div className="rpv-core__annotation-popup-date">{dateStr}</div>
+                </>
             )}
             {annotation.contents && (
                 <div className="rpv-core__annotation-popup-content">

@@ -6,30 +6,29 @@
  * @copyright 2019-2021 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-.rpv-core__annotation-popup-wrapper {
-    background-color: var(--rpv-core__annotation-popup-wrapper-background-color);
-    box-shadow: var(--rpv-core__annotation-popup-wrapper-box-shadow);
-    font-size: 0.75rem;
-    margin-left: 0.25rem;
-    position: absolute;
-    top: 0;
-    width: 16rem;
-    word-wrap: break-word;
-
-    &-header {
-        align-items: center;
-        display: flex;
-        justify-content: space-between;
+.rpv-core__annotation-popup {
+    &-wrapper {
+        background-color: var(--rpv-core__annotation-popup-wrapper-background-color);
+        box-shadow: var(--rpv-core__annotation-popup-wrapper-box-shadow);
+        font-size: 0.75rem;
         padding: 0.25rem;
+        word-break: break-word;
+    }
+    &-wrapper--rtl {
+        direction: rtl;
     }
 
     &-title {
         font-weight: 600;
-        margin-right: 1rem;
+        margin-bottom: 0.25rem;
+    }
+
+    &-date {
+        font-size: 0.5rem;
     }
 
     &-content {
-        border-top: 1px solid var(--rpv-core__annotation-popup-wrapper-content-border-top-color);
+        border-top: 1px solid var(--rpv-core__annotation-popup-content-border-top-color);
         padding: 0.25rem;
         // Make it scrollable
         max-height: 16rem;
