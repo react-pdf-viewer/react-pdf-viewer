@@ -7,7 +7,7 @@
  */
 
 import * as React from 'react';
-import { classNames, useIsomorphicLayoutEffect } from '@react-pdf-viewer/core';
+import { classNames, useIsomorphicLayoutEffect, TextDirection, ThemeContext } from '@react-pdf-viewer/core';
 import type { PdfJs } from '@react-pdf-viewer/core';
 
 import { scrollToBeVisible } from './scrollToBeVisible';
@@ -25,6 +25,8 @@ export const ThumbnailList: React.FC<{
     const containerRef = React.useRef<HTMLDivElement | null>(null);
     const thumbnailsRef = React.useRef<HTMLElement[]>([]);
     const [currentFocused, setCurrentFocused] = React.useState(currentPage);
+    const { direction } = React.useContext(ThemeContext);
+    const isRtl = direction === TextDirection.RightToLeft;
 
     // Scroll to the thumbnail that represents the current page
     const scrollToThumbnail = (target: HTMLElement) => {
@@ -115,7 +117,14 @@ export const ThumbnailList: React.FC<{
     }, [currentFocused]);
 
     return (
-        <div ref={containerRef} className="rpv-thumbnail__list" onKeyDown={handleKeyDown}>
+        <div
+            ref={containerRef}
+            className={classNames({
+                'rpv-thumbnail__list': true,
+                'rpv-thumbnail__list--rtl': isRtl,
+            })}
+            onKeyDown={handleKeyDown}
+        >
             {Array(numPages)
                 .fill(0)
                 .map((_, index) => (
