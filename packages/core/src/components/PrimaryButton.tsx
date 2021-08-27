@@ -19,12 +19,10 @@ export const PrimaryButton: React.FC<{
 
     return (
         <button
-            className={
-                classNames({
-                    'rpv-core__primary-button': true,
-                    'rpv-core__primary-button--rtl': isRtl,
-                })
-            }
+            className={classNames({
+                'rpv-core__primary-button': true,
+                'rpv-core__primary-button--rtl': isRtl,
+            })}
             type="button"
             onClick={onClick}
         >

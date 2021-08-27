@@ -30,7 +30,7 @@ export const MinimalButton: React.FC<{
                 'rpv-core__minimal-button': true,
                 'rpv-core__minimal-button--disabled': isDisabled,
                 'rpv-core__minimal-button--rtl': isRtl,
-                'rpv-core__minimal-button--selected': isSelected,                
+                'rpv-core__minimal-button--selected': isSelected,
             })}
             type="button"
             onClick={onClick}

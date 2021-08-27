@@ -13,6 +13,8 @@ import { useIsomorphicLayoutEffect } from '../hooks/useIsomorphicLayoutEffect';
 import { usePosition } from '../hooks/usePosition';
 import { Arrow } from './Arrow';
 import { Position } from '../structs/Position';
+import { TextDirection, ThemeContext } from '../theme/ThemeContext';
+import { classNames } from '../utils/classNames';
 import type { Offset } from '../types/Offset';
 
 export const PopoverBody: React.FC<{
@@ -26,6 +28,8 @@ export const PopoverBody: React.FC<{
     const contentRef = React.useRef<HTMLDivElement>();
     const innerRef = React.useRef<HTMLDivElement>();
     const anchorRef = React.useRef<HTMLDivElement>();
+    const { direction } = React.useContext(ThemeContext);
+    const isRtl = direction === TextDirection.RightToLeft;
 
     useClickOutside(closeOnClickOutside, contentRef, onClose);
     usePosition(contentRef, targetRef, anchorRef, position, offset);
@@ -51,7 +55,10 @@ export const PopoverBody: React.FC<{
             <div ref={anchorRef} style={{ left: 0, position: 'absolute', top: 0 }} />
             <div
                 aria-describedby={innerId}
-                className="rpv-core__popover-body"
+                className={classNames({
+                    'rpv-core__popover-body': true,
+                    'rpv-core__popover-body--rtl': isRtl,
+                })}
                 id={`rpv-core__popover-body-${ariaControlsSuffix}`}
                 ref={contentRef}
                 role="dialog"

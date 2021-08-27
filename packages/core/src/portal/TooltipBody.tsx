@@ -11,6 +11,8 @@ import * as React from 'react';
 import { usePosition } from '../hooks/usePosition';
 import { Position } from '../structs/Position';
 import { Arrow } from './Arrow';
+import { TextDirection, ThemeContext } from '../theme/ThemeContext';
+import { classNames } from '../utils/classNames';
 import type { Offset } from '../types/Offset';
 
 export const TooltipBody: React.FC<{
@@ -21,6 +23,8 @@ export const TooltipBody: React.FC<{
     targetRef: React.RefObject<HTMLElement>;
 }> = ({ ariaControlsSuffix, children, contentRef, offset, position, targetRef }) => {
     const anchorRef = React.useRef<HTMLDivElement>();
+    const { direction } = React.useContext(ThemeContext);
+    const isRtl = direction === TextDirection.RightToLeft;
 
     usePosition(contentRef, targetRef, anchorRef, position, offset);
 
@@ -28,7 +32,10 @@ export const TooltipBody: React.FC<{
         <>
             <div ref={anchorRef} style={{ left: 0, position: 'absolute', top: 0 }} />
             <div
-                className="rpv-core__tooltip-body"
+                className={classNames({
+                    'rpv-core__tooltip-body': true,
+                    'rpv-core__tooltip-body--rtl': isRtl,
+                })}
                 id={`rpv-core__tooltip-body-${ariaControlsSuffix}`}
                 ref={contentRef}
                 role="tooltip"

@@ -18,7 +18,7 @@ export const Button: React.FC<{
     const isRtl = direction === TextDirection.RightToLeft;
 
     return (
-        <button 
+        <button
             className={classNames({
                 'rpv-core__button': true,
                 'rpv-core__button--rtl': isRtl,
