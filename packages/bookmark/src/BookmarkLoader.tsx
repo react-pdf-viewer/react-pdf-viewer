@@ -7,7 +7,14 @@
  */
 
 import * as React from 'react';
-import { LocalizationContext, SpecialZoomLevel, Spinner } from '@react-pdf-viewer/core';
+import {
+    classNames,
+    LocalizationContext,
+    SpecialZoomLevel,
+    Spinner,
+    TextDirection,
+    ThemeContext,
+} from '@react-pdf-viewer/core';
 import type { PdfJs, Store } from '@react-pdf-viewer/core';
 
 import { BookmarkListRoot } from './BookmarkListRoot';
@@ -24,6 +31,8 @@ export const BookmarkLoader: React.FC<{
     onJumpToDest(pageIndex: number, bottomOffset: number, scaleTo: number | SpecialZoomLevel): void;
 }> = ({ doc, store, onJumpToDest }) => {
     const { l10n } = React.useContext(LocalizationContext);
+    const { direction } = React.useContext(ThemeContext);
+    const isRtl = direction === TextDirection.RightToLeft;
     const [bookmarks, setBookmarks] = React.useState<BookmarkState>({
         isLoaded: false,
         items: [],
@@ -45,11 +54,21 @@ export const BookmarkLoader: React.FC<{
     return !bookmarks.isLoaded ? (
         <Spinner />
     ) : bookmarks.items.length === 0 ? (
-        <div className="rpv-bookmark__empty">
+        <div
+            className={classNames({
+                'rpv-bookmark__empty': true,
+                'rpv-bookmark__empty--rtl': isRtl,
+            })}
+        >
             {l10n && l10n.bookmark ? l10n.bookmark.noBookmark : 'There is no bookmark'}
         </div>
     ) : (
-        <div className="rpv-bookmark__container">
+        <div
+            className={classNames({
+                'rpv-bookmark__container': true,
+                'rpv-bookmark__container--rtl': isRtl,
+            })}
+        >
             <BookmarkListRoot bookmarks={bookmarks.items} doc={doc} store={store} onJumpToDest={onJumpToDest} />
         </div>
     );
