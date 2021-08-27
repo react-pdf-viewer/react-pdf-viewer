@@ -10,6 +10,8 @@ import * as React from 'react';
 
 import { Spinner } from '../components/Spinner';
 import { useIsMounted } from '../hooks/useIsMounted';
+import { TextDirection, ThemeContext } from '../theme/ThemeContext';
+import { classNames } from '../utils/classNames';
 import { PdfJsApi } from '../vendors/PdfJsApi';
 import { CharacterMap } from '../Viewer';
 import { AskForPasswordState } from './AskForPasswordState';
@@ -44,6 +46,8 @@ export const DocumentLoader: React.FC<{
     transformGetDocumentParams,
     withCredentials,
 }) => {
+    const { direction } = React.useContext(ThemeContext);
+    const isRtl = direction === TextDirection.RightToLeft;
     const [status, setStatus] = React.useState<LoadingStatus>(new LoadingState(0));
 
     const [percentages, setPercentages] = React.useState(0);
@@ -137,13 +141,23 @@ export const DocumentLoader: React.FC<{
             return renderError ? (
                 renderError((status as FailureState).error)
             ) : (
-                <div className="rpv-core__doc-error">
+                <div
+                    className={classNames({
+                        'rpv-core__doc-error': true,
+                        'rpv-core__doc-error--rtl': isRtl,
+                    })}
+                >
                     <div className="rpv-core__doc-error-text">{(status as FailureState).error.message}</div>
                 </div>
             );
         case status instanceof LoadingState:
             return (
-                <div className="rpv-core__doc-loading">
+                <div
+                    className={classNames({
+                        'rpv-core__doc-loading': true,
+                        'rpv-core__doc-loading--rtl': isRtl,
+                    })}
+                >
                     {renderLoader ? renderLoader((status as LoadingState).percentages) : <Spinner />}
                 </div>
             );
