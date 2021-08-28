@@ -18,8 +18,9 @@ import { TextDirection, Viewer } from '@react-pdf-viewer/core';
 
 -   The `RenderViewer` type includes the theme context
 
-**Bug fix**
+**Bug fixes**
 
+-   The highlighting elements should be shown below the text, so users can still select the text
 -   There is an exception when opening a password protected document
 
 ## v2.7.2
