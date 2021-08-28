@@ -7,7 +7,13 @@
  */
 
 import * as React from 'react';
-import { LocalizationContext, useIsomorphicLayoutEffect } from '@react-pdf-viewer/core';
+import {
+    classNames,
+    useIsomorphicLayoutEffect,
+    LocalizationContext,
+    TextDirection,
+    ThemeContext,
+} from '@react-pdf-viewer/core';
 
 import { downloadFile } from './downloadFile';
 import type { FileItem } from './types/FileItem';
@@ -17,6 +23,8 @@ export const AttachmentList: React.FC<{
 }> = ({ files }) => {
     const containerRef = React.useRef<HTMLDivElement>();
     const { l10n } = React.useContext(LocalizationContext);
+    const { direction } = React.useContext(ThemeContext);
+    const isRtl = direction === TextDirection.RightToLeft;
     const attachmentItemsRef = React.useRef<HTMLElement[]>([]);
 
     const clickDownloadLabel = l10n && l10n.attachment ? l10n.attachment.clickToDownload : 'Click to download';
@@ -88,7 +96,15 @@ export const AttachmentList: React.FC<{
     }, []);
 
     return (
-        <div className="rpv-attachment__list" ref={containerRef} tabIndex={-1} onKeyDown={handleKeyDown}>
+        <div
+            className={classNames({
+                'rpv-attachment__list': true,
+                'rpv-attachment__list--rtl': isRtl,
+            })}
+            ref={containerRef}
+            tabIndex={-1}
+            onKeyDown={handleKeyDown}
+        >
             {files.map((file) => (
                 <button
                     className="rpv-attachment__item"

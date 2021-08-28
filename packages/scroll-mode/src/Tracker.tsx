@@ -7,6 +7,7 @@
  */
 
 import * as React from 'react';
+import { TextDirection, ThemeContext } from '@react-pdf-viewer/core';
 import type { Store } from '@react-pdf-viewer/core';
 
 import { ScrollMode } from './structs/ScrollMode';
@@ -16,6 +17,8 @@ import type { StoreProps } from './types/StoreProps';
 export const Tracker: React.FC<{
     store: Store<StoreProps>;
 }> = ({ store }) => {
+    const { direction } = React.useContext(ThemeContext);
+    const isRtl = direction === TextDirection.RightToLeft;
     const { switchTo } = useScrollMode(store);
 
     const handlePagesContainer = (getPagesContainer: () => HTMLElement) => {
@@ -23,6 +26,8 @@ export const Tracker: React.FC<{
         if (!pagesEle) {
             return;
         }
+        isRtl ? pagesEle.classList.add('rpv-scroll-mode--rtl') : pagesEle.classList.remove('rpv-scroll-mode--rtl');
+
         const scrollMode = store.get('scrollMode') || ScrollMode.Vertical;
         if (scrollMode !== ScrollMode.Vertical) {
             switchTo(scrollMode);

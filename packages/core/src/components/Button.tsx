@@ -8,10 +8,25 @@
 
 import * as React from 'react';
 
+import { TextDirection, ThemeContext } from '../theme/ThemeContext';
+import { classNames } from '../utils/classNames';
+
 export const Button: React.FC<{
     onClick(): void;
-}> = ({ children, onClick }) => (
-    <button className="rpv-core__button" type="button" onClick={onClick}>
-        {children}
-    </button>
-);
+}> = ({ children, onClick }) => {
+    const { direction } = React.useContext(ThemeContext);
+    const isRtl = direction === TextDirection.RightToLeft;
+
+    return (
+        <button
+            className={classNames({
+                'rpv-core__button': true,
+                'rpv-core__button--rtl': isRtl,
+            })}
+            type="button"
+            onClick={onClick}
+        >
+            {children}
+        </button>
+    );
+};

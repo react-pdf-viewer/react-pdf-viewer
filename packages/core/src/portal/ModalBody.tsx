@@ -12,6 +12,8 @@ import { useClickOutside } from '../hooks/useClickOutside';
 import { useIsomorphicLayoutEffect } from '../hooks/useIsomorphicLayoutEffect';
 import { useEscape } from '../hooks/useEscape';
 import { useLockScroll } from '../hooks/useLockScroll';
+import { TextDirection, ThemeContext } from '../theme/ThemeContext';
+import { classNames } from '../utils/classNames';
 
 export const ModalBody: React.FC<{
     ariaControlsSuffix: string;
@@ -20,6 +22,8 @@ export const ModalBody: React.FC<{
     onToggle(): void;
 }> = ({ ariaControlsSuffix, children, closeOnClickOutside, closeOnEscape, onToggle }) => {
     const contentRef = React.useRef<HTMLDivElement>();
+    const { direction } = React.useContext(ThemeContext);
+    const isRtl = direction === TextDirection.RightToLeft;
 
     useLockScroll();
     useEscape(() => {
@@ -46,7 +50,10 @@ export const ModalBody: React.FC<{
     return (
         <div
             aria-modal="true"
-            className="rpv-core__modal-body"
+            className={classNames({
+                'rpv-core__modal-body': true,
+                'rpv-core__modal-body--rtl': isRtl,
+            })}
             id={`rpv-core__modal-body-${ariaControlsSuffix}`}
             ref={contentRef}
             role="dialog"

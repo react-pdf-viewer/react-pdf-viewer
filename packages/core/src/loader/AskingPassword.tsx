@@ -27,16 +27,16 @@ export const AskingPassword: React.FC<{
 
     return (
         <div className="rpv-core__asking-password-wrapper">
-            <div className="rpv-core__asking-password">
+            <div
+                className={classNames({
+                    'rpv-core__asking-password': true,
+                    'rpv-core__asking-password--rtl': isRtl,
+                })}
+            >
                 <div className="rpv-core__asking-password-message">
                     {l10n.core.askingPassword.requirePasswordToOpen}:
                 </div>
-                <div
-                    className={classNames({
-                        'rpv-core__asking-password-body': true,
-                        'rpv-core__asking-password-body--rtl': isRtl,
-                    })}
-                >
+                <div className="rpv-core__asking-password-body">
                     <div
                         className={classNames({
                             'rpv-core__asking-password-input': true,

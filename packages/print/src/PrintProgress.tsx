@@ -7,7 +7,14 @@
  */
 
 import * as React from 'react';
-import { Button, LocalizationContext, ProgressBar } from '@react-pdf-viewer/core';
+import {
+    classNames,
+    Button,
+    LocalizationContext,
+    ProgressBar,
+    TextDirection,
+    ThemeContext,
+} from '@react-pdf-viewer/core';
 
 export const PrintProgress: React.FC<{
     numLoadedPages: number;
@@ -15,11 +22,18 @@ export const PrintProgress: React.FC<{
     onCancel(): void;
 }> = ({ numLoadedPages, numPages, onCancel }) => {
     const { l10n } = React.useContext(LocalizationContext);
+    const { direction } = React.useContext(ThemeContext);
+    const isRtl = direction === TextDirection.RightToLeft;
     const progress = Math.floor((numLoadedPages * 100) / numPages);
 
     return (
         <div className="rpv-print__progress">
-            <div className="rpv-print__progress-body">
+            <div
+                className={classNames({
+                    'rpv-print__progress-body': true,
+                    'rpv-print__progress-body--rtl': isRtl,
+                })}
+            >
                 <div className="rpv-print__progress-message">
                     {l10n && l10n.print ? l10n.print.preparingDocument : 'Preparing document ...'}
                 </div>

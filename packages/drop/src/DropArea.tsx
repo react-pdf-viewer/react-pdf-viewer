@@ -7,7 +7,7 @@
  */
 
 import * as React from 'react';
-import { LocalizationContext } from '@react-pdf-viewer/core';
+import { classNames, LocalizationContext, TextDirection, ThemeContext } from '@react-pdf-viewer/core';
 
 import { useDrop } from './useDrop';
 
@@ -15,6 +15,9 @@ export const DropArea: React.FC<{
     containerRef: React.RefObject<HTMLDivElement>;
     openFile(file: File): void;
 }> = ({ containerRef, openFile }) => {
+    const { direction } = React.useContext(ThemeContext);
+    const isRtl = direction === TextDirection.RightToLeft;
+
     const { isDragging } = useDrop(containerRef, (files) => {
         if (files.length === 0) {
             return;
@@ -27,7 +30,12 @@ export const DropArea: React.FC<{
         <>
             {isDragging && (
                 <div className="rpv-drop__area">
-                    <div className="rpv-drop__area-body">
+                    <div
+                        className={classNames({
+                            'rpv-drop__area-body': true,
+                            'rpv-drop__area-body--rtl': isRtl,
+                        })}
+                    >
                         {l10n && l10n.drop ? l10n.drop.dragDropFile : 'Drag and drop a PDF document here'}
                     </div>
                 </div>
