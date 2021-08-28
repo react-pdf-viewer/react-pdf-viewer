@@ -90,7 +90,7 @@ export const Tracker: React.FC<{
         const containerRect = containerEle.getBoundingClientRect();
 
         const highlightEle = document.createElement('span');
-        containerEle.appendChild(highlightEle);
+        containerEle.insertBefore(highlightEle, containerEle.firstChild);
 
         highlightEle.style.left = `${(100 * (wrapperRect.left - containerRect.left)) / containerRect.width}%`;
         highlightEle.style.top = `${(100 * (wrapperRect.top - containerRect.top)) / containerRect.height}%`;
