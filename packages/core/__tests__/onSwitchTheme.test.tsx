@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
+import { defaultLayoutPlugin } from '@react-pdf-viewer/default-layout';
 
 import { mockIsIntersecting } from '../../../test-utils/mockIntersectionObserver';
-import { Viewer } from '@react-pdf-viewer/core';
-import { defaultLayoutPlugin } from '@react-pdf-viewer/default-layout';
+import { Viewer } from '../src';
 
 const TestOnSwitchTheme: React.FC<{
     fileUrl: Uint8Array;

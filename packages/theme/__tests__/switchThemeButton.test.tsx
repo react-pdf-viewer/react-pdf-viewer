@@ -4,7 +4,7 @@ import { ThemeContext, Viewer } from '@react-pdf-viewer/core';
 import { defaultLayoutPlugin, ToolbarProps } from '@react-pdf-viewer/default-layout';
 
 import { mockIsIntersecting } from '../../../test-utils/mockIntersectionObserver';
-import { themePlugin } from '../src/index';
+import { themePlugin } from '../src';
 
 const TestSwitchThemeButtonWithDefaultLayout: React.FC<{
     fileUrl: Uint8Array;
