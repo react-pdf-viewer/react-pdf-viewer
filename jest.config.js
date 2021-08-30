@@ -11,7 +11,7 @@ module.exports = {
         // For pdfjs-dist 2.7.570+
         'pdfjs-dist': '<rootDir>/node_modules/pdfjs-dist/legacy/build/pdf',
         // For pdfjs-dist 2.6.347
-        // 'pdfjs-dist': '<rootDir>/node_modules/pdfjs-dist/es5/build/pdf',        
+        // 'pdfjs-dist': '<rootDir>/node_modules/pdfjs-dist/es5/build/pdf',
     },
     setupFilesAfterEnv: ['<rootDir>/configs/setupTests.ts'],
     transform: {

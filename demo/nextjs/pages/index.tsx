@@ -12,7 +12,7 @@ const Index = () => {
                     fileUrl="pdf-open-parameters.pdf"
                     defaultScale={SpecialZoomLevel.PageWidth}
                     theme={{
-                        direction: TextDirection.RightToLeft,
+                        direction: TextDirection.LeftToRight,
                     }}
                     plugins={[defaultLayoutPluginInstance]}
                 />

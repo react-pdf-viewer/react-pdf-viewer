@@ -48,7 +48,7 @@ const TestRtl: React.FC<{
 test('Support RTL', async () => {
     const { findByTestId, getByTestId } = render(<TestRtl fileUrl={global['__SAMPLE_PDF__']} />);
 
-    const viewerEle = getByTestId('viewer');
+    const viewerEle = getByTestId('core__viewer');
     mockIsIntersecting(viewerEle, true);
 
     const defaultToolbar = await findByTestId('toolbar');

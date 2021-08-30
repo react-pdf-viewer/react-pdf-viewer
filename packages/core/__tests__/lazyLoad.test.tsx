@@ -11,7 +11,7 @@ test('Lazy load', async () => {
         </div>
     );
     const { findByText, getByTestId } = render(<App />);
-    mockIsIntersecting(getByTestId('viewer'), true);
+    mockIsIntersecting(getByTestId('core__viewer'), true);
 
     const firstText = await findByText('Adobe Acrobat PDF Files');
     expect(firstText).toHaveClass('rpv-core__text-layer-text');

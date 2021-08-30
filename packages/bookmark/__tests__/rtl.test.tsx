@@ -48,7 +48,7 @@ const TestRtl: React.FC<{
 test('Support RTL: There is no bookmark', async () => {
     const { findByTestId, getByTestId } = render(<TestRtl fileUrl={global['__SAMPLE_PDF__']} />);
 
-    const viewerEle = getByTestId('viewer');
+    const viewerEle = getByTestId('core__viewer');
     mockIsIntersecting(viewerEle, true);
 
     const bookmarkContainer = await findByTestId('bookmark__empty');
@@ -58,7 +58,7 @@ test('Support RTL: There is no bookmark', async () => {
 test('Support RTL: There are bookmarks', async () => {
     const { findByTestId, getByTestId } = render(<TestRtl fileUrl={global['__OPEN_PARAMS_PDF__']} />);
 
-    const viewerEle = getByTestId('viewer');
+    const viewerEle = getByTestId('core__viewer');
     mockIsIntersecting(viewerEle, true);
 
     const bookmarkContainer = await findByTestId('bookmark__container');
