@@ -116,6 +116,7 @@ export interface Slot {
     subSlot?: Slot;
 }
 export interface SlotAttr extends React.HTMLAttributes<HTMLDivElement> {
+    'data-testid'?: string;
     ref?: React.MutableRefObject<HTMLDivElement | null>;
 }
 export type Toggle = (status?: ToggleStatus) => void;
