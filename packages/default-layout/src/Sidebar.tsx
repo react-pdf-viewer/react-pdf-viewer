@@ -92,6 +92,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
     return (
         <div
+            data-testid="default-layout__sidebar"
             className={classNames({
                 'rpv-default-layout__sidebar': true,
                 'rpv-default-layout__sidebar--opened': opened,
