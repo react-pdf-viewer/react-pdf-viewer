@@ -47,7 +47,7 @@ const TestCustomSearchControl: React.FC<{
 
 test('Custom Search control has to be rendered', async () => {
     const { findByTestId, getByTestId } = render(<TestCustomSearchControl fileUrl={global['__SAMPLE_PDF__']} />);
-    mockIsIntersecting(getByTestId('viewer'), true);
+    mockIsIntersecting(getByTestId('core__viewer'), true);
 
     const customSearchInput = await findByTestId('custom-search-input');
     fireEvent.change(customSearchInput, { target: { value: 'PDF' } });

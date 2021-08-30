@@ -55,6 +55,7 @@ export const BookmarkLoader: React.FC<{
         <Spinner />
     ) : bookmarks.items.length === 0 ? (
         <div
+            data-testid="bookmark__empty"
             className={classNames({
                 'rpv-bookmark__empty': true,
                 'rpv-bookmark__empty--rtl': isRtl,
@@ -64,6 +65,7 @@ export const BookmarkLoader: React.FC<{
         </div>
     ) : (
         <div
+            data-testid="bookmark__container"
             className={classNames({
                 'rpv-bookmark__container': true,
                 'rpv-bookmark__container--rtl': isRtl,

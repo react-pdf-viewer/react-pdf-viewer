@@ -53,6 +53,7 @@ export const AttachmentLoader: React.FC<{
         <Spinner />
     ) : attachments.files.length === 0 ? (
         <div
+            data-testid="attachment__empty"
             className={classNames({
                 'rpv-attachment__empty': true,
                 'rpv-attachment__empty--rtl': isRtl,

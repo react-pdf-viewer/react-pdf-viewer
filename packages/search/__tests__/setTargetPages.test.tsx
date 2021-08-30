@@ -47,13 +47,13 @@ test('setTargetPages() method', async () => {
     const { findByText, findByTestId, getByTestId } = render(
         <TestSetTargetPages fileUrl={global['__MULTIPLE_PAGES_PDF__']} keywords={keywords} />
     );
-    mockIsIntersecting(getByTestId('viewer'), true);
+    mockIsIntersecting(getByTestId('core__viewer'), true);
 
     const highlightButton = await screen.findByText('Highlight keywords');
     fireEvent.click(highlightButton);
 
     // There is no result on the first page because we ignore it
-    const firstPage = await findByTestId('viewer-page-layer-0');
+    const firstPage = await findByTestId('core__page-layer-0');
     mockIsIntersecting(firstPage, true);
     await findByText('A Simple PDF File');
 
@@ -61,7 +61,7 @@ test('setTargetPages() method', async () => {
     expect(highlights.length).toEqual(0);
 
     // Search on the second page
-    const secondPage = await findByTestId('viewer-page-layer-1');
+    const secondPage = await findByTestId('core__page-layer-1');
     mockIsIntersecting(secondPage, true);
 
     await findByText('Simple PDF File 2');

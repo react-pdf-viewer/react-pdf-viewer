@@ -11,13 +11,13 @@ test('Lazy load page', async () => {
         </div>
     );
     const { findByText, getByTestId } = render(<App />);
-    mockIsIntersecting(getByTestId('viewer'), true);
+    mockIsIntersecting(getByTestId('core__viewer'), true);
 
     let text = await findByText('A Simple PDF File');
     expect(text).toHaveClass('rpv-core__text-layer-text');
 
     // Set the second page as visible
-    mockIsIntersecting(getByTestId('viewer-page-layer-1'), true);
+    mockIsIntersecting(getByTestId('core__page-layer-1'), true);
 
     text = await findByText('continued from page 1', { exact: false });
     expect(text).toHaveClass('rpv-core__text-layer-text');

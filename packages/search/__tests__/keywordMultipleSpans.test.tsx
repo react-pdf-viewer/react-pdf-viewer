@@ -33,9 +33,9 @@ test('keyword belongs to multiple spans', async () => {
     const { findByText, findByTestId, getByTestId } = render(
         <TestKeywordMultipleSpansOption fileUrl={global['__SAMPLE_PDF__']} keyword={keyword} />
     );
-    mockIsIntersecting(getByTestId('viewer'), true);
+    mockIsIntersecting(getByTestId('core__viewer'), true);
 
-    const page = await findByTestId('viewer-page-layer-0');
+    const page = await findByTestId('core__page-layer-0');
     mockIsIntersecting(page, true);
 
     await findByText('Adobe Acrobat PDF Files');

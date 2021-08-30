@@ -162,7 +162,7 @@ export const Viewer: React.FC<{
                 <div
                     ref={containerRef}
                     className={`rpv-core__viewer rpv-core__viewer--${themeContext.currentTheme}`}
-                    data-testid="viewer"
+                    data-testid="core__viewer"
                     style={{
                         height: '100%',
                         width: '100%',

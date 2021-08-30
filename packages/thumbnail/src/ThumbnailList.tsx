@@ -119,6 +119,7 @@ export const ThumbnailList: React.FC<{
     return (
         <div
             ref={containerRef}
+            data-testid="thumbnail__list"
             className={classNames({
                 'rpv-thumbnail__list': true,
                 'rpv-thumbnail__list--rtl': isRtl,

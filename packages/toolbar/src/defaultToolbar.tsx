@@ -33,6 +33,7 @@ export const defaultToolbar = (toolbarSlot: ToolbarSlot): React.ReactElement => 
 
     return (
         <div
+            data-testid="toolbar"
             className={classNames({
                 'rpv-toolbar': true,
                 'rpv-toolbar--rtl': isRtl,

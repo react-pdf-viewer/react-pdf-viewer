@@ -4,7 +4,7 @@ import { ThemeContext, Viewer } from '@react-pdf-viewer/core';
 import { defaultLayoutPlugin, ToolbarProps } from '@react-pdf-viewer/default-layout';
 
 import { mockIsIntersecting } from '../../../test-utils/mockIntersectionObserver';
-import { themePlugin } from '../src/index';
+import { themePlugin } from '../src';
 
 const TestSwitchThemeButtonWithDefaultLayout: React.FC<{
     fileUrl: Uint8Array;
@@ -70,7 +70,7 @@ test('SwitchThemeButton() component with the default layout', async () => {
     const { findByText, getByLabelText, getByTestId } = render(
         <TestSwitchThemeButtonWithDefaultLayout fileUrl={global['__HELLO_PDF__']} />
     );
-    const viewerEle = getByTestId('viewer');
+    const viewerEle = getByTestId('core__viewer');
 
     mockIsIntersecting(viewerEle, true);
 
@@ -93,7 +93,7 @@ test('SwitchThemeButton() component without the default layout', async () => {
     const { findByText, getByLabelText, getByTestId } = render(
         <TestSwitchThemeButtonWithoutDefaultLayout fileUrl={global['__HELLO_PDF__']} />
     );
-    const viewerEle = getByTestId('viewer');
+    const viewerEle = getByTestId('core__viewer');
 
     mockIsIntersecting(viewerEle, true);
 

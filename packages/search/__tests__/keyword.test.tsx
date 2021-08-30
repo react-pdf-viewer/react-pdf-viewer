@@ -33,9 +33,9 @@ test('keyword option', async () => {
     const { findByText, findByTestId, getByTestId } = render(
         <TestKeywordOption fileUrl={global['__MULTIPLE_PAGES_PDF__']} keyword={keyword} />
     );
-    mockIsIntersecting(getByTestId('viewer'), true);
+    mockIsIntersecting(getByTestId('core__viewer'), true);
 
-    const page = await findByTestId('viewer-page-layer-1');
+    const page = await findByTestId('core__page-layer-1');
     mockIsIntersecting(page, true);
 
     await findByText('Simple PDF File 2');

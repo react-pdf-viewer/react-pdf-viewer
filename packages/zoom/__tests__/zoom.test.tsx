@@ -35,13 +35,13 @@ const TestCallZoomMethod: React.FC<{
 
 test('call zoom() method', async () => {
     const { findByText, getByTestId } = render(<TestCallZoomMethod fileUrl={global['__MULTIPLE_PAGES_PDF__']} />);
-    mockIsIntersecting(getByTestId('viewer'), true);
+    mockIsIntersecting(getByTestId('core__viewer'), true);
 
     // Now zoom the document
     const zoomButton = await screen.findByText('Zoom to 150%');
     fireEvent.click(zoomButton);
 
-    const lastPage = getByTestId('viewer-page-layer-1');
+    const lastPage = getByTestId('core__page-layer-1');
 
     // Set the last page as visible
     mockIsIntersecting(lastPage, true);

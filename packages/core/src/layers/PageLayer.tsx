@@ -134,7 +134,7 @@ export const PageLayer: React.FC<{
         <div
             ref={containerRef}
             className="rpv-core__page-layer"
-            data-testid={`viewer-page-layer-${pageIndex}`}
+            data-testid={`core__page-layer-${pageIndex}`}
             style={{
                 height: `${h}px`,
                 width: `${w}px`,

@@ -29,7 +29,7 @@ const TestOnDocumentLoad: React.FC<{
 
 test('onDocumentLoad() callback', async () => {
     const { findByTestId, getByTestId } = render(<TestOnDocumentLoad fileUrl={global['__MULTIPLE_PAGES_PDF__']} />);
-    mockIsIntersecting(getByTestId('viewer'), true);
+    mockIsIntersecting(getByTestId('core__viewer'), true);
 
     const numPagesLabel = await findByTestId('num-pages');
     expect(numPagesLabel.textContent).toEqual('2');

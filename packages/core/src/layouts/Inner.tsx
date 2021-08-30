@@ -12,7 +12,7 @@ import { useTrackResize } from '../hooks/useTrackResize';
 import { PageLayer } from '../layers/PageLayer';
 import { LocalizationContext } from '../localization/LocalizationContext';
 import { SpecialZoomLevel } from '../structs/SpecialZoomLevel';
-import { TextDirection, ThemeContext } from '../theme/ThemeContext';
+import { ThemeContext } from '../theme/ThemeContext';
 import { getFileExt } from '../utils/getFileExt';
 import { calculateScale } from './calculateScale';
 import type { PageSize } from '../types/PageSize';
@@ -325,6 +325,7 @@ export const Inner: React.FC<{
     const renderViewer = (): Slot => {
         let slot: Slot = {
             attrs: {
+                'data-testid': 'core__inner-container',
                 ref: containerRef,
                 style: {
                     height: '100%',
@@ -333,6 +334,7 @@ export const Inner: React.FC<{
             children: <></>,
             subSlot: {
                 attrs: {
+                    'data-testid': 'core__inner-pages',
                     ref: pagesRef,
                     style: {
                         height: '100%',

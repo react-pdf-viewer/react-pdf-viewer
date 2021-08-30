@@ -24,9 +24,9 @@ test('defaultScale option', async () => {
         </div>
     );
     const { getByTestId, findByTestId } = render(<App />);
-    mockIsIntersecting(getByTestId('viewer'), true);
+    mockIsIntersecting(getByTestId('core__viewer'), true);
 
-    const firstPage = await findByTestId('viewer-page-layer-0');
+    const firstPage = await findByTestId('core__page-layer-0');
     mockIsIntersecting(firstPage, true);
 
     expect(parseInt(firstPage.style.width, 10)).toEqual(892);
@@ -40,16 +40,16 @@ test('Set defaultScale as a special zoom level', async () => {
         </div>
     );
     const { getByTestId, findByTestId, findByText } = render(<App />);
-    const rootEle = getByTestId('viewer');
+    const rootEle = getByTestId('core__viewer');
     mockIsIntersecting(rootEle, true);
 
     rootEle['__jsdomMockClientHeight'] = 720;
     rootEle['__jsdomMockClientWidth'] = 720;
 
-    const firstPage = await findByTestId('viewer-page-layer-0');
+    const firstPage = await findByTestId('core__page-layer-0');
     mockIsIntersecting(firstPage, true);
 
-    const layoutBody = await findByTestId('default-layout__body');
+    const layoutBody = await findByTestId('core__inner-pages');
     layoutBody['__jsdomMockClientHeight'] = 677;
     layoutBody['__jsdomMockClientWidth'] = 673;
 
@@ -68,16 +68,16 @@ test('Keep special defaultScale after resizing', async () => {
         </div>
     );
     const { getByTestId, findByTestId, findByText } = render(<App />);
-    const rootEle = getByTestId('viewer');
+    const rootEle = getByTestId('core__viewer');
     mockIsIntersecting(rootEle, true);
 
     rootEle['__jsdomMockClientHeight'] = 720;
     rootEle['__jsdomMockClientWidth'] = 720;
 
-    const firstPage = await findByTestId('viewer-page-layer-0');
+    const firstPage = await findByTestId('core__page-layer-0');
     mockIsIntersecting(firstPage, true);
 
-    const layoutBody = await findByTestId('default-layout__body');
+    const layoutBody = await findByTestId('core__inner-pages');
 
     // Resize
     layoutBody['__jsdomMockClientHeight'] = 677;

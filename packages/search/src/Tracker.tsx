@@ -149,7 +149,7 @@ export const Tracker: React.FC<{
                 .forEach((item) => {
                     // Group by the span index
                     const spanIndexes = item.indexes.reduce((acc, item) => {
-                        acc[item.spanIndex] = [...(acc[item.spanIndex] || []), item];
+                        acc[item.spanIndex] = (acc[item.spanIndex] || ([] as CharIndex[])).concat([item]);
                         return acc;
                     }, {} as { [spanIndex: number]: CharIndex[] });
                     Object.values(spanIndexes).forEach((charIndexSpan) => {

@@ -97,6 +97,7 @@ export const AttachmentList: React.FC<{
 
     return (
         <div
+            data-testid="attachment__list"
             className={classNames({
                 'rpv-attachment__list': true,
                 'rpv-attachment__list--rtl': isRtl,
