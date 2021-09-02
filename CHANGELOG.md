@@ -6,9 +6,10 @@
 
 -   The `core` package provides new `Splitter` component
 
-**Improvement**
+**Improvements**
 
 -   The Default Layout plugin allows to resize the sidebar
+-   The plugin instances which can be accessed from an instance of the Default Layout or Toolbar plugin should be readonly
 
 ## v2.8.0
 
