@@ -238,6 +238,17 @@ export interface SpinnerProps {
 }
 export class Spinner extends React.Component<SpinnerProps> {}
 
+export interface SplitterSize {
+    firstHalfPercentage: number;
+    firstHalfSize: number;
+    secondHalfPercentage: number;
+    secondHalfSize: number;
+}
+export interface SplitterProps {
+    constrain?(size: SplitterSize): boolean;
+}
+export class Splitter extends React.Component<SplitterProps> {}
+
 export interface TextBoxProps {
     ariaLabel?: string;
     placeholder?: string;

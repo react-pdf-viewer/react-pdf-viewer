@@ -8,6 +8,7 @@
 
 // Types
 export * from './types/index';
+export type { SplitterSize } from './components/Splitter';
 
 // Structs
 export { AnnotationType } from './annotations/AnnotationType';
@@ -26,6 +27,7 @@ export { PrimaryButton } from './components/PrimaryButton';
 export { ProgressBar } from './components/ProgressBar';
 export { Separator } from './components/Separator';
 export { Spinner } from './components/Spinner';
+export { Splitter } from './components/Splitter';
 export { TextBox } from './components/TextBox';
 export { Icon } from './icons/Icon';
 export { Modal } from './portal/Modal';
