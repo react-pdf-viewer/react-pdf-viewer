@@ -7,12 +7,13 @@
  */
 
 import * as React from 'react';
-import * as Attachment from '@react-pdf-viewer/attachment';
+import { attachmentPlugin } from '@react-pdf-viewer/attachment';
 import { bookmarkPlugin } from '@react-pdf-viewer/bookmark';
 import { classNames, createStore, Splitter, TextDirection } from '@react-pdf-viewer/core';
 import { thumbnailPlugin } from '@react-pdf-viewer/thumbnail';
 import { toolbarPlugin } from '@react-pdf-viewer/toolbar';
 
+import type { AttachmentPlugin } from '@react-pdf-viewer/attachment';
 import type { BookmarkPlugin } from '@react-pdf-viewer/bookmark';
 import type {
     Plugin,
@@ -32,10 +33,10 @@ import type { StoreProps } from './types/StoreProps';
 
 export interface DefaultLayoutPlugin extends Plugin {
     activateTab(index: number): void;
-    attachmentPluginInstance: Attachment.AttachmentPlugin;
-    bookmarkPluginInstance: BookmarkPlugin;
-    thumbnailPluginInstance: ThumbnailPlugin;
-    toolbarPluginInstance: ToolbarPlugin;
+    readonly attachmentPluginInstance: AttachmentPlugin;
+    readonly bookmarkPluginInstance: BookmarkPlugin;
+    readonly thumbnailPluginInstance: ThumbnailPlugin;
+    readonly toolbarPluginInstance: ToolbarPlugin;
 }
 
 export interface DefaultLayoutPluginProps {
@@ -53,7 +54,7 @@ export const defaultLayoutPlugin = (props?: DefaultLayoutPluginProps): DefaultLa
         []
     );
 
-    const attachmentPluginInstance = Attachment.attachmentPlugin();
+    const attachmentPluginInstance = attachmentPlugin();
     const bookmarkPluginInstance = bookmarkPlugin();
     const thumbnailPluginInstance = thumbnailPlugin();
     const toolbarPluginInstance = toolbarPlugin(props ? props.toolbarPlugin : {});

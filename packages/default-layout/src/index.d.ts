@@ -25,10 +25,10 @@ export interface SidebarTab {
 // Plugin
 export interface DefaultLayoutPlugin extends Plugin {
     activateTab(index: number): void;
-    attachmentPluginInstance: AttachmentPlugin;
-    bookmarkPluginInstance: BookmarkPlugin;
-    thumbnailPluginInstance: ThumbnailPlugin;
-    toolbarPluginInstance: ToolbarPlugin;
+    readonly attachmentPluginInstance: AttachmentPlugin;
+    readonly bookmarkPluginInstance: BookmarkPlugin;
+    readonly thumbnailPluginInstance: ThumbnailPlugin;
+    readonly toolbarPluginInstance: ToolbarPlugin;
 }
 
 export interface DefaultLayoutPluginProps {

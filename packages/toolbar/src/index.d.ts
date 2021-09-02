@@ -114,18 +114,18 @@ export interface ToolbarSlot {
 export interface ToolbarPlugin extends Plugin {
     Toolbar: (props: ToolbarProps) => React.ReactElement;
     // Plugins instance
-    fullScreenPluginInstance: FullScreenPlugin;
-    getFilePluginInstance: GetFilePlugin;
-    openPluginInstance: OpenPlugin;
-    pageNavigationPluginInstance: PageNavigationPlugin;
-    printPluginInstance: PrintPlugin;
-    propertiesPluginInstance: PropertiesPlugin;
-    rotatePluginInstance: RotatePlugin;
-    scrollModePluginInstance: ScrollModePlugin;
-    searchPluginInstance: SearchPlugin;
-    selectionModePluginInstance: SelectionModePlugin;
-    themePluginInstance: ThemePlugin;
-    zoomPluginInstance: ZoomPlugin;
+    readonly fullScreenPluginInstance: FullScreenPlugin;
+    readonly getFilePluginInstance: GetFilePlugin;
+    readonly openPluginInstance: OpenPlugin;
+    readonly pageNavigationPluginInstance: PageNavigationPlugin;
+    readonly printPluginInstance: PrintPlugin;
+    readonly propertiesPluginInstance: PropertiesPlugin;
+    readonly rotatePluginInstance: RotatePlugin;
+    readonly scrollModePluginInstance: ScrollModePlugin;
+    readonly searchPluginInstance: SearchPlugin;
+    readonly selectionModePluginInstance: SelectionModePlugin;
+    readonly themePluginInstance: ThemePlugin;
+    readonly zoomPluginInstance: ZoomPlugin;
 }
 
 export interface ToolbarPluginProps {
