@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## v2.8.1 [WIP]
+
+**New feature**
+
+-   The `core` package provides new `Splitter` component
+
 ## v2.8.0
 
 **New features**
