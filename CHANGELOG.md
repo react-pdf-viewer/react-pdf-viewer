@@ -6,6 +6,10 @@
 
 -   The `core` package provides new `Splitter` component
 
+**Improvement**
+
+-   The Default Layout plugin allows to resize the sidebar
+
 ## v2.8.0
 
 **New features**

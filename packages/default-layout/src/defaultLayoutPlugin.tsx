@@ -9,7 +9,7 @@
 import * as React from 'react';
 import * as Attachment from '@react-pdf-viewer/attachment';
 import { bookmarkPlugin } from '@react-pdf-viewer/bookmark';
-import { classNames, createStore, TextDirection } from '@react-pdf-viewer/core';
+import { classNames, createStore, Splitter, TextDirection } from '@react-pdf-viewer/core';
 import { thumbnailPlugin } from '@react-pdf-viewer/thumbnail';
 import { toolbarPlugin } from '@react-pdf-viewer/toolbar';
 
@@ -18,10 +18,11 @@ import type {
     Plugin,
     PluginFunctions,
     PluginOnDocumentLoad,
-    RenderViewer,
-    ViewerState,
     PluginOnAnnotationLayerRender,
     PluginOnTextLayerRender,
+    RenderViewer,
+    SplitterSize,
+    ViewerState,
 } from '@react-pdf-viewer/core';
 import type { ThumbnailPlugin } from '@react-pdf-viewer/thumbnail';
 import type { ToolbarPlugin, ToolbarPluginProps, ToolbarProps } from '@react-pdf-viewer/toolbar';
@@ -65,6 +66,8 @@ export const defaultLayoutPlugin = (props?: DefaultLayoutPluginProps): DefaultLa
     const sidebarTabs = props ? props.sidebarTabs : (defaultTabs: SidebarTab[]) => defaultTabs;
 
     const plugins = [attachmentPluginInstance, bookmarkPluginInstance, thumbnailPluginInstance, toolbarPluginInstance];
+
+    const resizeConstrain = (size: SplitterSize) => size.firstHalfPercentage >= 20 && size.firstHalfPercentage <= 80;
 
     return {
         // The plugin instances
@@ -120,6 +123,7 @@ export const defaultLayoutPlugin = (props?: DefaultLayoutPluginProps): DefaultLa
                             thumbnailTabContent={<Thumbnails />}
                             tabs={sidebarTabs}
                         />
+                        <Splitter constrain={resizeConstrain} />
                         <div className="rpv-default-layout__body" {...mergeSubSlot}>
                             {slot.subSlot.children}
                         </div>
