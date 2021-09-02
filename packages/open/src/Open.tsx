@@ -21,8 +21,9 @@ export interface OpenProps {
 
 export const Open: React.FC<{
     children?: RenderOpen;
+    enableShortcuts: boolean;
     store: Store<StoreProps>;
-}> = ({ store, children }) => {
+}> = ({ children, enableShortcuts, store }) => {
     const handleOpenFiles = (e: React.ChangeEvent<HTMLInputElement>): void => {
         const files = e.target.files;
         if (!files || !files.length) {
@@ -34,7 +35,9 @@ export const Open: React.FC<{
         }
     };
 
-    const defaultChildren = (props: RenderOpenProps) => <OpenButton store={store} onClick={props.onClick} />;
+    const defaultChildren = (props: RenderOpenProps) => (
+        <OpenButton enableShortcuts={enableShortcuts} store={store} onClick={props.onClick} />
+    );
     const render = children || defaultChildren;
 
     return render({
