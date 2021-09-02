@@ -8,24 +8,22 @@
 
 import * as React from 'react';
 import { LocalizationContext, MinimalButton, Position, Tooltip } from '@react-pdf-viewer/core';
+import type { Store } from '@react-pdf-viewer/core';
 
 import { OpenFileIcon } from './OpenFileIcon';
-import type { RenderOpenProps } from './types/RenderOpenProps';
+import { useTriggerOpen } from './useTriggerOpen';
+import type { StoreProps } from './types/StoreProps';
 
 const TOOLTIP_OFFSET = { left: 0, top: 8 };
 
-export const OpenButton: React.FC<RenderOpenProps> = ({ onClick }) => {
+export const OpenButton: React.FC<{
+    store: Store<StoreProps>;
+    onClick(e: React.ChangeEvent<HTMLInputElement>): void;
+}> = ({ store, onClick }) => {
     const { l10n } = React.useContext(LocalizationContext);
     const label = l10n && l10n.open ? l10n.open.openFile : 'Open file';
 
-    const inputRef = React.createRef<HTMLInputElement>();
-
-    const openFileDialog = () => {
-        const inputEle = inputRef.current;
-        if (inputEle) {
-            inputEle.click();
-        }
-    };
+    const { inputRef, openFile } = useTriggerOpen(store);
 
     return (
         <Tooltip
@@ -42,7 +40,7 @@ export const OpenButton: React.FC<RenderOpenProps> = ({ onClick }) => {
                         type="file"
                         onChange={onClick}
                     />
-                    <MinimalButton ariaLabel={label as string} onClick={openFileDialog}>
+                    <MinimalButton ariaLabel={label as string} onClick={openFile}>
                         <OpenFileIcon />
                     </MinimalButton>
                 </div>

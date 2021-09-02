@@ -20,7 +20,7 @@ import type {
     GetFilePlugin,
     GetFilePluginProps,
 } from '@react-pdf-viewer/get-file';
-import type { OpenPlugin, OpenProps } from '@react-pdf-viewer/open';
+import type { OpenPlugin, OpenPluginProps, OpenProps } from '@react-pdf-viewer/open';
 import type {
     CurrentPageLabelProps,
     GoToPageProps,
@@ -131,6 +131,7 @@ export interface ToolbarPlugin extends Plugin {
 export interface ToolbarPluginProps {
     fullScreenPlugin?: FullScreenPluginProps;
     getFilePlugin?: GetFilePluginProps;
+    openPlugin?: OpenPluginProps;
     printPlugin?: PrintPluginProps;
     scrollModePlugin?: ScrollModePluginProps;
     searchPlugin?: SearchPluginProps;

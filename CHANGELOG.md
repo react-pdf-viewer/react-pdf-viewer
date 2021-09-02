@@ -10,6 +10,29 @@
 
 -   The Default Layout plugin allows to resize the sidebar
 -   The plugin instances which can be accessed from an instance of the Default Layout or Toolbar plugin should be readonly
+-   Support more shortcuts
+
+| Shortcut                      | Supported plugin                                   | Action          |
+| ----------------------------- | -------------------------------------------------- | --------------- |
+| <kbd>cmd</kbd> + <kbd>o</kbd> | [Open](https://react-pdf-viewer.dev/plugins/open/) | Open a document |
+
+The shortcuts are enabled by default. It's possible to disable them:
+
+```js
+// Use the standalone open plugin
+const openPluginInstance = openPlugin({
+    enableShortcuts: false,
+});
+
+// Use the default layout plugin
+const defaultLayoutPluginInstance = defaultLayoutPlugin({
+    toolbarPlugin: {
+        openPlugin: {
+            enableShortcuts: false,
+        },
+    },
+});
+```
 
 ## v2.8.0
 
