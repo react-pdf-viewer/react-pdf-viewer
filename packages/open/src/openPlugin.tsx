@@ -29,7 +29,9 @@ export const openPlugin = (props?: OpenPluginProps): OpenPlugin => {
     const openPluginProps = React.useMemo(() => Object.assign({}, { enableShortcuts: true }, props), []);
     const store = React.useMemo(() => createStore<StoreProps>({}), []);
 
-    const OpenDecorator = (props: OpenProps) => <Open {...props} store={store} />;
+    const OpenDecorator = (props: OpenProps) => (
+        <Open enableShortcuts={openPluginProps.enableShortcuts} {...props} store={store} />
+    );
 
     const OpenButtonDecorator = () => <OpenDecorator />;
 
