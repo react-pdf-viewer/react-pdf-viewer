@@ -9,7 +9,9 @@
 import * as React from 'react';
 
 export interface SplitterSize {
+    firstHalfPercentage: number;
     firstHalfSize: number;
+    secondHalfPercentage: number;
     secondHalfSize: number;
 }
 
@@ -35,20 +37,27 @@ export const Splitter: React.FC<{
 
         // How far the mouse has been moved
         const dx = e.clientX - xRef.current;
-        const dy = e.clientY - yRef.current;
 
-        const newLeftWidth =
-            ((leftWidthRef.current + dx) * 100) / resizerEle.parentElement.getBoundingClientRect().width;
-        leftSide.style.width = `${newLeftWidth}%`;
+        const firstHalfSize = leftWidthRef.current + dx;
+        const containerWidth = resizerEle.parentElement.getBoundingClientRect().width;
+        const firstHalfPercentage = (firstHalfSize * 100) / containerWidth;
 
-        resizerEle.style.cursor = 'col-resize';
-        document.body.style.cursor = 'col-resize';
+        resizerEle.classList.add('rpv-core__splitter--resizing');
 
-        leftSide.style.userSelect = 'none';
-        leftSide.style.pointerEvents = 'none';
+        if (constrain) {
+            const secondHalfSize = containerWidth - firstHalfSize - resizerEle.getBoundingClientRect().width;
+            const secondHalfPercentage = (secondHalfSize * 100) / containerWidth;
+            if (!constrain({ firstHalfPercentage, firstHalfSize, secondHalfPercentage, secondHalfSize })) {
+                return;
+            }
+        }
 
-        rightSide.style.userSelect = 'none';
-        rightSide.style.pointerEvents = 'none';
+        leftSide.style.width = `${firstHalfPercentage}%`;
+
+        document.body.classList.add('rpv-core__splitter-body--resizing');
+
+        leftSide.classList.add('rpv-core__splitter-sibling--resizing');
+        rightSide.classList.add('rpv-core__splitter-sibling--resizing');
     };
 
     const handleMouseUp = (e: MouseEvent) => {
@@ -59,14 +68,11 @@ export const Splitter: React.FC<{
             return;
         }
 
-        resizerEle.style.removeProperty('cursor');
-        document.body.style.removeProperty('cursor');
+        document.body.classList.remove('rpv-core__splitter-body--resizing');
 
-        leftSide.style.removeProperty('user-select');
-        leftSide.style.removeProperty('pointer-events');
-
-        rightSide.style.removeProperty('user-select');
-        rightSide.style.removeProperty('pointer-events');
+        resizerEle.classList.remove('rpv-core__splitter--resizing');
+        leftSide.classList.remove('rpv-core__splitter-sibling--resizing');
+        rightSide.classList.remove('rpv-core__splitter-sibling--resizing');
 
         // Remove the handlers of `mousemove` and `mouseup`
         document.removeEventListener('mousemove', handleMouseMove);

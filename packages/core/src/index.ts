@@ -8,6 +8,7 @@
 
 // Types
 export * from './types/index';
+export type { SplitterSize } from './components/Splitter';
 
 // Structs
 export { AnnotationType } from './annotations/AnnotationType';

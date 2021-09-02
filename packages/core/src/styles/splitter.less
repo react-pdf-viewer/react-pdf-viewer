@@ -12,7 +12,18 @@
     height: 100%;
     width: 0.25rem;
 
-    &:hover {
+    &:hover,
+    &--resizing {
+        cursor: col-resize;
         background-color: var(--rpv-core__splitter--hover-background-color);
     }
+}
+
+.rpv-core__splitter-body--resizing {
+    cursor: col-resize;
+}
+
+.rpv-core__splitter-sibling--resizing {
+    pointer-events: none;
+    user-select: none;
 }

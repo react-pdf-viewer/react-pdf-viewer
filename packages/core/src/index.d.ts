@@ -239,7 +239,9 @@ export interface SpinnerProps {
 export class Spinner extends React.Component<SpinnerProps> {}
 
 export interface SplitterSize {
+    firstHalfPercentage: number;
     firstHalfSize: number;
+    secondHalfPercentage: number;
     secondHalfSize: number;
 }
 export interface SplitterProps {
