@@ -8,25 +8,23 @@
 
 import * as React from 'react';
 import { LocalizationContext, MenuItem } from '@react-pdf-viewer/core';
+import type { Store } from '@react-pdf-viewer/core';
 
 import { OpenFileIcon } from './OpenFileIcon';
-import type { RenderOpenProps } from './types/RenderOpenProps';
+import { useTriggerOpen } from './useTriggerOpen';
+import type { StoreProps } from './types/StoreProps';
 
-export const OpenMenuItem: React.FC<RenderOpenProps> = ({ onClick }) => {
+export const OpenMenuItem: React.FC<{
+    store: Store<StoreProps>;
+    onClick(e: React.ChangeEvent<HTMLInputElement>): void;
+}> = ({ store, onClick }) => {
     const { l10n } = React.useContext(LocalizationContext);
     const label = l10n && l10n.open ? l10n.open.openFile : 'Open file';
 
-    const inputRef = React.createRef<HTMLInputElement>();
-
-    const openFileDialog = () => {
-        const inputEle = inputRef.current;
-        if (inputEle) {
-            inputEle.click();
-        }
-    };
+    const { inputRef, openFile } = useTriggerOpen(store);
 
     return (
-        <MenuItem icon={<OpenFileIcon />} onClick={openFileDialog}>
+        <MenuItem icon={<OpenFileIcon />} onClick={openFile}>
             <div className="rpv-open__input-wrapper">
                 <input
                     ref={inputRef}

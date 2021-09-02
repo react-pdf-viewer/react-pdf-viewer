@@ -25,7 +25,11 @@ export interface OpenPlugin extends Plugin {
     OpenMenuItem: () => React.ReactElement;
 }
 
-export function openPlugin(): OpenPlugin;
+export interface OpenPluginProps {
+    enableShortcuts?: boolean;
+}
+
+export function openPlugin(props?: OpenPluginProps): OpenPlugin;
 
 // Components
 export class OpenFileIcon extends React.Component {}

@@ -34,7 +34,7 @@ export const Open: React.FC<{
         }
     };
 
-    const defaultChildren = (props: RenderOpenProps) => <OpenButton onClick={props.onClick} />;
+    const defaultChildren = (props: RenderOpenProps) => <OpenButton store={store} onClick={props.onClick} />;
     const render = children || defaultChildren;
 
     return render({
