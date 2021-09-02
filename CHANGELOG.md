@@ -16,11 +16,21 @@
 | ----------------------------- | -------------------------------------------------- | --------------- |
 | <kbd>cmd</kbd> + <kbd>o</kbd> | [Open](https://react-pdf-viewer.dev/plugins/open/) | Open a document |
 
-It's possible to disable the shortcuts:
+The shortcuts are enabled by default. It's possible to disable them:
 
 ```js
+// Use the standalone open plugin
 const openPluginInstance = openPlugin({
     enableShortcuts: false,
+});
+
+// Use the default layout plugin
+const defaultLayoutPluginInstance = defaultLayoutPlugin({
+    toolbarPlugin: {
+        openPlugin: {
+            enableShortcuts: false,
+        },
+    },
 });
 ```
 
