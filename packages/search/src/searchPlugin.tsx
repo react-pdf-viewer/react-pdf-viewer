@@ -20,6 +20,7 @@ import type {
 import { EMPTY_KEYWORD_REGEXP } from './constants';
 import { normalizeSingleKeyword } from './normalizeKeyword';
 import { Search, SearchProps } from './Search';
+import { ShortcutHandler } from './ShortcutHandler';
 import { ShowSearchPopover, ShowSearchPopoverProps } from './ShowSearchPopover';
 import { ShowSearchPopoverButton } from './ShowSearchPopoverButton';
 import { Tracker } from './Tracker';
@@ -43,15 +44,16 @@ export interface SearchPlugin extends Plugin {
 }
 
 export interface SearchPluginProps {
+    enableShortcuts?: boolean;
     // The keyword that will be highlighted in all pages
     keyword?: SingleKeyword | SingleKeyword[];
     onHighlightKeyword?(props: OnHighlightKeyword): void;
 }
 
 export const searchPlugin = (props?: SearchPluginProps): SearchPlugin => {
-    const onHighlightKeyword = React.useMemo(
+    const searchPluginProps = React.useMemo(
         // eslint-disable-next-line @typescript-eslint/no-empty-function
-        () => (props && props.onHighlightKeyword ? props.onHighlightKeyword : () => {}),
+        () => Object.assign({}, { enableShortcuts: true, onHighlightKeyword: () => {} }, props),
         []
     );
     const store = React.useMemo(
@@ -71,7 +73,9 @@ export const searchPlugin = (props?: SearchPluginProps): SearchPlugin => {
     );
 
     const ShowSearchPopoverButtonDecorator = () => (
-        <ShowSearchPopoverDecorator>{(props) => <ShowSearchPopoverButton {...props} />}</ShowSearchPopoverDecorator>
+        <ShowSearchPopoverDecorator>
+            {(props) => <ShowSearchPopoverButton store={store} {...props} />}
+        </ShowSearchPopoverDecorator>
     );
 
     const renderViewer = (renderViewerProps: RenderViewer): Slot => {
@@ -79,6 +83,9 @@ export const searchPlugin = (props?: SearchPluginProps): SearchPlugin => {
         if (currentSlot.subSlot) {
             currentSlot.subSlot.children = (
                 <>
+                    {searchPluginProps.enableShortcuts && (
+                        <ShortcutHandler containerRef={renderViewerProps.containerRef} store={store} />
+                    )}
                     {Array(renderViewerProps.doc.numPages)
                         .fill(0)
                         .map((_, index) => (
@@ -87,7 +94,7 @@ export const searchPlugin = (props?: SearchPluginProps): SearchPlugin => {
                                 numPages={renderViewerProps.doc.numPages}
                                 pageIndex={index}
                                 store={store}
-                                onHighlightKeyword={onHighlightKeyword}
+                                onHighlightKeyword={searchPluginProps.onHighlightKeyword}
                             />
                         ))}
                     {currentSlot.subSlot.children}

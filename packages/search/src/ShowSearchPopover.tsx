@@ -29,7 +29,9 @@ export const ShowSearchPopover: React.FC<{
 }> = ({ children, store }) => {
     const { direction } = React.useContext(ThemeContext);
     const portalPosition = direction === TextDirection.RightToLeft ? Position.BottomRight : Position.BottomLeft;
-    const defaultChildren = (props: RenderShowSearchPopoverProps) => <ShowSearchPopoverButton {...props} />;
+    const defaultChildren = (props: RenderShowSearchPopoverProps) => (
+        <ShowSearchPopoverButton store={store} {...props} />
+    );
     const render = children || defaultChildren;
 
     return (
