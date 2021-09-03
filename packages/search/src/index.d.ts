@@ -91,6 +91,7 @@ export interface SearchPlugin extends Plugin {
 }
 
 export interface SearchPluginProps {
+    enableShortcuts?: boolean;
     // The keyword that will be highlighted in all pages
     keyword?: SingleKeyword | SingleKeyword[];
     onHighlightKeyword?(props: OnHighlightKeyword): void;

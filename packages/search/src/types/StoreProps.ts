@@ -13,6 +13,7 @@ import type { MatchPosition } from './MatchPosition';
 import type { SearchTargetPageFilter } from './SearchTargetPage';
 
 export interface StoreProps {
+    areShortcutsPressed?: boolean;
     doc?: PdfJs.PdfDocument;
     keyword?: RegExp[];
     matchPosition?: MatchPosition;

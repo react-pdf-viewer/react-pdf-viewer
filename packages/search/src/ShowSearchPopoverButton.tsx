@@ -7,27 +7,50 @@
  */
 
 import * as React from 'react';
-import { MinimalButton, Position, Tooltip } from '@react-pdf-viewer/core';
+import { isMac, MinimalButton, Position, Tooltip } from '@react-pdf-viewer/core';
+import type { Store, StoreHandler } from '@react-pdf-viewer/core';
 
 import { ShowSearchPopoverDecorator } from './ShowSearchPopoverDecorator';
-import type { RenderShowSearchPopoverProps } from './types/RenderShowSearchPopoverProps';
+import type { StoreProps } from './types/StoreProps';
 
 const TOOLTIP_OFFSET = { left: 0, top: 8 };
 
-export const ShowSearchPopoverButton: React.FC<RenderShowSearchPopoverProps> = ({ onClick }) => (
-    <ShowSearchPopoverDecorator onClick={onClick}>
-        {(p) => (
-            <Tooltip
-                ariaControlsSuffix="search-popover"
-                position={Position.BottomCenter}
-                target={
-                    <MinimalButton ariaLabel={p.label} onClick={onClick}>
-                        {p.icon}
-                    </MinimalButton>
-                }
-                content={() => p.label}
-                offset={TOOLTIP_OFFSET}
-            />
-        )}
-    </ShowSearchPopoverDecorator>
-);
+export const ShowSearchPopoverButton: React.FC<{
+    enableShortcuts: boolean;
+    store: Store<StoreProps>;
+    onClick(): void;
+}> = ({ enableShortcuts, store, onClick }) => {
+    const ariaKeyShortcuts = enableShortcuts ? (isMac() ? 'Meta+F' : 'Ctrl+F') : '';
+
+    const handleShortcutsPressed: StoreHandler<boolean> = (areShortcutsPressed: boolean) => {
+        if (areShortcutsPressed) {
+            onClick();
+        }
+    };
+
+    React.useEffect(() => {
+        store.subscribe('areShortcutsPressed', handleShortcutsPressed);
+
+        return () => {
+            store.unsubscribe('areShortcutsPressed', handleShortcutsPressed);
+        };
+    }, []);
+
+    return (
+        <ShowSearchPopoverDecorator onClick={onClick}>
+            {(p) => (
+                <Tooltip
+                    ariaControlsSuffix="search-popover"
+                    position={Position.BottomCenter}
+                    target={
+                        <MinimalButton ariaKeyShortcuts={ariaKeyShortcuts} ariaLabel={p.label} onClick={onClick}>
+                            {p.icon}
+                        </MinimalButton>
+                    }
+                    content={() => p.label}
+                    offset={TOOLTIP_OFFSET}
+                />
+            )}
+        </ShowSearchPopoverDecorator>
+    );
+};
