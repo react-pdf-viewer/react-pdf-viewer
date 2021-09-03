@@ -251,6 +251,7 @@ export class Splitter extends React.Component<SplitterProps> {}
 
 export interface TextBoxProps {
     ariaLabel?: string;
+    autoFocus?: boolean;
     placeholder?: string;
     type?: 'text' | 'password';
     value?: string;

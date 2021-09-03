@@ -83,6 +83,7 @@ export const SearchPopover: React.FC<{
             <div className="rpv-search__popover-input-counter">
                 <TextBox
                     ariaLabel={searchLabel}
+                    autoFocus={true}
                     placeholder={searchLabel}
                     type="text"
                     value={keyword}
