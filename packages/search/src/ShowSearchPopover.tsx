@@ -25,12 +25,13 @@ const PORTAL_OFFSET = { left: 0, top: 8 };
 
 export const ShowSearchPopover: React.FC<{
     children?: RenderShowSearchPopover;
+    enableShortcuts: boolean;
     store: Store<StoreProps>;
-}> = ({ children, store }) => {
+}> = ({ children, enableShortcuts, store }) => {
     const { direction } = React.useContext(ThemeContext);
     const portalPosition = direction === TextDirection.RightToLeft ? Position.BottomRight : Position.BottomLeft;
     const defaultChildren = (props: RenderShowSearchPopoverProps) => (
-        <ShowSearchPopoverButton store={store} {...props} />
+        <ShowSearchPopoverButton enableShortcuts={enableShortcuts} store={store} {...props} />
     );
     const render = children || defaultChildren;
 

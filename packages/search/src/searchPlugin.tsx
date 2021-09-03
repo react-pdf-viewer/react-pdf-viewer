@@ -69,12 +69,14 @@ export const searchPlugin = (props?: SearchPluginProps): SearchPlugin => {
     const SearchDecorator = (props: SearchProps) => <Search {...props} store={store} />;
 
     const ShowSearchPopoverDecorator = (props: ShowSearchPopoverProps) => (
-        <ShowSearchPopover {...props} store={store} />
+        <ShowSearchPopover enableShortcuts={searchPluginProps.enableShortcuts} {...props} store={store} />
     );
 
     const ShowSearchPopoverButtonDecorator = () => (
         <ShowSearchPopoverDecorator>
-            {(props) => <ShowSearchPopoverButton store={store} {...props} />}
+            {(props) => (
+                <ShowSearchPopoverButton enableShortcuts={searchPluginProps.enableShortcuts} store={store} {...props} />
+            )}
         </ShowSearchPopoverDecorator>
     );
 

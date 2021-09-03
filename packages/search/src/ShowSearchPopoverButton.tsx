@@ -7,7 +7,7 @@
  */
 
 import * as React from 'react';
-import { MinimalButton, Position, Tooltip } from '@react-pdf-viewer/core';
+import { isMac, MinimalButton, Position, Tooltip } from '@react-pdf-viewer/core';
 import type { Store, StoreHandler } from '@react-pdf-viewer/core';
 
 import { ShowSearchPopoverDecorator } from './ShowSearchPopoverDecorator';
@@ -16,9 +16,12 @@ import type { StoreProps } from './types/StoreProps';
 const TOOLTIP_OFFSET = { left: 0, top: 8 };
 
 export const ShowSearchPopoverButton: React.FC<{
+    enableShortcuts: boolean;
     store: Store<StoreProps>;
     onClick(): void;
-}> = ({ store, onClick }) => {
+}> = ({ enableShortcuts, store, onClick }) => {
+    const ariaKeyShortcuts = enableShortcuts ? (isMac() ? 'Meta+F' : 'Ctrl+F') : '';
+
     const handleShortcutsPressed: StoreHandler<boolean> = (areShortcutsPressed: boolean) => {
         if (areShortcutsPressed) {
             onClick();
@@ -40,7 +43,7 @@ export const ShowSearchPopoverButton: React.FC<{
                     ariaControlsSuffix="search-popover"
                     position={Position.BottomCenter}
                     target={
-                        <MinimalButton ariaLabel={p.label} onClick={onClick}>
+                        <MinimalButton ariaKeyShortcuts={ariaKeyShortcuts} ariaLabel={p.label} onClick={onClick}>
                             {p.icon}
                         </MinimalButton>
                     }
