@@ -26,8 +26,8 @@ export const ShortcutHandler: React.FC<{
         if (e.shiftKey || e.altKey) {
             return;
         }
-        const isCommandPressed = isMac() ? e.metaKey && e.ctrlKey && e.key === 'f' : e.key === 'F11';
-        if (!isCommandPressed) {
+        const areShortcutsPressed = isMac() ? e.metaKey && e.ctrlKey && e.key === 'f' : e.key === 'F11';
+        if (!areShortcutsPressed) {
             return;
         }
 
