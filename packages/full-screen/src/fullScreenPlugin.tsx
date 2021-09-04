@@ -14,6 +14,7 @@ import { EnterFullScreen, EnterFullScreenProps } from './EnterFullScreen';
 import { EnterFullScreenButton } from './EnterFullScreenButton';
 import { EnterFullScreenMenuItem, EnterFullScreenMenuItemProps } from './EnterFullScreenMenuItem';
 import { ExitFullScreenButton } from './ExitFullScreenButton';
+import { ShortcutHandler } from './ShortcutHandler';
 import type { StoreProps } from './types/StoreProps';
 import type { Zoom } from './types/Zoom';
 
@@ -55,7 +56,9 @@ export const fullScreenPlugin = (props?: FullScreenPluginProps): FullScreenPlugi
 
     const EnterFullScreenButtonDecorator = () => (
         <EnterFullScreenDecorator>
-            {(renderProps) => <EnterFullScreenButton {...renderProps} />}
+            {(renderProps) => (
+                <EnterFullScreenButton enableShortcuts={fullScreenPluginProps.enableShortcuts} {...renderProps} />
+            )}
         </EnterFullScreenDecorator>
     );
 
@@ -79,6 +82,14 @@ export const fullScreenPlugin = (props?: FullScreenPluginProps): FullScreenPlugi
         if (currentSlot.subSlot) {
             currentSlot.subSlot.children = (
                 <>
+                    {fullScreenPluginProps.enableShortcuts && (
+                        <ShortcutHandler
+                            containerRef={props.containerRef}
+                            store={store}
+                            onEnterFullScreen={fullScreenPluginProps.onEnterFullScreen}
+                            onExitFullScreen={fullScreenPluginProps.onExitFullScreen}
+                        />
+                    )}
                     <ExitFullScreenDecorator />
                     {currentSlot.subSlot.children}
                 </>
