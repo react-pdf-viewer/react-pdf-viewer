@@ -11,7 +11,12 @@ import type { Store } from '@react-pdf-viewer/core';
 
 import type { StoreProps } from './types/StoreProps';
 
-export const useTriggerOpen = (store: Store<StoreProps>) => {
+export const useTriggerOpen = (
+    store: Store<StoreProps>
+): {
+    inputRef: React.MutableRefObject<HTMLInputElement>;
+    openFile: () => void;
+} => {
     const inputRef = React.useRef<HTMLInputElement>();
 
     const openFile = () => {

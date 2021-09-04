@@ -17,7 +17,9 @@ export const useEnterFullScreen = (
     store: Store<StoreProps>,
     onEnterFullScreen: (zoom: Zoom) => void,
     onExitFullScreen: (zoom: Zoom) => void
-) => {
+): {
+    enterFullScreen: () => void;
+} => {
     const pagesRef = React.useRef<HTMLElement | null>(
         store.get('getPagesContainer') ? store.get('getPagesContainer')() : null
     );
