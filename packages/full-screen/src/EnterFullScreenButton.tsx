@@ -7,23 +7,26 @@
  */
 
 import * as React from 'react';
-import { LocalizationContext, MinimalButton, Position, Tooltip } from '@react-pdf-viewer/core';
+import { isMac, LocalizationContext, MinimalButton, Position, Tooltip } from '@react-pdf-viewer/core';
 
-import { RenderEnterFullScreenProps } from './EnterFullScreen';
 import { FullScreenIcon } from './FullScreenIcon';
 
 const TOOLTIP_OFFSET = { left: 0, top: 8 };
 
-export const EnterFullScreenButton: React.FC<RenderEnterFullScreenProps> = ({ onClick }) => {
+export const EnterFullScreenButton: React.FC<{
+    enableShortcuts: boolean;
+    onClick(): void;
+}> = ({ enableShortcuts, onClick }) => {
     const { l10n } = React.useContext(LocalizationContext);
     const label = l10n && l10n.fullScreen ? l10n.fullScreen.enterFullScreen : 'Full screen';
+    const ariaKeyShortcuts = enableShortcuts ? (isMac() ? 'Command+Ctrl+F' : 'F11') : '';
 
     return (
         <Tooltip
             ariaControlsSuffix="full-screen-enter"
             position={Position.BottomCenter}
             target={
-                <MinimalButton ariaLabel={label as string} onClick={onClick}>
+                <MinimalButton ariaKeyShortcuts={ariaKeyShortcuts} ariaLabel={label as string} onClick={onClick}>
                     <FullScreenIcon />
                 </MinimalButton>
             }

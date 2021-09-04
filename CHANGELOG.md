@@ -13,12 +13,13 @@
 -   The plugin instances which can be accessed from an instance of the Default Layout or Toolbar plugin should be readonly
 -   Support more shortcuts
 
-| Shortcut                      | Supported plugin                                       | Action                  |
-| ----------------------------- | ------------------------------------------------------ | ----------------------- |
-| <kbd>cmd</kbd> + <kbd>f</kbd> | [Search](https://react-pdf-viewer.dev/plugins/search/) | Open the search popover |
-| <kbd>cmd</kbd> + <kbd>o</kbd> | [Open](https://react-pdf-viewer.dev/plugins/open/)     | Open a document         |
+| Shortcut                                                          | Supported plugin                                                 | Action                     |
+| ----------------------------------------------------------------- | ---------------------------------------------------------------- | -------------------------- |
+| <kbd>ctrl</kbd> + <kbd>cmd</kbd> + <kbd>F</kbd> or <kbd>F11</kbd> | [Full screen](https://react-pdf-viewer.dev/plugins/full-screen/) | Enter the full screen mode |
+| <kbd>cmd</kbd> + <kbd>O</kbd>                                     | [Open](https://react-pdf-viewer.dev/plugins/open/)               | Open a document            |
+| <kbd>cmd</kbd> + <kbd>F</kbd>                                     | [Search](https://react-pdf-viewer.dev/plugins/search/)           | Open the search popover    |
 
-The shortcuts are enabled by default. It's possible to disable them:
+The shortcuts are enabled by default. It's possible to disable them, for example:
 
 ```js
 // Use the standalone open plugin

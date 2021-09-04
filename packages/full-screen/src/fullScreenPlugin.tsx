@@ -14,6 +14,7 @@ import { EnterFullScreen, EnterFullScreenProps } from './EnterFullScreen';
 import { EnterFullScreenButton } from './EnterFullScreenButton';
 import { EnterFullScreenMenuItem, EnterFullScreenMenuItemProps } from './EnterFullScreenMenuItem';
 import { ExitFullScreenButton } from './ExitFullScreenButton';
+import { ShortcutHandler } from './ShortcutHandler';
 import type { StoreProps } from './types/StoreProps';
 import type { Zoom } from './types/Zoom';
 
@@ -24,30 +25,40 @@ export interface FullScreenPlugin extends Plugin {
 }
 
 export interface FullScreenPluginProps {
+    enableShortcuts?: boolean;
     onEnterFullScreen?(zoom: Zoom): void;
     onExitFullScreen?(zoom: Zoom): void;
 }
 
 export const fullScreenPlugin = (props?: FullScreenPluginProps): FullScreenPlugin => {
-    const store = React.useMemo(() => createStore<StoreProps>({}), []);
-
     /* eslint-disable @typescript-eslint/no-empty-function */
-    const onEnterFullScreen = props && props.onEnterFullScreen ? props.onEnterFullScreen : () => {};
-    const onExitFullScreen = props && props.onExitFullScreen ? props.onExitFullScreen : () => {};
+    const fullScreenPluginProps = React.useMemo(
+        () =>
+            Object.assign(
+                {},
+                { enableShortcuts: true, onEnterFullScreen: () => {}, onExitFullScreen: () => {} },
+                props
+            ),
+        []
+    );
     /* eslint-enable @typescript-eslint/no-empty-function */
+    const store = React.useMemo(() => createStore<StoreProps>({}), []);
 
     const EnterFullScreenDecorator = (props: EnterFullScreenProps) => (
         <EnterFullScreen
             {...props}
+            enableShortcuts={fullScreenPluginProps.enableShortcuts}
             store={store}
-            onEnterFullScreen={onEnterFullScreen}
-            onExitFullScreen={onExitFullScreen}
+            onEnterFullScreen={fullScreenPluginProps.onEnterFullScreen}
+            onExitFullScreen={fullScreenPluginProps.onExitFullScreen}
         />
     );
 
     const EnterFullScreenButtonDecorator = () => (
         <EnterFullScreenDecorator>
-            {(renderProps) => <EnterFullScreenButton {...renderProps} />}
+            {(renderProps) => (
+                <EnterFullScreenButton enableShortcuts={fullScreenPluginProps.enableShortcuts} {...renderProps} />
+            )}
         </EnterFullScreenDecorator>
     );
 
@@ -71,6 +82,14 @@ export const fullScreenPlugin = (props?: FullScreenPluginProps): FullScreenPlugi
         if (currentSlot.subSlot) {
             currentSlot.subSlot.children = (
                 <>
+                    {fullScreenPluginProps.enableShortcuts && (
+                        <ShortcutHandler
+                            containerRef={props.containerRef}
+                            store={store}
+                            onEnterFullScreen={fullScreenPluginProps.onEnterFullScreen}
+                            onExitFullScreen={fullScreenPluginProps.onExitFullScreen}
+                        />
+                    )}
                     <ExitFullScreenDecorator />
                     {currentSlot.subSlot.children}
                 </>
