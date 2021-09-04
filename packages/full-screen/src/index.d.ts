@@ -33,6 +33,7 @@ export interface FullScreenPlugin extends Plugin {
 export type Zoom = (scale: number | SpecialZoomLevel) => void;
 
 export interface FullScreenPluginProps {
+    enableShortcuts?: boolean;
     onEnterFullScreen?(zoom: Zoom): void;
     onExitFullScreen?(zoom: Zoom): void;
 }

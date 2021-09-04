@@ -7,6 +7,7 @@
  */
 
 import * as React from 'react';
+import { isMac } from '@react-pdf-viewer/core';
 import type { Store } from '@react-pdf-viewer/core';
 
 import { EnterFullScreenButton } from './EnterFullScreenButton';
@@ -26,10 +27,11 @@ export interface EnterFullScreenProps {
 
 export const EnterFullScreen: React.FC<{
     children?: RenderEnterFullScreen;
+    enableShortcuts: boolean;
     store: Store<StoreProps>;
     onEnterFullScreen(zoom: Zoom): void;
     onExitFullScreen(zoom: Zoom): void;
-}> = ({ children, store, onEnterFullScreen, onExitFullScreen }) => {
+}> = ({ children, enableShortcuts, store, onEnterFullScreen, onExitFullScreen }) => {
     const pagesRef = React.useRef<HTMLElement | null>(
         store.get('getPagesContainer') ? store.get('getPagesContainer')() : null
     );
@@ -79,7 +81,9 @@ export const EnterFullScreen: React.FC<{
         };
     }, []);
 
-    const defaultChildren = (props: RenderEnterFullScreenProps) => <EnterFullScreenButton onClick={props.onClick} />;
+    const defaultChildren = (props: RenderEnterFullScreenProps) => (
+        <EnterFullScreenButton enableShortcuts={enableShortcuts} onClick={props.onClick} />
+    );
     const render = children || defaultChildren;
 
     return render({
