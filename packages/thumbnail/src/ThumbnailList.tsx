@@ -129,25 +129,27 @@ export const ThumbnailList: React.FC<{
             {Array(numPages)
                 .fill(0)
                 .map((_, index) => (
-                    <div
-                        className={classNames({
-                            'rpv-thumbnail__item': true,
-                            'rpv-thumbnail__item--selected': currentPage === index,
-                        })}
-                        key={`thumbnail-${index}`}
-                        role="button"
-                        tabIndex={currentPage === index ? 0 : -1}
-                        onClick={() => onJumpToPage(index)}
-                    >
-                        <ThumbnailContainer
-                            doc={doc}
-                            isActive={currentPage === index}
-                            pageHeight={pageHeight}
-                            pageIndex={index}
-                            pageWidth={pageWidth}
-                            rotation={rotation}
-                            onActive={scrollToThumbnail}
-                        />
+                    <div key={`thumbnail-${index}`}>
+                        <div
+                            className={classNames({
+                                'rpv-thumbnail__item': true,
+                                'rpv-thumbnail__item--selected': currentPage === index,
+                            })}
+                            role="button"
+                            tabIndex={currentPage === index ? 0 : -1}
+                            onClick={() => onJumpToPage(index)}
+                        >
+                            <ThumbnailContainer
+                                doc={doc}
+                                isActive={currentPage === index}
+                                pageHeight={pageHeight}
+                                pageIndex={index}
+                                pageWidth={pageWidth}
+                                rotation={rotation}
+                                onActive={scrollToThumbnail}
+                            />
+                        </div>
+                        <div className="rpv-thumbnail__page">{index + 1}</div>
                     </div>
                 ))}
         </div>
