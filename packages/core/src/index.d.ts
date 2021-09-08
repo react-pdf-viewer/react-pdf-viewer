@@ -409,6 +409,7 @@ export interface ViewerProps {
     // Invoked after switching to `theme`
     onSwitchTheme?(theme: string): void;
     onZoom?(e: ZoomEvent): void;
+    renderSinglePage?: boolean;
 }
 export class Viewer extends React.Component<ViewerProps> {}
 
