@@ -40,6 +40,7 @@ export const Inner: React.FC<{
     onOpenFile(fileName: string, data: Uint8Array): void;
     onPageChange(e: PageChangeEvent): void;
     onZoom(e: ZoomEvent): void;
+    renderSinglePage?: boolean;
 }> = ({
     currentFile,
     defaultScale,
@@ -53,6 +54,7 @@ export const Inner: React.FC<{
     onOpenFile,
     onPageChange,
     onZoom,
+    renderSinglePage,
 }) => {
     const { l10n } = React.useContext(LocalizationContext);
     const themeContext = React.useContext(ThemeContext);
@@ -345,36 +347,35 @@ export const Inner: React.FC<{
                 },
                 children: (
                     <>
-                        {Array(numPages)
-                            .fill(0)
-                            .map((_, index) => {
-                                return (
-                                    <div
-                                        aria-label={pageLabel.replace('{{pageIndex}}', `${index + 1}`)}
-                                        className="rpv-core__inner-page"
-                                        key={`pagelayer-${index}`}
-                                        ref={(ref): void => {
-                                            pageRefs[index].current = ref as HTMLDivElement;
-                                        }}
-                                        role="region"
-                                    >
-                                        <PageLayer
-                                            currentPage={currentPage}
-                                            doc={doc}
-                                            height={pageHeight}
-                                            pageIndex={index}
-                                            plugins={plugins}
-                                            renderPage={renderPage}
-                                            rotation={rotation}
-                                            scale={scale}
-                                            width={pageWidth}
-                                            onExecuteNamedAction={executeNamedAction}
-                                            onJumpToDest={jumpToDestination}
-                                            onPageVisibilityChanged={pageVisibilityChanged}
-                                        />
-                                    </div>
-                                );
-                            })}
+                        {(renderSinglePage ? Array(1) : Array(numPages)).fill(0).map((_, index) => {
+                            index = renderSinglePage ? currentPage : index;
+                            return (
+                                <div
+                                    aria-label={pageLabel.replace('{{pageIndex}}', `${index + 1}`)}
+                                    className="rpv-core__inner-page"
+                                    key={`pagelayer-${index}`}
+                                    ref={(ref): void => {
+                                        pageRefs[index].current = ref as HTMLDivElement;
+                                    }}
+                                    role="region"
+                                >
+                                    <PageLayer
+                                        currentPage={currentPage}
+                                        doc={doc}
+                                        height={pageHeight}
+                                        pageIndex={index}
+                                        plugins={plugins}
+                                        renderPage={renderPage}
+                                        rotation={rotation}
+                                        scale={scale}
+                                        width={pageWidth}
+                                        onExecuteNamedAction={executeNamedAction}
+                                        onJumpToDest={jumpToDestination}
+                                        onPageVisibilityChanged={pageVisibilityChanged}
+                                    />
+                                </div>
+                            );
+                        })}
                     </>
                 ),
             },

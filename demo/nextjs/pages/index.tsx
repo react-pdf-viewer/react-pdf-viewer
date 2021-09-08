@@ -9,6 +9,8 @@ const Index = () => {
         <Worker workerUrl="https://unpkg.com/pdfjs-dist@2.9.359/build/pdf.worker.js">
             <div className="demo">
                 <Viewer
+                    // renderSinglePage
+                    // initialPage={2}
                     fileUrl="pdf-open-parameters.pdf"
                     defaultScale={SpecialZoomLevel.PageWidth}
                     theme={{

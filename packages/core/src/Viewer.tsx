@@ -71,6 +71,7 @@ export const Viewer: React.FC<{
     // Invoked after switching to `theme`
     onSwitchTheme?(theme: string): void;
     onZoom?(e: ZoomEvent): void;
+    renderSinglePage?: boolean;
 }> = ({
     characterMap,
     defaultScale,
@@ -100,6 +101,7 @@ export const Viewer: React.FC<{
     onZoom = () => {
         /**/
     },
+    renderSinglePage = false,
 }) => {
     const [file, setFile] = React.useState<FileState>({
         data: fileUrl,
@@ -179,6 +181,7 @@ export const Viewer: React.FC<{
                                     doc={doc}
                                     render={(ps: PageSize) => (
                                         <Inner
+                                            renderSinglePage={renderSinglePage}
                                             currentFile={{
                                                 data: file.data,
                                                 name: file.name,
