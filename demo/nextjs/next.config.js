@@ -26,14 +26,14 @@ module.exports = {
             // The pattern covers the package and its CSS
             // @react-pdf-viewer/core
             // @react-pdf-viewer/core/lib/styles/index.css
-            /^@react-pdf-viewer\/[a-z-]+[\/styles]*[\/index.(css)]*$/,
+            /^@react-pdf-viewer\/[a-z-]+[\/lib\/styles]*[\/index.(css)]*$/,
             (resource) => {
                 const request = resource.request;
                 const pkgName = request.split('/')[1];
 
                 switch (true) {
                     case request.endsWith('.css'):
-                        resource.request = path.join(__dirname, `../../packages/${pkgName}/lib/styles/index.css`);
+                        resource.request = path.join(__dirname, `../../packages/${pkgName}/src/styles/index.scss`);
                         break;
 
                     default:
