@@ -149,7 +149,7 @@ export const ThumbnailList: React.FC<{
                                 onActive={scrollToThumbnail}
                             />
                         </div>
-                        <div className="rpv-thumbnail__page">{index + 1}</div>
+                        <div className="rpv-thumbnail__index">{index + 1}</div>
                     </div>
                 ))}
         </div>

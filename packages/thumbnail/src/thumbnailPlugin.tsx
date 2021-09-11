@@ -10,15 +10,20 @@ import * as React from 'react';
 import { createStore } from '@react-pdf-viewer/core';
 import type { Plugin, PluginFunctions, PluginOnDocumentLoad, ViewerState } from '@react-pdf-viewer/core';
 
+import { Cover } from './Cover';
 import { ThumbnailListWithStore } from './ThumbnailListWithStore';
+import type { CoverProps } from './types/CoverProps';
 import type { StoreProps } from './types/StoreProps';
 
 export interface ThumbnailPlugin extends Plugin {
+    Cover: (props: CoverProps) => React.ReactElement;
     Thumbnails: () => React.ReactElement;
 }
 
 export const thumbnailPlugin = (): ThumbnailPlugin => {
     const store = React.useMemo(() => createStore<StoreProps>({}), []);
+
+    const CoverDecorator = (props: CoverProps) => <Cover {...props} store={store} />;
 
     const ThumbnailsDecorator = () => <ThumbnailListWithStore store={store} />;
 
@@ -35,6 +40,7 @@ export const thumbnailPlugin = (): ThumbnailPlugin => {
             store.update('pageWidth', viewerState.pageWidth);
             return viewerState;
         },
+        Cover: CoverDecorator,
         Thumbnails: ThumbnailsDecorator,
     };
 };

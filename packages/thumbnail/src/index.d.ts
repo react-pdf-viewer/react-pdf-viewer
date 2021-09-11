@@ -10,7 +10,12 @@ import * as React from 'react';
 import type { Plugin } from '@react-pdf-viewer/core';
 
 // Plugin
+export interface CoverProps {
+    getPageIndex?({ numPages: number }): number;
+}
+
 export interface ThumbnailPlugin extends Plugin {
+    Cover: (props: CoverProps) => React.ReactElement;
     Thumbnails: () => React.ReactElement;
 }
 

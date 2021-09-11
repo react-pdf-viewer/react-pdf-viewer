@@ -2,9 +2,21 @@
 
 ## v2.8.1 [WIP]
 
-**New feature**
+**New features**
 
 -   The `core` package provides new `Splitter` component
+-   The `thumbnail` plugin provides new `Cover` component that shows the thumbnail of a particular page:
+
+```js
+const { thumbnailPluginInstance } = thumbnailPlugin();
+const { Cover } = thumbnailPluginInstance;
+
+// Thumbnail of the first page
+<Cover getPageIndex={_ => 0} />
+
+// Thumbnail of the last page
+<Cover getPageIndex={props => props.numPages - 1} />
+```
 
 **Improvements**
 

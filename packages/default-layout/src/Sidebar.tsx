@@ -48,7 +48,6 @@ export const Sidebar: React.FC<SidebarProps> = ({
     tabs,
 }) => {
     const containerRef = React.useRef<HTMLDivElement>();
-    const currentWidthRef = React.useRef('');
     const { l10n } = React.useContext(LocalizationContext);
     const [opened, setOpened] = React.useState(false);
     const [currentTab, setCurrentTab] = React.useState(store.get('currentTab') || 0);
@@ -83,8 +82,6 @@ export const Sidebar: React.FC<SidebarProps> = ({
             if (container) {
                 const width = container.style.width;
                 if (width) {
-                    // Remember the width, so we can resize to it when user opens the tab again
-                    currentWidthRef.current = width;
                     container.style.removeProperty('width');
                 }
             }
@@ -96,12 +93,6 @@ export const Sidebar: React.FC<SidebarProps> = ({
     const switchToTab = (index: number) => {
         setOpened(true);
         setCurrentTab(index);
-
-        // Restore the width
-        const container = containerRef.current;
-        if (container && currentWidthRef.current) {
-            container.style.width = currentWidthRef.current;
-        }
     };
 
     React.useEffect(() => {
