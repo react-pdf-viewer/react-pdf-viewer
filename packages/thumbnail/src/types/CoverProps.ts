@@ -6,8 +6,6 @@
  * @copyright 2019-2021 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-// Types
-export type { CoverProps } from './types/CoverProps';
-
-// Plugin
-export * from './thumbnailPlugin';
+export interface CoverProps {
+    pageIndex: number;
+}
