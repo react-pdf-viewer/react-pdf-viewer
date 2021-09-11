@@ -11,7 +11,7 @@ import type { Plugin } from '@react-pdf-viewer/core';
 
 // Plugin
 export interface CoverProps {
-    pageIndex: number;
+    getPageIndex({ numPages: number }): number;
 }
 
 export interface ThumbnailPlugin extends Plugin {

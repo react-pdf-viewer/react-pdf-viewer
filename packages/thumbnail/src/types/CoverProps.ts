@@ -7,5 +7,5 @@
  */
 
 export interface CoverProps {
-    pageIndex: number;
+    getPageIndex({ numPages: number }): number;
 }

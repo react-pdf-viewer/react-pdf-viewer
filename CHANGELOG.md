@@ -12,7 +12,10 @@ const { thumbnailPluginInstance } = thumbnailPlugin();
 const { Cover } = thumbnailPluginInstance;
 
 // Thumbnail of the first page
-<Cover pageIndex={0} />;
+<Cover getPageIndex={_ => 0} />
+
+// Thumbnail of the last page
+<Cover getPageIndex={props => props.numPages - 1} />
 ```
 
 **Improvements**
