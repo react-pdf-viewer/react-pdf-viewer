@@ -2,7 +2,7 @@
 
 ## v2.8.1 [WIP]
 
-**New feature**
+**New features**
 
 -   The `core` package provides new `Splitter` component
 -   The `thumbnail` plugin provides new `Cover` component that shows the thumbnail of a particular page:

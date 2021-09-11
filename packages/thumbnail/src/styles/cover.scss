@@ -21,6 +21,11 @@
 }
 
 .rpv-thumbnail__cover-loader {
+    // Center the spinner
+    align-items: center;
+    display: flex;
+    justify-content: center;
+
     // Absolute position
     left: 0;
     position: absolute;
