@@ -47,6 +47,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
     thumbnailTabContent,
     tabs,
 }) => {
+    const containerRef = React.useRef<HTMLDivElement>();
     const { l10n } = React.useContext(LocalizationContext);
     const [opened, setOpened] = React.useState(false);
     const [currentTab, setCurrentTab] = React.useState(store.get('currentTab') || 0);
@@ -74,7 +75,16 @@ export const Sidebar: React.FC<SidebarProps> = ({
     const listTabs = tabs ? tabs(defaultTabs) : defaultTabs;
 
     const toggleTab = (index: number) => {
-        currentTab === index ? setOpened((isOpened) => !isOpened) : switchToTab(index);
+        if (currentTab === index) {
+            setOpened((isOpened) => !isOpened);
+            // Remove the `width` style in the case the sidebar is resized
+            const container = containerRef.current;
+            if (container) {
+                container.style.removeProperty('width');
+            }
+        } else {
+            switchToTab(index);
+        }
     };
 
     const switchToTab = (index: number) => {
@@ -99,6 +109,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                 'rpv-default-layout__sidebar--ltr': !isRtl,
                 'rpv-default-layout__sidebar--rtl': isRtl,
             })}
+            ref={containerRef}
         >
             <div className="rpv-default-layout__sidebar-tabs">
                 <div className="rpv-default-layout__sidebar-headers" role="tablist" aria-orientation="vertical">
