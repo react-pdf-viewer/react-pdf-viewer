@@ -162,6 +162,7 @@ export const DocumentLoader: React.FC<{
     if (status instanceof LoadingState) {
         return (
             <div
+                data-testid="core__doc-loading"
                 className={classNames({
                     'rpv-core__doc-loading': true,
                     'rpv-core__doc-loading--rtl': isRtl,
@@ -173,7 +174,7 @@ export const DocumentLoader: React.FC<{
     }
 
     return (
-        <div className="rpv-core__doc-loading">
+        <div className="rpv-core__doc-loading" data-testid="core__doc-loading">
             <Spinner />
         </div>
     );

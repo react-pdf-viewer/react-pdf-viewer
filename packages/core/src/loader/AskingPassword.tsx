@@ -63,7 +63,13 @@ export const AskingPassword: React.FC<{
                             'rpv-core__asking-password-input--rtl': isRtl,
                         })}
                     >
-                        <TextBox testId="core__asking-password-input" type="password" value={password} onChange={setPassword} onKeyDown={handleKeyDown} />
+                        <TextBox
+                            testId="core__asking-password-input"
+                            type="password"
+                            value={password}
+                            onChange={setPassword}
+                            onKeyDown={handleKeyDown}
+                        />
                     </div>
                     <PrimaryButton onClick={submit}>{l10n.core.askingPassword.submit}</PrimaryButton>
                 </div>
