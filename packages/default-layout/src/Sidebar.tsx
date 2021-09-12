@@ -108,62 +108,62 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
     return (
         <>
-        <div
-            data-testid="default-layout__sidebar"
-            className={classNames({
-                'rpv-default-layout__sidebar': true,
-                'rpv-default-layout__sidebar--opened': opened,
-                'rpv-default-layout__sidebar--ltr': !isRtl,
-                'rpv-default-layout__sidebar--rtl': isRtl,                
-            })}
-            ref={containerRef}
-        >
-            <div className="rpv-default-layout__sidebar-tabs">
-                <div className="rpv-default-layout__sidebar-headers" role="tablist" aria-orientation="vertical">
-                    {listTabs.map((tab, index) => (
-                        <div
-                            aria-controls="rpv-default-layout__sidebar-content"
-                            aria-selected={currentTab === index}
-                            key={index}
-                            className="rpv-default-layout__sidebar-header"
-                            id={`rpv-default-layout__sidebar-tab-${index}`}
-                            role="tab"
-                        >
-                            <Tooltip
-                                ariaControlsSuffix={`default-layout-sidebar-tab-${index}`}
-                                position={isRtl ? Position.LeftCenter : Position.RightCenter}
-                                target={
-                                    <MinimalButton
-                                        ariaLabel={tab.title}
-                                        isSelected={currentTab === index}
-                                        onClick={() => toggleTab(index)}
-                                    >
-                                        {tab.icon}
-                                    </MinimalButton>
-                                }
-                                content={() => tab.title}
-                                offset={isRtl ? TOOLTIP_OFFSET_RTL : TOOLTIP_OFFSET_LTR}
-                            />
-                        </div>
-                    ))}
-                </div>
-                <div
-                    aria-labelledby={`rpv-default-layout__sidebar-tab-${currentTab}`}
-                    id="rpv-default-layout__sidebar-content"
-                    className={classNames({
-                        'rpv-default-layout__sidebar-content': true,
-                        'rpv-default-layout__sidebar-content--opened': opened,
-                        'rpv-default-layout__sidebar-content--ltr': !isRtl,
-                        'rpv-default-layout__sidebar-content--rtl': isRtl,
-                    })}
-                    role="tabpanel"
-                    tabIndex={-1}
-                >
-                    {listTabs[currentTab].content}
+            <div
+                data-testid="default-layout__sidebar"
+                className={classNames({
+                    'rpv-default-layout__sidebar': true,
+                    'rpv-default-layout__sidebar--opened': opened,
+                    'rpv-default-layout__sidebar--ltr': !isRtl,
+                    'rpv-default-layout__sidebar--rtl': isRtl,
+                })}
+                ref={containerRef}
+            >
+                <div className="rpv-default-layout__sidebar-tabs">
+                    <div className="rpv-default-layout__sidebar-headers" role="tablist" aria-orientation="vertical">
+                        {listTabs.map((tab, index) => (
+                            <div
+                                aria-controls="rpv-default-layout__sidebar-content"
+                                aria-selected={currentTab === index}
+                                key={index}
+                                className="rpv-default-layout__sidebar-header"
+                                id={`rpv-default-layout__sidebar-tab-${index}`}
+                                role="tab"
+                            >
+                                <Tooltip
+                                    ariaControlsSuffix={`default-layout-sidebar-tab-${index}`}
+                                    position={isRtl ? Position.LeftCenter : Position.RightCenter}
+                                    target={
+                                        <MinimalButton
+                                            ariaLabel={tab.title}
+                                            isSelected={currentTab === index}
+                                            onClick={() => toggleTab(index)}
+                                        >
+                                            {tab.icon}
+                                        </MinimalButton>
+                                    }
+                                    content={() => tab.title}
+                                    offset={isRtl ? TOOLTIP_OFFSET_RTL : TOOLTIP_OFFSET_LTR}
+                                />
+                            </div>
+                        ))}
+                    </div>
+                    <div
+                        aria-labelledby={`rpv-default-layout__sidebar-tab-${currentTab}`}
+                        id="rpv-default-layout__sidebar-content"
+                        className={classNames({
+                            'rpv-default-layout__sidebar-content': true,
+                            'rpv-default-layout__sidebar-content--opened': opened,
+                            'rpv-default-layout__sidebar-content--ltr': !isRtl,
+                            'rpv-default-layout__sidebar-content--rtl': isRtl,
+                        })}
+                        role="tabpanel"
+                        tabIndex={-1}
+                    >
+                        {listTabs[currentTab].content}
+                    </div>
                 </div>
             </div>
-        </div>
-        {opened && <Splitter constrain={resizeConstrain} />}
+            {opened && <Splitter constrain={resizeConstrain} />}
         </>
     );
 };
