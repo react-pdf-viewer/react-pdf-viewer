@@ -31,6 +31,7 @@ const handleAskPassword = (e: DocumentAskPasswordEvent) => {
 **Improvements**
 
 -   Automatically focus on the keyword input in the search popover
+-   Press `Enter` to submit the password when opening a protected document
 -   Show the page numbers for thumbnails
 -   The Default Layout plugin allows to resize the sidebar
 -   The plugin instances which can be accessed from an instance of the Default Layout or Toolbar plugin should be readonly

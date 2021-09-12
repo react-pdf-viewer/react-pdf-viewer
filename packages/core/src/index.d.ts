@@ -253,6 +253,7 @@ export interface TextBoxProps {
     ariaLabel?: string;
     autoFocus?: boolean;
     placeholder?: string;
+    testId?: string;
     type?: 'text' | 'password';
     value?: string;
     onChange: (value: string) => void;

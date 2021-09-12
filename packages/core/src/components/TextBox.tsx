@@ -15,6 +15,7 @@ export const TextBox: React.FC<{
     ariaLabel?: string;
     autoFocus?: boolean;
     placeholder?: string;
+    testId?: string;
     type?: 'text' | 'password';
     value?: string;
     onChange: (value: string) => void;
@@ -23,6 +24,7 @@ export const TextBox: React.FC<{
     ariaLabel = '',
     autoFocus = false,
     placeholder = '',
+    testId,
     type = 'text',
     value = '',
     onChange,
@@ -41,7 +43,11 @@ export const TextBox: React.FC<{
         placeholder,
         value,
         onChange: (e: React.ChangeEvent<HTMLInputElement>) => onChange(e.target.value),
+        onKeyDown,
     };
+    if (testId) {
+        attrs['data-testid'] = testId;
+    }
 
     return type === 'text' ? <input type="text" {...attrs} /> : <input type="password" {...attrs} />;
 };
