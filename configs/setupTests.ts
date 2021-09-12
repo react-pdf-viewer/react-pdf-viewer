@@ -51,12 +51,14 @@ const HELLO_PDF = new Uint8Array([
     10, 37, 37, 69, 79, 70,
 ]);
 const SAMPLE_PDF = new Uint8Array(fs.readFileSync(path.resolve(__dirname, '../assets/sample.pdf')));
+const SAMPLE_PROTECTED_PDF = new Uint8Array(fs.readFileSync(path.resolve(__dirname, '../assets/sample-protected.pdf')));
 const MULTIPLE_PAGES_PDF = new Uint8Array(fs.readFileSync(path.resolve(__dirname, '../assets/sample-two-pages.pdf')));
 const OPEN_PARAMS_PDF = new Uint8Array(fs.readFileSync(path.resolve(__dirname, '../assets/pdf-open-parameters.pdf')));
 
 beforeAll(() => {
     global['__HELLO_PDF__'] = HELLO_PDF;
     global['__SAMPLE_PDF__'] = SAMPLE_PDF;
+    global['__SAMPLE_PROTECTED_PDF__'] = SAMPLE_PROTECTED_PDF;
     global['__MULTIPLE_PAGES_PDF__'] = MULTIPLE_PAGES_PDF;
     global['__OPEN_PARAMS_PDF__'] = OPEN_PARAMS_PDF;
 });
