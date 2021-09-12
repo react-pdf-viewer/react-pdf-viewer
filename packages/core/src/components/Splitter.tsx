@@ -8,6 +8,8 @@
 
 import * as React from 'react';
 
+import { TextDirection, ThemeContext } from '../theme/ThemeContext';
+
 export interface SplitterSize {
     firstHalfPercentage: number;
     firstHalfSize: number;
@@ -18,6 +20,9 @@ export interface SplitterSize {
 export const Splitter: React.FC<{
     constrain?(size: SplitterSize): boolean;
 }> = ({ constrain }) => {
+    const { direction } = React.useContext(ThemeContext);
+    const isRtl = direction === TextDirection.RightToLeft;
+
     const resizerRef = React.useRef<HTMLDivElement>();
     const leftSideRef = React.useRef<HTMLElement>();
     const rightSideRef = React.useRef<HTMLElement>();
@@ -26,6 +31,7 @@ export const Splitter: React.FC<{
     const xRef = React.useRef(0);
     const yRef = React.useRef(0);
     const leftWidthRef = React.useRef(0);
+    const resizerWidthRef = React.useRef(0);
 
     const handleMouseMove = (e: MouseEvent) => {
         const resizerEle = resizerRef.current;
@@ -35,17 +41,19 @@ export const Splitter: React.FC<{
             return;
         }
 
+        const resizerWidth = resizerWidthRef.current;
+
         // How far the mouse has been moved
         const dx = e.clientX - xRef.current;
 
-        const firstHalfSize = leftWidthRef.current + dx;
+        const firstHalfSize = leftWidthRef.current + (isRtl ? -dx : dx);
         const containerWidth = resizerEle.parentElement.getBoundingClientRect().width;
         const firstHalfPercentage = (firstHalfSize * 100) / containerWidth;
 
         resizerEle.classList.add('rpv-core__splitter--resizing');
 
         if (constrain) {
-            const secondHalfSize = containerWidth - firstHalfSize - resizerEle.getBoundingClientRect().width;
+            const secondHalfSize = containerWidth - firstHalfSize - resizerWidth;
             const secondHalfPercentage = (secondHalfSize * 100) / containerWidth;
             if (!constrain({ firstHalfPercentage, firstHalfSize, secondHalfPercentage, secondHalfSize })) {
                 return;
@@ -102,6 +110,8 @@ export const Splitter: React.FC<{
         if (!resizerEle) {
             return;
         }
+
+        resizerWidthRef.current = resizerEle.getBoundingClientRect().width;
 
         leftSideRef.current = resizerEle.previousElementSibling as HTMLElement;
         rightSideRef.current = resizerEle.nextElementSibling as HTMLElement;
