@@ -6,13 +6,14 @@
  * @copyright 2019-2021 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import { LoadingStatus, VerifyPassword } from './LoadingStatus';
+import { LoadingStatus } from './LoadingStatus';
+import type { VerifyPassword } from '../types/DocumentAskPasswordEvent';
 
 export class WrongPasswordState extends LoadingStatus {
-    public verifyPasswordFn: VerifyPassword;
+    public verifyPassword: VerifyPassword;
 
-    constructor(verifyPasswordFn: VerifyPassword) {
+    constructor(verifyPassword: VerifyPassword) {
         super();
-        this.verifyPasswordFn = verifyPasswordFn;
+        this.verifyPassword = verifyPassword;
     }
 }

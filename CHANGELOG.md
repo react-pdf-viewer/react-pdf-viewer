@@ -18,6 +18,16 @@ const { Cover } = thumbnailPluginInstance;
 <Cover getPageIndex={props => props.numPages - 1} />
 ```
 
+-   Add new `onDocumentAskPassword` event that is triggered when a protected document requires a password to open:
+
+```js
+const handleAskPassword = (e: DocumentAskPasswordEvent) => {
+    // ...
+};
+
+<Viewer onDocumentAskPassword={handleAskPassword} />;
+```
+
 **Improvements**
 
 -   Automatically focus on the keyword input in the search popover

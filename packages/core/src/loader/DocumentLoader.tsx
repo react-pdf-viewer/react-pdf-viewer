@@ -19,9 +19,10 @@ import { AskingPassword } from './AskingPassword';
 import { CompletedState } from './CompletedState';
 import { FailureState } from './FailureState';
 import { LoadingState } from './LoadingState';
-import { LoadingStatus, VerifyPassword } from './LoadingStatus';
+import { LoadingStatus } from './LoadingStatus';
 import { WrongPassword } from './WrongPassword';
 import { WrongPasswordState } from './WrongPasswordState';
+import type { DocumentAskPasswordEvent, VerifyPassword } from '../types/DocumentAskPasswordEvent';
 import type { LoadError } from './LoadError';
 import type { PdfJs } from '../types/PdfJs';
 
@@ -36,6 +37,7 @@ export const DocumentLoader: React.FC<{
     renderLoader?(percentages: number): React.ReactElement;
     transformGetDocumentParams?(options: PdfJs.GetDocumentParams): PdfJs.GetDocumentParams;
     withCredentials: boolean;
+    onDocumentAskPassword?(e: DocumentAskPasswordEvent): void;
 }> = ({
     characterMap,
     file,
@@ -45,6 +47,7 @@ export const DocumentLoader: React.FC<{
     renderLoader,
     transformGetDocumentParams,
     withCredentials,
+    onDocumentAskPassword,
 }) => {
     const { direction } = React.useContext(ThemeContext);
     const isRtl = direction === TextDirection.RightToLeft;
@@ -130,42 +133,45 @@ export const DocumentLoader: React.FC<{
             : isMounted.current && setStatus(new LoadingState(percentages));
     }, [percentages, loadedDocument]);
 
-    switch (true) {
-        case status instanceof AskForPasswordState:
-            return <AskingPassword verifyPasswordFn={(status as AskForPasswordState).verifyPasswordFn} />;
-        case status instanceof WrongPasswordState:
-            return <WrongPassword verifyPasswordFn={(status as WrongPasswordState).verifyPasswordFn} />;
-        case status instanceof CompletedState:
-            return render((status as CompletedState).doc);
-        case status instanceof FailureState:
-            return renderError ? (
-                renderError((status as FailureState).error)
-            ) : (
-                <div
-                    className={classNames({
-                        'rpv-core__doc-error': true,
-                        'rpv-core__doc-error--rtl': isRtl,
-                    })}
-                >
-                    <div className="rpv-core__doc-error-text">{(status as FailureState).error.message}</div>
-                </div>
-            );
-        case status instanceof LoadingState:
-            return (
-                <div
-                    className={classNames({
-                        'rpv-core__doc-loading': true,
-                        'rpv-core__doc-loading--rtl': isRtl,
-                    })}
-                >
-                    {renderLoader ? renderLoader((status as LoadingState).percentages) : <Spinner />}
-                </div>
-            );
-        default:
-            return (
-                <div className="rpv-core__doc-loading">
-                    <Spinner />
-                </div>
-            );
+    if (status instanceof AskForPasswordState) {
+        return <AskingPassword verifyPassword={status.verifyPassword} onDocumentAskPassword={onDocumentAskPassword} />;
     }
+    if (status instanceof WrongPasswordState) {
+        return <WrongPassword verifyPassword={status.verifyPassword} onDocumentAskPassword={onDocumentAskPassword} />;
+    }
+    if (status instanceof CompletedState) {
+        return render((status as CompletedState).doc);
+    }
+    if (status instanceof FailureState) {
+        return renderError ? (
+            renderError((status as FailureState).error)
+        ) : (
+            <div
+                className={classNames({
+                    'rpv-core__doc-error': true,
+                    'rpv-core__doc-error--rtl': isRtl,
+                })}
+            >
+                <div className="rpv-core__doc-error-text">{(status as FailureState).error.message}</div>
+            </div>
+        );
+    }
+    if (status instanceof LoadingState) {
+        return (
+            <div
+                className={classNames({
+                    'rpv-core__doc-loading': true,
+                    'rpv-core__doc-loading--rtl': isRtl,
+                })}
+            >
+                {renderLoader ? renderLoader((status as LoadingState).percentages) : <Spinner />}
+            </div>
+        );
+    }
+
+    return (
+        <div className="rpv-core__doc-loading">
+            <Spinner />
+        </div>
+    );
 };

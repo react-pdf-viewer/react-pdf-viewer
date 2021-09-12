@@ -13,17 +13,26 @@ import { TextBox } from '../components/TextBox';
 import { LocalizationContext } from '../localization/LocalizationContext';
 import { TextDirection, ThemeContext } from '../theme/ThemeContext';
 import { classNames } from '../utils/classNames';
-import type { VerifyPassword } from './LoadingStatus';
+import type { DocumentAskPasswordEvent, VerifyPassword } from '../types/DocumentAskPasswordEvent';
 
 export const WrongPassword: React.FC<{
-    verifyPasswordFn: VerifyPassword;
-}> = ({ verifyPasswordFn }) => {
+    verifyPassword: VerifyPassword;
+    onDocumentAskPassword?(e: DocumentAskPasswordEvent): void;
+}> = ({ verifyPassword, onDocumentAskPassword }) => {
     const { l10n } = React.useContext(LocalizationContext);
     const [password, setPassword] = React.useState('');
     const { direction } = React.useContext(ThemeContext);
     const isRtl = direction === TextDirection.RightToLeft;
 
-    const submit = (): void => verifyPasswordFn(password);
+    const submit = (): void => verifyPassword(password);
+
+    React.useEffect(() => {
+        if (onDocumentAskPassword) {
+            onDocumentAskPassword({
+                verifyPassword,
+            });
+        }
+    }, []);
 
     return (
         <div className="rpv-core__asking-password-wrapper">

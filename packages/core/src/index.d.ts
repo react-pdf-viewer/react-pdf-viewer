@@ -357,6 +357,12 @@ export interface LoadError {
 }
 export type RenderError = (error: LoadError) => React.ReactElement;
 
+// Invoked when the document asks for password
+export type VerifyPassword = (password: string) => void;
+export interface DocumentAskPasswordEvent {
+    verifyPassword: VerifyPassword;
+}
+
 // Invoked when the document is loaded successfully
 export interface DocumentLoadEvent {
     doc: PdfJs.PdfDocument;
@@ -404,6 +410,7 @@ export interface ViewerProps {
     // Indicate the cross-site requests should be made with credentials such as cookie and authorization headers.
     // The default value is `false`
     withCredentials?: boolean;
+    onDocumentAskPassword?(e: DocumentAskPasswordEvent): void;
     onDocumentLoad?(e: DocumentLoadEvent): void;
     onPageChange?(e: PageChangeEvent): void;
     // Invoked after switching to `theme`

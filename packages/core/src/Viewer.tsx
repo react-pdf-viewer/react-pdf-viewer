@@ -19,6 +19,7 @@ import { TextDirection, ThemeContext } from './theme/ThemeContext';
 import { withTheme } from './theme/withTheme';
 import { Plugin } from './types/Plugin';
 import { isSameUrl } from './utils/isSameUrl';
+import type { DocumentAskPasswordEvent } from './types/DocumentAskPasswordEvent';
 import type { DocumentLoadEvent } from './types/DocumentLoadEvent';
 import type { LocalizationMap } from './types/LocalizationMap';
 import type { PageChangeEvent } from './types/PageChangeEvent';
@@ -66,6 +67,7 @@ export const Viewer: React.FC<{
     // Indicate the cross-site requests should be made with credentials such as cookie and authorization headers.
     // The default value is `false`
     withCredentials?: boolean;
+    onDocumentAskPassword?(e: DocumentAskPasswordEvent): void;
     onDocumentLoad?(e: DocumentLoadEvent): void;
     onPageChange?(e: PageChangeEvent): void;
     // Invoked after switching to `theme`
@@ -88,6 +90,7 @@ export const Viewer: React.FC<{
         theme: 'light',
     },
     withCredentials = false,
+    onDocumentAskPassword,
     onDocumentLoad = () => {
         /**/
     },
@@ -209,6 +212,7 @@ export const Viewer: React.FC<{
                             renderLoader={renderLoader}
                             transformGetDocumentParams={transformGetDocumentParams}
                             withCredentials={withCredentials}
+                            onDocumentAskPassword={onDocumentAskPassword}
                         />
                     )}
                 </div>
