@@ -12,11 +12,12 @@ import {
     LocalizationContext,
     MinimalButton,
     Position,
+    Splitter,
     TextDirection,
     ThemeContext,
     Tooltip,
 } from '@react-pdf-viewer/core';
-import type { Store } from '@react-pdf-viewer/core';
+import type { SplitterSize, Store } from '@react-pdf-viewer/core';
 
 import { BookmarkIcon } from './BookmarkIcon';
 import { FileIcon } from './FileIcon';
@@ -53,6 +54,8 @@ export const Sidebar: React.FC<SidebarProps> = ({
     const [currentTab, setCurrentTab] = React.useState(store.get('currentTab') || 0);
     const { direction } = React.useContext(ThemeContext);
     const isRtl = direction === TextDirection.RightToLeft;
+
+    const resizeConstrain = (size: SplitterSize) => size.firstHalfPercentage >= 20 && size.firstHalfPercentage <= 80;
 
     const defaultTabs: SidebarTab[] = [
         {
@@ -104,13 +107,14 @@ export const Sidebar: React.FC<SidebarProps> = ({
     }, []);
 
     return (
+        <>
         <div
             data-testid="default-layout__sidebar"
             className={classNames({
                 'rpv-default-layout__sidebar': true,
                 'rpv-default-layout__sidebar--opened': opened,
                 'rpv-default-layout__sidebar--ltr': !isRtl,
-                'rpv-default-layout__sidebar--rtl': isRtl,
+                'rpv-default-layout__sidebar--rtl': isRtl,                
             })}
             ref={containerRef}
         >
@@ -159,5 +163,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                 </div>
             </div>
         </div>
+        {opened && <Splitter constrain={resizeConstrain} />}
+        </>
     );
 };
