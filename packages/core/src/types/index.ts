@@ -6,6 +6,7 @@
  * @copyright 2019-2021 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
+export * from './DocumentAskPasswordEvent';
 export * from './DocumentLoadEvent';
 export * from './LocalizationMap';
 export * from './Offset';

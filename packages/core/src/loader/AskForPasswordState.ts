@@ -6,13 +6,21 @@
  * @copyright 2019-2021 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import { LoadingStatus, VerifyPassword } from './LoadingStatus';
+import { LoadingStatus } from './LoadingStatus';
+import type { VerifyPassword } from '../types/DocumentAskPasswordEvent';
+
+export enum SubmitPassword {
+    REQUIRE_PASSWORD,
+    WRONG_PASSWORD,
+}
 
 export class AskForPasswordState extends LoadingStatus {
-    public verifyPasswordFn: VerifyPassword;
+    public verifyPassword: VerifyPassword;
+    public submitPassword: SubmitPassword;
 
-    constructor(verifyPasswordFn: VerifyPassword) {
+    constructor(verifyPassword: VerifyPassword, submitPassword: SubmitPassword) {
         super();
-        this.verifyPasswordFn = verifyPasswordFn;
+        this.verifyPassword = verifyPassword;
+        this.submitPassword = submitPassword;
     }
 }
