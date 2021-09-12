@@ -41,6 +41,7 @@ export const TextBox: React.FC<{
         placeholder,
         value,
         onChange: (e: React.ChangeEvent<HTMLInputElement>) => onChange(e.target.value),
+        onKeyDown,
     };
 
     return type === 'text' ? <input type="text" {...attrs} /> : <input type="password" {...attrs} />;

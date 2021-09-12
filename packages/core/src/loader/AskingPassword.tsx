@@ -28,6 +28,12 @@ export const AskingPassword: React.FC<{
 
     const submit = (): void => verifyPassword(password);
 
+    const handleKeyDown = (e: React.KeyboardEvent) => {
+        if (e.key === 'Enter') {
+            submit();
+        }
+    };
+
     React.useEffect(() => {
         if (onDocumentAskPassword) {
             onDocumentAskPassword({
@@ -57,7 +63,7 @@ export const AskingPassword: React.FC<{
                             'rpv-core__asking-password-input--rtl': isRtl,
                         })}
                     >
-                        <TextBox type="password" value={password} onChange={setPassword} />
+                        <TextBox type="password" value={password} onChange={setPassword} onKeyDown={handleKeyDown} />
                     </div>
                     <PrimaryButton onClick={submit}>{l10n.core.askingPassword.submit}</PrimaryButton>
                 </div>
