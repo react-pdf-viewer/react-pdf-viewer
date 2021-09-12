@@ -9,11 +9,18 @@
 import { LoadingStatus } from './LoadingStatus';
 import type { VerifyPassword } from '../types/DocumentAskPasswordEvent';
 
+export enum SubmitPassword {
+    REQUIRE_PASSWORD,
+    WRONG_PASSWORD,
+}
+
 export class AskForPasswordState extends LoadingStatus {
     public verifyPassword: VerifyPassword;
+    public submitPassword: SubmitPassword;
 
-    constructor(verifyPassword: VerifyPassword) {
+    constructor(verifyPassword: VerifyPassword, submitPassword: SubmitPassword) {
         super();
         this.verifyPassword = verifyPassword;
+        this.submitPassword = submitPassword;
     }
 }

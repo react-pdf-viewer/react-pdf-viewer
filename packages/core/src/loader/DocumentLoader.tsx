@@ -14,14 +14,12 @@ import { TextDirection, ThemeContext } from '../theme/ThemeContext';
 import { classNames } from '../utils/classNames';
 import { PdfJsApi } from '../vendors/PdfJsApi';
 import { CharacterMap } from '../Viewer';
-import { AskForPasswordState } from './AskForPasswordState';
+import { AskForPasswordState, SubmitPassword } from './AskForPasswordState';
 import { AskingPassword } from './AskingPassword';
 import { CompletedState } from './CompletedState';
 import { FailureState } from './FailureState';
 import { LoadingState } from './LoadingState';
 import { LoadingStatus } from './LoadingStatus';
-import { WrongPassword } from './WrongPassword';
-import { WrongPasswordState } from './WrongPasswordState';
 import type { DocumentAskPasswordEvent, VerifyPassword } from '../types/DocumentAskPasswordEvent';
 import type { LoadError } from './LoadError';
 import type { PdfJs } from '../types/PdfJs';
@@ -90,10 +88,12 @@ export const DocumentLoader: React.FC<{
         loadingTask.onPassword = (verifyPassword: VerifyPassword, reason: number): void => {
             switch (reason) {
                 case PdfJsApi.PasswordResponses.NEED_PASSWORD:
-                    isMounted.current && setStatus(new AskForPasswordState(verifyPassword));
+                    isMounted.current &&
+                        setStatus(new AskForPasswordState(verifyPassword, SubmitPassword.REQUIRE_PASSWORD));
                     break;
                 case PdfJsApi.PasswordResponses.INCORRECT_PASSWORD:
-                    isMounted.current && setStatus(new WrongPasswordState(verifyPassword));
+                    isMounted.current &&
+                        setStatus(new AskForPasswordState(verifyPassword, SubmitPassword.WRONG_PASSWORD));
                     break;
                 default:
                     break;
@@ -134,10 +134,13 @@ export const DocumentLoader: React.FC<{
     }, [percentages, loadedDocument]);
 
     if (status instanceof AskForPasswordState) {
-        return <AskingPassword verifyPassword={status.verifyPassword} onDocumentAskPassword={onDocumentAskPassword} />;
-    }
-    if (status instanceof WrongPasswordState) {
-        return <WrongPassword verifyPassword={status.verifyPassword} onDocumentAskPassword={onDocumentAskPassword} />;
+        return (
+            <AskingPassword
+                submitPassword={status.submitPassword}
+                verifyPassword={status.verifyPassword}
+                onDocumentAskPassword={onDocumentAskPassword}
+            />
+        );
     }
     if (status instanceof CompletedState) {
         return render((status as CompletedState).doc);
