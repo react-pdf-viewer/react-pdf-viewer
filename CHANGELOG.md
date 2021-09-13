@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## v2.8.1 [WIP]
+## v2.9.0
 
 **New features**
 
