@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## v2.9.1
+
+**Improvement**
+
+As we know, the `Viewer` component only renders the pages which are visible in the screen. For an invisible page, users will see a spinner. However, the animation used in the `Spinner` component can slow down the app if the document has a big number of pages.
+
+This version improves the performance by animating the `Spinner` component when it's visible only.
+
 ## v2.9.0
 
 **New features**

@@ -8,6 +8,31 @@
 
 import * as React from 'react';
 
+import { useIntersectionObserver } from '../hooks/useIntersectionObserver';
+import { classNames } from '../utils/classNames';
+import type { VisibilityChanged } from '../types/VisibilityChanged';
+
 export const Spinner: React.FC<{
     size?: string;
-}> = ({ size = '4rem' }) => <div className="rpv-core__spinner" style={{ height: size, width: size }} />;
+}> = ({ size = '4rem' }) => {
+    const [visible, setVisible] = React.useState(false);
+
+    const handleVisibilityChanged = (params: VisibilityChanged): void => {
+        setVisible(params.isVisible);
+    };
+
+    const containerRef = useIntersectionObserver({
+        onVisibilityChanged: handleVisibilityChanged,
+    });
+
+    return (
+        <div
+            className={classNames({
+                'rpv-core__spinner': true,
+                'rpv-core__spinner--animating': visible,
+            })}
+            ref={containerRef}
+            style={{ height: size, width: size }}
+        />
+    );
+};

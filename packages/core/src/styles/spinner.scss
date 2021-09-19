@@ -7,17 +7,19 @@
  */
 
 .rpv-core__spinner {
-    animation-duration: 0.4s;
-    animation-name: rpv-core__spinner-transform;
-    animation-iteration-count: infinite;
-    animation-timing-function: linear;
-
     border-bottom: 2px solid var(--rpv-core__spinner-border-transparent-color);
     border-left: 2px solid var(--rpv-core__spinner-border-transparent-color);
     border-right: 2px solid var(--rpv-core__spinner-border-color);
     border-top: 2px solid var(--rpv-core__spinner-border-color);
 
     border-radius: 9999px;
+
+    &--animating {
+        animation-duration: 0.4s;
+        animation-name: rpv-core__spinner-transform;
+        animation-iteration-count: infinite;
+        animation-timing-function: linear;
+    }
 }
 
 @keyframes rpv-core__spinner-transform {
