@@ -1,5 +1,12 @@
 # CHANGELOG
 
+##
+
+**Bug fix**
+
+-   Fix the TypeScript definition of the `Cover` component
+-   Fix an edge case where there are extra empty pages when printing a document
+
 ## v2.9.1
 
 **Improvement**
