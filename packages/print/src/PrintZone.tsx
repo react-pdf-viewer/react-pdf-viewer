@@ -26,6 +26,11 @@ export const PrintZone: React.FC<{
     const canvas = React.useMemo(() => document.createElement('canvas') as HTMLCanvasElement, []);
 
     const container = React.useMemo(() => {
+        const zoneEle = document.querySelector('.rpv-print__zone');
+        if (zoneEle) {
+            return zoneEle;
+        }
+
         const div = document.createElement('div');
         div.classList.add('rpv-print__zone');
         document.body.appendChild(div);
