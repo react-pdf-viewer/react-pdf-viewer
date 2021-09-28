@@ -34,6 +34,7 @@ export const TextBox: React.FC<{
     const isRtl = direction === TextDirection.RightToLeft;
 
     const attrs = {
+        'data-testid': '',
         'aria-label': ariaLabel,
         autoFocus,
         className: classNames({
