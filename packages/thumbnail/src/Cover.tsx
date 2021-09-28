@@ -12,7 +12,7 @@ import { PdfJs, Spinner, Store, StoreHandler } from '@react-pdf-viewer/core';
 import { StoreProps } from './types/StoreProps';
 
 export const Cover: React.FC<{
-    getPageIndex?({ numPages: number }): number;
+    getPageIndex?({ numPages }: { numPages: number }): number;
     store: Store<StoreProps>;
 }> = ({ getPageIndex, store }) => {
     const [currentDoc, setCurrentDoc] = React.useState<PdfJs.PdfDocument>();
