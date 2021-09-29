@@ -2,8 +2,9 @@
 
 ##
 
-**Bug fix**
+**Bug fixes**
 
+-   Can't resize the sidebar when using with the [Fluent UI](https://developer.microsoft.com/en-us/fluentui) library
 -   Fix the TypeScript definition of the `Cover` component
 -   Fix an edge case where there are extra empty pages when printing a document
 

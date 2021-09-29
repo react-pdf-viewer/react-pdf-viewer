@@ -33,6 +33,10 @@ export const Splitter: React.FC<{
     const leftWidthRef = React.useRef(0);
     const resizerWidthRef = React.useRef(0);
 
+    const eventOptions = {
+        capture: true,
+    };
+
     const handleMouseMove = (e: MouseEvent) => {
         const resizerEle = resizerRef.current;
         const leftSide = leftSideRef.current;
@@ -83,8 +87,8 @@ export const Splitter: React.FC<{
         rightSide.classList.remove('rpv-core__splitter-sibling--resizing');
 
         // Remove the handlers of `mousemove` and `mouseup`
-        document.removeEventListener('mousemove', handleMouseMove);
-        document.removeEventListener('mouseup', handleMouseUp);
+        document.removeEventListener('mousemove', handleMouseMove, eventOptions);
+        document.removeEventListener('mouseup', handleMouseUp, eventOptions);
     };
 
     // Handle the mousedown event
@@ -101,8 +105,8 @@ export const Splitter: React.FC<{
         leftWidthRef.current = leftSide.getBoundingClientRect().width;
 
         // Attach the listeners to `document`
-        document.addEventListener('mousemove', handleMouseMove);
-        document.addEventListener('mouseup', handleMouseUp);
+        document.addEventListener('mousemove', handleMouseMove, eventOptions);
+        document.addEventListener('mouseup', handleMouseUp, eventOptions);
     };
 
     React.useEffect(() => {
