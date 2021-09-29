@@ -1,0 +1,30 @@
+{
+    "name": "react-pdf-viewer-webpack-typescript",
+    "private": true,
+    "version": "0.0.0",
+    "scripts": {
+        "copy": "cp ../../assets/pdf-open-parameters.pdf dist",
+        "typecheck": "tsc --noEmit",
+        "build": "rm -rf dist && webpack --mode production && npm run copy",
+        "dev": "rm -rf dist && mkdir dist && npm run copy && NODE_ENV=development webpack serve"
+    },
+    "dependencies": {
+        "@react-pdf-viewer/core": "2.9.1",
+        "@react-pdf-viewer/default-layout": "2.9.1"
+    },
+    "devDependencies": {
+        "@babel/core": "^7.15.5",
+        "@babel/preset-env": "^7.15.6",
+        "@babel/preset-react": "^7.14.5",
+        "babel-loader": "^8.2.2",
+        "css-loader": "^6.3.0",
+        "html-webpack-plugin": "^5.3.2",
+        "mini-css-extract-plugin": "^2.3.0",
+        "sass-loader": "^12.1.0",
+        "style-loader": "^3.3.0",
+        "ts-loader": "^9.2.6",
+        "webpack": "^5.54.0",
+        "webpack-cli": "^4.8.0",
+        "webpack-dev-server": "^4.3.0"
+    }
+}
