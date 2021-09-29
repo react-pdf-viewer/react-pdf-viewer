@@ -51,8 +51,11 @@ export const PrintZone: React.FC<{
                 document.body.classList.remove('rpv-print__body-printing');
 
                 // Remove the container
-                if (container.parentElement) {
-                    container.parentElement.removeChild(container);
+                const zones = document.querySelectorAll('.rpv-print__zone');
+                if (zones) {
+                    zones.forEach((zoneEle) => {
+                        zoneEle.parentElement.removeChild(zoneEle);
+                    });
                 }
 
                 // Cleanup
