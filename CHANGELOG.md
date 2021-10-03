@@ -2,6 +2,25 @@
 
 ## v2.9.2 [WIP]
 
+**New feature**
+
+-   Add new `trigger` option for the Highlight plugin
+
+```js
+import { Trigger } from '@react-pdf-viewer/highlight';
+
+const highlightPluginInstance = highlightPlugin({
+    trigger: Trigger.None,
+});
+```
+
+There are two possible values for the `trigger` option:
+
+| Value                             | Description                                                                   |
+| --------------------------------- | ----------------------------------------------------------------------------- |
+| `Trigger.TextSelection` (default) | Show the target after users select text                                       |
+| `Trigger.None`                    | Doesn't trigger the highlight. It is often used to render the highlight areas |
+
 **Improvements**
 
 -   Disable the printing functionality if the document doesn't allow to print

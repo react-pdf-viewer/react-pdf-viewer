@@ -51,6 +51,12 @@ export interface SelectionData {
     endDivIndex: number;
 }
 
+// Structs
+export enum Trigger {
+    None = 'None',
+    TextSelection = 'TextSelection',
+}
+
 // Plugin
 export interface HighlightPlugin extends Plugin {
     jumpToHighlightArea(area: HighlightArea): void;
@@ -60,6 +66,7 @@ export interface HighlightPluginProps {
     renderHighlightTarget?(props: RenderHighlightTargetProps): React.ReactElement;
     renderHighlightContent?(props: RenderHighlightContentProps): React.ReactElement;
     renderHighlights?(props: RenderHighlightsProps): React.ReactElement;
+    trigger?: Trigger;
 }
 
 export function highlightPlugin(props?: HighlightPluginProps): HighlightPlugin;

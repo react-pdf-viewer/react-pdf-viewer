@@ -12,6 +12,7 @@ import type { Store } from '@react-pdf-viewer/core';
 import { getCssProperties } from './transformArea';
 import { HighlightRect } from './HighlightRect';
 import { NO_SELECTION_STATE, HighlightState, SelectedState, SelectionState } from './SelectionState';
+import { Trigger } from './structs/Trigger';
 import { useRotation } from './useRotation';
 import type { RenderHighlightContentProps } from './types/RenderHighlightContentProps';
 import type { RenderHighlightTargetProps } from './types/RenderHighlightTargetProps';
@@ -24,7 +25,8 @@ export const HighlightAreaList: React.FC<{
     renderHighlightTarget?(props: RenderHighlightTargetProps): React.ReactElement;
     renderHighlights?(props: RenderHighlightsProps): React.ReactElement;
     store: Store<StoreProps>;
-}> = ({ pageIndex, renderHighlightContent, renderHighlightTarget, renderHighlights, store }) => {
+    trigger: Trigger;
+}> = ({ pageIndex, renderHighlightContent, renderHighlightTarget, renderHighlights, store, trigger }) => {
     const [selectionState, setSelectionState] = React.useState<SelectionState>(store.get('selectionState'));
     const { rotation } = useRotation(store);
 

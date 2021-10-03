@@ -22,6 +22,7 @@ import { HIGHLIGHT_LAYER_ATTR, HIGHLIGHT_PAGE_ATTR } from './constants';
 import { HighlightAreaList } from './HighlightAreaList';
 import { NO_SELECTION_STATE, SELECTING_STATE, SelectedState } from './SelectionState';
 import { Tracker } from './Tracker';
+import { Trigger } from './structs/Trigger';
 import type { HighlightArea } from './types/HighlightArea';
 import type { RenderHighlightsProps } from './types/RenderHighlightsProps';
 import type { RenderHighlightContentProps } from './types/RenderHighlightContentProps';
@@ -36,11 +37,14 @@ export interface HighlightPluginProps {
     renderHighlightTarget?(props: RenderHighlightTargetProps): React.ReactElement;
     renderHighlightContent?(props: RenderHighlightContentProps): React.ReactElement;
     renderHighlights?(props: RenderHighlightsProps): React.ReactElement;
+    trigger?: Trigger;
 }
 
 const TEXT_LAYER_END_SELECTOR = 'rpv-highlight__selected-end';
 
 export const highlightPlugin = (props?: HighlightPluginProps): HighlightPlugin => {
+    const highlightPluginProps = React.useMemo(() => Object.assign({}, { trigger: Trigger.TextSelection }, props), []);
+
     const store = React.useMemo(
         () =>
             createStore<StoreProps>({
@@ -51,6 +55,10 @@ export const highlightPlugin = (props?: HighlightPluginProps): HighlightPlugin =
 
     const renderViewer = (props: RenderViewer): Slot => {
         const currentSlot = props.slot;
+        if (highlightPluginProps.trigger !== Trigger.TextSelection) {
+            return currentSlot;
+        }
+
         if (currentSlot.subSlot && currentSlot.subSlot.children) {
             currentSlot.subSlot.children = (
                 <>
@@ -110,6 +118,10 @@ export const highlightPlugin = (props?: HighlightPluginProps): HighlightPlugin =
     };
 
     const onTextLayerRender = (e: PluginOnTextLayerRender) => {
+        if (highlightPluginProps.trigger !== Trigger.TextSelection) {
+            return;
+        }
+
         const mouseDownHandler = handleMouseDown(e);
         const mouseUpHandler = handleMouseUp(e);
         const textEle = e.ele;
@@ -142,10 +154,11 @@ export const highlightPlugin = (props?: HighlightPluginProps): HighlightPlugin =
     const renderPageLayer = (renderPageProps: PluginRenderPageLayer) => (
         <HighlightAreaList
             pageIndex={renderPageProps.pageIndex}
-            renderHighlightContent={props && props.renderHighlightContent ? props.renderHighlightContent : null}
-            renderHighlightTarget={props && props.renderHighlightTarget ? props.renderHighlightTarget : null}
-            renderHighlights={props && props.renderHighlights ? props.renderHighlights : null}
+            renderHighlightContent={highlightPluginProps.renderHighlightContent}
+            renderHighlightTarget={highlightPluginProps.renderHighlightTarget}
+            renderHighlights={highlightPluginProps.renderHighlights}
             store={store}
+            trigger={highlightPluginProps.trigger}
         />
     );
 
