@@ -6,10 +6,12 @@
  * @copyright 2019-2021 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-export enum PrintStatus {
-    CheckingPermission = 'CheckingPermission',
-    Inactive = 'Inactive',
-    Preparing = 'Preparing',
-    Cancelled = 'Cancelled',
-    Ready = 'Ready',
+.rpv-print__permission-body {
+    padding: 1rem;
+}
+
+.rpv-print__permission-footer {
+    display: flex;
+    justify-content: center;
+    padding: 0 1rem 1rem 0;
 }
