@@ -13,6 +13,9 @@ export type { RenderHighlightsProps } from './types/RenderHighlightsProps';
 export type { RenderHighlightTargetProps } from './types/RenderHighlightTargetProps';
 export type { SelectionData } from './types/SelectionData';
 
+// Structs
+export { Trigger } from './structs/Trigger';
+
 // Plugin
 export * from './highlightPlugin';
 
