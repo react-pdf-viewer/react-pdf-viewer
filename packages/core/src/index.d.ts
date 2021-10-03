@@ -474,6 +474,7 @@ export declare namespace PdfJs {
         getOutline(): Promise<Outline[]>;
         getPage(pageIndex: number): Promise<Page>;
         getPageIndex(ref: OutlineRef): Promise<number>;
+        getPageLabels(): Promise<string[] | null>;
     }
     interface GetDocumentParams {
         data?: FileData;
