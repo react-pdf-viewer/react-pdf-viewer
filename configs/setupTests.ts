@@ -51,7 +51,9 @@ const HELLO_PDF = new Uint8Array([
     10, 37, 37, 69, 79, 70,
 ]);
 const SAMPLE_PDF = new Uint8Array(fs.readFileSync(path.resolve(__dirname, '../samples/sample.pdf')));
-const SAMPLE_PROTECTED_PDF = new Uint8Array(fs.readFileSync(path.resolve(__dirname, '../samples/sample-protected.pdf')));
+const SAMPLE_PROTECTED_PDF = new Uint8Array(
+    fs.readFileSync(path.resolve(__dirname, '../samples/sample-protected.pdf'))
+);
 const MULTIPLE_PAGES_PDF = new Uint8Array(fs.readFileSync(path.resolve(__dirname, '../samples/sample-two-pages.pdf')));
 const OPEN_PARAMS_PDF = new Uint8Array(fs.readFileSync(path.resolve(__dirname, '../samples/pdf-open-parameters.pdf')));
 

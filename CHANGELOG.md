@@ -2,9 +2,10 @@
 
 ## v2.9.2 [WIP]
 
-**Improvement**
+**Improvements**
 
 -   Disable the printing functionality if the document doesn't allow to print
+-   Show the page labels if there are
 
 **Bug fixes**
 

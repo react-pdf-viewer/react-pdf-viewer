@@ -10,6 +10,7 @@ import * as React from 'react';
 import { classNames, useIsomorphicLayoutEffect, TextDirection, ThemeContext } from '@react-pdf-viewer/core';
 import type { PdfJs } from '@react-pdf-viewer/core';
 
+import { LabelsLoader } from './LabelsLoader';
 import { scrollToBeVisible } from './scrollToBeVisible';
 import { ThumbnailContainer } from './ThumbnailContainer';
 
@@ -117,41 +118,50 @@ export const ThumbnailList: React.FC<{
     }, [currentFocused]);
 
     return (
-        <div
-            ref={containerRef}
-            data-testid="thumbnail__list"
-            className={classNames({
-                'rpv-thumbnail__list': true,
-                'rpv-thumbnail__list--rtl': isRtl,
-            })}
-            onKeyDown={handleKeyDown}
-        >
-            {Array(numPages)
-                .fill(0)
-                .map((_, index) => (
-                    <div key={`thumbnail-${index}`}>
-                        <div
-                            className={classNames({
-                                'rpv-thumbnail__item': true,
-                                'rpv-thumbnail__item--selected': currentPage === index,
-                            })}
-                            role="button"
-                            tabIndex={currentPage === index ? 0 : -1}
-                            onClick={() => onJumpToPage(index)}
-                        >
-                            <ThumbnailContainer
-                                doc={doc}
-                                isActive={currentPage === index}
-                                pageHeight={pageHeight}
-                                pageIndex={index}
-                                pageWidth={pageWidth}
-                                rotation={rotation}
-                                onActive={scrollToThumbnail}
-                            />
-                        </div>
-                        <div className="rpv-thumbnail__index">{index + 1}</div>
+        <LabelsLoader doc={doc}>
+            {(labels) => {
+                const numLabels = labels.length;
+                return (
+                    <div
+                        ref={containerRef}
+                        data-testid="thumbnail__list"
+                        className={classNames({
+                            'rpv-thumbnail__list': true,
+                            'rpv-thumbnail__list--rtl': isRtl,
+                        })}
+                        onKeyDown={handleKeyDown}
+                    >
+                        {Array(numPages)
+                            .fill(0)
+                            .map((_, index) => (
+                                <div key={`thumbnail-${index}`}>
+                                    <div
+                                        className={classNames({
+                                            'rpv-thumbnail__item': true,
+                                            'rpv-thumbnail__item--selected': currentPage === index,
+                                        })}
+                                        role="button"
+                                        tabIndex={currentPage === index ? 0 : -1}
+                                        onClick={() => onJumpToPage(index)}
+                                    >
+                                        <ThumbnailContainer
+                                            doc={doc}
+                                            isActive={currentPage === index}
+                                            pageHeight={pageHeight}
+                                            pageIndex={index}
+                                            pageWidth={pageWidth}
+                                            rotation={rotation}
+                                            onActive={scrollToThumbnail}
+                                        />
+                                    </div>
+                                    <div className="rpv-thumbnail__index">
+                                        {index < numLabels && labels[index] ? labels[index] : index + 1}
+                                    </div>
+                                </div>
+                            ))}
                     </div>
-                ))}
-        </div>
+                );
+            }}
+        </LabelsLoader>
     );
 };
