@@ -22,7 +22,7 @@ export const useTogglePopup = (): {
     openOnHover: () => void;
     toggleOnClick: () => void;
 } => {
-    const { opened, toggle } = useToggle();
+    const { opened, toggle } = useToggle(false);
     const [togglePopupBy, setTooglePopupBy] = React.useState(TogglePopupBy.Hover);
 
     const toggleOnClick = (): void => {

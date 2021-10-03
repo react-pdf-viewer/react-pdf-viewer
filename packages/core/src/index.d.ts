@@ -273,7 +273,8 @@ export interface ModalProps {
     closeOnClickOutside: boolean;
     closeOnEscape: boolean;
     content: RenderContent;
-    target: RenderTarget;
+    isOpened?: boolean;
+    target?: RenderTarget;
 }
 export class Modal extends React.Component<ModalProps> {}
 
@@ -285,7 +286,7 @@ export interface PopoverProps {
     content: RenderContent;
     offset: Offset;
     position: Position;
-    target: RenderTarget;
+    target?: RenderTarget;
 }
 export class Popover extends React.Component<PopoverProps> {}
 
