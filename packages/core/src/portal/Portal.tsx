@@ -16,12 +16,13 @@ export type RenderTarget = (toggle: Toggle, opened: boolean) => React.ReactNode;
 
 export const Portal: React.FC<{
     content: RenderContent;
-    target: RenderTarget;
-}> = ({ content, target }) => {
-    const { opened, toggle } = useToggle();
+    isOpened?: boolean;
+    target?: RenderTarget;
+}> = ({ content, isOpened = false, target }) => {
+    const { opened, toggle } = useToggle(isOpened);
     return (
         <>
-            {target(toggle, opened)}
+            {target && target(toggle, opened)}
             {opened && content(toggle)}
         </>
     );

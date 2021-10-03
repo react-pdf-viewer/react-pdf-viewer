@@ -1,6 +1,10 @@
 # CHANGELOG
 
-##
+## v2.9.2 [WIP]
+
+**Improvement**
+
+-   Disable the printing functionality if the document doesn't allow to print
 
 **Bug fixes**
 

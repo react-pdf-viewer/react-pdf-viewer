@@ -2,6 +2,7 @@
 demo/nextjs/.next
 lerna-debug.log
 node_modules
+samples/ignore
 package-lock.json
 packages/**/lib
 packages/**/node_modules

@@ -19,8 +19,9 @@ export const Modal: React.FC<{
     closeOnClickOutside: boolean;
     closeOnEscape: boolean;
     content: RenderContent;
-    target: RenderTarget;
-}> = ({ ariaControlsSuffix, closeOnClickOutside, closeOnEscape, content, target }) => {
+    isOpened?: boolean;
+    target?: RenderTarget;
+}> = ({ ariaControlsSuffix, closeOnClickOutside, closeOnEscape, content, isOpened = false, target }) => {
     const controlsSuffix = ariaControlsSuffix || `${uniqueId()}`;
 
     const renderTarget = (toggle: Toggle, opened: boolean): React.ReactElement => (
@@ -46,5 +47,5 @@ export const Modal: React.FC<{
         </ModalOverlay>
     );
 
-    return <Portal target={renderTarget} content={renderContent} />;
+    return <Portal target={target ? renderTarget : null} content={renderContent} isOpened={isOpened} />;
 };

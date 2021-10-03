@@ -26,7 +26,7 @@ export const Print: React.FC<{
     store: Store<StoreProps>;
 }> = ({ children, enableShortcuts, store }) => {
     const print = () => {
-        store.update('printStatus', PrintStatus.Preparing);
+        store.update('printStatus', PrintStatus.CheckingPermission);
     };
 
     const render = children || PrintButton;

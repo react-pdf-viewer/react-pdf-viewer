@@ -47,6 +47,8 @@
     },
     "print": {
         "cancel": "Cancel",
+        "close": "Close",
+        "disallowPrint": "The document does not allow to print",
         "preparingDocument": "Preparing document ...",
         "print": "Print"
     },

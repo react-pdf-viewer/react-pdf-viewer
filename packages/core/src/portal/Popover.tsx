@@ -35,7 +35,7 @@ export const Popover: React.FC<{
     position,
     target,
 }) => {
-    const { opened, toggle } = useToggle();
+    const { opened, toggle } = useToggle(false);
     const targetRef = React.useRef<HTMLDivElement>();
     const controlsSuffix = ariaControlsSuffix || `${uniqueId()}`;
 

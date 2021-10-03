@@ -9,6 +9,7 @@
 import * as React from 'react';
 import type { PdfJs, Store, StoreHandler } from '@react-pdf-viewer/core';
 
+import { CheckPrintPermission } from './CheckPrintPermission';
 import { PrintProgress } from './PrintProgress';
 import { PrintStatus } from './structs/PrintStatus';
 import { PrintZone } from './PrintZone';
@@ -48,6 +49,7 @@ export const PrintContainer: React.FC<{
 
     return (
         <>
+            {printStatus === PrintStatus.CheckingPermission && <CheckPrintPermission doc={doc} store={store} />}
             {printStatus === PrintStatus.Preparing && (
                 <PrintProgress
                     numLoadedPages={numLoadedPagesForPrint}
