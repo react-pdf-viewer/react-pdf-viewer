@@ -3,7 +3,7 @@
     "private": true,
     "version": "0.0.0",
     "scripts": {
-        "copy": "cp ../../assets/pdf-open-parameters.pdf dist",
+        "copy": "cp -rf ../../samples/* dist",
         "typecheck": "tsc --noEmit",
         "build": "rm -rf dist && webpack --mode production && npm run copy",
         "dev": "rm -rf dist && mkdir dist && npm run copy && NODE_ENV=development webpack serve"

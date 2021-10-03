@@ -3,7 +3,7 @@
     "private": true,
     "version": "0.0.0",
     "scripts": {
-        "copy": "rm -rf public/*.pdf && cp -r ../../assets/*.pdf public",
+        "copy": "rm -rf public/* && cp -r ../../samples/* public",
         "dev": "npm run copy && next dev"
     },
     "dependencies": {
