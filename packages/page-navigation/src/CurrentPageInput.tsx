@@ -80,6 +80,7 @@ export const CurrentPageInput: React.FC<{
         <span className="rpv-page-navigation__current-page-input">
             <TextBox
                 ariaLabel={label as string}
+                testId="page-navigation__current-page-input"
                 type="text"
                 value={editingPage}
                 onChange={setEditingPage}
