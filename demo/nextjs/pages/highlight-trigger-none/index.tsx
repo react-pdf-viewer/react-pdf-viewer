@@ -39,6 +39,7 @@ const IndexPage = () => {
                 .map((area, idx) => (
                     <div
                         key={idx}
+                        className="highlight-area"
                         style={Object.assign(
                             {},
                             {

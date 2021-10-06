@@ -13,7 +13,8 @@
         "paths": {
             "@react-pdf-viewer/*": ["packages/*/src"],
             "*": ["node_modules", "packages"]
-        }
+        },
+        "types": ["expect-puppeteer", "jest-environment-puppeteer", "puppeteer"]
     },
     "exclude": ["node_modules"]
 }
