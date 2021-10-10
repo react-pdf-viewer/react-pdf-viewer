@@ -7,6 +7,7 @@
  */
 
 import * as React from 'react';
+import { useIsMounted } from '@react-pdf-viewer/core';
 import type { Store } from '@react-pdf-viewer/core';
 
 import { useCurrentPage } from './useCurrentPage';
@@ -30,6 +31,7 @@ export const CurrentPageLabel: React.FC<{
     children?: RenderCurrentPageLabel;
     store: Store<StoreProps>;
 }> = ({ children, store }) => {
+    const isMounted = useIsMounted();
     const docRef = useDocument(store);
     const [labels, setLabels] = React.useState(null);
     const { currentPage } = useCurrentPage(store);
@@ -42,7 +44,7 @@ export const CurrentPageLabel: React.FC<{
         const doc = docRef.current;
         if (doc) {
             doc.getPageLabels().then((labels) => {
-                setLabels(labels || []);
+                isMounted.current && setLabels(labels || []);
             });
         }
     }, [docRef.current]);
