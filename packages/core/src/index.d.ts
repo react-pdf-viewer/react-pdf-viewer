@@ -435,6 +435,8 @@ export function useIntersectionObserver(props: UseIntersectionObserverProps): Re
 
 export function useIsomorphicLayoutEffect(effect: React.EffectCallback, deps?: React.DependencyList): void;
 
+export function useIsMounted(): React.MutableRefObject<boolean>;
+
 // Utils
 export function classNames(classes: { [clazz: string]: boolean }): string;
 

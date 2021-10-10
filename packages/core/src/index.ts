@@ -47,6 +47,7 @@ export { Worker } from './Worker';
 
 // Hooks
 export { useIntersectionObserver } from './hooks/useIntersectionObserver';
+export { useIsMounted } from './hooks/useIsMounted';
 export { useIsomorphicLayoutEffect } from './hooks/useIsomorphicLayoutEffect';
 
 // Utils
