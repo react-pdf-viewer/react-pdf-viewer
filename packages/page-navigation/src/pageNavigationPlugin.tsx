@@ -138,6 +138,7 @@ export const pageNavigationPlugin = (): PageNavigationPlugin => {
             store.update('jumpToPage', pluginFunctions.jumpToPage);
         },
         onDocumentLoad: (props: PluginOnDocumentLoad) => {
+            store.update('doc', props.doc);
             store.update('numberOfPages', props.doc.numPages);
         },
         onViewerStateChange: (viewerState: ViewerState): ViewerState => {

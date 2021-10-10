@@ -17,6 +17,7 @@ export interface CurrentPageLabelProps {
 export interface RenderCurrentPageLabelProps {
     currentPage: number;
     numberOfPages: number;
+    pageLabel: string;
 }
 
 export interface GoToPageMenuItemProps {

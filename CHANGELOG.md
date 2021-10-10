@@ -2,7 +2,7 @@
 
 ## v2.9.2 [WIP]
 
-**New feature**
+**New features**
 
 -   Add new `trigger` option for the Highlight plugin
 
@@ -20,6 +20,22 @@ There are two possible values for the `trigger` option:
 | --------------------------------- | ----------------------------------------------------------------------------- |
 | `Trigger.TextSelection` (default) | Show the target after users select text                                       |
 | `Trigger.None`                    | Doesn't trigger the highlight. It is often used to render the highlight areas |
+
+-   The render props of the `CurrentPageLabel` component provided by the Page Navigation plugin includes new `pageLabel` property.
+    It is useful if the page has a label that isn't the same as its page number:
+
+```js
+const { CurrentPageLabel } = pageNavigationPluginInstance;
+
+<CurrentPageLabel>
+    {(props) => (
+        <>
+            {props.numberOfPages}
+            {props.pageLabel !== `${props.currentPage + 1}` && `(${props.pageLabel})`}
+        </>
+    )}
+</CurrentPageLabel>;
+```
 
 **Improvements**
 
