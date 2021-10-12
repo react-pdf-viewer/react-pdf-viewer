@@ -13,11 +13,16 @@ import type { Plugin, PluginFunctions, PluginOnDocumentLoad, ViewerState } from 
 import { Cover } from './Cover';
 import { ThumbnailListWithStore } from './ThumbnailListWithStore';
 import type { CoverProps } from './types/CoverProps';
+import type { RenderCurrentPageLabel } from './types/RenderCurrentPageLabelProps';
 import type { StoreProps } from './types/StoreProps';
+
+export interface ThumbnailsProps {
+    renderCurrentPageLabel?: RenderCurrentPageLabel;
+}
 
 export interface ThumbnailPlugin extends Plugin {
     Cover: (props: CoverProps) => React.ReactElement;
-    Thumbnails: () => React.ReactElement;
+    Thumbnails: (props?: ThumbnailsProps) => React.ReactElement;
 }
 
 export const thumbnailPlugin = (): ThumbnailPlugin => {
@@ -25,7 +30,9 @@ export const thumbnailPlugin = (): ThumbnailPlugin => {
 
     const CoverDecorator = (props: CoverProps) => <Cover {...props} store={store} />;
 
-    const ThumbnailsDecorator = () => <ThumbnailListWithStore store={store} />;
+    const ThumbnailsDecorator = (props?: ThumbnailsProps) => (
+        <ThumbnailListWithStore renderCurrentPageLabel={props?.renderCurrentPageLabel} store={store} />
+    );
 
     return {
         install: (pluginFunctions: PluginFunctions) => {

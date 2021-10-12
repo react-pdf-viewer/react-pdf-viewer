@@ -14,9 +14,22 @@ export interface CoverProps {
     getPageIndex?({ numPages }: { numPages: number }): number;
 }
 
+export interface RenderCurrentPageLabelProps {
+    currentPage: number;
+    numPages: number;
+    pageIndex: number;
+    pageLabel: string;
+}
+
+export type RenderCurrentPageLabel = (props: RenderCurrentPageLabelProps) => React.ReactElement;
+
+export interface ThumbnailsProps {
+    renderCurrentPageLabel?: RenderCurrentPageLabel;
+}
+
 export interface ThumbnailPlugin extends Plugin {
     Cover: (props: CoverProps) => React.ReactElement;
-    Thumbnails: () => React.ReactElement;
+    Thumbnails: (props?: ThumbnailsProps) => React.ReactElement;
 }
 
 export function thumbnailPlugin(): ThumbnailPlugin;
