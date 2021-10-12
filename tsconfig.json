@@ -14,7 +14,7 @@
             "@react-pdf-viewer/*": ["packages/*/src"],
             "*": ["node_modules", "packages"]
         },
-        "types": ["expect-puppeteer", "jest-environment-puppeteer", "puppeteer"]
+        "types": ["expect-puppeteer", "jest-environment-puppeteer", "puppeteer", "@testing-library/jest-dom"]
     },
     "exclude": ["node_modules"]
 }
