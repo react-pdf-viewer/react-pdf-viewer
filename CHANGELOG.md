@@ -37,10 +37,24 @@ const { CurrentPageLabel } = pageNavigationPluginInstance;
 </CurrentPageLabel>;
 ```
 
-**Improvements**
+-   The `Thumbnails` component displays the page labels if there are. You also can customize the page labels:
+
+```js
+const { Thumbnails } = thumbnailPluginInstance;
+
+<Thumbnails
+    renderCurrentPageLabel={(props) => (
+        <>
+            {props.pageIndex + 1}
+            {props.pageLabel !== `${props.pageIndex + 1}` && `(${props.pageLabel})`}
+        </>
+    )}
+/>;
+```
+
+**Improvement**
 
 -   Disable the printing functionality if the document doesn't allow to print
--   Show the page labels if there are
 
 **Bug fixes**
 

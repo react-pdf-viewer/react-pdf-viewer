@@ -8,6 +8,7 @@
 
 // Types
 export type { CoverProps } from './types/CoverProps';
+export type { RenderCurrentPageLabelProps, RenderCurrentPageLabel } from './types/RenderCurrentPageLabelProps';
 
 // Plugin
 export * from './thumbnailPlugin';
