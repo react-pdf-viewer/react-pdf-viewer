@@ -75,7 +75,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
         },
     ];
 
-    const listTabs = tabs ? tabs(defaultTabs) : defaultTabs;
+    const listTabs = React.useMemo(() => tabs ? tabs(defaultTabs) : defaultTabs, []);
 
     const toggleTab = (index: number) => {
         if (currentTab === index) {
