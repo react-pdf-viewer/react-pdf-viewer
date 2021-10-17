@@ -3,7 +3,7 @@ import { render } from '@testing-library/react';
 import { Viewer } from '@react-pdf-viewer/core';
 
 import { mockIsIntersecting } from '../../../test-utils/mockIntersectionObserver';
-import { thumbnailPlugin } from '../src';
+import { RenderCurrentPageLabelProps, thumbnailPlugin } from '../src';
 
 const fs = require('fs');
 const path = require('path');
@@ -11,7 +11,13 @@ const path = require('path');
 const TestPageLabel: React.FC<{
     fileUrl: Uint8Array;
 }> = ({ fileUrl }) => {
-    const thumbnailPluginInstance = thumbnailPlugin();
+    const renderCurrentPageLabel = (props: RenderCurrentPageLabelProps) => (
+        <>{`${props.pageIndex + 1} ${props.pageLabel !== `${props.pageIndex + 1}` && `(${props.pageLabel})`}`}</>
+    );
+
+    const thumbnailPluginInstance = thumbnailPlugin({
+        renderCurrentPageLabel,
+    });
     const { Thumbnails } = thumbnailPluginInstance;
 
     return (
@@ -29,15 +35,7 @@ const TestPageLabel: React.FC<{
                     width: '30%',
                 }}
             >
-                <Thumbnails
-                    renderCurrentPageLabel={(props) => (
-                        <>
-                            {`${props.pageIndex + 1} ${
-                                props.pageLabel !== `${props.pageIndex + 1}` && `(${props.pageLabel})`
-                            }`}
-                        </>
-                    )}
-                />
+                <Thumbnails />
             </div>
             <div style={{ flex: 1 }}>
                 <Viewer fileUrl={fileUrl} plugins={[thumbnailPluginInstance]} />

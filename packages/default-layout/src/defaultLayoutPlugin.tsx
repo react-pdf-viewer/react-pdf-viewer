@@ -24,7 +24,7 @@ import type {
     RenderViewer,
     ViewerState,
 } from '@react-pdf-viewer/core';
-import type { ThumbnailPlugin } from '@react-pdf-viewer/thumbnail';
+import type { ThumbnailPlugin, ThumbnailPluginProps } from '@react-pdf-viewer/thumbnail';
 import type { ToolbarPlugin, ToolbarPluginProps, ToolbarProps } from '@react-pdf-viewer/toolbar';
 
 import { Sidebar, SidebarTab } from './Sidebar';
@@ -39,6 +39,7 @@ export interface DefaultLayoutPlugin extends Plugin {
 }
 
 export interface DefaultLayoutPluginProps {
+    thumbnailPlugin?: ThumbnailPluginProps;
     toolbarPlugin?: ToolbarPluginProps;
     renderToolbar?: (Toolbar: (props: ToolbarProps) => React.ReactElement) => React.ReactElement;
     sidebarTabs?: (defaultTabs: SidebarTab[]) => SidebarTab[];
@@ -55,7 +56,7 @@ export const defaultLayoutPlugin = (props?: DefaultLayoutPluginProps): DefaultLa
 
     const attachmentPluginInstance = attachmentPlugin();
     const bookmarkPluginInstance = bookmarkPlugin();
-    const thumbnailPluginInstance = thumbnailPlugin();
+    const thumbnailPluginInstance = thumbnailPlugin(props ? props.thumbnailPlugin : {});
     const toolbarPluginInstance = toolbarPlugin(props ? props.toolbarPlugin : {});
 
     const { Attachments } = attachmentPluginInstance;
