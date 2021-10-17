@@ -9,6 +9,7 @@
 // Types
 export type { ToolbarProps } from './Toolbar';
 export type { ToolbarSlot } from './types/ToolbarSlot';
+export type { TransformToolbarSlot } from './types/TransformToolbarSlot';
 
 // Plugin
 export * from './toolbarPlugin';

@@ -43,8 +43,14 @@ import type { ThemePlugin } from '@react-pdf-viewer/theme';
 import type { ZoomPlugin, ZoomPluginProps } from '@react-pdf-viewer/zoom';
 
 import { Toolbar, ToolbarProps } from './Toolbar';
+import { renderDefaultToolbar } from './renderDefaultToolbar';
+import type { ToolbarSlot } from './types/ToolbarSlot';
+import type { TransformToolbarSlot } from './types/TransformToolbarSlot';
 
 export interface ToolbarPlugin extends Plugin {
+    renderDefaultToolbar: (
+        transformToolbarSlot: TransformToolbarSlot
+    ) => (defaultToolbarSlot: ToolbarSlot) => React.ReactElement;
     Toolbar: (props: ToolbarProps) => React.ReactElement;
     // Plugins instance
     readonly fullScreenPluginInstance: FullScreenPlugin;
@@ -237,6 +243,7 @@ export const toolbarPlugin = (props?: ToolbarPluginProps): ToolbarPlugin => {
             });
             return newState;
         },
+        renderDefaultToolbar,
         Toolbar: ToolbarDecorator,
     };
 };
