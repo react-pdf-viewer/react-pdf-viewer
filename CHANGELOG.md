@@ -53,6 +53,29 @@ const { Thumbnails } = thumbnailPluginInstance;
 <Thumbnails />;
 ```
 
+-   The Toolbar plugin provides the `renderDefaultToolbar` function to create a custom toolbar from the default toolbar easily.
+    The following sample code prepends `of` to the `NumberOfPages` component:
+
+```js
+import type { ToolbarSlot, TransformToolbarSlot } from '@react-pdf-viewer/toolbar';
+
+const { renderDefaultToolbar } = toolbarPluginInstance;
+
+const transform: TransformToolbarSlot = (slot: ToolbarSlot) => {
+    const { NumberOfPages } = slot;
+    return Object.assign({}, slot, {
+        NumberOfPages: () => (
+            <>
+                of <NumberOfPages />
+            </>
+        ),
+    });
+};
+
+export const CustomToobar: React.FC<ToolbarSlot> = (toolbarSlot): React.ReactElement =>
+    renderDefaultToolbar(transform)(toolbarSlot);
+```
+
 **Improvement**
 
 -   Disable the printing functionality if the document doesn't allow to print
