@@ -59,7 +59,7 @@ const { Thumbnails } = thumbnailPluginInstance;
 ```js
 import type { ToolbarSlot, TransformToolbarSlot } from '@react-pdf-viewer/toolbar';
 
-const { renderDefaultToolbar } = toolbarPluginInstance;
+const { renderDefaultToolbar, Toolbar } = toolbarPluginInstance;
 
 const transform: TransformToolbarSlot = (slot: ToolbarSlot) => {
     const { NumberOfPages } = slot;
@@ -72,8 +72,8 @@ const transform: TransformToolbarSlot = (slot: ToolbarSlot) => {
     });
 };
 
-export const CustomToobar: React.FC<ToolbarSlot> = (toolbarSlot): React.ReactElement =>
-    renderDefaultToolbar(transform)(toolbarSlot);
+// Render the toolbar
+<Toolbar>{renderDefaultToolbar(transform)}</Toolbar>;
 ```
 
 **Improvement**
