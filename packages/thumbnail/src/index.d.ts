@@ -23,13 +23,13 @@ export interface RenderCurrentPageLabelProps {
 
 export type RenderCurrentPageLabel = (props: RenderCurrentPageLabelProps) => React.ReactElement;
 
-export interface ThumbnailsProps {
+export interface ThumbnailPluginProps {
     renderCurrentPageLabel?: RenderCurrentPageLabel;
 }
 
 export interface ThumbnailPlugin extends Plugin {
     Cover: (props: CoverProps) => React.ReactElement;
-    Thumbnails: (props?: ThumbnailsProps) => React.ReactElement;
+    Thumbnails(): React.ReactElement;
 }
 
-export function thumbnailPlugin(): ThumbnailPlugin;
+export function thumbnailPlugin(props?: ThumbnailPluginProps): ThumbnailPlugin;

@@ -16,21 +16,21 @@ import type { CoverProps } from './types/CoverProps';
 import type { RenderCurrentPageLabel } from './types/RenderCurrentPageLabelProps';
 import type { StoreProps } from './types/StoreProps';
 
-export interface ThumbnailsProps {
+export interface ThumbnailPlugin extends Plugin {
+    Cover: (props: CoverProps) => React.ReactElement;
+    Thumbnails(): React.ReactElement;
+}
+
+export interface ThumbnailPluginProps {
     renderCurrentPageLabel?: RenderCurrentPageLabel;
 }
 
-export interface ThumbnailPlugin extends Plugin {
-    Cover: (props: CoverProps) => React.ReactElement;
-    Thumbnails: (props?: ThumbnailsProps) => React.ReactElement;
-}
-
-export const thumbnailPlugin = (): ThumbnailPlugin => {
+export const thumbnailPlugin = (props?: ThumbnailPluginProps): ThumbnailPlugin => {
     const store = React.useMemo(() => createStore<StoreProps>({}), []);
 
     const CoverDecorator = (props: CoverProps) => <Cover {...props} store={store} />;
 
-    const ThumbnailsDecorator = (props?: ThumbnailsProps) => (
+    const ThumbnailsDecorator = () => (
         <ThumbnailListWithStore renderCurrentPageLabel={props?.renderCurrentPageLabel} store={store} />
     );
 
