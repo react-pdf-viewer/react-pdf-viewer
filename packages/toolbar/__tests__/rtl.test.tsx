@@ -25,16 +25,11 @@ const TestRtl: React.FC<{
                 style={{
                     border: '1px solid rgba(0, 0, 0, 0.3)',
                     display: 'flex',
+                    flexDirection: 'column',
                     height: '100%',
                 }}
             >
-                <div
-                    style={{
-                        borderRight: '1px solid rgba(0, 0, 0, 0.3)',
-                        overflow: 'auto',
-                        width: '30%',
-                    }}
-                >
+                <div>
                     <Toolbar />
                 </div>
                 <div style={{ flex: 1 }}>
