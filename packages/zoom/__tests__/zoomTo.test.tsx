@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
+import { PrimaryButton, Viewer } from '@react-pdf-viewer/core';
 
 import { mockIsIntersecting } from '../../../test-utils/mockIntersectionObserver';
-import { PrimaryButton, Viewer } from '@react-pdf-viewer/core';
 import { zoomPlugin } from '../src/index';
 
 const TestCallZoomMethod: React.FC<{

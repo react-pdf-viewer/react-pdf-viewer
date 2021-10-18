@@ -23,6 +23,10 @@ import { ZoomPopover } from './ZoomPopover';
 import type { StoreProps } from './types/StoreProps';
 import type { ZoomMenuItemProps } from './types/ZoomMenuItemProps';
 
+export interface ZoomPopoverProps {
+    levels?: number[];
+}
+
 export interface ZoomPlugin extends Plugin {
     zoomTo: (scale: number | SpecialZoomLevel) => void;
     CurrentScale: (props: CurrentScaleProps) => React.ReactElement;
@@ -33,7 +37,7 @@ export interface ZoomPlugin extends Plugin {
     ZoomOutButton: () => React.ReactElement;
     ZoomOutMenuItem: (props: ZoomMenuItemProps) => React.ReactElement;
     Zoom: (props: ZoomProps) => React.ReactElement;
-    ZoomPopover: () => React.ReactElement;
+    ZoomPopover: (props?: ZoomPopoverProps) => React.ReactElement;
 }
 
 export interface ZoomPluginProps {
@@ -86,7 +90,9 @@ export const zoomPlugin = (props?: ZoomPluginProps): ZoomPlugin => {
 
     const ZoomDecorator = (props: ZoomProps) => <Zoom {...props} store={store} />;
 
-    const ZoomPopoverDecorator = () => <ZoomDecorator>{(props) => <ZoomPopover {...props} />}</ZoomDecorator>;
+    const ZoomPopoverDecorator = (zoomPopverProps?: ZoomPopoverProps) => (
+        <ZoomDecorator>{(props) => <ZoomPopover levels={zoomPopverProps?.levels} {...props} />}</ZoomDecorator>
+    );
 
     const renderViewer = (props: RenderViewer): Slot => {
         const { slot } = props;

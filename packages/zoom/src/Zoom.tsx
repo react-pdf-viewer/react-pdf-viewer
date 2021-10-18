@@ -19,12 +19,14 @@ type RenderZoom = (props: RenderZoomProps) => React.ReactElement;
 
 export interface ZoomProps {
     children?: RenderZoom;
+    levels?: number[];
 }
 
 export const Zoom: React.FC<{
     children?: RenderZoom;
+    levels?: number[];
     store: Store<StoreProps>;
-}> = ({ children, store }) => {
+}> = ({ children, levels, store }) => {
     const { scale } = useZoom(store);
 
     const zoomTo = (newLevel: number | SpecialZoomLevel) => {
@@ -34,7 +36,9 @@ export const Zoom: React.FC<{
         }
     };
 
-    const defaultChildren = (props: RenderZoomProps) => <ZoomPopover scale={props.scale} onZoom={props.onZoom} />;
+    const defaultChildren = (props: RenderZoomProps) => (
+        <ZoomPopover levels={levels} scale={props.scale} onZoom={props.onZoom} />
+    );
     const render = children || defaultChildren;
 
     return render({
