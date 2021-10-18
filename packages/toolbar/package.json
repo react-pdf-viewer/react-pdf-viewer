@@ -1,6 +1,6 @@
 {
     "name": "@react-pdf-viewer/toolbar",
-    "version": "2.9.1",
+    "version": "2.10.0",
     "description": "A React component to view a PDF document",
     "license": "https://react-pdf-viewer.dev/license",
     "author": {
@@ -33,19 +33,19 @@
         "lib/index.js"
     ],
     "dependencies": {
-        "@react-pdf-viewer/core": "2.9.1",
-        "@react-pdf-viewer/full-screen": "2.9.1",
-        "@react-pdf-viewer/get-file": "2.9.1",
-        "@react-pdf-viewer/open": "2.9.1",
-        "@react-pdf-viewer/page-navigation": "2.9.1",
-        "@react-pdf-viewer/print": "2.9.1",
-        "@react-pdf-viewer/properties": "2.9.1",
-        "@react-pdf-viewer/rotate": "2.9.1",
-        "@react-pdf-viewer/scroll-mode": "2.9.1",
-        "@react-pdf-viewer/search": "2.9.1",
-        "@react-pdf-viewer/selection-mode": "2.9.1",
-        "@react-pdf-viewer/theme": "2.9.1",
-        "@react-pdf-viewer/zoom": "2.9.1"
+        "@react-pdf-viewer/core": "2.10.0",
+        "@react-pdf-viewer/full-screen": "2.10.0",
+        "@react-pdf-viewer/get-file": "2.10.0",
+        "@react-pdf-viewer/open": "2.10.0",
+        "@react-pdf-viewer/page-navigation": "2.10.0",
+        "@react-pdf-viewer/print": "2.10.0",
+        "@react-pdf-viewer/properties": "2.10.0",
+        "@react-pdf-viewer/rotate": "2.10.0",
+        "@react-pdf-viewer/scroll-mode": "2.10.0",
+        "@react-pdf-viewer/search": "2.10.0",
+        "@react-pdf-viewer/selection-mode": "2.10.0",
+        "@react-pdf-viewer/theme": "2.10.0",
+        "@react-pdf-viewer/zoom": "2.10.0"
     },
     "peerDependencies": {
         "react": "^16.8.0 || ^17.0.0",
