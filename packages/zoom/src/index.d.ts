@@ -51,6 +51,10 @@ export interface ZoomMenuItemProps {
     onClick: () => void;
 }
 
+export interface ZoomPopoverProps {
+    levels?: number[];
+}
+
 // Plugin
 export interface ZoomPluginProps {
     enableShortcuts?: boolean;
@@ -66,7 +70,7 @@ export interface ZoomPlugin extends Plugin {
     ZoomOutButton: () => React.ReactElement;
     ZoomOutMenuItem: (props: ZoomMenuItemProps) => React.ReactElement;
     Zoom: (props: ZoomProps) => React.ReactElement;
-    ZoomPopover: () => React.ReactElement;
+    ZoomPopover: (props?: ZoomPopoverProps) => React.ReactElement;
 }
 
 export function zoomPlugin(props?: ZoomPluginProps): ZoomPlugin;

@@ -4,10 +4,12 @@
 
 **New feature**
 
--   The `Zoom` component provided by the zoom plugin adds a custom zoom levels
+-   The `Zoom` and `ZoomPopover` components provided by the zoom plugin adds a custom zoom levels
 
 ```tsx
 <Zoom levels={[0.5, 1, 2, 3, 4]} />
+
+<ZoomPopover levels={[0.5, 1, 2, 3, 4]} />
 ```
 
 **Bug fix**
