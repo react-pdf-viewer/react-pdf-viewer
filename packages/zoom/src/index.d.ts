@@ -29,6 +29,7 @@ export interface ZoomOutProps {
 
 export interface ZoomProps {
     children?: (props: RenderZoomProps) => React.ReactElement;
+    levels?: number[];
 }
 
 export interface RenderZoomInProps {

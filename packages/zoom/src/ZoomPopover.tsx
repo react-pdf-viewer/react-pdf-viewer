@@ -22,12 +22,14 @@ import {
 } from '@react-pdf-viewer/core';
 import type { LocalizationMap, Toggle } from '@react-pdf-viewer/core';
 
-import type { RenderZoomProps } from './types/RenderZoomProps';
-
-const LEVELS = [0.5, 0.75, 1, 1.25, 1.5, 2, 3, 4];
+const DEFAULT_LEVELS = [0.5, 0.75, 1, 1.25, 1.5, 2, 3, 4];
 const PORTAL_OFFSET = { left: 0, top: 8 };
 
-export const ZoomPopover: React.FC<RenderZoomProps> = ({ scale, onZoom }) => {
+export const ZoomPopover: React.FC<{
+    levels?: number[];
+    scale: number;
+    onZoom(newScale: number | SpecialZoomLevel): void;
+}> = ({ levels = DEFAULT_LEVELS, scale, onZoom }) => {
     const { l10n } = React.useContext(LocalizationContext);
     const { direction } = React.useContext(ThemeContext);
     const isRtl = direction === TextDirection.RightToLeft;
@@ -82,7 +84,7 @@ export const ZoomPopover: React.FC<RenderZoomProps> = ({ scale, onZoom }) => {
                 );
             })}
             <MenuDivider />
-            {LEVELS.map((level) => {
+            {levels.map((level) => {
                 const clickMenuItem = (): void => {
                     toggle();
                     onZoom(level);
