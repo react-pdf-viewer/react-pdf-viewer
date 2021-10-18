@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## v2.10.1
+
+**Bug fix**
+
+-   Clicking the Search button scrolls to the top of page
+
 ## v2.10.0
 
 **New features**
