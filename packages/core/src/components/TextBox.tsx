@@ -9,6 +9,7 @@
 import * as React from 'react';
 
 import { TextDirection, ThemeContext } from '../theme/ThemeContext';
+import { useIsomorphicLayoutEffect } from '../hooks/useIsomorphicLayoutEffect';
 import { classNames } from '../utils/classNames';
 
 export const TextBox: React.FC<{
@@ -31,12 +32,13 @@ export const TextBox: React.FC<{
     onKeyDown = () => {},
 }) => {
     const { direction } = React.useContext(ThemeContext);
+    const textboxRef = React.useRef<HTMLInputElement>();
     const isRtl = direction === TextDirection.RightToLeft;
 
     const attrs = {
+        ref: textboxRef,
         'data-testid': '',
         'aria-label': ariaLabel,
-        autoFocus,
         className: classNames({
             'rpv-core__textbox': true,
             'rpv-core__textbox--rtl': isRtl,
@@ -49,6 +51,21 @@ export const TextBox: React.FC<{
     if (testId) {
         attrs['data-testid'] = testId;
     }
+
+    useIsomorphicLayoutEffect(() => {
+        if (autoFocus) {
+            const textboxEle = textboxRef.current;
+            // The `focus({ preventScroll: true })` isn't suppored in all browsers
+            // See https://wpt.fyi/results/html/interaction/focus/processing-model/preventScroll.html
+            if (textboxEle) {
+                const x = window.scrollX;
+                const y = window.scrollY;
+                textboxEle.focus();
+                // Scroll to the previous position
+                window.scrollTo(x, y);
+            }
+        }
+    }, []);
 
     return type === 'text' ? <input type="text" {...attrs} /> : <input type="password" {...attrs} />;
 };
