@@ -106,6 +106,10 @@ export const Sidebar: React.FC<SidebarProps> = ({
         };
     }, []);
 
+    if (listTabs.length === 0) {
+        return <></>;
+    }
+
     return (
         <>
             <div

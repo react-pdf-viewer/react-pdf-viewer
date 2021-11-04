@@ -1,5 +1,17 @@
 # CHANGELOG
 
+## v2.10.2 [WIP]
+
+**Improvement**
+
+-   It's possible to remove the sidebar created by the default layout plugin:
+
+```js
+const defaultLayoutPluginInstance = defaultLayoutPlugin({
+    sidebarTabs: () => [],
+});
+```
+
 ## v2.10.1
 
 **New feature**
