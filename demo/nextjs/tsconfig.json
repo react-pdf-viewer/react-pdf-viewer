@@ -8,7 +8,8 @@
         "noEmit": true,
         "module": "esnext",
         "jsx": "preserve",
-        "lib": ["dom", "esnext"]
+        "lib": ["dom", "esnext"],
+        "incremental": true
     },
     "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
     "exclude": ["node_modules"]
