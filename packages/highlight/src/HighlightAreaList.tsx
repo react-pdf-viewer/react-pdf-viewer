@@ -11,7 +11,13 @@ import type { Store } from '@react-pdf-viewer/core';
 
 import { getCssProperties } from './transformArea';
 import { HighlightRect } from './HighlightRect';
-import { NO_SELECTION_STATE, HighlightState, SelectedState, SelectionState } from './SelectionState';
+import {
+    NO_SELECTION_STATE,
+    HighlightAreaState,
+    HighlightSelectionState,
+    HighlightState,
+    SelectedState,
+} from './HighlightState';
 import { Trigger } from './structs/Trigger';
 import { useRotation } from './useRotation';
 import type { RenderHighlightContentProps } from './types/RenderHighlightContentProps';
@@ -27,63 +33,65 @@ export const HighlightAreaList: React.FC<{
     store: Store<StoreProps>;
     trigger: Trigger;
 }> = ({ pageIndex, renderHighlightContent, renderHighlightTarget, renderHighlights, store, trigger }) => {
-    const [selectionState, setSelectionState] = React.useState<SelectionState>(store.get('selectionState'));
+    const [highlightState, setHighlightState] = React.useState<HighlightState>(store.get('highlightState'));
     const { rotation } = useRotation(store);
 
-    const handleSelectionState = (s: SelectionState) => setSelectionState(s);
+    const handleHighlightState = (s: HighlightState) => setHighlightState(s);
 
     // Cancel the selection
     const cancel = () => {
         window.getSelection().removeAllRanges();
-        store.update('selectionState', NO_SELECTION_STATE);
+        store.update('highlightState', NO_SELECTION_STATE);
     };
 
     React.useEffect(() => {
-        store.subscribe('selectionState', handleSelectionState);
+        store.subscribe('highlightState', handleHighlightState);
 
         return (): void => {
-            store.unsubscribe('selectionState', handleSelectionState);
+            store.unsubscribe('highlightState', handleHighlightState);
         };
     }, []);
 
     // Filter the selections
     const listAreas =
-        selectionState instanceof HighlightState
-            ? selectionState.highlightAreas.filter((s) => s.pageIndex === pageIndex)
+        highlightState instanceof HighlightSelectionState
+            ? highlightState.highlightAreas.filter((s) => s.pageIndex === pageIndex)
             : [];
+
+    const highlightAreas = highlightState.highlightAreas;
 
     return (
         <>
             {renderHighlightTarget &&
-                selectionState instanceof SelectedState &&
-                selectionState.selectionRegion.pageIndex === pageIndex &&
+                highlightState instanceof SelectedState &&
+                highlightState.selectionRegion.pageIndex === pageIndex &&
                 renderHighlightTarget({
-                    highlightAreas: selectionState.highlightAreas,
-                    selectedText: selectionState.selectedText,
-                    selectionRegion: selectionState.selectionRegion,
-                    selectionData: selectionState.selectionData,
+                    highlightAreas: highlightState.highlightAreas,
+                    selectedText: highlightState.selectedText,
+                    selectionRegion: highlightState.selectionRegion,
+                    selectionData: highlightState.selectionData,
                     cancel,
                     toggle: () => {
                         store.update(
-                            'selectionState',
-                            new HighlightState(
-                                selectionState.selectedText,
-                                selectionState.highlightAreas,
-                                selectionState.selectionData,
-                                selectionState.selectionRegion
+                            'highlightState',
+                            new HighlightSelectionState(
+                                highlightState.selectedText,
+                                highlightState.highlightAreas,
+                                highlightState.selectionData,
+                                highlightState.selectionRegion
                             )
                         );
                         window.getSelection().removeAllRanges();
                     },
                 })}
             {renderHighlightContent &&
-                selectionState instanceof HighlightState &&
-                selectionState.selectionRegion.pageIndex === pageIndex &&
+                highlightState instanceof HighlightSelectionState &&
+                highlightState.selectionRegion.pageIndex === pageIndex &&
                 renderHighlightContent({
-                    highlightAreas: selectionState.highlightAreas,
-                    selectedText: selectionState.selectedText,
-                    selectionRegion: selectionState.selectionRegion,
-                    selectionData: selectionState.selectionData,
+                    highlightAreas: highlightState.highlightAreas,
+                    selectedText: highlightState.selectedText,
+                    selectionRegion: highlightState.selectionRegion,
+                    selectionData: highlightState.selectionData,
                     cancel,
                 })}
             {listAreas.length > 0 && (
@@ -95,6 +103,7 @@ export const HighlightAreaList: React.FC<{
             )}
             {renderHighlights &&
                 renderHighlights({
+                    highlightAreas,
                     pageIndex,
                     rotation,
                     getCssProperties,

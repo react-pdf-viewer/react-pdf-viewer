@@ -1,0 +1,108 @@
+import * as React from 'react';
+import { Button, Viewer, Worker } from '@react-pdf-viewer/core';
+import { defaultLayoutPlugin } from '@react-pdf-viewer/default-layout';
+import { highlightPlugin, Trigger } from '@react-pdf-viewer/highlight';
+
+import type { HighlightArea, RenderHighlightsProps } from '@react-pdf-viewer/highlight';
+
+const IndexPage = () => {
+    const defaultLayoutPluginInstance = defaultLayoutPlugin();
+
+    const firstAreas: HighlightArea[] = [
+        {
+            pageIndex: 3,
+            height: 1.55401,
+            width: 28.1674,
+            left: 27.5399,
+            top: 15.0772,
+        },
+        {
+            pageIndex: 3,
+            height: 1.55401,
+            width: 28.7437,
+            left: 16.3638,
+            top: 16.6616,
+        },
+    ];
+
+    const secondAreas: HighlightArea[] = [
+        {
+            pageIndex: 3,
+            height: 1.32637,
+            width: 37.477,
+            left: 55.7062,
+            top: 15.2715,
+        },
+    ];
+
+    const renderHighlights = (props: RenderHighlightsProps) => (
+        <div>
+            {props.highlightAreas
+                .filter((area) => area.pageIndex === props.pageIndex)
+                .map((area, idx) => (
+                    <div
+                        key={idx}
+                        className="highlight-area"
+                        style={Object.assign(
+                            {},
+                            {
+                                background: 'yellow',
+                                opacity: 0.4,
+                            },
+                            props.getCssProperties(area, props.rotation)
+                        )}
+                    />
+                ))}
+        </div>
+    );
+
+    const highlightPluginInstance = highlightPlugin({
+        renderHighlights,
+        trigger: Trigger.None,
+    });
+    const { setHighlightAreas } = highlightPluginInstance;
+
+    React.useEffect(() => {
+        setHighlightAreas(firstAreas);
+    }, []);
+
+    return (
+        <Worker workerUrl="https://unpkg.com/pdfjs-dist@2.10.377/build/pdf.worker.js">
+            <div
+                style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    height: '50rem',
+                    margin: '5rem auto',
+                    width: '64rem',
+                }}
+            >
+                <div
+                    style={{
+                        alignItems: 'center',
+                        display: 'flex',
+                        padding: '0.5rem 0',
+                    }}
+                >
+                    <div style={{ marginRight: '0.5rem' }}>
+                        <Button onClick={() => setHighlightAreas(firstAreas)}>Load first set areas</Button>
+                    </div>
+                    <Button onClick={() => setHighlightAreas(secondAreas)}>Load second set areas</Button>
+                </div>
+                <div
+                    style={{
+                        flex: 1,
+                        overflow: 'hidden',
+                    }}
+                >
+                    <Viewer
+                        fileUrl="/pdf-open-parameters.pdf"
+                        plugins={[defaultLayoutPluginInstance, highlightPluginInstance]}
+                    />
+                </div>
+            </div>
+        </Worker>
+    );
+};
+
+export default IndexPage;

@@ -6,11 +6,11 @@
  * @copyright 2019-2021 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import { SelectionState } from '../SelectionState';
+import { HighlightState } from '../HighlightState';
 
 export interface StoreProps {
     getPageElement?(pageIndex: number): HTMLElement | null;
     getPagesContainer?(): HTMLElement;
     rotation?: number;
-    selectionState: SelectionState;
+    highlightState: HighlightState;
 }

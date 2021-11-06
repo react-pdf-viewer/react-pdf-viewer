@@ -1,6 +1,30 @@
 # CHANGELOG
 
-## v2.10.2 [WIP]
+## v2.11.0 [WIP]
+
+**New feature**
+
+-   The `highlight` plugin provides new `setHighlightAreas` function to render the highlight areas dynamically. The list of highlight areas passed to `setHighlightAreas` then can be accessed as a property of `RenderHighlightsProps`:
+
+```js
+const renderHighlights = (props: RenderHighlightsProps) => (
+    <div>
+        {props.highlightAreas
+            .filter((area) => area.pageIndex === props.pageIndex)
+            .map((area, idx) => (
+                // ...
+            ))}
+    </div>
+);
+
+const highlightPluginInstance = highlightPlugin({
+    renderHighlights,
+    trigger: Trigger.None,
+});
+const { setHighlightAreas } = highlightPluginInstance;
+
+setHighlightAreas(...);
+```
 
 **Improvement**
 
