@@ -196,6 +196,7 @@ export type RenderContent = (toggle: Toggle) => React.ReactNode;
 export type RenderTarget = (toggle: Toggle, opened: boolean) => React.ReactNode;
 
 export interface ButtonProps {
+    testId?: string;
     onClick(): void;
 }
 export class Button extends React.Component<ButtonProps> {}

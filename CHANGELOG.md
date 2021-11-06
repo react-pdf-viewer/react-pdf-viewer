@@ -4,6 +4,7 @@
 
 **New feature**
 
+-   The `Button` component has new `testId` property that is identical with the `data-testid` attribute
 -   The `highlight` plugin provides new `setHighlightAreas` function to render the highlight areas dynamically. The list of highlight areas passed to `setHighlightAreas` then can be accessed as a property of `RenderHighlightsProps`:
 
 ```js
