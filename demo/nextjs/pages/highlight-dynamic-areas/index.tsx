@@ -85,9 +85,13 @@ const IndexPage = () => {
                     }}
                 >
                     <div style={{ marginRight: '0.5rem' }}>
-                        <Button onClick={() => setHighlightAreas(firstAreas)}>Load first set areas</Button>
+                        <Button testId="first-areas" onClick={() => setHighlightAreas(firstAreas)}>
+                            Load first set areas
+                        </Button>
                     </div>
-                    <Button onClick={() => setHighlightAreas(secondAreas)}>Load second set areas</Button>
+                    <Button testId="second-areas" onClick={() => setHighlightAreas(secondAreas)}>
+                        Load second set areas
+                    </Button>
                 </div>
                 <div
                     style={{
