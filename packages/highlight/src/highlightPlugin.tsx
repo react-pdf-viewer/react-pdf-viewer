@@ -20,7 +20,7 @@ import type {
 
 import { HIGHLIGHT_LAYER_ATTR, HIGHLIGHT_PAGE_ATTR } from './constants';
 import { HighlightAreaList } from './HighlightAreaList';
-import { NO_SELECTION_STATE, SELECTING_STATE, SelectedState } from './SelectionState';
+import { NO_SELECTION_STATE, SELECTING_STATE, HighlightAreaState, SelectedState } from './HighlightState';
 import { Tracker } from './Tracker';
 import { Trigger } from './structs/Trigger';
 import type { HighlightArea } from './types/HighlightArea';
@@ -31,6 +31,7 @@ import type { StoreProps } from './types/StoreProps';
 
 export interface HighlightPlugin extends Plugin {
     jumpToHighlightArea(area: HighlightArea): void;
+    setHighlightAreas(areas: HighlightArea[]): void;
 }
 
 export interface HighlightPluginProps {
@@ -48,7 +49,7 @@ export const highlightPlugin = (props?: HighlightPluginProps): HighlightPlugin =
     const store = React.useMemo(
         () =>
             createStore<StoreProps>({
-                selectionState: NO_SELECTION_STATE,
+                highlightState: NO_SELECTION_STATE,
             }),
         []
     );
@@ -74,13 +75,13 @@ export const highlightPlugin = (props?: HighlightPluginProps): HighlightPlugin =
     const handleMouseDown = (textLayerRender: PluginOnTextLayerRender) => (e: MouseEvent) => {
         const textLayer = textLayerRender.ele;
         const pageRect = textLayer.getBoundingClientRect();
-        const selectionState = store.get('selectionState');
-        if (selectionState instanceof SelectedState) {
+        const highlightState = store.get('highlightState');
+        if (highlightState instanceof SelectedState) {
             const mouseTop = e.clientY - pageRect.top;
             const mouseLeft = e.clientX - pageRect.left;
 
             // Check if the user clicks inside a highlighting area
-            const userClickedInsideArea = selectionState.highlightAreas
+            const userClickedInsideArea = highlightState.highlightAreas
                 .filter((area) => area.pageIndex === textLayerRender.pageIndex)
                 .find((area) => {
                     const t = (area.top * pageRect.height) / 100;
@@ -92,12 +93,12 @@ export const highlightPlugin = (props?: HighlightPluginProps): HighlightPlugin =
             if (userClickedInsideArea) {
                 // Cancel the selection
                 window.getSelection().removeAllRanges();
-                store.update('selectionState', NO_SELECTION_STATE);
+                store.update('highlightState', NO_SELECTION_STATE);
             } else {
-                store.update('selectionState', SELECTING_STATE);
+                store.update('highlightState', SELECTING_STATE);
             }
         } else {
-            store.update('selectionState', NO_SELECTION_STATE);
+            store.update('highlightState', NO_SELECTION_STATE);
         }
 
         // Create an invisible element from the current position to the end of page
@@ -178,6 +179,10 @@ export const highlightPlugin = (props?: HighlightPluginProps): HighlightPlugin =
         pagesEle.scrollTop = targetPage.offsetTop + (area.top * targetPage.clientHeight) / 100 - pagesEle.offsetTop;
     };
 
+    const setHighlightAreas = (areas: HighlightArea[]) => {
+        store.update('highlightState', new HighlightAreaState(areas));
+    };
+
     return {
         install: (pluginFunctions: PluginFunctions) => {
             store.update('getPageElement', pluginFunctions.getPageElement);
@@ -187,9 +192,10 @@ export const highlightPlugin = (props?: HighlightPluginProps): HighlightPlugin =
             store.update('rotation', viewerState.rotation);
             return viewerState;
         },
-        jumpToHighlightArea,
         onTextLayerRender,
         renderPageLayer,
         renderViewer,
+        jumpToHighlightArea,
+        setHighlightAreas,
     };
 };

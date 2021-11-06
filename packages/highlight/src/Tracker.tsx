@@ -12,7 +12,7 @@ import type { Store } from '@react-pdf-viewer/core';
 import { HIGHLIGHT_LAYER_ATTR, HIGHLIGHT_PAGE_ATTR } from './constants';
 import { getRectFromOffsets } from './getRectFromOffsets';
 import { getTextFromOffsets } from './getTextFromOffsets';
-import { NO_SELECTION_STATE, SELECTING_STATE, SelectedState } from './SelectionState';
+import { NO_SELECTION_STATE, SELECTING_STATE, SelectedState } from './HighlightState';
 import { SelectionRange } from './structs/SelectionRange';
 import { transformArea } from './transformArea';
 import { useRotation } from './useRotation';
@@ -37,9 +37,9 @@ export const Tracker: React.FC<{
         // Get the current selection
         const selection = document.getSelection();
 
-        const selectionState = store.get('selectionState');
+        const highlightState = store.get('highlightState');
         const hasSelection =
-            (selectionState === NO_SELECTION_STATE || selectionState === SELECTING_STATE) &&
+            (highlightState === NO_SELECTION_STATE || highlightState === SELECTING_STATE) &&
             selection.rangeCount > 0 &&
             selection.toString() !== '';
         if (!hasSelection) {
@@ -219,7 +219,7 @@ export const Tracker: React.FC<{
         };
 
         store.update(
-            'selectionState',
+            'highlightState',
             new SelectedState(
                 selectedText,
                 highlightAreas.map((area) => transformArea(area, rotation)),

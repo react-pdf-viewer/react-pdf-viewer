@@ -9,37 +9,22 @@
 import type { HighlightArea } from './types/HighlightArea';
 import type { SelectionData } from './types/SelectionData';
 
-export class SelectionState {}
+export class HighlightState {
+    public highlightAreas: HighlightArea[] = [];
 
-class NoSelectionState extends SelectionState {}
-
-class SelectingState extends SelectionState {}
-
-export class SelectedState extends SelectionState {
-    public selectedText: string;
-    public selectionData: SelectionData;
-    public selectionRegion: HighlightArea;
-    public highlightAreas: HighlightArea[];
-
-    constructor(
-        selectedText: string,
-        highlightAreas: HighlightArea[],
-        selectionData: SelectionData,
-        selectionRegion: HighlightArea
-    ) {
-        super();
-        this.selectedText = selectedText;
-        this.selectionData = selectionData;
-        this.selectionRegion = selectionRegion;
+    constructor(highlightAreas: HighlightArea[] = []) {
         this.highlightAreas = highlightAreas;
     }
 }
 
-export class HighlightState extends SelectionState {
+class NoSelectionState extends HighlightState {}
+
+class SelectingState extends HighlightState {}
+
+export class SelectedState extends HighlightState {
     public selectedText: string;
     public selectionData: SelectionData;
     public selectionRegion: HighlightArea;
-    public highlightAreas: HighlightArea[];
 
     constructor(
         selectedText: string,
@@ -47,11 +32,34 @@ export class HighlightState extends SelectionState {
         selectionData: SelectionData,
         selectionRegion: HighlightArea
     ) {
-        super();
+        super(highlightAreas);
         this.selectedText = selectedText;
         this.selectionData = selectionData;
         this.selectionRegion = selectionRegion;
-        this.highlightAreas = highlightAreas;
+    }
+}
+
+export class HighlightSelectionState extends HighlightState {
+    public selectedText: string;
+    public selectionData: SelectionData;
+    public selectionRegion: HighlightArea;
+
+    constructor(
+        selectedText: string,
+        highlightAreas: HighlightArea[],
+        selectionData: SelectionData,
+        selectionRegion: HighlightArea
+    ) {
+        super(highlightAreas);
+        this.selectedText = selectedText;
+        this.selectionData = selectionData;
+        this.selectionRegion = selectionRegion;
+    }
+}
+
+export class HighlightAreaState extends HighlightState {
+    constructor(highlightAreas: HighlightArea[]) {
+        super(highlightAreas);
     }
 }
 
