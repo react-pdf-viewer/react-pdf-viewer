@@ -192,14 +192,14 @@ export const useSearch = (
                         keywords.forEach((keyword) => {
                             let matchIndex = 0;
                             let matches: RegExpExecArray | null;
-                            while ((matches = keyword.exec(pageText)) !== null) {
+                            while ((matches = keyword.regExp.exec(pageText)) !== null) {
                                 arr.push({
-                                    keyword,
+                                    keyword: keyword.regExp,
                                     matchIndex,
                                     pageIndex,
                                     pageText,
                                     startIndex: matches.index,
-                                    endIndex: keyword.lastIndex,
+                                    endIndex: keyword.regExp.lastIndex,
                                 });
                                 matchIndex++;
                             }
