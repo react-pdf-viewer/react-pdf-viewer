@@ -37,6 +37,10 @@ const defaultLayoutPluginInstance = defaultLayoutPlugin({
 });
 ```
 
+**Bug fix**
+
+-   The `selectedText` prop of `RenderHighlightContentProps` isn't correct
+
 ## v2.10.1
 
 **New feature**

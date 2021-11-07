@@ -70,7 +70,7 @@ export const TextLayer: React.FC<{
             });
             renderTask.current.promise.then(
                 () => {
-                    const spans: HTMLElement[] = [].slice.call(containerEle.querySelectorAll('span'));
+                    const spans: HTMLElement[] = [].slice.call(containerEle.children);
                     spans.forEach((span) => span.classList.add('rpv-core__text-layer-text'));
 
                     plugins.forEach((plugin) => {
