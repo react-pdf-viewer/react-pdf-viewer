@@ -35,9 +35,11 @@ const IndexPage = () => {
         },
     ];
 
+    const [areas, setAreas] = React.useState<HighlightArea[]>([]);
+
     const renderHighlights = (props: RenderHighlightsProps) => (
         <div>
-            {props.highlightAreas
+            {areas
                 .filter((area) => area.pageIndex === props.pageIndex)
                 .map((area, idx) => (
                     <div
@@ -60,11 +62,6 @@ const IndexPage = () => {
         renderHighlights,
         trigger: Trigger.None,
     });
-    const { setHighlightAreas } = highlightPluginInstance;
-
-    React.useEffect(() => {
-        setHighlightAreas(firstAreas);
-    }, []);
 
     return (
         <Worker workerUrl="https://unpkg.com/pdfjs-dist@2.10.377/build/pdf.worker.js">
@@ -85,11 +82,11 @@ const IndexPage = () => {
                     }}
                 >
                     <div style={{ marginRight: '0.5rem' }}>
-                        <Button testId="first-areas" onClick={() => setHighlightAreas(firstAreas)}>
+                        <Button testId="first-areas" onClick={() => setAreas(firstAreas)}>
                             Load first set areas
                         </Button>
                     </div>
-                    <Button testId="second-areas" onClick={() => setHighlightAreas(secondAreas)}>
+                    <Button testId="second-areas" onClick={() => setAreas(secondAreas)}>
                         Load second set areas
                     </Button>
                 </div>

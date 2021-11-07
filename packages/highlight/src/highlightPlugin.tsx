@@ -20,7 +20,7 @@ import type {
 
 import { HIGHLIGHT_LAYER_ATTR, HIGHLIGHT_PAGE_ATTR } from './constants';
 import { HighlightAreaList } from './HighlightAreaList';
-import { NO_SELECTION_STATE, SELECTING_STATE, HighlightAreaState, SelectedState } from './HighlightState';
+import { NO_SELECTION_STATE, SELECTING_STATE, SelectedState } from './HighlightState';
 import { Tracker } from './Tracker';
 import { Trigger } from './structs/Trigger';
 import type { HighlightArea } from './types/HighlightArea';
@@ -31,7 +31,6 @@ import type { StoreProps } from './types/StoreProps';
 
 export interface HighlightPlugin extends Plugin {
     jumpToHighlightArea(area: HighlightArea): void;
-    setHighlightAreas(areas: HighlightArea[]): void;
 }
 
 export interface HighlightPluginProps {
@@ -178,10 +177,6 @@ export const highlightPlugin = (props?: HighlightPluginProps): HighlightPlugin =
         pagesEle.scrollTop = targetPage.offsetTop + (area.top * targetPage.clientHeight) / 100 - pagesEle.offsetTop;
     };
 
-    const setHighlightAreas = (areas: HighlightArea[]) => {
-        store.update('highlightState', new HighlightAreaState(areas));
-    };
-
     return {
         install: (pluginFunctions: PluginFunctions) => {
             store.update('getPageElement', pluginFunctions.getPageElement);
@@ -195,6 +190,5 @@ export const highlightPlugin = (props?: HighlightPluginProps): HighlightPlugin =
         renderPageLayer,
         renderViewer,
         jumpToHighlightArea,
-        setHighlightAreas,
     };
 };
