@@ -13,12 +13,10 @@ import { getCssProperties } from './transformArea';
 import { HighlightRect } from './HighlightRect';
 import {
     NO_SELECTION_STATE,
-    HighlightAreaState,
     HighlightSelectionState,
     HighlightState,
     SelectedState,
 } from './HighlightState';
-import { Trigger } from './structs/Trigger';
 import { useRotation } from './useRotation';
 import type { RenderHighlightContentProps } from './types/RenderHighlightContentProps';
 import type { RenderHighlightTargetProps } from './types/RenderHighlightTargetProps';
@@ -31,8 +29,7 @@ export const HighlightAreaList: React.FC<{
     renderHighlightTarget?(props: RenderHighlightTargetProps): React.ReactElement;
     renderHighlights?(props: RenderHighlightsProps): React.ReactElement;
     store: Store<StoreProps>;
-    trigger: Trigger;
-}> = ({ pageIndex, renderHighlightContent, renderHighlightTarget, renderHighlights, store, trigger }) => {
+}> = ({ pageIndex, renderHighlightContent, renderHighlightTarget, renderHighlights, store }) => {
     const [highlightState, setHighlightState] = React.useState<HighlightState>(store.get('highlightState'));
     const { rotation } = useRotation(store);
 

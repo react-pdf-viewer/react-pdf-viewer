@@ -39,6 +39,7 @@ const defaultLayoutPluginInstance = defaultLayoutPlugin({
 
 **Bug fix**
 
+-   The highlight area aren't displayed
 -   The `selectedText` prop of `RenderHighlightContentProps` isn't correct
 
 ## v2.10.1
