@@ -27,7 +27,6 @@ export interface RenderHighlightContentProps {
 }
 
 export interface RenderHighlightsProps {
-    highlightAreas: HighlightArea[];
     getCssProperties(area: HighlightArea, rotation: number): React.CSSProperties;
     pageIndex: number;
     rotation: number;
@@ -61,7 +60,6 @@ export enum Trigger {
 // Plugin
 export interface HighlightPlugin extends Plugin {
     jumpToHighlightArea(area: HighlightArea): void;
-    setHighlightAreas(areas: HighlightArea[]): void;
 }
 
 export interface HighlightPluginProps {

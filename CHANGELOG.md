@@ -5,27 +5,6 @@
 **New feature**
 
 -   The `Button` component has new `testId` property that is identical with the `data-testid` attribute
--   The `highlight` plugin provides new `setHighlightAreas` function to render the highlight areas dynamically. The list of highlight areas passed to `setHighlightAreas` then can be accessed as a property of `RenderHighlightsProps`:
-
-```js
-const renderHighlights = (props: RenderHighlightsProps) => (
-    <div>
-        {props.highlightAreas
-            .filter((area) => area.pageIndex === props.pageIndex)
-            .map((area, idx) => (
-                // ...
-            ))}
-    </div>
-);
-
-const highlightPluginInstance = highlightPlugin({
-    renderHighlights,
-    trigger: Trigger.None,
-});
-const { setHighlightAreas } = highlightPluginInstance;
-
-setHighlightAreas(...);
-```
 
 **Improvement**
 
@@ -37,7 +16,7 @@ const defaultLayoutPluginInstance = defaultLayoutPlugin({
 });
 ```
 
-**Bug fix**
+**Bug fixes**
 
 -   The highlight area aren't displayed
 -   The `selectedText` prop of `RenderHighlightContentProps` isn't correct

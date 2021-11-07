@@ -57,12 +57,6 @@ export class HighlightSelectionState extends HighlightState {
     }
 }
 
-export class HighlightAreaState extends HighlightState {
-    constructor(highlightAreas: HighlightArea[]) {
-        super(highlightAreas);
-    }
-}
-
 // Create some instances
 export const NO_SELECTION_STATE = new NoSelectionState();
 export const SELECTING_STATE = new SelectingState();
