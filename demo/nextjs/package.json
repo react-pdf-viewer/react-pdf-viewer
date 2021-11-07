@@ -19,10 +19,10 @@
         "@react-pdf-viewer/search": "2.10.1",
         "@react-pdf-viewer/toolbar": "2.10.1",
         "@react-pdf-viewer/zoom": "2.10.1",
-        "next": "^12.0.2"
+        "next": "^12.0.3"
     },
     "devDependencies": {
-        "serve": "^13.0.0",
+        "serve": "^13.0.2",
         "ts-loader": "^9.2.6"
     }
 }
