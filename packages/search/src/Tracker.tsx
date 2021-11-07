@@ -14,6 +14,7 @@ import { calculateOffset } from './calculateOffset';
 import { EMPTY_KEYWORD_REGEXP } from './constants';
 import { unwrap } from './unwrap';
 import type { MatchPosition } from './types/MatchPosition';
+import type { NormalizedKeyword } from './types/NormalizedKeyword';
 import type { OnHighlightKeyword } from './types/OnHighlightKeyword';
 import type { StoreProps } from './types/StoreProps';
 
@@ -45,7 +46,7 @@ export const Tracker: React.FC<{
         matchIndex: -1,
         pageIndex: -1,
     });
-    const [keywordRegexp, setKeywordRegexp] = React.useState<RegExp[]>([EMPTY_KEYWORD_REGEXP]);
+    const [keywordRegexp, setKeywordRegexp] = React.useState<NormalizedKeyword[]>([EMPTY_KEYWORD_REGEXP]);
     const [renderStatus, setRenderStatus] = React.useState<RenderStatus>({
         pageIndex,
         scale: 1,
@@ -68,7 +69,13 @@ export const Tracker: React.FC<{
         }
     };
 
-    const highlight = (keyword: RegExp, containerEle: Element, span: HTMLElement, charIndexSpan: CharIndex[]): void => {
+    const highlight = (
+        keywordStr: string,
+        keyword: RegExp,
+        containerEle: Element,
+        span: HTMLElement,
+        charIndexSpan: CharIndex[]
+    ): void => {
         const range = document.createRange();
 
         const firstChild = span.firstChild;
@@ -97,7 +104,7 @@ export const Tracker: React.FC<{
         highlightEle.style.width = `${(100 * wrapperRect.width) / containerRect.width}%`;
         highlightEle.style.height = `${(100 * wrapperRect.height) / containerRect.height}%`;
         highlightEle.classList.add('rpv-search__highlight');
-        highlightEle.setAttribute('title', keyword.source.trim());
+        highlightEle.setAttribute('title', keywordStr.trim());
 
         unwrap(wrapper);
 
@@ -121,14 +128,17 @@ export const Tracker: React.FC<{
         const fullText = charIndexes.map((item) => item.char).join('');
 
         keywordRegexp.forEach((keyword) => {
-            const keywordStr = keyword.source;
+            const keywordStr = keyword.keyword;
             if (!keywordStr.trim()) {
                 return;
             }
 
             // Clone the keyword regular expression, and add the global (`g`) flag
             // If the `g` flag is missing, it will lead to an infinitive loop
-            const cloneKeyword = keyword.flags.indexOf('g') === -1 ? new RegExp(keyword, `${keyword.flags}g`) : keyword;
+            const cloneKeyword =
+                keyword.regExp.flags.indexOf('g') === -1
+                    ? new RegExp(keyword.regExp, `${keyword.regExp.flags}g`)
+                    : keyword.regExp;
 
             // Find all matches in the full text
             let match;
@@ -153,13 +163,19 @@ export const Tracker: React.FC<{
                         return acc;
                     }, {} as { [spanIndex: number]: CharIndex[] });
                     Object.values(spanIndexes).forEach((charIndexSpan) => {
-                        highlight(item.keyword, containerEle, spans[charIndexSpan[0].spanIndex], charIndexSpan);
+                        highlight(
+                            keywordStr,
+                            item.keyword,
+                            containerEle,
+                            spans[charIndexSpan[0].spanIndex],
+                            charIndexSpan
+                        );
                     });
                 });
         });
     };
 
-    const handleKeywordChanged = (keyword?: RegExp[]) => {
+    const handleKeywordChanged = (keyword?: NormalizedKeyword[]) => {
         if (keyword && keyword.length > 0) {
             setKeywordRegexp(keyword);
         }
@@ -183,7 +199,7 @@ export const Tracker: React.FC<{
     };
 
     const isEmptyKeyword = () =>
-        keywordRegexp.length === 0 || (keywordRegexp.length === 1 && keywordRegexp[0].source.trim() === '');
+        keywordRegexp.length === 0 || (keywordRegexp.length === 1 && keywordRegexp[0].keyword.trim() === '');
 
     // Prepare the characters indexes
     // The order of hooks are important. Since `charIndexes` will be used when we highlight matching items,

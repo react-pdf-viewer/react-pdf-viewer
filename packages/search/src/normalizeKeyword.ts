@@ -8,17 +8,31 @@
 
 import { EMPTY_KEYWORD_REGEXP } from './constants';
 import type { FlagKeyword } from './types/FlagKeyword';
+import type { NormalizedKeyword } from './types/NormalizedKeyword';
 import type { SingleKeyword } from './types/SingleKeyword';
 
-export const normalizeFlagKeyword = (flagKeyword: FlagKeyword): RegExp => {
+// `$&` means the whole matched string
+const escapeRegExp = (input: string): string => input.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+
+export const normalizeFlagKeyword = (flagKeyword: FlagKeyword): NormalizedKeyword => {
     const source = flagKeyword.wholeWords ? ` ${flagKeyword.keyword} ` : flagKeyword.keyword;
     const flags = flagKeyword.matchCase ? 'g' : 'gi';
-    return new RegExp(source, flags);
+    return {
+        keyword: flagKeyword.keyword,
+        regExp: new RegExp(escapeRegExp(source), flags),
+    };
 };
 
-export const normalizeSingleKeyword = (keyword: SingleKeyword, matchCase?: boolean, wholeWords?: boolean): RegExp => {
+export const normalizeSingleKeyword = (
+    keyword: SingleKeyword,
+    matchCase?: boolean,
+    wholeWords?: boolean
+): NormalizedKeyword => {
     if (keyword instanceof RegExp) {
-        return keyword;
+        return {
+            keyword: keyword.source,
+            regExp: keyword,
+        };
     }
 
     // Normalize a string keyword

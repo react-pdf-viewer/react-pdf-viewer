@@ -27,6 +27,7 @@ import { Tracker } from './Tracker';
 import { useSearch } from './useSearch';
 import type { OnHighlightKeyword } from './types/OnHighlightKeyword';
 import type { Match } from './types/Match';
+import type { NormalizedKeyword } from './types/NormalizedKeyword';
 import type { SearchTargetPageFilter } from './types/SearchTargetPage';
 import type { SingleKeyword } from './types/SingleKeyword';
 import type { StoreProps } from './types/StoreProps';
@@ -107,7 +108,7 @@ export const searchPlugin = (props?: SearchPluginProps): SearchPlugin => {
         return currentSlot;
     };
 
-    const normalizeKeywords = (keyword?: SingleKeyword | SingleKeyword[]): RegExp[] =>
+    const normalizeKeywords = (keyword?: SingleKeyword | SingleKeyword[]): NormalizedKeyword[] =>
         Array.isArray(keyword) ? keyword.map((k) => normalizeSingleKeyword(k)) : [normalizeSingleKeyword(keyword)];
 
     return {

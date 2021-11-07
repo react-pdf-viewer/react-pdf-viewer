@@ -10,12 +10,13 @@ import { SpecialZoomLevel } from '@react-pdf-viewer/core';
 import type { PdfJs, PluginOnTextLayerRender } from '@react-pdf-viewer/core';
 
 import type { MatchPosition } from './MatchPosition';
+import type { NormalizedKeyword } from './NormalizedKeyword';
 import type { SearchTargetPageFilter } from './SearchTargetPage';
 
 export interface StoreProps {
     areShortcutsPressed?: boolean;
     doc?: PdfJs.PdfDocument;
-    keyword?: RegExp[];
+    keyword?: NormalizedKeyword[];
     matchPosition?: MatchPosition;
     renderStatus: Map<number, PluginOnTextLayerRender>;
     jumpToDestination?(
