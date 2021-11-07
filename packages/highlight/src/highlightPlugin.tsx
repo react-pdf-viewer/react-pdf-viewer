@@ -44,7 +44,7 @@ export interface HighlightPluginProps {
 const TEXT_LAYER_END_SELECTOR = 'rpv-highlight__selected-end';
 
 export const highlightPlugin = (props?: HighlightPluginProps): HighlightPlugin => {
-    const highlightPluginProps = React.useMemo(() => Object.assign({}, { trigger: Trigger.TextSelection }, props), []);
+    const highlightPluginProps = Object.assign({}, { trigger: Trigger.TextSelection }, props);
 
     const store = React.useMemo(
         () =>
@@ -159,7 +159,6 @@ export const highlightPlugin = (props?: HighlightPluginProps): HighlightPlugin =
             renderHighlightTarget={highlightPluginProps.renderHighlightTarget}
             renderHighlights={highlightPluginProps.renderHighlights}
             store={store}
-            trigger={highlightPluginProps.trigger}
         />
     );
 
