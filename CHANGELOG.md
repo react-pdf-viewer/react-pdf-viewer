@@ -8,6 +8,7 @@
 
 **Improvements**
 
+-   Cache pages' labels. So we won't see blink in the current page label when navigating between pages
 -   Keep the file name when downloading a file opened from local
 -   It's possible to remove the sidebar created by the default layout plugin:
 
