@@ -7,7 +7,7 @@
  */
 
 import * as React from 'react';
-import type { OpenFile, Store, StoreHandler } from '@react-pdf-viewer/core';
+import type { OpenFile, PdfJs, Store, StoreHandler } from '@react-pdf-viewer/core';
 
 import { DownloadButton } from './DownloadButton';
 import { downloadFile } from './downloadFile';
@@ -26,22 +26,29 @@ export const Download: React.FC<{
     store: Store<StoreProps>;
 }> = ({ children, fileNameGenerator, store }) => {
     const [currentFile, setCurrentFile] = React.useState<OpenFile>(store.get('file'));
+    const [currentDocument, setCurrentDocument] = React.useState<PdfJs.PdfDocument>(store.get('doc'));
+
+    const handleDocumentChanged: StoreHandler<PdfJs.PdfDocument> = (doc: PdfJs.PdfDocument) => {
+        setCurrentDocument(doc);
+    };
 
     const handleFileChanged: StoreHandler<OpenFile> = (file: OpenFile) => {
         setCurrentFile(file);
     };
 
     React.useEffect(() => {
+        store.subscribe('doc', handleDocumentChanged);
         store.subscribe('file', handleFileChanged);
 
         return () => {
+            store.subscribe('doc', handleDocumentChanged);
             store.unsubscribe('file', handleFileChanged);
         };
     }, []);
 
     const download = () => {
-        if (currentFile) {
-            downloadFile(currentFile, fileNameGenerator(currentFile));
+        if (currentDocument && currentFile) {
+            downloadFile(currentDocument, currentFile, fileNameGenerator(currentFile));
         }
     };
 

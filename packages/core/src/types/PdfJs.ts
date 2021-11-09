@@ -46,6 +46,7 @@ export declare namespace PdfJs {
     interface PdfDocument {
         numPages: number;
         getAttachments(): Promise<{ [filename: string]: Attachment }>;
+        getData(): Promise<Uint8Array>;
         getDestination(dest: string): Promise<OutlineDestination>;
         getDownloadInfo(): Promise<{ length: number }>;
         getMetadata(): Promise<MetaData>;

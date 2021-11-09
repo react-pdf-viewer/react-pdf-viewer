@@ -8,7 +8,7 @@
 
 import * as React from 'react';
 import { createStore } from '@react-pdf-viewer/core';
-import type { OpenFile, Plugin, ViewerState } from '@react-pdf-viewer/core';
+import type { OpenFile, Plugin, PluginOnDocumentLoad } from '@react-pdf-viewer/core';
 
 import { Download, DownloadProps } from './Download';
 import { DownloadButton } from './DownloadButton';
@@ -59,9 +59,9 @@ export const getFilePlugin = (props?: GetFilePluginProps): GetFilePlugin => {
     );
 
     return {
-        onViewerStateChange: (viewerState: ViewerState): ViewerState => {
-            store.update('file', viewerState.file);
-            return viewerState;
+        onDocumentLoad: (props: PluginOnDocumentLoad) => {
+            store.update('doc', props.doc);
+            store.update('file', props.file);
         },
         Download: DownloadDecorator,
         DownloadButton: DownloadButtonDecorator,
