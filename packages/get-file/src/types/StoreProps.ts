@@ -6,8 +6,9 @@
  * @copyright 2019-2021 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import type { OpenFile } from '@react-pdf-viewer/core';
+import type { OpenFile, PdfJs } from '@react-pdf-viewer/core';
 
 export interface StoreProps {
+    doc?: PdfJs.PdfDocument;
     file?: OpenFile;
 }
