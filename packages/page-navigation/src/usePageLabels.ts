@@ -11,12 +11,13 @@ import type { PdfJs, Store, StoreHandler } from '@react-pdf-viewer/core';
 
 import type { StoreProps } from './types/StoreProps';
 
-export const usePageLabels = (store: Store<StoreProps>): React.MutableRefObject<string[]> => {
-    const labelsRef = React.useRef<string[]>([]);
+export const usePageLabels = (store: Store<StoreProps>): string[] | null => {
+    const [labels, setLabels] = React.useState<string[]>(null);
 
     const handleDocumentChanged: StoreHandler<PdfJs.PdfDocument> = (doc: PdfJs.PdfDocument) => {
         doc.getPageLabels().then((labels) => {
-            labelsRef.current = labels;
+            console.log('labels');
+            setLabels(labels);
         });
     };
 
@@ -28,5 +29,5 @@ export const usePageLabels = (store: Store<StoreProps>): React.MutableRefObject<
         };
     }, []);
 
-    return labelsRef;
+    return labels;
 };

@@ -30,8 +30,7 @@ export const CurrentPageLabel: React.FC<{
     children?: RenderCurrentPageLabel;
     store: Store<StoreProps>;
 }> = ({ children, store }) => {
-    const labelsRef = usePageLabels(store);
-    const labels = labelsRef.current;
+    const labels = usePageLabels(store);
 
     const { currentPage } = useCurrentPage(store);
     const { numberOfPages } = useNumberOfPages(store);
@@ -39,9 +38,13 @@ export const CurrentPageLabel: React.FC<{
     const defaultChildren = (props: RenderCurrentPageLabelProps) => <>{props.currentPage + 1}</>;
     const render = children || defaultChildren;
 
-    return render({
-        currentPage,
-        numberOfPages,
-        pageLabel: labels.length === numberOfPages ? labels[currentPage] : '',
-    });
+    return labels ? (
+        render({
+            currentPage,
+            numberOfPages,
+            pageLabel: labels.length === numberOfPages ? labels[currentPage] : '',
+        })
+    ) : (
+        <></>
+    );
 };
