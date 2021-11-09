@@ -7,12 +7,11 @@
  */
 
 import * as React from 'react';
-import { useIsMounted } from '@react-pdf-viewer/core';
 import type { Store } from '@react-pdf-viewer/core';
 
 import { useCurrentPage } from './useCurrentPage';
-import { useDocument } from './useDocument';
 import { useNumberOfPages } from './useNumberOfPages';
+import { usePageLabels } from './usePageLabels';
 import type { StoreProps } from './types/StoreProps';
 
 export interface RenderCurrentPageLabelProps {
@@ -31,31 +30,18 @@ export const CurrentPageLabel: React.FC<{
     children?: RenderCurrentPageLabel;
     store: Store<StoreProps>;
 }> = ({ children, store }) => {
-    const isMounted = useIsMounted();
-    const docRef = useDocument(store);
-    const [labels, setLabels] = React.useState(null);
+    const labelsRef = usePageLabels(store);
+    const labels = labelsRef.current;
+
     const { currentPage } = useCurrentPage(store);
     const { numberOfPages } = useNumberOfPages(store);
 
     const defaultChildren = (props: RenderCurrentPageLabelProps) => <>{props.currentPage + 1}</>;
     const render = children || defaultChildren;
 
-    React.useEffect(() => {
-        const doc = docRef.current;
-        if (doc) {
-            doc.getPageLabels().then((labels) => {
-                isMounted.current && setLabels(labels || []);
-            });
-        }
-    }, [docRef.current]);
-
-    return labels ? (
-        render({
-            currentPage,
-            numberOfPages,
-            pageLabel: labels.length === numberOfPages ? labels[currentPage] : '',
-        })
-    ) : (
-        <></>
-    );
+    return render({
+        currentPage,
+        numberOfPages,
+        pageLabel: labels.length === numberOfPages ? labels[currentPage] : '',
+    });
 };
