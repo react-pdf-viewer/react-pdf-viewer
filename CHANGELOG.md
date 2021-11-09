@@ -6,8 +6,9 @@
 
 -   The `Button` component has new `testId` property that is identical with the `data-testid` attribute
 
-**Improvement**
+**Improvements**
 
+-   Keep the file name when downloading a file opened from local
 -   It's possible to remove the sidebar created by the default layout plugin:
 
 ```js
