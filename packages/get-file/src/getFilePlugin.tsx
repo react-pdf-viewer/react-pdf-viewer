@@ -30,8 +30,7 @@ export interface GetFilePluginProps {
 export const getFilePlugin = (props?: GetFilePluginProps): GetFilePlugin => {
     const store = React.useMemo(() => createStore<StoreProps>({}), []);
 
-    const defaultFileNameGenerator = (file: OpenFile) =>
-        typeof file.data === 'object' ? 'document.pdf' : getFileName(file.name);
+    const defaultFileNameGenerator = (file: OpenFile) => (file.name ? getFileName(file.name) : 'document.pdf');
 
     const DownloadDecorator = (downloadProps: DownloadProps) => (
         <Download
