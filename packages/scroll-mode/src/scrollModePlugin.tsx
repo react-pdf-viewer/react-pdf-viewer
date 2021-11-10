@@ -27,6 +27,7 @@ export interface SwitchScrollModeMenuItemProps {
 }
 
 export interface ScrollModePlugin extends Plugin {
+    switchScrollMode(mode: ScrollMode): void;
     SwitchScrollMode(props: SwitchScrollModeProps): React.ReactElement;
     SwitchScrollModeButton(props: SwitchScrollModeButtonProps): React.ReactElement;
     SwitchScrollModeMenuItem(props: SwitchScrollModeMenuItemProps): React.ReactElement;
@@ -95,6 +96,10 @@ export const scrollModePlugin = (props?: ScrollModePluginProps): ScrollModePlugi
             store.update('getPagesContainer', pluginFunctions.getPagesContainer);
         },
         renderViewer,
+        // Plugin functions
+        switchScrollMode: (mode: ScrollMode) => {
+            store.update('scrollMode', mode);
+        },
         SwitchScrollMode: SwitchScrollModeDecorator,
         SwitchScrollModeButton: SwitchScrollModeButtonDecorator,
         SwitchScrollModeMenuItem: SwitchScrollModeMenuItemDecorator,

@@ -39,6 +39,7 @@ export enum ScrollMode {
 
 // Plugin
 export interface ScrollModePlugin extends Plugin {
+    switchScrollMode(mode: ScrollMode): void;
     SwitchScrollMode(props: SwitchScrollModeProps): React.ReactElement;
     SwitchScrollModeButton(props: SwitchScrollModeButtonProps): React.ReactElement;
     SwitchScrollModeMenuItem(props: SwitchScrollModeMenuItemProps): React.ReactElement;
