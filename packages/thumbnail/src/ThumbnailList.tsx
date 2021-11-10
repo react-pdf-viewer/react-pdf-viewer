@@ -10,7 +10,6 @@ import * as React from 'react';
 import { classNames, useIsomorphicLayoutEffect, TextDirection, ThemeContext } from '@react-pdf-viewer/core';
 import type { PdfJs } from '@react-pdf-viewer/core';
 
-import { LabelsLoader } from './LabelsLoader';
 import { scrollToBeVisible } from './scrollToBeVisible';
 import { ThumbnailContainer } from './ThumbnailContainer';
 import type { RenderCurrentPageLabel } from './types/RenderCurrentPageLabelProps';
@@ -18,13 +17,15 @@ import type { RenderCurrentPageLabel } from './types/RenderCurrentPageLabelProps
 export const ThumbnailList: React.FC<{
     currentPage: number;
     doc: PdfJs.PdfDocument;
+    labels: string[];
     pageHeight: number;
     pageWidth: number;
     renderCurrentPageLabel?: RenderCurrentPageLabel;
     rotation: number;
     onJumpToPage(pageIndex: number): void;
-}> = ({ currentPage, doc, pageHeight, pageWidth, renderCurrentPageLabel, rotation, onJumpToPage }) => {
+}> = ({ currentPage, doc, labels, pageHeight, pageWidth, renderCurrentPageLabel, rotation, onJumpToPage }) => {
     const { numPages } = doc;
+    const numLabels = labels.length;
     const containerRef = React.useRef<HTMLDivElement | null>(null);
     const thumbnailsRef = React.useRef<HTMLElement[]>([]);
     const [currentFocused, setCurrentFocused] = React.useState(currentPage);
@@ -120,55 +121,48 @@ export const ThumbnailList: React.FC<{
     }, [currentFocused]);
 
     return (
-        <LabelsLoader doc={doc}>
-            {(labels) => {
-                const numLabels = labels.length;
-                return (
-                    <div
-                        ref={containerRef}
-                        data-testid="thumbnail__list"
-                        className={classNames({
-                            'rpv-thumbnail__list': true,
-                            'rpv-thumbnail__list--rtl': isRtl,
-                        })}
-                        onKeyDown={handleKeyDown}
-                    >
-                        {Array(numPages)
-                            .fill(0)
-                            .map((_, pageIndex) => {
-                                const pageLabel = numLabels === numPages ? labels[pageIndex] : `${pageIndex + 1}`;
-                                const label = renderCurrentPageLabel
-                                    ? renderCurrentPageLabel({ currentPage, pageIndex, numPages, pageLabel })
-                                    : pageLabel;
+        <div
+            ref={containerRef}
+            data-testid="thumbnail__list"
+            className={classNames({
+                'rpv-thumbnail__list': true,
+                'rpv-thumbnail__list--rtl': isRtl,
+            })}
+            onKeyDown={handleKeyDown}
+        >
+            {Array(numPages)
+                .fill(0)
+                .map((_, pageIndex) => {
+                    const pageLabel = numLabels === numPages ? labels[pageIndex] : `${pageIndex + 1}`;
+                    const label = renderCurrentPageLabel
+                        ? renderCurrentPageLabel({ currentPage, pageIndex, numPages, pageLabel })
+                        : pageLabel;
 
-                                return (
-                                    <div key={`thumbnail-${pageIndex}`}>
-                                        <div
-                                            className={classNames({
-                                                'rpv-thumbnail__item': true,
-                                                'rpv-thumbnail__item--selected': currentPage === pageIndex,
-                                            })}
-                                            role="button"
-                                            tabIndex={currentPage === pageIndex ? 0 : -1}
-                                            onClick={() => onJumpToPage(pageIndex)}
-                                        >
-                                            <ThumbnailContainer
-                                                doc={doc}
-                                                isActive={currentPage === pageIndex}
-                                                pageHeight={pageHeight}
-                                                pageIndex={pageIndex}
-                                                pageWidth={pageWidth}
-                                                rotation={rotation}
-                                                onActive={scrollToThumbnail}
-                                            />
-                                        </div>
-                                        <div className="rpv-thumbnail__index">{label}</div>
-                                    </div>
-                                );
-                            })}
-                    </div>
-                );
-            }}
-        </LabelsLoader>
+                    return (
+                        <div key={`thumbnail-${pageIndex}`}>
+                            <div
+                                className={classNames({
+                                    'rpv-thumbnail__item': true,
+                                    'rpv-thumbnail__item--selected': currentPage === pageIndex,
+                                })}
+                                role="button"
+                                tabIndex={currentPage === pageIndex ? 0 : -1}
+                                onClick={() => onJumpToPage(pageIndex)}
+                            >
+                                <ThumbnailContainer
+                                    doc={doc}
+                                    isActive={currentPage === pageIndex}
+                                    pageHeight={pageHeight}
+                                    pageIndex={pageIndex}
+                                    pageWidth={pageWidth}
+                                    rotation={rotation}
+                                    onActive={scrollToThumbnail}
+                                />
+                            </div>
+                            <div className="rpv-thumbnail__index">{label}</div>
+                        </div>
+                    );
+                })}
+        </div>
     );
 };

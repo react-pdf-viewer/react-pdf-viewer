@@ -11,6 +11,7 @@ import { Spinner, useIsomorphicLayoutEffect } from '@react-pdf-viewer/core';
 import type { PdfJs, Store, StoreHandler } from '@react-pdf-viewer/core';
 
 import { ThumbnailList } from './ThumbnailList';
+import { usePageLabels } from './usePageLabels';
 import type { RenderCurrentPageLabel } from './types/RenderCurrentPageLabelProps';
 import type { StoreProps } from './types/StoreProps';
 
@@ -18,6 +19,7 @@ export const ThumbnailListWithStore: React.FC<{
     renderCurrentPageLabel?: RenderCurrentPageLabel;
     store: Store<StoreProps>;
 }> = ({ renderCurrentPageLabel, store }) => {
+    const labels = usePageLabels(store);
     const [currentDoc, setCurrentDoc] = React.useState(store.get('doc'));
     const [currentPage, setCurrentPage] = React.useState(store.get('currentPage') || 0);
     const [pageHeight, setPageHeight] = React.useState(store.get('pageHeight') || 0);
@@ -77,6 +79,7 @@ export const ThumbnailListWithStore: React.FC<{
         <ThumbnailList
             currentPage={currentPage}
             doc={currentDoc}
+            labels={labels}
             pageHeight={pageHeight}
             pageWidth={pageWidth}
             renderCurrentPageLabel={renderCurrentPageLabel}
