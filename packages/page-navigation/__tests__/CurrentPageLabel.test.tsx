@@ -54,7 +54,13 @@ test('Test <CurrentPageLabel>', async () => {
     const viewerEle = getByTestId('core__viewer');
     mockIsIntersecting(viewerEle, true);
 
-    const pageLabel = await findByTestId('current-page-label');
+    let pageLabel = await findByTestId('current-page-label');
+    expect(pageLabel.textContent).toEqual('8');
+
+    // Jump to the third page
+    const page = await findByTestId('core__page-layer-3');
+    mockIsIntersecting(page, true);
+    pageLabel = await findByTestId('current-page-label');
     expect(pageLabel.textContent).toEqual('8');
 });
 
@@ -73,7 +79,19 @@ test('Test <CurrentPageLabel> with custom page label', async () => {
     let pageLabel = await findByTestId('current-page-label');
     expect(pageLabel.textContent).toEqual('4(i)');
 
+    // Jump to the third page
+    let page = await findByTestId('core__page-layer-2');
+    mockIsIntersecting(page, true);
+    pageLabel = await findByTestId('current-page-label');
+    expect(pageLabel.textContent).toEqual('4(iii)');
+
     rerender(<TestCurrentPageLabel fileUrl={pageLabelDocument2} />);
     pageLabel = await findByTestId('current-page-label');
     expect(pageLabel.textContent).toEqual('8(296)');
+
+    // Jump to other page
+    page = await findByTestId('core__page-layer-5');
+    mockIsIntersecting(page, true);
+    pageLabel = await findByTestId('current-page-label');
+    expect(pageLabel.textContent).toEqual('8(301)');
 });
