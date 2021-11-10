@@ -21,6 +21,8 @@ export const useScrollMode = (
     const [scrollMode, setScrollMode] = React.useState(store.get('scrollMode') || ScrollMode.Vertical);
 
     const switchTo = (newScrollMode: ScrollMode) => {
+        setScrollMode(newScrollMode);
+
         const getPagesContainer = store.get('getPagesContainer');
         if (!getPagesContainer) {
             return;
@@ -51,21 +53,7 @@ export const useScrollMode = (
             default:
                 break;
         }
-
-        store.update('scrollMode', newScrollMode);
     };
-
-    const handleScrollModeChanged: StoreHandler<ScrollMode> = (newScrollMode: ScrollMode) => {
-        setScrollMode(newScrollMode);
-    };
-
-    React.useEffect(() => {
-        store.subscribe('scrollMode', handleScrollModeChanged);
-
-        return () => {
-            store.unsubscribe('scrollMode', handleScrollModeChanged);
-        };
-    }, []);
 
     return { scrollMode, switchTo };
 };

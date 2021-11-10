@@ -2,9 +2,41 @@
 
 ## v2.11.0 [WIP]
 
-**New feature**
+**New features**
 
 -   The `Button` component has new `testId` property that is identical with the `data-testid` attribute
+-   The Scroll Mode plugin provides new function to switch mode programatically:
+
+```js
+const scrollModePluginInstance = scrollModePlugin();
+const { switchTo } = scrollModePluginInstance;
+
+// Switch to Wrapped mode
+switchTo(ScrollMode.Wrapped);
+```
+
+You might find it useful when using with the full screen plugin. The following sample code switches the scroll mode after entering the full screen mode:
+
+```js
+const defaultLayoutPluginInstance = defaultLayoutPlugin({
+    toolbarPlugin: {
+        fullScreenPlugin: {
+            onEnterFullScreen: (zoom) => {
+                zoom(SpecialZoomLevel.PageFit);
+                defaultLayoutPluginInstance.toolbarPluginInstance.scrollModePluginInstance.switchScrollMode(
+                    ScrollMode.Wrapped
+                );
+            },
+            onExitFullScreen: (zoom) => {
+                zoom(SpecialZoomLevel.PageWidth);
+                defaultLayoutPluginInstance.toolbarPluginInstance.scrollModePluginInstance.switchScrollMode(
+                    ScrollMode.Horizontal
+                );
+            },
+        },
+    },
+});
+```
 
 **Improvements**
 

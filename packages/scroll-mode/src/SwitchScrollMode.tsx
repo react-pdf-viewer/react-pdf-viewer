@@ -29,7 +29,10 @@ export const SwitchScrollMode: React.FC<{
 }> = ({ children, mode, store }) => {
     const { scrollMode, switchTo } = useScrollMode(store);
 
-    const onClick = () => switchTo(mode);
+    const onClick = () => {
+        switchTo(mode);
+        store.update('scrollMode', mode);
+    };
 
     const isSelected = scrollMode === mode;
 
