@@ -15,9 +15,8 @@ export const usePageLabels = (store: Store<StoreProps>): string[] | null => {
     const [labels, setLabels] = React.useState<string[]>(null);
 
     const handleDocumentChanged: StoreHandler<PdfJs.PdfDocument> = (doc: PdfJs.PdfDocument) => {
-        doc.getPageLabels().then((labels) => {
-            console.log('labels');
-            setLabels(labels);
+        doc.getPageLabels().then((result) => {
+            setLabels(result || []);
         });
     };
 

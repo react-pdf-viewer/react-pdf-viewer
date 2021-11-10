@@ -31,7 +31,6 @@ export const CurrentPageLabel: React.FC<{
     store: Store<StoreProps>;
 }> = ({ children, store }) => {
     const labels = usePageLabels(store);
-
     const { currentPage } = useCurrentPage(store);
     const { numberOfPages } = useNumberOfPages(store);
 
