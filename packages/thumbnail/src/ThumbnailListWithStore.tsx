@@ -20,7 +20,7 @@ export const ThumbnailListWithStore: React.FC<{
     store: Store<StoreProps>;
 }> = ({ renderCurrentPageLabel, store }) => {
     const labels = usePageLabels(store);
-    const [currentDoc, setCurrentDoc] = React.useState(store.get('doc'));
+    const [currentDoc, setCurrentDoc] = React.useState<PdfJs.PdfDocument>();
     const [currentPage, setCurrentPage] = React.useState(store.get('currentPage') || 0);
     const [pageHeight, setPageHeight] = React.useState(store.get('pageHeight') || 0);
     const [pageWidth, setPageWidth] = React.useState(store.get('pageWidth') || 0);
