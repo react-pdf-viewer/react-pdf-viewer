@@ -1,9 +1,10 @@
 import * as React from 'react';
 import { render } from '@testing-library/react';
 import { Viewer } from '@react-pdf-viewer/core';
+import type { ToolbarProps, ToolbarSlot, TransformToolbarSlot } from '@react-pdf-viewer/toolbar';
 
 import { mockIsIntersecting } from '../../../test-utils/mockIntersectionObserver';
-import { pageNavigationPlugin } from '../src';
+import { defaultLayoutPlugin } from '../src';
 
 const fs = require('fs');
 const path = require('path');
@@ -11,37 +12,34 @@ const path = require('path');
 const TestCurrentPageLabel: React.FC<{
     fileUrl: Uint8Array;
 }> = ({ fileUrl }) => {
-    const pageNavigationPluginInstance = pageNavigationPlugin();
-    const { CurrentPageLabel } = pageNavigationPluginInstance;
-
-    return (
-        <div
-            style={{
-                border: '1px solid rgba(0, 0, 0, 0.3)',
-                display: 'flex',
-                height: '100%',
-            }}
-        >
-            <div
-                style={{
-                    borderRight: '1px solid rgba(0, 0, 0, 0.3)',
-                    overflow: 'auto',
-                    width: '30%',
-                }}
-                data-testid="current-page-label"
-            >
+    const transform: TransformToolbarSlot = (slot: ToolbarSlot) => {
+        const { CurrentPageLabel } = slot;
+        return Object.assign({}, slot, {
+            NumberOfPages: () => (
                 <CurrentPageLabel>
                     {(props) => (
-                        <>
+                        <span data-testid="current-page-label">
                             {props.numberOfPages}
                             {props.pageLabel !== `${props.currentPage + 1}` && `(${props.pageLabel})`}
-                        </>
+                        </span>
                     )}
                 </CurrentPageLabel>
-            </div>
-            <div style={{ flex: 1 }}>
-                <Viewer fileUrl={fileUrl} plugins={[pageNavigationPluginInstance]} />
-            </div>
+            ),
+        });
+    };
+
+    const renderToolbar = (Toolbar: (props: ToolbarProps) => React.ReactElement) => (
+        <Toolbar>{renderDefaultToolbar(transform)}</Toolbar>
+    );
+
+    const defaultLayoutPluginInstance = defaultLayoutPlugin({
+        renderToolbar,
+    });
+    const { renderDefaultToolbar } = defaultLayoutPluginInstance.toolbarPluginInstance;
+
+    return (
+        <div style={{ height: '50rem', width: '50rem' }}>
+            <Viewer fileUrl={fileUrl} plugins={[defaultLayoutPluginInstance]} />
         </div>
     );
 };

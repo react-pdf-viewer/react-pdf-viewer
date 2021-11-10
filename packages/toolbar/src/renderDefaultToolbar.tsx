@@ -16,7 +16,7 @@ import type { TransformToolbarSlot } from './types/TransformToolbarSlot';
 export const renderDefaultToolbar =
     (transformToolbarSlot: TransformToolbarSlot) =>
     (defaultToolbarSlot: ToolbarSlot): React.ReactElement => {
-        const toolbarSlot = transformToolbarSlot(defaultToolbarSlot);
+        const toolbarSlot = React.useMemo(() => transformToolbarSlot(defaultToolbarSlot), []);
         const { direction } = React.useContext(ThemeContext);
         const isRtl = direction === TextDirection.RightToLeft;
         const {

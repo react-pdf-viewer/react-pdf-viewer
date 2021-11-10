@@ -3,7 +3,7 @@ import { render } from '@testing-library/react';
 import { Viewer } from '@react-pdf-viewer/core';
 
 import { mockIsIntersecting } from '../../../test-utils/mockIntersectionObserver';
-import { pageNavigationPlugin } from '../src';
+import { toolbarPlugin, ToolbarSlot, TransformToolbarSlot } from '../src';
 
 const fs = require('fs');
 const path = require('path');
@@ -11,36 +11,44 @@ const path = require('path');
 const TestCurrentPageLabel: React.FC<{
     fileUrl: Uint8Array;
 }> = ({ fileUrl }) => {
-    const pageNavigationPluginInstance = pageNavigationPlugin();
-    const { CurrentPageLabel } = pageNavigationPluginInstance;
+    const toolbarPluginInstance = toolbarPlugin();
+    const { renderDefaultToolbar, Toolbar } = toolbarPluginInstance;
+
+    const transform: TransformToolbarSlot = (slot: ToolbarSlot) => {
+        const { CurrentPageLabel } = slot;
+        return Object.assign({}, slot, {
+            NumberOfPages: () => (
+                <CurrentPageLabel>
+                    {(props) => (
+                        <span data-testid="current-page-label">
+                            {props.numberOfPages}
+                            {props.pageLabel !== `${props.currentPage + 1}` && `(${props.pageLabel})`}
+                        </span>
+                    )}
+                </CurrentPageLabel>
+            ),
+        });
+    };
 
     return (
         <div
             style={{
                 border: '1px solid rgba(0, 0, 0, 0.3)',
                 display: 'flex',
+                flexDirection: 'column',
                 height: '100%',
             }}
         >
+            <div>
+                <Toolbar>{renderDefaultToolbar(transform)}</Toolbar>
+            </div>
             <div
                 style={{
-                    borderRight: '1px solid rgba(0, 0, 0, 0.3)',
-                    overflow: 'auto',
-                    width: '30%',
+                    flex: 1,
+                    overflow: 'hidden',
                 }}
-                data-testid="current-page-label"
             >
-                <CurrentPageLabel>
-                    {(props) => (
-                        <>
-                            {props.numberOfPages}
-                            {props.pageLabel !== `${props.currentPage + 1}` && `(${props.pageLabel})`}
-                        </>
-                    )}
-                </CurrentPageLabel>
-            </div>
-            <div style={{ flex: 1 }}>
-                <Viewer fileUrl={fileUrl} plugins={[pageNavigationPluginInstance]} />
+                <Viewer fileUrl={fileUrl} plugins={[toolbarPluginInstance]} />
             </div>
         </div>
     );
