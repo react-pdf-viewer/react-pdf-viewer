@@ -37,6 +37,7 @@ module.exports = {
     devServer: {
         static: path.join(__dirname, 'dist'),
         historyApiFallback: true,
+        host: '0.0.0.0',
         port: 8001,
     },
     plugins: [
