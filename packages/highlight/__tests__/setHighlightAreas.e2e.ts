@@ -14,6 +14,9 @@ describe('Render dynamic highlight areas', () => {
         await pageInput.type('4');
         await pageInput.press('Enter');
 
+        const firstSecondSetButton = await page.waitForSelector('[data-testid="first-areas"]');
+        await firstSecondSetButton.click();
+
         const pageEle = await page.waitForSelector('[data-testid="core__page-layer-3"]', { visible: true });
         await page.waitForSelector('.highlight-area', { visible: true });
 
