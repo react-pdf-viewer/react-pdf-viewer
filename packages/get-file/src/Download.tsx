@@ -48,7 +48,7 @@ export const Download: React.FC<{
 
     const download = () => {
         if (currentDocument && currentFile) {
-            downloadFile(currentDocument, currentFile, fileNameGenerator(currentFile));
+            downloadFile(currentDocument, fileNameGenerator(currentFile));
         }
     };
 
