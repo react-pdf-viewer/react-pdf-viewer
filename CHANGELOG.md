@@ -53,7 +53,7 @@ const defaultLayoutPluginInstance = defaultLayoutPlugin({
 **Bug fixes**
 
 -   Can't use special characters such as `(`, `)`, `[`, `]`, `*` in the keyword
--   Downloading document doesn't work on iOS Safari
+-   Downloading document doesn't work on iOS Safari and iOS Chrome
 -   The Get File plugin doesn't work with a file which is opened with credentials
 -   The highlight area aren't displayed
 -   The `selectedText` prop of `RenderHighlightContentProps` isn't correct
