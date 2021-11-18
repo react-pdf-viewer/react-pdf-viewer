@@ -11,9 +11,9 @@ import { createStore } from '@react-pdf-viewer/core';
 import type { Plugin, PluginFunctions, RenderViewer, Slot } from '@react-pdf-viewer/core';
 
 import { EnterFullScreen, EnterFullScreenProps } from './EnterFullScreen';
+import { ExitFullScreen, RenderExitFullScreenProps } from './ExitFullScreen';
 import { EnterFullScreenButton } from './EnterFullScreenButton';
 import { EnterFullScreenMenuItem, EnterFullScreenMenuItemProps } from './EnterFullScreenMenuItem';
-import { ExitFullScreenButton } from './ExitFullScreenButton';
 import { ShortcutHandler } from './ShortcutHandler';
 import type { StoreProps } from './types/StoreProps';
 import type { Zoom } from './types/Zoom';
@@ -26,6 +26,7 @@ export interface FullScreenPlugin extends Plugin {
 
 export interface FullScreenPluginProps {
     enableShortcuts?: boolean;
+    renderExitFullScreenButton?: (props: RenderExitFullScreenProps) => React.ReactElement;
     onEnterFullScreen?(zoom: Zoom): void;
     onExitFullScreen?(zoom: Zoom): void;
 }
@@ -75,7 +76,7 @@ export const fullScreenPlugin = (props?: FullScreenPluginProps): FullScreenPlugi
         </EnterFullScreenDecorator>
     );
 
-    const ExitFullScreenDecorator = () => <ExitFullScreenButton store={store} />;
+    const ExitFullScreenDecorator = () => <ExitFullScreen children={props?.renderExitFullScreenButton} store={store} />;
 
     const renderViewer = (props: RenderViewer): Slot => {
         const currentSlot = props.slot;
