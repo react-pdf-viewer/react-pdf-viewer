@@ -23,6 +23,10 @@ export interface RenderEnterFullScreenProps {
     onClick(): void;
 }
 
+export interface RenderExitFullScreenProps {
+    onClick(): void;
+}
+
 // Plugin
 export interface FullScreenPlugin extends Plugin {
     EnterFullScreen(props: EnterFullScreenProps): React.ReactElement;
@@ -34,6 +38,7 @@ export type Zoom = (scale: number | SpecialZoomLevel) => void;
 
 export interface FullScreenPluginProps {
     enableShortcuts?: boolean;
+    renderExitFullScreenButton?: (props: RenderExitFullScreenProps) => React.ReactElement;
     onEnterFullScreen?(zoom: Zoom): void;
     onExitFullScreen?(zoom: Zoom): void;
 }

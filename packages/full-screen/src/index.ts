@@ -9,6 +9,7 @@
 // Types
 export type { EnterFullScreenProps, RenderEnterFullScreenProps } from './EnterFullScreen';
 export type { EnterFullScreenMenuItemProps } from './EnterFullScreenMenuItem';
+export type { RenderExitFullScreenProps } from './ExitFullScreen';
 
 // Plugin
 export * from './fullScreenPlugin';

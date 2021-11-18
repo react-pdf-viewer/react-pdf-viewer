@@ -1,5 +1,27 @@
 # CHANGELOG
 
+## v3.0.0 [WIP]
+
+**New feature**
+
+-   Be able to customize the button to exit the full screen mode:
+
+```tsx
+const fullScreenPluginInstance = fullScreenPlugin({
+    renderExitFullScreenButton: (props) => (
+        <div
+            style={{
+                bottom: '1rem',
+                position: 'fixed',
+                right: '1rem',
+            }}
+        >
+            <button onClick={props.onClick}>Exit full screen</button>
+        </div>
+    ),
+});
+```
+
 ## v2.11.0
 
 **New features**
