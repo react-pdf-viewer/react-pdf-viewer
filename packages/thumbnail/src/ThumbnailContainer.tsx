@@ -95,7 +95,7 @@ export const ThumbnailContainer: React.FC<{
             }}
         >
             {!page ? (
-                React.useContext(SpinnerContext).renderSpinner
+                React.useContext(SpinnerContext).renderSpinner()
             ) : (
                 <ThumbnailItem
                     page={page}

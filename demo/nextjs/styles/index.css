@@ -13,3 +13,27 @@ body {
     max-width: 80rem;
     padding: 2rem;
 }
+
+/* Custom spinner */
+@keyframes square-spinner {
+    25% {
+        transform: rotateX(180deg) rotateY(0);
+    }
+    50% {
+        transform: rotateX(180deg) rotateY(180deg);
+    }
+    75% {
+        transform: rotateX(0) rotateY(180deg);
+    }
+    100% {
+        transform: rotateX(0) rotateY(0);
+    }
+}
+.square-spinner {
+    background-color: rgba(0, 0, 0, 0.2);
+    width: 2rem;
+    height: 2rem;
+    animation-duration: 3s;
+    animation-iteration-count: infinite;
+    animation-name: square-spinner;
+}

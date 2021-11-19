@@ -27,7 +27,7 @@ export interface ThumbnailPluginProps {
     renderCurrentPageLabel?: RenderCurrentPageLabel;
     // The spinner that replaces the default `Spinner` component
     // For example, it is displayed when loading the cover or thumbnail of a page
-    renderSpinner?: React.ReactElement;
+    renderSpinner?: () => React.ReactElement;
 }
 
 export interface ThumbnailPlugin extends Plugin {

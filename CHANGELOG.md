@@ -26,7 +26,7 @@ const fullScreenPluginInstance = fullScreenPlugin({
 
 ```js
 const thumbnailPluginInstance = thumbnailPlugin({
-    renderSpinner: <div className="square-spinner" />,
+    renderSpinner: () => <div className="square-spinner" />,
 });
 ```
 

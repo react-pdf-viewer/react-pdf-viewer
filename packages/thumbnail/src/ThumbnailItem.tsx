@@ -60,7 +60,7 @@ export const ThumbnailItem: React.FC<{
     }, [rotation]);
 
     return !src ? (
-        React.useContext(SpinnerContext).renderSpinner
+        React.useContext(SpinnerContext).renderSpinner()
     ) : (
         <img
             aria-label={thumbnailLabel.replace('{{pageIndex}}', `${pageIndex + 1}`)}
