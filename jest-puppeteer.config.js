@@ -1,6 +1,7 @@
 module.exports = {
     launch: {
-        headless: true,
+        // We need it for full-screen plugin test cases
+        headless: false,
         product: 'chrome',
     },
 };

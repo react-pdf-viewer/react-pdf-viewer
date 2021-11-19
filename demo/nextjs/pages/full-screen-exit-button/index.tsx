@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { PrimaryButton, Viewer, Worker } from '@react-pdf-viewer/core';
+import { Button, Viewer, Worker } from '@react-pdf-viewer/core';
 import { fullScreenPlugin } from '@react-pdf-viewer/full-screen';
 
 const IndexPage = () => {
@@ -12,7 +12,9 @@ const IndexPage = () => {
                     right: '1rem',
                 }}
             >
-                <PrimaryButton onClick={props.onClick}>Exit</PrimaryButton>
+                <Button testId="exit-full-screen" onClick={props.onClick}>
+                    Exit
+                </Button>
             </div>
         ),
     });
