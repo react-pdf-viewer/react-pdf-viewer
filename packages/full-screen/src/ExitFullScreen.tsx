@@ -30,7 +30,6 @@ export const ExitFullScreen: React.FC<{
     const [isFullScreen, setFullScreen] = React.useState(false);
 
     const handleFullScreen = (fullScreen: boolean) => {
-        console.log('Exit full screen 1');
         setFullScreen(fullScreen);
     };
 
