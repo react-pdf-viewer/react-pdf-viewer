@@ -11,6 +11,7 @@ import { createStore } from '@react-pdf-viewer/core';
 import type { Plugin, PluginFunctions, PluginOnDocumentLoad, ViewerState } from '@react-pdf-viewer/core';
 
 import { Cover } from './Cover';
+import { SpinnerContext } from './SpinnerContext';
 import { ThumbnailListWithStore } from './ThumbnailListWithStore';
 import type { CoverProps } from './types/CoverProps';
 import type { RenderCurrentPageLabel } from './types/RenderCurrentPageLabelProps';
@@ -23,15 +24,22 @@ export interface ThumbnailPlugin extends Plugin {
 
 export interface ThumbnailPluginProps {
     renderCurrentPageLabel?: RenderCurrentPageLabel;
+    // The spinner that replaces the default `Spinner` component
+    // For example, it is displayed when loading the cover or thumbnail of a page
+    renderSpinner?: () => React.ReactElement;
 }
 
-export const thumbnailPlugin = (props?: ThumbnailPluginProps): ThumbnailPlugin => {
+export const thumbnailPlugin = (pluginProps?: ThumbnailPluginProps): ThumbnailPlugin => {
     const store = React.useMemo(() => createStore<StoreProps>({}), []);
 
-    const CoverDecorator = (props: CoverProps) => <Cover {...props} store={store} />;
+    const CoverDecorator = (props: CoverProps) => (
+        <Cover {...props} renderSpinner={pluginProps?.renderSpinner} store={store} />
+    );
 
     const ThumbnailsDecorator = () => (
-        <ThumbnailListWithStore renderCurrentPageLabel={props?.renderCurrentPageLabel} store={store} />
+        <SpinnerContext.Provider value={{ renderSpinner: pluginProps?.renderSpinner }}>
+            <ThumbnailListWithStore renderCurrentPageLabel={pluginProps?.renderCurrentPageLabel} store={store} />
+        </SpinnerContext.Provider>
     );
 
     return {

@@ -13,8 +13,9 @@ import { StoreProps } from './types/StoreProps';
 
 export const Cover: React.FC<{
     getPageIndex?({ numPages }: { numPages: number }): number;
+    renderSpinner?: () => React.ReactElement;
     store: Store<StoreProps>;
-}> = ({ getPageIndex, store }) => {
+}> = ({ getPageIndex, renderSpinner, store }) => {
     const [currentDoc, setCurrentDoc] = React.useState<PdfJs.PdfDocument>();
 
     const handleDocumentChanged: StoreHandler<PdfJs.PdfDocument> = (doc: PdfJs.PdfDocument) => {
@@ -91,9 +92,7 @@ export const Cover: React.FC<{
     return (
         <div className="rpv-thumbnail__cover" ref={containerRef}>
             {!rendered && (
-                <div className="rpv-thumbnail__cover-loader">
-                    <Spinner />
-                </div>
+                <div className="rpv-thumbnail__cover-loader">{renderSpinner ? renderSpinner() : <Spinner />}</div>
             )}
             <canvas
                 ref={canvasRef}

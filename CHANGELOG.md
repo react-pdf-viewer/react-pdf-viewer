@@ -2,7 +2,7 @@
 
 ## v3.0.0 [WIP]
 
-**New feature**
+**New features**
 
 -   Be able to customize the button to exit the full screen mode:
 
@@ -19,6 +19,14 @@ const fullScreenPluginInstance = fullScreenPlugin({
             <button onClick={props.onClick}>Exit full screen</button>
         </div>
     ),
+});
+```
+
+-   The thumbnail plugin adds new `renderSpinner` property that can be used to replace the default `Spinner` component. For example, it is displayed when loading the cover or thumbnail of a page:
+
+```js
+const thumbnailPluginInstance = thumbnailPlugin({
+    renderSpinner: () => <div className="square-spinner" />,
 });
 ```
 

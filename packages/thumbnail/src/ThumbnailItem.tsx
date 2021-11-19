@@ -10,6 +10,8 @@ import * as React from 'react';
 import { LocalizationContext, Spinner } from '@react-pdf-viewer/core';
 import type { PdfJs } from '@react-pdf-viewer/core';
 
+import { SpinnerContext } from './SpinnerContext';
+
 export const ThumbnailItem: React.FC<{
     page: PdfJs.Page;
     pageHeight: number;
@@ -58,7 +60,7 @@ export const ThumbnailItem: React.FC<{
     }, [rotation]);
 
     return !src ? (
-        <Spinner />
+        React.useContext(SpinnerContext).renderSpinner()
     ) : (
         <img
             aria-label={thumbnailLabel.replace('{{pageIndex}}', `${pageIndex + 1}`)}
