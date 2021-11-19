@@ -10,6 +10,7 @@ import * as React from 'react';
 import { useIntersectionObserver, Spinner } from '@react-pdf-viewer/core';
 import type { PdfJs, VisibilityChanged } from '@react-pdf-viewer/core';
 
+import { SpinnerContext } from './SpinnerContext';
 import { ThumbnailItem } from './ThumbnailItem';
 
 const THUMBNAIL_WIDTH = 100;
@@ -94,7 +95,7 @@ export const ThumbnailContainer: React.FC<{
             }}
         >
             {!page ? (
-                <Spinner />
+                React.useContext(SpinnerContext).renderSpinner
             ) : (
                 <ThumbnailItem
                     page={page}

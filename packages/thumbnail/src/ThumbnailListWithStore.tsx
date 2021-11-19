@@ -7,9 +7,10 @@
  */
 
 import * as React from 'react';
-import { Spinner, useIsomorphicLayoutEffect } from '@react-pdf-viewer/core';
+import { useIsomorphicLayoutEffect } from '@react-pdf-viewer/core';
 import type { PdfJs, Store, StoreHandler } from '@react-pdf-viewer/core';
 
+import { SpinnerContext } from './SpinnerContext';
 import { ThumbnailList } from './ThumbnailList';
 import { usePageLabels } from './usePageLabels';
 import type { RenderCurrentPageLabel } from './types/RenderCurrentPageLabelProps';
@@ -87,8 +88,6 @@ export const ThumbnailListWithStore: React.FC<{
             onJumpToPage={jump}
         />
     ) : (
-        <div className="rpv-thumbnail__loader">
-            <Spinner />
-        </div>
+        <div className="rpv-thumbnail__loader">{React.useContext(SpinnerContext).renderSpinner}</div>
     );
 };
