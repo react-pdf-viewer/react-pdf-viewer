@@ -14,12 +14,14 @@ import { SpinnerContext } from './SpinnerContext';
 import { ThumbnailList } from './ThumbnailList';
 import { usePageLabels } from './usePageLabels';
 import type { RenderCurrentPageLabel } from './types/RenderCurrentPageLabelProps';
+import type { RenderThumbnailItem } from './types/RenderThumbnailItemProps';
 import type { StoreProps } from './types/StoreProps';
 
 export const ThumbnailListWithStore: React.FC<{
     renderCurrentPageLabel?: RenderCurrentPageLabel;
+    renderThumbnailItem?: RenderThumbnailItem;
     store: Store<StoreProps>;
-}> = ({ renderCurrentPageLabel, store }) => {
+}> = ({ renderCurrentPageLabel, renderThumbnailItem, store }) => {
     const labels = usePageLabels(store);
     const [currentDoc, setCurrentDoc] = React.useState<PdfJs.PdfDocument>();
     const [currentPage, setCurrentPage] = React.useState(store.get('currentPage') || 0);
@@ -84,6 +86,7 @@ export const ThumbnailListWithStore: React.FC<{
             pageHeight={pageHeight}
             pageWidth={pageWidth}
             renderCurrentPageLabel={renderCurrentPageLabel}
+            renderThumbnailItem={renderThumbnailItem}
             rotation={rotation}
             onJumpToPage={jump}
         />

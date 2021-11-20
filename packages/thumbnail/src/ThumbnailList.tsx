@@ -13,6 +13,7 @@ import type { PdfJs } from '@react-pdf-viewer/core';
 import { scrollToBeVisible } from './scrollToBeVisible';
 import { ThumbnailContainer } from './ThumbnailContainer';
 import type { RenderCurrentPageLabel } from './types/RenderCurrentPageLabelProps';
+import type { RenderThumbnailItem } from './types/RenderThumbnailItemProps';
 
 export const ThumbnailList: React.FC<{
     currentPage: number;
@@ -21,9 +22,20 @@ export const ThumbnailList: React.FC<{
     pageHeight: number;
     pageWidth: number;
     renderCurrentPageLabel?: RenderCurrentPageLabel;
+    renderThumbnailItem?: RenderThumbnailItem;
     rotation: number;
     onJumpToPage(pageIndex: number): void;
-}> = ({ currentPage, doc, labels, pageHeight, pageWidth, renderCurrentPageLabel, rotation, onJumpToPage }) => {
+}> = ({
+    currentPage,
+    doc,
+    labels,
+    pageHeight,
+    pageWidth,
+    renderCurrentPageLabel,
+    renderThumbnailItem,
+    rotation,
+    onJumpToPage,
+}) => {
     const { numPages } = doc;
     const numLabels = labels.length;
     const containerRef = React.useRef<HTMLDivElement | null>(null);
@@ -138,7 +150,28 @@ export const ThumbnailList: React.FC<{
                         ? renderCurrentPageLabel({ currentPage, pageIndex, numPages, pageLabel })
                         : pageLabel;
 
-                    return (
+                    const thumbnail = (
+                        <ThumbnailContainer
+                            doc={doc}
+                            isActive={currentPage === pageIndex}
+                            pageHeight={pageHeight}
+                            pageIndex={pageIndex}
+                            pageWidth={pageWidth}
+                            rotation={rotation}
+                            onActive={scrollToThumbnail}
+                        />
+                    );
+
+                    return renderThumbnailItem ? (
+                        renderThumbnailItem({
+                            currentPage,
+                            numPages,
+                            pageIndex,
+                            renderPageLabel: <>{label}</>,
+                            renderPageThumbnail: thumbnail,
+                            onJumpToPage: () => onJumpToPage(pageIndex),
+                        })
+                    ) : (
                         <div key={`thumbnail-${pageIndex}`}>
                             <div
                                 className={classNames({
@@ -149,15 +182,7 @@ export const ThumbnailList: React.FC<{
                                 tabIndex={currentPage === pageIndex ? 0 : -1}
                                 onClick={() => onJumpToPage(pageIndex)}
                             >
-                                <ThumbnailContainer
-                                    doc={doc}
-                                    isActive={currentPage === pageIndex}
-                                    pageHeight={pageHeight}
-                                    pageIndex={pageIndex}
-                                    pageWidth={pageWidth}
-                                    rotation={rotation}
-                                    onActive={scrollToThumbnail}
-                                />
+                                {thumbnail}
                             </div>
                             <div className="rpv-thumbnail__index">{label}</div>
                         </div>
