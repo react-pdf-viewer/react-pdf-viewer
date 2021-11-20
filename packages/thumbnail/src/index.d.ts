@@ -23,11 +23,23 @@ export interface RenderCurrentPageLabelProps {
 
 export type RenderCurrentPageLabel = (props: RenderCurrentPageLabelProps) => React.ReactElement;
 
+export interface RenderThumbnailProps {
+    currentPage: number;
+    numPages: number;
+    pageIndex: number;
+    renderPageLabel: React.ReactElement;
+    renderPageThumbnail: React.ReactElement;
+    onJumpToPage: () => void;
+}
+
+export type RenderThumbnail = (props: RenderThumbnailProps) => React.ReactElement;
+
 export interface ThumbnailPluginProps {
     renderCurrentPageLabel?: RenderCurrentPageLabel;
     // The spinner that replaces the default `Spinner` component
     // For example, it is displayed when loading the cover or thumbnail of a page
     renderSpinner?: () => React.ReactElement;
+    renderThumbnail?: RenderThumbnail;
 }
 
 export interface ThumbnailPlugin extends Plugin {

@@ -15,6 +15,7 @@ import { defaultSpinner, SpinnerContext } from './SpinnerContext';
 import { ThumbnailListWithStore } from './ThumbnailListWithStore';
 import type { CoverProps } from './types/CoverProps';
 import type { RenderCurrentPageLabel } from './types/RenderCurrentPageLabelProps';
+import type { RenderThumbnail } from './types/RenderThumbnailProps';
 import type { StoreProps } from './types/StoreProps';
 
 export interface ThumbnailPlugin extends Plugin {
@@ -27,6 +28,7 @@ export interface ThumbnailPluginProps {
     // The spinner that replaces the default `Spinner` component
     // For example, it is displayed when loading the cover or thumbnail of a page
     renderSpinner?: () => React.ReactElement;
+    renderThumbnail?: RenderThumbnail;
 }
 
 export const thumbnailPlugin = (pluginProps?: ThumbnailPluginProps): ThumbnailPlugin => {
@@ -38,7 +40,11 @@ export const thumbnailPlugin = (pluginProps?: ThumbnailPluginProps): ThumbnailPl
 
     const ThumbnailsDecorator = () => (
         <SpinnerContext.Provider value={{ renderSpinner: pluginProps?.renderSpinner || defaultSpinner }}>
-            <ThumbnailListWithStore renderCurrentPageLabel={pluginProps?.renderCurrentPageLabel} store={store} />
+            <ThumbnailListWithStore
+                renderCurrentPageLabel={pluginProps?.renderCurrentPageLabel}
+                renderThumbnail={pluginProps?.renderThumbnail}
+                store={store}
+            />
         </SpinnerContext.Provider>
     );
 
