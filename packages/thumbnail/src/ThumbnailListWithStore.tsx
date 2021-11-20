@@ -23,7 +23,7 @@ export const ThumbnailListWithStore: React.FC<{
     store: Store<StoreProps>;
 }> = ({ renderCurrentPageLabel, renderThumbnailItem, store }) => {
     const labels = usePageLabels(store);
-    const [currentDoc, setCurrentDoc] = React.useState<PdfJs.PdfDocument>();
+    const [currentDoc, setCurrentDoc] = React.useState<PdfJs.PdfDocument>(store.get('doc'));
     const [currentPage, setCurrentPage] = React.useState(store.get('currentPage') || 0);
     const [pageHeight, setPageHeight] = React.useState(store.get('pageHeight') || 0);
     const [pageWidth, setPageWidth] = React.useState(store.get('pageWidth') || 0);
@@ -91,6 +91,8 @@ export const ThumbnailListWithStore: React.FC<{
             onJumpToPage={jump}
         />
     ) : (
-        <div className="rpv-thumbnail__loader">{React.useContext(SpinnerContext).renderSpinner()}</div>
+        <div data-testid="thumbnail-list__loader" className="rpv-thumbnail__loader">
+            {React.useContext(SpinnerContext).renderSpinner()}
+        </div>
     );
 };

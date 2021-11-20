@@ -52,6 +52,10 @@ const thumbnailPluginInstance = thumbnailPlugin({
 });
 ```
 
+**Bug fix**
+
+-   The thumbnails are stuck at loading spinner
+
 ## v2.11.0
 
 **New features**
