@@ -1,9 +1,25 @@
 import * as React from 'react';
-import { Viewer, Worker } from '@react-pdf-viewer/core';
+import { Button, Viewer, Worker } from '@react-pdf-viewer/core';
 import { thumbnailPlugin } from '@react-pdf-viewer/thumbnail';
+import type { DocumentLoadEvent } from '@react-pdf-viewer/core';
 import type { RenderThumbnailItemProps } from '@react-pdf-viewer/thumbnail';
 
 const IndexPage = () => {
+    const [selectedPages, setSelectedPages] = React.useState<Record<string, boolean>>({});
+    const [numPages, setNumPages] = React.useState(0);
+
+    const selectAllPages = () => {
+        const selectedPages = {};
+        Array(numPages)
+            .fill(0)
+            .forEach((_, i) => (selectedPages[`${i}`] = true));
+        setSelectedPages(selectedPages);
+    };
+
+    const handleChoosePage = (e: React.ChangeEvent<HTMLInputElement>, pageIndex: number) => {
+        setSelectedPages((selectedPages) => Object.assign({}, selectedPages, { [`${pageIndex}`]: e.target.checked }));
+    };
+
     const renderThumbnailItem = (props: RenderThumbnailItemProps) => (
         <div
             key={props.pageIndex}
@@ -14,9 +30,24 @@ const IndexPage = () => {
                 cursor: 'pointer',
                 padding: '0.5rem',
             }}
-            onClick={props.onJumpToPage}
         >
-            {props.renderPageThumbnail}
+            <div style={{ marginBottom: '0.25rem' }} onClick={props.onJumpToPage}>
+                {props.renderPageThumbnail}
+            </div>
+            <div
+                style={{
+                    alignItems: 'center',
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                }}
+            >
+                <div>Page {props.renderPageLabel}</div>
+                <input
+                    type="checkbox"
+                    checked={selectedPages[`${props.pageIndex}`]}
+                    onChange={(e) => handleChoosePage(e, props.pageIndex)}
+                />
+            </div>
         </div>
     );
 
@@ -25,35 +56,59 @@ const IndexPage = () => {
     });
     const { Thumbnails } = thumbnailPluginInstance;
 
+    const handleDocumentLoad = (e: DocumentLoadEvent) => {
+        setNumPages(e.doc.numPages);
+    };
+
     return (
         <Worker workerUrl="https://unpkg.com/pdfjs-dist@2.10.377/build/pdf.worker.js">
             <div
                 style={{
-                    border: '1px solid rgba(0, 0, 0, 0.1)',
-                    display: 'flex',
-                    height: '50rem',
-                    margin: '5rem auto',
+                    margin: '1rem auto',
                     width: '64rem',
                 }}
             >
                 <div
                     style={{
                         alignItems: 'center',
-                        borderRight: '1px solid rgba(0, 0, 0, 0.1)',
                         display: 'flex',
-                        padding: '4px',
-                        width: '20%',
+                        marginBottom: '1rem',
                     }}
                 >
-                    <Thumbnails />
+                    <div style={{ marginRight: '0.5rem' }}>
+                        <Button onClick={selectAllPages}>Select all pages</Button>
+                    </div>
                 </div>
                 <div
                     style={{
-                        flex: 1,
-                        overflow: 'hidden',
+                        border: '1px solid rgba(0, 0, 0, 0.1)',
+                        display: 'flex',
+                        height: '50rem',
                     }}
                 >
-                    <Viewer fileUrl="/pdf-open-parameters.pdf" plugins={[thumbnailPluginInstance]} />
+                    <div
+                        style={{
+                            alignItems: 'center',
+                            borderRight: '1px solid rgba(0, 0, 0, 0.1)',
+                            display: 'flex',
+                            padding: '4px',
+                            width: '20%',
+                        }}
+                    >
+                        <Thumbnails />
+                    </div>
+                    <div
+                        style={{
+                            flex: 1,
+                            overflow: 'hidden',
+                        }}
+                    >
+                        <Viewer
+                            onDocumentLoad={handleDocumentLoad}
+                            fileUrl="/pdf-open-parameters.pdf"
+                            plugins={[thumbnailPluginInstance]}
+                        />
+                    </div>
                 </div>
             </div>
         </Worker>

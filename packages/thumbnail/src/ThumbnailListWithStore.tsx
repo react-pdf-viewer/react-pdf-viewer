@@ -91,6 +91,8 @@ export const ThumbnailListWithStore: React.FC<{
             onJumpToPage={jump}
         />
     ) : (
-        <div className="rpv-thumbnail__loader">{React.useContext(SpinnerContext).renderSpinner()}</div>
+        <div data-testid="thumbnail-list__loader" className="rpv-thumbnail__loader">
+            {React.useContext(SpinnerContext).renderSpinner()}
+        </div>
     );
 };
