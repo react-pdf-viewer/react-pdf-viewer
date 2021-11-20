@@ -13,6 +13,8 @@ export interface SpinnerContextProps {
     renderSpinner: () => React.ReactElement;
 }
 
+export const defaultSpinner = () => <Spinner />;
+
 export const SpinnerContext = React.createContext<SpinnerContextProps>({
-    renderSpinner: () => <Spinner />,
+    renderSpinner: defaultSpinner,
 });
