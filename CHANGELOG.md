@@ -30,10 +30,10 @@ const thumbnailPluginInstance = thumbnailPlugin({
 });
 ```
 
--   The thumbnail plugin adds new `renderThumbnail` property that is used to customize the thumbnail renderer:
+-   The thumbnail plugin adds new `renderThumbnailItem` property that is used to customize the thumbnail renderer:
 
 ```js
-const renderThumbnail = (props: RenderThumbnailProps) => (
+const renderThumbnailItem = (props: RenderThumbnailItemProps) => (
     <div
         key={props.pageIndex}
         onClick={props.onJumpToPage}
@@ -48,7 +48,7 @@ const renderThumbnail = (props: RenderThumbnailProps) => (
 );
 
 const thumbnailPluginInstance = thumbnailPlugin({
-    renderThumbnail,
+    renderThumbnailItem,
 });
 ```
 

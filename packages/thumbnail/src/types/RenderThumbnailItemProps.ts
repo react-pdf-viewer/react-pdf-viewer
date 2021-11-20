@@ -8,7 +8,7 @@
 
 import * as React from 'react';
 
-export interface RenderThumbnailProps {
+export interface RenderThumbnailItemProps {
     currentPage: number;
     numPages: number;
     pageIndex: number;
@@ -17,4 +17,4 @@ export interface RenderThumbnailProps {
     onJumpToPage: () => void;
 }
 
-export type RenderThumbnail = (props: RenderThumbnailProps) => React.ReactElement;
+export type RenderThumbnailItem = (props: RenderThumbnailItemProps) => React.ReactElement;

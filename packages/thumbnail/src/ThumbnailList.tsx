@@ -13,7 +13,7 @@ import type { PdfJs } from '@react-pdf-viewer/core';
 import { scrollToBeVisible } from './scrollToBeVisible';
 import { ThumbnailContainer } from './ThumbnailContainer';
 import type { RenderCurrentPageLabel } from './types/RenderCurrentPageLabelProps';
-import type { RenderThumbnail } from './types/RenderThumbnailProps';
+import type { RenderThumbnailItem } from './types/RenderThumbnailItemProps';
 
 export const ThumbnailList: React.FC<{
     currentPage: number;
@@ -22,7 +22,7 @@ export const ThumbnailList: React.FC<{
     pageHeight: number;
     pageWidth: number;
     renderCurrentPageLabel?: RenderCurrentPageLabel;
-    renderThumbnail?: RenderThumbnail;
+    renderThumbnailItem?: RenderThumbnailItem;
     rotation: number;
     onJumpToPage(pageIndex: number): void;
 }> = ({
@@ -32,7 +32,7 @@ export const ThumbnailList: React.FC<{
     pageHeight,
     pageWidth,
     renderCurrentPageLabel,
-    renderThumbnail,
+    renderThumbnailItem,
     rotation,
     onJumpToPage,
 }) => {
@@ -162,8 +162,8 @@ export const ThumbnailList: React.FC<{
                         />
                     );
 
-                    return renderThumbnail ? (
-                        renderThumbnail({
+                    return renderThumbnailItem ? (
+                        renderThumbnailItem({
                             currentPage,
                             numPages,
                             pageIndex,
