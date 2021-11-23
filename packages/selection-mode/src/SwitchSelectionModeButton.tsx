@@ -21,7 +21,12 @@ export const SwitchSelectionModeButton: React.FC<RenderSwitchSelectionModeProps>
                 ariaControlsSuffix="selection-mode-switch"
                 position={Position.BottomCenter}
                 target={
-                    <MinimalButton ariaLabel={props.label} isSelected={isSelected} onClick={props.onClick}>
+                    <MinimalButton
+                        ariaLabel={props.label}
+                        isSelected={isSelected}
+                        testId="selection-mode__switch-button"
+                        onClick={props.onClick}
+                    >
                         {props.icon}
                     </MinimalButton>
                 }

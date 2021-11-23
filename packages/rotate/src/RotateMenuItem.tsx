@@ -23,7 +23,7 @@ export const RotateMenuItem: React.FC<RenderRotateProps> = ({ direction, onClick
     const icon = direction === RotateDirection.Backward ? <RotateBackwardIcon /> : <RotateForwardIcon />;
 
     return (
-        <MenuItem icon={icon} onClick={onClick}>
+        <MenuItem icon={icon} testId="rotate__menu" onClick={onClick}>
             {label}
         </MenuItem>
     );

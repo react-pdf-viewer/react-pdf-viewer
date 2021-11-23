@@ -4,6 +4,7 @@
 
 **New features**
 
+-   Add new `testId` property to `MenuItem`, `MinimalButton`, `PrimaryButton`
 -   Be able to customize the button to exit the full screen mode:
 
 ```tsx
@@ -51,6 +52,10 @@ const thumbnailPluginInstance = thumbnailPlugin({
     renderThumbnailItem,
 });
 ```
+
+**Improvement**
+
+-   Add `data-testid` attribute to buttons in the toolbar
 
 **Bug fix**
 

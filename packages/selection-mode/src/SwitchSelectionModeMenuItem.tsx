@@ -19,7 +19,12 @@ export const SwitchSelectionModeMenuItem: React.FC<RenderSwitchSelectionModeProp
 }) => (
     <SwitchSelectionModeDecorator mode={mode} onClick={onClick}>
         {(props) => (
-            <MenuItem checked={isSelected} icon={props.icon} onClick={props.onClick}>
+            <MenuItem
+                checked={isSelected}
+                icon={props.icon}
+                testId="selection-mode__switch-menu"
+                onClick={props.onClick}
+            >
                 {props.label}
             </MenuItem>
         )}

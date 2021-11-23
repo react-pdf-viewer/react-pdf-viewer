@@ -31,7 +31,7 @@ export const SwitchThemeMenuItem: React.FC<SwitchThemeMenuItemProps> = ({ onClic
             : 'Switch to the dark theme';
 
     return (
-        <MenuItem icon={isDarkTheme ? <LightIcon /> : <DarkIcon />} onClick={onClick}>
+        <MenuItem icon={isDarkTheme ? <LightIcon /> : <DarkIcon />} testId="theme__switch-menu" onClick={onClick}>
             {label}
         </MenuItem>
     );

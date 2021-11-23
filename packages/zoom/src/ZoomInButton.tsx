@@ -24,7 +24,12 @@ export const ZoomInButton: React.FC<RenderZoomInProps> = ({ enableShortcuts, onC
             ariaControlsSuffix="zoom-in"
             position={Position.BottomCenter}
             target={
-                <MinimalButton ariaKeyShortcuts={ariaKeyShortcuts} ariaLabel={label as string} onClick={onClick}>
+                <MinimalButton
+                    ariaKeyShortcuts={ariaKeyShortcuts}
+                    ariaLabel={label as string}
+                    testId="zoom__in-button"
+                    onClick={onClick}
+                >
                     <ZoomInIcon />
                 </MinimalButton>
             }

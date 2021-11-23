@@ -42,7 +42,12 @@ export const OpenButton: React.FC<{
                         type="file"
                         onChange={onClick}
                     />
-                    <MinimalButton ariaKeyShortcuts={ariaKeyShortcuts} ariaLabel={label as string} onClick={openFile}>
+                    <MinimalButton
+                        ariaKeyShortcuts={ariaKeyShortcuts}
+                        ariaLabel={label as string}
+                        testId="open__button"
+                        onClick={openFile}
+                    >
                         <OpenFileIcon />
                     </MinimalButton>
                 </div>

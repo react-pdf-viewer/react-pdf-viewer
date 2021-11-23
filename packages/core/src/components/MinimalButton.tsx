@@ -16,10 +16,12 @@ export const MinimalButton: React.FC<{
     ariaKeyShortcuts?: string;
     isDisabled?: boolean;
     isSelected?: boolean;
+    testId?: string;
     onClick(): void;
-}> = ({ ariaLabel = '', ariaKeyShortcuts = '', children, isDisabled = false, isSelected = false, onClick }) => {
+}> = ({ ariaLabel = '', ariaKeyShortcuts = '', children, isDisabled = false, isSelected = false, testId, onClick }) => {
     const { direction } = React.useContext(ThemeContext);
     const isRtl = direction === TextDirection.RightToLeft;
+    const attrs = testId ? { 'data-testid': testId } : {};
 
     return (
         <button
@@ -34,6 +36,7 @@ export const MinimalButton: React.FC<{
             })}
             type="button"
             onClick={onClick}
+            {...attrs}
         >
             {children}
         </button>

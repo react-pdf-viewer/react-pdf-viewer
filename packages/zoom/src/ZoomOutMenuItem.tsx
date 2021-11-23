@@ -17,7 +17,7 @@ export const ZoomOutMenuItem: React.FC<ZoomMenuItemProps> = ({ onClick }) => {
     const label = l10n && l10n.zoom ? l10n.zoom.zoomOut : 'Zoom out';
 
     return (
-        <MenuItem icon={<ZoomOutIcon />} onClick={onClick}>
+        <MenuItem icon={<ZoomOutIcon />} testId="zoom__out-menu" onClick={onClick}>
             {label}
         </MenuItem>
     );

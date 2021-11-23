@@ -23,7 +23,12 @@ export const GoToNextPageButton: React.FC<RenderGoToPageProps> = ({ isDisabled, 
             ariaControlsSuffix="page-navigation-next"
             position={Position.BottomCenter}
             target={
-                <MinimalButton ariaLabel={label as string} isDisabled={isDisabled} onClick={onClick}>
+                <MinimalButton
+                    ariaLabel={label as string}
+                    isDisabled={isDisabled}
+                    testId="page-navigation__next-button"
+                    onClick={onClick}
+                >
                     <NextIcon />
                 </MinimalButton>
             }

@@ -24,7 +24,12 @@ export const PrintButton: React.FC<RenderPrintProps> = ({ enableShortcuts, onCli
             ariaControlsSuffix="print"
             position={Position.BottomCenter}
             target={
-                <MinimalButton ariaKeyShortcuts={ariaKeyShortcuts} ariaLabel={label as string} onClick={onClick}>
+                <MinimalButton
+                    ariaKeyShortcuts={ariaKeyShortcuts}
+                    ariaLabel={label as string}
+                    testId="print__button"
+                    onClick={onClick}
+                >
                     <PrintIcon />
                 </MinimalButton>
             }

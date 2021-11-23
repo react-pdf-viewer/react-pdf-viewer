@@ -24,7 +24,12 @@ export const ZoomOutButton: React.FC<RenderZoomOutProps> = ({ enableShortcuts, o
             ariaControlsSuffix="zoom-out"
             position={Position.BottomCenter}
             target={
-                <MinimalButton ariaKeyShortcuts={ariaKeyShortcuts} ariaLabel={label as string} onClick={onClick}>
+                <MinimalButton
+                    ariaKeyShortcuts={ariaKeyShortcuts}
+                    ariaLabel={label as string}
+                    testId="zoom__out-button"
+                    onClick={onClick}
+                >
                     <ZoomOutIcon />
                 </MinimalButton>
             }

@@ -43,7 +43,12 @@ export const ShowSearchPopoverButton: React.FC<{
                     ariaControlsSuffix="search-popover"
                     position={Position.BottomCenter}
                     target={
-                        <MinimalButton ariaKeyShortcuts={ariaKeyShortcuts} ariaLabel={p.label} onClick={onClick}>
+                        <MinimalButton
+                            ariaKeyShortcuts={ariaKeyShortcuts}
+                            ariaLabel={p.label}
+                            testId="search__popover-button"
+                            onClick={onClick}
+                        >
                             {p.icon}
                         </MinimalButton>
                     }

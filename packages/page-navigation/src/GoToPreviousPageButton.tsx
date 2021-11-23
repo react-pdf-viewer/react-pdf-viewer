@@ -23,7 +23,12 @@ export const GoToPreviousPageButton: React.FC<RenderGoToPageProps> = ({ isDisabl
             ariaControlsSuffix="page-navigation-previous"
             position={Position.BottomCenter}
             target={
-                <MinimalButton ariaLabel={label as string} isDisabled={isDisabled} onClick={onClick}>
+                <MinimalButton
+                    ariaLabel={label as string}
+                    isDisabled={isDisabled}
+                    testId="page-navigation__previous-button"
+                    onClick={onClick}
+                >
                     <PreviousIcon />
                 </MinimalButton>
             }

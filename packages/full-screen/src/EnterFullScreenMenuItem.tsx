@@ -20,7 +20,7 @@ export const EnterFullScreenMenuItem: React.FC<EnterFullScreenMenuItemProps> = (
     const label = l10n && l10n.fullScreen ? l10n.fullScreen.enterFullScreen : 'Full screen';
 
     return (
-        <MenuItem icon={<FullScreenIcon />} onClick={onClick}>
+        <MenuItem icon={<FullScreenIcon />} testId="full-screen__enter-menu" onClick={onClick}>
             {label}
         </MenuItem>
     );

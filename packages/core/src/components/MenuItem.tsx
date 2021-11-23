@@ -16,10 +16,12 @@ export const MenuItem: React.FC<{
     checked?: boolean;
     icon?: React.ReactElement;
     isDisabled?: boolean;
+    testId?: string;
     onClick(): void;
-}> = ({ checked = false, children, icon = null, isDisabled = false, onClick }) => {
+}> = ({ checked = false, children, icon = null, isDisabled = false, testId, onClick }) => {
     const { direction } = React.useContext(ThemeContext);
     const isRtl = direction === TextDirection.RightToLeft;
+    const attrs = testId ? { 'data-testid': testId } : {};
 
     return (
         <button
@@ -33,6 +35,7 @@ export const MenuItem: React.FC<{
             tabIndex={-1}
             type="button"
             onClick={onClick}
+            {...attrs}
         >
             <div
                 className={classNames({

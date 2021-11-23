@@ -17,7 +17,12 @@ export const GoToLastPageMenuItem: React.FC<RenderGoToPageProps> = ({ isDisabled
     const label = l10n && l10n.pageNavigation ? l10n.pageNavigation.goToLastPage : 'Last page';
 
     return (
-        <MenuItem icon={<DownArrowIcon />} isDisabled={isDisabled} onClick={onClick}>
+        <MenuItem
+            icon={<DownArrowIcon />}
+            isDisabled={isDisabled}
+            testId="page-navigation__last-menu"
+            onClick={onClick}
+        >
             {label}
         </MenuItem>
     );
