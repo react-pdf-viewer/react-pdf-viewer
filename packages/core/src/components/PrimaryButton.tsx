@@ -12,10 +12,12 @@ import { TextDirection, ThemeContext } from '../theme/ThemeContext';
 import { classNames } from '../utils/classNames';
 
 export const PrimaryButton: React.FC<{
+    testId?: string;
     onClick(): void;
-}> = ({ children, onClick }) => {
+}> = ({ children, testId, onClick }) => {
     const { direction } = React.useContext(ThemeContext);
     const isRtl = direction === TextDirection.RightToLeft;
+    const attrs = testId ? { 'data-testid': testId } : {};
 
     return (
         <button
@@ -25,6 +27,7 @@ export const PrimaryButton: React.FC<{
             })}
             type="button"
             onClick={onClick}
+            {...attrs}
         >
             {children}
         </button>

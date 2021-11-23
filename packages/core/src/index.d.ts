@@ -209,6 +209,7 @@ export interface MenuItemProps {
     checked?: boolean;
     icon?: React.ReactElement;
     isDisabled?: boolean;
+    testId?: string;
     onClick(): void;
 }
 export class MenuItem extends React.Component<MenuItemProps> {}
@@ -218,11 +219,13 @@ export interface MinimalButtonProps {
     ariaKeyShortcuts?: string;
     isDisabled?: boolean;
     isSelected?: boolean;
+    testId?: string;
     onClick(): void;
 }
 export class MinimalButton extends React.Component<MinimalButtonProps> {}
 
 export interface PrimaryButtonProps {
+    testId?: string;
     onClick(): void;
 }
 export class PrimaryButton extends React.Component<PrimaryButtonProps> {}

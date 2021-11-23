@@ -4,6 +4,7 @@
 
 **New features**
 
+-   Add new `testId` property to `MenuItem`, `MinimalButton`, `PrimaryButton`
 -   Be able to customize the button to exit the full screen mode:
 
 ```tsx
