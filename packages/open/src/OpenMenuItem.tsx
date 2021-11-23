@@ -24,7 +24,7 @@ export const OpenMenuItem: React.FC<{
     const { inputRef, openFile } = useTriggerOpen(store);
 
     return (
-        <MenuItem icon={<OpenFileIcon />} onClick={openFile}>
+        <MenuItem icon={<OpenFileIcon />} testId="open__menu" onClick={openFile}>
             <div className="rpv-open__input-wrapper">
                 <input
                     ref={inputRef}

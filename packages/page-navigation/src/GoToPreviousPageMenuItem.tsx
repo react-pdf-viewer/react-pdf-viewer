@@ -17,7 +17,12 @@ export const GoToPreviousPageMenuItem: React.FC<RenderGoToPageProps> = ({ isDisa
     const label = l10n && l10n.pageNavigation ? l10n.pageNavigation.goToPreviousPage : 'Previous page';
 
     return (
-        <MenuItem icon={<PreviousIcon />} isDisabled={isDisabled} onClick={onClick}>
+        <MenuItem
+            icon={<PreviousIcon />}
+            isDisabled={isDisabled}
+            testId="page-navigation__previous-menu"
+            onClick={onClick}
+        >
             {label}
         </MenuItem>
     );

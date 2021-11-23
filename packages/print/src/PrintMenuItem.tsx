@@ -20,7 +20,7 @@ export const PrintMenuItem: React.FC<PrintMenuItemProps> = ({ onClick }) => {
     const label = l10n && l10n.print ? l10n.print.print : 'Print';
 
     return (
-        <MenuItem icon={<PrintIcon />} onClick={onClick}>
+        <MenuItem icon={<PrintIcon />} testId="print__menu" onClick={onClick}>
             {label}
         </MenuItem>
     );

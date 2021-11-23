@@ -35,7 +35,7 @@ export const SwitchThemeButton: React.FC<{
             ariaControlsSuffix="theme-switch"
             position={Position.BottomCenter}
             target={
-                <MinimalButton ariaLabel={label as string} onClick={onClick}>
+                <MinimalButton ariaLabel={label as string} testId="theme__switch-button" onClick={onClick}>
                     {isDarkTheme ? <LightIcon /> : <DarkIcon />}
                 </MinimalButton>
             }

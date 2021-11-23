@@ -20,7 +20,7 @@ export const DownloadMenuItem: React.FC<DownloadMenuItemProps> = ({ onClick }) =
     const label = l10n && l10n.download ? l10n.download.download : 'Download';
 
     return (
-        <MenuItem icon={<DownloadIcon />} onClick={onClick}>
+        <MenuItem icon={<DownloadIcon />} testId="get-file__download-menu" onClick={onClick}>
             {label}
         </MenuItem>
     );

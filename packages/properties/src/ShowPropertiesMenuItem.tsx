@@ -17,7 +17,7 @@ export const ShowPropertiesMenuItem: React.FC<RenderShowPropertiesProps> = ({ on
     const label = l10n && l10n.properties ? l10n.properties.showProperties : 'Show properties';
 
     return (
-        <MenuItem icon={<InfoIcon />} onClick={onClick}>
+        <MenuItem icon={<InfoIcon />} testId="properties__menu" onClick={onClick}>
             {label}
         </MenuItem>
     );

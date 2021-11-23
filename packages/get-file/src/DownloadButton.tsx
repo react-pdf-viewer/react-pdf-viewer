@@ -23,7 +23,7 @@ export const DownloadButton: React.FC<RenderDownloadProps> = ({ onClick }) => {
             ariaControlsSuffix="get-file"
             position={Position.BottomCenter}
             target={
-                <MinimalButton ariaLabel={label as string} onClick={onClick}>
+                <MinimalButton ariaLabel={label as string} testId="get-file__download-button" onClick={onClick}>
                     <DownloadIcon />
                 </MinimalButton>
             }

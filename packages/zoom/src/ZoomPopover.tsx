@@ -51,7 +51,7 @@ export const ZoomPopover: React.FC<{
             toggle();
         };
         return (
-            <MinimalButton ariaLabel={zoomDocumentLabel as string} onClick={click}>
+            <MinimalButton ariaLabel={zoomDocumentLabel as string} testId="zoom__popover-target" onClick={click}>
                 <span className="rpv-zoom__popover-target">
                     <span
                         data-testid="zoom__popover-target-scale"

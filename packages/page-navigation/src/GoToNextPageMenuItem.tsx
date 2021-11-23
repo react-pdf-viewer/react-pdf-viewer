@@ -17,7 +17,7 @@ export const GoToNextPageMenuItem: React.FC<RenderGoToPageProps> = ({ isDisabled
     const label = l10n && l10n.pageNavigation ? l10n.pageNavigation.goToNextPage : 'Next page';
 
     return (
-        <MenuItem icon={<NextIcon />} isDisabled={isDisabled} onClick={onClick}>
+        <MenuItem icon={<NextIcon />} isDisabled={isDisabled} testId="page-navigation__next-menu" onClick={onClick}>
             {label}
         </MenuItem>
     );

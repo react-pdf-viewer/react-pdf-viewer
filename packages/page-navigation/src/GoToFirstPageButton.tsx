@@ -23,7 +23,12 @@ export const GoToFirstPageButton: React.FC<RenderGoToPageProps> = ({ isDisabled,
             ariaControlsSuffix="page-navigation-first"
             position={Position.BottomCenter}
             target={
-                <MinimalButton ariaLabel={label as string} isDisabled={isDisabled} onClick={onClick}>
+                <MinimalButton
+                    ariaLabel={label as string}
+                    isDisabled={isDisabled}
+                    testId="page-navigation__first-button"
+                    onClick={onClick}
+                >
                     <UpArrowIcon />
                 </MinimalButton>
             }

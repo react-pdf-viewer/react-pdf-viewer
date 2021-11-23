@@ -23,7 +23,7 @@ export const ShowPropertiesButton: React.FC<RenderShowPropertiesProps> = ({ onCl
             ariaControlsSuffix="properties"
             position={Position.BottomCenter}
             target={
-                <MinimalButton ariaLabel={label as string} onClick={onClick}>
+                <MinimalButton ariaLabel={label as string} testId="properties__button" onClick={onClick}>
                     <InfoIcon />
                 </MinimalButton>
             }

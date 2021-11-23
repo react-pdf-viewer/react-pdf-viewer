@@ -17,7 +17,7 @@ export const GoToFirstPageMenuItem: React.FC<RenderGoToPageProps> = ({ isDisable
     const label = l10n && l10n.pageNavigation ? l10n.pageNavigation.goToFirstPage : 'First page';
 
     return (
-        <MenuItem icon={<UpArrowIcon />} isDisabled={isDisabled} onClick={onClick}>
+        <MenuItem icon={<UpArrowIcon />} isDisabled={isDisabled} testId="page-navigation__first-menu" onClick={onClick}>
             {label}
         </MenuItem>
     );

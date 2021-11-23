@@ -53,6 +53,10 @@ const thumbnailPluginInstance = thumbnailPlugin({
 });
 ```
 
+**Improvement**
+
+-   Add `data-testid` attribute to buttons in the toolbar
+
 **Bug fix**
 
 -   The thumbnails are stuck at loading spinner

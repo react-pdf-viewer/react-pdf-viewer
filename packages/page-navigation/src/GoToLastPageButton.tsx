@@ -23,7 +23,12 @@ export const GoToLastPageButton: React.FC<RenderGoToPageProps> = ({ isDisabled, 
             ariaControlsSuffix="page-navigation-last"
             position={Position.BottomCenter}
             target={
-                <MinimalButton ariaLabel={label as string} isDisabled={isDisabled} onClick={onClick}>
+                <MinimalButton
+                    ariaLabel={label as string}
+                    isDisabled={isDisabled}
+                    testId="page-navigation__last-button"
+                    onClick={onClick}
+                >
                     <DownArrowIcon />
                 </MinimalButton>
             }

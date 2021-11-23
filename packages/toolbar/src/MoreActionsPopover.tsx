@@ -58,7 +58,12 @@ export const MoreActionsPopover: React.FC<{
                 ariaControlsSuffix="toolbar-more-actions"
                 position={portalPosition}
                 target={
-                    <MinimalButton ariaLabel={label as string} onClick={toggle} isSelected={opened}>
+                    <MinimalButton
+                        ariaLabel={label as string}
+                        isSelected={opened}
+                        testId="toolbar__more-actions-popover-target"
+                        onClick={toggle}
+                    >
                         <MoreIcon />
                     </MinimalButton>
                 }

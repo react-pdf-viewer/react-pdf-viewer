@@ -26,7 +26,12 @@ export const EnterFullScreenButton: React.FC<{
             ariaControlsSuffix="full-screen-enter"
             position={Position.BottomCenter}
             target={
-                <MinimalButton ariaKeyShortcuts={ariaKeyShortcuts} ariaLabel={label as string} onClick={onClick}>
+                <MinimalButton
+                    ariaKeyShortcuts={ariaKeyShortcuts}
+                    ariaLabel={label as string}
+                    testId="full-screen__enter-button"
+                    onClick={onClick}
+                >
                     <FullScreenIcon />
                 </MinimalButton>
             }
