@@ -57,8 +57,9 @@ const thumbnailPluginInstance = thumbnailPlugin({
 
 -   Add `data-testid` attribute to buttons in the toolbar
 
-**Bug fix**
+**Bug fixes**
 
+-   Navigating between search results should be the same as their appearances on pages
 -   The thumbnails are stuck at loading spinner
 
 ## v2.11.0

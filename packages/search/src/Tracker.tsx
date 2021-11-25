@@ -36,6 +36,32 @@ interface CharIndex {
     spanIndex: number;
 }
 
+const percentToNumber = (input: string): number => input.slice(0, -1) as unknown as number;
+
+// Sort the highlight elements by their positions
+const sortHighlightElements = (a: HTMLElement, b: HTMLElement) => {
+    const aTop = percentToNumber(a.style.top);
+    const aLeft = percentToNumber(a.style.left);
+    const bTop = percentToNumber(b.style.top);
+    const bLeft = percentToNumber(b.style.left);
+
+    // Compare the top values first
+    if (aTop < bTop) {
+        return -1;
+    }
+    if (aTop > bTop) {
+        return 1;
+    }
+    // Then compare the left values
+    if (aLeft < bLeft) {
+        return -1;
+    }
+    if (aLeft > bLeft) {
+        return 1;
+    }
+    return 0;
+};
+
 export const Tracker: React.FC<{
     numPages: number;
     pageIndex: number;
@@ -171,6 +197,13 @@ export const Tracker: React.FC<{
                             charIndexSpan
                         );
                     });
+                    const highlightEles: HTMLElement[] = [].slice.call(
+                        containerEle.querySelectorAll('.rpv-search__highlight')
+                    );
+                    // Sort the highlight elements as they appear in the texts
+                    highlightEles.sort(sortHighlightElements).forEach((ele, i) => {
+                        ele.setAttribute('data-index', `${i}`);
+                    });
                 });
         });
     };
@@ -272,24 +305,27 @@ export const Tracker: React.FC<{
         }
 
         const container = renderStatus.ele;
-        const spans = container.querySelectorAll('.rpv-search__highlight');
-        if (matchPosition.matchIndex < spans.length) {
-            const span = spans[matchPosition.matchIndex] as HTMLElement;
-            const { left, top } = calculateOffset(span, container);
-            const jump = store.get('jumpToDestination');
-            if (jump) {
-                jump(
-                    pageIndex,
-                    (container.getBoundingClientRect().height - top) / renderStatus.scale,
-                    left / renderStatus.scale,
-                    renderStatus.scale
-                );
-                if (currentMatchRef.current) {
-                    currentMatchRef.current.classList.remove('rpv-search__highlight--current');
-                }
-                currentMatchRef.current = span;
-                span.classList.add('rpv-search__highlight--current');
+        const highlightEle = container.querySelector(
+            `.rpv-search__highlight[data-index="${matchPosition.matchIndex}"]`
+        );
+        if (!highlightEle) {
+            return;
+        }
+
+        const { left, top } = calculateOffset(highlightEle as HTMLElement, container);
+        const jump = store.get('jumpToDestination');
+        if (jump) {
+            jump(
+                pageIndex,
+                (container.getBoundingClientRect().height - top) / renderStatus.scale,
+                left / renderStatus.scale,
+                renderStatus.scale
+            );
+            if (currentMatchRef.current) {
+                currentMatchRef.current.classList.remove('rpv-search__highlight--current');
             }
+            currentMatchRef.current = highlightEle as HTMLElement;
+            highlightEle.classList.add('rpv-search__highlight--current');
         }
     };
 
