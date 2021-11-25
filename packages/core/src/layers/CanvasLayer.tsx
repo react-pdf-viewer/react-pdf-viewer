@@ -9,6 +9,7 @@
 import * as React from 'react';
 
 import { Spinner } from '../components/Spinner';
+import { useIsMounted } from '../hooks/useIsMounted';
 import { LayerRenderStatus } from '../structs/LayerRenderStatus';
 import { WithScale } from './WithScale';
 import type { PdfJs } from '../types/PdfJs';
@@ -23,6 +24,7 @@ export const CanvasLayer: React.FC<{
     scale: number;
     width: number;
 }> = ({ height, page, pageIndex, plugins, rotation, scale, width }) => {
+    const isMounted = useIsMounted();
     const canvasRef = React.useRef<HTMLCanvasElement>();
     const renderTask = React.useRef<PdfJs.PageRenderTask>();
 
@@ -70,7 +72,7 @@ export const CanvasLayer: React.FC<{
         renderTask.current = page.render({ canvasContext, viewport });
         renderTask.current.promise.then(
             (): void => {
-                setRendered(true);
+                isMounted.current && setRendered(true);
                 canvasEle.style.removeProperty('opacity');
                 plugins.forEach((plugin) => {
                     if (plugin.onCanvasLayerRender) {
@@ -85,7 +87,7 @@ export const CanvasLayer: React.FC<{
                 });
             },
             (): void => {
-                setRendered(true);
+                isMounted.current && setRendered(true);
             }
         );
     };
