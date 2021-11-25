@@ -29,7 +29,13 @@ export const RotateButton: React.FC<RenderRotateProps> = ({ direction, onClick }
             ariaControlsSuffix="rotate"
             position={Position.BottomCenter}
             target={
-                <MinimalButton ariaLabel={label as string} testId="rotate__button" onClick={onClick}>
+                <MinimalButton
+                    ariaLabel={label as string}
+                    testId={
+                        direction === RotateDirection.Backward ? 'rotate__backward-button' : 'rotate__forward-button'
+                    }
+                    onClick={onClick}
+                >
                     {icon}
                 </MinimalButton>
             }
