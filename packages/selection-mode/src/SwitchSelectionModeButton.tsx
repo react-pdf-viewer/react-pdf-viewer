@@ -10,29 +10,42 @@ import * as React from 'react';
 import { MinimalButton, Position, Tooltip } from '@react-pdf-viewer/core';
 
 import { SwitchSelectionModeDecorator } from './SwitchSelectionModeDecorator';
+import { SelectionMode } from './structs/SelectionMode';
 import { RenderSwitchSelectionModeProps } from './types/RenderSwitchSelectionModeProps';
 
 const TOOLTIP_OFFSET = { left: 0, top: 8 };
 
-export const SwitchSelectionModeButton: React.FC<RenderSwitchSelectionModeProps> = ({ isSelected, mode, onClick }) => (
-    <SwitchSelectionModeDecorator mode={mode} onClick={onClick}>
-        {(props) => (
-            <Tooltip
-                ariaControlsSuffix="selection-mode-switch"
-                position={Position.BottomCenter}
-                target={
-                    <MinimalButton
-                        ariaLabel={props.label}
-                        isSelected={isSelected}
-                        testId="selection-mode__switch-button"
-                        onClick={props.onClick}
-                    >
-                        {props.icon}
-                    </MinimalButton>
-                }
-                content={() => props.label}
-                offset={TOOLTIP_OFFSET}
-            />
-        )}
-    </SwitchSelectionModeDecorator>
-);
+export const SwitchSelectionModeButton: React.FC<RenderSwitchSelectionModeProps> = ({ isSelected, mode, onClick }) => {
+    let testId = '';
+    switch (mode) {
+        case SelectionMode.Hand:
+            testId = 'selection-mode__hand-button';
+            break;
+        case SelectionMode.Text:
+        default:
+            testId = 'selection-mode__text-button';
+    }
+
+    return (
+        <SwitchSelectionModeDecorator mode={mode} onClick={onClick}>
+            {(props) => (
+                <Tooltip
+                    ariaControlsSuffix="selection-mode-switch"
+                    position={Position.BottomCenter}
+                    target={
+                        <MinimalButton
+                            ariaLabel={props.label}
+                            isSelected={isSelected}
+                            testId={testId}
+                            onClick={props.onClick}
+                        >
+                            {props.icon}
+                        </MinimalButton>
+                    }
+                    content={() => props.label}
+                    offset={TOOLTIP_OFFSET}
+                />
+            )}
+        </SwitchSelectionModeDecorator>
+    );
+};

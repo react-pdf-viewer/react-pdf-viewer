@@ -1,7 +1,7 @@
 module.exports = {
     testEnvironment: 'jsdom',
     // Uncomment the `testMatch` option when we want to run a specific test case
-    testMatch: ['<rootDir>/packages/thumbnail/__tests__/renderThumbnailItem.test.tsx'],
+    testMatch: ['<rootDir>/packages/toolbar/__tests__/testId.test.tsx'],
     // testRegex: ['(/__tests__/.*|(\\.|/)(test|spec))\\.tsx$'],
     moduleNameMapper: {
         '@react-pdf-viewer/core': '<rootDir>/packages/core/src',
