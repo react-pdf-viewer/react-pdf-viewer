@@ -36,7 +36,7 @@ interface CharIndex {
     spanIndex: number;
 }
 
-const percentToNumber = (input: string): number => input.slice(0, -1) as unknown as number;
+const percentToNumber = (input: string): number => parseFloat(input.slice(0, -1));
 
 // Sort the highlight elements by their positions
 const sortHighlightElements = (a: HTMLElement, b: HTMLElement) => {
@@ -197,14 +197,13 @@ export const Tracker: React.FC<{
                             charIndexSpan
                         );
                     });
-                    const highlightEles: HTMLElement[] = [].slice.call(
-                        containerEle.querySelectorAll('.rpv-search__highlight')
-                    );
-                    // Sort the highlight elements as they appear in the texts
-                    highlightEles.sort(sortHighlightElements).forEach((ele, i) => {
-                        ele.setAttribute('data-index', `${i}`);
-                    });
                 });
+        });
+
+        const highlightEles: HTMLElement[] = [].slice.call(containerEle.querySelectorAll('.rpv-search__highlight'));
+        // Sort the highlight elements as they appear in the texts
+        highlightEles.sort(sortHighlightElements).forEach((ele, i) => {
+            ele.setAttribute('data-index', `${i}`);
         });
     };
 
