@@ -62,6 +62,7 @@ const thumbnailPluginInstance = thumbnailPlugin({
 
 -   Navigating between search results should be the same as their appearances on pages
 -   The thumbnails are stuck at loading spinner
+-   The Cover component position isn't correct
 
 ## v2.11.0
 
