@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Button, Viewer, Worker } from '@react-pdf-viewer/core';
+import { Button, Viewer } from '@react-pdf-viewer/core';
 import { defaultLayoutPlugin } from '@react-pdf-viewer/default-layout';
 import { highlightPlugin, Trigger } from '@react-pdf-viewer/highlight';
 
@@ -64,45 +64,43 @@ const IndexPage = () => {
     });
 
     return (
-        <Worker workerUrl="https://unpkg.com/pdfjs-dist@2.10.377/build/pdf.worker.js">
+        <div
+            style={{
+                display: 'flex',
+                flexDirection: 'column',
+                height: '50rem',
+                margin: '5rem auto',
+                width: '64rem',
+            }}
+        >
             <div
                 style={{
+                    alignItems: 'center',
                     display: 'flex',
-                    flexDirection: 'column',
-                    height: '50rem',
-                    margin: '5rem auto',
-                    width: '64rem',
+                    padding: '0.5rem 0',
                 }}
             >
-                <div
-                    style={{
-                        alignItems: 'center',
-                        display: 'flex',
-                        padding: '0.5rem 0',
-                    }}
-                >
-                    <div style={{ marginRight: '0.5rem' }}>
-                        <Button testId="first-areas" onClick={() => setAreas(firstAreas)}>
-                            Load first set areas
-                        </Button>
-                    </div>
-                    <Button testId="second-areas" onClick={() => setAreas(secondAreas)}>
-                        Load second set areas
+                <div style={{ marginRight: '0.5rem' }}>
+                    <Button testId="first-areas" onClick={() => setAreas(firstAreas)}>
+                        Load first set areas
                     </Button>
                 </div>
-                <div
-                    style={{
-                        flex: 1,
-                        overflow: 'hidden',
-                    }}
-                >
-                    <Viewer
-                        fileUrl="/pdf-open-parameters.pdf"
-                        plugins={[defaultLayoutPluginInstance, highlightPluginInstance]}
-                    />
-                </div>
+                <Button testId="second-areas" onClick={() => setAreas(secondAreas)}>
+                    Load second set areas
+                </Button>
             </div>
-        </Worker>
+            <div
+                style={{
+                    flex: 1,
+                    overflow: 'hidden',
+                }}
+            >
+                <Viewer
+                    fileUrl="/pdf-open-parameters.pdf"
+                    plugins={[defaultLayoutPluginInstance, highlightPluginInstance]}
+                />
+            </div>
+        </div>
     );
 };
 

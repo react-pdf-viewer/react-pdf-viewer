@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Viewer, Worker } from '@react-pdf-viewer/core';
+import { Viewer } from '@react-pdf-viewer/core';
 import { defaultLayoutPlugin } from '@react-pdf-viewer/default-layout';
 
 const HELLO_PDF = new Uint8Array([
@@ -35,11 +35,9 @@ const IndexPage = () => {
     const defaultLayoutPluginInstance = defaultLayoutPlugin();
 
     return (
-        <Worker workerUrl="https://unpkg.com/pdfjs-dist@2.10.377/build/pdf.worker.js">
-            <div className="demo">
-                <Viewer fileUrl={HELLO_PDF} plugins={[defaultLayoutPluginInstance]} />
-            </div>
-        </Worker>
+        <div className="demo">
+            <Viewer fileUrl={HELLO_PDF} plugins={[defaultLayoutPluginInstance]} />
+        </div>
     );
 };
 

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Button, Viewer, Worker } from '@react-pdf-viewer/core';
+import { Button, Viewer } from '@react-pdf-viewer/core';
 import { thumbnailPlugin } from '@react-pdf-viewer/thumbnail';
 import type { DocumentLoadEvent } from '@react-pdf-viewer/core';
 import type { RenderThumbnailItemProps } from '@react-pdf-viewer/thumbnail';
@@ -61,57 +61,55 @@ const IndexPage = () => {
     };
 
     return (
-        <Worker workerUrl="https://unpkg.com/pdfjs-dist@2.10.377/build/pdf.worker.js">
+        <div
+            style={{
+                margin: '1rem auto',
+                width: '64rem',
+            }}
+        >
             <div
                 style={{
-                    margin: '1rem auto',
-                    width: '64rem',
+                    alignItems: 'center',
+                    display: 'flex',
+                    marginBottom: '1rem',
+                }}
+            >
+                <div style={{ marginRight: '0.5rem' }}>
+                    <Button onClick={selectAllPages}>Select all pages</Button>
+                </div>
+            </div>
+            <div
+                style={{
+                    border: '1px solid rgba(0, 0, 0, 0.1)',
+                    display: 'flex',
+                    height: '50rem',
                 }}
             >
                 <div
                     style={{
                         alignItems: 'center',
+                        borderRight: '1px solid rgba(0, 0, 0, 0.1)',
                         display: 'flex',
-                        marginBottom: '1rem',
+                        padding: '4px',
+                        width: '20%',
                     }}
                 >
-                    <div style={{ marginRight: '0.5rem' }}>
-                        <Button onClick={selectAllPages}>Select all pages</Button>
-                    </div>
+                    <Thumbnails />
                 </div>
                 <div
                     style={{
-                        border: '1px solid rgba(0, 0, 0, 0.1)',
-                        display: 'flex',
-                        height: '50rem',
+                        flex: 1,
+                        overflow: 'hidden',
                     }}
                 >
-                    <div
-                        style={{
-                            alignItems: 'center',
-                            borderRight: '1px solid rgba(0, 0, 0, 0.1)',
-                            display: 'flex',
-                            padding: '4px',
-                            width: '20%',
-                        }}
-                    >
-                        <Thumbnails />
-                    </div>
-                    <div
-                        style={{
-                            flex: 1,
-                            overflow: 'hidden',
-                        }}
-                    >
-                        <Viewer
-                            onDocumentLoad={handleDocumentLoad}
-                            fileUrl="/pdf-open-parameters.pdf"
-                            plugins={[thumbnailPluginInstance]}
-                        />
-                    </div>
+                    <Viewer
+                        onDocumentLoad={handleDocumentLoad}
+                        fileUrl="/pdf-open-parameters.pdf"
+                        plugins={[thumbnailPluginInstance]}
+                    />
                 </div>
             </div>
-        </Worker>
+        </div>
     );
 };
 

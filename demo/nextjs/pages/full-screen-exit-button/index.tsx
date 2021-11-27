@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Button, Viewer, Worker } from '@react-pdf-viewer/core';
+import { Button, Viewer } from '@react-pdf-viewer/core';
 import { fullScreenPlugin } from '@react-pdf-viewer/full-screen';
 
 const IndexPage = () => {
@@ -21,38 +21,36 @@ const IndexPage = () => {
     const { EnterFullScreenButton } = fullScreenPluginInstance;
 
     return (
-        <Worker workerUrl="https://unpkg.com/pdfjs-dist@2.10.377/build/pdf.worker.js">
+        <div
+            style={{
+                border: '1px solid rgba(0, 0, 0, 0.1)',
+                display: 'flex',
+                flexDirection: 'column',
+                height: '50rem',
+                margin: '5rem auto',
+                width: '64rem',
+            }}
+        >
             <div
                 style={{
-                    border: '1px solid rgba(0, 0, 0, 0.1)',
+                    alignItems: 'center',
+                    backgroundColor: '#eeeeee',
+                    borderBottom: '1px solid rgba(0, 0, 0, 0.1)',
                     display: 'flex',
-                    flexDirection: 'column',
-                    height: '50rem',
-                    margin: '5rem auto',
-                    width: '64rem',
+                    padding: '4px',
                 }}
             >
-                <div
-                    style={{
-                        alignItems: 'center',
-                        backgroundColor: '#eeeeee',
-                        borderBottom: '1px solid rgba(0, 0, 0, 0.1)',
-                        display: 'flex',
-                        padding: '4px',
-                    }}
-                >
-                    <EnterFullScreenButton />
-                </div>
-                <div
-                    style={{
-                        flex: 1,
-                        overflow: 'hidden',
-                    }}
-                >
-                    <Viewer fileUrl="/pdf-open-parameters.pdf" plugins={[fullScreenPluginInstance]} />
-                </div>
+                <EnterFullScreenButton />
             </div>
-        </Worker>
+            <div
+                style={{
+                    flex: 1,
+                    overflow: 'hidden',
+                }}
+            >
+                <Viewer fileUrl="/pdf-open-parameters.pdf" plugins={[fullScreenPluginInstance]} />
+            </div>
+        </div>
     );
 };
 
