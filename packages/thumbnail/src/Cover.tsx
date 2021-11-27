@@ -54,11 +54,11 @@ export const Cover: React.FC<{
             const containerHeight = containerEle.clientHeight;
 
             const scaled = Math.min(containerWidth / w, containerHeight / h);
-            const canvasWidth = scaled * w;
-            const canvasHeight = scaled * h;
+            const canvasWidth = scaled * w * devicePixelRatio;
+            const canvasHeight = scaled * h * devicePixelRatio;
 
-            canvas.height = canvasHeight * devicePixelRatio;
-            canvas.width = canvasWidth * devicePixelRatio;
+            canvas.height = canvasHeight;
+            canvas.width = canvasWidth;
             canvas.style.opacity = '0';
 
             const renderViewport = page.getViewport({
@@ -89,7 +89,7 @@ export const Cover: React.FC<{
             {!src ? (
                 <div className="rpv-thumbnail__cover-loader">{renderSpinner ? renderSpinner() : <Spinner />}</div>
             ) : (
-                <img className="rpv-thumbnail__cover-image" src={src} />
+                <img className="rpv-thumbnail__cover-image" data-testid="thumbnail__cover-image" src={src} />
             )}
         </div>
     );
