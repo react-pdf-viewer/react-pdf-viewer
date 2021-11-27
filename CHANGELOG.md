@@ -53,9 +53,10 @@ const thumbnailPluginInstance = thumbnailPlugin({
 });
 ```
 
-**Improvement**
+**Improvements**
 
 -   Add `data-testid` attribute to buttons in the toolbar
+-   The `Cover` component uses the image instead of canvas tag
 
 **Bug fixes**
 

@@ -16,6 +16,7 @@ export const Cover: React.FC<{
     renderSpinner?: () => React.ReactElement;
     store: Store<StoreProps>;
 }> = ({ getPageIndex, renderSpinner, store }) => {
+    const [src, setSrc] = React.useState('');
     const [currentDoc, setCurrentDoc] = React.useState<PdfJs.PdfDocument>();
 
     const handleDocumentChanged: StoreHandler<PdfJs.PdfDocument> = (doc: PdfJs.PdfDocument) => {
@@ -24,10 +25,7 @@ export const Cover: React.FC<{
 
     // Support high DPI screen
     const devicePixelRatio = window.devicePixelRatio || 1;
-    const canvasRef = React.useRef<HTMLCanvasElement>();
     const containerRef = React.useRef<HTMLDivElement>();
-
-    const [rendered, setRendered] = React.useState(false);
 
     React.useEffect(() => {
         if (!currentDoc) {
@@ -35,8 +33,7 @@ export const Cover: React.FC<{
         }
 
         const containerEle = containerRef.current;
-        const canvasEle = canvasRef.current;
-        if (!containerEle || !canvasEle) {
+        if (!containerEle) {
             return;
         }
 
@@ -48,6 +45,11 @@ export const Cover: React.FC<{
             const w = viewport.width;
             const h = viewport.height;
 
+            const canvas = document.createElement('canvas') as HTMLCanvasElement;
+            const canvasContext = canvas.getContext('2d', {
+                alpha: false,
+            }) as CanvasRenderingContext2D;
+
             const containerWidth = containerEle.clientWidth;
             const containerHeight = containerEle.clientHeight;
 
@@ -55,13 +57,9 @@ export const Cover: React.FC<{
             const canvasWidth = scaled * w;
             const canvasHeight = scaled * h;
 
-            canvasEle.height = canvasHeight * devicePixelRatio;
-            canvasEle.width = canvasWidth * devicePixelRatio;
-            canvasEle.style.opacity = '0';
-
-            const canvasContext = canvasEle.getContext('2d', {
-                alpha: false,
-            }) as CanvasRenderingContext2D;
+            canvas.height = canvasHeight * devicePixelRatio;
+            canvas.width = canvasWidth * devicePixelRatio;
+            canvas.style.opacity = '0';
 
             const renderViewport = page.getViewport({
                 rotation: 0,
@@ -70,12 +68,9 @@ export const Cover: React.FC<{
 
             const renderTask = page.render({ canvasContext, viewport: renderViewport });
             renderTask.promise.then(
+                (): void => setSrc(canvas.toDataURL()),
                 (): void => {
-                    setRendered(true);
-                    canvasEle.style.removeProperty('opacity');
-                },
-                (): void => {
-                    setRendered(true);
+                    /**/
                 }
             );
         });
@@ -91,16 +86,11 @@ export const Cover: React.FC<{
 
     return (
         <div className="rpv-thumbnail__cover" ref={containerRef}>
-            {!rendered && (
+            {!src ? (
                 <div className="rpv-thumbnail__cover-loader">{renderSpinner ? renderSpinner() : <Spinner />}</div>
+            ) : (
+                <img className="rpv-thumbnail__cover-image" src={src} />
             )}
-            <canvas
-                ref={canvasRef}
-                style={{
-                    transform: `scale(${1 / devicePixelRatio})`,
-                    transformOrigin: `top left`,
-                }}
-            />
         </div>
     );
 };

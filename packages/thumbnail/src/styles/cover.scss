@@ -20,6 +20,11 @@
     width: 100%;
 }
 
+.rpv-thumbnail__cover-image {
+    height: auto;
+    max-width: 100%;
+}
+
 .rpv-thumbnail__cover-loader {
     // Center the spinner
     align-items: center;
