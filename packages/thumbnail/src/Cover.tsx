@@ -23,8 +23,6 @@ export const Cover: React.FC<{
         setCurrentDoc(doc);
     };
 
-    // Support high DPI screen
-    const devicePixelRatio = window.devicePixelRatio || 1;
     const containerRef = React.useRef<HTMLDivElement>();
 
     React.useEffect(() => {
@@ -54,8 +52,8 @@ export const Cover: React.FC<{
             const containerHeight = containerEle.clientHeight;
 
             const scaled = Math.min(containerWidth / w, containerHeight / h);
-            const canvasWidth = scaled * w * devicePixelRatio;
-            const canvasHeight = scaled * h * devicePixelRatio;
+            const canvasWidth = scaled * w;
+            const canvasHeight = scaled * h;
 
             canvas.height = canvasHeight;
             canvas.width = canvasWidth;
@@ -63,7 +61,7 @@ export const Cover: React.FC<{
 
             const renderViewport = page.getViewport({
                 rotation: 0,
-                scale: scaled * devicePixelRatio,
+                scale: scaled,
             });
 
             const renderTask = page.render({ canvasContext, viewport: renderViewport });
