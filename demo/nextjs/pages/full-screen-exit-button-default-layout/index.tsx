@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Button, Viewer, Worker } from '@react-pdf-viewer/core';
+import { Button, Viewer } from '@react-pdf-viewer/core';
 import { defaultLayoutPlugin } from '@react-pdf-viewer/default-layout';
 
 const IndexPage = () => {
@@ -24,17 +24,15 @@ const IndexPage = () => {
     });
 
     return (
-        <Worker workerUrl="https://unpkg.com/pdfjs-dist@2.10.377/build/pdf.worker.js">
-            <div
-                style={{
-                    height: '50rem',
-                    margin: '5rem auto',
-                    width: '64rem',
-                }}
-            >
-                <Viewer fileUrl="/pdf-open-parameters.pdf" plugins={[defaultLayoutPluginInstance]} />
-            </div>
-        </Worker>
+        <div
+            style={{
+                height: '50rem',
+                margin: '5rem auto',
+                width: '64rem',
+            }}
+        >
+            <Viewer fileUrl="/pdf-open-parameters.pdf" plugins={[defaultLayoutPluginInstance]} />
+        </div>
     );
 };
 

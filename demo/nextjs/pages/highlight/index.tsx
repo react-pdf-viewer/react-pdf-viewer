@@ -1,14 +1,5 @@
 import * as React from 'react';
-import {
-    Button,
-    DocumentLoadEvent,
-    PdfJs,
-    Position,
-    PrimaryButton,
-    Tooltip,
-    Viewer,
-    Worker,
-} from '@react-pdf-viewer/core';
+import { Button, DocumentLoadEvent, PdfJs, Position, PrimaryButton, Tooltip, Viewer } from '@react-pdf-viewer/core';
 import { defaultLayoutPlugin } from '@react-pdf-viewer/default-layout';
 import {
     HighlightArea,
@@ -218,15 +209,13 @@ const IndexPage = () => {
     const { activateTab } = defaultLayoutPluginInstance;
 
     return (
-        <Worker workerUrl="https://unpkg.com/pdfjs-dist@2.10.377/build/pdf.worker.js">
-            <div className="demo">
-                <Viewer
-                    fileUrl="/pdf-open-parameters.pdf"
-                    plugins={[highlightPluginInstance, defaultLayoutPluginInstance]}
-                    onDocumentLoad={handleDocumentLoad}
-                />
-            </div>
-        </Worker>
+        <div className="demo">
+            <Viewer
+                fileUrl="/pdf-open-parameters.pdf"
+                plugins={[highlightPluginInstance, defaultLayoutPluginInstance]}
+                onDocumentLoad={handleDocumentLoad}
+            />
+        </div>
     );
 };
 
