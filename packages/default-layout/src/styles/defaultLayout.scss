@@ -6,82 +6,96 @@
  * @copyright 2019-2021 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-.rpv-default-layout__container {
-    /* Border */
-    border: 1px solid var(--rpv-default-layout__container-border-color);
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    position: relative;
+ $rpv-default-layout-toolbar-height: 2.5rem;
 
-    /* Full size */
-    height: 100%;
-    width: 100%;
-}
+ .rpv-default-layout__container {
+     /* Border */
+     border: 1px solid var(--rpv-default-layout__container-border-color);
+     box-sizing: border-box;
+ 
+     /* Full size */
+     height: 100%;
+     width: 100%;
+ }
+ 
+ .rpv-default-layout__toolbar {
+     align-items: center;
+     background-color: var(--rpv-default-layout__toolbar-background-color);
+     border-bottom: 1px solid var(--rpv-default-layout__toolbar-border-bottom-color);
+     display: flex;
+     padding: 0 0.25rem;
+ 
+     /* Postion */
+     left: 0;
+     position: absolute;
+     top: 0;
+ 
+     /* Size */
+     height: $rpv-default-layout-toolbar-height;
+     width: 100%;
+ 
+     /* To make the tooltip displayed on top of the pages */
+     z-index: 1;
+ }
+ 
+ .rpv-default-layout__sidebar {
+    padding-top: $rpv-default-layout-toolbar-height;
 
-.rpv-default-layout__toolbar {
-    background-color: var(--rpv-default-layout__toolbar-background-color);
-    border-bottom: 1px solid var(--rpv-default-layout__toolbar-border-bottom-color);
-    padding: 0.25rem;
-}
-
-.rpv-default-layout__sidebar {
-    &--opened {
-        /* Absolute position */
-        left: 0;
-        position: absolute;
-        top: 0;
-
-        /* Size */
-        height: 100%;
-        width: 12rem;
-
-        /* Display it on top of pages */
-        background-color: var(--rpv-default-layout__sidebar--opened-background-color);
-        z-index: 1;
-    }
-
-    &--ltr {
-        border-right: 1px solid var(--rpv-default-layout__sidebar-border-color);
-    }
-    &--rtl {
-        border-left: 1px solid var(--rpv-default-layout__sidebar-border-color);
-    }
-}
-
-.rpv-default-layout__main {
-    display: flex;
-    flex-grow: 1;
-
-    /* Fix the scroll issue on Safari */
-    height: 100%;
-    overflow: hidden;
-
-    /* Used to position the sidebar */
-    position: relative;
-
-    &--rtl {
-        direction: rtl;
-    }
-}
-
-.rpv-default-layout__body {
-    background-color: var(--rpv-default-layout__body-background-color);
-    flex: 1;
-    overflow: auto;
-}
-
-@media (min-width: 768px) {
-    .rpv-default-layout__sidebar--opened {
-        width: 16rem;
-    }
-}
-
-@media (min-width: 1024px) {
-    .rpv-default-layout__sidebar--opened {
-        background: inherit;
-        position: inherit;
-        width: 20rem;
-        z-index: inherit;
-    }
-}
+     &--opened {
+         /* Absolute position */
+         left: 0;
+         position: absolute;
+         top: 0;
+ 
+         /* Size */
+         height: 100%;
+         width: 12rem;
+ 
+         /* Display it on top of pages */
+         background-color: var(--rpv-default-layout__sidebar--opened-background-color);
+         z-index: 1;
+     }
+ 
+     &--ltr {
+         border-right: 1px solid var(--rpv-default-layout__sidebar-border-color);
+     }
+     &--rtl {
+         border-left: 1px solid var(--rpv-default-layout__sidebar-border-color);
+     }
+ }
+ 
+ .rpv-default-layout__main {
+     display: flex;
+ 
+     /* Fix the scroll issue on Safari */
+     height: 100%;
+ 
+     /* Used to position the sidebar */
+     position: relative;
+ 
+     &--rtl {
+         direction: rtl;
+     }
+ }
+ 
+ .rpv-default-layout__body {
+     background-color: var(--rpv-default-layout__body-background-color);
+     flex: 1;
+     overflow: auto;
+     padding-top: $rpv-default-layout-toolbar-height;
+ }
+ 
+ @media (min-width: 768px) {
+     .rpv-default-layout__sidebar--opened {
+         width: 16rem;
+     }
+ }
+ 
+ @media (min-width: 1024px) {
+     .rpv-default-layout__sidebar--opened {
+         background: inherit;
+         position: inherit;
+         width: 20rem;
+         z-index: inherit;
+     }
+ }

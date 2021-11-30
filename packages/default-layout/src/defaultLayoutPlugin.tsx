@@ -104,9 +104,6 @@ export const defaultLayoutPlugin = (props?: DefaultLayoutPluginProps): DefaultLa
 
             slot.children = (
                 <div className="rpv-default-layout__container">
-                    <div className="rpv-default-layout__toolbar">
-                        {props && props.renderToolbar ? props.renderToolbar(Toolbar) : <Toolbar />}
-                    </div>
                     <div
                         data-testid="default-layout__main"
                         className={classNames({
@@ -122,8 +119,11 @@ export const defaultLayoutPlugin = (props?: DefaultLayoutPluginProps): DefaultLa
                             thumbnailTabContent={<Thumbnails />}
                             tabs={sidebarTabs}
                         />
-                        <div className="rpv-default-layout__body" {...mergeSubSlot}>
-                            {slot.subSlot.children}
+                        <div className="rpv-default-layout__body" data-testid="default-layout__body">
+                            <div className="rpv-default-layout__toolbar">
+                                {props && props.renderToolbar ? props.renderToolbar(Toolbar) : <Toolbar />}
+                            </div>
+                            <div {...mergeSubSlot}>{slot.subSlot.children}</div>
                         </div>
                     </div>
                     {slot.children}
