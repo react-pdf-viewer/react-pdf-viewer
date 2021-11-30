@@ -86,6 +86,8 @@ export const fullScreenPlugin = (props?: FullScreenPluginProps): FullScreenPlugi
             children={props?.renderExitFullScreenButton}
             getFullScreenTarget={getFullScreenTarget}
             store={store}
+            onEnterFullScreen={fullScreenPluginProps.onEnterFullScreen}
+            onExitFullScreen={fullScreenPluginProps.onExitFullScreen}
         />
     );
 

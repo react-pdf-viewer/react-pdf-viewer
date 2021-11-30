@@ -10,8 +10,9 @@ import * as React from 'react';
 import type { Store } from '@react-pdf-viewer/core';
 
 import { ExitFullScreenButton } from './ExitFullScreenButton';
-import { exitFullScreen, getFullScreenElement } from './fullScreen';
+import { useEnterFullScreen } from './useEnterFullScreen';
 import type { StoreProps } from './types/StoreProps';
+import type { Zoom } from './types/Zoom';
 
 export interface RenderExitFullScreenProps {
     onClick(): void;
@@ -27,38 +28,15 @@ export const ExitFullScreen: React.FC<{
     children?: RenderExitFullScreen;
     getFullScreenTarget(pagesContainer: HTMLElement): HTMLElement;
     store: Store<StoreProps>;
-}> = ({ children, getFullScreenTarget, store }) => {
-    const [isFullScreen, setFullScreen] = React.useState(false);
-
-    const handleFullScreen = (fullScreen: boolean) => {
-        setFullScreen(fullScreen);
-    };
-
-    const handleExitFullScreen = () => {
-        setFullScreen(false);
-
-        const getPagesContainer = store.get('getPagesContainer');
-        if (!getPagesContainer) {
-            return;
-        }
-
-        const pagesEle = getPagesContainer();
-        if (!pagesEle) {
-            return;
-        }
-
-        const ele = getFullScreenElement();
-        if (ele && ele === getFullScreenTarget(pagesEle)) {
-            exitFullScreen(document);
-        }
-    };
-
-    React.useEffect(() => {
-        store.subscribe('isFullScreen', handleFullScreen);
-        return (): void => {
-            store.unsubscribe('isFullScreen', handleFullScreen);
-        };
-    }, []);
+    onEnterFullScreen(zoom: Zoom): void;
+    onExitFullScreen(zoom: Zoom): void;
+}> = ({ children, getFullScreenTarget, store, onEnterFullScreen, onExitFullScreen }) => {
+    const { enterFullScreen, exitFullScreen, isFullScreen } = useEnterFullScreen(
+        getFullScreenTarget,
+        store,
+        onEnterFullScreen,
+        onExitFullScreen
+    );
 
     const defaultChildren = (props: RenderExitFullScreenProps) => <ExitFullScreenButton onClick={props.onClick} />;
     const render = children || defaultChildren;
@@ -66,7 +44,7 @@ export const ExitFullScreen: React.FC<{
     return (
         isFullScreen &&
         render({
-            onClick: handleExitFullScreen,
+            onClick: isFullScreen ? exitFullScreen : enterFullScreen,
         })
     );
 };

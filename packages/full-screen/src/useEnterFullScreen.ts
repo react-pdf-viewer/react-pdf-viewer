@@ -9,7 +9,7 @@
 import * as React from 'react';
 import type { Store } from '@react-pdf-viewer/core';
 
-import { addFullScreenChangeListener, exitFullScreen, getFullScreenElement, requestFullScreen } from './fullScreen';
+import { addFullScreenChangeListener, exitFullScreenMode, getFullScreenElement, requestFullScreen } from './fullScreen';
 import type { StoreProps } from './types/StoreProps';
 import type { Zoom } from './types/Zoom';
 
@@ -20,20 +20,22 @@ export const useEnterFullScreen = (
     onExitFullScreen: (zoom: Zoom) => void
 ): {
     enterFullScreen: () => void;
+    exitFullScreen: () => void;
+    isFullScreen: boolean;
 } => {
+    const [isFullScreen, setFullScreen] = React.useState(false);
     const pagesRef = React.useRef<HTMLElement | null>(
         store.get('getPagesContainer') ? store.get('getPagesContainer')() : null
     );
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const closeOtherFullScreen = (): Promise<any> => {
+    const closeOtherFullScreen = () => {
         const pagesEle = pagesRef.current;
         if (!pagesEle) {
             return Promise.resolve();
         }
 
         const ele = getFullScreenElement();
-        return ele && ele !== getFullScreenTarget(pagesEle) ? exitFullScreen(ele) : Promise.resolve();
+        return ele && ele !== getFullScreenTarget(pagesEle) ? exitFullScreenMode(ele) : Promise.resolve();
     };
 
     const enterFullScreen = () => {
@@ -49,12 +51,12 @@ export const useEnterFullScreen = (
 
     const onFullScreenChange = (): void => {
         const ele = getFullScreenElement();
-        const isFullScreen = ele === getFullScreenTarget(pagesRef.current);
-        store.update('isFullScreen', isFullScreen);
+        const isFullScreenMode = ele === getFullScreenTarget(pagesRef.current);
+        store.update('isFullScreen', isFullScreenMode);
 
         const zoom = store.get('zoom');
         if (zoom) {
-            isFullScreen ? onEnterFullScreen(zoom) : onExitFullScreen(zoom);
+            isFullScreenMode ? onEnterFullScreen(zoom) : onExitFullScreen(zoom);
         }
     };
 
@@ -63,14 +65,42 @@ export const useEnterFullScreen = (
         addFullScreenChangeListener(onFullScreenChange);
     };
 
+    const handleFullScreen = (fullScreen: boolean) => {
+        setFullScreen(fullScreen);
+    };
+
+    const exitFullScreen = () => {
+        setFullScreen(false);
+
+        const getPagesContainer = store.get('getPagesContainer');
+        if (!getPagesContainer) {
+            return;
+        }
+
+        const pagesEle = getPagesContainer();
+        if (!pagesEle) {
+            return;
+        }
+
+        const ele = getFullScreenElement();
+        if (ele && ele === getFullScreenTarget(pagesEle)) {
+            exitFullScreenMode(document);
+        }
+    };
+
     React.useEffect(() => {
+        store.subscribe('isFullScreen', handleFullScreen);
         store.subscribe('getPagesContainer', handlePagesContainer);
+
         return (): void => {
             store.unsubscribe('getPagesContainer', handlePagesContainer);
+            store.unsubscribe('isFullScreen', handleFullScreen);
         };
     }, []);
 
     return {
         enterFullScreen,
+        exitFullScreen,
+        isFullScreen,
     };
 };
