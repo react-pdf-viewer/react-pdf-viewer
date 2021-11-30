@@ -64,7 +64,7 @@ export const removeFullScreenChangeListener = (handler: () => void): void => {
     }
 };
 
-export const exitFullScreen = (element: Element | Document): Promise<void> => {
+export const exitFullScreenMode = (element: Element | Document): Promise<void> => {
     return isBrowser
         ? // eslint-disable-next-line @typescript-eslint/no-explicit-any
           (element as any)[vendor.ExitFullScreen]()

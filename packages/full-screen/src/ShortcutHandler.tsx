@@ -16,11 +16,12 @@ import type { Zoom } from './types/Zoom';
 
 export const ShortcutHandler: React.FC<{
     containerRef: React.RefObject<HTMLDivElement>;
+    getFullScreenTarget(pagesContainer: HTMLElement): HTMLElement;
     store: Store<StoreProps>;
     onEnterFullScreen: (zoom: Zoom) => void;
     onExitFullScreen: (zoom: Zoom) => void;
-}> = ({ containerRef, store, onEnterFullScreen, onExitFullScreen }) => {
-    const { enterFullScreen } = useEnterFullScreen(store, onEnterFullScreen, onExitFullScreen);
+}> = ({ containerRef, getFullScreenTarget, store, onEnterFullScreen, onExitFullScreen }) => {
+    const { enterFullScreen } = useEnterFullScreen(getFullScreenTarget, store, onEnterFullScreen, onExitFullScreen);
 
     const keydownHandler = (e: KeyboardEvent) => {
         if (e.shiftKey || e.altKey) {

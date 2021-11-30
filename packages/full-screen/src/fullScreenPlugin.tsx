@@ -26,12 +26,16 @@ export interface FullScreenPlugin extends Plugin {
 
 export interface FullScreenPluginProps {
     enableShortcuts?: boolean;
+    getFullScreenTarget?(pagesContainer: HTMLElement): HTMLElement;
     renderExitFullScreenButton?: (props: RenderExitFullScreenProps) => React.ReactElement;
     onEnterFullScreen?(zoom: Zoom): void;
     onExitFullScreen?(zoom: Zoom): void;
 }
 
 export const fullScreenPlugin = (props?: FullScreenPluginProps): FullScreenPlugin => {
+    const defaultFullScreenTarget = (ele: HTMLElement) => ele;
+    const getFullScreenTarget = props?.getFullScreenTarget || defaultFullScreenTarget;
+
     /* eslint-disable @typescript-eslint/no-empty-function */
     const fullScreenPluginProps = React.useMemo(
         () =>
@@ -49,6 +53,7 @@ export const fullScreenPlugin = (props?: FullScreenPluginProps): FullScreenPlugi
         <EnterFullScreen
             {...props}
             enableShortcuts={fullScreenPluginProps.enableShortcuts}
+            getFullScreenTarget={getFullScreenTarget}
             store={store}
             onEnterFullScreen={fullScreenPluginProps.onEnterFullScreen}
             onExitFullScreen={fullScreenPluginProps.onExitFullScreen}
@@ -76,7 +81,15 @@ export const fullScreenPlugin = (props?: FullScreenPluginProps): FullScreenPlugi
         </EnterFullScreenDecorator>
     );
 
-    const ExitFullScreenDecorator = () => <ExitFullScreen children={props?.renderExitFullScreenButton} store={store} />;
+    const ExitFullScreenDecorator = () => (
+        <ExitFullScreen
+            children={props?.renderExitFullScreenButton}
+            getFullScreenTarget={getFullScreenTarget}
+            store={store}
+            onEnterFullScreen={fullScreenPluginProps.onEnterFullScreen}
+            onExitFullScreen={fullScreenPluginProps.onExitFullScreen}
+        />
+    );
 
     const renderViewer = (props: RenderViewer): Slot => {
         const currentSlot = props.slot;
@@ -86,6 +99,7 @@ export const fullScreenPlugin = (props?: FullScreenPluginProps): FullScreenPlugi
                     {fullScreenPluginProps.enableShortcuts && (
                         <ShortcutHandler
                             containerRef={props.containerRef}
+                            getFullScreenTarget={getFullScreenTarget}
                             store={store}
                             onEnterFullScreen={fullScreenPluginProps.onEnterFullScreen}
                             onExitFullScreen={fullScreenPluginProps.onExitFullScreen}

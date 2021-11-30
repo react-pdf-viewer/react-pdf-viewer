@@ -10,6 +10,7 @@ import * as React from 'react';
 import type { Store } from '@react-pdf-viewer/core';
 
 import { EnterFullScreenButton } from './EnterFullScreenButton';
+import { ExitFullScreenButtonWithTooltip } from './ExitFullScreenButtonWithTooltip';
 import { useEnterFullScreen } from './useEnterFullScreen';
 import type { StoreProps } from './types/StoreProps';
 import type { Zoom } from './types/Zoom';
@@ -27,18 +28,27 @@ export interface EnterFullScreenProps {
 export const EnterFullScreen: React.FC<{
     children?: RenderEnterFullScreen;
     enableShortcuts: boolean;
+    getFullScreenTarget(pagesContainer: HTMLElement): HTMLElement;
     store: Store<StoreProps>;
     onEnterFullScreen(zoom: Zoom): void;
     onExitFullScreen(zoom: Zoom): void;
-}> = ({ children, enableShortcuts, store, onEnterFullScreen, onExitFullScreen }) => {
-    const { enterFullScreen } = useEnterFullScreen(store, onEnterFullScreen, onExitFullScreen);
-
-    const defaultChildren = (props: RenderEnterFullScreenProps) => (
-        <EnterFullScreenButton enableShortcuts={enableShortcuts} onClick={props.onClick} />
+}> = ({ children, enableShortcuts, getFullScreenTarget, store, onEnterFullScreen, onExitFullScreen }) => {
+    const { enterFullScreen, exitFullScreen, isFullScreen } = useEnterFullScreen(
+        getFullScreenTarget,
+        store,
+        onEnterFullScreen,
+        onExitFullScreen
     );
+
+    const defaultChildren = (props: RenderEnterFullScreenProps) =>
+        isFullScreen ? (
+            <ExitFullScreenButtonWithTooltip onClick={props.onClick} />
+        ) : (
+            <EnterFullScreenButton enableShortcuts={enableShortcuts} onClick={props.onClick} />
+        );
     const render = children || defaultChildren;
 
     return render({
-        onClick: enterFullScreen,
+        onClick: isFullScreen ? exitFullScreen : enterFullScreen,
     });
 };
