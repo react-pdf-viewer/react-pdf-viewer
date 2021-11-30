@@ -25,8 +25,9 @@ export interface ExitFullScreenProps {
 
 export const ExitFullScreen: React.FC<{
     children?: RenderExitFullScreen;
+    getFullScreenTarget(pagesContainer: HTMLElement): HTMLElement;
     store: Store<StoreProps>;
-}> = ({ children, store }) => {
+}> = ({ children, getFullScreenTarget, store }) => {
     const [isFullScreen, setFullScreen] = React.useState(false);
 
     const handleFullScreen = (fullScreen: boolean) => {
@@ -47,7 +48,7 @@ export const ExitFullScreen: React.FC<{
         }
 
         const ele = getFullScreenElement();
-        if (ele && ele === pagesEle) {
+        if (ele && ele === getFullScreenTarget(pagesEle)) {
             exitFullScreen(document);
         }
     };

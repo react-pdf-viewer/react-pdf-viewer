@@ -23,6 +23,15 @@ const fullScreenPluginInstance = fullScreenPlugin({
 });
 ```
 
+-   The full screen plugin allows to set the full screen element. The following code will include the pages container and the toolbar in the full screen mode:
+
+```js
+const fullScreenPluginInstance = fullScreenPlugin({
+    // `ele` is the pages container
+    getFullScreenTarget: (pagesContainer) => pagesContainer.closest('[data-testid="default-layout__body"]'),
+}),
+```
+
 -   The thumbnail plugin adds new `renderSpinner` property that can be used to replace the default `Spinner` component. For example, it is displayed when loading the cover or thumbnail of a page:
 
 ```js

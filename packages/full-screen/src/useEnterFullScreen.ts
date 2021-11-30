@@ -14,6 +14,7 @@ import type { StoreProps } from './types/StoreProps';
 import type { Zoom } from './types/Zoom';
 
 export const useEnterFullScreen = (
+    getFullScreenTarget: (pagesContainer: HTMLElement) => HTMLElement,
     store: Store<StoreProps>,
     onEnterFullScreen: (zoom: Zoom) => void,
     onExitFullScreen: (zoom: Zoom) => void
@@ -32,7 +33,7 @@ export const useEnterFullScreen = (
         }
 
         const ele = getFullScreenElement();
-        return ele && ele !== pagesEle ? exitFullScreen(ele) : Promise.resolve();
+        return ele && ele !== getFullScreenTarget(pagesEle) ? exitFullScreen(ele) : Promise.resolve();
     };
 
     const enterFullScreen = () => {
@@ -42,13 +43,13 @@ export const useEnterFullScreen = (
         }
 
         closeOtherFullScreen().then(() => {
-            requestFullScreen(pagesEle);
+            requestFullScreen(getFullScreenTarget(pagesEle));
         });
     };
 
     const onFullScreenChange = (): void => {
         const ele = getFullScreenElement();
-        const isFullScreen = ele === pagesRef.current;
+        const isFullScreen = ele === getFullScreenTarget(pagesRef.current);
         store.update('isFullScreen', isFullScreen);
 
         const zoom = store.get('zoom');

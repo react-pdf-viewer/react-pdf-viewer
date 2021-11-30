@@ -38,6 +38,7 @@ export type Zoom = (scale: number | SpecialZoomLevel) => void;
 
 export interface FullScreenPluginProps {
     enableShortcuts?: boolean;
+    getFullScreenTarget?(pagesContainer: HTMLElement): HTMLElement;
     renderExitFullScreenButton?: (props: RenderExitFullScreenProps) => React.ReactElement;
     onEnterFullScreen?(zoom: Zoom): void;
     onExitFullScreen?(zoom: Zoom): void;
