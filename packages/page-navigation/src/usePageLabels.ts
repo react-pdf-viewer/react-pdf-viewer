@@ -24,6 +24,7 @@ export const usePageLabels = (store: Store<StoreProps>): string[] | null => {
         store.subscribe('doc', handleDocumentChanged);
 
         return () => {
+            setLabels([]);
             store.unsubscribe('doc', handleDocumentChanged);
         };
     }, []);
