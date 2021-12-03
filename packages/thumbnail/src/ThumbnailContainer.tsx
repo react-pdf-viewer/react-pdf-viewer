@@ -30,7 +30,7 @@ export const ThumbnailContainer: React.FC<{
     pageIndex: number;
     pageWidth: number;
     rotation: number;
-    onActive(target: HTMLElement): void;
+    onActive(pageIndex: number): void;
 }> = ({ doc, isActive, pageHeight, pageIndex, pageWidth, rotation, onActive }) => {
     const [pageSize, setPageSize] = React.useState<PageState>({
         height: pageHeight,
@@ -57,7 +57,7 @@ export const ThumbnailContainer: React.FC<{
         const ele = containerRef.current;
         const visibility = visibilityRef.current;
         if (!visibility.isVisible || visibility.ratio < 1) {
-            onActive(ele);
+            onActive(pageIndex);
         }
     }, [isActive]);
 
