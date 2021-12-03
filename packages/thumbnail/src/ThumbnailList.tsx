@@ -45,10 +45,13 @@ export const ThumbnailList: React.FC<{
     const isRtl = direction === TextDirection.RightToLeft;
 
     // Scroll to the thumbnail that represents the current page
-    const scrollToThumbnail = (target: HTMLElement) => {
+    const scrollToThumbnail = (pageIndex: number) => {
         const container = containerRef.current;
         if (container) {
-            scrollToBeVisible(target.parentElement, container);
+            const thumbnailNodes = container.children;
+            if (pageIndex < thumbnailNodes.length) {
+                scrollToBeVisible(thumbnailNodes.item(pageIndex) as HTMLElement, container);
+            }
         }
     };
 
