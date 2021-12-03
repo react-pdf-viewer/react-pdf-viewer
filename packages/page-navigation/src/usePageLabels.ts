@@ -12,7 +12,7 @@ import type { PdfJs, Store, StoreHandler } from '@react-pdf-viewer/core';
 import type { StoreProps } from './types/StoreProps';
 
 export const usePageLabels = (store: Store<StoreProps>): string[] | null => {
-    const [labels, setLabels] = React.useState<string[]>(null);
+    const [labels, setLabels] = React.useState<string[]>([]);
 
     const handleDocumentChanged: StoreHandler<PdfJs.PdfDocument> = (doc: PdfJs.PdfDocument) => {
         doc.getPageLabels().then((result) => {

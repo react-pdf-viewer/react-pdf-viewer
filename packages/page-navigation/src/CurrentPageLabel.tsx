@@ -37,13 +37,9 @@ export const CurrentPageLabel: React.FC<{
     const defaultChildren = (props: RenderCurrentPageLabelProps) => <>{props.currentPage + 1}</>;
     const render = children || defaultChildren;
 
-    return labels ? (
-        render({
-            currentPage,
-            numberOfPages,
-            pageLabel: labels.length === numberOfPages ? labels[currentPage] : '',
-        })
-    ) : (
-        <></>
-    );
+    return render({
+        currentPage,
+        numberOfPages,
+        pageLabel: labels.length === numberOfPages ? labels[currentPage] : '',
+    });
 };
