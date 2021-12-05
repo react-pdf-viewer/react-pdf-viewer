@@ -40,7 +40,7 @@ const thumbnailPluginInstance = thumbnailPlugin({
 });
 ```
 
--   The thumbnail plugin adds new `renderThumbnailItem` property that is used to customize the thumbnail renderer:
+-   The `Thumbnails` component adds new `renderThumbnailItem` property that is used to customize the thumbnail renderer:
 
 ```js
 const renderThumbnailItem = (props: RenderThumbnailItemProps) => (
@@ -57,9 +57,10 @@ const renderThumbnailItem = (props: RenderThumbnailItemProps) => (
     </div>
 );
 
-const thumbnailPluginInstance = thumbnailPlugin({
-    renderThumbnailItem,
-});
+const thumbnailPluginInstance = thumbnailPlugin();
+const { Thumbnails } = thumbnailPluginInstance;
+
+<Thumbnails renderThumbnailItem={renderThumbnailItem} />;
 ```
 
 **Improvements**
