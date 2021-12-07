@@ -8,21 +8,16 @@ const Index = () => {
     const dropPluginInstance = dropPlugin();
 
     return (
-        <Worker workerUrl="https://unpkg.com/pdfjs-dist@2.10.377/build/pdf.worker.js">
-            <div
-                style={{
-                    display: 'flex',
-                    height: '50rem',
-                    margin: '5rem auto',
-                    width: '64rem',
-                }}
-            >
-                <Viewer
-                    fileUrl="/pdf-open-parameters.pdf"
-                    plugins={[defaultLayoutPluginInstance, dropPluginInstance]}
-                />
-            </div>
-        </Worker>
+        <div
+            style={{
+                display: 'flex',
+                height: '50rem',
+                margin: '5rem auto',
+                width: '64rem',
+            }}
+        >
+            <Viewer fileUrl="/pdf-open-parameters.pdf" plugins={[defaultLayoutPluginInstance, dropPluginInstance]} />
+        </div>
     );
 };
 
