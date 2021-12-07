@@ -27,9 +27,7 @@ const TestRenderThumbnailItem: React.FC<{
         </div>
     );
 
-    const thumbnailPluginInstance = thumbnailPlugin({
-        renderThumbnailItem,
-    });
+    const thumbnailPluginInstance = thumbnailPlugin();
     const { Thumbnails } = thumbnailPluginInstance;
 
     return (
@@ -47,7 +45,7 @@ const TestRenderThumbnailItem: React.FC<{
                     width: '30%',
                 }}
             >
-                <Thumbnails />
+                <Thumbnails renderThumbnailItem={renderThumbnailItem} />
             </div>
             <div style={{ flex: 1 }}>
                 <Viewer fileUrl={fileUrl} plugins={[thumbnailPluginInstance]} />
