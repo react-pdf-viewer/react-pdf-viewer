@@ -23,7 +23,6 @@
      background-color: var(--rpv-default-layout__toolbar-background-color);
      border-bottom: 1px solid var(--rpv-default-layout__toolbar-border-bottom-color);
      display: flex;
-     padding: 0 0.25rem;
  
      /* Postion */
      left: 0;
@@ -43,12 +42,12 @@
 
      &--opened {
          /* Absolute position */
+         bottom: 0;
          left: 0;
          position: absolute;
          top: 0;
  
-         /* Size */
-         height: 100%;
+         /* Size */         
          width: 12rem;
  
          /* Display it on top of pages */

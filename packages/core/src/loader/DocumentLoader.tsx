@@ -66,7 +66,7 @@ export const DocumentLoader: React.FC<{
         setStatus(new LoadingState(0));
 
         // Create a new worker
-        const worker = new PdfJsApi.PDFWorker({ name: `PDFWorker_${Date.now()}` }) as PdfJs.PDFWorker;
+        const worker = new PdfJsApi.PDFWorker({ name: `PDFWorker_${Date.now()}` as any }) as PdfJs.PDFWorker;
 
         const params: PdfJs.GetDocumentParams = Object.assign(
             {
@@ -84,7 +84,7 @@ export const DocumentLoader: React.FC<{
         );
         const transformParams = transformGetDocumentParams ? transformGetDocumentParams(params) : params;
 
-        const loadingTask = PdfJsApi.getDocument(transformParams) as unknown as PdfJs.LoadingTask;
+        const loadingTask = PdfJsApi.getDocument(transformParams as any) as unknown as PdfJs.LoadingTask;
         loadingTask.onPassword = (verifyPassword: VerifyPassword, reason: number): void => {
             switch (reason) {
                 case PdfJsApi.PasswordResponses.NEED_PASSWORD:

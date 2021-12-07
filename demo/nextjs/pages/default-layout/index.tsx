@@ -1,11 +1,9 @@
 import * as React from 'react';
-import { Viewer, Worker } from '@react-pdf-viewer/core';
+import { Viewer } from '@react-pdf-viewer/core';
 import { defaultLayoutPlugin } from '@react-pdf-viewer/default-layout';
-import { dropPlugin } from '@react-pdf-viewer/drop';
 
-const Index = () => {
+const IndexPage = () => {
     const defaultLayoutPluginInstance = defaultLayoutPlugin();
-    const dropPluginInstance = dropPlugin();
 
     return (
         <div
@@ -16,9 +14,9 @@ const Index = () => {
                 width: '64rem',
             }}
         >
-            <Viewer fileUrl="/pdf-open-parameters.pdf" plugins={[defaultLayoutPluginInstance, dropPluginInstance]} />
+            <Viewer fileUrl="/pdf-open-parameters.pdf" plugins={[defaultLayoutPluginInstance]} />
         </div>
     );
 };
 
-export default Index;
+export default IndexPage;

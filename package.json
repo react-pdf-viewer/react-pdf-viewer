@@ -52,7 +52,7 @@
         "jest": "^27.4.3",
         "jest-puppeteer": "^6.0.2",
         "lerna": "^4.0.0",
-        "pdfjs-dist": "^2.10.377",
+        "pdfjs-dist": "^2.11.338",
         "postcss": "^8.4.4",
         "postcss-cli": "^9.0.2",
         "postcss-import": "^14.0.2",

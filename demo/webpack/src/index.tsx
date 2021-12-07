@@ -6,7 +6,7 @@ import App from './App';
 
 const rootElement = document.getElementById('root');
 render(
-    <Worker workerUrl="https://unpkg.com/pdfjs-dist@2.10.377/build/pdf.worker.js">
+    <Worker workerUrl="https://unpkg.com/pdfjs-dist@2.11.338/build/pdf.worker.js">
         <App />
     </Worker>,
     rootElement
