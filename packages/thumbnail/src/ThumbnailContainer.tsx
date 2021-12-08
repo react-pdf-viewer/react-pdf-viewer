@@ -7,7 +7,7 @@
  */
 
 import * as React from 'react';
-import { useIntersectionObserver, Spinner } from '@react-pdf-viewer/core';
+import { useIntersectionObserver } from '@react-pdf-viewer/core';
 import type { PdfJs, VisibilityChanged } from '@react-pdf-viewer/core';
 
 import { SpinnerContext } from './SpinnerContext';
@@ -54,7 +54,6 @@ export const ThumbnailContainer: React.FC<{
         if (!isActive) {
             return;
         }
-        const ele = containerRef.current;
         const visibility = visibilityRef.current;
         if (!visibility.isVisible || visibility.ratio < 1) {
             onActive(pageIndex);
