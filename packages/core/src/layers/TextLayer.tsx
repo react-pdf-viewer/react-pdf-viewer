@@ -48,6 +48,7 @@ export const TextLayer: React.FC<{
         if (!containerEle) {
             return;
         }
+        containerEle.removeAttribute('data-testid');
         const viewport = page.getViewport({ rotation, scale });
 
         plugins.forEach((plugin) => {
@@ -70,6 +71,7 @@ export const TextLayer: React.FC<{
             });
             renderTask.current.promise.then(
                 () => {
+                    containerEle.setAttribute('data-testid', `core__text-layer-${pageIndex}`);
                     const spans: HTMLElement[] = [].slice.call(containerEle.children);
                     spans.forEach((span) => span.classList.add('rpv-core__text-layer-text'));
 
@@ -85,7 +87,7 @@ export const TextLayer: React.FC<{
                     });
                 },
                 () => {
-                    /**/
+                    containerEle.removeAttribute('data-testid');
                 }
             );
         });

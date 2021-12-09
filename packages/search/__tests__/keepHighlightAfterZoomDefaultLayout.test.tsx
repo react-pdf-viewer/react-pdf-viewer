@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { findAllByTitle, findByText } from '@testing-library/dom';
+import { findAllByTitle } from '@testing-library/dom';
 import { fireEvent, render } from '@testing-library/react';
 
 import { Viewer } from '@react-pdf-viewer/core';
@@ -44,7 +44,9 @@ test('Keep highlighting after zooming', async () => {
     let page = await findByTestId('core__page-layer-4');
     mockIsIntersecting(page, true);
 
-    await findByText(page, 'Parameters for Opening PDF Files');
+    // Wait for the text layer to be rendered completely
+    await findByTestId('core__text-layer-4');
+
     let highlights = await findAllByTitle(page, keyword);
     expect(highlights.length).toEqual(8);
     expect(highlights[0].getAttribute('title')).toEqual(keyword);
@@ -56,8 +58,8 @@ test('Keep highlighting after zooming', async () => {
 
     page = await findByTestId('core__page-layer-5');
     mockIsIntersecting(page, true);
+    await findByTestId('core__text-layer-5');
 
-    await findByText(page, 'Adobe Acrobat SDK');
     highlights = await findAllByTitle(page, keyword);
     expect(highlights.length).toEqual(4);
     expect(highlights[0].getAttribute('title')).toEqual(keyword);
