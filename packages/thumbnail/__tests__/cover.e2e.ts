@@ -17,7 +17,7 @@ test('Cover component', async () => {
 
     expect(result.cls).toEqual('rpv-thumbnail__cover-image');
     expect(result.src.startsWith('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPAA')).toBeTruthy();
-    expect(result.src.length).toEqual(13994);
+    expect(result.src.length).toEqual(13406);
     expect(result.height).toEqual(320);
     expect(result.width).toEqual(240);
 });
