@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { fireEvent, render, waitForElementToBeRemoved } from '@testing-library/react';
+import { fireEvent, render } from '@testing-library/react';
 import { defaultLayoutPlugin } from '@react-pdf-viewer/default-layout';
 
 import { mockIsIntersecting } from '../../../test-utils/mockIntersectionObserver';
@@ -41,7 +41,6 @@ test('onSwitchTheme() callback', async () => {
     const switchButton = await getByLabelText('Switch to the dark theme');
     fireEvent.click(switchButton);
 
-    await findByTestId('thumbnail__list');
     expect(viewerEle.classList.contains('rpv-core__viewer--dark')).toEqual(true);
 
     const currentThemeLabel = await findByTestId('current-theme');
@@ -51,7 +50,6 @@ test('onSwitchTheme() callback', async () => {
     const switchLightButton = await getByLabelText('Switch to the light theme');
     fireEvent.click(switchLightButton);
 
-    await findByTestId('thumbnail__list');
     expect(viewerEle.classList.contains('rpv-core__viewer--light')).toEqual(true);
     expect(currentThemeLabel.textContent).toEqual('light');
 });
