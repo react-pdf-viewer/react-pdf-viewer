@@ -9,6 +9,7 @@
 import * as React from 'react';
 import { PdfJs, Spinner, Store, StoreHandler } from '@react-pdf-viewer/core';
 
+import { CoverInner } from './CoverInner';
 import { StoreProps } from './types/StoreProps';
 
 export const Cover: React.FC<{
@@ -16,63 +17,11 @@ export const Cover: React.FC<{
     renderSpinner?: () => React.ReactElement;
     store: Store<StoreProps>;
 }> = ({ getPageIndex, renderSpinner, store }) => {
-    const [src, setSrc] = React.useState('');
     const [currentDoc, setCurrentDoc] = React.useState<PdfJs.PdfDocument>();
 
     const handleDocumentChanged: StoreHandler<PdfJs.PdfDocument> = (doc: PdfJs.PdfDocument) => {
         setCurrentDoc(doc);
     };
-
-    const containerRef = React.useRef<HTMLDivElement>();
-
-    React.useEffect(() => {
-        if (!currentDoc) {
-            return;
-        }
-
-        const containerEle = containerRef.current;
-        if (!containerEle) {
-            return;
-        }
-
-        const { numPages } = currentDoc;
-        const targetPage = getPageIndex ? getPageIndex({ numPages }) : 0;
-        const normalizePage = Math.max(0, Math.min(targetPage, numPages - 1));
-        currentDoc.getPage(normalizePage + 1).then((page) => {
-            const viewport = page.getViewport({ scale: 1 });
-            const w = viewport.width;
-            const h = viewport.height;
-
-            const canvas = document.createElement('canvas') as HTMLCanvasElement;
-            const canvasContext = canvas.getContext('2d', {
-                alpha: false,
-            }) as CanvasRenderingContext2D;
-
-            const containerWidth = containerEle.clientWidth;
-            const containerHeight = containerEle.clientHeight;
-
-            const scaled = Math.min(containerWidth / w, containerHeight / h);
-            const canvasWidth = scaled * w;
-            const canvasHeight = scaled * h;
-
-            canvas.height = canvasHeight;
-            canvas.width = canvasWidth;
-            canvas.style.opacity = '0';
-
-            const renderViewport = page.getViewport({
-                rotation: 0,
-                scale: scaled,
-            });
-
-            const renderTask = page.render({ canvasContext, viewport: renderViewport });
-            renderTask.promise.then(
-                (): void => setSrc(canvas.toDataURL()),
-                (): void => {
-                    /**/
-                }
-            );
-        });
-    }, [currentDoc]);
 
     React.useEffect(() => {
         store.subscribe('doc', handleDocumentChanged);
@@ -83,11 +32,11 @@ export const Cover: React.FC<{
     }, []);
 
     return (
-        <div className="rpv-thumbnail__cover" ref={containerRef}>
-            {!src ? (
-                <div className="rpv-thumbnail__cover-loader">{renderSpinner ? renderSpinner() : <Spinner />}</div>
+        <div className="rpv-thumbnail__cover">
+            {currentDoc ? (
+                <CoverInner doc={currentDoc} getPageIndex={getPageIndex} renderSpinner={renderSpinner} />
             ) : (
-                <img className="rpv-thumbnail__cover-image" data-testid="thumbnail__cover-image" src={src} />
+                <div className="rpv-thumbnail__cover-loader">{renderSpinner ? renderSpinner() : <Spinner />}</div>
             )}
         </div>
     );

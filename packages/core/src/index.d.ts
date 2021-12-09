@@ -441,6 +441,10 @@ export function useIsomorphicLayoutEffect(effect: React.EffectCallback, deps?: R
 
 export function useIsMounted(): React.MutableRefObject<boolean>;
 
+export function usePages(doc: PdfJs.PdfDocument): {
+    getPage: (pageIndex: number) => Promise<PdfJs.Page>;
+};
+
 // Utils
 export function classNames(classes: { [clazz: string]: boolean }): string;
 
