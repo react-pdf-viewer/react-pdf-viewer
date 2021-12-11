@@ -9,6 +9,7 @@
 import * as React from 'react';
 
 import { Spinner } from '../components/Spinner';
+import { usePages } from '../hooks/usePages';
 import { SpecialZoomLevel } from '../structs/SpecialZoomLevel';
 import { decrease } from '../zoom/zoomingLevel';
 import { calculateScale } from './calculateScale';
@@ -20,6 +21,7 @@ export const PageSizeCalculator: React.FC<{
     doc: PdfJs.PdfDocument;
     render(pageSize: PageSize): React.ReactElement;
 }> = ({ defaultScale, doc, render }) => {
+    const { getPage } = usePages(doc);
     const pagesRef = React.useRef<HTMLDivElement | null>(null);
     const [pageSize, setPageSize] = React.useState<PageSize>({
         pageHeight: 0,
@@ -28,7 +30,7 @@ export const PageSizeCalculator: React.FC<{
     });
 
     React.useEffect(() => {
-        doc.getPage(1).then((pdfPage) => {
+        getPage(0).then((pdfPage) => {
             const viewport = pdfPage.getViewport({ scale: 1 });
             const w = viewport.width;
             const h = viewport.height;

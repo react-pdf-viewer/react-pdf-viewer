@@ -7,7 +7,7 @@
  */
 
 import * as React from 'react';
-import { useIntersectionObserver } from '@react-pdf-viewer/core';
+import { useIntersectionObserver, usePages } from '@react-pdf-viewer/core';
 import type { PdfJs, VisibilityChanged } from '@react-pdf-viewer/core';
 
 import { SpinnerContext } from './SpinnerContext';
@@ -32,6 +32,7 @@ export const ThumbnailContainer: React.FC<{
     rotation: number;
     onActive(pageIndex: number): void;
 }> = ({ doc, isActive, pageHeight, pageIndex, pageWidth, rotation, onActive }) => {
+    const { getPage } = usePages(doc);
     const [pageSize, setPageSize] = React.useState<PageState>({
         height: pageHeight,
         isCalculated: false,
@@ -63,7 +64,7 @@ export const ThumbnailContainer: React.FC<{
     const onVisibilityChanged = (params: VisibilityChanged): void => {
         visibilityRef.current = params;
         if (params.isVisible && !isCalculated) {
-            doc.getPage(pageIndex + 1).then((pdfPage) => {
+            getPage(pageIndex).then((pdfPage) => {
                 const viewport = pdfPage.getViewport({ scale: 1 });
 
                 setPageSize({

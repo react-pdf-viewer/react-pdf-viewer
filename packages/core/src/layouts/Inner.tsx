@@ -8,6 +8,7 @@
 
 import * as React from 'react';
 
+import { usePages } from '../hooks/usePages';
 import { useTrackResize } from '../hooks/useTrackResize';
 import { PageLayer } from '../layers/PageLayer';
 import { LocalizationContext } from '../localization/LocalizationContext';
@@ -54,6 +55,7 @@ export const Inner: React.FC<{
     onPageChange,
     onZoom,
 }) => {
+    const { getPage } = usePages(doc);
     const { l10n } = React.useContext(LocalizationContext);
     const themeContext = React.useContext(ThemeContext);
     const containerRef = React.useRef<HTMLDivElement | null>(null);
@@ -121,8 +123,7 @@ export const Inner: React.FC<{
             return;
         }
 
-        const newPageIndex = pageIndex + 1;
-        doc.getPage(newPageIndex).then((page) => {
+        getPage(pageIndex).then((page) => {
             const viewport = page.getViewport({ scale: 1 });
 
             let top = 0;

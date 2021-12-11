@@ -38,12 +38,14 @@ export declare namespace PdfJs {
     }
 
     interface LoadingTask {
+        docId: string;
         onPassword: (verifyPassword: VerifyPassword, reason: number) => void;
         onProgress: (progress: LoadingTaskProgress) => void;
         promise: Promise<PdfDocument>;
         destroy(): void;
     }
     interface PdfDocument {
+        loadingTask: LoadingTask;
         numPages: number;
         getAttachments(): Promise<{ [filename: string]: Attachment }>;
         getData(): Promise<Uint8Array>;
@@ -251,6 +253,7 @@ export declare namespace PdfJs {
         getOperatorList(): Promise<PageOperatorList>;
         commonObjs: PageCommonObjects;
         objs: PageObjects;
+        ref?: OutlineRef;
         view: number[];
     }
 
