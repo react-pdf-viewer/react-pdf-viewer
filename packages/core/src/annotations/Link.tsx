@@ -8,8 +8,8 @@
 
 import * as React from 'react';
 
+import { usePages } from '../hooks/usePages';
 import { SpecialZoomLevel } from '../structs/SpecialZoomLevel';
-import { getDestination } from '../utils/getDestination';
 import { Annotation } from './Annotation';
 import type { PdfJs } from '../types/PdfJs';
 
@@ -21,13 +21,15 @@ export const Link: React.FC<{
     onExecuteNamedAction(action: string): void;
     onJumpToDest(pageIndex: number, bottomOffset: number, leftOffset: number, scaleTo: number | SpecialZoomLevel): void;
 }> = ({ annotation, doc, page, viewport, onExecuteNamedAction, onJumpToDest }) => {
+    const { getDestination } = usePages(doc);
+
     const link = (e: React.MouseEvent): void => {
         e.preventDefault();
         annotation.action
             ? onExecuteNamedAction(annotation.action)
-            : getDestination(doc, annotation.dest).then((target) => {
+            : getDestination(annotation.dest).then((target) => {
                   const { pageIndex, bottomOffset, scaleTo } = target;
-                  onJumpToDest(bottomOffset ? pageIndex + 1 : pageIndex, bottomOffset, 0, scaleTo);
+                  onJumpToDest(pageIndex, bottomOffset, 0, scaleTo);
               });
     };
 

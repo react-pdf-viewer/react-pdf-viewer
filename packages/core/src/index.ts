@@ -53,5 +53,4 @@ export { usePages } from './hooks/usePages';
 
 // Utils
 export { classNames } from './utils/classNames';
-export { getDestination } from './utils/getDestination';
 export { isMac } from './utils/isMac';
