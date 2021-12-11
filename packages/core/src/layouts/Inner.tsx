@@ -119,13 +119,13 @@ export const Inner: React.FC<{
     ): void => {
         const pagesContainer = pagesRef.current;
         const currentState = stateRef.current;
-        if (!pagesContainer || !currentState) {
+        const targetPageEle = pageRefs[pageIndex].current;
+        if (!pagesContainer || !currentState || !targetPageEle) {
             return;
         }
 
         getPage(pageIndex).then((page) => {
             const viewport = page.getViewport({ scale: 1 });
-
             let top = 0;
             const bottom = bottomOffset || 0;
             let left = leftOffset || 0;
@@ -143,16 +143,14 @@ export const Inner: React.FC<{
                     zoom(updateScale);
                     break;
                 default:
-                    top = (viewport.height - bottom) * currentState.scale;
-                    left = left * currentState.scale;
+                    const boundingRect = viewport.convertToViewportPoint(left, bottom);
+                    left = Math.max(boundingRect[0] * currentState.scale, 0);
+                    top = Math.max(boundingRect[1] * currentState.scale, 0);
                     break;
             }
 
-            const targetPageEle = pageRefs[pageIndex].current;
-            if (targetPageEle) {
-                pagesContainer.scrollTop = targetPageEle.offsetTop + top;
-                pagesContainer.scrollLeft = targetPageEle.offsetLeft + left;
-            }
+            pagesContainer.scrollTop = targetPageEle.offsetTop + top;
+            pagesContainer.scrollLeft = targetPageEle.offsetLeft + left;
         });
     };
 

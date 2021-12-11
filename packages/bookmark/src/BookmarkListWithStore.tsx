@@ -22,10 +22,10 @@ export const BookmarkListWithStore: React.FC<{
         setCurrentDoc(doc);
     };
 
-    const jump = (pageIndex: number, bottomOffset: number, scaleTo: number | SpecialZoomLevel) => {
+    const jump = (pageIndex: number, bottomOffset: number, leftOffset: number, scaleTo: number | SpecialZoomLevel) => {
         const jumpToDestination = store.get('jumpToDestination');
         if (jumpToDestination) {
-            jumpToDestination(pageIndex, bottomOffset, 0, scaleTo);
+            jumpToDestination(pageIndex, bottomOffset, leftOffset, scaleTo);
         }
     };
 

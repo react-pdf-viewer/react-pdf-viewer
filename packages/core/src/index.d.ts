@@ -443,6 +443,7 @@ export function useIsMounted(): React.MutableRefObject<boolean>;
 
 export interface JumpToDestination {
     bottomOffset: number;
+    leftOffset: number;
     pageIndex: number;
     scaleTo: number | SpecialZoomLevel;
 }
@@ -510,6 +511,7 @@ export declare namespace PdfJs {
         transform: number[];
         width: number;
         clone(params: ViewPortCloneParams): ViewPort;
+        convertToViewportPoint(x: number, y: number): [number, number];
     }
 
     interface PageTextContent {
