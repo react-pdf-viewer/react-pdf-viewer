@@ -72,7 +72,7 @@ export const BookmarkItem: React.FC<{
                         {bookmark.title}
                     </a>
                 ) : (
-                    <div className="rpv-bookmark__title" onClick={clickBookmak}>
+                    <div className="rpv-bookmark__title" aria-label={bookmark.title} onClick={clickBookmak}>
                         {bookmark.title}
                     </div>
                 )}
