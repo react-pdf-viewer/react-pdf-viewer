@@ -66,6 +66,8 @@ export const CoverInner: React.FC<{
     return src ? (
         <img className="rpv-thumbnail__cover-image" data-testid="thumbnail__cover-image" src={src} />
     ) : (
-        <div className="rpv-thumbnail__cover-loader">{renderSpinner ? renderSpinner() : <Spinner />}</div>
+        <div className="rpv-thumbnail__cover-loader" ref={containerRef}>
+            {renderSpinner ? renderSpinner() : <Spinner />}
+        </div>
     );
 };
