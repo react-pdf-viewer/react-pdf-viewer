@@ -8,55 +8,56 @@
 
 import * as React from 'react';
 
-import { usePrevious } from '../hooks/usePrevious';
 import { SpecialZoomLevel } from '../structs/SpecialZoomLevel';
 import type { PdfJs } from '../types/PdfJs';
 
 export interface JumpToDestination {
     bottomOffset: number;
+    leftOffset: number;
     pageIndex: number;
     scaleTo: number | SpecialZoomLevel;
 }
 
 const normalizeDestination = (pageIndex: number, destArray: PdfJs.OutlineDestination): JumpToDestination => {
-    let bottomOffset;
-    let scale;
     switch (destArray[1].name) {
         case 'XYZ':
-            bottomOffset = destArray[3];
-            scale = destArray[4];
             return {
-                bottomOffset,
-                pageIndex: pageIndex - 1,
-                scaleTo: scale,
+                bottomOffset: destArray[3],
+                leftOffset: destArray[2] || 0,
+                pageIndex: pageIndex,
+                scaleTo: destArray[4],
             };
         case 'Fit':
         case 'FitB':
             return {
                 bottomOffset: 0,
-                pageIndex: pageIndex - 1,
+                leftOffset: 0,
+                pageIndex: pageIndex,
                 scaleTo: SpecialZoomLevel.PageFit,
             };
         case 'FitH':
         case 'FitBH':
             return {
                 bottomOffset: destArray[2],
-                pageIndex: pageIndex - 1,
+                leftOffset: 0,
+                pageIndex: pageIndex,
                 scaleTo: SpecialZoomLevel.PageWidth,
             };
         default:
             return {
                 bottomOffset: 0,
-                pageIndex: pageIndex - 1,
+                leftOffset: 0,
+                pageIndex: pageIndex,
                 scaleTo: 1,
             };
     }
 };
 
 // Since these values are shared to different plugins, we can't use them as `React.useRef`
+// Map the page reference to its index (zero-based index)
 const pageOutlinesMap = new Map<string, number>();
 
-// Map the page reference to its index
+// Map the index to the page instance
 const pagesMap = new Map<number, PdfJs.Page>();
 const previousDoc = {
     docId: '',
@@ -101,7 +102,7 @@ export const usePages = (
             doc.getPage(pageIndex + 1).then((page) => {
                 pagesMap.set(pageIndex, page);
                 if (page.ref) {
-                    cacheOutlineRef(page.ref, pageIndex + 1);
+                    cacheOutlineRef(page.ref, pageIndex);
                 }
                 resolve(page);
             });
@@ -124,7 +125,7 @@ export const usePages = (
                     const pageIndex = getPageIndex(outlineRef);
                     if (pageIndex === null) {
                         doc.getPageIndex(outlineRef).then((pageIndex) => {
-                            cacheOutlineRef(outlineRef, pageIndex + 1);
+                            cacheOutlineRef(outlineRef, pageIndex);
                             getDestination(dest).then((result) => res(result));
                         });
                     } else {

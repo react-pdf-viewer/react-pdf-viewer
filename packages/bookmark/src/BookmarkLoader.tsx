@@ -28,7 +28,7 @@ interface BookmarkState {
 export const BookmarkLoader: React.FC<{
     doc: PdfJs.PdfDocument;
     store: Store<StoreProps>;
-    onJumpToDest(pageIndex: number, bottomOffset: number, scaleTo: number | SpecialZoomLevel): void;
+    onJumpToDest(pageIndex: number, bottomOffset: number, leftOffset: number, scaleTo: number | SpecialZoomLevel): void;
 }> = ({ doc, store, onJumpToDest }) => {
     const { l10n } = React.useContext(LocalizationContext);
     const { direction } = React.useContext(ThemeContext);

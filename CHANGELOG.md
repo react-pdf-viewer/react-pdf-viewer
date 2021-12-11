@@ -71,6 +71,7 @@ const { Thumbnails } = thumbnailPluginInstance;
 **Bug fixes**
 
 -   Navigating between search results should be the same as their appearances on pages
+-   The internal links don't work properly in some cases
 -   The thumbnails are stuck at loading spinner
 -   The `Cover` component position isn't correct
 -   The number of pages slot `<NumberOfPages />` isn't correct when using the `renderToolbar`

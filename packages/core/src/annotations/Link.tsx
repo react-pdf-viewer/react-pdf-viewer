@@ -28,8 +28,8 @@ export const Link: React.FC<{
         annotation.action
             ? onExecuteNamedAction(annotation.action)
             : getDestination(annotation.dest).then((target) => {
-                  const { pageIndex, bottomOffset, scaleTo } = target;
-                  onJumpToDest(pageIndex, bottomOffset, 0, scaleTo);
+                  const { pageIndex, bottomOffset, leftOffset, scaleTo } = target;
+                  onJumpToDest(pageIndex, bottomOffset, leftOffset, scaleTo);
               });
     };
 

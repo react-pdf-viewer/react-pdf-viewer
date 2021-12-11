@@ -134,6 +134,7 @@ export declare namespace PdfJs {
         transform: number[];
         width: number;
         clone(params: ViewPortCloneParams): ViewPort;
+        convertToViewportPoint(x: number, y: number): [number, number];
     }
 
     // Render task

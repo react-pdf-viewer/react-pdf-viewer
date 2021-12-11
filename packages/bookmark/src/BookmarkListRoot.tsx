@@ -22,7 +22,7 @@ export const BookmarkListRoot: React.FC<{
     bookmarks: PdfJs.Outline[];
     doc: PdfJs.PdfDocument;
     store: Store<StoreProps>;
-    onJumpToDest(pageIndex: number, bottomOffset: number, scaleTo: number | SpecialZoomLevel): void;
+    onJumpToDest(pageIndex: number, bottomOffset: number, leftOffset: number, scaleTo: number | SpecialZoomLevel): void;
 }> = ({ bookmarks, doc, store, onJumpToDest }) => {
     const { getDestination } = usePages(doc);
     const containerRef = React.useRef<HTMLDivElement>();
@@ -49,8 +49,8 @@ export const BookmarkListRoot: React.FC<{
 
     const jumpToDest = (dest: PdfJs.OutlineDestinationType): void => {
         getDestination(dest).then((target) => {
-            const { pageIndex, bottomOffset, scaleTo } = target;
-            onJumpToDest(pageIndex, bottomOffset, scaleTo);
+            const { pageIndex, bottomOffset, leftOffset, scaleTo } = target;
+            onJumpToDest(pageIndex, bottomOffset, leftOffset, scaleTo);
         });
     };
 
