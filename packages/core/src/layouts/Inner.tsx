@@ -67,6 +67,15 @@ export const Inner: React.FC<{
     const keepSpecialZoomLevelRef = React.useRef<SpecialZoomLevel | null>(
         typeof defaultScale === 'string' ? defaultScale : null
     );
+    // Map the page index to page element
+    const pagesMapRef = React.useRef<Map<number, HTMLDivElement>>(new Map());
+
+    React.useEffect(() => {
+        return () => {
+            // Clear the maps
+            pagesMapRef.current.clear();
+        };
+    }, []);
 
     const handlePagesResize = (target: Element) => {
         if (keepSpecialZoomLevelRef.current) {
@@ -84,7 +93,6 @@ export const Inner: React.FC<{
 
     const arr = Array(numPages).fill(null);
     const pageVisibility = arr.map(() => 0);
-    const pageRefs = arr.map(() => React.useRef<HTMLDivElement>());
 
     // The methods that a plugin can hook on
     // -------------------------------------
@@ -102,12 +110,9 @@ export const Inner: React.FC<{
 
     const getPagesContainer = () => pagesRef.current;
 
-    const getPageElement = (pageIndex: number): HTMLElement | null => {
-        if (pageIndex < 0 || pageIndex >= numPages) {
-            return null;
-        }
-        return pageRefs[pageIndex].current;
-    };
+    const getPageElement = (pageIndex: number): HTMLElement | null => (
+        pagesMapRef.current.get(pageIndex) || null
+    );
 
     const getViewerState = () => stateRef.current;
 
@@ -119,7 +124,7 @@ export const Inner: React.FC<{
     ): void => {
         const pagesContainer = pagesRef.current;
         const currentState = stateRef.current;
-        const targetPageEle = pageRefs[pageIndex].current;
+        const targetPageEle = pagesMapRef.current.get(pageIndex);
         if (!pagesContainer || !currentState || !targetPageEle) {
             return;
         }
@@ -159,7 +164,7 @@ export const Inner: React.FC<{
             return;
         }
         const pagesContainer = pagesRef.current;
-        const targetPage = pageRefs[pageIndex].current;
+        const targetPage = pagesMapRef.current.get(pageIndex);
         if (pagesContainer && targetPage) {
             pagesContainer.scrollTop = targetPage.offsetTop;
             pagesContainer.scrollLeft = targetPage.offsetLeft;
@@ -353,7 +358,7 @@ export const Inner: React.FC<{
                                         className="rpv-core__inner-page"
                                         key={`pagelayer-${index}`}
                                         ref={(ref): void => {
-                                            pageRefs[index].current = ref as HTMLDivElement;
+                                            pagesMapRef.current.set(index, ref);
                                         }}
                                         role="region"
                                     >
