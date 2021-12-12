@@ -70,6 +70,14 @@ export const Inner: React.FC<{
     // Map the page index to page element
     const pagesMapRef = React.useRef<Map<number, HTMLDivElement>>(new Map());
 
+    const pageIndexes = React.useMemo(
+        () =>
+            Array(doc.numPages)
+                .fill(0)
+                .map((_, index) => index),
+        [doc.loadingTask.docId]
+    );
+
     React.useEffect(() => {
         return () => {
             // Clear the maps
@@ -110,9 +118,7 @@ export const Inner: React.FC<{
 
     const getPagesContainer = () => pagesRef.current;
 
-    const getPageElement = (pageIndex: number): HTMLElement | null => (
-        pagesMapRef.current.get(pageIndex) || null
-    );
+    const getPageElement = (pageIndex: number): HTMLElement | null => pagesMapRef.current.get(pageIndex) || null;
 
     const getViewerState = () => stateRef.current;
 
@@ -349,36 +355,32 @@ export const Inner: React.FC<{
                 },
                 children: (
                     <>
-                        {Array(numPages)
-                            .fill(0)
-                            .map((_, index) => {
-                                return (
-                                    <div
-                                        aria-label={pageLabel.replace('{{pageIndex}}', `${index + 1}`)}
-                                        className="rpv-core__inner-page"
-                                        key={`pagelayer-${index}`}
-                                        ref={(ref): void => {
-                                            pagesMapRef.current.set(index, ref);
-                                        }}
-                                        role="region"
-                                    >
-                                        <PageLayer
-                                            currentPage={currentPage}
-                                            doc={doc}
-                                            height={pageHeight}
-                                            pageIndex={index}
-                                            plugins={plugins}
-                                            renderPage={renderPage}
-                                            rotation={rotation}
-                                            scale={scale}
-                                            width={pageWidth}
-                                            onExecuteNamedAction={executeNamedAction}
-                                            onJumpToDest={jumpToDestination}
-                                            onPageVisibilityChanged={pageVisibilityChanged}
-                                        />
-                                    </div>
-                                );
-                            })}
+                        {pageIndexes.map((index) => (
+                            <div
+                                aria-label={pageLabel.replace('{{pageIndex}}', `${index + 1}`)}
+                                className="rpv-core__inner-page"
+                                key={`pagelayer-${index}`}
+                                ref={(ref): void => {
+                                    pagesMapRef.current.set(index, ref);
+                                }}
+                                role="region"
+                            >
+                                <PageLayer
+                                    currentPage={currentPage}
+                                    doc={doc}
+                                    height={pageHeight}
+                                    pageIndex={index}
+                                    plugins={plugins}
+                                    renderPage={renderPage}
+                                    rotation={rotation}
+                                    scale={scale}
+                                    width={pageWidth}
+                                    onExecuteNamedAction={executeNamedAction}
+                                    onJumpToDest={jumpToDestination}
+                                    onPageVisibilityChanged={pageVisibilityChanged}
+                                />
+                            </div>
+                        ))}
                     </>
                 ),
             },
