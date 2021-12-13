@@ -7,6 +7,7 @@
  */
 
 import * as React from 'react';
+import { getPage } from '@react-pdf-viewer/core';
 import type { Store } from '@react-pdf-viewer/core';
 
 import { EMPTY_KEYWORD_REGEXP } from './constants';
@@ -116,9 +117,8 @@ export const useSearch = (
 
         const promises = Array(currentDoc.numPages)
             .fill(0)
-            .map((_, pageIndex) => {
-                return currentDoc
-                    .getPage(pageIndex + 1)
+            .map((_, pageIndex) =>
+                getPage(currentDoc, pageIndex)
                     .then((page) => {
                         return page.getTextContent();
                     })
@@ -128,8 +128,8 @@ export const useSearch = (
                             pageContent,
                             pageIndex,
                         });
-                    });
-            });
+                    })
+            );
         return Promise.all(promises).then((data) => {
             data.sort((a, b) => a.pageIndex - b.pageIndex);
             return Promise.resolve(data.map((item) => item.pageContent));

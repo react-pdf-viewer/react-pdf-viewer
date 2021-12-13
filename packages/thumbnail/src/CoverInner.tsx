@@ -7,14 +7,13 @@
  */
 
 import * as React from 'react';
-import { PdfJs, Spinner, usePages } from '@react-pdf-viewer/core';
+import { getPage, PdfJs, Spinner } from '@react-pdf-viewer/core';
 
 export const CoverInner: React.FC<{
     getPageIndex?({ numPages }: { numPages: number }): number;
     renderSpinner?: () => React.ReactElement;
     doc: PdfJs.PdfDocument;
 }> = ({ getPageIndex, renderSpinner, doc }) => {
-    const { getPage } = usePages(doc);
     const [src, setSrc] = React.useState('');
     const containerRef = React.useRef<HTMLDivElement>();
 
@@ -27,7 +26,7 @@ export const CoverInner: React.FC<{
         const { numPages } = doc;
         const targetPage = getPageIndex ? getPageIndex({ numPages }) : 0;
         const normalizePage = Math.max(0, Math.min(targetPage, numPages - 1));
-        getPage(normalizePage).then((page) => {
+        getPage(doc, normalizePage).then((page) => {
             const viewport = page.getViewport({ scale: 1 });
             const w = viewport.width;
             const h = viewport.height;

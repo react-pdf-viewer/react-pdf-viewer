@@ -49,8 +49,8 @@ export { Worker } from './Worker';
 export { useIntersectionObserver } from './hooks/useIntersectionObserver';
 export { useIsMounted } from './hooks/useIsMounted';
 export { useIsomorphicLayoutEffect } from './hooks/useIsomorphicLayoutEffect';
-export { usePages } from './hooks/usePages';
 
 // Utils
 export { classNames } from './utils/classNames';
 export { isMac } from './utils/isMac';
+export { getDestination, getPage } from './utils/managePages';

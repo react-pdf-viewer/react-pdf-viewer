@@ -441,20 +441,18 @@ export function useIsomorphicLayoutEffect(effect: React.EffectCallback, deps?: R
 
 export function useIsMounted(): React.MutableRefObject<boolean>;
 
+// Utils
+export function classNames(classes: { [clazz: string]: boolean }): string;
+
+export function getPage(doc: PdfJs.PdfDocument, pageIndex: number): Promise<PdfJs.Page>;
+
 export interface JumpToDestination {
     bottomOffset: number;
     leftOffset: number;
     pageIndex: number;
     scaleTo: number | SpecialZoomLevel;
 }
-
-export function usePages(doc: PdfJs.PdfDocument): {
-    getPage: (pageIndex: number) => Promise<PdfJs.Page>;
-    getDestination: (dest: PdfJs.OutlineDestinationType) => Promise<JumpToDestination>;
-};
-
-// Utils
-export function classNames(classes: { [clazz: string]: boolean }): string;
+export function getDestination(doc: PdfJs.PdfDocument, dest: PdfJs.OutlineDestinationType): Promise<JumpToDestination>;
 
 export function isMac(): boolean;
 

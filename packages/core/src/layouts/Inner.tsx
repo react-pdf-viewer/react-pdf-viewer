@@ -8,12 +8,12 @@
 
 import * as React from 'react';
 
-import { usePages } from '../hooks/usePages';
 import { useTrackResize } from '../hooks/useTrackResize';
 import { PageLayer } from '../layers/PageLayer';
 import { LocalizationContext } from '../localization/LocalizationContext';
 import { SpecialZoomLevel } from '../structs/SpecialZoomLevel';
 import { ThemeContext } from '../theme/ThemeContext';
+import { clearPagesCache, getPage } from '../utils/managePages';
 import { getFileExt } from '../utils/getFileExt';
 import { calculateScale } from './calculateScale';
 import type { PageSize } from '../types/PageSize';
@@ -55,7 +55,7 @@ export const Inner: React.FC<{
     onPageChange,
     onZoom,
 }) => {
-    const { getPage } = usePages(doc);
+    const docId = doc.loadingTask.docId;
     const { l10n } = React.useContext(LocalizationContext);
     const themeContext = React.useContext(ThemeContext);
     const containerRef = React.useRef<HTMLDivElement | null>(null);
@@ -67,6 +67,23 @@ export const Inner: React.FC<{
     const keepSpecialZoomLevelRef = React.useRef<SpecialZoomLevel | null>(
         typeof defaultScale === 'string' ? defaultScale : null
     );
+    // Map the page index to page element
+    const pagesMapRef = React.useRef<Map<number, HTMLDivElement>>(new Map());
+
+    const pageIndexes = React.useMemo(
+        () =>
+            Array(doc.numPages)
+                .fill(0)
+                .map((_, index) => index),
+        [docId]
+    );
+
+    React.useEffect(() => {
+        return () => {
+            // Clear the maps
+            pagesMapRef.current.clear();
+        };
+    }, []);
 
     const handlePagesResize = (target: Element) => {
         if (keepSpecialZoomLevelRef.current) {
@@ -84,7 +101,6 @@ export const Inner: React.FC<{
 
     const arr = Array(numPages).fill(null);
     const pageVisibility = arr.map(() => 0);
-    const pageRefs = arr.map(() => React.useRef<HTMLDivElement>());
 
     // The methods that a plugin can hook on
     // -------------------------------------
@@ -102,12 +118,7 @@ export const Inner: React.FC<{
 
     const getPagesContainer = () => pagesRef.current;
 
-    const getPageElement = (pageIndex: number): HTMLElement | null => {
-        if (pageIndex < 0 || pageIndex >= numPages) {
-            return null;
-        }
-        return pageRefs[pageIndex].current;
-    };
+    const getPageElement = (pageIndex: number): HTMLElement | null => pagesMapRef.current.get(pageIndex) || null;
 
     const getViewerState = () => stateRef.current;
 
@@ -119,12 +130,12 @@ export const Inner: React.FC<{
     ): void => {
         const pagesContainer = pagesRef.current;
         const currentState = stateRef.current;
-        const targetPageEle = pageRefs[pageIndex].current;
+        const targetPageEle = pagesMapRef.current.get(pageIndex);
         if (!pagesContainer || !currentState || !targetPageEle) {
             return;
         }
 
-        getPage(pageIndex).then((page) => {
+        getPage(doc, pageIndex).then((page) => {
             const viewport = page.getViewport({ scale: 1 });
             let top = 0;
             const bottom = bottomOffset || 0;
@@ -159,7 +170,7 @@ export const Inner: React.FC<{
             return;
         }
         const pagesContainer = pagesRef.current;
-        const targetPage = pageRefs[pageIndex].current;
+        const targetPage = pagesMapRef.current.get(pageIndex);
         if (pagesContainer && targetPage) {
             pagesContainer.scrollTop = targetPage.offsetTop;
             pagesContainer.scrollLeft = targetPage.offsetLeft;
@@ -264,7 +275,7 @@ export const Inner: React.FC<{
                 }
             });
         };
-    }, []);
+    }, [docId]);
 
     React.useEffect(() => {
         onDocumentLoad({ doc, file: currentFile });
@@ -275,7 +286,7 @@ export const Inner: React.FC<{
         if (initialPage) {
             jumpToPage(initialPage);
         }
-    }, []);
+    }, [docId]);
 
     React.useEffect(() => {
         onPageChange({ currentPage, doc });
@@ -288,6 +299,12 @@ export const Inner: React.FC<{
             scale,
         });
     }, [currentPage]);
+
+    React.useEffect(() => {
+        return () => {
+            clearPagesCache();
+        };
+    }, []);
 
     const pageVisibilityChanged = (pageIndex: number, ratio: number): void => {
         pageVisibility[pageIndex] = ratio;
@@ -344,36 +361,32 @@ export const Inner: React.FC<{
                 },
                 children: (
                     <>
-                        {Array(numPages)
-                            .fill(0)
-                            .map((_, index) => {
-                                return (
-                                    <div
-                                        aria-label={pageLabel.replace('{{pageIndex}}', `${index + 1}`)}
-                                        className="rpv-core__inner-page"
-                                        key={`pagelayer-${index}`}
-                                        ref={(ref): void => {
-                                            pageRefs[index].current = ref as HTMLDivElement;
-                                        }}
-                                        role="region"
-                                    >
-                                        <PageLayer
-                                            currentPage={currentPage}
-                                            doc={doc}
-                                            height={pageHeight}
-                                            pageIndex={index}
-                                            plugins={plugins}
-                                            renderPage={renderPage}
-                                            rotation={rotation}
-                                            scale={scale}
-                                            width={pageWidth}
-                                            onExecuteNamedAction={executeNamedAction}
-                                            onJumpToDest={jumpToDestination}
-                                            onPageVisibilityChanged={pageVisibilityChanged}
-                                        />
-                                    </div>
-                                );
-                            })}
+                        {pageIndexes.map((index) => (
+                            <div
+                                aria-label={pageLabel.replace('{{pageIndex}}', `${index + 1}`)}
+                                className="rpv-core__inner-page"
+                                key={`pagelayer-${index}`}
+                                ref={(ref): void => {
+                                    pagesMapRef.current.set(index, ref);
+                                }}
+                                role="region"
+                            >
+                                <PageLayer
+                                    currentPage={currentPage}
+                                    doc={doc}
+                                    height={pageHeight}
+                                    pageIndex={index}
+                                    plugins={plugins}
+                                    renderPage={renderPage}
+                                    rotation={rotation}
+                                    scale={scale}
+                                    width={pageWidth}
+                                    onExecuteNamedAction={executeNamedAction}
+                                    onJumpToDest={jumpToDestination}
+                                    onPageVisibilityChanged={pageVisibilityChanged}
+                                />
+                            </div>
+                        ))}
                     </>
                 ),
             },
