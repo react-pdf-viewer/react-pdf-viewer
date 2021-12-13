@@ -55,6 +55,7 @@ export const Inner: React.FC<{
     onPageChange,
     onZoom,
 }) => {
+    const docId = doc.loadingTask.docId;
     const { getPage } = usePages(doc);
     const { l10n } = React.useContext(LocalizationContext);
     const themeContext = React.useContext(ThemeContext);
@@ -75,7 +76,7 @@ export const Inner: React.FC<{
             Array(doc.numPages)
                 .fill(0)
                 .map((_, index) => index),
-        [doc.loadingTask.docId]
+        [docId]
     );
 
     React.useEffect(() => {
@@ -275,7 +276,7 @@ export const Inner: React.FC<{
                 }
             });
         };
-    }, []);
+    }, [docId]);
 
     React.useEffect(() => {
         onDocumentLoad({ doc, file: currentFile });
@@ -286,7 +287,7 @@ export const Inner: React.FC<{
         if (initialPage) {
             jumpToPage(initialPage);
         }
-    }, []);
+    }, [docId]);
 
     React.useEffect(() => {
         onPageChange({ currentPage, doc });
