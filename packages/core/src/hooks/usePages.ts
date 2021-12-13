@@ -70,7 +70,7 @@ export const usePages = (
     getPage: (pageIndex: number) => Promise<PdfJs.Page>;
 } => {
     React.useEffect(() => {
-        if (previousDoc.docId !== doc.loadingTask.docId) {
+        if (previousDoc.docId && previousDoc.docId !== doc.loadingTask.docId) {
             // Clear cache when the document changes
             pageOutlinesMap.clear();
             pagesMap.clear();
