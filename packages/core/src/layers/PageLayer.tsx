@@ -11,8 +11,8 @@ import * as React from 'react';
 import { AnnotationLayer } from '../annotations/AnnotationLayer';
 import { Spinner } from '../components/Spinner';
 import { useIntersectionObserver } from '../hooks/useIntersectionObserver';
-import { usePages } from '../hooks/usePages';
 import { SpecialZoomLevel } from '../structs/SpecialZoomLevel';
+import { getPage } from '../utils/managePages';
 import { CanvasLayer } from './CanvasLayer';
 import { SvgLayer } from './SvgLayer';
 import { TextLayer } from './TextLayer';
@@ -63,8 +63,6 @@ export const PageLayer: React.FC<{
         pageWidth: width,
         viewportRotation: 0,
     });
-    const { getPage } = usePages(doc);
-
     const { page, pageHeight, pageWidth } = pageSize;
 
     const prevIsCalculated = React.useRef(false);
@@ -86,7 +84,7 @@ export const PageLayer: React.FC<{
         }
         prevIsCalculated.current = true;
 
-        getPage(pageIndex).then((pdfPage) => {
+        getPage(doc, pageIndex).then((pdfPage) => {
             const viewport = pdfPage.getViewport({ scale: 1 });
 
             setPageSize({

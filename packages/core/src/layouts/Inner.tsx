@@ -8,12 +8,12 @@
 
 import * as React from 'react';
 
-import { usePages } from '../hooks/usePages';
 import { useTrackResize } from '../hooks/useTrackResize';
 import { PageLayer } from '../layers/PageLayer';
 import { LocalizationContext } from '../localization/LocalizationContext';
 import { SpecialZoomLevel } from '../structs/SpecialZoomLevel';
 import { ThemeContext } from '../theme/ThemeContext';
+import { clearPagesCache, getPage } from '../utils/managePages';
 import { getFileExt } from '../utils/getFileExt';
 import { calculateScale } from './calculateScale';
 import type { PageSize } from '../types/PageSize';
@@ -56,7 +56,6 @@ export const Inner: React.FC<{
     onZoom,
 }) => {
     const docId = doc.loadingTask.docId;
-    const { getPage } = usePages(doc);
     const { l10n } = React.useContext(LocalizationContext);
     const themeContext = React.useContext(ThemeContext);
     const containerRef = React.useRef<HTMLDivElement | null>(null);
@@ -136,7 +135,7 @@ export const Inner: React.FC<{
             return;
         }
 
-        getPage(pageIndex).then((page) => {
+        getPage(doc, pageIndex).then((page) => {
             const viewport = page.getViewport({ scale: 1 });
             let top = 0;
             const bottom = bottomOffset || 0;
@@ -300,6 +299,12 @@ export const Inner: React.FC<{
             scale,
         });
     }, [currentPage]);
+
+    React.useEffect(() => {
+        return () => {
+            clearPagesCache();
+        };
+    }, []);
 
     const pageVisibilityChanged = (pageIndex: number, ratio: number): void => {
         pageVisibility[pageIndex] = ratio;

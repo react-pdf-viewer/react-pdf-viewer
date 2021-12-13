@@ -75,6 +75,7 @@ const { Thumbnails } = thumbnailPluginInstance;
 -   The thumbnails are stuck at loading spinner
 -   The `Cover` component position isn't correct
 -   The number of pages slot `<NumberOfPages />` isn't correct when using the `renderToolbar`
+-   There is an exception of `React has detected a change in the order of Hooks` when switching documents
 
 ## v2.11.0
 

@@ -7,7 +7,7 @@
  */
 
 import * as React from 'react';
-import { usePages, SpecialZoomLevel } from '@react-pdf-viewer/core';
+import { getDestination, SpecialZoomLevel } from '@react-pdf-viewer/core';
 import type { PdfJs, Store } from '@react-pdf-viewer/core';
 
 import { BookmarkList } from './BookmarkList';
@@ -24,7 +24,6 @@ export const BookmarkListRoot: React.FC<{
     store: Store<StoreProps>;
     onJumpToDest(pageIndex: number, bottomOffset: number, leftOffset: number, scaleTo: number | SpecialZoomLevel): void;
 }> = ({ bookmarks, doc, store, onJumpToDest }) => {
-    const { getDestination } = usePages(doc);
     const containerRef = React.useRef<HTMLDivElement>();
     const [links, setLinks] = React.useState(store.get('linkAnnotations') || {});
 
@@ -48,7 +47,7 @@ export const BookmarkListRoot: React.FC<{
     const handleLinkAnnotationsChanged = (links: Record<string, HTMLElement>) => setLinks(links);
 
     const jumpToDest = (dest: PdfJs.OutlineDestinationType): void => {
-        getDestination(dest).then((target) => {
+        getDestination(doc, dest).then((target) => {
             const { pageIndex, bottomOffset, leftOffset, scaleTo } = target;
             onJumpToDest(pageIndex, bottomOffset, leftOffset, scaleTo);
         });

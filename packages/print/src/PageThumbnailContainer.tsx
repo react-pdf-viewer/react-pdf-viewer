@@ -7,7 +7,7 @@
  */
 
 import * as React from 'react';
-import { usePages } from '@react-pdf-viewer/core';
+import { getPage } from '@react-pdf-viewer/core';
 import type { PdfJs } from '@react-pdf-viewer/core';
 
 import { PageThumbnail } from './PageThumbnail';
@@ -28,7 +28,6 @@ export const PageThumbnailContainer: React.FC<{
     rotation: number;
     onLoad(): void;
 }> = ({ canvas, doc, pageHeight, pageIndex, pageWidth, rotation, onLoad }) => {
-    const { getPage } = usePages(doc);
     const [pageSize, setPageSize] = React.useState<PageState>({
         height: pageHeight,
         page: null,
@@ -39,7 +38,7 @@ export const PageThumbnailContainer: React.FC<{
     const isVertical = Math.abs(rotation) % 180 === 0;
 
     React.useEffect(() => {
-        getPage(pageIndex).then((pdfPage) => {
+        getPage(doc, pageIndex).then((pdfPage) => {
             const viewport = pdfPage.getViewport({ scale: 1 });
 
             setPageSize({
