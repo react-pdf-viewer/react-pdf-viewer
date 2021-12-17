@@ -16,6 +16,9 @@ import { calculateScale } from './calculateScale';
 import type { PageSize } from '../types/PageSize';
 import type { PdfJs } from '../types/PdfJs';
 
+// The width that can be reserved for additional elements such as sidebar
+const RESERVE_WIDTH = 45;
+
 export const PageSizeCalculator: React.FC<{
     defaultScale?: number | SpecialZoomLevel;
     doc: PdfJs.PdfDocument;
@@ -28,7 +31,7 @@ export const PageSizeCalculator: React.FC<{
         scale: 1,
     });
 
-    React.useEffect(() => {
+    React.useLayoutEffect(() => {
         getPage(doc, 0).then((pdfPage) => {
             const viewport = pdfPage.getViewport({ scale: 1 });
             const w = viewport.width;
@@ -43,7 +46,7 @@ export const PageSizeCalculator: React.FC<{
             const parentEle = pagesEle.parentElement;
 
             // Determine the best scale that fits the document within the container
-            const scaled = parentEle.clientWidth / w;
+            const scaled = (parentEle.clientWidth - RESERVE_WIDTH) / w;
 
             let scale = defaultScale
                 ? typeof defaultScale === 'string'
