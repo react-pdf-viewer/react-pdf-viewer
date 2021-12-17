@@ -67,6 +67,7 @@ const { Thumbnails } = thumbnailPluginInstance;
 
 -   Add `data-testid` attribute to buttons in the toolbar
 -   The `Cover` component uses the image instead of canvas tag
+-   The default layout shouldn't have a horizontal scrollbar when the default scale isn't set
 
 **Bug fixes**
 
