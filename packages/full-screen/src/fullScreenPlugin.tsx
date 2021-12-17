@@ -83,12 +83,13 @@ export const fullScreenPlugin = (props?: FullScreenPluginProps): FullScreenPlugi
 
     const ExitFullScreenDecorator = () => (
         <ExitFullScreen
-            children={props?.renderExitFullScreenButton}
             getFullScreenTarget={getFullScreenTarget}
             store={store}
             onEnterFullScreen={fullScreenPluginProps.onEnterFullScreen}
             onExitFullScreen={fullScreenPluginProps.onExitFullScreen}
-        />
+        >
+            {props?.renderExitFullScreenButton}
+        </ExitFullScreen>
     );
 
     const renderViewer = (props: RenderViewer): Slot => {

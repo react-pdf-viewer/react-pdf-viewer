@@ -7,7 +7,7 @@
  */
 
 import * as React from 'react';
-import { LocalizationContext, Spinner } from '@react-pdf-viewer/core';
+import { LocalizationContext } from '@react-pdf-viewer/core';
 import type { PdfJs } from '@react-pdf-viewer/core';
 
 import { SpinnerContext } from './SpinnerContext';

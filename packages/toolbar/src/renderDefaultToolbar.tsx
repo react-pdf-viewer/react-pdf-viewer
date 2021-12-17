@@ -15,6 +15,7 @@ import type { TransformToolbarSlot } from './types/TransformToolbarSlot';
 
 export const renderDefaultToolbar =
     (transformToolbarSlot: TransformToolbarSlot) =>
+    // eslint-disable-next-line react/display-name
     (defaultToolbarSlot: ToolbarSlot): React.ReactElement => {
         const toolbarSlot = React.useMemo(() => transformToolbarSlot(defaultToolbarSlot), []);
         const { direction } = React.useContext(ThemeContext);
