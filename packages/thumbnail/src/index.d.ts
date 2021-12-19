@@ -29,6 +29,7 @@ export type RenderCurrentPageLabel = (props: RenderCurrentPageLabelProps) => Rea
 
 export interface RenderThumbnailItemProps {
     currentPage: number;
+    key: string;
     numPages: number;
     pageIndex: number;
     renderPageLabel: React.ReactElement;

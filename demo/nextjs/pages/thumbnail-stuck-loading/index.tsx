@@ -3,6 +3,8 @@ import { Button, Viewer } from '@react-pdf-viewer/core';
 import { thumbnailPlugin } from '@react-pdf-viewer/thumbnail';
 
 const IndexPage = () => {
+    const [count, setCount] = React.useState(0);
+    const triggerRerender = () => setCount((c) => c + 1);
     const [fileUrl, setFileUrl] = React.useState('/pdf-open-parameters.pdf');
 
     const thumbnailPluginInstance = thumbnailPlugin();
@@ -22,6 +24,11 @@ const IndexPage = () => {
                     marginBottom: '1rem',
                 }}
             >
+                <div style={{ marginRight: '0.5rem' }}>
+                    <Button testId="trigger-rerender" onClick={triggerRerender}>
+                        Trigger re-render (count={count})
+                    </Button>
+                </div>
                 <div style={{ marginRight: '0.5rem' }}>
                     <Button testId="load-doc-1" onClick={() => setFileUrl('/pdf-open-parameters.pdf')}>
                         Load document 1

@@ -15,6 +15,12 @@ test('The thumbnails are stuck at loading', async () => {
         'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAACFCAYAAACt+l1zAAAAAXNSR0IArs4c6QAACd9JREFUeF7tnW'
     );
 
+    // Trigger re-renderer
+    const triggerButton = await page.waitForSelector('[data-testid="trigger-rerender"]', {
+        visible: true,
+    });
+    await triggerButton.click();
+
     // There is no spinner for loading the current document anymore
     const listLoader = await page.$('[data-testid="thumbnail-list__loader"]');
     expect(listLoader).toBeNull();

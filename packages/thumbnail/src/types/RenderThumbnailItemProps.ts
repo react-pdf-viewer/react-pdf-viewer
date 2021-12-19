@@ -10,6 +10,7 @@ import * as React from 'react';
 
 export interface RenderThumbnailItemProps {
     currentPage: number;
+    key: string;
     numPages: number;
     pageIndex: number;
     renderPageLabel: React.ReactElement;
