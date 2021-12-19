@@ -148,6 +148,8 @@ export const ThumbnailList: React.FC<{
             {Array(numPages)
                 .fill(0)
                 .map((_, pageIndex) => {
+                    // The key includes the `docId` so the thumbnail list will be re-rendered when the document changes
+                    const key = `${doc.loadingTask.docId}___${pageIndex}`;
                     const pageLabel = numLabels === numPages ? labels[pageIndex] : `${pageIndex + 1}`;
                     const label = renderCurrentPageLabel
                         ? renderCurrentPageLabel({ currentPage, pageIndex, numPages, pageLabel })
@@ -168,6 +170,7 @@ export const ThumbnailList: React.FC<{
                     return renderThumbnailItem ? (
                         renderThumbnailItem({
                             currentPage,
+                            key,
                             numPages,
                             pageIndex,
                             renderPageLabel: <>{label}</>,
@@ -175,7 +178,7 @@ export const ThumbnailList: React.FC<{
                             onJumpToPage: () => onJumpToPage(pageIndex),
                         })
                     ) : (
-                        <div key={`thumbnail-${pageIndex}`}>
+                        <div key={key}>
                             <div
                                 className={classNames({
                                     'rpv-thumbnail__item': true,

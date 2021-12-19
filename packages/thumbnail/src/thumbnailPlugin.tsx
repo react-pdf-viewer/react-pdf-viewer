@@ -35,7 +35,7 @@ export interface ThumbnailPluginProps {
 }
 
 export const thumbnailPlugin = (pluginProps?: ThumbnailPluginProps): ThumbnailPlugin => {
-    const store = createStore<StoreProps>({});
+    const store = React.useMemo(() => createStore<StoreProps>({}), []);
 
     const CoverDecorator = (props: CoverProps) => (
         <Cover {...props} renderSpinner={pluginProps?.renderSpinner} store={store} />
