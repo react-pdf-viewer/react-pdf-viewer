@@ -41,14 +41,17 @@ export const thumbnailPlugin = (pluginProps?: ThumbnailPluginProps): ThumbnailPl
         <Cover {...props} renderSpinner={pluginProps?.renderSpinner} store={store} />
     );
 
-    const ThumbnailsDecorator = (props?: ThumbnailsProps) => (
-        <SpinnerContext.Provider value={{ renderSpinner: pluginProps?.renderSpinner || defaultSpinner }}>
-            <ThumbnailListWithStore
-                renderCurrentPageLabel={pluginProps?.renderCurrentPageLabel}
-                renderThumbnailItem={props?.renderThumbnailItem}
-                store={store}
-            />
-        </SpinnerContext.Provider>
+    const ThumbnailsDecorator = React.useCallback(
+        (props?: ThumbnailsProps) => (
+            <SpinnerContext.Provider value={{ renderSpinner: pluginProps?.renderSpinner || defaultSpinner }}>
+                <ThumbnailListWithStore
+                    renderCurrentPageLabel={pluginProps?.renderCurrentPageLabel}
+                    renderThumbnailItem={props?.renderThumbnailItem}
+                    store={store}
+                />
+            </SpinnerContext.Provider>
+        ),
+        []
     );
 
     return {

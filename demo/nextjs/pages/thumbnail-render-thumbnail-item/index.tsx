@@ -58,9 +58,7 @@ const IndexPage = () => {
         </div>
     );
 
-    // Use `useMemo` here to avoid from jumping to the top when selecting a page
-    // (because the list of thumbnails is rerendered)
-    const thumbnailPluginInstance = React.useMemo(() => thumbnailPlugin(), []);
+    const thumbnailPluginInstance = thumbnailPlugin();
     const { Thumbnails } = thumbnailPluginInstance;
 
     return (

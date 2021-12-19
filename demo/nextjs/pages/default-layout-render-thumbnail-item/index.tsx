@@ -1,14 +1,12 @@
 import * as React from 'react';
-import { Button, DocumentLoadEvent, PdfJs, Viewer } from '@react-pdf-viewer/core';
+import { Button, DocumentLoadEvent, Viewer } from '@react-pdf-viewer/core';
 import { defaultLayoutPlugin, ThumbnailIcon } from '@react-pdf-viewer/default-layout';
 import type { RenderThumbnailItemProps } from '@react-pdf-viewer/thumbnail';
 
 const IndexPage = () => {
     const [selectedPages, setSelectedPages] = React.useState<boolean[]>([]);
-    const [currentDoc, setCurrentDoc] = React.useState<PdfJs.PdfDocument>();
 
     const handleDocumentLoad = (e: DocumentLoadEvent) => {
-        setCurrentDoc(e.doc);
         setSelectedPages(Array(e.doc.numPages).fill(false));
     };
 
@@ -71,12 +69,7 @@ const IndexPage = () => {
             ].concat(defaultTabs.slice(1)),
     });
 
-    // Use `useMemo` here to avoid from jumping to the top when selecting a page
-    // (because the list of thumbnails is rerendered)
-    const thumbnailPluginInstance = React.useMemo(
-        () => defaultLayoutPluginInstance.thumbnailPluginInstance,
-        [currentDoc]
-    );
+    const thumbnailPluginInstance = defaultLayoutPluginInstance.thumbnailPluginInstance;
     const { Thumbnails } = thumbnailPluginInstance;
 
     return (
