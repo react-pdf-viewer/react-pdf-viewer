@@ -35,6 +35,7 @@
     flex-flow: row wrap;
     justify-content: center;
     overflow: auto;
+    padding: 0.5rem 0;
 
     &--rtl {
         direction: rtl;

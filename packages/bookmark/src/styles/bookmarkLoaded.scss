@@ -9,6 +9,7 @@
 .rpv-bookmark__empty {
     height: 100%;
     overflow: auto;
+    padding: 0.5rem 0;
     text-align: center;
     width: 100%;
 
@@ -20,6 +21,7 @@
 .rpv-bookmark__container {
     height: 100%;
     overflow: auto;
+    padding: 0.5rem 0;
     width: 100%;
 
     &--rtl {
