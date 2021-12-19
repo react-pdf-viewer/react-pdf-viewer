@@ -22,7 +22,7 @@ test('Click bookmarks', async () => {
 
     await page.waitForSelector('[data-testid="core__text-layer-2"]', { visible: true });
     let scrollTop = await pagesContainer.evaluate((ele) => ele.scrollTop);
-    expect(scrollTop).toEqual(2835);
+    expect(scrollTop).toEqual(2505);
 
     // Click the `Preface` bookmark item
     bookmarkItem = await page.waitForSelector('.rpv-bookmark__title[aria-label="Preface"]');
@@ -30,7 +30,7 @@ test('Click bookmarks', async () => {
 
     await page.waitForSelector('[data-testid="core__text-layer-3"]', { visible: true });
     scrollTop = await pagesContainer.evaluate((ele) => ele.scrollTop);
-    expect(scrollTop).toEqual(4197);
+    expect(scrollTop).toEqual(3709);
 
     // Click the `Who should read this guide` bookmark item
     bookmarkItem = await page.waitForSelector('.rpv-bookmark__title[aria-label="Who should read this guide?"]');
@@ -38,7 +38,7 @@ test('Click bookmarks', async () => {
 
     await page.waitForSelector('[data-testid="core__text-layer-3"]', { visible: true });
     scrollTop = await pagesContainer.evaluate((ele) => ele.scrollTop);
-    expect(scrollTop).toEqual(4386);
+    expect(scrollTop).toEqual(3876);
 
     // Click the `Related documentation` bookmark item
     bookmarkItem = await page.waitForSelector('.rpv-bookmark__title[aria-label="Related documentation"]');
@@ -46,7 +46,7 @@ test('Click bookmarks', async () => {
 
     await page.waitForSelector('[data-testid="core__text-layer-3"]', { visible: true });
     scrollTop = await pagesContainer.evaluate((ele) => ele.scrollTop);
-    expect(scrollTop).toEqual(4515);
+    expect(scrollTop).toEqual(3990);
 
     // Click the `Parameters for Opening PDF Files` bookmark item
     bookmarkItem = await page.waitForSelector('.rpv-bookmark__title[aria-label="Parameters for Opening PDF Files"]');
@@ -54,7 +54,7 @@ test('Click bookmarks', async () => {
 
     await page.waitForSelector('[data-testid="core__text-layer-4"]', { visible: true });
     scrollTop = await pagesContainer.evaluate((ele) => ele.scrollTop);
-    expect(scrollTop).toEqual(5560);
+    expect(scrollTop).toEqual(4913);
 
     // Click the `Parameters` bookmark item
     bookmarkItem = await page.waitForSelector('.rpv-bookmark__title[aria-label="Parameters"]');
@@ -62,7 +62,7 @@ test('Click bookmarks', async () => {
 
     await page.waitForSelector('[data-testid="core__text-layer-4"]', { visible: true });
     scrollTop = await pagesContainer.evaluate((ele) => ele.scrollTop);
-    expect(scrollTop).toEqual(6131);
+    expect(scrollTop).toEqual(5417);
 
     // Click the `Specifying parameters in a URL` bookmark item
     bookmarkItem = await page.waitForSelector('.rpv-bookmark__title[aria-label="Specifying parameters in a URL"]');
@@ -70,7 +70,7 @@ test('Click bookmarks', async () => {
 
     await page.waitForSelector('[data-testid="core__text-layer-6"]', { visible: true });
     scrollTop = await pagesContainer.evaluate((ele) => ele.scrollTop);
-    expect(scrollTop).toEqual(8990);
+    expect(scrollTop).toEqual(7944);
 
     // Click the `URL examples` bookmark item
     bookmarkItem = await page.waitForSelector('.rpv-bookmark__title[aria-label="URL examples"]');
@@ -78,7 +78,7 @@ test('Click bookmarks', async () => {
 
     await page.waitForSelector('[data-testid="core__text-layer-7"]', { visible: true });
     scrollTop = await pagesContainer.evaluate((ele) => ele.scrollTop);
-    expect(scrollTop).toEqual(9662);
+    expect(scrollTop).toEqual(8539);
 
     // Click the `URL limitations` bookmark item
     bookmarkItem = await page.waitForSelector('.rpv-bookmark__title[aria-label="URL limitations"]');
@@ -86,5 +86,5 @@ test('Click bookmarks', async () => {
 
     await page.waitForSelector('[data-testid="core__text-layer-7"]', { visible: true });
     scrollTop = await pagesContainer.evaluate((ele) => ele.scrollTop);
-    expect(scrollTop).toEqual(9953);
+    expect(scrollTop).toEqual(8795);
 });
