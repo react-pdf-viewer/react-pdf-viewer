@@ -24,7 +24,7 @@ test('Jump between internal links', async () => {
 
     await page.waitForSelector('[data-testid="core__text-layer-3"]', { visible: true });
     let scrollTop = await pagesContainer.evaluate((ele) => ele.scrollTop);
-    expect(scrollTop).toEqual(4197);
+    expect(scrollTop).toEqual(3709);
 
     // Click the `Who should read this guide` link
     await jumpToTableOfContents();
@@ -33,7 +33,7 @@ test('Jump between internal links', async () => {
 
     await page.waitForSelector('[data-testid="core__text-layer-3"]', { visible: true });
     scrollTop = await pagesContainer.evaluate((ele) => ele.scrollTop);
-    expect(scrollTop).toEqual(4386);
+    expect(scrollTop).toEqual(3876);
 
     // Click the `Related documentation` link
     await jumpToTableOfContents();
@@ -42,7 +42,7 @@ test('Jump between internal links', async () => {
 
     await page.waitForSelector('[data-testid="core__text-layer-3"]', { visible: true });
     scrollTop = await pagesContainer.evaluate((ele) => ele.scrollTop);
-    expect(scrollTop).toEqual(4515);
+    expect(scrollTop).toEqual(3990);
 
     // Click the `Parameters for Opening PDF Files` link
     await jumpToTableOfContents();
@@ -51,7 +51,7 @@ test('Jump between internal links', async () => {
 
     await page.waitForSelector('[data-testid="core__text-layer-4"]', { visible: true });
     scrollTop = await pagesContainer.evaluate((ele) => ele.scrollTop);
-    expect(scrollTop).toEqual(5560);
+    expect(scrollTop).toEqual(4913);
 
     // Click the `Parameters` link
     await jumpToTableOfContents();
@@ -60,7 +60,7 @@ test('Jump between internal links', async () => {
 
     await page.waitForSelector('[data-testid="core__text-layer-4"]', { visible: true });
     scrollTop = await pagesContainer.evaluate((ele) => ele.scrollTop);
-    expect(scrollTop).toEqual(6131);
+    expect(scrollTop).toEqual(5417);
 
     // Click the `Specifying parameters in a URL` link
     await jumpToTableOfContents();
@@ -69,7 +69,7 @@ test('Jump between internal links', async () => {
 
     await page.waitForSelector('[data-testid="core__text-layer-6"]', { visible: true });
     scrollTop = await pagesContainer.evaluate((ele) => ele.scrollTop);
-    expect(scrollTop).toEqual(8990);
+    expect(scrollTop).toEqual(7944);
 
     // Click the `URL examples` link
     await jumpToTableOfContents();
@@ -78,7 +78,7 @@ test('Jump between internal links', async () => {
 
     await page.waitForSelector('[data-testid="core__text-layer-7"]', { visible: true });
     scrollTop = await pagesContainer.evaluate((ele) => ele.scrollTop);
-    expect(scrollTop).toEqual(9662);
+    expect(scrollTop).toEqual(8539);
 
     // Click the `URL limitations` link
     await jumpToTableOfContents();
@@ -87,5 +87,5 @@ test('Jump between internal links', async () => {
 
     await page.waitForSelector('[data-testid="core__text-layer-7"]', { visible: true });
     scrollTop = await pagesContainer.evaluate((ele) => ele.scrollTop);
-    expect(scrollTop).toEqual(9953);
+    expect(scrollTop).toEqual(8795);
 });

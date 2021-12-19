@@ -34,6 +34,10 @@ test('The thumbnails are stuck at loading', async () => {
     });
     await loadDoc2Button.click();
 
+    // Wait until the current thumbnails are updated
+    // The second document has only 1 page, so the thumbnail of second page does not exist
+    await page.waitForFunction(() => !document.querySelector('[aria-label="Thumbnail of page 2"]'));
+
     firstThumbnail = await page.waitForSelector('[aria-label="Thumbnail of page 1"]');
     src = await firstThumbnail.evaluate((ele) => ele.getAttribute('src'));
     expect(src.length).toEqual(5134);
