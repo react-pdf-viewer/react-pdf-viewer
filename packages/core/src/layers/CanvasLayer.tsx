@@ -87,7 +87,8 @@ export const CanvasLayer: React.FC<{
             alpha: false,
         }) as CanvasRenderingContext2D;
 
-        renderTask.current = page.render({ canvasContext, viewport });
+        const transform = shouldScaleByCSS || outputScale !== 1 ? [possibleScale, 0, 0, possibleScale, 0, 0] : null;
+        renderTask.current = page.render({ canvasContext, transform, viewport });
         renderTask.current.promise.then(
             (): void => {
                 isMounted.current && setRendered(true);
