@@ -30,6 +30,10 @@ interface PageSizeState {
 
 const NUMBER_OF_OVERSCAN_PAGES = 2;
 
+const INTERSECTION_THRESHOLD = Array(10)
+    .fill(null)
+    .map((_, i) => i / 10);
+
 export const PageLayer: React.FC<{
     currentPage: number;
     doc: PdfJs.PdfDocument;
@@ -66,10 +70,6 @@ export const PageLayer: React.FC<{
     const { page, pageHeight, pageWidth } = pageSize;
 
     const prevIsCalculated = React.useRef(false);
-
-    const intersectionThreshold = Array(10)
-        .fill(null)
-        .map((_, i) => i / 10);
 
     const scaledWidth = pageWidth * scale;
     const scaledHeight = pageHeight * scale;
@@ -117,7 +117,7 @@ export const PageLayer: React.FC<{
     const rotationNumber = (rotation + pageSize.viewportRotation) % 360;
 
     const containerRef = useIntersectionObserver({
-        threshold: intersectionThreshold,
+        threshold: INTERSECTION_THRESHOLD,
         onVisibilityChanged: visibilityChanged,
     });
 
