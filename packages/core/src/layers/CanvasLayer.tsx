@@ -11,9 +11,15 @@ import * as React from 'react';
 import { Spinner } from '../components/Spinner';
 import { useIsMounted } from '../hooks/useIsMounted';
 import { LayerRenderStatus } from '../structs/LayerRenderStatus';
+import { floatToRatio } from '../utils/floatToRatio';
+import { roundToDivide } from '../utils/roundToDivide';
 import { WithScale } from './WithScale';
 import type { PdfJs } from '../types/PdfJs';
 import type { Plugin } from '../types/Plugin';
+
+// The mobile browsers have the limit value for maximum canvas size
+// The values vary but here we set a maximum value of 16 mega-pixels
+const MAX_CANVAS_SIZE = 4096 * 4096;
 
 export const CanvasLayer: React.FC<{
     height: number;
@@ -29,9 +35,6 @@ export const CanvasLayer: React.FC<{
     const renderTask = React.useRef<PdfJs.PageRenderTask>();
 
     const [rendered, setRendered] = React.useState(false);
-
-    // Support high DPI screen
-    const devicePixelRatio = window.devicePixelRatio || 1;
 
     const renderCanvas = (): void => {
         setRendered(false);
@@ -55,21 +58,37 @@ export const CanvasLayer: React.FC<{
             }
         });
 
-        // Set the size for canvas here instead of inside `render`
-        // to avoid the black flickering
-        canvasEle.height = height * devicePixelRatio;
-        canvasEle.width = width * devicePixelRatio;
+        const viewport = page.getViewport({
+            rotation,
+            scale,
+        });
+
+        // Support high DPI screens
+        let outputScale = window.devicePixelRatio || 1;
+
+        // Calculate the maximum scale
+        const maxScale = Math.sqrt(MAX_CANVAS_SIZE / (viewport.width * viewport.height));
+
+        // Scale by CSS to avoid the crash
+        const shouldScaleByCSS = outputScale > maxScale;
+        shouldScaleByCSS ? (canvasEle.style.transform = `scale(1, 1)`) : canvasEle.style.removeProperty('transform');
+
+        const possibleScale = Math.min(maxScale, outputScale);
+        const [x, y] = floatToRatio(possibleScale, 8);
+
+        // Set the size for canvas here instead of inside `render` to avoid the black flickering
+        canvasEle.width = roundToDivide(viewport.width * possibleScale, x);
+        canvasEle.height = roundToDivide(viewport.height * possibleScale, x);
+        canvasEle.style.width = `${roundToDivide(viewport.width, y)}px`;
+        canvasEle.style.height = `${roundToDivide(viewport.height, y)}px`;
         canvasEle.style.opacity = '0';
 
         const canvasContext = canvasEle.getContext('2d', {
             alpha: false,
         }) as CanvasRenderingContext2D;
 
-        const viewport = page.getViewport({
-            rotation,
-            scale: scale * devicePixelRatio,
-        });
-        renderTask.current = page.render({ canvasContext, viewport });
+        const transform = shouldScaleByCSS || outputScale !== 1 ? [possibleScale, 0, 0, possibleScale, 0, 0] : null;
+        renderTask.current = page.render({ canvasContext, transform, viewport });
         renderTask.current.promise.then(
             (): void => {
                 isMounted.current && setRendered(true);
@@ -106,13 +125,7 @@ export const CanvasLayer: React.FC<{
                         <Spinner />
                     </div>
                 )}
-                <canvas
-                    ref={canvasRef}
-                    style={{
-                        transform: `scale(${1 / devicePixelRatio})`,
-                        transformOrigin: `top left`,
-                    }}
-                />
+                <canvas ref={canvasRef} />
             </div>
         </WithScale>
     );
