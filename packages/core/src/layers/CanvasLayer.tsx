@@ -29,7 +29,8 @@ export const CanvasLayer: React.FC<{
     rotation: number;
     scale: number;
     width: number;
-}> = ({ height, page, pageIndex, plugins, rotation, scale, width }) => {
+    onRenderCompleted(pageIndex: number): void;
+}> = ({ height, page, pageIndex, plugins, rotation, scale, width, onRenderCompleted }) => {
     const isMounted = useIsMounted();
     const canvasRef = React.useRef<HTMLCanvasElement>();
     const renderTask = React.useRef<PdfJs.PageRenderTask>();
@@ -44,7 +45,7 @@ export const CanvasLayer: React.FC<{
             task.cancel();
         }
 
-        const canvasEle = canvasRef.current as HTMLCanvasElement;
+        const canvasEle = canvasRef.current;
 
         plugins.forEach((plugin) => {
             if (plugin.onCanvasLayerRender) {
@@ -83,9 +84,7 @@ export const CanvasLayer: React.FC<{
         canvasEle.style.height = `${roundToDivide(viewport.height, y)}px`;
         canvasEle.style.opacity = '0';
 
-        const canvasContext = canvasEle.getContext('2d', {
-            alpha: false,
-        }) as CanvasRenderingContext2D;
+        const canvasContext = canvasEle.getContext('2d', { alpha: false });
 
         const transform = shouldScaleByCSS || outputScale !== 1 ? [possibleScale, 0, 0, possibleScale, 0, 0] : null;
         renderTask.current = page.render({ canvasContext, transform, viewport });
@@ -104,9 +103,11 @@ export const CanvasLayer: React.FC<{
                         });
                     }
                 });
+                onRenderCompleted(pageIndex);
             },
             (): void => {
                 isMounted.current && setRendered(true);
+                onRenderCompleted(pageIndex);
             }
         );
     };

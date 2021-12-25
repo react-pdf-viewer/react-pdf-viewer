@@ -28,8 +28,6 @@ interface PageSizeState {
     viewportRotation: number;
 }
 
-const NUMBER_OF_OVERSCAN_PAGES = 2;
-
 const INTERSECTION_THRESHOLD = Array(10)
     .fill(null)
     .map((_, i) => i / 10);
@@ -43,10 +41,12 @@ export const PageLayer: React.FC<{
     renderPage?: RenderPage;
     rotation: number;
     scale: number;
+    shouldRender: boolean;
     width: number;
     onExecuteNamedAction(action: string): void;
     onJumpToDest(pageIndex: number, bottomOffset: number, leftOffset: number, scaleTo: number | SpecialZoomLevel): void;
     onPageVisibilityChanged(pageIndex: number, ratio: number): void;
+    onRenderCompleted(pageIndex: number): void;
 }> = ({
     currentPage,
     doc,
@@ -56,10 +56,12 @@ export const PageLayer: React.FC<{
     renderPage,
     rotation,
     scale,
+    shouldRender,
     width,
     onExecuteNamedAction,
     onJumpToDest,
     onPageVisibilityChanged,
+    onRenderCompleted,
 }) => {
     const [pageSize, setPageSize] = React.useState<PageSizeState>({
         page: null,
@@ -98,9 +100,6 @@ export const PageLayer: React.FC<{
 
     const visibilityChanged = (params: VisibilityChanged): void => {
         onPageVisibilityChanged(pageIndex, params.isVisible ? params.ratio : -1);
-        if (params.isVisible) {
-            determinePageSize();
-        }
     };
 
     // Default page renderer
@@ -122,13 +121,10 @@ export const PageLayer: React.FC<{
     });
 
     React.useEffect(() => {
-        if (
-            currentPage - NUMBER_OF_OVERSCAN_PAGES <= pageIndex &&
-            pageIndex <= currentPage + NUMBER_OF_OVERSCAN_PAGES
-        ) {
+        if (shouldRender) {
             determinePageSize();
         }
-    }, [currentPage]);
+    }, [shouldRender]);
 
     return (
         <div
@@ -171,6 +167,7 @@ export const PageLayer: React.FC<{
                                     rotation={rotationNumber}
                                     scale={scale}
                                     width={w}
+                                    onRenderCompleted={onRenderCompleted}
                                 />
                             ),
                         },

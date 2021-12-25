@@ -15,6 +15,7 @@ import { SpecialZoomLevel } from '../structs/SpecialZoomLevel';
 import { ThemeContext } from '../theme/ThemeContext';
 import { clearPagesCache, getPage } from '../utils/managePages';
 import { getFileExt } from '../utils/getFileExt';
+import { maxByKey } from '../utils/maxByKey';
 import { calculateScale } from './calculateScale';
 import type { PageSize } from '../types/PageSize';
 import type { DocumentLoadEvent } from '../types/DocumentLoadEvent';
@@ -27,6 +28,21 @@ import type { RenderPage } from '../types/RenderPage';
 import type { Slot } from '../types/Slot';
 import type { ViewerState } from '../types/ViewerState';
 import type { ZoomEvent } from '../types/ZoomEvent';
+
+enum PageRenderStatus {
+    NotRenderedYet = 'NotRenderedYet',
+    Rendering = 'Rendering',
+    Rendered = 'Rendered',
+    Error = 'Error',
+}
+
+interface PageVisibility {
+    pageIndex: number;
+    renderStatus: PageRenderStatus;
+    visibility: number;
+}
+
+const NUMBER_OF_OVERSCAN_PAGES = 2;
 
 export const Inner: React.FC<{
     currentFile: OpenFile;
@@ -55,6 +71,7 @@ export const Inner: React.FC<{
     onPageChange,
     onZoom,
 }) => {
+    const { numPages } = doc;
     const docId = doc.loadingTask.docId;
     const { l10n } = React.useContext(LocalizationContext);
     const themeContext = React.useContext(ThemeContext);
@@ -69,6 +86,17 @@ export const Inner: React.FC<{
     );
     // Map the page index to page element
     const pagesMapRef = React.useRef<Map<number, HTMLDivElement>>(new Map());
+    const [renderPageIndex, setRenderPageIndex] = React.useState(initialPage);
+
+    const pageVisibilityRef = React.useRef<PageVisibility[]>(
+        Array(numPages)
+            .fill(null)
+            .map((_, pageIndex) => ({
+                pageIndex,
+                renderStatus: PageRenderStatus.NotRenderedYet,
+                visibility: -1,
+            }))
+    );
 
     const pageIndexes = React.useMemo(
         () =>
@@ -96,11 +124,7 @@ export const Inner: React.FC<{
         onResize: handlePagesResize,
     });
 
-    const { numPages } = doc;
     const { pageWidth, pageHeight } = pageSize;
-
-    const arr = Array(numPages).fill(null);
-    const pageVisibility = arr.map(() => 0);
 
     // The methods that a plugin can hook on
     // -------------------------------------
@@ -298,6 +322,9 @@ export const Inner: React.FC<{
             rotation,
             scale,
         });
+
+        // Start rendering the next page in the ranges of overscan pages
+        renderNextPage();
     }, [currentPage]);
 
     React.useEffect(() => {
@@ -307,11 +334,46 @@ export const Inner: React.FC<{
     }, []);
 
     const pageVisibilityChanged = (pageIndex: number, ratio: number): void => {
-        pageVisibility[pageIndex] = ratio;
-        const maxRatioPage = pageVisibility.reduce((maxIndex, item, index, array) => {
-            return item > array[maxIndex] ? index : maxIndex;
-        }, 0);
+        pageVisibilityRef.current[pageIndex].visibility = ratio;
+
+        // The current page is the page which has the biggest visibility ratio
+        const maxRatioPage = maxByKey(pageVisibilityRef.current, 'visibility').pageIndex;
         setCurrentPage(maxRatioPage);
+
+        if (
+            pageVisibilityRef.current.filter((item) => item.renderStatus === PageRenderStatus.NotRenderedYet).length ===
+            numPages
+        ) {
+            // All pages are not rendered yet
+            setRenderPageIndex(maxRatioPage);
+        }
+    };
+
+    const handlePageRenderCompleted = (pageIndex: number): void => {
+        console.log('handlePageRenderCompleted', { currentPage, pageIndex });
+        pageVisibilityRef.current[pageIndex].renderStatus = PageRenderStatus.Rendered;
+        renderNextPage();
+    };
+
+    const renderNextPage = () => {
+        if (pageVisibilityRef.current.find((item) => item.renderStatus === PageRenderStatus.Rendering)) {
+            return;
+        }
+
+        const notRenderedPages = pageVisibilityRef.current.filter(
+            (item) => item.renderStatus === PageRenderStatus.NotRenderedYet
+        );
+        if (notRenderedPages.length) {
+            const nextRenderPage = maxByKey(notRenderedPages, 'visibility').pageIndex;
+            // Only render the next page if it belongs to the range of overscan pages
+            if (
+                currentPage - NUMBER_OF_OVERSCAN_PAGES <= nextRenderPage &&
+                nextRenderPage <= currentPage + NUMBER_OF_OVERSCAN_PAGES
+            ) {
+                pageVisibilityRef.current[nextRenderPage].renderStatus = PageRenderStatus.Rendering;
+                setRenderPageIndex(nextRenderPage);
+            }
+        }
     };
 
     // `action` can be `FirstPage`, `PrevPage`, `NextPage`, `LastPage`, `GoBack`, `GoForward`
@@ -380,10 +442,12 @@ export const Inner: React.FC<{
                                     renderPage={renderPage}
                                     rotation={rotation}
                                     scale={scale}
+                                    shouldRender={renderPageIndex === index}
                                     width={pageWidth}
                                     onExecuteNamedAction={executeNamedAction}
                                     onJumpToDest={jumpToDestination}
                                     onPageVisibilityChanged={pageVisibilityChanged}
+                                    onRenderCompleted={handlePageRenderCompleted}
                                 />
                             </div>
                         ))}
