@@ -24,27 +24,43 @@ const pageThumbnailPlugin = (props: PageThumbnailPluginProps): Plugin => {
     };
 };
 
-const IndexPage = () => {
+const ThumbnailCover: React.FC<{
+    fileUrl: string;
+}> = ({ fileUrl }) => {
     const thumbnailPluginInstance = thumbnailPlugin();
     const { Cover } = thumbnailPluginInstance;
     const pageThumbnailPluginInstance = pageThumbnailPlugin({
         PageThumbnail: <Cover getPageIndex={() => 0} />,
     });
 
-    return (
+    return <Viewer fileUrl={fileUrl} plugins={[pageThumbnailPluginInstance, thumbnailPluginInstance]} />;
+};
+
+const IndexPage = () => (
+    <div>
         <div
+            data-testid="first-doc-cover"
             style={{
+                border: '1px solid rgba(0, 0, 0, 0.3)',
                 height: '20rem',
                 margin: '5rem auto',
                 width: '20rem',
             }}
         >
-            <Viewer
-                fileUrl="/pdf-open-parameters.pdf"
-                plugins={[pageThumbnailPluginInstance, thumbnailPluginInstance]}
-            />
+            <ThumbnailCover fileUrl="/pdf-open-parameters.pdf" />
         </div>
-    );
-};
+        <div
+            data-testid="second-doc-cover"
+            style={{
+                border: '1px solid rgba(0, 0, 0, 0.3)',
+                height: '20rem',
+                margin: '5rem auto',
+                width: '20rem',
+            }}
+        >
+            <ThumbnailCover fileUrl="/sample.pdf" />
+        </div>
+    </div>
+);
 
 export default IndexPage;
