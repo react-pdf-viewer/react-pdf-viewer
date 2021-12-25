@@ -56,14 +56,16 @@ const normalizeDestination = (pageIndex: number, destArray: PdfJs.OutlineDestina
 const pageOutlinesMap = new Map<string, number>();
 
 // Map the index to the page instance
-const pagesMap = new Map<number, PdfJs.Page>();
+const pagesMap = new Map<string, PdfJs.Page>();
 
-const generateRefKey = (outline: PdfJs.OutlineRef): string => `${outline.num}R${outline.gen === 0 ? '' : outline.gen}`;
+const generateRefKey = (doc: PdfJs.PdfDocument, outline: PdfJs.OutlineRef): string =>
+    `${doc.loadingTask.docId}___${outline.num}R${outline.gen === 0 ? '' : outline.gen}`;
 
-const getPageIndex = (outline: PdfJs.OutlineRef): number | null => pageOutlinesMap.get(generateRefKey(outline)) || null;
+const getPageIndex = (doc: PdfJs.PdfDocument, outline: PdfJs.OutlineRef): number | null =>
+    pageOutlinesMap.get(generateRefKey(doc, outline)) || null;
 
-const cacheOutlineRef = (outline: PdfJs.OutlineRef, pageIndex: number) => {
-    pageOutlinesMap.set(generateRefKey(outline), pageIndex);
+const cacheOutlineRef = (doc: PdfJs.PdfDocument, outline: PdfJs.OutlineRef, pageIndex: number) => {
+    pageOutlinesMap.set(generateRefKey(doc, outline), pageIndex);
 };
 
 export const clearPagesCache = () => {
@@ -76,16 +78,17 @@ export const getPage = (doc: PdfJs.PdfDocument, pageIndex: number): Promise<PdfJ
         return Promise.reject('The document is not loaded yet');
     }
 
-    const page = pagesMap.get(pageIndex);
+    const pageKey = `${doc.loadingTask.docId}___${pageIndex}`;
+    const page = pagesMap.get(pageKey);
     if (page) {
         return Promise.resolve(page);
     }
 
     return new Promise((resolve, _) => {
         doc.getPage(pageIndex + 1).then((page) => {
-            pagesMap.set(pageIndex, page);
+            pagesMap.set(pageKey, page);
             if (page.ref) {
-                cacheOutlineRef(page.ref, pageIndex);
+                cacheOutlineRef(doc, page.ref, pageIndex);
             }
             resolve(page);
         });
@@ -108,10 +111,10 @@ export const getDestination = (
         }).then((destArray) => {
             if ('object' === typeof destArray[0] && destArray[0] !== null) {
                 const outlineRef = destArray[0] as PdfJs.OutlineRef;
-                const pageIndex = getPageIndex(outlineRef);
+                const pageIndex = getPageIndex(doc, outlineRef);
                 if (pageIndex === null) {
                     doc.getPageIndex(outlineRef).then((pageIndex) => {
-                        cacheOutlineRef(outlineRef, pageIndex);
+                        cacheOutlineRef(doc, outlineRef, pageIndex);
                         getDestination(doc, dest).then((result) => res(result));
                     });
                 } else {

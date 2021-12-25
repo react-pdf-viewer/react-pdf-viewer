@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## v3.1.0 [WIP]
+
+**Bug fix**
+
+-   The `Cover` component has the same image source when loading different documents
+
 ## v3.0.0
 
 **New features**
