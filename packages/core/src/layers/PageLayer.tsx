@@ -33,7 +33,6 @@ const INTERSECTION_THRESHOLD = Array(10)
     .map((_, i) => i / 10);
 
 export const PageLayer: React.FC<{
-    currentPage: number;
     doc: PdfJs.PdfDocument;
     height: number;
     pageIndex: number;
@@ -48,7 +47,6 @@ export const PageLayer: React.FC<{
     onPageVisibilityChanged(pageIndex: number, ratio: number): void;
     onRenderCompleted(pageIndex: number): void;
 }> = ({
-    currentPage,
     doc,
     height,
     pageIndex,
@@ -69,9 +67,11 @@ export const PageLayer: React.FC<{
         pageWidth: width,
         viewportRotation: 0,
     });
+    const [layersRendered, setLayersRendered] = React.useState({
+        canvasLayer: false,
+        textLayer: false,
+    });
     const { page, pageHeight, pageWidth } = pageSize;
-
-    const prevIsCalculated = React.useRef(false);
 
     const scaledWidth = pageWidth * scale;
     const scaledHeight = pageHeight * scale;
@@ -81,11 +81,6 @@ export const PageLayer: React.FC<{
     const h = isVertical ? scaledHeight : scaledWidth;
 
     const determinePageSize = () => {
-        if (prevIsCalculated.current) {
-            return;
-        }
-        prevIsCalculated.current = true;
-
         getPage(doc, pageIndex).then((pdfPage) => {
             const viewport = pdfPage.getViewport({ scale: 1 });
 
@@ -120,11 +115,47 @@ export const PageLayer: React.FC<{
         onVisibilityChanged: visibilityChanged,
     });
 
+    const handleRenderCanvasCompleted = () => {
+        setLayersRendered((layersRendered) => Object.assign({}, layersRendered, { canvasLayer: true }));
+    };
+    const handleRenderTextCompleted = () => {
+        setLayersRendered((layersRendered) => Object.assign({}, layersRendered, { textLayer: true }));
+    };
+
+    React.useEffect(() => {
+        setPageSize({
+            page: null,
+            pageHeight: height,
+            pageWidth: width,
+            viewportRotation: 0,
+        });
+        setLayersRendered({
+            canvasLayer: false,
+            textLayer: false,
+        });
+    }, [rotation, scale]);
+
     React.useEffect(() => {
         if (shouldRender) {
+            setPageSize({
+                page: null,
+                pageHeight: height,
+                pageWidth: width,
+                viewportRotation: 0,
+            });
+            setLayersRendered({
+                canvasLayer: false,
+                textLayer: false,
+            });
             determinePageSize();
         }
     }, [shouldRender]);
+
+    React.useEffect(() => {
+        if (layersRendered.canvasLayer && layersRendered.textLayer) {
+            onRenderCompleted(pageIndex);
+        }
+    }, [layersRendered]);
 
     return (
         <div
@@ -167,7 +198,7 @@ export const PageLayer: React.FC<{
                                     rotation={rotationNumber}
                                     scale={scale}
                                     width={w}
-                                    onRenderCompleted={onRenderCompleted}
+                                    onRenderCanvasCompleted={handleRenderCanvasCompleted}
                                 />
                             ),
                         },
@@ -191,6 +222,7 @@ export const PageLayer: React.FC<{
                                     plugins={plugins}
                                     rotation={rotationNumber}
                                     scale={scale}
+                                    onRenderTextCompleted={handleRenderTextCompleted}
                                 />
                             ),
                         },

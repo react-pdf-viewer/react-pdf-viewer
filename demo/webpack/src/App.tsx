@@ -32,7 +32,7 @@ const App = () => {
                 height: '50rem',
             }}
         >
-            <Viewer fileUrl="/pdf-open-parameters.pdf" plugins={[defaultLayoutPluginInstance]} />
+            <Viewer initialPage={5} defaultScale={0.5} fileUrl="/1.pdf" plugins={[defaultLayoutPluginInstance]} />
         </div>
     );
 };

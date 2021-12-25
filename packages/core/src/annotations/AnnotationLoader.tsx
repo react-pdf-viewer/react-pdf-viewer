@@ -8,6 +8,7 @@
 
 import * as React from 'react';
 
+import { useIsMounted } from '../hooks/useIsMounted';
 import type { PdfJs } from '../types/PdfJs';
 
 interface Status {
@@ -19,6 +20,7 @@ export const AnnotationLoader: React.FC<{
     page: PdfJs.Page;
     renderAnnotations(annotations: PdfJs.Annotation[]): React.ReactElement;
 }> = ({ page, renderAnnotations }) => {
+    const isMounted = useIsMounted();
     const [status, setStatus] = React.useState<Status>({
         loading: true,
         annotations: [],
@@ -26,10 +28,12 @@ export const AnnotationLoader: React.FC<{
 
     React.useEffect(() => {
         page.getAnnotations({ intent: 'display' }).then((result) => {
-            setStatus({
-                loading: false,
-                annotations: result,
-            });
+            if (isMounted.current) {
+                setStatus({
+                    loading: false,
+                    annotations: result,
+                });
+            }
         });
     }, []);
 

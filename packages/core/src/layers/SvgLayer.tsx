@@ -8,7 +8,7 @@
 
 import * as React from 'react';
 
-import { WithScale } from './WithScale';
+import { useIsomorphicLayoutEffect } from '../hooks/useIsomorphicLayoutEffect';
 import { PdfJsApi } from '../vendors/PdfJsApi';
 import type { PdfJs } from '../types/PdfJs';
 
@@ -29,7 +29,7 @@ export const SvgLayer: React.FC<{
         containerEle.innerHTML = '';
     };
 
-    const renderSvg = (): void => {
+    useIsomorphicLayoutEffect(() => {
         const containerEle = containerRef.current as HTMLDivElement;
         const viewport = page.getViewport({ rotation, scale });
 
@@ -44,11 +44,7 @@ export const SvgLayer: React.FC<{
                 containerEle.appendChild(svg);
             });
         });
-    };
+    }, []);
 
-    return (
-        <WithScale callback={renderSvg} rotation={rotation} scale={scale}>
-            <div className="rpv-core__svg-layer" ref={containerRef} />
-        </WithScale>
-    );
+    return <div className="rpv-core__svg-layer" ref={containerRef} />;
 };
