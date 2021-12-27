@@ -22,7 +22,12 @@ export const useIntersectionObserver = (props: UseIntersectionObserverProps) => 
     const { threshold, onVisibilityChanged } = props;
 
     useIsomorphicLayoutEffect(() => {
-        const io = new IntersectionObserver(
+        const container = containerRef.current;
+        if (!container) {
+            return;
+        }
+
+        const intersectionTracker = new IntersectionObserver(
             (entries) => {
                 entries.forEach((entry) => {
                     const isVisible = entry.isIntersecting;
@@ -34,14 +39,19 @@ export const useIntersectionObserver = (props: UseIntersectionObserverProps) => 
                 threshold: threshold || 0,
             }
         );
-        const container = containerRef.current;
-        if (!container) {
-            return;
-        }
-        io.observe(container);
+        intersectionTracker.observe(container);
+
+        // Make sure that the visibility of container is tracked when it is resized.
+        // It happens when users zoom or ratate a document, for example.
+        const resizeTracker = new ResizeObserver((_: ResizeObserverEntry[], __: ResizeObserver) => {
+            intersectionTracker.unobserve(container);
+            intersectionTracker.observe(container);
+        });
+        resizeTracker.observe(container);
 
         return (): void => {
-            io.unobserve(container);
+            intersectionTracker.unobserve(container);
+            resizeTracker.unobserve(container);
         };
     }, []);
 

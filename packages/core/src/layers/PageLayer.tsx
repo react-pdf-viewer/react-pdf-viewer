@@ -137,16 +137,6 @@ export const PageLayer: React.FC<{
 
     React.useEffect(() => {
         if (shouldRender) {
-            setPageSize({
-                page: null,
-                pageHeight: height,
-                pageWidth: width,
-                viewportRotation: 0,
-            });
-            setLayersRendered({
-                canvasLayer: false,
-                textLayer: false,
-            });
             determinePageSize();
         }
     }, [shouldRender]);
