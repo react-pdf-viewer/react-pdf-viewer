@@ -113,6 +113,10 @@ export const CanvasLayer: React.FC<{
 
         return () => {
             renderTask.current?.cancel();
+            if (canvasEle) {
+                canvasEle.width = 0;
+                canvasEle.height = 0;
+            }
         };
     }, []);
 
