@@ -347,7 +347,13 @@ export const Inner: React.FC<{
 
         switch (pageStatus.renderStatus) {
             case PageRenderStatus.Rendering:
-                // Do nothing, wait until the current page is rendered completely
+                if (!pageStatusesRef.current.has(pageStatus.pageIndex)) {
+                    pageStatusesRef.current.set(startPage, PageRenderStatus.Rendering);
+                    setPageStatus({
+                        pageIndex: startPage,
+                        renderStatus: PageRenderStatus.Rendering,
+                    });
+                }
                 break;
 
             case PageRenderStatus.Rendered:
@@ -368,6 +374,7 @@ export const Inner: React.FC<{
             case PageRenderStatus.NotRenderedYet:
             default:
                 // If there is no rendered page, then start with the `startPage`
+                pageStatusesRef.current.set(startPage, PageRenderStatus.Rendering);
                 setPageStatus({
                     pageIndex: startPage,
                     renderStatus: PageRenderStatus.Rendering,
