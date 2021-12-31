@@ -11,6 +11,7 @@ import * as React from 'react';
 import { AnnotationLayer } from '../annotations/AnnotationLayer';
 import { Spinner } from '../components/Spinner';
 import { useIntersectionObserver } from '../hooks/useIntersectionObserver';
+import { useIsMounted } from '../hooks/useIsMounted';
 import { SpecialZoomLevel } from '../structs/SpecialZoomLevel';
 import { getPage } from '../utils/managePages';
 import { CanvasLayer } from './CanvasLayer';
@@ -61,6 +62,7 @@ export const PageLayer: React.FC<{
     onPageVisibilityChanged,
     onRenderCompleted,
 }) => {
+    const isMounted = useIsMounted();
     const [pageSize, setPageSize] = React.useState<PageSizeState>({
         page: null,
         pageHeight: height,
@@ -84,7 +86,7 @@ export const PageLayer: React.FC<{
         getPage(doc, pageIndex).then((pdfPage) => {
             const viewport = pdfPage.getViewport({ scale: 1 });
 
-            setPageSize({
+            isMounted.current && setPageSize({
                 page: pdfPage,
                 pageHeight: viewport.height,
                 pageWidth: viewport.width,
@@ -116,10 +118,14 @@ export const PageLayer: React.FC<{
     });
 
     const handleRenderCanvasCompleted = () => {
-        setLayersRendered((layersRendered) => Object.assign({}, layersRendered, { canvasLayer: true }));
+        if (isMounted.current) {
+            setLayersRendered((layersRendered) => Object.assign({}, layersRendered, { canvasLayer: true }));
+        }
     };
     const handleRenderTextCompleted = () => {
-        setLayersRendered((layersRendered) => Object.assign({}, layersRendered, { textLayer: true }));
+        if (isMounted.current) {
+            setLayersRendered((layersRendered) => Object.assign({}, layersRendered, { textLayer: true }));
+        }
     };
 
     React.useEffect(() => {
@@ -136,7 +142,7 @@ export const PageLayer: React.FC<{
     }, [rotation, scale]);
 
     React.useEffect(() => {
-        if (shouldRender) {
+        if (shouldRender && isMounted.current) {
             determinePageSize();
         }
     }, [shouldRender]);
