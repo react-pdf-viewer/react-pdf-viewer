@@ -36,6 +36,7 @@ enum PageRenderStatus {
 }
 
 const NUM_OVERSCAN_PAGES = 2;
+const PAGE_PADDING = 16;
 
 export const Inner: React.FC<{
     currentFile: OpenFile;
@@ -79,7 +80,7 @@ export const Inner: React.FC<{
     );
 
     const estimateSize = React.useCallback(
-        () => (Math.abs(rotation) % 180 === 0 ? pageSize.pageHeight * scale : pageSize.pageWidth * scale),
+        () => (Math.abs(rotation) % 180 === 0 ? pageSize.pageHeight * scale : pageSize.pageWidth * scale) + PAGE_PADDING,
         [rotation, scale]
     );
     const virtualizer = useVirtual({
@@ -249,22 +250,17 @@ export const Inner: React.FC<{
         });
     }, [scale]);
 
-    // Important rule: All the plugin methods can't use the internal state (`currentPage`, `rotation`, `scale`, for example).
-    // These methods when being called from plugins will use the initial value of state, not the latest one.
-    // If you want to access internal state from plugin methods, use `stateRef`
-    const getPluginMethods = (): PluginFunctions => ({
-        getPagesContainer,
-        getViewerState,
-        jumpToDestination,
-        jumpToPage,
-        openFile,
-        rotate,
-        setViewerState,
-        zoom,
-    });
-
     React.useEffect(() => {
-        const pluginMethods = getPluginMethods();
+        const pluginMethods: PluginFunctions = {
+            getPagesContainer,
+            getViewerState,
+            jumpToDestination,
+            jumpToPage,
+            openFile,
+            rotate,
+            setViewerState,
+            zoom,
+        };
 
         // Install the plugins
         plugins.forEach((plugin) => {
@@ -355,21 +351,13 @@ export const Inner: React.FC<{
         }
     }, [virtualizer, pageStatus]);
 
-    React.useEffect(() => {
-        return () => {
-            clearPagesCache();
-            // Clear the maps
-            pageStatusesRef.current.clear();
-        };
-    }, []);
-
-    const handlePageRenderCompleted = (pageIndex: number): void => {
+    const handlePageRenderCompleted = React.useCallback((pageIndex: number): void => {
         setPageStatus({
             pageIndex,
             renderStatus: PageRenderStatus.Rendered,
         });
         pageStatusesRef.current.set(pageIndex, PageRenderStatus.Rendered);
-    };
+    }, []);
 
     // `action` can be `FirstPage`, `PrevPage`, `NextPage`, `LastPage`, `GoBack`, `GoForward`
     const executeNamedAction = (action: string): void => {
@@ -395,7 +383,7 @@ export const Inner: React.FC<{
 
     const pageLabel = (l10n && l10n.core ? l10n.core.pageLabel : 'Page {{pageIndex}}') as string;
 
-    const renderViewer = (): Slot => {
+    const renderViewer = React.useCallback(() => {
         let slot: Slot = {
             attrs: {
                 'data-testid': 'core__inner-container',
@@ -478,14 +466,22 @@ export const Inner: React.FC<{
         });
 
         return slot;
-    };
+    }, [plugins, virtualizer.virtualItems]);
 
-    const renderSlot = (slot: Slot) => (
+    const renderSlot = React.useCallback((slot: Slot) => (
         <div {...slot.attrs} style={slot.attrs && slot.attrs.style ? slot.attrs.style : {}}>
             {slot.children}
             {slot.subSlot && renderSlot(slot.subSlot)}
         </div>
-    );
+    ), []);
+
+    React.useEffect(() => {
+        return () => {
+            clearPagesCache();
+            // Clear the maps
+            pageStatusesRef.current.clear();
+        };
+    }, []);
 
     return renderSlot(renderViewer());
 };
