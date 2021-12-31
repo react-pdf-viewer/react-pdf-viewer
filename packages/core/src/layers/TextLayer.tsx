@@ -96,7 +96,7 @@ export const TextLayer: React.FC<{
         });
 
         return () => {
-            renderTask.current.cancel();
+            renderTask.current?.cancel();
         };
     }, []);
 

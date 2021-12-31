@@ -9,6 +9,7 @@
 import * as React from 'react';
 
 import { useTrackResize } from '../hooks/useTrackResize';
+import { useVirtual } from '../hooks/useVirtual';
 import { PageLayer } from '../layers/PageLayer';
 import { LocalizationContext } from '../localization/LocalizationContext';
 import { SpecialZoomLevel } from '../structs/SpecialZoomLevel';
@@ -33,7 +34,6 @@ enum PageRenderStatus {
     NotRenderedYet = 'NotRenderedYet',
     Rendering = 'Rendering',
     Rendered = 'Rendered',
-    Error = 'Error',
 }
 
 interface PageVisibility {
@@ -41,6 +41,8 @@ interface PageVisibility {
     renderStatus: PageRenderStatus;
     visibility: number;
 }
+
+const NUM_OVERSCAN_PAGES = 2;
 
 export const Inner: React.FC<{
     currentFile: OpenFile;
@@ -73,8 +75,8 @@ export const Inner: React.FC<{
     const docId = doc.loadingTask.docId;
     const { l10n } = React.useContext(LocalizationContext);
     const themeContext = React.useContext(ThemeContext);
-    const containerRef = React.useRef<HTMLDivElement | null>(null);
-    const pagesRef = React.useRef<HTMLDivElement | null>(null);
+    const containerRef = React.useRef<HTMLDivElement>();
+    const pagesRef = React.useRef<HTMLDivElement>();
     const [currentPage, setCurrentPage] = React.useState(0);
     const [rotation, setRotation] = React.useState(0);
     const stateRef = React.useRef<ViewerState>(viewerState);
@@ -82,9 +84,19 @@ export const Inner: React.FC<{
     const keepSpecialZoomLevelRef = React.useRef<SpecialZoomLevel | null>(
         typeof defaultScale === 'string' ? defaultScale : null
     );
+    const virtualizer = useVirtual({
+        estimateSize: () => pageSize.pageHeight * scale,
+        numberOfItems: numPages,
+        overscan: NUM_OVERSCAN_PAGES,
+        parentRef: pagesRef,
+    });
+    const [pageStatus, setPageStatus] = React.useState({
+        pageIndex: -1,
+        renderStatus: PageRenderStatus.NotRenderedYet,
+    });
+
     // Map the page index to page element
     const pagesMapRef = React.useRef<Map<number, HTMLDivElement>>(new Map());
-    const [renderPageIndex, setRenderPageIndex] = React.useState(-1);
 
     // Reach the initial page in the first render
     const reachInitialPageRef = React.useRef(initialPage ? false : true);
@@ -102,14 +114,7 @@ export const Inner: React.FC<{
     );
 
     const pageVisibilityRef = React.useRef<PageVisibility[]>(getInitialPageVisibilities());
-
-    const pageIndexes = React.useMemo(
-        () =>
-            Array(doc.numPages)
-                .fill(0)
-                .map((_, index) => index),
-        [docId]
-    );
+    const pageStatusesRef = React.useRef<Map<number, PageRenderStatus>>(new Map());
 
     const handlePagesResize = (target: Element) => {
         if (keepSpecialZoomLevelRef.current) {
@@ -221,7 +226,6 @@ export const Inner: React.FC<{
 
     const rotate = (updateRotation: number): void => {
         pageVisibilityRef.current = getInitialPageVisibilities();
-        renderNextPage();
 
         setRotation(updateRotation);
         setViewerState({
@@ -236,7 +240,6 @@ export const Inner: React.FC<{
 
     const zoom = (newScale: number | SpecialZoomLevel): void => {
         pageVisibilityRef.current = getInitialPageVisibilities();
-        renderNextPage();
 
         const pagesEle = pagesRef.current;
         let updateScale = pagesEle
@@ -332,10 +335,53 @@ export const Inner: React.FC<{
     }, [currentPage]);
 
     React.useEffect(() => {
+        const startPage = virtualizer.virtualItems[0].index;
+        const endPage = startPage + virtualizer.virtualItems.length;
+
+        // Reset the statuses for pages that are not in the range
+        pageStatusesRef.current.forEach((_, pageIndex) => {
+            if (pageIndex < startPage || pageIndex > endPage) {
+                pageStatusesRef.current.delete(pageIndex);
+            }
+        });
+
+        switch (pageStatus.renderStatus) {
+            case PageRenderStatus.Rendering:
+                // Do nothing, wait until the current page is rendered completely
+                break;
+
+            case PageRenderStatus.Rendered:
+                // The current rendering is done
+                // Find the next page in the range which isn't rendered yet
+                for (let i = startPage; i < endPage; i++) {
+                    if (!pageStatusesRef.current.has(i)) {
+                        pageStatusesRef.current.set(i, PageRenderStatus.Rendering);
+                        setPageStatus({
+                            pageIndex: i,
+                            renderStatus: PageRenderStatus.Rendering,
+                        });
+                        break;
+                    }
+                }
+                break;
+
+            case PageRenderStatus.NotRenderedYet:
+            default:
+                // If there is no rendered page, then start with the `startPage`
+                setPageStatus({
+                    pageIndex: startPage,
+                    renderStatus: PageRenderStatus.Rendering,
+                });
+                break;
+        }
+    }, [virtualizer, pageStatus]);
+
+    React.useEffect(() => {
         return () => {
             clearPagesCache();
             // Clear the maps
             pagesMapRef.current.clear();
+            pageStatusesRef.current.clear();
         };
     }, []);
 
@@ -351,53 +397,14 @@ export const Inner: React.FC<{
             return;
         }
         setCurrentPage(maxRatioPage);
-        renderNextPage();
     };
 
     const handlePageRenderCompleted = (pageIndex: number): void => {
-        console.log('handlePageRenderCompleted', { currentPage, pageIndex });
-        pageVisibilityRef.current[pageIndex].renderStatus = PageRenderStatus.Rendered;
-        renderNextPage();
-    };
-
-    const renderNextPage = () => {
-        // Find all visible pages
-        const visiblePages = pageVisibilityRef.current.filter((item) => item.visibility > 0);
-        if (!visiblePages.length) {
-            return;
-        }
-        const firstVisiblePage = visiblePages[0].pageIndex;
-        const lastVisiblePage = visiblePages[visiblePages.length - 1].pageIndex;
-
-        // Check if there is any visible page that has been rendering
-        const hasRenderingPage = visiblePages.find((item) => item.renderStatus === PageRenderStatus.Rendering);
-        if (hasRenderingPage) {
-            // Wait until the page is rendered completely
-            return;
-        }
-
-        // Find the most visible page that isn't rendered yet
-        const notRenderedPages = visiblePages
-            .filter((item) => item.renderStatus === PageRenderStatus.NotRenderedYet)
-            .sort((a, b) => a.visibility - b.visibility);
-        if (notRenderedPages.length) {
-            const nextRenderPage = notRenderedPages[notRenderedPages.length - 1].pageIndex;
-            pageVisibilityRef.current[nextRenderPage].renderStatus = PageRenderStatus.Rendering;
-            setRenderPageIndex(nextRenderPage);
-        } else if (
-            lastVisiblePage + 1 < numPages &&
-            pageVisibilityRef.current[lastVisiblePage + 1].renderStatus !== PageRenderStatus.Rendered
-        ) {
-            // All visible pages are rendered
-            // Render the page that is right after the last visible page ...
-            setRenderPageIndex(lastVisiblePage + 1);
-        } else if (
-            firstVisiblePage - 1 >= 0 &&
-            pageVisibilityRef.current[firstVisiblePage - 1].renderStatus !== PageRenderStatus.Rendered
-        ) {
-            // ... or before the first visible one
-            setRenderPageIndex(firstVisiblePage - 1);
-        }
+        setPageStatus({
+            pageIndex,
+            renderStatus: PageRenderStatus.Rendered,
+        });
+        pageStatusesRef.current.set(pageIndex, PageRenderStatus.Rendered);
     };
 
     // `action` can be `FirstPage`, `PrevPage`, `NextPage`, `LastPage`, `GoBack`, `GoForward`
@@ -446,26 +453,36 @@ export const Inner: React.FC<{
                     },
                 },
                 children: (
-                    <>
-                        {pageIndexes.map((index) => (
+                    <div
+                        style={{
+                            height: `${virtualizer.totalSize}px`,
+                            position: 'relative',
+                        }}
+                    >
+                        {virtualizer.virtualItems.map((item) => (
                             <div
-                                aria-label={pageLabel.replace('{{pageIndex}}', `${index + 1}`)}
+                                aria-label={pageLabel.replace('{{pageIndex}}', `${item.index + 1}`)}
                                 className="rpv-core__inner-page"
-                                key={`pagelayer-${index}`}
-                                ref={(ref): void => {
-                                    pagesMapRef.current.set(index, ref);
-                                }}
+                                key={item.index}
                                 role="region"
+                                style={{
+                                    left: 0,
+                                    position: 'absolute',
+                                    top: 0,
+                                    height: `${item.size}px`,
+                                    transform: `translateY(${item.start}px)`,
+                                    width: '100%',
+                                }}
                             >
                                 <PageLayer
                                     doc={doc}
                                     height={pageHeight}
-                                    pageIndex={index}
+                                    pageIndex={item.index}
                                     plugins={plugins}
                                     renderPage={renderPage}
                                     rotation={rotation}
                                     scale={scale}
-                                    shouldRender={renderPageIndex === index}
+                                    shouldRender={pageStatus.pageIndex === item.index}
                                     width={pageWidth}
                                     onExecuteNamedAction={executeNamedAction}
                                     onJumpToDest={jumpToDestination}
@@ -474,7 +491,7 @@ export const Inner: React.FC<{
                                 />
                             </div>
                         ))}
-                    </>
+                    </div>
                 ),
             },
         };

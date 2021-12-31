@@ -112,7 +112,7 @@ export const CanvasLayer: React.FC<{
         );
 
         return () => {
-            renderTask.current.cancel();
+            renderTask.current?.cancel();
         };
     }, []);
 
