@@ -6,6 +6,10 @@
 
 -   The `Cover` component has the same image source when loading different documents
 
+**Breaking change**
+
+-   It is not possible to access the page element in a plugin with the `getPageElement` function. The method is removed because the pages are rendered dynamically
+
 ## v3.0.0
 
 **New features**

@@ -162,24 +162,17 @@ export const highlightPlugin = (props?: HighlightPluginProps): HighlightPlugin =
     );
 
     const jumpToHighlightArea = (area: HighlightArea) => {
-        const getPagesContainer = store.get('getPagesContainer');
-        const getPageElement = store.get('getPageElement');
-        if (!getPagesContainer || !getPageElement) {
-            return;
+        const jumpToDestination = store.get('jumpToDestination');
+        if (jumpToDestination) {
+            const bottomOffset = (_: number, viewportHeight: number) => ((100 - area.top) * viewportHeight) / 100;
+            const leftOffset = (viewportWidth: number, _: number) => ((100 - area.left) * viewportWidth) / 100;
+            jumpToDestination(area.pageIndex, bottomOffset, leftOffset);
         }
-
-        const pagesEle = getPagesContainer();
-        if (!pagesEle) {
-            return;
-        }
-
-        const targetPage = getPageElement(area.pageIndex);
-        pagesEle.scrollTop = targetPage.offsetTop + (area.top * targetPage.clientHeight) / 100 - pagesEle.offsetTop;
     };
 
     return {
         install: (pluginFunctions: PluginFunctions) => {
-            store.update('getPageElement', pluginFunctions.getPageElement);
+            store.update('jumpToDestination', pluginFunctions.jumpToDestination);
             store.update('getPagesContainer', pluginFunctions.getPagesContainer);
         },
         onViewerStateChange: (viewerState: ViewerState) => {

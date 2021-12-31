@@ -42,11 +42,14 @@ export const useScroll = ({
         };
     }, [element]);
 
-    const scrollTo = React.useCallback((topOffset: number) => {
-        if (elementRef.current) {
-            elementRef.current.scrollTop = topOffset;
-        }
-    }, [elementRef]);
+    const scrollTo = React.useCallback(
+        (topOffset: number) => {
+            if (elementRef.current) {
+                elementRef.current.scrollTop = topOffset;
+            }
+        },
+        [elementRef]
+    );
 
     return {
         scrollOffset,

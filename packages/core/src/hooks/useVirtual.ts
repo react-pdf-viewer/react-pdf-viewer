@@ -99,7 +99,7 @@ export const useVirtual = ({
     latestRef.current.scrollOffset = scrollOffset;
     latestRef.current.parentSize = parentHeight;
 
-    const measurements = React.useMemo(() => {        
+    const measurements = React.useMemo(() => {
         const measurements: ItemMeasurement[] = [];
 
         for (let i = 0; i < numberOfItems; i++) {

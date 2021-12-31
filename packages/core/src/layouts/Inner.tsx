@@ -23,7 +23,7 @@ import type { OpenFile } from '../types/OpenFile';
 import type { PageChangeEvent } from '../types/PageChangeEvent';
 import type { PdfJs } from '../types/PdfJs';
 import type { Plugin } from '../types/Plugin';
-import type { PluginFunctions } from '../types/PluginFunctions';
+import type { DestinationOffsetFromViewport, PluginFunctions } from '../types/PluginFunctions';
 import type { RenderPage } from '../types/RenderPage';
 import type { Slot } from '../types/Slot';
 import type { ViewerState } from '../types/ViewerState';
@@ -78,7 +78,10 @@ export const Inner: React.FC<{
         typeof defaultScale === 'string' ? defaultScale : null
     );
 
-    const estimateSize = React.useCallback(() => Math.abs(rotation) % 180 === 0 ? pageSize.pageHeight * scale : pageSize.pageWidth * scale, [rotation, scale]);
+    const estimateSize = React.useCallback(
+        () => (Math.abs(rotation) % 180 === 0 ? pageSize.pageHeight * scale : pageSize.pageWidth * scale),
+        [rotation, scale]
+    );
     const virtualizer = useVirtual({
         estimateSize,
         numberOfItems: numPages,
@@ -135,9 +138,9 @@ export const Inner: React.FC<{
 
     const jumpToDestination = (
         pageIndex: number,
-        bottomOffset: number,
-        leftOffset: number,
-        scaleTo: number | SpecialZoomLevel
+        bottomOffset: number | DestinationOffsetFromViewport,
+        leftOffset: number | DestinationOffsetFromViewport,
+        scaleTo?: number | SpecialZoomLevel
     ): void => {
         const pagesContainer = pagesRef.current;
         const currentState = stateRef.current;
@@ -148,9 +151,13 @@ export const Inner: React.FC<{
         getPage(doc, pageIndex).then((page) => {
             const viewport = page.getViewport({ scale: 1 });
             let top = 0;
-            const bottom = bottomOffset || 0;
-            let left = leftOffset || 0;
+            const bottom =
+                (typeof bottomOffset === 'function' ? bottomOffset(viewport.width, viewport.height) : bottomOffset) ||
+                0;
+            let left =
+                (typeof leftOffset === 'function' ? leftOffset(viewport.width, viewport.height) : leftOffset) || 0;
             let updateScale = currentState.scale;
+
             switch (scaleTo) {
                 case SpecialZoomLevel.PageFit:
                     top = 0;
