@@ -77,8 +77,10 @@ export const Inner: React.FC<{
     const keepSpecialZoomLevelRef = React.useRef<SpecialZoomLevel | null>(
         typeof defaultScale === 'string' ? defaultScale : null
     );
+
+    const estimateSize = React.useCallback(() => Math.abs(rotation) % 180 === 0 ? pageSize.pageHeight * scale : pageSize.pageWidth * scale, [rotation, scale]);
     const virtualizer = useVirtual({
-        estimateSize: () => pageSize.pageHeight * scale,
+        estimateSize,
         numberOfItems: numPages,
         overscan: NUM_OVERSCAN_PAGES,
         parentRef: pagesRef,
@@ -204,6 +206,7 @@ export const Inner: React.FC<{
     };
 
     const rotate = (updateRotation: number): void => {
+        pageStatusesRef.current.clear();
         setRotation(updateRotation);
         setViewerState({
             file: viewerState.file,
@@ -216,6 +219,8 @@ export const Inner: React.FC<{
     };
 
     const zoom = (newScale: number | SpecialZoomLevel): void => {
+        pageStatusesRef.current.clear();
+
         const pagesEle = pagesRef.current;
         let updateScale = pagesEle
             ? typeof newScale === 'string'
