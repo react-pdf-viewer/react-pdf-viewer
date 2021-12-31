@@ -177,16 +177,9 @@ export const Inner: React.FC<{
     };
 
     const jumpToPage = (pageIndex: number): void => {
-        if (pageIndex < 0 || pageIndex >= numPages) {
-            return;
+        if (0 <= pageIndex && pageIndex < numPages) {
+            virtualizer.scrollToItem(pageIndex);
         }
-        const pagesContainer = pagesRef.current;
-        const targetPage = pagesMapRef.current.get(pageIndex);
-        if (pagesContainer && targetPage) {
-            pagesContainer.scrollTop = targetPage.offsetTop;
-            pagesContainer.scrollLeft = targetPage.offsetLeft;
-        }
-        setCurrentPage(pageIndex);
     };
 
     const openFile = (file: File): void => {

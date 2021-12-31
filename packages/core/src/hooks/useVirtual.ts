@@ -10,6 +10,7 @@ import * as React from 'react';
 
 import { useMeasureRect } from './useMeasureRect';
 import { useScroll } from './useScroll';
+import { clamp } from '../utils/clamp';
 import { findNearest } from '../utils/findNearest';
 import { maxByKey } from '../utils/maxByKey';
 
@@ -78,10 +79,11 @@ export const useVirtual = ({
     parentRef: React.MutableRefObject<HTMLDivElement>;
 }): {
     maxVisibilityIndex: number;
+    scrollToItem: (index: number) => void;
     totalSize: number;
     virtualItems: ItemMeasurement[];
 } => {
-    const { scrollOffset } = useScroll({
+    const { scrollOffset, scrollTo } = useScroll({
         elementRef: parentRef,
     });
     const { height: parentHeight } = useMeasureRect({
@@ -97,7 +99,7 @@ export const useVirtual = ({
     latestRef.current.scrollOffset = scrollOffset;
     latestRef.current.parentSize = parentHeight;
 
-    const measurements = React.useMemo(() => {
+    const measurements = React.useMemo(() => {        
         const measurements: ItemMeasurement[] = [];
 
         for (let i = 0; i < numberOfItems; i++) {
@@ -112,6 +114,7 @@ export const useVirtual = ({
                 key: `${i}`,
             };
         }
+        console.log(measurements);
         return measurements;
     }, [estimateSize]);
 
@@ -133,8 +136,17 @@ export const useVirtual = ({
         virtualItems.push(measurements[i]);
     }
 
+    const scrollToItem = React.useCallback((index: number) => {
+        const { measurements } = latestRef.current;
+        const measurement = measurements[clamp(0, numberOfItems - 1, index)];
+        if (measurement) {
+            scrollTo(measurement.start);
+        }
+    }, []);
+
     return {
         maxVisibilityIndex,
+        scrollToItem,
         totalSize,
         virtualItems,
     };
