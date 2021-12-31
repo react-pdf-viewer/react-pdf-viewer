@@ -98,9 +98,6 @@ export const Inner: React.FC<{
         setCurrentPage(virtualizer.maxVisibilityIndex);
     }, [virtualizer.maxVisibilityIndex]);
 
-    // Map the page index to page element
-    const pagesMapRef = React.useRef<Map<number, HTMLDivElement>>(new Map());
-
     const pageStatusesRef = React.useRef<Map<number, PageRenderStatus>>(new Map());
 
     const handlePagesResize = (target: Element) => {
@@ -131,8 +128,6 @@ export const Inner: React.FC<{
     };
 
     const getPagesContainer = () => pagesRef.current;
-
-    const getPageElement = (pageIndex: number): HTMLElement | null => pagesMapRef.current.get(pageIndex) || null;
 
     const getViewerState = () => stateRef.current;
 
@@ -258,7 +253,6 @@ export const Inner: React.FC<{
     // These methods when being called from plugins will use the initial value of state, not the latest one.
     // If you want to access internal state from plugin methods, use `stateRef`
     const getPluginMethods = (): PluginFunctions => ({
-        getPageElement,
         getPagesContainer,
         getViewerState,
         jumpToDestination,
@@ -365,7 +359,6 @@ export const Inner: React.FC<{
         return () => {
             clearPagesCache();
             // Clear the maps
-            pagesMapRef.current.clear();
             pageStatusesRef.current.clear();
         };
     }, []);

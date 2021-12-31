@@ -36,7 +36,6 @@ export interface Plugin {
 
 export type DestinationOffsetFromViewport = (viewportWidth: number, viewportHeight: number) => number;
 export interface PluginFunctions {
-    getPageElement(pageIndex: number): HTMLElement | null;
     getPagesContainer(): HTMLElement;
     getViewerState(): ViewerState;
     jumpToDestination(
