@@ -11,6 +11,7 @@ import * as React from 'react';
 import { useMeasureRect } from './useMeasureRect';
 import { useScroll } from './useScroll';
 import { findNearest } from '../utils/findNearest';
+import { maxByKey } from '../utils/maxByKey';
 
 interface ItemMeasurement {
     index: number;
@@ -20,22 +21,46 @@ interface ItemMeasurement {
     key: string;
 }
 
-interface Range {
-    start: number;
-    end: number;
+interface ItemVisibility {
+    index: number;
+    visibility: number;
 }
 
-const calculateRange = (measurements: ItemMeasurement[], outerSize: number, scrollOffset: number): Range => {
+const calculateRange = (
+    measurements: ItemMeasurement[],
+    outerSize: number,
+    scrollOffset: number
+): {
+    maxVisibilityIndex: number;
+    start: number;
+    end: number;
+} => {
     const size = measurements.length - 1;
     const getOffset = (index: number) => measurements[index].start;
     let start = findNearest(0, size, scrollOffset, getOffset);
     let end = start;
 
+    let visibleSize = 0;
+    const visibilities: ItemVisibility[] = [];
+    let lastVisibility = 0;
     while (end < size && measurements[end].end < scrollOffset + outerSize) {
+        let allVisibleSize = measurements[end].end - scrollOffset;
+        lastVisibility = outerSize - allVisibleSize;
+        visibilities.push({
+            index: end,
+            visibility: allVisibleSize - visibleSize,
+        });
+        visibleSize = allVisibleSize;
         end++;
     }
+    visibilities.push({
+        index: end,
+        visibility: lastVisibility,
+    });
+    const maxVisibilityIndex = maxByKey(visibilities, 'visibility').index;
 
     return {
+        maxVisibilityIndex,
         start,
         end,
     };
@@ -52,6 +77,7 @@ export const useVirtual = ({
     overscan: number;
     parentRef: React.MutableRefObject<HTMLDivElement>;
 }): {
+    maxVisibilityIndex: number;
     totalSize: number;
     virtualItems: ItemMeasurement[];
 } => {
@@ -93,7 +119,7 @@ export const useVirtual = ({
     latestRef.current.measurements = measurements;
     latestRef.current.totalSize = totalSize;
 
-    const { start, end } = calculateRange(
+    const { maxVisibilityIndex, start, end } = calculateRange(
         latestRef.current.measurements,
         latestRef.current.parentSize,
         latestRef.current.scrollOffset
@@ -106,7 +132,9 @@ export const useVirtual = ({
     for (let i = startRange; i <= endRange; i++) {
         virtualItems.push(measurements[i]);
     }
+
     return {
+        maxVisibilityIndex,
         totalSize,
         virtualItems,
     };

@@ -16,7 +16,6 @@ import { SpecialZoomLevel } from '../structs/SpecialZoomLevel';
 import { ThemeContext } from '../theme/ThemeContext';
 import { clearPagesCache, getPage } from '../utils/managePages';
 import { getFileExt } from '../utils/getFileExt';
-import { maxByKey } from '../utils/maxByKey';
 import { calculateScale } from './calculateScale';
 import type { PageSize } from '../types/PageSize';
 import type { DocumentLoadEvent } from '../types/DocumentLoadEvent';
@@ -34,12 +33,6 @@ enum PageRenderStatus {
     NotRenderedYet = 'NotRenderedYet',
     Rendering = 'Rendering',
     Rendered = 'Rendered',
-}
-
-interface PageVisibility {
-    pageIndex: number;
-    renderStatus: PageRenderStatus;
-    visibility: number;
 }
 
 const NUM_OVERSCAN_PAGES = 2;
@@ -95,25 +88,14 @@ export const Inner: React.FC<{
         renderStatus: PageRenderStatus.NotRenderedYet,
     });
 
+    React.useEffect(() => {
+        // The current page is the page which has the biggest visibility
+        setCurrentPage(virtualizer.maxVisibilityIndex);
+    }, [virtualizer.maxVisibilityIndex]);
+
     // Map the page index to page element
     const pagesMapRef = React.useRef<Map<number, HTMLDivElement>>(new Map());
 
-    // Reach the initial page in the first render
-    const reachInitialPageRef = React.useRef(initialPage ? false : true);
-
-    const getInitialPageVisibilities = React.useCallback(
-        () =>
-            Array(numPages)
-                .fill(null)
-                .map((_, pageIndex) => ({
-                    pageIndex,
-                    renderStatus: PageRenderStatus.NotRenderedYet,
-                    visibility: -1,
-                })),
-        []
-    );
-
-    const pageVisibilityRef = React.useRef<PageVisibility[]>(getInitialPageVisibilities());
     const pageStatusesRef = React.useRef<Map<number, PageRenderStatus>>(new Map());
 
     const handlePagesResize = (target: Element) => {
@@ -202,9 +184,6 @@ export const Inner: React.FC<{
             pagesContainer.scrollTop = targetPage.offsetTop;
             pagesContainer.scrollLeft = targetPage.offsetLeft;
         }
-        if (initialPage && !reachInitialPageRef.current) {
-            reachInitialPageRef.current = true;
-        }
         setCurrentPage(pageIndex);
     };
 
@@ -225,8 +204,6 @@ export const Inner: React.FC<{
     };
 
     const rotate = (updateRotation: number): void => {
-        pageVisibilityRef.current = getInitialPageVisibilities();
-
         setRotation(updateRotation);
         setViewerState({
             file: viewerState.file,
@@ -239,8 +216,6 @@ export const Inner: React.FC<{
     };
 
     const zoom = (newScale: number | SpecialZoomLevel): void => {
-        pageVisibilityRef.current = getInitialPageVisibilities();
-
         const pagesEle = pagesRef.current;
         let updateScale = pagesEle
             ? typeof newScale === 'string'
@@ -392,20 +367,6 @@ export const Inner: React.FC<{
         };
     }, []);
 
-    const pageVisibilityChanged = (pageIndex: number, ratio: number): void => {
-        if (!reachInitialPageRef.current) {
-            return;
-        }
-        pageVisibilityRef.current[pageIndex].visibility = ratio;
-
-        // The current page is the page which has the biggest visibility ratio
-        const maxRatioPage = maxByKey(pageVisibilityRef.current, 'visibility').pageIndex;
-        if (pageVisibilityRef.current[maxRatioPage].visibility <= 0) {
-            return;
-        }
-        setCurrentPage(maxRatioPage);
-    };
-
     const handlePageRenderCompleted = (pageIndex: number): void => {
         setPageStatus({
             pageIndex,
@@ -493,7 +454,6 @@ export const Inner: React.FC<{
                                     width={pageWidth}
                                     onExecuteNamedAction={executeNamedAction}
                                     onJumpToDest={jumpToDestination}
-                                    onPageVisibilityChanged={pageVisibilityChanged}
                                     onRenderCompleted={handlePageRenderCompleted}
                                 />
                             </div>

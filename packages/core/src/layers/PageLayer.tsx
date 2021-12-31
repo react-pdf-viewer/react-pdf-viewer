@@ -10,7 +10,6 @@ import * as React from 'react';
 
 import { AnnotationLayer } from '../annotations/AnnotationLayer';
 import { Spinner } from '../components/Spinner';
-import { useIntersectionObserver } from '../hooks/useIntersectionObserver';
 import { useIsMounted } from '../hooks/useIsMounted';
 import { SpecialZoomLevel } from '../structs/SpecialZoomLevel';
 import { getPage } from '../utils/managePages';
@@ -20,7 +19,6 @@ import { TextLayer } from './TextLayer';
 import type { PdfJs } from '../types/PdfJs';
 import type { Plugin } from '../types/Plugin';
 import type { RenderPage, RenderPageProps } from '../types/RenderPage';
-import type { VisibilityChanged } from '../types/VisibilityChanged';
 
 interface PageSizeState {
     page?: PdfJs.Page | null;
@@ -28,10 +26,6 @@ interface PageSizeState {
     pageWidth: number;
     viewportRotation: number;
 }
-
-const INTERSECTION_THRESHOLD = Array(10)
-    .fill(null)
-    .map((_, i) => i / 10);
 
 export const PageLayer: React.FC<{
     doc: PdfJs.PdfDocument;
@@ -45,7 +39,6 @@ export const PageLayer: React.FC<{
     width: number;
     onExecuteNamedAction(action: string): void;
     onJumpToDest(pageIndex: number, bottomOffset: number, leftOffset: number, scaleTo: number | SpecialZoomLevel): void;
-    onPageVisibilityChanged(pageIndex: number, ratio: number): void;
     onRenderCompleted(pageIndex: number): void;
 }> = ({
     doc,
@@ -59,7 +52,6 @@ export const PageLayer: React.FC<{
     width,
     onExecuteNamedAction,
     onJumpToDest,
-    onPageVisibilityChanged,
     onRenderCompleted,
 }) => {
     const isMounted = useIsMounted();
@@ -86,17 +78,14 @@ export const PageLayer: React.FC<{
         getPage(doc, pageIndex).then((pdfPage) => {
             const viewport = pdfPage.getViewport({ scale: 1 });
 
-            isMounted.current && setPageSize({
-                page: pdfPage,
-                pageHeight: viewport.height,
-                pageWidth: viewport.width,
-                viewportRotation: viewport.rotation,
-            });
+            isMounted.current &&
+                setPageSize({
+                    page: pdfPage,
+                    pageHeight: viewport.height,
+                    pageWidth: viewport.width,
+                    viewportRotation: viewport.rotation,
+                });
         });
-    };
-
-    const visibilityChanged = (params: VisibilityChanged): void => {
-        onPageVisibilityChanged(pageIndex, params.isVisible ? params.ratio : -1);
     };
 
     // Default page renderer
@@ -111,11 +100,6 @@ export const PageLayer: React.FC<{
 
     // To support the document which is already rotated
     const rotationNumber = (rotation + pageSize.viewportRotation) % 360;
-
-    const containerRef = useIntersectionObserver({
-        threshold: INTERSECTION_THRESHOLD,
-        onVisibilityChanged: visibilityChanged,
-    });
 
     const handleRenderCanvasCompleted = () => {
         if (isMounted.current) {
@@ -155,7 +139,6 @@ export const PageLayer: React.FC<{
 
     return (
         <div
-            ref={containerRef}
             className="rpv-core__page-layer"
             data-testid={`core__page-layer-${pageIndex}`}
             style={{

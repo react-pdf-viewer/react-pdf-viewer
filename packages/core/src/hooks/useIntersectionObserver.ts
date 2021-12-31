@@ -41,17 +41,8 @@ export const useIntersectionObserver = (props: UseIntersectionObserverProps) => 
         );
         intersectionTracker.observe(container);
 
-        // Make sure that the visibility of container is tracked when it is resized.
-        // It happens when users zoom or ratate a document, for example.
-        const resizeTracker = new ResizeObserver((_: ResizeObserverEntry[], __: ResizeObserver) => {
-            intersectionTracker.unobserve(container);
-            intersectionTracker.observe(container);
-        });
-        resizeTracker.observe(container);
-
         return (): void => {
             intersectionTracker.unobserve(container);
-            resizeTracker.unobserve(container);
         };
     }, []);
 
