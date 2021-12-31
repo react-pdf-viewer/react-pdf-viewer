@@ -79,7 +79,7 @@ export const useVirtual = ({
     parentRef: React.MutableRefObject<HTMLDivElement>;
 }): {
     maxVisibilityIndex: number;
-    scrollToItem: (index: number) => void;
+    scrollToItem: (index: number, topOffset: number) => void;
     totalSize: number;
     virtualItems: ItemMeasurement[];
 } => {
@@ -114,7 +114,6 @@ export const useVirtual = ({
                 key: `${i}`,
             };
         }
-        console.log(measurements);
         return measurements;
     }, [estimateSize]);
 
@@ -136,11 +135,11 @@ export const useVirtual = ({
         virtualItems.push(measurements[i]);
     }
 
-    const scrollToItem = React.useCallback((index: number) => {
+    const scrollToItem = React.useCallback((index: number, topOffset: number) => {
         const { measurements } = latestRef.current;
         const measurement = measurements[clamp(0, numberOfItems - 1, index)];
         if (measurement) {
-            scrollTo(measurement.start);
+            scrollTo(measurement.start + topOffset);
         }
     }, []);
 

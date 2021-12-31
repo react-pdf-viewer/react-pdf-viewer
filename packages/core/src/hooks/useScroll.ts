@@ -16,7 +16,7 @@ export const useScroll = ({
     elementRef: React.MutableRefObject<HTMLDivElement>;
 }): {
     scrollOffset: number;
-    scrollTo: (offset: number) => void;
+    scrollTo: (topOffset: number) => void;
 } => {
     const [scrollOffset, setScrollOffset] = React.useState(0);
     const [element, setElement] = React.useState(elementRef.current);
@@ -42,9 +42,9 @@ export const useScroll = ({
         };
     }, [element]);
 
-    const scrollTo = React.useCallback((offset: number) => {
+    const scrollTo = React.useCallback((topOffset: number) => {
         if (elementRef.current) {
-            elementRef.current.scrollTop = offset;
+            elementRef.current.scrollTop = topOffset;
         }
     }, [elementRef]);
 

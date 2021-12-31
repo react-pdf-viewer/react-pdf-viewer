@@ -141,8 +141,7 @@ export const Inner: React.FC<{
     ): void => {
         const pagesContainer = pagesRef.current;
         const currentState = stateRef.current;
-        const targetPageEle = pagesMapRef.current.get(pageIndex);
-        if (!pagesContainer || !currentState || !targetPageEle) {
+        if (!pagesContainer || !currentState) {
             return;
         }
 
@@ -170,15 +169,14 @@ export const Inner: React.FC<{
                     top = Math.max(boundingRect[1] * currentState.scale, 0);
                     break;
             }
-
-            pagesContainer.scrollTop = targetPageEle.offsetTop + top;
-            pagesContainer.scrollLeft = targetPageEle.offsetLeft + left;
+            virtualizer.scrollToItem(pageIndex, top);
+            pagesContainer.scrollLeft += left;
         });
     };
 
     const jumpToPage = (pageIndex: number): void => {
         if (0 <= pageIndex && pageIndex < numPages) {
-            virtualizer.scrollToItem(pageIndex);
+            virtualizer.scrollToItem(pageIndex, 0);
         }
     };
 
