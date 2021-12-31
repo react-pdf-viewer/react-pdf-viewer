@@ -126,10 +126,10 @@ export const PageLayer: React.FC<{
     }, [rotation, scale]);
 
     React.useEffect(() => {
-        if (shouldRender && isMounted.current) {
+        if (shouldRender && isMounted.current && !page) {
             determinePageSize();
         }
-    }, [shouldRender]);
+    }, [shouldRender, page]);
 
     React.useEffect(() => {
         if (layersRendered.canvasLayer && layersRendered.textLayer) {
