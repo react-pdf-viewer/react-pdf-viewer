@@ -8,8 +8,8 @@
 
 import * as React from 'react';
 
+import { useIsomorphicLayoutEffect } from '../hooks/useIsomorphicLayoutEffect';
 import { LayerRenderStatus } from '../structs/LayerRenderStatus';
-import { WithScale } from './WithScale';
 import { PdfJsApi } from '../vendors/PdfJsApi';
 import type { PdfJs } from '../types/PdfJs';
 import type { Plugin } from '../types/Plugin';
@@ -20,7 +20,8 @@ export const TextLayer: React.FC<{
     plugins: Plugin[];
     rotation: number;
     scale: number;
-}> = ({ page, pageIndex, plugins, rotation, scale }) => {
+    onRenderTextCompleted: () => void;
+}> = ({ page, pageIndex, plugins, rotation, scale, onRenderTextCompleted }) => {
     const containerRef = React.useRef<HTMLDivElement>();
     const renderTask = React.useRef<PdfJs.PageRenderTask>();
 
@@ -38,7 +39,7 @@ export const TextLayer: React.FC<{
         breaks.forEach((br) => containerEle.removeChild(br));
     };
 
-    const renderText = (): void => {
+    useIsomorphicLayoutEffect(() => {
         const task = renderTask.current;
         if (task) {
             task.cancel();
@@ -85,17 +86,19 @@ export const TextLayer: React.FC<{
                             });
                         }
                     });
+                    onRenderTextCompleted();
                 },
                 () => {
                     containerEle.removeAttribute('data-testid');
+                    onRenderTextCompleted();
                 }
             );
         });
-    };
 
-    return (
-        <WithScale callback={renderText} rotation={rotation} scale={scale}>
-            <div className="rpv-core__text-layer" ref={containerRef} />
-        </WithScale>
-    );
+        return () => {
+            renderTask.current?.cancel();
+        };
+    }, []);
+
+    return <div className="rpv-core__text-layer" ref={containerRef} />;
 };

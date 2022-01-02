@@ -9,14 +9,15 @@
 import { SpecialZoomLevel } from '../structs/SpecialZoomLevel';
 import type { ViewerState } from './ViewerState';
 
+export type DestinationOffsetFromViewport = (viewportWidth: number, viewportHeight: number) => number;
+
 export interface PluginFunctions {
-    getPageElement(pageIndex: number): HTMLElement | null;
     getPagesContainer(): HTMLElement;
     getViewerState(): ViewerState;
     jumpToDestination(
         pageIndex: number,
-        bottomOffset: number,
-        leftOffset: number,
+        bottomOffset: number | DestinationOffsetFromViewport,
+        leftOffset: number | DestinationOffsetFromViewport,
         scaleTo: number | SpecialZoomLevel
     ): void;
     jumpToPage(pageIndex: number): void;

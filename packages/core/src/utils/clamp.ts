@@ -6,7 +6,4 @@
  * @copyright 2019-2021 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-.rpv-core__inner-page {
-    background-color: var(--rpv-core__inner-page-background-color);
-    padding: 0.5rem 0;
-}
+export const clamp = (min: number, max: number, value: number) => Math.max(min, Math.min(value, max));

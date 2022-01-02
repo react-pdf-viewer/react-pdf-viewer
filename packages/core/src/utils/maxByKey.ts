@@ -6,7 +6,5 @@
  * @copyright 2019-2021 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-.rpv-core__inner-page {
-    background-color: var(--rpv-core__inner-page-background-color);
-    padding: 0.5rem 0;
-}
+export const maxByKey = <T extends Record<string, any>, K extends keyof T>(arr: T[], key: K): T =>
+    arr.reduce((a, b) => (a[key] >= b[key] ? a : b), {} as T);

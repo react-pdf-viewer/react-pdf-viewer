@@ -33,15 +33,16 @@ export interface Plugin {
     onTextLayerRender?(props: PluginOnTextLayerRender): void;
     onViewerStateChange?(viewerState: ViewerState): ViewerState;
 }
+
+export type DestinationOffsetFromViewport = (viewportWidth: number, viewportHeight: number) => number;
 export interface PluginFunctions {
-    getPageElement(pageIndex: number): HTMLElement | null;
     getPagesContainer(): HTMLElement;
     getViewerState(): ViewerState;
     jumpToDestination(
         pageIndex: number,
-        bottomOffset: number,
-        leftOffset: number,
-        scaleTo: number | SpecialZoomLevel
+        bottomOffset: number | DestinationOffsetFromViewport,
+        leftOffset: number | DestinationOffsetFromViewport,
+        scaleTo?: number | SpecialZoomLevel
     ): void;
     jumpToPage(pageIndex: number): void;
     openFile(file: File): void;

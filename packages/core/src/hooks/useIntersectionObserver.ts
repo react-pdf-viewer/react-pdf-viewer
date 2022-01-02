@@ -22,7 +22,12 @@ export const useIntersectionObserver = (props: UseIntersectionObserverProps) => 
     const { threshold, onVisibilityChanged } = props;
 
     useIsomorphicLayoutEffect(() => {
-        const io = new IntersectionObserver(
+        const container = containerRef.current;
+        if (!container) {
+            return;
+        }
+
+        const intersectionTracker = new IntersectionObserver(
             (entries) => {
                 entries.forEach((entry) => {
                     const isVisible = entry.isIntersecting;
@@ -34,14 +39,10 @@ export const useIntersectionObserver = (props: UseIntersectionObserverProps) => 
                 threshold: threshold || 0,
             }
         );
-        const container = containerRef.current;
-        if (!container) {
-            return;
-        }
-        io.observe(container);
+        intersectionTracker.observe(container);
 
         return (): void => {
-            io.unobserve(container);
+            intersectionTracker.unobserve(container);
         };
     }, []);
 

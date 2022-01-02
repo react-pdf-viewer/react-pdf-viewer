@@ -9,12 +9,14 @@
 import * as React from 'react';
 
 import { useTrackResize } from '../hooks/useTrackResize';
+import { useVirtual } from '../hooks/useVirtual';
 import { PageLayer } from '../layers/PageLayer';
 import { LocalizationContext } from '../localization/LocalizationContext';
 import { SpecialZoomLevel } from '../structs/SpecialZoomLevel';
 import { ThemeContext } from '../theme/ThemeContext';
 import { clearPagesCache, getPage } from '../utils/managePages';
 import { getFileExt } from '../utils/getFileExt';
+import { maxByKey } from '../utils/maxByKey';
 import { calculateScale } from './calculateScale';
 import type { PageSize } from '../types/PageSize';
 import type { DocumentLoadEvent } from '../types/DocumentLoadEvent';
@@ -22,11 +24,28 @@ import type { OpenFile } from '../types/OpenFile';
 import type { PageChangeEvent } from '../types/PageChangeEvent';
 import type { PdfJs } from '../types/PdfJs';
 import type { Plugin } from '../types/Plugin';
-import type { PluginFunctions } from '../types/PluginFunctions';
+import type { DestinationOffsetFromViewport, PluginFunctions } from '../types/PluginFunctions';
 import type { RenderPage } from '../types/RenderPage';
 import type { Slot } from '../types/Slot';
 import type { ViewerState } from '../types/ViewerState';
 import type { ZoomEvent } from '../types/ZoomEvent';
+
+enum PageRenderStatus {
+    NotRenderedYet = 'NotRenderedYet',
+    Rendering = 'Rendering',
+    Rendered = 'Rendered',
+}
+
+interface PageVisibility {
+    pageIndex: number;
+    renderStatus: PageRenderStatus;
+    visibility: number;
+}
+
+const NUM_OVERSCAN_PAGES = 2;
+const PAGE_PADDING = 16;
+
+const OUT_OF_RANGE_VISIBILITY = -9999;
 
 export const Inner: React.FC<{
     currentFile: OpenFile;
@@ -55,11 +74,12 @@ export const Inner: React.FC<{
     onPageChange,
     onZoom,
 }) => {
+    const { numPages } = doc;
     const docId = doc.loadingTask.docId;
     const { l10n } = React.useContext(LocalizationContext);
     const themeContext = React.useContext(ThemeContext);
-    const containerRef = React.useRef<HTMLDivElement | null>(null);
-    const pagesRef = React.useRef<HTMLDivElement | null>(null);
+    const containerRef = React.useRef<HTMLDivElement>();
+    const pagesRef = React.useRef<HTMLDivElement>();
     const [currentPage, setCurrentPage] = React.useState(0);
     const [rotation, setRotation] = React.useState(0);
     const stateRef = React.useRef<ViewerState>(viewerState);
@@ -67,23 +87,61 @@ export const Inner: React.FC<{
     const keepSpecialZoomLevelRef = React.useRef<SpecialZoomLevel | null>(
         typeof defaultScale === 'string' ? defaultScale : null
     );
-    // Map the page index to page element
-    const pagesMapRef = React.useRef<Map<number, HTMLDivElement>>(new Map());
 
-    const pageIndexes = React.useMemo(
+    const [renderPageIndex, setRenderPageIndex] = React.useState(-1);
+    const getInitialPageVisibilities = React.useCallback(
         () =>
-            Array(doc.numPages)
-                .fill(0)
-                .map((_, index) => index),
-        [docId]
+            Array(numPages)
+                .fill(null)
+                .map((_, pageIndex) => ({
+                    pageIndex,
+                    renderStatus: PageRenderStatus.NotRenderedYet,
+                    visibility: OUT_OF_RANGE_VISIBILITY,
+                })),
+        []
     );
+    const pageVisibilityRef = React.useRef<PageVisibility[]>(getInitialPageVisibilities());
+
+    const estimateSize = React.useCallback(
+        () =>
+            (Math.abs(rotation) % 180 === 0 ? pageSize.pageHeight * scale : pageSize.pageWidth * scale) + PAGE_PADDING,
+        [rotation, scale]
+    );
+    const virtualizer = useVirtual({
+        estimateSize,
+        numberOfItems: numPages,
+        overscan: NUM_OVERSCAN_PAGES,
+        parentRef: pagesRef,
+    });
 
     React.useEffect(() => {
-        return () => {
-            // Clear the maps
-            pagesMapRef.current.clear();
-        };
-    }, []);
+        // The current page is the page which has the biggest visibility
+        const currentPage = maxByKey(virtualizer.virtualItems, 'visibility').index;
+        setCurrentPage(currentPage);
+        onPageChange({ currentPage, doc });
+        setViewerState({
+            file: viewerState.file,
+            pageIndex: currentPage,
+            pageHeight,
+            pageWidth,
+            rotation,
+            scale,
+        });
+
+        const { startIndex, endIndex, virtualItems } = virtualizer;
+        for (let i = 0; i < numPages; i++) {
+            if (i < startIndex || i > endIndex) {
+                pageVisibilityRef.current[i].visibility = OUT_OF_RANGE_VISIBILITY;
+                pageVisibilityRef.current[i].renderStatus = PageRenderStatus.NotRenderedYet;
+            } else {
+                const item = virtualItems.find((item) => item.index === i);
+                if (item) {
+                    pageVisibilityRef.current[i].visibility = item.visibility;
+                }
+            }
+        }
+        renderNextPage();
+    }, [virtualizer.virtualItems]);
 
     const handlePagesResize = (target: Element) => {
         if (keepSpecialZoomLevelRef.current) {
@@ -96,11 +154,7 @@ export const Inner: React.FC<{
         onResize: handlePagesResize,
     });
 
-    const { numPages } = doc;
     const { pageWidth, pageHeight } = pageSize;
-
-    const arr = Array(numPages).fill(null);
-    const pageVisibility = arr.map(() => 0);
 
     // The methods that a plugin can hook on
     // -------------------------------------
@@ -118,83 +172,84 @@ export const Inner: React.FC<{
 
     const getPagesContainer = () => pagesRef.current;
 
-    const getPageElement = (pageIndex: number): HTMLElement | null => pagesMapRef.current.get(pageIndex) || null;
-
     const getViewerState = () => stateRef.current;
 
-    const jumpToDestination = (
-        pageIndex: number,
-        bottomOffset: number,
-        leftOffset: number,
-        scaleTo: number | SpecialZoomLevel
-    ): void => {
-        const pagesContainer = pagesRef.current;
-        const currentState = stateRef.current;
-        const targetPageEle = pagesMapRef.current.get(pageIndex);
-        if (!pagesContainer || !currentState || !targetPageEle) {
-            return;
-        }
-
-        getPage(doc, pageIndex).then((page) => {
-            const viewport = page.getViewport({ scale: 1 });
-            let top = 0;
-            const bottom = bottomOffset || 0;
-            let left = leftOffset || 0;
-            let updateScale = currentState.scale;
-            switch (scaleTo) {
-                case SpecialZoomLevel.PageFit:
-                    top = 0;
-                    left = 0;
-                    zoom(SpecialZoomLevel.PageFit);
-                    break;
-                case SpecialZoomLevel.PageWidth:
-                    updateScale = calculateScale(pagesContainer, pageHeight, pageWidth, SpecialZoomLevel.PageWidth);
-                    top = (viewport.height - bottom) * updateScale;
-                    left = left * updateScale;
-                    zoom(updateScale);
-                    break;
-                default:
-                    const boundingRect = viewport.convertToViewportPoint(left, bottom);
-                    left = Math.max(boundingRect[0] * currentState.scale, 0);
-                    top = Math.max(boundingRect[1] * currentState.scale, 0);
-                    break;
+    const jumpToDestination = React.useCallback(
+        (
+            pageIndex: number,
+            bottomOffset: number | DestinationOffsetFromViewport,
+            leftOffset: number | DestinationOffsetFromViewport,
+            scaleTo?: number | SpecialZoomLevel
+        ): void => {
+            const pagesContainer = pagesRef.current;
+            const currentState = stateRef.current;
+            if (!pagesContainer || !currentState) {
+                return;
             }
 
-            pagesContainer.scrollTop = targetPageEle.offsetTop + top;
-            pagesContainer.scrollLeft = targetPageEle.offsetLeft + left;
-        });
-    };
+            getPage(doc, pageIndex).then((page) => {
+                const viewport = page.getViewport({ scale: 1 });
+                let top = 0;
+                const bottom =
+                    (typeof bottomOffset === 'function'
+                        ? bottomOffset(viewport.width, viewport.height)
+                        : bottomOffset) || 0;
+                let left =
+                    (typeof leftOffset === 'function' ? leftOffset(viewport.width, viewport.height) : leftOffset) || 0;
+                let updateScale = currentState.scale;
 
-    const jumpToPage = (pageIndex: number): void => {
-        if (pageIndex < 0 || pageIndex >= numPages) {
-            return;
-        }
-        const pagesContainer = pagesRef.current;
-        const targetPage = pagesMapRef.current.get(pageIndex);
-        if (pagesContainer && targetPage) {
-            pagesContainer.scrollTop = targetPage.offsetTop;
-            pagesContainer.scrollLeft = targetPage.offsetLeft;
-        }
-        setCurrentPage(pageIndex);
-    };
+                switch (scaleTo) {
+                    case SpecialZoomLevel.PageFit:
+                        top = 0;
+                        left = 0;
+                        zoom(SpecialZoomLevel.PageFit);
+                        break;
+                    case SpecialZoomLevel.PageWidth:
+                        updateScale = calculateScale(pagesContainer, pageHeight, pageWidth, SpecialZoomLevel.PageWidth);
+                        top = (viewport.height - bottom) * updateScale;
+                        left = left * updateScale;
+                        zoom(updateScale);
+                        break;
+                    default:
+                        const boundingRect = viewport.convertToViewportPoint(left, bottom);
+                        left = Math.max(boundingRect[0] * currentState.scale, 0);
+                        top = Math.max(boundingRect[1] * currentState.scale, 0);
+                        break;
+                }
+                virtualizer.scrollToItem(pageIndex, top);
+                pagesContainer.scrollLeft += left;
+            });
+        },
+        []
+    );
 
-    const openFile = (file: File): void => {
-        if (getFileExt(file.name).toLowerCase() !== 'pdf') {
-            return;
+    const jumpToPage = React.useCallback((pageIndex: number) => {
+        if (0 <= pageIndex && pageIndex < numPages) {
+            virtualizer.scrollToItem(pageIndex, 0);
         }
-        new Promise<Uint8Array>((resolve) => {
-            const reader = new FileReader();
-            reader.readAsArrayBuffer(file);
-            reader.onload = (): void => {
-                const bytes = new Uint8Array(reader.result as ArrayBuffer);
-                resolve(bytes);
-            };
-        }).then((data) => {
-            onOpenFile(file.name, data);
-        });
-    };
+    }, []);
 
-    const rotate = (updateRotation: number): void => {
+    const openFile = React.useCallback(
+        (file: File) => {
+            if (getFileExt(file.name).toLowerCase() !== 'pdf') {
+                return;
+            }
+            new Promise<Uint8Array>((resolve) => {
+                const reader = new FileReader();
+                reader.readAsArrayBuffer(file);
+                reader.onload = (): void => {
+                    const bytes = new Uint8Array(reader.result as ArrayBuffer);
+                    resolve(bytes);
+                };
+            }).then((data) => {
+                onOpenFile(file.name, data);
+            });
+        },
+        [onOpenFile]
+    );
+
+    const rotate = React.useCallback((updateRotation: number) => {
+        pageVisibilityRef.current = getInitialPageVisibilities();
         setRotation(updateRotation);
         setViewerState({
             file: viewerState.file,
@@ -204,9 +259,11 @@ export const Inner: React.FC<{
             rotation: updateRotation,
             scale,
         });
-    };
+    }, []);
 
-    const zoom = (newScale: number | SpecialZoomLevel): void => {
+    const zoom = React.useCallback((newScale: number | SpecialZoomLevel) => {
+        pageVisibilityRef.current = getInitialPageVisibilities();
+
         const pagesEle = pagesRef.current;
         let updateScale = pagesEle
             ? typeof newScale === 'string'
@@ -216,49 +273,38 @@ export const Inner: React.FC<{
 
         keepSpecialZoomLevelRef.current = typeof newScale === 'string' ? newScale : null;
 
+        // Keep the current scroll position
+        pagesEle.scrollTop = (pagesEle.scrollTop * updateScale) / scale;
+        pagesEle.scrollLeft = (pagesEle.scrollLeft * updateScale) / scale;
+
         setScale(updateScale);
         onZoom({ doc, scale: updateScale });
-    };
-
-    React.useEffect(() => {
-        const pagesEle = pagesRef.current;
-        const currentState = stateRef.current;
-        if (!pagesEle || !currentState) {
-            return;
-        }
-
-        // Keep the current scroll position
-        pagesEle.scrollTop = (pagesEle.scrollTop * scale) / currentState.scale;
-        pagesEle.scrollLeft = (pagesEle.scrollLeft * scale) / currentState.scale;
 
         setViewerState({
             file: viewerState.file,
             // Keep the current page after zooming
-            pageIndex: currentState.pageIndex,
+            pageIndex: currentPage,
             pageHeight,
             pageWidth,
             rotation,
-            scale: scale,
+            scale: updateScale,
         });
-    }, [scale]);
+    }, []);
 
-    // Important rule: All the plugin methods can't use the internal state (`currentPage`, `rotation`, `scale`, for example).
-    // These methods when being called from plugins will use the initial value of state, not the latest one.
-    // If you want to access internal state from plugin methods, use `stateRef`
-    const getPluginMethods = (): PluginFunctions => ({
-        getPageElement,
-        getPagesContainer,
-        getViewerState,
-        jumpToDestination,
-        jumpToPage,
-        openFile,
-        rotate,
-        setViewerState,
-        zoom,
-    });
+    // Internal
+    // --------
 
     React.useEffect(() => {
-        const pluginMethods = getPluginMethods();
+        const pluginMethods: PluginFunctions = {
+            getPagesContainer,
+            getViewerState,
+            jumpToDestination,
+            jumpToPage,
+            openFile,
+            rotate,
+            setViewerState,
+            zoom,
+        };
 
         // Install the plugins
         plugins.forEach((plugin) => {
@@ -288,30 +334,49 @@ export const Inner: React.FC<{
         }
     }, [docId]);
 
-    React.useEffect(() => {
-        onPageChange({ currentPage, doc });
-        setViewerState({
-            file: viewerState.file,
-            pageIndex: currentPage,
-            pageHeight,
-            pageWidth,
-            rotation,
-            scale,
-        });
-    }, [currentPage]);
-
-    React.useEffect(() => {
-        return () => {
-            clearPagesCache();
-        };
+    const handlePageRenderCompleted = React.useCallback((pageIndex: number) => {
+        pageVisibilityRef.current[pageIndex].renderStatus = PageRenderStatus.Rendered;
+        renderNextPage();
     }, []);
 
-    const pageVisibilityChanged = (pageIndex: number, ratio: number): void => {
-        pageVisibility[pageIndex] = ratio;
-        const maxRatioPage = pageVisibility.reduce((maxIndex, item, index, array) => {
-            return item > array[maxIndex] ? index : maxIndex;
-        }, 0);
-        setCurrentPage(maxRatioPage);
+    const renderNextPage = () => {
+        // Find all visible pages
+        const visiblePages = pageVisibilityRef.current.filter((item) => item.visibility > OUT_OF_RANGE_VISIBILITY);
+        if (!visiblePages.length) {
+            return;
+        }
+        const firstVisiblePage = visiblePages[0].pageIndex;
+        const lastVisiblePage = visiblePages[visiblePages.length - 1].pageIndex;
+
+        // Check if there is any visible page that has been rendering
+        const hasRenderingPage = visiblePages.find((item) => item.renderStatus === PageRenderStatus.Rendering);
+        if (hasRenderingPage) {
+            // Wait until the page is rendered completely
+            return;
+        }
+
+        // Find the most visible page that isn't rendered yet
+        const notRenderedPages = visiblePages
+            .filter((item) => item.renderStatus === PageRenderStatus.NotRenderedYet)
+            .sort((a, b) => a.visibility - b.visibility);
+        if (notRenderedPages.length) {
+            const nextRenderPage = notRenderedPages[notRenderedPages.length - 1].pageIndex;
+            pageVisibilityRef.current[nextRenderPage].renderStatus = PageRenderStatus.Rendering;
+            setRenderPageIndex(nextRenderPage);
+        } else if (
+            lastVisiblePage + 1 < numPages &&
+            pageVisibilityRef.current[lastVisiblePage + 1].renderStatus !== PageRenderStatus.Rendered
+        ) {
+            // All visible pages are rendered
+            // Render the page that is right after the last visible page ...
+            setRenderPageIndex(lastVisiblePage + 1);
+        } else if (
+            firstVisiblePage - 1 >= 0 &&
+            pageVisibilityRef.current[firstVisiblePage - 1].renderStatus !== PageRenderStatus.Rendered
+        ) {
+            // ... or before the first visible one
+            setRenderPageIndex(firstVisiblePage - 1);
+        }
     };
 
     // `action` can be `FirstPage`, `PrevPage`, `NextPage`, `LastPage`, `GoBack`, `GoForward`
@@ -336,9 +401,8 @@ export const Inner: React.FC<{
         }
     };
 
-    const pageLabel = (l10n && l10n.core ? l10n.core.pageLabel : 'Page {{pageIndex}}') as string;
-
-    const renderViewer = (): Slot => {
+    const renderViewer = React.useCallback(() => {
+        const pageLabel = (l10n && l10n.core ? l10n.core.pageLabel : 'Page {{pageIndex}}') as string;
         let slot: Slot = {
             attrs: {
                 'data-testid': 'core__inner-container',
@@ -360,34 +424,44 @@ export const Inner: React.FC<{
                     },
                 },
                 children: (
-                    <>
-                        {pageIndexes.map((index) => (
+                    <div
+                        style={{
+                            height: `${virtualizer.totalSize}px`,
+                            position: 'relative',
+                        }}
+                    >
+                        {virtualizer.virtualItems.map((item) => (
                             <div
-                                aria-label={pageLabel.replace('{{pageIndex}}', `${index + 1}`)}
+                                aria-label={pageLabel.replace('{{pageIndex}}', `${item.index + 1}`)}
                                 className="rpv-core__inner-page"
-                                key={`pagelayer-${index}`}
-                                ref={(ref): void => {
-                                    pagesMapRef.current.set(index, ref);
-                                }}
+                                key={item.index}
                                 role="region"
+                                style={{
+                                    left: 0,
+                                    position: 'absolute',
+                                    top: 0,
+                                    height: `${item.size}px`,
+                                    transform: `translateY(${item.start}px)`,
+                                    width: '100%',
+                                }}
                             >
                                 <PageLayer
-                                    currentPage={currentPage}
                                     doc={doc}
                                     height={pageHeight}
-                                    pageIndex={index}
+                                    pageIndex={item.index}
                                     plugins={plugins}
                                     renderPage={renderPage}
                                     rotation={rotation}
                                     scale={scale}
+                                    shouldRender={renderPageIndex === item.index}
                                     width={pageWidth}
                                     onExecuteNamedAction={executeNamedAction}
                                     onJumpToDest={jumpToDestination}
-                                    onPageVisibilityChanged={pageVisibilityChanged}
+                                    onRenderCompleted={handlePageRenderCompleted}
                                 />
                             </div>
                         ))}
-                    </>
+                    </div>
                 ),
             },
         };
@@ -411,14 +485,23 @@ export const Inner: React.FC<{
         });
 
         return slot;
-    };
+    }, [plugins, virtualizer]);
 
-    const renderSlot = (slot: Slot) => (
-        <div {...slot.attrs} style={slot.attrs && slot.attrs.style ? slot.attrs.style : {}}>
-            {slot.children}
-            {slot.subSlot && renderSlot(slot.subSlot)}
-        </div>
+    const renderSlot = React.useCallback(
+        (slot: Slot) => (
+            <div {...slot.attrs} style={slot.attrs && slot.attrs.style ? slot.attrs.style : {}}>
+                {slot.children}
+                {slot.subSlot && renderSlot(slot.subSlot)}
+            </div>
+        ),
+        []
     );
+
+    React.useEffect(() => {
+        return () => {
+            clearPagesCache();
+        };
+    }, []);
 
     return renderSlot(renderViewer());
 };

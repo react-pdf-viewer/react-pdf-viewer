@@ -10,10 +10,10 @@ import * as React from 'react';
 
 import { Spinner } from '../components/Spinner';
 import { useIsMounted } from '../hooks/useIsMounted';
+import { useIsomorphicLayoutEffect } from '../hooks/useIsomorphicLayoutEffect';
 import { LayerRenderStatus } from '../structs/LayerRenderStatus';
 import { floatToRatio } from '../utils/floatToRatio';
 import { roundToDivide } from '../utils/roundToDivide';
-import { WithScale } from './WithScale';
 import type { PdfJs } from '../types/PdfJs';
 import type { Plugin } from '../types/Plugin';
 
@@ -29,14 +29,15 @@ export const CanvasLayer: React.FC<{
     rotation: number;
     scale: number;
     width: number;
-}> = ({ height, page, pageIndex, plugins, rotation, scale, width }) => {
+    onRenderCanvasCompleted: () => void;
+}> = ({ height, page, pageIndex, plugins, rotation, scale, width, onRenderCanvasCompleted }) => {
     const isMounted = useIsMounted();
     const canvasRef = React.useRef<HTMLCanvasElement>();
     const renderTask = React.useRef<PdfJs.PageRenderTask>();
 
     const [rendered, setRendered] = React.useState(false);
 
-    const renderCanvas = (): void => {
+    useIsomorphicLayoutEffect(() => {
         setRendered(false);
 
         const task = renderTask.current;
@@ -44,7 +45,7 @@ export const CanvasLayer: React.FC<{
             task.cancel();
         }
 
-        const canvasEle = canvasRef.current as HTMLCanvasElement;
+        const canvasEle = canvasRef.current;
 
         plugins.forEach((plugin) => {
             if (plugin.onCanvasLayerRender) {
@@ -83,9 +84,7 @@ export const CanvasLayer: React.FC<{
         canvasEle.style.height = `${roundToDivide(viewport.height, y)}px`;
         canvasEle.style.opacity = '0';
 
-        const canvasContext = canvasEle.getContext('2d', {
-            alpha: false,
-        }) as CanvasRenderingContext2D;
+        const canvasContext = canvasEle.getContext('2d', { alpha: false });
 
         const transform = shouldScaleByCSS || outputScale !== 1 ? [possibleScale, 0, 0, possibleScale, 0, 0] : null;
         renderTask.current = page.render({ canvasContext, transform, viewport });
@@ -104,29 +103,37 @@ export const CanvasLayer: React.FC<{
                         });
                     }
                 });
+                onRenderCanvasCompleted();
             },
             (): void => {
                 isMounted.current && setRendered(true);
+                onRenderCanvasCompleted();
             }
         );
-    };
+
+        return () => {
+            renderTask.current?.cancel();
+            if (canvasEle) {
+                canvasEle.width = 0;
+                canvasEle.height = 0;
+            }
+        };
+    }, []);
 
     return (
-        <WithScale callback={renderCanvas} rotation={rotation} scale={scale}>
-            <div
-                className="rpv-core__canvas-layer"
-                style={{
-                    height: `${height}px`,
-                    width: `${width}px`,
-                }}
-            >
-                {!rendered && (
-                    <div className="rpv-core__canvas-layer-loader">
-                        <Spinner />
-                    </div>
-                )}
-                <canvas ref={canvasRef} />
-            </div>
-        </WithScale>
+        <div
+            className="rpv-core__canvas-layer"
+            style={{
+                height: `${height}px`,
+                width: `${width}px`,
+            }}
+        >
+            {!rendered && (
+                <div className="rpv-core__canvas-layer-loader">
+                    <Spinner />
+                </div>
+            )}
+            <canvas ref={canvasRef} />
+        </div>
     );
 };

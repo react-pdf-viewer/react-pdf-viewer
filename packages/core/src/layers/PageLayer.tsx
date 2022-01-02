@@ -10,7 +10,7 @@ import * as React from 'react';
 
 import { AnnotationLayer } from '../annotations/AnnotationLayer';
 import { Spinner } from '../components/Spinner';
-import { useIntersectionObserver } from '../hooks/useIntersectionObserver';
+import { useIsMounted } from '../hooks/useIsMounted';
 import { SpecialZoomLevel } from '../structs/SpecialZoomLevel';
 import { getPage } from '../utils/managePages';
 import { CanvasLayer } from './CanvasLayer';
@@ -19,7 +19,6 @@ import { TextLayer } from './TextLayer';
 import type { PdfJs } from '../types/PdfJs';
 import type { Plugin } from '../types/Plugin';
 import type { RenderPage, RenderPageProps } from '../types/RenderPage';
-import type { VisibilityChanged } from '../types/VisibilityChanged';
 
 interface PageSizeState {
     page?: PdfJs.Page | null;
@@ -28,14 +27,7 @@ interface PageSizeState {
     viewportRotation: number;
 }
 
-const NUMBER_OF_OVERSCAN_PAGES = 2;
-
-const INTERSECTION_THRESHOLD = Array(10)
-    .fill(null)
-    .map((_, i) => i / 10);
-
 export const PageLayer: React.FC<{
-    currentPage: number;
     doc: PdfJs.PdfDocument;
     height: number;
     pageIndex: number;
@@ -43,12 +35,12 @@ export const PageLayer: React.FC<{
     renderPage?: RenderPage;
     rotation: number;
     scale: number;
+    shouldRender: boolean;
     width: number;
     onExecuteNamedAction(action: string): void;
     onJumpToDest(pageIndex: number, bottomOffset: number, leftOffset: number, scaleTo: number | SpecialZoomLevel): void;
-    onPageVisibilityChanged(pageIndex: number, ratio: number): void;
+    onRenderCompleted(pageIndex: number): void;
 }> = ({
-    currentPage,
     doc,
     height,
     pageIndex,
@@ -56,20 +48,24 @@ export const PageLayer: React.FC<{
     renderPage,
     rotation,
     scale,
+    shouldRender,
     width,
     onExecuteNamedAction,
     onJumpToDest,
-    onPageVisibilityChanged,
+    onRenderCompleted,
 }) => {
+    const isMounted = useIsMounted();
     const [pageSize, setPageSize] = React.useState<PageSizeState>({
         page: null,
         pageHeight: height,
         pageWidth: width,
         viewportRotation: 0,
     });
+    const [layersRendered, setLayersRendered] = React.useState({
+        canvasLayer: false,
+        textLayer: false,
+    });
     const { page, pageHeight, pageWidth } = pageSize;
-
-    const prevIsCalculated = React.useRef(false);
 
     const scaledWidth = pageWidth * scale;
     const scaledHeight = pageHeight * scale;
@@ -79,28 +75,17 @@ export const PageLayer: React.FC<{
     const h = isVertical ? scaledHeight : scaledWidth;
 
     const determinePageSize = () => {
-        if (prevIsCalculated.current) {
-            return;
-        }
-        prevIsCalculated.current = true;
-
         getPage(doc, pageIndex).then((pdfPage) => {
             const viewport = pdfPage.getViewport({ scale: 1 });
 
-            setPageSize({
-                page: pdfPage,
-                pageHeight: viewport.height,
-                pageWidth: viewport.width,
-                viewportRotation: viewport.rotation,
-            });
+            isMounted.current &&
+                setPageSize({
+                    page: pdfPage,
+                    pageHeight: viewport.height,
+                    pageWidth: viewport.width,
+                    viewportRotation: viewport.rotation,
+                });
         });
-    };
-
-    const visibilityChanged = (params: VisibilityChanged): void => {
-        onPageVisibilityChanged(pageIndex, params.isVisible ? params.ratio : -1);
-        if (params.isVisible) {
-            determinePageSize();
-        }
     };
 
     // Default page renderer
@@ -116,23 +101,44 @@ export const PageLayer: React.FC<{
     // To support the document which is already rotated
     const rotationNumber = (rotation + pageSize.viewportRotation) % 360;
 
-    const containerRef = useIntersectionObserver({
-        threshold: INTERSECTION_THRESHOLD,
-        onVisibilityChanged: visibilityChanged,
-    });
+    const handleRenderCanvasCompleted = () => {
+        if (isMounted.current) {
+            setLayersRendered((layersRendered) => Object.assign({}, layersRendered, { canvasLayer: true }));
+        }
+    };
+    const handleRenderTextCompleted = () => {
+        if (isMounted.current) {
+            setLayersRendered((layersRendered) => Object.assign({}, layersRendered, { textLayer: true }));
+        }
+    };
 
     React.useEffect(() => {
-        if (
-            currentPage - NUMBER_OF_OVERSCAN_PAGES <= pageIndex &&
-            pageIndex <= currentPage + NUMBER_OF_OVERSCAN_PAGES
-        ) {
+        setPageSize({
+            page: null,
+            pageHeight: height,
+            pageWidth: width,
+            viewportRotation: 0,
+        });
+        setLayersRendered({
+            canvasLayer: false,
+            textLayer: false,
+        });
+    }, [rotation, scale]);
+
+    React.useEffect(() => {
+        if (shouldRender && isMounted.current && !page) {
             determinePageSize();
         }
-    }, [currentPage]);
+    }, [shouldRender, page]);
+
+    React.useEffect(() => {
+        if (layersRendered.canvasLayer && layersRendered.textLayer) {
+            onRenderCompleted(pageIndex);
+        }
+    }, [layersRendered]);
 
     return (
         <div
-            ref={containerRef}
             className="rpv-core__page-layer"
             data-testid={`core__page-layer-${pageIndex}`}
             style={{
@@ -171,6 +177,7 @@ export const PageLayer: React.FC<{
                                     rotation={rotationNumber}
                                     scale={scale}
                                     width={w}
+                                    onRenderCanvasCompleted={handleRenderCanvasCompleted}
                                 />
                             ),
                         },
@@ -194,6 +201,7 @@ export const PageLayer: React.FC<{
                                     plugins={plugins}
                                     rotation={rotationNumber}
                                     scale={scale}
+                                    onRenderTextCompleted={handleRenderTextCompleted}
                                 />
                             ),
                         },
