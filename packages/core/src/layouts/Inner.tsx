@@ -274,8 +274,8 @@ export const Inner: React.FC<{
         keepSpecialZoomLevelRef.current = typeof newScale === 'string' ? newScale : null;
 
         // Keep the current scroll position
-        pagesEle.scrollTop = (pagesEle.scrollTop * updateScale) / scale;
-        pagesEle.scrollLeft = (pagesEle.scrollLeft * updateScale) / scale;
+        pagesEle.scrollTop = (pagesEle.scrollTop * updateScale) / stateRef.current.scale;
+        pagesEle.scrollLeft = (pagesEle.scrollLeft * updateScale) / stateRef.current.scale;
 
         setScale(updateScale);
         onZoom({ doc, scale: updateScale });
