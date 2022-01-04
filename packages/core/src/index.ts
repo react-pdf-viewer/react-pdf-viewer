@@ -34,6 +34,9 @@ export { Modal } from './portal/Modal';
 export { Popover } from './portal/Popover';
 export { Tooltip } from './portal/Tooltip';
 
+// Services
+export { renderQueueService } from './services/renderQueueService';
+
 // Store
 export { createStore } from './store/createStore';
 

@@ -431,6 +431,24 @@ export interface WorkerProps {
 }
 export class Worker extends React.Component<WorkerProps> {}
 
+// Services
+export function renderQueueService({
+    doc,
+    queueName,
+    priority,
+}: {
+    doc: PdfJs.PdfDocument;
+    queueName: string;
+    priority: number;
+}): {
+    OUT_OF_RANGE_VISIBILITY: number;
+    getHighestPriorityPage: () => number;
+    markRendered: (pageIndex: number) => void;
+    resetQueue: () => void;
+    setRange: (startIndex: number, endIndex: number) => void;
+    setVisibility: (pageIndex: number, visibility: number) => void;
+};
+
 // Hooks
 export interface UseIntersectionObserverProps {
     threshold?: number | number[];

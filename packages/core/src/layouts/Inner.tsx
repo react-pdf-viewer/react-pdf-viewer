@@ -12,7 +12,7 @@ import { useTrackResize } from '../hooks/useTrackResize';
 import { useVirtual } from '../hooks/useVirtual';
 import { PageLayer } from '../layers/PageLayer';
 import { LocalizationContext } from '../localization/LocalizationContext';
-import { renderQueueService } from '../services/renderQueueService';
+import { clearRenderQueue, renderQueueService } from '../services/renderQueueService';
 import { SpecialZoomLevel } from '../structs/SpecialZoomLevel';
 import { ThemeContext } from '../theme/ThemeContext';
 import { clearPagesCache, getPage } from '../utils/managePages';
@@ -76,7 +76,10 @@ export const Inner: React.FC<{
     );
 
     const [renderPageIndex, setRenderPageIndex] = React.useState(-1);
-    const renderQueueInstance = React.useMemo(() => renderQueueService(doc), [docId]);
+    const renderQueueInstance = React.useMemo(
+        () => renderQueueService({ doc, queueName: 'core-pages', priority: 0 }),
+        [docId]
+    );
 
     const estimateSize = React.useCallback(
         () =>
@@ -440,6 +443,7 @@ export const Inner: React.FC<{
 
     React.useEffect(() => {
         return () => {
+            clearRenderQueue();
             clearPagesCache();
         };
     }, []);
