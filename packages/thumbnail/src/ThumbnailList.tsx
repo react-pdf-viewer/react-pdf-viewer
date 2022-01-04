@@ -7,8 +7,14 @@
  */
 
 import * as React from 'react';
-import { classNames, useIsomorphicLayoutEffect, TextDirection, ThemeContext } from '@react-pdf-viewer/core';
-import type { PdfJs } from '@react-pdf-viewer/core';
+import {
+    classNames,
+    renderQueueService,
+    useIsomorphicLayoutEffect,
+    TextDirection,
+    ThemeContext,
+} from '@react-pdf-viewer/core';
+import type { PdfJs, VisibilityChanged } from '@react-pdf-viewer/core';
 
 import { scrollToBeVisible } from './scrollToBeVisible';
 import { ThumbnailContainer } from './ThumbnailContainer';
@@ -37,23 +43,19 @@ export const ThumbnailList: React.FC<{
     onJumpToPage,
 }) => {
     const { numPages } = doc;
+    const docId = doc.loadingTask.docId;
     const numLabels = labels.length;
     const containerRef = React.useRef<HTMLDivElement | null>(null);
     const thumbnailsRef = React.useRef<HTMLElement[]>([]);
     const [currentFocused, setCurrentFocused] = React.useState(currentPage);
     const { direction } = React.useContext(ThemeContext);
     const isRtl = direction === TextDirection.RightToLeft;
+    const [renderPageIndex, setRenderPageIndex] = React.useState(-1);
 
-    // Scroll to the thumbnail that represents the current page
-    const scrollToThumbnail = (pageIndex: number) => {
-        const container = containerRef.current;
-        if (container) {
-            const thumbnailNodes = container.children;
-            if (pageIndex < thumbnailNodes.length) {
-                scrollToBeVisible(thumbnailNodes.item(pageIndex) as HTMLElement, container);
-            }
-        }
-    };
+    const renderQueueInstance = React.useMemo(
+        () => renderQueueService({ doc, queueName: 'thumbnail-list', priority: 999 }),
+        [docId]
+    );
 
     const handleKeyDown = (e: React.KeyboardEvent) => {
         switch (e.key) {
@@ -135,6 +137,37 @@ export const ThumbnailList: React.FC<{
         thumbnailEle.focus();
     }, [currentFocused]);
 
+    useIsomorphicLayoutEffect(() => {
+        // Scroll to the thumbnail that represents the current page
+        const container = containerRef.current;
+        if (container) {
+            const thumbnailNodes = container.children;
+            if (currentPage < thumbnailNodes.length) {
+                scrollToBeVisible(thumbnailNodes.item(currentPage) as HTMLElement, container);
+            }
+        }
+    }, [currentPage]);
+
+    const handleRenderCompleted = React.useCallback((pageIndex: number) => {
+        renderQueueInstance.markRendered(pageIndex);
+        renderNextThumbnail();
+    }, []);
+
+    const handleVisibilityChanged = React.useCallback((pageIndex: number, visibility: VisibilityChanged) => {
+        renderQueueInstance.setVisibility(
+            pageIndex,
+            visibility.isVisible ? visibility.ratio : renderQueueInstance.OUT_OF_RANGE_VISIBILITY
+        );
+        renderNextThumbnail();
+    }, []);
+
+    const renderNextThumbnail = () => {
+        const nextPage = renderQueueInstance.getHighestPriorityPage();
+        if (nextPage > -1) {
+            setRenderPageIndex(nextPage);
+        }
+    };
+
     return (
         <div
             ref={containerRef}
@@ -158,12 +191,13 @@ export const ThumbnailList: React.FC<{
                     const thumbnail = (
                         <ThumbnailContainer
                             doc={doc}
-                            isActive={currentPage === pageIndex}
                             pageHeight={pageHeight}
                             pageIndex={pageIndex}
                             pageWidth={pageWidth}
                             rotation={rotation}
-                            onActive={scrollToThumbnail}
+                            shouldRender={renderPageIndex === pageIndex}
+                            onRenderCompleted={handleRenderCompleted}
+                            onVisibilityChanged={handleVisibilityChanged}
                         />
                     );
 

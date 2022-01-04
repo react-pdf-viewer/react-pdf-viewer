@@ -20,7 +20,8 @@ export const ThumbnailItem: React.FC<{
     rotation: number;
     thumbnailHeight: number;
     thumbnailWidth: number;
-}> = ({ page, pageHeight, pageIndex, pageWidth, rotation, thumbnailHeight, thumbnailWidth }) => {
+    onRenderCompleted: (pageIndex: number) => void;
+}> = ({ page, pageHeight, pageIndex, pageWidth, rotation, thumbnailHeight, thumbnailWidth, onRenderCompleted }) => {
     const { l10n } = React.useContext(LocalizationContext);
     const renderTask = React.useRef<PdfJs.PageRenderTask>();
     const [src, setSrc] = React.useState('');
@@ -35,10 +36,8 @@ export const ThumbnailItem: React.FC<{
             task.cancel();
         }
 
-        const canvas = document.createElement('canvas') as HTMLCanvasElement;
-        const canvasContext = canvas.getContext('2d', {
-            alpha: false,
-        }) as CanvasRenderingContext2D;
+        const canvas = document.createElement('canvas');
+        const canvasContext = canvas.getContext('2d', { alpha: false });
 
         const w = thumbnailWidth;
         const h = w / (pageWidth / pageHeight);
@@ -52,11 +51,18 @@ export const ThumbnailItem: React.FC<{
         const viewport = page.getViewport({ rotation, scale });
         renderTask.current = page.render({ canvasContext, viewport });
         renderTask.current.promise.then(
-            () => setSrc(canvas.toDataURL()),
             () => {
-                /**/
+                setSrc(canvas.toDataURL());
+                onRenderCompleted(pageIndex);
+            },
+            () => {
+                onRenderCompleted(pageIndex);
             }
         );
+
+        return () => {
+            renderTask.current?.cancel();
+        };
     }, [rotation]);
 
     return !src ? (
