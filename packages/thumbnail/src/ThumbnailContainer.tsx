@@ -17,7 +17,6 @@ const THUMBNAIL_WIDTH = 100;
 
 interface PageState {
     height: number;
-    isCalculated: boolean;
     page: PdfJs.Page | null;
     viewportRotation: number;
     width: number;
@@ -25,63 +24,48 @@ interface PageState {
 
 export const ThumbnailContainer: React.FC<{
     doc: PdfJs.PdfDocument;
-    isActive: boolean;
     pageHeight: number;
     pageIndex: number;
     pageWidth: number;
     rotation: number;
-    onActive(pageIndex: number): void;
-}> = ({ doc, isActive, pageHeight, pageIndex, pageWidth, rotation, onActive }) => {
+    shouldRender: boolean;
+    onRenderCompleted: (pageIndex: number) => void;
+    onVisibilityChanged(pageIndex: number, visibility: VisibilityChanged): void;
+}> = ({ doc, pageHeight, pageIndex, pageWidth, rotation, shouldRender, onRenderCompleted, onVisibilityChanged }) => {
     const [pageSize, setPageSize] = React.useState<PageState>({
         height: pageHeight,
-        isCalculated: false,
         page: null,
         viewportRotation: 0,
         width: pageWidth,
     });
-    const visibilityRef = React.useRef<VisibilityChanged>({
-        isVisible: false,
-        ratio: 0,
-    });
-    const { isCalculated, page, height, width } = pageSize;
+    const { page, height, width } = pageSize;
 
     const scale = width / height;
     const isVertical = Math.abs(rotation) % 180 === 0;
     const w = isVertical ? THUMBNAIL_WIDTH : THUMBNAIL_WIDTH / scale;
     const h = isVertical ? THUMBNAIL_WIDTH / scale : THUMBNAIL_WIDTH;
 
-    React.useLayoutEffect(() => {
-        if (!isActive) {
-            return;
-        }
-        const visibility = visibilityRef.current;
-        if (!visibility.isVisible || visibility.ratio < 1) {
-            onActive(pageIndex);
-        }
-    }, [isActive]);
-
-    const onVisibilityChanged = (params: VisibilityChanged): void => {
-        visibilityRef.current = params;
-        if (params.isVisible && !isCalculated) {
+    React.useEffect(() => {
+        if (shouldRender) {
             getPage(doc, pageIndex).then((pdfPage) => {
                 const viewport = pdfPage.getViewport({ scale: 1 });
-
                 setPageSize({
                     height: viewport.height,
-                    isCalculated: true,
                     page: pdfPage,
                     viewportRotation: viewport.rotation,
                     width: viewport.width,
                 });
             });
         }
-    };
+    }, [shouldRender]);
 
     // To support the document which is already rotated
     const rotationNumber = (rotation + pageSize.viewportRotation) % 360;
 
     const containerRef = useIntersectionObserver({
-        onVisibilityChanged,
+        onVisibilityChanged: (visibility) => {
+            onVisibilityChanged(pageIndex, visibility);
+        },
     });
 
     return (
@@ -104,6 +88,7 @@ export const ThumbnailContainer: React.FC<{
                     rotation={rotationNumber}
                     thumbnailHeight={h}
                     thumbnailWidth={w}
+                    onRenderCompleted={onRenderCompleted}
                 />
             )}
         </div>

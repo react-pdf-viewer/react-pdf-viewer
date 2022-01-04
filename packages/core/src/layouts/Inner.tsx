@@ -12,6 +12,7 @@ import { useTrackResize } from '../hooks/useTrackResize';
 import { useVirtual } from '../hooks/useVirtual';
 import { PageLayer } from '../layers/PageLayer';
 import { LocalizationContext } from '../localization/LocalizationContext';
+import { clearRenderQueue, renderQueueService } from '../services/renderQueueService';
 import { SpecialZoomLevel } from '../structs/SpecialZoomLevel';
 import { ThemeContext } from '../theme/ThemeContext';
 import { clearPagesCache, getPage } from '../utils/managePages';
@@ -30,22 +31,8 @@ import type { Slot } from '../types/Slot';
 import type { ViewerState } from '../types/ViewerState';
 import type { ZoomEvent } from '../types/ZoomEvent';
 
-enum PageRenderStatus {
-    NotRenderedYet = 'NotRenderedYet',
-    Rendering = 'Rendering',
-    Rendered = 'Rendered',
-}
-
-interface PageVisibility {
-    pageIndex: number;
-    renderStatus: PageRenderStatus;
-    visibility: number;
-}
-
 const NUM_OVERSCAN_PAGES = 2;
 const PAGE_PADDING = 16;
-
-const OUT_OF_RANGE_VISIBILITY = -9999;
 
 export const Inner: React.FC<{
     currentFile: OpenFile;
@@ -89,18 +76,10 @@ export const Inner: React.FC<{
     );
 
     const [renderPageIndex, setRenderPageIndex] = React.useState(-1);
-    const getInitialPageVisibilities = React.useCallback(
-        () =>
-            Array(numPages)
-                .fill(null)
-                .map((_, pageIndex) => ({
-                    pageIndex,
-                    renderStatus: PageRenderStatus.NotRenderedYet,
-                    visibility: OUT_OF_RANGE_VISIBILITY,
-                })),
-        []
+    const renderQueueInstance = React.useMemo(
+        () => renderQueueService({ doc, queueName: 'core-pages', priority: 0 }),
+        [docId]
     );
-    const pageVisibilityRef = React.useRef<PageVisibility[]>(getInitialPageVisibilities());
 
     const estimateSize = React.useCallback(
         () =>
@@ -129,17 +108,15 @@ export const Inner: React.FC<{
         });
 
         const { startIndex, endIndex, virtualItems } = virtualizer;
-        for (let i = 0; i < numPages; i++) {
-            if (i < startIndex || i > endIndex) {
-                pageVisibilityRef.current[i].visibility = OUT_OF_RANGE_VISIBILITY;
-                pageVisibilityRef.current[i].renderStatus = PageRenderStatus.NotRenderedYet;
-            } else {
-                const item = virtualItems.find((item) => item.index === i);
-                if (item) {
-                    pageVisibilityRef.current[i].visibility = item.visibility;
-                }
+        renderQueueInstance.setRange(startIndex, endIndex);
+
+        for (let i = startIndex; i <= endIndex; i++) {
+            const item = virtualItems.find((item) => item.index === i);
+            if (item) {
+                renderQueueInstance.setVisibility(i, item.visibility);
             }
         }
+
         renderNextPage();
     }, [virtualizer.virtualItems]);
 
@@ -249,7 +226,7 @@ export const Inner: React.FC<{
     );
 
     const rotate = React.useCallback((updateRotation: number) => {
-        pageVisibilityRef.current = getInitialPageVisibilities();
+        renderQueueInstance.resetQueue();
         setRotation(updateRotation);
         setViewerState({
             file: viewerState.file,
@@ -262,7 +239,7 @@ export const Inner: React.FC<{
     }, []);
 
     const zoom = React.useCallback((newScale: number | SpecialZoomLevel) => {
-        pageVisibilityRef.current = getInitialPageVisibilities();
+        renderQueueInstance.resetQueue();
 
         const pagesEle = pagesRef.current;
         let updateScale = pagesEle
@@ -335,47 +312,14 @@ export const Inner: React.FC<{
     }, [docId]);
 
     const handlePageRenderCompleted = React.useCallback((pageIndex: number) => {
-        pageVisibilityRef.current[pageIndex].renderStatus = PageRenderStatus.Rendered;
+        renderQueueInstance.markRendered(pageIndex);
         renderNextPage();
     }, []);
 
     const renderNextPage = () => {
-        // Find all visible pages
-        const visiblePages = pageVisibilityRef.current.filter((item) => item.visibility > OUT_OF_RANGE_VISIBILITY);
-        if (!visiblePages.length) {
-            return;
-        }
-        const firstVisiblePage = visiblePages[0].pageIndex;
-        const lastVisiblePage = visiblePages[visiblePages.length - 1].pageIndex;
-
-        // Check if there is any visible page that has been rendering
-        const hasRenderingPage = visiblePages.find((item) => item.renderStatus === PageRenderStatus.Rendering);
-        if (hasRenderingPage) {
-            // Wait until the page is rendered completely
-            return;
-        }
-
-        // Find the most visible page that isn't rendered yet
-        const notRenderedPages = visiblePages
-            .filter((item) => item.renderStatus === PageRenderStatus.NotRenderedYet)
-            .sort((a, b) => a.visibility - b.visibility);
-        if (notRenderedPages.length) {
-            const nextRenderPage = notRenderedPages[notRenderedPages.length - 1].pageIndex;
-            pageVisibilityRef.current[nextRenderPage].renderStatus = PageRenderStatus.Rendering;
-            setRenderPageIndex(nextRenderPage);
-        } else if (
-            lastVisiblePage + 1 < numPages &&
-            pageVisibilityRef.current[lastVisiblePage + 1].renderStatus !== PageRenderStatus.Rendered
-        ) {
-            // All visible pages are rendered
-            // Render the page that is right after the last visible page ...
-            setRenderPageIndex(lastVisiblePage + 1);
-        } else if (
-            firstVisiblePage - 1 >= 0 &&
-            pageVisibilityRef.current[firstVisiblePage - 1].renderStatus !== PageRenderStatus.Rendered
-        ) {
-            // ... or before the first visible one
-            setRenderPageIndex(firstVisiblePage - 1);
+        const nextPage = renderQueueInstance.getHighestPriorityPage();
+        if (nextPage > -1) {
+            setRenderPageIndex(nextPage);
         }
     };
 
@@ -499,6 +443,7 @@ export const Inner: React.FC<{
 
     React.useEffect(() => {
         return () => {
+            clearRenderQueue();
             clearPagesCache();
         };
     }, []);
