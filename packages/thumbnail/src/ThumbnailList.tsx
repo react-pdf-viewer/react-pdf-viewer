@@ -148,25 +148,31 @@ export const ThumbnailList: React.FC<{
         }
     }, [currentPage]);
 
-    const handleRenderCompleted = React.useCallback((pageIndex: number) => {
-        renderQueueInstance.markRendered(pageIndex);
-        renderNextThumbnail();
-    }, []);
+    const handleRenderCompleted = React.useCallback(
+        (pageIndex: number) => {
+            renderQueueInstance.markRendered(pageIndex);
+            renderNextThumbnail();
+        },
+        [docId]
+    );
 
-    const handleVisibilityChanged = React.useCallback((pageIndex: number, visibility: VisibilityChanged) => {
-        renderQueueInstance.setVisibility(
-            pageIndex,
-            visibility.isVisible ? visibility.ratio : renderQueueInstance.OUT_OF_RANGE_VISIBILITY
-        );
-        renderNextThumbnail();
-    }, []);
+    const handleVisibilityChanged = React.useCallback(
+        (pageIndex: number, visibility: VisibilityChanged) => {
+            renderQueueInstance.setVisibility(
+                pageIndex,
+                visibility.isVisible ? visibility.ratio : renderQueueInstance.OUT_OF_RANGE_VISIBILITY
+            );
+            renderNextThumbnail();
+        },
+        [docId]
+    );
 
-    const renderNextThumbnail = () => {
+    const renderNextThumbnail = React.useCallback(() => {
         const nextPage = renderQueueInstance.getHighestPriorityPage();
         if (nextPage > -1) {
             setRenderPageIndex(nextPage);
         }
-    };
+    }, [docId]);
 
     return (
         <div
