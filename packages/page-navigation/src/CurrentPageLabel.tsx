@@ -36,10 +36,12 @@ export const CurrentPageLabel: React.FC<{
 
     const defaultChildren = (props: RenderCurrentPageLabelProps) => <>{props.currentPage + 1}</>;
     const render = children || defaultChildren;
+    console.log({ numberOfPages, labels });
 
     return render({
         currentPage,
         numberOfPages,
-        pageLabel: labels.length === numberOfPages ? labels[currentPage] : '',
+        // Check the value of `numberOfPages` to make sure the document is loaded
+        pageLabel: labels.length === numberOfPages && numberOfPages > 0 ? labels[currentPage] : '',
     });
 };
