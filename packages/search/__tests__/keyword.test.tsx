@@ -1,10 +1,11 @@
 import * as React from 'react';
 import { findAllByTitle } from '@testing-library/dom';
-import { render } from '@testing-library/react';
+import { fireEvent, render } from '@testing-library/react';
 
 import { mockIsIntersecting } from '../../../test-utils/mockIntersectionObserver';
+import { mockResize } from '../../../test-utils/mockResizeObserver';
 import { Viewer } from '@react-pdf-viewer/core';
-import { searchPlugin } from '../src/index';
+import { searchPlugin } from '../src';
 import type { FlagKeyword } from '../src/types/FlagKeyword';
 
 const TestKeywordOption: React.FC<{
@@ -19,8 +20,8 @@ const TestKeywordOption: React.FC<{
         <div
             style={{
                 border: '1px solid rgba(0, 0, 0, .3)',
-                height: '720px',
-                width: '720px',
+                height: '50rem',
+                width: '50rem',
             }}
         >
             <Viewer fileUrl={fileUrl} plugins={[searchPluginInstance]} />
@@ -34,10 +35,12 @@ test('keyword option', async () => {
     const { findByText, findByTestId, getByTestId } = render(
         <TestKeywordOption fileUrl={global['__MULTIPLE_PAGES_PDF__']} keyword={keyword} />
     );
-    mockIsIntersecting(getByTestId('core__viewer'), true);
+    const viewerEle = getByTestId('core__viewer');
+    mockIsIntersecting(viewerEle, true);
+    viewerEle['__jsdomMockClientHeight'] = 800;
+    viewerEle['__jsdomMockClientWidth'] = 800;
 
     const page = await findByTestId('core__page-layer-1');
-    mockIsIntersecting(page, true);
 
     await findByText('Simple PDF File 2');
 
@@ -53,11 +56,33 @@ test('Special character in the keyword', async () => {
     const { findByText, findByTestId, getByTestId } = render(
         <TestKeywordOption fileUrl={global['__OPEN_PARAMS_PDF__']} keyword={keyword} />
     );
-    mockIsIntersecting(getByTestId('core__viewer'), true);
+    const viewerEle = getByTestId('core__viewer');
+    mockIsIntersecting(viewerEle, true);
+    viewerEle['__jsdomMockClientHeight'] = 800;
+    viewerEle['__jsdomMockClientWidth'] = 800;
+
+    // Jump to the fourth page
+    const pagesContainer = await findByTestId('core__inner-pages');
+    pagesContainer.getBoundingClientRect = jest.fn(() => ({
+        x: 0,
+        y: 0,
+        height: 800,
+        width: 800,
+        top: 0,
+        right: 0,
+        bottom: 0,
+        left: 0,
+        toJSON: () => {},
+    }));
+    mockResize(pagesContainer);
+
+    fireEvent.scroll(pagesContainer, {
+        target: {
+            scrollTop: 3549,
+        },
+    });
 
     const page = await findByTestId('core__page-layer-4');
-    mockIsIntersecting(page, true);
-
     await findByText('Parameters for Opening PDF Files');
 
     const highlights = await findAllByTitle(page, keyword);
@@ -75,11 +100,33 @@ test('Match case of special character', async () => {
     const { findByText, findByTestId, getByTestId } = render(
         <TestKeywordOption fileUrl={global['__OPEN_PARAMS_PDF__']} keyword={flagKeyword} />
     );
-    mockIsIntersecting(getByTestId('core__viewer'), true);
+    const viewerEle = getByTestId('core__viewer');
+    mockIsIntersecting(viewerEle, true);
+    viewerEle['__jsdomMockClientHeight'] = 800;
+    viewerEle['__jsdomMockClientWidth'] = 800;
+
+    // Jump to the fourth page
+    const pagesContainer = await findByTestId('core__inner-pages');
+    pagesContainer.getBoundingClientRect = jest.fn(() => ({
+        x: 0,
+        y: 0,
+        height: 800,
+        width: 800,
+        top: 0,
+        right: 0,
+        bottom: 0,
+        left: 0,
+        toJSON: () => {},
+    }));
+    mockResize(pagesContainer);
+
+    fireEvent.scroll(pagesContainer, {
+        target: {
+            scrollTop: 4436,
+        },
+    });
 
     const page = await findByTestId('core__page-layer-5');
-    mockIsIntersecting(page, true);
-
     await findByText('Adobe Acrobat SDK');
 
     const highlights = await findAllByTitle(page, flagKeyword.keyword);
