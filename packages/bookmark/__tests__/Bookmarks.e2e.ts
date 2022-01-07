@@ -66,7 +66,7 @@ test('Click bookmarks', async () => {
 
     await page.waitForSelector('[data-testid="core__text-layer-6"]', { visible: true });
     scrollTop = await pagesContainer.evaluate((ele) => ele.scrollTop);
-    expect(scrollTop).toEqual(6898);
+    expect(scrollTop).toEqual(6897);
 
     // Click the `URL examples` bookmark item
     bookmarkItem = await page.waitForSelector('.rpv-bookmark__title[aria-label="URL examples"]');
