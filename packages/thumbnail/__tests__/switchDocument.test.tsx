@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { fireEvent, render } from '@testing-library/react';
+import { fireEvent, render, waitForElementToBeRemoved } from '@testing-library/react';
 import { Button, Viewer } from '@react-pdf-viewer/core';
 
 import { mockIsIntersecting } from '../../../test-utils/mockIntersectionObserver';
@@ -78,6 +78,10 @@ test('Thumbnails are updated when switching between documents', async () => {
 
     const viewerEle = getByTestId('core__viewer');
     mockIsIntersecting(viewerEle, true);
+    viewerEle['__jsdomMockClientHeight'] = 631;
+    viewerEle['__jsdomMockClientWidth'] = 800;
+
+    await waitForElementToBeRemoved(() => getByTestId('core__doc-loading'));
 
     const getSourceOfFirstThumbnail = async () => {
         const thumbnailsContainer = await findByTestId('thumbnail__list');
@@ -98,6 +102,9 @@ test('Thumbnails are updated when switching between documents', async () => {
     // Load the second document
     const loadSecondDoc = await findByTestId('load-doc-2');
     fireEvent.click(loadSecondDoc);
+
+    // Wait until the document is loaded completely
+    await waitForElementToBeRemoved(() => getByTestId('core__doc-loading'));
 
     src = await getSourceOfFirstThumbnail();
     expect(src.substring(0, 100)).toEqual(
