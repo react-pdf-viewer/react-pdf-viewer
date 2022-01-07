@@ -12,7 +12,7 @@ import { useTrackResize } from '../hooks/useTrackResize';
 import { useVirtual } from '../hooks/useVirtual';
 import { PageLayer } from '../layers/PageLayer';
 import { LocalizationContext } from '../localization/LocalizationContext';
-import { clearRenderQueue, renderQueueService } from '../services/renderQueueService';
+import { renderQueueService } from '../services/renderQueueService';
 import { SpecialZoomLevel } from '../structs/SpecialZoomLevel';
 import { ThemeContext } from '../theme/ThemeContext';
 import { clearPagesCache, getPage } from '../utils/managePages';
@@ -443,7 +443,7 @@ export const Inner: React.FC<{
 
     React.useEffect(() => {
         return () => {
-            clearRenderQueue();
+            renderQueueInstance.cleanup();
             clearPagesCache();
         };
     }, []);
