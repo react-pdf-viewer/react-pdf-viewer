@@ -1,10 +1,11 @@
 import * as React from 'react';
 import { findAllByTitle } from '@testing-library/dom';
-import { fireEvent, render } from '@testing-library/react';
+import { fireEvent, render, screen, waitForElementToBeRemoved } from '@testing-library/react';
 
 import { Viewer } from '@react-pdf-viewer/core';
 import { toolbarPlugin } from '@react-pdf-viewer/toolbar';
 import { mockIsIntersecting } from '../../../test-utils/mockIntersectionObserver';
+import { mockResize } from '../../../test-utils/mockResizeObserver';
 import type { FlagKeyword } from '../src/types/FlagKeyword';
 
 const TestKeepHighlight: React.FC<{
@@ -24,13 +25,22 @@ const TestKeepHighlight: React.FC<{
                 border: '1px solid rgba(0, 0, 0, 0.3)',
                 display: 'flex',
                 flexDirection: 'column',
-                height: '100%',
+                height: '50rem',
+                width: '50rem',
             }}
         >
-            <div>
+            <div
+                style={{
+                    alignItems: 'center',
+                    borderBottom: '1px solid rgba(0, 0, 0, 0.3)',
+                    display: 'flex',
+                    height: '2.5rem',
+                    justifyContent: 'center',
+                }}
+            >
                 <Toolbar />
             </div>
-            <div style={{ flex: 1 }}>
+            <div style={{ flex: 1, overflow: 'hidden' }}>
                 <Viewer fileUrl={fileUrl} plugins={[toolbarPluginInstance]} />
             </div>
         </div>
@@ -44,10 +54,35 @@ test('Keep highlighting after clicking zoom buttons in the default toolbar', asy
         <TestKeepHighlight fileUrl={global['__OPEN_PARAMS_PDF__']} keyword={keyword} />
     );
 
-    mockIsIntersecting(getByTestId('core__viewer'), true);
+    const viewerEle = getByTestId('core__viewer');
+    mockIsIntersecting(viewerEle, true);
+    viewerEle['__jsdomMockClientHeight'] = 759;
+    viewerEle['__jsdomMockClientWidth'] = 800;
+
+    // Wait until the document is loaded completely
+    await waitForElementToBeRemoved(() => screen.getByTestId('core__doc-loading'));
+
+    const pagesContainer = getByTestId('core__inner-pages');
+    pagesContainer.getBoundingClientRect = jest.fn(() => ({
+        x: 0,
+        y: 0,
+        height: 759,
+        width: 800,
+        top: 0,
+        right: 0,
+        bottom: 0,
+        left: 0,
+        toJSON: () => {},
+    }));
+    mockResize(pagesContainer);
+
+    fireEvent.scroll(pagesContainer, {
+        target: {
+            scrollTop: 5331,
+        },
+    });
 
     let page = await findByTestId('core__page-layer-6');
-    mockIsIntersecting(page, true);
 
     // Wait for the text layer to be rendered completely
     await findByTestId('core__text-layer-6');
@@ -61,8 +96,13 @@ test('Keep highlighting after clicking zoom buttons in the default toolbar', asy
     const zoomInButton = await findByTestId('zoom__in-button');
     fireEvent.click(zoomInButton);
 
+    fireEvent.scroll(pagesContainer, {
+        target: {
+            scrollTop: 3549,
+        },
+    });
+
     page = await findByTestId('core__page-layer-4');
-    mockIsIntersecting(page, true);
     await findByTestId('core__text-layer-4');
 
     highlights = await findAllByTitle(page, keyword);
