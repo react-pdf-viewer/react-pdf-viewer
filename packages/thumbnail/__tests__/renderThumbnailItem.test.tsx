@@ -1,8 +1,9 @@
 import * as React from 'react';
-import { fireEvent, render } from '@testing-library/react';
+import { fireEvent, render, screen, waitForElementToBeRemoved } from '@testing-library/react';
 import { classNames, Viewer } from '@react-pdf-viewer/core';
 
 import { mockIsIntersecting } from '../../../test-utils/mockIntersectionObserver';
+import { mockResize } from '../../../test-utils/mockResizeObserver';
 import { thumbnailPlugin, RenderThumbnailItemProps } from '../src';
 
 const TestRenderThumbnailItem: React.FC<{
@@ -35,7 +36,8 @@ const TestRenderThumbnailItem: React.FC<{
             style={{
                 border: '1px solid rgba(0, 0, 0, 0.3)',
                 display: 'flex',
-                height: '100%',
+                height: '50rem',
+                width: '50rem',
             }}
         >
             <div
@@ -59,14 +61,39 @@ test('Test renderThumbnailItem option', async () => {
 
     const viewerEle = getByTestId('core__viewer');
     mockIsIntersecting(viewerEle, true);
+    viewerEle['__jsdomMockClientHeight'] = 559;
+    viewerEle['__jsdomMockClientWidth'] = 800;
+
+    // Wait until the document is loaded completely
+    await waitForElementToBeRemoved(() => screen.getByTestId('core__doc-loading'));
+
+    const pagesContainer = getByTestId('core__inner-pages');
+    pagesContainer.getBoundingClientRect = jest.fn(() => ({
+        x: 0,
+        y: 0,
+        height: 559,
+        width: 800,
+        top: 0,
+        right: 0,
+        bottom: 0,
+        left: 0,
+        toJSON: () => {},
+    }));
+    mockResize(pagesContainer);
 
     const thumbnailsContainer = await findByTestId('thumbnail__list');
     expect(thumbnailsContainer.querySelectorAll('.custom-thumbnail-item').length).toEqual(8);
 
-    // Click on the second thumbnail
+    // Find the second thumbnail
     let secondThumbnail = await findByTestId('thumbnail-1');
     expect(secondThumbnail).toHaveClass('custom-thumbnail-item');
-    fireEvent.click(secondThumbnail);
+
+    // Scroll to the second page
+    fireEvent.scroll(pagesContainer, {
+        target: {
+            scrollTop: 658,
+        },
+    });
 
     secondThumbnail = await findByTestId('thumbnail-1');
     expect(secondThumbnail).toHaveClass('custom-thumbnail-item--selected');
