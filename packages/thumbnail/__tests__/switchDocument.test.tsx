@@ -46,6 +46,7 @@ const TestSwitchDocument = () => {
                     border: '1px solid rgba(0, 0, 0, 0.1)',
                     display: 'flex',
                     height: '50rem',
+                    width: '50rem',
                 }}
             >
                 <div
@@ -53,7 +54,7 @@ const TestSwitchDocument = () => {
                         alignItems: 'center',
                         borderRight: '1px solid rgba(0, 0, 0, 0.1)',
                         display: 'flex',
-                        padding: '4px',
+                        padding: '0.25rem',
                         width: '20%',
                     }}
                 >
