@@ -41,8 +41,6 @@ test('call switchScrollMode() method', async () => {
 
     // Set the second page as visible
     const page = await findByTestId('core__page-layer-1');
-    mockIsIntersecting(page, true);
-
     expect(parseInt(page.style.width, 10)).toEqual(297);
     expect(parseInt(page.style.height, 10)).toEqual(396);
 

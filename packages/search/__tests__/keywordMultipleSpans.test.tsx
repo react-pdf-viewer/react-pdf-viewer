@@ -36,8 +36,6 @@ test('keyword belongs to multiple spans', async () => {
     mockIsIntersecting(getByTestId('core__viewer'), true);
 
     const page = await findByTestId('core__page-layer-0');
-    mockIsIntersecting(page, true);
-
     await findByText('Adobe Acrobat PDF Files');
 
     const highlights = await findAllByTitle(page, keyword);

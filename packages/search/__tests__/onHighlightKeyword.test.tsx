@@ -42,8 +42,6 @@ test('onHighlightKeyword option', async () => {
     mockIsIntersecting(getByTestId('core__viewer'), true);
 
     const page = await findByTestId('core__page-layer-1');
-    mockIsIntersecting(page, true);
-
     await findByText('Simple PDF File 2');
 
     const highlights = await findAllByTitle(page, keyword);

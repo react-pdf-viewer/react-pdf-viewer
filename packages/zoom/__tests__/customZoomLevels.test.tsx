@@ -62,9 +62,6 @@ test('Custom zoom levels with <Zoom />', async () => {
 
     const firstPage = await findByTestId('core__page-layer-0');
 
-    // Set the first page as visible
-    mockIsIntersecting(firstPage, true);
-
     // Check the page size
     expect(parseInt(firstPage.style.width, 10)).toEqual(1425);
     expect(parseInt(firstPage.style.height, 10)).toEqual(1900);

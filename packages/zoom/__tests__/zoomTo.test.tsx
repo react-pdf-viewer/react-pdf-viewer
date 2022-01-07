@@ -43,9 +43,6 @@ test('call zoom() method', async () => {
 
     const lastPage = getByTestId('core__page-layer-1');
 
-    // Set the last page as visible
-    mockIsIntersecting(lastPage, true);
-
     // Check the page size
     expect(parseInt(lastPage.style.width, 10)).toEqual(918);
     expect(parseInt(lastPage.style.height, 10)).toEqual(1188);
