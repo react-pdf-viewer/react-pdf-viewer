@@ -17,8 +17,8 @@ const TestZoomLevels: React.FC<{
                 border: '1px solid rgba(0, 0, 0, .3)',
                 display: 'flex',
                 flexDirection: 'column',
-                height: '720px',
-                width: '640px',
+                height: '50rem',
+                width: '50rem',
             }}
         >
             <div
