@@ -8,4 +8,10 @@
 
 :root {
     --rpv-full-screen__exit-button-content-background-color: #fff;
+    --rpv-full-screen__pages-background-color: #fff;
+}
+
+/* Dark theme */
+.rpv-core__viewer--dark {
+    --rpv-full-screen__pages-background-color: #1a1a1a;
 }
