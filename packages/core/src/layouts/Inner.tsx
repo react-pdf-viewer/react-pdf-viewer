@@ -205,11 +205,19 @@ export const Inner: React.FC<{
                         top = Math.max(boundingRect[1] * currentState.scale, 0);
                         break;
                 }
-                virtualizer.scrollToItem(pageIndex, top);
-                pagesContainer.scrollLeft += left;
+
+                switch (scrollMode) {
+                    case ScrollMode.Horizontal:
+                        virtualizer.scrollToItem(pageIndex, left);
+                        break;
+                    case ScrollMode.Vertical:
+                    default:
+                        virtualizer.scrollToItem(pageIndex, top);
+                        break;
+                }
             });
         },
-        []
+        [scrollMode]
     );
 
     const jumpToPage = React.useCallback((pageIndex: number) => {
