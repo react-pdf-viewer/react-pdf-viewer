@@ -210,6 +210,7 @@ export const Viewer: React.FC<{
                                             onZoom={onZoom}
                                         />
                                     )}
+                                    scrollMode={scrollMode}
                                 />
                             )}
                             renderError={renderError}
