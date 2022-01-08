@@ -180,6 +180,11 @@ export enum Position {
     LeftBottom = 'LEFT_BOTTOM',
 }
 
+export enum ScrollMode {
+    Horizontal = 'Horizontal',
+    Vertical = 'Vertical',
+}
+
 export enum SpecialZoomLevel {
     ActualSize = 'ActualSize',
     PageFit = 'PageFit',
@@ -411,6 +416,7 @@ export interface ViewerProps {
     renderError?: RenderError;
     renderPage?: RenderPage;
     renderLoader?(percentages: number): React.ReactElement;
+    scrollMode?: ScrollMode;
     // Theme
     theme?: string | ThemeProps;
     transformGetDocumentParams?(options: PdfJs.GetDocumentParams): PdfJs.GetDocumentParams;

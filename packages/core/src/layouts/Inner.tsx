@@ -43,6 +43,7 @@ export const Inner: React.FC<{
     pageSize: PageSize;
     plugins: Plugin[];
     renderPage?: RenderPage;
+    scrollMode: ScrollMode;
     viewerState: ViewerState;
     onDocumentLoad(e: DocumentLoadEvent): void;
     onOpenFile(fileName: string, data: Uint8Array): void;
@@ -56,6 +57,7 @@ export const Inner: React.FC<{
     pageSize,
     plugins,
     renderPage,
+    scrollMode,
     viewerState,
     onDocumentLoad,
     onOpenFile,
@@ -82,17 +84,25 @@ export const Inner: React.FC<{
         [docId]
     );
 
-    const estimateSize = React.useCallback(
-        () =>
-            (Math.abs(rotation) % 180 === 0 ? pageSize.pageHeight * scale : pageSize.pageWidth * scale) + PAGE_PADDING,
-        [rotation, scale]
-    );
+    const estimateSize = React.useCallback(() => {
+        let sizes = [pageSize.pageHeight, pageSize.pageWidth];
+        switch (scrollMode) {
+            case ScrollMode.Horizontal:
+                sizes = [pageSize.pageWidth, pageSize.pageHeight];
+                break;
+            case ScrollMode.Vertical:
+            default:
+                sizes = [pageSize.pageHeight, pageSize.pageWidth];
+                break;
+        }
+        return (Math.abs(rotation) % 180 === 0 ? sizes[0] * scale : sizes[1] * scale) + PAGE_PADDING;
+    }, [rotation, scale, scrollMode]);
     const virtualizer = useVirtual({
         estimateSize,
         numberOfItems: numPages,
         overscan: NUM_OVERSCAN_PAGES,
         parentRef: pagesRef,
-        scrollMode: ScrollMode.Vertical,
+        scrollMode,
     });
 
     React.useEffect(() => {
