@@ -10,6 +10,7 @@ import * as React from 'react';
 
 import { useMeasureRect } from './useMeasureRect';
 import { useScroll } from './useScroll';
+import { ScrollMode } from '../structs/ScrollMode';
 import { clamp } from '../utils/clamp';
 import { findNearest } from '../utils/findNearest';
 
@@ -59,20 +60,25 @@ export const useVirtual = ({
     numberOfItems,
     overscan,
     parentRef,
+    scrollMode,
 }: {
     estimateSize: (index: number) => number;
     numberOfItems: number;
     overscan: number;
     parentRef: React.MutableRefObject<HTMLDivElement>;
+    scrollMode: ScrollMode;
 }): {
     startIndex: number;
     endIndex: number;
-    scrollToItem: (index: number, topOffset: number) => void;
+    getContainerStyles: () => React.CSSProperties;
+    getItemStyles: (item: ItemMeasurement) => React.CSSProperties;
+    scrollToItem: (index: number, offset: number) => void;
     totalSize: number;
     virtualItems: ItemMeasurement[];
 } => {
     const { scrollOffset, scrollTo } = useScroll({
         elementRef: parentRef,
+        scrollMode,
     });
     const { height: parentHeight } = useMeasureRect({
         elementRef: parentRef,
@@ -123,17 +129,70 @@ export const useVirtual = ({
         virtualItems.push({ ...measurements[i], visibility: visibilities[i] !== undefined ? visibilities[i] : -1 });
     }
 
-    const scrollToItem = React.useCallback((index: number, topOffset: number) => {
+    const scrollToItem = React.useCallback((index: number, offset: number) => {
         const { measurements } = latestRef.current;
         const measurement = measurements[clamp(0, numberOfItems - 1, index)];
         if (measurement) {
-            scrollTo(measurement.start + topOffset);
+            scrollTo(measurement.start + offset);
         }
     }, []);
+
+    // Build the styles for the items' container
+    const getContainerStyles = React.useCallback((): React.CSSProperties => {
+        switch (scrollMode) {
+            case ScrollMode.Horizontal:
+                return {
+                    position: 'relative',
+                    height: '100%',
+                    width: `${totalSize}px`,
+                };
+            case ScrollMode.Vertical:
+            default:
+                return {
+                    position: 'relative',
+                    height: `${totalSize}px`,
+                    width: '100%',
+                };
+        }
+    }, [scrollMode, totalSize]);
+
+    // Build the absolute position styles for each item
+    const getItemStyles = React.useCallback(
+        (item: ItemMeasurement): React.CSSProperties => {
+            switch (scrollMode) {
+                case ScrollMode.Horizontal:
+                    return {
+                        // Size
+                        height: '100%',
+                        width: `${item.size}px`,
+                        // Absolute position
+                        left: 0,
+                        position: 'absolute',
+                        top: 0,
+                        transform: `translateX(${item.start}px)`,
+                    };
+                case ScrollMode.Vertical:
+                default:
+                    return {
+                        // Size
+                        height: `${item.size}px`,
+                        width: '100%',
+                        // Absolute position
+                        left: 0,
+                        position: 'absolute',
+                        top: 0,
+                        transform: `translateY(${item.start}px)`,
+                    };
+            }
+        },
+        [scrollMode]
+    );
 
     return {
         startIndex: startRange,
         endIndex: endRange,
+        getContainerStyles,
+        getItemStyles,
         scrollToItem,
         totalSize,
         virtualItems,

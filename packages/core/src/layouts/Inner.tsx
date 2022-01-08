@@ -13,6 +13,7 @@ import { useVirtual } from '../hooks/useVirtual';
 import { PageLayer } from '../layers/PageLayer';
 import { LocalizationContext } from '../localization/LocalizationContext';
 import { renderQueueService } from '../services/renderQueueService';
+import { ScrollMode } from '../structs/ScrollMode';
 import { SpecialZoomLevel } from '../structs/SpecialZoomLevel';
 import { ThemeContext } from '../theme/ThemeContext';
 import { clearPagesCache, getPage } from '../utils/managePages';
@@ -91,6 +92,7 @@ export const Inner: React.FC<{
         numberOfItems: numPages,
         overscan: NUM_OVERSCAN_PAGES,
         parentRef: pagesRef,
+        scrollMode: ScrollMode.Vertical,
     });
 
     React.useEffect(() => {
@@ -368,26 +370,14 @@ export const Inner: React.FC<{
                     },
                 },
                 children: (
-                    <div
-                        style={{
-                            height: `${virtualizer.totalSize}px`,
-                            position: 'relative',
-                        }}
-                    >
+                    <div style={virtualizer.getContainerStyles()}>
                         {virtualizer.virtualItems.map((item) => (
                             <div
                                 aria-label={pageLabel.replace('{{pageIndex}}', `${item.index + 1}`)}
                                 className="rpv-core__inner-page"
                                 key={item.index}
                                 role="region"
-                                style={{
-                                    left: 0,
-                                    position: 'absolute',
-                                    top: 0,
-                                    height: `${item.size}px`,
-                                    transform: `translateY(${item.start}px)`,
-                                    width: '100%',
-                                }}
+                                style={virtualizer.getItemStyles(item)}
                             >
                                 <PageLayer
                                     doc={doc}
