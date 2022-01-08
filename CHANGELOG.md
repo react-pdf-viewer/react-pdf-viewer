@@ -5,8 +5,9 @@
 **Bug fixes**
 
 -   The `Cover` component has the same image source when loading different documents
--   The sidebar doesn't fit in its container on Safari
 -   The default `Spinner` is used when using the `renderLoader` option
+-   The exit full screen button doesn't look good in dark theme
+-   The sidebar doesn't fit in its container on Safari
 
 **Breaking change**
 
