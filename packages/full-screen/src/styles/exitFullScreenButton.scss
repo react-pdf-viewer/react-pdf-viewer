@@ -10,6 +10,7 @@
     bottom: 0;
     padding: 0.5rem;
     position: fixed;
+    z-index: 1;
 
     &-content {
         background-color: var(--rpv-full-screen__exit-button-content-background-color);
