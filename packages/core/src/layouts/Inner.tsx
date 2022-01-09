@@ -87,7 +87,7 @@ export const Inner: React.FC<{
 
     const estimateSize = React.useCallback(() => {
         let sizes = [pageSize.pageHeight, pageSize.pageWidth];
-        switch (scrollMode) {
+        switch (currentScrollMode) {
             case ScrollMode.Horizontal:
                 sizes = [pageSize.pageWidth, pageSize.pageHeight];
                 break;
@@ -207,7 +207,7 @@ export const Inner: React.FC<{
                         break;
                 }
 
-                switch (scrollMode) {
+                switch (currentScrollMode) {
                     case ScrollMode.Horizontal:
                         virtualizer.scrollToItem(pageIndex, left);
                         break;
@@ -218,7 +218,7 @@ export const Inner: React.FC<{
                 }
             });
         },
-        [scrollMode]
+        [currentScrollMode]
     );
 
     const jumpToPage = React.useCallback((pageIndex: number) => {

@@ -80,7 +80,7 @@ export const useVirtual = ({
         elementRef: parentRef,
         scrollMode,
     });
-    const { height: parentHeight } = useMeasureRect({
+    const parentRect = useMeasureRect({
         elementRef: parentRef,
     });
 
@@ -91,7 +91,15 @@ export const useVirtual = ({
         totalSize: 0,
     });
     latestRef.current.scrollOffset = scrollOffset;
-    latestRef.current.parentSize = parentHeight;
+    switch (scrollMode) {
+        case ScrollMode.Horizontal:
+            latestRef.current.parentSize = parentRect.width;
+            break;
+        case ScrollMode.Vertical:
+        default:
+            latestRef.current.parentSize = parentRect.height;
+            break;
+    }
 
     const measurements = React.useMemo(() => {
         const measurements: ItemMeasurement[] = [];
@@ -129,13 +137,16 @@ export const useVirtual = ({
         virtualItems.push({ ...measurements[i], visibility: visibilities[i] !== undefined ? visibilities[i] : -1 });
     }
 
-    const scrollToItem = React.useCallback((index: number, offset: number) => {
-        const { measurements } = latestRef.current;
-        const measurement = measurements[clamp(0, numberOfItems - 1, index)];
-        if (measurement) {
-            scrollTo(measurement.start + offset);
-        }
-    }, []);
+    const scrollToItem = React.useCallback(
+        (index: number, offset: number) => {
+            const { measurements } = latestRef.current;
+            const measurement = measurements[clamp(0, numberOfItems - 1, index)];
+            if (measurement) {
+                scrollTo(measurement.start + offset);
+            }
+        },
+        [scrollTo]
+    );
 
     // Build the styles for the items' container
     const getContainerStyles = React.useCallback((): React.CSSProperties => {
