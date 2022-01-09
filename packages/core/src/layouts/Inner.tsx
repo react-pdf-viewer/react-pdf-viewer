@@ -390,7 +390,9 @@ export const Inner: React.FC<{
                     'data-testid': 'core__inner-pages',
                     className: classNames({
                         'rpv-core__inner-pages': true,
+                        'rpv-core__inner-pages--horizontal': currentScrollMode === ScrollMode.Horizontal,
                         'rpv-core__inner-pages--rtl': isRtl,
+                        'rpv-core__inner-pages--vertical': currentScrollMode === ScrollMode.Vertical,
                     }),
                     ref: pagesRef,
                     style: {

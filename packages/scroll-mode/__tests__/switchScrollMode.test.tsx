@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
-import { PrimaryButton, Viewer } from '@react-pdf-viewer/core';
+import { PrimaryButton, ScrollMode, Viewer } from '@react-pdf-viewer/core';
 
 import { mockIsIntersecting } from '../../../test-utils/mockIntersectionObserver';
-import { scrollModePlugin, ScrollMode } from '../src/index';
+import { scrollModePlugin } from '../src/index';
 
 const TestSwitchScrollMode: React.FC<{
     fileUrl: Uint8Array;
@@ -18,8 +18,8 @@ const TestSwitchScrollMode: React.FC<{
                     marginBottom: '1rem',
                 }}
             >
-                <PrimaryButton onClick={() => switchScrollMode(ScrollMode.Wrapped)}>
-                    Switch to wrapped mode
+                <PrimaryButton onClick={() => switchScrollMode(ScrollMode.Horizontal)}>
+                    Switch to horizontal mode
                 </PrimaryButton>
             </div>
             <div
@@ -44,9 +44,9 @@ test('call switchScrollMode() method', async () => {
     expect(parseInt(page.style.width, 10)).toEqual(297);
     expect(parseInt(page.style.height, 10)).toEqual(396);
 
-    const switchModeButton = await screen.findByText('Switch to wrapped mode');
+    const switchModeButton = await screen.findByText('Switch to horizontal mode');
     fireEvent.click(switchModeButton);
 
     const pagesContainer = getByTestId('core__inner-pages');
-    expect(pagesContainer).toHaveClass('rpv-scroll-mode__wrapped');
+    expect(pagesContainer).toHaveClass('rpv-core__inner-pages--horizontal');
 });
