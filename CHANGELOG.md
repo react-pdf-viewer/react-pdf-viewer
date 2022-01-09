@@ -24,6 +24,31 @@ import { ScrollMode, Viewer } from '@react-pdf-viewer/core';
 **Breaking change**
 
 -   It is not possible to access the page element in a plugin with the `getPageElement` function. The method is removed because the pages are rendered dynamically
+-   The `ScrollMode` provided by the `@react-pdf-viewer/scroll-mode` package now belongs to the `@react-pdf-viewer/core` package:
+
+```js
+// v3.0.0 and previous versions
+import { ScrollMode } from '@react-pdf-viewer/scroll-mode';
+
+// From v3.1.0
+import { ScrollMode } from '@react-pdf-viewer/core';
+```
+
+-   The inital scroll mode option provided by the `scrollModePlugin` plugin now belongs to the `Viewer` component:
+
+```tsx
+// v3.0.0 and previous versions
+import { scrollModePlugin, ScrollMode } from '@react-pdf-viewer/scroll-mode';
+
+const scrollModePluginInstance = scrollModePlugin({
+    scrollMode: ScrollMode.Horizontal,
+});
+
+// From v3.1.0
+import { ScrollMode } from '@react-pdf-viewer/core';
+
+<Viewer scrollMode={ScrollMode.Horizontal} />;
+```
 
 ## v3.0.0
 
