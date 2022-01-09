@@ -11,7 +11,6 @@ import { LocalizationContext, ScrollMode } from '@react-pdf-viewer/core';
 
 import { HorizontalScrollingIcon } from './HorizontalScrollingIcon';
 import { VerticalScrollingIcon } from './VerticalScrollingIcon';
-import { WrappedScrollingIcon } from './WrappedScrollingIcon';
 
 interface RenderChildren {
     icon: React.ReactElement;
