@@ -10,6 +10,7 @@ import * as React from 'react';
 import {
     classNames,
     renderQueueService,
+    useIsMounted,
     useIsomorphicLayoutEffect,
     TextDirection,
     ThemeContext,
@@ -51,6 +52,7 @@ export const ThumbnailList: React.FC<{
     const { direction } = React.useContext(ThemeContext);
     const isRtl = direction === TextDirection.RightToLeft;
     const [renderPageIndex, setRenderPageIndex] = React.useState(-1);
+    const isMounted = useIsMounted();
 
     const renderQueueInstance = React.useMemo(
         () => renderQueueService({ doc, queueName: 'thumbnail-list', priority: 999 }),
@@ -150,8 +152,10 @@ export const ThumbnailList: React.FC<{
 
     const handleRenderCompleted = React.useCallback(
         (pageIndex: number) => {
-            renderQueueInstance.markRendered(pageIndex);
-            renderNextThumbnail();
+            if (isMounted.current) {
+                renderQueueInstance.markRendered(pageIndex);
+                renderNextThumbnail();
+            }
         },
         [docId]
     );
@@ -172,6 +176,12 @@ export const ThumbnailList: React.FC<{
         if (nextPage > -1) {
             setRenderPageIndex(nextPage);
         }
+    }, [docId]);
+
+    React.useEffect(() => {
+        return () => {
+            renderQueueInstance.cleanup();
+        };
     }, [docId]);
 
     return (

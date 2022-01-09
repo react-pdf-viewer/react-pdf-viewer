@@ -40,6 +40,7 @@ export const CurrentPageLabel: React.FC<{
     return render({
         currentPage,
         numberOfPages,
-        pageLabel: labels.length === numberOfPages ? labels[currentPage] : '',
+        // Check the value of `numberOfPages` to make sure the document is loaded
+        pageLabel: labels.length === numberOfPages && numberOfPages > 0 ? labels[currentPage] : '',
     });
 };

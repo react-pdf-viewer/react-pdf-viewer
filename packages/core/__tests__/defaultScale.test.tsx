@@ -27,8 +27,6 @@ test('defaultScale option', async () => {
     mockIsIntersecting(getByTestId('core__viewer'), true);
 
     const firstPage = await findByTestId('core__page-layer-0');
-    mockIsIntersecting(firstPage, true);
-
     expect(parseInt(firstPage.style.width, 10)).toEqual(892);
     expect(parseInt(firstPage.style.height, 10)).toEqual(1263);
 });
@@ -46,9 +44,7 @@ test('Set defaultScale as a special zoom level', async () => {
     rootEle['__jsdomMockClientHeight'] = 720;
     rootEle['__jsdomMockClientWidth'] = 720;
 
-    const firstPage = await findByTestId('core__page-layer-0');
-    mockIsIntersecting(firstPage, true);
-
+    await findByTestId('core__page-layer-0');
     const layoutBody = await findByTestId('core__inner-pages');
     layoutBody['__jsdomMockClientHeight'] = 677;
     layoutBody['__jsdomMockClientWidth'] = 673;
@@ -74,9 +70,7 @@ test('Keep special defaultScale after resizing', async () => {
     rootEle['__jsdomMockClientHeight'] = 720;
     rootEle['__jsdomMockClientWidth'] = 720;
 
-    const firstPage = await findByTestId('core__page-layer-0');
-    mockIsIntersecting(firstPage, true);
-
+    await findByTestId('core__page-layer-0');
     const layoutBody = await findByTestId('core__inner-pages');
 
     // Resize

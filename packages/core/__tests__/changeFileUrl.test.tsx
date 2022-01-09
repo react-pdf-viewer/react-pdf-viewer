@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { fireEvent, render } from '@testing-library/react';
 
-import { mockAllIsIntersecting, mockIsIntersecting } from '../../../test-utils/mockIntersectionObserver';
+import { mockAllIsIntersecting } from '../../../test-utils/mockIntersectionObserver';
 import { Viewer } from '../src/Viewer';
 
 test('fileUrl as a prop', async () => {
@@ -36,7 +36,7 @@ test('fileUrl as a state', async () => {
             </>
         );
     };
-    const { getByText, findByText, rerender } = render(<App />);
+    const { getByText, findByText } = render(<App />);
     mockAllIsIntersecting(true);
 
     let firstText = await findByText('Hello, world!');

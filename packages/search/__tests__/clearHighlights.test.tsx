@@ -60,8 +60,6 @@ test('clearHighlights() method', async () => {
     fireEvent.click(highlightButton);
 
     const page = await findByTestId('core__page-layer-1');
-    mockIsIntersecting(page, true);
-
     await findByText('Simple PDF File 2');
 
     // Found 13 texts that match `PDF`

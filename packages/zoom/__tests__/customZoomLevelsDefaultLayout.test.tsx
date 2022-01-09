@@ -1,10 +1,11 @@
 import * as React from 'react';
-import { fireEvent, render } from '@testing-library/react';
+import { fireEvent, render, waitForElementToBeRemoved } from '@testing-library/react';
 import { Viewer } from '@react-pdf-viewer/core';
 import { defaultLayoutPlugin } from '@react-pdf-viewer/default-layout';
 import type { ToolbarProps, ToolbarSlot, TransformToolbarSlot } from '@react-pdf-viewer/toolbar';
 
-import { mockAllIsIntersecting } from '../../../test-utils/mockIntersectionObserver';
+import { mockIsIntersecting } from '../../../test-utils/mockIntersectionObserver';
+import { mockResize } from '../../../test-utils/mockResizeObserver';
 
 const TestZoomLevelsWithDefaultLayout: React.FC<{
     fileUrl: Uint8Array;
@@ -28,8 +29,8 @@ const TestZoomLevelsWithDefaultLayout: React.FC<{
         <div
             style={{
                 border: '1px solid rgba(0, 0, 0, .3)',
-                height: '720px',
-                width: '640px',
+                height: '50rem',
+                width: '50rem',
             }}
         >
             <Viewer fileUrl={fileUrl} plugins={[defaultLayoutPluginInstance]} />
@@ -41,7 +42,28 @@ test('Custom zoom levels with the default layout', async () => {
     const { findByTestId, findByText, getByRole, getByTestId } = render(
         <TestZoomLevelsWithDefaultLayout fileUrl={global['__OPEN_PARAMS_PDF__']} />
     );
-    mockAllIsIntersecting(true);
+
+    const viewerEle = getByTestId('core__viewer');
+    mockIsIntersecting(viewerEle, true);
+    viewerEle['__jsdomMockClientHeight'] = 759;
+    viewerEle['__jsdomMockClientWidth'] = 800;
+
+    // Wait until the document is loaded completely
+    await waitForElementToBeRemoved(() => getByTestId('core__doc-loading'));
+
+    const pagesContainer = getByTestId('core__inner-pages');
+    pagesContainer.getBoundingClientRect = jest.fn(() => ({
+        x: 0,
+        y: 0,
+        height: 759,
+        width: 800,
+        top: 0,
+        right: 0,
+        bottom: 0,
+        left: 0,
+        toJSON: () => {},
+    }));
+    mockResize(pagesContainer);
 
     const firstPage = await findByTestId('core__page-layer-0');
 

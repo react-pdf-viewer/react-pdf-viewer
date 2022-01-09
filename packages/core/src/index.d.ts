@@ -442,6 +442,7 @@ export function renderQueueService({
     priority: number;
 }): {
     OUT_OF_RANGE_VISIBILITY: number;
+    cleanup: () => void;
     getHighestPriorityPage: () => number;
     markRendered: (pageIndex: number) => void;
     resetQueue: () => void;

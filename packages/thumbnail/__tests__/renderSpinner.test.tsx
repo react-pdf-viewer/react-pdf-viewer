@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { render } from '@testing-library/react';
+import { render, waitForElementToBeRemoved } from '@testing-library/react';
 import { Viewer } from '@react-pdf-viewer/core';
 
 import { mockIsIntersecting } from '../../../test-utils/mockIntersectionObserver';
@@ -18,7 +18,8 @@ const TestRenderSpinner: React.FC<{
             style={{
                 border: '1px solid rgba(0, 0, 0, 0.3)',
                 display: 'flex',
-                height: '100%',
+                height: '50rem',
+                width: '50rem',
             }}
         >
             <div
@@ -44,6 +45,11 @@ test('Test renderSpinner option', async () => {
 
     const viewerEle = getByTestId('core__viewer');
     mockIsIntersecting(viewerEle, true);
+    viewerEle['__jsdomMockClientHeight'] = 559;
+    viewerEle['__jsdomMockClientWidth'] = 800;
+
+    // Wait until the document is loaded completely
+    await waitForElementToBeRemoved(() => getByTestId('core__doc-loading'));
 
     const thumbnailsContainer = await findByTestId('thumbnail__list');
     expect(thumbnailsContainer.querySelectorAll('.custom-spinner').length).toEqual(8);
@@ -56,5 +62,8 @@ test('Test renderSpinner option', async () => {
     await findByLabelText('Thumbnail of page 1');
     await findByLabelText('Thumbnail of page 2');
 
-    expect(thumbnailsContainer.querySelectorAll('.custom-spinner').length).toEqual(6);
+    // Maybe there are 5 pages whose thumbnails aren't rendered yet
+    // because we will pre-render the thumbnail of page 3
+    const numUnloadThumbnails = thumbnailsContainer.querySelectorAll('.custom-spinner').length;
+    expect(numUnloadThumbnails === 5 || numUnloadThumbnails === 6).toBeTruthy();
 });

@@ -39,8 +39,6 @@ test('keyword with flag matchCase=false', async () => {
     mockIsIntersecting(getByTestId('core__viewer'), true);
 
     const page = await findByTestId('core__page-layer-1');
-    mockIsIntersecting(page, true);
-
     await findByText('Simple PDF File 2');
 
     const highlights = await findAllByTitle(page, flagKeyword.keyword);
@@ -61,8 +59,6 @@ test('keyword with flag matchCase=true', async () => {
     mockIsIntersecting(getByTestId('core__viewer'), true);
 
     const page = await findByTestId('core__page-layer-1');
-    mockIsIntersecting(page, true);
-
     await findByText('Simple PDF File 2');
 
     const highlights = await findAllByTitle(page, flagKeyword.keyword);

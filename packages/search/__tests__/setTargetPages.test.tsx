@@ -54,7 +54,6 @@ test('setTargetPages() method', async () => {
 
     // There is no result on the first page because we ignore it
     const firstPage = await findByTestId('core__page-layer-0');
-    mockIsIntersecting(firstPage, true);
     await findByText('A Simple PDF File');
 
     let highlights = queryAllByTitle(firstPage, 'text');
@@ -62,8 +61,6 @@ test('setTargetPages() method', async () => {
 
     // Search on the second page
     const secondPage = await findByTestId('core__page-layer-1');
-    mockIsIntersecting(secondPage, true);
-
     await findByText('Simple PDF File 2');
 
     // Found 13 texts that match `text`

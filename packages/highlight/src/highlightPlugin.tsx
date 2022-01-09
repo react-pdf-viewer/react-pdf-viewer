@@ -164,8 +164,10 @@ export const highlightPlugin = (props?: HighlightPluginProps): HighlightPlugin =
     const jumpToHighlightArea = (area: HighlightArea) => {
         const jumpToDestination = store.get('jumpToDestination');
         if (jumpToDestination) {
+            /* eslint-disable @typescript-eslint/no-unused-vars */
             const bottomOffset = (_: number, viewportHeight: number) => ((100 - area.top) * viewportHeight) / 100;
             const leftOffset = (viewportWidth: number, _: number) => ((100 - area.left) * viewportWidth) / 100;
+            /* eslint-enable @typescript-eslint/no-unused-vars */
             jumpToDestination(area.pageIndex, bottomOffset, leftOffset);
         }
     };

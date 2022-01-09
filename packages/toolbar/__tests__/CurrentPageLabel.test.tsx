@@ -1,8 +1,9 @@
 import * as React from 'react';
-import { render } from '@testing-library/react';
+import { fireEvent, render } from '@testing-library/react';
 import { Viewer } from '@react-pdf-viewer/core';
 
 import { mockIsIntersecting } from '../../../test-utils/mockIntersectionObserver';
+import { mockResize } from '../../../test-utils/mockResizeObserver';
 import { toolbarPlugin, ToolbarSlot, TransformToolbarSlot } from '../src';
 
 const fs = require('fs');
@@ -36,7 +37,8 @@ const TestCurrentPageLabel: React.FC<{
                 border: '1px solid rgba(0, 0, 0, 0.3)',
                 display: 'flex',
                 flexDirection: 'column',
-                height: '100%',
+                width: '50rem',
+                height: '50rem',
             }}
         >
             <div>
@@ -61,13 +63,34 @@ test('Test <CurrentPageLabel>', async () => {
 
     const viewerEle = getByTestId('core__viewer');
     mockIsIntersecting(viewerEle, true);
+    viewerEle['__jsdomMockClientHeight'] = 768;
+    viewerEle['__jsdomMockClientWidth'] = 800;
 
     let pageLabel = await findByTestId('current-page-label');
     expect(pageLabel.textContent).toEqual('8');
 
     // Jump to the third page
-    const page = await findByTestId('core__page-layer-3');
-    mockIsIntersecting(page, true);
+    const pagesContainer = getByTestId('core__inner-pages');
+    pagesContainer.getBoundingClientRect = jest.fn(() => ({
+        x: 0,
+        y: 0,
+        height: 768,
+        width: 800,
+        top: 0,
+        right: 0,
+        bottom: 0,
+        left: 0,
+        toJSON: () => {},
+    }));
+    mockResize(pagesContainer);
+
+    fireEvent.scroll(pagesContainer, {
+        target: {
+            scrollTop: 1774,
+        },
+    });
+
+    await findByTestId('core__page-layer-3');
     pageLabel = await findByTestId('current-page-label');
     expect(pageLabel.textContent).toEqual('8');
 });
@@ -83,23 +106,51 @@ test('Test <CurrentPageLabel> with custom page label', async () => {
 
     const viewerEle = getByTestId('core__viewer');
     mockIsIntersecting(viewerEle, true);
+    viewerEle['__jsdomMockClientHeight'] = 768;
+    viewerEle['__jsdomMockClientWidth'] = 800;
 
     let pageLabel = await findByTestId('current-page-label');
     expect(pageLabel.textContent).toEqual('4(i)');
 
     // Jump to the third page
-    let page = await findByTestId('core__page-layer-2');
-    mockIsIntersecting(page, true);
+    let pagesContainer = getByTestId('core__inner-pages');
+    pagesContainer.getBoundingClientRect = jest.fn(() => ({
+        x: 0,
+        y: 0,
+        height: 768,
+        width: 800,
+        top: 0,
+        right: 0,
+        bottom: 0,
+        left: 0,
+        toJSON: () => {},
+    }));
+    mockResize(pagesContainer);
+
+    fireEvent.scroll(pagesContainer, {
+        target: {
+            scrollTop: 1774,
+        },
+    });
+
+    await findByTestId('core__page-layer-2');
     pageLabel = await findByTestId('current-page-label');
     expect(pageLabel.textContent).toEqual('4(iii)');
 
+    // Render other document
     rerender(<TestCurrentPageLabel fileUrl={pageLabelDocument2} />);
     pageLabel = await findByTestId('current-page-label');
     expect(pageLabel.textContent).toEqual('8(296)');
 
     // Jump to other page
-    page = await findByTestId('core__page-layer-5');
-    mockIsIntersecting(page, true);
+    pagesContainer = getByTestId('core__inner-pages');
+    fireEvent.scroll(pagesContainer, {
+        target: {
+            scrollTop: 4445,
+        },
+    });
+
+    await findByTestId('core__page-layer-5');
     pageLabel = await findByTestId('current-page-label');
-    expect(pageLabel.textContent).toEqual('8(301)');
+    expect(pageLabel.textContent).toEqual('8(300)');
 });
