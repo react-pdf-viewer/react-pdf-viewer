@@ -51,8 +51,12 @@ export const useEnterFullScreen = (
 
     const onFullScreenChange = (): void => {
         const ele = getFullScreenElement();
-        const isFullScreenMode = ele === getFullScreenTarget(pagesRef.current);
+        const pagesEle = pagesRef.current;
+        const isFullScreenMode = ele === getFullScreenTarget(pagesEle);
         store.update('isFullScreen', isFullScreenMode);
+        isFullScreenMode
+            ? pagesEle.classList.add('rpv-full-screen__pages')
+            : pagesEle.classList.remove('rpv-full-screen__pages');
 
         const zoom = store.get('zoom');
         if (zoom) {

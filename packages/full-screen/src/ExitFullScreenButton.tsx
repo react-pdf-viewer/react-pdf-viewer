@@ -28,15 +28,13 @@ export const ExitFullScreenButton: React.FC<{
                 'rpv-full-screen__exit-button--rtl': isRtl,
             })}
         >
-            <div className="rpv-full-screen__exit-button-content">
-                <MinimalButton
-                    ariaLabel={exitFullScreenLabel as string}
-                    testId="full-screen__exit-button"
-                    onClick={onClick}
-                >
-                    <ExitFullScreenIcon />
-                </MinimalButton>
-            </div>
+            <MinimalButton
+                ariaLabel={exitFullScreenLabel as string}
+                testId="full-screen__exit-button"
+                onClick={onClick}
+            >
+                <ExitFullScreenIcon />
+            </MinimalButton>
         </div>
     );
 };
