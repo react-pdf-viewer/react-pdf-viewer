@@ -13,6 +13,7 @@ import { useVirtual } from '../hooks/useVirtual';
 import { PageLayer } from '../layers/PageLayer';
 import { LocalizationContext } from '../localization/LocalizationContext';
 import { renderQueueService } from '../services/renderQueueService';
+import { ScrollMode } from '../structs/ScrollMode';
 import { SpecialZoomLevel } from '../structs/SpecialZoomLevel';
 import { ThemeContext } from '../theme/ThemeContext';
 import { clearPagesCache, getPage } from '../utils/managePages';
@@ -42,6 +43,7 @@ export const Inner: React.FC<{
     pageSize: PageSize;
     plugins: Plugin[];
     renderPage?: RenderPage;
+    scrollMode: ScrollMode;
     viewerState: ViewerState;
     onDocumentLoad(e: DocumentLoadEvent): void;
     onOpenFile(fileName: string, data: Uint8Array): void;
@@ -55,6 +57,7 @@ export const Inner: React.FC<{
     pageSize,
     plugins,
     renderPage,
+    scrollMode,
     viewerState,
     onDocumentLoad,
     onOpenFile,
@@ -81,16 +84,25 @@ export const Inner: React.FC<{
         [docId]
     );
 
-    const estimateSize = React.useCallback(
-        () =>
-            (Math.abs(rotation) % 180 === 0 ? pageSize.pageHeight * scale : pageSize.pageWidth * scale) + PAGE_PADDING,
-        [rotation, scale]
-    );
+    const estimateSize = React.useCallback(() => {
+        let sizes = [pageSize.pageHeight, pageSize.pageWidth];
+        switch (scrollMode) {
+            case ScrollMode.Horizontal:
+                sizes = [pageSize.pageWidth, pageSize.pageHeight];
+                break;
+            case ScrollMode.Vertical:
+            default:
+                sizes = [pageSize.pageHeight, pageSize.pageWidth];
+                break;
+        }
+        return (Math.abs(rotation) % 180 === 0 ? sizes[0] * scale : sizes[1] * scale) + PAGE_PADDING;
+    }, [rotation, scale, scrollMode]);
     const virtualizer = useVirtual({
         estimateSize,
         numberOfItems: numPages,
         overscan: NUM_OVERSCAN_PAGES,
         parentRef: pagesRef,
+        scrollMode,
     });
 
     React.useEffect(() => {
@@ -193,11 +205,19 @@ export const Inner: React.FC<{
                         top = Math.max(boundingRect[1] * currentState.scale, 0);
                         break;
                 }
-                virtualizer.scrollToItem(pageIndex, top);
-                pagesContainer.scrollLeft += left;
+
+                switch (scrollMode) {
+                    case ScrollMode.Horizontal:
+                        virtualizer.scrollToItem(pageIndex, left);
+                        break;
+                    case ScrollMode.Vertical:
+                    default:
+                        virtualizer.scrollToItem(pageIndex, top);
+                        break;
+                }
             });
         },
-        []
+        [scrollMode]
     );
 
     const jumpToPage = React.useCallback((pageIndex: number) => {
@@ -368,26 +388,14 @@ export const Inner: React.FC<{
                     },
                 },
                 children: (
-                    <div
-                        style={{
-                            height: `${virtualizer.totalSize}px`,
-                            position: 'relative',
-                        }}
-                    >
+                    <div style={virtualizer.getContainerStyles()}>
                         {virtualizer.virtualItems.map((item) => (
                             <div
                                 aria-label={pageLabel.replace('{{pageIndex}}', `${item.index + 1}`)}
                                 className="rpv-core__inner-page"
                                 key={item.index}
                                 role="region"
-                                style={{
-                                    left: 0,
-                                    position: 'absolute',
-                                    top: 0,
-                                    height: `${item.size}px`,
-                                    transform: `translateY(${item.start}px)`,
-                                    width: '100%',
-                                }}
+                                style={virtualizer.getItemStyles(item)}
                             >
                                 <PageLayer
                                     doc={doc}

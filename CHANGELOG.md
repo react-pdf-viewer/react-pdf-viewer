@@ -2,6 +2,16 @@
 
 ## v3.1.0 [WIP]
 
+**New feature**
+
+-   The `Viewer` component provides new `scrollMode` option:
+
+```tsx
+import { ScrollMode, Viewer } from '@react-pdf-viewer/core';
+
+<Viewer scrollMode={ScrollMode.Horizontal} />;
+```
+
 **Bug fixes**
 
 -   The `Cover` component has the same image source when loading different documents

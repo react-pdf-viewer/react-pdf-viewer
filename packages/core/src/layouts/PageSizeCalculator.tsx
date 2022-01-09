@@ -9,12 +9,16 @@
 import * as React from 'react';
 
 import { Spinner } from '../components/Spinner';
+import { ScrollMode } from '../structs/ScrollMode';
 import { SpecialZoomLevel } from '../structs/SpecialZoomLevel';
 import { getPage } from '../utils/managePages';
 import { decrease } from '../zoom/zoomingLevel';
 import { calculateScale } from './calculateScale';
 import type { PageSize } from '../types/PageSize';
 import type { PdfJs } from '../types/PdfJs';
+
+// The height that can be reserved for additional elements such as toolbar
+const RESERVE_HEIGHT = 45;
 
 // The width that can be reserved for additional elements such as sidebar
 const RESERVE_WIDTH = 45;
@@ -23,8 +27,9 @@ export const PageSizeCalculator: React.FC<{
     defaultScale?: number | SpecialZoomLevel;
     doc: PdfJs.PdfDocument;
     render(pageSize: PageSize): React.ReactElement;
-}> = ({ defaultScale, doc, render }) => {
-    const pagesRef = React.useRef<HTMLDivElement | null>(null);
+    scrollMode: ScrollMode;
+}> = ({ defaultScale, doc, render, scrollMode }) => {
+    const pagesRef = React.useRef<HTMLDivElement>();
     const [pageSize, setPageSize] = React.useState<PageSize>({
         pageHeight: 0,
         pageWidth: 0,
@@ -46,7 +51,19 @@ export const PageSizeCalculator: React.FC<{
             const parentEle = pagesEle.parentElement;
 
             // Determine the best scale that fits the document within the container
-            const scaled = (parentEle.clientWidth - RESERVE_WIDTH) / w;
+            const scaleWidth = (parentEle.clientWidth - RESERVE_WIDTH) / w;
+            const scaleHeight = (parentEle.clientHeight - RESERVE_HEIGHT) / h;
+
+            let scaled = scaleWidth;
+            switch (scrollMode) {
+                case ScrollMode.Horizontal:
+                    scaled = Math.min(scaleWidth, scaleHeight);
+                    break;
+                case ScrollMode.Vertical:
+                default:
+                    scaled = scaleWidth;
+                    break;
+            }
 
             let scale = defaultScale
                 ? typeof defaultScale === 'string'
