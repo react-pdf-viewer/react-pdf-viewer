@@ -7,10 +7,9 @@
  */
 
 import * as React from 'react';
-import { MinimalButton, Position, Tooltip } from '@react-pdf-viewer/core';
+import { MinimalButton, Position, ScrollMode, Tooltip } from '@react-pdf-viewer/core';
 
 import { SwitchScrollModeDecorator } from './SwitchScrollModeDecorator';
-import { ScrollMode } from './structs/ScrollMode';
 import type { RenderSwitchScrollModeProps } from './types/RenderSwitchScrollModeProps';
 
 const TOOLTIP_OFFSET = { left: 0, top: 8 };
@@ -22,11 +21,9 @@ export const SwitchScrollModeButton: React.FC<RenderSwitchScrollModeProps> = ({ 
             testId = 'scroll-mode__horizontal-button';
             break;
         case ScrollMode.Vertical:
+        default:
             testId = 'scroll-mode__vertical-button';
             break;
-        case ScrollMode.Wrapped:
-        default:
-            testId = 'scroll-mode__wrapped-button';
     }
 
     return (

@@ -7,9 +7,9 @@
  */
 
 import * as React from 'react';
+import { ScrollMode } from '@react-pdf-viewer/core';
 import type { Store } from '@react-pdf-viewer/core';
 
-import { ScrollMode } from './structs/ScrollMode';
 import { SwitchScrollModeButton } from './SwitchScrollModeButton';
 import { useScrollMode } from './useScrollMode';
 import type { RenderSwitchScrollModeProps } from './types/RenderSwitchScrollModeProps';
@@ -27,11 +27,11 @@ export const SwitchScrollMode: React.FC<{
     mode: ScrollMode;
     store: Store<StoreProps>;
 }> = ({ children, mode, store }) => {
-    const { scrollMode, switchTo } = useScrollMode(store);
+    const { scrollMode } = useScrollMode(store);
 
     const onClick = () => {
-        switchTo(mode);
         store.update('scrollMode', mode);
+        store.get('switchScrollMode')(mode);
     };
 
     const isSelected = scrollMode === mode;

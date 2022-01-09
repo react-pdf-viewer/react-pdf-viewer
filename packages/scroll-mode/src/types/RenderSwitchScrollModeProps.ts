@@ -6,7 +6,7 @@
  * @copyright 2019-2022 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import { ScrollMode } from '../structs/ScrollMode';
+import { ScrollMode } from '@react-pdf-viewer/core';
 
 export interface RenderSwitchScrollModeProps {
     isSelected: boolean;

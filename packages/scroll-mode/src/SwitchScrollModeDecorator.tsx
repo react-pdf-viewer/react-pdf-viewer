@@ -7,10 +7,9 @@
  */
 
 import * as React from 'react';
-import { LocalizationContext } from '@react-pdf-viewer/core';
+import { LocalizationContext, ScrollMode } from '@react-pdf-viewer/core';
 
 import { HorizontalScrollingIcon } from './HorizontalScrollingIcon';
-import { ScrollMode } from './structs/ScrollMode';
 import { VerticalScrollingIcon } from './VerticalScrollingIcon';
 import { WrappedScrollingIcon } from './WrappedScrollingIcon';
 
@@ -34,11 +33,6 @@ export const SwitchScrollModeDecorator: React.FC<{
         case ScrollMode.Horizontal:
             label = (l10n && l10n.scrollMode ? l10n.scrollMode.horizontalScrolling : 'Horizontal scrolling') as string;
             icon = <HorizontalScrollingIcon />;
-            break;
-
-        case ScrollMode.Wrapped:
-            label = (l10n && l10n.scrollMode ? l10n.scrollMode.wrappedScrolling : 'Wrapped scrolling') as string;
-            icon = <WrappedScrollingIcon />;
             break;
 
         case ScrollMode.Vertical:
