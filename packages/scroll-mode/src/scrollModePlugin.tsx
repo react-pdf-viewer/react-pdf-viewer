@@ -36,7 +36,9 @@ export const scrollModePlugin = (): ScrollModePlugin => {
         () =>
             createStore<StoreProps>({
                 scrollMode: ScrollMode.Vertical,
-                switchScrollMode: () => {/**/},
+                switchScrollMode: () => {
+                    /**/
+                },
             }),
         []
     );

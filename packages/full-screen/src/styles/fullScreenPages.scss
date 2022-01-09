@@ -6,6 +6,6 @@
  * @copyright 2019-2022 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-@import './theme';
-@import './exitFullScreenButton';
-@import './fullScreenPages.scss';
+.rpv-full-screen__pages {
+    background-color: var(--rpv-full-screen__pages-background-color);
+}
