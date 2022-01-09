@@ -20,6 +20,7 @@ import { ScrollMode, Viewer } from '@react-pdf-viewer/core';
 -   The default `Spinner` is used when using the `renderLoader` option
 -   The exit full screen button doesn't look good in dark theme
 -   The sidebar doesn't fit in its container on Safari
+-   There is a black area in the full screen mode if the zoom level is small enough
 
 **Breaking changes**
 
