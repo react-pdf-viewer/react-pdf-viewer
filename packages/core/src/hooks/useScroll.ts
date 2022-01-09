@@ -51,7 +51,7 @@ export const useScroll = ({
         return () => {
             element.removeEventListener('scroll', handleScroll);
         };
-    }, [element]);
+    }, [element, scrollMode]);
 
     const scrollTo = React.useCallback(
         (offset: number) => {
@@ -68,7 +68,7 @@ export const useScroll = ({
                 }
             }
         },
-        [elementRef]
+        [elementRef, scrollMode]
     );
 
     return {
