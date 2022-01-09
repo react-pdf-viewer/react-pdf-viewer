@@ -134,6 +134,8 @@ export interface ViewerState {
     rotation: number;
     // The current zoom level
     scale: number;
+    // The current scroll mode
+    scrollMode: ScrollMode;
 }
 export interface VisibilityChanged {
     isVisible: boolean;

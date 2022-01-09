@@ -6,6 +6,7 @@
  * @copyright 2019-2022 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
+import { ScrollMode } from '../structs/ScrollMode';
 import type { OpenFile } from './OpenFile';
 
 export interface ViewerState {
@@ -20,4 +21,6 @@ export interface ViewerState {
     rotation: number;
     // The current zoom level
     scale: number;
+    // The current scroll mode
+    scrollMode: ScrollMode;
 }

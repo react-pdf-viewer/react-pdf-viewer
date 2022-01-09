@@ -121,6 +121,7 @@ export const Inner: React.FC<{
             pageWidth,
             rotation,
             scale,
+            scrollMode: currentScrollMode,
         });
 
         const { startIndex, endIndex, virtualItems } = virtualizer;
@@ -259,10 +260,20 @@ export const Inner: React.FC<{
             pageWidth,
             rotation: updateRotation,
             scale,
+            scrollMode: currentScrollMode,
         });
     }, []);
 
     const switchScrollMode = React.useCallback((scrollMode: ScrollMode) => {
+        setViewerState({
+            file: viewerState.file,
+            pageIndex: currentPage,
+            pageHeight,
+            pageWidth,
+            rotation,
+            scale,
+            scrollMode,
+        });
         setCurrentScrollMode(scrollMode);
     }, []);
 
@@ -293,6 +304,7 @@ export const Inner: React.FC<{
             pageWidth,
             rotation,
             scale: updateScale,
+            scrollMode: currentScrollMode,
         });
     }, []);
 

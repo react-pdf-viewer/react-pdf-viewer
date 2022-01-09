@@ -8,7 +8,7 @@
 
 import * as React from 'react';
 import { createStore, ScrollMode } from '@react-pdf-viewer/core';
-import type { Plugin, PluginFunctions } from '@react-pdf-viewer/core';
+import type { Plugin, PluginFunctions, ViewerState } from '@react-pdf-viewer/core';
 
 import { SwitchScrollMode, SwitchScrollModeProps } from './SwitchScrollMode';
 import { SwitchScrollModeButton } from './SwitchScrollModeButton';
@@ -77,8 +77,11 @@ export const scrollModePlugin = (): ScrollModePlugin => {
             store.update('switchScrollMode', pluginFunctions.switchScrollMode);
         },
         // Plugin functions
+        onViewerStateChange: (viewerState: ViewerState) => {
+            store.update('scrollMode', viewerState.scrollMode);
+            return viewerState;
+        },
         switchScrollMode: (mode: ScrollMode) => {
-            store.update('scrollMode', mode);
             store.get('switchScrollMode')(mode);
         },
         SwitchScrollMode: SwitchScrollModeDecorator,
