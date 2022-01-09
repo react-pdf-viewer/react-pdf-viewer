@@ -6,6 +6,7 @@
  * @copyright 2019-2022 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
+import { ScrollMode } from '../structs/ScrollMode';
 import { SpecialZoomLevel } from '../structs/SpecialZoomLevel';
 import type { ViewerState } from './ViewerState';
 
@@ -24,5 +25,6 @@ export interface PluginFunctions {
     openFile(file: File): void;
     rotate(rotation: number): void;
     setViewerState(viewerState: ViewerState): void;
+    switchScrollMode(scrollMode: ScrollMode): void;
     zoom(scale: number | SpecialZoomLevel): void;
 }

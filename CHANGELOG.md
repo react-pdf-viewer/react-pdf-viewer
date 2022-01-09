@@ -12,6 +12,8 @@ import { ScrollMode, Viewer } from '@react-pdf-viewer/core';
 <Viewer scrollMode={ScrollMode.Horizontal} />;
 ```
 
+-   Plugins can register and call the `switchScrollMode` method to switch the scroll mode programatically
+
 **Bug fixes**
 
 -   The `Cover` component has the same image source when loading different documents

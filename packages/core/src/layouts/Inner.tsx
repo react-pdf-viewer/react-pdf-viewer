@@ -72,6 +72,7 @@ export const Inner: React.FC<{
     const pagesRef = React.useRef<HTMLDivElement>();
     const [currentPage, setCurrentPage] = React.useState(0);
     const [rotation, setRotation] = React.useState(0);
+    const [currentScrollMode, setCurrentScrollMode] = React.useState(scrollMode);
     const stateRef = React.useRef<ViewerState>(viewerState);
     const [scale, setScale] = React.useState(pageSize.scale);
     const keepSpecialZoomLevelRef = React.useRef<SpecialZoomLevel | null>(
@@ -96,13 +97,13 @@ export const Inner: React.FC<{
                 break;
         }
         return (Math.abs(rotation) % 180 === 0 ? sizes[0] * scale : sizes[1] * scale) + PAGE_PADDING;
-    }, [rotation, scale, scrollMode]);
+    }, [rotation, scale, currentScrollMode]);
     const virtualizer = useVirtual({
         estimateSize,
         numberOfItems: numPages,
         overscan: NUM_OVERSCAN_PAGES,
         parentRef: pagesRef,
-        scrollMode,
+        scrollMode: currentScrollMode,
     });
 
     React.useEffect(() => {
@@ -258,6 +259,10 @@ export const Inner: React.FC<{
         });
     }, []);
 
+    const switchScrollMode = React.useCallback((scrollMode: ScrollMode) => {
+        setCurrentScrollMode(scrollMode);
+    }, []);
+
     const zoom = React.useCallback((newScale: number | SpecialZoomLevel) => {
         renderQueueInstance.resetQueue();
 
@@ -300,6 +305,7 @@ export const Inner: React.FC<{
             openFile,
             rotate,
             setViewerState,
+            switchScrollMode,
             zoom,
         };
 
