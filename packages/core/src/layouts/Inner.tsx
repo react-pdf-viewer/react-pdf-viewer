@@ -446,6 +446,7 @@ export const Inner: React.FC<{
                     jumpToPage,
                     openFile,
                     rotate,
+                    switchScrollMode,
                     zoom,
                 });
             }
