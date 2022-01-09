@@ -13,9 +13,11 @@ import { ScrollMode } from '../structs/ScrollMode';
 
 export const useScroll = ({
     elementRef,
+    isRtl,
     scrollMode,
 }: {
     elementRef: React.MutableRefObject<HTMLDivElement>;
+    isRtl: boolean;
     scrollMode: ScrollMode;
 }): {
     scrollOffset: number;
@@ -23,6 +25,7 @@ export const useScroll = ({
 } => {
     const [scrollOffset, setScrollOffset] = React.useState(0);
     const [element, setElement] = React.useState(elementRef.current);
+    const factor = isRtl ? -1 : 1;
 
     useIsomorphicLayoutEffect(() => {
         setElement(elementRef.current);
@@ -36,7 +39,7 @@ export const useScroll = ({
         const handleScroll = () => {
             switch (scrollMode) {
                 case ScrollMode.Horizontal:
-                    setScrollOffset(element.scrollLeft);
+                    setScrollOffset(factor * element.scrollLeft);
                     break;
                 case ScrollMode.Vertical:
                 default:
@@ -59,7 +62,7 @@ export const useScroll = ({
             if (ele) {
                 switch (scrollMode) {
                     case ScrollMode.Horizontal:
-                        ele.scrollLeft = offset;
+                        ele.scrollLeft = factor * offset;
                         break;
                     case ScrollMode.Vertical:
                     default:

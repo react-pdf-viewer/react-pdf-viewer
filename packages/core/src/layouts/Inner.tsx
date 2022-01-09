@@ -15,7 +15,8 @@ import { LocalizationContext } from '../localization/LocalizationContext';
 import { renderQueueService } from '../services/renderQueueService';
 import { ScrollMode } from '../structs/ScrollMode';
 import { SpecialZoomLevel } from '../structs/SpecialZoomLevel';
-import { ThemeContext } from '../theme/ThemeContext';
+import { TextDirection, ThemeContext } from '../theme/ThemeContext';
+import { classNames } from '../utils/classNames';
 import { clearPagesCache, getPage } from '../utils/managePages';
 import { getFileExt } from '../utils/getFileExt';
 import { maxByKey } from '../utils/maxByKey';
@@ -68,6 +69,7 @@ export const Inner: React.FC<{
     const docId = doc.loadingTask.docId;
     const { l10n } = React.useContext(LocalizationContext);
     const themeContext = React.useContext(ThemeContext);
+    const isRtl = themeContext.direction === TextDirection.RightToLeft;
     const containerRef = React.useRef<HTMLDivElement>();
     const pagesRef = React.useRef<HTMLDivElement>();
     const [currentPage, setCurrentPage] = React.useState(0);
@@ -100,6 +102,7 @@ export const Inner: React.FC<{
     }, [rotation, scale, currentScrollMode]);
     const virtualizer = useVirtual({
         estimateSize,
+        isRtl,
         numberOfItems: numPages,
         overscan: NUM_OVERSCAN_PAGES,
         parentRef: pagesRef,
@@ -385,6 +388,10 @@ export const Inner: React.FC<{
             subSlot: {
                 attrs: {
                     'data-testid': 'core__inner-pages',
+                    className: classNames({
+                        'rpv-core__inner-pages': true,
+                        'rpv-core__inner-pages--rtl': isRtl,
+                    }),
                     ref: pagesRef,
                     style: {
                         height: '100%',
