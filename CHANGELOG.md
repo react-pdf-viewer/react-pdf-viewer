@@ -6,6 +6,7 @@
 
 -   The `Cover` component has the same image source when loading different documents
 -   The sidebar doesn't fit in its container on Safari
+-   The default `Spinner` is used when using the `renderLoader` option
 
 **Breaking change**
 

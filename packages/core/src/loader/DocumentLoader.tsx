@@ -56,13 +56,7 @@ export const DocumentLoader: React.FC<{
     const isMounted = useIsMounted();
 
     React.useEffect(() => {
-        // If we don't reset the status when new `file` is provided
-        // (for example, when opening file)
-        // then we will see the error
-        //  ```
-        //  Invariant Violation: Rendered fewer hooks than expected.
-        //  This may be caused by an accidental early return statement
-        //  ```
+        // Reset the status when new `file` is provided (for example, when opening file from the toolbar)
         setStatus(new LoadingState(0));
 
         // Create a new worker
@@ -159,23 +153,16 @@ export const DocumentLoader: React.FC<{
             </div>
         );
     }
-    if (status instanceof LoadingState) {
-        return (
-            <div
-                data-testid="core__doc-loading"
-                className={classNames({
-                    'rpv-core__doc-loading': true,
-                    'rpv-core__doc-loading--rtl': isRtl,
-                })}
-            >
-                {renderLoader ? renderLoader((status as LoadingState).percentages) : <Spinner />}
-            </div>
-        );
-    }
 
     return (
-        <div className="rpv-core__doc-loading" data-testid="core__doc-loading">
-            <Spinner />
+        <div
+            data-testid="core__doc-loading"
+            className={classNames({
+                'rpv-core__doc-loading': true,
+                'rpv-core__doc-loading--rtl': isRtl,
+            })}
+        >
+            {renderLoader ? renderLoader((status as LoadingState).percentages) : <Spinner />}
         </div>
     );
 };
