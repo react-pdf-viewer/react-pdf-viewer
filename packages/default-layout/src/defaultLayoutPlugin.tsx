@@ -96,6 +96,7 @@ export const defaultLayoutPlugin = (props?: DefaultLayoutPluginProps): DefaultLa
             const mergeSubSlot =
                 slot.subSlot && slot.subSlot.attrs
                     ? {
+                          className: slot.subSlot.attrs.className,
                           'data-testid': slot.subSlot.attrs['data-testid'],
                           ref: slot.subSlot.attrs.ref,
                           style: slot.subSlot.attrs.style,

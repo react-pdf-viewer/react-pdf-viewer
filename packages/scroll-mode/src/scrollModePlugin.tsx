@@ -7,14 +7,12 @@
  */
 
 import * as React from 'react';
-import { createStore } from '@react-pdf-viewer/core';
-import type { Plugin, PluginFunctions, RenderViewer, Slot } from '@react-pdf-viewer/core';
+import { createStore, ScrollMode } from '@react-pdf-viewer/core';
+import type { Plugin, PluginFunctions, ViewerState } from '@react-pdf-viewer/core';
 
-import { ScrollMode } from './structs/ScrollMode';
 import { SwitchScrollMode, SwitchScrollModeProps } from './SwitchScrollMode';
 import { SwitchScrollModeButton } from './SwitchScrollModeButton';
 import { SwitchScrollModeMenuItem } from './SwitchScrollModeMenuItem';
-import { Tracker } from './Tracker';
 import type { StoreProps } from './types/StoreProps';
 
 export interface SwitchScrollModeButtonProps {
@@ -33,15 +31,12 @@ export interface ScrollModePlugin extends Plugin {
     SwitchScrollModeMenuItem(props: SwitchScrollModeMenuItemProps): React.ReactElement;
 }
 
-export interface ScrollModePluginProps {
-    scrollMode?: ScrollMode;
-}
-
-export const scrollModePlugin = (props?: ScrollModePluginProps): ScrollModePlugin => {
+export const scrollModePlugin = (): ScrollModePlugin => {
     const store = React.useMemo(
         () =>
             createStore<StoreProps>({
-                scrollMode: props && props.scrollMode ? props.scrollMode : ScrollMode.Vertical,
+                scrollMode: ScrollMode.Vertical,
+                switchScrollMode: () => {/**/},
             }),
         []
     );
@@ -77,28 +72,17 @@ export const scrollModePlugin = (props?: ScrollModePluginProps): ScrollModePlugi
         </SwitchScrollModeDecorator>
     );
 
-    const renderViewer = (props: RenderViewer): Slot => {
-        const currentSlot = props.slot;
-        if (currentSlot && currentSlot.children) {
-            currentSlot.children = (
-                <>
-                    <Tracker store={store} />
-                    {currentSlot.children}
-                </>
-            );
-        }
-
-        return currentSlot;
-    };
-
     return {
         install: (pluginFunctions: PluginFunctions) => {
-            store.update('getPagesContainer', pluginFunctions.getPagesContainer);
+            store.update('switchScrollMode', pluginFunctions.switchScrollMode);
         },
-        renderViewer,
         // Plugin functions
+        onViewerStateChange: (viewerState: ViewerState) => {
+            store.update('scrollMode', viewerState.scrollMode);
+            return viewerState;
+        },
         switchScrollMode: (mode: ScrollMode) => {
-            store.update('scrollMode', mode);
+            store.get('switchScrollMode')(mode);
         },
         SwitchScrollMode: SwitchScrollModeDecorator,
         SwitchScrollModeButton: SwitchScrollModeButtonDecorator,

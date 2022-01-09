@@ -57,12 +57,14 @@ const calculateRange = (
 
 export const useVirtual = ({
     estimateSize,
+    isRtl,
     numberOfItems,
     overscan,
     parentRef,
     scrollMode,
 }: {
     estimateSize: (index: number) => number;
+    isRtl: boolean;
     numberOfItems: number;
     overscan: number;
     parentRef: React.MutableRefObject<HTMLDivElement>;
@@ -78,9 +80,10 @@ export const useVirtual = ({
 } => {
     const { scrollOffset, scrollTo } = useScroll({
         elementRef: parentRef,
+        isRtl,
         scrollMode,
     });
-    const { height: parentHeight } = useMeasureRect({
+    const parentRect = useMeasureRect({
         elementRef: parentRef,
     });
 
@@ -91,7 +94,15 @@ export const useVirtual = ({
         totalSize: 0,
     });
     latestRef.current.scrollOffset = scrollOffset;
-    latestRef.current.parentSize = parentHeight;
+    switch (scrollMode) {
+        case ScrollMode.Horizontal:
+            latestRef.current.parentSize = parentRect.width;
+            break;
+        case ScrollMode.Vertical:
+        default:
+            latestRef.current.parentSize = parentRect.height;
+            break;
+    }
 
     const measurements = React.useMemo(() => {
         const measurements: ItemMeasurement[] = [];
@@ -129,13 +140,16 @@ export const useVirtual = ({
         virtualItems.push({ ...measurements[i], visibility: visibilities[i] !== undefined ? visibilities[i] : -1 });
     }
 
-    const scrollToItem = React.useCallback((index: number, offset: number) => {
-        const { measurements } = latestRef.current;
-        const measurement = measurements[clamp(0, numberOfItems - 1, index)];
-        if (measurement) {
-            scrollTo(measurement.start + offset);
-        }
-    }, []);
+    const scrollToItem = React.useCallback(
+        (index: number, offset: number) => {
+            const { measurements } = latestRef.current;
+            const measurement = measurements[clamp(0, numberOfItems - 1, index)];
+            if (measurement) {
+                scrollTo(measurement.start + offset);
+            }
+        },
+        [scrollTo]
+    );
 
     // Build the styles for the items' container
     const getContainerStyles = React.useCallback((): React.CSSProperties => {
@@ -159,6 +173,8 @@ export const useVirtual = ({
     // Build the absolute position styles for each item
     const getItemStyles = React.useCallback(
         (item: ItemMeasurement): React.CSSProperties => {
+            const sideProperty = isRtl ? 'right' : 'left';
+            const factor = isRtl ? -1 : 1;
             switch (scrollMode) {
                 case ScrollMode.Horizontal:
                     return {
@@ -166,10 +182,10 @@ export const useVirtual = ({
                         height: '100%',
                         width: `${item.size}px`,
                         // Absolute position
-                        left: 0,
+                        [sideProperty]: 0,
                         position: 'absolute',
                         top: 0,
-                        transform: `translateX(${item.start}px)`,
+                        transform: `translateX(${item.start * factor}px)`,
                     };
                 case ScrollMode.Vertical:
                 default:
@@ -178,14 +194,14 @@ export const useVirtual = ({
                         height: `${item.size}px`,
                         width: '100%',
                         // Absolute position
-                        left: 0,
+                        [sideProperty]: 0,
                         position: 'absolute',
                         top: 0,
                         transform: `translateY(${item.start}px)`,
                     };
             }
         },
-        [scrollMode]
+        [isRtl, scrollMode]
     );
 
     return {

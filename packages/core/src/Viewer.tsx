@@ -203,6 +203,7 @@ export const Viewer: React.FC<{
                                                 pageWidth: ps.pageWidth,
                                                 rotation: 0,
                                                 scale: ps.scale,
+                                                scrollMode,
                                             }}
                                             onDocumentLoad={onDocumentLoad}
                                             onOpenFile={openFile}

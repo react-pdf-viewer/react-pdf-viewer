@@ -12,6 +12,8 @@ import { ScrollMode, Viewer } from '@react-pdf-viewer/core';
 <Viewer scrollMode={ScrollMode.Horizontal} />;
 ```
 
+-   Plugins can register and call the `switchScrollMode` method to switch the scroll mode programatically
+
 **Bug fixes**
 
 -   The `Cover` component has the same image source when loading different documents
@@ -19,9 +21,44 @@ import { ScrollMode, Viewer } from '@react-pdf-viewer/core';
 -   The exit full screen button doesn't look good in dark theme
 -   The sidebar doesn't fit in its container on Safari
 
-**Breaking change**
+**Breaking changes**
 
 -   It is not possible to access the page element in a plugin with the `getPageElement` function. The method is removed because the pages are rendered dynamically
+-   The `ScrollMode` provided by the `@react-pdf-viewer/scroll-mode` package now belongs to the `@react-pdf-viewer/core` package:
+
+```js
+// v3.0.0 and previous versions
+import { ScrollMode } from '@react-pdf-viewer/scroll-mode';
+
+// From v3.1.0
+import { ScrollMode } from '@react-pdf-viewer/core';
+```
+
+-   The inital scroll mode option provided by the `scrollModePlugin` plugin now belongs to the `Viewer` component:
+
+```tsx
+// v3.0.0 and previous versions
+import { scrollModePlugin, ScrollMode } from '@react-pdf-viewer/scroll-mode';
+
+const scrollModePluginInstance = scrollModePlugin({
+    scrollMode: ScrollMode.Horizontal,
+});
+
+// From v3.1.0
+import { ScrollMode } from '@react-pdf-viewer/core';
+
+<Viewer scrollMode={ScrollMode.Horizontal} />;
+```
+
+-   There aren't CSS styles provided by the `@react-pdf-viewer/scroll-mode` package:
+
+```js
+// v3.0.0 and previous versions
+import '@react-pdf-viewer/scroll-mode/lib/styles/index.css';
+
+// From v3.1.0
+// Remove the import above
+```
 
 ## v3.0.0
 

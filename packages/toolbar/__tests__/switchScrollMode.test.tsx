@@ -46,9 +46,9 @@ test('Switch scroll mode from menu items', async () => {
     const moreButton = await findByLabelText('More actions');
     fireEvent.click(moreButton);
 
-    const wrappedMenuItem = await findByText('Wrapped scrolling');
-    fireEvent.click(wrappedMenuItem);
+    const horizontalMenuItem = await findByText('Horizontal scrolling');
+    fireEvent.click(horizontalMenuItem);
 
     const pagesContainer = getByTestId('core__inner-pages');
-    expect(pagesContainer).toHaveClass('rpv-scroll-mode__wrapped');
+    expect(pagesContainer).toHaveClass('rpv-core__inner-pages--horizontal');
 });

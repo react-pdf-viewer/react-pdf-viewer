@@ -10,9 +10,6 @@
 export type { SwitchScrollModeProps } from './SwitchScrollMode';
 export type { RenderSwitchScrollModeProps } from './types/RenderSwitchScrollModeProps';
 
-// Structs
-export { ScrollMode } from './structs/ScrollMode';
-
 // Plugin
 export * from './scrollModePlugin';
 

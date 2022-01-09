@@ -8,6 +8,7 @@
 
 import * as React from 'react';
 
+import { ScrollMode } from '../structs/ScrollMode';
 import { SpecialZoomLevel } from '../structs/SpecialZoomLevel';
 import type { ThemeContextProps } from '../theme/ThemeContext';
 import type { PdfJs } from '../types/PdfJs';
@@ -24,5 +25,6 @@ export interface RenderViewer {
     openFile(file: File): void;
     jumpToPage(page: number): void;
     rotate(degree: number): void;
+    switchScrollMode(scrollMode: ScrollMode): void;
     zoom(level: number | SpecialZoomLevel): void;
 }

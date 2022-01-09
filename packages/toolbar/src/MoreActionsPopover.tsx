@@ -14,12 +14,12 @@ import {
     MinimalButton,
     Popover,
     Position,
+    ScrollMode,
     TextDirection,
     ThemeContext,
     Tooltip,
 } from '@react-pdf-viewer/core';
 import type { Toggle } from '@react-pdf-viewer/core';
-import { ScrollMode } from '@react-pdf-viewer/scroll-mode';
 import { SelectionMode } from '@react-pdf-viewer/selection-mode';
 
 import { MoreIcon } from './MoreIcon';
@@ -113,7 +113,6 @@ export const MoreActionsPopover: React.FC<{
                 <MenuDivider />
                 <SwitchScrollModeMenuItem mode={ScrollMode.Vertical} onClick={toggle} />
                 <SwitchScrollModeMenuItem mode={ScrollMode.Horizontal} onClick={toggle} />
-                <SwitchScrollModeMenuItem mode={ScrollMode.Wrapped} onClick={toggle} />
                 <MenuDivider />
                 <ShowPropertiesMenuItem onClick={toggle} />
             </Menu>

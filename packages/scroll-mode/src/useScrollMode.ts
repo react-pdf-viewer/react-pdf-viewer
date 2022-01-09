@@ -7,53 +7,29 @@
  */
 
 import * as React from 'react';
-import type { Store } from '@react-pdf-viewer/core';
+import { ScrollMode } from '@react-pdf-viewer/core';
+import type { Store, StoreHandler } from '@react-pdf-viewer/core';
 
-import { ScrollMode } from './structs/ScrollMode';
 import type { StoreProps } from './types/StoreProps';
 
 export const useScrollMode = (
     store: Store<StoreProps>
 ): {
     scrollMode: ScrollMode;
-    switchTo: (newScrollMode: ScrollMode) => void;
 } => {
     const [scrollMode, setScrollMode] = React.useState(store.get('scrollMode') || ScrollMode.Vertical);
 
-    const switchTo = (newScrollMode: ScrollMode) => {
-        setScrollMode(newScrollMode);
-
-        const getPagesContainer = store.get('getPagesContainer');
-        if (!getPagesContainer) {
-            return;
-        }
-        const pagesEle = getPagesContainer();
-        if (!pagesEle) {
-            return;
-        }
-        switch (newScrollMode) {
-            case ScrollMode.Vertical:
-                pagesEle.classList.add('rpv-scroll-mode__vertical');
-                pagesEle.classList.remove('rpv-scroll-mode__horizontal');
-                pagesEle.classList.remove('rpv-scroll-mode__wrapped');
-                break;
-
-            case ScrollMode.Horizontal:
-                pagesEle.classList.add('rpv-scroll-mode__horizontal');
-                pagesEle.classList.remove('rpv-scroll-mode__vertical');
-                pagesEle.classList.remove('rpv-scroll-mode__wrapped');
-                break;
-
-            case ScrollMode.Wrapped:
-                pagesEle.classList.add('rpv-scroll-mode__wrapped');
-                pagesEle.classList.remove('rpv-scroll-mode__vertical');
-                pagesEle.classList.remove('rpv-scroll-mode__horizontal');
-                break;
-
-            default:
-                break;
-        }
+    const handleScrollModeChanged: StoreHandler<ScrollMode> = (currentScrollMode: ScrollMode) => {
+        setScrollMode(currentScrollMode);
     };
 
-    return { scrollMode, switchTo };
+    React.useEffect(() => {
+        store.subscribe('scrollMode', handleScrollModeChanged);
+
+        return (): void => {
+            store.unsubscribe('scrollMode', handleScrollModeChanged);
+        };
+    }, []);
+
+    return { scrollMode };
 };

@@ -15,7 +15,8 @@ import { LocalizationContext } from '../localization/LocalizationContext';
 import { renderQueueService } from '../services/renderQueueService';
 import { ScrollMode } from '../structs/ScrollMode';
 import { SpecialZoomLevel } from '../structs/SpecialZoomLevel';
-import { ThemeContext } from '../theme/ThemeContext';
+import { TextDirection, ThemeContext } from '../theme/ThemeContext';
+import { classNames } from '../utils/classNames';
 import { clearPagesCache, getPage } from '../utils/managePages';
 import { getFileExt } from '../utils/getFileExt';
 import { maxByKey } from '../utils/maxByKey';
@@ -68,10 +69,12 @@ export const Inner: React.FC<{
     const docId = doc.loadingTask.docId;
     const { l10n } = React.useContext(LocalizationContext);
     const themeContext = React.useContext(ThemeContext);
+    const isRtl = themeContext.direction === TextDirection.RightToLeft;
     const containerRef = React.useRef<HTMLDivElement>();
     const pagesRef = React.useRef<HTMLDivElement>();
     const [currentPage, setCurrentPage] = React.useState(0);
     const [rotation, setRotation] = React.useState(0);
+    const [currentScrollMode, setCurrentScrollMode] = React.useState(scrollMode);
     const stateRef = React.useRef<ViewerState>(viewerState);
     const [scale, setScale] = React.useState(pageSize.scale);
     const keepSpecialZoomLevelRef = React.useRef<SpecialZoomLevel | null>(
@@ -86,7 +89,7 @@ export const Inner: React.FC<{
 
     const estimateSize = React.useCallback(() => {
         let sizes = [pageSize.pageHeight, pageSize.pageWidth];
-        switch (scrollMode) {
+        switch (currentScrollMode) {
             case ScrollMode.Horizontal:
                 sizes = [pageSize.pageWidth, pageSize.pageHeight];
                 break;
@@ -96,13 +99,14 @@ export const Inner: React.FC<{
                 break;
         }
         return (Math.abs(rotation) % 180 === 0 ? sizes[0] * scale : sizes[1] * scale) + PAGE_PADDING;
-    }, [rotation, scale, scrollMode]);
+    }, [rotation, scale, currentScrollMode]);
     const virtualizer = useVirtual({
         estimateSize,
+        isRtl,
         numberOfItems: numPages,
         overscan: NUM_OVERSCAN_PAGES,
         parentRef: pagesRef,
-        scrollMode,
+        scrollMode: currentScrollMode,
     });
 
     React.useEffect(() => {
@@ -117,6 +121,7 @@ export const Inner: React.FC<{
             pageWidth,
             rotation,
             scale,
+            scrollMode: currentScrollMode,
         });
 
         const { startIndex, endIndex, virtualItems } = virtualizer;
@@ -206,7 +211,7 @@ export const Inner: React.FC<{
                         break;
                 }
 
-                switch (scrollMode) {
+                switch (currentScrollMode) {
                     case ScrollMode.Horizontal:
                         virtualizer.scrollToItem(pageIndex, left);
                         break;
@@ -217,7 +222,7 @@ export const Inner: React.FC<{
                 }
             });
         },
-        [scrollMode]
+        [currentScrollMode]
     );
 
     const jumpToPage = React.useCallback((pageIndex: number) => {
@@ -255,7 +260,21 @@ export const Inner: React.FC<{
             pageWidth,
             rotation: updateRotation,
             scale,
+            scrollMode: currentScrollMode,
         });
+    }, []);
+
+    const switchScrollMode = React.useCallback((scrollMode: ScrollMode) => {
+        setViewerState({
+            file: viewerState.file,
+            pageIndex: currentPage,
+            pageHeight,
+            pageWidth,
+            rotation,
+            scale,
+            scrollMode,
+        });
+        setCurrentScrollMode(scrollMode);
     }, []);
 
     const zoom = React.useCallback((newScale: number | SpecialZoomLevel) => {
@@ -285,6 +304,7 @@ export const Inner: React.FC<{
             pageWidth,
             rotation,
             scale: updateScale,
+            scrollMode: currentScrollMode,
         });
     }, []);
 
@@ -300,6 +320,7 @@ export const Inner: React.FC<{
             openFile,
             rotate,
             setViewerState,
+            switchScrollMode,
             zoom,
         };
 
@@ -379,6 +400,12 @@ export const Inner: React.FC<{
             subSlot: {
                 attrs: {
                     'data-testid': 'core__inner-pages',
+                    className: classNames({
+                        'rpv-core__inner-pages': true,
+                        'rpv-core__inner-pages--horizontal': currentScrollMode === ScrollMode.Horizontal,
+                        'rpv-core__inner-pages--rtl': isRtl,
+                        'rpv-core__inner-pages--vertical': currentScrollMode === ScrollMode.Vertical,
+                    }),
                     ref: pagesRef,
                     style: {
                         height: '100%',
@@ -431,6 +458,7 @@ export const Inner: React.FC<{
                     jumpToPage,
                     openFile,
                     rotate,
+                    switchScrollMode,
                     zoom,
                 });
             }

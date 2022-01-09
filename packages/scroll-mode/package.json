@@ -44,8 +44,7 @@
     },
     "scripts": {
         "clean": "rm -rf lib && mkdir lib",
-        "build": "npm run clean && npm run js && npm run css",
-        "js": "cp src/index.d.ts lib && cp dist/index.js lib && rollup -c ../../rollup.config.js",
-        "css": "sass --no-source-map src/styles/index.scss lib/styles/index.temp.css && postcss lib/styles/index.temp.css > lib/styles/index.css && rm -rf lib/styles/index.temp.css"
+        "build": "npm run clean && npm run js",
+        "js": "cp src/index.d.ts lib && cp dist/index.js lib && rollup -c ../../rollup.config.js"
     }
 }
