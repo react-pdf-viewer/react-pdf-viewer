@@ -18,6 +18,9 @@ export const SwitchScrollModeMenuItem: React.FC<RenderSwitchScrollModeProps> = (
         case ScrollMode.Horizontal:
             testId = 'scroll-mode__horizontal-menu';
             break;
+        case ScrollMode.Wrapped:
+            testId = 'scroll-mode__wrapped-menu';
+            break;
         case ScrollMode.Vertical:
         default:
             testId = 'scroll-mode__vertical-menu';

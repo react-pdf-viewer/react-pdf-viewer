@@ -6,8 +6,7 @@
  * @copyright 2019-2022 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-export enum ScrollMode {
-    Horizontal = 'Horizontal',
-    Vertical = 'Vertical',
-    Wrapped = 'Wrapped',
+export interface Rect {
+    height: number;
+    width: number;
 }

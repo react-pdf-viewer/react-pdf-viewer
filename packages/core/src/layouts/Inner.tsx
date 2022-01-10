@@ -28,6 +28,7 @@ import type { PageChangeEvent } from '../types/PageChangeEvent';
 import type { PdfJs } from '../types/PdfJs';
 import type { Plugin } from '../types/Plugin';
 import type { DestinationOffsetFromViewport, PluginFunctions } from '../types/PluginFunctions';
+import type { Rect } from '../types/Rect';
 import type { RenderPage } from '../types/RenderPage';
 import type { Slot } from '../types/Slot';
 import type { ViewerState } from '../types/ViewerState';
@@ -86,20 +87,29 @@ export const Inner: React.FC<{
         () => renderQueueService({ doc, queueName: 'core-pages', priority: 0 }),
         [docId]
     );
+    const maxVisibilityPageRef = React.useRef({
+        pageIndex: -1,
+        visibility: -1,
+    });
 
     const estimateSize = React.useCallback(() => {
-        let sizes = [pageSize.pageHeight, pageSize.pageWidth];
-        switch (currentScrollMode) {
-            case ScrollMode.Horizontal:
-                sizes = [pageSize.pageWidth, pageSize.pageHeight];
-                break;
-            case ScrollMode.Vertical:
-            default:
-                sizes = [pageSize.pageHeight, pageSize.pageWidth];
-                break;
-        }
-        return (Math.abs(rotation) % 180 === 0 ? sizes[0] * scale : sizes[1] * scale) + PAGE_PADDING;
-    }, [rotation, scale, currentScrollMode]);
+        const sizes = [pageSize.pageHeight, pageSize.pageWidth];
+        const rect: Rect =
+            Math.abs(rotation) % 180 === 0
+                ? {
+                      height: sizes[0],
+                      width: sizes[1],
+                  }
+                : {
+                      height: sizes[1],
+                      width: sizes[0],
+                  };
+        return {
+            height: rect.height * scale + PAGE_PADDING,
+            width: rect.width * scale + PAGE_PADDING,
+        };
+    }, [rotation, scale]);
+
     const virtualizer = useVirtual({
         estimateSize,
         isRtl,
@@ -213,11 +223,11 @@ export const Inner: React.FC<{
 
                 switch (currentScrollMode) {
                     case ScrollMode.Horizontal:
-                        virtualizer.scrollToItem(pageIndex, left);
+                        virtualizer.scrollToItem(pageIndex, { left, top: 0 });
                         break;
                     case ScrollMode.Vertical:
                     default:
-                        virtualizer.scrollToItem(pageIndex, top);
+                        virtualizer.scrollToItem(pageIndex, { left: 0, top });
                         break;
                 }
             });
@@ -227,7 +237,7 @@ export const Inner: React.FC<{
 
     const jumpToPage = React.useCallback((pageIndex: number) => {
         if (0 <= pageIndex && pageIndex < numPages) {
-            virtualizer.scrollToItem(pageIndex, 0);
+            virtualizer.scrollToItem(pageIndex, { left: 0, top: 0 });
         }
     }, []);
 

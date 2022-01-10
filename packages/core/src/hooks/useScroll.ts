@@ -10,6 +10,12 @@ import * as React from 'react';
 
 import { useIsomorphicLayoutEffect } from './useIsomorphicLayoutEffect';
 import { ScrollMode } from '../structs/ScrollMode';
+import type { Offset } from '../types/Offset';
+
+const ZERO_OFFSET: Offset = {
+    left: 0,
+    top: 0,
+};
 
 export const useScroll = ({
     elementRef,
@@ -20,10 +26,10 @@ export const useScroll = ({
     isRtl: boolean;
     scrollMode: ScrollMode;
 }): {
-    scrollOffset: number;
-    scrollTo: (offset: number) => void;
+    scrollOffset: Offset;
+    scrollTo: (offset: Offset) => void;
 } => {
-    const [scrollOffset, setScrollOffset] = React.useState(0);
+    const [scrollOffset, setScrollOffset] = React.useState(ZERO_OFFSET);
     const [element, setElement] = React.useState(elementRef.current);
     const factor = isRtl ? -1 : 1;
 
@@ -39,11 +45,17 @@ export const useScroll = ({
         const handleScroll = () => {
             switch (scrollMode) {
                 case ScrollMode.Horizontal:
-                    setScrollOffset(factor * element.scrollLeft);
+                    setScrollOffset({
+                        left: factor * element.scrollLeft,
+                        top: 0,
+                    });
                     break;
                 case ScrollMode.Vertical:
                 default:
-                    setScrollOffset(element.scrollTop);
+                    setScrollOffset({
+                        left: 0,
+                        top: element.scrollTop,
+                    });
                     break;
             }
         };
@@ -57,16 +69,16 @@ export const useScroll = ({
     }, [element, scrollMode]);
 
     const scrollTo = React.useCallback(
-        (offset: number) => {
+        (offset: Offset) => {
             const ele = elementRef.current;
             if (ele) {
                 switch (scrollMode) {
                     case ScrollMode.Horizontal:
-                        ele.scrollLeft = factor * offset;
+                        ele.scrollLeft = factor * offset.left;
                         break;
                     case ScrollMode.Vertical:
                     default:
-                        ele.scrollTop = offset;
+                        ele.scrollTop = offset.top;
                         break;
                 }
             }

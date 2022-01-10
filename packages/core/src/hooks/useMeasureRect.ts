@@ -9,23 +9,19 @@
 import * as React from 'react';
 
 import { useIsomorphicLayoutEffect } from './useIsomorphicLayoutEffect';
-
-export interface Size {
-    height: number;
-    width: number;
-}
+import type { Rect } from '../types/Rect';
 
 const rectReducer = (
-    state: Size,
+    state: Rect,
     action: {
-        rect: Size;
+        rect: Rect;
     }
 ) => {
     const rect = action.rect;
     return state.height !== rect.height || state.width !== rect.width ? rect : state;
 };
 
-export const useMeasureRect = ({ elementRef }: { elementRef: React.MutableRefObject<HTMLDivElement> }): Size => {
+export const useMeasureRect = ({ elementRef }: { elementRef: React.MutableRefObject<HTMLDivElement> }): Rect => {
     const [element, setElement] = React.useState(elementRef.current);
     const initializedRectRef = React.useRef(false);
     const [rect, dispatch] = React.useReducer(rectReducer, { height: 0, width: 0 });
@@ -39,7 +35,10 @@ export const useMeasureRect = ({ elementRef }: { elementRef: React.MutableRefObj
     useIsomorphicLayoutEffect(() => {
         if (element && !initializedRectRef.current) {
             initializedRectRef.current = true;
-            dispatch({ rect: element.getBoundingClientRect() });
+            const { height, width } = element.getBoundingClientRect();
+            dispatch({
+                rect: { height, width },
+            });
         }
     }, [element]);
 
@@ -50,7 +49,10 @@ export const useMeasureRect = ({ elementRef }: { elementRef: React.MutableRefObj
         const tracker = new ResizeObserver((entries: ResizeObserverEntry[], __: ResizeObserver) => {
             entries.forEach((entry) => {
                 if (entry.target === element) {
-                    dispatch({ rect: entry.contentRect });
+                    const { height, width } = entry.contentRect;
+                    dispatch({
+                        rect: { height, width },
+                    });
                 }
             });
         });

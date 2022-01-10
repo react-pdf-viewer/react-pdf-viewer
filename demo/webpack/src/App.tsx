@@ -11,9 +11,9 @@ const App = () => {
             fullScreenPlugin: {
                 onEnterFullScreen: (zoom) => {
                     zoom(SpecialZoomLevel.PageFit);
-                    // defaultLayoutPluginInstance.toolbarPluginInstance.scrollModePluginInstance.switchScrollMode(
-                    //     ScrollMode.Wrapped
-                    // );
+                    defaultLayoutPluginInstance.toolbarPluginInstance.scrollModePluginInstance.switchScrollMode(
+                        ScrollMode.Wrapped
+                    );
                 },
                 onExitFullScreen: (zoom) => {
                     zoom(SpecialZoomLevel.PageWidth);
@@ -31,7 +31,12 @@ const App = () => {
                 height: '50rem',
             }}
         >
-            <Viewer fileUrl="/pdf-open-parameters.pdf" plugins={[defaultLayoutPluginInstance]} />
+            <Viewer
+                fileUrl="/pdf-open-parameters.pdf"
+                defaultScale={0.75}
+                plugins={[defaultLayoutPluginInstance]}
+                scrollMode={ScrollMode.Wrapped}
+            />
         </div>
     );
 };
