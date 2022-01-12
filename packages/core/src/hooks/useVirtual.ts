@@ -41,6 +41,7 @@ const calculateRange = (
 ): {
     start: number;
     end: number;
+    maxVisbilityIndex: number;
     visibilities: Record<string, number>;
 } => {
     let currentOffset = 0;
@@ -66,19 +67,27 @@ const calculateRange = (
                 return measurements[index].start.top;
         }
     };
-    
+
     let start = findNearest(0, size, currentOffset, getOffset);
     if (scrollMode === ScrollMode.Wrapped) {
         // Find the first item in the same row which has the same `top` value
         // and the `left` value is greater than `scrollOffset.left`
         const startTop = measurements[start].start.top;
-        while (start - 1 >= 0 && measurements[start - 1].start.top === startTop && measurements[start - 1].start.left >= scrollOffset.left) {
+        while (
+            start - 1 >= 0 &&
+            measurements[start - 1].start.top === startTop &&
+            measurements[start - 1].start.left >= scrollOffset.left
+        ) {
             start--;
         }
     }
 
-    let end = start;
-    while (end < size) {
+    let end = start;    
+    // The visiblities of each item
+    const visibilities: Record<string, number> = {};
+    let maxVisbilityIndex = start;
+    let maxVisbility = -1;
+    while (end <= size) {
         const itemRect = measurements[end].size;
         const visibility = {
             width: 0,
@@ -87,133 +96,161 @@ const calculateRange = (
         const topLeftCorner = {
             top: measurements[end].start.top - scrollOffset.top,
             left: measurements[end].start.left - scrollOffset.left,
-        };  
-        const visibleSize = {                
+        };
+        const visibleSize = {
             height: outerSize.height - topLeftCorner.top,
             width: outerSize.width - topLeftCorner.left,
         };
 
-        // ┌────────────────────────┐─ ─ ─ ─ ─
-        // |                        |
-        // |                        |
-        // |      Container         |   (1)
-        // |                        |
-        // |                        |
-        // |                        |
-        // └────────────────────────┘─ ─ ─ ─ ─
-        // |                        |           
-        // |           (2)          |   (3)
-        // |                        |
+        //          |                        |
+        //    (8)   |           (1)          |   (2)
+        //          |                        |
+        // ─ ─ ─ ─ ─┼────────────────────────┼─ ─ ─ ─ ─
+        //          |                        |
+        //          |                        |
+        //    (7)   |      Container         |   (3)
+        //          |                        |
+        //          |                        |
+        //          |                        |
+        // ─ ─ ─ ─ ─┼────────────────────────┼─ ─ ─ ─ ─
+        //          |                        |
+        //    (6)   |           (5)          |   (4)
+        //          |                        |
         if (scrollMode === ScrollMode.Horizontal && visibleSize.width <= 0) {
-            // The top left corner belongs to the (1) or (3) areas
+            // The top left corner belongs to the (2, 3, 4) areas
             break;
         }
         if (scrollMode === ScrollMode.Vertical && visibleSize.height <= 0) {
-            // The top left corner belongs to the (2) area
+            // The top left corner belongs to the (4, 5) areas
             break;
         }
         if (scrollMode === ScrollMode.Wrapped && (visibleSize.width <= 0 || visibleSize.height <= 0)) {
+            // The top left corner belongs to the (2, 3, 4, 5) areas
             break;
-        }        
+        }
 
-        // The top left corner now belongs to the container
         // Calculate the width that is visible within the container
-        // There are two cases:  
-        // - The top right corner is inside of the container
-        // ┌────────────────────────┐
-        // |   (top, left)          |
-        // |        ●─ ─ ─ ─ ─●     |   visibility.width = 1
-        // |           (top, right) |
-        // |                        |
-        // |                        |
-        // └────────────────────────┘
-        // - The top right corner is outside of the container
-        // ┌────────────────────────┐
-        // |   (top, left)          |       (top, right)
-        // |        ●─ ─ ─ ─ ─ ─ ─ ─┼─ ─ ─ ─ ─ ─●
-        // |                        |
-        // |                        |   visibility.width = visibleSize.width / itemRect.width;
-        // |                        |
-        // └────────────────────────┘
-        const visibilityWidth = itemRect.width <= visibleSize.width ? 1 : visibleSize.width / itemRect.width;
-        
-        // Calculate the height that is visible within the container
-        // - The bottom left corner is inside of the container
-        // ┌────────────────────────┐
-        // |   (top, left)          |
-        // |        ●               |
-        // |        |               |   visibility.height = 1;
-        // |        |               |
-        // |        ● (bottom, left)|
-        // └────────────────────────┘
-        // - The bottom left corner is outside of the container
-        // ┌────────────────────────┐
-        // |   (top, left)          |
-        // |        ●               |
-        // |        |               |   visibility.height = visibleSize.height / itemRect.height;
-        // |        |               |
-        // |        |               |
-        // └────────┼───────────────┘
-        //          |
-        //          ● (bottom, left)
-        const visibilityHeight = itemRect.height <= visibleSize.height ? 1 : visibleSize.height / itemRect.height;
+        // We don't care it in the vertical scroll mode
+        if (scrollMode === ScrollMode.Vertical) {
+            visibility.width = 1;
+        } else if (topLeftCorner.left < 0) {
+            // The top left corner belongs to the (1) area
+            // 1) The top right corner is inside of the container
+            // |   (top, left)          |
+            // |        ●─ ─ ─ ─ ─●     |   visibility.width = 1
+            // |           (top, right) |
+            // |                        |
+            // ┌────────────────────────┐
+            // |                        |
+            // |                        |
+            // |                        |
+            // |                        |
+            // |                        |
+            // └────────────────────────┘            
 
-        console.log({end, visibilityWidth, visibilityHeight});
+            // 2) The top right corner is outside of the container
+            // |   (top, left)          |       (top, right)
+            // |        ●─ ─ ─ ─ ─ ─ ─ ─┼─ ─ ─ ─ ─ ─●
+            // |                        |
+            // ┌────────────────────────┐
+            // |                        |
+            // |                        |
+            // |                        |
+            // |                        |
+            // |                        |
+            // └────────────────────────┘
+            const visibleWidth = itemRect.width - -topLeftCorner.left;
+            visibility.width = visibleWidth <= outerSize.width ? visibleWidth / outerSize.width : 1;
+        } else {
+            // The top left corner is inside of the container
+            // 1) The top right corner is inside of the container
+            // ┌────────────────────────┐
+            // |   (top, left)          |
+            // |        ●─ ─ ─ ─ ─●     |   visibility.width = 1
+            // |           (top, right) |
+            // |                        |
+            // |                        |
+            // └────────────────────────┘
+
+            // 2) The top right corner is outside of the container
+            // ┌────────────────────────┐
+            // |   (top, left)          |       (top, right)
+            // |        ●─ ─ ─ ─ ─ ─ ─ ─┼─ ─ ─ ─ ─ ─●
+            // |                        |
+            // |                        |   visibility.width = visibleSize.width / itemRect.width;
+            // |                        |
+            // └────────────────────────┘
+            visibility.width = itemRect.width <= visibleSize.width ? 1 : visibleSize.width / itemRect.width;
+        }
+
+        // Calculate the height that is visible within the container
+        // There are four cases
+        if (scrollMode === ScrollMode.Horizontal) {
+            visibility.height = 1;
+        } else if (topLeftCorner.top < 0) {
+            // The top left corner belongs to the (1) area
+            // 1) The bottom left corner is inside of the container
+            // |   (top, left)          |
+            // |        ●               |
+            // |        |               |
+            // ┌────────┼───────────────┐   visibility.height = visibleHeight / outerSize.height;
+            // |        |               |
+            // |        |               |
+            // |        ● (bottom, left)|
+            // |                        |
+            // └────────────────────────┘
+
+            // 2) The bottom left corner is outside of the container
+            // |   (top, left)          |
+            // |        ●               |
+            // |        |               |
+            // ┌────────┼───────────────┐
+            // |        |               |   visibility.height = 1;
+            // |        |               |
+            // |        |               |
+            // |        |               |
+            // └────────┼───────────────┘
+            // |        |               |
+            // |        ● (bottom, left)|
+            const visibleHeight = itemRect.height - -topLeftCorner.top;
+            visibility.height = visibleHeight <= outerSize.height ? visibleHeight / outerSize.height : 1;
+        } else {
+            // The top left corner is inside of the container
+            // 1) The bottom left corner is inside of the container
+            // ┌────────────────────────┐
+            // |   (top, left)          |
+            // |        ●               |
+            // |        |               |   visibility.height = 1;
+            // |        |               |
+            // |        ● (bottom, left)|
+            // └────────────────────────┘
+
+            // 2) The bottom left corner is outside of the container
+            // ┌────────────────────────┐
+            // |   (top, left)          |
+            // |        ●               |
+            // |        |               |   visibility.height = visibleSize.height / itemRect.height;
+            // |        |               |
+            // |        |               |
+            // └────────┼───────────────┘
+            //          |
+            //          ● (bottom, left)
+            visibility.height = itemRect.height <= visibleSize.height ? 1 : visibleSize.height / itemRect.height;
+        }
+
+        visibilities[end] = visibility.width * visibility.height;
+        if (maxVisbility < visibilities[end]) {
+            maxVisbility = visibilities[end];
+            maxVisbilityIndex = end;
+        }
         end++;
     }
-    
-    // let end = start;
-    // // The visiblities of each item
-    // const visibilities: Record<string, number> = {};
-    // let visibleSize: Rect = ZERO_RECT;
-    // let lastVisibilityRect: Rect = ZERO_RECT;
-    // let lastVisibility = 0;
-
-    // while (end < size) {
-    //     let allVisibleSize = {
-    //         height: measurements[end].end.top - scrollOffset.top,
-    //         width: measurements[end].end.left - scrollOffset.left,
-    //     };
-    //     lastVisibilityRect = {
-    //         height: outerSize.height - allVisibleSize.height,
-    //         width: outerSize.width - allVisibleSize.width,
-    //     };
-    //     if (scrollMode === ScrollMode.Horizontal && lastVisibilityRect.width <= 0) {
-    //         visibilities[end] = allVisibleSize.width - visibleSize.width;
-    //         lastVisibility = visibilities[end];
-    //         visibleSize = allVisibleSize;
-    //         break;
-    //     }
-    //     if (scrollMode === ScrollMode.Vertical && lastVisibilityRect.height <= 0) {
-    //         visibilities[end] = allVisibleSize.height - visibleSize.height;
-    //         lastVisibility = visibilities[end];
-    //         visibleSize = allVisibleSize;
-    //         break;
-    //     }
-    //     if (scrollMode === ScrollMode.Wrapped && lastVisibilityRect.height <= 0) {
-    //         visibilities[end] = allVisibleSize.height - visibleSize.height;
-    //         visibleSize = allVisibleSize;
-    //         lastVisibility = visibilities[end];
-           
-    //         // Find the last item in the same row which has the same `top` value
-    //         const top = measurements[end].start.top;
-    //         const visibility = visibilities[end];
-
-    //         while (end < size && measurements[end + 1].start.top === top) {
-    //             end++;
-    //             visibilities[end] = visibility;
-    //         }
-    //         break;
-    //     }        
-    //     end++;
-    // }
-    // visibilities[end] = lastVisibility;
-    // console.log({start, end, visibilities})
 
     return {
         start,
-        end: size,
-        visibilities: {},
+        end,
+        maxVisbilityIndex,
+        visibilities,
     };
 };
 
@@ -234,6 +271,7 @@ export const useVirtual = ({
 }): {
     startIndex: number;
     endIndex: number;
+    maxVisbilityIndex: number;
     getContainerStyles: () => React.CSSProperties;
     getItemStyles: (item: ItemMeasurement) => React.CSSProperties;
     scrollToItem: (index: number, offset: Offset) => void;
@@ -264,7 +302,7 @@ export const useVirtual = ({
         let firstOfRow = {
             height: 0,
             left: 0,
-            top: 0,            
+            top: 0,
         };
         for (let i = 0; i < numberOfItems; i++) {
             const size = estimateSize(i);
@@ -313,7 +351,7 @@ export const useVirtual = ({
                 left: start.left + size.width,
                 top: start.top + size.height,
             };
-            
+
             measurements[i] = {
                 index: i,
                 start,
@@ -325,14 +363,16 @@ export const useVirtual = ({
         return measurements;
     }, [estimateSize, scrollMode, parentRect]);
 
-    const totalSize = measurements[numberOfItems - 1] ? {
-        height: measurements[numberOfItems - 1].end.top,
-        width: measurements[numberOfItems - 1].end.left,
-    } : ZERO_RECT;
+    const totalSize = measurements[numberOfItems - 1]
+        ? {
+              height: measurements[numberOfItems - 1].end.top,
+              width: measurements[numberOfItems - 1].end.left,
+          }
+        : ZERO_RECT;
     latestRef.current.measurements = measurements;
     latestRef.current.totalSize = totalSize;
 
-    const { visibilities, start, end } = calculateRange(
+    const { maxVisbilityIndex, visibilities, start, end } = calculateRange(
         scrollMode,
         latestRef.current.measurements,
         latestRef.current.parentRect,
@@ -428,6 +468,7 @@ export const useVirtual = ({
     return {
         startIndex: startRange,
         endIndex: endRange,
+        maxVisbilityIndex,
         getContainerStyles,
         getItemStyles,
         scrollToItem,

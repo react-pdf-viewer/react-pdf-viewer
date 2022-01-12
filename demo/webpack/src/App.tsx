@@ -18,7 +18,7 @@ const App = () => {
                 onExitFullScreen: (zoom) => {
                     zoom(SpecialZoomLevel.PageWidth);
                     defaultLayoutPluginInstance.toolbarPluginInstance.scrollModePluginInstance.switchScrollMode(
-                        ScrollMode.Horizontal
+                        ScrollMode.Vertical
                     );
                 },
             },
