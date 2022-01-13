@@ -409,6 +409,7 @@ export const Inner: React.FC<{
                         'rpv-core__inner-pages--horizontal': currentScrollMode === ScrollMode.Horizontal,
                         'rpv-core__inner-pages--rtl': isRtl,
                         'rpv-core__inner-pages--vertical': currentScrollMode === ScrollMode.Vertical,
+                        'rpv-core__inner-pages--wrapped': currentScrollMode === ScrollMode.Wrapped,
                     }),
                     ref: pagesRef,
                     style: {
