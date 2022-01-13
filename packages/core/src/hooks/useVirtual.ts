@@ -82,7 +82,7 @@ const calculateRange = (
         }
     }
 
-    let end = start;    
+    let end = start;
     // The visiblities of each item
     const visibilities: Record<string, number> = {};
     let maxVisbilityIndex = start;
@@ -146,7 +146,7 @@ const calculateRange = (
             // |                        |
             // |                        |
             // |                        |
-            // └────────────────────────┘            
+            // └────────────────────────┘
 
             // 2) The top right corner is outside of the container
             // |   (top, left)          |       (top, right)

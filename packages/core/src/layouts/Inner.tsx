@@ -19,7 +19,6 @@ import { TextDirection, ThemeContext } from '../theme/ThemeContext';
 import { classNames } from '../utils/classNames';
 import { clearPagesCache, getPage } from '../utils/managePages';
 import { getFileExt } from '../utils/getFileExt';
-import { maxByKey } from '../utils/maxByKey';
 import { calculateScale } from './calculateScale';
 import type { PageSize } from '../types/PageSize';
 import type { DocumentLoadEvent } from '../types/DocumentLoadEvent';
@@ -87,10 +86,6 @@ export const Inner: React.FC<{
         () => renderQueueService({ doc, queueName: 'core-pages', priority: 0 }),
         [docId]
     );
-    const maxVisibilityPageRef = React.useRef({
-        pageIndex: -1,
-        visibility: -1,
-    });
 
     const estimateSize = React.useCallback(() => {
         const sizes = [pageSize.pageHeight, pageSize.pageWidth];
@@ -120,8 +115,9 @@ export const Inner: React.FC<{
     });
 
     React.useEffect(() => {
+        const { startIndex, endIndex, maxVisbilityIndex, virtualItems } = virtualizer;
         // The current page is the page which has the biggest visibility
-        const currentPage = maxByKey(virtualizer.virtualItems, 'visibility').index;
+        const currentPage = maxVisbilityIndex;
         setCurrentPage(currentPage);
         onPageChange({ currentPage, doc });
         setViewerState({
@@ -134,9 +130,7 @@ export const Inner: React.FC<{
             scrollMode: currentScrollMode,
         });
 
-        const { startIndex, endIndex, virtualItems } = virtualizer;
         renderQueueInstance.setRange(startIndex, endIndex);
-
         for (let i = startIndex; i <= endIndex; i++) {
             const item = virtualItems.find((item) => item.index === i);
             if (item) {
@@ -145,7 +139,7 @@ export const Inner: React.FC<{
         }
 
         renderNextPage();
-    }, [virtualizer.virtualItems]);
+    }, [virtualizer.startIndex, virtualizer.endIndex, virtualizer.maxVisbilityIndex, rotation, scale]);
 
     const handlePagesResize = (target: Element) => {
         if (keepSpecialZoomLevelRef.current) {
