@@ -19,7 +19,6 @@ import { TextDirection, ThemeContext } from '../theme/ThemeContext';
 import { classNames } from '../utils/classNames';
 import { clearPagesCache, getPage } from '../utils/managePages';
 import { getFileExt } from '../utils/getFileExt';
-import { maxByKey } from '../utils/maxByKey';
 import { calculateScale } from './calculateScale';
 import type { PageSize } from '../types/PageSize';
 import type { DocumentLoadEvent } from '../types/DocumentLoadEvent';
@@ -28,6 +27,7 @@ import type { PageChangeEvent } from '../types/PageChangeEvent';
 import type { PdfJs } from '../types/PdfJs';
 import type { Plugin } from '../types/Plugin';
 import type { DestinationOffsetFromViewport, PluginFunctions } from '../types/PluginFunctions';
+import type { Rect } from '../types/Rect';
 import type { RenderPage } from '../types/RenderPage';
 import type { Slot } from '../types/Slot';
 import type { ViewerState } from '../types/ViewerState';
@@ -88,18 +88,23 @@ export const Inner: React.FC<{
     );
 
     const estimateSize = React.useCallback(() => {
-        let sizes = [pageSize.pageHeight, pageSize.pageWidth];
-        switch (currentScrollMode) {
-            case ScrollMode.Horizontal:
-                sizes = [pageSize.pageWidth, pageSize.pageHeight];
-                break;
-            case ScrollMode.Vertical:
-            default:
-                sizes = [pageSize.pageHeight, pageSize.pageWidth];
-                break;
-        }
-        return (Math.abs(rotation) % 180 === 0 ? sizes[0] * scale : sizes[1] * scale) + PAGE_PADDING;
-    }, [rotation, scale, currentScrollMode]);
+        const sizes = [pageSize.pageHeight, pageSize.pageWidth];
+        const rect: Rect =
+            Math.abs(rotation) % 180 === 0
+                ? {
+                      height: sizes[0],
+                      width: sizes[1],
+                  }
+                : {
+                      height: sizes[1],
+                      width: sizes[0],
+                  };
+        return {
+            height: rect.height * scale + PAGE_PADDING,
+            width: rect.width * scale + PAGE_PADDING,
+        };
+    }, [rotation, scale]);
+
     const virtualizer = useVirtual({
         estimateSize,
         isRtl,
@@ -110,8 +115,9 @@ export const Inner: React.FC<{
     });
 
     React.useEffect(() => {
+        const { startIndex, endIndex, maxVisbilityIndex, virtualItems } = virtualizer;
         // The current page is the page which has the biggest visibility
-        const currentPage = maxByKey(virtualizer.virtualItems, 'visibility').index;
+        const currentPage = maxVisbilityIndex;
         setCurrentPage(currentPage);
         onPageChange({ currentPage, doc });
         setViewerState({
@@ -124,9 +130,7 @@ export const Inner: React.FC<{
             scrollMode: currentScrollMode,
         });
 
-        const { startIndex, endIndex, virtualItems } = virtualizer;
         renderQueueInstance.setRange(startIndex, endIndex);
-
         for (let i = startIndex; i <= endIndex; i++) {
             const item = virtualItems.find((item) => item.index === i);
             if (item) {
@@ -135,7 +139,7 @@ export const Inner: React.FC<{
         }
 
         renderNextPage();
-    }, [virtualizer.virtualItems]);
+    }, [virtualizer.startIndex, virtualizer.endIndex, virtualizer.maxVisbilityIndex, rotation, scale]);
 
     const handlePagesResize = (target: Element) => {
         if (keepSpecialZoomLevelRef.current) {
@@ -213,11 +217,11 @@ export const Inner: React.FC<{
 
                 switch (currentScrollMode) {
                     case ScrollMode.Horizontal:
-                        virtualizer.scrollToItem(pageIndex, left);
+                        virtualizer.scrollToItem(pageIndex, { left, top: 0 });
                         break;
                     case ScrollMode.Vertical:
                     default:
-                        virtualizer.scrollToItem(pageIndex, top);
+                        virtualizer.scrollToItem(pageIndex, { left: 0, top });
                         break;
                 }
             });
@@ -227,7 +231,7 @@ export const Inner: React.FC<{
 
     const jumpToPage = React.useCallback((pageIndex: number) => {
         if (0 <= pageIndex && pageIndex < numPages) {
-            virtualizer.scrollToItem(pageIndex, 0);
+            virtualizer.scrollToItem(pageIndex, { left: 0, top: 0 });
         }
     }, []);
 
@@ -405,6 +409,7 @@ export const Inner: React.FC<{
                         'rpv-core__inner-pages--horizontal': currentScrollMode === ScrollMode.Horizontal,
                         'rpv-core__inner-pages--rtl': isRtl,
                         'rpv-core__inner-pages--vertical': currentScrollMode === ScrollMode.Vertical,
+                        'rpv-core__inner-pages--wrapped': currentScrollMode === ScrollMode.Wrapped,
                     }),
                     ref: pagesRef,
                     style: {

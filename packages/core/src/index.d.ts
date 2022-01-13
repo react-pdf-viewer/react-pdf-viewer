@@ -186,6 +186,7 @@ export enum Position {
 export enum ScrollMode {
     Horizontal = 'Horizontal',
     Vertical = 'Vertical',
+    Wrapped = 'Wrapped',
 }
 
 export enum SpecialZoomLevel {
