@@ -198,7 +198,7 @@ export const Viewer: React.FC<{
                                             scrollMode={scrollMode}
                                             viewerState={{
                                                 file,
-                                                pageIndex: initialPage,
+                                                pageIndex: -1,
                                                 pageHeight: ps.pageHeight,
                                                 pageWidth: ps.pageWidth,
                                                 rotation: 0,
