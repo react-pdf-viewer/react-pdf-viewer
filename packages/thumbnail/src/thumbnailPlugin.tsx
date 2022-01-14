@@ -36,6 +36,7 @@ export interface ThumbnailPluginProps {
 
 export const thumbnailPlugin = (pluginProps?: ThumbnailPluginProps): ThumbnailPlugin => {
     const store = React.useMemo(() => createStore<StoreProps>({}), []);
+    const [docId, setDocId] = React.useState('');
 
     const CoverDecorator = (props: CoverProps) => (
         <Cover {...props} renderSpinner={pluginProps?.renderSpinner} store={store} />
@@ -51,7 +52,7 @@ export const thumbnailPlugin = (pluginProps?: ThumbnailPluginProps): ThumbnailPl
                 />
             </SpinnerContext.Provider>
         ),
-        []
+        [docId]
     );
 
     return {
@@ -59,6 +60,7 @@ export const thumbnailPlugin = (pluginProps?: ThumbnailPluginProps): ThumbnailPl
             store.update('jumpToPage', pluginFunctions.jumpToPage);
         },
         onDocumentLoad: (props: PluginOnDocumentLoad) => {
+            setDocId(props.doc.loadingTask.docId);
             store.update('doc', props.doc);
         },
         onViewerStateChange: (viewerState: ViewerState) => {
