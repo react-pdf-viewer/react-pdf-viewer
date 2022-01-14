@@ -31,10 +31,8 @@ export const CoverInner: React.FC<{
             const w = viewport.width;
             const h = viewport.height;
 
-            const canvas = document.createElement('canvas') as HTMLCanvasElement;
-            const canvasContext = canvas.getContext('2d', {
-                alpha: false,
-            }) as CanvasRenderingContext2D;
+            const canvas = document.createElement('canvas');
+            const canvasContext = canvas.getContext('2d', { alpha: false });
 
             const containerWidth = containerEle.clientWidth;
             const containerHeight = containerEle.clientHeight;
