@@ -10,7 +10,7 @@ test('Jump between internal links', async () => {
     const pagesContainer = await page.waitForSelector('[data-testid="core__inner-pages"]');
 
     const jumpToTableOfContents = async () => {
-        await pagesContainer.evaluate((ele) => (ele.scrollTop = 2408), pagesContainer);
+        await pagesContainer.evaluate((ele) => (ele.scrollTop = 2416), pagesContainer);
         // Wait until the page is rendered
         return await page.waitForSelector('[data-testid="core__text-layer-2"]', { visible: true });
     };
@@ -19,7 +19,7 @@ test('Jump between internal links', async () => {
     await jumpToTableOfContents();
 
     // Click the `Preface` link
-    let link = await page.waitForSelector('[data-annotation-id="31R"] a');
+    let link = await page.waitForSelector('[data-annotation-id="31R"]');
     await link.click();
 
     await page.waitForSelector('[data-testid="core__text-layer-3"]', { visible: true });
@@ -28,7 +28,7 @@ test('Jump between internal links', async () => {
 
     // Click the `Who should read this guide` link
     await jumpToTableOfContents();
-    link = await page.waitForSelector('[data-annotation-id="37R"] a');
+    link = await page.waitForSelector('[data-annotation-id="37R"]', { visible: true });
     await link.click();
 
     await page.waitForSelector('[data-testid="core__text-layer-3"]', { visible: true });
@@ -37,7 +37,7 @@ test('Jump between internal links', async () => {
 
     // Click the `Related documentation` link
     await jumpToTableOfContents();
-    link = await page.waitForSelector('[data-annotation-id="38R"] a');
+    link = await page.waitForSelector('[data-annotation-id="38R"]', { visible: true });
     await link.click();
 
     await page.waitForSelector('[data-testid="core__text-layer-3"]', { visible: true });
@@ -46,7 +46,7 @@ test('Jump between internal links', async () => {
 
     // Click the `Parameters for Opening PDF Files` link
     await jumpToTableOfContents();
-    link = await page.waitForSelector('[data-annotation-id="39R"] a');
+    link = await page.waitForSelector('[data-annotation-id="39R"]', { visible: true });
     await link.click();
 
     await page.waitForSelector('[data-testid="core__text-layer-4"]', { visible: true });
@@ -55,7 +55,7 @@ test('Jump between internal links', async () => {
 
     // Click the `Parameters` link
     await jumpToTableOfContents();
-    link = await page.waitForSelector('[data-annotation-id="34R"] a');
+    link = await page.waitForSelector('[data-annotation-id="34R"]', { visible: true });
     await link.click();
 
     await page.waitForSelector('[data-testid="core__text-layer-4"]', { visible: true });
@@ -64,7 +64,7 @@ test('Jump between internal links', async () => {
 
     // Click the `Specifying parameters in a URL` link
     await jumpToTableOfContents();
-    link = await page.waitForSelector('[data-annotation-id="35R"] a');
+    link = await page.waitForSelector('[data-annotation-id="35R"]', { visible: true });
     await link.click();
 
     await page.waitForSelector('[data-testid="core__text-layer-6"]', { visible: true });
@@ -73,7 +73,7 @@ test('Jump between internal links', async () => {
 
     // Click the `URL examples` link
     await jumpToTableOfContents();
-    link = await page.waitForSelector('[data-annotation-id="36R"] a');
+    link = await page.waitForSelector('[data-annotation-id="36R"]', { visible: true });
     await link.click();
 
     await page.waitForSelector('[data-testid="core__text-layer-7"]', { visible: true });
@@ -82,7 +82,7 @@ test('Jump between internal links', async () => {
 
     // Click the `URL limitations` link
     await jumpToTableOfContents();
-    link = await page.waitForSelector('[data-annotation-id="33R"] a');
+    link = await page.waitForSelector('[data-annotation-id="33R"]', { visible: true });
     await link.click();
 
     await page.waitForSelector('[data-testid="core__text-layer-7"]', { visible: true });
