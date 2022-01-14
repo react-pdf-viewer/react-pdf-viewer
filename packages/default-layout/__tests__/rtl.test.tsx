@@ -11,7 +11,7 @@ const TestRtl: React.FC<{
     const defaultLayoutPluginInstance = defaultLayoutPlugin();
 
     return (
-        <div style={{ height: '720px', width: '720px' }}>
+        <div style={{ height: '50rem', width: '50rem' }}>
             <Viewer
                 fileUrl={fileUrl}
                 theme={{
@@ -39,5 +39,5 @@ test('Support RTL', async () => {
     expect(sidebar).toHaveClass('rpv-default-layout__sidebar--rtl');
 
     const body = await findByTestId('core__inner-pages');
-    expect(body).toHaveClass('rpv-scroll-mode--rtl');
+    expect(body).toHaveClass('rpv-core__inner-pages--rtl');
 });
