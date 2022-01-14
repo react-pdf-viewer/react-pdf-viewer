@@ -2,13 +2,13 @@ import 'expect-puppeteer';
 
 test('Click bookmarks', async () => {
     await page.goto('http://localhost:3000/bookmark');
-    await page.evaluate(() => document.querySelector('[data-testid="core__viewer"]').scrollIntoView());
+    await page.evaluate(() => document.querySelector('[data-testid="root"]').scrollIntoView());
 
     // Wait until the bookmark list is rendered
     await page.waitForSelector('[data-testid="bookmark__container"]');
 
     // Wait until the first page is rendered
-    await page.waitForSelector('[data-testid="core__page-layer-0"]', { visible: true });
+    await page.waitForSelector('[data-testid="core__text-layer-0"]', { visible: true });
 
     const pagesContainer = await page.waitForSelector('[data-testid="core__inner-pages"]');
 
