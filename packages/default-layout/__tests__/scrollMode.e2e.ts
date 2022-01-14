@@ -28,7 +28,7 @@ describe('Scroll modes', () => {
         const link = await page.waitForSelector('[data-annotation-id="35R"]', { visible: true });
         await link.click();
 
-        await page.waitForSelector('[data-testid="core__page-layer-6"]', { visible: true });
+        await page.waitForSelector('[data-testid="core__text-layer-6"]', { visible: true });
         const scrollLeft = await pagesContainer.evaluate((ele) => ele.scrollLeft);
         expect(scrollLeft).toEqual(5496);
 
@@ -43,7 +43,7 @@ describe('Scroll modes', () => {
         await page.evaluate(() => document.querySelector('[data-testid="core__viewer"]').scrollIntoView());
 
         // Wait until the first page is rendered
-        await page.waitForSelector('[data-testid="core__page-layer-0"]', { visible: true });
+        await page.waitForSelector('[data-testid="core__text-layer-0"]', { visible: true });
 
         // Zoom to 75%
         const zoomButton = await page.waitForSelector('[data-testid="zoom__popover-target"]');
@@ -79,7 +79,7 @@ describe('Scroll modes', () => {
         const link = await page.waitForSelector('[data-annotation-id="34R"]', { visible: true });
         await link.click();
 
-        await page.waitForSelector('[data-testid="core__page-layer-4"]', { visible: true });
+        await page.waitForSelector('[data-testid="core__text-layer-4"]', { visible: true });
         scrollTop = await pagesContainer.evaluate((ele) => ele.scrollTop);
         expect(scrollTop).toEqual(1520);
 
