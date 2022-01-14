@@ -119,7 +119,10 @@ export const Inner: React.FC<{
         // The current page is the page which has the biggest visibility
         const currentPage = maxVisbilityIndex;
         setCurrentPage(currentPage);
-        onPageChange({ currentPage, doc });
+        // Only trigger if the current page changes
+        if (stateRef.current.pageIndex !== currentPage) {
+            onPageChange({ currentPage, doc });
+        }
         setViewerState({
             file: viewerState.file,
             pageIndex: currentPage,

@@ -1,0 +1,34 @@
+import 'expect-puppeteer';
+
+test('Test the onPageChange() callback', async () => {
+    await page.goto('http://localhost:3000/core-onpagechange');
+    await page.evaluate(() => document.querySelector('[data-testid="core__viewer"]').scrollIntoView());
+
+    // Wait until the first page is rendered
+    await page.waitForSelector('[data-testid="core__page-layer-0"]', { visible: true });
+
+    let visitedPagesLabel = await page.waitForSelector('[data-testid="visited-pages"]');
+    let visitedPages = await visitedPagesLabel.evaluate((ele) => ele.textContent);
+    expect(visitedPages).toEqual('0');
+
+    // Scroll to the third page
+    await page.evaluate(() => document.querySelector('[data-testid="core__page-layer-2"]').scrollIntoView());
+    visitedPagesLabel = await page.waitForSelector('[data-testid="visited-pages"]');
+    visitedPages = await visitedPagesLabel.evaluate((ele) => ele.textContent);
+    expect(visitedPages).toEqual('0, 2');
+
+    // Click the `Specifying parameters in a URL` link
+    const link = await page.waitForSelector('[data-annotation-id="35R"]', { visible: true });
+    await link.click();
+
+    await page.waitForSelector('[data-testid="core__page-layer-6"]', { visible: true });
+    visitedPagesLabel = await page.waitForSelector('[data-testid="visited-pages"]');
+    visitedPages = await visitedPagesLabel.evaluate((ele) => ele.textContent);
+    expect(visitedPages).toEqual('0, 2, 6');
+
+    // Scroll to the last page
+    await page.evaluate(() => document.querySelector('[data-testid="core__page-layer-7"]').scrollIntoView());
+    visitedPagesLabel = await page.waitForSelector('[data-testid="visited-pages"]');
+    visitedPages = await visitedPagesLabel.evaluate((ele) => ele.textContent);
+    expect(visitedPages).toEqual('0, 2, 6, 7');
+});

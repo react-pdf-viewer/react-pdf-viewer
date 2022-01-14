@@ -19,6 +19,7 @@ import { ScrollMode, Viewer } from '@react-pdf-viewer/core';
 -   The `Cover` component has the same image source when loading different documents
 -   The default `Spinner` is used when using the `renderLoader` option
 -   The exit full screen button doesn't look good in dark theme
+-   The `onPageChange` event fires more than once
 -   The sidebar doesn't fit in its container on Safari
 -   There is a black area in the full screen mode if the zoom level is small enough
 
