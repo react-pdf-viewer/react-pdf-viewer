@@ -25,7 +25,6 @@ import type { RenderThumbnailItem } from './types/RenderThumbnailItemProps';
 export const ThumbnailList: React.FC<{
     currentPage: number;
     doc: PdfJs.PdfDocument;
-    labels: string[];
     pageHeight: number;
     pageWidth: number;
     renderCurrentPageLabel?: RenderCurrentPageLabel;
@@ -35,7 +34,6 @@ export const ThumbnailList: React.FC<{
 }> = ({
     currentPage,
     doc,
-    labels,
     pageHeight,
     pageWidth,
     renderCurrentPageLabel,
@@ -43,6 +41,7 @@ export const ThumbnailList: React.FC<{
     rotation,
     onJumpToPage,
 }) => {
+    const [labels, setLabels] = React.useState([]);
     const { numPages } = doc;
     const docId = doc.loadingTask.docId;
     const numLabels = labels.length;
@@ -58,6 +57,12 @@ export const ThumbnailList: React.FC<{
         () => renderQueueService({ doc, queueName: 'thumbnail-list', priority: 999 }),
         [docId]
     );
+
+    React.useEffect(() => {
+        doc.getPageLabels().then((result) => {
+            isMounted.current && setLabels(result || []);
+        });
+    }, [docId]);
 
     const handleKeyDown = (e: React.KeyboardEvent) => {
         switch (e.key) {

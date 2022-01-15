@@ -25,7 +25,8 @@ const TestPageLabel: React.FC<{
             style={{
                 border: '1px solid rgba(0, 0, 0, 0.3)',
                 display: 'flex',
-                height: '100%',
+                height: '50rem',
+                width: '50rem',
             }}
         >
             <div

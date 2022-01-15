@@ -7,11 +7,13 @@
  */
 
 import * as React from 'react';
-import type { Store } from '@react-pdf-viewer/core';
 
+import type { PdfJs, Store, StoreHandler } from '@react-pdf-viewer/core';
+
+import { FetchLabels } from './FetchLabels';
 import { useCurrentPage } from './useCurrentPage';
+import { useDocument } from './useDocument';
 import { useNumberOfPages } from './useNumberOfPages';
-import { usePageLabels } from './usePageLabels';
 import type { StoreProps } from './types/StoreProps';
 
 export interface RenderCurrentPageLabelProps {
@@ -30,17 +32,26 @@ export const CurrentPageLabel: React.FC<{
     children?: RenderCurrentPageLabel;
     store: Store<StoreProps>;
 }> = ({ children, store }) => {
-    const labels = usePageLabels(store);
+    const currentDoc = useDocument(store);
     const { currentPage } = useCurrentPage(store);
     const { numberOfPages } = useNumberOfPages(store);
 
     const defaultChildren = (props: RenderCurrentPageLabelProps) => <>{props.currentPage + 1}</>;
     const render = children || defaultChildren;
 
-    return render({
-        currentPage,
-        numberOfPages,
-        // Check the value of `numberOfPages` to make sure the document is loaded
-        pageLabel: labels.length === numberOfPages && numberOfPages > 0 ? labels[currentPage] : '',
-    });
+    return currentDoc ? (
+        <FetchLabels doc={currentDoc}>
+            {(labels) => {
+                // Check the value of `numberOfPages` to make sure the document is loaded
+                const pageLabel = labels.length === numberOfPages && numberOfPages > 0 ? labels[currentPage] : '';
+                return render({
+                    currentPage,
+                    numberOfPages,
+                    pageLabel,
+                });
+            }}
+        </FetchLabels>
+    ) : (
+        <></>
+    );
 };

@@ -12,7 +12,6 @@ import type { PdfJs, Store, StoreHandler } from '@react-pdf-viewer/core';
 
 import { SpinnerContext } from './SpinnerContext';
 import { ThumbnailList } from './ThumbnailList';
-import { usePageLabels } from './usePageLabels';
 import type { RenderCurrentPageLabel } from './types/RenderCurrentPageLabelProps';
 import type { RenderThumbnailItem } from './types/RenderThumbnailItemProps';
 import type { StoreProps } from './types/StoreProps';
@@ -22,7 +21,6 @@ export const ThumbnailListWithStore: React.FC<{
     renderThumbnailItem?: RenderThumbnailItem;
     store: Store<StoreProps>;
 }> = ({ renderCurrentPageLabel, renderThumbnailItem, store }) => {
-    const labels = usePageLabels(store);
     const [currentDoc, setCurrentDoc] = React.useState<PdfJs.PdfDocument>(store.get('doc'));
     const [currentPage, setCurrentPage] = React.useState(store.get('currentPage') || 0);
     const [pageHeight, setPageHeight] = React.useState(store.get('pageHeight') || 0);
@@ -82,7 +80,6 @@ export const ThumbnailListWithStore: React.FC<{
         <ThumbnailList
             currentPage={currentPage}
             doc={currentDoc}
-            labels={labels}
             pageHeight={pageHeight}
             pageWidth={pageWidth}
             renderCurrentPageLabel={renderCurrentPageLabel}

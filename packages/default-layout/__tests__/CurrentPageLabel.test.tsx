@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { fireEvent, render } from '@testing-library/react';
+import { fireEvent, render, waitForElementToBeRemoved } from '@testing-library/react';
 import { Viewer } from '@react-pdf-viewer/core';
 import type { ToolbarProps, ToolbarSlot, TransformToolbarSlot } from '@react-pdf-viewer/toolbar';
 
@@ -15,18 +15,21 @@ const TestCurrentPageLabel: React.FC<{
 }> = ({ fileUrl }) => {
     const transform: TransformToolbarSlot = (slot: ToolbarSlot) => {
         const { CurrentPageLabel } = slot;
-        return Object.assign({}, slot, {
+        return {
+            ...slot,
             NumberOfPages: () => (
                 <CurrentPageLabel>
                     {(props) => (
                         <span data-testid="current-page-label">
                             {props.numberOfPages}
-                            {props.pageLabel !== `${props.currentPage + 1}` && `(${props.pageLabel})`}
+                            {props.pageLabel &&
+                                props.pageLabel !== `${props.currentPage + 1}` &&
+                                `(${props.pageLabel})`}
                         </span>
                     )}
                 </CurrentPageLabel>
             ),
-        });
+        };
     };
 
     const renderToolbar = (Toolbar: (props: ToolbarProps) => React.ReactElement) => (
@@ -46,9 +49,7 @@ const TestCurrentPageLabel: React.FC<{
 };
 
 test('Test <CurrentPageLabel>', async () => {
-    const { findByTestId, getByTestId, rerender } = render(
-        <TestCurrentPageLabel fileUrl={global['__OPEN_PARAMS_PDF__']} />
-    );
+    const { findByTestId, getByTestId } = render(<TestCurrentPageLabel fileUrl={global['__OPEN_PARAMS_PDF__']} />);
 
     const viewerEle = getByTestId('core__viewer');
     mockIsIntersecting(viewerEle, true);
@@ -63,8 +64,8 @@ test('Test <CurrentPageLabel>', async () => {
     pagesContainer.getBoundingClientRect = jest.fn(() => ({
         x: 0,
         y: 0,
-        height: 800,
-        width: 800,
+        height: 758,
+        width: 753,
         top: 0,
         right: 0,
         bottom: 0,
@@ -75,11 +76,11 @@ test('Test <CurrentPageLabel>', async () => {
 
     fireEvent.scroll(pagesContainer, {
         target: {
-            scrollTop: 1774,
+            scrollTop: 1782,
         },
     });
 
-    await findByTestId('core__page-layer-3');
+    await findByTestId('core__text-layer-3');
     pageLabel = await findByTestId('current-page-label');
     expect(pageLabel.textContent).toEqual('8');
 });
@@ -88,26 +89,22 @@ test('Test <CurrentPageLabel> with custom page label', async () => {
     const pageLabelDocument = new Uint8Array(
         fs.readFileSync(path.resolve(__dirname, '../../../samples/ignore/page-labels.pdf'))
     );
-    const pageLabelDocument2 = new Uint8Array(
-        fs.readFileSync(path.resolve(__dirname, '../../../samples/ignore/page-labels-2.pdf'))
-    );
-    const { findByTestId, getByTestId, rerender } = render(<TestCurrentPageLabel fileUrl={pageLabelDocument} />);
+    const { findByTestId, getByTestId } = render(<TestCurrentPageLabel fileUrl={pageLabelDocument} />);
 
-    const viewerEle = getByTestId('core__viewer');
+    let viewerEle = getByTestId('core__viewer');
     mockIsIntersecting(viewerEle, true);
     viewerEle['__jsdomMockClientHeight'] = 800;
     viewerEle['__jsdomMockClientWidth'] = 800;
 
-    let pageLabel = await findByTestId('current-page-label');
-    expect(pageLabel.textContent).toEqual('4(i)');
+    // Wait until the document is loaded completely
+    await waitForElementToBeRemoved(() => getByTestId('core__doc-loading'));
 
-    // Jump to the third page
     let pagesContainer = getByTestId('core__inner-pages');
     pagesContainer.getBoundingClientRect = jest.fn(() => ({
         x: 0,
         y: 0,
-        height: 800,
-        width: 800,
+        height: 758,
+        width: 753,
         top: 0,
         right: 0,
         bottom: 0,
@@ -116,30 +113,20 @@ test('Test <CurrentPageLabel> with custom page label', async () => {
     }));
     mockResize(pagesContainer);
 
+    // Wait until the first page is rendered completely
+    await findByTestId('core__text-layer-0');
+
+    let pageLabel = await findByTestId('current-page-label');
+    expect(pageLabel.textContent).toEqual('4(i)');
+
+    // Jump to the third page
     fireEvent.scroll(pagesContainer, {
         target: {
-            scrollTop: 1774,
+            scrollTop: 1782,
         },
     });
 
     await findByTestId('core__page-layer-2');
     pageLabel = await findByTestId('current-page-label');
     expect(pageLabel.textContent).toEqual('4(iii)');
-
-    // Render other document
-    rerender(<TestCurrentPageLabel fileUrl={pageLabelDocument2} />);
-    pageLabel = await findByTestId('current-page-label');
-    expect(pageLabel.textContent).toEqual('8(296)');
-
-    // Jump to other page
-    pagesContainer = getByTestId('core__inner-pages');
-    fireEvent.scroll(pagesContainer, {
-        target: {
-            scrollTop: 3556,
-        },
-    });
-
-    await findByTestId('core__page-layer-4');
-    pageLabel = await findByTestId('current-page-label');
-    expect(pageLabel.textContent).toEqual('8(299)');
 });
