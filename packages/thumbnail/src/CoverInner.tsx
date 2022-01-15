@@ -7,7 +7,8 @@
  */
 
 import * as React from 'react';
-import { getPage, PdfJs, Spinner } from '@react-pdf-viewer/core';
+import { getPage, Spinner, useIntersectionObserver } from '@react-pdf-viewer/core';
+import type { PdfJs, VisibilityChanged } from '@react-pdf-viewer/core';
 
 export const CoverInner: React.FC<{
     getPageIndex?({ numPages }: { numPages: number }): number;
@@ -15,9 +16,11 @@ export const CoverInner: React.FC<{
     doc: PdfJs.PdfDocument;
 }> = ({ getPageIndex, renderSpinner, doc }) => {
     const [src, setSrc] = React.useState('');
-    const containerRef = React.useRef<HTMLDivElement>();
 
-    React.useEffect(() => {
+    const handleVisibilityChanged = (params: VisibilityChanged): void => {
+        if (src || !params.isVisible) {
+            return;
+        }
         const containerEle = containerRef.current;
         if (!containerEle) {
             return;
@@ -58,12 +61,16 @@ export const CoverInner: React.FC<{
                 }
             );
         });
-    }, []);
+    };
+
+    const containerRef = useIntersectionObserver({
+        onVisibilityChanged: handleVisibilityChanged,
+    });
 
     return src ? (
         <img className="rpv-thumbnail__cover-image" data-testid="thumbnail__cover-image" src={src} />
     ) : (
-        <div className="rpv-thumbnail__cover-loader" ref={containerRef}>
+        <div className="rpv-thumbnail__cover-loader" data-testid="thumbnail__cover-loader" ref={containerRef}>
             {renderSpinner ? renderSpinner() : <Spinner />}
         </div>
     );
