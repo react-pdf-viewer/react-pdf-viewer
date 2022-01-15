@@ -5,7 +5,7 @@ test('Click bookmarks', async () => {
     await page.evaluate(() => document.querySelector('[data-testid="core__viewer"]').scrollIntoView());
 
     // Wait until the first page is rendered
-    await page.waitForSelector('[data-testid="core__page-layer-0"]', { visible: true });
+    await page.waitForSelector('[data-testid="core__text-layer-0"]', { visible: true });
 
     const pagesContainer = await page.waitForSelector('[data-testid="core__inner-pages"]');
 
