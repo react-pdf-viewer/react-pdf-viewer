@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { render, waitForElementToBeRemoved } from '@testing-library/react';
-import { Viewer } from '@react-pdf-viewer/core';
+import { fireEvent, render, waitForElementToBeRemoved } from '@testing-library/react';
+import { Button, Viewer } from '@react-pdf-viewer/core';
 import type { Plugin, RenderViewer } from '@react-pdf-viewer/core';
 
 import { mockIsIntersecting } from '../../../test-utils/mockIntersectionObserver';
@@ -99,7 +99,7 @@ const TestMultipleCovers = () => {
 };
 
 test('Test multiple <Cover />', async () => {
-    const { findAllByTestId, findByTestId, getAllByTestId, getByTestId } = render(<TestMultipleCovers />);
+    const { findByTestId, getAllByTestId, getByTestId } = render(<TestMultipleCovers />);
 
     // Test the cover of the first document
     const viewerEleList = getAllByTestId('core__viewer');
@@ -129,6 +129,89 @@ test('Test multiple <Cover />', async () => {
     mockIsIntersecting(viewerEleList[1], true);
     viewerEleList[1]['__jsdomMockClientHeight'] = 318;
     viewerEleList[1]['__jsdomMockClientWidth'] = 318;
+
+    // Wait until the document is loaded completely
+    await waitForElementToBeRemoved(() => getByTestId('core__doc-loading'));
+
+    coverLoader = getByTestId('thumbnail__cover-loader');
+    mockIsIntersecting(coverLoader, true);
+    coverLoader['__jsdomMockClientHeight'] = 318;
+    coverLoader['__jsdomMockClientWidth'] = 318;
+
+    image = await findByTestId('thumbnail__cover-image');
+    src = image.getAttribute('src');
+    expect(src.length).toEqual(1998);
+    expect(src.slice(-100)).toEqual(
+        'ETXEiBpiRA0xooYYUUOMqCFG1BAjaogRNcSIGmJEDTGihhhRQ4yoIUbUECNqiBE1xIgaYv4DB66eMUgszcEAAAAASUVORK5CYII='
+    );
+});
+
+const TestCoverDynamicDocument = () => {
+    const pageLabelDocument = React.useMemo(
+        () => new Uint8Array(fs.readFileSync(path.resolve(__dirname, '../../../samples/ignore/page-labels.pdf'))),
+        []
+    );
+    const [fileUrl, setFileUrl] = React.useState(global['__OPEN_PARAMS_PDF__']);
+
+    return (
+        <div
+            data-testid="root"
+            style={{
+                margin: '1rem auto',
+                width: '64rem',
+            }}
+        >
+            <div
+                style={{
+                    alignItems: 'center',
+                    display: 'flex',
+                    marginBottom: '1rem',
+                }}
+            >
+                <div style={{ marginRight: '0.5rem' }}>
+                    <Button testId="load-doc-1" onClick={() => setFileUrl(global['__OPEN_PARAMS_PDF__'])}>
+                        Load document 1
+                    </Button>
+                </div>
+                <Button testId="load-doc-2" onClick={() => setFileUrl(pageLabelDocument)}>
+                    Load document 2
+                </Button>
+            </div>
+            <TestCover fileUrl={fileUrl} pageIndex={2} />
+        </div>
+    );
+};
+
+test('Test <Cover /> with dynamic document', async () => {
+    const { findByTestId, getByTestId, getByText } = render(<TestCoverDynamicDocument />);
+
+    let viewerEle = getByTestId('core__viewer');
+    mockIsIntersecting(viewerEle, true);
+    viewerEle['__jsdomMockClientHeight'] = 318;
+    viewerEle['__jsdomMockClientWidth'] = 318;
+
+    // Wait until the document is loaded completely
+    await waitForElementToBeRemoved(() => getByTestId('core__doc-loading'));
+
+    let coverLoader = getByTestId('thumbnail__cover-loader');
+    mockIsIntersecting(coverLoader, true);
+    coverLoader['__jsdomMockClientHeight'] = 318;
+    coverLoader['__jsdomMockClientWidth'] = 318;
+
+    let image = await findByTestId('thumbnail__cover-image');
+    let src = image.getAttribute('src');
+    expect(src.length).toEqual(11662);
+    expect(src.slice(-100)).toEqual(
+        'K2IgBVfEQAquiIEUXBEDKbgiBlJwRQyk4IoYSMEVMZCCK2IgBVfEQAquiIEUXBEDKbgiBvof61fzlJ7KkmoAAAAASUVORK5CYII='
+    );
+
+    // Click the `Load document 2` button
+    fireEvent.click(getByText('Load document 2'));
+
+    viewerEle = getByTestId('core__viewer');
+    mockIsIntersecting(viewerEle, true);
+    viewerEle['__jsdomMockClientHeight'] = 318;
+    viewerEle['__jsdomMockClientWidth'] = 318;
 
     // Wait until the document is loaded completely
     await waitForElementToBeRemoved(() => getByTestId('core__doc-loading'));
