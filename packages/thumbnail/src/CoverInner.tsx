@@ -7,7 +7,8 @@
  */
 
 import * as React from 'react';
-import { getPage, PdfJs, Spinner } from '@react-pdf-viewer/core';
+import { getPage, Spinner, useIntersectionObserver, useIsMounted } from '@react-pdf-viewer/core';
+import type { PdfJs, VisibilityChanged } from '@react-pdf-viewer/core';
 
 export const CoverInner: React.FC<{
     getPageIndex?({ numPages }: { numPages: number }): number;
@@ -15,9 +16,13 @@ export const CoverInner: React.FC<{
     doc: PdfJs.PdfDocument;
 }> = ({ getPageIndex, renderSpinner, doc }) => {
     const [src, setSrc] = React.useState('');
-    const containerRef = React.useRef<HTMLDivElement>();
+    const isMounted = useIsMounted();
+    const renderTask = React.useRef<PdfJs.PageRenderTask>();
 
-    React.useEffect(() => {
+    const handleVisibilityChanged = (params: VisibilityChanged): void => {
+        if (src || !params.isVisible) {
+            return;
+        }
         const containerEle = containerRef.current;
         if (!containerEle) {
             return;
@@ -50,20 +55,34 @@ export const CoverInner: React.FC<{
                 scale: scaled,
             });
 
-            const renderTask = page.render({ canvasContext, viewport: renderViewport });
-            renderTask.promise.then(
-                (): void => setSrc(canvas.toDataURL()),
+            renderTask.current = page.render({ canvasContext, viewport: renderViewport });
+            renderTask.current.promise.then(
+                (): void => {
+                    isMounted.current && setSrc(canvas.toDataURL());
+                    canvas.width = 0;
+                    canvas.height = 0;
+                },
                 (): void => {
                     /**/
                 }
             );
         });
+    };
+
+    const containerRef = useIntersectionObserver({
+        onVisibilityChanged: handleVisibilityChanged,
+    });
+
+    React.useEffect(() => {
+        return () => {
+            renderTask.current?.cancel();
+        };
     }, []);
 
     return src ? (
         <img className="rpv-thumbnail__cover-image" data-testid="thumbnail__cover-image" src={src} />
     ) : (
-        <div className="rpv-thumbnail__cover-loader" ref={containerRef}>
+        <div className="rpv-thumbnail__cover-loader" data-testid="thumbnail__cover-loader" ref={containerRef}>
             {renderSpinner ? renderSpinner() : <Spinner />}
         </div>
     );
