@@ -71,6 +71,7 @@ export const ThumbnailContainer: React.FC<{
     return (
         <div
             className="rpv-thumbnail__container"
+            data-testid={`thumbnail__container-${pageIndex}`}
             ref={containerRef}
             style={{
                 height: `${h}px`,

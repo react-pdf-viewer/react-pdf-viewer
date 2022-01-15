@@ -57,7 +57,9 @@ const TestRenderThumbnailItem: React.FC<{
 };
 
 test('Test renderThumbnailItem option', async () => {
-    const { findByTestId, getByTestId } = render(<TestRenderThumbnailItem fileUrl={global['__OPEN_PARAMS_PDF__']} />);
+    const { findByLabelText, findByTestId, getByTestId } = render(
+        <TestRenderThumbnailItem fileUrl={global['__OPEN_PARAMS_PDF__']} />
+    );
 
     const viewerEle = getByTestId('core__viewer');
     mockIsIntersecting(viewerEle, true);
@@ -95,6 +97,14 @@ test('Test renderThumbnailItem option', async () => {
         },
     });
 
-    secondThumbnail = await findByTestId('thumbnail-1');
-    expect(secondThumbnail).toHaveClass('custom-thumbnail-item--selected');
+    // Wait until the second thumbnail is rendered
+    let secondThumbnailContainer = await findByTestId('thumbnail__container-1');
+    mockIsIntersecting(secondThumbnailContainer, true);
+
+    const secondThumbnailImage = await findByLabelText('Thumbnail of page 2');
+    const src = secondThumbnailImage.getAttribute('src');
+    expect(src.substring(0, 100)).toEqual(
+        'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAACFCAYAAACt+l1zAAAABmJLR0QA/wD/AP+gvaeTAAAgAElEQV'
+    );
+    expect(src.length).toEqual(11582);
 });
