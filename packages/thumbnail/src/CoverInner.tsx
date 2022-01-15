@@ -7,7 +7,7 @@
  */
 
 import * as React from 'react';
-import { getPage, Spinner, useIntersectionObserver } from '@react-pdf-viewer/core';
+import { getPage, Spinner, useIntersectionObserver, useIsMounted } from '@react-pdf-viewer/core';
 import type { PdfJs, VisibilityChanged } from '@react-pdf-viewer/core';
 
 export const CoverInner: React.FC<{
@@ -16,6 +16,8 @@ export const CoverInner: React.FC<{
     doc: PdfJs.PdfDocument;
 }> = ({ getPageIndex, renderSpinner, doc }) => {
     const [src, setSrc] = React.useState('');
+    const isMounted = useIsMounted();
+    const renderTask = React.useRef<PdfJs.PageRenderTask>();
 
     const handleVisibilityChanged = (params: VisibilityChanged): void => {
         if (src || !params.isVisible) {
@@ -53,9 +55,13 @@ export const CoverInner: React.FC<{
                 scale: scaled,
             });
 
-            const renderTask = page.render({ canvasContext, viewport: renderViewport });
-            renderTask.promise.then(
-                (): void => setSrc(canvas.toDataURL()),
+            renderTask.current = page.render({ canvasContext, viewport: renderViewport });
+            renderTask.current.promise.then(
+                (): void => {
+                    isMounted.current && setSrc(canvas.toDataURL());
+                    canvas.width = 0;
+                    canvas.height = 0;
+                },
                 (): void => {
                     /**/
                 }
@@ -66,6 +72,12 @@ export const CoverInner: React.FC<{
     const containerRef = useIntersectionObserver({
         onVisibilityChanged: handleVisibilityChanged,
     });
+
+    React.useEffect(() => {
+        return () => {
+            renderTask.current?.cancel();
+        };
+    }, []);
 
     return src ? (
         <img className="rpv-thumbnail__cover-image" data-testid="thumbnail__cover-image" src={src} />
