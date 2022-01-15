@@ -7,9 +7,10 @@
  */
 
 import * as React from 'react';
-import { useIsMounted } from '@react-pdf-viewer/core';
-import type { Store } from '@react-pdf-viewer/core';
 
+import type { PdfJs, Store, StoreHandler } from '@react-pdf-viewer/core';
+
+import { FetchLabels } from './FetchLabels';
 import { useCurrentPage } from './useCurrentPage';
 import { useDocument } from './useDocument';
 import { useNumberOfPages } from './useNumberOfPages';
@@ -32,29 +33,25 @@ export const CurrentPageLabel: React.FC<{
     store: Store<StoreProps>;
 }> = ({ children, store }) => {
     const currentDoc = useDocument(store);
-    const isMounted = useIsMounted();
-    const [labels, setLabels] = React.useState<string[]>([]);
-
-    React.useEffect(() => {
-        if (currentDoc) {
-            currentDoc.getPageLabels().then((result) => {
-                isMounted.current && setLabels(result || []);
-            });
-        }
-    }, [currentDoc?.loadingTask.docId]);
-
     const { currentPage } = useCurrentPage(store);
     const { numberOfPages } = useNumberOfPages(store);
 
     const defaultChildren = (props: RenderCurrentPageLabelProps) => <>{props.currentPage + 1}</>;
     const render = children || defaultChildren;
 
-    // Check the value of `numberOfPages` to make sure the document is loaded
-    const pageLabel = labels.length === numberOfPages && numberOfPages > 0 ? labels[currentPage] : '';
-
-    return render({
-        currentPage,
-        numberOfPages,
-        pageLabel,
-    });
+    return currentDoc ? (
+        <FetchLabels doc={currentDoc}>
+            {(labels) => {
+                // Check the value of `numberOfPages` to make sure the document is loaded
+                const pageLabel = labels.length === numberOfPages && numberOfPages > 0 ? labels[currentPage] : '';
+                return render({
+                    currentPage,
+                    numberOfPages,
+                    pageLabel,
+                });
+            }}
+        </FetchLabels>
+    ) : (
+        <></>
+    );
 };

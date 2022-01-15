@@ -106,7 +106,7 @@ export const toolbarPlugin = (props?: ToolbarPluginProps): ToolbarPlugin => {
         zoomPluginInstance,
     ];
 
-    const ToolbarDecorator = (props: ToolbarProps) => {
+    const ToolbarDecorator = React.useCallback((props: ToolbarProps) => {
         const { EnterFullScreen, EnterFullScreenMenuItem } = fullScreenPluginInstance;
         const { Download, DownloadMenuItem } = getFilePluginInstance;
         const { Open, OpenMenuItem } = openPluginInstance;
@@ -178,7 +178,7 @@ export const toolbarPlugin = (props?: ToolbarPluginProps): ToolbarPlugin => {
                 }}
             />
         );
-    };
+    }, []);
 
     return {
         // Plugin instances
