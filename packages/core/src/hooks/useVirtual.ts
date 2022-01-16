@@ -116,16 +116,19 @@ const calculateRange = (
         //          |                        |
         //    (6)   |           (5)          |   (4)
         //          |                        |
-        if (scrollMode === ScrollMode.Horizontal && visibleSize.width <= 0) {
+        if (scrollMode === ScrollMode.Horizontal && visibleSize.width < 0) {
             // The top left corner belongs to the (2, 3, 4) areas
+            end--;
             break;
         }
-        if (scrollMode === ScrollMode.Vertical && visibleSize.height <= 0) {
+        if (scrollMode === ScrollMode.Vertical && visibleSize.height < 0) {
             // The top left corner belongs to the (4, 5) areas
+            end--;
             break;
         }
-        if (scrollMode === ScrollMode.Wrapped && (visibleSize.width <= 0 || visibleSize.height <= 0)) {
+        if (scrollMode === ScrollMode.Wrapped && (visibleSize.width < 0 || visibleSize.height < 0)) {
             // The top left corner belongs to the (2, 3, 4, 5) areas
+            end--;
             break;
         }
 
@@ -258,19 +261,23 @@ export const useVirtual = ({
     estimateSize,
     isRtl,
     numberOfItems,
-    overscan,
+    setStartRange,
+    setEndRange,
     parentRef,
     scrollMode,
 }: {
     estimateSize: (index: number) => Rect;
     isRtl: boolean;
     numberOfItems: number;
-    overscan: number;
+    setStartRange(startIndex: number): number;
+    setEndRange(endIndex: number): number;
     parentRef: React.MutableRefObject<HTMLDivElement>;
     scrollMode: ScrollMode;
 }): {
     startIndex: number;
+    startRange: number;
     endIndex: number;
+    endRange: number;
     maxVisbilityIndex: number;
     getContainerStyles: () => React.CSSProperties;
     getItemStyles: (item: ItemMeasurement) => React.CSSProperties;
@@ -379,8 +386,8 @@ export const useVirtual = ({
         latestRef.current.scrollOffset
     );
 
-    const startRange = Math.max(start - overscan, 0);
-    const endRange = Math.min(end + overscan, measurements.length - 1);
+    const startRange = setStartRange(start);
+    const endRange = setEndRange(end);
 
     const virtualItems = [];
     for (let i = startRange; i <= endRange; i++) {
@@ -466,8 +473,10 @@ export const useVirtual = ({
     );
 
     return {
-        startIndex: startRange,
-        endIndex: endRange,
+        startIndex: start,
+        startRange,
+        endIndex: end,
+        endRange,
         maxVisbilityIndex,
         getContainerStyles,
         getItemStyles,
