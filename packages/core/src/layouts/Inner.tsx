@@ -33,7 +33,7 @@ import type { Slot } from '../types/Slot';
 import type { ViewerState } from '../types/ViewerState';
 import type { ZoomEvent } from '../types/ZoomEvent';
 
-const NUM_OVERSCAN_PAGES = 2;
+const NUM_OVERSCAN_PAGES = 5;
 const PAGE_PADDING = 16;
 
 export const Inner: React.FC<{
@@ -105,17 +105,21 @@ export const Inner: React.FC<{
         };
     }, [rotation, scale]);
 
+    const setStartRange = React.useCallback((startIndex: number) => Math.max(startIndex - NUM_OVERSCAN_PAGES, 0), []);
+    const setEndRange = React.useCallback((endIndex: number) => Math.min(endIndex + NUM_OVERSCAN_PAGES, numPages - 1), [numPages]);
+
     const virtualizer = useVirtual({
         estimateSize,
         isRtl,
         numberOfItems: numPages,
-        overscan: NUM_OVERSCAN_PAGES,
         parentRef: pagesRef,
         scrollMode: currentScrollMode,
+        setStartRange,
+        setEndRange,
     });
 
     React.useEffect(() => {
-        const { startIndex, endIndex, maxVisbilityIndex, virtualItems } = virtualizer;
+        const { startRange, endRange, maxVisbilityIndex, virtualItems } = virtualizer;
         // The current page is the page which has the biggest visibility
         const currentPage = maxVisbilityIndex;
         setCurrentPage(currentPage);
@@ -133,8 +137,9 @@ export const Inner: React.FC<{
             scrollMode: currentScrollMode,
         });
 
-        renderQueueInstance.setRange(startIndex, endIndex);
-        for (let i = startIndex; i <= endIndex; i++) {
+        // The range of pages that will be rendered
+        renderQueueInstance.setRange(startRange, endRange);
+        for (let i = startRange; i <= endRange; i++) {
             const item = virtualItems.find((item) => item.index === i);
             if (item) {
                 renderQueueInstance.setVisibility(i, item.visibility);
@@ -142,7 +147,7 @@ export const Inner: React.FC<{
         }
 
         renderNextPage();
-    }, [virtualizer.startIndex, virtualizer.endIndex, virtualizer.maxVisbilityIndex, rotation, scale]);
+    }, [virtualizer.startRange, virtualizer.endRange, virtualizer.maxVisbilityIndex, rotation, scale]);
 
     const handlePagesResize = (target: Element) => {
         if (keepSpecialZoomLevelRef.current) {
