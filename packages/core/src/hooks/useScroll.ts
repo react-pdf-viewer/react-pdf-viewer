@@ -32,6 +32,8 @@ export const useScroll = ({
     const [scrollOffset, setScrollOffset] = React.useState(ZERO_OFFSET);
     const [element, setElement] = React.useState(elementRef.current);
     const factor = isRtl ? -1 : 1;
+    const latestRef = React.useRef(scrollMode);
+    latestRef.current = scrollMode;
 
     useIsomorphicLayoutEffect(() => {
         setElement(elementRef.current);
@@ -43,7 +45,7 @@ export const useScroll = ({
         }
 
         const handleScroll = () => {
-            switch (scrollMode) {
+            switch (latestRef.current) {
                 case ScrollMode.Horizontal:
                     setScrollOffset({
                         left: factor * element.scrollLeft,
@@ -66,13 +68,13 @@ export const useScroll = ({
         return () => {
             element.removeEventListener('scroll', handleScroll);
         };
-    }, [element, scrollMode]);
+    }, [element]);
 
     const scrollTo = React.useCallback(
         (offset: Offset) => {
             const ele = elementRef.current;
             if (ele) {
-                switch (scrollMode) {
+                switch (latestRef.current) {
                     case ScrollMode.Horizontal:
                         ele.scrollLeft = factor * offset.left;
                         break;
@@ -83,7 +85,7 @@ export const useScroll = ({
                 }
             }
         },
-        [elementRef, scrollMode]
+        [elementRef]
     );
 
     return {

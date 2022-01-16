@@ -121,7 +121,7 @@ const calculateRange = (
             end--;
             break;
         }
-        if (scrollMode === ScrollMode.Vertical && visibleSize.height < 0) {            
+        if (scrollMode === ScrollMode.Vertical && visibleSize.height < 0) {
             // The top left corner belongs to the (4, 5) areas
             end--;
             break;
@@ -276,7 +276,7 @@ export const useVirtual = ({
 }): {
     startIndex: number;
     startRange: number;
-    endIndex: number;    
+    endIndex: number;
     endRange: number;
     maxVisbilityIndex: number;
     getContainerStyles: () => React.CSSProperties;

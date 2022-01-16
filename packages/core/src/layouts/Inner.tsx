@@ -106,7 +106,10 @@ export const Inner: React.FC<{
     }, [rotation, scale]);
 
     const setStartRange = React.useCallback((startIndex: number) => Math.max(startIndex - NUM_OVERSCAN_PAGES, 0), []);
-    const setEndRange = React.useCallback((endIndex: number) => Math.min(endIndex + NUM_OVERSCAN_PAGES, numPages - 1), [numPages]);
+    const setEndRange = React.useCallback(
+        (endIndex: number) => Math.min(endIndex + NUM_OVERSCAN_PAGES, numPages - 1),
+        [numPages]
+    );
 
     const virtualizer = useVirtual({
         estimateSize,
@@ -162,8 +165,9 @@ export const Inner: React.FC<{
 
     const { pageWidth, pageHeight } = pageSize;
 
-    // The methods that a plugin can hook on
-    // -------------------------------------
+    // The methods that a plugin can hook on.
+    // These methods are registered once and there is no chance for plugins to get the latest version of the methods.
+    // Hence, don't pass any dependencies or internal states if they use React hooks such as React.useCallback()
 
     const setViewerState = (viewerState: ViewerState) => {
         let newState = viewerState;
@@ -223,7 +227,7 @@ export const Inner: React.FC<{
                         break;
                 }
 
-                switch (currentScrollMode) {
+                switch (currentState.scrollMode) {
                     case ScrollMode.Horizontal:
                         virtualizer.scrollToItem(pageIndex, { left, top: 0 });
                         break;
@@ -234,7 +238,7 @@ export const Inner: React.FC<{
                 }
             });
         },
-        [currentScrollMode]
+        []
     );
 
     const jumpToPage = React.useCallback((pageIndex: number) => {
