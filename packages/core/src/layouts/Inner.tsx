@@ -121,37 +121,6 @@ export const Inner: React.FC<{
         setEndRange,
     });
 
-    React.useEffect(() => {
-        const { startRange, endRange, maxVisbilityIndex, virtualItems } = virtualizer;
-        // The current page is the page which has the biggest visibility
-        const currentPage = maxVisbilityIndex;
-        setCurrentPage(currentPage);
-        // Only trigger if the current page changes
-        if (stateRef.current.pageIndex !== currentPage) {
-            onPageChange({ currentPage, doc });
-        }
-        setViewerState({
-            file: viewerState.file,
-            pageIndex: currentPage,
-            pageHeight,
-            pageWidth,
-            rotation,
-            scale,
-            scrollMode: currentScrollMode,
-        });
-
-        // The range of pages that will be rendered
-        renderQueueInstance.setRange(startRange, endRange);
-        for (let i = startRange; i <= endRange; i++) {
-            const item = virtualItems.find((item) => item.index === i);
-            if (item) {
-                renderQueueInstance.setVisibility(i, item.visibility);
-            }
-        }
-
-        renderNextPage();
-    }, [virtualizer.startRange, virtualizer.endRange, virtualizer.maxVisbilityIndex, rotation, scale]);
-
     const handlePagesResize = (target: Element) => {
         if (keepSpecialZoomLevelRef.current) {
             zoom(keepSpecialZoomLevelRef.current);
@@ -283,7 +252,7 @@ export const Inner: React.FC<{
     const switchScrollMode = React.useCallback((scrollMode: ScrollMode) => {
         setViewerState({
             file: viewerState.file,
-            pageIndex: currentPage,
+            pageIndex: stateRef.current.pageIndex,
             pageHeight,
             pageWidth,
             rotation,
@@ -326,6 +295,46 @@ export const Inner: React.FC<{
 
     // Internal
     // --------
+
+    // Scroll to the current page after switching the scroll mode
+    React.useEffect(() => {
+        const latestPage = stateRef.current.pageIndex;
+        if (latestPage > -1) {
+            virtualizer.scrollToItem(latestPage, { left: 0, top: 0 });
+        }
+    }, [currentScrollMode]);
+
+    // This hook should be placed at the end of hooks
+    React.useEffect(() => {
+        const { startRange, endRange, maxVisbilityIndex, virtualItems } = virtualizer;
+        // The current page is the page which has the biggest visibility
+        const currentPage = maxVisbilityIndex;
+        setCurrentPage(currentPage);
+        // Only trigger if the current page changes
+        if (stateRef.current.pageIndex !== currentPage) {
+            onPageChange({ currentPage, doc });
+        }
+        setViewerState({
+            file: viewerState.file,
+            pageIndex: currentPage,
+            pageHeight,
+            pageWidth,
+            rotation,
+            scale,
+            scrollMode: currentScrollMode,
+        });
+
+        // The range of pages that will be rendered
+        renderQueueInstance.setRange(startRange, endRange);
+        for (let i = startRange; i <= endRange; i++) {
+            const item = virtualItems.find((item) => item.index === i);
+            if (item) {
+                renderQueueInstance.setVisibility(i, item.visibility);
+            }
+        }
+
+        renderNextPage();
+    }, [virtualizer.startRange, virtualizer.endRange, virtualizer.maxVisbilityIndex, rotation, scale]);
 
     React.useEffect(() => {
         const pluginMethods: PluginFunctions = {
