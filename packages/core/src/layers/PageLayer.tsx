@@ -61,10 +61,9 @@ export const PageLayer: React.FC<{
         pageWidth: width,
         viewportRotation: 0,
     });
-    const [layersRendered, setLayersRendered] = React.useState({
-        canvasLayer: false,
-        textLayer: false,
-    });
+    const [canvasLayerRendered, setCanvasLayerRendered] = React.useState(false);
+    const [textLayerRendered, setTextLayerRendered] = React.useState(false);
+
     const { page, pageHeight, pageWidth } = pageSize;
 
     const scaledWidth = pageWidth * scale;
@@ -103,12 +102,12 @@ export const PageLayer: React.FC<{
 
     const handleRenderCanvasCompleted = () => {
         if (isMounted.current) {
-            setLayersRendered((layersRendered) => Object.assign({}, layersRendered, { canvasLayer: true }));
+            setCanvasLayerRendered(true);
         }
     };
     const handleRenderTextCompleted = () => {
         if (isMounted.current) {
-            setLayersRendered((layersRendered) => Object.assign({}, layersRendered, { textLayer: true }));
+            setTextLayerRendered(true);
         }
     };
 
@@ -119,10 +118,8 @@ export const PageLayer: React.FC<{
             pageWidth: width,
             viewportRotation: 0,
         });
-        setLayersRendered({
-            canvasLayer: false,
-            textLayer: false,
-        });
+        setCanvasLayerRendered(false);
+        setTextLayerRendered(false);
     }, [rotation, scale]);
 
     React.useEffect(() => {
@@ -132,10 +129,10 @@ export const PageLayer: React.FC<{
     }, [shouldRender, page]);
 
     React.useEffect(() => {
-        if (layersRendered.canvasLayer && layersRendered.textLayer) {
+        if (canvasLayerRendered && textLayerRendered) {
             onRenderCompleted(pageIndex);
         }
-    }, [layersRendered]);
+    }, [canvasLayerRendered, textLayerRendered]);
 
     return (
         <div
@@ -181,6 +178,7 @@ export const PageLayer: React.FC<{
                                 />
                             ),
                         },
+                        canvasLayerRendered,
                         doc,
                         height: h,
                         pageIndex,
@@ -205,7 +203,9 @@ export const PageLayer: React.FC<{
                                 />
                             ),
                         },
+                        textLayerRendered,
                         width: w,
+                        markRendered: onRenderCompleted,
                     })}
                     {plugins.map((plugin, idx) =>
                         plugin.renderPageLayer ? (
