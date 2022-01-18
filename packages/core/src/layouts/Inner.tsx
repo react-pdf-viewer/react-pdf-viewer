@@ -385,6 +385,7 @@ export const Inner: React.FC<{
     const renderNextPage = () => {
         const nextPage = renderQueueInstance.getHighestPriorityPage();
         if (nextPage > -1) {
+            renderQueueInstance.markRendering(nextPage);
             setRenderPageIndex(nextPage);
         }
     };
