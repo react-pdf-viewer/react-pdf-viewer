@@ -16,7 +16,7 @@ const CustomPageRender: React.FC<{
 
     return (
         <>
-            {renderPageProps.svgLayer.children}
+            {renderPageProps.canvasLayer.children}
             <div
                 data-testid={`custom-page-${renderPageProps.pageIndex}`}
                 style={{
