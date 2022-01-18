@@ -72,7 +72,9 @@ export const Tracker: React.FC<{
         matchIndex: -1,
         pageIndex: -1,
     });
-    const [keywordRegexp, setKeywordRegexp] = React.useState<NormalizedKeyword[]>([EMPTY_KEYWORD_REGEXP]);
+    const [keywordRegexp, setKeywordRegexp] = React.useState<NormalizedKeyword[]>(
+        store.get('keyword') || [EMPTY_KEYWORD_REGEXP]
+    );
     const [renderStatus, setRenderStatus] = React.useState<RenderStatus>({
         pageIndex,
         scale: 1,
