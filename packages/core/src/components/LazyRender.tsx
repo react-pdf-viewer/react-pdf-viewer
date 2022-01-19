@@ -10,7 +10,9 @@ import * as React from 'react';
 import { useIntersectionObserver } from '../hooks/useIntersectionObserver';
 import type { VisibilityChanged } from '../types/VisibilityChanged';
 
-export const LazyRender: React.FC = ({ children }) => {
+export const LazyRender: React.FC<{
+    attrs?: React.HTMLAttributes<HTMLDivElement>;
+}> = ({ attrs, children }) => {
     const [visible, setVisible] = React.useState(false);
 
     const handleVisibilityChanged = (params: VisibilityChanged): void => {
@@ -24,5 +26,9 @@ export const LazyRender: React.FC = ({ children }) => {
         onVisibilityChanged: handleVisibilityChanged,
     });
 
-    return <div ref={containerRef}>{visible && children}</div>;
+    return (
+        <div ref={containerRef} {...attrs}>
+            {visible && children}
+        </div>
+    );
 };

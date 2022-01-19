@@ -217,7 +217,10 @@ export interface ButtonProps {
 }
 export class Button extends React.Component<ButtonProps> {}
 
-export class LazyRender extends React.Component {}
+export interface LazyRenderProps {
+    attrs?: React.HTMLAttributes<HTMLDivElement>;
+}
+export class LazyRender extends React.Component<LazyRenderProps> {}
 
 export class Menu extends React.Component {}
 

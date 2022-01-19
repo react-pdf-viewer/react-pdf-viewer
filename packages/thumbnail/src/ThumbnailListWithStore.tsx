@@ -77,7 +77,14 @@ export const ThumbnailListWithStore: React.FC<{
     }, []);
 
     return currentDoc ? (
-        <LazyRender>
+        <LazyRender
+            attrs={{
+                style: {
+                    height: '100%',
+                    width: '100%',
+                },
+            }}
+        >
             <ThumbnailList
                 currentPage={currentPage}
                 doc={currentDoc}
