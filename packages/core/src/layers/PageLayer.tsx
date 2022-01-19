@@ -144,7 +144,7 @@ export const PageLayer: React.FC<{
             }}
         >
             {!page ? (
-                <Spinner />
+                <Spinner testId={`core__page-layer-loading-${pageIndex}`} />
             ) : (
                 <>
                     {renderPageLayer({

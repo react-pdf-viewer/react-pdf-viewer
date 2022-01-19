@@ -55,9 +55,10 @@ test('onPageChange() callback', async () => {
     // Scroll to the third page
     fireEvent.scroll(pagesContainer, {
         target: {
-            scrollTop: 2408,
+            scrollTop: 1782,
         },
     });
 
-    expect(visitedPages.textContent).toEqual('0,3');
+    await waitForElementToBeRemoved(() => getByTestId('core__page-layer-loading-2'));
+    expect(visitedPages.textContent).toEqual('0,2');
 });
