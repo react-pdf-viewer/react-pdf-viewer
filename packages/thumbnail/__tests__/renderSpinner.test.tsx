@@ -51,6 +51,9 @@ test('Test renderSpinner option', async () => {
     // Wait until the document is loaded completely
     await waitForElementToBeRemoved(() => getByTestId('core__doc-loading'));
 
+    const thumbnailsListContainer = await findByTestId('thumbnail__list-container');
+    mockIsIntersecting(thumbnailsListContainer, true);
+
     const thumbnailsContainer = await findByTestId('thumbnail__list');
     expect(thumbnailsContainer.querySelectorAll('.custom-spinner').length).toEqual(8);
 

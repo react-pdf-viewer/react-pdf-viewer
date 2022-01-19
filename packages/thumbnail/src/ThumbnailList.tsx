@@ -252,7 +252,9 @@ export const ThumbnailList: React.FC<{
                         >
                             {thumbnail}
                         </div>
-                        <div className="rpv-thumbnail__index">{label}</div>
+                        <div data-testid={`thumbnail__label-${pageIndex}`} className="rpv-thumbnail__label">
+                            {label}
+                        </div>
                     </div>
                 );
             })}

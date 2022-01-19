@@ -65,6 +65,9 @@ test('Test <Thumbnails />', async () => {
     }));
     mockResize(pagesContainer);
 
+    const thumbnailsListContainer = await findByTestId('thumbnail__list-container');
+    mockIsIntersecting(thumbnailsListContainer, true);
+
     const thumbnailsContainer = await findByTestId('thumbnail__list');
     expect(thumbnailsContainer.querySelectorAll('.rpv-thumbnail__item').length).toEqual(8);
 

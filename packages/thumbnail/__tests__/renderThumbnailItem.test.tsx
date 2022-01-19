@@ -83,6 +83,9 @@ test('Test renderThumbnailItem option', async () => {
     }));
     mockResize(pagesContainer);
 
+    const thumbnailsListContainer = await findByTestId('thumbnail__list-container');
+    mockIsIntersecting(thumbnailsListContainer, true);
+
     const thumbnailsContainer = await findByTestId('thumbnail__list');
     expect(thumbnailsContainer.querySelectorAll('.custom-thumbnail-item').length).toEqual(8);
 

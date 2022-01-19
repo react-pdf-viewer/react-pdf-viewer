@@ -40,31 +40,49 @@ const TestPageLabel: React.FC<{
 };
 
 test('Show default page number', async () => {
-    const { findByText, getByTestId } = render(<TestPageLabel fileUrl={global['__OPEN_PARAMS_PDF__']} />);
+    const { findByTestId, getByTestId } = render(<TestPageLabel fileUrl={global['__OPEN_PARAMS_PDF__']} />);
 
     const viewerEle = getByTestId('core__viewer');
     mockIsIntersecting(viewerEle, true);
 
-    const label = await findByText('7');
-    expect(label).toHaveClass('rpv-thumbnail__index');
+    const thumbnailsListContainer = await findByTestId('thumbnail__list-container');
+    mockIsIntersecting(thumbnailsListContainer, true);
+
+    const label = await findByTestId('thumbnail__label-6');
+    expect(label.textContent).toEqual('7');
+    expect(label).toHaveClass('rpv-thumbnail__label');
 });
 
 test('Show custom page label', async () => {
     const pageLabelDocument = new Uint8Array(
         fs.readFileSync(path.resolve(__dirname, '../../../samples/ignore/page-labels.pdf'))
     );
-    const pageLabelDocument2 = new Uint8Array(
-        fs.readFileSync(path.resolve(__dirname, '../../../samples/ignore/page-labels-2.pdf'))
-    );
-    const { findByText, getByTestId, rerender } = render(<TestPageLabel fileUrl={pageLabelDocument} />);
+    const { findByTestId, getByTestId } = render(<TestPageLabel fileUrl={pageLabelDocument} />);
 
     const viewerEle = getByTestId('core__viewer');
     mockIsIntersecting(viewerEle, true);
 
-    let label = await findByText('iii');
-    expect(label).toHaveClass('rpv-thumbnail__index');
+    const thumbnailsListContainer = await findByTestId('thumbnail__list-container');
+    mockIsIntersecting(thumbnailsListContainer, true);
 
-    rerender(<TestPageLabel fileUrl={pageLabelDocument2} />);
-    label = await findByText('297');
-    expect(label).toHaveClass('rpv-thumbnail__index');
+    const label = await findByTestId('thumbnail__label-2');
+    expect(label.textContent).toEqual('iii');
+    expect(label).toHaveClass('rpv-thumbnail__label');
+});
+
+test('Show custom page label 2', async () => {
+    const pageLabelDocument2 = new Uint8Array(
+        fs.readFileSync(path.resolve(__dirname, '../../../samples/ignore/page-labels-2.pdf'))
+    );
+    const { findByTestId, getByTestId } = render(<TestPageLabel fileUrl={pageLabelDocument2} />);
+
+    const viewerEle = getByTestId('core__viewer');
+    mockIsIntersecting(viewerEle, true);
+
+    const thumbnailsListContainer = await findByTestId('thumbnail__list-container');
+    mockIsIntersecting(thumbnailsListContainer, true);
+
+    const label = await findByTestId('thumbnail__label-1');
+    expect(label.textContent).toEqual('297');
+    expect(label).toHaveClass('rpv-thumbnail__label');
 });
