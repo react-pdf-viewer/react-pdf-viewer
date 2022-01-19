@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { fireEvent, render } from '@testing-library/react';
+import { fireEvent, render, waitForElementToBeRemoved } from '@testing-library/react';
 import { Button, Viewer } from '@react-pdf-viewer/core';
 
 import { mockIsIntersecting } from '../../../test-utils/mockIntersectionObserver';
@@ -93,6 +93,7 @@ test('Test <CurrentPageLabel> with dynamic document', async () => {
     });
 
     await findByTestId('core__page-layer-3');
+    await waitForElementToBeRemoved(() => getByTestId('core__page-layer-loading-3'));
     pageLabel = await findByTestId('current-page-label');
     expect(pageLabel.textContent).toEqual('4 of 8');
 
