@@ -20,6 +20,7 @@ export { ToggleStatus } from './structs/ToggleStatus';
 
 // Components
 export { Button } from './components/Button';
+export { LazyRender } from './components/LazyRender';
 export { Menu } from './components/Menu';
 export { MenuDivider } from './components/MenuDivider';
 export { MenuItem } from './components/MenuItem';
