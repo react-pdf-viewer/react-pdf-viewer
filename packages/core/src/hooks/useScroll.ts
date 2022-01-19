@@ -9,12 +9,18 @@
 import * as React from 'react';
 
 import { useIsomorphicLayoutEffect } from './useIsomorphicLayoutEffect';
+import { useRafState } from './useRafState';
 import { ScrollMode } from '../structs/ScrollMode';
 import type { Offset } from '../types/Offset';
 
 const ZERO_OFFSET: Offset = {
     left: 0,
     top: 0,
+};
+
+const SCROLL_EVENT_OPTIONS = {
+    capture: false,
+    passive: true,
 };
 
 export const useScroll = ({
@@ -29,7 +35,7 @@ export const useScroll = ({
     scrollOffset: Offset;
     scrollTo: (offset: Offset) => void;
 } => {
-    const [scrollOffset, setScrollOffset] = React.useState(ZERO_OFFSET);
+    const [scrollOffset, setScrollOffset] = useRafState(ZERO_OFFSET);
     const [element, setElement] = React.useState(elementRef.current);
     const factor = isRtl ? -1 : 1;
     const latestRef = React.useRef(scrollMode);
@@ -43,7 +49,6 @@ export const useScroll = ({
         if (!element) {
             return;
         }
-
         const handleScroll = () => {
             switch (latestRef.current) {
                 case ScrollMode.Horizontal:
@@ -63,10 +68,10 @@ export const useScroll = ({
         };
 
         // Handle the scroll event
-        element.addEventListener('scroll', handleScroll, { capture: false, passive: true });
+        element.addEventListener('scroll', handleScroll, SCROLL_EVENT_OPTIONS);
 
         return () => {
-            element.removeEventListener('scroll', handleScroll);
+            element.removeEventListener('scroll', handleScroll, SCROLL_EVENT_OPTIONS);
         };
     }, [element]);
 
