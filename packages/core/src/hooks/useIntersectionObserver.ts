@@ -12,6 +12,7 @@ import { useIsomorphicLayoutEffect } from '../hooks/useIsomorphicLayoutEffect';
 import type { VisibilityChanged } from '../types/VisibilityChanged';
 
 interface UseIntersectionObserverProps {
+    once?: boolean;
     threshold?: number | number[];
     onVisibilityChanged(params: VisibilityChanged): void;
 }
@@ -19,7 +20,7 @@ interface UseIntersectionObserverProps {
 export const useIntersectionObserver = (props: UseIntersectionObserverProps) => {
     const containerRef = React.useRef<HTMLDivElement | null>(null);
 
-    const { threshold, onVisibilityChanged } = props;
+    const { once, threshold, onVisibilityChanged } = props;
 
     useIsomorphicLayoutEffect(() => {
         const container = containerRef.current;
@@ -33,6 +34,10 @@ export const useIntersectionObserver = (props: UseIntersectionObserverProps) => 
                     const isVisible = entry.isIntersecting;
                     const ratio = entry.intersectionRatio;
                     onVisibilityChanged({ isVisible, ratio });
+                    if (isVisible && once) {
+                        intersectionTracker.unobserve(container);
+                        intersectionTracker.disconnect();
+                    }
                 });
             },
             {
@@ -43,6 +48,7 @@ export const useIntersectionObserver = (props: UseIntersectionObserverProps) => 
 
         return (): void => {
             intersectionTracker.unobserve(container);
+            intersectionTracker.disconnect();
         };
     }, []);
 

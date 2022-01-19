@@ -469,6 +469,7 @@ export function renderQueueService({
 
 // Hooks
 export interface UseIntersectionObserverProps {
+    once?: boolean;
     threshold?: number | number[];
     onVisibilityChanged(params: VisibilityChanged): void;
 }
