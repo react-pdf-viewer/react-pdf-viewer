@@ -60,4 +60,7 @@ beforeAll(() => {
     global['__SAMPLE_PROTECTED_PDF__'] = SAMPLE_PROTECTED_PDF;
     global['__MULTIPLE_PAGES_PDF__'] = MULTIPLE_PAGES_PDF;
     global['__OPEN_PARAMS_PDF__'] = OPEN_PARAMS_PDF;
+
+    // Mock the `requestAnimationFrame` function that is used by some hooks such as `useRafState`
+    jest.spyOn(window, 'requestAnimationFrame').mockImplementation((callback) => setTimeout(callback, 0));
 });
