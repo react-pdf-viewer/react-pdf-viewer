@@ -12,6 +12,7 @@ const IndexPage = () => {
 
     return (
         <div
+            data-testid="root"
             style={{
                 margin: '1rem auto',
                 width: '64rem',

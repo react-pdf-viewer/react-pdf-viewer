@@ -78,11 +78,9 @@ export const ThumbnailListWithStore: React.FC<{
 
     return currentDoc ? (
         <LazyRender
+            testId="thumbnail__list-container"
             attrs={{
-                style: {
-                    height: '100%',
-                    width: '100%',
-                },
+                className: 'rpv-thumbnail__list-container',
             }}
         >
             <ThumbnailList

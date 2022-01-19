@@ -6,6 +6,11 @@
  * @copyright 2019-2022 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
+.rpv-thumbnail__list-container {
+    height: 100%;
+    width: 100%;
+}
+
 .rpv-thumbnail__loader {
     align-items: center;
     display: flex;

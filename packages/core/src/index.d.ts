@@ -219,6 +219,7 @@ export class Button extends React.Component<ButtonProps> {}
 
 export interface LazyRenderProps {
     attrs?: React.HTMLAttributes<HTMLDivElement>;
+    testId?: string;
 }
 export class LazyRender extends React.Component<LazyRenderProps> {}
 
