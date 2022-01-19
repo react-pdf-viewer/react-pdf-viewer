@@ -4,6 +4,7 @@
 
 **New feature**
 
+-   Add new `testId` property to `Spinner`
 -   The `Viewer` component provides new `scrollMode` option:
 
 ```tsx
