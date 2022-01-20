@@ -16,6 +16,7 @@ import { ScrollMode, Viewer } from '@react-pdf-viewer/core';
 
 **Bug fixes**
 
+-   Keep the current page after switching the scroll mode
 -   The `Cover` component has the same image source when loading different documents
 -   The default `Spinner` is used when using the `renderLoader` option
 -   The exit full screen button doesn't look good in dark theme
