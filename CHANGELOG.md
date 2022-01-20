@@ -2,7 +2,7 @@
 
 ## v3.1.0 [WIP]
 
-**New feature**
+**New features**
 
 -   Add new `testId` property to `Spinner`
 -   The `Viewer` component provides new `scrollMode` option:
@@ -14,6 +14,21 @@ import { ScrollMode, Viewer } from '@react-pdf-viewer/core';
 ```
 
 -   Plugins can register and call the `switchScrollMode` method to switch the scroll mode programatically
+
+**Improvements**
+
+-   The `Viewer` component now works on mobile.
+
+As we know, the mobile browsers such as iOS Safari have the limit value for canvas size and the maximum memory values (256 MB on iOS Safari, for example) for rendering canvases.
+It can cause the `Viewer` component to crash if we zoom the document to a big enough level. This version fixes these kinds of issues. There is no crash on mobile anymore!
+
+-   Improve the performance when rendering a document.
+
+In the previous versions, each page is represented by a separated `div` element. The element isn't rendered by default, and will be rendered when the corresponding page is visible in the viewport.
+However, this optimization is not enough for a document that has a big number of pages.
+
+v3.1.0 brings the optimization to a new level. Instead of keeping the instance of all pages all the time, the `Viewer` component only renders a given range of pages including the visible pages and some pages that are before and after them.
+For example, if users see pages 5-8 in the screen, we will render the pages 3-10 ony. The range will be changed when users scroll up or down, and then the corresponding pages are rendered accordingly.
 
 **Bug fixes**
 
