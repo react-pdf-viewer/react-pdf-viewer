@@ -217,6 +217,8 @@ export interface ButtonProps {
 }
 export class Button extends React.Component<ButtonProps> {}
 
+export class LazyRender extends React.Component {}
+
 export class Menu extends React.Component {}
 
 export class MenuDivider extends React.Component {}
@@ -469,6 +471,7 @@ export function renderQueueService({
 
 // Hooks
 export interface UseIntersectionObserverProps {
+    once?: boolean;
     threshold?: number | number[];
     onVisibilityChanged(params: VisibilityChanged): void;
 }

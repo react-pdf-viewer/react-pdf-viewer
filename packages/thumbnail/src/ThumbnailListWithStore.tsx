@@ -7,7 +7,7 @@
  */
 
 import * as React from 'react';
-import { useIsomorphicLayoutEffect } from '@react-pdf-viewer/core';
+import { useIsomorphicLayoutEffect, LazyRender } from '@react-pdf-viewer/core';
 import type { PdfJs, Store, StoreHandler } from '@react-pdf-viewer/core';
 
 import { SpinnerContext } from './SpinnerContext';
@@ -77,16 +77,18 @@ export const ThumbnailListWithStore: React.FC<{
     }, []);
 
     return currentDoc ? (
-        <ThumbnailList
-            currentPage={currentPage}
-            doc={currentDoc}
-            pageHeight={pageHeight}
-            pageWidth={pageWidth}
-            renderCurrentPageLabel={renderCurrentPageLabel}
-            renderThumbnailItem={renderThumbnailItem}
-            rotation={rotation}
-            onJumpToPage={jump}
-        />
+        <LazyRender>
+            <ThumbnailList
+                currentPage={currentPage}
+                doc={currentDoc}
+                pageHeight={pageHeight}
+                pageWidth={pageWidth}
+                renderCurrentPageLabel={renderCurrentPageLabel}
+                renderThumbnailItem={renderThumbnailItem}
+                rotation={rotation}
+                onJumpToPage={jump}
+            />
+        </LazyRender>
     ) : (
         <div data-testid="thumbnail-list__loader" className="rpv-thumbnail__loader">
             {React.useContext(SpinnerContext).renderSpinner()}
