@@ -8,7 +8,7 @@
 
 import * as React from 'react';
 
-import type { PdfJs, Store, StoreHandler } from '@react-pdf-viewer/core';
+import type { Store } from '@react-pdf-viewer/core';
 
 import { FetchLabels } from './FetchLabels';
 import { useCurrentPage } from './useCurrentPage';
