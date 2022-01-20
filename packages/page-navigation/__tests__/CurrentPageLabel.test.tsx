@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { fireEvent, render } from '@testing-library/react';
+import { fireEvent, render, waitForElementToBeRemoved } from '@testing-library/react';
 import { Viewer } from '@react-pdf-viewer/core';
 
 import { mockIsIntersecting } from '../../../test-utils/mockIntersectionObserver';
@@ -58,8 +58,8 @@ test('Test <CurrentPageLabel>', async () => {
 
     const viewerEle = getByTestId('core__viewer');
     mockIsIntersecting(viewerEle, true);
-    viewerEle['__jsdomMockClientHeight'] = 767;
-    viewerEle['__jsdomMockClientWidth'] = 800;
+    viewerEle['__jsdomMockClientHeight'] = 766;
+    viewerEle['__jsdomMockClientWidth'] = 798;
 
     let pageLabel = await findByTestId('current-page-label');
     expect(pageLabel.textContent).toEqual('8');
@@ -69,8 +69,8 @@ test('Test <CurrentPageLabel>', async () => {
     pagesContainer.getBoundingClientRect = jest.fn(() => ({
         x: 0,
         y: 0,
-        height: 767,
-        width: 800,
+        height: 766,
+        width: 798,
         top: 0,
         right: 0,
         bottom: 0,
@@ -81,11 +81,12 @@ test('Test <CurrentPageLabel>', async () => {
 
     fireEvent.scroll(pagesContainer, {
         target: {
-            scrollTop: 1774,
+            scrollTop: 1782,
         },
     });
 
-    await findByTestId('core__page-layer-3');
+    await findByTestId('core__page-layer-2');
+    await waitForElementToBeRemoved(() => getByTestId('core__page-layer-loading-2'));
     pageLabel = await findByTestId('current-page-label');
     expect(pageLabel.textContent).toEqual('8');
 });
@@ -101,8 +102,8 @@ test('Test <CurrentPageLabel> with custom page label', async () => {
 
     const viewerEle = getByTestId('core__viewer');
     mockIsIntersecting(viewerEle, true);
-    viewerEle['__jsdomMockClientHeight'] = 767;
-    viewerEle['__jsdomMockClientWidth'] = 800;
+    viewerEle['__jsdomMockClientHeight'] = 766;
+    viewerEle['__jsdomMockClientWidth'] = 798;
 
     let pageLabel = await findByTestId('current-page-label');
     expect(pageLabel.textContent).toEqual('4(i)');
@@ -112,8 +113,8 @@ test('Test <CurrentPageLabel> with custom page label', async () => {
     pagesContainer.getBoundingClientRect = jest.fn(() => ({
         x: 0,
         y: 0,
-        height: 767,
-        width: 800,
+        height: 766,
+        width: 798,
         top: 0,
         right: 0,
         bottom: 0,
@@ -124,7 +125,7 @@ test('Test <CurrentPageLabel> with custom page label', async () => {
 
     fireEvent.scroll(pagesContainer, {
         target: {
-            scrollTop: 1774,
+            scrollTop: 1782,
         },
     });
 
@@ -141,10 +142,10 @@ test('Test <CurrentPageLabel> with custom page label', async () => {
     pagesContainer = getByTestId('core__inner-pages');
     fireEvent.scroll(pagesContainer, {
         target: {
-            scrollTop: 3556,
+            scrollTop: 2675,
         },
     });
-    await findByTestId('core__page-layer-4');
+    await findByTestId('core__page-layer-3');
     pageLabel = await findByTestId('current-page-label');
     expect(pageLabel.textContent).toEqual('8(299)');
 });
