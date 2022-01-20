@@ -65,8 +65,8 @@ test('Test <CurrentPageLabel> with dynamic document', async () => {
 
     let viewerEle = await findByTestId('core__viewer');
     mockIsIntersecting(viewerEle, true);
-    viewerEle['__jsdomMockClientHeight'] = 767;
-    viewerEle['__jsdomMockClientWidth'] = 800;
+    viewerEle['__jsdomMockClientHeight'] = 766;
+    viewerEle['__jsdomMockClientWidth'] = 798;
 
     let pageLabel = await findByTestId('current-page-label');
     expect(pageLabel.textContent).toEqual('1 of 8');
@@ -76,8 +76,8 @@ test('Test <CurrentPageLabel> with dynamic document', async () => {
     pagesContainer.getBoundingClientRect = jest.fn(() => ({
         x: 0,
         y: 0,
-        height: 767,
-        width: 800,
+        height: 766,
+        width: 798,
         top: 0,
         right: 0,
         bottom: 0,
@@ -102,8 +102,8 @@ test('Test <CurrentPageLabel> with dynamic document', async () => {
 
     viewerEle = await findByTestId('core__viewer');
     mockIsIntersecting(viewerEle, true);
-    viewerEle['__jsdomMockClientHeight'] = 767;
-    viewerEle['__jsdomMockClientWidth'] = 800;
+    viewerEle['__jsdomMockClientHeight'] = 766;
+    viewerEle['__jsdomMockClientWidth'] = 798;
 
     pageLabel = await findByTestId('current-page-label');
     expect(pageLabel.textContent).toEqual('1 of 2');
@@ -113,8 +113,8 @@ test('Test <CurrentPageLabel> with dynamic document', async () => {
     pagesContainer.getBoundingClientRect = jest.fn(() => ({
         x: 0,
         y: 0,
-        height: 767,
-        width: 800,
+        height: 766,
+        width: 798,
         top: 0,
         right: 0,
         bottom: 0,
@@ -125,7 +125,7 @@ test('Test <CurrentPageLabel> with dynamic document', async () => {
 
     fireEvent.scroll(pagesContainer, {
         target: {
-            scrollTop: 887,
+            scrollTop: 895,
         },
     });
 
