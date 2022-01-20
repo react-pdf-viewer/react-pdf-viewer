@@ -3,7 +3,7 @@ import 'expect-puppeteer';
 test('The thumbnails are stuck at loading', async () => {
     await page.goto('http://localhost:3000/thumbnail-stuck-loading');
 
-    await page.evaluate(() => document.querySelector('[data-testid="core__viewer"]').scrollIntoView());
+    await page.evaluate(() => document.querySelector('[data-testid="root"]').scrollIntoView());
 
     // To make sure the thumbnails are rendered
     await page.waitForSelector('[data-testid="thumbnail__list"]');

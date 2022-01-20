@@ -84,6 +84,9 @@ test('Thumbnails are updated when switching between documents', async () => {
     await waitForElementToBeRemoved(() => getByTestId('core__doc-loading'));
 
     const getSourceOfFirstThumbnail = async () => {
+        const thumbnailsListContainer = await findByTestId('thumbnail__list-container');
+        mockIsIntersecting(thumbnailsListContainer, true);
+
         const thumbnailsContainer = await findByTestId('thumbnail__list');
         // Make the first thumbnail item visible
         const thumbnailItems = Array.from(thumbnailsContainer.querySelectorAll('.rpv-thumbnail__container'));

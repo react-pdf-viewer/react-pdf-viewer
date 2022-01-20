@@ -93,6 +93,8 @@ test('Test <Thumbnails /> with dynamic document', async () => {
     }));
     mockResize(pagesContainer);
 
+    let thumbnailsListContainer = await findByTestId('thumbnail__list-container');
+    mockIsIntersecting(thumbnailsListContainer, true);
     let thumbnailsContainer = await findByTestId('thumbnail__list');
     expect(thumbnailsContainer.querySelectorAll('.rpv-thumbnail__item').length).toEqual(8);
 
@@ -118,6 +120,8 @@ test('Test <Thumbnails /> with dynamic document', async () => {
     // Wait until the document is loaded completely
     await waitForElementToBeRemoved(() => screen.getByTestId('core__doc-loading'));
 
+    thumbnailsListContainer = await findByTestId('thumbnail__list-container');
+    mockIsIntersecting(thumbnailsListContainer, true);
     thumbnailsContainer = await findByTestId('thumbnail__list');
     expect(thumbnailsContainer.querySelectorAll('.rpv-thumbnail__item').length).toEqual(4);
 

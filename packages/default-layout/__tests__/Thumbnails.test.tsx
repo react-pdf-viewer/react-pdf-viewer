@@ -29,6 +29,8 @@ test('Thumbnails are not displayed when switching between tabs', async () => {
     const thumbnailTab = await findByLabelText('Thumbnail');
     fireEvent.click(thumbnailTab);
 
+    let thumbnailsListContainer = await findByTestId('thumbnail__list-container');
+    mockIsIntersecting(thumbnailsListContainer, true);
     let thumbnailsContainer = await findByTestId('thumbnail__list');
 
     // Make the first thumbnail item visible
@@ -52,7 +54,10 @@ test('Thumbnails are not displayed when switching between tabs', async () => {
     // Now click the `Thumbnail` tab again
     fireEvent.click(thumbnailTab);
 
+    thumbnailsListContainer = await findByTestId('thumbnail__list-container');
+    mockIsIntersecting(thumbnailsListContainer, true);
     thumbnailsContainer = await findByTestId('thumbnail__list');
+
     thumbnailItems = Array.from(thumbnailsContainer.querySelectorAll('.rpv-thumbnail__container'));
     mockIsIntersecting(thumbnailItems[0], true);
 

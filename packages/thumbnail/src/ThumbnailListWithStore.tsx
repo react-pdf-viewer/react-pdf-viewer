@@ -77,7 +77,12 @@ export const ThumbnailListWithStore: React.FC<{
     }, []);
 
     return currentDoc ? (
-        <LazyRender>
+        <LazyRender
+            testId="thumbnail__list-container"
+            attrs={{
+                className: 'rpv-thumbnail__list-container',
+            }}
+        >
             <ThumbnailList
                 currentPage={currentPage}
                 doc={currentDoc}

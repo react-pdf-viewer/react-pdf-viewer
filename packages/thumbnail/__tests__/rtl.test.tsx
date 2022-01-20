@@ -51,6 +51,9 @@ test('Support RTL', async () => {
     const viewerEle = getByTestId('core__viewer');
     mockIsIntersecting(viewerEle, true);
 
+    const thumbnailsListContainer = await findByTestId('thumbnail__list-container');
+    mockIsIntersecting(thumbnailsListContainer, true);
+
     const thumnailsContainer = await findByTestId('thumbnail__list');
     expect(thumnailsContainer).toHaveClass('rpv-thumbnail__list--rtl');
 });
