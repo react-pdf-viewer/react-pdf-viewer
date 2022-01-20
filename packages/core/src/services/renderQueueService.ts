@@ -59,6 +59,10 @@ export const renderQueueService = ({
         pageVisibilities[queue][pageIndex].renderStatus = PageRenderStatus.Rendered;
     };
 
+    const markRendering = (pageIndex: number) => {
+        pageVisibilities[queue][pageIndex].renderStatus = PageRenderStatus.Rendering;
+    };
+
     const setRange = (startIndex: number, endIndex: number) => {
         for (let i = 0; i < numPages; i++) {
             if (i < startIndex || i > endIndex) {
@@ -83,22 +87,20 @@ export const renderQueueService = ({
         const firstVisiblePage = visiblePages[0].pageIndex;
         const lastVisiblePage = visiblePages[visiblePages.length - 1].pageIndex;
 
-        // Check if there is any visible page that has been rendering
-        const hasRenderingPage = visiblePages.find((item) => item.renderStatus === PageRenderStatus.Rendering);
-        if (hasRenderingPage) {
-            // Wait until the page is rendered completely
-            return -1;
+        // Find the first visible page that isn't rendered yet
+        const numVisiblePages = visiblePages.length;
+        for (let i = 0; i < numVisiblePages; i++) {
+            // There is a page that is being rendered
+            if (visiblePages[i].renderStatus === PageRenderStatus.Rendering) {
+                return -1;
+            }
+            if (visiblePages[i].renderStatus === PageRenderStatus.NotRenderedYet) {
+                return visiblePages[i].pageIndex;
+            }
         }
 
-        // Find the most visible page that isn't rendered yet
-        const notRenderedPages = visiblePages
-            .filter((item) => item.renderStatus === PageRenderStatus.NotRenderedYet)
-            .sort((a, b) => a.visibility - b.visibility);
-        if (notRenderedPages.length) {
-            const nextRenderPage = notRenderedPages[notRenderedPages.length - 1].pageIndex;
-            pageVisibilities[queue][nextRenderPage].renderStatus = PageRenderStatus.Rendering;
-            return nextRenderPage;
-        } else if (
+        // All visible pages are rendered
+        if (
             lastVisiblePage + 1 < numPages &&
             pageVisibilities[queue][lastVisiblePage + 1].renderStatus !== PageRenderStatus.Rendered
         ) {
@@ -123,6 +125,7 @@ export const renderQueueService = ({
         cleanup,
         getHighestPriorityPage,
         markRendered,
+        markRendering,
         resetQueue,
         setRange,
         setVisibility,

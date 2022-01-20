@@ -179,6 +179,7 @@ export const ThumbnailList: React.FC<{
     const renderNextThumbnail = React.useCallback(() => {
         const nextPage = renderQueueInstance.getHighestPriorityPage();
         if (nextPage > -1) {
+            renderQueueInstance.markRendering(nextPage);
             setRenderPageIndex(nextPage);
         }
     }, [docId]);

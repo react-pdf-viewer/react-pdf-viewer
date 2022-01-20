@@ -87,6 +87,8 @@ export interface PluginRenderPageLayer {
 export interface RenderPageProps {
     annotationLayer: Slot;
     canvasLayer: Slot;
+    // Is the canvas layer rendered completely?
+    canvasLayerRendered: boolean;
     doc: PdfJs.PdfDocument;
     height: number;
     pageIndex: number;
@@ -94,7 +96,11 @@ export interface RenderPageProps {
     scale: number;
     svgLayer: Slot;
     textLayer: Slot;
+    // Is the text layer rendered completely?
+    textLayerRendered: boolean;
     width: number;
+    // Mark as the page rendered completely
+    markRendered(pageIndex: number): void;
 }
 export type RenderPage = (props: RenderPageProps) => React.ReactElement;
 export interface RenderViewer {
@@ -455,6 +461,7 @@ export function renderQueueService({
     cleanup: () => void;
     getHighestPriorityPage: () => number;
     markRendered: (pageIndex: number) => void;
+    markRendering: (pageIndex: number) => void;
     resetQueue: () => void;
     setRange: (startIndex: number, endIndex: number) => void;
     setVisibility: (pageIndex: number, visibility: number) => void;

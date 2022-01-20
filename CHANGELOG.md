@@ -64,6 +64,53 @@ import '@react-pdf-viewer/scroll-mode/lib/styles/index.css';
 // Remove the import above
 ```
 
+-   From v3.1.0, pages are rendered one by one. If you use a custom page renderer, then you have to call the `markRendered` method to mark the page rendered completely.
+    Hence the next page in the queue will be rendered.
+
+```js
+// v3.0.0 and previous versions
+import type { RenderPageProps } from '@react-pdf-viewer/core';
+
+const CustomPageRender: React.FC<{
+    renderPageProps: RenderPageProps,
+}> = ({ renderPageProps }) => {
+    return (
+        <>
+            {/* Use the canvas and/or text layers */}
+            {renderPageProps.canvasLayer.children}
+            {renderPageProps.textLayer.children}
+
+            {/* Your custom components on page ... */}
+        </>
+    );
+};
+
+<Viewer renderPage={(props) => <CustomPageRender renderPageProps={props} />} />;
+
+// From v3.1.0
+const CustomPageRender: React.FC<{
+    renderPageProps: RenderPageProps,
+}> = ({ renderPageProps }) => {
+    React.useEffect(() => {
+        if (renderPageProps.canvasLayerRendered && renderPageProps.textLayerRendered) {
+            renderPageProps.markRendered(renderPageProps.pageIndex);
+        }
+    }, [renderPageProps.canvasLayerRendered, renderPageProps.textLayerRendered]);
+
+    return (
+        <>
+            {/* Use the canvas and/or text layers */}
+            {renderPageProps.canvasLayer.children}
+            {renderPageProps.textLayer.children}
+
+            {/* Your custom components on page ... */}
+        </>
+    );
+};
+
+<Viewer renderPage={(props) => <CustomPageRender renderPageProps={props} />} />;
+```
+
 ## v3.0.0
 
 **New features**

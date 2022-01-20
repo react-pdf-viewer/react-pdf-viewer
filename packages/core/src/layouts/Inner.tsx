@@ -33,7 +33,7 @@ import type { Slot } from '../types/Slot';
 import type { ViewerState } from '../types/ViewerState';
 import type { ZoomEvent } from '../types/ZoomEvent';
 
-const NUM_OVERSCAN_PAGES = 5;
+const NUM_OVERSCAN_PAGES = 3;
 const PAGE_PADDING = 16;
 
 export const Inner: React.FC<{
@@ -385,6 +385,7 @@ export const Inner: React.FC<{
     const renderNextPage = () => {
         const nextPage = renderQueueInstance.getHighestPriorityPage();
         if (nextPage > -1) {
+            renderQueueInstance.markRendering(nextPage);
             setRenderPageIndex(nextPage);
         }
     };

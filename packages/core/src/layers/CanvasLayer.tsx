@@ -8,7 +8,6 @@
 
 import * as React from 'react';
 
-import { Spinner } from '../components/Spinner';
 import { useIsMounted } from '../hooks/useIsMounted';
 import { useIsomorphicLayoutEffect } from '../hooks/useIsomorphicLayoutEffect';
 import { LayerRenderStatus } from '../structs/LayerRenderStatus';
@@ -35,11 +34,7 @@ export const CanvasLayer: React.FC<{
     const canvasRef = React.useRef<HTMLCanvasElement>();
     const renderTask = React.useRef<PdfJs.PageRenderTask>();
 
-    const [rendered, setRendered] = React.useState(false);
-
     useIsomorphicLayoutEffect(() => {
-        setRendered(false);
-
         const task = renderTask.current;
         if (task) {
             task.cancel();
@@ -90,7 +85,6 @@ export const CanvasLayer: React.FC<{
         renderTask.current = page.render({ canvasContext, transform, viewport });
         renderTask.current.promise.then(
             (): void => {
-                isMounted.current && setRendered(true);
                 canvasEle.style.removeProperty('opacity');
                 plugins.forEach((plugin) => {
                     if (plugin.onCanvasLayerRender) {
@@ -106,7 +100,6 @@ export const CanvasLayer: React.FC<{
                 onRenderCanvasCompleted();
             },
             (): void => {
-                isMounted.current && setRendered(true);
                 onRenderCanvasCompleted();
             }
         );
@@ -128,12 +121,7 @@ export const CanvasLayer: React.FC<{
                 width: `${width}px`,
             }}
         >
-            {!rendered && (
-                <div className="rpv-core__canvas-layer-loader">
-                    <Spinner />
-                </div>
-            )}
-            <canvas ref={canvasRef} />
+            <canvas ref={canvasRef} style={{ opacity: 0 }} />
         </div>
     );
 };
