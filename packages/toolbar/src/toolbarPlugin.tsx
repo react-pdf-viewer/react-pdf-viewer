@@ -25,6 +25,7 @@ import type {
     Plugin,
     PluginFunctions,
     PluginOnDocumentLoad,
+    PluginRenderPageLayer,
     RenderViewer,
     ViewerState,
     PluginOnTextLayerRender,
@@ -202,6 +203,17 @@ export const toolbarPlugin = (props?: ToolbarPluginProps): ToolbarPlugin => {
                 }
             });
         },
+        renderPageLayer: (renderProps: PluginRenderPageLayer) => (
+            <React.Fragment>
+                {plugins.map((plugin, idx) =>
+                    plugin.renderPageLayer ? (
+                        <React.Fragment key={idx}>{plugin.renderPageLayer(renderProps)}</React.Fragment>
+                    ) : (
+                        <React.Fragment key={idx}></React.Fragment>
+                    )
+                )}
+            </React.Fragment>
+        ),
         renderViewer: (props: RenderViewer) => {
             let { slot } = props;
             plugins.forEach((plugin) => {

@@ -21,6 +21,7 @@ import type {
     PluginOnDocumentLoad,
     PluginOnAnnotationLayerRender,
     PluginOnTextLayerRender,
+    PluginRenderPageLayer,
     RenderViewer,
     ViewerState,
 } from '@react-pdf-viewer/core';
@@ -85,6 +86,19 @@ export const defaultLayoutPlugin = (props?: DefaultLayoutPluginProps): DefaultLa
                 }
             });
         },
+        renderPageLayer: (renderProps: PluginRenderPageLayer) => (
+            <React.Fragment>
+                {plugins.map((plugin, idx) =>
+                    plugin.renderPageLayer ? (
+                        <React.Fragment key={idx}>{plugin.renderPageLayer(renderProps)}</React.Fragment>
+                    ) : (
+                        <React.Fragment key={idx}>
+                            <></>
+                        </React.Fragment>
+                    )
+                )}
+            </React.Fragment>
+        ),
         renderViewer: (renderProps: RenderViewer) => {
             let { slot } = renderProps;
             plugins.forEach((plugin) => {

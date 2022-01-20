@@ -13,6 +13,7 @@ import type {
     PluginFunctions,
     PluginOnDocumentLoad,
     PluginOnTextLayerRender,
+    PluginRenderPageLayer,
     RenderViewer,
     Slot,
 } from '@react-pdf-viewer/core';
@@ -51,6 +52,9 @@ export interface SearchPluginProps {
     onHighlightKeyword?(props: OnHighlightKeyword): void;
 }
 
+const normalizeKeywords = (keyword?: SingleKeyword | SingleKeyword[]): NormalizedKeyword[] =>
+    Array.isArray(keyword) ? keyword.map((k) => normalizeSingleKeyword(k)) : [normalizeSingleKeyword(keyword)];
+
 export const searchPlugin = (props?: SearchPluginProps): SearchPlugin => {
     const searchPluginProps = React.useMemo(
         // eslint-disable-next-line @typescript-eslint/no-empty-function
@@ -61,6 +65,7 @@ export const searchPlugin = (props?: SearchPluginProps): SearchPlugin => {
         () =>
             createStore<StoreProps>({
                 renderStatus: new Map<number, PluginOnTextLayerRender>(),
+                keyword: props && props.keyword ? normalizeKeywords(props.keyword) : [EMPTY_KEYWORD_REGEXP],
             }),
         []
     );
@@ -89,17 +94,6 @@ export const searchPlugin = (props?: SearchPluginProps): SearchPlugin => {
                     {searchPluginProps.enableShortcuts && (
                         <ShortcutHandler containerRef={renderViewerProps.containerRef} store={store} />
                     )}
-                    {Array(renderViewerProps.doc.numPages)
-                        .fill(0)
-                        .map((_, index) => (
-                            <Tracker
-                                key={index}
-                                numPages={renderViewerProps.doc.numPages}
-                                pageIndex={index}
-                                store={store}
-                                onHighlightKeyword={searchPluginProps.onHighlightKeyword}
-                            />
-                        ))}
                     {currentSlot.subSlot.children}
                 </>
             );
@@ -108,8 +102,15 @@ export const searchPlugin = (props?: SearchPluginProps): SearchPlugin => {
         return currentSlot;
     };
 
-    const normalizeKeywords = (keyword?: SingleKeyword | SingleKeyword[]): NormalizedKeyword[] =>
-        Array.isArray(keyword) ? keyword.map((k) => normalizeSingleKeyword(k)) : [normalizeSingleKeyword(keyword)];
+    const renderPageLayer = (renderProps: PluginRenderPageLayer) => (
+        <Tracker
+            key={renderProps.pageIndex}
+            numPages={renderProps.doc.numPages}
+            pageIndex={renderProps.pageIndex}
+            store={store}
+            onHighlightKeyword={searchPluginProps.onHighlightKeyword}
+        />
+    );
 
     return {
         install: (pluginFunctions: PluginFunctions) => {
@@ -119,6 +120,7 @@ export const searchPlugin = (props?: SearchPluginProps): SearchPlugin => {
             store.update('jumpToPage', pluginFunctions.jumpToPage);
             store.update('keyword', keyword);
         },
+        renderPageLayer,
         renderViewer,
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         uninstall: (props: PluginFunctions) => {
