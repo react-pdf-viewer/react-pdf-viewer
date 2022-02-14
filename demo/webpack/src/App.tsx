@@ -16,10 +16,7 @@ const App = () => {
                 margin: '1rem auto',
             }}
         >
-            <Viewer
-                fileUrl={'/pdf-open-parameters.pdf'}
-                plugins={[defaultLayoutPluginInstance]}
-            />
+            <Viewer fileUrl={'/pdf-open-parameters.pdf'} plugins={[defaultLayoutPluginInstance]} />
         </div>
     );
 };
