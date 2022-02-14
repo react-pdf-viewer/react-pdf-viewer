@@ -62,3 +62,69 @@ test('onPageChange() callback', async () => {
     await waitForElementToBeRemoved(() => getByTestId('core__page-layer-loading-2'));
     expect(visitedPages.textContent).toEqual('0,2');
 });
+
+const TestOnPageChangeDocumentLoad: React.FC<{
+    fileUrl: Uint8Array;
+}> = ({ fileUrl }) => {
+    const [log, setLog] = React.useState('');
+
+    const handlePageChange = (e: PageChangeEvent) => {
+        setLog((log) => `${log}___${e.currentPage}___onPageChange`);
+    };
+
+    const handleDocumentLoad = (e) => {
+        setLog((log) => `${log}___onDocumentLoad`);
+    };
+
+    return (
+        <>
+            <div data-testid="log">{log}</div>
+            <div style={{ height: '50rem', width: '50rem' }}>
+                <Viewer fileUrl={fileUrl} onPageChange={handlePageChange} onDocumentLoad={handleDocumentLoad} />
+            </div>
+        </>
+    );
+};
+
+test('onPageChange() should fire after onDocumentLoad()', async () => {
+    const { findByTestId, getByTestId } = render(
+        <TestOnPageChangeDocumentLoad fileUrl={global['__OPEN_PARAMS_PDF__']} />
+    );
+
+    const viewerEle = getByTestId('core__viewer');
+    mockIsIntersecting(viewerEle, true);
+    viewerEle['__jsdomMockClientHeight'] = 800;
+    viewerEle['__jsdomMockClientWidth'] = 800;
+
+    // Wait until the document is loaded completely
+    await waitForElementToBeRemoved(() => getByTestId('core__doc-loading'));
+
+    let log = await findByTestId('log');
+    expect(log.textContent).toEqual('___onDocumentLoad___0___onPageChange');
+
+    const pagesContainer = getByTestId('core__inner-pages');
+    pagesContainer.getBoundingClientRect = jest.fn(() => ({
+        x: 0,
+        y: 0,
+        height: 800,
+        width: 800,
+        top: 0,
+        right: 0,
+        bottom: 0,
+        left: 0,
+        toJSON: () => {},
+    }));
+    mockResize(pagesContainer);
+
+    // Scroll to the third page
+    fireEvent.scroll(pagesContainer, {
+        target: {
+            scrollTop: 1782,
+        },
+    });
+
+    await waitForElementToBeRemoved(() => getByTestId('core__page-layer-loading-2'));
+
+    log = await findByTestId('log');
+    expect(log.textContent).toEqual('___onDocumentLoad___0___onPageChange___2___onPageChange');
+});
