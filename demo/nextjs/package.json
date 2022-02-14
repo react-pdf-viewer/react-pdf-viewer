@@ -19,7 +19,7 @@
         "@react-pdf-viewer/search": "3.1.0",
         "@react-pdf-viewer/toolbar": "3.1.0",
         "@react-pdf-viewer/zoom": "3.1.0",
-        "next": "^12.0.7"
+        "next": "^12.0.10"
     },
     "devDependencies": {
         "serve": "^13.0.2",
