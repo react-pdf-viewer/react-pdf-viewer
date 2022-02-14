@@ -296,6 +296,17 @@ export const Inner: React.FC<{
     // Internal
     // --------
 
+    React.useEffect(() => {
+        onDocumentLoad({ doc, file: currentFile });
+        // Loop over the plugins
+        plugins.forEach((plugin) => {
+            plugin.onDocumentLoad && plugin.onDocumentLoad({ doc, file: currentFile });
+        });
+        if (initialPage) {
+            jumpToPage(initialPage);
+        }
+    }, [docId]);
+
     // Scroll to the current page after switching the scroll mode
     React.useEffect(() => {
         const latestPage = stateRef.current.pageIndex;
@@ -364,17 +375,6 @@ export const Inner: React.FC<{
                 }
             });
         };
-    }, [docId]);
-
-    React.useEffect(() => {
-        onDocumentLoad({ doc, file: currentFile });
-        // Loop over the plugins
-        plugins.forEach((plugin) => {
-            plugin.onDocumentLoad && plugin.onDocumentLoad({ doc, file: currentFile });
-        });
-        if (initialPage) {
-            jumpToPage(initialPage);
-        }
     }, [docId]);
 
     const handlePageRenderCompleted = React.useCallback((pageIndex: number) => {

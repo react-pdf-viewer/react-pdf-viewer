@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## v3.1.1 [WIP]
+
+**Bug fix**
+
+-   `onPageChange()` should fire after `onDocumentLoad()`
+
 ## v3.1.0
 
 **New features**
