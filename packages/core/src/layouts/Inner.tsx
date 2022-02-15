@@ -297,6 +297,36 @@ export const Inner: React.FC<{
     // --------
 
     React.useEffect(() => {
+        const pluginMethods: PluginFunctions = {
+            getPagesContainer,
+            getViewerState,
+            jumpToDestination,
+            jumpToPage,
+            openFile,
+            rotate,
+            setViewerState,
+            switchScrollMode,
+            zoom,
+        };
+
+        // Install the plugins
+        plugins.forEach((plugin) => {
+            if (plugin.install) {
+                plugin.install(pluginMethods);
+            }
+        });
+
+        return () => {
+            // Uninstall the plugins
+            plugins.forEach((plugin) => {
+                if (plugin.uninstall) {
+                    plugin.uninstall(pluginMethods);
+                }
+            });
+        };
+    }, [docId]);
+
+    React.useEffect(() => {
         onDocumentLoad({ doc, file: currentFile });
         // Loop over the plugins
         plugins.forEach((plugin) => {
@@ -346,36 +376,6 @@ export const Inner: React.FC<{
 
         renderNextPage();
     }, [virtualizer.startRange, virtualizer.endRange, virtualizer.maxVisbilityIndex, rotation, scale]);
-
-    React.useEffect(() => {
-        const pluginMethods: PluginFunctions = {
-            getPagesContainer,
-            getViewerState,
-            jumpToDestination,
-            jumpToPage,
-            openFile,
-            rotate,
-            setViewerState,
-            switchScrollMode,
-            zoom,
-        };
-
-        // Install the plugins
-        plugins.forEach((plugin) => {
-            if (plugin.install) {
-                plugin.install(pluginMethods);
-            }
-        });
-
-        return () => {
-            // Uninstall the plugins
-            plugins.forEach((plugin) => {
-                if (plugin.uninstall) {
-                    plugin.uninstall(pluginMethods);
-                }
-            });
-        };
-    }, [docId]);
 
     const handlePageRenderCompleted = React.useCallback((pageIndex: number) => {
         renderQueueInstance.markRendered(pageIndex);
