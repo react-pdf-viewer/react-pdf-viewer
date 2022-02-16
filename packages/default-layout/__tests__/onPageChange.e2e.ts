@@ -2,6 +2,10 @@ import 'expect-puppeteer';
 
 test('Test the onPageChange() callback with the default layout', async () => {
     await page.goto('http://localhost:3000/default-layout-onpagechange');
+    await page.setViewport({
+        width: 1920,
+        height: 1080,
+    });
     await page.evaluate(() => document.querySelector('[data-testid="root"]').scrollIntoView());
 
     // Wait until the first page is rendered
@@ -37,6 +41,10 @@ test('Test the onPageChange() callback with the default layout', async () => {
 
 test('Test the onPageChange() when navigating between pages', async () => {
     await page.goto('http://localhost:3000/default-layout-onpagechange');
+    await page.setViewport({
+        width: 1920,
+        height: 1080,
+    });
     await page.evaluate(() => document.querySelector('[data-testid="root"]').scrollIntoView());
 
     // Wait until the first page is rendered

@@ -1,10 +1,11 @@
 import 'expect-puppeteer';
 
-beforeAll(async () => {
-    await page.goto('http://localhost:3000/search-custom-control');
-});
-
 test('Jump between matches', async () => {
+    await page.goto('http://localhost:3000/search-custom-control');
+    await page.setViewport({
+        width: 1920,
+        height: 1080,
+    });
     await page.evaluate(() => document.querySelector('[data-testid="core__viewer"]').scrollIntoView());
 
     // Wait for the first page is rendered
@@ -44,26 +45,26 @@ test('Jump between matches', async () => {
 
     let position = await getPosition();
     expect(position.index).toEqual('0');
-    expect(position.left).toEqual('72.3331%');
+    expect(position.left).toEqual('72.1969%');
     expect(position.top).toEqual('15.1042%');
 
     // Jump to next match
     await nextMatchButton.click();
     position = await getPosition();
     expect(position.index).toEqual('1');
-    expect(position.left).toEqual('30.8287%');
+    expect(position.left).toEqual('31.0541%');
     expect(position.top).toEqual('16.6877%');
 
     await nextMatchButton.click();
     position = await getPosition();
     expect(position.index).toEqual('2');
-    expect(position.left).toEqual('60.0819%');
+    expect(position.left).toEqual('60.1314%');
     expect(position.top).toEqual('26.285%');
 
     await nextMatchButton.click();
     position = await getPosition();
     expect(position.index).toEqual('3');
-    expect(position.left).toEqual('37.3107%');
+    expect(position.left).toEqual('37.3104%');
     expect(position.top).toEqual('45.0968%');
 
     await nextMatchButton.click();
@@ -81,6 +82,6 @@ test('Jump between matches', async () => {
     await nextMatchButton.click();
     position = await getPosition();
     expect(position.index).toEqual('6');
-    expect(position.left).toEqual('43.5025%');
+    expect(position.left).toEqual('43.4949%');
     expect(position.top).toEqual('49.5134%');
 });

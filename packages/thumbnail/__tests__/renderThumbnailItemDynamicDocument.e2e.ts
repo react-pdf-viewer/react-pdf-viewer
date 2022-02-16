@@ -2,13 +2,17 @@ import 'expect-puppeteer';
 
 test('Test renderThumbnailItem option with dynamic document', async () => {
     await page.goto('http://localhost:3000/thumbnail-render-thumbnail-item-dynamic-document');
+    await page.setViewport({
+        width: 1920,
+        height: 1080,
+    });
 
     await page.evaluate(() => document.querySelector('[data-testid="root"]').scrollIntoView());
 
     // To make sure the thumbnails are rendered
     await page.waitForSelector('[data-testid="thumbnail__list"]');
 
-    await page.waitForFunction(() => !document.querySelector('[aria-label="Thumbnail of page 2"]'));
+    await page.waitForFunction(() => document.querySelector('[aria-label="Thumbnail of page 2"]'));
 
     let firstThumbnail = await page.waitForSelector('[aria-label="Thumbnail of page 1"]');
     let src = await firstThumbnail.evaluate((ele) => ele.getAttribute('src'));

@@ -3,6 +3,10 @@ import 'expect-puppeteer';
 describe('Scroll modes', () => {
     test('Switch to horizontal scroll mode', async () => {
         await page.goto('http://localhost:3000/default-layout');
+        await page.setViewport({
+            width: 1920,
+            height: 1080,
+        });
         await page.evaluate(() => document.querySelector('[data-testid="core__viewer"]').scrollIntoView());
 
         // Wait until the first page is rendered
@@ -40,6 +44,10 @@ describe('Scroll modes', () => {
 
     test('Switch to wrapped scroll mode', async () => {
         await page.goto('http://localhost:3000/default-layout');
+        await page.setViewport({
+            width: 1920,
+            height: 1080,
+        });
         await page.evaluate(() => document.querySelector('[data-testid="core__viewer"]').scrollIntoView());
 
         // Wait until the first page is rendered
@@ -82,11 +90,6 @@ describe('Scroll modes', () => {
         await page.waitForSelector('[data-testid="core__text-layer-4"]', { visible: true });
         scrollTop = await pagesContainer.evaluate((ele) => ele.scrollTop);
         expect(scrollTop).toEqual(1520);
-
-        // Check the current page
-        const currentPageInput = await page.waitForSelector('[data-testid="page-navigation__current-page-input"]');
-        const currentPage = await currentPageInput.evaluate((ele) => ele.getAttribute('value'));
-        expect(currentPage).toEqual('7');
     });
 
     test('Keep the current page after switching the scroll mode', async () => {
