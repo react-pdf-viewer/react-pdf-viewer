@@ -8,6 +8,7 @@
 
 import * as React from 'react';
 
+import { useIsomorphicLayoutEffect } from './useIsomorphicLayoutEffect';
 import { useMeasureRect } from './useMeasureRect';
 import { useScroll } from './useScroll';
 import { ScrollMode } from '../structs/ScrollMode';
@@ -22,6 +23,9 @@ interface ItemMeasurement {
     size: Rect;
     end: Offset;
     visibility: number;
+}
+interface VirtualItem extends ItemMeasurement {
+    measureRef: (ele: HTMLElement) => void;
 }
 
 const ZERO_RECT: Rect = {
@@ -280,9 +284,9 @@ export const useVirtual = ({
     endRange: number;
     maxVisbilityIndex: number;
     getContainerStyles: () => React.CSSProperties;
-    getItemStyles: (item: ItemMeasurement) => React.CSSProperties;
+    getItemStyles: (item: VirtualItem) => React.CSSProperties;
     scrollToItem: (index: number, offset: Offset) => void;
-    virtualItems: ItemMeasurement[];
+    virtualItems: VirtualItem[];
 } => {
     const { scrollOffset, scrollTo } = useScroll({
         elementRef: parentRef,
@@ -302,6 +306,10 @@ export const useVirtual = ({
     latestRef.current.scrollOffset = scrollOffset;
     latestRef.current.parentRect = parentRect;
 
+    // Support dynamic size of each item
+    const resizeObserversRef = React.useRef<Map<Element, ResizeObserver>>(new Map());
+    const [cacheMeasure, setCacheMeasure] = React.useState<Record<number, Rect>>({});
+
     const measurements = React.useMemo(() => {
         const measurements: ItemMeasurement[] = [];
 
@@ -312,7 +320,7 @@ export const useVirtual = ({
             top: 0,
         };
         for (let i = 0; i < numberOfItems; i++) {
-            const size = estimateSize(i);
+            const size = cacheMeasure[i] || estimateSize(i);
             let start = ZERO_OFFSET;
             if (i === 0) {
                 totalWidth = size.width;
@@ -368,7 +376,7 @@ export const useVirtual = ({
             };
         }
         return measurements;
-    }, [estimateSize, scrollMode, parentRect]);
+    }, [estimateSize, scrollMode, parentRect, cacheMeasure]);
 
     const totalSize = measurements[numberOfItems - 1]
         ? {
@@ -389,10 +397,48 @@ export const useVirtual = ({
     const startRange = setStartRange(start);
     const endRange = setEndRange(end);
 
-    const virtualItems = [];
-    for (let i = startRange; i <= endRange; i++) {
-        virtualItems.push({ ...measurements[i], visibility: visibilities[i] !== undefined ? visibilities[i] : -1 });
-    }
+    const virtualItems = React.useMemo(() => {
+        const virtualItems: VirtualItem[] = [];
+
+        for (let i = startRange; i <= endRange; i++) {
+            const item = measurements[i];
+            const virtualItem: VirtualItem = {
+                ...item,
+                visibility: visibilities[i] !== undefined ? visibilities[i] : -1,
+                measureRef: (ele) => {
+                    if (!ele) {
+                        return;
+                    }
+                    new ResizeObserver(([{ target }], tracker) => {
+                        const rect = target.getBoundingClientRect();
+                        if (!rect) {
+                            tracker.disconnect();
+                            resizeObserversRef.current.delete(target);
+                            return;
+                        }
+
+                        const measuredSize = {
+                            height: rect.height,
+                            width: rect.width,
+                        };
+                        resizeObserversRef.current.get(target)?.disconnect();
+                        resizeObserversRef.current.set(target, tracker);
+                        if (measuredSize.height !== item.size.height || measuredSize.width !== item.size.width) {
+                            setCacheMeasure((old) => ({
+                                ...old,
+                                [i]: measuredSize,
+                            }));
+                            // measurements[i].size = measuredSize;
+                            // virtualItem.size = measuredSize;
+                        }
+                    }).observe(ele);
+                },
+            };
+            virtualItems.push(virtualItem);
+        }
+
+        return virtualItems;
+    }, [visibilities, measurements]);
 
     const scrollToItem = React.useCallback(
         (index: number, offset: Offset) => {
@@ -429,7 +475,7 @@ export const useVirtual = ({
 
     // Build the absolute position styles for each item
     const getItemStyles = React.useCallback(
-        (item: ItemMeasurement): React.CSSProperties => {
+        (item: VirtualItem): React.CSSProperties => {
             const sideProperty = isRtl ? 'right' : 'left';
             const factor = isRtl ? -1 : 1;
             switch (scrollMode) {
@@ -471,6 +517,14 @@ export const useVirtual = ({
         },
         [isRtl, scrollMode]
     );
+
+    // Cleanup
+    useIsomorphicLayoutEffect(() => {
+        return () => {
+            resizeObserversRef.current.forEach((tracker) => tracker.disconnect());
+            resizeObserversRef.current.clear();
+        };
+    });
 
     return {
         startIndex: start,

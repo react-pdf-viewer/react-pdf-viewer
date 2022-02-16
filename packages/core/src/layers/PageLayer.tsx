@@ -30,6 +30,7 @@ interface PageSizeState {
 export const PageLayer: React.FC<{
     doc: PdfJs.PdfDocument;
     height: number;
+    measureRef: (ele: HTMLElement) => void;
     pageIndex: number;
     plugins: Plugin[];
     renderPage?: RenderPage;
@@ -43,6 +44,7 @@ export const PageLayer: React.FC<{
 }> = ({
     doc,
     height,
+    measureRef,
     pageIndex,
     plugins,
     renderPage,
@@ -138,6 +140,7 @@ export const PageLayer: React.FC<{
         <div
             className="rpv-core__page-layer"
             data-testid={`core__page-layer-${pageIndex}`}
+            ref={measureRef}
             style={{
                 height: `${h}px`,
                 width: `${w}px`,

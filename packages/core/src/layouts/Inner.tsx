@@ -100,8 +100,8 @@ export const Inner: React.FC<{
                       width: sizes[0],
                   };
         return {
-            height: rect.height * scale + PAGE_PADDING,
-            width: rect.width * scale + PAGE_PADDING,
+            height: rect.height * scale,
+            width: rect.width * scale,
         };
     }, [rotation, scale]);
 
@@ -454,6 +454,7 @@ export const Inner: React.FC<{
                                 <PageLayer
                                     doc={doc}
                                     height={pageHeight}
+                                    measureRef={item.measureRef}
                                     pageIndex={item.index}
                                     plugins={plugins}
                                     renderPage={renderPage}
