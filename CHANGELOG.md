@@ -2,9 +2,10 @@
 
 ## v3.1.1 [WIP]
 
-**Bug fix**
+**Bug fixes**
 
 -   `onPageChange()` should fire after `onDocumentLoad()`
+-   The pages aren't layouted properly when they have different dimensions
 
 ## v3.1.0
 

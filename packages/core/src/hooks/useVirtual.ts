@@ -318,20 +318,22 @@ export const useVirtual = ({
 
         let totalWidth = 0;
         let firstOfRow = {
-            height: 0,
             left: 0,
             top: 0,
         };
+        // Maximum height of items which are in the same row (in the wrapped layout mode)
+        // The value will be used to calculate the `start` position for items in the next row
+        let maxHeight = 0;
         for (let i = 0; i < numberOfItems; i++) {
             const size = cacheMeasure[i] || transformSize(estimateSize(i));
             let start = ZERO_OFFSET;
             if (i === 0) {
                 totalWidth = size.width;
                 firstOfRow = {
-                    height: size.height,
                     left: 0,
                     top: 0,
                 };
+                maxHeight = size.height;
             } else {
                 switch (scrollMode) {
                     case ScrollMode.Wrapped:
@@ -342,18 +344,19 @@ export const useVirtual = ({
                                 left: measurements[i - 1].end.left,
                                 top: firstOfRow.top,
                             };
+                            maxHeight = Math.max(maxHeight, size.height);
                         } else {
                             // Put the item in the next row
                             totalWidth = size.width;
                             start = {
                                 left: firstOfRow.left,
-                                top: firstOfRow.top + firstOfRow.height,
+                                top: firstOfRow.top + maxHeight,
                             };
                             firstOfRow = {
-                                height: size.height,
                                 left: start.left,
                                 top: start.top,
                             };
+                            maxHeight = size.height;
                         }
                         break;
                     case ScrollMode.Horizontal:
