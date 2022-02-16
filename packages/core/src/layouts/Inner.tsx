@@ -110,6 +110,13 @@ export const Inner: React.FC<{
         (endIndex: number) => Math.min(endIndex + NUM_OVERSCAN_PAGES, numPages - 1),
         [numPages]
     );
+    const transformSize = React.useCallback(
+        (size: Rect) => ({
+            height: size.height + PAGE_PADDING,
+            width: size.width + PAGE_PADDING,
+        }),
+        []
+    );
 
     const virtualizer = useVirtual({
         estimateSize,
@@ -119,6 +126,7 @@ export const Inner: React.FC<{
         scrollMode: currentScrollMode,
         setStartRange,
         setEndRange,
+        transformSize,
     });
 
     const handlePagesResize = (target: Element) => {

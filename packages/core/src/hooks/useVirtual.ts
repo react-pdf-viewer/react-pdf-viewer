@@ -269,6 +269,7 @@ export const useVirtual = ({
     setEndRange,
     parentRef,
     scrollMode,
+    transformSize,
 }: {
     estimateSize: (index: number) => Rect;
     isRtl: boolean;
@@ -277,6 +278,8 @@ export const useVirtual = ({
     setEndRange(endIndex: number): number;
     parentRef: React.MutableRefObject<HTMLDivElement>;
     scrollMode: ScrollMode;
+    // Modify the size of each item. For example, items might have paddings
+    transformSize: (size: Rect) => Rect;
 }): {
     startIndex: number;
     startRange: number;
@@ -320,7 +323,7 @@ export const useVirtual = ({
             top: 0,
         };
         for (let i = 0; i < numberOfItems; i++) {
-            const size = cacheMeasure[i] || estimateSize(i);
+            const size = cacheMeasure[i] || transformSize(estimateSize(i));
             let start = ZERO_OFFSET;
             if (i === 0) {
                 totalWidth = size.width;
@@ -376,7 +379,7 @@ export const useVirtual = ({
             };
         }
         return measurements;
-    }, [estimateSize, scrollMode, parentRect, cacheMeasure]);
+    }, [estimateSize, scrollMode, parentRect, cacheMeasure, transformSize]);
 
     const totalSize = measurements[numberOfItems - 1]
         ? {
@@ -417,10 +420,10 @@ export const useVirtual = ({
                             return;
                         }
 
-                        const measuredSize = {
+                        const measuredSize = transformSize({
                             height: rect.height,
                             width: rect.width,
-                        };
+                        });
                         resizeObserversRef.current.get(target)?.disconnect();
                         resizeObserversRef.current.set(target, tracker);
                         if (measuredSize.height !== item.size.height || measuredSize.width !== item.size.width) {
@@ -428,8 +431,6 @@ export const useVirtual = ({
                                 ...old,
                                 [i]: measuredSize,
                             }));
-                            // measurements[i].size = measuredSize;
-                            // virtualItem.size = measuredSize;
                         }
                     }).observe(ele);
                 },
@@ -438,7 +439,7 @@ export const useVirtual = ({
         }
 
         return virtualItems;
-    }, [visibilities, measurements]);
+    }, [transformSize, visibilities, measurements]);
 
     const scrollToItem = React.useCallback(
         (index: number, offset: Offset) => {
