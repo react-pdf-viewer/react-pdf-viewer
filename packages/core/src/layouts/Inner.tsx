@@ -100,8 +100,8 @@ export const Inner: React.FC<{
                       width: sizes[0],
                   };
         return {
-            height: rect.height * scale + PAGE_PADDING,
-            width: rect.width * scale + PAGE_PADDING,
+            height: rect.height * scale,
+            width: rect.width * scale,
         };
     }, [rotation, scale]);
 
@@ -109,6 +109,13 @@ export const Inner: React.FC<{
     const setEndRange = React.useCallback(
         (endIndex: number) => Math.min(endIndex + NUM_OVERSCAN_PAGES, numPages - 1),
         [numPages]
+    );
+    const transformSize = React.useCallback(
+        (size: Rect) => ({
+            height: size.height + PAGE_PADDING,
+            width: size.width + PAGE_PADDING,
+        }),
+        []
     );
 
     const virtualizer = useVirtual({
@@ -119,6 +126,7 @@ export const Inner: React.FC<{
         scrollMode: currentScrollMode,
         setStartRange,
         setEndRange,
+        transformSize,
     });
 
     const handlePagesResize = (target: Element) => {
@@ -297,6 +305,36 @@ export const Inner: React.FC<{
     // --------
 
     React.useEffect(() => {
+        const pluginMethods: PluginFunctions = {
+            getPagesContainer,
+            getViewerState,
+            jumpToDestination,
+            jumpToPage,
+            openFile,
+            rotate,
+            setViewerState,
+            switchScrollMode,
+            zoom,
+        };
+
+        // Install the plugins
+        plugins.forEach((plugin) => {
+            if (plugin.install) {
+                plugin.install(pluginMethods);
+            }
+        });
+
+        return () => {
+            // Uninstall the plugins
+            plugins.forEach((plugin) => {
+                if (plugin.uninstall) {
+                    plugin.uninstall(pluginMethods);
+                }
+            });
+        };
+    }, [docId]);
+
+    React.useEffect(() => {
         onDocumentLoad({ doc, file: currentFile });
         // Loop over the plugins
         plugins.forEach((plugin) => {
@@ -346,36 +384,6 @@ export const Inner: React.FC<{
 
         renderNextPage();
     }, [virtualizer.startRange, virtualizer.endRange, virtualizer.maxVisbilityIndex, rotation, scale]);
-
-    React.useEffect(() => {
-        const pluginMethods: PluginFunctions = {
-            getPagesContainer,
-            getViewerState,
-            jumpToDestination,
-            jumpToPage,
-            openFile,
-            rotate,
-            setViewerState,
-            switchScrollMode,
-            zoom,
-        };
-
-        // Install the plugins
-        plugins.forEach((plugin) => {
-            if (plugin.install) {
-                plugin.install(pluginMethods);
-            }
-        });
-
-        return () => {
-            // Uninstall the plugins
-            plugins.forEach((plugin) => {
-                if (plugin.uninstall) {
-                    plugin.uninstall(pluginMethods);
-                }
-            });
-        };
-    }, [docId]);
 
     const handlePageRenderCompleted = React.useCallback((pageIndex: number) => {
         renderQueueInstance.markRendered(pageIndex);
@@ -454,6 +462,7 @@ export const Inner: React.FC<{
                                 <PageLayer
                                     doc={doc}
                                     height={pageHeight}
+                                    measureRef={item.measureRef}
                                     pageIndex={item.index}
                                     plugins={plugins}
                                     renderPage={renderPage}
