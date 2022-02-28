@@ -9,7 +9,13 @@
 import * as React from 'react';
 import type { Store } from '@react-pdf-viewer/core';
 
-import { addFullScreenChangeListener, exitFullScreenMode, getFullScreenElement, requestFullScreen } from './fullScreen';
+import {
+    addFullScreenChangeListener,
+    exitFullScreenMode,
+    getFullScreenElement,
+    isFullScreenEnabled,
+    requestFullScreen,
+} from './fullScreen';
 import type { StoreProps } from './types/StoreProps';
 import type { Zoom } from './types/Zoom';
 
@@ -39,6 +45,10 @@ export const useEnterFullScreen = (
     };
 
     const enterFullScreen = () => {
+        if (!isFullScreenEnabled()) {
+            return;
+        }
+
         const pagesEle = pagesRef.current;
         if (!pagesEle) {
             return;

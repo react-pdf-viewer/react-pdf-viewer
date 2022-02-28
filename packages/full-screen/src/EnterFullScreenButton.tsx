@@ -9,6 +9,7 @@
 import * as React from 'react';
 import { isMac, LocalizationContext, MinimalButton, Position, Tooltip } from '@react-pdf-viewer/core';
 
+import { isFullScreenEnabled } from './fullScreen';
 import { FullScreenIcon } from './FullScreenIcon';
 
 const TOOLTIP_OFFSET = { left: 0, top: 8 };
@@ -29,6 +30,7 @@ export const EnterFullScreenButton: React.FC<{
                 <MinimalButton
                     ariaKeyShortcuts={ariaKeyShortcuts}
                     ariaLabel={label as string}
+                    isDisabled={!isFullScreenEnabled()}
                     testId="full-screen__enter-button"
                     onClick={onClick}
                 >
