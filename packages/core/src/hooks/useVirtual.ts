@@ -310,7 +310,6 @@ export const useVirtual = ({
     latestRef.current.parentRect = parentRect;
 
     // Support dynamic size of each item
-    const resizeObserversRef = React.useRef<Map<Element, ResizeObserver>>(new Map());
     const [cacheMeasure, setCacheMeasure] = React.useState<Record<number, Rect>>({});
 
     const measurements = React.useMemo(() => {
@@ -415,27 +414,17 @@ export const useVirtual = ({
                     if (!ele) {
                         return;
                     }
-                    new ResizeObserver(([{ target }], tracker) => {
-                        const rect = target.getBoundingClientRect();
-                        if (!rect) {
-                            tracker.disconnect();
-                            resizeObserversRef.current.delete(target);
-                            return;
-                        }
-
-                        const measuredSize = transformSize({
-                            height: rect.height,
-                            width: rect.width,
-                        });
-                        resizeObserversRef.current.get(target)?.disconnect();
-                        resizeObserversRef.current.set(target, tracker);
-                        if (measuredSize.height !== item.size.height || measuredSize.width !== item.size.width) {
-                            setCacheMeasure((old) => ({
-                                ...old,
-                                [i]: measuredSize,
-                            }));
-                        }
-                    }).observe(ele);
+                    const rect = ele.getBoundingClientRect();
+                    const measuredSize = transformSize({
+                        height: rect.height,
+                        width: rect.width,
+                    });
+                    if (measuredSize.height !== item.size.height || measuredSize.width !== item.size.width) {
+                        setCacheMeasure((old) => ({
+                            ...old,
+                            [i]: measuredSize,
+                        }));
+                    }
                 },
             };
             virtualItems.push(virtualItem);
@@ -521,14 +510,6 @@ export const useVirtual = ({
         },
         [isRtl, scrollMode]
     );
-
-    // Cleanup
-    useIsomorphicLayoutEffect(() => {
-        return () => {
-            resizeObserversRef.current.forEach((tracker) => tracker.disconnect());
-            resizeObserversRef.current.clear();
-        };
-    });
 
     return {
         startIndex: start,
