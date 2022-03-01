@@ -52,6 +52,9 @@ const vendor: ApiMap = isBrowser
       defaultVendor
     : defaultVendor;
 
+export const isFullScreenEnabled = () =>
+    vendor.FullScreenEnabled in document && document[vendor.FullScreenEnabled as keyof Document] === true;
+
 export const addFullScreenChangeListener = (handler: () => void): void => {
     if (isBrowser) {
         document.addEventListener(vendor.FullScreenChange, handler);

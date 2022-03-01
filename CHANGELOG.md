@@ -2,6 +2,10 @@
 
 ## v3.1.1 [WIP]
 
+**Improvement**
+
+-   The full screen button and menu item are disabled on browsers that don't support full screen APIs. It happens on iOS Safari and iOS Chrome, for example.
+
 **Bug fixes**
 
 -   `onPageChange()` should fire after `onDocumentLoad()`
