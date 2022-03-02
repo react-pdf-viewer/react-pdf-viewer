@@ -9,8 +9,8 @@
         "dev": "rm -rf dist && mkdir dist && npm run copy && NODE_ENV=development webpack serve"
     },
     "dependencies": {
-        "@react-pdf-viewer/core": "3.1.0",
-        "@react-pdf-viewer/default-layout": "3.1.0"
+        "@react-pdf-viewer/core": "3.1.1",
+        "@react-pdf-viewer/default-layout": "3.1.1"
     },
     "devDependencies": {
         "@babel/core": "^7.17.2",
