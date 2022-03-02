@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## v3.1.1 [WIP]
+## v3.1.1
 
 **Improvement**
 
