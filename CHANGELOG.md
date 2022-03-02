@@ -10,6 +10,7 @@
 
 -   `onPageChange()` should fire after `onDocumentLoad()`
 -   The pages aren't layouted properly when they have different dimensions
+-   The pages are blank initially until users scroll or interact with the page
 
 ## v3.1.0
 

@@ -30,7 +30,6 @@ export const CanvasLayer: React.FC<{
     width: number;
     onRenderCanvasCompleted: () => void;
 }> = ({ height, page, pageIndex, plugins, rotation, scale, width, onRenderCanvasCompleted }) => {
-    const isMounted = useIsMounted();
     const canvasRef = React.useRef<HTMLCanvasElement>();
     const renderTask = React.useRef<PdfJs.PageRenderTask>();
 
@@ -77,7 +76,11 @@ export const CanvasLayer: React.FC<{
         canvasEle.height = roundToDivide(viewport.height * possibleScale, x);
         canvasEle.style.width = `${roundToDivide(viewport.width, y)}px`;
         canvasEle.style.height = `${roundToDivide(viewport.height, y)}px`;
-        canvasEle.style.opacity = '0';
+
+        // Hide the canvas element
+        // Setting `hidden` is safer than the opacity (such as canvasEle.style.opacity = '0')
+        // Setting the opacity style can cause the issue where the page is blank until users scroll or interact with the page
+        canvasEle.hidden = true;
 
         const canvasContext = canvasEle.getContext('2d', { alpha: false });
 
@@ -85,7 +88,7 @@ export const CanvasLayer: React.FC<{
         renderTask.current = page.render({ canvasContext, transform, viewport });
         renderTask.current.promise.then(
             (): void => {
-                canvasEle.style.removeProperty('opacity');
+                canvasEle.hidden = false;
                 plugins.forEach((plugin) => {
                     if (plugin.onCanvasLayerRender) {
                         plugin.onCanvasLayerRender({
@@ -100,6 +103,7 @@ export const CanvasLayer: React.FC<{
                 onRenderCanvasCompleted();
             },
             (): void => {
+                canvasEle.hidden = false;
                 onRenderCanvasCompleted();
             }
         );
@@ -121,7 +125,7 @@ export const CanvasLayer: React.FC<{
                 width: `${width}px`,
             }}
         >
-            <canvas ref={canvasRef} style={{ opacity: 0 }} />
+            <canvas ref={canvasRef} />
         </div>
     );
 };
