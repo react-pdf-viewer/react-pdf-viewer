@@ -54,8 +54,14 @@ const IndexPage = () => {
                                             renderSearchProps.setKeyword(e.target.value);
                                         }}
                                         onKeyDown={(e) => {
-                                            if (e.key === 'Enter' && renderSearchProps.keyword) {
+                                            if (e.key !== 'Enter') {
+                                                return;
+                                            }
+                                            if (renderSearchProps.keyword) {
                                                 renderSearchProps.search().then(() => setSearchDone(true));
+                                            } else {
+                                                setSearchDone(true);
+                                                renderSearchProps.clearKeyword();
                                             }
                                         }}
                                     />
