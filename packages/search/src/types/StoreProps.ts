@@ -17,7 +17,7 @@ export interface StoreProps {
     areShortcutsPressed?: boolean;
     doc?: PdfJs.PdfDocument;
     keyword?: NormalizedKeyword[];
-    matchPosition?: MatchPosition;
+    matchPosition: MatchPosition;
     renderStatus: Map<number, PluginOnTextLayerRender>;
     jumpToDestination?(
         pageIndex: number,

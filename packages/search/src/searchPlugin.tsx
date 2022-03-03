@@ -64,6 +64,10 @@ export const searchPlugin = (props?: SearchPluginProps): SearchPlugin => {
     const store = React.useMemo(
         () =>
             createStore<StoreProps>({
+                matchPosition: {
+                    matchIndex: -1,
+                    pageIndex: -1,
+                },
                 renderStatus: new Map<number, PluginOnTextLayerRender>(),
                 keyword: props && props.keyword ? normalizeKeywords(props.keyword) : [EMPTY_KEYWORD_REGEXP],
             }),
