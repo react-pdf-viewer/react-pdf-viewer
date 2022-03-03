@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## v3.1.2 [WIP]
+
+**Bug fixes**
+
+-   The `ScrollModePluginProps` type isn't defined in the type definitions of the `toolbar` plugin
+
 ## v3.1.1
 
 **Improvement**
