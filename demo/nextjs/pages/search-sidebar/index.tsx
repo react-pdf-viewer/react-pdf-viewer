@@ -73,6 +73,7 @@ const SearchSidebar: React.FC<{
                             <div style={{ position: 'relative' }}>
                                 <TextBox
                                     placeholder="Enter to search"
+                                    testId="keyword-input"
                                     value={keyword}
                                     onChange={setKeyword}
                                     onKeyDown={handleSearchKeyDown}
@@ -106,6 +107,7 @@ const SearchSidebar: React.FC<{
                                             }}
                                         >
                                             <div
+                                                data-testid="num-matches"
                                                 style={{
                                                     color: 'rgba(0, 0, 0, .5)',
                                                     fontSize: '.8rem',
@@ -152,6 +154,7 @@ const SearchSidebar: React.FC<{
                                                         </div>
                                                     </div>
                                                     <div
+                                                        data-testid={`match-${index}`}
                                                         style={{
                                                             backgroundColor:
                                                                 currentMatch === index + 1 ? 'rgba(0, 0, 0, .1)' : '',
