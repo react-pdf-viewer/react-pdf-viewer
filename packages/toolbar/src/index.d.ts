@@ -32,7 +32,6 @@ import type { PropertiesPlugin, ShowPropertiesProps, ShowPropertiesMenuItemProps
 import type { RotateDecoratorProps, RotatePlugin, RotateProps } from '@react-pdf-viewer/rotate';
 import type {
     ScrollModePlugin,
-    ScrollModePluginProps,
     SwitchScrollModeMenuItemProps,
     SwitchScrollModeProps,
 } from '@react-pdf-viewer/scroll-mode';
@@ -138,7 +137,6 @@ export interface ToolbarPluginProps {
     getFilePlugin?: GetFilePluginProps;
     openPlugin?: OpenPluginProps;
     printPlugin?: PrintPluginProps;
-    scrollModePlugin?: ScrollModePluginProps;
     searchPlugin?: SearchPluginProps;
     selectionModePlugin?: SelectionModePluginProps;
     zoomPlugin?: ZoomPluginProps;
