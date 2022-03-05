@@ -8,7 +8,6 @@
 
 import * as React from 'react';
 
-import { useIsomorphicLayoutEffect } from './useIsomorphicLayoutEffect';
 import { useMeasureRect } from './useMeasureRect';
 import { useScroll } from './useScroll';
 import { ScrollMode } from '../structs/ScrollMode';
