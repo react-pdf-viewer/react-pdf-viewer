@@ -68,10 +68,9 @@ export const Tracker: React.FC<{
     store: Store<StoreProps>;
     onHighlightKeyword?(props: OnHighlightKeyword): void;
 }> = ({ numPages, pageIndex, store, onHighlightKeyword }) => {
-    const [matchPosition, setMatchPosition] = React.useState<MatchPosition>({
-        matchIndex: -1,
-        pageIndex: -1,
-    });
+    // The initial matching position is taken from the store
+    // So the current highlight is kept (after zooming the document, for example)
+    const [matchPosition, setMatchPosition] = React.useState<MatchPosition>(store.get('matchPosition'));
     const [keywordRegexp, setKeywordRegexp] = React.useState<NormalizedKeyword[]>(
         store.get('keyword') || [EMPTY_KEYWORD_REGEXP]
     );

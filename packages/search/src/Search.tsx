@@ -19,7 +19,7 @@ export interface RenderSearchProps {
     changeMatchCase(matchCase: boolean): void;
     changeWholeWords(wholeWords: boolean): void;
     currentMatch: number;
-    jumpToMatch(matchIndex: number, pageIndex: number): Match | null;
+    jumpToMatch(matchIndex: number): Match | null;
     jumpToNextMatch(): Match | null;
     jumpToPreviousMatch(): Match | null;
     keyword: string;

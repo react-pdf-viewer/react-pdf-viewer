@@ -5,6 +5,7 @@
 **Bug fixes**
 
 -   The `ScrollModePluginProps` type isn't defined in the type definitions of the `toolbar` plugin
+-   The current highlight is lost after zooming the document
 
 ## v3.1.1
 
