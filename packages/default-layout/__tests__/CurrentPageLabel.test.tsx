@@ -129,7 +129,7 @@ test('Test <CurrentPageLabel> with custom page label', async () => {
         },
     });
 
-    await findByTestId('core__page-layer-2');
+    await findByTestId('core__text-layer-2');
     pageLabel = await findByTestId('current-page-label');
     expect(pageLabel.textContent).toEqual('4(iii)');
 });
