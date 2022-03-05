@@ -85,10 +85,6 @@ export const useSearch = (
     const jumpToNextMatch = (): Match | null => jumpToMatch(currentMatch + 1);
 
     const clearKeyword = (): void => {
-        if (keywords.length === 0) {
-            // Do nothing
-            return;
-        }
         store.update('keyword', [EMPTY_KEYWORD_REGEXP]);
 
         setKeyword('');

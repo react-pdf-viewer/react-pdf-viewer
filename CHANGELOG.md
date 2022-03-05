@@ -4,8 +4,9 @@
 
 **Bug fixes**
 
+-   The `clearHighlights` and `clearKeyword()` functions provided by the `search` plugin should remove all highlights when the keyword is empty
 -   The current highlight is lost after zooming the document
--   The `jumpToMatch()` function does not properly highlight keyword when the page is not in the virtual list
+-   The `jumpToMatch()` function provided by the `search` plugin does not properly highlight keyword when the page is not in the virtual list
 -   The `ScrollModePluginProps` type isn't defined in the type definitions of the `toolbar` plugin
 
 ## v3.1.1
