@@ -4,8 +4,9 @@
 
 **Bug fixes**
 
--   The `ScrollModePluginProps` type isn't defined in the type definitions of the `toolbar` plugin
 -   The current highlight is lost after zooming the document
+-   The `jumpToMatch()` function does not properly highlight keyword when the page is not in the virtual list
+-   The `ScrollModePluginProps` type isn't defined in the type definitions of the `toolbar` plugin
 
 ## v3.1.1
 
