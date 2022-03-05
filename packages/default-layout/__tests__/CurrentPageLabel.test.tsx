@@ -56,6 +56,9 @@ test('Test <CurrentPageLabel>', async () => {
     viewerEle['__jsdomMockClientHeight'] = 800;
     viewerEle['__jsdomMockClientWidth'] = 800;
 
+    // Wait until the document is loaded completely
+    await waitForElementToBeRemoved(() => getByTestId('core__doc-loading'));
+
     let pageLabel = await findByTestId('current-page-label');
     expect(pageLabel.textContent).toEqual('8');
 
