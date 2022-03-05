@@ -56,6 +56,9 @@ test('Test <CurrentPageLabel>', async () => {
     viewerEle['__jsdomMockClientHeight'] = 800;
     viewerEle['__jsdomMockClientWidth'] = 800;
 
+    // Wait until the document is loaded completely
+    await waitForElementToBeRemoved(() => getByTestId('core__doc-loading'));
+
     let pageLabel = await findByTestId('current-page-label');
     expect(pageLabel.textContent).toEqual('8');
 
@@ -126,7 +129,7 @@ test('Test <CurrentPageLabel> with custom page label', async () => {
         },
     });
 
-    await findByTestId('core__page-layer-2');
+    await findByTestId('core__text-layer-2');
     pageLabel = await findByTestId('current-page-label');
     expect(pageLabel.textContent).toEqual('4(iii)');
 });

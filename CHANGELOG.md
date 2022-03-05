@@ -4,6 +4,7 @@
 
 **Bug fixes**
 
+-   Don't highlight spaces between words when searching for a keyword
 -   The `clearHighlights` and `clearKeyword()` functions provided by the `search` plugin should remove all highlights when the keyword is empty
 -   The current highlight is lost after zooming the document
 -   The `jumpToMatch()` function provided by the `search` plugin does not properly highlight keyword when the page is not in the virtual list

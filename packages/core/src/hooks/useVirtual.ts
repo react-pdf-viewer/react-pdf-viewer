@@ -8,7 +8,6 @@
 
 import * as React from 'react';
 
-import { useIsomorphicLayoutEffect } from './useIsomorphicLayoutEffect';
 import { useMeasureRect } from './useMeasureRect';
 import { useScroll } from './useScroll';
 import { ScrollMode } from '../structs/ScrollMode';
@@ -415,6 +414,10 @@ export const useVirtual = ({
                         return;
                     }
                     const rect = ele.getBoundingClientRect();
+                    if (rect.height === 0 && rect.width === 0) {
+                        // This happens in the unit test environment
+                        return;
+                    }
                     const measuredSize = transformSize({
                         height: rect.height,
                         width: rect.width,

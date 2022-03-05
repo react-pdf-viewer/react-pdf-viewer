@@ -190,13 +190,16 @@ export const Tracker: React.FC<{
                         return acc;
                     }, {} as { [spanIndex: number]: CharIndex[] });
                     Object.values(spanIndexes).forEach((charIndexSpan) => {
-                        highlight(
-                            keywordStr,
-                            item.keyword,
-                            containerEle,
-                            spans[charIndexSpan[0].spanIndex],
-                            charIndexSpan
-                        );
+                        // Ignore the spaces between words
+                        if (charIndexSpan[0].char.trim() !== '') {
+                            highlight(
+                                keywordStr,
+                                item.keyword,
+                                containerEle,
+                                spans[charIndexSpan[0].spanIndex],
+                                charIndexSpan
+                            );
+                        }
                     });
                 });
         });
