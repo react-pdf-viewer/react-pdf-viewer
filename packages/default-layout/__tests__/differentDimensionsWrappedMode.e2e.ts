@@ -31,7 +31,7 @@ test('Document with different page dimensions (wrapped scroll mode)', async () =
     const pagesContainer = await page.waitForSelector('[data-testid="core__inner-pages"]');
 
     await page.evaluate(() => document.querySelector('[data-testid="core__page-layer-2"]').scrollIntoView());
-    await page.waitForSelector('[data-testid="core__text-layer-1"]', { visible: true });
+    await page.waitForSelector('[data-testid="core__text-layer-2"]', { visible: true });
     let scrollTop = await pagesContainer.evaluate((ele) => ele.scrollTop);
     expect(scrollTop).toEqual(420);
 
