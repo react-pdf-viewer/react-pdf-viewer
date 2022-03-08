@@ -1,6 +1,6 @@
 {
     "name": "@react-pdf-viewer/full-screen",
-    "version": "3.1.1",
+    "version": "3.1.2",
     "description": "A React component to view a PDF document",
     "license": "https://react-pdf-viewer.dev/license",
     "author": {
@@ -33,7 +33,7 @@
         "lib/index.js"
     ],
     "dependencies": {
-        "@react-pdf-viewer/core": "3.1.1"
+        "@react-pdf-viewer/core": "3.1.2"
     },
     "peerDependencies": {
         "react": "^16.8.0 || ^17.0.0",
