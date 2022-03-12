@@ -37,7 +37,7 @@ const webkitVendor: ApiMap = {
 
 const msVendor: ApiMap = {
     ExitFullScreen: 'msExitFullscreen',
-    FullScreenChange: 'MSFullscreenChange',
+    FullScreenChange: 'msFullscreenChange',
     FullScreenElement: 'msFullscreenElement',
     FullScreenEnabled: 'msFullscreenEnabled',
     RequestFullScreen: 'msRequestFullscreen',

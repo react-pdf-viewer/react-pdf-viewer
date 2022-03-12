@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## v3.2.0 [WIP]
+
+**Bug fixes**
+
+-   Typo in full screen change event
+
 ## v3.1.2
 
 **Bug fixes**
