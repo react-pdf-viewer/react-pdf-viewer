@@ -2,6 +2,10 @@
 
 ## v3.2.0 [WIP]
 
+**Improvement**
+
+-   The search popover is opened if users press the shortcuts (`Ctrl + F`, or `Cmd + F` on macOS) when the mouse is inside the viewer container
+
 **Bug fixes**
 
 -   Typo in full screen change event
