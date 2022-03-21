@@ -2,11 +2,16 @@
 
 ## v3.2.0 [WIP]
 
-**Improvement**
+**New feature**
+
+-   The `Popover` component has new prop `lockScroll` which indicates whether the `body` element is scrollable or not. By default, it takes the `true` value
+
+**Improvements**
 
 -   The search popover is opened if users press the shortcuts (`Ctrl + F`, or `Cmd + F` on macOS) when the mouse is inside the viewer container
+-   It's able to scroll the pages when opening the search popover
 
-**Bug fixes**
+**Bug fix**
 
 -   Typo in full screen change event
 

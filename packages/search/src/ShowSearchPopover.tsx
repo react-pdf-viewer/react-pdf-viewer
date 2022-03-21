@@ -38,6 +38,7 @@ export const ShowSearchPopover: React.FC<{
     return (
         <Popover
             ariaControlsSuffix="search"
+            lockScroll={false}
             position={portalPosition}
             target={(toggle: Toggle) =>
                 render({
