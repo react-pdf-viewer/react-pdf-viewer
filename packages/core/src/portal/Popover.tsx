@@ -22,6 +22,7 @@ export const Popover: React.FC<{
     closeOnClickOutside: boolean;
     closeOnEscape: boolean;
     content: RenderContent;
+    lockScroll?: boolean;
     offset: Offset;
     position: Position;
     target: RenderTarget;
@@ -31,6 +32,7 @@ export const Popover: React.FC<{
     closeOnClickOutside,
     closeOnEscape,
     content,
+    lockScroll = true,
     offset,
     position,
     target,
@@ -50,7 +52,7 @@ export const Popover: React.FC<{
 
             {opened && (
                 <>
-                    <PopoverOverlay closeOnEscape={closeOnEscape} onClose={toggle} />
+                    {lockScroll && <PopoverOverlay closeOnEscape={closeOnEscape} onClose={toggle} />}
                     <PopoverBody
                         ariaControlsSuffix={controlsSuffix}
                         closeOnClickOutside={closeOnClickOutside}
