@@ -16,7 +16,18 @@ export const ShortcutHandler: React.FC<{
     containerRef: React.RefObject<HTMLDivElement>;
     store: Store<StoreProps>;
 }> = ({ containerRef, store }) => {
-    const keydownHandler = (e: KeyboardEvent) => {
+    // Indicate whether the mouse is inside the viewer container or not
+    const [isMouseInside, setMouseInside] = React.useState(true);
+
+    const handleMouseEnter = () => setMouseInside(true);
+    const handleMouseLeave = () => setMouseInside(false);
+
+    const handleKeydown = (e: KeyboardEvent) => {
+        const containerEle = containerRef.current;
+        if (!containerEle) {
+            return;
+        }
+
         if (e.shiftKey || e.altKey || e.key !== 'f') {
             return;
         }
@@ -25,13 +36,10 @@ export const ShortcutHandler: React.FC<{
             return;
         }
 
-        const containerEle = containerRef.current;
-        if (!containerEle || !document.activeElement || !containerEle.contains(document.activeElement)) {
-            return;
+        if (isMouseInside || (document.activeElement && containerEle.contains(document.activeElement))) {
+            e.preventDefault();
+            store.update('areShortcutsPressed', true);
         }
-
-        e.preventDefault();
-        store.update('areShortcutsPressed', true);
     };
 
     React.useEffect(() => {
@@ -40,9 +48,14 @@ export const ShortcutHandler: React.FC<{
             return;
         }
 
-        document.addEventListener('keydown', keydownHandler);
+        document.addEventListener('keydown', handleKeydown);
+        containerEle.addEventListener('mouseenter', handleMouseEnter);
+        containerEle.addEventListener('mouseleave', handleMouseLeave);
+
         return () => {
-            document.removeEventListener('keydown', keydownHandler);
+            document.removeEventListener('keydown', handleKeydown);
+            containerEle.removeEventListener('mouseenter', handleMouseEnter);
+            containerEle.removeEventListener('mouseleave', handleMouseLeave);
         };
     }, [containerRef.current]);
 
