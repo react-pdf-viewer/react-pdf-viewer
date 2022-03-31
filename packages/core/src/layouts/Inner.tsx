@@ -131,6 +131,8 @@ export const Inner: React.FC<{
 
     const handlePagesResize = (target: Element) => {
         if (keepSpecialZoomLevelRef.current) {
+            // Mark all pages as not rendered yet
+            setRenderPageIndex(-1);
             zoom(keepSpecialZoomLevelRef.current);
         }
     };

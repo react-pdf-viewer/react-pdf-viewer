@@ -11,9 +11,10 @@
 -   The search popover is opened if users press the shortcuts (`Ctrl + F`, or `Cmd + F` on macOS) when the mouse is inside the viewer container
 -   It's able to scroll the pages when opening the search popover
 
-**Bug fix**
+**Bug fixes**
 
 -   Typo in full screen change event
+-   There is a visible page that isn't rendered when setting the zoom level as page width
 
 ## v3.1.2
 
