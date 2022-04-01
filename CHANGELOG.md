@@ -121,9 +121,10 @@ const { RotatePage } = rotatePluginInstance;
 
 **Improvements**
 
--   The search popover is opened if users press the shortcuts (`Ctrl + F`, or `Cmd + F` on macOS) when the mouse is inside the viewer container
 -   It's able to scroll the pages when opening the search popover
+-   Compatible with React 18
 -   Support link annotations that have the `unsafeUrl` property
+-   The search popover is opened if users press the shortcuts (`Ctrl + F`, or `Cmd + F` on macOS) when the mouse is inside the viewer container
 
 **Bug fixes**
 
