@@ -61,6 +61,7 @@ export const Link: React.FC<{
                     {...props.slot.attrs}
                     className="rpv-core__annotation rpv-core__annotation--link"
                     data-annotation-id={annotation.id}
+                    data-testid={`core__annotation--link-${annotation.id}`}
                 >
                     <a {...attrs} />
                 </div>
