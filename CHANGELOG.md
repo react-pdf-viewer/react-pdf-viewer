@@ -16,6 +16,7 @@
 
 -   Typo in full screen change event
 -   There is a visible page that isn't rendered when setting the zoom level as page width
+-   The thumbnails aren't rotated after rotating the document
 
 ## v3.1.2
 
