@@ -266,6 +266,22 @@ export const Inner: React.FC<{
         onRotate({ doc, rotation: updateRotation });
     }, []);
 
+    const rotatePage = React.useCallback((pageIndex: number, updateRotation: number) => {
+        renderQueueInstance.resetQueue();
+        const rotations = pagesRotation.set(pageIndex, updateRotation);
+        setPagesRotation(rotations);
+        setViewerState({
+            file: viewerState.file,
+            pageIndex: currentPage,
+            pageHeight,
+            pageWidth,
+            pagesRotation: rotations,
+            rotation,
+            scale,
+            scrollMode: currentScrollMode,
+        });
+    }, []);
+
     const switchScrollMode = React.useCallback((scrollMode: ScrollMode) => {
         setViewerState({
             file: viewerState.file,
@@ -323,6 +339,7 @@ export const Inner: React.FC<{
             jumpToPage,
             openFile,
             rotate,
+            rotatePage,
             setViewerState,
             switchScrollMode,
             zoom,
