@@ -675,6 +675,7 @@ export declare namespace PdfJs {
         // Link annotation
         // `action` can be `FirstPage`, `PrevPage`, `NextPage`, `LastPage`, `GoBack`, `GoForward`
         action?: string;
+        unsafeUrl?: string;
         url?: string;
         newWindow?: boolean;
         // Polyline annotation
