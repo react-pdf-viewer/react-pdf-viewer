@@ -67,6 +67,7 @@ export const thumbnailPlugin = (pluginProps?: ThumbnailPluginProps): ThumbnailPl
             store.update('currentPage', viewerState.pageIndex);
             store.update('pageHeight', viewerState.pageHeight);
             store.update('pageWidth', viewerState.pageWidth);
+            store.update('rotation', viewerState.rotation);
             return viewerState;
         },
         Cover: CoverDecorator,
