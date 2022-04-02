@@ -26,12 +26,23 @@ export const ThumbnailContainer: React.FC<{
     doc: PdfJs.PdfDocument;
     pageHeight: number;
     pageIndex: number;
+    pageRotation: number;
     pageWidth: number;
     rotation: number;
     shouldRender: boolean;
     onRenderCompleted: (pageIndex: number) => void;
     onVisibilityChanged(pageIndex: number, visibility: VisibilityChanged): void;
-}> = ({ doc, pageHeight, pageIndex, pageWidth, rotation, shouldRender, onRenderCompleted, onVisibilityChanged }) => {
+}> = ({
+    doc,
+    pageHeight,
+    pageIndex,
+    pageRotation,
+    pageWidth,
+    rotation,
+    shouldRender,
+    onRenderCompleted,
+    onVisibilityChanged,
+}) => {
     const [pageSize, setPageSize] = React.useState<PageState>({
         height: pageHeight,
         page: null,
@@ -41,7 +52,7 @@ export const ThumbnailContainer: React.FC<{
     const { page, height, width } = pageSize;
 
     const scale = width / height;
-    const isVertical = Math.abs(rotation) % 180 === 0;
+    const isVertical = Math.abs(rotation + pageRotation) % 180 === 0;
     const w = isVertical ? THUMBNAIL_WIDTH : THUMBNAIL_WIDTH / scale;
     const h = isVertical ? THUMBNAIL_WIDTH / scale : THUMBNAIL_WIDTH;
 
@@ -60,7 +71,7 @@ export const ThumbnailContainer: React.FC<{
     }, [shouldRender]);
 
     // To support the document which is already rotated
-    const rotationNumber = (rotation + pageSize.viewportRotation) % 360;
+    const rotationNumber = (pageSize.viewportRotation + rotation + pageRotation) % 360;
 
     const containerRef = useIntersectionObserver({
         onVisibilityChanged: (visibility) => {

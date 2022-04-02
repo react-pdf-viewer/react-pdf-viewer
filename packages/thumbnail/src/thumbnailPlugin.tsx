@@ -72,6 +72,7 @@ export const thumbnailPlugin = (pluginProps?: ThumbnailPluginProps): ThumbnailPl
         },
         onViewerStateChange: (viewerState: ViewerState) => {
             store.update('currentPage', viewerState.pageIndex);
+            store.update('pagesRotation', viewerState.pagesRotation);
             store.update('pageHeight', viewerState.pageHeight);
             store.update('pageWidth', viewerState.pageWidth);
             store.update('rotation', viewerState.rotation);

@@ -26,6 +26,7 @@ export const ThumbnailListWithStore: React.FC<{
     const [pageHeight, setPageHeight] = React.useState(store.get('pageHeight') || 0);
     const [pageWidth, setPageWidth] = React.useState(store.get('pageWidth') || 0);
     const [rotation, setRotation] = React.useState(store.get('rotation') || 0);
+    const [pagesRotation, setPagesRotation] = React.useState(store.get('pagesRotation') || new Map());
 
     const handleCurrentPageChanged: StoreHandler<number> = (currentPageIndex: number) => {
         setCurrentPage(currentPageIndex);
@@ -47,6 +48,10 @@ export const ThumbnailListWithStore: React.FC<{
         setRotation(currentRotation);
     };
 
+    const handlePagesRotationChanged: StoreHandler<Map<number, number>> = (rotations: Map<number, number>) => {
+        setPagesRotation(rotations);
+    };
+
     const jump = (pageIndex: number) => {
         const jumpToPage = store.get('jumpToPage');
         if (jumpToPage) {
@@ -63,12 +68,14 @@ export const ThumbnailListWithStore: React.FC<{
         store.subscribe('pageHeight', handlePageHeightChanged);
         store.subscribe('pageWidth', handlePageWidthChanged);
         store.subscribe('rotation', handleRotationChanged);
+        store.subscribe('pagesRotation', handlePagesRotationChanged);
 
         return () => {
             store.unsubscribe('doc', handleDocumentChanged);
             store.unsubscribe('pageHeight', handlePageHeightChanged);
             store.unsubscribe('pageWidth', handlePageWidthChanged);
             store.unsubscribe('rotation', handleRotationChanged);
+            store.unsubscribe('pagesRotation', handlePagesRotationChanged);
         };
     }, []);
 
@@ -90,6 +97,7 @@ export const ThumbnailListWithStore: React.FC<{
             <ThumbnailList
                 currentPage={currentPage}
                 doc={currentDoc}
+                pagesRotation={pagesRotation}
                 pageHeight={pageHeight}
                 pageWidth={pageWidth}
                 renderCurrentPageLabel={renderCurrentPageLabel}

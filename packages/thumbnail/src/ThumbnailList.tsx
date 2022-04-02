@@ -25,6 +25,7 @@ import type { RenderThumbnailItem } from './types/RenderThumbnailItemProps';
 export const ThumbnailList: React.FC<{
     currentPage: number;
     doc: PdfJs.PdfDocument;
+    pagesRotation: Map<number, number>;
     pageHeight: number;
     pageWidth: number;
     renderCurrentPageLabel?: RenderCurrentPageLabel;
@@ -35,6 +36,7 @@ export const ThumbnailList: React.FC<{
 }> = ({
     currentPage,
     doc,
+    pagesRotation,
     pageHeight,
     pageWidth,
     renderCurrentPageLabel,
@@ -218,11 +220,14 @@ export const ThumbnailList: React.FC<{
                     ? renderCurrentPageLabel({ currentPage, pageIndex, numPages, pageLabel })
                     : pageLabel;
 
+                const pageRotation = pagesRotation.has(pageIndex) ? pagesRotation.get(pageIndex) : 0;
+
                 const thumbnail = (
                     <ThumbnailContainer
                         doc={doc}
                         pageHeight={pageHeight}
                         pageIndex={pageIndex}
+                        pageRotation={pageRotation}
                         pageWidth={pageWidth}
                         rotation={rotation}
                         shouldRender={renderPageIndex === pageIndex}
