@@ -267,8 +267,8 @@ export const Inner: React.FC<{
     }, []);
 
     const rotatePage = React.useCallback((pageIndex: number, updateRotation: number) => {
-        renderQueueInstance.resetQueue();
-        const rotations = pagesRotation.set(pageIndex, updateRotation);
+        const currentPageRotation = pagesRotation.has(pageIndex) ? pagesRotation.get(pageIndex) : 0;
+        const rotations = pagesRotation.set(pageIndex, currentPageRotation + updateRotation);
         setPagesRotation(rotations);
         setViewerState({
             file: viewerState.file,
@@ -280,6 +280,10 @@ export const Inner: React.FC<{
             scale,
             scrollMode: currentScrollMode,
         });
+
+        // Rerender the target page
+        renderQueueInstance.markRendering(pageIndex);
+        setRenderPageIndex(pageIndex);
     }, []);
 
     const switchScrollMode = React.useCallback((scrollMode: ScrollMode) => {

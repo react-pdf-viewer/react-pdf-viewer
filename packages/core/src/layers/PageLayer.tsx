@@ -123,7 +123,7 @@ export const PageLayer: React.FC<{
         });
         setCanvasLayerRendered(false);
         setTextLayerRendered(false);
-    }, [rotation, scale]);
+    }, [pageRotation, rotation, scale]);
 
     React.useEffect(() => {
         if (shouldRender && isMounted.current && !page) {
