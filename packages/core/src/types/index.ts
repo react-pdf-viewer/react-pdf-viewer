@@ -18,6 +18,7 @@ export * from './Plugin';
 export * from './PluginFunctions';
 export * from './RenderPage';
 export * from './RenderViewer';
+export * from './RotateEvent';
 export * from './Slot';
 export * from './Store';
 export * from './Toggle';
