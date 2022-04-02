@@ -16,6 +16,24 @@
 />
 ```
 
+-   Provide the ability of rotating a particular page. You can customize a thumbnail renderer to add the rotating functionality to each page:
+
+```tsx
+const renderThumbnailItem = (props: RenderThumbnailItemProps) => (
+    <MinimalButton onClick={() => props.onRotatePage(90)}>
+        <RotateForwardIcon />
+    </MinimalButton>
+    <MinimalButton onClick={() => props.onRotatePage(-90)}>
+        <RotateBackwardIcon />
+    </MinimalButton>
+);
+
+const thumbnailPluginInstance = thumbnailPlugin();
+const { Thumbnails } = thumbnailPluginInstance;
+
+<Thumbnails renderThumbnailItem={renderThumbnailItem} />
+```
+
 **Improvements**
 
 -   The search popover is opened if users press the shortcuts (`Ctrl + F`, or `Cmd + F` on macOS) when the mouse is inside the viewer container
