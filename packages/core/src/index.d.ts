@@ -412,6 +412,12 @@ export interface ZoomEvent {
     scale: number;
 }
 
+// Invoked when users rotate the document
+export interface RotateEvent {
+    doc: PdfJs.PdfDocument;
+    rotation: number;
+}
+
 export interface ThemeProps {
     direction?: TextDirection;
     theme?: string;
@@ -444,6 +450,7 @@ export interface ViewerProps {
     onDocumentAskPassword?(e: DocumentAskPasswordEvent): void;
     onDocumentLoad?(e: DocumentLoadEvent): void;
     onPageChange?(e: PageChangeEvent): void;
+    onRotate?(e: RotateEvent): void;
     // Invoked after switching to `theme`
     onSwitchTheme?(theme: string): void;
     onZoom?(e: ZoomEvent): void;

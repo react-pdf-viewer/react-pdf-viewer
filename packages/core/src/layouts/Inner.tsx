@@ -29,6 +29,7 @@ import type { Plugin } from '../types/Plugin';
 import type { DestinationOffsetFromViewport, PluginFunctions } from '../types/PluginFunctions';
 import type { Rect } from '../types/Rect';
 import type { RenderPage } from '../types/RenderPage';
+import type { RotateEvent } from '../types/RotateEvent';
 import type { Slot } from '../types/Slot';
 import type { ViewerState } from '../types/ViewerState';
 import type { ZoomEvent } from '../types/ZoomEvent';
@@ -49,6 +50,7 @@ export const Inner: React.FC<{
     onDocumentLoad(e: DocumentLoadEvent): void;
     onOpenFile(fileName: string, data: Uint8Array): void;
     onPageChange(e: PageChangeEvent): void;
+    onRotate(e: RotateEvent): void;
     onZoom(e: ZoomEvent): void;
 }> = ({
     currentFile,
@@ -63,6 +65,7 @@ export const Inner: React.FC<{
     onDocumentLoad,
     onOpenFile,
     onPageChange,
+    onRotate,
     onZoom,
 }) => {
     const { numPages } = doc;
@@ -257,6 +260,7 @@ export const Inner: React.FC<{
             scale,
             scrollMode: currentScrollMode,
         });
+        onRotate({ doc, rotation: updateRotation });
     }, []);
 
     const switchScrollMode = React.useCallback((scrollMode: ScrollMode) => {
