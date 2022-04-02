@@ -42,6 +42,7 @@ export const PageLayer: React.FC<{
     onExecuteNamedAction(action: string): void;
     onJumpToDest(pageIndex: number, bottomOffset: number, leftOffset: number, scaleTo: number | SpecialZoomLevel): void;
     onRenderCompleted(pageIndex: number): void;
+    onRotatePage(pageIndex: number, rotation: number): void;
 }> = ({
     doc,
     height,
@@ -57,6 +58,7 @@ export const PageLayer: React.FC<{
     onExecuteNamedAction,
     onJumpToDest,
     onRenderCompleted,
+    onRotatePage,
 }) => {
     const isMounted = useIsMounted();
     const [pageSize, setPageSize] = React.useState<PageSizeState>({
@@ -210,6 +212,7 @@ export const PageLayer: React.FC<{
                         textLayerRendered,
                         width: w,
                         markRendered: onRenderCompleted,
+                        rotatePage: (rotation: number) => onRotatePage(pageIndex, rotation),
                     })}
                     {plugins.map((plugin, idx) =>
                         plugin.renderPageLayer ? (

@@ -517,6 +517,7 @@ export const Inner: React.FC<{
                                     onExecuteNamedAction={executeNamedAction}
                                     onJumpToDest={jumpToDestination}
                                     onRenderCompleted={handlePageRenderCompleted}
+                                    onRotatePage={rotatePage}
                                 />
                             </div>
                         ))}

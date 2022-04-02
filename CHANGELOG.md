@@ -34,6 +34,28 @@ const { Thumbnails } = thumbnailPluginInstance;
 <Thumbnails renderThumbnailItem={renderThumbnailItem} />
 ```
 
+It's also possible to do it by using the `renderPage`:
+
+```tsx
+const renderPage: RenderPage = (props: RenderPageProps) => (
+    <>
+        {props.canvasLayer.children}
+        <div>
+            <MinimalButton onClick={() => props.rotatePage(90)}>
+                <RotateForwardIcon />
+            </MinimalButton>
+            <MinimalButton onClick={() => props.rotatePage(-90)}>
+                <RotateBackwardIcon />
+            </MinimalButton>
+        </div>
+        {props.annotationLayer.children}
+        {props.textLayer.children}
+    </>
+);
+
+<Viewer renderPage={renderPage} />;
+```
+
 **Improvements**
 
 -   The search popover is opened if users press the shortcuts (`Ctrl + F`, or `Cmd + F` on macOS) when the mouse is inside the viewer container

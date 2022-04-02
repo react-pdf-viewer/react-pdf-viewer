@@ -28,6 +28,7 @@ export interface RenderPageProps {
     width: number;
     // Mark as the page rendered completely
     markRendered(pageIndex: number): void;
+    rotatePage(rotation: number): void;
 }
 
 export type RenderPage = (props: RenderPageProps) => React.ReactElement;
