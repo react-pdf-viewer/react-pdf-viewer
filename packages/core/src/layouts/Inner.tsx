@@ -78,6 +78,7 @@ export const Inner: React.FC<{
     const [currentPage, setCurrentPage] = React.useState(0);
     const [rotation, setRotation] = React.useState(0);
     // The rotation for each page
+    const [pagesRotationChanged, setPagesRotationChanged] = React.useState(false);
     const [pagesRotation, setPagesRotation] = React.useState(new Map<number, number>());
     const [currentScrollMode, setCurrentScrollMode] = React.useState(scrollMode);
     const stateRef = React.useRef<ViewerState>(viewerState);
@@ -270,6 +271,8 @@ export const Inner: React.FC<{
         const currentPageRotation = pagesRotation.has(pageIndex) ? pagesRotation.get(pageIndex) : 0;
         const rotations = pagesRotation.set(pageIndex, currentPageRotation + updateRotation);
         setPagesRotation(rotations);
+        // Force the pages to be re-virtualized
+        setPagesRotationChanged((value) => !value);
         setViewerState({
             file: viewerState.file,
             pageIndex: currentPage,
@@ -416,7 +419,14 @@ export const Inner: React.FC<{
         }
 
         renderNextPage();
-    }, [virtualizer.startRange, virtualizer.endRange, virtualizer.maxVisbilityIndex, rotation, scale]);
+    }, [
+        virtualizer.startRange,
+        virtualizer.endRange,
+        virtualizer.maxVisbilityIndex,
+        pagesRotationChanged,
+        rotation,
+        scale,
+    ]);
 
     const handlePageRenderCompleted = React.useCallback((pageIndex: number) => {
         renderQueueInstance.markRendered(pageIndex);
