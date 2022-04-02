@@ -206,6 +206,7 @@ export const Viewer: React.FC<{
                                                 pageIndex: -1,
                                                 pageHeight: ps.pageHeight,
                                                 pageWidth: ps.pageWidth,
+                                                pagesRotation: new Map(),
                                                 rotation: 0,
                                                 scale: ps.scale,
                                                 scrollMode,

@@ -18,6 +18,8 @@ export interface ViewerState {
     // Size of page
     pageHeight: number;
     pageWidth: number;
+    // The rotation for each page
+    pagesRotation: Map<number, number>;
     rotation: number;
     // The current zoom level
     scale: number;
