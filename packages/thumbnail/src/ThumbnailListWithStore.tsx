@@ -54,6 +54,10 @@ export const ThumbnailListWithStore: React.FC<{
         }
     };
 
+    const rotatePage = (pageIndex: number, rotation: number) => {
+        store.get('rotatePage')(pageIndex, rotation);
+    };
+
     React.useEffect(() => {
         store.subscribe('doc', handleDocumentChanged);
         store.subscribe('pageHeight', handlePageHeightChanged);
@@ -92,6 +96,7 @@ export const ThumbnailListWithStore: React.FC<{
                 renderThumbnailItem={renderThumbnailItem}
                 rotation={rotation}
                 onJumpToPage={jump}
+                onRotatePage={rotatePage}
             />
         </LazyRender>
     ) : (

@@ -35,6 +35,7 @@ export interface RenderThumbnailItemProps {
     renderPageLabel: React.ReactElement;
     renderPageThumbnail: React.ReactElement;
     onJumpToPage: () => void;
+    onRotatePage: (rotation: number) => void;
 }
 
 export type RenderThumbnailItem = (props: RenderThumbnailItemProps) => React.ReactElement;

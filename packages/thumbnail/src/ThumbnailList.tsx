@@ -31,6 +31,7 @@ export const ThumbnailList: React.FC<{
     renderThumbnailItem?: RenderThumbnailItem;
     rotation: number;
     onJumpToPage(pageIndex: number): void;
+    onRotatePage(pageIndex: number, rotation: number): void;
 }> = ({
     currentPage,
     doc,
@@ -40,6 +41,7 @@ export const ThumbnailList: React.FC<{
     renderThumbnailItem,
     rotation,
     onJumpToPage,
+    onRotatePage,
 }) => {
     const [labels, setLabels] = React.useState([]);
     const { numPages } = doc;
@@ -238,6 +240,7 @@ export const ThumbnailList: React.FC<{
                         renderPageLabel: <>{label}</>,
                         renderPageThumbnail: thumbnail,
                         onJumpToPage: () => onJumpToPage(pageIndex),
+                        onRotatePage: (rotation: number) => onRotatePage(pageIndex, rotation),
                     })
                 ) : (
                     <div key={key}>

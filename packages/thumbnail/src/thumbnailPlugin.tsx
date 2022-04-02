@@ -35,7 +35,13 @@ export interface ThumbnailPluginProps {
 }
 
 export const thumbnailPlugin = (pluginProps?: ThumbnailPluginProps): ThumbnailPlugin => {
-    const store = React.useMemo(() => createStore<StoreProps>({}), []);
+    const store = React.useMemo(
+        () =>
+            createStore<StoreProps>({
+                rotatePage: () => {},
+            }),
+        []
+    );
     const [docId, setDocId] = React.useState('');
 
     const CoverDecorator = (props: CoverProps) => (
@@ -58,6 +64,7 @@ export const thumbnailPlugin = (pluginProps?: ThumbnailPluginProps): ThumbnailPl
     return {
         install: (pluginFunctions: PluginFunctions) => {
             store.update('jumpToPage', pluginFunctions.jumpToPage);
+            store.update('rotatePage', pluginFunctions.rotatePage);
         },
         onDocumentLoad: (props: PluginOnDocumentLoad) => {
             setDocId(props.doc.loadingTask.docId);
