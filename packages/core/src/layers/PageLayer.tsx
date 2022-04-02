@@ -186,7 +186,7 @@ export const PageLayer: React.FC<{
                         doc,
                         height: h,
                         pageIndex,
-                        rotation,
+                        rotation: rotationValue,
                         scale,
                         svgLayer: {
                             attrs: {},

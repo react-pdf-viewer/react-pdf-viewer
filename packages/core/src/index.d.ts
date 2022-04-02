@@ -117,7 +117,7 @@ export interface RenderViewer {
     openFile(file: File): void;
     // Jump to given page
     // `page` is zero-index based
-    jumpToPage(page: number): void;    
+    jumpToPage(page: number): void;
     rotate(degree: number): void;
     rotatePage(pageIndex: number, rotation: number): void;
     zoom(level: number | SpecialZoomLevel): void;
