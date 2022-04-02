@@ -27,6 +27,7 @@ export interface RenderViewer {
     openFile(file: File): void;
     jumpToPage(page: number): void;
     rotate(degree: number): void;
+    rotatePage(pageIndex: number, rotation: number): void;
     switchScrollMode(scrollMode: ScrollMode): void;
     zoom(level: number | SpecialZoomLevel): void;
 }

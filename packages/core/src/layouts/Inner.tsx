@@ -525,6 +525,7 @@ export const Inner: React.FC<{
                     jumpToPage,
                     openFile,
                     rotate,
+                    rotatePage,
                     switchScrollMode,
                     zoom,
                 });
