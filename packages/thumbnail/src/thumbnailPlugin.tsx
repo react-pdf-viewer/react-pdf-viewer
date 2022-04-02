@@ -38,7 +38,9 @@ export const thumbnailPlugin = (pluginProps?: ThumbnailPluginProps): ThumbnailPl
     const store = React.useMemo(
         () =>
             createStore<StoreProps>({
-                rotatePage: () => {},
+                rotatePage: () => {
+                    /**/
+                },
             }),
         []
     );
