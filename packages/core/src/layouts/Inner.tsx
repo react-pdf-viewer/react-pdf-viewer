@@ -77,6 +77,8 @@ export const Inner: React.FC<{
     const pagesRef = React.useRef<HTMLDivElement>();
     const [currentPage, setCurrentPage] = React.useState(0);
     const [rotation, setRotation] = React.useState(0);
+    // The rotation for each page
+    const [pagesRotation, setPagesRotation] = React.useState(new Map<number, number>());
     const [currentScrollMode, setCurrentScrollMode] = React.useState(scrollMode);
     const stateRef = React.useRef<ViewerState>(viewerState);
     const [scale, setScale] = React.useState(pageSize.scale);
@@ -470,6 +472,7 @@ export const Inner: React.FC<{
                                     height={pageHeight}
                                     measureRef={item.measureRef}
                                     pageIndex={item.index}
+                                    pageRotation={pagesRotation.has(item.index) ? pagesRotation.get(item.index) : 0}
                                     plugins={plugins}
                                     renderPage={renderPage}
                                     rotation={rotation}

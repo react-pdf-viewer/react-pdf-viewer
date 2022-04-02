@@ -32,6 +32,7 @@ export const PageLayer: React.FC<{
     height: number;
     measureRef: (ele: HTMLElement) => void;
     pageIndex: number;
+    pageRotation: number;
     plugins: Plugin[];
     renderPage?: RenderPage;
     rotation: number;
@@ -46,6 +47,7 @@ export const PageLayer: React.FC<{
     height,
     measureRef,
     pageIndex,
+    pageRotation,
     plugins,
     renderPage,
     rotation,
@@ -68,17 +70,19 @@ export const PageLayer: React.FC<{
 
     const { page, pageHeight, pageWidth } = pageSize;
 
+    const isVertical = Math.abs(rotation + pageRotation) % 180 === 0;
     const scaledWidth = pageWidth * scale;
     const scaledHeight = pageHeight * scale;
 
-    const isVertical = Math.abs(rotation) % 180 === 0;
     const w = isVertical ? scaledWidth : scaledHeight;
     const h = isVertical ? scaledHeight : scaledWidth;
+
+    // To support the document which is already rotated
+    const rotationValue = (pageSize.viewportRotation + rotation + pageRotation) % 360;
 
     const determinePageSize = () => {
         getPage(doc, pageIndex).then((pdfPage) => {
             const viewport = pdfPage.getViewport({ scale: 1 });
-
             isMounted.current &&
                 setPageSize({
                     page: pdfPage,
@@ -98,9 +102,6 @@ export const PageLayer: React.FC<{
         </>
     );
     const renderPageLayer = renderPage || defaultPageRenderer;
-
-    // To support the document which is already rotated
-    const rotationNumber = (rotation + pageSize.viewportRotation) % 360;
 
     const handleRenderCanvasCompleted = () => {
         if (isMounted.current) {
@@ -159,7 +160,7 @@ export const PageLayer: React.FC<{
                                     page={page}
                                     pageIndex={pageIndex}
                                     plugins={plugins}
-                                    rotation={rotationNumber}
+                                    rotation={rotationValue}
                                     scale={scale}
                                     onExecuteNamedAction={onExecuteNamedAction}
                                     onJumpToDest={onJumpToDest}
@@ -174,7 +175,7 @@ export const PageLayer: React.FC<{
                                     page={page}
                                     pageIndex={pageIndex}
                                     plugins={plugins}
-                                    rotation={rotationNumber}
+                                    rotation={rotationValue}
                                     scale={scale}
                                     width={w}
                                     onRenderCanvasCompleted={handleRenderCanvasCompleted}
@@ -190,7 +191,7 @@ export const PageLayer: React.FC<{
                         svgLayer: {
                             attrs: {},
                             children: (
-                                <SvgLayer height={h} page={page} rotation={rotationNumber} scale={scale} width={w} />
+                                <SvgLayer height={h} page={page} rotation={rotationValue} scale={scale} width={w} />
                             ),
                         },
                         textLayer: {
@@ -200,7 +201,7 @@ export const PageLayer: React.FC<{
                                     page={page}
                                     pageIndex={pageIndex}
                                     plugins={plugins}
-                                    rotation={rotationNumber}
+                                    rotation={rotationValue}
                                     scale={scale}
                                     onRenderTextCompleted={handleRenderTextCompleted}
                                 />
@@ -217,7 +218,7 @@ export const PageLayer: React.FC<{
                                     doc,
                                     height: h,
                                     pageIndex,
-                                    rotation,
+                                    rotation: rotationValue,
                                     scale,
                                     width: w,
                                 })}
