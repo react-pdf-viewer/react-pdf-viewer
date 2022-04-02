@@ -77,6 +77,9 @@ export const Inner: React.FC<{
     const pagesRef = React.useRef<HTMLDivElement>();
     const [currentPage, setCurrentPage] = React.useState(0);
     const [rotation, setRotation] = React.useState(0);
+    // The rotation for each page
+    const [pagesRotationChanged, setPagesRotationChanged] = React.useState(false);
+    const [pagesRotation, setPagesRotation] = React.useState(new Map<number, number>());
     const [currentScrollMode, setCurrentScrollMode] = React.useState(scrollMode);
     const stateRef = React.useRef<ViewerState>(viewerState);
     const [scale, setScale] = React.useState(pageSize.scale);
@@ -256,11 +259,34 @@ export const Inner: React.FC<{
             pageIndex: currentPage,
             pageHeight,
             pageWidth,
+            pagesRotation,
             rotation: updateRotation,
             scale,
             scrollMode: currentScrollMode,
         });
         onRotate({ doc, rotation: updateRotation });
+    }, []);
+
+    const rotatePage = React.useCallback((pageIndex: number, updateRotation: number) => {
+        const currentPageRotation = pagesRotation.has(pageIndex) ? pagesRotation.get(pageIndex) : 0;
+        const rotations = pagesRotation.set(pageIndex, currentPageRotation + updateRotation);
+        setPagesRotation(rotations);
+        // Force the pages to be re-virtualized
+        setPagesRotationChanged((value) => !value);
+        setViewerState({
+            file: viewerState.file,
+            pageIndex: currentPage,
+            pageHeight,
+            pageWidth,
+            pagesRotation: rotations,
+            rotation,
+            scale,
+            scrollMode: currentScrollMode,
+        });
+
+        // Rerender the target page
+        renderQueueInstance.markRendering(pageIndex);
+        setRenderPageIndex(pageIndex);
     }, []);
 
     const switchScrollMode = React.useCallback((scrollMode: ScrollMode) => {
@@ -269,6 +295,7 @@ export const Inner: React.FC<{
             pageIndex: stateRef.current.pageIndex,
             pageHeight,
             pageWidth,
+            pagesRotation,
             rotation,
             scale,
             scrollMode,
@@ -301,6 +328,7 @@ export const Inner: React.FC<{
             pageIndex: currentPage,
             pageHeight,
             pageWidth,
+            pagesRotation,
             rotation,
             scale: updateScale,
             scrollMode: currentScrollMode,
@@ -318,6 +346,7 @@ export const Inner: React.FC<{
             jumpToPage,
             openFile,
             rotate,
+            rotatePage,
             setViewerState,
             switchScrollMode,
             zoom,
@@ -374,6 +403,7 @@ export const Inner: React.FC<{
             pageIndex: currentPage,
             pageHeight,
             pageWidth,
+            pagesRotation,
             rotation,
             scale,
             scrollMode: currentScrollMode,
@@ -389,7 +419,14 @@ export const Inner: React.FC<{
         }
 
         renderNextPage();
-    }, [virtualizer.startRange, virtualizer.endRange, virtualizer.maxVisbilityIndex, rotation, scale]);
+    }, [
+        virtualizer.startRange,
+        virtualizer.endRange,
+        virtualizer.maxVisbilityIndex,
+        pagesRotationChanged,
+        rotation,
+        scale,
+    ]);
 
     const handlePageRenderCompleted = React.useCallback((pageIndex: number) => {
         renderQueueInstance.markRendered(pageIndex);
@@ -470,6 +507,7 @@ export const Inner: React.FC<{
                                     height={pageHeight}
                                     measureRef={item.measureRef}
                                     pageIndex={item.index}
+                                    pageRotation={pagesRotation.has(item.index) ? pagesRotation.get(item.index) : 0}
                                     plugins={plugins}
                                     renderPage={renderPage}
                                     rotation={rotation}
@@ -479,6 +517,7 @@ export const Inner: React.FC<{
                                     onExecuteNamedAction={executeNamedAction}
                                     onJumpToDest={jumpToDestination}
                                     onRenderCompleted={handlePageRenderCompleted}
+                                    onRotatePage={rotatePage}
                                 />
                             </div>
                         ))}
@@ -494,12 +533,14 @@ export const Inner: React.FC<{
                     doc,
                     pageHeight,
                     pageWidth,
+                    pagesRotation,
                     rotation,
                     slot,
                     themeContext,
                     jumpToPage,
                     openFile,
                     rotate,
+                    rotatePage,
                     switchScrollMode,
                     zoom,
                 });

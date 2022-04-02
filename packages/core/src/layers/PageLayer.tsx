@@ -32,6 +32,7 @@ export const PageLayer: React.FC<{
     height: number;
     measureRef: (ele: HTMLElement) => void;
     pageIndex: number;
+    pageRotation: number;
     plugins: Plugin[];
     renderPage?: RenderPage;
     rotation: number;
@@ -41,11 +42,13 @@ export const PageLayer: React.FC<{
     onExecuteNamedAction(action: string): void;
     onJumpToDest(pageIndex: number, bottomOffset: number, leftOffset: number, scaleTo: number | SpecialZoomLevel): void;
     onRenderCompleted(pageIndex: number): void;
+    onRotatePage(pageIndex: number, rotation: number): void;
 }> = ({
     doc,
     height,
     measureRef,
     pageIndex,
+    pageRotation,
     plugins,
     renderPage,
     rotation,
@@ -55,6 +58,7 @@ export const PageLayer: React.FC<{
     onExecuteNamedAction,
     onJumpToDest,
     onRenderCompleted,
+    onRotatePage,
 }) => {
     const isMounted = useIsMounted();
     const [pageSize, setPageSize] = React.useState<PageSizeState>({
@@ -68,17 +72,19 @@ export const PageLayer: React.FC<{
 
     const { page, pageHeight, pageWidth } = pageSize;
 
+    const isVertical = Math.abs(rotation + pageRotation) % 180 === 0;
     const scaledWidth = pageWidth * scale;
     const scaledHeight = pageHeight * scale;
 
-    const isVertical = Math.abs(rotation) % 180 === 0;
     const w = isVertical ? scaledWidth : scaledHeight;
     const h = isVertical ? scaledHeight : scaledWidth;
+
+    // To support the document which is already rotated
+    const rotationValue = (pageSize.viewportRotation + rotation + pageRotation) % 360;
 
     const determinePageSize = () => {
         getPage(doc, pageIndex).then((pdfPage) => {
             const viewport = pdfPage.getViewport({ scale: 1 });
-
             isMounted.current &&
                 setPageSize({
                     page: pdfPage,
@@ -98,9 +104,6 @@ export const PageLayer: React.FC<{
         </>
     );
     const renderPageLayer = renderPage || defaultPageRenderer;
-
-    // To support the document which is already rotated
-    const rotationNumber = (rotation + pageSize.viewportRotation) % 360;
 
     const handleRenderCanvasCompleted = () => {
         if (isMounted.current) {
@@ -122,7 +125,7 @@ export const PageLayer: React.FC<{
         });
         setCanvasLayerRendered(false);
         setTextLayerRendered(false);
-    }, [rotation, scale]);
+    }, [pageRotation, rotation, scale]);
 
     React.useEffect(() => {
         if (shouldRender && isMounted.current && !page) {
@@ -159,7 +162,7 @@ export const PageLayer: React.FC<{
                                     page={page}
                                     pageIndex={pageIndex}
                                     plugins={plugins}
-                                    rotation={rotationNumber}
+                                    rotation={rotationValue}
                                     scale={scale}
                                     onExecuteNamedAction={onExecuteNamedAction}
                                     onJumpToDest={onJumpToDest}
@@ -174,7 +177,7 @@ export const PageLayer: React.FC<{
                                     page={page}
                                     pageIndex={pageIndex}
                                     plugins={plugins}
-                                    rotation={rotationNumber}
+                                    rotation={rotationValue}
                                     scale={scale}
                                     width={w}
                                     onRenderCanvasCompleted={handleRenderCanvasCompleted}
@@ -185,12 +188,12 @@ export const PageLayer: React.FC<{
                         doc,
                         height: h,
                         pageIndex,
-                        rotation,
+                        rotation: rotationValue,
                         scale,
                         svgLayer: {
                             attrs: {},
                             children: (
-                                <SvgLayer height={h} page={page} rotation={rotationNumber} scale={scale} width={w} />
+                                <SvgLayer height={h} page={page} rotation={rotationValue} scale={scale} width={w} />
                             ),
                         },
                         textLayer: {
@@ -200,7 +203,7 @@ export const PageLayer: React.FC<{
                                     page={page}
                                     pageIndex={pageIndex}
                                     plugins={plugins}
-                                    rotation={rotationNumber}
+                                    rotation={rotationValue}
                                     scale={scale}
                                     onRenderTextCompleted={handleRenderTextCompleted}
                                 />
@@ -209,6 +212,7 @@ export const PageLayer: React.FC<{
                         textLayerRendered,
                         width: w,
                         markRendered: onRenderCompleted,
+                        rotatePage: (rotation: number) => onRotatePage(pageIndex, rotation),
                     })}
                     {plugins.map((plugin, idx) =>
                         plugin.renderPageLayer ? (
@@ -217,7 +221,7 @@ export const PageLayer: React.FC<{
                                     doc,
                                     height: h,
                                     pageIndex,
-                                    rotation,
+                                    rotation: rotationValue,
                                     scale,
                                     width: w,
                                 })}

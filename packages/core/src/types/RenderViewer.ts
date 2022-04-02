@@ -19,12 +19,15 @@ export interface RenderViewer {
     doc: PdfJs.PdfDocument;
     pageHeight: number;
     pageWidth: number;
+    // The rotation for each page
+    pagesRotation: Map<number, number>;
     rotation: number;
     slot: Slot;
     themeContext: ThemeContextProps;
     openFile(file: File): void;
     jumpToPage(page: number): void;
     rotate(degree: number): void;
+    rotatePage(pageIndex: number, rotation: number): void;
     switchScrollMode(scrollMode: ScrollMode): void;
     zoom(level: number | SpecialZoomLevel): void;
 }

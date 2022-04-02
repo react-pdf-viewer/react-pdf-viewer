@@ -17,11 +17,12 @@ import type { StoreProps } from './types/StoreProps';
 
 export const PrintContainer: React.FC<{
     doc: PdfJs.PdfDocument;
+    pagesRotation: Map<number, number>;
     pageHeight: number;
     pageWidth: number;
     rotation: number;
     store: Store<StoreProps>;
-}> = ({ doc, pageHeight, pageWidth, rotation, store }) => {
+}> = ({ doc, pagesRotation, pageHeight, pageWidth, rotation, store }) => {
     const [printStatus, setPrintStatus] = React.useState(PrintStatus.Inactive);
     const [numLoadedPagesForPrint, setNumLoadedPagesForPrint] = React.useState(0);
 
@@ -62,6 +63,7 @@ export const PrintContainer: React.FC<{
                     <PrintZone
                         doc={doc}
                         numLoadedPages={numLoadedPagesForPrint}
+                        pagesRotation={pagesRotation}
                         pageHeight={pageHeight}
                         pageWidth={pageWidth}
                         printStatus={printStatus}

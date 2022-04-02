@@ -67,6 +67,7 @@ export const printPlugin = (props?: PrintPluginProps): PrintPlugin => {
                     )}
                     <PrintContainer
                         doc={props.doc}
+                        pagesRotation={props.pagesRotation}
                         pageHeight={props.pageHeight}
                         pageWidth={props.pageWidth}
                         rotation={props.rotation}

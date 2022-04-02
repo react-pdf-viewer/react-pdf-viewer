@@ -47,6 +47,7 @@ export interface PluginFunctions {
     jumpToPage(pageIndex: number): void;
     openFile(file: File): void;
     rotate(rotation: number): void;
+    rotatePage(pageIndex: number, rotation: number): void;
     setViewerState(viewerState: ViewerState): void;
     switchScrollMode(scrollMode: ScrollMode): void;
     zoom(scale: number | SpecialZoomLevel): void;
@@ -101,6 +102,7 @@ export interface RenderPageProps {
     width: number;
     // Mark as the page rendered completely
     markRendered(pageIndex: number): void;
+    rotatePage(rotation: number): void;
 }
 export type RenderPage = (props: RenderPageProps) => React.ReactElement;
 export interface RenderViewer {
@@ -108,6 +110,8 @@ export interface RenderViewer {
     doc: PdfJs.PdfDocument;
     pageHeight: number;
     pageWidth: number;
+    // The rotation for each page
+    pagesRotation: Map<number, number>;
     rotation: number;
     slot: Slot;
     themeContext: ThemeContextProps;
@@ -116,6 +120,7 @@ export interface RenderViewer {
     // `page` is zero-index based
     jumpToPage(page: number): void;
     rotate(degree: number): void;
+    rotatePage(pageIndex: number, rotation: number): void;
     zoom(level: number | SpecialZoomLevel): void;
 }
 export interface Slot {
@@ -137,6 +142,8 @@ export interface ViewerState {
     // Size of page
     pageHeight: number;
     pageWidth: number;
+    // The rotation for each page
+    pagesRotation: Map<number, number>;
     rotation: number;
     // The current zoom level
     scale: number;
