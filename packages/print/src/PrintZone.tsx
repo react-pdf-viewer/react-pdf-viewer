@@ -16,13 +16,14 @@ import { PrintStatus } from './structs/PrintStatus';
 export const PrintZone: React.FC<{
     doc: PdfJs.PdfDocument;
     numLoadedPages: number;
+    pagesRotation: Map<number, number>;
     pageHeight: number;
     pageWidth: number;
     printStatus: PrintStatus;
     rotation: number;
     onCancel(): void;
     onLoad(): void;
-}> = ({ doc, numLoadedPages, pageHeight, pageWidth, printStatus, rotation, onCancel, onLoad }) => {
+}> = ({ doc, numLoadedPages, pagesRotation, pageHeight, pageWidth, printStatus, rotation, onCancel, onLoad }) => {
     const canvas = React.useMemo(() => document.createElement('canvas') as HTMLCanvasElement, []);
 
     const container = React.useMemo(() => {
@@ -86,6 +87,7 @@ export const PrintZone: React.FC<{
                         doc={doc}
                         pageHeight={pageHeight}
                         pageIndex={index}
+                        pageRotation={pagesRotation.has(index) ? pagesRotation.get(index) : 0}
                         pageWidth={pageWidth}
                         rotation={rotation}
                         onLoad={onLoad}

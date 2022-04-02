@@ -24,10 +24,11 @@ export const PageThumbnailContainer: React.FC<{
     doc: PdfJs.PdfDocument;
     pageHeight: number;
     pageIndex: number;
+    pageRotation: number;
     pageWidth: number;
     rotation: number;
     onLoad(): void;
-}> = ({ canvas, doc, pageHeight, pageIndex, pageWidth, rotation, onLoad }) => {
+}> = ({ canvas, doc, pageHeight, pageIndex, pageRotation, pageWidth, rotation, onLoad }) => {
     const [pageSize, setPageSize] = React.useState<PageState>({
         height: pageHeight,
         page: null,
@@ -35,7 +36,7 @@ export const PageThumbnailContainer: React.FC<{
         width: pageWidth,
     });
     const { page, height, width } = pageSize;
-    const isVertical = Math.abs(rotation) % 180 === 0;
+    const isVertical = Math.abs(rotation + pageRotation) % 180 === 0;
 
     React.useEffect(() => {
         getPage(doc, pageIndex).then((pdfPage) => {
@@ -51,7 +52,7 @@ export const PageThumbnailContainer: React.FC<{
     }, []);
 
     // To support the document which is already rotated
-    const rotationNumber = (rotation + pageSize.viewportRotation) % 360;
+    const rotationNumber = (pageSize.viewportRotation + rotation + pageRotation) % 360;
 
     return (
         page && (
