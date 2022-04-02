@@ -501,6 +501,7 @@ export const Inner: React.FC<{
                     doc,
                     pageHeight,
                     pageWidth,
+                    pagesRotation,
                     rotation,
                     slot,
                     themeContext,

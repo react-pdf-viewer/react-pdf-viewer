@@ -19,6 +19,8 @@ export interface RenderViewer {
     doc: PdfJs.PdfDocument;
     pageHeight: number;
     pageWidth: number;
+    // The rotation for each page
+    pagesRotation: Map<number, number>;
     rotation: number;
     slot: Slot;
     themeContext: ThemeContextProps;
