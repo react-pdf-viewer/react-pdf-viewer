@@ -28,6 +28,7 @@ import type { PageSize } from './types/PageSize';
 import type { PdfJs } from './types/PdfJs';
 import type { RenderPage } from './types/RenderPage';
 import type { RotateEvent } from './types/RotateEvent';
+import type { RotatePageEvent } from './types/RotatePageEvent';
 import type { VisibilityChanged } from './types/VisibilityChanged';
 import type { ZoomEvent } from './types/ZoomEvent';
 
@@ -74,6 +75,7 @@ export const Viewer: React.FC<{
     onDocumentLoad?(e: DocumentLoadEvent): void;
     onPageChange?(e: PageChangeEvent): void;
     onRotate?(e: RotateEvent): void;
+    onRotatePage?(e: RotatePageEvent): void;
     // Invoked after switching to `theme`
     onSwitchTheme?(theme: string): void;
     onZoom?(e: ZoomEvent): void;
@@ -103,6 +105,9 @@ export const Viewer: React.FC<{
         /**/
     },
     onRotate = () => {
+        /**/
+    },
+    onRotatePage = () => {
         /**/
     },
     onSwitchTheme = () => {
@@ -215,6 +220,7 @@ export const Viewer: React.FC<{
                                             onOpenFile={openFile}
                                             onPageChange={onPageChange}
                                             onRotate={onRotate}
+                                            onRotatePage={onRotatePage}
                                             onZoom={onZoom}
                                         />
                                     )}
