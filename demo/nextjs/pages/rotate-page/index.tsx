@@ -8,6 +8,7 @@ const IndexPage = () => {
 
     return (
         <div
+            data-testid="root"
             className="rpv-core__viewer"
             style={{
                 border: '1px solid rgba(0, 0, 0, 0.3)',
@@ -31,7 +32,10 @@ const IndexPage = () => {
                 <div style={{ padding: '0 0.25rem' }}>
                     <RotatePage>
                         {(props) => (
-                            <PrimaryButton onClick={() => props.onRotatePage(0, RotateDirection.Forward)}>
+                            <PrimaryButton
+                                testId="rotate-forward"
+                                onClick={() => props.onRotatePage(0, RotateDirection.Forward)}
+                            >
                                 Rotate the first page forward
                             </PrimaryButton>
                         )}
@@ -40,7 +44,10 @@ const IndexPage = () => {
                 <div style={{ padding: '0 0.25rem' }}>
                     <RotatePage>
                         {(props) => (
-                            <PrimaryButton onClick={() => props.onRotatePage(0, RotateDirection.Backward)}>
+                            <PrimaryButton
+                                testId="rotate-backward"
+                                onClick={() => props.onRotatePage(0, RotateDirection.Backward)}
+                            >
                                 Rotate the first page backward
                             </PrimaryButton>
                         )}
