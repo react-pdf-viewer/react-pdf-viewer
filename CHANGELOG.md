@@ -74,7 +74,8 @@ const { RotatePage } = rotatePluginInstance;
 
 ```tsx
 <Viewer
-    onRotate={({ doc, pageIndex, rotation }) => {
+    onRotatePage={({ direction, doc, pageIndex, rotation }) => {
+        // `direction` is the rotate direction
         // `doc` is the current document
         // `pageIndex` is the zero-based page index
         // `rotation` is the latest rotation value

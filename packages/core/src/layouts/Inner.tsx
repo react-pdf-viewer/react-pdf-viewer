@@ -289,7 +289,7 @@ export const Inner: React.FC<{
             scale,
             scrollMode: currentScrollMode,
         });
-        onRotatePage({ doc, pageIndex, rotation: finalRotation });
+        onRotatePage({ direction, doc, pageIndex, rotation: finalRotation });
 
         // Rerender the target page
         renderQueueInstance.markRendering(pageIndex);

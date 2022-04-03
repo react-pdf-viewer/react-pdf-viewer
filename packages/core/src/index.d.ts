@@ -432,6 +432,7 @@ export interface RotateEvent {
 
 // Invoked when users rotate a page of the document
 export interface RotatePageEvent {
+    direction: RotateDirection;
     doc: PdfJs.PdfDocument;
     pageIndex: number;
     rotation: number;
