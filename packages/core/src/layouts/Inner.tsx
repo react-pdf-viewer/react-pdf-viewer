@@ -255,7 +255,11 @@ export const Inner: React.FC<{
         [onOpenFile]
     );
 
-    const rotate = React.useCallback((updateRotation: number) => {
+    const rotate = React.useCallback((direction: RotateDirection) => {
+        const degrees = direction === RotateDirection.Backward ? -90 : 90;
+        const currentRotation = stateRef.current.rotation;
+        const updateRotation = currentRotation === 360 || currentRotation === -360 ? degrees : currentRotation + degrees;
+
         renderQueueInstance.resetQueue();
         setRotation(updateRotation);
         setViewerState({
@@ -268,7 +272,7 @@ export const Inner: React.FC<{
             scale,
             scrollMode: currentScrollMode,
         });
-        onRotate({ doc, rotation: updateRotation });
+        onRotate({ direction, doc, rotation: updateRotation });
     }, []);
 
     const rotatePage = React.useCallback((pageIndex: number, direction: RotateDirection) => {

@@ -46,7 +46,7 @@ export interface PluginFunctions {
     ): void;
     jumpToPage(pageIndex: number): void;
     openFile(file: File): void;
-    rotate(rotation: number): void;
+    rotate(direction: RotateDirection): void;
     rotatePage(pageIndex: number, direction: RotateDirection): void;
     setViewerState(viewerState: ViewerState): void;
     switchScrollMode(scrollMode: ScrollMode): void;
@@ -119,7 +119,7 @@ export interface RenderViewer {
     // Jump to given page
     // `page` is zero-index based
     jumpToPage(page: number): void;
-    rotate(degree: number): void;
+    rotate(direction: RotateDirection): void;
     rotatePage(pageIndex: number, direction: RotateDirection): void;
     zoom(level: number | SpecialZoomLevel): void;
 }
@@ -426,6 +426,7 @@ export interface ZoomEvent {
 
 // Invoked when users rotate the document
 export interface RotateEvent {
+    direction: RotateDirection;
     doc: PdfJs.PdfDocument;
     rotation: number;
 }

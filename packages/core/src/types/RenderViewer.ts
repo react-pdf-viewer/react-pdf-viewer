@@ -27,7 +27,7 @@ export interface RenderViewer {
     themeContext: ThemeContextProps;
     openFile(file: File): void;
     jumpToPage(page: number): void;
-    rotate(degree: number): void;
+    rotate(direction: RotateDirection): void;
     rotatePage(pageIndex: number, direction: RotateDirection): void;
     switchScrollMode(scrollMode: ScrollMode): void;
     zoom(level: number | SpecialZoomLevel): void;

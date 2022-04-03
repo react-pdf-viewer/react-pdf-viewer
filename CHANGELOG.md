@@ -9,7 +9,8 @@
 
 ```tsx
 <Viewer
-    onRotate={({ doc, rotation }) => {
+    onRotate={({ direction, doc, rotation }) => {
+        // `direction` is the rotate direction
         // `doc` is the current document
         // `rotation` is the latest rotation value
     }}
@@ -95,7 +96,7 @@ const { RotatePage } = rotatePluginInstance;
 -   There is a visible page that isn't rendered when setting the zoom level as page width
 -   The thumbnails aren't rotated after rotating the document
 
-**Breaking change**
+**Breaking changes**
 
 -   The `RotateDirection` provided by the `@react-pdf-viewer/rotate` package now belongs to the `@react-pdf-viewer/core` package:
 
@@ -105,6 +106,18 @@ import { RotateDirection } from '@react-pdf-viewer/rotate';
 
 // From v3.2.0
 import { RotateDirection } from '@react-pdf-viewer/core';
+```
+
+-   The `rotate` function used in the plugins changes the parameter type:
+
+```js
+// v3.1.2 and previous versions
+rotate(90);
+rotate(-90);
+
+// From v3.2.0
+rotate(RotateDirection.Forward);
+rotate(RotateDirection.Backward);
 ```
 
 ## v3.1.2

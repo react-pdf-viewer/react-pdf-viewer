@@ -24,7 +24,7 @@ export interface PluginFunctions {
     ): void;
     jumpToPage(pageIndex: number): void;
     openFile(file: File): void;
-    rotate(rotation: number): void;
+    rotate(direction: RotateDirection): void;
     rotatePage(pageIndex: number, direction: RotateDirection): void;
     setViewerState(viewerState: ViewerState): void;
     switchScrollMode(scrollMode: ScrollMode): void;

@@ -11,7 +11,6 @@ import { RotateDirection } from '@react-pdf-viewer/core';
 import type { Store } from '@react-pdf-viewer/core';
 
 import { RotateButton } from './RotateButton';
-import { useRotation } from './useRotation';
 import type { RenderRotateProps } from './types/RenderRotateProps';
 import type { StoreProps } from './types/StoreProps';
 
@@ -27,14 +26,10 @@ export const Rotate: React.FC<{
     direction: RotateDirection;
     store: Store<StoreProps>;
 }> = ({ children, direction, store }) => {
-    const { rotation } = useRotation(store);
-
     const onClick = () => {
         const rotate = store.get('rotate');
         if (rotate) {
-            const degrees = direction === RotateDirection.Backward ? -90 : 90;
-            const updateRotation = rotation === 360 || rotation === -360 ? degrees : rotation + degrees;
-            rotate(updateRotation);
+            rotate(direction);
         }
     };
 
