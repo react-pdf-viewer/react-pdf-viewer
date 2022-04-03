@@ -9,7 +9,7 @@ const TOOLTIP_OFFSET = { left: 0, top: 8 };
 const IndexPage = () => {
     const renderThumbnailItem = (props: RenderThumbnailItemProps) => (
         <div
-            key={props.pageIndex}
+            key={props.key}
             className="custom-thumbnail-item"
             data-testid={`thumbnail-${props.pageIndex}`}
             style={{
