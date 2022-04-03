@@ -56,6 +56,18 @@ const renderPage: RenderPage = (props: RenderPageProps) => (
 <Viewer renderPage={renderPage} />;
 ```
 
+-   The `onRotatePage` event is triggered when a page is rotated:
+
+```tsx
+<Viewer
+    onRotate={({ doc, pageIndex, rotation }) => {
+        // `doc` is the current document
+        // `pageIndex` is the zero-based page index
+        // `rotation` is the latest rotation value
+    }}
+/>
+```
+
 **Improvements**
 
 -   The search popover is opened if users press the shortcuts (`Ctrl + F`, or `Cmd + F` on macOS) when the mouse is inside the viewer container

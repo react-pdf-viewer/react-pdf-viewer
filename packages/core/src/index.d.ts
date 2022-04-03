@@ -425,6 +425,13 @@ export interface RotateEvent {
     rotation: number;
 }
 
+// Invoked when users rotate a page of the document
+export interface RotatePageEvent {
+    doc: PdfJs.PdfDocument;
+    pageIndex: number;
+    rotation: number;
+}
+
 export interface ThemeProps {
     direction?: TextDirection;
     theme?: string;
@@ -458,6 +465,7 @@ export interface ViewerProps {
     onDocumentLoad?(e: DocumentLoadEvent): void;
     onPageChange?(e: PageChangeEvent): void;
     onRotate?(e: RotateEvent): void;
+    onRotatePage?(e: RotatePageEvent): void;
     // Invoked after switching to `theme`
     onSwitchTheme?(theme: string): void;
     onZoom?(e: ZoomEvent): void;

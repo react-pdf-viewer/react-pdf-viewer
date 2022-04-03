@@ -30,6 +30,7 @@ import type { DestinationOffsetFromViewport, PluginFunctions } from '../types/Pl
 import type { Rect } from '../types/Rect';
 import type { RenderPage } from '../types/RenderPage';
 import type { RotateEvent } from '../types/RotateEvent';
+import type { RotatePageEvent } from '../types/RotatePageEvent';
 import type { Slot } from '../types/Slot';
 import type { ViewerState } from '../types/ViewerState';
 import type { ZoomEvent } from '../types/ZoomEvent';
@@ -51,6 +52,7 @@ export const Inner: React.FC<{
     onOpenFile(fileName: string, data: Uint8Array): void;
     onPageChange(e: PageChangeEvent): void;
     onRotate(e: RotateEvent): void;
+    onRotatePage(e: RotatePageEvent): void;
     onZoom(e: ZoomEvent): void;
 }> = ({
     currentFile,
@@ -66,6 +68,7 @@ export const Inner: React.FC<{
     onOpenFile,
     onPageChange,
     onRotate,
+    onRotatePage,
     onZoom,
 }) => {
     const { numPages } = doc;
@@ -269,7 +272,8 @@ export const Inner: React.FC<{
 
     const rotatePage = React.useCallback((pageIndex: number, updateRotation: number) => {
         const currentPageRotation = pagesRotation.has(pageIndex) ? pagesRotation.get(pageIndex) : 0;
-        const rotations = pagesRotation.set(pageIndex, currentPageRotation + updateRotation);
+        const finalRotation = currentPageRotation + updateRotation;
+        const rotations = pagesRotation.set(pageIndex, finalRotation);
         setPagesRotation(rotations);
         // Force the pages to be re-virtualized
         setPagesRotationChanged((value) => !value);
@@ -283,6 +287,7 @@ export const Inner: React.FC<{
             scale,
             scrollMode: currentScrollMode,
         });
+        onRotatePage({ doc, pageIndex, rotation: finalRotation });
 
         // Rerender the target page
         renderQueueInstance.markRendering(pageIndex);
