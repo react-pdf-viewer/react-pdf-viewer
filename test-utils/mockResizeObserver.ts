@@ -48,6 +48,7 @@ const triggerResize = (elements: Element[], observer: ResizeObserver, item: Item
             borderBoxSize: [],
             contentBoxSize: [],
             contentRect: element.getBoundingClientRect(),
+            devicePixelContentBoxSize: [],
             target: element,
         });
     });
