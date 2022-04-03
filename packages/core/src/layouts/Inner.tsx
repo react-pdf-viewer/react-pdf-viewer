@@ -258,7 +258,8 @@ export const Inner: React.FC<{
     const rotate = React.useCallback((direction: RotateDirection) => {
         const degrees = direction === RotateDirection.Backward ? -90 : 90;
         const currentRotation = stateRef.current.rotation;
-        const updateRotation = currentRotation === 360 || currentRotation === -360 ? degrees : currentRotation + degrees;
+        const updateRotation =
+            currentRotation === 360 || currentRotation === -360 ? degrees : currentRotation + degrees;
 
         renderQueueInstance.resetQueue();
         setRotation(updateRotation);

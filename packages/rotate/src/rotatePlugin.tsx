@@ -30,13 +30,7 @@ export interface RotatePlugin extends Plugin {
 }
 
 export const rotatePlugin = (): RotatePlugin => {
-    const store = React.useMemo(
-        () =>
-            createStore<StoreProps>({
-                rotation: 0,
-            }),
-        []
-    );
+    const store = React.useMemo(() => createStore<StoreProps>(), []);
 
     const RotateDecorator = (props: RotateProps) => <Rotate {...props} store={store} />;
 
@@ -82,10 +76,6 @@ export const rotatePlugin = (): RotatePlugin => {
         install: (pluginFunctions: PluginFunctions) => {
             store.update('rotate', pluginFunctions.rotate);
             store.update('rotatePage', pluginFunctions.rotatePage);
-        },
-        onViewerStateChange: (viewerState: ViewerState) => {
-            store.update('rotation', viewerState.rotation);
-            return viewerState;
         },
         Rotate: RotateDecorator,
         RotateBackwardButton: RotateBackwardButtonDecorator,
