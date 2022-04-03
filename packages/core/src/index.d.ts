@@ -196,6 +196,11 @@ export enum Position {
     LeftBottom = 'LEFT_BOTTOM',
 }
 
+export enum RotateDirection {
+    Backward = 'Backward',
+    Forward = 'Forward',
+}
+
 export enum ScrollMode {
     Horizontal = 'Horizontal',
     Vertical = 'Vertical',

@@ -7,11 +7,10 @@
  */
 
 import * as React from 'react';
-import { LocalizationContext, MenuItem } from '@react-pdf-viewer/core';
+import { LocalizationContext, MenuItem, RotateDirection } from '@react-pdf-viewer/core';
 
 import { RotateBackwardIcon } from './RotateBackwardIcon';
 import { RotateForwardIcon } from './RotateForwardIcon';
-import { RotateDirection } from './structs/RotateDirection';
 import type { RenderRotateProps } from './types/RenderRotateProps';
 
 export const RotateMenuItem: React.FC<RenderRotateProps> = ({ direction, onClick }) => {

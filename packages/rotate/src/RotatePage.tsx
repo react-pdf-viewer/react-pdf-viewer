@@ -7,9 +7,9 @@
  */
 
 import * as React from 'react';
+import { RotateDirection } from '@react-pdf-viewer/core';
 import type { Store } from '@react-pdf-viewer/core';
 
-import { RotateDirection } from './structs/RotateDirection';
 import type { RenderRotatePageProps } from './types/RenderRotatePageProps';
 import type { StoreProps } from './types/StoreProps';
 

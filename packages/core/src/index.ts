@@ -14,6 +14,7 @@ export type { SplitterSize } from './components/Splitter';
 export { AnnotationType } from './annotations/AnnotationType';
 export { LayerRenderStatus } from './structs/LayerRenderStatus';
 export { Position } from './structs/Position';
+export { RotateDirection } from './structs/RotateDirection';
 export { ScrollMode } from './structs/ScrollMode';
 export { SpecialZoomLevel } from './structs/SpecialZoomLevel';
 export { ToggleStatus } from './structs/ToggleStatus';

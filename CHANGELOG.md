@@ -94,6 +94,18 @@ const { RotatePage } = rotatePluginInstance;
 -   There is a visible page that isn't rendered when setting the zoom level as page width
 -   The thumbnails aren't rotated after rotating the document
 
+**Breaking change**
+
+-   The `RotateDirection` provided by the `@react-pdf-viewer/rotate` package now belongs to the `@react-pdf-viewer/core` package:
+
+```js
+// v3.1.2 and previous versions
+import { RotateDirection } from '@react-pdf-viewer/rotate';
+
+// From v3.2.0
+import { RotateDirection } from '@react-pdf-viewer/core';
+```
+
 ## v3.1.2
 
 **Bug fixes**
