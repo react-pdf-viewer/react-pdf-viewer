@@ -278,10 +278,12 @@ export const Inner: React.FC<{
 
     const rotatePage = React.useCallback((pageIndex: number, direction: RotateDirection) => {
         const degrees = direction === RotateDirection.Backward ? -90 : 90;
-        const currentPageRotation = pagesRotation.has(pageIndex) ? pagesRotation.get(pageIndex) : 0;
+        const rotations = stateRef.current.pagesRotation;
+        const currentPageRotation = rotations.has(pageIndex) ? rotations.get(pageIndex) : 0;
         const finalRotation = currentPageRotation + degrees;
-        const rotations = pagesRotation.set(pageIndex, finalRotation);
-        setPagesRotation(rotations);
+        const updateRotations = rotations.set(pageIndex, finalRotation);
+
+        setPagesRotation(updateRotations);
         // Force the pages to be re-virtualized
         setPagesRotationChanged((value) => !value);
         setViewerState({
@@ -289,7 +291,7 @@ export const Inner: React.FC<{
             pageIndex: currentPage,
             pageHeight,
             pageWidth,
-            pagesRotation: rotations,
+            pagesRotation: updateRotations,
             rotation,
             scale,
             scrollMode: currentScrollMode,
