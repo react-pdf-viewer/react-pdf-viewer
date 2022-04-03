@@ -8,6 +8,7 @@
 
 import * as React from 'react';
 
+import { RotateDirection } from '../structs/RotateDirection';
 import { ScrollMode } from '../structs/ScrollMode';
 import { SpecialZoomLevel } from '../structs/SpecialZoomLevel';
 import type { ThemeContextProps } from '../theme/ThemeContext';
@@ -26,8 +27,8 @@ export interface RenderViewer {
     themeContext: ThemeContextProps;
     openFile(file: File): void;
     jumpToPage(page: number): void;
-    rotate(degree: number): void;
-    rotatePage(pageIndex: number, rotation: number): void;
+    rotate(direction: RotateDirection): void;
+    rotatePage(pageIndex: number, direction: RotateDirection): void;
     switchScrollMode(scrollMode: ScrollMode): void;
     zoom(level: number | SpecialZoomLevel): void;
 }

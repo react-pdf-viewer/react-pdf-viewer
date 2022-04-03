@@ -46,8 +46,8 @@ export interface PluginFunctions {
     ): void;
     jumpToPage(pageIndex: number): void;
     openFile(file: File): void;
-    rotate(rotation: number): void;
-    rotatePage(pageIndex: number, rotation: number): void;
+    rotate(direction: RotateDirection): void;
+    rotatePage(pageIndex: number, direction: RotateDirection): void;
     setViewerState(viewerState: ViewerState): void;
     switchScrollMode(scrollMode: ScrollMode): void;
     zoom(scale: number | SpecialZoomLevel): void;
@@ -102,7 +102,7 @@ export interface RenderPageProps {
     width: number;
     // Mark as the page rendered completely
     markRendered(pageIndex: number): void;
-    rotatePage(rotation: number): void;
+    onRotatePage(direction: RotateDirection): void;
 }
 export type RenderPage = (props: RenderPageProps) => React.ReactElement;
 export interface RenderViewer {
@@ -119,8 +119,8 @@ export interface RenderViewer {
     // Jump to given page
     // `page` is zero-index based
     jumpToPage(page: number): void;
-    rotate(degree: number): void;
-    rotatePage(pageIndex: number, rotation: number): void;
+    rotate(direction: RotateDirection): void;
+    rotatePage(pageIndex: number, direction: RotateDirection): void;
     zoom(level: number | SpecialZoomLevel): void;
 }
 export interface Slot {
@@ -194,6 +194,11 @@ export enum Position {
     LeftTop = 'LEFT_TOP',
     LeftCenter = 'LEFT_CENTER',
     LeftBottom = 'LEFT_BOTTOM',
+}
+
+export enum RotateDirection {
+    Backward = 'Backward',
+    Forward = 'Forward',
 }
 
 export enum ScrollMode {
@@ -421,12 +426,14 @@ export interface ZoomEvent {
 
 // Invoked when users rotate the document
 export interface RotateEvent {
+    direction: RotateDirection;
     doc: PdfJs.PdfDocument;
     rotation: number;
 }
 
 // Invoked when users rotate a page of the document
 export interface RotatePageEvent {
+    direction: RotateDirection;
     doc: PdfJs.PdfDocument;
     pageIndex: number;
     rotation: number;

@@ -7,14 +7,13 @@
  */
 
 import * as React from 'react';
-import { createStore } from '@react-pdf-viewer/core';
+import { createStore, RotateDirection } from '@react-pdf-viewer/core';
 import type { Plugin, PluginFunctions, ViewerState } from '@react-pdf-viewer/core';
 
 import { Rotate, RotateProps } from './Rotate';
 import { RotateButton } from './RotateButton';
 import { RotateMenuItem } from './RotateMenuItem';
 import { RotatePage, RotatePageProps } from './RotatePage';
-import { RotateDirection } from './structs/RotateDirection';
 import type { StoreProps } from './types/StoreProps';
 
 export interface RotateDecoratorProps {
@@ -31,13 +30,7 @@ export interface RotatePlugin extends Plugin {
 }
 
 export const rotatePlugin = (): RotatePlugin => {
-    const store = React.useMemo(
-        () =>
-            createStore<StoreProps>({
-                rotation: 0,
-            }),
-        []
-    );
+    const store = React.useMemo(() => createStore<StoreProps>(), []);
 
     const RotateDecorator = (props: RotateProps) => <Rotate {...props} store={store} />;
 
@@ -83,10 +76,6 @@ export const rotatePlugin = (): RotatePlugin => {
         install: (pluginFunctions: PluginFunctions) => {
             store.update('rotate', pluginFunctions.rotate);
             store.update('rotatePage', pluginFunctions.rotatePage);
-        },
-        onViewerStateChange: (viewerState: ViewerState) => {
-            store.update('rotation', viewerState.rotation);
-            return viewerState;
         },
         Rotate: RotateDecorator,
         RotateBackwardButton: RotateBackwardButtonDecorator,

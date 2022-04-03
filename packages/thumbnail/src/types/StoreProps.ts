@@ -6,6 +6,7 @@
  * @copyright 2019-2022 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
+import { RotateDirection } from '@react-pdf-viewer/core';
 import type { PdfJs } from '@react-pdf-viewer/core';
 
 export interface StoreProps {
@@ -15,6 +16,6 @@ export interface StoreProps {
     pageHeight?: number;
     pageWidth?: number;
     jumpToPage?(pageIndex: number): void;
-    rotatePage(pageIndex: number, rotation: number): void;
+    rotatePage(pageIndex: number, direction: RotateDirection): void;
     rotation?: number;
 }

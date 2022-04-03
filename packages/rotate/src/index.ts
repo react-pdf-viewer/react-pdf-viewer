@@ -12,9 +12,6 @@ export type { RotatePageProps } from './RotatePage';
 export type { RenderRotatePageProps } from './types/RenderRotatePageProps';
 export type { RenderRotateProps } from './types/RenderRotateProps';
 
-// Structs
-export { RotateDirection } from './structs/RotateDirection';
-
 // Plugin
 export * from './rotatePlugin';
 

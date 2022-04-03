@@ -13,6 +13,7 @@ import { useVirtual } from '../hooks/useVirtual';
 import { PageLayer } from '../layers/PageLayer';
 import { LocalizationContext } from '../localization/LocalizationContext';
 import { renderQueueService } from '../services/renderQueueService';
+import { RotateDirection } from '../structs/RotateDirection';
 import { ScrollMode } from '../structs/ScrollMode';
 import { SpecialZoomLevel } from '../structs/SpecialZoomLevel';
 import { TextDirection, ThemeContext } from '../theme/ThemeContext';
@@ -254,7 +255,12 @@ export const Inner: React.FC<{
         [onOpenFile]
     );
 
-    const rotate = React.useCallback((updateRotation: number) => {
+    const rotate = React.useCallback((direction: RotateDirection) => {
+        const degrees = direction === RotateDirection.Backward ? -90 : 90;
+        const currentRotation = stateRef.current.rotation;
+        const updateRotation =
+            currentRotation === 360 || currentRotation === -360 ? degrees : currentRotation + degrees;
+
         renderQueueInstance.resetQueue();
         setRotation(updateRotation);
         setViewerState({
@@ -267,12 +273,13 @@ export const Inner: React.FC<{
             scale,
             scrollMode: currentScrollMode,
         });
-        onRotate({ doc, rotation: updateRotation });
+        onRotate({ direction, doc, rotation: updateRotation });
     }, []);
 
-    const rotatePage = React.useCallback((pageIndex: number, updateRotation: number) => {
+    const rotatePage = React.useCallback((pageIndex: number, direction: RotateDirection) => {
+        const degrees = direction === RotateDirection.Backward ? -90 : 90;
         const currentPageRotation = pagesRotation.has(pageIndex) ? pagesRotation.get(pageIndex) : 0;
-        const finalRotation = currentPageRotation + updateRotation;
+        const finalRotation = currentPageRotation + degrees;
         const rotations = pagesRotation.set(pageIndex, finalRotation);
         setPagesRotation(rotations);
         // Force the pages to be re-virtualized
@@ -287,7 +294,7 @@ export const Inner: React.FC<{
             scale,
             scrollMode: currentScrollMode,
         });
-        onRotatePage({ doc, pageIndex, rotation: finalRotation });
+        onRotatePage({ direction, doc, pageIndex, rotation: finalRotation });
 
         // Rerender the target page
         renderQueueInstance.markRendering(pageIndex);

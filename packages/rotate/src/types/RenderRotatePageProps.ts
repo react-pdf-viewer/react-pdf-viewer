@@ -6,7 +6,7 @@
  * @copyright 2019-2022 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import { RotateDirection } from '../structs/RotateDirection';
+import { RotateDirection } from '@react-pdf-viewer/core';
 
 export interface RenderRotatePageProps {
     onRotatePage(pageIndex: number, direction: RotateDirection): void;

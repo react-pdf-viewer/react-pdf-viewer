@@ -7,6 +7,7 @@
  */
 
 import * as React from 'react';
+import { RotateDirection } from '@react-pdf-viewer/core';
 import type { Plugin } from '@react-pdf-viewer/core';
 
 // Plugin
@@ -35,7 +36,7 @@ export interface RenderThumbnailItemProps {
     renderPageLabel: React.ReactElement;
     renderPageThumbnail: React.ReactElement;
     onJumpToPage: () => void;
-    onRotatePage: (rotation: number) => void;
+    onRotatePage: (direction: RotateDirection) => void;
 }
 
 export type RenderThumbnailItem = (props: RenderThumbnailItemProps) => React.ReactElement;

@@ -6,9 +6,11 @@
  * @copyright 2019-2022 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
+import { RotateDirection } from '../structs/RotateDirection';
 import type { PdfJs } from './PdfJs';
 
 export interface RotatePageEvent {
+    direction: RotateDirection;
     doc: PdfJs.PdfDocument;
     pageIndex: number;
     rotation: number;

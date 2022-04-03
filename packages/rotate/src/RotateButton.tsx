@@ -7,11 +7,10 @@
  */
 
 import * as React from 'react';
-import { LocalizationContext, MinimalButton, Position, Tooltip } from '@react-pdf-viewer/core';
+import { LocalizationContext, MinimalButton, Position, RotateDirection, Tooltip } from '@react-pdf-viewer/core';
 
 import { RotateBackwardIcon } from './RotateBackwardIcon';
 import { RotateForwardIcon } from './RotateForwardIcon';
-import { RotateDirection } from './structs/RotateDirection';
 import type { RenderRotateProps } from './types/RenderRotateProps';
 
 const TOOLTIP_OFFSET = { left: 0, top: 8 };

@@ -6,8 +6,9 @@
  * @copyright 2019-2022 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
+import { RotateDirection } from '@react-pdf-viewer/core';
+
 export interface StoreProps {
-    rotation: number;
-    rotate?(degrees: number): void;
-    rotatePage?(pageIndex: number, rotation: number): void;
+    rotate?(direction: RotateDirection): void;
+    rotatePage?(pageIndex: number, direction: RotateDirection): void;
 }

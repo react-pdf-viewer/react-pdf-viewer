@@ -7,9 +7,9 @@
  */
 
 import * as React from 'react';
+import { RotateDirection } from '@react-pdf-viewer/core';
 import type { Store } from '@react-pdf-viewer/core';
 
-import { RotateDirection } from './structs/RotateDirection';
 import type { RenderRotatePageProps } from './types/RenderRotatePageProps';
 import type { StoreProps } from './types/StoreProps';
 
@@ -26,8 +26,7 @@ export const RotatePage: React.FC<{
     const onRotatePage = (pageIndex: number, direction: RotateDirection) => {
         const rotatePage = store.get('rotatePage');
         if (rotatePage) {
-            const degrees = direction === RotateDirection.Backward ? -90 : 90;
-            rotatePage(pageIndex, degrees);
+            rotatePage(pageIndex, direction);
         }
     };
 
