@@ -47,7 +47,7 @@ export interface PluginFunctions {
     jumpToPage(pageIndex: number): void;
     openFile(file: File): void;
     rotate(rotation: number): void;
-    rotatePage(pageIndex: number, rotation: number): void;
+    rotatePage(pageIndex: number, direction: RotateDirection): void;
     setViewerState(viewerState: ViewerState): void;
     switchScrollMode(scrollMode: ScrollMode): void;
     zoom(scale: number | SpecialZoomLevel): void;
@@ -102,7 +102,7 @@ export interface RenderPageProps {
     width: number;
     // Mark as the page rendered completely
     markRendered(pageIndex: number): void;
-    rotatePage(rotation: number): void;
+    onRotatePage(direction: RotateDirection): void;
 }
 export type RenderPage = (props: RenderPageProps) => React.ReactElement;
 export interface RenderViewer {
@@ -120,7 +120,7 @@ export interface RenderViewer {
     // `page` is zero-index based
     jumpToPage(page: number): void;
     rotate(degree: number): void;
-    rotatePage(pageIndex: number, rotation: number): void;
+    rotatePage(pageIndex: number, direction: RotateDirection): void;
     zoom(level: number | SpecialZoomLevel): void;
 }
 export interface Slot {

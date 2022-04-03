@@ -20,10 +20,10 @@
 
 ```tsx
 const renderThumbnailItem = (props: RenderThumbnailItemProps) => (
-    <MinimalButton onClick={() => props.onRotatePage(90)}>
+    <MinimalButton onClick={() => props.onRotatePage(RotateDirection.Forward)}>
         <RotateForwardIcon />
     </MinimalButton>
-    <MinimalButton onClick={() => props.onRotatePage(-90)}>
+    <MinimalButton onClick={() => props.onRotatePage(RotateDirection.Backward)}>
         <RotateBackwardIcon />
     </MinimalButton>
 );
@@ -41,10 +41,10 @@ const renderPage: RenderPage = (props: RenderPageProps) => (
     <>
         {props.canvasLayer.children}
         <div>
-            <MinimalButton onClick={() => props.rotatePage(90)}>
+            <MinimalButton onClick={() => props.onRotatePage(RotateDirection.Forward)}>
                 <RotateForwardIcon />
             </MinimalButton>
-            <MinimalButton onClick={() => props.rotatePage(-90)}>
+            <MinimalButton onClick={() => props.onRotatePage(RotateDirection.Backward)}>
                 <RotateBackwardIcon />
             </MinimalButton>
         </div>

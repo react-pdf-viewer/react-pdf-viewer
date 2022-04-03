@@ -13,6 +13,7 @@ import { useVirtual } from '../hooks/useVirtual';
 import { PageLayer } from '../layers/PageLayer';
 import { LocalizationContext } from '../localization/LocalizationContext';
 import { renderQueueService } from '../services/renderQueueService';
+import { RotateDirection } from '../structs/RotateDirection';
 import { ScrollMode } from '../structs/ScrollMode';
 import { SpecialZoomLevel } from '../structs/SpecialZoomLevel';
 import { TextDirection, ThemeContext } from '../theme/ThemeContext';
@@ -270,9 +271,10 @@ export const Inner: React.FC<{
         onRotate({ doc, rotation: updateRotation });
     }, []);
 
-    const rotatePage = React.useCallback((pageIndex: number, updateRotation: number) => {
+    const rotatePage = React.useCallback((pageIndex: number, direction: RotateDirection) => {
+        const degrees = direction === RotateDirection.Backward ? -90 : 90;
         const currentPageRotation = pagesRotation.has(pageIndex) ? pagesRotation.get(pageIndex) : 0;
-        const finalRotation = currentPageRotation + updateRotation;
+        const finalRotation = currentPageRotation + degrees;
         const rotations = pagesRotation.set(pageIndex, finalRotation);
         setPagesRotation(rotations);
         // Force the pages to be re-virtualized

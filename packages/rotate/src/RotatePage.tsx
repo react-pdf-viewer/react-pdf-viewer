@@ -26,8 +26,7 @@ export const RotatePage: React.FC<{
     const onRotatePage = (pageIndex: number, direction: RotateDirection) => {
         const rotatePage = store.get('rotatePage');
         if (rotatePage) {
-            const degrees = direction === RotateDirection.Backward ? -90 : 90;
-            rotatePage(pageIndex, degrees);
+            rotatePage(pageIndex, direction);
         }
     };
 

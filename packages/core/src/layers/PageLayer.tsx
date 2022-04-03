@@ -11,6 +11,7 @@ import * as React from 'react';
 import { AnnotationLayer } from '../annotations/AnnotationLayer';
 import { Spinner } from '../components/Spinner';
 import { useIsMounted } from '../hooks/useIsMounted';
+import { RotateDirection } from '../structs/RotateDirection';
 import { SpecialZoomLevel } from '../structs/SpecialZoomLevel';
 import { getPage } from '../utils/managePages';
 import { CanvasLayer } from './CanvasLayer';
@@ -42,7 +43,7 @@ export const PageLayer: React.FC<{
     onExecuteNamedAction(action: string): void;
     onJumpToDest(pageIndex: number, bottomOffset: number, leftOffset: number, scaleTo: number | SpecialZoomLevel): void;
     onRenderCompleted(pageIndex: number): void;
-    onRotatePage(pageIndex: number, rotation: number): void;
+    onRotatePage(pageIndex: number, direction: RotateDirection): void;
 }> = ({
     doc,
     height,
@@ -212,7 +213,7 @@ export const PageLayer: React.FC<{
                         textLayerRendered,
                         width: w,
                         markRendered: onRenderCompleted,
-                        rotatePage: (rotation: number) => onRotatePage(pageIndex, rotation),
+                        onRotatePage: (direction: RotateDirection) => onRotatePage(pageIndex, direction),
                     })}
                     {plugins.map((plugin, idx) =>
                         plugin.renderPageLayer ? (

@@ -12,6 +12,7 @@ import {
     renderQueueService,
     useIsMounted,
     useIsomorphicLayoutEffect,
+    RotateDirection,
     TextDirection,
     ThemeContext,
 } from '@react-pdf-viewer/core';
@@ -32,7 +33,7 @@ export const ThumbnailList: React.FC<{
     renderThumbnailItem?: RenderThumbnailItem;
     rotation: number;
     onJumpToPage(pageIndex: number): void;
-    onRotatePage(pageIndex: number, rotation: number): void;
+    onRotatePage(pageIndex: number, direction: RotateDirection): void;
 }> = ({
     currentPage,
     doc,
@@ -245,7 +246,7 @@ export const ThumbnailList: React.FC<{
                         renderPageLabel: <>{label}</>,
                         renderPageThumbnail: thumbnail,
                         onJumpToPage: () => onJumpToPage(pageIndex),
-                        onRotatePage: (rotation: number) => onRotatePage(pageIndex, rotation),
+                        onRotatePage: (direction: RotateDirection) => onRotatePage(pageIndex, direction),
                     })
                 ) : (
                     <div key={key}>

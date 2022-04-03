@@ -7,7 +7,7 @@
  */
 
 import * as React from 'react';
-import { useIsomorphicLayoutEffect, LazyRender } from '@react-pdf-viewer/core';
+import { useIsomorphicLayoutEffect, LazyRender, RotateDirection } from '@react-pdf-viewer/core';
 import type { PdfJs, Store, StoreHandler } from '@react-pdf-viewer/core';
 
 import { SpinnerContext } from './SpinnerContext';
@@ -59,8 +59,8 @@ export const ThumbnailListWithStore: React.FC<{
         }
     };
 
-    const rotatePage = (pageIndex: number, rotation: number) => {
-        store.get('rotatePage')(pageIndex, rotation);
+    const rotatePage = (pageIndex: number, direction: RotateDirection) => {
+        store.get('rotatePage')(pageIndex, direction);
     };
 
     React.useEffect(() => {

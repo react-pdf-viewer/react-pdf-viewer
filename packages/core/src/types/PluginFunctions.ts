@@ -6,6 +6,7 @@
  * @copyright 2019-2022 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
+import { RotateDirection } from '../structs/RotateDirection';
 import { ScrollMode } from '../structs/ScrollMode';
 import { SpecialZoomLevel } from '../structs/SpecialZoomLevel';
 import type { ViewerState } from './ViewerState';
@@ -24,7 +25,7 @@ export interface PluginFunctions {
     jumpToPage(pageIndex: number): void;
     openFile(file: File): void;
     rotate(rotation: number): void;
-    rotatePage(pageIndex: number, rotation: number): void;
+    rotatePage(pageIndex: number, direction: RotateDirection): void;
     setViewerState(viewerState: ViewerState): void;
     switchScrollMode(scrollMode: ScrollMode): void;
     zoom(scale: number | SpecialZoomLevel): void;

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { MinimalButton, Position, Tooltip, Viewer } from '@react-pdf-viewer/core';
+import { MinimalButton, Position, RotateDirection, Tooltip, Viewer } from '@react-pdf-viewer/core';
 import { RotateBackwardIcon, RotateForwardIcon } from '@react-pdf-viewer/rotate';
 import type { RenderPage, RenderPageProps } from '@react-pdf-viewer/core';
 
@@ -30,7 +30,7 @@ const IndexPage = () => {
                     <Tooltip
                         position={Position.BottomCenter}
                         target={
-                            <MinimalButton onClick={() => props.rotatePage(90)}>
+                            <MinimalButton onClick={() => props.onRotatePage(RotateDirection.Forward)}>
                                 <RotateForwardIcon />
                             </MinimalButton>
                         }
@@ -40,7 +40,7 @@ const IndexPage = () => {
                     <Tooltip
                         position={Position.BottomCenter}
                         target={
-                            <MinimalButton onClick={() => props.rotatePage(-90)}>
+                            <MinimalButton onClick={() => props.onRotatePage(RotateDirection.Backward)}>
                                 <RotateBackwardIcon />
                             </MinimalButton>
                         }
