@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { MinimalButton, Position, RotateDirection, Tooltip, Viewer } from '@react-pdf-viewer/core';
-import { defaultLayoutPlugin, ThumbnailIcon } from '@react-pdf-viewer/default-layout';
+import { thumbnailPlugin } from '@react-pdf-viewer/thumbnail';
 import { RotateBackwardIcon, RotateForwardIcon } from '@react-pdf-viewer/rotate';
 import type { RenderThumbnailItemProps } from '@react-pdf-viewer/thumbnail';
 
@@ -55,29 +55,35 @@ const IndexPage = () => {
         </div>
     );
 
-    const defaultLayoutPluginInstance = defaultLayoutPlugin({
-        sidebarTabs: (defaultTabs) =>
-            [
-                {
-                    content: <Thumbnails renderThumbnailItem={renderThumbnailItem} />,
-                    icon: <ThumbnailIcon />,
-                    title: 'Thumbnails',
-                },
-            ].concat(defaultTabs.slice(1)),
-    });
-
-    const thumbnailPluginInstance = defaultLayoutPluginInstance.thumbnailPluginInstance;
+    const thumbnailPluginInstance = thumbnailPlugin();
     const { Thumbnails } = thumbnailPluginInstance;
 
     return (
         <div
             style={{
-                margin: '1rem auto',
+                border: '1px solid rgba(0, 0, 0, 0.1)',
+                display: 'flex',
                 height: '50rem',
+                margin: '1rem auto',
                 width: '64rem',
             }}
         >
-            <Viewer fileUrl="/pdf-open-parameters.pdf" plugins={[defaultLayoutPluginInstance]} />
+            <div
+                style={{
+                    borderRight: '1px solid rgba(0, 0, 0, 0.1)',
+                    width: '20%',
+                }}
+            >
+                <Thumbnails renderThumbnailItem={renderThumbnailItem} />
+            </div>
+            <div
+                style={{
+                    flex: 1,
+                    overflow: 'hidden',
+                }}
+            >
+                <Viewer defaultScale={0.5} fileUrl="/pdf-open-parameters.pdf" plugins={[thumbnailPluginInstance]} />
+            </div>
         </div>
     );
 };
