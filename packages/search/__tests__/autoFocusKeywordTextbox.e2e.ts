@@ -1,15 +1,13 @@
 import 'expect-puppeteer';
 
 describe('Focus the keyword textbox automatically', () => {
-    beforeAll(async () => {
+    test('The keyword field is focused automatically', async () => {
         await page.goto('http://localhost:3000/search-focus-keyword');
         await page.setViewport({
             width: 1200,
             height: 800,
         });
-    });
 
-    test('The keyword field is focused automatically', async () => {
         await page.evaluate(() => document.querySelector('[data-testid="core__viewer"]').scrollIntoView());
         const seachButton = await page.waitForSelector('[aria-label="Search"]', {
             visible: true,
@@ -23,6 +21,12 @@ describe('Focus the keyword textbox automatically', () => {
     });
 
     test('The page should not scroll to the top', async () => {
+        await page.goto('http://localhost:3000/search-focus-keyword');
+        await page.setViewport({
+            width: 1200,
+            height: 800,
+        });
+
         await page.evaluate(() => document.querySelector('[data-testid="core__viewer"]').scrollIntoView());
 
         const seachButton = await page.waitForSelector('[aria-label="Search"]', {
