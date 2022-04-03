@@ -144,6 +144,8 @@ export interface ViewerState {
     pageWidth: number;
     // The rotation for each page
     pagesRotation: Map<number, number>;
+    // The last page which is rotated
+    rotatedPage?: number;
     rotation: number;
     // The current zoom level
     scale: number;

@@ -17,5 +17,6 @@ export interface StoreProps {
     pageWidth?: number;
     jumpToPage?(pageIndex: number): void;
     rotatePage(pageIndex: number, direction: RotateDirection): void;
+    rotatedPage?: number;
     rotation?: number;
 }

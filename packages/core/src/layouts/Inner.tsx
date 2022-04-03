@@ -292,6 +292,7 @@ export const Inner: React.FC<{
             pageHeight,
             pageWidth,
             pagesRotation: updateRotations,
+            rotatedPage: pageIndex,
             rotation,
             scale,
             scrollMode: currentScrollMode,
