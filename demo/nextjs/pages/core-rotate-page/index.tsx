@@ -30,7 +30,10 @@ const IndexPage = () => {
                     <Tooltip
                         position={Position.BottomCenter}
                         target={
-                            <MinimalButton onClick={() => props.onRotatePage(RotateDirection.Forward)}>
+                            <MinimalButton
+                                testId={`rotate-forward-${props.pageIndex}`}
+                                onClick={() => props.onRotatePage(RotateDirection.Forward)}
+                            >
                                 <RotateForwardIcon />
                             </MinimalButton>
                         }
@@ -40,7 +43,10 @@ const IndexPage = () => {
                     <Tooltip
                         position={Position.BottomCenter}
                         target={
-                            <MinimalButton onClick={() => props.onRotatePage(RotateDirection.Backward)}>
+                            <MinimalButton
+                                testId={`rotate-backward-${props.pageIndex}`}
+                                onClick={() => props.onRotatePage(RotateDirection.Backward)}
+                            >
                                 <RotateBackwardIcon />
                             </MinimalButton>
                         }
