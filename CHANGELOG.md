@@ -1,8 +1,8 @@
 # CHANGELOG
 
-## v3.2.0 [WIP]
+## v3.2.0
 
-**New feature**
+**New features**
 
 -   The `Popover` component has new prop `lockScroll` which indicates whether the `body` element is scrollable or not. By default, it takes the `true` value
 -   The `Viewer` component adds new `onRotate` callback that is invoked when users rotate the document:

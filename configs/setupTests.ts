@@ -54,6 +54,12 @@ const SAMPLE_PROTECTED_PDF = new Uint8Array(
 const MULTIPLE_PAGES_PDF = new Uint8Array(fs.readFileSync(path.resolve(__dirname, '../samples/sample-two-pages.pdf')));
 const OPEN_PARAMS_PDF = new Uint8Array(fs.readFileSync(path.resolve(__dirname, '../samples/pdf-open-parameters.pdf')));
 
+global.console = {
+    ...console,
+    // I don't want to see pdf-js' warnings
+    log: jest.fn(),
+};
+
 beforeAll(() => {
     global['__HELLO_PDF__'] = HELLO_PDF;
     global['__SAMPLE_PDF__'] = SAMPLE_PDF;
