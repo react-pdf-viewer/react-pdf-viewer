@@ -6,8 +6,8 @@
  * @copyright 2019-2022 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-export interface StoreProps {
-    rotation: number;
-    rotate?(degrees: number): void;
-    rotatePage?(pageIndex: number, rotation: number): void;
+import { RotateDirection } from '../structs/RotateDirection';
+
+export interface RenderRotatePageProps {
+    onRotatePage(pageIndex: number, direction: RotateDirection): void;
 }

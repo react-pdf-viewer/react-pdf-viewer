@@ -10,6 +10,13 @@ import * as React from 'react';
 import type { Plugin } from '@react-pdf-viewer/core';
 
 // Types
+export interface RenderRotatePageProps {
+    onRotatePage(pageIndex: number, direction: RotateDirection): void;
+}
+export interface RotatePageProps {
+    children: (props: RenderRotatePageProps) => React.ReactElement;
+}
+
 export interface RotateProps {
     children?: (props: RenderRotateProps) => React.ReactElement;
     direction: RotateDirection;
@@ -33,6 +40,7 @@ export enum RotateDirection {
 // Plugin
 export interface RotatePlugin extends Plugin {
     Rotate(props: RotateProps): React.ReactElement;
+    RotatePage(props: RotatePageProps): React.ReactElement;
     RotateBackwardButton(): React.ReactElement;
     RotateBackwardMenuItem(props: RotateDecoratorProps): React.ReactElement;
     RotateForwardButton(): React.ReactElement;

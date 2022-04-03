@@ -56,6 +56,20 @@ const renderPage: RenderPage = (props: RenderPageProps) => (
 <Viewer renderPage={renderPage} />;
 ```
 
+The rotate plugin adds new `RotatePage` component in case you want to rotate a particular page from outside:
+
+```tsx
+const rotatePluginInstance = rotatePlugin();
+const { RotatePage } = rotatePluginInstance;
+
+<RotatePage>
+    {(props) => <PrimaryButton onClick={() => props.onRotatePage(0, RotateDirection.Forward)}>Rotate the first page forward</PrimaryButton>}
+</RotatePage>
+<RotatePage>
+    {(props) => <PrimaryButton onClick={() => props.onRotatePage(0, RotateDirection.Backward)}>Rotate the first page backward</PrimaryButton>}
+</RotatePage>
+```
+
 -   The `onRotatePage` event is triggered when a page is rotated:
 
 ```tsx
