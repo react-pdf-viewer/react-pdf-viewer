@@ -27,6 +27,7 @@ export const ThumbnailListWithStore: React.FC<{
     const [pageWidth, setPageWidth] = React.useState(store.get('pageWidth') || 0);
     const [rotation, setRotation] = React.useState(store.get('rotation') || 0);
     const [pagesRotation, setPagesRotation] = React.useState(store.get('pagesRotation') || new Map());
+    const [rotatedPage, setRotatedPage] = React.useState(store.get('rotatedPage') || -1);
 
     const handleCurrentPageChanged: StoreHandler<number> = (currentPageIndex: number) => {
         setCurrentPage(currentPageIndex);
@@ -52,6 +53,10 @@ export const ThumbnailListWithStore: React.FC<{
         setPagesRotation(rotations);
     };
 
+    const handleRotatedPage: StoreHandler<number> = (rotatedPage: number) => {
+        setRotatedPage(rotatedPage);
+    };
+
     const jump = (pageIndex: number) => {
         const jumpToPage = store.get('jumpToPage');
         if (jumpToPage) {
@@ -67,6 +72,7 @@ export const ThumbnailListWithStore: React.FC<{
         store.subscribe('doc', handleDocumentChanged);
         store.subscribe('pageHeight', handlePageHeightChanged);
         store.subscribe('pageWidth', handlePageWidthChanged);
+        store.subscribe('rotatedPage', handleRotatedPage);
         store.subscribe('rotation', handleRotationChanged);
         store.subscribe('pagesRotation', handlePagesRotationChanged);
 
@@ -74,6 +80,7 @@ export const ThumbnailListWithStore: React.FC<{
             store.unsubscribe('doc', handleDocumentChanged);
             store.unsubscribe('pageHeight', handlePageHeightChanged);
             store.unsubscribe('pageWidth', handlePageWidthChanged);
+            store.unsubscribe('rotatedPage', handleRotatedPage);
             store.unsubscribe('rotation', handleRotationChanged);
             store.unsubscribe('pagesRotation', handlePagesRotationChanged);
         };
@@ -102,6 +109,7 @@ export const ThumbnailListWithStore: React.FC<{
                 pageWidth={pageWidth}
                 renderCurrentPageLabel={renderCurrentPageLabel}
                 renderThumbnailItem={renderThumbnailItem}
+                rotatedPage={rotatedPage}
                 rotation={rotation}
                 onJumpToPage={jump}
                 onRotatePage={rotatePage}

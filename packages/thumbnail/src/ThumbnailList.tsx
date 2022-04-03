@@ -31,6 +31,7 @@ export const ThumbnailList: React.FC<{
     pageWidth: number;
     renderCurrentPageLabel?: RenderCurrentPageLabel;
     renderThumbnailItem?: RenderThumbnailItem;
+    rotatedPage: number;
     rotation: number;
     onJumpToPage(pageIndex: number): void;
     onRotatePage(pageIndex: number, direction: RotateDirection): void;
@@ -42,6 +43,7 @@ export const ThumbnailList: React.FC<{
     pageWidth,
     renderCurrentPageLabel,
     renderThumbnailItem,
+    rotatedPage,
     rotation,
     onJumpToPage,
     onRotatePage,
@@ -196,6 +198,14 @@ export const ThumbnailList: React.FC<{
             setRenderPageIndex(nextPage);
         }
     }, [docId]);
+
+    React.useEffect(() => {
+        if (rotatedPage >= 0) {
+            // Re-render the thumbnail of page which has just been rotated
+            renderQueueInstance.markRendering(rotatedPage);
+            setRenderPageIndex(rotatedPage);
+        }
+    }, [docId, rotatedPage]);
 
     React.useEffect(() => {
         return () => {
