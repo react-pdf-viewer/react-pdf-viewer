@@ -9,6 +9,7 @@
 import * as React from 'react';
 import type { PdfJs, Store } from '@react-pdf-viewer/core';
 
+import { shouldBeCollapsed } from './shouldBeCollapsed';
 import { BookmarkList } from './BookmarkList';
 import { DownArrowIcon } from './DownArrowIcon';
 import { RightArrowIcon } from './RightArrowIcon';
@@ -23,7 +24,8 @@ export const BookmarkItem: React.FC<{
     store: Store<StoreProps>;
     onJumpToDest(dest: PdfJs.OutlineDestinationType): void;
 }> = ({ bookmark, depth, doc, index, numberOfSiblings, store, onJumpToDest }) => {
-    const [expanded, setExpanded] = React.useState(true);
+    const collapsed = React.useMemo(() => shouldBeCollapsed(bookmark), [bookmark]);
+    const [expanded, setExpanded] = React.useState(!collapsed);
 
     const hasSubItems = bookmark.items && bookmark.items.length > 0;
 

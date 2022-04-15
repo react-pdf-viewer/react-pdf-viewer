@@ -97,6 +97,7 @@ export declare namespace PdfJs {
     interface Outline {
         bold?: boolean;
         color?: number[];
+        count?: undefined | number;
         dest?: OutlineDestinationType;
         italic?: boolean;
         items: Outline[];

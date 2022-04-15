@@ -41,6 +41,6 @@ test('Test Bookmarks component', async () => {
     const viewerEle = getByTestId('core__viewer');
     mockIsIntersecting(viewerEle, true);
 
-    const bookmarkTitle = await findByText('Specifying parameters in a URL');
+    const bookmarkTitle = await findByText('Parameters for Opening PDF Files');
     expect(bookmarkTitle).toHaveClass('rpv-bookmark__title');
 });
