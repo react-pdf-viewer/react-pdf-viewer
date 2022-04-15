@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## v3.3.0 [WIP]
+
+**Improvement**
+
+-   In previous versions, all bookmarks were expanded by default. From this version, a bookmark will be shown or hidden initially depending on its data structure.
+You can see this behaviour on popular viewers such as Acrobat Reader.
+
 ## v3.2.0
 
 **New features**
