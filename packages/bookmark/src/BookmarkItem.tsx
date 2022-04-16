@@ -64,10 +64,12 @@ export const BookmarkItem: React.FC<{
                 }}
                 onClick={clickItem}
             >
-                {hasSubItems && (
+                {hasSubItems ? (
                     <span className="rpv-bookmark__toggle" onClick={toggleSubItems}>
                         {expanded ? <DownArrowIcon /> : <RightArrowIcon />}
                     </span>
+                ) : (
+                    <span className="rpv-bookmark__toggle" />
                 )}
                 {bookmark.url ? (
                     <a
