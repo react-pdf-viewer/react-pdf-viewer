@@ -13,10 +13,10 @@ test('Bookmarks are expanded initially', async () => {
     await page.waitForSelector('[data-testid="core__page-layer-0"]', { visible: true });
 
     // To make sure the bookmarks are rendered
-    let thumbnailsContainer = await page.waitForSelector('[data-testid="bookmark__container"]');
+    let bookmarksContainer = await page.waitForSelector('[data-testid="bookmark__container"]');
 
     // Check the number of bookmarks
-    let numBookmarks = await thumbnailsContainer.evaluate((ele) => ele.querySelectorAll('li').length);
+    let numBookmarks = await bookmarksContainer.evaluate((ele) => ele.querySelectorAll('li').length);
     expect(numBookmarks).toEqual(32);
 
     // Check the heading 1
@@ -41,8 +41,8 @@ test('Bookmarks are expanded initially', async () => {
     await loadDoc2Button.click();
 
     // Check the number of bookmarks
-    thumbnailsContainer = await page.waitForSelector('[data-testid="bookmark__container"]');
-    numBookmarks = await thumbnailsContainer.evaluate((ele) => ele.querySelectorAll('li').length);
+    bookmarksContainer = await page.waitForSelector('[data-testid="bookmark__container"]');
+    numBookmarks = await bookmarksContainer.evaluate((ele) => ele.querySelectorAll('li').length);
     expect(numBookmarks).toEqual(77);
 
     // Check the heading 1
@@ -77,8 +77,8 @@ test('Bookmarks are expanded initially', async () => {
     await loadDoc3Button.click();
 
     // Check the number of bookmarks
-    thumbnailsContainer = await page.waitForSelector('[data-testid="bookmark__container"]');
-    numBookmarks = await thumbnailsContainer.evaluate((ele) => ele.querySelectorAll('li').length);
+    bookmarksContainer = await page.waitForSelector('[data-testid="bookmark__container"]');
+    numBookmarks = await bookmarksContainer.evaluate((ele) => ele.querySelectorAll('li').length);
     expect(numBookmarks).toEqual(78);
 
     // Check the heading 1
