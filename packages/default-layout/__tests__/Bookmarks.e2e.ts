@@ -7,8 +7,6 @@ test('Click bookmarks', async () => {
     // Wait until the first page is rendered
     await page.waitForSelector('[data-testid="core__text-layer-0"]', { visible: true });
 
-    const pagesContainer = await page.waitForSelector('[data-testid="core__inner-pages"]');
-
     // Click the `Bookmark` tab in the sidebar
     const bookmarkTab = await page.waitForSelector('button[aria-label="Bookmark"]');
     await bookmarkTab.click();
@@ -21,70 +19,61 @@ test('Click bookmarks', async () => {
     await bookmarkItem.click();
 
     await page.waitForSelector('[data-testid="core__text-layer-2"]', { visible: true });
-    let scrollTop = await pagesContainer.evaluate((ele) => ele.scrollTop);
-    expect(scrollTop).toEqual(2505);
+    await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 2505');
 
     // Click the `Preface` bookmark item
     bookmarkItem = await page.waitForSelector('.rpv-bookmark__title[aria-label="Preface"]');
     await bookmarkItem.click();
 
     await page.waitForSelector('[data-testid="core__text-layer-3"]', { visible: true });
-    scrollTop = await pagesContainer.evaluate((ele) => ele.scrollTop);
-    expect(scrollTop).toEqual(3709);
+    await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 3709');
 
     // Click the `Who should read this guide` bookmark item
     bookmarkItem = await page.waitForSelector('.rpv-bookmark__title[aria-label="Who should read this guide?"]');
     await bookmarkItem.click();
 
     await page.waitForSelector('[data-testid="core__text-layer-3"]', { visible: true });
-    scrollTop = await pagesContainer.evaluate((ele) => ele.scrollTop);
-    expect(scrollTop).toEqual(3876);
+    await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 3876');
 
     // Click the `Related documentation` bookmark item
     bookmarkItem = await page.waitForSelector('.rpv-bookmark__title[aria-label="Related documentation"]');
     await bookmarkItem.click();
 
     await page.waitForSelector('[data-testid="core__text-layer-3"]', { visible: true });
-    scrollTop = await pagesContainer.evaluate((ele) => ele.scrollTop);
-    expect(scrollTop).toEqual(3990);
+    await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 3990');
 
     // Click the `Parameters for Opening PDF Files` bookmark item
     bookmarkItem = await page.waitForSelector('.rpv-bookmark__title[aria-label="Parameters for Opening PDF Files"]');
     await bookmarkItem.click();
 
     await page.waitForSelector('[data-testid="core__text-layer-4"]', { visible: true });
-    scrollTop = await pagesContainer.evaluate((ele) => ele.scrollTop);
-    expect(scrollTop).toEqual(4913);
+    await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 4913');
 
     // Click the `Parameters` bookmark item
     bookmarkItem = await page.waitForSelector('.rpv-bookmark__title[aria-label="Parameters"]');
     await bookmarkItem.click();
 
     await page.waitForSelector('[data-testid="core__text-layer-4"]', { visible: true });
-    scrollTop = await pagesContainer.evaluate((ele) => ele.scrollTop);
-    expect(scrollTop).toEqual(5417);
+    await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 5417');
 
     // Click the `Specifying parameters in a URL` bookmark item
     bookmarkItem = await page.waitForSelector('.rpv-bookmark__title[aria-label="Specifying parameters in a URL"]');
     await bookmarkItem.click();
 
     await page.waitForSelector('[data-testid="core__text-layer-6"]', { visible: true });
-    scrollTop = await pagesContainer.evaluate((ele) => ele.scrollTop);
-    expect(scrollTop).toEqual(7944);
+    await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 7944');
 
     // Click the `URL examples` bookmark item
     bookmarkItem = await page.waitForSelector('.rpv-bookmark__title[aria-label="URL examples"]');
     await bookmarkItem.click();
 
     await page.waitForSelector('[data-testid="core__text-layer-7"]', { visible: true });
-    scrollTop = await pagesContainer.evaluate((ele) => ele.scrollTop);
-    expect(scrollTop).toEqual(8539);
+    await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 8539');
 
     // Click the `URL limitations` bookmark item
     bookmarkItem = await page.waitForSelector('.rpv-bookmark__title[aria-label="URL limitations"]');
     await bookmarkItem.click();
 
     await page.waitForSelector('[data-testid="core__text-layer-7"]', { visible: true });
-    scrollTop = await pagesContainer.evaluate((ele) => ele.scrollTop);
-    expect(scrollTop).toEqual(8795);
+    await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 8795');
 });

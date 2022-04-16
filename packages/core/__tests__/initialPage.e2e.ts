@@ -6,9 +6,5 @@ test('Test the initialPage option', async () => {
 
     // Wait until the initial page is rendered
     await page.waitForSelector('[data-testid="core__page-layer-6"]', { visible: true });
-
-    const pagesContainer = await page.waitForSelector('[data-testid="core__inner-pages"]');
-
-    const scrollTop = await pagesContainer.evaluate((ele) => ele.scrollTop);
-    expect(scrollTop).toEqual(7224);
+    await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 7224');
 });

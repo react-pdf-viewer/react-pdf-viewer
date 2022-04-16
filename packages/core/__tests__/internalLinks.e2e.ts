@@ -11,10 +11,10 @@ test('Jump between internal links', async () => {
     // Wait until the first page is rendered
     await page.waitForSelector('[data-testid="core__text-layer-0"]', { visible: true });
 
-    const pagesContainer = await page.waitForSelector('[data-testid="core__inner-pages"]');
-
     const jumpToTableOfContents = async () => {
-        await pagesContainer.evaluate((ele) => (ele.scrollTop = 2416), pagesContainer);
+        await page.waitForFunction(
+            () => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 2416'
+        );
         // Wait until the page is rendered
         return await page.waitForSelector('[data-testid="core__text-layer-2"]', { visible: true });
     };
@@ -27,8 +27,7 @@ test('Jump between internal links', async () => {
     await link.click();
 
     await page.waitForSelector('[data-testid="core__text-layer-3"]', { visible: true });
-    let scrollTop = await pagesContainer.evaluate((ele) => ele.scrollTop);
-    expect(scrollTop).toEqual(3709);
+    await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 3709');
 
     // Click the `Who should read this guide` link
     await jumpToTableOfContents();
@@ -36,8 +35,7 @@ test('Jump between internal links', async () => {
     await link.click();
 
     await page.waitForSelector('[data-testid="core__text-layer-3"]', { visible: true });
-    scrollTop = await pagesContainer.evaluate((ele) => ele.scrollTop);
-    expect(scrollTop).toEqual(3876);
+    await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 3876');
 
     // Click the `Related documentation` link
     await jumpToTableOfContents();
@@ -45,8 +43,7 @@ test('Jump between internal links', async () => {
     await link.click();
 
     await page.waitForSelector('[data-testid="core__text-layer-3"]', { visible: true });
-    scrollTop = await pagesContainer.evaluate((ele) => ele.scrollTop);
-    expect(scrollTop).toEqual(3990);
+    await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 3990');
 
     // Click the `Parameters for Opening PDF Files` link
     await jumpToTableOfContents();
@@ -54,8 +51,7 @@ test('Jump between internal links', async () => {
     await link.click();
 
     await page.waitForSelector('[data-testid="core__text-layer-4"]', { visible: true });
-    scrollTop = await pagesContainer.evaluate((ele) => ele.scrollTop);
-    expect(scrollTop).toEqual(4913);
+    await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 4913');
 
     // Click the `Parameters` link
     await jumpToTableOfContents();
@@ -63,8 +59,7 @@ test('Jump between internal links', async () => {
     await link.click();
 
     await page.waitForSelector('[data-testid="core__text-layer-4"]', { visible: true });
-    scrollTop = await pagesContainer.evaluate((ele) => ele.scrollTop);
-    expect(scrollTop).toEqual(5417);
+    await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 5417');
 
     // Click the `Specifying parameters in a URL` link
     await jumpToTableOfContents();
@@ -72,8 +67,7 @@ test('Jump between internal links', async () => {
     await link.click();
 
     await page.waitForSelector('[data-testid="core__text-layer-6"]', { visible: true });
-    scrollTop = await pagesContainer.evaluate((ele) => ele.scrollTop);
-    expect(scrollTop).toEqual(7944);
+    await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 7944');
 
     // Click the `URL examples` link
     await jumpToTableOfContents();
@@ -81,8 +75,7 @@ test('Jump between internal links', async () => {
     await link.click();
 
     await page.waitForSelector('[data-testid="core__text-layer-7"]', { visible: true });
-    scrollTop = await pagesContainer.evaluate((ele) => ele.scrollTop);
-    expect(scrollTop).toEqual(8539);
+    await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 8539');
 
     // Click the `URL limitations` link
     await jumpToTableOfContents();
@@ -90,6 +83,5 @@ test('Jump between internal links', async () => {
     await link.click();
 
     await page.waitForSelector('[data-testid="core__text-layer-7"]', { visible: true });
-    scrollTop = await pagesContainer.evaluate((ele) => ele.scrollTop);
-    expect(scrollTop).toEqual(8795);
+    await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 8795');
 });

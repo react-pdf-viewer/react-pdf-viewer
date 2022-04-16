@@ -23,8 +23,9 @@ describe('Scroll modes in RTL', () => {
         await link.click();
 
         await page.waitForSelector('[data-testid="core__text-layer-6"]', { visible: true });
-        const scrollTop = await pagesContainer.evaluate((ele) => ele.scrollTop);
-        expect(scrollTop).toEqual(7944);
+        await page.waitForFunction(
+            () => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 7944'
+        );
 
         // Check the current page
         const currentPageInput = await page.waitForSelector('[data-testid="page-navigation__current-page-input"]');
@@ -60,8 +61,9 @@ describe('Scroll modes in RTL', () => {
         await link.click();
 
         await page.waitForSelector('[data-testid="core__text-layer-6"]', { visible: true });
-        const scrollLeft = await pagesContainer.evaluate((ele) => ele.scrollLeft);
-        expect(scrollLeft).toEqual(-5496);
+        await page.waitForFunction(
+            () => 'document.querySelector("[data-testid=core__inner-pages]").scrollLeft === -5496'
+        );
 
         // Check the current page
         const currentPageInput = await page.waitForSelector('[data-testid="page-navigation__current-page-input"]');
@@ -103,15 +105,17 @@ describe('Scroll modes in RTL', () => {
         // Jump to the table of contents page
         await page.evaluate(() => document.querySelector('[data-testid="core__page-layer-2"]').scrollIntoView());
 
-        let scrollTop = await pagesContainer.evaluate((ele) => ele.scrollTop);
-        expect(scrollTop).toEqual(618);
+        await page.waitForFunction(
+            () => 'document.querySelector("[data-testid=core__inner-pages]").scrollLeft === 618'
+        );
 
         // Click the `Parameters` link
         const link = await page.waitForSelector('[data-annotation-id="34R"]', { visible: true });
         await link.click();
 
         await page.waitForSelector('[data-testid="core__text-layer-4"]', { visible: true });
-        scrollTop = await pagesContainer.evaluate((ele) => ele.scrollTop);
-        expect(scrollTop).toEqual(1520);
+        await page.waitForFunction(
+            () => 'document.querySelector("[data-testid=core__inner-pages]").scrollLeft === 1520'
+        );
     });
 });
