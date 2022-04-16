@@ -27,7 +27,9 @@ export const BookmarkItem: React.FC<{
     onJumpToDest(dest: PdfJs.OutlineDestinationType): void;
 }> = ({ bookmark, depth, doc, index, isBookmarkExpanded, numberOfSiblings, store, onJumpToDest }) => {
     const defaultIsCollapsed = React.useMemo(() => shouldBeCollapsed(bookmark), [bookmark]);
-    const defaultExpanded = isBookmarkExpanded ? isBookmarkExpanded({ bookmark, doc, depth, index }) : !defaultIsCollapsed;
+    const defaultExpanded = isBookmarkExpanded
+        ? isBookmarkExpanded({ bookmark, doc, depth, index })
+        : !defaultIsCollapsed;
     const [expanded, setExpanded] = React.useState(defaultExpanded);
 
     const hasSubItems = bookmark.items && bookmark.items.length > 0;

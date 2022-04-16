@@ -8,11 +8,11 @@
     The following sample code expands bookmarks whose depth are smaller or equal to 2:
 
 ```tsx
-const setBookmarkExpanded = ({ bookmark, depth, doc, index }) => {    
+const setBookmarkExpanded = ({ bookmark, depth, doc, index }) => {
     // `bookmark` is the bookmark data structure
     // `depth` is the current depth
     // `doc` is the current document
-    // `index` is the zero-based index of bookmark relative to its parent 
+    // `index` is the zero-based index of bookmark relative to its parent
     return depth <= 2;
 };
 
@@ -23,10 +23,10 @@ Expanding or collapsing all bookmarks initially can be done easily:
 
 ```tsx
 // Expand bookmarks initially
-const setBookmarkExpanded = ({ bookmark, depth, doc }) => true;
+const setBookmarkExpanded = ({ bookmark, depth, doc, index }) => true;
 
 // Collapse bookmarks initially
-const setBookmarkExpanded = ({ bookmark, depth, doc }) => false;
+const setBookmarkExpanded = ({ bookmark, depth, doc, index }) => false;
 ```
 
 **Improvement**
