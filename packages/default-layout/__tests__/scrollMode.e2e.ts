@@ -33,8 +33,9 @@ describe('Scroll modes', () => {
         await link.click();
 
         await page.waitForSelector('[data-testid="core__text-layer-6"]', { visible: true });
-        const scrollLeft = await pagesContainer.evaluate((ele) => ele.scrollLeft);
-        expect(scrollLeft).toEqual(5496);
+        await page.waitForFunction(
+            () => 'document.querySelector("[data-testid=core__inner-pages]").scrollLeft === 5496'
+        );
 
         // Check the current page
         const currentPageInput = await page.waitForSelector('[data-testid="page-navigation__current-page-input"]');
