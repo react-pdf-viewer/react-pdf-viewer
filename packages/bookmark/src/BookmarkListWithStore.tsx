@@ -11,11 +11,13 @@ import { SpecialZoomLevel, Spinner } from '@react-pdf-viewer/core';
 import type { PdfJs, Store, StoreHandler } from '@react-pdf-viewer/core';
 
 import { BookmarkLoader } from './BookmarkLoader';
+import type { IsBookmarkExpanded } from './types/IsBookmarkExpanded';
 import type { StoreProps } from './types/StoreProps';
 
 export const BookmarkListWithStore: React.FC<{
+    isBookmarkExpanded: IsBookmarkExpanded;
     store: Store<StoreProps>;
-}> = ({ store }) => {
+}> = ({ isBookmarkExpanded, store }) => {
     const [currentDoc, setCurrentDoc] = React.useState(store.get('doc'));
 
     const handleDocumentChanged: StoreHandler<PdfJs.PdfDocument> = (doc: PdfJs.PdfDocument) => {
@@ -38,7 +40,7 @@ export const BookmarkListWithStore: React.FC<{
     }, []);
 
     return currentDoc ? (
-        <BookmarkLoader doc={currentDoc} store={store} onJumpToDest={jump} />
+        <BookmarkLoader doc={currentDoc} isBookmarkExpanded={isBookmarkExpanded} store={store} onJumpToDest={jump} />
     ) : (
         <div className="rpv-bookmark__loader">
             <Spinner />

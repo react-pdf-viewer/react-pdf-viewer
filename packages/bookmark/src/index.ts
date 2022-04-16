@@ -6,6 +6,9 @@
  * @copyright 2019-2022 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
+// Types
+export type { IsBookmarkExpanded } from './types/IsBookmarkExpanded';
+
 // Plugin
 export * from './bookmarkPlugin';
 
