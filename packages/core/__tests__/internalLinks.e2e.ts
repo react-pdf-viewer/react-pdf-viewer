@@ -68,20 +68,4 @@ test('Jump between internal links', async () => {
 
     await page.waitForSelector('[data-testid="core__text-layer-6"]', { visible: true });
     await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 7944');
-
-    // Click the `URL examples` link
-    await jumpToTableOfContents();
-    link = await page.waitForSelector('[data-annotation-id="36R"]', { visible: true });
-    await link.click();
-
-    await page.waitForSelector('[data-testid="core__text-layer-7"]', { visible: true });
-    await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 8539');
-
-    // Click the `URL limitations` link
-    await jumpToTableOfContents();
-    link = await page.waitForSelector('[data-annotation-id="33R"]', { visible: true });
-    await link.click();
-
-    await page.waitForSelector('[data-testid="core__text-layer-7"]', { visible: true });
-    await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 8795');
 });
