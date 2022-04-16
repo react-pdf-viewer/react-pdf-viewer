@@ -28,20 +28,15 @@ test('Document with different page dimensions (wrapped scroll mode)', async () =
     expect(zoomLevel).toEqual('50%');
     await zoomMenuItem.click();
 
-    const pagesContainer = await page.waitForSelector('[data-testid="core__inner-pages"]');
-
     await page.evaluate(() => document.querySelector('[data-testid="core__page-layer-2"]').scrollIntoView());
     await page.waitForSelector('[data-testid="core__text-layer-2"]', { visible: true });
-    let scrollTop = await pagesContainer.evaluate((ele) => ele.scrollTop);
-    expect(scrollTop).toEqual(420);
+    await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 420');
 
     await page.evaluate(() => document.querySelector('[data-testid="core__page-layer-5"]').scrollIntoView());
     await page.waitForSelector('[data-testid="core__text-layer-5"]', { visible: true });
-    scrollTop = await pagesContainer.evaluate((ele) => ele.scrollTop);
-    expect(scrollTop).toEqual(832);
+    await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 832');
 
     await page.evaluate(() => document.querySelector('[data-testid="core__page-layer-7"]').scrollIntoView());
     await page.waitForSelector('[data-testid="core__text-layer-7"]', { visible: true });
-    scrollTop = await pagesContainer.evaluate((ele) => ele.scrollTop);
-    expect(scrollTop).toEqual(890);
+    await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 890');
 });

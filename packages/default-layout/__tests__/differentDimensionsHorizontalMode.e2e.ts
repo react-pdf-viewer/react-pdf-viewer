@@ -31,44 +31,36 @@ test('Document with different page dimensions (horizontal scroll mode)', async (
     let nextPageButton = await page.waitForSelector('[data-testid="page-navigation__next-button"]');
     await nextPageButton.click();
 
-    const pagesContainer = await page.waitForSelector('[data-testid="core__inner-pages"]');
     await page.waitForSelector('[data-testid="core__text-layer-1"]', { visible: true });
-    let scrollLeft = await pagesContainer.evaluate((ele) => ele.scrollLeft);
-    expect(scrollLeft).toEqual(461);
+    await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollLeft === 461');
 
     // Jump to the 3rd page
     await nextPageButton.click();
     await page.waitForSelector('[data-testid="core__text-layer-2"]', { visible: true });
-    scrollLeft = await pagesContainer.evaluate((ele) => ele.scrollLeft);
-    expect(scrollLeft).toEqual(1071);
+    await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollLeft === 1071');
 
     // Jump to the 4th page
     await nextPageButton.click();
     await page.waitForSelector('[data-testid="core__text-layer-3"]', { visible: true });
-    scrollLeft = await pagesContainer.evaluate((ele) => ele.scrollLeft);
-    expect(scrollLeft).toEqual(1533);
+    await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollLeft === 1533');
 
     // Jump to the 5th page
     await nextPageButton.click();
     await page.waitForSelector('[data-testid="core__text-layer-4"]', { visible: true });
-    scrollLeft = await pagesContainer.evaluate((ele) => ele.scrollLeft);
-    expect(scrollLeft).toEqual(2143);
+    await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollLeft === 2143');
 
     // Jump to the 6th page
     await nextPageButton.click();
     await page.waitForSelector('[data-testid="core__text-layer-5"]', { visible: true });
-    scrollLeft = await pagesContainer.evaluate((ele) => ele.scrollLeft);
-    expect(scrollLeft).toEqual(2753);
+    await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollLeft === 2753');
 
     // Jump to the 7th page
     await nextPageButton.click();
     await page.waitForSelector('[data-testid="core__text-layer-6"]', { visible: true });
-    scrollLeft = await pagesContainer.evaluate((ele) => ele.scrollLeft);
-    expect(scrollLeft).toEqual(3161);
+    await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollLeft === 3161');
 
     // Jump to the 8th page
     await nextPageButton.click();
     await page.waitForSelector('[data-testid="core__text-layer-7"]', { visible: true });
-    scrollLeft = await pagesContainer.evaluate((ele) => ele.scrollLeft);
-    expect(scrollLeft).toEqual(3161);
+    await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollLeft === 3161');
 });
