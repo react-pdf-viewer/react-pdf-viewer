@@ -39,6 +39,10 @@ test('Click bookmarks when switching to the horizontal scroll mode', async () =>
     await page.waitForSelector('[data-testid="core__text-layer-3"]', { visible: true });
     await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollLeft === 2868');
 
+    // Toggle the `Preface` item
+    let toggleIcon = await page.waitForSelector('li[aria-label="Preface"] .rpv-bookmark__toggle');
+    await toggleIcon.click();
+
     // Click the `Who should read this guide` bookmark item
     bookmarkItem = await page.waitForSelector('.rpv-bookmark__title[aria-label="Who should read this guide?"]');
     await bookmarkItem.click();
@@ -60,6 +64,10 @@ test('Click bookmarks when switching to the horizontal scroll mode', async () =>
     await page.waitForSelector('[data-testid="core__text-layer-4"]', { visible: true });
     await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollLeft === 3775');
 
+    // Toggle the `Parameters for Opening PDF Files` item
+    toggleIcon = await page.waitForSelector('li[aria-label="Parameters for Opening PDF Files"] .rpv-bookmark__toggle');
+    await toggleIcon.click();
+
     // Click the `Parameters` bookmark item
     bookmarkItem = await page.waitForSelector('.rpv-bookmark__title[aria-label="Parameters"]');
     await bookmarkItem.click();
@@ -73,6 +81,10 @@ test('Click bookmarks when switching to the horizontal scroll mode', async () =>
 
     await page.waitForSelector('[data-testid="core__text-layer-6"]', { visible: true });
     await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollLeft === 5496');
+
+    // Toggle the `Specifying parameters in a URL` item
+    toggleIcon = await page.waitForSelector('li[aria-label="Specifying parameters in a URL"] .rpv-bookmark__toggle');
+    await toggleIcon.click();
 
     // Click the `URL examples` bookmark item
     bookmarkItem = await page.waitForSelector('.rpv-bookmark__title[aria-label="URL examples"]');
@@ -141,6 +153,10 @@ test('Click bookmarks when switching to the wrapped scroll mode', async () => {
     await page.waitForSelector('[data-testid="core__text-layer-3"]', { visible: true });
     await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 444');
 
+    // Toggle the `Preface` item
+    let toggleIcon = await page.waitForSelector('li[aria-label="Preface"] .rpv-bookmark__toggle');
+    await toggleIcon.click();
+
     // Click the `Who should read this guide` bookmark item
     bookmarkItem = await page.waitForSelector('.rpv-bookmark__title[aria-label="Who should read this guide?"]');
     await bookmarkItem.click();
@@ -162,6 +178,10 @@ test('Click bookmarks when switching to the wrapped scroll mode', async () => {
     await page.waitForSelector('[data-testid="core__text-layer-4"]', { visible: true });
     await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 856');
 
+    // Toggle the `Parameters for Opening PDF Files` item
+    toggleIcon = await page.waitForSelector('li[aria-label="Parameters for Opening PDF Files"] .rpv-bookmark__toggle');
+    await toggleIcon.click();
+
     // Click the `Parameters` bookmark item
     bookmarkItem = await page.waitForSelector('.rpv-bookmark__title[aria-label="Parameters"]');
     await bookmarkItem.click();
@@ -175,6 +195,10 @@ test('Click bookmarks when switching to the wrapped scroll mode', async () => {
 
     await page.waitForSelector('[data-testid="core__text-layer-6"]', { visible: true });
     await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 890');
+
+    // Toggle the `Specifying parameters in a URL` item
+    toggleIcon = await page.waitForSelector('li[aria-label="Specifying parameters in a URL"] .rpv-bookmark__toggle');
+    await toggleIcon.click();
 
     // Click the `URL examples` bookmark item
     bookmarkItem = await page.waitForSelector('.rpv-bookmark__title[aria-label="URL examples"]');
