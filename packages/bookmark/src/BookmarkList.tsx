@@ -10,16 +10,18 @@ import * as React from 'react';
 import type { PdfJs, Store } from '@react-pdf-viewer/core';
 
 import { BookmarkItem } from './BookmarkItem';
+import type { IsBookmarkExpanded } from './types/IsBookmarkExpanded';
 import type { StoreProps } from './types/StoreProps';
 
 export const BookmarkList: React.FC<{
     bookmarks: PdfJs.Outline[];
     depth: number;
     doc: PdfJs.PdfDocument;
+    isBookmarkExpanded?: IsBookmarkExpanded;
     isRoot: boolean;
     store: Store<StoreProps>;
     onJumpToDest(dest: PdfJs.OutlineDestinationType): void;
-}> = ({ bookmarks, depth = 0, doc, isRoot, store, onJumpToDest }) => (
+}> = ({ bookmarks, depth = 0, doc, isBookmarkExpanded, isRoot, store, onJumpToDest }) => (
     <ul className="rpv-bookmark__list" role={isRoot ? 'tree' : 'group'} tabIndex={-1}>
         {bookmarks.map((bookmark, index) => (
             <BookmarkItem
@@ -27,6 +29,7 @@ export const BookmarkList: React.FC<{
                 depth={depth}
                 doc={doc}
                 index={index}
+                isBookmarkExpanded={isBookmarkExpanded}
                 key={index}
                 numberOfSiblings={bookmarks.length}
                 store={store}

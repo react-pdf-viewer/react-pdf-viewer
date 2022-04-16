@@ -16,10 +16,15 @@ import type {
 } from '@react-pdf-viewer/core';
 
 import { BookmarkListWithStore } from './BookmarkListWithStore';
+import type { IsBookmarkExpanded } from './types/IsBookmarkExpanded';
 import type { StoreProps } from './types/StoreProps';
 
+export interface BookmarksProps {
+    isBookmarkExpanded?: IsBookmarkExpanded;
+}
+
 export interface BookmarkPlugin extends Plugin {
-    Bookmarks: () => React.ReactElement;
+    Bookmarks: (props?: BookmarksProps) => React.ReactElement;
 }
 
 export const bookmarkPlugin = (): BookmarkPlugin => {
@@ -31,7 +36,9 @@ export const bookmarkPlugin = (): BookmarkPlugin => {
         []
     );
 
-    const BookmarksDecorator = () => <BookmarkListWithStore store={store} />;
+    const BookmarksDecorator = (props?: BookmarksProps) => (
+        <BookmarkListWithStore isBookmarkExpanded={props?.isBookmarkExpanded} store={store} />
+    );
 
     const onAnnotationLayerRender = (e: PluginOnAnnotationLayerRender) => {
         if (!e.annotations.length) {

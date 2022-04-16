@@ -7,11 +7,27 @@
  */
 
 import * as React from 'react';
-import type { Plugin } from '@react-pdf-viewer/core';
+import type { PdfJs, Plugin } from '@react-pdf-viewer/core';
 
 // Plugin
+export type IsBookmarkExpanded = ({
+    bookmark,
+    depth,
+    doc,
+    index,
+}: {
+    bookmark: PdfJs.Outline;
+    depth: number;
+    doc: PdfJs.PdfDocument;
+    index: number;
+}) => boolean;
+
+export interface BookmarksProps {
+    isBookmarkExpanded?: IsBookmarkExpanded;
+}
+
 export interface BookmarkPlugin extends Plugin {
-    Bookmarks: () => React.ReactElement;
+    Bookmarks: (props?: BookmarksProps) => React.ReactElement;
 }
 
 export function bookmarkPlugin(): BookmarkPlugin;

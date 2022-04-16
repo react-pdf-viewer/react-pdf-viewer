@@ -13,6 +13,7 @@ import { shouldBeCollapsed } from './shouldBeCollapsed';
 import { BookmarkList } from './BookmarkList';
 import { DownArrowIcon } from './DownArrowIcon';
 import { RightArrowIcon } from './RightArrowIcon';
+import type { IsBookmarkExpanded } from './types/IsBookmarkExpanded';
 import type { StoreProps } from './types/StoreProps';
 
 export const BookmarkItem: React.FC<{
@@ -20,12 +21,14 @@ export const BookmarkItem: React.FC<{
     depth: number;
     doc: PdfJs.PdfDocument;
     index: number;
+    isBookmarkExpanded?: IsBookmarkExpanded;
     numberOfSiblings: number;
     store: Store<StoreProps>;
     onJumpToDest(dest: PdfJs.OutlineDestinationType): void;
-}> = ({ bookmark, depth, doc, index, numberOfSiblings, store, onJumpToDest }) => {
-    const collapsed = React.useMemo(() => shouldBeCollapsed(bookmark), [bookmark]);
-    const [expanded, setExpanded] = React.useState(!collapsed);
+}> = ({ bookmark, depth, doc, index, isBookmarkExpanded, numberOfSiblings, store, onJumpToDest }) => {
+    const defaultIsCollapsed = React.useMemo(() => shouldBeCollapsed(bookmark), [bookmark]);
+    const defaultExpanded = isBookmarkExpanded ? isBookmarkExpanded({ bookmark, doc, depth, index }) : !defaultIsCollapsed;
+    const [expanded, setExpanded] = React.useState(defaultExpanded);
 
     const hasSubItems = bookmark.items && bookmark.items.length > 0;
 
@@ -84,6 +87,7 @@ export const BookmarkItem: React.FC<{
                     bookmarks={bookmark.items}
                     depth={depth + 1}
                     doc={doc}
+                    isBookmarkExpanded={isBookmarkExpanded}
                     isRoot={false}
                     store={store}
                     onJumpToDest={onJumpToDest}
