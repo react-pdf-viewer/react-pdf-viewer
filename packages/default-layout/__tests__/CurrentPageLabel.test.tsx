@@ -90,7 +90,7 @@ test('Test <CurrentPageLabel>', async () => {
 
 test('Test <CurrentPageLabel> with custom page label', async () => {
     const pageLabelDocument = new Uint8Array(
-        fs.readFileSync(path.resolve(__dirname, '../../../samples/ignore/page-labels.pdf'))
+        fs.readFileSync(path.resolve(__dirname, '../../../samples/ignore/page-labels-2.pdf'))
     );
     const { findByTestId, getByTestId } = render(<TestCurrentPageLabel fileUrl={pageLabelDocument} />);
 
@@ -120,16 +120,16 @@ test('Test <CurrentPageLabel> with custom page label', async () => {
     await findByTestId('core__text-layer-0');
 
     let pageLabel = await findByTestId('current-page-label');
-    expect(pageLabel.textContent).toEqual('4(i)');
+    expect(pageLabel.textContent).toEqual('8(296)');
 
-    // Jump to the third page
+    // Jump to the 5th page
     fireEvent.scroll(pagesContainer, {
         target: {
-            scrollTop: 1782,
+            scrollTop: 3556,
         },
     });
 
-    await findByTestId('core__text-layer-2');
+    await findByTestId('core__page-layer-5');
     pageLabel = await findByTestId('current-page-label');
-    expect(pageLabel.textContent).toEqual('4(iii)');
+    expect(pageLabel.textContent).toEqual('8(300)');
 });
