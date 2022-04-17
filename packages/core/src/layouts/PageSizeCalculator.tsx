@@ -81,7 +81,7 @@ export const PageSizeCalculator: React.FC<{
 
     const { pageWidth } = pageSize;
     return pageWidth === 0 ? (
-        <div className="rpv-core__page-size-calculator" ref={pagesRef}>
+        <div className="rpv-core__page-size-calculator" data-testid="core__page-size-calculating" ref={pagesRef}>
             <Spinner />
         </div>
     ) : (
