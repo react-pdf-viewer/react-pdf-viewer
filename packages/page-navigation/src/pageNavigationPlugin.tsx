@@ -24,6 +24,7 @@ import { GoToNextPageMenuItem } from './GoToNextPageMenuItem';
 import { GoToPreviousPage } from './GoToPreviousPage';
 import { GoToPreviousPageMenuItem } from './GoToPreviousPageMenuItem';
 import { GoToPreviousPageButton } from './GoToPreviousPageButton';
+import { NumberOfPages, NumberOfPagesProps } from './NumberOfPages';
 
 import type { GoToPageMenuItemProps, GoToPageProps } from './types';
 import type { StoreProps } from './types/StoreProps';
@@ -44,6 +45,7 @@ export interface PageNavigationPlugin extends Plugin {
     GoToPreviousPage: (props: GoToPageProps) => React.ReactElement;
     GoToPreviousPageButton: () => React.ReactElement;
     GoToPreviousPageMenuItem: (props: GoToPageMenuItemProps) => React.ReactElement;
+    NumberOfPages: (props: NumberOfPagesProps) => React.ReactElement;
 }
 
 export const pageNavigationPlugin = (): PageNavigationPlugin => {
@@ -133,6 +135,8 @@ export const pageNavigationPlugin = (): PageNavigationPlugin => {
         </GoToPreviousPageDecorator>
     );
 
+    const NumberOfPagesDecorator = (props: NumberOfPagesProps) => <NumberOfPages {...props} store={store} />;
+
     return {
         install: (pluginFunctions: PluginFunctions) => {
             store.update('jumpToPage', pluginFunctions.jumpToPage);
@@ -165,5 +169,6 @@ export const pageNavigationPlugin = (): PageNavigationPlugin => {
         GoToPreviousPage: GoToPreviousPageDecorator,
         GoToPreviousPageButton: GoToPreviousPageButtonDecorator,
         GoToPreviousPageMenuItem: GoToPreviousPageMenuItemDecorator,
+        NumberOfPages: NumberOfPagesDecorator,
     };
 };

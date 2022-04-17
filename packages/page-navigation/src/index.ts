@@ -8,6 +8,7 @@
 
 // Types
 export type { CurrentPageLabelProps, RenderCurrentPageLabelProps } from './CurrentPageLabel';
+export type { NumberOfPagesProps, RenderNumberOfPages, RenderNumberOfPagesProps } from './NumberOfPages';
 export type { GoToPageMenuItemProps, GoToPageProps, RenderGoToPage, RenderGoToPageProps } from './types';
 
 // Plugin
