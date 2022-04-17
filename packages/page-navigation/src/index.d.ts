@@ -35,6 +35,16 @@ export interface RenderGoToPageProps {
 
 export type RenderGoToPage = (props: RenderGoToPageProps) => React.ReactElement;
 
+export interface RenderNumberOfPagesProps {
+    numberOfPages: number;
+}
+
+export type RenderNumberOfPages = (props: RenderNumberOfPagesProps) => React.ReactElement;
+
+export interface NumberOfPagesProps {
+    children?: RenderNumberOfPages;
+}
+
 // Plugin
 export interface PageNavigationPlugin extends Plugin {
     jumpToPage: (pageIndex: number) => void;
@@ -52,6 +62,7 @@ export interface PageNavigationPlugin extends Plugin {
     GoToPreviousPage: (props: GoToPageProps) => React.ReactElement;
     GoToPreviousPageButton: () => React.ReactElement;
     GoToPreviousPageMenuItem: (props: GoToPageMenuItemProps) => React.ReactElement;
+    NumberOfPages: (props: NumberOfPagesProps) => React.ReactElement;
 }
 
 export function pageNavigationPlugin(): PageNavigationPlugin;

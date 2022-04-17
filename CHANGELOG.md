@@ -29,6 +29,8 @@ const setBookmarkExpanded = ({ bookmark, depth, doc, index }) => true;
 const setBookmarkExpanded = ({ bookmark, depth, doc, index }) => false;
 ```
 
+-   The Page Navigation plugin provides new `NumberOfPages` component that displays the total number of pages
+
 **Improvements**
 
 -   Align bookmark titles
