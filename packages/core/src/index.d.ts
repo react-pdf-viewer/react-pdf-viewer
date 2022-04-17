@@ -267,6 +267,7 @@ export interface MinimalButtonProps {
 export class MinimalButton extends React.Component<MinimalButtonProps> {}
 
 export interface PrimaryButtonProps {
+    children?: React.ReactNode;
     testId?: string;
     onClick(): void;
 }
@@ -489,6 +490,7 @@ export interface ViewerProps {
 export class Viewer extends React.Component<ViewerProps> {}
 
 export interface WorkerProps {
+    children?: React.ReactNode;
     workerUrl: string;
 }
 export class Worker extends React.Component<WorkerProps> {}

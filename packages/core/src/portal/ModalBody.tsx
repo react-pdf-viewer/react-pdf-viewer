@@ -17,6 +17,7 @@ import { classNames } from '../utils/classNames';
 
 export const ModalBody: React.FC<{
     ariaControlsSuffix: string;
+    children?: React.ReactNode;
     closeOnClickOutside: boolean;
     closeOnEscape: boolean;
     onToggle(): void;

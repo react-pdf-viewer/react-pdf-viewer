@@ -11,6 +11,7 @@ import * as React from 'react';
 import { PdfJsApi } from './vendors/PdfJsApi';
 
 export const Worker: React.FC<{
+    children?: React.ReactNode;
     workerUrl: string;
 }> = ({ children, workerUrl }) => {
     PdfJsApi.GlobalWorkerOptions.workerSrc = workerUrl;

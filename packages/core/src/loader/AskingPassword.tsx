@@ -53,9 +53,10 @@ export const AskingPassword: React.FC<{
             >
                 <div className="rpv-core__asking-password-message">
                     {submitPassword === SubmitPassword.REQUIRE_PASSWORD &&
-                        ((l10n.core as LocalizationMap).askingPassword as LocalizationMap).requirePasswordToOpen}
+                        (((l10n.core as LocalizationMap).askingPassword as LocalizationMap)
+                            .requirePasswordToOpen as string)}
                     {submitPassword === SubmitPassword.WRONG_PASSWORD &&
-                        ((l10n.core as LocalizationMap).wrongPassword as LocalizationMap).tryAgain}
+                        (((l10n.core as LocalizationMap).wrongPassword as LocalizationMap).tryAgain as string)}
                 </div>
                 <div className="rpv-core__asking-password-body">
                     <div
@@ -74,7 +75,7 @@ export const AskingPassword: React.FC<{
                         />
                     </div>
                     <PrimaryButton onClick={submit}>
-                        {((l10n.core as LocalizationMap).askingPassword as LocalizationMap).submit}
+                        {((l10n.core as LocalizationMap).askingPassword as LocalizationMap).submit as string}
                     </PrimaryButton>
                 </div>
             </div>
