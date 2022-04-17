@@ -32,6 +32,7 @@ const setBookmarkExpanded = ({ bookmark, depth, doc, index }) => false;
 **Improvements**
 
 -   Align bookmark titles
+-   Compatible with React 18
 -   In previous versions, all bookmarks were expanded by default. From this version, a bookmark will be shown or hidden initially depending on its data structure.
     You can see this behaviour on popular viewers such as Acrobat Reader.
 
@@ -121,9 +122,10 @@ const { RotatePage } = rotatePluginInstance;
 
 **Improvements**
 
--   The search popover is opened if users press the shortcuts (`Ctrl + F`, or `Cmd + F` on macOS) when the mouse is inside the viewer container
 -   It's able to scroll the pages when opening the search popover
+-   Compatible with React 18
 -   Support link annotations that have the `unsafeUrl` property
+-   The search popover is opened if users press the shortcuts (`Ctrl + F`, or `Cmd + F` on macOS) when the mouse is inside the viewer container
 
 **Bug fixes**
 

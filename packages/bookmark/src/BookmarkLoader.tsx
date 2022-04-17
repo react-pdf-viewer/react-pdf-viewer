@@ -15,7 +15,7 @@ import {
     TextDirection,
     ThemeContext,
 } from '@react-pdf-viewer/core';
-import type { PdfJs, Store } from '@react-pdf-viewer/core';
+import type { LocalizationMap, PdfJs, Store } from '@react-pdf-viewer/core';
 
 import { BookmarkListRoot } from './BookmarkListRoot';
 import type { IsBookmarkExpanded } from './types/IsBookmarkExpanded';
@@ -63,7 +63,7 @@ export const BookmarkLoader: React.FC<{
                 'rpv-bookmark__empty--rtl': isRtl,
             })}
         >
-            {l10n && l10n.bookmark ? l10n.bookmark.noBookmark : 'There is no bookmark'}
+            {l10n && l10n.bookmark ? ((l10n.bookmark as LocalizationMap).noBookmark as string) : 'There is no bookmark'}
         </div>
     ) : (
         <div

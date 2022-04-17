@@ -60,6 +60,10 @@ export const ThumbnailList: React.FC<{
     const [renderPageIndex, setRenderPageIndex] = React.useState(-1);
     const isMounted = useIsMounted();
 
+    // To support React 18+, we need a _global_ flag to indicate that there is a thumbnail which is being rendered.
+    // Without this ref, it only renders only one thumnail. Is it caused by batching in React 18?
+    const hasRenderingThumbnailRef = React.useRef(false);
+
     const pageIndexes = React.useMemo(
         () =>
             Array(numPages)
@@ -174,6 +178,7 @@ export const ThumbnailList: React.FC<{
         (pageIndex: number) => {
             if (isMounted.current) {
                 renderQueueInstance.markRendered(pageIndex);
+                hasRenderingThumbnailRef.current = false;
                 renderNextThumbnail();
             }
         },
@@ -192,9 +197,14 @@ export const ThumbnailList: React.FC<{
     );
 
     const renderNextThumbnail = React.useCallback(() => {
+        if (hasRenderingThumbnailRef.current) {
+            return;
+        }
+
         const nextPage = renderQueueInstance.getHighestPriorityPage();
         if (nextPage > -1) {
             renderQueueInstance.markRendering(nextPage);
+            hasRenderingThumbnailRef.current = true;
             setRenderPageIndex(nextPage);
         }
     }, [docId]);
@@ -203,6 +213,7 @@ export const ThumbnailList: React.FC<{
         if (rotatedPage >= 0) {
             // Re-render the thumbnail of page which has just been rotated
             renderQueueInstance.markRendering(rotatedPage);
+            hasRenderingThumbnailRef.current = true;
             setRenderPageIndex(rotatedPage);
         }
     }, [docId, rotatedPage]);

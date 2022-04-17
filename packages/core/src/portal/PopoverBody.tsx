@@ -19,6 +19,7 @@ import type { Offset } from '../types/Offset';
 
 export const PopoverBody: React.FC<{
     ariaControlsSuffix: string;
+    children?: React.ReactNode;
     closeOnClickOutside: boolean;
     offset: Offset;
     position: Position;

@@ -15,6 +15,7 @@ import { LocalizationContext } from '../localization/LocalizationContext';
 import { TextDirection, ThemeContext } from '../theme/ThemeContext';
 import { classNames } from '../utils/classNames';
 import type { DocumentAskPasswordEvent, VerifyPassword } from '../types/DocumentAskPasswordEvent';
+import type { LocalizationMap } from '../types/LocalizationMap';
 
 export const AskingPassword: React.FC<{
     submitPassword: SubmitPassword;
@@ -52,8 +53,10 @@ export const AskingPassword: React.FC<{
             >
                 <div className="rpv-core__asking-password-message">
                     {submitPassword === SubmitPassword.REQUIRE_PASSWORD &&
-                        l10n.core.askingPassword.requirePasswordToOpen}
-                    {submitPassword === SubmitPassword.WRONG_PASSWORD && l10n.core.wrongPassword.tryAgain}
+                        (((l10n.core as LocalizationMap).askingPassword as LocalizationMap)
+                            .requirePasswordToOpen as string)}
+                    {submitPassword === SubmitPassword.WRONG_PASSWORD &&
+                        (((l10n.core as LocalizationMap).wrongPassword as LocalizationMap).tryAgain as string)}
                 </div>
                 <div className="rpv-core__asking-password-body">
                     <div
@@ -71,7 +74,9 @@ export const AskingPassword: React.FC<{
                             onKeyDown={handleKeyDown}
                         />
                     </div>
-                    <PrimaryButton onClick={submit}>{l10n.core.askingPassword.submit}</PrimaryButton>
+                    <PrimaryButton onClick={submit}>
+                        {((l10n.core as LocalizationMap).askingPassword as LocalizationMap).submit as string}
+                    </PrimaryButton>
                 </div>
             </div>
         </div>

@@ -8,6 +8,7 @@
 
 import * as React from 'react';
 import { isMac, LocalizationContext, MinimalButton, Position, Tooltip } from '@react-pdf-viewer/core';
+import type { LocalizationMap } from '@react-pdf-viewer/core';
 
 import { PrintIcon } from './PrintIcon';
 import type { RenderPrintProps } from './types/RenderPrintProps';
@@ -16,7 +17,7 @@ const TOOLTIP_OFFSET = { left: 0, top: 8 };
 
 export const PrintButton: React.FC<RenderPrintProps> = ({ enableShortcuts, onClick }) => {
     const { l10n } = React.useContext(LocalizationContext);
-    const label = l10n && l10n.print ? l10n.print.print : 'Print';
+    const label = l10n && l10n.print ? ((l10n.print as LocalizationMap).print as string) : 'Print';
     const ariaKeyShortcuts = enableShortcuts ? (isMac() ? 'Meta+P' : 'Ctrl+P') : '';
 
     return (
@@ -26,7 +27,7 @@ export const PrintButton: React.FC<RenderPrintProps> = ({ enableShortcuts, onCli
             target={
                 <MinimalButton
                     ariaKeyShortcuts={ariaKeyShortcuts}
-                    ariaLabel={label as string}
+                    ariaLabel={label}
                     testId="print__button"
                     onClick={onClick}
                 >

@@ -8,7 +8,7 @@
 
 import * as React from 'react';
 import { Button, LocalizationContext, Separator } from '@react-pdf-viewer/core';
-import type { PdfJs } from '@react-pdf-viewer/core';
+import type { LocalizationMap, PdfJs } from '@react-pdf-viewer/core';
 
 import { PropertiesLoader } from './PropertiesLoader';
 import { PropertyItem } from './PropertyItem';
@@ -33,57 +33,91 @@ export const PropertiesModal: React.FC<{
         <>
             <div className="rpv-properties__modal-section">
                 <PropertyItem
-                    label={(l10n && l10n.properties ? l10n.properties.fileName : 'File name') as string}
+                    label={
+                        l10n && l10n.properties
+                            ? ((l10n.properties as LocalizationMap).fileName as string)
+                            : 'File name'
+                    }
                     value={data.fileName || getFileName(fileName)}
                 />
                 <PropertyItem
-                    label={(l10n && l10n.properties ? l10n.properties.fileSize : 'File size') as string}
+                    label={
+                        l10n && l10n.properties
+                            ? ((l10n.properties as LocalizationMap).fileSize as string)
+                            : 'File size'
+                    }
                     value={getFileSize(data.length)}
                 />
             </div>
             <Separator />
             <div className="rpv-properties__modal-section">
                 <PropertyItem
-                    label={(l10n && l10n.properties ? l10n.properties.title : 'Title') as string}
+                    label={l10n && l10n.properties ? ((l10n.properties as LocalizationMap).title as string) : 'Title'}
                     value={data.info.Title}
                 />
                 <PropertyItem
-                    label={(l10n && l10n.properties ? l10n.properties.author : 'Author') as string}
+                    label={l10n && l10n.properties ? ((l10n.properties as LocalizationMap).author as string) : 'Author'}
                     value={data.info.Author}
                 />
                 <PropertyItem
-                    label={(l10n && l10n.properties ? l10n.properties.subject : 'Subject') as string}
+                    label={
+                        l10n && l10n.properties ? ((l10n.properties as LocalizationMap).subject as string) : 'Subject'
+                    }
                     value={data.info.Subject}
                 />
                 <PropertyItem
-                    label={(l10n && l10n.properties ? l10n.properties.keywords : 'Keywords') as string}
+                    label={
+                        l10n && l10n.properties ? ((l10n.properties as LocalizationMap).keywords as string) : 'Keywords'
+                    }
                     value={data.info.Keywords}
                 />
                 <PropertyItem
-                    label={(l10n && l10n.properties ? l10n.properties.creator : 'Creator') as string}
+                    label={
+                        l10n && l10n.properties ? ((l10n.properties as LocalizationMap).creator as string) : 'Creator'
+                    }
                     value={data.info.Creator}
                 />
                 <PropertyItem
-                    label={(l10n && l10n.properties ? l10n.properties.creationDate : 'Creation date') as string}
+                    label={
+                        l10n && l10n.properties
+                            ? ((l10n.properties as LocalizationMap).creationDate as string)
+                            : 'Creation date'
+                    }
                     value={formatDate(data.info.CreationDate)}
                 />
                 <PropertyItem
-                    label={(l10n && l10n.properties ? l10n.properties.modificationDate : 'Modification date') as string}
+                    label={
+                        l10n && l10n.properties
+                            ? ((l10n.properties as LocalizationMap).modificationDate as string)
+                            : 'Modification date'
+                    }
                     value={formatDate(data.info.ModDate)}
                 />
             </div>
             <Separator />
             <div className="rpv-properties__modal-section">
                 <PropertyItem
-                    label={(l10n && l10n.properties ? l10n.properties.pdfProducer : 'PDF producer') as string}
+                    label={
+                        l10n && l10n.properties
+                            ? ((l10n.properties as LocalizationMap).pdfProducer as string)
+                            : 'PDF producer'
+                    }
                     value={data.info.Producer}
                 />
                 <PropertyItem
-                    label={(l10n && l10n.properties ? l10n.properties.pdfVersion : 'PDF version') as string}
+                    label={
+                        l10n && l10n.properties
+                            ? ((l10n.properties as LocalizationMap).pdfVersion as string)
+                            : 'PDF version'
+                    }
                     value={data.info.PDFFormatVersion}
                 />
                 <PropertyItem
-                    label={(l10n && l10n.properties ? l10n.properties.pageCount : 'Page count') as string}
+                    label={
+                        l10n && l10n.properties
+                            ? ((l10n.properties as LocalizationMap).pageCount as string)
+                            : 'Page count'
+                    }
                     value={`${doc.numPages}`}
                 />
             </div>
@@ -94,7 +128,9 @@ export const PropertiesModal: React.FC<{
         <div className="rpv-properties__modal">
             <PropertiesLoader doc={doc} render={renderData} />
             <div className="rpv-properties__modal-footer">
-                <Button onClick={onToggle}>{l10n && l10n.properties ? l10n.properties.close : 'Close'}</Button>
+                <Button onClick={onToggle}>
+                    {l10n && l10n.properties ? ((l10n.properties as LocalizationMap).close as string) : 'Close'}
+                </Button>
             </div>
         </div>
     );

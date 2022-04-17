@@ -226,6 +226,7 @@ export type RenderContent = (toggle: Toggle) => React.ReactNode;
 export type RenderTarget = (toggle: Toggle, opened: boolean) => React.ReactNode;
 
 export interface ButtonProps {
+    children?: React.ReactNode;
     testId?: string;
     onClick(): void;
 }
@@ -233,16 +234,20 @@ export class Button extends React.Component<ButtonProps> {}
 
 export interface LazyRenderProps {
     attrs?: React.HTMLAttributes<HTMLDivElement>;
+    children?: React.ReactNode;
     testId?: string;
 }
 export class LazyRender extends React.Component<LazyRenderProps> {}
 
-export class Menu extends React.Component {}
+export class Menu extends React.Component<{
+    children?: React.ReactNode;
+}> {}
 
 export class MenuDivider extends React.Component {}
 
 export interface MenuItemProps {
     checked?: boolean;
+    children?: React.ReactNode;
     icon?: React.ReactElement;
     isDisabled?: boolean;
     testId?: string;
@@ -253,6 +258,7 @@ export class MenuItem extends React.Component<MenuItemProps> {}
 export interface MinimalButtonProps {
     ariaLabel?: string;
     ariaKeyShortcuts?: string;
+    children?: React.ReactNode;
     isDisabled?: boolean;
     isSelected?: boolean;
     testId?: string;
@@ -261,6 +267,7 @@ export interface MinimalButtonProps {
 export class MinimalButton extends React.Component<MinimalButtonProps> {}
 
 export interface PrimaryButtonProps {
+    children?: React.ReactNode;
     testId?: string;
     onClick(): void;
 }
@@ -303,6 +310,7 @@ export interface TextBoxProps {
 export class TextBox extends React.Component<TextBoxProps> {}
 
 export interface IconProps {
+    children?: React.ReactNode;
     // If this option is `true`, the icon will not be flipped
     ignoreDirection?: boolean;
     size?: number;
@@ -359,7 +367,7 @@ export function createStore<T extends StoreState>(initialState?: T): Store<T>;
 
 // Contexts
 export interface LocalizationMap {
-    [key: string]: LocalizationMap;
+    [key: string]: string | LocalizationMap;
 }
 export interface LocalizationContextProps {
     l10n: LocalizationMap;
@@ -482,6 +490,7 @@ export interface ViewerProps {
 export class Viewer extends React.Component<ViewerProps> {}
 
 export interface WorkerProps {
+    children?: React.ReactNode;
     workerUrl: string;
 }
 export class Worker extends React.Component<WorkerProps> {}

@@ -14,6 +14,7 @@ import { classNames } from '../utils/classNames';
 export const MinimalButton: React.FC<{
     ariaLabel?: string;
     ariaKeyShortcuts?: string;
+    children?: React.ReactNode;
     isDisabled?: boolean;
     isSelected?: boolean;
     testId?: string;

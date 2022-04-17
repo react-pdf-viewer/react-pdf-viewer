@@ -8,6 +8,7 @@
 
 import * as React from 'react';
 import { isMac, LocalizationContext, MinimalButton, Position, Tooltip } from '@react-pdf-viewer/core';
+import type { LocalizationMap } from '@react-pdf-viewer/core';
 
 import { ZoomInIcon } from './ZoomInIcon';
 import type { RenderZoomInProps } from './types/RenderZoomInProps';
@@ -16,7 +17,7 @@ const TOOLTIP_OFFSET = { left: 0, top: 8 };
 
 export const ZoomInButton: React.FC<RenderZoomInProps> = ({ enableShortcuts, onClick }) => {
     const { l10n } = React.useContext(LocalizationContext);
-    const label = l10n && l10n.zoom ? l10n.zoom.zoomIn : 'Zoom in';
+    const label = l10n && l10n.zoom ? ((l10n.zoom as LocalizationMap).zoomIn as string) : 'Zoom in';
     const ariaKeyShortcuts = enableShortcuts ? (isMac() ? 'Meta+=' : 'Ctrl+=') : '';
 
     return (
@@ -26,7 +27,7 @@ export const ZoomInButton: React.FC<RenderZoomInProps> = ({ enableShortcuts, onC
             target={
                 <MinimalButton
                     ariaKeyShortcuts={ariaKeyShortcuts}
-                    ariaLabel={label as string}
+                    ariaLabel={label}
                     testId="zoom__in-button"
                     onClick={onClick}
                 >

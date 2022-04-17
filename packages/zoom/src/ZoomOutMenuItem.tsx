@@ -8,13 +8,14 @@
 
 import * as React from 'react';
 import { LocalizationContext, MenuItem } from '@react-pdf-viewer/core';
+import type { LocalizationMap } from '@react-pdf-viewer/core';
 
 import { ZoomOutIcon } from './ZoomOutIcon';
 import type { ZoomMenuItemProps } from './types/ZoomMenuItemProps';
 
 export const ZoomOutMenuItem: React.FC<ZoomMenuItemProps> = ({ onClick }) => {
     const { l10n } = React.useContext(LocalizationContext);
-    const label = l10n && l10n.zoom ? l10n.zoom.zoomOut : 'Zoom out';
+    const label = l10n && l10n.zoom ? ((l10n.zoom as LocalizationMap).zoomOut as string) : 'Zoom out';
 
     return (
         <MenuItem icon={<ZoomOutIcon />} testId="zoom__out-menu" onClick={onClick}>

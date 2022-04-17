@@ -17,6 +17,7 @@ import type { Offset } from '../types/Offset';
 
 export const TooltipBody: React.FC<{
     ariaControlsSuffix: string;
+    children?: React.ReactNode;
     contentRef: React.RefObject<HTMLDivElement>;
     offset: Offset;
     position: Position;

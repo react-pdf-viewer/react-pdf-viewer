@@ -14,6 +14,7 @@ import { classNames } from '../utils/classNames';
 
 export const MenuItem: React.FC<{
     checked?: boolean;
+    children?: React.ReactNode;
     icon?: React.ReactElement;
     isDisabled?: boolean;
     testId?: string;

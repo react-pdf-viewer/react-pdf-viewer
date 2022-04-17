@@ -12,6 +12,7 @@ import { TextDirection, ThemeContext } from '../theme/ThemeContext';
 import { classNames } from '../utils/classNames';
 
 export const PrimaryButton: React.FC<{
+    children?: React.ReactNode;
     testId?: string;
     onClick(): void;
 }> = ({ children, testId, onClick }) => {

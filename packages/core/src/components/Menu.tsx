@@ -12,7 +12,9 @@ import { useIsomorphicLayoutEffect } from '../hooks/useIsomorphicLayoutEffect';
 import { TextDirection, ThemeContext } from '../theme/ThemeContext';
 import { classNames } from '../utils/classNames';
 
-export const Menu: React.FC = ({ children }) => {
+export const Menu: React.FC<{
+    children?: React.ReactNode;
+}> = ({ children }) => {
     const containerRef = React.useRef<HTMLDivElement>();
     const visibleMenuItemsRef = React.useRef<HTMLElement[]>([]);
     const { direction } = React.useContext(ThemeContext);

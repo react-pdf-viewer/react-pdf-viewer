@@ -8,6 +8,7 @@
 
 import * as React from 'react';
 import { classNames, LocalizationContext, TextDirection, ThemeContext } from '@react-pdf-viewer/core';
+import type { LocalizationMap } from '@react-pdf-viewer/core';
 
 import { useDrop } from './useDrop';
 
@@ -36,7 +37,9 @@ export const DropArea: React.FC<{
                             'rpv-drop__area-body--rtl': isRtl,
                         })}
                     >
-                        {l10n && l10n.drop ? l10n.drop.dragDropFile : 'Drag and drop a PDF document here'}
+                        {l10n && l10n.drop
+                            ? ((l10n.drop as LocalizationMap).dragDropFile as string)
+                            : 'Drag and drop a PDF document here'}
                     </div>
                 </div>
             )}

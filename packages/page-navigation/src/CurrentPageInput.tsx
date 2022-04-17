@@ -8,7 +8,7 @@
 
 import * as React from 'react';
 import { LocalizationContext, TextBox } from '@react-pdf-viewer/core';
-import type { Store } from '@react-pdf-viewer/core';
+import type { LocalizationMap, Store } from '@react-pdf-viewer/core';
 
 import { useCurrentPage } from './useCurrentPage';
 import { useNumberOfPages } from './useNumberOfPages';
@@ -74,12 +74,15 @@ export const CurrentPageInput: React.FC<{
         }
     };
 
-    const label = l10n && l10n.pageNavigation ? l10n.pageNavigation.enterPageNumber : 'Enter a page number';
+    const label =
+        l10n && l10n.pageNavigation
+            ? ((l10n.pageNavigation as LocalizationMap).enterPageNumber as string)
+            : 'Enter a page number';
 
     return (
         <span className="rpv-page-navigation__current-page-input">
             <TextBox
-                ariaLabel={label as string}
+                ariaLabel={label}
                 testId="page-navigation__current-page-input"
                 type="text"
                 value={editingPage}

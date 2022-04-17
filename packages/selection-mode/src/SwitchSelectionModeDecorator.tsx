@@ -8,6 +8,7 @@
 
 import * as React from 'react';
 import { LocalizationContext } from '@react-pdf-viewer/core';
+import type { LocalizationMap } from '@react-pdf-viewer/core';
 
 import { HandToolIcon } from './HandToolIcon';
 import { SelectionMode } from './structs/SelectionMode';
@@ -31,15 +32,17 @@ export const SwitchSelectionModeDecorator: React.FC<{
 
     switch (mode) {
         case SelectionMode.Hand:
-            label = (l10n && l10n.selectionMode ? l10n.selectionMode.handTool : 'Hand tool') as string;
+            label =
+                l10n && l10n.selectionMode ? ((l10n.selectionMode as LocalizationMap).handTool as string) : 'Hand tool';
             icon = <HandToolIcon />;
             break;
 
         case SelectionMode.Text:
         default:
-            label = (
-                l10n && l10n.selectionMode ? l10n.selectionMode.textSelectionTool : 'Text selection tool'
-            ) as string;
+            label =
+                l10n && l10n.selectionMode
+                    ? ((l10n.selectionMode as LocalizationMap).textSelectionTool as string)
+                    : 'Text selection tool';
             icon = <TextSelectionIcon />;
             break;
     }

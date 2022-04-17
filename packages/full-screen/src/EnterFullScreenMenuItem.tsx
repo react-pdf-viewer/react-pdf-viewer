@@ -8,6 +8,7 @@
 
 import * as React from 'react';
 import { LocalizationContext, MenuItem } from '@react-pdf-viewer/core';
+import type { LocalizationMap } from '@react-pdf-viewer/core';
 
 import { isFullScreenEnabled } from './fullScreen';
 import { FullScreenIcon } from './FullScreenIcon';
@@ -18,7 +19,8 @@ export interface EnterFullScreenMenuItemProps {
 
 export const EnterFullScreenMenuItem: React.FC<EnterFullScreenMenuItemProps> = ({ onClick }) => {
     const { l10n } = React.useContext(LocalizationContext);
-    const label = l10n && l10n.fullScreen ? l10n.fullScreen.enterFullScreen : 'Full screen';
+    const label =
+        l10n && l10n.fullScreen ? ((l10n.fullScreen as LocalizationMap).enterFullScreen as string) : 'Full screen';
 
     return (
         <MenuItem

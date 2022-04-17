@@ -14,6 +14,7 @@ import {
     TextDirection,
     ThemeContext,
 } from '@react-pdf-viewer/core';
+import type { LocalizationMap } from '@react-pdf-viewer/core';
 
 import { downloadFile } from './downloadFile';
 import type { FileItem } from './types/FileItem';
@@ -27,7 +28,10 @@ export const AttachmentList: React.FC<{
     const isRtl = direction === TextDirection.RightToLeft;
     const attachmentItemsRef = React.useRef<HTMLElement[]>([]);
 
-    const clickDownloadLabel = l10n && l10n.attachment ? l10n.attachment.clickToDownload : 'Click to download';
+    const clickDownloadLabel =
+        l10n && l10n.attachment
+            ? ((l10n.attachment as LocalizationMap).clickToDownload as string)
+            : 'Click to download';
 
     const handleKeyDown = (e: React.KeyboardEvent) => {
         switch (e.key) {
@@ -111,7 +115,7 @@ export const AttachmentList: React.FC<{
                     className="rpv-attachment__item"
                     key={file.fileName}
                     tabIndex={-1}
-                    title={clickDownloadLabel as string}
+                    title={clickDownloadLabel}
                     type="button"
                     onClick={() => downloadFile(file.fileName, file.data)}
                 >

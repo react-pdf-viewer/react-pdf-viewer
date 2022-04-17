@@ -12,6 +12,7 @@ import { TextDirection, ThemeContext } from '../theme/ThemeContext';
 import { classNames } from '../utils/classNames';
 
 export const Icon: React.FC<{
+    children?: React.ReactNode;
     // If this option is `true`, the icon will not be flipped
     ignoreDirection?: boolean;
     size?: number;

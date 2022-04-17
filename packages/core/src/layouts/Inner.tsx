@@ -21,6 +21,7 @@ import { classNames } from '../utils/classNames';
 import { clearPagesCache, getPage } from '../utils/managePages';
 import { getFileExt } from '../utils/getFileExt';
 import { calculateScale } from './calculateScale';
+import type { LocalizationMap } from '../types/LocalizationMap';
 import type { PageSize } from '../types/PageSize';
 import type { DocumentLoadEvent } from '../types/DocumentLoadEvent';
 import type { OpenFile } from '../types/OpenFile';
@@ -479,7 +480,8 @@ export const Inner: React.FC<{
     };
 
     const renderViewer = React.useCallback(() => {
-        const pageLabel = (l10n && l10n.core ? l10n.core.pageLabel : 'Page {{pageIndex}}') as string;
+        const pageLabel =
+            l10n && l10n.core ? ((l10n.core as LocalizationMap).pageLabel as string) : 'Page {{pageIndex}}';
         let slot: Slot = {
             attrs: {
                 'data-testid': 'core__inner-container',

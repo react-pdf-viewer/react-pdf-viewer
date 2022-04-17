@@ -8,13 +8,15 @@
 
 import * as React from 'react';
 import { LocalizationContext, MenuItem } from '@react-pdf-viewer/core';
+import type { LocalizationMap } from '@react-pdf-viewer/core';
 
 import { DownArrowIcon } from './DownArrowIcon';
 import type { RenderGoToPageProps } from './types/index';
 
 export const GoToLastPageMenuItem: React.FC<RenderGoToPageProps> = ({ isDisabled, onClick }) => {
     const { l10n } = React.useContext(LocalizationContext);
-    const label = l10n && l10n.pageNavigation ? l10n.pageNavigation.goToLastPage : 'Last page';
+    const label =
+        l10n && l10n.pageNavigation ? ((l10n.pageNavigation as LocalizationMap).goToLastPage as string) : 'Last page';
 
     return (
         <MenuItem
