@@ -10,7 +10,12 @@ import * as React from 'react';
 import type { EnterFullScreenMenuItemProps, EnterFullScreenProps } from '@react-pdf-viewer/full-screen';
 import type { DownloadMenuItemProps, DownloadProps } from '@react-pdf-viewer/get-file';
 import type { OpenProps } from '@react-pdf-viewer/open';
-import type { CurrentPageLabelProps, GoToPageMenuItemProps, GoToPageProps } from '@react-pdf-viewer/page-navigation';
+import type {
+    CurrentPageLabelProps,
+    GoToPageMenuItemProps,
+    GoToPageProps,
+    NumberOfPagesProps,
+} from '@react-pdf-viewer/page-navigation';
 import type { PrintMenuItemProps, PrintProps } from '@react-pdf-viewer/print';
 import type { ShowPropertiesProps, ShowPropertiesMenuItemProps } from '@react-pdf-viewer/properties';
 import type { RotateDecoratorProps, RotateProps } from '@react-pdf-viewer/rotate';
@@ -38,7 +43,7 @@ export interface ToolbarSlot {
     GoToNextPageMenuItem(props: GoToPageMenuItemProps): React.ReactElement;
     GoToPreviousPage(props: GoToPageProps): React.ReactElement;
     GoToPreviousPageMenuItem(props: GoToPageMenuItemProps): React.ReactElement;
-    NumberOfPages(): React.ReactElement;
+    NumberOfPages(props: NumberOfPagesProps): React.ReactElement;
 
     Download(props: DownloadProps): React.ReactElement;
     DownloadMenuItem(props: DownloadMenuItemProps): React.ReactElement;

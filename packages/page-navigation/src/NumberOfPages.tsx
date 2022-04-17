@@ -16,7 +16,7 @@ export interface RenderNumberOfPagesProps {
     numberOfPages: number;
 }
 
-type RenderNumberOfPages = (props: RenderNumberOfPagesProps) => React.ReactElement;
+export type RenderNumberOfPages = (props: RenderNumberOfPagesProps) => React.ReactElement;
 
 export interface NumberOfPagesProps {
     children?: RenderNumberOfPages;

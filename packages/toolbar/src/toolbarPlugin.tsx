@@ -122,6 +122,7 @@ export const toolbarPlugin = (props?: ToolbarPluginProps): ToolbarPlugin => {
             GoToNextPageMenuItem,
             GoToPreviousPage,
             GoToPreviousPageMenuItem,
+            NumberOfPages,
         } = pageNavigationPluginInstance;
         const { Print, PrintMenuItem } = printPluginInstance;
         const { ShowProperties, ShowPropertiesMenuItem } = propertiesPluginInstance;
@@ -131,8 +132,6 @@ export const toolbarPlugin = (props?: ToolbarPluginProps): ToolbarPlugin => {
         const { SwitchSelectionMode, SwitchSelectionModeMenuItem } = selectionModePluginInstance;
         const { SwitchTheme, SwitchThemeMenuItem } = themePluginInstance;
         const { CurrentScale, Zoom, ZoomIn, ZoomInMenuItem, ZoomOut, ZoomOutMenuItem } = zoomPluginInstance;
-
-        const NumberOfPages = () => <CurrentPageLabel>{(props) => <>{props.numberOfPages}</>}</CurrentPageLabel>;
 
         return (
             <Toolbar
