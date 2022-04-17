@@ -34,17 +34,18 @@ export const ZoomPopover: React.FC<{
     const { direction } = React.useContext(ThemeContext);
     const isRtl = direction === TextDirection.RightToLeft;
 
-    const getSpcialLevelLabel = (level: SpecialZoomLevel): string | LocalizationMap => {
+    const getSpcialLevelLabel = (level: SpecialZoomLevel): string => {
         switch (level) {
             case SpecialZoomLevel.ActualSize:
-                return l10n && l10n.zoom ? l10n.zoom.actualSize : 'Actual size';
+                return l10n && l10n.zoom ? ((l10n.zoom as LocalizationMap).actualSize as string) : 'Actual size';
             case SpecialZoomLevel.PageFit:
-                return l10n && l10n.zoom ? l10n.zoom.pageFit : 'Page fit';
+                return l10n && l10n.zoom ? ((l10n.zoom as LocalizationMap).pageFit as string) : 'Page fit';
             case SpecialZoomLevel.PageWidth:
-                return l10n && l10n.zoom ? l10n.zoom.pageWidth : 'Page width';
+                return l10n && l10n.zoom ? ((l10n.zoom as LocalizationMap).pageWidth as string) : 'Page width';
         }
     };
-    const zoomDocumentLabel = l10n && l10n.zoom ? l10n.zoom.zoomDocument : 'Zoom document';
+    const zoomDocumentLabel =
+        l10n && l10n.zoom ? ((l10n.zoom as LocalizationMap).zoomDocument as string) : 'Zoom document';
 
     const renderTarget = (toggle: Toggle): React.ReactElement => {
         const click = (): void => {

@@ -8,6 +8,7 @@
 
 import * as React from 'react';
 import { LocalizationContext, MinimalButton, Position, Tooltip } from '@react-pdf-viewer/core';
+import type { LocalizationMap } from '@react-pdf-viewer/core';
 
 import { DownloadIcon } from './DownloadIcon';
 import type { RenderDownloadProps } from './types/RenderDownloadProps';
@@ -16,14 +17,14 @@ const TOOLTIP_OFFSET = { left: 0, top: 8 };
 
 export const DownloadButton: React.FC<RenderDownloadProps> = ({ onClick }) => {
     const { l10n } = React.useContext(LocalizationContext);
-    const label = l10n && l10n.download ? l10n.download.download : 'Download';
+    const label = l10n && l10n.download ? ((l10n.download as LocalizationMap).download as string) : 'Download';
 
     return (
         <Tooltip
             ariaControlsSuffix="get-file"
             position={Position.BottomCenter}
             target={
-                <MinimalButton ariaLabel={label as string} testId="get-file__download-button" onClick={onClick}>
+                <MinimalButton ariaLabel={label} testId="get-file__download-button" onClick={onClick}>
                     <DownloadIcon />
                 </MinimalButton>
             }

@@ -19,7 +19,7 @@ import {
     ThemeContext,
     Tooltip,
 } from '@react-pdf-viewer/core';
-import type { Store } from '@react-pdf-viewer/core';
+import type { LocalizationMap, Store } from '@react-pdf-viewer/core';
 
 import { NextIcon } from './NextIcon';
 import { PreviousIcon } from './PreviousIcon';
@@ -74,9 +74,11 @@ export const SearchPopover: React.FC<{
         clearKeyword();
     };
 
-    const searchLabel = (l10n && l10n.search ? l10n.search.enterToSearch : 'Enter to search') as string;
-    const previousMatchLabel = l10n && l10n.search ? l10n.search.previousMatch : 'Previous match';
-    const nextMatchLabel = l10n && l10n.search ? l10n.search.nextMatch : 'Next match';
+    const searchLabel =
+        l10n && l10n.search ? ((l10n.search as LocalizationMap).enterToSearch as string) : 'Enter to search';
+    const previousMatchLabel =
+        l10n && l10n.search ? ((l10n.search as LocalizationMap).previousMatch as string) : 'Previous match';
+    const nextMatchLabel = l10n && l10n.search ? ((l10n.search as LocalizationMap).nextMatch as string) : 'Next match';
 
     return (
         <div className="rpv-search__popover">
@@ -112,7 +114,7 @@ export const SearchPopover: React.FC<{
                     type="checkbox"
                     onChange={onChangeMatchCase}
                 />{' '}
-                {l10n && l10n.search ? l10n.search.matchCase : 'Match case'}
+                {l10n && l10n.search ? ((l10n.search as LocalizationMap).matchCase as string) : 'Match case'}
             </label>
             <label className="rpv-search__popover-label">
                 <input
@@ -121,7 +123,7 @@ export const SearchPopover: React.FC<{
                     type="checkbox"
                     onChange={onChangeWholeWords}
                 />{' '}
-                {l10n && l10n.search ? l10n.search.wholeWords : 'Whole words'}
+                {l10n && l10n.search ? ((l10n.search as LocalizationMap).wholeWords as string) : 'Whole words'}
             </label>
             <div className="rpv-search__popover-footer">
                 <div className="rpv-search__popover-footer-item">
@@ -165,7 +167,9 @@ export const SearchPopover: React.FC<{
                         'rpv-search__popover-footer-button--rtl': isRtl,
                     })}
                 >
-                    <Button onClick={onClose}>{l10n && l10n.search ? l10n.search.close : 'Close'}</Button>
+                    <Button onClick={onClose}>
+                        {l10n && l10n.search ? ((l10n.search as LocalizationMap).close as string) : 'Close'}
+                    </Button>
                 </div>
             </div>
         </div>

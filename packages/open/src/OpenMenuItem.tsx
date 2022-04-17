@@ -8,7 +8,7 @@
 
 import * as React from 'react';
 import { LocalizationContext, MenuItem } from '@react-pdf-viewer/core';
-import type { Store } from '@react-pdf-viewer/core';
+import type { LocalizationMap, Store } from '@react-pdf-viewer/core';
 
 import { OpenFileIcon } from './OpenFileIcon';
 import { useTriggerOpen } from './useTriggerOpen';
@@ -19,7 +19,7 @@ export const OpenMenuItem: React.FC<{
     onClick(e: React.ChangeEvent<HTMLInputElement>): void;
 }> = ({ store, onClick }) => {
     const { l10n } = React.useContext(LocalizationContext);
-    const label = l10n && l10n.open ? l10n.open.openFile : 'Open file';
+    const label = l10n && l10n.open ? ((l10n.open as LocalizationMap).openFile as string) : 'Open file';
 
     const { inputRef, openFile } = useTriggerOpen(store);
 

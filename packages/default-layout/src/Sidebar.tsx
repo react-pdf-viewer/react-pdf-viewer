@@ -17,7 +17,7 @@ import {
     ThemeContext,
     Tooltip,
 } from '@react-pdf-viewer/core';
-import type { SplitterSize, Store } from '@react-pdf-viewer/core';
+import type { LocalizationMap, SplitterSize, Store } from '@react-pdf-viewer/core';
 
 import { BookmarkIcon } from './BookmarkIcon';
 import { FileIcon } from './FileIcon';
@@ -61,17 +61,24 @@ export const Sidebar: React.FC<SidebarProps> = ({
         {
             content: thumbnailTabContent,
             icon: <ThumbnailIcon />,
-            title: (l10n && l10n.defaultLayout ? l10n.defaultLayout.thumbnail : 'Thumbnail') as string,
+            title:
+                l10n && l10n.defaultLayout
+                    ? ((l10n.defaultLayout as LocalizationMap).thumbnail as string)
+                    : 'Thumbnail',
         },
         {
             content: bookmarkTabContent,
             icon: <BookmarkIcon />,
-            title: (l10n && l10n.defaultLayout ? l10n.defaultLayout.bookmark : 'Bookmark') as string,
+            title:
+                l10n && l10n.defaultLayout ? ((l10n.defaultLayout as LocalizationMap).bookmark as string) : 'Bookmark',
         },
         {
             content: attachmentTabContent,
             icon: <FileIcon />,
-            title: (l10n && l10n.defaultLayout ? l10n.defaultLayout.attachment : 'Attachment') as string,
+            title:
+                l10n && l10n.defaultLayout
+                    ? ((l10n.defaultLayout as LocalizationMap).attachment as string)
+                    : 'Attachment',
         },
     ];
 

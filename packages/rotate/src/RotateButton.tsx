@@ -8,6 +8,7 @@
 
 import * as React from 'react';
 import { LocalizationContext, MinimalButton, Position, RotateDirection, Tooltip } from '@react-pdf-viewer/core';
+import type { LocalizationMap } from '@react-pdf-viewer/core';
 
 import { RotateBackwardIcon } from './RotateBackwardIcon';
 import { RotateForwardIcon } from './RotateForwardIcon';
@@ -18,8 +19,10 @@ const TOOLTIP_OFFSET = { left: 0, top: 8 };
 export const RotateButton: React.FC<RenderRotateProps> = ({ direction, onClick }) => {
     const { l10n } = React.useContext(LocalizationContext);
 
-    const backwardLabel = l10n && l10n.rotate ? l10n.rotate.rotateBackward : 'Rotate counterclockwise';
-    const forwardLabel = l10n && l10n.rotate ? l10n.rotate.rotateForward : 'Rotate clockwise';
+    const backwardLabel =
+        l10n && l10n.rotate ? ((l10n.rotate as LocalizationMap).rotateBackward as string) : 'Rotate counterclockwise';
+    const forwardLabel =
+        l10n && l10n.rotate ? ((l10n.rotate as LocalizationMap).rotateForward as string) : 'Rotate clockwise';
     const label = direction === RotateDirection.Backward ? backwardLabel : forwardLabel;
     const icon = direction === RotateDirection.Backward ? <RotateBackwardIcon /> : <RotateForwardIcon />;
 
@@ -29,7 +32,7 @@ export const RotateButton: React.FC<RenderRotateProps> = ({ direction, onClick }
             position={Position.BottomCenter}
             target={
                 <MinimalButton
-                    ariaLabel={label as string}
+                    ariaLabel={label}
                     testId={
                         direction === RotateDirection.Backward ? 'rotate__backward-button' : 'rotate__forward-button'
                     }

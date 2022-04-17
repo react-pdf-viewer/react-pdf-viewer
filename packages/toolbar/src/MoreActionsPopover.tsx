@@ -19,7 +19,7 @@ import {
     ThemeContext,
     Tooltip,
 } from '@react-pdf-viewer/core';
-import type { Toggle } from '@react-pdf-viewer/core';
+import type { LocalizationMap, Toggle } from '@react-pdf-viewer/core';
 import { SelectionMode } from '@react-pdf-viewer/selection-mode';
 
 import { MoreIcon } from './MoreIcon';
@@ -51,7 +51,7 @@ export const MoreActionsPopover: React.FC<{
     } = toolbarSlot;
 
     const renderTarget = (toggle: Toggle, opened: boolean): React.ReactElement => {
-        const label = l10n && l10n.toolbar ? l10n.toolbar.moreActions : 'More actions';
+        const label = l10n && l10n.toolbar ? ((l10n.toolbar as LocalizationMap).moreActions as string) : 'More actions';
 
         return (
             <Tooltip
@@ -59,7 +59,7 @@ export const MoreActionsPopover: React.FC<{
                 position={portalPosition}
                 target={
                     <MinimalButton
-                        ariaLabel={label as string}
+                        ariaLabel={label}
                         isSelected={opened}
                         testId="toolbar__more-actions-popover-target"
                         onClick={toggle}

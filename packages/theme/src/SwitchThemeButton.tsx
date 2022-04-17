@@ -8,6 +8,7 @@
 
 import * as React from 'react';
 import { LocalizationContext, MinimalButton, Position, ThemeContext, Tooltip } from '@react-pdf-viewer/core';
+import type { LocalizationMap } from '@react-pdf-viewer/core';
 
 import { DarkIcon } from './DarkIcon';
 import { LightIcon } from './LightIcon';
@@ -24,8 +25,8 @@ export const SwitchThemeButton: React.FC<{
     const label =
         l10n && l10n.theme
             ? isDarkTheme
-                ? l10n.theme.switchLightTheme
-                : l10n.theme.switchDarkTheme
+                ? ((l10n.theme as LocalizationMap).switchLightTheme as string)
+                : ((l10n.theme as LocalizationMap).switchDarkTheme as string)
             : isDarkTheme
             ? 'Switch to the light theme'
             : 'Switch to the dark theme';
@@ -35,7 +36,7 @@ export const SwitchThemeButton: React.FC<{
             ariaControlsSuffix="theme-switch"
             position={Position.BottomCenter}
             target={
-                <MinimalButton ariaLabel={label as string} testId="theme__switch-button" onClick={onClick}>
+                <MinimalButton ariaLabel={label} testId="theme__switch-button" onClick={onClick}>
                     {isDarkTheme ? <LightIcon /> : <DarkIcon />}
                 </MinimalButton>
             }

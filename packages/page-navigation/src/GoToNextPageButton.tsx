@@ -8,6 +8,7 @@
 
 import * as React from 'react';
 import { LocalizationContext, MinimalButton, Position, Tooltip } from '@react-pdf-viewer/core';
+import type { LocalizationMap } from '@react-pdf-viewer/core';
 
 import { NextIcon } from './NextIcon';
 import type { RenderGoToPageProps } from './types/index';
@@ -16,7 +17,8 @@ const TOOLTIP_OFFSET = { left: 0, top: 8 };
 
 export const GoToNextPageButton: React.FC<RenderGoToPageProps> = ({ isDisabled, onClick }) => {
     const { l10n } = React.useContext(LocalizationContext);
-    const label = l10n && l10n.pageNavigation ? l10n.pageNavigation.goToNextPage : 'Next page';
+    const label =
+        l10n && l10n.pageNavigation ? ((l10n.pageNavigation as LocalizationMap).goToNextPage as string) : 'Next page';
 
     return (
         <Tooltip
@@ -24,7 +26,7 @@ export const GoToNextPageButton: React.FC<RenderGoToPageProps> = ({ isDisabled, 
             position={Position.BottomCenter}
             target={
                 <MinimalButton
-                    ariaLabel={label as string}
+                    ariaLabel={label}
                     isDisabled={isDisabled}
                     testId="page-navigation__next-button"
                     onClick={onClick}

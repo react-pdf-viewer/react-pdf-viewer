@@ -15,6 +15,7 @@ import {
     TextDirection,
     ThemeContext,
 } from '@react-pdf-viewer/core';
+import type { LocalizationMap } from '@react-pdf-viewer/core';
 
 export const PrintProgress: React.FC<{
     numLoadedPages: number;
@@ -35,12 +36,16 @@ export const PrintProgress: React.FC<{
                 })}
             >
                 <div className="rpv-print__progress-message">
-                    {l10n && l10n.print ? l10n.print.preparingDocument : 'Preparing document ...'}
+                    {l10n && l10n.print
+                        ? ((l10n.print as LocalizationMap).preparingDocument as string)
+                        : 'Preparing document ...'}
                 </div>
                 <div className="rpv-print__progress-bar">
                     <ProgressBar progress={progress} />
                 </div>
-                <Button onClick={onCancel}>{l10n && l10n.print ? l10n.print.cancel : 'Cancel'}</Button>
+                <Button onClick={onCancel}>
+                    {l10n && l10n.print ? ((l10n.print as LocalizationMap).cancel as string) : 'Cancel'}
+                </Button>
             </div>
         </div>
     );

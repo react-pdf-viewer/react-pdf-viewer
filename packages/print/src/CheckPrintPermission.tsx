@@ -8,7 +8,7 @@
 
 import * as React from 'react';
 import { Button, LocalizationContext, Modal } from '@react-pdf-viewer/core';
-import type { PdfJs, Store } from '@react-pdf-viewer/core';
+import type { LocalizationMap, PdfJs, Store } from '@react-pdf-viewer/core';
 
 import type { StoreProps } from './types/StoreProps';
 import { PrintStatus } from './structs/PrintStatus';
@@ -49,10 +49,14 @@ export const CheckPrintPermission: React.FC<{
                 return (
                     <>
                         <div className="rpv-print__permission-body">
-                            {l10n && l10n.print ? l10n.print.disallowPrint : 'The document does not allow to print'}
+                            {l10n && l10n.print
+                                ? ((l10n.print as LocalizationMap).disallowPrint as string)
+                                : 'The document does not allow to print'}
                         </div>
                         <div className="rpv-print__permission-footer">
-                            <Button onClick={close}>{l10n && l10n.print ? l10n.print.close : 'Close'}</Button>
+                            <Button onClick={close}>
+                                {l10n && l10n.print ? ((l10n.print as LocalizationMap).close as string) : 'Close'}
+                            </Button>
                         </div>
                     </>
                 );

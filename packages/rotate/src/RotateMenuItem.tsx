@@ -8,6 +8,7 @@
 
 import * as React from 'react';
 import { LocalizationContext, MenuItem, RotateDirection } from '@react-pdf-viewer/core';
+import type { LocalizationMap } from '@react-pdf-viewer/core';
 
 import { RotateBackwardIcon } from './RotateBackwardIcon';
 import { RotateForwardIcon } from './RotateForwardIcon';
@@ -16,8 +17,10 @@ import type { RenderRotateProps } from './types/RenderRotateProps';
 export const RotateMenuItem: React.FC<RenderRotateProps> = ({ direction, onClick }) => {
     const { l10n } = React.useContext(LocalizationContext);
 
-    const backwardLabel = l10n && l10n.rotate ? l10n.rotate.rotateBackward : 'Rotate counterclockwise';
-    const forwardLabel = l10n && l10n.rotate ? l10n.rotate.rotateForward : 'Rotate clockwise';
+    const backwardLabel =
+        l10n && l10n.rotate ? ((l10n.rotate as LocalizationMap).rotateBackward as string) : 'Rotate counterclockwise';
+    const forwardLabel =
+        l10n && l10n.rotate ? ((l10n.rotate as LocalizationMap).rotateForward as string) : 'Rotate clockwise';
     const label = direction === RotateDirection.Backward ? backwardLabel : forwardLabel;
     const icon = direction === RotateDirection.Backward ? <RotateBackwardIcon /> : <RotateForwardIcon />;
 

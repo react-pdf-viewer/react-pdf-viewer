@@ -366,7 +366,7 @@ export function createStore<T extends StoreState>(initialState?: T): Store<T>;
 
 // Contexts
 export interface LocalizationMap {
-    [key: string]: LocalizationMap;
+    [key: string]: string | LocalizationMap;
 }
 export interface LocalizationContextProps {
     l10n: LocalizationMap;

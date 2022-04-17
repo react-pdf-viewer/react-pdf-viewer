@@ -8,7 +8,7 @@
 
 import * as React from 'react';
 import { LocalizationContext } from '@react-pdf-viewer/core';
-import type { PdfJs } from '@react-pdf-viewer/core';
+import type { LocalizationMap, PdfJs } from '@react-pdf-viewer/core';
 
 import { SpinnerContext } from './SpinnerContext';
 
@@ -26,9 +26,10 @@ export const ThumbnailItem: React.FC<{
     const renderTask = React.useRef<PdfJs.PageRenderTask>();
     const [src, setSrc] = React.useState('');
 
-    const thumbnailLabel = (
-        l10n && l10n.thumbnail ? l10n.thumbnail.thumbnailLabel : 'Thumbnail of page {{pageIndex}}'
-    ) as string;
+    const thumbnailLabel =
+        l10n && l10n.thumbnail
+            ? ((l10n.thumbnail as LocalizationMap).thumbnailLabel as string)
+            : 'Thumbnail of page {{pageIndex}}';
 
     React.useEffect(() => {
         const task = renderTask.current;

@@ -8,6 +8,7 @@
 
 import * as React from 'react';
 import { LocalizationContext, ScrollMode } from '@react-pdf-viewer/core';
+import type { LocalizationMap } from '@react-pdf-viewer/core';
 
 import { HorizontalScrollingIcon } from './HorizontalScrollingIcon';
 import { VerticalScrollingIcon } from './VerticalScrollingIcon';
@@ -31,18 +32,27 @@ export const SwitchScrollModeDecorator: React.FC<{
 
     switch (mode) {
         case ScrollMode.Horizontal:
-            label = (l10n && l10n.scrollMode ? l10n.scrollMode.horizontalScrolling : 'Horizontal scrolling') as string;
+            label =
+                l10n && l10n.scrollMode
+                    ? ((l10n.scrollMode as LocalizationMap).horizontalScrolling as string)
+                    : 'Horizontal scrolling';
             icon = <HorizontalScrollingIcon />;
             break;
 
         case ScrollMode.Wrapped:
-            label = (l10n && l10n.scrollMode ? l10n.scrollMode.wrappedScrolling : 'Wrapped scrolling') as string;
+            label =
+                l10n && l10n.scrollMode
+                    ? ((l10n.scrollMode as LocalizationMap).wrappedScrolling as string)
+                    : 'Wrapped scrolling';
             icon = <WrappedScrollingIcon />;
             break;
 
         case ScrollMode.Vertical:
         default:
-            label = (l10n && l10n.scrollMode ? l10n.scrollMode.verticalScrolling : 'Vertical scrolling') as string;
+            label =
+                l10n && l10n.scrollMode
+                    ? ((l10n.scrollMode as LocalizationMap).verticalScrolling as string)
+                    : 'Vertical scrolling';
             icon = <VerticalScrollingIcon />;
             break;
     }
