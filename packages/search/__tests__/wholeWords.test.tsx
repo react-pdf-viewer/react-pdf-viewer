@@ -1,22 +1,25 @@
 import * as React from 'react';
-import { Icon, MinimalButton, Position, Tooltip, Viewer } from '@react-pdf-viewer/core';
-import { NextIcon, PreviousIcon, RenderSearchProps, searchPlugin } from '@react-pdf-viewer/search';
+import { fireEvent, render, waitForElementToBeRemoved } from '@testing-library/react';
 
-const IndexPage = () => {
+import { mockIsIntersecting } from '../../../test-utils/mockIntersectionObserver';
+import { Icon, MinimalButton, Position, Tooltip, Viewer } from '@react-pdf-viewer/core';
+import { searchPlugin, NextIcon, PreviousIcon, RenderSearchProps } from '../src/index';
+
+const TestWholeWords: React.FC<{
+    fileUrl: Uint8Array;
+}> = ({ fileUrl }) => {
     const searchPluginInstance = searchPlugin();
     const { Search } = searchPluginInstance;
 
     return (
         <div
-            data-testid="root"
             className="rpv-core__viewer"
             style={{
                 border: '1px solid rgba(0, 0, 0, 0.3)',
                 display: 'flex',
                 flexDirection: 'column',
                 height: '50rem',
-                margin: '5rem auto',
-                width: '64rem',
+                width: '50rem',
             }}
         >
             <div
@@ -25,12 +28,13 @@ const IndexPage = () => {
                     backgroundColor: '#eeeeee',
                     borderBottom: '1px solid rgba(0, 0, 0, 0.1)',
                     display: 'flex',
+                    height: '2.5rem',
                     padding: '4px',
                 }}
             >
                 <Search>
                     {(renderSearchProps: RenderSearchProps) => {
-                        const [searchDone, setSearchDone] = React.useState(false);
+                        const [readyToSearch, setReadyToSearch] = React.useState(false);
                         return (
                             <>
                                 <div
@@ -41,7 +45,7 @@ const IndexPage = () => {
                                     }}
                                 >
                                     <input
-                                        data-testid="keyword-input"
+                                        data-testid="custom-search-input"
                                         style={{
                                             border: 'none',
                                             padding: '8px',
@@ -51,18 +55,13 @@ const IndexPage = () => {
                                         type="text"
                                         value={renderSearchProps.keyword}
                                         onChange={(e) => {
-                                            setSearchDone(false);
+                                            setReadyToSearch(false);
                                             renderSearchProps.setKeyword(e.target.value);
                                         }}
                                         onKeyDown={(e) => {
-                                            if (e.key !== 'Enter') {
-                                                return;
-                                            }
-                                            if (renderSearchProps.keyword) {
-                                                renderSearchProps.search().then(() => setSearchDone(true));
-                                            } else {
-                                                setSearchDone(true);
-                                                renderSearchProps.clearKeyword();
+                                            if (e.key === 'Enter' && renderSearchProps.keyword) {
+                                                setReadyToSearch(true);
+                                                renderSearchProps.search();
                                             }
                                         }}
                                     />
@@ -121,16 +120,16 @@ const IndexPage = () => {
                                                 </Icon>
                                             </button>
                                         }
-                                        content={() => 'Match whole word'}
+                                        content={() => 'Match whole words'}
                                         offset={{ left: 0, top: 8 }}
                                     />
                                 </div>
-                                {searchDone && renderSearchProps.keyword && renderSearchProps.numberOfMatches === 0 && (
-                                    <div data-testid="num-matches" style={{ padding: '0 8px' }}>
-                                        Not found
-                                    </div>
-                                )}
-                                {searchDone && renderSearchProps.keyword && renderSearchProps.numberOfMatches > 0 && (
+                                {readyToSearch &&
+                                    renderSearchProps.keyword &&
+                                    renderSearchProps.numberOfMatches === 0 && (
+                                        <div style={{ padding: '0 8px' }}>Not found</div>
+                                    )}
+                                {readyToSearch && renderSearchProps.keyword && renderSearchProps.numberOfMatches > 0 && (
                                     <div data-testid="num-matches" style={{ padding: '0 8px' }}>
                                         {renderSearchProps.currentMatch} of {renderSearchProps.numberOfMatches}
                                     </div>
@@ -152,7 +151,7 @@ const IndexPage = () => {
                                         position={Position.BottomCenter}
                                         target={
                                             <MinimalButton
-                                                testId="next-match-button"
+                                                testId="next-match"
                                                 onClick={renderSearchProps.jumpToNextMatch}
                                             >
                                                 <NextIcon />
@@ -173,10 +172,42 @@ const IndexPage = () => {
                     overflow: 'hidden',
                 }}
             >
-                <Viewer fileUrl="/pdf-open-parameters.pdf" plugins={[searchPluginInstance]} />
+                <Viewer fileUrl={fileUrl} plugins={[searchPluginInstance]} />
             </div>
         </div>
     );
 };
 
-export default IndexPage;
+test('Test the whole words matching', async () => {
+    const { findByTestId, getByTestId } = render(<TestWholeWords fileUrl={global['__OPEN_PARAMS_PDF__']} />);
+
+    const viewerEle = getByTestId('core__viewer');
+    mockIsIntersecting(viewerEle, true);
+    viewerEle['__jsdomMockClientHeight'] = 758;
+    viewerEle['__jsdomMockClientWidth'] = 798;
+
+    // Wait until the document is loaded completely
+    await waitForElementToBeRemoved(() => getByTestId('core__doc-loading'));
+
+    const customSearchInput = await findByTestId('custom-search-input');
+    fireEvent.change(customSearchInput, { target: { value: 'PDF file' } });
+    fireEvent.keyDown(customSearchInput, { key: 'Enter' });
+
+    let numMatchesLabel = await findByTestId('num-matches');
+    expect(numMatchesLabel.textContent).toEqual('1 of 15');
+
+    // There are 4 results found on the 4th page
+    let textLayer = await findByTestId('core__text-layer-3');
+    let highlights = textLayer.querySelectorAll('.rpv-search__highlight');
+    expect(highlights.length).toEqual(4);
+
+    // Enable the `Whole words` option
+    const matchWholeWordsButton = await findByTestId('match-whole-words');
+    fireEvent.click(matchWholeWordsButton);
+
+    numMatchesLabel = await findByTestId('num-matches');
+    expect(numMatchesLabel.textContent).toEqual('1 of 3');
+
+    highlights = textLayer.querySelectorAll('.rpv-search__highlight');
+    expect(highlights.length).toEqual(2);
+});

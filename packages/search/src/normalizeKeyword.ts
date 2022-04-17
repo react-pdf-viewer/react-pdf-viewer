@@ -20,6 +20,7 @@ export const normalizeFlagKeyword = (flagKeyword: FlagKeyword): NormalizedKeywor
     return {
         keyword: flagKeyword.keyword,
         regExp: new RegExp(escapeRegExp(source), flags),
+        wholeWords: flagKeyword.wholeWords || false,
     };
 };
 
@@ -32,6 +33,7 @@ export const normalizeSingleKeyword = (
         return {
             keyword: keyword.source,
             regExp: keyword,
+            wholeWords: wholeWords || false,
         };
     }
 

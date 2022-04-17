@@ -190,16 +190,15 @@ export const Tracker: React.FC<{
                         return acc;
                     }, {} as { [spanIndex: number]: CharIndex[] });
                     Object.values(spanIndexes).forEach((charIndexSpan) => {
-                        // Ignore the spaces between words
-                        if (charIndexSpan[0].char.trim() !== '') {
-                            highlight(
-                                keywordStr,
-                                item.keyword,
-                                containerEle,
-                                spans[charIndexSpan[0].spanIndex],
-                                charIndexSpan
-                            );
-                        }
+                        // Ignore the first and last spaces if we are finding the whole word
+                        const normalizedCharSpan = keyword.wholeWords ? charIndexSpan.slice(1, -1) : charIndexSpan;
+                        highlight(
+                            keywordStr,
+                            item.keyword,
+                            containerEle,
+                            spans[normalizedCharSpan[0].spanIndex],
+                            normalizedCharSpan
+                        );
                     });
                 });
         });

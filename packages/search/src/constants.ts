@@ -12,4 +12,5 @@ import type { NormalizedKeyword } from './types/NormalizedKeyword';
 export const EMPTY_KEYWORD_REGEXP: NormalizedKeyword = {
     keyword: '',
     regExp: new RegExp(' '),
+    wholeWords: false,
 };

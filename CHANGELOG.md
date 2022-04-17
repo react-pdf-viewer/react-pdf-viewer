@@ -39,6 +39,10 @@ const setBookmarkExpanded = ({ bookmark, depth, doc, index }) => false;
     You can see this behaviour on popular viewers such as Acrobat Reader.
 -   The toolbar slot `NumberOfPages` provides the ability of customizing the number of pages
 
+**Bug fix**
+
+-   The hightlights are lost when the whole words option is enabled
+
 ## v3.2.0
 
 **New features**
