@@ -12,6 +12,7 @@ import type { VisibilityChanged } from '../types/VisibilityChanged';
 
 export const LazyRender: React.FC<{
     attrs?: React.HTMLAttributes<HTMLDivElement>;
+    children?: React.ReactNode;
     testId?: string;
 }> = ({ attrs, children, testId }) => {
     const [visible, setVisible] = React.useState(false);
