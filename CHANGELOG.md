@@ -32,6 +32,7 @@ const setBookmarkExpanded = ({ bookmark, depth, doc, index }) => false;
 **Improvements**
 
 -   Align bookmark titles
+-   Compatible with React 18
 -   In previous versions, all bookmarks were expanded by default. From this version, a bookmark will be shown or hidden initially depending on its data structure.
     You can see this behaviour on popular viewers such as Acrobat Reader.
 
