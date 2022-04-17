@@ -8,6 +8,7 @@ const IndexPage = () => {
 
     return (
         <div
+            data-testid="root"
             className="rpv-core__viewer"
             style={{
                 border: '1px solid rgba(0, 0, 0, 0.3)',
@@ -100,6 +101,7 @@ const IndexPage = () => {
                                         position={Position.BottomCenter}
                                         target={
                                             <button
+                                                data-testid="match-whole-words"
                                                 style={{
                                                     background: '#fff',
                                                     border: 'none',
