@@ -42,6 +42,7 @@ const setBookmarkExpanded = ({ bookmark, depth, doc, index }) => false;
 **Bug fix**
 
 -   The hightlights are lost when the whole words option is enabled
+-   There is a visible page that isn't rendered when setting the zoom level as page width
 
 ## v3.2.0
 
@@ -130,7 +131,6 @@ const { RotatePage } = rotatePluginInstance;
 **Improvements**
 
 -   It's able to scroll the pages when opening the search popover
--   Compatible with React 18
 -   Support link annotations that have the `unsafeUrl` property
 -   The search popover is opened if users press the shortcuts (`Ctrl + F`, or `Cmd + F` on macOS) when the mouse is inside the viewer container
 

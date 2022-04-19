@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { render } from '@testing-library/react';
+import { fireEvent, render, waitForElementToBeRemoved } from '@testing-library/react';
 import { defaultLayoutPlugin } from '@react-pdf-viewer/default-layout';
 
 import { mockIsIntersecting } from '../../../test-utils/mockIntersectionObserver';
@@ -33,51 +33,74 @@ test('defaultScale option', async () => {
 
 test('Set defaultScale as a special zoom level', async () => {
     const App = () => (
-        <div style={{ height: '720px', width: '720px' }}>
-            <TestDefaultScaleSpecialZoomLevel fileUrl={global['__MULTIPLE_PAGES_PDF__']} />
+        <div style={{ height: '50rem', width: '50rem' }}>
+            <TestDefaultScaleSpecialZoomLevel fileUrl={global['__OPEN_PARAMS_PDF__']} />
         </div>
     );
-    const { getByTestId, findByTestId, findByText } = render(<App />);
+    const { findByTestId, getByTestId } = render(<App />);
+
     const rootEle = getByTestId('core__viewer');
     mockIsIntersecting(rootEle, true);
+    rootEle['__jsdomMockClientHeight'] = 800;
+    rootEle['__jsdomMockClientWidth'] = 800;
 
-    rootEle['__jsdomMockClientHeight'] = 720;
-    rootEle['__jsdomMockClientWidth'] = 720;
+    // Wait until the document is loaded completely
+    await waitForElementToBeRemoved(() => getByTestId('core__doc-loading'));
 
-    await findByTestId('core__page-layer-0');
     const layoutBody = await findByTestId('core__inner-pages');
-    layoutBody['__jsdomMockClientHeight'] = 677;
-    layoutBody['__jsdomMockClientWidth'] = 673;
+    layoutBody['__jsdomMockClientHeight'] = 753;
+    layoutBody['__jsdomMockClientWidth'] = 758;
 
     mockResize(layoutBody);
+
+    await findByTestId('core__text-layer-3');
 
     // Users shouldn't see a scrollbar
     // See the issue #698
     const currentScale = await findByTestId('zoom__popover-target-scale');
-    expect(currentScale.innerHTML).toEqual('107%');
+    expect(currentScale.innerHTML).toEqual('125%');
 });
 
 test('Keep special defaultScale after resizing', async () => {
     const App = () => (
-        <div style={{ height: '720px', width: '720px' }}>
-            <TestDefaultScaleSpecialZoomLevel fileUrl={global['__MULTIPLE_PAGES_PDF__']} />
+        <div style={{ height: '50rem', width: '50rem' }}>
+            <Viewer defaultScale={SpecialZoomLevel.PageWidth} fileUrl={global['__OPEN_PARAMS_PDF__']} />
         </div>
     );
-    const { getByTestId, findByTestId, findByText } = render(<App />);
-    const rootEle = getByTestId('core__viewer');
-    mockIsIntersecting(rootEle, true);
+    const { findByTestId, getByTestId } = render(<App />);
 
-    rootEle['__jsdomMockClientHeight'] = 720;
-    rootEle['__jsdomMockClientWidth'] = 720;
+    const viewerEle = getByTestId('core__viewer');
+    mockIsIntersecting(viewerEle, true);
+    viewerEle['__jsdomMockClientHeight'] = 800;
+    viewerEle['__jsdomMockClientWidth'] = 800;
 
-    await findByTestId('core__page-layer-0');
-    const layoutBody = await findByTestId('core__inner-pages');
+    // Wait until the document is loaded completely
+    await waitForElementToBeRemoved(() => getByTestId('core__doc-loading'));
+
+    let firstPage = await findByTestId('core__page-layer-0');
+    const w1 = parseInt(firstPage.style.width, 10);
+    const h1 = parseInt(firstPage.style.height, 10);
+    expect(w1).toEqual(783);
+    expect(h1).toEqual(1044);
+
+    const pagesContainer = await findByTestId('core__inner-pages');
 
     // Resize
-    layoutBody['__jsdomMockClientHeight'] = 677;
-    layoutBody['__jsdomMockClientWidth'] = 553;
-    mockResize(layoutBody);
+    pagesContainer['__jsdomMockClientHeight'] = 800;
+    pagesContainer['__jsdomMockClientWidth'] = 640;
+    mockResize(pagesContainer);
 
-    const currentScale = await findByTestId('zoom__popover-target-scale');
-    expect(currentScale.innerHTML).toEqual('88%');
+    // Scroll to the 4th page
+    fireEvent.scroll(pagesContainer, {
+        target: {
+            scrollTop: 2250,
+        },
+    });
+
+    await findByTestId('core__text-layer-3');
+    const fourthPage = await findByTestId('core__page-layer-3');
+    const w2 = parseInt(fourthPage.style.width, 10);
+    const h2 = parseInt(fourthPage.style.height, 10);
+    expect(w2).toEqual(623);
+    expect(h2).toEqual(830);
 });
