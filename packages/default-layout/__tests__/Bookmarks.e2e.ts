@@ -2,6 +2,10 @@ import 'expect-puppeteer';
 
 test('Click bookmarks', async () => {
     await page.goto('http://localhost:3000/default-layout');
+    await page.setViewport({
+        width: 1920,
+        height: 1080,
+    });
     await page.evaluate(() => document.querySelector('[data-testid="core__viewer"]').scrollIntoView());
 
     // Wait until the first page is rendered

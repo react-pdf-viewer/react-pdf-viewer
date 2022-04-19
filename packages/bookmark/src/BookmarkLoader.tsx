@@ -54,7 +54,9 @@ export const BookmarkLoader: React.FC<{
     }, [doc]);
 
     return !bookmarks.isLoaded ? (
-        <Spinner />
+        <div className="rpv-bookmark__loader">
+            <Spinner />
+        </div>
     ) : bookmarks.items.length === 0 ? (
         <div
             data-testid="bookmark__empty"

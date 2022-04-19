@@ -1,11 +1,12 @@
 import 'expect-puppeteer';
 
 describe('Include the toolbar', () => {
-    beforeAll(async () => {
-        await page.goto('http://localhost:3000/full-screen-include-toolbar');
-    });
-
     test('Include the toolbar', async () => {
+        await page.goto('http://localhost:3000/full-screen-include-toolbar');
+        await page.setViewport({
+            width: 1200,
+            height: 800,
+        });
         await page.evaluate(() => document.querySelector('[data-testid="core__viewer"]').scrollIntoView());
 
         // To make sure the pages are rendered

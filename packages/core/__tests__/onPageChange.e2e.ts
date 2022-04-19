@@ -18,6 +18,7 @@ test('Test the onPageChange() callback', async () => {
     // Scroll to the third page
     await page.evaluate(() => document.querySelector('[data-testid="core__page-layer-2"]').scrollIntoView());
     await page.waitForSelector('[data-testid="core__text-layer-2"]', { visible: true });
+    await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 2611');
     visitedPagesLabel = await page.waitForSelector('[data-testid="visited-pages"]');
     visitedPages = await visitedPagesLabel.evaluate((ele) => ele.textContent);
     expect(visitedPages).toEqual('0, 2');
@@ -28,6 +29,7 @@ test('Test the onPageChange() callback', async () => {
 
     await page.waitForSelector('[data-testid="core__page-layer-6"]', { visible: true });
     await page.waitForSelector('[data-testid="core__text-layer-6"]', { visible: true });
+    await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 7944');
     visitedPagesLabel = await page.waitForSelector('[data-testid="visited-pages"]');
     visitedPages = await visitedPagesLabel.evaluate((ele) => ele.textContent);
     expect(visitedPages).toEqual('0, 2, 6');
@@ -35,6 +37,7 @@ test('Test the onPageChange() callback', async () => {
     // Scroll to the last page
     await page.evaluate(() => document.querySelector('[data-testid="core__page-layer-7"]').scrollIntoView());
     await page.waitForSelector('[data-testid="core__text-layer-7"]', { visible: true });
+    await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 8436');
     visitedPagesLabel = await page.waitForSelector('[data-testid="visited-pages"]');
     visitedPages = await visitedPagesLabel.evaluate((ele) => ele.textContent);
     expect(visitedPages).toEqual('0, 2, 6, 7');
