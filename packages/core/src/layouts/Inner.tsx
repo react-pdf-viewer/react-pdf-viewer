@@ -8,6 +8,7 @@
 
 import * as React from 'react';
 
+import { useDebounceCallback } from '../hooks/useDebounceCallback';
 import { useTrackResize } from '../hooks/useTrackResize';
 import { useVirtual } from '../hooks/useVirtual';
 import { PageLayer } from '../layers/PageLayer';
@@ -140,13 +141,13 @@ export const Inner: React.FC<{
         transformSize,
     });
 
-    const handlePagesResize = (target: Element) => {
+    const handlePagesResize = useDebounceCallback((_) => {
         if (keepSpecialZoomLevelRef.current) {
             // Mark all pages as not rendered yet
             setRenderPageIndex(-1);
             zoom(keepSpecialZoomLevelRef.current);
         }
-    };
+    }, 200);
 
     useTrackResize({
         targetRef: pagesRef,
