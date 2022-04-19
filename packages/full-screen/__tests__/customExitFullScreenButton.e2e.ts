@@ -1,15 +1,12 @@
 import 'expect-puppeteer';
 
 describe('Test exit full screen mode', () => {
-    beforeAll(async () => {
+    test('Test exit button', async () => {
         await page.goto('http://localhost:3000/full-screen-exit-button');
         await page.setViewport({
             width: 1200,
             height: 800,
         });
-    });
-
-    test('Test exit button', async () => {
         await page.evaluate(() => document.querySelector('[data-testid="core__viewer"]').scrollIntoView());
 
         // To make sure the pages are rendered

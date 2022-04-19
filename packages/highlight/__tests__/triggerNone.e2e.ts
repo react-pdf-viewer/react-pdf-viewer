@@ -1,11 +1,12 @@
 import 'expect-puppeteer';
 
 describe('Test trigger option', () => {
-    beforeAll(async () => {
-        await page.goto('http://localhost:3000/highlight-trigger-none');
-    });
-
     test('Test trigger=Trigger.None', async () => {
+        await page.goto('http://localhost:3000/highlight-trigger-none');
+        await page.setViewport({
+            width: 1200,
+            height: 800,
+        });
         const pageInput = await page.waitForSelector('[data-testid="page-navigation__current-page-input"]', {
             visible: true,
         });

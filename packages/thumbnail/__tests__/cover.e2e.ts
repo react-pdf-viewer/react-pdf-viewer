@@ -1,10 +1,11 @@
 import 'expect-puppeteer';
 
-beforeAll(async () => {
-    await page.goto('http://localhost:3000/thumbnail-cover');
-});
-
 test('Cover component', async () => {
+    await page.goto('http://localhost:3000/thumbnail-cover');
+    await page.setViewport({
+        width: 1200,
+        height: 800,
+    });
     await page.evaluate(() => document.querySelector('[data-testid="first-doc-cover"]').scrollIntoView());
 
     let imageEle = await page.waitForSelector('[data-testid="first-doc-cover"] [data-testid="thumbnail__cover-image"]');
