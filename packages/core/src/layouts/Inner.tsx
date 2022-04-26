@@ -13,7 +13,7 @@ import { useTrackResize } from '../hooks/useTrackResize';
 import { useVirtual } from '../hooks/useVirtual';
 import { PageLayer } from '../layers/PageLayer';
 import { LocalizationContext } from '../localization/LocalizationContext';
-import { renderQueueService } from '../services/renderQueueService';
+import { renderQueueService, RenderQueueService } from '../services/renderQueueService';
 import { RotateDirection } from '../structs/RotateDirection';
 import { ScrollMode } from '../structs/ScrollMode';
 import { SpecialZoomLevel } from '../structs/SpecialZoomLevel';
@@ -94,10 +94,22 @@ export const Inner: React.FC<{
     );
 
     const [renderPageIndex, setRenderPageIndex] = React.useState(-1);
-    const renderQueueInstance = React.useMemo(
-        () => renderQueueService({ doc, queueName: 'core-pages', priority: 0 }),
-        [docId]
-    );
+
+    const renderQueueInstanceRef = React.useRef<RenderQueueService>();
+    React.useEffect(() => {
+        // To support the Strict Mode in React 18
+        // We need to re-initialize the render queue here, because the queue will be cleaned up
+        const renderQueue = (renderQueueInstanceRef.current = renderQueueService({
+            doc,
+            queueName: 'core-pages',
+            priority: 0,
+        }));
+
+        return () => {
+            renderQueue.cleanup();
+            clearPagesCache();
+        };
+    }, [docId]);
 
     const estimateSize = React.useCallback(() => {
         const sizes = [pageSize.pageHeight, pageSize.pageWidth];
@@ -263,7 +275,7 @@ export const Inner: React.FC<{
         const updateRotation =
             currentRotation === 360 || currentRotation === -360 ? degrees : currentRotation + degrees;
 
-        renderQueueInstance.resetQueue();
+        renderQueueInstanceRef.current.resetQueue();
         setRotation(updateRotation);
         setViewerState({
             file: viewerState.file,
@@ -302,7 +314,7 @@ export const Inner: React.FC<{
         onRotatePage({ direction, doc, pageIndex, rotation: finalRotation });
 
         // Rerender the target page
-        renderQueueInstance.markRendering(pageIndex);
+        renderQueueInstanceRef.current.markRendering(pageIndex);
         setRenderPageIndex(pageIndex);
     }, []);
 
@@ -321,7 +333,7 @@ export const Inner: React.FC<{
     }, []);
 
     const zoom = React.useCallback((newScale: number | SpecialZoomLevel) => {
-        renderQueueInstance.resetQueue();
+        renderQueueInstanceRef.current.resetQueue();
 
         const pagesEle = pagesRef.current;
         let updateScale = pagesEle
@@ -427,11 +439,11 @@ export const Inner: React.FC<{
         });
 
         // The range of pages that will be rendered
-        renderQueueInstance.setRange(startRange, endRange);
+        renderQueueInstanceRef.current.setRange(startRange, endRange);
         for (let i = startRange; i <= endRange; i++) {
             const item = virtualItems.find((item) => item.index === i);
             if (item) {
-                renderQueueInstance.setVisibility(i, item.visibility);
+                renderQueueInstanceRef.current.setVisibility(i, item.visibility);
             }
         }
 
@@ -446,14 +458,14 @@ export const Inner: React.FC<{
     ]);
 
     const handlePageRenderCompleted = React.useCallback((pageIndex: number) => {
-        renderQueueInstance.markRendered(pageIndex);
+        renderQueueInstanceRef.current.markRendered(pageIndex);
         renderNextPage();
     }, []);
 
     const renderNextPage = () => {
-        const nextPage = renderQueueInstance.getHighestPriorityPage();
+        const nextPage = renderQueueInstanceRef.current.getHighestPriorityPage();
         if (nextPage > -1) {
-            renderQueueInstance.markRendering(nextPage);
+            renderQueueInstanceRef.current.markRendering(nextPage);
             setRenderPageIndex(nextPage);
         }
     };
@@ -578,12 +590,13 @@ export const Inner: React.FC<{
         []
     );
 
-    React.useEffect(() => {
-        return () => {
-            renderQueueInstance.cleanup();
-            clearPagesCache();
-        };
-    }, []);
+    // React.useEffect(() => {
+    //     return () => {
+    //         console.log('Clean up !!!');
+    //         renderQueueInstanceRef.current.cleanup();
+    //         clearPagesCache();
+    //     };
+    // }, []);
 
     return renderSlot(renderViewer());
 };
