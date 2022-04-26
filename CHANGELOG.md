@@ -1,5 +1,19 @@
 # CHANGELOG
 
+## v3.3.1 [WIP]
+
+**Bug fix**
+
+-   Support React 18 strict mode
+
+```tsx
+<React.StrictMode>
+    <Worker workerUrl="...">
+        <Viewer fileUrl="..." />
+    </Worker>
+</React.StrictMode>
+```
+
 ## v3.3.0
 
 **New feature**

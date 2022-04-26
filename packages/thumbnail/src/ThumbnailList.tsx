@@ -16,7 +16,7 @@ import {
     TextDirection,
     ThemeContext,
 } from '@react-pdf-viewer/core';
-import type { PdfJs, VisibilityChanged } from '@react-pdf-viewer/core';
+import type { PdfJs, RenderQueueService, VisibilityChanged } from '@react-pdf-viewer/core';
 
 import { FetchLabels } from './FetchLabels';
 import { scrollToBeVisible } from './scrollToBeVisible';
@@ -71,10 +71,20 @@ export const ThumbnailList: React.FC<{
         [docId]
     );
 
-    const renderQueueInstance = React.useMemo(
-        () => renderQueueService({ doc, queueName: 'thumbnail-list', priority: 999 }),
-        [docId]
-    );
+    const renderQueueInstanceRef = React.useRef<RenderQueueService>();
+    React.useEffect(() => {
+        // To support the Strict Mode in React 18
+        // We need to re-initialize the render queue here, because the queue will be cleaned up
+        const renderQueue = (renderQueueInstanceRef.current = renderQueueService({
+            doc,
+            queueName: 'thumbnail-list',
+            priority: 999,
+        }));
+
+        return () => {
+            renderQueue.cleanup();
+        };
+    }, [docId]);
 
     const handleKeyDown = (e: React.KeyboardEvent) => {
         switch (e.key) {
@@ -170,7 +180,7 @@ export const ThumbnailList: React.FC<{
     const handleRenderCompleted = React.useCallback(
         (pageIndex: number) => {
             if (isMounted.current) {
-                renderQueueInstance.markRendered(pageIndex);
+                renderQueueInstanceRef.current.markRendered(pageIndex);
                 hasRenderingThumbnailRef.current = false;
                 renderNextThumbnail();
             }
@@ -180,9 +190,9 @@ export const ThumbnailList: React.FC<{
 
     const handleVisibilityChanged = React.useCallback(
         (pageIndex: number, visibility: VisibilityChanged) => {
-            renderQueueInstance.setVisibility(
+            renderQueueInstanceRef.current.setVisibility(
                 pageIndex,
-                visibility.isVisible ? visibility.ratio : renderQueueInstance.OUT_OF_RANGE_VISIBILITY
+                visibility.isVisible ? visibility.ratio : renderQueueInstanceRef.current.OUT_OF_RANGE_VISIBILITY
             );
             renderNextThumbnail();
         },
@@ -194,9 +204,9 @@ export const ThumbnailList: React.FC<{
             return;
         }
 
-        const nextPage = renderQueueInstance.getHighestPriorityPage();
+        const nextPage = renderQueueInstanceRef.current.getHighestPriorityPage();
         if (nextPage > -1) {
-            renderQueueInstance.markRendering(nextPage);
+            renderQueueInstanceRef.current.markRendering(nextPage);
             hasRenderingThumbnailRef.current = true;
             setRenderPageIndex(nextPage);
         }
@@ -205,17 +215,11 @@ export const ThumbnailList: React.FC<{
     React.useEffect(() => {
         if (rotatedPage >= 0) {
             // Re-render the thumbnail of page which has just been rotated
-            renderQueueInstance.markRendering(rotatedPage);
+            renderQueueInstanceRef.current.markRendering(rotatedPage);
             hasRenderingThumbnailRef.current = true;
             setRenderPageIndex(rotatedPage);
         }
     }, [docId, rotatedPage]);
-
-    React.useEffect(() => {
-        return () => {
-            renderQueueInstance.cleanup();
-        };
-    }, [docId]);
 
     return (
         <FetchLabels doc={doc}>

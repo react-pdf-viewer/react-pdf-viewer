@@ -590,13 +590,5 @@ export const Inner: React.FC<{
         []
     );
 
-    // React.useEffect(() => {
-    //     return () => {
-    //         console.log('Clean up !!!');
-    //         renderQueueInstanceRef.current.cleanup();
-    //         clearPagesCache();
-    //     };
-    // }, []);
-
     return renderSlot(renderViewer());
 };
