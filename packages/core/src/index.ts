@@ -39,6 +39,7 @@ export { Tooltip } from './portal/Tooltip';
 
 // Services
 export { renderQueueService } from './services/renderQueueService';
+export type { RenderQueueService } from './services/renderQueueService';
 
 // Store
 export { createStore } from './store/createStore';

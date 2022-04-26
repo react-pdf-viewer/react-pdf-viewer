@@ -16,8 +16,9 @@ import {
     TextDirection,
     ThemeContext,
 } from '@react-pdf-viewer/core';
-import type { PdfJs, VisibilityChanged } from '@react-pdf-viewer/core';
+import type { PdfJs, RenderQueueService, VisibilityChanged } from '@react-pdf-viewer/core';
 
+import { FetchLabels } from './FetchLabels';
 import { scrollToBeVisible } from './scrollToBeVisible';
 import { ThumbnailContainer } from './ThumbnailContainer';
 import type { RenderCurrentPageLabel } from './types/RenderCurrentPageLabelProps';
@@ -48,10 +49,8 @@ export const ThumbnailList: React.FC<{
     onJumpToPage,
     onRotatePage,
 }) => {
-    const [labels, setLabels] = React.useState([]);
     const { numPages } = doc;
     const docId = doc.loadingTask.docId;
-    const numLabels = labels.length;
     const containerRef = React.useRef<HTMLDivElement | null>(null);
     const thumbnailsRef = React.useRef<HTMLElement[]>([]);
     const [currentFocused, setCurrentFocused] = React.useState(currentPage);
@@ -72,15 +71,19 @@ export const ThumbnailList: React.FC<{
         [docId]
     );
 
-    const renderQueueInstance = React.useMemo(
-        () => renderQueueService({ doc, queueName: 'thumbnail-list', priority: 999 }),
-        [docId]
-    );
-
+    const renderQueueInstanceRef = React.useRef<RenderQueueService>();
     React.useEffect(() => {
-        doc.getPageLabels().then((result) => {
-            isMounted.current && setLabels(result || []);
-        });
+        // To support the Strict Mode in React 18
+        // We need to re-initialize the render queue here, because the queue will be cleaned up
+        const renderQueue = (renderQueueInstanceRef.current = renderQueueService({
+            doc,
+            queueName: 'thumbnail-list',
+            priority: 999,
+        }));
+
+        return () => {
+            renderQueue.cleanup();
+        };
     }, [docId]);
 
     const handleKeyDown = (e: React.KeyboardEvent) => {
@@ -177,7 +180,7 @@ export const ThumbnailList: React.FC<{
     const handleRenderCompleted = React.useCallback(
         (pageIndex: number) => {
             if (isMounted.current) {
-                renderQueueInstance.markRendered(pageIndex);
+                renderQueueInstanceRef.current.markRendered(pageIndex);
                 hasRenderingThumbnailRef.current = false;
                 renderNextThumbnail();
             }
@@ -187,9 +190,9 @@ export const ThumbnailList: React.FC<{
 
     const handleVisibilityChanged = React.useCallback(
         (pageIndex: number, visibility: VisibilityChanged) => {
-            renderQueueInstance.setVisibility(
+            renderQueueInstanceRef.current.setVisibility(
                 pageIndex,
-                visibility.isVisible ? visibility.ratio : renderQueueInstance.OUT_OF_RANGE_VISIBILITY
+                visibility.isVisible ? visibility.ratio : renderQueueInstanceRef.current.OUT_OF_RANGE_VISIBILITY
             );
             renderNextThumbnail();
         },
@@ -201,9 +204,9 @@ export const ThumbnailList: React.FC<{
             return;
         }
 
-        const nextPage = renderQueueInstance.getHighestPriorityPage();
+        const nextPage = renderQueueInstanceRef.current.getHighestPriorityPage();
         if (nextPage > -1) {
-            renderQueueInstance.markRendering(nextPage);
+            renderQueueInstanceRef.current.markRendering(nextPage);
             hasRenderingThumbnailRef.current = true;
             setRenderPageIndex(nextPage);
         }
@@ -212,82 +215,80 @@ export const ThumbnailList: React.FC<{
     React.useEffect(() => {
         if (rotatedPage >= 0) {
             // Re-render the thumbnail of page which has just been rotated
-            renderQueueInstance.markRendering(rotatedPage);
+            renderQueueInstanceRef.current.markRendering(rotatedPage);
             hasRenderingThumbnailRef.current = true;
             setRenderPageIndex(rotatedPage);
         }
     }, [docId, rotatedPage]);
 
-    React.useEffect(() => {
-        return () => {
-            renderQueueInstance.cleanup();
-        };
-    }, [docId]);
-
     return (
-        <div
-            ref={containerRef}
-            data-testid="thumbnail__list"
-            className={classNames({
-                'rpv-thumbnail__list': true,
-                'rpv-thumbnail__list--rtl': isRtl,
-            })}
-            onKeyDown={handleKeyDown}
-        >
-            {pageIndexes.map((pageIndex) => {
-                // The key includes the `docId` so the thumbnail list will be re-rendered when the document changes
-                const key = `${doc.loadingTask.docId}___${pageIndex}`;
-                const pageLabel = numLabels === numPages ? labels[pageIndex] : `${pageIndex + 1}`;
-                const label = renderCurrentPageLabel
-                    ? renderCurrentPageLabel({ currentPage, pageIndex, numPages, pageLabel })
-                    : pageLabel;
+        <FetchLabels doc={doc}>
+            {(labels) => (
+                <div
+                    ref={containerRef}
+                    data-testid="thumbnail__list"
+                    className={classNames({
+                        'rpv-thumbnail__list': true,
+                        'rpv-thumbnail__list--rtl': isRtl,
+                    })}
+                    onKeyDown={handleKeyDown}
+                >
+                    {pageIndexes.map((pageIndex) => {
+                        // The key includes the `docId` so the thumbnail list will be re-rendered when the document changes
+                        const key = `${doc.loadingTask.docId}___${pageIndex}`;
+                        const pageLabel = labels.length === numPages ? labels[pageIndex] : `${pageIndex + 1}`;
+                        const label = renderCurrentPageLabel
+                            ? renderCurrentPageLabel({ currentPage, pageIndex, numPages, pageLabel })
+                            : pageLabel;
 
-                const pageRotation = pagesRotation.has(pageIndex) ? pagesRotation.get(pageIndex) : 0;
+                        const pageRotation = pagesRotation.has(pageIndex) ? pagesRotation.get(pageIndex) : 0;
 
-                const thumbnail = (
-                    <ThumbnailContainer
-                        doc={doc}
-                        pageHeight={pageHeight}
-                        pageIndex={pageIndex}
-                        pageRotation={pageRotation}
-                        pageWidth={pageWidth}
-                        rotation={rotation}
-                        shouldRender={renderPageIndex === pageIndex}
-                        onRenderCompleted={handleRenderCompleted}
-                        onVisibilityChanged={handleVisibilityChanged}
-                    />
-                );
+                        const thumbnail = (
+                            <ThumbnailContainer
+                                doc={doc}
+                                pageHeight={pageHeight}
+                                pageIndex={pageIndex}
+                                pageRotation={pageRotation}
+                                pageWidth={pageWidth}
+                                rotation={rotation}
+                                shouldRender={renderPageIndex === pageIndex}
+                                onRenderCompleted={handleRenderCompleted}
+                                onVisibilityChanged={handleVisibilityChanged}
+                            />
+                        );
 
-                return renderThumbnailItem ? (
-                    renderThumbnailItem({
-                        currentPage,
-                        key,
-                        numPages,
-                        pageIndex,
-                        renderPageLabel: <>{label}</>,
-                        renderPageThumbnail: thumbnail,
-                        onJumpToPage: () => onJumpToPage(pageIndex),
-                        onRotatePage: (direction: RotateDirection) => onRotatePage(pageIndex, direction),
-                    })
-                ) : (
-                    <div key={key}>
-                        <div
-                            className={classNames({
-                                'rpv-thumbnail__item': true,
-                                'rpv-thumbnail__item--selected': currentPage === pageIndex,
-                            })}
-                            role="button"
-                            tabIndex={currentPage === pageIndex ? 0 : -1}
-                            onClick={() => onJumpToPage(pageIndex)}
-                        >
-                            {thumbnail}
-                        </div>
-                        <div data-testid={`thumbnail__label-${pageIndex}`} className="rpv-thumbnail__label">
-                            {label}
-                        </div>
-                    </div>
-                );
-            })}
-        </div>
+                        return renderThumbnailItem ? (
+                            renderThumbnailItem({
+                                currentPage,
+                                key,
+                                numPages,
+                                pageIndex,
+                                renderPageLabel: <>{label}</>,
+                                renderPageThumbnail: thumbnail,
+                                onJumpToPage: () => onJumpToPage(pageIndex),
+                                onRotatePage: (direction: RotateDirection) => onRotatePage(pageIndex, direction),
+                            })
+                        ) : (
+                            <div key={key}>
+                                <div
+                                    className={classNames({
+                                        'rpv-thumbnail__item': true,
+                                        'rpv-thumbnail__item--selected': currentPage === pageIndex,
+                                    })}
+                                    role="button"
+                                    tabIndex={currentPage === pageIndex ? 0 : -1}
+                                    onClick={() => onJumpToPage(pageIndex)}
+                                >
+                                    {thumbnail}
+                                </div>
+                                <div data-testid={`thumbnail__label-${pageIndex}`} className="rpv-thumbnail__label">
+                                    {label}
+                                </div>
+                            </div>
+                        );
+                    })}
+                </div>
+            )}
+        </FetchLabels>
     );
 };

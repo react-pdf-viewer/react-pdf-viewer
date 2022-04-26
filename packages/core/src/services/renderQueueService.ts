@@ -20,6 +20,17 @@ interface PageVisibility {
     visibility: number;
 }
 
+export interface RenderQueueService {
+    OUT_OF_RANGE_VISIBILITY: number;
+    cleanup: () => void;
+    getHighestPriorityPage: () => number;
+    markRendered: (pageIndex: number) => void;
+    markRendering: (pageIndex: number) => void;
+    resetQueue: () => void;
+    setRange: (startIndex: number, endIndex: number) => void;
+    setVisibility: (pageIndex: number, visibility: number) => void;
+}
+
 const OUT_OF_RANGE_VISIBILITY = -9999;
 
 let pageVisibilities: Record<string, PageVisibility[]> = {};
@@ -32,7 +43,7 @@ export const renderQueueService = ({
     doc: PdfJs.PdfDocument;
     queueName: string;
     priority: number;
-}) => {
+}): RenderQueueService => {
     const { numPages } = doc;
 
     // Generate a unique name for queue to make sure it works when switching documents
