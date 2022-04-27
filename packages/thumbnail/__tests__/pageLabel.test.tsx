@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { render } from '@testing-library/react';
+import { render, waitForElementToBeRemoved } from '@testing-library/react';
 import { Viewer } from '@react-pdf-viewer/core';
 
 import { mockIsIntersecting } from '../../../test-utils/mockIntersectionObserver';
@@ -43,10 +43,18 @@ test('Show default page number', async () => {
     const { findByTestId, getByTestId } = render(<TestPageLabel fileUrl={global['__OPEN_PARAMS_PDF__']} />);
 
     const viewerEle = getByTestId('core__viewer');
+    viewerEle['__jsdomMockClientHeight'] = 798;
+    viewerEle['__jsdomMockClientWidth'] = 558;
     mockIsIntersecting(viewerEle, true);
+
+    // Wait until the document is loaded completely
+    await waitForElementToBeRemoved(() => getByTestId('core__doc-loading'));
+    await findByTestId('core__page-layer-0');
 
     const thumbnailsListContainer = await findByTestId('thumbnail__list-container');
     mockIsIntersecting(thumbnailsListContainer, true);
+
+    await findByTestId('thumbnail__list');
 
     const label = await findByTestId('thumbnail__label-6');
     expect(label.textContent).toEqual('7');
@@ -60,10 +68,18 @@ test('Show custom page label', async () => {
     const { findByTestId, getByTestId } = render(<TestPageLabel fileUrl={pageLabelDocument} />);
 
     const viewerEle = getByTestId('core__viewer');
+    viewerEle['__jsdomMockClientHeight'] = 798;
+    viewerEle['__jsdomMockClientWidth'] = 558;
     mockIsIntersecting(viewerEle, true);
+
+    // Wait until the document is loaded completely
+    await waitForElementToBeRemoved(() => getByTestId('core__doc-loading'));
+    await findByTestId('core__page-layer-0');
 
     const thumbnailsListContainer = await findByTestId('thumbnail__list-container');
     mockIsIntersecting(thumbnailsListContainer, true);
+
+    await findByTestId('thumbnail__list');
 
     const label = await findByTestId('thumbnail__label-2');
     expect(label.textContent).toEqual('iii');
@@ -77,10 +93,18 @@ test('Show custom page label 2', async () => {
     const { findByTestId, getByTestId } = render(<TestPageLabel fileUrl={pageLabelDocument2} />);
 
     const viewerEle = getByTestId('core__viewer');
+    viewerEle['__jsdomMockClientHeight'] = 798;
+    viewerEle['__jsdomMockClientWidth'] = 558;
     mockIsIntersecting(viewerEle, true);
+
+    // Wait until the document is loaded completely
+    await waitForElementToBeRemoved(() => getByTestId('core__doc-loading'));
+    await findByTestId('core__page-layer-0');
 
     const thumbnailsListContainer = await findByTestId('thumbnail__list-container');
     mockIsIntersecting(thumbnailsListContainer, true);
+
+    await findByTestId('thumbnail__list');
 
     const label = await findByTestId('thumbnail__label-1');
     expect(label.textContent).toEqual('297');
