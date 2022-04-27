@@ -24,28 +24,19 @@ export const AnnotationLayer: React.FC<{
     onExecuteNamedAction(action: string): void;
     onJumpToDest(pageIndex: number, bottomOffset: number, leftOffset: number, scaleTo: number | SpecialZoomLevel): void;
 }> = ({ doc, page, pageIndex, plugins, rotation, scale, onExecuteNamedAction, onJumpToDest }) => {
-    const containerRef = React.useRef<HTMLDivElement>();
-
-    const renderAnnotations = (annotations: PdfJs.Annotation[]): React.ReactElement => {
-        return (
-            <AnnotationLayerBody
-                annotations={annotations}
-                containerRef={containerRef}
-                doc={doc}
-                page={page}
-                pageIndex={pageIndex}
-                plugins={plugins}
-                rotation={rotation}
-                scale={scale}
-                onExecuteNamedAction={onExecuteNamedAction}
-                onJumpToDest={onJumpToDest}
-            />
-        );
-    };
-
-    return (
-        <div ref={containerRef} className="rpv-core__annotation-layer">
-            <AnnotationLoader page={page} renderAnnotations={renderAnnotations} />
-        </div>
+    const renderAnnotations = (annotations: PdfJs.Annotation[]): React.ReactElement => (
+        <AnnotationLayerBody
+            annotations={annotations}
+            doc={doc}
+            page={page}
+            pageIndex={pageIndex}
+            plugins={plugins}
+            rotation={rotation}
+            scale={scale}
+            onExecuteNamedAction={onExecuteNamedAction}
+            onJumpToDest={onJumpToDest}
+        />
     );
+
+    return <AnnotationLoader page={page} renderAnnotations={renderAnnotations} />;
 };
