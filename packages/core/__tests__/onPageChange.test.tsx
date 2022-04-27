@@ -34,11 +34,13 @@ test('onPageChange() callback', async () => {
 
     // Wait until the document is loaded completely
     await waitForElementToBeRemoved(() => getByTestId('core__doc-loading'));
+    await findByTestId('core__text-layer-0');
+    await findByTestId('core__text-layer-1');
 
     const visitedPages = await findByTestId('visited-pages');
     expect(visitedPages.textContent).toEqual('0');
 
-    const pagesContainer = getByTestId('core__inner-pages');
+    const pagesContainer = await findByTestId('core__inner-pages');
     pagesContainer.getBoundingClientRect = jest.fn(() => ({
         x: 0,
         y: 0,
@@ -59,7 +61,7 @@ test('onPageChange() callback', async () => {
         },
     });
 
-    await waitForElementToBeRemoved(() => getByTestId('core__page-layer-loading-2'));
+    await findByTestId('core__text-layer-2');
     expect(visitedPages.textContent).toEqual('0,2');
 });
 
@@ -98,11 +100,13 @@ test('onPageChange() should fire after onDocumentLoad()', async () => {
 
     // Wait until the document is loaded completely
     await waitForElementToBeRemoved(() => getByTestId('core__doc-loading'));
+    await findByTestId('core__text-layer-0');
+    await findByTestId('core__text-layer-1');
 
     let log = await findByTestId('log');
     expect(log.textContent).toEqual('___onDocumentLoad___0___onPageChange');
 
-    const pagesContainer = getByTestId('core__inner-pages');
+    const pagesContainer = await findByTestId('core__inner-pages');
     pagesContainer.getBoundingClientRect = jest.fn(() => ({
         x: 0,
         y: 0,
@@ -123,7 +127,7 @@ test('onPageChange() should fire after onDocumentLoad()', async () => {
         },
     });
 
-    await waitForElementToBeRemoved(() => getByTestId('core__page-layer-loading-2'));
+    await findByTestId('core__text-layer-2');
 
     log = await findByTestId('log');
     expect(log.textContent).toEqual('___onDocumentLoad___0___onPageChange___2___onPageChange');
