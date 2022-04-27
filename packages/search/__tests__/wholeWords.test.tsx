@@ -189,6 +189,11 @@ test('Test the whole words matching', async () => {
     // Wait until the document is loaded completely
     await waitForElementToBeRemoved(() => getByTestId('core__doc-loading'));
 
+    await findByTestId('core__text-layer-0');
+    await findByTestId('core__text-layer-1');
+    await findByTestId('core__text-layer-2');
+    let textLayer = await findByTestId('core__text-layer-3');
+
     const customSearchInput = await findByTestId('custom-search-input');
     fireEvent.change(customSearchInput, { target: { value: 'PDF file' } });
     fireEvent.keyDown(customSearchInput, { key: 'Enter' });
@@ -197,7 +202,6 @@ test('Test the whole words matching', async () => {
     expect(numMatchesLabel.textContent).toEqual('1 of 15');
 
     // There are 4 results found on the 4th page
-    let textLayer = await findByTestId('core__text-layer-3');
     let highlights = textLayer.querySelectorAll('.rpv-search__highlight');
     expect(highlights.length).toEqual(4);
 
