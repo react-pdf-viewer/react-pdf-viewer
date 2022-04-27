@@ -69,7 +69,7 @@ test('Test renderThumbnailItem option', async () => {
     // Wait until the document is loaded completely
     await waitForElementToBeRemoved(() => screen.getByTestId('core__doc-loading'));
 
-    const pagesContainer = getByTestId('core__inner-pages');
+    const pagesContainer = await findByTestId('core__inner-pages');
     pagesContainer.getBoundingClientRect = jest.fn(() => ({
         x: 0,
         y: 0,
@@ -99,6 +99,8 @@ test('Test renderThumbnailItem option', async () => {
             scrollTop: 658,
         },
     });
+
+    await findByTestId('core__text-layer-2');
 
     // Wait until the second thumbnail is rendered
     let secondThumbnailContainer = await findByTestId('thumbnail__container-1');
