@@ -47,6 +47,6 @@ test('call switchScrollMode() method', async () => {
     const switchModeButton = await screen.findByText('Switch to horizontal mode');
     fireEvent.click(switchModeButton);
 
-    const pagesContainer = getByTestId('core__inner-pages');
+    const pagesContainer = await findByTestId('core__inner-pages');
     expect(pagesContainer).toHaveClass('rpv-core__inner-pages--horizontal');
 });
