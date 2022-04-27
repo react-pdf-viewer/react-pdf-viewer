@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, render, waitForElementToBeRemoved } from '@testing-library/react';
 import { Viewer } from '@react-pdf-viewer/core';
 
 import { mockIsIntersecting } from '../../../test-utils/mockIntersectionObserver';
@@ -17,7 +17,8 @@ const TestSwitchScrollMode: React.FC<{
                 border: '1px solid rgba(0, 0, 0, 0.3)',
                 display: 'flex',
                 flexDirection: 'column',
-                height: '100%',
+                height: '50rem',
+                width: '50rem',
             }}
         >
             <div>
@@ -36,12 +37,19 @@ const TestSwitchScrollMode: React.FC<{
 };
 
 test('Switch scroll mode from menu items', async () => {
-    const { findByLabelText, findByText, getByTestId } = render(
+    const { findByLabelText, findByText, findByTestId, getByTestId } = render(
         <TestSwitchScrollMode fileUrl={global['__OPEN_PARAMS_PDF__']} />
     );
 
     const viewerEle = getByTestId('core__viewer');
     mockIsIntersecting(viewerEle, true);
+    viewerEle['__jsdomMockClientHeight'] = 767;
+    viewerEle['__jsdomMockClientWidth'] = 800;
+
+    await waitForElementToBeRemoved(() => getByTestId('core__doc-loading'));
+    await findByTestId('core__text-layer-0');
+    await findByTestId('core__text-layer-1');
+    await findByTestId('core__text-layer-2');
 
     const moreButton = await findByLabelText('More actions');
     fireEvent.click(moreButton);
@@ -49,6 +57,6 @@ test('Switch scroll mode from menu items', async () => {
     const horizontalMenuItem = await findByText('Horizontal scrolling');
     fireEvent.click(horizontalMenuItem);
 
-    const pagesContainer = getByTestId('core__inner-pages');
+    const pagesContainer = await findByTestId('core__inner-pages');
     expect(pagesContainer).toHaveClass('rpv-core__inner-pages--horizontal');
 });
