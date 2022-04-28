@@ -76,12 +76,15 @@ const TestSwitchDocument = () => {
 test('Thumbnails are updated when switching between documents', async () => {
     const { findByLabelText, findByTestId, getByTestId } = render(<TestSwitchDocument />);
 
-    const viewerEle = getByTestId('core__viewer');
+    let viewerEle = await findByTestId('core__viewer');
     mockIsIntersecting(viewerEle, true);
     viewerEle['__jsdomMockClientHeight'] = 631;
     viewerEle['__jsdomMockClientWidth'] = 800;
 
     await waitForElementToBeRemoved(() => getByTestId('core__doc-loading'));
+    await findByTestId('core__text-layer-0');
+    await findByTestId('core__text-layer-1');
+    await findByTestId('core__text-layer-2');
 
     const getSourceOfFirstThumbnail = async () => {
         const thumbnailsListContainer = await findByTestId('thumbnail__list-container');
@@ -106,8 +109,14 @@ test('Thumbnails are updated when switching between documents', async () => {
     const loadSecondDoc = await findByTestId('load-doc-2');
     fireEvent.click(loadSecondDoc);
 
+    viewerEle = await findByTestId('core__viewer');
+    mockIsIntersecting(viewerEle, true);
+    viewerEle['__jsdomMockClientHeight'] = 631;
+    viewerEle['__jsdomMockClientWidth'] = 800;
+
     // Wait until the document is loaded completely
     await waitForElementToBeRemoved(() => getByTestId('core__doc-loading'));
+    await findByTestId('core__text-layer-0');
 
     src = await getSourceOfFirstThumbnail();
     expect(src.substring(0, 100)).toEqual(
