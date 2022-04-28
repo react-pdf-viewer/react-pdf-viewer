@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { findAllByTitle, getAllByTitle, queryAllByTitle } from '@testing-library/dom';
+import { findAllByTitle, getAllByTitle, queryAllByTitle, waitForElementToBeRemoved } from '@testing-library/dom';
 import { fireEvent, render, screen } from '@testing-library/react';
 
 import { mockIsIntersecting } from '../../../test-utils/mockIntersectionObserver';
@@ -25,8 +25,8 @@ const TestSetTargetPages: React.FC<{
             <div
                 style={{
                     border: '1px solid rgba(0, 0, 0, .3)',
-                    height: '720px',
-                    width: '720px',
+                    height: '50rem',
+                    width: '50rem',
                 }}
             >
                 <Viewer fileUrl={fileUrl} plugins={[searchPluginInstance]} />
@@ -47,20 +47,26 @@ test('setTargetPages() method', async () => {
     const { findByText, findByTestId, getByTestId } = render(
         <TestSetTargetPages fileUrl={global['__MULTIPLE_PAGES_PDF__']} keywords={keywords} />
     );
-    mockIsIntersecting(getByTestId('core__viewer'), true);
+    const viewerEle = getByTestId('core__viewer');
+    viewerEle['__jsdomMockClientHeight'] = 798;
+    viewerEle['__jsdomMockClientWidth'] = 798;
+    mockIsIntersecting(viewerEle, true);
+
+    // Wait until the document is loaded completely
+    await waitForElementToBeRemoved(() => getByTestId('core__doc-loading'));
+    const firstPage = await findByTestId('core__text-layer-0');
+    const secondPage = await findByTestId('core__text-layer-1');
 
     const highlightButton = await screen.findByText('Highlight keywords');
     fireEvent.click(highlightButton);
 
     // There is no result on the first page because we ignore it
-    const firstPage = await findByTestId('core__page-layer-0');
     await findByText('A Simple PDF File');
 
     let highlights = queryAllByTitle(firstPage, 'text');
     expect(highlights.length).toEqual(0);
 
     // Search on the second page
-    const secondPage = await findByTestId('core__page-layer-1');
     await findByText('Simple PDF File 2');
 
     // Found 13 texts that match `text`
