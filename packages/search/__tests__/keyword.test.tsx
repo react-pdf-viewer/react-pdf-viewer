@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { findAllByTitle } from '@testing-library/dom';
-import { fireEvent, render } from '@testing-library/react';
+import { fireEvent, render, waitForElementToBeRemoved } from '@testing-library/react';
 
 import { mockIsIntersecting } from '../../../test-utils/mockIntersectionObserver';
 import { mockResize } from '../../../test-utils/mockResizeObserver';
@@ -40,6 +40,11 @@ test('keyword option', async () => {
     viewerEle['__jsdomMockClientHeight'] = 800;
     viewerEle['__jsdomMockClientWidth'] = 800;
 
+    // Wait until the document is loaded completely
+    await waitForElementToBeRemoved(() => getByTestId('core__doc-loading'));
+    await findByTestId('core__text-layer-0');
+    await findByTestId('core__text-layer-1');
+
     const page = await findByTestId('core__page-layer-1');
 
     await findByText('Simple PDF File 2');
@@ -60,6 +65,12 @@ test('Special character in the keyword', async () => {
     mockIsIntersecting(viewerEle, true);
     viewerEle['__jsdomMockClientHeight'] = 800;
     viewerEle['__jsdomMockClientWidth'] = 800;
+
+    // Wait until the document is loaded completely
+    await waitForElementToBeRemoved(() => getByTestId('core__doc-loading'));
+    await findByTestId('core__text-layer-0');
+    await findByTestId('core__text-layer-1');
+    await findByTestId('core__text-layer-2');
 
     // Jump to the fourth page
     const pagesContainer = await findByTestId('core__inner-pages');
@@ -104,6 +115,12 @@ test('Match case of special character', async () => {
     mockIsIntersecting(viewerEle, true);
     viewerEle['__jsdomMockClientHeight'] = 800;
     viewerEle['__jsdomMockClientWidth'] = 800;
+
+    // Wait until the document is loaded completely
+    await waitForElementToBeRemoved(() => getByTestId('core__doc-loading'));
+    await findByTestId('core__text-layer-0');
+    await findByTestId('core__text-layer-1');
+    await findByTestId('core__text-layer-2');
 
     // Jump to the fourth page
     const pagesContainer = await findByTestId('core__inner-pages');
