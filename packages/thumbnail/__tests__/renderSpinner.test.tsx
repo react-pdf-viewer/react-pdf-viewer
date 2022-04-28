@@ -50,6 +50,9 @@ test('Test renderSpinner option', async () => {
 
     // Wait until the document is loaded completely
     await waitForElementToBeRemoved(() => getByTestId('core__doc-loading'));
+    await findByTestId('core__text-layer-0');
+    await findByTestId('core__text-layer-1');
+    await findByTestId('core__text-layer-2');
 
     const thumbnailsListContainer = await findByTestId('thumbnail__list-container');
     mockIsIntersecting(thumbnailsListContainer, true);
