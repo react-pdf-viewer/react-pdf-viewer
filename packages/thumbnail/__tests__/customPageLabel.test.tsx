@@ -3,6 +3,7 @@ import { render, waitForElementToBeRemoved } from '@testing-library/react';
 import { Viewer } from '@react-pdf-viewer/core';
 
 import { mockIsIntersecting } from '../../../test-utils/mockIntersectionObserver';
+import { mockResize } from '../../../test-utils/mockResizeObserver';
 import { thumbnailPlugin } from '../src';
 
 const fs = require('fs');
@@ -39,28 +40,6 @@ const TestPageLabel: React.FC<{
     );
 };
 
-test('Show default page number', async () => {
-    const { findByTestId, getByTestId } = render(<TestPageLabel fileUrl={global['__OPEN_PARAMS_PDF__']} />);
-
-    const viewerEle = getByTestId('core__viewer');
-    viewerEle['__jsdomMockClientHeight'] = 798;
-    viewerEle['__jsdomMockClientWidth'] = 558;
-    mockIsIntersecting(viewerEle, true);
-
-    // Wait until the document is loaded completely
-    await waitForElementToBeRemoved(() => getByTestId('core__doc-loading'));
-    await findByTestId('core__page-layer-0');
-
-    const thumbnailsListContainer = await findByTestId('thumbnail__list-container');
-    mockIsIntersecting(thumbnailsListContainer, true);
-
-    await findByTestId('thumbnail__list');
-
-    const label = await findByTestId('thumbnail__label-6');
-    expect(label.textContent).toEqual('7');
-    expect(label).toHaveClass('rpv-thumbnail__label');
-});
-
 test('Show custom page label', async () => {
     const pageLabelDocument = new Uint8Array(
         fs.readFileSync(path.resolve(__dirname, '../../../samples/ignore/page-labels.pdf'))
@@ -74,7 +53,23 @@ test('Show custom page label', async () => {
 
     // Wait until the document is loaded completely
     await waitForElementToBeRemoved(() => getByTestId('core__doc-loading'));
-    await findByTestId('core__page-layer-0');
+    await findByTestId('core__text-layer-0');
+    await findByTestId('core__text-layer-1');
+    await findByTestId('core__text-layer-2');
+
+    const pagesContainer = await findByTestId('core__inner-pages');
+    pagesContainer.getBoundingClientRect = jest.fn(() => ({
+        x: 0,
+        y: 0,
+        height: 558,
+        width: 798,
+        top: 0,
+        right: 0,
+        bottom: 0,
+        left: 0,
+        toJSON: () => {},
+    }));
+    mockResize(pagesContainer);
 
     const thumbnailsListContainer = await findByTestId('thumbnail__list-container');
     mockIsIntersecting(thumbnailsListContainer, true);
@@ -99,7 +94,23 @@ test('Show custom page label 2', async () => {
 
     // Wait until the document is loaded completely
     await waitForElementToBeRemoved(() => getByTestId('core__doc-loading'));
-    await findByTestId('core__page-layer-0');
+    await findByTestId('core__text-layer-0');
+    await findByTestId('core__text-layer-1');
+    await findByTestId('core__text-layer-2');
+
+    const pagesContainer = await findByTestId('core__inner-pages');
+    pagesContainer.getBoundingClientRect = jest.fn(() => ({
+        x: 0,
+        y: 0,
+        height: 558,
+        width: 798,
+        top: 0,
+        right: 0,
+        bottom: 0,
+        left: 0,
+        toJSON: () => {},
+    }));
+    mockResize(pagesContainer);
 
     const thumbnailsListContainer = await findByTestId('thumbnail__list-container');
     mockIsIntersecting(thumbnailsListContainer, true);
