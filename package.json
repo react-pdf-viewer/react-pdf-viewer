@@ -26,8 +26,8 @@
         "clean": "lerna run clean",
         "build": "lerna run build",
         "dev": "lerna run dev",
-        "test:unit": "jest --runInBand --config jest.config.js",
-        "test:e2e": "jest --runInBand --config jest-e2e.config.js",
+        "test:unit": "jest --no-cache --runInBand --config jest.config.js",
+        "test:e2e": "jest --no-cache --runInBand --config jest-e2e.config.js",
         "lint": "eslint packages/**/src/*.ts packages/**/src/*.tsx",
         "format": "prettier --write \"**/*.+(css|js|json|jsx|less|md|ts|tsx)\"",
         "release": "npm run build && lerna publish from-package"
