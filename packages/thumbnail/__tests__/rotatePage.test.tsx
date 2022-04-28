@@ -111,6 +111,9 @@ test('Rotate single page using renderThumbnailItem', async () => {
 
     // Wait until the document is loaded completely
     await waitForElementToBeRemoved(() => getByTestId('core__doc-loading'));
+    await findByTestId('core__text-layer-0');
+    await findByTestId('core__text-layer-1');
+    await findByTestId('core__text-layer-2');
 
     const pagesContainer = await findByTestId('core__inner-pages');
     pagesContainer.getBoundingClientRect = jest.fn(() => ({
@@ -133,8 +136,7 @@ test('Rotate single page using renderThumbnailItem', async () => {
         },
     });
 
-    // Rotate forward the third thumbnail
-    await waitForElementToBeRemoved(() => getByTestId('core__page-layer-loading-2'));
+    await findByTestId('core__text-layer-3');
 
     const thumbnailsListContainer = await findByTestId('thumbnail__list-container');
     mockIsIntersecting(thumbnailsListContainer, true);
@@ -143,6 +145,7 @@ test('Rotate single page using renderThumbnailItem', async () => {
     let thirdThumbnailContainer = await findByTestId('thumbnail__container-2');
     mockIsIntersecting(thirdThumbnailContainer, true);
 
+    // Rotate forward the third thumbnail
     const forwardBtn = getByTestId('rotate-forward-2');
     fireEvent.click(forwardBtn);
 
