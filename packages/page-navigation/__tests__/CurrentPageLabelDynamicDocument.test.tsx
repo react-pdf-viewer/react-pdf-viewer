@@ -46,13 +46,12 @@ const TestCurrentPageLabelDynamicDocument = () => {
                             height: '2rem',
                             justifyContent: 'center',
                         }}
-                        data-testid="current-page-label"
                     >
                         <CurrentPageLabel>
                             {(props) => (
-                                <>
+                                <span data-testid="current-page-label">
                                     {props.currentPage + 1} of {props.numberOfPages}
-                                </>
+                                </span>
                             )}
                         </CurrentPageLabel>
                     </div>
@@ -78,6 +77,9 @@ test('Test <CurrentPageLabel> with dynamic document', async () => {
 
     // Wait until the document is loaded completely
     await waitForElementToBeRemoved(() => getByTestId('core__doc-loading'));
+    await findByTestId('core__text-layer-0');
+    await findByTestId('core__text-layer-1');
+    await findByTestId('core__text-layer-2');
 
     let pageLabel = await findByTestId('current-page-label');
     expect(pageLabel.textContent).toEqual('1 of 8');
@@ -104,6 +106,8 @@ test('Test <CurrentPageLabel> with dynamic document', async () => {
     });
 
     await findByTestId('core__text-layer-3');
+    await findByTestId('core__text-layer-4');
+    await findByTestId('core__text-layer-5');
     pageLabel = await findByTestId('current-page-label');
     expect(pageLabel.textContent).toEqual('4 of 8');
 
@@ -114,6 +118,11 @@ test('Test <CurrentPageLabel> with dynamic document', async () => {
     mockIsIntersecting(viewerEle, true);
     viewerEle['__jsdomMockClientHeight'] = 766;
     viewerEle['__jsdomMockClientWidth'] = 798;
+
+    await waitForElementToBeRemoved(() => getByTestId('core__doc-loading'));
+    await findByTestId('core__text-layer-0');
+    await findByTestId('core__text-layer-1');
+    await findByTestId('core__text-layer-2');
 
     pageLabel = await findByTestId('current-page-label');
     expect(pageLabel.textContent).toEqual('1 of 8');
@@ -139,7 +148,9 @@ test('Test <CurrentPageLabel> with dynamic document', async () => {
         },
     });
 
-    await findByTestId('core__page-layer-5');
+    await findByTestId('core__text-layer-3');
+    await findByTestId('core__text-layer-4');
+    await findByTestId('core__text-layer-5');
     pageLabel = await findByTestId('current-page-label');
     expect(pageLabel.textContent).toEqual('6 of 8');
 });
