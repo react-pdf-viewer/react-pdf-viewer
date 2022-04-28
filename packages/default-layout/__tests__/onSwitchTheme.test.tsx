@@ -39,8 +39,9 @@ test('onSwitchTheme() callback', async () => {
 
     // Wait until the document is loaded completely
     await waitForElementToBeRemoved(() => getByTestId('core__doc-loading'));
-
     await findByTestId('core__text-layer-0');
+    await findByTestId('core__text-layer-1');
+    await findByTestId('core__text-layer-2');
 
     // Click the switch theme button
     const switchButton = await getByLabelText('Switch to the dark theme');
@@ -48,13 +49,13 @@ test('onSwitchTheme() callback', async () => {
 
     expect(viewerEle.classList.contains('rpv-core__viewer--dark')).toEqual(true);
 
-    // const currentThemeLabel = await findByTestId('current-theme');
-    // expect(currentThemeLabel.textContent).toEqual('dark');
+    const currentThemeLabel = await findByTestId('current-theme');
+    expect(currentThemeLabel.textContent).toEqual('dark');
 
-    // // Click again to switch back to the light theme
-    // const switchLightButton = await getByLabelText('Switch to the light theme');
-    // fireEvent.click(switchLightButton);
+    // Click again to switch back to the light theme
+    const switchLightButton = await getByLabelText('Switch to the light theme');
+    fireEvent.click(switchLightButton);
 
-    // expect(viewerEle.classList.contains('rpv-core__viewer--light')).toEqual(true);
-    // expect(currentThemeLabel.textContent).toEqual('light');
+    expect(viewerEle.classList.contains('rpv-core__viewer--light')).toEqual(true);
+    expect(currentThemeLabel.textContent).toEqual('light');
 });
