@@ -208,7 +208,7 @@ test('Test <Cover /> with dynamic document', async () => {
     // Click the `Load document 2` button
     fireEvent.click(getByText('Load document 2'));
 
-    viewerEle = getByTestId('core__viewer');
+    viewerEle = await findByTestId('core__viewer');
     mockIsIntersecting(viewerEle, true);
     viewerEle['__jsdomMockClientHeight'] = 318;
     viewerEle['__jsdomMockClientWidth'] = 318;
