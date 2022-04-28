@@ -46,9 +46,14 @@ test('Bookmarks are expanded initially (level 1)', async () => {
 
     const viewerEle = getByTestId('core__viewer');
     mockIsIntersecting(viewerEle, true);
+    viewerEle['__jsdomMockClientHeight'] = 800;
+    viewerEle['__jsdomMockClientWidth'] = 560;
 
     // Wait until the document is loaded completely
     await waitForElementToBeRemoved(() => screen.getByTestId('core__doc-loading'));
+    await findByTestId('core__text-layer-0');
+    await findByTestId('core__text-layer-1');
+    await findByTestId('core__text-layer-2');
 
     const bookmarksContainer = await findByTestId('bookmark__container');
 
@@ -79,9 +84,14 @@ test('Bookmarks are expanded initially (level 2)', async () => {
 
     const viewerEle = getByTestId('core__viewer');
     mockIsIntersecting(viewerEle, true);
+    viewerEle['__jsdomMockClientHeight'] = 800;
+    viewerEle['__jsdomMockClientWidth'] = 560;
 
     // Wait until the document is loaded completely
     await waitForElementToBeRemoved(() => screen.getByTestId('core__doc-loading'));
+    await findByTestId('core__text-layer-0');
+    await findByTestId('core__text-layer-1');
+    await findByTestId('core__text-layer-2');
 
     const bookmarksContainer = await findByTestId('bookmark__container');
 
@@ -112,9 +122,14 @@ test('Bookmarks are expanded initially (level 3)', async () => {
 
     const viewerEle = getByTestId('core__viewer');
     mockIsIntersecting(viewerEle, true);
+    viewerEle['__jsdomMockClientHeight'] = 800;
+    viewerEle['__jsdomMockClientWidth'] = 560;
 
     // Wait until the document is loaded completely
     await waitForElementToBeRemoved(() => screen.getByTestId('core__doc-loading'));
+    await findByTestId('core__text-layer-0');
+    await findByTestId('core__text-layer-1');
+    await findByTestId('core__text-layer-2');
 
     const bookmarksContainer = await findByTestId('bookmark__container');
 
