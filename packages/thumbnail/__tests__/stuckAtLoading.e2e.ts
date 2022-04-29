@@ -14,9 +14,9 @@ test('The thumbnails are stuck at loading', async () => {
 
     let firstThumbnail = await page.waitForSelector('[aria-label="Thumbnail of page 1"]');
     let src = await firstThumbnail.evaluate((ele) => ele.getAttribute('src'));
-    expect(src.length).toEqual(3486);
+    expect(src.length).toEqual(3702);
     expect(src.substring(0, 100)).toEqual(
-        'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAACFCAYAAACt+l1zAAAAAXNSR0IArs4c6QAACd9JREFUeF7tnW'
+        'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAACFCAYAAACt+l1zAAAAAXNSR0IArs4c6QAACoJJREFUeF7tnX'
     );
 
     // Trigger re-renderer
