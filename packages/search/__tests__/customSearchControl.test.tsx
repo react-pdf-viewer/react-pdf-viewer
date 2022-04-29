@@ -1,8 +1,9 @@
 import * as React from 'react';
 import { fireEvent, render, waitForElementToBeRemoved } from '@testing-library/react';
+import { Viewer } from '@react-pdf-viewer/core';
 
 import { mockIsIntersecting } from '../../../test-utils/mockIntersectionObserver';
-import { Viewer } from '@react-pdf-viewer/core';
+import { mockResize } from '../../../test-utils/mockResizeObserver';
 import { searchPlugin } from '../src/index';
 
 const TestCustomSearchControl: React.FC<{
@@ -58,6 +59,20 @@ test('Custom Search control has to be rendered', async () => {
     await findByTestId('core__text-layer-0');
     await findByTestId('core__text-layer-1');
     await findByTestId('core__text-layer-2');
+
+    const pagesContainer = await findByTestId('core__inner-pages');
+    pagesContainer.getBoundingClientRect = jest.fn(() => ({
+        x: 0,
+        y: 0,
+        height: 798,
+        width: 798,
+        top: 0,
+        right: 0,
+        bottom: 0,
+        left: 0,
+        toJSON: () => {},
+    }));
+    mockResize(pagesContainer);
 
     const customSearchInput = await findByTestId('custom-search-input');
     fireEvent.change(customSearchInput, { target: { value: 'PDF' } });
