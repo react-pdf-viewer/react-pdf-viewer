@@ -42,8 +42,13 @@ test('keyword belongs to multiple spans', async () => {
 
     await waitForElementToBeRemoved(() => getByTestId('core__doc-loading'));
     await findByTestId('core__text-layer-0');
+    await findByTestId('core__annotation-layer-0');
     await findByTestId('core__text-layer-1');
+    await findByTestId('core__annotation-layer-1');
     await findByTestId('core__text-layer-2');
+    await findByTestId('core__annotation-layer-2');
+    await findByTestId('core__text-layer-3');
+    await findByTestId('core__annotation-layer-3');
 
     const pagesContainer = await findByTestId('core__inner-pages');
     pagesContainer.getBoundingClientRect = jest.fn(() => ({
@@ -65,6 +70,9 @@ test('keyword belongs to multiple spans', async () => {
             scrollTop: 2705,
         },
     });
+
+    await findByTestId('core__text-layer-4');
+    await findByTestId('core__annotation-layer-4');
 
     // Wait for the text layer to be rendered completely
     const page = await findByTestId('core__text-layer-3');
