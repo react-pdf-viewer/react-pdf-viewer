@@ -79,8 +79,13 @@ test('Test <Thumbnails /> with dynamic document', async () => {
     // Wait until the document is loaded completely
     await waitForElementToBeRemoved(() => screen.getByTestId('core__doc-loading'));
     await findByTestId('core__text-layer-0');
+    await findByTestId('core__annotation-layer-0');
     await findByTestId('core__text-layer-1');
+    await findByTestId('core__annotation-layer-1');
     await findByTestId('core__text-layer-2');
+    await findByTestId('core__annotation-layer-2');
+    await findByTestId('core__text-layer-3');
+    await findByTestId('core__annotation-layer-3');
 
     let pagesContainer = await findByTestId('core__inner-pages');
     pagesContainer.getBoundingClientRect = jest.fn(() => ({
@@ -124,8 +129,13 @@ test('Test <Thumbnails /> with dynamic document', async () => {
     // Wait until the document is loaded completely
     await waitForElementToBeRemoved(() => screen.getByTestId('core__doc-loading'));
     await findByTestId('core__text-layer-0');
+    await findByTestId('core__annotation-layer-0');
     await findByTestId('core__text-layer-1');
+    await findByTestId('core__annotation-layer-1');
     await findByTestId('core__text-layer-2');
+    await findByTestId('core__annotation-layer-2');
+    await findByTestId('core__text-layer-3');
+    await findByTestId('core__annotation-layer-3');
 
     pagesContainer = await findByTestId('core__inner-pages');
     pagesContainer.getBoundingClientRect = jest.fn(() => ({
@@ -140,9 +150,6 @@ test('Test <Thumbnails /> with dynamic document', async () => {
         toJSON: () => {},
     }));
     mockResize(pagesContainer);
-
-    await findByTestId('core__text-layer-1');
-    await findByTestId('core__text-layer-2');
 
     thumbnailsListContainer = await findByTestId('thumbnail__list-container');
     mockIsIntersecting(thumbnailsListContainer, true);
