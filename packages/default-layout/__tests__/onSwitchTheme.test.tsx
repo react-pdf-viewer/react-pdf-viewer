@@ -29,7 +29,7 @@ const TestOnSwitchTheme: React.FC<{
 };
 
 test('onSwitchTheme() callback', async () => {
-    const { findByTestId, findByText, getByLabelText, getByTestId } = render(
+    const { findByTestId, getByLabelText, getByTestId } = render(
         <TestOnSwitchTheme fileUrl={global['__OPEN_PARAMS_PDF__']} />
     );
     const viewerEle = getByTestId('core__viewer');
@@ -40,8 +40,13 @@ test('onSwitchTheme() callback', async () => {
     // Wait until the document is loaded completely
     await waitForElementToBeRemoved(() => getByTestId('core__doc-loading'));
     await findByTestId('core__text-layer-0');
+    await findByTestId('core__annotation-layer-0');
     await findByTestId('core__text-layer-1');
+    await findByTestId('core__annotation-layer-1');
     await findByTestId('core__text-layer-2');
+    await findByTestId('core__annotation-layer-2');
+    await findByTestId('core__text-layer-3');
+    await findByTestId('core__annotation-layer-3');
 
     // Click the switch theme button
     const switchButton = await getByLabelText('Switch to the dark theme');
