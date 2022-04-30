@@ -83,8 +83,11 @@ test('Thumbnails are updated when switching between documents', async () => {
 
     await waitForElementToBeRemoved(() => getByTestId('core__doc-loading'));
     await findByTestId('core__text-layer-0');
+    await findByTestId('core__annotation-layer-0');
     await findByTestId('core__text-layer-1');
+    await findByTestId('core__annotation-layer-1');
     await findByTestId('core__text-layer-2');
+    await findByTestId('core__annotation-layer-2');
 
     const getSourceOfFirstThumbnail = async () => {
         const thumbnailsListContainer = await findByTestId('thumbnail__list-container');
@@ -117,6 +120,7 @@ test('Thumbnails are updated when switching between documents', async () => {
     // Wait until the document is loaded completely
     await waitForElementToBeRemoved(() => getByTestId('core__doc-loading'));
     await findByTestId('core__text-layer-0');
+    await findByTestId('core__annotation-layer-0');
 
     src = await getSourceOfFirstThumbnail();
     expect(src.substring(0, 100)).toEqual(
