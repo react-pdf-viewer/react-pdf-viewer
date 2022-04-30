@@ -33,8 +33,13 @@ test('Set defaultScale as a special zoom level', async () => {
     // Wait until the document is loaded completely
     await waitForElementToBeRemoved(() => getByTestId('core__doc-loading'));
     await findByTestId('core__text-layer-0');
+    await findByTestId('core__annotation-layer-0');
     await findByTestId('core__text-layer-1');
+    await findByTestId('core__annotation-layer-1');
     await findByTestId('core__text-layer-2');
+    await findByTestId('core__annotation-layer-2');
+    await findByTestId('core__text-layer-3');
+    await findByTestId('core__annotation-layer-3');
 
     const pagesContainer = await findByTestId('core__inner-pages');
     pagesContainer['__jsdomMockClientHeight'] = 753;
@@ -63,8 +68,13 @@ test('Keep special defaultScale after resizing', async () => {
     // Wait until the document is loaded completely
     await waitForElementToBeRemoved(() => getByTestId('core__doc-loading'));
     await findByTestId('core__text-layer-0');
+    await findByTestId('core__annotation-layer-0');
     await findByTestId('core__text-layer-1');
+    await findByTestId('core__annotation-layer-1');
     await findByTestId('core__text-layer-2');
+    await findByTestId('core__annotation-layer-2');
+    await findByTestId('core__text-layer-3');
+    await findByTestId('core__annotation-layer-3');
 
     let firstPage = await findByTestId('core__page-layer-0');
     const w1 = parseInt(firstPage.style.width, 10);
@@ -87,12 +97,8 @@ test('Keep special defaultScale after resizing', async () => {
     });
 
     await findByTestId('core__text-layer-3');
-    await findByTestId('core__text-layer-4');
-    await findByTestId('core__text-layer-5');
 
     const fourthPage = await findByTestId('core__page-layer-3');
-    const w2 = parseInt(fourthPage.style.width, 10);
-    const h2 = parseInt(fourthPage.style.height, 10);
-    expect(w2).toEqual(623);
-    expect(h2).toEqual(830);
+    await waitFor(() => expect(parseInt(fourthPage.style.width, 10)).toEqual(623));
+    await waitFor(() => expect(parseInt(fourthPage.style.height, 10)).toEqual(830));
 });
