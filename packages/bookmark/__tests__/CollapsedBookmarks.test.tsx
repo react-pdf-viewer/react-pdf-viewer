@@ -52,8 +52,13 @@ test('Bookmarks are expanded initially (level 1)', async () => {
     // Wait until the document is loaded completely
     await waitForElementToBeRemoved(() => screen.getByTestId('core__doc-loading'));
     await findByTestId('core__text-layer-0');
+    await findByTestId('core__annotation-layer-0');
     await findByTestId('core__text-layer-1');
+    await findByTestId('core__annotation-layer-1');
     await findByTestId('core__text-layer-2');
+    await findByTestId('core__annotation-layer-2');
+    await findByTestId('core__text-layer-3');
+    await findByTestId('core__annotation-layer-3');
 
     const bookmarksContainer = await findByTestId('bookmark__container');
 
@@ -90,8 +95,13 @@ test('Bookmarks are expanded initially (level 2)', async () => {
     // Wait until the document is loaded completely
     await waitForElementToBeRemoved(() => screen.getByTestId('core__doc-loading'));
     await findByTestId('core__text-layer-0');
+    await findByTestId('core__annotation-layer-0');
     await findByTestId('core__text-layer-1');
+    await findByTestId('core__annotation-layer-1');
     await findByTestId('core__text-layer-2');
+    await findByTestId('core__annotation-layer-2');
+    await findByTestId('core__text-layer-3');
+    await findByTestId('core__annotation-layer-3');
 
     const bookmarksContainer = await findByTestId('bookmark__container');
 
@@ -128,8 +138,13 @@ test('Bookmarks are expanded initially (level 3)', async () => {
     // Wait until the document is loaded completely
     await waitForElementToBeRemoved(() => screen.getByTestId('core__doc-loading'));
     await findByTestId('core__text-layer-0');
+    await findByTestId('core__annotation-layer-0');
     await findByTestId('core__text-layer-1');
+    await findByTestId('core__annotation-layer-1');
     await findByTestId('core__text-layer-2');
+    await findByTestId('core__annotation-layer-2');
+    await findByTestId('core__text-layer-3');
+    await findByTestId('core__annotation-layer-3');
 
     const bookmarksContainer = await findByTestId('bookmark__container');
 
