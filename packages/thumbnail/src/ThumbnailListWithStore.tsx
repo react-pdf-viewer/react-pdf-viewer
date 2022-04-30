@@ -20,7 +20,8 @@ export const ThumbnailListWithStore: React.FC<{
     renderCurrentPageLabel?: RenderCurrentPageLabel;
     renderThumbnailItem?: RenderThumbnailItem;
     store: Store<StoreProps>;
-}> = ({ renderCurrentPageLabel, renderThumbnailItem, store }) => {
+    thumbnailWidth: number;
+}> = ({ renderCurrentPageLabel, renderThumbnailItem, store, thumbnailWidth }) => {
     const [currentDoc, setCurrentDoc] = React.useState<PdfJs.PdfDocument>(store.get('doc'));
     const [currentPage, setCurrentPage] = React.useState(store.get('currentPage') || 0);
     const [pageHeight, setPageHeight] = React.useState(store.get('pageHeight') || 0);
@@ -111,6 +112,7 @@ export const ThumbnailListWithStore: React.FC<{
                 renderThumbnailItem={renderThumbnailItem}
                 rotatedPage={rotatedPage}
                 rotation={rotation}
+                thumbnailWidth={thumbnailWidth}
                 onJumpToPage={jump}
                 onRotatePage={rotatePage}
             />

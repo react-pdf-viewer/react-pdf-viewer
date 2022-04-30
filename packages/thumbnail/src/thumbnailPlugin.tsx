@@ -32,6 +32,8 @@ export interface ThumbnailPluginProps {
     // The spinner that replaces the default `Spinner` component
     // For example, it is displayed when loading the cover or thumbnail of a page
     renderSpinner?: () => React.ReactElement;
+    // The width of thumbnails in pixels
+    thumbnailWidth?: number;
 }
 
 export const thumbnailPlugin = (pluginProps?: ThumbnailPluginProps): ThumbnailPlugin => {
@@ -57,6 +59,7 @@ export const thumbnailPlugin = (pluginProps?: ThumbnailPluginProps): ThumbnailPl
                     renderCurrentPageLabel={pluginProps?.renderCurrentPageLabel}
                     renderThumbnailItem={props?.renderThumbnailItem}
                     store={store}
+                    thumbnailWidth={pluginProps?.thumbnailWidth || 100}
                 />
             </SpinnerContext.Provider>
         ),

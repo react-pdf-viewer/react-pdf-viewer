@@ -13,8 +13,6 @@ import type { PdfJs, VisibilityChanged } from '@react-pdf-viewer/core';
 import { SpinnerContext } from './SpinnerContext';
 import { ThumbnailItem } from './ThumbnailItem';
 
-const THUMBNAIL_WIDTH = 100;
-
 interface PageState {
     height: number;
     page: PdfJs.Page | null;
@@ -30,6 +28,7 @@ export const ThumbnailContainer: React.FC<{
     pageWidth: number;
     rotation: number;
     shouldRender: boolean;
+    thumbnailWidth: number;
     onRenderCompleted: (pageIndex: number) => void;
     onVisibilityChanged(pageIndex: number, visibility: VisibilityChanged): void;
 }> = ({
@@ -40,6 +39,7 @@ export const ThumbnailContainer: React.FC<{
     pageWidth,
     rotation,
     shouldRender,
+    thumbnailWidth,
     onRenderCompleted,
     onVisibilityChanged,
 }) => {
@@ -53,8 +53,8 @@ export const ThumbnailContainer: React.FC<{
 
     const scale = width / height;
     const isVertical = Math.abs(rotation + pageRotation) % 180 === 0;
-    const w = isVertical ? THUMBNAIL_WIDTH : THUMBNAIL_WIDTH / scale;
-    const h = isVertical ? THUMBNAIL_WIDTH / scale : THUMBNAIL_WIDTH;
+    const w = isVertical ? thumbnailWidth : thumbnailWidth / scale;
+    const h = isVertical ? thumbnailWidth / scale : thumbnailWidth;
 
     React.useEffect(() => {
         if (shouldRender) {

@@ -34,6 +34,7 @@ export const ThumbnailList: React.FC<{
     renderThumbnailItem?: RenderThumbnailItem;
     rotatedPage: number;
     rotation: number;
+    thumbnailWidth: number;
     onJumpToPage(pageIndex: number): void;
     onRotatePage(pageIndex: number, direction: RotateDirection): void;
 }> = ({
@@ -46,6 +47,7 @@ export const ThumbnailList: React.FC<{
     renderThumbnailItem,
     rotatedPage,
     rotation,
+    thumbnailWidth,
     onJumpToPage,
     onRotatePage,
 }) => {
@@ -252,6 +254,7 @@ export const ThumbnailList: React.FC<{
                                 pageWidth={pageWidth}
                                 rotation={rotation}
                                 shouldRender={renderPageIndex === pageIndex}
+                                thumbnailWidth={thumbnailWidth}
                                 onRenderCompleted={handleRenderCompleted}
                                 onVisibilityChanged={handleVisibilityChanged}
                             />
