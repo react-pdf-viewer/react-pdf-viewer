@@ -52,6 +52,7 @@ test('Support RTL', async () => {
     // Wait until the document is loaded completely
     await waitForElementToBeRemoved(() => getByTestId('core__doc-loading'));
     await findByTestId('core__text-layer-0');
+    await findByTestId('core__annotation-layer-0');
 
     const defaultToolbar = await findByTestId('toolbar');
     expect(defaultToolbar).toHaveClass('rpv-toolbar--rtl');
