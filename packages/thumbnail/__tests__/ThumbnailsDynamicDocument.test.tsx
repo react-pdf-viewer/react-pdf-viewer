@@ -16,7 +16,9 @@ const TestThumbnailsDynamicDocument = () => {
     );
 
     const [fileUrl, setFileUrl] = React.useState(global['__OPEN_PARAMS_PDF__']);
-    const thumbnailPluginInstance = thumbnailPlugin();
+    const thumbnailPluginInstance = thumbnailPlugin({
+        thumbnailWidth: 150,
+    });
     const { Thumbnails } = thumbnailPluginInstance;
 
     return (
@@ -114,9 +116,11 @@ test('Test <Thumbnails /> with dynamic document', async () => {
     const firstThumbnailImage = await findByLabelText('Thumbnail of page 1');
     let src = firstThumbnailImage.getAttribute('src');
     expect(src.substring(0, 100)).toEqual(
-        'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAACFCAYAAACt+l1zAAAABmJLR0QA/wD/AP+gvaeTAAAKgUlEQV'
+        'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJYAAADICAYAAAAKhRhlAAAABmJLR0QA/wD/AP+gvaeTAAASp0lEQV'
     );
-    expect(src.length).toEqual(3710);
+    expect(src.length).toEqual(6490);
+    expect(firstThumbnailImage.getAttribute('width')).toEqual('150px');
+    expect(firstThumbnailImage.getAttribute('height')).toEqual('200px');
 
     // Click the `Load document 2` button
     fireEvent.click(getByText('Load document 2'));
@@ -164,7 +168,9 @@ test('Test <Thumbnails /> with dynamic document', async () => {
     const secondThumbnailImage = await findByLabelText('Thumbnail of page 2');
     src = secondThumbnailImage.getAttribute('src');
     expect(src.substring(0, 100)).toEqual(
-        'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAACBCAYAAAA2ax9lAAAABmJLR0QA/wD/AP+gvaeTAAAByUlEQV'
+        'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJYAAADCCAYAAACrHjsDAAAABmJLR0QA/wD/AP+gvaeTAAADCklEQV'
     );
-    expect(src.length).toEqual(734);
+    expect(src.length).toEqual(1162);
+    expect(secondThumbnailImage.getAttribute('width')).toEqual('150px');
+    expect(secondThumbnailImage.getAttribute('height')).toEqual('194.11764705882354px');
 });
