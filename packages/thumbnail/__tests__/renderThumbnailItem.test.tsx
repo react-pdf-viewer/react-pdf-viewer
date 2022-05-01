@@ -28,7 +28,9 @@ const TestRenderThumbnailItem: React.FC<{
         </div>
     );
 
-    const thumbnailPluginInstance = thumbnailPlugin();
+    const thumbnailPluginInstance = thumbnailPlugin({
+        thumbnailWidth: 150,
+    });
     const { Thumbnails } = thumbnailPluginInstance;
 
     return (
@@ -117,7 +119,9 @@ test('Test renderThumbnailItem option', async () => {
     const secondThumbnailImage = await findByLabelText('Thumbnail of page 2');
     const src = secondThumbnailImage.getAttribute('src');
     expect(src.substring(0, 100)).toEqual(
-        'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAACFCAYAAACt+l1zAAAABmJLR0QA/wD/AP+gvaeTAAAgAElEQV'
+        'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJYAAADICAYAAAAKhRhlAAAABmJLR0QA/wD/AP+gvaeTAAAgAElEQV'
     );
-    expect(src.length).toEqual(11582);
+    expect(src.length).toEqual(25166);
+    expect(secondThumbnailImage.getAttribute('width')).toEqual('150px');
+    expect(secondThumbnailImage.getAttribute('height')).toEqual('200px');
 });
