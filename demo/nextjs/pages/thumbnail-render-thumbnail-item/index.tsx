@@ -58,11 +58,14 @@ const IndexPage = () => {
         </div>
     );
 
-    const thumbnailPluginInstance = thumbnailPlugin();
+    const thumbnailPluginInstance = thumbnailPlugin({
+        thumbnailWidth: 150,
+    });
     const { Thumbnails } = thumbnailPluginInstance;
 
     return (
         <div
+            data-testid="root"
             style={{
                 margin: '1rem auto',
                 width: '64rem',
