@@ -15,11 +15,18 @@ test('Test renderThumbnailItem option with dynamic document', async () => {
     await page.waitForFunction(() => document.querySelector('[aria-label="Thumbnail of page 2"]'));
 
     let firstThumbnail = await page.waitForSelector('[aria-label="Thumbnail of page 1"]');
-    let src = await firstThumbnail.evaluate((ele) => ele.getAttribute('src'));
-    expect(src.length).toEqual(3702);
-    expect(src.substring(0, 100)).toEqual(
-        'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAACFCAYAAACt+l1zAAAAAXNSR0IArs4c6QAACoJJREFUeF7tnX'
+    let props = await firstThumbnail.evaluate((ele) => ({
+        height: ele.getAttribute('height'),
+        width: ele.getAttribute('width'),
+        src: ele.getAttribute('src'),
+    }));
+
+    expect(props.src.length).toEqual(6930);
+    expect(props.src.substring(0, 100)).toEqual(
+        'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJYAAADICAYAAAAKhRhlAAAAAXNSR0IArs4c6QAAE/VJREFUeF7tnQ'
     );
+    expect(props.width).toEqual('150px');
+    expect(props.height).toEqual('200px');
 
     let thumbnailItems = await page.$$('.custom-thumbnail-item');
     expect(thumbnailItems.length).toEqual(8);
@@ -39,9 +46,16 @@ test('Test renderThumbnailItem option with dynamic document', async () => {
     await page.waitForFunction(() => document.querySelectorAll('.custom-thumbnail-item').length === 2);
 
     firstThumbnail = await page.waitForSelector('[aria-label="Thumbnail of page 1"]');
-    src = await firstThumbnail.evaluate((ele) => ele.getAttribute('src'));
-    expect(src.length).toEqual(2850);
-    expect(src.substring(0, 100)).toEqual(
-        'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAACBCAYAAAA2ax9lAAAAAXNSR0IArs4c6QAACAJJREFUeF7tmt'
+    props = await firstThumbnail.evaluate((ele) => ({
+        height: ele.getAttribute('height'),
+        width: ele.getAttribute('width'),
+        src: ele.getAttribute('src'),
+    }));
+
+    expect(props.src.length).toEqual(5146);
+    expect(props.src.substring(0, 100)).toEqual(
+        'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJYAAADCCAYAAACrHjsDAAAAAXNSR0IArs4c6QAADrxJREFUeF7tnQ'
     );
+    expect(props.width).toEqual('150px');
+    expect(props.height).toEqual('194.11764705882354px');
 });

@@ -35,7 +35,9 @@ const IndexPage = () => {
         </div>
     );
 
-    const thumbnailPluginInstance = thumbnailPlugin();
+    const thumbnailPluginInstance = thumbnailPlugin({
+        thumbnailWidth: 150,
+    });
     const { Thumbnails } = thumbnailPluginInstance;
 
     return (

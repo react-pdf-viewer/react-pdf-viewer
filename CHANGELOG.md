@@ -2,6 +2,23 @@
 
 ## v3.3.1 [WIP]
 
+**New feature**
+
+-   The thumbnail plugin adds new option for customizing the width of thumbnails:
+
+```tsx
+const thumbnailPluginInstance = thumbnailPlugin({
+    thumbnailWidth: 150,
+});
+
+// Use with the default layout plugin
+const defaultLayoutPluginInstance = defaultLayoutPlugin({
+    thumbnailPlugin: {
+        thumbnailWidth: 150,
+    },
+});
+```
+
 **Bug fix**
 
 -   Support React 18 strict mode
