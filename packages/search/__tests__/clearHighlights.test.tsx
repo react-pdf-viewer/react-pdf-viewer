@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { findAllByTitle } from '@testing-library/dom';
-import { fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, render, screen, waitForElementToBeRemoved } from '@testing-library/react';
 
 import { mockIsIntersecting } from '../../../test-utils/mockIntersectionObserver';
 import { Viewer } from '@react-pdf-viewer/core';
@@ -32,8 +32,8 @@ const TestClearHighlights: React.FC<{
             <div
                 style={{
                     border: '1px solid rgba(0, 0, 0, .3)',
-                    height: '720px',
-                    width: '720px',
+                    height: '50rem',
+                    width: '50rem',
                 }}
             >
                 <Viewer fileUrl={fileUrl} plugins={[searchPluginInstance]} />
@@ -54,7 +54,15 @@ test('clearHighlights() method', async () => {
     const { findByText, findByTestId, getByTestId } = render(
         <TestClearHighlights fileUrl={global['__MULTIPLE_PAGES_PDF__']} keywords={keywords} />
     );
-    mockIsIntersecting(getByTestId('core__viewer'), true);
+    const viewerEle = getByTestId('core__viewer');
+    mockIsIntersecting(viewerEle, true);
+    viewerEle['__jsdomMockClientHeight'] = 798;
+    viewerEle['__jsdomMockClientWidth'] = 798;
+
+    // Wait until the document is loaded completely
+    await waitForElementToBeRemoved(() => screen.getByTestId('core__doc-loading'));
+    await findByTestId('core__text-layer-0');
+    await findByTestId('core__text-layer-1');
 
     const highlightButton = await screen.findByText('Highlight keywords');
     fireEvent.click(highlightButton);

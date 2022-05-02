@@ -71,7 +71,7 @@ test('Test <Cover />', async () => {
     // Wait until the document is loaded completely
     await waitForElementToBeRemoved(() => getByTestId('core__doc-loading'));
 
-    const coverLoader = getByTestId('thumbnail__cover-loader');
+    const coverLoader = await findByTestId('thumbnail__cover-loader');
     mockIsIntersecting(coverLoader, true);
     coverLoader['__jsdomMockClientHeight'] = 318;
     coverLoader['__jsdomMockClientWidth'] = 318;
@@ -110,7 +110,7 @@ test('Test multiple <Cover />', async () => {
     // Wait until the document is loaded completely
     await waitForElementToBeRemoved(() => getByTestId('core__doc-loading'));
 
-    let coverLoader = getByTestId('thumbnail__cover-loader');
+    let coverLoader = await findByTestId('thumbnail__cover-loader');
     mockIsIntersecting(coverLoader, true);
     coverLoader['__jsdomMockClientHeight'] = 318;
     coverLoader['__jsdomMockClientWidth'] = 318;
@@ -133,7 +133,7 @@ test('Test multiple <Cover />', async () => {
     // Wait until the document is loaded completely
     await waitForElementToBeRemoved(() => getByTestId('core__doc-loading'));
 
-    coverLoader = getByTestId('thumbnail__cover-loader');
+    coverLoader = await findByTestId('thumbnail__cover-loader');
     mockIsIntersecting(coverLoader, true);
     coverLoader['__jsdomMockClientHeight'] = 318;
     coverLoader['__jsdomMockClientWidth'] = 318;
@@ -193,7 +193,7 @@ test('Test <Cover /> with dynamic document', async () => {
     // Wait until the document is loaded completely
     await waitForElementToBeRemoved(() => getByTestId('core__doc-loading'));
 
-    let coverLoader = getByTestId('thumbnail__cover-loader');
+    let coverLoader = await findByTestId('thumbnail__cover-loader');
     mockIsIntersecting(coverLoader, true);
     coverLoader['__jsdomMockClientHeight'] = 318;
     coverLoader['__jsdomMockClientWidth'] = 318;
@@ -208,7 +208,7 @@ test('Test <Cover /> with dynamic document', async () => {
     // Click the `Load document 2` button
     fireEvent.click(getByText('Load document 2'));
 
-    viewerEle = getByTestId('core__viewer');
+    viewerEle = await findByTestId('core__viewer');
     mockIsIntersecting(viewerEle, true);
     viewerEle['__jsdomMockClientHeight'] = 318;
     viewerEle['__jsdomMockClientWidth'] = 318;
@@ -216,7 +216,7 @@ test('Test <Cover /> with dynamic document', async () => {
     // Wait until the document is loaded completely
     await waitForElementToBeRemoved(() => getByTestId('core__doc-loading'));
 
-    coverLoader = getByTestId('thumbnail__cover-loader');
+    coverLoader = await findByTestId('thumbnail__cover-loader');
     mockIsIntersecting(coverLoader, true);
     coverLoader['__jsdomMockClientHeight'] = 318;
     coverLoader['__jsdomMockClientWidth'] = 318;

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { fireEvent, render } from '@testing-library/react';
+import { fireEvent, render, waitForElementToBeRemoved } from '@testing-library/react';
 import { Viewer } from '@react-pdf-viewer/core';
 
 import { mockIsIntersecting } from '../../../test-utils/mockIntersectionObserver';
@@ -17,7 +17,8 @@ const TestTestIdAttribute: React.FC<{
                 border: '1px solid rgba(0, 0, 0, 0.3)',
                 display: 'flex',
                 flexDirection: 'column',
-                height: '100%',
+                height: '50rem',
+                width: '50rem',
             }}
         >
             <div>
@@ -37,6 +38,13 @@ test('Test data-testid attribute', async () => {
 
     const viewerEle = getByTestId('core__viewer');
     mockIsIntersecting(viewerEle, true);
+    viewerEle['__jsdomMockClientHeight'] = 800;
+    viewerEle['__jsdomMockClientWidth'] = 800;
+
+    // Wait until the document is loaded completely
+    await waitForElementToBeRemoved(() => getByTestId('core__doc-loading'));
+    await findByTestId('core__text-layer-0');
+    await findByTestId('core__annotation-layer-0');
 
     const searchButton = await findByLabelText('Search');
     expect(searchButton).toHaveAttribute('data-testid', 'search__popover-button');

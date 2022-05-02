@@ -22,9 +22,9 @@ test('Rotate single page using renderThumbnailItem', async () => {
         width: ele.getAttribute('width'),
         src: ele.getAttribute('src'),
     }));
-    expect(props.src.length).toEqual(3486);
+    expect(props.src.length).toEqual(3702);
     expect(props.src.substring(0, 100)).toEqual(
-        'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAACFCAYAAACt+l1zAAAAAXNSR0IArs4c6QAACd9JREFUeF7tnW'
+        'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAACFCAYAAACt+l1zAAAAAXNSR0IArs4c6QAACoJJREFUeF7tnX'
     );
     expect(props.width).toEqual('100px');
 

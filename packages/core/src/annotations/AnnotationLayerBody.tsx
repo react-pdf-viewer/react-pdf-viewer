@@ -32,7 +32,6 @@ import type { Plugin } from '../types/Plugin';
 
 export const AnnotationLayerBody: React.FC<{
     annotations: PdfJs.Annotation[];
-    containerRef: React.RefObject<HTMLDivElement | null>;
     doc: PdfJs.PdfDocument;
     page: PdfJs.Page;
     pageIndex: number;
@@ -41,18 +40,8 @@ export const AnnotationLayerBody: React.FC<{
     scale: number;
     onExecuteNamedAction(action: string): void;
     onJumpToDest(pageIndex: number, bottomOffset: number, leftOffset: number, scaleTo: number | SpecialZoomLevel): void;
-}> = ({
-    annotations,
-    containerRef,
-    doc,
-    page,
-    pageIndex,
-    plugins,
-    rotation,
-    scale,
-    onExecuteNamedAction,
-    onJumpToDest,
-}) => {
+}> = ({ annotations, doc, page, pageIndex, plugins, rotation, scale, onExecuteNamedAction, onJumpToDest }) => {
+    const containerRef = React.useRef<HTMLDivElement>();
     const viewport = page.getViewport({ rotation, scale });
     const clonedViewPort = viewport.clone({ dontFlip: true });
 
@@ -78,7 +67,11 @@ export const AnnotationLayerBody: React.FC<{
     }, []);
 
     return (
-        <>
+        <div
+            ref={containerRef}
+            className="rpv-core__annotation-layer"
+            data-testid={`core__annotation-layer-${pageIndex}`}
+        >
             {filterAnnotations.map((annotation) => {
                 const childAnnotation = annotations.find((item) => item.parentId === annotation.id);
                 switch (annotation.annotationType) {
@@ -209,6 +202,6 @@ export const AnnotationLayerBody: React.FC<{
                         return <React.Fragment key={annotation.id}></React.Fragment>;
                 }
             })}
-        </>
+        </div>
     );
 };

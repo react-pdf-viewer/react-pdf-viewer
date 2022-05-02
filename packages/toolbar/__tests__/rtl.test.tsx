@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { render } from '@testing-library/react';
+import { render, waitForElementToBeRemoved } from '@testing-library/react';
 import { TextDirection, ThemeContext, Viewer } from '@react-pdf-viewer/core';
 
 import { mockIsIntersecting } from '../../../test-utils/mockIntersectionObserver';
@@ -26,7 +26,8 @@ const TestRtl: React.FC<{
                     border: '1px solid rgba(0, 0, 0, 0.3)',
                     display: 'flex',
                     flexDirection: 'column',
-                    height: '100%',
+                    height: '50rem',
+                    width: '50rem',
                 }}
             >
                 <div>
@@ -45,6 +46,13 @@ test('Support RTL', async () => {
 
     const viewerEle = getByTestId('core__viewer');
     mockIsIntersecting(viewerEle, true);
+    viewerEle['__jsdomMockClientHeight'] = 798;
+    viewerEle['__jsdomMockClientWidth'] = 798;
+
+    // Wait until the document is loaded completely
+    await waitForElementToBeRemoved(() => getByTestId('core__doc-loading'));
+    await findByTestId('core__text-layer-0');
+    await findByTestId('core__annotation-layer-0');
 
     const defaultToolbar = await findByTestId('toolbar');
     expect(defaultToolbar).toHaveClass('rpv-toolbar--rtl');

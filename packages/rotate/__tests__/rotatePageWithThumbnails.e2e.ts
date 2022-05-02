@@ -22,9 +22,9 @@ test('Rotate single page with thumbnails using RotatePage component', async () =
         width: ele.getAttribute('width'),
         src: ele.getAttribute('src'),
     }));
-    expect(props.src.length).toEqual(3486);
+    expect(props.src.length).toEqual(3702);
     expect(props.src.substring(0, 100)).toEqual(
-        'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAACFCAYAAACt+l1zAAAAAXNSR0IArs4c6QAACd9JREFUeF7tnW'
+        'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAACFCAYAAACt+l1zAAAAAXNSR0IArs4c6QAACoJJREFUeF7tnX'
     );
     expect(props.width).toEqual('100px');
 
@@ -47,9 +47,9 @@ test('Rotate single page with thumbnails using RotatePage component', async () =
         width: ele.getAttribute('width'),
         src: ele.getAttribute('src'),
     }));
-    expect(props.src.length).toEqual(3822);
+    expect(props.src.length).toEqual(4334);
     expect(props.src.substring(0, 100)).toEqual(
-        'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIUAAABkCAYAAACowvMbAAAAAXNSR0IArs4c6QAACtpJREFUeF7tXQ'
+        'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIUAAABkCAYAAACowvMbAAAAAXNSR0IArs4c6QAADFtJREFUeF7tnQ'
     );
     expect(props.height).toEqual('100px');
     expect(props.width).toEqual('133.33333333333334px');

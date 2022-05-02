@@ -1,4 +1,5 @@
 import 'expect-puppeteer';
+
 test('Document with different page dimensions (horizontal scroll mode)', async () => {
     await page.goto('http://localhost:3000/default-layout-different-dimensions');
     await page.setViewport({
@@ -6,6 +7,8 @@ test('Document with different page dimensions (horizontal scroll mode)', async (
         height: 1080,
     });
     await page.evaluate(() => document.querySelector('[data-testid="core__viewer"]').scrollIntoView());
+
+    jest.setTimeout(10 * 1000);
 
     // Wait until the first page is rendered
     await page.waitForSelector('[data-testid="core__page-layer-0"]', { visible: true });

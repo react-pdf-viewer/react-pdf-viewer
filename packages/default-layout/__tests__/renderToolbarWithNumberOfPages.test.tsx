@@ -43,12 +43,20 @@ test('Test renderToolbar with <NumberOfPages />', async () => {
 
     // Wait until the document is loaded completely
     await waitForElementToBeRemoved(() => getByTestId('core__doc-loading'));
+    await findByTestId('core__text-layer-0');
+    await findByTestId('core__annotation-layer-0');
+    await findByTestId('core__text-layer-1');
+    await findByTestId('core__annotation-layer-1');
+    await findByTestId('core__text-layer-2');
+    await findByTestId('core__annotation-layer-2');
+    await findByTestId('core__text-layer-3');
+    await findByTestId('core__annotation-layer-3');
 
     let pageLabel = await findByTestId('current-page-label');
     expect(pageLabel.textContent).toEqual('1 of 8');
 
     // Jump to the fourth page
-    const pagesContainer = getByTestId('core__inner-pages');
+    const pagesContainer = await findByTestId('core__inner-pages');
     pagesContainer.getBoundingClientRect = jest.fn(() => ({
         x: 0,
         y: 0,
@@ -68,7 +76,11 @@ test('Test renderToolbar with <NumberOfPages />', async () => {
         },
     });
 
-    const page = await findByTestId('core__page-layer-3');
+    await findByTestId('core__text-layer-4');
+    await findByTestId('core__annotation-layer-4');
+    await findByTestId('core__text-layer-5');
+    await findByTestId('core__annotation-layer-5');
+
     pageLabel = await findByTestId('current-page-label');
     expect(pageLabel.textContent).toEqual('4 of 8');
 });

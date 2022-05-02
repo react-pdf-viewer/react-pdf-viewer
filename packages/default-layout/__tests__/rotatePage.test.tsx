@@ -104,8 +104,11 @@ test('Rotate single page with thumbnails using renderThumbnailItem', async () =>
 
     // Wait until the document is loaded completely
     await waitForElementToBeRemoved(() => getByTestId('core__doc-loading'));
+    await findByTestId('core__text-layer-0');
+    await findByTestId('core__text-layer-1');
+    await findByTestId('core__text-layer-2');
 
-    const pagesContainer = getByTestId('core__inner-pages');
+    const pagesContainer = await findByTestId('core__inner-pages');
     pagesContainer.getBoundingClientRect = jest.fn(() => ({
         x: 0,
         y: 0,
@@ -126,7 +129,7 @@ test('Rotate single page with thumbnails using renderThumbnailItem', async () =>
         },
     });
 
-    await waitForElementToBeRemoved(() => getByTestId('core__page-layer-loading-2'));
+    await findByTestId('core__text-layer-3');
 
     // Click the `Thumbnails` tab
     const thumbnailTab = await findByLabelText('Thumbnails');

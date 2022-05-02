@@ -58,12 +58,18 @@ test('Test <CurrentPageLabel>', async () => {
 
     // Wait until the document is loaded completely
     await waitForElementToBeRemoved(() => getByTestId('core__doc-loading'));
+    await findByTestId('core__text-layer-0');
+    await findByTestId('core__annotation-layer-0');
+    await findByTestId('core__text-layer-1');
+    await findByTestId('core__annotation-layer-1');
+    await findByTestId('core__text-layer-2');
+    await findByTestId('core__annotation-layer-2');
 
     let pageLabel = await findByTestId('current-page-label');
     expect(pageLabel.textContent).toEqual('8');
 
     // Jump to the third page
-    const pagesContainer = getByTestId('core__inner-pages');
+    const pagesContainer = await findByTestId('core__inner-pages');
     pagesContainer.getBoundingClientRect = jest.fn(() => ({
         x: 0,
         y: 0,
@@ -101,8 +107,14 @@ test('Test <CurrentPageLabel> with custom page label', async () => {
 
     // Wait until the document is loaded completely
     await waitForElementToBeRemoved(() => getByTestId('core__doc-loading'));
+    await findByTestId('core__text-layer-0');
+    await findByTestId('core__annotation-layer-0');
+    await findByTestId('core__text-layer-1');
+    await findByTestId('core__annotation-layer-1');
+    await findByTestId('core__text-layer-2');
+    await findByTestId('core__annotation-layer-2');
 
-    let pagesContainer = getByTestId('core__inner-pages');
+    const pagesContainer = await findByTestId('core__inner-pages');
     pagesContainer.getBoundingClientRect = jest.fn(() => ({
         x: 0,
         y: 0,
@@ -122,14 +134,14 @@ test('Test <CurrentPageLabel> with custom page label', async () => {
     let pageLabel = await findByTestId('current-page-label');
     expect(pageLabel.textContent).toEqual('8(296)');
 
-    // Jump to the 5th page
+    // Jump to the 3rd page
     fireEvent.scroll(pagesContainer, {
         target: {
-            scrollTop: 3556,
+            scrollTop: 1782,
         },
     });
 
-    await findByTestId('core__page-layer-5');
+    await findByTestId('core__text-layer-3');
     pageLabel = await findByTestId('current-page-label');
-    expect(pageLabel.textContent).toEqual('8(300)');
+    expect(pageLabel.textContent).toEqual('8(298)');
 });

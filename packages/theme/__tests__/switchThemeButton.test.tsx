@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { fireEvent, render } from '@testing-library/react';
+import { fireEvent, render, waitForElementToBeRemoved } from '@testing-library/react';
 import { ThemeContext, Viewer } from '@react-pdf-viewer/core';
 import { defaultLayoutPlugin, ToolbarProps } from '@react-pdf-viewer/default-layout';
 
@@ -26,8 +26,8 @@ const TestSwitchThemeButtonWithDefaultLayout: React.FC<{
         <div
             style={{
                 border: '1px solid rgba(0, 0, 0, .3)',
-                height: '720px',
-                width: '640px',
+                height: '50rem',
+                width: '50rem',
             }}
         >
             <Viewer fileUrl={fileUrl} plugins={[defaultLayoutPluginInstance]} />
@@ -56,8 +56,8 @@ const TestSwitchThemeButtonWithoutDefaultLayout: React.FC<{
             <div
                 style={{
                     border: '1px solid rgba(0, 0, 0, .3)',
-                    height: '720px',
-                    width: '640px',
+                    height: '50rem',
+                    width: '50rem',
                 }}
             >
                 <Viewer fileUrl={fileUrl} theme={currentTheme} plugins={[themePluginInstance]} />
@@ -67,12 +67,18 @@ const TestSwitchThemeButtonWithoutDefaultLayout: React.FC<{
 };
 
 test('SwitchThemeButton() component with the default layout', async () => {
-    const { findByText, getByLabelText, getByTestId } = render(
+    const { findByTestId, findByText, getByLabelText, getByTestId } = render(
         <TestSwitchThemeButtonWithDefaultLayout fileUrl={global['__HELLO_PDF__']} />
     );
     const viewerEle = getByTestId('core__viewer');
-
     mockIsIntersecting(viewerEle, true);
+    viewerEle['__jsdomMockClientHeight'] = 798;
+    viewerEle['__jsdomMockClientWidth'] = 798;
+
+    // Wait until the document is loaded completely
+    await waitForElementToBeRemoved(() => getByTestId('core__doc-loading'));
+    await findByTestId('core__text-layer-0');
+    await findByTestId('core__annotation-layer-0');
 
     let firstText = await findByText('Hello, world!');
     expect(firstText).toHaveClass('rpv-core__text-layer-text');
@@ -90,12 +96,18 @@ test('SwitchThemeButton() component with the default layout', async () => {
 });
 
 test('SwitchThemeButton() component without the default layout', async () => {
-    const { findByText, getByLabelText, getByTestId } = render(
+    const { findByTestId, findByText, getByLabelText, getByTestId } = render(
         <TestSwitchThemeButtonWithoutDefaultLayout fileUrl={global['__HELLO_PDF__']} />
     );
     const viewerEle = getByTestId('core__viewer');
-
     mockIsIntersecting(viewerEle, true);
+    viewerEle['__jsdomMockClientHeight'] = 798;
+    viewerEle['__jsdomMockClientWidth'] = 798;
+
+    // Wait until the document is loaded completely
+    await waitForElementToBeRemoved(() => getByTestId('core__doc-loading'));
+    await findByTestId('core__text-layer-0');
+    await findByTestId('core__annotation-layer-0');
 
     let firstText = await findByText('Hello, world!');
     expect(firstText).toHaveClass('rpv-core__text-layer-text');

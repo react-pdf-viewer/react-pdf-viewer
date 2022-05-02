@@ -1,63 +1,55 @@
 import * as React from 'react';
-import { fireEvent, render, waitForElementToBeRemoved } from '@testing-library/react';
+import { render, waitForElementToBeRemoved } from '@testing-library/react';
 import { Viewer } from '@react-pdf-viewer/core';
 
 import { mockIsIntersecting } from '../../../test-utils/mockIntersectionObserver';
 import { mockResize } from '../../../test-utils/mockResizeObserver';
-import { pageNavigationPlugin } from '../src';
+import { thumbnailPlugin } from '../src';
 
 const fs = require('fs');
 const path = require('path');
 
-const TestCurrentPageLabel: React.FC<{
+const TestPageLabel: React.FC<{
     fileUrl: Uint8Array;
 }> = ({ fileUrl }) => {
-    const pageNavigationPluginInstance = pageNavigationPlugin();
-    const { CurrentPageLabel } = pageNavigationPluginInstance;
+    const thumbnailPluginInstance = thumbnailPlugin();
+    const { Thumbnails } = thumbnailPluginInstance;
 
     return (
         <div
             style={{
                 border: '1px solid rgba(0, 0, 0, 0.3)',
                 display: 'flex',
-                flexDirection: 'column',
                 height: '50rem',
                 width: '50rem',
             }}
         >
             <div
                 style={{
-                    alignItems: 'center',
-                    borderBottom: '1px solid rgba(0, 0, 0, 0.3)',
-                    display: 'flex',
-                    height: '2rem',
-                    justifyContent: 'center',
+                    borderRight: '1px solid rgba(0, 0, 0, 0.3)',
+                    overflow: 'auto',
+                    width: '30%',
                 }}
-                data-testid="current-page-label"
             >
-                <CurrentPageLabel>
-                    {(props) => (
-                        <>
-                            {props.numberOfPages}
-                            {props.pageLabel !== `${props.currentPage + 1}` && `(${props.pageLabel})`}
-                        </>
-                    )}
-                </CurrentPageLabel>
+                <Thumbnails />
             </div>
-            <div style={{ flex: 1, overflow: 'hidden' }}>
-                <Viewer fileUrl={fileUrl} plugins={[pageNavigationPluginInstance]} />
+            <div style={{ flex: 1 }}>
+                <Viewer fileUrl={fileUrl} plugins={[thumbnailPluginInstance]} />
             </div>
         </div>
     );
 };
 
-test('Test <CurrentPageLabel>', async () => {
-    const { findByTestId, getByTestId } = render(<TestCurrentPageLabel fileUrl={global['__OPEN_PARAMS_PDF__']} />);
+test('Show custom page label', async () => {
+    const pageLabelDocument = new Uint8Array(
+        fs.readFileSync(path.resolve(__dirname, '../../../samples/ignore/page-labels.pdf'))
+    );
+    const { findByTestId, getByTestId } = render(<TestPageLabel fileUrl={pageLabelDocument} />);
 
     const viewerEle = getByTestId('core__viewer');
+    viewerEle['__jsdomMockClientHeight'] = 798;
+    viewerEle['__jsdomMockClientWidth'] = 558;
     mockIsIntersecting(viewerEle, true);
-    viewerEle['__jsdomMockClientHeight'] = 766;
-    viewerEle['__jsdomMockClientWidth'] = 798;
 
     // Wait until the document is loaded completely
     await waitForElementToBeRemoved(() => getByTestId('core__doc-loading'));
@@ -70,15 +62,11 @@ test('Test <CurrentPageLabel>', async () => {
     await findByTestId('core__text-layer-3');
     await findByTestId('core__annotation-layer-3');
 
-    let pageLabel = await findByTestId('current-page-label');
-    expect(pageLabel.textContent).toEqual('8');
-
-    // Jump to the third page
     const pagesContainer = await findByTestId('core__inner-pages');
     pagesContainer.getBoundingClientRect = jest.fn(() => ({
         x: 0,
         y: 0,
-        height: 766,
+        height: 558,
         width: 798,
         top: 0,
         right: 0,
@@ -88,27 +76,26 @@ test('Test <CurrentPageLabel>', async () => {
     }));
     mockResize(pagesContainer);
 
-    fireEvent.scroll(pagesContainer, {
-        target: {
-            scrollTop: 1782,
-        },
-    });
+    const thumbnailsListContainer = await findByTestId('thumbnail__list-container');
+    mockIsIntersecting(thumbnailsListContainer, true);
 
-    await findByTestId('core__text-layer-2');
-    pageLabel = await findByTestId('current-page-label');
-    expect(pageLabel.textContent).toEqual('8');
+    await findByTestId('thumbnail__list');
+
+    const label = await findByTestId('thumbnail__label-2');
+    expect(label.textContent).toEqual('iii');
+    expect(label).toHaveClass('rpv-thumbnail__label');
 });
 
-test('Test <CurrentPageLabel> with custom page label', async () => {
+test('Show custom page label 2', async () => {
     const pageLabelDocument2 = new Uint8Array(
         fs.readFileSync(path.resolve(__dirname, '../../../samples/ignore/page-labels-2.pdf'))
     );
-    const { findByTestId, getByTestId } = render(<TestCurrentPageLabel fileUrl={pageLabelDocument2} />);
+    const { findByTestId, getByTestId } = render(<TestPageLabel fileUrl={pageLabelDocument2} />);
 
     const viewerEle = getByTestId('core__viewer');
+    viewerEle['__jsdomMockClientHeight'] = 798;
+    viewerEle['__jsdomMockClientWidth'] = 558;
     mockIsIntersecting(viewerEle, true);
-    viewerEle['__jsdomMockClientHeight'] = 766;
-    viewerEle['__jsdomMockClientWidth'] = 798;
 
     // Wait until the document is loaded completely
     await waitForElementToBeRemoved(() => getByTestId('core__doc-loading'));
@@ -121,15 +108,11 @@ test('Test <CurrentPageLabel> with custom page label', async () => {
     await findByTestId('core__text-layer-3');
     await findByTestId('core__annotation-layer-3');
 
-    let pageLabel = await findByTestId('current-page-label');
-    expect(pageLabel.textContent).toEqual('8(296)');
-
-    // Jump to other page
     const pagesContainer = await findByTestId('core__inner-pages');
     pagesContainer.getBoundingClientRect = jest.fn(() => ({
         x: 0,
         y: 0,
-        height: 766,
+        height: 558,
         width: 798,
         top: 0,
         right: 0,
@@ -139,16 +122,12 @@ test('Test <CurrentPageLabel> with custom page label', async () => {
     }));
     mockResize(pagesContainer);
 
-    fireEvent.scroll(pagesContainer, {
-        target: {
-            scrollTop: 1782,
-        },
-    });
+    const thumbnailsListContainer = await findByTestId('thumbnail__list-container');
+    mockIsIntersecting(thumbnailsListContainer, true);
 
-    await findByTestId('core__text-layer-4');
-    await findByTestId('core__annotation-layer-4');
+    await findByTestId('thumbnail__list');
 
-    await findByTestId('core__text-layer-3');
-    pageLabel = await findByTestId('current-page-label');
-    expect(pageLabel.textContent).toEqual('8(298)');
+    const label = await findByTestId('thumbnail__label-1');
+    expect(label.textContent).toEqual('297');
+    expect(label).toHaveClass('rpv-thumbnail__label');
 });

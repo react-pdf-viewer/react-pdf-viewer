@@ -15,13 +15,19 @@ export const FetchLabels: React.FC<{
     doc: PdfJs.PdfDocument;
 }> = ({ children, doc }) => {
     const isMounted = useIsMounted();
-    const [labels, setLabels] = React.useState<string[]>([]);
+    const [status, setStatus] = React.useState<{
+        loading: boolean;
+        labels: string[];
+    }>({
+        loading: true,
+        labels: [],
+    });
 
     React.useEffect(() => {
         doc.getPageLabels().then((result) => {
-            isMounted.current && setLabels(result || []);
+            isMounted.current && setStatus({ loading: false, labels: result || [] });
         });
     }, [doc.loadingTask.docId]);
 
-    return children(labels);
+    return status.loading ? <></> : children(status.labels);
 };
