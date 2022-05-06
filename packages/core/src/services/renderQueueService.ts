@@ -28,7 +28,6 @@ interface RenderQueue {
 }
 
 export interface RenderQueueService {
-    OUT_OF_RANGE_VISIBILITY: number;
     cleanup: () => void;
     getHighestPriorityPage: () => number;
     markRendered: (pageIndex: number) => void;
@@ -37,8 +36,6 @@ export interface RenderQueueService {
     setRange: (startIndex: number, endIndex: number) => void;
     setVisibility: (pageIndex: number, visibility: number) => void;
 }
-
-const OUT_OF_RANGE_VISIBILITY = -9999;
 
 let queues: Record<string, RenderQueue> = {};
 
@@ -62,7 +59,7 @@ export const renderQueueService = ({
             .map((_, pageIndex) => ({
                 pageIndex,
                 renderStatus: PageRenderStatus.NotRenderedYet,
-                visibility: OUT_OF_RANGE_VISIBILITY,
+                visibility: -1,
             }));
 
     const cleanup = () => {
@@ -108,7 +105,7 @@ export const renderQueueService = ({
 
         for (let i = 0; i < numPages; i++) {
             if (i < startIndex || i > endIndex) {
-                queues[queue].visibilities[i].visibility = OUT_OF_RANGE_VISIBILITY;
+                queues[queue].visibilities[i].visibility = -1;
                 queues[queue].visibilities[i].renderStatus = PageRenderStatus.NotRenderedYet;
             }
         }
@@ -124,7 +121,7 @@ export const renderQueueService = ({
         // Find all visible pages which belongs to the range
         const visiblePages = queues[queue].visibilities
             .slice(queues[queue].startRange, queues[queue].endRange + 1)
-            .filter((item) => item.visibility > OUT_OF_RANGE_VISIBILITY);
+            .filter((item) => item.visibility >= 0);
         if (!visiblePages.length) {
             return -1;
         }
@@ -165,7 +162,6 @@ export const renderQueueService = ({
     resetQueue();
 
     return {
-        OUT_OF_RANGE_VISIBILITY,
         cleanup,
         getHighestPriorityPage,
         markRendered,
