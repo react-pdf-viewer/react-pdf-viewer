@@ -497,7 +497,6 @@ export class Worker extends React.Component<WorkerProps> {}
 
 // Services
 export interface RenderQueueService {
-    OUT_OF_RANGE_VISIBILITY: number;
     cleanup: () => void;
     getHighestPriorityPage: () => number;
     markRendered: (pageIndex: number) => void;

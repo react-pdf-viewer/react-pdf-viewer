@@ -1,10 +1,11 @@
 # CHANGELOG
 
-## v3.4.0
+## v3.4.0 [WIP]
 
-**Bug fix**
+**Bug fixes**
 
 -   The pages are flickering when zooming the document. The issue only happens with React 18's Strict mode
+-   There is a page that is not rendered even it is visible. The issue only happens on React 18 when users zoom the document continuously
 
 ## v3.3.1
 

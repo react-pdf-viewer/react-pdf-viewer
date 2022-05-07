@@ -20,8 +20,14 @@ interface PageVisibility {
     visibility: number;
 }
 
+interface RenderQueue {
+    currentRenderingPage: number;
+    startRange: number;
+    endRange: number;
+    visibilities: PageVisibility[];
+}
+
 export interface RenderQueueService {
-    OUT_OF_RANGE_VISIBILITY: number;
     cleanup: () => void;
     getHighestPriorityPage: () => number;
     markRendered: (pageIndex: number) => void;
@@ -31,9 +37,7 @@ export interface RenderQueueService {
     setVisibility: (pageIndex: number, visibility: number) => void;
 }
 
-const OUT_OF_RANGE_VISIBILITY = -9999;
-
-let pageVisibilities: Record<string, PageVisibility[]> = {};
+let queues: Record<string, RenderQueue> = {};
 
 export const renderQueueService = ({
     doc,
@@ -55,43 +59,69 @@ export const renderQueueService = ({
             .map((_, pageIndex) => ({
                 pageIndex,
                 renderStatus: PageRenderStatus.NotRenderedYet,
-                visibility: OUT_OF_RANGE_VISIBILITY,
+                visibility: -1,
             }));
 
     const cleanup = () => {
-        pageVisibilities[queue] = [];
+        queues[queue] = {
+            currentRenderingPage: -1,
+            startRange: 0,
+            endRange: numPages - 1,
+            visibilities: [],
+        };
     };
 
     const resetQueue = () => {
-        pageVisibilities[queue] = getInitialPageVisibilities();
+        queues[queue] = {
+            currentRenderingPage: -1,
+            startRange: 0,
+            endRange: numPages - 1,
+            visibilities: getInitialPageVisibilities(),
+        };
     };
 
     const markRendered = (pageIndex: number) => {
-        pageVisibilities[queue][pageIndex].renderStatus = PageRenderStatus.Rendered;
+        queues[queue].visibilities[pageIndex].renderStatus = PageRenderStatus.Rendered;
     };
 
     const markRendering = (pageIndex: number) => {
-        pageVisibilities[queue][pageIndex].renderStatus = PageRenderStatus.Rendering;
+        if (
+            queues[queue].currentRenderingPage !== -1 &&
+            queues[queue].currentRenderingPage !== pageIndex &&
+            queues[queue].visibilities[queues[queue].currentRenderingPage].renderStatus === PageRenderStatus.Rendering
+        ) {
+            // The last rendering page isn't rendered completely
+            queues[queue].visibilities[queues[queue].currentRenderingPage].renderStatus =
+                PageRenderStatus.NotRenderedYet;
+        }
+
+        queues[queue].visibilities[pageIndex].renderStatus = PageRenderStatus.Rendering;
+        queues[queue].currentRenderingPage = pageIndex;
     };
 
     const setRange = (startIndex: number, endIndex: number) => {
+        queues[queue].startRange = startIndex;
+        queues[queue].endRange = endIndex;
+
         for (let i = 0; i < numPages; i++) {
             if (i < startIndex || i > endIndex) {
-                pageVisibilities[queue][i].visibility = OUT_OF_RANGE_VISIBILITY;
-                pageVisibilities[queue][i].renderStatus = PageRenderStatus.NotRenderedYet;
+                queues[queue].visibilities[i].visibility = -1;
+                queues[queue].visibilities[i].renderStatus = PageRenderStatus.NotRenderedYet;
             }
         }
     };
 
     const setVisibility = (pageIndex: number, visibility: number) => {
-        pageVisibilities[queue][pageIndex].visibility = visibility;
+        queues[queue].visibilities[pageIndex].visibility = visibility;
     };
 
     // Render the next page in queue.
     // The next page is -1 in the case there's no page that need to be rendered or there is at least one page which has been rendering
     const getHighestPriorityPage = (): number => {
-        // Find all visible pages
-        const visiblePages = pageVisibilities[queue].filter((item) => item.visibility > OUT_OF_RANGE_VISIBILITY);
+        // Find all visible pages which belongs to the range
+        const visiblePages = queues[queue].visibilities
+            .slice(queues[queue].startRange, queues[queue].endRange + 1)
+            .filter((item) => item.visibility >= 0);
         if (!visiblePages.length) {
             return -1;
         }
@@ -113,14 +143,14 @@ export const renderQueueService = ({
         // All visible pages are rendered
         if (
             lastVisiblePage + 1 < numPages &&
-            pageVisibilities[queue][lastVisiblePage + 1].renderStatus !== PageRenderStatus.Rendered
+            queues[queue].visibilities[lastVisiblePage + 1].renderStatus !== PageRenderStatus.Rendered
         ) {
             // All visible pages are rendered
             // Render the page that is right after the last visible page ...
             return lastVisiblePage + 1;
         } else if (
             firstVisiblePage - 1 >= 0 &&
-            pageVisibilities[queue][firstVisiblePage - 1].renderStatus !== PageRenderStatus.Rendered
+            queues[queue].visibilities[firstVisiblePage - 1].renderStatus !== PageRenderStatus.Rendered
         ) {
             // ... or before the first visible one
             return firstVisiblePage - 1;
@@ -132,7 +162,6 @@ export const renderQueueService = ({
     resetQueue();
 
     return {
-        OUT_OF_RANGE_VISIBILITY,
         cleanup,
         getHighestPriorityPage,
         markRendered,
