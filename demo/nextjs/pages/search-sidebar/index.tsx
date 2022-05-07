@@ -1,6 +1,6 @@
-import * as React from 'react';
 import { MinimalButton, Spinner, TextBox, Viewer } from '@react-pdf-viewer/core';
 import { Match, NextIcon, PreviousIcon, RenderSearchProps, SearchPlugin, searchPlugin } from '@react-pdf-viewer/search';
+import * as React from 'react';
 
 enum SearchStatus {
     NotSearchedYet,

@@ -7,10 +7,9 @@
  */
 
 import * as React from 'react';
-
+import type { PdfJs } from '../types/PdfJs';
 import { downloadFile } from '../utils/downloadFile';
 import { Annotation } from './Annotation';
-import type { PdfJs } from '../types/PdfJs';
 
 export const FileAttachment: React.FC<{
     annotation: PdfJs.Annotation;

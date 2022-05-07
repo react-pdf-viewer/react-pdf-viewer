@@ -6,10 +6,7 @@
  * @copyright 2019-2022 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-// Types
+export * from './thumbnailPlugin';
 export type { CoverProps } from './types/CoverProps';
 export type { RenderCurrentPageLabel, RenderCurrentPageLabelProps } from './types/RenderCurrentPageLabelProps';
 export type { RenderThumbnailItem, RenderThumbnailItemProps } from './types/RenderThumbnailItemProps';
-
-// Plugin
-export * from './thumbnailPlugin';

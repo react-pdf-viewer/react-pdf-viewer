@@ -7,7 +7,6 @@
  */
 
 import * as React from 'react';
-
 import { RotateDirection } from '../structs/RotateDirection';
 import type { PdfJs } from './PdfJs';
 import type { Slot } from './Slot';

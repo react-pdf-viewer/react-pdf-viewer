@@ -6,26 +6,25 @@
  * @copyright 2019-2022 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import * as React from 'react';
-import { createStore, LayerRenderStatus } from '@react-pdf-viewer/core';
 import type {
-    PluginOnTextLayerRender,
     Plugin,
     PluginFunctions,
+    PluginOnTextLayerRender,
     PluginRenderPageLayer,
     RenderViewer,
     Slot,
     ViewerState,
 } from '@react-pdf-viewer/core';
-
+import { createStore, LayerRenderStatus } from '@react-pdf-viewer/core';
+import * as React from 'react';
 import { HIGHLIGHT_LAYER_ATTR, HIGHLIGHT_PAGE_ATTR } from './constants';
 import { HighlightAreaList } from './HighlightAreaList';
-import { NO_SELECTION_STATE, SELECTING_STATE, SelectedState } from './HighlightState';
-import { Tracker } from './Tracker';
+import { NO_SELECTION_STATE, SelectedState, SELECTING_STATE } from './HighlightState';
 import { Trigger } from './structs/Trigger';
+import { Tracker } from './Tracker';
 import type { HighlightArea } from './types/HighlightArea';
-import type { RenderHighlightsProps } from './types/RenderHighlightsProps';
 import type { RenderHighlightContentProps } from './types/RenderHighlightContentProps';
+import type { RenderHighlightsProps } from './types/RenderHighlightsProps';
 import type { RenderHighlightTargetProps } from './types/RenderHighlightTargetProps';
 import type { StoreProps } from './types/StoreProps';
 

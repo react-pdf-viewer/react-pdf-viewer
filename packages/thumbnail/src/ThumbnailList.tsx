@@ -6,18 +6,17 @@
  * @copyright 2019-2022 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import * as React from 'react';
+import type { PdfJs, RenderQueueService, VisibilityChanged } from '@react-pdf-viewer/core';
 import {
     classNames,
     renderQueueService,
-    useIsMounted,
-    useIsomorphicLayoutEffect,
     RotateDirection,
     TextDirection,
     ThemeContext,
+    useIsMounted,
+    useIsomorphicLayoutEffect,
 } from '@react-pdf-viewer/core';
-import type { PdfJs, RenderQueueService, VisibilityChanged } from '@react-pdf-viewer/core';
-
+import * as React from 'react';
 import { FetchLabels } from './FetchLabels';
 import { scrollToBeVisible } from './scrollToBeVisible';
 import { ThumbnailContainer } from './ThumbnailContainer';

@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { Button, DocumentLoadEvent, PdfJs, Position, PrimaryButton, Tooltip, Viewer } from '@react-pdf-viewer/core';
 import { defaultLayoutPlugin } from '@react-pdf-viewer/default-layout';
 import {
@@ -6,9 +5,10 @@ import {
     highlightPlugin,
     MessageIcon,
     RenderHighlightContentProps,
-    RenderHighlightTargetProps,
     RenderHighlightsProps,
+    RenderHighlightTargetProps,
 } from '@react-pdf-viewer/highlight';
+import * as React from 'react';
 
 interface Note {
     id: number;

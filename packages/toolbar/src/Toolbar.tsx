@@ -7,7 +7,6 @@
  */
 
 import * as React from 'react';
-
 import { DefaultToobar } from './DefaultToobar';
 import type { ToolbarSlot } from './types/ToolbarSlot';
 

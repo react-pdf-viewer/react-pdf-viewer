@@ -6,10 +6,9 @@
  * @copyright 2019-2022 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import * as React from 'react';
-import { LocalizationContext, MinimalButton, Position, Tooltip } from '@react-pdf-viewer/core';
 import type { LocalizationMap } from '@react-pdf-viewer/core';
-
+import { LocalizationContext, MinimalButton, Position, Tooltip } from '@react-pdf-viewer/core';
+import * as React from 'react';
 import { NextIcon } from './NextIcon';
 import type { RenderGoToPageProps } from './types/index';
 

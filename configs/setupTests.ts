@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom/extend-expect';
-
 import { SimpleMockResizeObserver } from './SimpleMockResizeObserver';
+
 global.ResizeObserver = SimpleMockResizeObserver;
 
 // Mock clientWidth, clientHeight

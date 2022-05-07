@@ -6,9 +6,8 @@
  * @copyright 2019-2022 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import * as React from 'react';
-
 import { RotateDirection } from '@react-pdf-viewer/core';
+import * as React from 'react';
 
 export interface RenderThumbnailItemProps {
     currentPage: number;

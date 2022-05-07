@@ -6,12 +6,12 @@
  * @copyright 2019-2022 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import * as React from 'react';
-import type { Plugin } from '@react-pdf-viewer/core';
 import type { AttachmentPlugin } from '@react-pdf-viewer/attachment';
 import type { BookmarkPlugin } from '@react-pdf-viewer/bookmark';
+import type { Plugin } from '@react-pdf-viewer/core';
 import type { ThumbnailPlugin, ThumbnailPluginProps } from '@react-pdf-viewer/thumbnail';
 import type { ToolbarPlugin, ToolbarPluginProps, ToolbarProps, ToolbarSlot } from '@react-pdf-viewer/toolbar';
+import * as React from 'react';
 
 // Types
 export type { ToolbarPluginProps, ToolbarProps, ToolbarSlot };

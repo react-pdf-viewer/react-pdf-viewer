@@ -1,9 +1,8 @@
-import * as React from 'react';
-import { findAllByTitle } from '@testing-library/dom';
-import { fireEvent, render, waitForElementToBeRemoved } from '@testing-library/react';
-
 import { Viewer } from '@react-pdf-viewer/core';
 import { defaultLayoutPlugin } from '@react-pdf-viewer/default-layout';
+import { findAllByTitle } from '@testing-library/dom';
+import { fireEvent, render, waitForElementToBeRemoved } from '@testing-library/react';
+import * as React from 'react';
 import { mockIsIntersecting } from '../../../test-utils/mockIntersectionObserver';
 import { mockResize } from '../../../test-utils/mockResizeObserver';
 import type { FlagKeyword } from '../src/types/FlagKeyword';

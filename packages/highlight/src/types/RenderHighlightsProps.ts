@@ -7,7 +7,6 @@
  */
 
 import * as React from 'react';
-
 import type { HighlightArea } from './HighlightArea';
 
 export interface RenderHighlightsProps {

@@ -7,9 +7,8 @@
  */
 
 import * as React from 'react';
-
-import { useIsomorphicLayoutEffect } from './useIsomorphicLayoutEffect';
 import type { Rect } from '../types/Rect';
+import { useIsomorphicLayoutEffect } from './useIsomorphicLayoutEffect';
 
 const rectReducer = (
     state: Rect,

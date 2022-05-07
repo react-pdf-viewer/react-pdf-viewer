@@ -6,10 +6,9 @@
  * @copyright 2019-2022 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import * as React from 'react';
-import { SpecialZoomLevel, Spinner } from '@react-pdf-viewer/core';
 import type { PdfJs, Store, StoreHandler } from '@react-pdf-viewer/core';
-
+import { SpecialZoomLevel, Spinner } from '@react-pdf-viewer/core';
+import * as React from 'react';
 import { BookmarkLoader } from './BookmarkLoader';
 import type { IsBookmarkExpanded } from './types/IsBookmarkExpanded';
 import type { StoreProps } from './types/StoreProps';

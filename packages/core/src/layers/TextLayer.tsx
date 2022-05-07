@@ -7,12 +7,11 @@
  */
 
 import * as React from 'react';
-
 import { useIsomorphicLayoutEffect } from '../hooks/useIsomorphicLayoutEffect';
 import { LayerRenderStatus } from '../structs/LayerRenderStatus';
-import { PdfJsApi } from '../vendors/PdfJsApi';
 import type { PdfJs } from '../types/PdfJs';
 import type { Plugin } from '../types/Plugin';
+import { PdfJsApi } from '../vendors/PdfJsApi';
 
 export const TextLayer: React.FC<{
     page: PdfJs.Page;

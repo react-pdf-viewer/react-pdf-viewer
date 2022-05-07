@@ -6,9 +6,9 @@
  * @copyright 2019-2022 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import * as React from 'react';
-import { getPage, Spinner, useIntersectionObserver, useIsMounted } from '@react-pdf-viewer/core';
 import type { PdfJs, VisibilityChanged } from '@react-pdf-viewer/core';
+import { getPage, Spinner, useIntersectionObserver, useIsMounted } from '@react-pdf-viewer/core';
+import * as React from 'react';
 
 export const CoverInner: React.FC<{
     getPageIndex?({ numPages }: { numPages: number }): number;

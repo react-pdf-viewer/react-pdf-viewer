@@ -1,9 +1,8 @@
-import * as React from 'react';
-import { fireEvent, render, waitForElementToBeRemoved } from '@testing-library/react';
-
-import { mockIsIntersecting } from '../../../test-utils/mockIntersectionObserver';
 import { Icon, MinimalButton, Position, Tooltip, Viewer } from '@react-pdf-viewer/core';
-import { searchPlugin, NextIcon, PreviousIcon, RenderSearchProps } from '../src/index';
+import { fireEvent, render, waitForElementToBeRemoved } from '@testing-library/react';
+import * as React from 'react';
+import { mockIsIntersecting } from '../../../test-utils/mockIntersectionObserver';
+import { NextIcon, PreviousIcon, RenderSearchProps, searchPlugin } from '../src/index';
 
 const TestWholeWords: React.FC<{
     fileUrl: Uint8Array;

@@ -1,11 +1,10 @@
-import * as React from 'react';
-import { fireEvent, render, waitForElementToBeRemoved } from '@testing-library/react';
 import { RotateBackwardIcon, RotateForwardIcon } from '@react-pdf-viewer/rotate';
-
+import { fireEvent, render, waitForElementToBeRemoved } from '@testing-library/react';
+import * as React from 'react';
 import { mockIsIntersecting } from '../../../test-utils/mockIntersectionObserver';
 import { mockResize } from '../../../test-utils/mockResizeObserver';
-import { MinimalButton, Position, RotateDirection, Tooltip, Viewer } from '../src';
 import type { RenderPage, RenderPageProps } from '../src';
+import { MinimalButton, Position, RotateDirection, Tooltip, Viewer } from '../src';
 
 const TestRotatePage: React.FC<{
     fileUrl: Uint8Array;

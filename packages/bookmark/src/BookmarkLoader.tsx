@@ -6,7 +6,7 @@
  * @copyright 2019-2022 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import * as React from 'react';
+import type { LocalizationMap, PdfJs, Store } from '@react-pdf-viewer/core';
 import {
     classNames,
     LocalizationContext,
@@ -15,8 +15,7 @@ import {
     TextDirection,
     ThemeContext,
 } from '@react-pdf-viewer/core';
-import type { LocalizationMap, PdfJs, Store } from '@react-pdf-viewer/core';
-
+import * as React from 'react';
 import { BookmarkListRoot } from './BookmarkListRoot';
 import type { IsBookmarkExpanded } from './types/IsBookmarkExpanded';
 import type { StoreProps } from './types/StoreProps';

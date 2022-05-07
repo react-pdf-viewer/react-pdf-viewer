@@ -6,11 +6,10 @@
  * @copyright 2019-2022 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import * as React from 'react';
 import type { Store } from '@react-pdf-viewer/core';
-
-import { useNumberOfPages } from './useNumberOfPages';
+import * as React from 'react';
 import type { StoreProps } from './types/StoreProps';
+import { useNumberOfPages } from './useNumberOfPages';
 
 export interface RenderNumberOfPagesProps {
     numberOfPages: number;

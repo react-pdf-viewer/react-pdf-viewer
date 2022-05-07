@@ -7,7 +7,6 @@
  */
 
 import * as React from 'react';
-
 import { getCssProperties } from './transformArea';
 import type { HighlightArea } from './types/HighlightArea';
 

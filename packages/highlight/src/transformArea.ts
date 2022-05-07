@@ -7,7 +7,6 @@
  */
 
 import * as React from 'react';
-
 import type { HighlightArea } from './types/HighlightArea';
 
 const normalizeRotation = (rotation: number): number => (rotation >= 0 ? rotation : 360 + rotation);

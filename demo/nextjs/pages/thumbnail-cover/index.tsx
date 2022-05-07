@@ -1,6 +1,6 @@
-import * as React from 'react';
 import { Plugin, RenderViewer, Viewer } from '@react-pdf-viewer/core';
 import { thumbnailPlugin } from '@react-pdf-viewer/thumbnail';
+import * as React from 'react';
 
 interface PageThumbnailPluginProps {
     PageThumbnail: React.ReactElement;

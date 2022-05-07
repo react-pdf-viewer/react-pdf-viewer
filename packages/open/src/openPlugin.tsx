@@ -6,10 +6,9 @@
  * @copyright 2019-2022 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import * as React from 'react';
-import { createStore } from '@react-pdf-viewer/core';
 import type { Plugin, PluginFunctions, RenderViewer, Slot } from '@react-pdf-viewer/core';
-
+import { createStore } from '@react-pdf-viewer/core';
+import * as React from 'react';
 import { Open, OpenProps } from './Open';
 import { OpenMenuItem } from './OpenMenuItem';
 import { ShortcutHandler } from './ShortcutHandler';

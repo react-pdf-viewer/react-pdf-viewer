@@ -1,6 +1,5 @@
-import * as React from 'react';
 import { render } from '@testing-library/react';
-
+import * as React from 'react';
 import { mockAllIsIntersecting } from '../../../test-utils/mockIntersectionObserver';
 import { Viewer } from '../src/Viewer';
 

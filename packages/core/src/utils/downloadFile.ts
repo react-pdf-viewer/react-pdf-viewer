@@ -6,8 +6,8 @@
  * @copyright 2019-2022 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import { getFileName } from './getFileName';
 import type { PdfJs } from '../types/PdfJs';
+import { getFileName } from './getFileName';
 
 export const downloadFile = (url: string, data: PdfJs.FileData): void => {
     const blobUrl = typeof data === 'string' ? '' : URL.createObjectURL(new Blob([data], { type: '' }));

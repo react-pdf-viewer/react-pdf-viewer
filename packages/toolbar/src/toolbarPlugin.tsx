@@ -6,45 +6,42 @@
  * @copyright 2019-2022 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import * as React from 'react';
-
-import { fullScreenPlugin } from '@react-pdf-viewer/full-screen';
-import { getFilePlugin } from '@react-pdf-viewer/get-file';
-import { openPlugin } from '@react-pdf-viewer/open';
-import { pageNavigationPlugin } from '@react-pdf-viewer/page-navigation';
-import { printPlugin } from '@react-pdf-viewer/print';
-import { propertiesPlugin } from '@react-pdf-viewer/properties';
-import { rotatePlugin } from '@react-pdf-viewer/rotate';
-import { scrollModePlugin } from '@react-pdf-viewer/scroll-mode';
-import { searchPlugin } from '@react-pdf-viewer/search';
-import { selectionModePlugin } from '@react-pdf-viewer/selection-mode';
-import { themePlugin } from '@react-pdf-viewer/theme';
-import { zoomPlugin } from '@react-pdf-viewer/zoom';
-
 import type {
     Plugin,
     PluginFunctions,
     PluginOnDocumentLoad,
+    PluginOnTextLayerRender,
     PluginRenderPageLayer,
     RenderViewer,
     ViewerState,
-    PluginOnTextLayerRender,
 } from '@react-pdf-viewer/core';
 import type { FullScreenPlugin, FullScreenPluginProps } from '@react-pdf-viewer/full-screen';
+import { fullScreenPlugin } from '@react-pdf-viewer/full-screen';
 import type { GetFilePlugin, GetFilePluginProps } from '@react-pdf-viewer/get-file';
+import { getFilePlugin } from '@react-pdf-viewer/get-file';
 import type { OpenPlugin, OpenPluginProps } from '@react-pdf-viewer/open';
+import { openPlugin } from '@react-pdf-viewer/open';
 import type { PageNavigationPlugin } from '@react-pdf-viewer/page-navigation';
+import { pageNavigationPlugin } from '@react-pdf-viewer/page-navigation';
 import type { PrintPlugin, PrintPluginProps } from '@react-pdf-viewer/print';
+import { printPlugin } from '@react-pdf-viewer/print';
 import type { PropertiesPlugin } from '@react-pdf-viewer/properties';
+import { propertiesPlugin } from '@react-pdf-viewer/properties';
 import type { RotatePlugin } from '@react-pdf-viewer/rotate';
+import { rotatePlugin } from '@react-pdf-viewer/rotate';
 import type { ScrollModePlugin } from '@react-pdf-viewer/scroll-mode';
+import { scrollModePlugin } from '@react-pdf-viewer/scroll-mode';
 import type { SearchPlugin, SearchPluginProps } from '@react-pdf-viewer/search';
+import { searchPlugin } from '@react-pdf-viewer/search';
 import type { SelectionModePlugin, SelectionModePluginProps } from '@react-pdf-viewer/selection-mode';
+import { selectionModePlugin } from '@react-pdf-viewer/selection-mode';
 import type { ThemePlugin } from '@react-pdf-viewer/theme';
+import { themePlugin } from '@react-pdf-viewer/theme';
 import type { ZoomPlugin, ZoomPluginProps } from '@react-pdf-viewer/zoom';
-
-import { Toolbar, ToolbarProps } from './Toolbar';
+import { zoomPlugin } from '@react-pdf-viewer/zoom';
+import * as React from 'react';
 import { renderDefaultToolbar } from './renderDefaultToolbar';
+import { Toolbar, ToolbarProps } from './Toolbar';
 import type { ToolbarSlot } from './types/ToolbarSlot';
 import type { TransformToolbarSlot } from './types/TransformToolbarSlot';
 

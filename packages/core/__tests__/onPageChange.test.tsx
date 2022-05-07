@@ -1,6 +1,5 @@
-import * as React from 'react';
 import { fireEvent, render, waitFor, waitForElementToBeRemoved } from '@testing-library/react';
-
+import * as React from 'react';
 import { mockIsIntersecting } from '../../../test-utils/mockIntersectionObserver';
 import { mockResize } from '../../../test-utils/mockResizeObserver';
 import { PageChangeEvent, Viewer } from '../src';

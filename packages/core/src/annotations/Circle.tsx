@@ -7,9 +7,8 @@
  */
 
 import * as React from 'react';
-
-import { Annotation } from './Annotation';
 import type { PdfJs } from '../types/PdfJs';
+import { Annotation } from './Annotation';
 
 export const Circle: React.FC<{
     annotation: PdfJs.Annotation;

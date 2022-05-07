@@ -7,14 +7,13 @@
  */
 
 import * as React from 'react';
-
 import { useToggle } from '../hooks/useToggle';
+import { Position } from '../structs/Position';
+import type { Offset } from '../types/Offset';
+import { uniqueId } from '../utils/uniqueId';
 import { PopoverBody } from './PopoverBody';
 import { PopoverOverlay } from './PopoverOverlay';
 import { RenderContent, RenderTarget } from './Portal';
-import { Position } from '../structs/Position';
-import { uniqueId } from '../utils/uniqueId';
-import type { Offset } from '../types/Offset';
 
 export const Popover: React.FC<{
     ariaControlsSuffix?: string;

@@ -6,7 +6,6 @@
  * @copyright 2019-2022 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import * as React from 'react';
 import type { Plugin } from '@react-pdf-viewer/core';
 import type {
     EnterFullScreenMenuItemProps,
@@ -23,13 +22,13 @@ import type {
 import type { OpenPlugin, OpenPluginProps, OpenProps } from '@react-pdf-viewer/open';
 import type {
     CurrentPageLabelProps,
-    GoToPageProps,
     GoToPageMenuItemProps,
+    GoToPageProps,
     NumberOfPagesProps,
     PageNavigationPlugin,
 } from '@react-pdf-viewer/page-navigation';
 import type { PrintMenuItemProps, PrintPlugin, PrintPluginProps, PrintProps } from '@react-pdf-viewer/print';
-import type { PropertiesPlugin, ShowPropertiesProps, ShowPropertiesMenuItemProps } from '@react-pdf-viewer/properties';
+import type { PropertiesPlugin, ShowPropertiesMenuItemProps, ShowPropertiesProps } from '@react-pdf-viewer/properties';
 import type { RotateDecoratorProps, RotatePlugin, RotateProps } from '@react-pdf-viewer/rotate';
 import type {
     ScrollModePlugin,
@@ -43,7 +42,7 @@ import type {
     SwitchSelectionModeMenuItemProps,
     SwitchSelectionModeProps,
 } from '@react-pdf-viewer/selection-mode';
-import type { SwitchThemeProps, SwitchThemeMenuItemProps, ThemePlugin } from '@react-pdf-viewer/theme';
+import type { SwitchThemeMenuItemProps, SwitchThemeProps, ThemePlugin } from '@react-pdf-viewer/theme';
 import type {
     CurrentScaleProps,
     ZoomInProps,
@@ -53,6 +52,7 @@ import type {
     ZoomPluginProps,
     ZoomProps,
 } from '@react-pdf-viewer/zoom';
+import * as React from 'react';
 
 // Types
 export interface ToolbarProps {

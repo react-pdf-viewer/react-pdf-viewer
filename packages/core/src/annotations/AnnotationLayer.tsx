@@ -7,12 +7,11 @@
  */
 
 import * as React from 'react';
-
 import { SpecialZoomLevel } from '../structs/SpecialZoomLevel';
-import { AnnotationLayerBody } from './AnnotationLayerBody';
-import { AnnotationLoader } from './AnnotationLoader';
 import type { PdfJs } from '../types/PdfJs';
 import type { Plugin } from '../types/Plugin';
+import { AnnotationLayerBody } from './AnnotationLayerBody';
+import { AnnotationLoader } from './AnnotationLoader';
 
 export const AnnotationLayer: React.FC<{
     doc: PdfJs.PdfDocument;

@@ -6,13 +6,12 @@
  * @copyright 2019-2022 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import * as React from 'react';
 import type { PdfJs, Store } from '@react-pdf-viewer/core';
-
-import { shouldBeCollapsed } from './shouldBeCollapsed';
+import * as React from 'react';
 import { BookmarkList } from './BookmarkList';
 import { DownArrowIcon } from './DownArrowIcon';
 import { RightArrowIcon } from './RightArrowIcon';
+import { shouldBeCollapsed } from './shouldBeCollapsed';
 import type { IsBookmarkExpanded } from './types/IsBookmarkExpanded';
 import type { StoreProps } from './types/StoreProps';
 

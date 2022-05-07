@@ -6,10 +6,9 @@
  * @copyright 2019-2022 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import * as React from 'react';
-import { Spinner } from '@react-pdf-viewer/core';
 import type { PdfJs, Store, StoreHandler } from '@react-pdf-viewer/core';
-
+import { Spinner } from '@react-pdf-viewer/core';
+import * as React from 'react';
 import { AttachmentLoader } from './AttachmentLoader';
 import type { StoreProps } from './types/StoreProps';
 

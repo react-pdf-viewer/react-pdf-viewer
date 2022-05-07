@@ -6,19 +6,18 @@
  * @copyright 2019-2022 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import * as React from 'react';
 import type { Store } from '@react-pdf-viewer/core';
-
+import * as React from 'react';
 import { HIGHLIGHT_LAYER_ATTR, HIGHLIGHT_PAGE_ATTR } from './constants';
 import { getRectFromOffsets } from './getRectFromOffsets';
 import { getTextFromOffsets } from './getTextFromOffsets';
-import { NO_SELECTION_STATE, SELECTING_STATE, SelectedState } from './HighlightState';
+import { NO_SELECTION_STATE, SelectedState, SELECTING_STATE } from './HighlightState';
 import { SelectionRange } from './structs/SelectionRange';
 import { transformArea } from './transformArea';
-import { useRotation } from './useRotation';
 import type { HighlightArea } from './types/HighlightArea';
 import type { SelectionData } from './types/SelectionData';
 import type { StoreProps } from './types/StoreProps';
+import { useRotation } from './useRotation';
 
 export const Tracker: React.FC<{
     store: Store<StoreProps>;

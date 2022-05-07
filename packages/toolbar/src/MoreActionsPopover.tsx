@@ -6,7 +6,7 @@
  * @copyright 2019-2022 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import * as React from 'react';
+import type { LocalizationMap, Toggle } from '@react-pdf-viewer/core';
 import {
     LocalizationContext,
     Menu,
@@ -19,9 +19,8 @@ import {
     ThemeContext,
     Tooltip,
 } from '@react-pdf-viewer/core';
-import type { LocalizationMap, Toggle } from '@react-pdf-viewer/core';
 import { SelectionMode } from '@react-pdf-viewer/selection-mode';
-
+import * as React from 'react';
 import { MoreIcon } from './MoreIcon';
 import type { ToolbarSlot } from './types/ToolbarSlot';
 

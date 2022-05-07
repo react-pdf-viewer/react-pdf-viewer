@@ -1,6 +1,6 @@
-import * as React from 'react';
 import { Button, Viewer } from '@react-pdf-viewer/core';
 import { fullScreenPlugin } from '@react-pdf-viewer/full-screen';
+import * as React from 'react';
 
 const IndexPage = () => {
     const fullScreenPluginInstance = fullScreenPlugin({

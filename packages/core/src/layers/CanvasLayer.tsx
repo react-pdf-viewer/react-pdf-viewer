@@ -7,13 +7,12 @@
  */
 
 import * as React from 'react';
-
 import { useIsomorphicLayoutEffect } from '../hooks/useIsomorphicLayoutEffect';
 import { LayerRenderStatus } from '../structs/LayerRenderStatus';
-import { floatToRatio } from '../utils/floatToRatio';
-import { roundToDivide } from '../utils/roundToDivide';
 import type { PdfJs } from '../types/PdfJs';
 import type { Plugin } from '../types/Plugin';
+import { floatToRatio } from '../utils/floatToRatio';
+import { roundToDivide } from '../utils/roundToDivide';
 
 // The mobile browsers have the limit value for maximum canvas size
 // The values vary but here we set a maximum value of 16 mega-pixels

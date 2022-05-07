@@ -7,7 +7,6 @@
  */
 
 import * as React from 'react';
-
 import { useIsMounted } from '../hooks/useIsMounted';
 import type { PdfJs } from '../types/PdfJs';
 

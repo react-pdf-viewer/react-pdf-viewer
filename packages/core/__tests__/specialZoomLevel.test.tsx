@@ -1,11 +1,10 @@
-import * as React from 'react';
-import { fireEvent, render, waitFor, waitForElementToBeRemoved } from '@testing-library/react';
 import { defaultLayoutPlugin } from '@react-pdf-viewer/default-layout';
-
+import { fireEvent, render, waitFor, waitForElementToBeRemoved } from '@testing-library/react';
+import * as React from 'react';
 import { mockIsIntersecting } from '../../../test-utils/mockIntersectionObserver';
 import { mockResize } from '../../../test-utils/mockResizeObserver';
-import { Viewer } from '../src/Viewer';
 import { SpecialZoomLevel } from '../src/structs/SpecialZoomLevel';
+import { Viewer } from '../src/Viewer';
 
 const TestDefaultScaleSpecialZoomLevel: React.FC<{
     fileUrl: Uint8Array;

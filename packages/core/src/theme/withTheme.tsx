@@ -7,7 +7,6 @@
  */
 
 import * as React from 'react';
-
 import { usePrevious } from '../hooks/usePrevious';
 import { isDarkMode } from '../utils/isDarkMode';
 

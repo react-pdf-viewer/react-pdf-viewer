@@ -6,9 +6,8 @@
  * @copyright 2019-2022 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import * as React from 'react';
 import type { OpenFile, PdfJs, Store, StoreHandler } from '@react-pdf-viewer/core';
-
+import * as React from 'react';
 import { DownloadButton } from './DownloadButton';
 import { downloadFile } from './downloadFile';
 import type { RenderDownloadProps } from './types/RenderDownloadProps';

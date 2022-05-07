@@ -6,22 +6,21 @@
  * @copyright 2019-2022 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import * as React from 'react';
-import { createStore, SpecialZoomLevel } from '@react-pdf-viewer/core';
 import type { Plugin, PluginFunctions, RenderViewer, Slot, ViewerState } from '@react-pdf-viewer/core';
-
+import { createStore, SpecialZoomLevel } from '@react-pdf-viewer/core';
+import * as React from 'react';
 import { CurrentScale, CurrentScaleProps } from './CurrentScale';
 import { ShortcutHandler } from './ShortcutHandler';
+import type { StoreProps } from './types/StoreProps';
+import type { ZoomMenuItemProps } from './types/ZoomMenuItemProps';
 import { Zoom, ZoomProps } from './Zoom';
 import { ZoomIn, ZoomInProps } from './ZoomIn';
-import { ZoomOut, ZoomOutProps } from './ZoomOut';
 import { ZoomInButton } from './ZoomInButton';
 import { ZoomInMenuItem } from './ZoomInMenuItem';
+import { ZoomOut, ZoomOutProps } from './ZoomOut';
 import { ZoomOutButton } from './ZoomOutButton';
 import { ZoomOutMenuItem } from './ZoomOutMenuItem';
 import { ZoomPopover } from './ZoomPopover';
-import type { StoreProps } from './types/StoreProps';
-import type { ZoomMenuItemProps } from './types/ZoomMenuItemProps';
 
 export interface ZoomPopoverProps {
     levels?: number[];

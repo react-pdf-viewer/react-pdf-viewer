@@ -1,7 +1,7 @@
-import * as React from 'react';
+import type { PageChangeEvent } from '@react-pdf-viewer/core';
 import { Viewer } from '@react-pdf-viewer/core';
 import { defaultLayoutPlugin } from '@react-pdf-viewer/default-layout';
-import type { PageChangeEvent } from '@react-pdf-viewer/core';
+import * as React from 'react';
 
 const IndexPage = () => {
     const [visitedPages, setVisitedPages] = React.useState([]);

@@ -6,10 +6,9 @@
  * @copyright 2019-2022 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import * as React from 'react';
-import { LocalizationContext } from '@react-pdf-viewer/core';
 import type { LocalizationMap, PdfJs } from '@react-pdf-viewer/core';
-
+import { LocalizationContext } from '@react-pdf-viewer/core';
+import * as React from 'react';
 import { SpinnerContext } from './SpinnerContext';
 
 export const ThumbnailItem: React.FC<{

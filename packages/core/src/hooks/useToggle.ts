@@ -7,7 +7,6 @@
  */
 
 import * as React from 'react';
-
 import { ToggleStatus } from '../structs/ToggleStatus';
 import type { Toggle } from '../types/Toggle';
 

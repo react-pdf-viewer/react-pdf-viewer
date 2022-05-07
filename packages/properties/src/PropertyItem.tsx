@@ -6,8 +6,8 @@
  * @copyright 2019-2022 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import * as React from 'react';
 import { classNames, TextDirection, ThemeContext } from '@react-pdf-viewer/core';
+import * as React from 'react';
 
 export const PropertyItem: React.FC<{
     label: string;

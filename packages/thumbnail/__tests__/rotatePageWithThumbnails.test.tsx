@@ -1,9 +1,8 @@
-import * as React from 'react';
-import { fireEvent, render, waitForElementToBeRemoved } from '@testing-library/react';
+import type { RenderPage, RenderPageProps } from '@react-pdf-viewer/core';
 import { MinimalButton, Position, RotateDirection, Tooltip, Viewer } from '@react-pdf-viewer/core';
 import { RotateBackwardIcon, RotateForwardIcon } from '@react-pdf-viewer/rotate';
-import type { RenderPage, RenderPageProps } from '@react-pdf-viewer/core';
-
+import { fireEvent, render, waitForElementToBeRemoved } from '@testing-library/react';
+import * as React from 'react';
 import { mockIsIntersecting } from '../../../test-utils/mockIntersectionObserver';
 import { mockResize } from '../../../test-utils/mockResizeObserver';
 import { thumbnailPlugin } from '../src';

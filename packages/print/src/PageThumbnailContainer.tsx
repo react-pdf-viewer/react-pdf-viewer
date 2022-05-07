@@ -6,10 +6,9 @@
  * @copyright 2019-2022 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import * as React from 'react';
-import { getPage } from '@react-pdf-viewer/core';
 import type { PdfJs } from '@react-pdf-viewer/core';
-
+import { getPage } from '@react-pdf-viewer/core';
+import * as React from 'react';
 import { PageThumbnail } from './PageThumbnail';
 
 interface PageState {

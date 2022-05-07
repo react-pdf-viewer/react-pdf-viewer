@@ -1,6 +1,6 @@
-import * as React from 'react';
-import { Viewer } from '@react-pdf-viewer/core';
 import type { RenderPageProps } from '@react-pdf-viewer/core';
+import { Viewer } from '@react-pdf-viewer/core';
+import * as React from 'react';
 
 const CustomPageRender: React.FC<{
     renderPageProps: RenderPageProps;

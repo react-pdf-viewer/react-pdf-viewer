@@ -6,10 +6,9 @@
  * @copyright 2019-2022 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import * as React from 'react';
-import { createStore, ScrollMode } from '@react-pdf-viewer/core';
 import type { Plugin, PluginFunctions, ViewerState } from '@react-pdf-viewer/core';
-
+import { createStore, ScrollMode } from '@react-pdf-viewer/core';
+import * as React from 'react';
 import { SwitchScrollMode, SwitchScrollModeProps } from './SwitchScrollMode';
 import { SwitchScrollModeButton } from './SwitchScrollModeButton';
 import { SwitchScrollModeMenuItem } from './SwitchScrollModeMenuItem';

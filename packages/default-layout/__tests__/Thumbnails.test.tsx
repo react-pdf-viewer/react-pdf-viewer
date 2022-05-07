@@ -1,7 +1,6 @@
-import * as React from 'react';
-import { fireEvent, render } from '@testing-library/react';
 import { Viewer } from '@react-pdf-viewer/core';
-
+import { fireEvent, render } from '@testing-library/react';
+import * as React from 'react';
 import { mockIsIntersecting } from '../../../test-utils/mockIntersectionObserver';
 import { defaultLayoutPlugin } from '../src';
 

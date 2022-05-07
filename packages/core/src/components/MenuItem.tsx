@@ -7,7 +7,6 @@
  */
 
 import * as React from 'react';
-
 import { CheckIcon } from '../icons/CheckIcon';
 import { TextDirection, ThemeContext } from '../theme/ThemeContext';
 import { classNames } from '../utils/classNames';

@@ -6,10 +6,9 @@
  * @copyright 2019-2022 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import * as React from 'react';
-import { createStore } from '@react-pdf-viewer/core';
 import type { Plugin, PluginFunctions, PluginOnDocumentLoad, ViewerState } from '@react-pdf-viewer/core';
-
+import { createStore } from '@react-pdf-viewer/core';
+import * as React from 'react';
 import { CurrentPageInput } from './CurrentPageInput';
 import { CurrentPageLabel, CurrentPageLabelProps } from './CurrentPageLabel';
 import { GoToFirstPage } from './GoToFirstPage';
@@ -22,10 +21,9 @@ import { GoToNextPage } from './GoToNextPage';
 import { GoToNextPageButton } from './GoToNextPageButton';
 import { GoToNextPageMenuItem } from './GoToNextPageMenuItem';
 import { GoToPreviousPage } from './GoToPreviousPage';
-import { GoToPreviousPageMenuItem } from './GoToPreviousPageMenuItem';
 import { GoToPreviousPageButton } from './GoToPreviousPageButton';
+import { GoToPreviousPageMenuItem } from './GoToPreviousPageMenuItem';
 import { NumberOfPages, NumberOfPagesProps } from './NumberOfPages';
-
 import type { GoToPageMenuItemProps, GoToPageProps } from './types';
 import type { StoreProps } from './types/StoreProps';
 
