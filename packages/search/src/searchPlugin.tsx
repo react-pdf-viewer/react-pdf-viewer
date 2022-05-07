@@ -6,8 +6,6 @@
  * @copyright 2019-2022 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import * as React from 'react';
-import { createStore } from '@react-pdf-viewer/core';
 import type {
     Plugin,
     PluginFunctions,
@@ -17,7 +15,8 @@ import type {
     RenderViewer,
     Slot,
 } from '@react-pdf-viewer/core';
-
+import { createStore } from '@react-pdf-viewer/core';
+import * as React from 'react';
 import { EMPTY_KEYWORD_REGEXP } from './constants';
 import { normalizeSingleKeyword } from './normalizeKeyword';
 import { Search, SearchProps } from './Search';
@@ -25,13 +24,13 @@ import { ShortcutHandler } from './ShortcutHandler';
 import { ShowSearchPopover, ShowSearchPopoverProps } from './ShowSearchPopover';
 import { ShowSearchPopoverButton } from './ShowSearchPopoverButton';
 import { Tracker } from './Tracker';
-import { useSearch } from './useSearch';
-import type { OnHighlightKeyword } from './types/OnHighlightKeyword';
 import type { Match } from './types/Match';
 import type { NormalizedKeyword } from './types/NormalizedKeyword';
+import type { OnHighlightKeyword } from './types/OnHighlightKeyword';
 import type { SearchTargetPageFilter } from './types/SearchTargetPage';
 import type { SingleKeyword } from './types/SingleKeyword';
 import type { StoreProps } from './types/StoreProps';
+import { useSearch } from './useSearch';
 
 export interface SearchPlugin extends Plugin {
     Search(props: SearchProps): React.ReactElement;

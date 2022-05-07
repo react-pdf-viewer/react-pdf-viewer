@@ -7,10 +7,9 @@
  */
 
 import * as React from 'react';
-
 import { useClickOutside } from '../hooks/useClickOutside';
-import { useIsomorphicLayoutEffect } from '../hooks/useIsomorphicLayoutEffect';
 import { useEscape } from '../hooks/useEscape';
+import { useIsomorphicLayoutEffect } from '../hooks/useIsomorphicLayoutEffect';
 import { useLockScroll } from '../hooks/useLockScroll';
 import { TextDirection, ThemeContext } from '../theme/ThemeContext';
 import { classNames } from '../utils/classNames';

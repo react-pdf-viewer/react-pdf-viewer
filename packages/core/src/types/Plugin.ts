@@ -7,7 +7,6 @@
  */
 
 import * as React from 'react';
-
 import { LayerRenderStatus } from '../structs/LayerRenderStatus';
 import type { OpenFile } from './OpenFile';
 import type { PdfJs } from './PdfJs';

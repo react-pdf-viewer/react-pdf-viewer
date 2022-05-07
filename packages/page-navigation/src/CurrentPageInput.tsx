@@ -6,13 +6,12 @@
  * @copyright 2019-2022 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import * as React from 'react';
-import { LocalizationContext, TextBox } from '@react-pdf-viewer/core';
 import type { LocalizationMap, Store } from '@react-pdf-viewer/core';
-
+import { LocalizationContext, TextBox } from '@react-pdf-viewer/core';
+import * as React from 'react';
+import type { StoreProps } from './types/StoreProps';
 import { useCurrentPage } from './useCurrentPage';
 import { useNumberOfPages } from './useNumberOfPages';
-import type { StoreProps } from './types/StoreProps';
 
 export const CurrentPageInput: React.FC<{
     store: Store<StoreProps>;

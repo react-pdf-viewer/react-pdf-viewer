@@ -1,6 +1,6 @@
-import * as React from 'react';
 import { Icon, MinimalButton, Position, Tooltip, Viewer } from '@react-pdf-viewer/core';
 import { NextIcon, PreviousIcon, RenderSearchProps, searchPlugin } from '@react-pdf-viewer/search';
+import * as React from 'react';
 
 const IndexPage = () => {
     const searchPluginInstance = searchPlugin();

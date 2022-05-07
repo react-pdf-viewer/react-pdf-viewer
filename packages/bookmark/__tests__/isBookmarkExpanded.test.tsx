@@ -1,7 +1,6 @@
-import * as React from 'react';
-import { render, screen, waitForElementToBeRemoved } from '@testing-library/react';
 import { Viewer } from '@react-pdf-viewer/core';
-
+import { render, screen, waitForElementToBeRemoved } from '@testing-library/react';
+import * as React from 'react';
 import { mockIsIntersecting } from '../../../test-utils/mockIntersectionObserver';
 import { bookmarkPlugin } from '../src';
 

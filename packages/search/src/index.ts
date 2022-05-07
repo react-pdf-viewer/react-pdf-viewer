@@ -6,20 +6,15 @@
  * @copyright 2019-2022 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-// Types
+export { NextIcon } from './NextIcon';
+export { PreviousIcon } from './PreviousIcon';
+export type { RenderSearchProps, SearchProps } from './Search';
+export { SearchIcon } from './SearchIcon';
+export * from './searchPlugin';
+export type { ShowSearchPopoverProps } from './ShowSearchPopover';
 export type { FlagKeyword } from './types/FlagKeyword';
 export type { Match } from './types/Match';
 export type { MatchPosition } from './types/MatchPosition';
 export type { OnHighlightKeyword } from './types/OnHighlightKeyword';
 export type { RenderShowSearchPopoverProps } from './types/RenderShowSearchPopoverProps';
 export type { SingleKeyword } from './types/SingleKeyword';
-export type { RenderSearchProps, SearchProps } from './Search';
-export type { ShowSearchPopoverProps } from './ShowSearchPopover';
-
-// Plugin
-export * from './searchPlugin';
-
-// Components
-export { NextIcon } from './NextIcon';
-export { PreviousIcon } from './PreviousIcon';
-export { SearchIcon } from './SearchIcon';

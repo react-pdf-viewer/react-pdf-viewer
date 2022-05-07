@@ -6,17 +6,16 @@
  * @copyright 2019-2022 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import * as React from 'react';
 import type { Store } from '@react-pdf-viewer/core';
-
-import { getCssProperties } from './transformArea';
+import * as React from 'react';
 import { HighlightRect } from './HighlightRect';
-import { NO_SELECTION_STATE, HighlightSelectionState, HighlightState, SelectedState } from './HighlightState';
-import { useRotation } from './useRotation';
+import { HighlightSelectionState, HighlightState, NO_SELECTION_STATE, SelectedState } from './HighlightState';
+import { getCssProperties } from './transformArea';
 import type { RenderHighlightContentProps } from './types/RenderHighlightContentProps';
-import type { RenderHighlightTargetProps } from './types/RenderHighlightTargetProps';
 import type { RenderHighlightsProps } from './types/RenderHighlightsProps';
+import type { RenderHighlightTargetProps } from './types/RenderHighlightTargetProps';
 import type { StoreProps } from './types/StoreProps';
+import { useRotation } from './useRotation';
 
 export const HighlightAreaList: React.FC<{
     pageIndex: number;

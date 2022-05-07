@@ -6,12 +6,11 @@
  * @copyright 2019-2022 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import * as React from 'react';
-import { isMac, LocalizationContext, MinimalButton, Position, Tooltip } from '@react-pdf-viewer/core';
 import type { LocalizationMap } from '@react-pdf-viewer/core';
-
-import { ZoomOutIcon } from './ZoomOutIcon';
+import { isMac, LocalizationContext, MinimalButton, Position, Tooltip } from '@react-pdf-viewer/core';
+import * as React from 'react';
 import type { RenderZoomOutProps } from './types/RenderZoomOutProps';
+import { ZoomOutIcon } from './ZoomOutIcon';
 
 const TOOLTIP_OFFSET = { left: 0, top: 8 };
 

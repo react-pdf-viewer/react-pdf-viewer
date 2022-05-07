@@ -6,10 +6,9 @@
  * @copyright 2019-2022 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import * as React from 'react';
-import { createStore } from '@react-pdf-viewer/core';
 import type { Plugin, PluginOnDocumentLoad, ViewerState } from '@react-pdf-viewer/core';
-
+import { createStore } from '@react-pdf-viewer/core';
+import * as React from 'react';
 import { ShowProperties, ShowPropertiesProps } from './ShowProperties';
 import { ShowPropertiesMenuItem } from './ShowPropertiesMenuItem';
 import type { StoreProps } from './types/StoreProps';

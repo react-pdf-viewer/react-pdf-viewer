@@ -6,14 +6,13 @@
  * @copyright 2019-2022 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import * as React from 'react';
-import { createStore } from '@react-pdf-viewer/core';
 import type { Plugin, PluginFunctions, RenderViewer, Slot } from '@react-pdf-viewer/core';
-
+import { createStore } from '@react-pdf-viewer/core';
+import * as React from 'react';
 import { EnterFullScreen, EnterFullScreenProps } from './EnterFullScreen';
-import { ExitFullScreen, RenderExitFullScreenProps } from './ExitFullScreen';
 import { EnterFullScreenButton } from './EnterFullScreenButton';
 import { EnterFullScreenMenuItem, EnterFullScreenMenuItemProps } from './EnterFullScreenMenuItem';
+import { ExitFullScreen, RenderExitFullScreenProps } from './ExitFullScreen';
 import { ShortcutHandler } from './ShortcutHandler';
 import type { StoreProps } from './types/StoreProps';
 import type { Zoom } from './types/Zoom';

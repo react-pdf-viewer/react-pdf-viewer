@@ -7,7 +7,6 @@
  */
 
 import * as React from 'react';
-
 import { Position } from '../structs/Position';
 import { classNames } from '../utils/classNames';
 

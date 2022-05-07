@@ -1,7 +1,7 @@
-import * as React from 'react';
 import { Button, DocumentLoadEvent, Viewer } from '@react-pdf-viewer/core';
-import { thumbnailPlugin } from '@react-pdf-viewer/thumbnail';
 import type { RenderThumbnailItemProps } from '@react-pdf-viewer/thumbnail';
+import { thumbnailPlugin } from '@react-pdf-viewer/thumbnail';
+import * as React from 'react';
 
 const IndexPage = () => {
     const [selectedPages, setSelectedPages] = React.useState<boolean[]>([]);

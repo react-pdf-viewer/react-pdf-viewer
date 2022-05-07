@@ -7,15 +7,14 @@
  */
 
 import * as React from 'react';
-
 import { useClickOutside } from '../hooks/useClickOutside';
 import { useIsomorphicLayoutEffect } from '../hooks/useIsomorphicLayoutEffect';
 import { usePosition } from '../hooks/usePosition';
-import { Arrow } from './Arrow';
 import { Position } from '../structs/Position';
 import { TextDirection, ThemeContext } from '../theme/ThemeContext';
-import { classNames } from '../utils/classNames';
 import type { Offset } from '../types/Offset';
+import { classNames } from '../utils/classNames';
+import { Arrow } from './Arrow';
 
 export const PopoverBody: React.FC<{
     ariaControlsSuffix: string;

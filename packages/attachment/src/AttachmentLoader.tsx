@@ -6,10 +6,9 @@
  * @copyright 2019-2022 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import * as React from 'react';
-import { classNames, LocalizationContext, Spinner, TextDirection, ThemeContext } from '@react-pdf-viewer/core';
 import type { LocalizationMap, PdfJs } from '@react-pdf-viewer/core';
-
+import { classNames, LocalizationContext, Spinner, TextDirection, ThemeContext } from '@react-pdf-viewer/core';
+import * as React from 'react';
 import { AttachmentList } from './AttachmentList';
 import type { FileItem } from './types/FileItem';
 

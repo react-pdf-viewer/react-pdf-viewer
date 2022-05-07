@@ -6,10 +6,9 @@
  * @copyright 2019-2022 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import * as React from 'react';
-import { getPage, useIntersectionObserver } from '@react-pdf-viewer/core';
 import type { PdfJs, VisibilityChanged } from '@react-pdf-viewer/core';
-
+import { getPage, useIntersectionObserver } from '@react-pdf-viewer/core';
+import * as React from 'react';
 import { SpinnerContext } from './SpinnerContext';
 import { ThumbnailItem } from './ThumbnailItem';
 

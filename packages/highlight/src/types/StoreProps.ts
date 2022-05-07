@@ -6,8 +6,8 @@
  * @copyright 2019-2022 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import { SpecialZoomLevel } from '@react-pdf-viewer/core';
 import type { DestinationOffsetFromViewport } from '@react-pdf-viewer/core';
+import { SpecialZoomLevel } from '@react-pdf-viewer/core';
 import { HighlightState } from '../HighlightState';
 
 export interface StoreProps {

@@ -7,7 +7,6 @@
  */
 
 import * as React from 'react';
-
 import { Icon } from './Icon';
 
 export const CommentIcon: React.FC = () => (

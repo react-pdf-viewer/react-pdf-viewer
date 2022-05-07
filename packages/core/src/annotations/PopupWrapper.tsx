@@ -7,12 +7,11 @@
  */
 
 import * as React from 'react';
-
 import { TextDirection, ThemeContext } from '../theme/ThemeContext';
+import type { PdfJs } from '../types/PdfJs';
 import { classNames } from '../utils/classNames';
 import { convertDate } from '../utils/convertDate';
 import { AnnotationType } from './AnnotationType';
-import type { PdfJs } from '../types/PdfJs';
 
 export const PopupWrapper: React.FC<{
     annotation: PdfJs.Annotation;

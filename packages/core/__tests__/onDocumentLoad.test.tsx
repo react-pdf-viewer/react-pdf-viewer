@@ -1,9 +1,8 @@
-import * as React from 'react';
 import { render, waitForElementToBeRemoved } from '@testing-library/react';
-
+import * as React from 'react';
 import { mockIsIntersecting } from '../../../test-utils/mockIntersectionObserver';
-import { Viewer } from '../src/Viewer';
 import { DocumentLoadEvent } from '../src';
+import { Viewer } from '../src/Viewer';
 
 const TestOnDocumentLoad: React.FC<{
     fileUrl: Uint8Array;

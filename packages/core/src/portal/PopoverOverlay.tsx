@@ -7,7 +7,6 @@
  */
 
 import * as React from 'react';
-
 import { useEscape } from '../hooks/useEscape';
 
 export const PopoverOverlay: React.FC<{

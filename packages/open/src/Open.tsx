@@ -6,9 +6,8 @@
  * @copyright 2019-2022 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import * as React from 'react';
 import type { Store } from '@react-pdf-viewer/core';
-
+import * as React from 'react';
 import { OpenButton } from './OpenButton';
 import type { RenderOpenProps } from './types/RenderOpenProps';
 import type { StoreProps } from './types/StoreProps';

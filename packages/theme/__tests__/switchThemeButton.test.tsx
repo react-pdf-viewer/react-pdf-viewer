@@ -1,8 +1,7 @@
-import * as React from 'react';
-import { fireEvent, render, waitForElementToBeRemoved } from '@testing-library/react';
 import { ThemeContext, Viewer } from '@react-pdf-viewer/core';
 import { defaultLayoutPlugin, ToolbarProps } from '@react-pdf-viewer/default-layout';
-
+import { fireEvent, render, waitForElementToBeRemoved } from '@testing-library/react';
+import * as React from 'react';
 import { mockIsIntersecting } from '../../../test-utils/mockIntersectionObserver';
 import { themePlugin } from '../src';
 

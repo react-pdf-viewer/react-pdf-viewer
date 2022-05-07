@@ -6,9 +6,8 @@
  * @copyright 2019-2022 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import * as React from 'react';
 import type { Plugin } from '@react-pdf-viewer/core';
-
+import * as React from 'react';
 import { SwitchTheme, SwitchThemeProps } from './SwitchTheme';
 import { SwitchThemeButton } from './SwitchThemeButton';
 import { SwitchThemeMenuItem, SwitchThemeMenuItemProps } from './SwitchThemeMenuItem';

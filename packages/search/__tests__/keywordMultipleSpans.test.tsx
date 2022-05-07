@@ -1,10 +1,9 @@
-import * as React from 'react';
+import { Viewer } from '@react-pdf-viewer/core';
 import { findAllByTitle } from '@testing-library/dom';
 import { fireEvent, render, waitForElementToBeRemoved } from '@testing-library/react';
-
+import * as React from 'react';
 import { mockIsIntersecting } from '../../../test-utils/mockIntersectionObserver';
 import { mockResize } from '../../../test-utils/mockResizeObserver';
-import { Viewer } from '@react-pdf-viewer/core';
 import { searchPlugin } from '../src/index';
 
 const TestKeywordMultipleSpansOption: React.FC<{

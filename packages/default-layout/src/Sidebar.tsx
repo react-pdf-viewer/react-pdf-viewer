@@ -6,7 +6,7 @@
  * @copyright 2019-2022 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import * as React from 'react';
+import type { LocalizationMap, SplitterSize, Store } from '@react-pdf-viewer/core';
 import {
     classNames,
     LocalizationContext,
@@ -17,8 +17,7 @@ import {
     ThemeContext,
     Tooltip,
 } from '@react-pdf-viewer/core';
-import type { LocalizationMap, SplitterSize, Store } from '@react-pdf-viewer/core';
-
+import * as React from 'react';
 import { BookmarkIcon } from './BookmarkIcon';
 import { FileIcon } from './FileIcon';
 import { ThumbnailIcon } from './ThumbnailIcon';

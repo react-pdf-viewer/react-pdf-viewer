@@ -6,12 +6,11 @@
  * @copyright 2019-2022 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import * as React from 'react';
-import { Button, LocalizationContext, Modal } from '@react-pdf-viewer/core';
 import type { LocalizationMap, PdfJs, Store } from '@react-pdf-viewer/core';
-
-import type { StoreProps } from './types/StoreProps';
+import { Button, LocalizationContext, Modal } from '@react-pdf-viewer/core';
+import * as React from 'react';
 import { PrintStatus } from './structs/PrintStatus';
+import type { StoreProps } from './types/StoreProps';
 
 const PERMISSION_PRINT = 4;
 const PERMISSION_PRINT_HIGHT_QUALITY = 2048;

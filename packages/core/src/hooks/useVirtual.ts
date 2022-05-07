@@ -7,14 +7,13 @@
  */
 
 import * as React from 'react';
-
-import { useMeasureRect } from './useMeasureRect';
-import { useScroll } from './useScroll';
 import { ScrollMode } from '../structs/ScrollMode';
-import { clamp } from '../utils/clamp';
-import { findNearest } from '../utils/findNearest';
 import type { Offset } from '../types/Offset';
 import type { Rect } from '../types/Rect';
+import { clamp } from '../utils/clamp';
+import { findNearest } from '../utils/findNearest';
+import { useMeasureRect } from './useMeasureRect';
+import { useScroll } from './useScroll';
 
 interface ItemMeasurement {
     index: number;

@@ -7,7 +7,6 @@
  */
 
 import * as React from 'react';
-
 import { useDebounceCallback } from '../hooks/useDebounceCallback';
 import { useTrackResize } from '../hooks/useTrackResize';
 import { useVirtual } from '../hooks/useVirtual';
@@ -18,15 +17,11 @@ import { RotateDirection } from '../structs/RotateDirection';
 import { ScrollMode } from '../structs/ScrollMode';
 import { SpecialZoomLevel } from '../structs/SpecialZoomLevel';
 import { TextDirection, ThemeContext } from '../theme/ThemeContext';
-import { classNames } from '../utils/classNames';
-import { clearPagesCache, getPage } from '../utils/managePages';
-import { getFileExt } from '../utils/getFileExt';
-import { calculateScale } from './calculateScale';
-import type { LocalizationMap } from '../types/LocalizationMap';
-import type { PageSize } from '../types/PageSize';
 import type { DocumentLoadEvent } from '../types/DocumentLoadEvent';
+import type { LocalizationMap } from '../types/LocalizationMap';
 import type { OpenFile } from '../types/OpenFile';
 import type { PageChangeEvent } from '../types/PageChangeEvent';
+import type { PageSize } from '../types/PageSize';
 import type { PdfJs } from '../types/PdfJs';
 import type { Plugin } from '../types/Plugin';
 import type { DestinationOffsetFromViewport, PluginFunctions } from '../types/PluginFunctions';
@@ -37,6 +32,10 @@ import type { RotatePageEvent } from '../types/RotatePageEvent';
 import type { Slot } from '../types/Slot';
 import type { ViewerState } from '../types/ViewerState';
 import type { ZoomEvent } from '../types/ZoomEvent';
+import { classNames } from '../utils/classNames';
+import { getFileExt } from '../utils/getFileExt';
+import { clearPagesCache, getPage } from '../utils/managePages';
+import { calculateScale } from './calculateScale';
 
 const NUM_OVERSCAN_PAGES = 3;
 const PAGE_PADDING = 16;

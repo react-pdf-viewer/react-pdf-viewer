@@ -7,15 +7,14 @@
  */
 
 import * as React from 'react';
-
-import { SubmitPassword } from './AskForPasswordState';
 import { PrimaryButton } from '../components/PrimaryButton';
 import { TextBox } from '../components/TextBox';
 import { LocalizationContext } from '../localization/LocalizationContext';
 import { TextDirection, ThemeContext } from '../theme/ThemeContext';
-import { classNames } from '../utils/classNames';
 import type { DocumentAskPasswordEvent, VerifyPassword } from '../types/DocumentAskPasswordEvent';
 import type { LocalizationMap } from '../types/LocalizationMap';
+import { classNames } from '../utils/classNames';
+import { SubmitPassword } from './AskForPasswordState';
 
 export const AskingPassword: React.FC<{
     submitPassword: SubmitPassword;

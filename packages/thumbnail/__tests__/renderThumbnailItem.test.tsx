@@ -1,10 +1,9 @@
-import * as React from 'react';
-import { fireEvent, render, screen, waitForElementToBeRemoved } from '@testing-library/react';
 import { classNames, Viewer } from '@react-pdf-viewer/core';
-
+import { fireEvent, render, screen, waitForElementToBeRemoved } from '@testing-library/react';
+import * as React from 'react';
 import { mockIsIntersecting } from '../../../test-utils/mockIntersectionObserver';
 import { mockResize } from '../../../test-utils/mockResizeObserver';
-import { thumbnailPlugin, RenderThumbnailItemProps } from '../src';
+import { RenderThumbnailItemProps, thumbnailPlugin } from '../src';
 
 const TestRenderThumbnailItem: React.FC<{
     fileUrl: Uint8Array;

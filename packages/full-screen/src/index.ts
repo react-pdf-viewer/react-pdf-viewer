@@ -6,14 +6,9 @@
  * @copyright 2019-2022 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-// Types
 export type { EnterFullScreenProps, RenderEnterFullScreenProps } from './EnterFullScreen';
 export type { EnterFullScreenMenuItemProps } from './EnterFullScreenMenuItem';
 export type { RenderExitFullScreenProps } from './ExitFullScreen';
-
-// Plugin
-export * from './fullScreenPlugin';
-
-// Components
 export { ExitFullScreenIcon } from './ExitFullScreenIcon';
 export { FullScreenIcon } from './FullScreenIcon';
+export * from './fullScreenPlugin';

@@ -6,9 +6,8 @@
  * @copyright 2019-2022 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import { SpecialZoomLevel } from '@react-pdf-viewer/core';
 import type { PdfJs, PluginOnTextLayerRender } from '@react-pdf-viewer/core';
-
+import { SpecialZoomLevel } from '@react-pdf-viewer/core';
 import type { MatchPosition } from './MatchPosition';
 import type { NormalizedKeyword } from './NormalizedKeyword';
 import type { SearchTargetPageFilter } from './SearchTargetPage';

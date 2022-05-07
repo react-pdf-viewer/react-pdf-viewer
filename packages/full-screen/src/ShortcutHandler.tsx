@@ -6,13 +6,12 @@
  * @copyright 2019-2022 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import * as React from 'react';
-import { isMac } from '@react-pdf-viewer/core';
 import type { Store } from '@react-pdf-viewer/core';
-
-import { useEnterFullScreen } from './useEnterFullScreen';
+import { isMac } from '@react-pdf-viewer/core';
+import * as React from 'react';
 import type { StoreProps } from './types/StoreProps';
 import type { Zoom } from './types/Zoom';
+import { useEnterFullScreen } from './useEnterFullScreen';
 
 export const ShortcutHandler: React.FC<{
     containerRef: React.RefObject<HTMLDivElement>;

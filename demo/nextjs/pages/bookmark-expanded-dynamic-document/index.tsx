@@ -1,6 +1,6 @@
-import * as React from 'react';
-import { Button, Viewer } from '@react-pdf-viewer/core';
 import { bookmarkPlugin } from '@react-pdf-viewer/bookmark';
+import { Button, Viewer } from '@react-pdf-viewer/core';
+import * as React from 'react';
 
 const IndexPage = () => {
     const [fileUrl, setFileUrl] = React.useState('/bookmarks-level-1.pdf');

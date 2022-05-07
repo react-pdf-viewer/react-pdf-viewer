@@ -6,7 +6,6 @@
  * @copyright 2019-2022 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import * as React from 'react';
 import type { EnterFullScreenMenuItemProps, EnterFullScreenProps } from '@react-pdf-viewer/full-screen';
 import type { DownloadMenuItemProps, DownloadProps } from '@react-pdf-viewer/get-file';
 import type { OpenProps } from '@react-pdf-viewer/open';
@@ -17,12 +16,12 @@ import type {
     NumberOfPagesProps,
 } from '@react-pdf-viewer/page-navigation';
 import type { PrintMenuItemProps, PrintProps } from '@react-pdf-viewer/print';
-import type { ShowPropertiesProps, ShowPropertiesMenuItemProps } from '@react-pdf-viewer/properties';
+import type { ShowPropertiesMenuItemProps, ShowPropertiesProps } from '@react-pdf-viewer/properties';
 import type { RotateDecoratorProps, RotateProps } from '@react-pdf-viewer/rotate';
 import type { SwitchScrollModeMenuItemProps, SwitchScrollModeProps } from '@react-pdf-viewer/scroll-mode';
 import type { SearchProps, ShowSearchPopoverProps } from '@react-pdf-viewer/search';
 import type { SwitchSelectionModeMenuItemProps, SwitchSelectionModeProps } from '@react-pdf-viewer/selection-mode';
-import type { SwitchThemeProps, SwitchThemeMenuItemProps } from '@react-pdf-viewer/theme';
+import type { SwitchThemeMenuItemProps, SwitchThemeProps } from '@react-pdf-viewer/theme';
 import type {
     CurrentScaleProps,
     ZoomInProps,
@@ -30,6 +29,7 @@ import type {
     ZoomOutProps,
     ZoomProps,
 } from '@react-pdf-viewer/zoom';
+import * as React from 'react';
 
 export interface ToolbarSlot {
     CurrentPageInput(): React.ReactElement;

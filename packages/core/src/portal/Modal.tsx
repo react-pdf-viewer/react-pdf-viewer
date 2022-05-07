@@ -7,12 +7,11 @@
  */
 
 import * as React from 'react';
-
+import type { Toggle } from '../types/Toggle';
+import { uniqueId } from '../utils/uniqueId';
 import { ModalBody } from './ModalBody';
 import { ModalOverlay } from './ModalOverlay';
 import { Portal, RenderContent, RenderTarget } from './Portal';
-import { uniqueId } from '../utils/uniqueId';
-import type { Toggle } from '../types/Toggle';
 
 export const Modal: React.FC<{
     ariaControlsSuffix?: string;

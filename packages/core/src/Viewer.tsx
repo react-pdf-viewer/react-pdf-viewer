@@ -7,7 +7,6 @@
  */
 
 import * as React from 'react';
-
 import { useIntersectionObserver } from './hooks/useIntersectionObserver';
 import { usePrevious } from './hooks/usePrevious';
 import { Inner } from './layouts/Inner';
@@ -18,19 +17,19 @@ import { ScrollMode } from './structs/ScrollMode';
 import { SpecialZoomLevel } from './structs/SpecialZoomLevel';
 import { TextDirection, ThemeContext } from './theme/ThemeContext';
 import { withTheme } from './theme/withTheme';
-import { Plugin } from './types/Plugin';
-import { isSameUrl } from './utils/isSameUrl';
 import type { DocumentAskPasswordEvent } from './types/DocumentAskPasswordEvent';
 import type { DocumentLoadEvent } from './types/DocumentLoadEvent';
 import type { LocalizationMap } from './types/LocalizationMap';
 import type { PageChangeEvent } from './types/PageChangeEvent';
 import type { PageSize } from './types/PageSize';
 import type { PdfJs } from './types/PdfJs';
+import { Plugin } from './types/Plugin';
 import type { RenderPage } from './types/RenderPage';
 import type { RotateEvent } from './types/RotateEvent';
 import type { RotatePageEvent } from './types/RotatePageEvent';
 import type { VisibilityChanged } from './types/VisibilityChanged';
 import type { ZoomEvent } from './types/ZoomEvent';
+import { isSameUrl } from './utils/isSameUrl';
 
 export interface CharacterMap {
     isCompressed: boolean;

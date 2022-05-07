@@ -6,17 +6,16 @@
  * @copyright 2019-2022 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import * as React from 'react';
-import { LayerRenderStatus } from '@react-pdf-viewer/core';
 import type { PluginOnTextLayerRender, Store } from '@react-pdf-viewer/core';
-
+import { LayerRenderStatus } from '@react-pdf-viewer/core';
+import * as React from 'react';
 import { calculateOffset } from './calculateOffset';
 import { EMPTY_KEYWORD_REGEXP } from './constants';
-import { unwrap } from './unwrap';
 import type { MatchPosition } from './types/MatchPosition';
 import type { NormalizedKeyword } from './types/NormalizedKeyword';
 import type { OnHighlightKeyword } from './types/OnHighlightKeyword';
 import type { StoreProps } from './types/StoreProps';
+import { unwrap } from './unwrap';
 
 interface RenderStatus {
     ele?: HTMLElement;

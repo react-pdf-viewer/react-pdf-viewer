@@ -7,10 +7,9 @@
  */
 
 import * as React from 'react';
-
 import { useIsomorphicLayoutEffect } from '../hooks/useIsomorphicLayoutEffect';
-import { PdfJsApi } from '../vendors/PdfJsApi';
 import type { PdfJs } from '../types/PdfJs';
+import { PdfJsApi } from '../vendors/PdfJsApi';
 
 export const SvgLayer: React.FC<{
     height: number;

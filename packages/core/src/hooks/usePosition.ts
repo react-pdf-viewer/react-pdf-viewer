@@ -7,11 +7,10 @@
  */
 
 import * as React from 'react';
-
 import { useIsomorphicLayoutEffect } from '../hooks/useIsomorphicLayoutEffect';
 import { Position } from '../structs/Position';
-import { calculatePosition } from '../utils/calculatePosition';
 import type { Offset } from '../types/Offset';
+import { calculatePosition } from '../utils/calculatePosition';
 
 export const usePosition = (
     contentRef: React.RefObject<HTMLElement>,

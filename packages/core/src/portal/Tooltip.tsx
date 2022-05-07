@@ -7,14 +7,13 @@
  */
 
 import * as React from 'react';
-
 import { useEscape } from '../hooks/useEscape';
 import { useToggle } from '../hooks/useToggle';
-import { ToggleStatus } from '../structs/ToggleStatus';
 import { Position } from '../structs/Position';
-import { TooltipBody } from './TooltipBody';
-import { uniqueId } from '../utils/uniqueId';
+import { ToggleStatus } from '../structs/ToggleStatus';
 import type { Offset } from '../types/Offset';
+import { uniqueId } from '../utils/uniqueId';
+import { TooltipBody } from './TooltipBody';
 
 type RenderTooltipContent = () => React.ReactNode;
 

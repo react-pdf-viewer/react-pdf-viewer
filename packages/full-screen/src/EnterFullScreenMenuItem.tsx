@@ -6,10 +6,9 @@
  * @copyright 2019-2022 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import * as React from 'react';
-import { LocalizationContext, MenuItem } from '@react-pdf-viewer/core';
 import type { LocalizationMap } from '@react-pdf-viewer/core';
-
+import { LocalizationContext, MenuItem } from '@react-pdf-viewer/core';
+import * as React from 'react';
 import { isFullScreenEnabled } from './fullScreen';
 import { FullScreenIcon } from './FullScreenIcon';
 

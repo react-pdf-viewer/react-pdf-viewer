@@ -6,14 +6,9 @@
  * @copyright 2019-2022 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-// Types
+export { HorizontalScrollingIcon } from './HorizontalScrollingIcon';
+export * from './scrollModePlugin';
 export type { SwitchScrollModeProps } from './SwitchScrollMode';
 export type { RenderSwitchScrollModeProps } from './types/RenderSwitchScrollModeProps';
-
-// Plugin
-export * from './scrollModePlugin';
-
-// Components
-export { HorizontalScrollingIcon } from './HorizontalScrollingIcon';
 export { VerticalScrollingIcon } from './VerticalScrollingIcon';
 export { WrappedScrollingIcon } from './WrappedScrollingIcon';

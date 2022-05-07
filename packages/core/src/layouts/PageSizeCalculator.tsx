@@ -7,15 +7,14 @@
  */
 
 import * as React from 'react';
-
 import { Spinner } from '../components/Spinner';
 import { ScrollMode } from '../structs/ScrollMode';
 import { SpecialZoomLevel } from '../structs/SpecialZoomLevel';
+import type { PageSize } from '../types/PageSize';
+import type { PdfJs } from '../types/PdfJs';
 import { getPage } from '../utils/managePages';
 import { decrease } from '../zoom/zoomingLevel';
 import { calculateScale } from './calculateScale';
-import type { PageSize } from '../types/PageSize';
-import type { PdfJs } from '../types/PdfJs';
 
 // The height that can be reserved for additional elements such as toolbar
 const RESERVE_HEIGHT = 45;

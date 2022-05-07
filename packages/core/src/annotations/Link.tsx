@@ -7,11 +7,10 @@
  */
 
 import * as React from 'react';
-
 import { SpecialZoomLevel } from '../structs/SpecialZoomLevel';
+import type { PdfJs } from '../types/PdfJs';
 import { getDestination } from '../utils/managePages';
 import { Annotation } from './Annotation';
-import type { PdfJs } from '../types/PdfJs';
 
 export const Link: React.FC<{
     annotation: PdfJs.Annotation;

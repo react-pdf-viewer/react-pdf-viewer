@@ -7,19 +7,18 @@
  */
 
 import * as React from 'react';
-
 import { AnnotationLayer } from '../annotations/AnnotationLayer';
 import { Spinner } from '../components/Spinner';
 import { useIsMounted } from '../hooks/useIsMounted';
 import { RotateDirection } from '../structs/RotateDirection';
 import { SpecialZoomLevel } from '../structs/SpecialZoomLevel';
+import type { PdfJs } from '../types/PdfJs';
+import type { Plugin } from '../types/Plugin';
+import type { RenderPage, RenderPageProps } from '../types/RenderPage';
 import { getPage } from '../utils/managePages';
 import { CanvasLayer } from './CanvasLayer';
 import { SvgLayer } from './SvgLayer';
 import { TextLayer } from './TextLayer';
-import type { PdfJs } from '../types/PdfJs';
-import type { Plugin } from '../types/Plugin';
-import type { RenderPage, RenderPageProps } from '../types/RenderPage';
 
 interface PageSizeState {
     page?: PdfJs.Page | null;

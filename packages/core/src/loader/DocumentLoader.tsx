@@ -7,10 +7,11 @@
  */
 
 import * as React from 'react';
-
 import { Spinner } from '../components/Spinner';
 import { useIsMounted } from '../hooks/useIsMounted';
 import { TextDirection, ThemeContext } from '../theme/ThemeContext';
+import type { DocumentAskPasswordEvent, VerifyPassword } from '../types/DocumentAskPasswordEvent';
+import type { PdfJs } from '../types/PdfJs';
 import { classNames } from '../utils/classNames';
 import { PdfJsApi } from '../vendors/PdfJsApi';
 import { CharacterMap } from '../Viewer';
@@ -18,11 +19,9 @@ import { AskForPasswordState, SubmitPassword } from './AskForPasswordState';
 import { AskingPassword } from './AskingPassword';
 import { CompletedState } from './CompletedState';
 import { FailureState } from './FailureState';
+import type { LoadError } from './LoadError';
 import { LoadingState } from './LoadingState';
 import { LoadingStatus } from './LoadingStatus';
-import type { DocumentAskPasswordEvent, VerifyPassword } from '../types/DocumentAskPasswordEvent';
-import type { LoadError } from './LoadError';
-import type { PdfJs } from '../types/PdfJs';
 
 export type RenderError = (error: LoadError) => React.ReactElement;
 

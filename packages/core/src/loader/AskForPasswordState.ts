@@ -6,8 +6,8 @@
  * @copyright 2019-2022 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import { LoadingStatus } from './LoadingStatus';
 import type { VerifyPassword } from '../types/DocumentAskPasswordEvent';
+import { LoadingStatus } from './LoadingStatus';
 
 export enum SubmitPassword {
     REQUIRE_PASSWORD,

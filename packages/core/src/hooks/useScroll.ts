@@ -7,11 +7,10 @@
  */
 
 import * as React from 'react';
-
-import { useIsomorphicLayoutEffect } from './useIsomorphicLayoutEffect';
-import { useRafState } from './useRafState';
 import { ScrollMode } from '../structs/ScrollMode';
 import type { Offset } from '../types/Offset';
+import { useIsomorphicLayoutEffect } from './useIsomorphicLayoutEffect';
+import { useRafState } from './useRafState';
 
 const ZERO_OFFSET: Offset = {
     left: 0,

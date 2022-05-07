@@ -7,7 +7,6 @@
  */
 
 import * as React from 'react';
-
 import { useIsomorphicLayoutEffect } from '../hooks/useIsomorphicLayoutEffect';
 import type { VisibilityChanged } from '../types/VisibilityChanged';
 

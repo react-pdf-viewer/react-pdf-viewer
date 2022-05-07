@@ -7,7 +7,6 @@
  */
 
 import * as React from 'react';
-
 import { useIsMounted } from './useIsMounted';
 
 export const useRafState = <T>(initialState: T | (() => T)): [T, React.Dispatch<React.SetStateAction<T>>] => {

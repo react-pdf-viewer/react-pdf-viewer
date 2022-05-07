@@ -6,10 +6,9 @@
  * @copyright 2019-2022 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
+import type { PdfJs } from '@react-pdf-viewer/core';
 import * as React from 'react';
 import { createPortal } from 'react-dom';
-import type { PdfJs } from '@react-pdf-viewer/core';
-
 import { PageThumbnailContainer } from './PageThumbnailContainer';
 import { PrintStatus } from './structs/PrintStatus';
 

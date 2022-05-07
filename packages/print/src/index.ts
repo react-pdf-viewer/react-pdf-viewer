@@ -6,13 +6,8 @@
  * @copyright 2019-2022 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-// Types
-export type { RenderPrintProps } from './types/RenderPrintProps';
-export type { PrintMenuItemProps } from './PrintMenuItem';
 export type { PrintProps } from './Print';
-
-// Plugin
-export * from './printPlugin';
-
-// Components
 export { PrintIcon } from './PrintIcon';
+export type { PrintMenuItemProps } from './PrintMenuItem';
+export * from './printPlugin';
+export type { RenderPrintProps } from './types/RenderPrintProps';

@@ -6,28 +6,26 @@
  * @copyright 2019-2022 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import * as React from 'react';
-import { attachmentPlugin } from '@react-pdf-viewer/attachment';
-import { bookmarkPlugin } from '@react-pdf-viewer/bookmark';
-import { classNames, createStore, TextDirection } from '@react-pdf-viewer/core';
-import { thumbnailPlugin } from '@react-pdf-viewer/thumbnail';
-import { toolbarPlugin } from '@react-pdf-viewer/toolbar';
-
 import type { AttachmentPlugin } from '@react-pdf-viewer/attachment';
+import { attachmentPlugin } from '@react-pdf-viewer/attachment';
 import type { BookmarkPlugin } from '@react-pdf-viewer/bookmark';
+import { bookmarkPlugin } from '@react-pdf-viewer/bookmark';
 import type {
     Plugin,
     PluginFunctions,
-    PluginOnDocumentLoad,
     PluginOnAnnotationLayerRender,
+    PluginOnDocumentLoad,
     PluginOnTextLayerRender,
     PluginRenderPageLayer,
     RenderViewer,
     ViewerState,
 } from '@react-pdf-viewer/core';
+import { classNames, createStore, TextDirection } from '@react-pdf-viewer/core';
 import type { ThumbnailPlugin, ThumbnailPluginProps } from '@react-pdf-viewer/thumbnail';
+import { thumbnailPlugin } from '@react-pdf-viewer/thumbnail';
 import type { ToolbarPlugin, ToolbarPluginProps, ToolbarProps } from '@react-pdf-viewer/toolbar';
-
+import { toolbarPlugin } from '@react-pdf-viewer/toolbar';
+import * as React from 'react';
 import { Sidebar, SidebarTab } from './Sidebar';
 import type { StoreProps } from './types/StoreProps';
 

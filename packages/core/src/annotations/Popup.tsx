@@ -7,11 +7,10 @@
  */
 
 import * as React from 'react';
-
 import { useIsomorphicLayoutEffect } from '../hooks/useIsomorphicLayoutEffect';
+import type { PdfJs } from '../types/PdfJs';
 import { Annotation } from './Annotation';
 import { PopupWrapper } from './PopupWrapper';
-import type { PdfJs } from '../types/PdfJs';
 
 export const Popup: React.FC<{
     annotation: PdfJs.Annotation;

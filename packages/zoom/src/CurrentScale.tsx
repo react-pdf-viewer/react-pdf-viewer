@@ -6,11 +6,10 @@
  * @copyright 2019-2022 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import * as React from 'react';
 import type { Store } from '@react-pdf-viewer/core';
-
-import { useZoom } from './useZoom';
+import * as React from 'react';
 import type { StoreProps } from './types/StoreProps';
+import { useZoom } from './useZoom';
 
 export interface RenderCurrentScaleProps {
     scale: number;
