@@ -8,6 +8,7 @@
 
 import * as React from 'react';
 import { useDebounceCallback } from '../hooks/useDebounceCallback';
+import { useIsomorphicLayoutEffect } from '../hooks/useIsomorphicLayoutEffect';
 import { useTrackResize } from '../hooks/useTrackResize';
 import { useVirtual } from '../hooks/useVirtual';
 import { PageLayer } from '../layers/PageLayer';
@@ -409,7 +410,7 @@ export const Inner: React.FC<{
     }, [docId]);
 
     // Scroll to the current page after switching the scroll mode
-    React.useEffect(() => {
+    useIsomorphicLayoutEffect(() => {
         const latestPage = stateRef.current.pageIndex;
         if (latestPage > -1) {
             virtualizer.scrollToItem(latestPage, { left: 0, top: 0 });
