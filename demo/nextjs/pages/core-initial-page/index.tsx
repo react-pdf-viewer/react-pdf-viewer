@@ -1,8 +1,8 @@
 import { Viewer } from '@react-pdf-viewer/core';
 import * as React from 'react';
 
-const IndexPage = () => {
-    return (
+const IndexPage = () => (
+    <React.StrictMode>
         <div
             style={{
                 border: '1px solid rgba(0, 0, 0, .3)',
@@ -14,7 +14,7 @@ const IndexPage = () => {
         >
             <Viewer fileUrl="/pdf-open-parameters.pdf" initialPage={6} />
         </div>
-    );
-};
+    </React.StrictMode>
+);
 
 export default IndexPage;
