@@ -5,7 +5,7 @@ import * as React from 'react';
 const CustomPageRender: React.FC<{
     renderPageProps: RenderPageProps;
 }> = ({ renderPageProps }) => {
-    React.useEffect(() => {
+    React.useLayoutEffect(() => {
         // Mark that the page is rendered completely
         // So the next page in the queue will be rendered
         // Since our custom page uses the canvas layer, we have to check `renderPageProps.canvasLayerRendered`
@@ -44,23 +44,21 @@ const CustomPageRender: React.FC<{
     );
 };
 
-const IndexPage = () => {
-    return (
-        <div
-            style={{
-                border: '1px solid rgba(0, 0, 0, .3)',
-                display: 'flex',
-                height: '50rem',
-                margin: '5rem auto',
-                width: '64rem',
-            }}
-        >
-            <Viewer
-                fileUrl="/pdf-open-parameters.pdf"
-                renderPage={(props) => <CustomPageRender renderPageProps={props} />}
-            />
-        </div>
-    );
-};
+const IndexPage = () => (
+    <div
+        style={{
+            border: '1px solid rgba(0, 0, 0, .3)',
+            display: 'flex',
+            height: '50rem',
+            margin: '5rem auto',
+            width: '64rem',
+        }}
+    >
+        <Viewer
+            fileUrl="/pdf-open-parameters.pdf"
+            renderPage={(props) => <CustomPageRender renderPageProps={props} />}
+        />
+    </div>
+);
 
 export default IndexPage;

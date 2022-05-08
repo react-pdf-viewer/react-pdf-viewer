@@ -8,6 +8,11 @@ test('Test the renderPage option', async () => {
     });
     await page.evaluate(() => document.querySelector('[data-testid="core__viewer"]').scrollIntoView());
 
+    // Wait until the first page is rendered
+    await page.waitForSelector('[data-testid="core__page-layer-0"]', { visible: true });
+    await page.waitForSelector('[data-testid="core__page-layer-1"]');
+    await page.waitForSelector('[data-testid="core__page-layer-2"]');
+
     const firstPage = await page.waitForSelector('[data-testid="custom-page-0"]');
     let pageText = await firstPage.evaluate((ele) => ele.textContent);
     expect(pageText).toEqual('Page 1');
@@ -15,8 +20,4 @@ test('Test the renderPage option', async () => {
     const secondPage = await page.waitForSelector('[data-testid="custom-page-1"]');
     pageText = await secondPage.evaluate((ele) => ele.textContent);
     expect(pageText).toEqual('Page 2');
-
-    const thirdPage = await page.waitForSelector('[data-testid="custom-page-2"]');
-    pageText = await thirdPage.evaluate((ele) => ele.textContent);
-    expect(pageText).toEqual('Page 3');
 });

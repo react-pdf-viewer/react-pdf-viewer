@@ -12,9 +12,7 @@ test('Jump between internal links', async () => {
     await page.waitForSelector('[data-testid="core__text-layer-0"]', { visible: true });
 
     const jumpToTableOfContents = async () => {
-        await page.waitForFunction(
-            () => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 2416'
-        );
+        await page.evaluate(() => (document.querySelector('[data-testid=core__inner-pages]').scrollTop = 2416));
         // Wait until the page is rendered
         return await page.waitForSelector('[data-testid="core__text-layer-2"]', { visible: true });
     };
