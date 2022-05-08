@@ -9,7 +9,7 @@ const path = require('path');
 
 const TestSwitchDocument = () => {
     const secondDocument = React.useMemo(
-        () => new Uint8Array(fs.readFileSync(path.resolve(__dirname, '../../../samples/sample-2.pdf'))),
+        () => new Uint8Array(fs.readFileSync(path.resolve(__dirname, '../../../samples/sample.pdf'))),
         []
     );
 
@@ -123,7 +123,7 @@ test('Thumbnails are updated when switching between documents', async () => {
 
     src = await getSourceOfFirstThumbnail();
     expect(src.substring(0, 100)).toEqual(
-        'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAACBCAYAAAA2ax9lAAAABmJLR0QA/wD/AP+gvaeTAAAgAElEQV'
+        'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAACNCAYAAABBqd8eAAAABmJLR0QA/wD/AP+gvaeTAAABXElEQV'
     );
-    expect(src.length).toEqual(20006);
+    expect(src.length).toEqual(586);
 });
