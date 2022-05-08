@@ -33,9 +33,12 @@ export interface RenderQueueService {
     markRendered: (pageIndex: number) => void;
     markRendering: (pageIndex: number) => void;
     resetQueue: () => void;
+    setOutOfRange: (pageIndex: number) => void;
     setRange: (startIndex: number, endIndex: number) => void;
     setVisibility: (pageIndex: number, visibility: number) => void;
 }
+
+const OUT_OF_RANGE_VISIBILITY = -9999;
 
 let queues: Record<string, RenderQueue> = {};
 
@@ -59,7 +62,7 @@ export const renderQueueService = ({
             .map((_, pageIndex) => ({
                 pageIndex,
                 renderStatus: PageRenderStatus.NotRenderedYet,
-                visibility: -1,
+                visibility: OUT_OF_RANGE_VISIBILITY,
             }));
 
     const cleanup = () => {
@@ -85,6 +88,10 @@ export const renderQueueService = ({
     };
 
     const markRendering = (pageIndex: number) => {
+        if (pageIndex > queues[queue].endRange) {
+            return;
+        }
+
         if (
             queues[queue].currentRenderingPage !== -1 &&
             queues[queue].currentRenderingPage !== pageIndex &&
@@ -105,10 +112,14 @@ export const renderQueueService = ({
 
         for (let i = 0; i < numPages; i++) {
             if (i < startIndex || i > endIndex) {
-                queues[queue].visibilities[i].visibility = -1;
+                queues[queue].visibilities[i].visibility = OUT_OF_RANGE_VISIBILITY;
                 queues[queue].visibilities[i].renderStatus = PageRenderStatus.NotRenderedYet;
             }
         }
+    };
+
+    const setOutOfRange = (pageIndex: number) => {
+        setVisibility(pageIndex, OUT_OF_RANGE_VISIBILITY);
     };
 
     const setVisibility = (pageIndex: number, visibility: number) => {
@@ -121,7 +132,7 @@ export const renderQueueService = ({
         // Find all visible pages which belongs to the range
         const visiblePages = queues[queue].visibilities
             .slice(queues[queue].startRange, queues[queue].endRange + 1)
-            .filter((item) => item.visibility >= 0);
+            .filter((item) => item.visibility > OUT_OF_RANGE_VISIBILITY);
         if (!visiblePages.length) {
             return -1;
         }
@@ -167,6 +178,7 @@ export const renderQueueService = ({
         markRendered,
         markRendering,
         resetQueue,
+        setOutOfRange,
         setRange,
         setVisibility,
     };

@@ -502,6 +502,7 @@ export interface RenderQueueService {
     markRendered: (pageIndex: number) => void;
     markRendering: (pageIndex: number) => void;
     resetQueue: () => void;
+    setOutOfRange: (pageIndex: number) => void;
     setRange: (startIndex: number, endIndex: number) => void;
     setVisibility: (pageIndex: number, visibility: number) => void;
 }
