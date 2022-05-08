@@ -50,6 +50,7 @@
         "eslint": "^8.15.0",
         "eslint-plugin-react": "^7.29.4",
         "jest": "^28.1.0",
+        "jest-environment-jsdom": "^28.1.0",
         "jest-puppeteer": "^6.1.0",
         "lerna": "^4.0.0",
         "pdfjs-dist": "^2.13.216",
