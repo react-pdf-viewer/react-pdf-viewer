@@ -4,7 +4,7 @@
     "version": "0.0.0",
     "scripts": {
         "copy": "rm -rf public/* && cp -r ../../samples/* public",
-        "dev": "npm run copy && next dev"
+        "dev": "npm run copy && node_modules/.bin/next dev"
     },
     "dependencies": {
         "@react-pdf-viewer/core": "3.3.1",
