@@ -47,6 +47,7 @@ const HELLO_PDF = new Uint8Array([
     111, 111, 116, 32, 49, 32, 48, 32, 82, 10, 62, 62, 10, 115, 116, 97, 114, 116, 120, 114, 101, 102, 10, 52, 57, 50,
     10, 37, 37, 69, 79, 70,
 ]);
+const DUMMY_PDF = new Uint8Array(fs.readFileSync(path.resolve(__dirname, '../samples/dummy.pdf')));
 const SAMPLE_PDF = new Uint8Array(fs.readFileSync(path.resolve(__dirname, '../samples/sample.pdf')));
 const SAMPLE_PROTECTED_PDF = new Uint8Array(
     fs.readFileSync(path.resolve(__dirname, '../samples/sample-protected.pdf'))
@@ -61,8 +62,9 @@ global.console = {
 };
 
 beforeAll(() => {
+    global['__DUMMY_PDF__'] = DUMMY_PDF;
     global['__HELLO_PDF__'] = HELLO_PDF;
-    global['__SAMPLE_PDF__'] = SAMPLE_PDF;
+    global['__SAMPLE_PDF__'] = SAMPLE_PDF;    
     global['__SAMPLE_PROTECTED_PDF__'] = SAMPLE_PROTECTED_PDF;
     global['__MULTIPLE_PAGES_PDF__'] = MULTIPLE_PAGES_PDF;
     global['__OPEN_PARAMS_PDF__'] = OPEN_PARAMS_PDF;
