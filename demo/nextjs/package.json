@@ -4,7 +4,7 @@
     "version": "0.0.0",
     "scripts": {
         "copy": "rm -rf public/* && cp -r ../../samples/* public",
-        "dev": "npm run copy && next dev"
+        "dev": "npm run copy && node_modules/.bin/next dev"
     },
     "dependencies": {
         "@react-pdf-viewer/core": "3.3.1",
@@ -19,10 +19,10 @@
         "@react-pdf-viewer/search": "3.3.1",
         "@react-pdf-viewer/toolbar": "3.3.1",
         "@react-pdf-viewer/zoom": "3.3.1",
-        "next": "^12.1.5"
+        "next": "^12.1.6"
     },
     "devDependencies": {
         "serve": "^13.0.2",
-        "ts-loader": "^9.2.8"
+        "ts-loader": "^9.3.0"
     }
 }

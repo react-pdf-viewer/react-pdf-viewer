@@ -191,7 +191,10 @@ export const ThumbnailList: React.FC<{
 
     const handleVisibilityChanged = React.useCallback(
         (pageIndex: number, visibility: VisibilityChanged) => {
-            renderQueueInstanceRef.current.setVisibility(pageIndex, visibility.isVisible ? visibility.ratio : -1);
+            visibility.isVisible
+                ? renderQueueInstanceRef.current.setVisibility(pageIndex, visibility.ratio)
+                : // Notice that we don't virtualize the list of thumbnails
+                  renderQueueInstanceRef.current.setOutOfRange(pageIndex);
             renderNextThumbnail();
         },
         [docId]
