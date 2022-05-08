@@ -9,7 +9,7 @@ const path = require('path');
 
 const TestSwitchDocument = () => {
     const secondDocument = React.useMemo(
-        () => new Uint8Array(fs.readFileSync(path.resolve(__dirname, '../../../samples/sample.pdf'))),
+        () => new Uint8Array(fs.readFileSync(path.resolve(__dirname, '../../../samples/sample-2.pdf'))),
         []
     );
 
@@ -18,57 +18,59 @@ const TestSwitchDocument = () => {
     const { Thumbnails } = thumbnailPluginInstance;
 
     return (
-        <div
-            style={{
-                margin: '1rem auto',
-                width: '64rem',
-            }}
-        >
+        <React.StrictMode>
             <div
                 style={{
-                    alignItems: 'center',
-                    display: 'flex',
-                    marginBottom: '1rem',
-                }}
-            >
-                <div style={{ marginRight: '0.5rem' }}>
-                    <Button testId="load-doc-1" onClick={() => setFileUrl(global['__OPEN_PARAMS_PDF__'])}>
-                        Load document 1
-                    </Button>
-                </div>
-                <Button testId="load-doc-2" onClick={() => setFileUrl(secondDocument)}>
-                    Load document 2
-                </Button>
-            </div>
-            <div
-                style={{
-                    border: '1px solid rgba(0, 0, 0, 0.1)',
-                    display: 'flex',
-                    height: '50rem',
-                    width: '50rem',
+                    margin: '1rem auto',
+                    width: '64rem',
                 }}
             >
                 <div
                     style={{
                         alignItems: 'center',
-                        borderRight: '1px solid rgba(0, 0, 0, 0.1)',
                         display: 'flex',
-                        padding: '0.25rem',
-                        width: '20%',
+                        marginBottom: '1rem',
                     }}
                 >
-                    <Thumbnails />
+                    <div style={{ marginRight: '0.5rem' }}>
+                        <Button testId="load-doc-1" onClick={() => setFileUrl(global['__OPEN_PARAMS_PDF__'])}>
+                            Load document 1
+                        </Button>
+                    </div>
+                    <Button testId="load-doc-2" onClick={() => setFileUrl(secondDocument)}>
+                        Load document 2
+                    </Button>
                 </div>
                 <div
                     style={{
-                        flex: 1,
-                        overflow: 'hidden',
+                        border: '1px solid rgba(0, 0, 0, 0.1)',
+                        display: 'flex',
+                        height: '50rem',
+                        width: '50rem',
                     }}
                 >
-                    <Viewer fileUrl={fileUrl} plugins={[thumbnailPluginInstance]} />
+                    <div
+                        style={{
+                            alignItems: 'center',
+                            borderRight: '1px solid rgba(0, 0, 0, 0.1)',
+                            display: 'flex',
+                            padding: '0.25rem',
+                            width: '20%',
+                        }}
+                    >
+                        <Thumbnails />
+                    </div>
+                    <div
+                        style={{
+                            flex: 1,
+                            overflow: 'hidden',
+                        }}
+                    >
+                        <Viewer fileUrl={fileUrl} plugins={[thumbnailPluginInstance]} />
+                    </div>
                 </div>
             </div>
-        </div>
+        </React.StrictMode>
     );
 };
 
@@ -123,7 +125,7 @@ test('Thumbnails are updated when switching between documents', async () => {
 
     src = await getSourceOfFirstThumbnail();
     expect(src.substring(0, 100)).toEqual(
-        'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAACNCAYAAABBqd8eAAAABmJLR0QA/wD/AP+gvaeTAAABXElEQV'
+        'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAACBCAYAAAA2ax9lAAAABmJLR0QA/wD/AP+gvaeTAAAgAElEQV'
     );
-    expect(src.length).toEqual(586);
+    expect(src.length).toEqual(20006);
 });
