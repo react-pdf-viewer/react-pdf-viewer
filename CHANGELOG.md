@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## v3.4.0 [WIP]
+## v3.3.2
 
 **Bug fixes**
 
