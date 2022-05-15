@@ -6,6 +6,10 @@
 
 -   Clicking `Enter` automatically jumps to the next match when being focused on the keyword field
 
+**Bug fix**
+
+-   Automatically scroll to the thumbnail of the initial page when it's set
+
 ## v3.3.2
 
 **Bug fixes**

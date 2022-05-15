@@ -9,6 +9,7 @@
 import type { PdfJs, Store, StoreHandler } from '@react-pdf-viewer/core';
 import { LazyRender, RotateDirection, useIsomorphicLayoutEffect } from '@react-pdf-viewer/core';
 import * as React from 'react';
+import { FetchLabels } from './FetchLabels';
 import { SpinnerContext } from './SpinnerContext';
 import { ThumbnailList } from './ThumbnailList';
 import type { RenderCurrentPageLabel } from './types/RenderCurrentPageLabelProps';
@@ -101,20 +102,25 @@ export const ThumbnailListWithStore: React.FC<{
                 className: 'rpv-thumbnail__list-container',
             }}
         >
-            <ThumbnailList
-                currentPage={currentPage}
-                doc={currentDoc}
-                pagesRotation={pagesRotation}
-                pageHeight={pageHeight}
-                pageWidth={pageWidth}
-                renderCurrentPageLabel={renderCurrentPageLabel}
-                renderThumbnailItem={renderThumbnailItem}
-                rotatedPage={rotatedPage}
-                rotation={rotation}
-                thumbnailWidth={thumbnailWidth}
-                onJumpToPage={jump}
-                onRotatePage={rotatePage}
-            />
+            <FetchLabels doc={currentDoc}>
+                {(labels) => (
+                    <ThumbnailList
+                        currentPage={currentPage}
+                        doc={currentDoc}
+                        labels={labels}
+                        pagesRotation={pagesRotation}
+                        pageHeight={pageHeight}
+                        pageWidth={pageWidth}
+                        renderCurrentPageLabel={renderCurrentPageLabel}
+                        renderThumbnailItem={renderThumbnailItem}
+                        rotatedPage={rotatedPage}
+                        rotation={rotation}
+                        thumbnailWidth={thumbnailWidth}
+                        onJumpToPage={jump}
+                        onRotatePage={rotatePage}
+                    />
+                )}
+            </FetchLabels>
         </LazyRender>
     ) : (
         <div data-testid="thumbnail-list__loader" className="rpv-thumbnail__loader">
