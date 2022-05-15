@@ -69,7 +69,7 @@ const IndexPage = () => {
                 flexDirection: 'column',
                 height: '50rem',
                 margin: '5rem auto',
-                width: '64rem',
+                width: '50rem',
             }}
         >
             <div
