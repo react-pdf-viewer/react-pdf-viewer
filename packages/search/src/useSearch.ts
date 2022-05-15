@@ -68,13 +68,13 @@ export const useSearch = (
     };
 
     const jumpToMatch = (index: number): Match | null => {
-        if (keywords.length === 0 || found.length === 0) {
+        const numMatches = found.length;
+        if (keywords.length === 0 || numMatches === 0) {
             return null;
         }
 
-        // Make sure that the `index` is in the range of 1 and `found.length`
-        const normalizedIndex = Math.max(1, Math.min(found.length, index));
-
+        // Make sure that the `index` is in the range of 1 and `numMatches`
+        const normalizedIndex = index === numMatches + 1 ? 1 : Math.max(1, Math.min(numMatches, index));
         setCurrentMatch(normalizedIndex);
         return jumpToGivenMatch(found[normalizedIndex - 1]);
     };

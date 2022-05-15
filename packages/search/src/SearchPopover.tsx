@@ -34,6 +34,7 @@ export const SearchPopover: React.FC<{
     const { l10n } = React.useContext(LocalizationContext);
     const { direction } = React.useContext(ThemeContext);
     const [isQuerying, setIsQuerying] = React.useState(false);
+    const [searchDone, setSearchDone] = React.useState(false);
     const isRtl = direction === TextDirection.RightToLeft;
 
     const {
@@ -54,23 +55,37 @@ export const SearchPopover: React.FC<{
     const onKeydownSearch = (e: React.KeyboardEvent<HTMLInputElement>): void => {
         // Press the Enter key
         if (e.key === 'Enter' && keyword) {
-            setIsQuerying(true);
-            // eslint-disable-next-line @typescript-eslint/no-unused-vars
-            search().then((_) => setIsQuerying(false));
+            if (searchDone) {
+                jumpToNextMatch();
+            } else {
+                setIsQuerying(true);
+                // eslint-disable-next-line @typescript-eslint/no-unused-vars
+                search().then((_) => {
+                    setIsQuerying(false);
+                    setSearchDone(true);
+                });
+            }
         }
     };
 
     const onChangeMatchCase = (e: React.ChangeEvent<HTMLInputElement>): void => {
+        setSearchDone(false);
         changeMatchCase(e.target.checked);
     };
 
     const onChangeWholeWords = (e: React.ChangeEvent<HTMLInputElement>): void => {
+        setSearchDone(false);
         changeWholeWords(e.target.checked);
     };
 
     const onClose = (): void => {
         onToggle();
         clearKeyword();
+    };
+
+    const onChangeKeyword = (value: string) => {
+        setSearchDone(false);
+        setKeyword(value);
     };
 
     const searchLabel =
@@ -88,7 +103,7 @@ export const SearchPopover: React.FC<{
                     placeholder={searchLabel}
                     type="text"
                     value={keyword}
-                    onChange={setKeyword}
+                    onChange={onChangeKeyword}
                     onKeyDown={onKeydownSearch}
                 />
                 <div
