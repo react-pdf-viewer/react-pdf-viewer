@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## v3.3.3 [WIP]
+
+**Improvement**
+
+-   Clicking `Enter` automatically jumps to the next match when being focused on the keyword field
+
 ## v3.3.2
 
 **Bug fixes**
