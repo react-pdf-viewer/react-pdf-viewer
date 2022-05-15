@@ -113,9 +113,9 @@ export const SearchPopover: React.FC<{
                         'rpv-search__popover-counter--rtl': isRtl,
                     })}
                 >
-                    {isQuerying && <Spinner size="1rem" />}
+                    {isQuerying && <Spinner testId="search__popover-searching" size="1rem" />}
                     {!isQuerying && (
-                        <span>
+                        <span data-testid="search__popover-num-matches">
                             {currentMatch}/{numberOfMatches}
                         </span>
                     )}
