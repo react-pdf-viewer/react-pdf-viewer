@@ -3,7 +3,7 @@ import { SimpleMockResizeObserver } from './SimpleMockResizeObserver';
 
 global.ResizeObserver = SimpleMockResizeObserver;
 
-// Mock clientWidth, clientHeight
+// Mock `clientWidth`, `clientHeight`
 Object.defineProperty(window.HTMLElement.prototype, 'clientHeight', {
     get: function () {
         return this.__jsdomMockClientHeight || 0;
@@ -13,6 +13,13 @@ Object.defineProperty(window.HTMLElement.prototype, 'clientWidth', {
     get: function () {
         return this.__jsdomMockClientWidth || 0;
     },
+});
+
+// Mock the `window.scrollTo` function
+const noop = () => {};
+Object.defineProperty(window, 'scrollTo', {
+    value: noop,
+    writable: true,
 });
 
 const fs = require('fs');
