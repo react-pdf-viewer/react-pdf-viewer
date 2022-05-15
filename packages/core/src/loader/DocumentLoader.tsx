@@ -7,6 +7,7 @@
  */
 
 import * as React from 'react';
+import { ProgressBar } from '../components/ProgressBar';
 import { Spinner } from '../components/Spinner';
 import { useIsMounted } from '../hooks/useIsMounted';
 import { TextDirection, ThemeContext } from '../theme/ThemeContext';
@@ -51,11 +52,13 @@ export const DocumentLoader: React.FC<{
     const [status, setStatus] = React.useState<LoadingStatus>(new LoadingState(0));
 
     const [percentages, setPercentages] = React.useState(0);
+    const docRef = React.useRef<string>('');
     const [loadedDocument, setLoadedDocument] = React.useState<PdfJs.PdfDocument>(null);
     const isMounted = useIsMounted();
 
     React.useEffect(() => {
         // Reset the status when new `file` is provided (for example, when opening file from the toolbar)
+        docRef.current = '';
         setStatus(new LoadingState(0));
 
         // Create a new worker
@@ -93,13 +96,20 @@ export const DocumentLoader: React.FC<{
             }
         };
         loadingTask.onProgress = (progress) => {
-            progress.total > 0
-                ? // It seems weird but there is a case that `loaded` is greater than `total`
-                  isMounted.current && setPercentages(Math.min(100, (100 * progress.loaded) / progress.total))
-                : isMounted.current && setPercentages(100);
+            const loaded =
+                progress.total > 0
+                    ? // It seems weird but there is a case that `loaded` is greater than `total`
+                      Math.min(100, (100 * progress.loaded) / progress.total)
+                    : 100;
+            if (isMounted.current && docRef.current === '') {
+                setStatus(new LoadingState(loaded));
+            }
         };
         loadingTask.promise.then(
-            (doc) => isMounted.current && setLoadedDocument(doc),
+            (doc) => {
+                docRef.current = doc.loadingTask.docId;
+                isMounted.current && setStatus(new CompletedState(doc));
+            },
             (err) =>
                 isMounted.current &&
                 !worker.destroyed &&
@@ -116,15 +126,6 @@ export const DocumentLoader: React.FC<{
             worker.destroy();
         };
     }, [file]);
-
-    // There is a case that `loadingTask.promise()` is already resolved but `loadingTask.onProgress` is still triggered
-    // (numOfPercentages does not reach 100 yet)
-    // So, we have to check both `percentages` and `loaded`
-    React.useEffect(() => {
-        percentages === 100 && loadedDocument
-            ? isMounted.current && setStatus(new CompletedState(loadedDocument))
-            : isMounted.current && setStatus(new LoadingState(percentages));
-    }, [percentages, loadedDocument]);
 
     if (status instanceof AskForPasswordState) {
         return (

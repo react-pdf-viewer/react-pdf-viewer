@@ -2,9 +2,10 @@
 
 ## v3.3.3 [WIP]
 
-**Improvement**
+**Improvements**
 
 -   Clicking `Enter` automatically jumps to the next match when being focused on the keyword field
+-   Support documents which are optimized for web. Users don't have to wait the full document loaded to see the first page.
 
 **Bug fix**
 
