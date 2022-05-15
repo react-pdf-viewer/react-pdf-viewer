@@ -14,7 +14,7 @@ const IndexPage = () => {
                 width: '64rem',
             }}
         >
-            <Viewer fileUrl="/pdf-open-parameters.pdf" plugins={[defaultLayoutPluginInstance]} initialPage={6} />
+            <Viewer fileUrl="/bookmarks-level-1.pdf" plugins={[defaultLayoutPluginInstance]} initialPage={20} />
         </div>
     );
 };
