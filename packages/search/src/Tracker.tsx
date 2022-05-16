@@ -37,27 +37,20 @@ interface CharIndex {
     spanIndex: number;
 }
 
-const percentToNumber = (input: string): number => parseFloat(input.slice(0, -1));
-
 // Sort the highlight elements by their positions
-const sortHighlightElements = (a: HTMLElement, b: HTMLElement) => {
-    const aTop = percentToNumber(a.style.top);
-    const aLeft = percentToNumber(a.style.left);
-    const bTop = percentToNumber(b.style.top);
-    const bLeft = percentToNumber(b.style.left);
-
+const sortHighlightPosition = (a: HighlightPosition, b: HighlightPosition) => {
     // Compare the top values first
-    if (aTop < bTop) {
+    if (a.top < b.top) {
         return -1;
     }
-    if (aTop > bTop) {
+    if (a.top > b.top) {
         return 1;
     }
     // Then compare the left values
-    if (aLeft < bLeft) {
+    if (a.left < b.left) {
         return -1;
     }
-    if (aLeft > bLeft) {
+    if (a.left > b.left) {
         return 1;
     }
     return 0;
@@ -223,13 +216,8 @@ export const Tracker: React.FC<{
                 });
         });
 
-        const highlightEles: HTMLElement[] = [].slice.call(containerEle.querySelectorAll('.rpv-search__highlight'));
         // Sort the highlight elements as they appear in the texts
-        highlightEles.sort(sortHighlightElements).forEach((ele, i) => {
-            ele.setAttribute('data-index', `${i}`);
-        });
-
-        return highlightPos;
+        return highlightPos.sort(sortHighlightPosition);
     };
 
     const handleKeywordChanged = (keyword?: NormalizedKeyword[]) => {
