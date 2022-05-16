@@ -2,6 +2,18 @@
 
 ## v3.5.0 [WIP]
 
+**New feature**
+
+-   Be able to customize the highlight elements when searching for a keyword:
+
+```tsx
+const searchPluginInstance = searchPlugin({
+    renderHighlights: (highlightPositions: HighlightPosition[]) => (
+        // Your custom highlight elements
+    ),
+});
+```
+
 **Improvement**
 
 -   The page navigation plugin allows to jump to the previous and next pages with shortcuts.

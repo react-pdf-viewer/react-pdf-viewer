@@ -24,6 +24,7 @@ import { ShortcutHandler } from './ShortcutHandler';
 import { ShowSearchPopover, ShowSearchPopoverProps } from './ShowSearchPopover';
 import { ShowSearchPopoverButton } from './ShowSearchPopoverButton';
 import { Tracker } from './Tracker';
+import type { HighlightPosition } from './types/HighlightPosition';
 import type { Match } from './types/Match';
 import type { NormalizedKeyword } from './types/NormalizedKeyword';
 import type { OnHighlightKeyword } from './types/OnHighlightKeyword';
@@ -48,6 +49,7 @@ export interface SearchPluginProps {
     enableShortcuts?: boolean;
     // The keyword that will be highlighted in all pages
     keyword?: SingleKeyword | SingleKeyword[];
+    renderHighlights?(props: HighlightPosition[]): React.ReactElement;
     onHighlightKeyword?(props: OnHighlightKeyword): void;
 }
 
@@ -110,6 +112,7 @@ export const searchPlugin = (props?: SearchPluginProps): SearchPlugin => {
             key={renderProps.pageIndex}
             numPages={renderProps.doc.numPages}
             pageIndex={renderProps.pageIndex}
+            renderHighlights={props?.renderHighlights}
             store={store}
             onHighlightKeyword={searchPluginProps.onHighlightKeyword}
         />

@@ -11,6 +11,7 @@ import { LayerRenderStatus } from '@react-pdf-viewer/core';
 import * as React from 'react';
 import { calculateOffset } from './calculateOffset';
 import { EMPTY_KEYWORD_REGEXP } from './constants';
+import type { HighlightPosition } from './types/HighlightPosition';
 import type { MatchPosition } from './types/MatchPosition';
 import type { NormalizedKeyword } from './types/NormalizedKeyword';
 import type { OnHighlightKeyword } from './types/OnHighlightKeyword';
@@ -64,9 +65,31 @@ const sortHighlightElements = (a: HTMLElement, b: HTMLElement) => {
 export const Tracker: React.FC<{
     numPages: number;
     pageIndex: number;
+    renderHighlights?(props: HighlightPosition[]): React.ReactElement;
     store: Store<StoreProps>;
     onHighlightKeyword?(props: OnHighlightKeyword): void;
-}> = ({ numPages, pageIndex, store, onHighlightKeyword }) => {
+}> = ({ numPages, pageIndex, renderHighlights, store, onHighlightKeyword }) => {
+    const defaultRenderHighlights = React.useCallback(
+        (highlightPos: HighlightPosition[]) => (
+            <>
+                {highlightPos.map((pos) => (
+                    <div
+                        className="rpv-search__highlight"
+                        title={pos.keyword.trim()}
+                        style={{
+                            left: `${pos.left}%`,
+                            top: `${pos.top}%`,
+                            height: `${pos.height}%`,
+                            width: `${pos.width}%`,
+                        }}
+                    />
+                ))}
+            </>
+        ),
+        []
+    );
+    const renderHighlightElements = renderHighlights || defaultRenderHighlights;
+
     // The initial matching position is taken from the store
     // So the current highlight is kept (after zooming the document, for example)
     const [matchPosition, setMatchPosition] = React.useState<MatchPosition>(store.get('matchPosition'));
@@ -80,6 +103,7 @@ export const Tracker: React.FC<{
     });
     const currentMatchRef = React.useRef<HTMLElement | null>(null);
     const characterIndexesRef = React.useRef<CharIndex[]>([]);
+    const [highlightPositions, setHighlightPositions] = React.useState<HighlightPosition[]>([]);
 
     const defaultTargetPageFilter = () => true;
     const targetPageFilter = React.useCallback(
@@ -101,7 +125,7 @@ export const Tracker: React.FC<{
         containerEle: Element,
         span: HTMLElement,
         charIndexSpan: CharIndex[]
-    ): void => {
+    ): HighlightPosition => {
         const range = document.createRange();
 
         const firstChild = span.firstChild;
@@ -122,32 +146,38 @@ export const Tracker: React.FC<{
         const wrapperRect = wrapper.getBoundingClientRect();
         const containerRect = containerEle.getBoundingClientRect();
 
-        const highlightEle = document.createElement('span');
-        containerEle.insertBefore(highlightEle, containerEle.firstChild);
-
-        highlightEle.style.left = `${(100 * (wrapperRect.left - containerRect.left)) / containerRect.width}%`;
-        highlightEle.style.top = `${(100 * (wrapperRect.top - containerRect.top)) / containerRect.height}%`;
-        highlightEle.style.width = `${(100 * wrapperRect.width) / containerRect.width}%`;
-        highlightEle.style.height = `${(100 * wrapperRect.height) / containerRect.height}%`;
-        highlightEle.classList.add('rpv-search__highlight');
-        highlightEle.setAttribute('title', keywordStr.trim());
+        const left = (100 * (wrapperRect.left - containerRect.left)) / containerRect.width;
+        const top = (100 * (wrapperRect.top - containerRect.top)) / containerRect.height;
+        const height = (100 * wrapperRect.height) / containerRect.height;
+        const width = (100 * wrapperRect.width) / containerRect.width;
 
         unwrap(wrapper);
 
-        if (onHighlightKeyword) {
-            onHighlightKeyword({
-                highlightEle,
-                keyword,
-            });
-        }
+        // if (onHighlightKeyword) {
+        //     onHighlightKeyword({
+        //         highlightEle,
+        //         keyword,
+        //     });
+        // }
+
+        return {
+            keyword: keywordStr,
+            numPages,
+            pageIndex,
+            left,
+            top,
+            height,
+            width,
+        };
     };
 
-    const highlightAll = (containerEle: Element): void => {
+    const highlightAll = (containerEle: Element): HighlightPosition[] => {
         const charIndexes = characterIndexesRef.current;
         if (charIndexes.length === 0) {
             return;
         }
 
+        const highlightPos: HighlightPosition[] = [];
         const spans: HTMLElement[] = [].slice.call(containerEle.querySelectorAll('.rpv-core__text-layer-text'));
 
         // Generate the full text of page
@@ -193,12 +223,14 @@ export const Tracker: React.FC<{
                         if (charIndexSpan.length !== 1 || charIndexSpan[0].char.trim() !== '') {
                             // Ignore the first and last spaces if we are finding the whole word
                             const normalizedCharSpan = keyword.wholeWords ? charIndexSpan.slice(1, -1) : charIndexSpan;
-                            highlight(
-                                keywordStr,
-                                item.keyword,
-                                containerEle,
-                                spans[normalizedCharSpan[0].spanIndex],
-                                normalizedCharSpan
+                            highlightPos.push(
+                                highlight(
+                                    keywordStr,
+                                    item.keyword,
+                                    containerEle,
+                                    spans[normalizedCharSpan[0].spanIndex],
+                                    normalizedCharSpan
+                                )
                             );
                         }
                     });
@@ -210,6 +242,8 @@ export const Tracker: React.FC<{
         highlightEles.sort(sortHighlightElements).forEach((ele, i) => {
             ele.setAttribute('data-index', `${i}`);
         });
+
+        return highlightPos;
     };
 
     const handleKeywordChanged = (keyword?: NormalizedKeyword[]) => {
@@ -289,13 +323,17 @@ export const Tracker: React.FC<{
 
         const containerEle = renderStatus.ele;
         unhighlightAll(containerEle);
-        highlightAll(containerEle);
+
+        const highlightPos = highlightAll(containerEle);
+        setHighlightPositions(highlightPos);
+
         scrollToMatch();
     }, [keywordRegexp, matchPosition, renderStatus.status, characterIndexesRef.current]);
 
     React.useEffect(() => {
         if (isEmptyKeyword() && renderStatus.ele && renderStatus.status === LayerRenderStatus.DidRender) {
             unhighlightAll(renderStatus.ele);
+            setHighlightPositions([]);
         }
     }, [keywordRegexp, renderStatus.status]);
 
@@ -345,5 +383,5 @@ export const Tracker: React.FC<{
         };
     }, []);
 
-    return <></>;
+    return renderHighlightElements(highlightPositions);
 };

@@ -90,10 +90,23 @@ export interface SearchPlugin extends Plugin {
     setTargetPages(targetPageFilter: SearchTargetPageFilter): void;
 }
 
+export interface HighlightPosition {
+    keyword: string;
+    numPages: number;
+    pageIndex: number;
+    // The position of the highlight element
+    left: number;
+    top: number;
+    // The size of the highlight element
+    height: number;
+    width: number;
+}
+
 export interface SearchPluginProps {
     enableShortcuts?: boolean;
     // The keyword that will be highlighted in all pages
     keyword?: SingleKeyword | SingleKeyword[];
+    renderHighlights?(props: HighlightPosition[]): React.ReactElement;
     onHighlightKeyword?(props: OnHighlightKeyword): void;
 }
 

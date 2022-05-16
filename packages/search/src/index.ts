@@ -13,6 +13,7 @@ export { SearchIcon } from './SearchIcon';
 export * from './searchPlugin';
 export type { ShowSearchPopoverProps } from './ShowSearchPopover';
 export type { FlagKeyword } from './types/FlagKeyword';
+export type { HighlightPosition } from './types/HighlightPosition';
 export type { Match } from './types/Match';
 export type { MatchPosition } from './types/MatchPosition';
 export type { OnHighlightKeyword } from './types/OnHighlightKeyword';
