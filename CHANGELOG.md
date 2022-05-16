@@ -7,9 +7,10 @@
 -   Clicking `Enter` automatically jumps to the next match when being focused on the keyword field
 -   Support documents which are optimized for web. Users don't have to wait the full document loaded to see the first page.
 
-**Bug fix**
+**Bug fixes**
 
 -   Automatically scroll to the thumbnail of the initial page when it's set
+-   The text might not be selectable if a plugin registers the `renderPageLayer` method
 
 ## v3.3.2
 
