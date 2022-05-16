@@ -10,6 +10,7 @@ import type { PluginOnTextLayerRender, Store } from '@react-pdf-viewer/core';
 import { LayerRenderStatus } from '@react-pdf-viewer/core';
 import * as React from 'react';
 import { calculateOffset } from './calculateOffset';
+import { HightlightItem } from './HightlightItem';
 import { EMPTY_KEYWORD_REGEXP } from './constants';
 import type { HighlightPosition } from './types/HighlightPosition';
 import type { MatchPosition } from './types/MatchPosition';
@@ -72,17 +73,8 @@ export const Tracker: React.FC<{
     const defaultRenderHighlights = React.useCallback(
         (highlightPos: HighlightPosition[]) => (
             <>
-                {highlightPos.map((pos) => (
-                    <div
-                        className="rpv-search__highlight"
-                        title={pos.keyword.trim()}
-                        style={{
-                            left: `${pos.left}%`,
-                            top: `${pos.top}%`,
-                            height: `${pos.height}%`,
-                            width: `${pos.width}%`,
-                        }}
-                    />
+                {highlightPos.map((position) => (
+                    <HightlightItem position={position} onHighlightKeyword={onHighlightKeyword} />
                 ))}
             </>
         ),
@@ -153,15 +145,9 @@ export const Tracker: React.FC<{
 
         unwrap(wrapper);
 
-        // if (onHighlightKeyword) {
-        //     onHighlightKeyword({
-        //         highlightEle,
-        //         keyword,
-        //     });
-        // }
-
         return {
-            keyword: keywordStr,
+            keyword,
+            keywordStr,
             numPages,
             pageIndex,
             left,

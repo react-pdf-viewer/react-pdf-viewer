@@ -91,7 +91,8 @@ export interface SearchPlugin extends Plugin {
 }
 
 export interface HighlightPosition {
-    keyword: string;
+    keyword: RegExp;
+    keywordStr: string;
     numPages: number;
     pageIndex: number;
     // The position of the highlight element
