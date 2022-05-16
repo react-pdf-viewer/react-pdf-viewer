@@ -12,12 +12,13 @@ import * as React from 'react';
 import { calculateOffset } from './calculateOffset';
 import { HightlightItem } from './HightlightItem';
 import { EMPTY_KEYWORD_REGEXP } from './constants';
-import type { HighlightPosition } from './types/HighlightPosition';
+import type { HighlightArea, RenderHighlightsProps } from './types/RenderHighlightsProps';
 import type { MatchPosition } from './types/MatchPosition';
 import type { NormalizedKeyword } from './types/NormalizedKeyword';
 import type { OnHighlightKeyword } from './types/OnHighlightKeyword';
 import type { StoreProps } from './types/StoreProps';
 import { unwrap } from './unwrap';
+import { getCssProperties } from './getCssProperties';
 
 interface RenderStatus {
     ele?: HTMLElement;
@@ -38,7 +39,7 @@ interface CharIndex {
 }
 
 // Sort the highlight elements by their positions
-const sortHighlightPosition = (a: HighlightPosition, b: HighlightPosition) => {
+const sortHighlightPosition = (a: HighlightArea, b: HighlightArea) => {
     // Compare the top values first
     if (a.top < b.top) {
         return -1;
@@ -59,16 +60,16 @@ const sortHighlightPosition = (a: HighlightPosition, b: HighlightPosition) => {
 export const Tracker: React.FC<{
     numPages: number;
     pageIndex: number;
-    renderHighlights?(props: HighlightPosition[]): React.ReactElement;
+    renderHighlights?(props: RenderHighlightsProps): React.ReactElement;
     store: Store<StoreProps>;
     onHighlightKeyword?(props: OnHighlightKeyword): void;
 }> = ({ numPages, pageIndex, renderHighlights, store, onHighlightKeyword }) => {
     const containerRef = React.useRef<HTMLDivElement>();
     const defaultRenderHighlights = React.useCallback(
-        (highlightPos: HighlightPosition[]) => (
+        (renderProps: RenderHighlightsProps) => (
             <>
-                {highlightPos.map((position, index) => (
-                    <HightlightItem index={index} position={position} onHighlightKeyword={onHighlightKeyword} />
+                {renderProps.highlightAreas.map((area, index) => (
+                    <HightlightItem index={index} area={area} onHighlightKeyword={onHighlightKeyword} />
                 ))}
             </>
         ),
@@ -89,7 +90,7 @@ export const Tracker: React.FC<{
     });
     const currentMatchRef = React.useRef<HTMLElement | null>(null);
     const characterIndexesRef = React.useRef<CharIndex[]>([]);
-    const [highlightPositions, setHighlightPositions] = React.useState<HighlightPosition[]>([]);
+    const [highlightAreas, setHighlightAreas] = React.useState<HighlightArea[]>([]);
 
     const defaultTargetPageFilter = () => true;
     const targetPageFilter = React.useCallback(
@@ -111,7 +112,7 @@ export const Tracker: React.FC<{
         textLayerEle: Element,
         span: HTMLElement,
         charIndexSpan: CharIndex[]
-    ): HighlightPosition => {
+    ): HighlightArea => {
         const range = document.createRange();
 
         const firstChild = span.firstChild;
@@ -151,13 +152,13 @@ export const Tracker: React.FC<{
         };
     };
 
-    const highlightAll = (textLayerEle: Element): HighlightPosition[] => {
+    const highlightAll = (textLayerEle: Element): HighlightArea[] => {
         const charIndexes = characterIndexesRef.current;
         if (charIndexes.length === 0) {
             return;
         }
 
-        const highlightPos: HighlightPosition[] = [];
+        const highlightPos: HighlightArea[] = [];
         const spans: HTMLElement[] = [].slice.call(textLayerEle.querySelectorAll('.rpv-core__text-layer-text'));
 
         // Generate the full text of page
@@ -300,7 +301,7 @@ export const Tracker: React.FC<{
         unhighlightAll(textLayerEle);
 
         const highlightPos = highlightAll(textLayerEle);
-        setHighlightPositions(highlightPos);
+        setHighlightAreas(highlightPos);
 
         scrollToMatch();
     }, [keywordRegexp, matchPosition, renderStatus.status, characterIndexesRef.current]);
@@ -308,7 +309,7 @@ export const Tracker: React.FC<{
     React.useEffect(() => {
         if (isEmptyKeyword() && renderStatus.ele && renderStatus.status === LayerRenderStatus.DidRender) {
             unhighlightAll(renderStatus.ele);
-            setHighlightPositions([]);
+            setHighlightAreas([]);
         }
     }, [keywordRegexp, renderStatus.status]);
 
@@ -360,7 +361,10 @@ export const Tracker: React.FC<{
 
     return (
         <div className="rpv-search__highlights" ref={containerRef}>
-            {renderHighlightElements(highlightPositions)}
+            {renderHighlightElements({
+                getCssProperties,
+                highlightAreas,
+            })}
         </div>
     );
 };

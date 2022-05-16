@@ -6,7 +6,9 @@
  * @copyright 2019-2022 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-export interface HighlightPosition {
+import * as React from 'react';
+
+export interface HighlightArea {
     keyword: RegExp;
     keywordStr: string;
     numPages: number;
@@ -17,4 +19,9 @@ export interface HighlightPosition {
     // The size of the highlight element
     height: number;
     width: number;
+}
+
+export interface RenderHighlightsProps {
+    getCssProperties(area: HighlightArea): React.CSSProperties;
+    highlightAreas: HighlightArea[];
 }

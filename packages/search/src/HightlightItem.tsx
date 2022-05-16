@@ -8,14 +8,15 @@
 
 import { useIsomorphicLayoutEffect } from '@react-pdf-viewer/core';
 import * as React from 'react';
-import type { HighlightPosition } from './types/HighlightPosition';
+import { getCssProperties } from './getCssProperties';
 import type { OnHighlightKeyword } from './types/OnHighlightKeyword';
+import type { HighlightArea } from './types/RenderHighlightsProps';
 
 export const HightlightItem: React.FC<{
     index: number;
-    position: HighlightPosition;
+    area: HighlightArea;
     onHighlightKeyword?(props: OnHighlightKeyword): void;
-}> = ({ index, position, onHighlightKeyword }) => {
+}> = ({ index, area, onHighlightKeyword }) => {
     const containerRef = React.useRef<HTMLDivElement>();
 
     useIsomorphicLayoutEffect(() => {
@@ -23,7 +24,7 @@ export const HightlightItem: React.FC<{
         if (onHighlightKeyword && highlightEle) {
             onHighlightKeyword({
                 highlightEle,
-                keyword: position.keyword,
+                keyword: area.keyword,
             });
         }
     }, []);
@@ -33,13 +34,8 @@ export const HightlightItem: React.FC<{
             className="rpv-search__highlight"
             data-index={index}
             ref={containerRef}
-            style={{
-                left: `${position.left}%`,
-                top: `${position.top}%`,
-                height: `${position.height}%`,
-                width: `${position.width}%`,
-            }}
-            title={position.keywordStr.trim()}
+            style={getCssProperties(area)}
+            title={area.keywordStr.trim()}
         />
     );
 };
