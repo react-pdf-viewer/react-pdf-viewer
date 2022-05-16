@@ -57,7 +57,7 @@ const sortHighlightPosition = (a: HighlightArea, b: HighlightArea) => {
     return 0;
 };
 
-export const Tracker: React.FC<{
+export const Highlights: React.FC<{
     numPages: number;
     pageIndex: number;
     renderHighlights?(props: RenderHighlightsProps): React.ReactElement;
@@ -131,12 +131,14 @@ export const Tracker: React.FC<{
         range.surroundContents(wrapper);
 
         const wrapperRect = wrapper.getBoundingClientRect();
-        const containerRect = textLayerEle.getBoundingClientRect();
+        const textLayerRect = textLayerEle.getBoundingClientRect();
+        const pageHeight = textLayerRect.height;
+        const pageWidth = textLayerRect.width;
 
-        const left = (100 * (wrapperRect.left - containerRect.left)) / containerRect.width;
-        const top = (100 * (wrapperRect.top - containerRect.top)) / containerRect.height;
-        const height = (100 * wrapperRect.height) / containerRect.height;
-        const width = (100 * wrapperRect.width) / containerRect.width;
+        const left = (100 * (wrapperRect.left - textLayerRect.left)) / pageWidth;
+        const top = (100 * (wrapperRect.top - textLayerRect.top)) / pageHeight;
+        const height = (100 * wrapperRect.height) / pageHeight;
+        const width = (100 * wrapperRect.width) / pageWidth;
 
         unwrap(wrapper);
 
@@ -149,6 +151,8 @@ export const Tracker: React.FC<{
             top,
             height,
             width,
+            pageHeight,
+            pageWidth,
         };
     };
 

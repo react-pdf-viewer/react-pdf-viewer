@@ -18,16 +18,16 @@ import type {
 import { createStore } from '@react-pdf-viewer/core';
 import * as React from 'react';
 import { EMPTY_KEYWORD_REGEXP } from './constants';
+import { Highlights } from './Highlights';
 import { normalizeSingleKeyword } from './normalizeKeyword';
 import { Search, SearchProps } from './Search';
 import { ShortcutHandler } from './ShortcutHandler';
 import { ShowSearchPopover, ShowSearchPopoverProps } from './ShowSearchPopover';
 import { ShowSearchPopoverButton } from './ShowSearchPopoverButton';
-import { Tracker } from './Tracker';
-import type { RenderHighlightsProps } from './types/RenderHighlightsProps';
 import type { Match } from './types/Match';
 import type { NormalizedKeyword } from './types/NormalizedKeyword';
 import type { OnHighlightKeyword } from './types/OnHighlightKeyword';
+import type { RenderHighlightsProps } from './types/RenderHighlightsProps';
 import type { SearchTargetPageFilter } from './types/SearchTargetPage';
 import type { SingleKeyword } from './types/SingleKeyword';
 import type { StoreProps } from './types/StoreProps';
@@ -108,7 +108,7 @@ export const searchPlugin = (props?: SearchPluginProps): SearchPlugin => {
     };
 
     const renderPageLayer = (renderProps: PluginRenderPageLayer) => (
-        <Tracker
+        <Highlights
             key={renderProps.pageIndex}
             numPages={renderProps.doc.numPages}
             pageIndex={renderProps.pageIndex}
