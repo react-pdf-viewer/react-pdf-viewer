@@ -6,6 +6,15 @@
  * @copyright 2019-2022 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
+.rpv-search__highlights {
+    left: 0;
+    position: absolute;
+    top: 0;
+    // Take the full size
+    height: 100%;
+    width: 100%;
+}
+
 .rpv-search__highlight {
     background-color: var(--rpv-search__highlight-background-color);
     border-radius: 0.25rem;

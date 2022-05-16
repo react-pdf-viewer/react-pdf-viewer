@@ -12,9 +12,10 @@ import type { HighlightPosition } from './types/HighlightPosition';
 import type { OnHighlightKeyword } from './types/OnHighlightKeyword';
 
 export const HightlightItem: React.FC<{
+    index: number;
     position: HighlightPosition;
     onHighlightKeyword?(props: OnHighlightKeyword): void;
-}> = ({ position, onHighlightKeyword }) => {
+}> = ({ index, position, onHighlightKeyword }) => {
     const containerRef = React.useRef<HTMLDivElement>();
 
     useIsomorphicLayoutEffect(() => {
@@ -30,6 +31,7 @@ export const HightlightItem: React.FC<{
     return (
         <div
             className="rpv-search__highlight"
+            data-index={index}
             ref={containerRef}
             style={{
                 left: `${position.left}%`,
