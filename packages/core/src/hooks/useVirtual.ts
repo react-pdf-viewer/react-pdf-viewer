@@ -91,10 +91,7 @@ const calculateRange = (
     let maxVisbility = -1;
     while (end <= size) {
         const itemRect = measurements[end].size;
-        const visibility = {
-            width: 0,
-            height: 0,
-        };
+        const visibility = ZERO_RECT;
         const topLeftCorner = {
             top: measurements[end].start.top - scrollOffset.top,
             left: measurements[end].start.left - scrollOffset.left,

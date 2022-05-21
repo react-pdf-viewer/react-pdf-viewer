@@ -328,10 +328,6 @@ export const Inner: React.FC<{
         setRenderQueueKey((key) => key + 1);
         renderQueue.markNotRendered();
 
-        // Keep the current scroll position
-        pagesEle.scrollTop = (pagesEle.scrollTop * updateScale) / stateRef.current.scale;
-        pagesEle.scrollLeft = (pagesEle.scrollLeft * updateScale) / stateRef.current.scale;
-
         setScale(updateScale);
         onZoom({ doc, scale: updateScale });
 
@@ -400,6 +396,16 @@ export const Inner: React.FC<{
             onPageChange({ currentPage, doc });
         }
     }, [currentPage, virtualizer.isSmoothScrolling]);
+
+    useIsomorphicLayoutEffect(() => {
+        const latestPage = stateRef.current.pageIndex;
+        const pagesEle = pagesRef.current;
+        if (latestPage > -1 && pagesEle) {
+            // Keep the current scroll position
+            pagesEle.scrollTop = (pagesEle.scrollTop * scale) / stateRef.current.scale;
+            pagesEle.scrollLeft = (pagesEle.scrollLeft * scale) / stateRef.current.scale;
+        }
+    }, [scale]);
 
     // This hook should be placed at the end of hooks
     React.useEffect(() => {
