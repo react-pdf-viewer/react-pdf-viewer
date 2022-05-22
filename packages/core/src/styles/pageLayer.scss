@@ -7,10 +7,15 @@
  */
 
 .rpv-core__page-layer {
-    align-items: center;
     box-shadow: var(--rpv-core__page-layer-box-shadow);
+    margin: 0 auto;
+    overflow: hidden;
+} 
+
+.rpv-core__page-layer-inner {
+    align-items: center;    
     display: flex;
     justify-content: center;
-    margin: 0 auto;
+    margin: 0 auto var(--rpv-core__page-layer-inner-margin-bottom);
     position: relative;
 }

@@ -40,7 +40,6 @@ import { clearPagesCache, getPage } from '../utils/managePages';
 import { calculateScale } from './calculateScale';
 
 const NUM_OVERSCAN_PAGES = 3;
-const PAGE_PADDING = 16;
 
 export const Inner: React.FC<{
     currentFile: OpenFile;
@@ -99,6 +98,11 @@ export const Inner: React.FC<{
 
     const [renderPageIndex, setRenderPageIndex] = React.useState(-1);
     const [renderQueueKey, setRenderQueueKey] = React.useState(0);
+    const scrollOffsetRef = React.useRef({
+        top: 0,
+        left: 0,
+        scale: 1,
+    });
 
     const renderQueue = useRenderQueue({ doc });
     React.useEffect(() => {
@@ -130,13 +134,7 @@ export const Inner: React.FC<{
         (endIndex: number) => Math.min(endIndex + NUM_OVERSCAN_PAGES, numPages - 1),
         [numPages]
     );
-    const transformSize = React.useCallback(
-        (size: Rect) => ({
-            height: size.height + PAGE_PADDING,
-            width: size.width + PAGE_PADDING,
-        }),
-        []
-    );
+    const transformSize = React.useCallback((size: Rect) => size, []);
 
     const virtualizer = useVirtual({
         estimateSize,
@@ -327,6 +325,11 @@ export const Inner: React.FC<{
 
         setRenderQueueKey((key) => key + 1);
         renderQueue.markNotRendered();
+        scrollOffsetRef.current = {
+            top: pagesEle.scrollTop,
+            left: pagesEle.scrollLeft,
+            scale: stateRef.current.scale,
+        };
 
         setScale(updateScale);
         onZoom({ doc, scale: updateScale });
@@ -402,8 +405,8 @@ export const Inner: React.FC<{
         const pagesEle = pagesRef.current;
         if (latestPage > -1 && pagesEle) {
             // Keep the current scroll position
-            pagesEle.scrollTop = (pagesEle.scrollTop * scale) / stateRef.current.scale;
-            pagesEle.scrollLeft = (pagesEle.scrollLeft * scale) / stateRef.current.scale;
+            pagesEle.scrollTop = (scrollOffsetRef.current.top * scale) / scrollOffsetRef.current.scale;
+            pagesEle.scrollLeft = (scrollOffsetRef.current.left * scale) / scrollOffsetRef.current.scale;
         }
     }, [scale]);
 
