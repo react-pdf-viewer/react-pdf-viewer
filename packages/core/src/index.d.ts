@@ -509,9 +509,9 @@ export function useIsMounted(): React.MutableRefObject<boolean>;
 
 export interface UseRenderQueue {
     getHighestPriorityPage: () => number;
+    markRangeNotRendered: () => void;
     markRendered: (pageIndex: number) => void;
     markRendering: (pageIndex: number) => void;
-    resetQueue: () => void;
     setOutOfRange: (pageIndex: number) => void;
     setRange: (startIndex: number, endIndex: number) => void;
     setVisibility: (pageIndex: number, visibility: number) => void;

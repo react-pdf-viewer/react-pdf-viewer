@@ -30,9 +30,9 @@ interface RenderQueue {
 
 export interface UseRenderQueue {
     getHighestPriorityPage: () => number;
+    markRangeNotRendered: () => void;
     markRendered: (pageIndex: number) => void;
     markRendering: (pageIndex: number) => void;
-    resetQueue: () => void;
     setOutOfRange: (pageIndex: number) => void;
     setRange: (startIndex: number, endIndex: number) => void;
     setVisibility: (pageIndex: number, visibility: number) => void;
@@ -63,6 +63,13 @@ export const useRenderQueue = ({ doc }: { doc: PdfJs.PdfDocument }): UseRenderQu
         visibilities: initialPageVisibilities,
     });
 
+    // Mark all pages in the current range as not rendered yet
+    const markRangeNotRendered = () => {
+        for (let i = latestRef.current.startRange; i < latestRef.current.endRange; i++) {
+            latestRef.current.visibilities[i].renderStatus = PageRenderStatus.NotRenderedYet;
+        }
+    };
+
     const markRendered = (pageIndex: number) => {
         latestRef.current.visibilities[pageIndex].renderStatus = PageRenderStatus.Rendered;
     };
@@ -85,15 +92,6 @@ export const useRenderQueue = ({ doc }: { doc: PdfJs.PdfDocument }): UseRenderQu
 
         latestRef.current.visibilities[pageIndex].renderStatus = PageRenderStatus.Rendering;
         latestRef.current.currentRenderingPage = pageIndex;
-    };
-
-    const resetQueue = () => {
-        latestRef.current = {
-            currentRenderingPage: -1,
-            startRange: 0,
-            endRange: numPages - 1,
-            visibilities: initialPageVisibilities,
-        };
     };
 
     const setRange = (startIndex: number, endIndex: number) => {
@@ -162,9 +160,9 @@ export const useRenderQueue = ({ doc }: { doc: PdfJs.PdfDocument }): UseRenderQu
 
     return {
         getHighestPriorityPage,
+        markRangeNotRendered,
         markRendered,
         markRendering,
-        resetQueue,
         setOutOfRange,
         setRange,
         setVisibility,

@@ -9,11 +9,11 @@
 import * as React from 'react';
 import { useDebounceCallback } from '../hooks/useDebounceCallback';
 import { useIsomorphicLayoutEffect } from '../hooks/useIsomorphicLayoutEffect';
+import { useRenderQueue } from '../hooks/useRenderQueue';
 import { useTrackResize } from '../hooks/useTrackResize';
 import { useVirtual } from '../hooks/useVirtual';
 import { PageLayer } from '../layers/PageLayer';
 import { LocalizationContext } from '../localization/LocalizationContext';
-import { useRenderQueue } from '../hooks/useRenderQueue';
 import { RotateDirection } from '../structs/RotateDirection';
 import { ScrollMode } from '../structs/ScrollMode';
 import { SpecialZoomLevel } from '../structs/SpecialZoomLevel';
@@ -266,7 +266,7 @@ export const Inner: React.FC<{
         const updateRotation =
             currentRotation === 360 || currentRotation === -360 ? degrees : currentRotation + degrees;
 
-        renderQueue.resetQueue();
+        renderQueue.markRangeNotRendered();
         setRotation(updateRotation);
         setViewerState({
             ...stateRef.current,
@@ -306,8 +306,6 @@ export const Inner: React.FC<{
     }, []);
 
     const zoom = React.useCallback((newScale: number | SpecialZoomLevel) => {
-        renderQueue.resetQueue();
-
         const pagesEle = pagesRef.current;
         let updateScale = pagesEle
             ? typeof newScale === 'string'
@@ -316,6 +314,8 @@ export const Inner: React.FC<{
             : 1;
 
         keepSpecialZoomLevelRef.current = typeof newScale === 'string' ? newScale : null;
+
+        renderQueue.markRangeNotRendered();
 
         // Keep the current scroll position
         pagesEle.scrollTop = (pagesEle.scrollTop * updateScale) / stateRef.current.scale;
