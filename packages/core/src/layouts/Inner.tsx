@@ -429,7 +429,7 @@ export const Inner: React.FC<{
 
     const renderNextPage = () => {
         const nextPage = renderQueue.getHighestPriorityPage();
-        if (nextPage > -1) {
+        if (nextPage > -1 && renderQueue.isInRange(nextPage)) {
             renderQueue.markRendering(nextPage);
             setRenderPageIndex(nextPage);
         }
