@@ -495,28 +495,6 @@ export interface WorkerProps {
 }
 export class Worker extends React.Component<WorkerProps> {}
 
-// Services
-export interface RenderQueueService {
-    cleanup: () => void;
-    getHighestPriorityPage: () => number;
-    markRendered: (pageIndex: number) => void;
-    markRendering: (pageIndex: number) => void;
-    resetQueue: () => void;
-    setOutOfRange: (pageIndex: number) => void;
-    setRange: (startIndex: number, endIndex: number) => void;
-    setVisibility: (pageIndex: number, visibility: number) => void;
-}
-
-export function renderQueueService({
-    doc,
-    queueName,
-    priority,
-}: {
-    doc: PdfJs.PdfDocument;
-    queueName: string;
-    priority: number;
-}): RenderQueueService;
-
 // Hooks
 export interface UseIntersectionObserverProps {
     once?: boolean;
@@ -528,6 +506,18 @@ export function useIntersectionObserver(props: UseIntersectionObserverProps): Re
 export function useIsomorphicLayoutEffect(effect: React.EffectCallback, deps?: React.DependencyList): void;
 
 export function useIsMounted(): React.MutableRefObject<boolean>;
+
+export interface UseRenderQueue {
+    getHighestPriorityPage: () => number;
+    markRendered: (pageIndex: number) => void;
+    markRendering: (pageIndex: number) => void;
+    resetQueue: () => void;
+    setOutOfRange: (pageIndex: number) => void;
+    setRange: (startIndex: number, endIndex: number) => void;
+    setVisibility: (pageIndex: number, visibility: number) => void;
+}
+
+export function useRenderQueue({ doc }: { doc: PdfJs.PdfDocument }): UseRenderQueue;
 
 // Utils
 export function classNames(classes: { [clazz: string]: boolean }): string;

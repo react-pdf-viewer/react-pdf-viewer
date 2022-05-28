@@ -13,7 +13,7 @@ import { useTrackResize } from '../hooks/useTrackResize';
 import { useVirtual } from '../hooks/useVirtual';
 import { PageLayer } from '../layers/PageLayer';
 import { LocalizationContext } from '../localization/LocalizationContext';
-import { renderQueueService, RenderQueueService } from '../services/renderQueueService';
+import { useRenderQueue } from '../hooks/useRenderQueue';
 import { RotateDirection } from '../structs/RotateDirection';
 import { ScrollMode } from '../structs/ScrollMode';
 import { SpecialZoomLevel } from '../structs/SpecialZoomLevel';
@@ -95,18 +95,9 @@ export const Inner: React.FC<{
 
     const [renderPageIndex, setRenderPageIndex] = React.useState(-1);
 
-    const renderQueueInstanceRef = React.useRef<RenderQueueService>();
+    const renderQueue = useRenderQueue({ doc });
     React.useEffect(() => {
-        // To support the Strict Mode in React 18
-        // We need to re-initialize the render queue here, because the queue will be cleaned up
-        const renderQueue = (renderQueueInstanceRef.current = renderQueueService({
-            doc,
-            queueName: 'core-pages',
-            priority: 0,
-        }));
-
         return () => {
-            renderQueue.cleanup();
             clearPagesCache();
         };
     }, [docId]);
@@ -275,7 +266,7 @@ export const Inner: React.FC<{
         const updateRotation =
             currentRotation === 360 || currentRotation === -360 ? degrees : currentRotation + degrees;
 
-        renderQueueInstanceRef.current.resetQueue();
+        renderQueue.resetQueue();
         setRotation(updateRotation);
         setViewerState({
             file: viewerState.file,
@@ -314,7 +305,7 @@ export const Inner: React.FC<{
         onRotatePage({ direction, doc, pageIndex, rotation: finalRotation });
 
         // Rerender the target page
-        renderQueueInstanceRef.current.markRendering(pageIndex);
+        renderQueue.markRendering(pageIndex);
         setRenderPageIndex(pageIndex);
     }, []);
 
@@ -333,7 +324,7 @@ export const Inner: React.FC<{
     }, []);
 
     const zoom = React.useCallback((newScale: number | SpecialZoomLevel) => {
-        renderQueueInstanceRef.current.resetQueue();
+        renderQueue.resetQueue();
 
         const pagesEle = pagesRef.current;
         let updateScale = pagesEle
@@ -439,11 +430,11 @@ export const Inner: React.FC<{
         });
 
         // The range of pages that will be rendered
-        renderQueueInstanceRef.current.setRange(startRange, endRange);
+        renderQueue.setRange(startRange, endRange);
         for (let i = startRange; i <= endRange; i++) {
             const item = virtualItems.find((item) => item.index === i);
             if (item) {
-                renderQueueInstanceRef.current.setVisibility(i, item.visibility);
+                renderQueue.setVisibility(i, item.visibility);
             }
         }
 
@@ -458,14 +449,14 @@ export const Inner: React.FC<{
     ]);
 
     const handlePageRenderCompleted = React.useCallback((pageIndex: number) => {
-        renderQueueInstanceRef.current.markRendered(pageIndex);
+        renderQueue.markRendered(pageIndex);
         renderNextPage();
     }, []);
 
     const renderNextPage = () => {
-        const nextPage = renderQueueInstanceRef.current.getHighestPriorityPage();
+        const nextPage = renderQueue.getHighestPriorityPage();
         if (nextPage > -1) {
-            renderQueueInstanceRef.current.markRendering(nextPage);
+            renderQueue.markRendering(nextPage);
             setRenderPageIndex(nextPage);
         }
     };
