@@ -49,7 +49,6 @@ test('Press Enter to jump to the next match', async () => {
 
     // Search for "bookmarks"
     const keywordInput = await findByLabelText('Enter to search');
-    console.info(keywordInput.outerHTML);
     fireEvent.change(keywordInput, {
         target: {
             value: 'bookmarks',
