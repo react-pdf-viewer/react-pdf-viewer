@@ -269,14 +269,8 @@ export const Inner: React.FC<{
         renderQueue.resetQueue();
         setRotation(updateRotation);
         setViewerState({
-            file: viewerState.file,
-            pageIndex: currentPage,
-            pageHeight,
-            pageWidth,
-            pagesRotation,
+            ...stateRef.current,
             rotation: updateRotation,
-            scale,
-            scrollMode: currentScrollMode,
         });
         onRotate({ direction, doc, rotation: updateRotation });
     }, []);
@@ -292,15 +286,9 @@ export const Inner: React.FC<{
         // Force the pages to be re-virtualized
         setPagesRotationChanged((value) => !value);
         setViewerState({
-            file: viewerState.file,
-            pageIndex: currentPage,
-            pageHeight,
-            pageWidth,
+            ...stateRef.current,
             pagesRotation: updateRotations,
             rotatedPage: pageIndex,
-            rotation,
-            scale,
-            scrollMode: currentScrollMode,
         });
         onRotatePage({ direction, doc, pageIndex, rotation: finalRotation });
 
@@ -311,13 +299,7 @@ export const Inner: React.FC<{
 
     const switchScrollMode = React.useCallback((scrollMode: ScrollMode) => {
         setViewerState({
-            file: viewerState.file,
-            pageIndex: stateRef.current.pageIndex,
-            pageHeight,
-            pageWidth,
-            pagesRotation,
-            rotation,
-            scale,
+            ...stateRef.current,
             scrollMode,
         });
         setCurrentScrollMode(scrollMode);
@@ -343,15 +325,8 @@ export const Inner: React.FC<{
         onZoom({ doc, scale: updateScale });
 
         setViewerState({
-            file: viewerState.file,
-            // Keep the current page after zooming
-            pageIndex: currentPage,
-            pageHeight,
-            pageWidth,
-            pagesRotation,
-            rotation,
+            ...stateRef.current,
             scale: updateScale,
-            scrollMode: currentScrollMode,
         });
     }, []);
 
@@ -419,14 +394,8 @@ export const Inner: React.FC<{
             onPageChange({ currentPage, doc });
         }
         setViewerState({
-            file: viewerState.file,
+            ...stateRef.current,
             pageIndex: currentPage,
-            pageHeight,
-            pageWidth,
-            pagesRotation,
-            rotation,
-            scale,
-            scrollMode: currentScrollMode,
         });
 
         // The range of pages that will be rendered
