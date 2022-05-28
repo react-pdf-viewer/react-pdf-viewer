@@ -314,6 +314,11 @@ export const Inner: React.FC<{
             : 1;
 
         keepSpecialZoomLevelRef.current = typeof newScale === 'string' ? newScale : null;
+        if (updateScale === stateRef.current.scale) {
+            // Prevent the case where users continue zooming
+            // when the document reaches the minimum/maximum zooming scale
+            return;
+        }
 
         renderQueue.markRangeNotRendered();
 
