@@ -76,10 +76,6 @@ export const useRenderQueue = ({ doc }: { doc: PdfJs.PdfDocument }): UseRenderQu
     };
 
     const markRendering = (pageIndex: number) => {
-        if (pageIndex > latestRef.current.endRange) {
-            return;
-        }
-
         if (
             latestRef.current.currentRenderingPage !== -1 &&
             latestRef.current.currentRenderingPage !== pageIndex &&
