@@ -9,11 +9,11 @@
 import * as React from 'react';
 import { useDebounceCallback } from '../hooks/useDebounceCallback';
 import { useIsomorphicLayoutEffect } from '../hooks/useIsomorphicLayoutEffect';
+import { useRenderQueue } from '../hooks/useRenderQueue';
 import { useTrackResize } from '../hooks/useTrackResize';
 import { useVirtual } from '../hooks/useVirtual';
 import { PageLayer } from '../layers/PageLayer';
 import { LocalizationContext } from '../localization/LocalizationContext';
-import { renderQueueService, RenderQueueService } from '../services/renderQueueService';
 import { RotateDirection } from '../structs/RotateDirection';
 import { ScrollMode } from '../structs/ScrollMode';
 import { SpecialZoomLevel } from '../structs/SpecialZoomLevel';
@@ -94,19 +94,11 @@ export const Inner: React.FC<{
     );
 
     const [renderPageIndex, setRenderPageIndex] = React.useState(-1);
+    const [renderQueueKey, setRenderQueueKey] = React.useState(0);
 
-    const renderQueueInstanceRef = React.useRef<RenderQueueService>();
+    const renderQueue = useRenderQueue({ doc });
     React.useEffect(() => {
-        // To support the Strict Mode in React 18
-        // We need to re-initialize the render queue here, because the queue will be cleaned up
-        const renderQueue = (renderQueueInstanceRef.current = renderQueueService({
-            doc,
-            queueName: 'core-pages',
-            priority: 0,
-        }));
-
         return () => {
-            renderQueue.cleanup();
             clearPagesCache();
         };
     }, [docId]);
@@ -275,17 +267,11 @@ export const Inner: React.FC<{
         const updateRotation =
             currentRotation === 360 || currentRotation === -360 ? degrees : currentRotation + degrees;
 
-        renderQueueInstanceRef.current.resetQueue();
+        renderQueue.markNotRendered();
         setRotation(updateRotation);
         setViewerState({
-            file: viewerState.file,
-            pageIndex: currentPage,
-            pageHeight,
-            pageWidth,
-            pagesRotation,
+            ...stateRef.current,
             rotation: updateRotation,
-            scale,
-            scrollMode: currentScrollMode,
         });
         onRotate({ direction, doc, rotation: updateRotation });
     }, []);
@@ -301,40 +287,26 @@ export const Inner: React.FC<{
         // Force the pages to be re-virtualized
         setPagesRotationChanged((value) => !value);
         setViewerState({
-            file: viewerState.file,
-            pageIndex: currentPage,
-            pageHeight,
-            pageWidth,
+            ...stateRef.current,
             pagesRotation: updateRotations,
             rotatedPage: pageIndex,
-            rotation,
-            scale,
-            scrollMode: currentScrollMode,
         });
         onRotatePage({ direction, doc, pageIndex, rotation: finalRotation });
 
         // Rerender the target page
-        renderQueueInstanceRef.current.markRendering(pageIndex);
+        renderQueue.markRendering(pageIndex);
         setRenderPageIndex(pageIndex);
     }, []);
 
     const switchScrollMode = React.useCallback((scrollMode: ScrollMode) => {
         setViewerState({
-            file: viewerState.file,
-            pageIndex: stateRef.current.pageIndex,
-            pageHeight,
-            pageWidth,
-            pagesRotation,
-            rotation,
-            scale,
+            ...stateRef.current,
             scrollMode,
         });
         setCurrentScrollMode(scrollMode);
     }, []);
 
     const zoom = React.useCallback((newScale: number | SpecialZoomLevel) => {
-        renderQueueInstanceRef.current.resetQueue();
-
         const pagesEle = pagesRef.current;
         let updateScale = pagesEle
             ? typeof newScale === 'string'
@@ -343,6 +315,14 @@ export const Inner: React.FC<{
             : 1;
 
         keepSpecialZoomLevelRef.current = typeof newScale === 'string' ? newScale : null;
+        if (updateScale === stateRef.current.scale) {
+            // Prevent the case where users continue zooming
+            // when the document reaches the minimum/maximum zooming scale
+            return;
+        }
+
+        setRenderQueueKey((key) => key + 1);
+        renderQueue.markNotRendered();
 
         // Keep the current scroll position
         pagesEle.scrollTop = (pagesEle.scrollTop * updateScale) / stateRef.current.scale;
@@ -352,15 +332,8 @@ export const Inner: React.FC<{
         onZoom({ doc, scale: updateScale });
 
         setViewerState({
-            file: viewerState.file,
-            // Keep the current page after zooming
-            pageIndex: currentPage,
-            pageHeight,
-            pageWidth,
-            pagesRotation,
-            rotation,
+            ...stateRef.current,
             scale: updateScale,
-            scrollMode: currentScrollMode,
         });
     }, []);
 
@@ -428,22 +401,16 @@ export const Inner: React.FC<{
             onPageChange({ currentPage, doc });
         }
         setViewerState({
-            file: viewerState.file,
+            ...stateRef.current,
             pageIndex: currentPage,
-            pageHeight,
-            pageWidth,
-            pagesRotation,
-            rotation,
-            scale,
-            scrollMode: currentScrollMode,
         });
 
         // The range of pages that will be rendered
-        renderQueueInstanceRef.current.setRange(startRange, endRange);
+        renderQueue.setRange(startRange, endRange);
         for (let i = startRange; i <= endRange; i++) {
             const item = virtualItems.find((item) => item.index === i);
             if (item) {
-                renderQueueInstanceRef.current.setVisibility(i, item.visibility);
+                renderQueue.setVisibility(i, item.visibility);
             }
         }
 
@@ -457,15 +424,18 @@ export const Inner: React.FC<{
         scale,
     ]);
 
-    const handlePageRenderCompleted = React.useCallback((pageIndex: number) => {
-        renderQueueInstanceRef.current.markRendered(pageIndex);
-        renderNextPage();
-    }, []);
+    const handlePageRenderCompleted = React.useCallback(
+        (pageIndex: number) => {
+            renderQueue.markRendered(pageIndex);
+            renderNextPage();
+        },
+        [renderQueueKey]
+    );
 
     const renderNextPage = () => {
-        const nextPage = renderQueueInstanceRef.current.getHighestPriorityPage();
-        if (nextPage > -1) {
-            renderQueueInstanceRef.current.markRendering(nextPage);
+        const nextPage = renderQueue.getHighestPriorityPage();
+        if (nextPage > -1 && renderQueue.isInRange(nextPage)) {
+            renderQueue.markRendering(nextPage);
             setRenderPageIndex(nextPage);
         }
     };
@@ -540,6 +510,7 @@ export const Inner: React.FC<{
                                     pageRotation={pagesRotation.has(item.index) ? pagesRotation.get(item.index) : 0}
                                     plugins={plugins}
                                     renderPage={renderPage}
+                                    renderQueueKey={renderQueueKey}
                                     rotation={rotation}
                                     scale={scale}
                                     shouldRender={renderPageIndex === item.index}

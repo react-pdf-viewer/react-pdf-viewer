@@ -6,4 +6,5 @@
  * @copyright 2019-2022 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
+/// <reference path="../types/PdfJs.ts" />
 export * as PdfJsApi from 'pdfjs-dist';

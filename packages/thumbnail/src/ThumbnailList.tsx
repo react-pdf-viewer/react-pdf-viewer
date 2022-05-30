@@ -6,15 +6,15 @@
  * @copyright 2019-2022 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import type { PdfJs, RenderQueueService, VisibilityChanged } from '@react-pdf-viewer/core';
+import type { PdfJs, VisibilityChanged } from '@react-pdf-viewer/core';
 import {
     classNames,
-    renderQueueService,
     RotateDirection,
     TextDirection,
     ThemeContext,
     useIsMounted,
     useIsomorphicLayoutEffect,
+    useRenderQueue,
 } from '@react-pdf-viewer/core';
 import * as React from 'react';
 import { scrollToBeVisible } from './scrollToBeVisible';
@@ -65,6 +65,8 @@ export const ThumbnailList: React.FC<{
     // Without this ref, it only renders only one thumnail. Is it caused by batching in React 18?
     const hasRenderingThumbnailRef = React.useRef(false);
 
+    const renderQueue = useRenderQueue({ doc });
+
     const pageIndexes = React.useMemo(
         () =>
             Array(numPages)
@@ -72,21 +74,6 @@ export const ThumbnailList: React.FC<{
                 .map((_, pageIndex) => pageIndex),
         [docId]
     );
-
-    const renderQueueInstanceRef = React.useRef<RenderQueueService>();
-    React.useEffect(() => {
-        // To support the Strict Mode in React 18
-        // We need to re-initialize the render queue here, because the queue will be cleaned up
-        const renderQueue = (renderQueueInstanceRef.current = renderQueueService({
-            doc,
-            queueName: 'thumbnail-list',
-            priority: 999,
-        }));
-
-        return () => {
-            renderQueue.cleanup();
-        };
-    }, [docId]);
 
     const handleKeyDown = (e: React.KeyboardEvent) => {
         switch (e.key) {
@@ -182,7 +169,7 @@ export const ThumbnailList: React.FC<{
     const handleRenderCompleted = React.useCallback(
         (pageIndex: number) => {
             if (isMounted.current) {
-                renderQueueInstanceRef.current.markRendered(pageIndex);
+                renderQueue.markRendered(pageIndex);
                 hasRenderingThumbnailRef.current = false;
                 renderNextThumbnail();
             }
@@ -193,9 +180,9 @@ export const ThumbnailList: React.FC<{
     const handleVisibilityChanged = React.useCallback(
         (pageIndex: number, visibility: VisibilityChanged) => {
             visibility.isVisible
-                ? renderQueueInstanceRef.current.setVisibility(pageIndex, visibility.ratio)
+                ? renderQueue.setVisibility(pageIndex, visibility.ratio)
                 : // Notice that we don't virtualize the list of thumbnails
-                  renderQueueInstanceRef.current.setOutOfRange(pageIndex);
+                  renderQueue.setOutOfRange(pageIndex);
             renderNextThumbnail();
         },
         [docId]
@@ -206,9 +193,9 @@ export const ThumbnailList: React.FC<{
             return;
         }
 
-        const nextPage = renderQueueInstanceRef.current.getHighestPriorityPage();
+        const nextPage = renderQueue.getHighestPriorityPage();
         if (nextPage > -1) {
-            renderQueueInstanceRef.current.markRendering(nextPage);
+            renderQueue.markRendering(nextPage);
             hasRenderingThumbnailRef.current = true;
             setRenderPageIndex(nextPage);
         }
@@ -217,7 +204,7 @@ export const ThumbnailList: React.FC<{
     React.useEffect(() => {
         if (rotatedPage >= 0) {
             // Re-render the thumbnail of page which has just been rotated
-            renderQueueInstanceRef.current.markRendering(rotatedPage);
+            renderQueue.markRendering(rotatedPage);
             hasRenderingThumbnailRef.current = true;
             setRenderPageIndex(rotatedPage);
         }
