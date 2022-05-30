@@ -35,6 +35,7 @@ export const PageLayer: React.FC<{
     pageRotation: number;
     plugins: Plugin[];
     renderPage?: RenderPage;
+    renderQueueKey: number;
     rotation: number;
     scale: number;
     shouldRender: boolean;
@@ -51,6 +52,7 @@ export const PageLayer: React.FC<{
     pageRotation,
     plugins,
     renderPage,
+    renderQueueKey,
     rotation,
     scale,
     shouldRender,
@@ -82,16 +84,20 @@ export const PageLayer: React.FC<{
     // To support the document which is already rotated
     const rotationValue = (pageSize.viewportRotation + rotation + pageRotation) % 360;
 
+    const renderQueueKeyRef = React.useRef(0);
+
     const determinePageSize = () => {
         getPage(doc, pageIndex).then((pdfPage) => {
             const viewport = pdfPage.getViewport({ scale: 1 });
-            isMounted.current &&
+            if (isMounted.current) {
+                renderQueueKeyRef.current = renderQueueKey;
                 setPageSize({
                     page: pdfPage,
                     pageHeight: viewport.height,
                     pageWidth: viewport.width,
                     viewportRotation: viewport.rotation,
                 });
+            }
         });
     };
 
@@ -135,7 +141,21 @@ export const PageLayer: React.FC<{
 
     React.useEffect(() => {
         if (canvasLayerRendered && textLayerRendered) {
-            onRenderCompleted(pageIndex);
+            if (renderQueueKey !== renderQueueKeyRef.current) {
+                // The page is rendered in the queue which is not the current queue
+                // (For example, when users zoom or rotate the document)
+                // Reset page and layer statuses
+                setPageSize({
+                    page: null,
+                    pageHeight: height,
+                    pageWidth: width,
+                    viewportRotation: 0,
+                });
+                setCanvasLayerRendered(false);
+                setTextLayerRendered(false);
+            } else {
+                onRenderCompleted(pageIndex);
+            }
         }
     }, [canvasLayerRendered, textLayerRendered]);
 

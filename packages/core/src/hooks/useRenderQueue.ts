@@ -31,7 +31,7 @@ interface RenderQueue {
 export interface UseRenderQueue {
     getHighestPriorityPage: () => number;
     isInRange: (pageIndex: number) => boolean;
-    markRangeNotRendered: () => void;
+    markNotRendered: () => void;
     markRendered: (pageIndex: number) => void;
     markRendering: (pageIndex: number) => void;
     setOutOfRange: (pageIndex: number) => void;
@@ -64,14 +64,16 @@ export const useRenderQueue = ({ doc }: { doc: PdfJs.PdfDocument }): UseRenderQu
         visibilities: initialPageVisibilities,
     });
 
-    // Mark all pages in the current range as not rendered yet
-    const markRangeNotRendered = () => {
-        for (let i = latestRef.current.startRange; i <= latestRef.current.endRange; i++) {
+    // Mark all pages as not rendered yet
+    const markNotRendered = () => {
+        for (let i = 0; i < numPages; i++) {
             latestRef.current.visibilities[i].renderStatus = PageRenderStatus.NotRenderedYet;
         }
     };
 
     const markRendered = (pageIndex: number) => {
+        // Don't compare the `pageIndex` with the `currentRenderingPage`
+        // because there is a case a page need to be marked as rendered
         latestRef.current.visibilities[pageIndex].renderStatus = PageRenderStatus.Rendered;
     };
 
@@ -161,7 +163,7 @@ export const useRenderQueue = ({ doc }: { doc: PdfJs.PdfDocument }): UseRenderQu
     return {
         getHighestPriorityPage,
         isInRange,
-        markRangeNotRendered,
+        markNotRendered,
         markRendered,
         markRendering,
         setOutOfRange,

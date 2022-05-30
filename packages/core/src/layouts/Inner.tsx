@@ -94,6 +94,7 @@ export const Inner: React.FC<{
     );
 
     const [renderPageIndex, setRenderPageIndex] = React.useState(-1);
+    const [renderQueueKey, setRenderQueueKey] = React.useState(0);
 
     const renderQueue = useRenderQueue({ doc });
     React.useEffect(() => {
@@ -266,7 +267,7 @@ export const Inner: React.FC<{
         const updateRotation =
             currentRotation === 360 || currentRotation === -360 ? degrees : currentRotation + degrees;
 
-        renderQueue.markRangeNotRendered();
+        renderQueue.markNotRendered();
         setRotation(updateRotation);
         setViewerState({
             ...stateRef.current,
@@ -320,7 +321,8 @@ export const Inner: React.FC<{
             return;
         }
 
-        renderQueue.markRangeNotRendered();
+        setRenderQueueKey((key) => key + 1);
+        renderQueue.markNotRendered();
 
         // Keep the current scroll position
         pagesEle.scrollTop = (pagesEle.scrollTop * updateScale) / stateRef.current.scale;
@@ -422,10 +424,13 @@ export const Inner: React.FC<{
         scale,
     ]);
 
-    const handlePageRenderCompleted = React.useCallback((pageIndex: number) => {
-        renderQueue.markRendered(pageIndex);
-        renderNextPage();
-    }, []);
+    const handlePageRenderCompleted = React.useCallback(
+        (pageIndex: number) => {
+            renderQueue.markRendered(pageIndex);
+            renderNextPage();
+        },
+        [renderQueueKey]
+    );
 
     const renderNextPage = () => {
         const nextPage = renderQueue.getHighestPriorityPage();
@@ -505,6 +510,7 @@ export const Inner: React.FC<{
                                     pageRotation={pagesRotation.has(item.index) ? pagesRotation.get(item.index) : 0}
                                     plugins={plugins}
                                     renderPage={renderPage}
+                                    renderQueueKey={renderQueueKey}
                                     rotation={rotation}
                                     scale={scale}
                                     shouldRender={renderPageIndex === item.index}

@@ -6,6 +6,7 @@
 
 -   Clicking `Enter` automatically jumps to the next match when being focused on the keyword field
 -   Support documents which are optimized for web. Users don't have to wait the full document loaded to see the first page.
+-   There is a page that is not rendered even it is visible when users zoom the document
 
 **Bug fixes**
 
