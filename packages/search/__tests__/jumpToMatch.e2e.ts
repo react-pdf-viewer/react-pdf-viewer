@@ -51,7 +51,7 @@ test('jumpToMatch in a custom search sidebar', async () => {
     await page.waitForSelector('[data-testid="core__text-layer-7"]', { visible: true });
     position = await getPosition();
     expect(position.index).toEqual('0');
-    expect(position.left).toEqual('60.8209%');
+    expect(position.left).toEqual('60.8208%');
     expect(position.top).toEqual('42.0421%');
 
     // Jump to the second match whose container page isn't in the virtual list
