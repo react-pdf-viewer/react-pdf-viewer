@@ -118,7 +118,7 @@ export const useRenderQueue = ({ doc }: { doc: PdfJs.PdfDocument }): UseRenderQu
     const getHighestPriorityPage = (): number => {
         // Find all visible pages which belongs to the range
         const visiblePages = latestRef.current.visibilities
-            .slice(latestRef.current.startRange, latestRef.current.endRange)
+            .slice(latestRef.current.startRange, latestRef.current.endRange + 1)
             .filter((item) => item.visibility > OUT_OF_RANGE_VISIBILITY);
         if (!visiblePages.length) {
             return -1;
