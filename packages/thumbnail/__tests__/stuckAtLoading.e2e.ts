@@ -14,9 +14,9 @@ test('The thumbnails are stuck at loading', async () => {
 
     let firstThumbnail = await page.waitForSelector('[aria-label="Thumbnail of page 1"]');
     let src = await firstThumbnail.evaluate((ele) => ele.getAttribute('src'));
-    expect(src.length).toEqual(3702);
+    expect(src.length).toEqual(3518);
     expect(src.substring(0, 100)).toEqual(
-        'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAACFCAYAAACt+l1zAAAAAXNSR0IArs4c6QAACoJJREFUeF7tnX'
+        'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAACFCAYAAACt+l1zAAAAAXNSR0IArs4c6QAACfdJREFUeF7tnX'
     );
 
     // Trigger re-renderer
@@ -44,8 +44,8 @@ test('The thumbnails are stuck at loading', async () => {
 
     firstThumbnail = await page.waitForSelector('[aria-label="Thumbnail of page 1"]');
     src = await firstThumbnail.evaluate((ele) => ele.getAttribute('src'));
-    expect(src.length).toEqual(5134);
+    expect(src.length).toEqual(5162);
     expect(src.substring(0, 100)).toEqual(
-        'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAACNCAYAAABBqd8eAAAAAXNSR0IArs4c6QAADrNJREFUeF7t3F'
+        'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAACNCAYAAABBqd8eAAAAAXNSR0IArs4c6QAADshJREFUeF7t3F'
     );
 });
