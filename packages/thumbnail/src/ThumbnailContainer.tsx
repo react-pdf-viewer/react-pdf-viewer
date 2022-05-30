@@ -7,7 +7,7 @@
  */
 
 import type { PdfJs, VisibilityChanged } from '@react-pdf-viewer/core';
-import { getPage, useIntersectionObserver } from '@react-pdf-viewer/core';
+import { getPage, useIntersectionObserver, useIsMounted } from '@react-pdf-viewer/core';
 import * as React from 'react';
 import { SpinnerContext } from './SpinnerContext';
 import { ThumbnailItem } from './ThumbnailItem';
@@ -42,6 +42,7 @@ export const ThumbnailContainer: React.FC<{
     onRenderCompleted,
     onVisibilityChanged,
 }) => {
+    const isMounted = useIsMounted();
     const [pageSize, setPageSize] = React.useState<PageState>({
         height: pageHeight,
         page: null,
@@ -59,12 +60,13 @@ export const ThumbnailContainer: React.FC<{
         if (shouldRender) {
             getPage(doc, pageIndex).then((pdfPage) => {
                 const viewport = pdfPage.getViewport({ scale: 1 });
-                setPageSize({
-                    height: viewport.height,
-                    page: pdfPage,
-                    viewportRotation: viewport.rotation,
-                    width: viewport.width,
-                });
+                isMounted.current &&
+                    setPageSize({
+                        height: viewport.height,
+                        page: pdfPage,
+                        viewportRotation: viewport.rotation,
+                        width: viewport.width,
+                    });
             });
         }
     }, [shouldRender]);

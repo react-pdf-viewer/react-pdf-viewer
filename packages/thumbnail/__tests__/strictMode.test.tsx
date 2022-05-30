@@ -81,10 +81,10 @@ test('Support Strict mode', async () => {
 
     const firstThumbnailImage = await findByLabelText('Thumbnail of page 1');
     let src = firstThumbnailImage.getAttribute('src');
-    expect(src.substring(0, 100)).toEqual(
-        'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAACFCAYAAACt+l1zAAAABmJLR0QA/wD/AP+gvaeTAAAKgUlEQV'
+    expect(src.slice(-100)).toEqual(
+        'g5q5u9+1tNDZs+y0tLZiUW7cJm7ZQhRFYcdbf7xnA1vITNN8XeAtW4h0f8mDumBkEMHIIIL5Hw+y6qIMqKXCAAAAAElFTkSuQmCC'
     );
-    expect(src.length).toEqual(3710);
+    expect(src.length).toEqual(3662);
 
     // Wait until the second thumbnail is rendered
     let secondThumbnailContainer = await findByTestId('thumbnail__container-1');

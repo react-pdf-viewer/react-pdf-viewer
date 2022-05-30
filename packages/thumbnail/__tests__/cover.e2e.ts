@@ -20,7 +20,7 @@ test('Cover component', async () => {
     expect(result.src.substring(0, 100)).toEqual(
         'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAO4AAAE+CAYAAACKpyy5AAAAAXNSR0IArs4c6QAAIABJREFUeF7tnQ'
     );
-    expect(result.src.length).toEqual(13702);
+    expect(result.src.length).toEqual(13406);
     expect(result.height).toEqual(318);
     expect(result.width).toEqual(238);
 
@@ -39,7 +39,7 @@ test('Cover component', async () => {
     expect(result.src.substring(0, 100)).toEqual(
         'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOAAAAE+CAYAAACUbhwKAAAAAXNSR0IArs4c6QAAIABJREFUeF7t3Q'
     );
-    expect(result.src.length).toEqual(19870);
+    expect(result.src.length).toEqual(19922);
     expect(result.height).toEqual(318);
     expect(result.width).toEqual(224);
 });

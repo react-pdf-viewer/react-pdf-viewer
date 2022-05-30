@@ -116,9 +116,9 @@ test('Test multiple <Cover />', async () => {
 
     let image = await findByTestId('thumbnail__cover-image');
     let src = image.getAttribute('src');
-    expect(src.length).toEqual(12246);
+    expect(src.length).toEqual(12154);
     expect(src.slice(-100)).toEqual(
-        'IUTbkyebQihIwhVCQRKuEAqScIVQkIQrhIIkXCEUJOEKoSAJVwgFSbhCKEjCFUJBEq4QCvp/uBwJY9su364AAAAASUVORK5CYII='
+        'IeqfHGwKoSAJVwgFSbhCKEjCFUJBEq4QCpJwhVCQhCuEgiRcIRQk4QqhIAlXCAVJuEIo6P8DgxmhOluzxw0AAAAASUVORK5CYII='
     );
 
     // So we can query the cover of second document

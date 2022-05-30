@@ -7,7 +7,7 @@ import '../styles/index.css';
 
 export default function MyApp({ Component, pageProps }) {
     return (
-        <Worker workerUrl="https://unpkg.com/pdfjs-dist@2.13.216/build/pdf.worker.js">
+        <Worker workerUrl="https://unpkg.com/pdfjs-dist@2.14.305/build/pdf.worker.js">
             <Component {...pageProps} />
         </Worker>
     );
