@@ -42,11 +42,11 @@ test('Keep highlighting after clicking zoom buttons in the default toolbar', asy
     expect(areas.length).toEqual(8);
 
     expect(areas[0].height).toEqual('1.607%');
-    expect(areas[0].width).toEqual('7.16717%');
+    expect(areas[0].width).toEqual('7.16704%');
     expect(areas[0].index).toEqual('7');
 
     expect(areas[1].height).toEqual('1.607%');
-    expect(areas[1].width).toEqual('7.1247%');
+    expect(areas[1].width).toEqual('7.12442%');
     expect(areas[1].index).toEqual('6');
 
     // Click the zoom in button
@@ -57,10 +57,10 @@ test('Keep highlighting after clicking zoom buttons in the default toolbar', asy
     expect(areas.length).toEqual(8);
 
     expect(areas[2].height).toEqual('1.55401%');
-    expect(areas[2].width).toEqual('7.29663%');
+    expect(areas[2].width).toEqual('7.29661%');
     expect(areas[2].index).toEqual('5');
 
     expect(areas[3].height).toEqual('1.55401%');
-    expect(areas[3].width).toEqual('7.22995%');
+    expect(areas[3].width).toEqual('7.22953%');
     expect(areas[3].index).toEqual('4');
 });
