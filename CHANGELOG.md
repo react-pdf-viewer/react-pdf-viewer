@@ -1,17 +1,17 @@
 # CHANGELOG
 
-## v3.3.3 [WIP]
+## v3.3.3
 
 **Improvements**
 
 -   Clicking `Enter` automatically jumps to the next match when being focused on the keyword field
 -   Support documents which are optimized for web. Users don't have to wait the full document loaded to see the first page.
--   There is a page that is not rendered even it is visible when users zoom the document
 
 **Bug fixes**
 
 -   Automatically scroll to the thumbnail of the initial page when it's set
 -   The text might not be selectable if a plugin registers the `renderPageLayer` method
+-   There is a page that is not rendered even it is visible when users zoom the document
 
 ## v3.3.2
 
