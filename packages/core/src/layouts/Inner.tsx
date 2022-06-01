@@ -323,13 +323,15 @@ export const Inner: React.FC<{
             return;
         }
 
-        setRenderQueueKey((key) => key + 1);
-        renderQueue.markNotRendered();
         scrollOffsetRef.current = {
             top: pagesEle.scrollTop,
             left: pagesEle.scrollLeft,
             scale: stateRef.current.scale,
         };
+        console.log(scrollOffsetRef.current)
+
+        setRenderQueueKey((key) => key + 1);
+        renderQueue.markNotRendered();
 
         setScale(updateScale);
         onZoom({ doc, scale: updateScale });
@@ -404,9 +406,11 @@ export const Inner: React.FC<{
         const latestPage = stateRef.current.pageIndex;
         const pagesEle = pagesRef.current;
         if (latestPage > -1 && pagesEle) {
+            console.log(scrollOffsetRef.current, scale);
+            console.log(scrollOffsetRef.current.top * scale / scrollOffsetRef.current.scale)
             // Keep the current scroll position
-            pagesEle.scrollTop = (scrollOffsetRef.current.top * scale) / scrollOffsetRef.current.scale;
-            pagesEle.scrollLeft = (scrollOffsetRef.current.left * scale) / scrollOffsetRef.current.scale;
+            pagesEle.scrollTop = scrollOffsetRef.current.top * scale / scrollOffsetRef.current.scale;
+            pagesEle.scrollLeft = scrollOffsetRef.current.left * scale / scrollOffsetRef.current.scale;
         }
     }, [scale]);
 

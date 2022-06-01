@@ -21,6 +21,10 @@
 
     // Misc
     line-height: 1;
+
+    // Make it displayed on top of the shadow layer
+    // so users can select text of pages
+    z-index: 1;
 }
 
 .rpv-core__text-layer ::selection {
