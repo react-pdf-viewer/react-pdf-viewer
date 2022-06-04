@@ -13,7 +13,8 @@ export const smoothScroll = (
     scrollMode: ScrollMode,
     targetPosition: number,
     duration: number,
-    easing: (t: number) => number
+    easing: (t: number) => number = (t) => t,
+    onReachTarget: () => void = () => {}
 ) => {
     let start = 0;
     switch (scrollMode) {
@@ -43,13 +44,17 @@ export const smoothScroll = (
         const percent = Math.min(time / duration, 1);
         const easedPercent = easing(percent);
 
+        let updatePosition = start - offset * easedPercent;
         switch (scrollMode) {
             case ScrollMode.Horizontal:
-                ele.scrollLeft = start - offset * easedPercent;
+                ele.scrollLeft = updatePosition;
             case ScrollMode.Vertical:
             default:
-                ele.scrollTop = start - offset * easedPercent;
+                ele.scrollTop = updatePosition;
                 break;
+        }
+        if (updatePosition === targetPosition) {
+            onReachTarget();
         }
 
         if (time < duration) {

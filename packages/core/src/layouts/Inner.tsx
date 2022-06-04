@@ -86,7 +86,9 @@ export const Inner: React.FC<{
     // The rotation for each page
     const [pagesRotationChanged, setPagesRotationChanged] = React.useState(false);
     const [pagesRotation, setPagesRotation] = React.useState(new Map<number, number>());
+
     const [currentScrollMode, setCurrentScrollMode] = React.useState(scrollMode);
+
     const stateRef = React.useRef<ViewerState>(viewerState);
     const [scale, setScale] = React.useState(pageSize.scale);
     const keepSpecialZoomLevelRef = React.useRef<SpecialZoomLevel | null>(
@@ -390,16 +392,20 @@ export const Inner: React.FC<{
         }
     }, [currentScrollMode]);
 
+    React.useEffect(() => {
+        const { isSmoothScrolling, maxVisbilityIndex } = virtualizer;
+        if (currentPage === stateRef.current.pageIndex && !isSmoothScrolling) {
+            onPageChange({ currentPage: maxVisbilityIndex, doc });
+        }
+    }, [currentPage, virtualizer.isSmoothScrolling]);
+
     // This hook should be placed at the end of hooks
     React.useEffect(() => {
         const { startRange, endRange, maxVisbilityIndex, virtualItems } = virtualizer;
         // The current page is the page which has the biggest visibility
         const currentPage = maxVisbilityIndex;
+
         setCurrentPage(currentPage);
-        // Only trigger if the current page changes
-        if (stateRef.current.pageIndex !== currentPage) {
-            onPageChange({ currentPage, doc });
-        }
         setViewerState({
             ...stateRef.current,
             pageIndex: currentPage,

@@ -30,10 +30,12 @@ export const useScroll = ({
     elementRef,
     isRtl,
     scrollMode,
+    onSmoothScroll,
 }: {
     elementRef: React.MutableRefObject<HTMLDivElement>;
     isRtl: boolean;
     scrollMode: ScrollMode;
+    onSmoothScroll: (isScrollingSmoothly: boolean) => void;
 }): {
     scrollOffset: Offset;
     scrollTo: (offset: Offset) => void;
@@ -44,6 +46,29 @@ export const useScroll = ({
     const latestRef = React.useRef(scrollMode);
     latestRef.current = scrollMode;
 
+    const handleSmoothScrollingComplete = React.useCallback(() => onSmoothScroll(false), []);
+
+    const handleScroll = React.useCallback(() => {
+        if (!element) {
+            return;
+        }
+        switch (latestRef.current) {
+            case ScrollMode.Horizontal:
+                setScrollOffset({
+                    left: factor * element.scrollLeft,
+                    top: 0,
+                });
+                break;
+            case ScrollMode.Vertical:
+            default:
+                setScrollOffset({
+                    left: 0,
+                    top: element.scrollTop,
+                });
+                break;
+        }
+    }, [element]);
+
     useIsomorphicLayoutEffect(() => {
         setElement(elementRef.current);
     });
@@ -52,24 +77,6 @@ export const useScroll = ({
         if (!element) {
             return;
         }
-        const handleScroll = () => {
-            switch (latestRef.current) {
-                case ScrollMode.Horizontal:
-                    setScrollOffset({
-                        left: factor * element.scrollLeft,
-                        top: 0,
-                    });
-                    break;
-                case ScrollMode.Vertical:
-                default:
-                    setScrollOffset({
-                        left: 0,
-                        top: element.scrollTop,
-                    });
-                    break;
-            }
-        };
-
         // Handle the scroll event
         element.addEventListener('scroll', handleScroll, SCROLL_EVENT_OPTIONS);
 
@@ -82,6 +89,7 @@ export const useScroll = ({
         (targetPosition: Offset) => {
             const ele = elementRef.current;
             if (ele) {
+                onSmoothScroll(true);
                 switch (latestRef.current) {
                     case ScrollMode.Horizontal:
                         smoothScroll(
@@ -89,12 +97,20 @@ export const useScroll = ({
                             ScrollMode.Horizontal,
                             factor * targetPosition.left,
                             SCROLL_DURATION,
-                            easeOutQuart
+                            easeOutQuart,
+                            handleSmoothScrollingComplete
                         );
                         break;
                     case ScrollMode.Vertical:
                     default:
-                        smoothScroll(ele, ScrollMode.Vertical, targetPosition.top, SCROLL_DURATION, easeOutQuart);
+                        smoothScroll(
+                            ele,
+                            ScrollMode.Vertical,
+                            targetPosition.top,
+                            SCROLL_DURATION,
+                            easeOutQuart,
+                            handleSmoothScrollingComplete
+                        );
                         break;
                 }
             }
