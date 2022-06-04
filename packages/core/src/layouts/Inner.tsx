@@ -9,6 +9,7 @@
 import * as React from 'react';
 import { useDebounceCallback } from '../hooks/useDebounceCallback';
 import { useIsomorphicLayoutEffect } from '../hooks/useIsomorphicLayoutEffect';
+import { usePrevious } from '../hooks/usePrevious';
 import { useRenderQueue } from '../hooks/useRenderQueue';
 import { useTrackResize } from '../hooks/useTrackResize';
 import { useVirtual } from '../hooks/useVirtual';
@@ -88,6 +89,7 @@ export const Inner: React.FC<{
     const [pagesRotation, setPagesRotation] = React.useState(new Map<number, number>());
 
     const [currentScrollMode, setCurrentScrollMode] = React.useState(scrollMode);
+    const previousScrollMode = usePrevious(currentScrollMode);
 
     const stateRef = React.useRef<ViewerState>(viewerState);
     const [scale, setScale] = React.useState(pageSize.scale);
@@ -387,15 +389,15 @@ export const Inner: React.FC<{
     // Scroll to the current page after switching the scroll mode
     useIsomorphicLayoutEffect(() => {
         const latestPage = stateRef.current.pageIndex;
-        if (latestPage > -1) {
+        if (latestPage > -1 && previousScrollMode !== currentScrollMode) {
             virtualizer.scrollToItem(latestPage, { left: 0, top: 0 });
         }
     }, [currentScrollMode]);
 
     React.useEffect(() => {
-        const { isSmoothScrolling, maxVisbilityIndex } = virtualizer;
+        const { isSmoothScrolling } = virtualizer;
         if (currentPage === stateRef.current.pageIndex && !isSmoothScrolling) {
-            onPageChange({ currentPage: maxVisbilityIndex, doc });
+            onPageChange({ currentPage, doc });
         }
     }, [currentPage, virtualizer.isSmoothScrolling]);
 
