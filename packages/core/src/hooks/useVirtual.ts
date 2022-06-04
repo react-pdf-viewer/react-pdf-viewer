@@ -279,6 +279,7 @@ export const useVirtual = ({
     // Modify the size of each item. For example, items might have paddings
     transformSize: (size: Rect) => Rect;
 }): {
+    isSmoothScrolling: boolean;
     startIndex: number;
     startRange: number;
     endIndex: number;
@@ -289,10 +290,14 @@ export const useVirtual = ({
     scrollToItem: (index: number, offset: Offset) => void;
     virtualItems: VirtualItem[];
 } => {
+    const [isSmoothScrolling, setSmoothScrolling] = React.useState(false);
+    const onSmoothScroll = React.useCallback((isSmoothScrolling: boolean) => setSmoothScrolling(isSmoothScrolling), []);
+
     const { scrollOffset, scrollTo } = useScroll({
         elementRef: parentRef,
         isRtl,
         scrollMode,
+        onSmoothScroll,
     });
     const parentRect = useMeasureRect({
         elementRef: parentRef,
@@ -514,6 +519,7 @@ export const useVirtual = ({
     );
 
     return {
+        isSmoothScrolling,
         startIndex: start,
         startRange,
         endIndex: end,

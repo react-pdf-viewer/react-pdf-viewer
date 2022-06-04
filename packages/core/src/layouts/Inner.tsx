@@ -9,6 +9,7 @@
 import * as React from 'react';
 import { useDebounceCallback } from '../hooks/useDebounceCallback';
 import { useIsomorphicLayoutEffect } from '../hooks/useIsomorphicLayoutEffect';
+import { usePrevious } from '../hooks/usePrevious';
 import { useRenderQueue } from '../hooks/useRenderQueue';
 import { useTrackResize } from '../hooks/useTrackResize';
 import { useVirtual } from '../hooks/useVirtual';
@@ -86,7 +87,10 @@ export const Inner: React.FC<{
     // The rotation for each page
     const [pagesRotationChanged, setPagesRotationChanged] = React.useState(false);
     const [pagesRotation, setPagesRotation] = React.useState(new Map<number, number>());
+
     const [currentScrollMode, setCurrentScrollMode] = React.useState(scrollMode);
+    const previousScrollMode = usePrevious(currentScrollMode);
+
     const stateRef = React.useRef<ViewerState>(viewerState);
     const [scale, setScale] = React.useState(pageSize.scale);
     const keepSpecialZoomLevelRef = React.useRef<SpecialZoomLevel | null>(
@@ -385,21 +389,25 @@ export const Inner: React.FC<{
     // Scroll to the current page after switching the scroll mode
     useIsomorphicLayoutEffect(() => {
         const latestPage = stateRef.current.pageIndex;
-        if (latestPage > -1) {
+        if (latestPage > -1 && previousScrollMode !== currentScrollMode) {
             virtualizer.scrollToItem(latestPage, { left: 0, top: 0 });
         }
     }, [currentScrollMode]);
+
+    React.useEffect(() => {
+        const { isSmoothScrolling } = virtualizer;
+        if (currentPage === stateRef.current.pageIndex && !isSmoothScrolling) {
+            onPageChange({ currentPage, doc });
+        }
+    }, [currentPage, virtualizer.isSmoothScrolling]);
 
     // This hook should be placed at the end of hooks
     React.useEffect(() => {
         const { startRange, endRange, maxVisbilityIndex, virtualItems } = virtualizer;
         // The current page is the page which has the biggest visibility
         const currentPage = maxVisbilityIndex;
+
         setCurrentPage(currentPage);
-        // Only trigger if the current page changes
-        if (stateRef.current.pageIndex !== currentPage) {
-            onPageChange({ currentPage, doc });
-        }
         setViewerState({
             ...stateRef.current,
             pageIndex: currentPage,
