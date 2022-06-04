@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## v3.3.4 [WIP]
+
+**Improvement**
+
+-   Smooth scroll when jumping to a given page or destination (clicking a bookmark, for example)
+
 ## v3.3.3
 
 **Improvements**

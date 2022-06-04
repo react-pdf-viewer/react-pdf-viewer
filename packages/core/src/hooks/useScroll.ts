@@ -9,6 +9,8 @@
 import * as React from 'react';
 import { ScrollMode } from '../structs/ScrollMode';
 import type { Offset } from '../types/Offset';
+import { easeOutQuart } from '../utils/easeOutQuart';
+import { smoothScroll } from '../utils/smoothScroll';
 import { useIsomorphicLayoutEffect } from './useIsomorphicLayoutEffect';
 import { useRafState } from './useRafState';
 
@@ -21,6 +23,8 @@ const SCROLL_EVENT_OPTIONS = {
     capture: false,
     passive: true,
 };
+
+const SCROLL_DURATION = 400;
 
 export const useScroll = ({
     elementRef,
@@ -75,16 +79,22 @@ export const useScroll = ({
     }, [element]);
 
     const scrollTo = React.useCallback(
-        (offset: Offset) => {
+        (targetPosition: Offset) => {
             const ele = elementRef.current;
             if (ele) {
                 switch (latestRef.current) {
                     case ScrollMode.Horizontal:
-                        ele.scrollLeft = factor * offset.left;
+                        smoothScroll(
+                            ele,
+                            ScrollMode.Horizontal,
+                            factor * targetPosition.left,
+                            SCROLL_DURATION,
+                            easeOutQuart
+                        );
                         break;
                     case ScrollMode.Vertical:
                     default:
-                        ele.scrollTop = offset.top;
+                        smoothScroll(ele, ScrollMode.Vertical, targetPosition.top, SCROLL_DURATION, easeOutQuart);
                         break;
                 }
             }
