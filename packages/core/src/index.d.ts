@@ -183,6 +183,15 @@ export enum LayerRenderStatus {
     DidRender,
 }
 
+export enum PageMode {
+    Attachments = 'UseAttachments',
+    Bookmarks = 'UseOutlines',
+    ContentGroup = 'UseOC',
+    Default = 'UserNone',
+    FullScreen = 'FullScreen',
+    Thumbnails = 'UseThumbs',
+}
+
 export enum Position {
     TopLeft = 'TOP_LEFT',
     TopCenter = 'TOP_CENTER',
@@ -563,6 +572,7 @@ export declare namespace PdfJs {
         getPage(pageIndex: number): Promise<Page>;
         getPageIndex(ref: OutlineRef): Promise<number>;
         getPageLabels(): Promise<string[] | null>;
+        getPageMode(): Promise<PageMode>;
     }
     interface GetDocumentParams {
         data?: FileData;

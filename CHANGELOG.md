@@ -1,6 +1,18 @@
 # CHANGELOG
 
-## v3.3.4 [WIP]
+## v3.4.0 [WIP]
+
+**New feature**
+
+-   It's possible to set the initial tab based on the document's page mode:
+
+```tsx
+import { defaultLayoutPlugin, setInitialTabFromPageMode } from '@react-pdf-viewer/default-layout';
+
+const defaultLayoutPluginInstance = defaultLayoutPlugin({
+    setInitialTab: setInitialTabFromPageMode,
+});
+```
 
 **Improvement**
 
