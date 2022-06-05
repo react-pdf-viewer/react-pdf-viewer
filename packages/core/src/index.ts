@@ -32,6 +32,7 @@ export { Popover } from './portal/Popover';
 export { Tooltip } from './portal/Tooltip';
 export { createStore } from './store/createStore';
 export { LayerRenderStatus } from './structs/LayerRenderStatus';
+export { PageMode } from './structs/PageMode';
 export { Position } from './structs/Position';
 export { RotateDirection } from './structs/RotateDirection';
 export { ScrollMode } from './structs/ScrollMode';

@@ -6,6 +6,8 @@
  * @copyright 2019-2022 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
+import { PageMode } from '../structs/PageMode';
+
 export declare namespace PdfJs {
     // Worker
     const GlobalWorkerOptions: GlobalWorker;
@@ -56,6 +58,7 @@ export declare namespace PdfJs {
         getPage(pageIndex: number): Promise<Page>;
         getPageIndex(ref: OutlineRef): Promise<number>;
         getPageLabels(): Promise<string[] | null>;
+        getPageMode(): Promise<PageMode>;
         getPermissions(): Promise<number[] | null>;
     }
     interface GetDocumentParams {
