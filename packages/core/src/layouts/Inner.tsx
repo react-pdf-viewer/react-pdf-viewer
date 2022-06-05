@@ -45,7 +45,7 @@ export const Inner: React.FC<{
     currentFile: OpenFile;
     defaultScale?: number | SpecialZoomLevel;
     doc: PdfJs.PdfDocument;
-    initialPage?: number;
+    initialPage: number;
     pageSize: PageSize;
     plugins: Plugin[];
     renderPage?: RenderPage;
@@ -81,7 +81,7 @@ export const Inner: React.FC<{
     const isRtl = themeContext.direction === TextDirection.RightToLeft;
     const containerRef = React.useRef<HTMLDivElement>();
     const pagesRef = React.useRef<HTMLDivElement>();
-    const [currentPage, setCurrentPage] = React.useState(0);
+    const [currentPage, setCurrentPage] = React.useState(initialPage);
     const [rotation, setRotation] = React.useState(0);
     // The rotation for each page
     const [pagesRotationChanged, setPagesRotationChanged] = React.useState(false);
@@ -386,7 +386,13 @@ export const Inner: React.FC<{
 
     React.useEffect(() => {
         const { isSmoothScrolling } = virtualizer;
-        if (currentPage === stateRef.current.pageIndex && !isSmoothScrolling) {
+        if (isSmoothScrolling) {
+            return;
+        }
+        if (
+            (stateRef.current.pageIndex === -1 && currentPage === initialPage) ||
+            (currentPage === stateRef.current.pageIndex && currentPage !== initialPage)
+        ) {
             onPageChange({ currentPage, doc });
         }
     }, [currentPage, virtualizer.isSmoothScrolling]);
