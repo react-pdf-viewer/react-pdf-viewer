@@ -6,12 +6,8 @@
  * @copyright 2019-2022 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-.rpv-core__inner-pages {
-    &--rtl {
-        direction: rtl;
-    }
-}
-
-.rpv-core__inner-page {
-    background-color: var(--rpv-core__inner-page-background-color);
+.rpv-core__annotation-layer {
+    // Make it displayed on top of the shadow layer
+    // so users can interact with the annotations (for example, follow links)
+    z-index: 1;
 }

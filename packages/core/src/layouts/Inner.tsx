@@ -40,13 +40,12 @@ import { clearPagesCache, getPage } from '../utils/managePages';
 import { calculateScale } from './calculateScale';
 
 const NUM_OVERSCAN_PAGES = 3;
-const PAGE_PADDING = 16;
 
 export const Inner: React.FC<{
     currentFile: OpenFile;
     defaultScale?: number | SpecialZoomLevel;
     doc: PdfJs.PdfDocument;
-    initialPage?: number;
+    initialPage: number;
     pageSize: PageSize;
     plugins: Plugin[];
     renderPage?: RenderPage;
@@ -82,7 +81,7 @@ export const Inner: React.FC<{
     const isRtl = themeContext.direction === TextDirection.RightToLeft;
     const containerRef = React.useRef<HTMLDivElement>();
     const pagesRef = React.useRef<HTMLDivElement>();
-    const [currentPage, setCurrentPage] = React.useState(0);
+    const [currentPage, setCurrentPage] = React.useState(initialPage);
     const [rotation, setRotation] = React.useState(0);
     // The rotation for each page
     const [pagesRotationChanged, setPagesRotationChanged] = React.useState(false);
@@ -91,15 +90,14 @@ export const Inner: React.FC<{
     const [currentScrollMode, setCurrentScrollMode] = React.useState(scrollMode);
     const previousScrollMode = usePrevious(currentScrollMode);
 
-    const stateRef = React.useRef<ViewerState>(viewerState);
     const [scale, setScale] = React.useState(pageSize.scale);
+    const stateRef = React.useRef<ViewerState>(viewerState);
     const keepSpecialZoomLevelRef = React.useRef<SpecialZoomLevel | null>(
         typeof defaultScale === 'string' ? defaultScale : null
     );
 
     const [renderPageIndex, setRenderPageIndex] = React.useState(-1);
     const [renderQueueKey, setRenderQueueKey] = React.useState(0);
-
     const renderQueue = useRenderQueue({ doc });
     React.useEffect(() => {
         return () => {
@@ -130,13 +128,7 @@ export const Inner: React.FC<{
         (endIndex: number) => Math.min(endIndex + NUM_OVERSCAN_PAGES, numPages - 1),
         [numPages]
     );
-    const transformSize = React.useCallback(
-        (size: Rect) => ({
-            height: size.height + PAGE_PADDING,
-            width: size.width + PAGE_PADDING,
-        }),
-        []
-    );
+    const transformSize = React.useCallback((size: Rect) => size, []);
 
     const virtualizer = useVirtual({
         estimateSize,
@@ -325,12 +317,10 @@ export const Inner: React.FC<{
             return;
         }
 
+        virtualizer.zoom(updateScale / stateRef.current.scale);
+
         setRenderQueueKey((key) => key + 1);
         renderQueue.markNotRendered();
-
-        // Keep the current scroll position
-        pagesEle.scrollTop = (pagesEle.scrollTop * updateScale) / stateRef.current.scale;
-        pagesEle.scrollLeft = (pagesEle.scrollLeft * updateScale) / stateRef.current.scale;
 
         setScale(updateScale);
         onZoom({ doc, scale: updateScale });
@@ -396,7 +386,13 @@ export const Inner: React.FC<{
 
     React.useEffect(() => {
         const { isSmoothScrolling } = virtualizer;
-        if (currentPage === stateRef.current.pageIndex && !isSmoothScrolling) {
+        if (isSmoothScrolling) {
+            return;
+        }
+        if (
+            (stateRef.current.pageIndex === -1 && currentPage === initialPage) ||
+            (currentPage === stateRef.current.pageIndex && currentPage !== initialPage)
+        ) {
             onPageChange({ currentPage, doc });
         }
     }, [currentPage, virtualizer.isSmoothScrolling]);

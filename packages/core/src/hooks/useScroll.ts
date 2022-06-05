@@ -38,7 +38,7 @@ export const useScroll = ({
     onSmoothScroll: (isScrollingSmoothly: boolean) => void;
 }): {
     scrollOffset: Offset;
-    scrollTo: (offset: Offset) => void;
+    scrollTo: (offset: Offset, withSmoothScroll: boolean) => void;
 } => {
     const [scrollOffset, setScrollOffset] = useRafState(ZERO_OFFSET);
     const [element, setElement] = React.useState(elementRef.current);
@@ -86,31 +86,43 @@ export const useScroll = ({
     }, [element]);
 
     const scrollTo = React.useCallback(
-        (targetPosition: Offset) => {
+        (targetPosition: Offset, withSmoothScroll: boolean) => {
             const ele = elementRef.current;
-            if (ele) {
+            if (!ele) {
+                return;
+            }
+
+            let updatePosition = 0;
+            let currentScrollMode = ScrollMode.Vertical;
+            switch (latestRef.current) {
+                case ScrollMode.Horizontal:
+                    updatePosition = factor * targetPosition.left;
+                    currentScrollMode = ScrollMode.Horizontal;
+                    break;
+                case ScrollMode.Vertical:
+                default:
+                    updatePosition = targetPosition.top;
+                    currentScrollMode = ScrollMode.Vertical;
+                    break;
+            }
+            if (withSmoothScroll) {
                 onSmoothScroll(true);
+                smoothScroll(
+                    ele,
+                    currentScrollMode,
+                    updatePosition,
+                    SCROLL_DURATION,
+                    easeOutQuart,
+                    handleSmoothScrollingComplete
+                );
+            } else {
                 switch (latestRef.current) {
                     case ScrollMode.Horizontal:
-                        smoothScroll(
-                            ele,
-                            ScrollMode.Horizontal,
-                            factor * targetPosition.left,
-                            SCROLL_DURATION,
-                            easeOutQuart,
-                            handleSmoothScrollingComplete
-                        );
+                        ele.scrollLeft = updatePosition;
                         break;
                     case ScrollMode.Vertical:
                     default:
-                        smoothScroll(
-                            ele,
-                            ScrollMode.Vertical,
-                            targetPosition.top,
-                            SCROLL_DURATION,
-                            easeOutQuart,
-                            handleSmoothScrollingComplete
-                        );
+                        ele.scrollTop = updatePosition;
                         break;
                 }
             }

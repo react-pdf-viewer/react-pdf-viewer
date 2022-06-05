@@ -7,10 +7,21 @@
  */
 
 .rpv-core__page-layer {
-    align-items: center;
-    box-shadow: var(--rpv-core__page-layer-box-shadow);
+    align-items: center;    
     display: flex;
     justify-content: center;
     margin: 0 auto;
+    overflow: hidden;
     position: relative;
+
+    &::after {
+        content: '';
+        position: absolute;
+        // Position
+        bottom: 0.25rem;
+        left: 0.25rem;      
+        right: 0.25rem;
+        top: 0.25rem;
+        box-shadow: var(--rpv-core__page-layer-box-shadow);
+    }
 }

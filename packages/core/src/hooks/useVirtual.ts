@@ -91,10 +91,7 @@ const calculateRange = (
     let maxVisbility = -1;
     while (end <= size) {
         const itemRect = measurements[end].size;
-        const visibility = {
-            width: 0,
-            height: 0,
-        };
+        const visibility = ZERO_RECT;
         const topLeftCorner = {
             top: measurements[end].start.top - scrollOffset.top,
             left: measurements[end].start.left - scrollOffset.left,
@@ -285,10 +282,11 @@ export const useVirtual = ({
     endIndex: number;
     endRange: number;
     maxVisbilityIndex: number;
+    virtualItems: VirtualItem[];
     getContainerStyles: () => React.CSSProperties;
     getItemStyles: (item: VirtualItem) => React.CSSProperties;
     scrollToItem: (index: number, offset: Offset) => void;
-    virtualItems: VirtualItem[];
+    zoom: (scale: number) => void;
 } => {
     const [isSmoothScrolling, setSmoothScrolling] = React.useState(false);
     const onSmoothScroll = React.useCallback((isSmoothScrolling: boolean) => setSmoothScrolling(isSmoothScrolling), []);
@@ -443,12 +441,16 @@ export const useVirtual = ({
     const scrollToItem = React.useCallback(
         (index: number, offset: Offset) => {
             const { measurements } = latestRef.current;
-            const measurement = measurements[clamp(0, numberOfItems - 1, index)];
+            const normalizedIndex = clamp(0, numberOfItems - 1, index);
+            const measurement = measurements[normalizedIndex];
             if (measurement) {
-                scrollTo({
-                    left: offset.left + measurement.start.left,
-                    top: offset.top + measurement.start.top,
-                });
+                scrollTo(
+                    {
+                        left: offset.left + measurement.start.left,
+                        top: offset.top + measurement.start.top,
+                    },
+                    true
+                );
             }
         },
         [scrollTo]
@@ -518,6 +520,16 @@ export const useVirtual = ({
         [isRtl, scrollMode]
     );
 
+    const zoom = React.useCallback((scale: number) => {
+        setCacheMeasure({});
+        const { scrollOffset } = latestRef.current;
+        const updateOffset = {
+            left: scrollOffset.left * scale,
+            top: scrollOffset.top * scale,
+        };
+        scrollTo(updateOffset, false);
+    }, []);
+
     return {
         isSmoothScrolling,
         startIndex: start,
@@ -525,9 +537,10 @@ export const useVirtual = ({
         endIndex: end,
         endRange,
         maxVisbilityIndex,
+        virtualItems,
         getContainerStyles,
         getItemStyles,
         scrollToItem,
-        virtualItems,
+        zoom,
     };
 };
