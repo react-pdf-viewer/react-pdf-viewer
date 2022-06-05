@@ -10,5 +10,6 @@ export type { ToolbarPluginProps, ToolbarProps, ToolbarSlot } from '@react-pdf-v
 export { BookmarkIcon } from './BookmarkIcon';
 export * from './defaultLayoutPlugin';
 export { FileIcon } from './FileIcon';
+export { setInitialTabFromPageMode } from './setInitialTabFromPageMode';
 export type { SidebarTab } from './Sidebar';
 export { ThumbnailIcon } from './ThumbnailIcon';
