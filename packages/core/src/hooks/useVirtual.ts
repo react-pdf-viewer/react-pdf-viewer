@@ -284,6 +284,7 @@ export const useVirtual = ({
     maxVisbilityIndex: number;
     getContainerStyles: () => React.CSSProperties;
     getItemStyles: (item: VirtualItem) => React.CSSProperties;
+    scrollTo: (offset: Offset) => void;
     scrollToItem: (index: number, offset: Offset) => void;
     virtualItems: VirtualItem[];
 } => {
@@ -524,6 +525,7 @@ export const useVirtual = ({
         maxVisbilityIndex,
         getContainerStyles,
         getItemStyles,
+        scrollTo,
         scrollToItem,
         virtualItems,
     };

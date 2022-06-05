@@ -328,7 +328,6 @@ export const Inner: React.FC<{
             left: pagesEle.scrollLeft,
             scale: stateRef.current.scale,
         };
-        console.log(scrollOffsetRef.current)
 
         setRenderQueueKey((key) => key + 1);
         renderQueue.markNotRendered();
@@ -404,13 +403,12 @@ export const Inner: React.FC<{
 
     useIsomorphicLayoutEffect(() => {
         const latestPage = stateRef.current.pageIndex;
-        const pagesEle = pagesRef.current;
-        if (latestPage > -1 && pagesEle) {
-            console.log(scrollOffsetRef.current, scale);
-            console.log(scrollOffsetRef.current.top * scale / scrollOffsetRef.current.scale)
+        if (latestPage > -1) {
             // Keep the current scroll position
-            pagesEle.scrollTop = scrollOffsetRef.current.top * scale / scrollOffsetRef.current.scale;
-            pagesEle.scrollLeft = scrollOffsetRef.current.left * scale / scrollOffsetRef.current.scale;
+            virtualizer.scrollTo({
+                top: (scrollOffsetRef.current.top * scale) / scrollOffsetRef.current.scale,
+                left: (scrollOffsetRef.current.left * scale) / scrollOffsetRef.current.scale,
+            });
         }
     }, [scale]);
 

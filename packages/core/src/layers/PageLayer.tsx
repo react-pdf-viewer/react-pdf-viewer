@@ -232,13 +232,7 @@ export const PageLayer: React.FC<{
                             svgLayer: {
                                 attrs: {},
                                 children: (
-                                    <SvgLayer
-                                        height={h}
-                                        page={page}
-                                        rotation={rotationValue}
-                                        scale={scale}
-                                        width={w}
-                                    />
+                                    <SvgLayer height={h} page={page} rotation={rotationValue} scale={scale} width={w} />
                                 ),
                             },
                             textLayer: {
