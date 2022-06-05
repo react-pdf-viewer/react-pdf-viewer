@@ -90,20 +90,14 @@ export const Inner: React.FC<{
     const [currentScrollMode, setCurrentScrollMode] = React.useState(scrollMode);
     const previousScrollMode = usePrevious(currentScrollMode);
 
-    const stateRef = React.useRef<ViewerState>(viewerState);
     const [scale, setScale] = React.useState(pageSize.scale);
+    const stateRef = React.useRef<ViewerState>(viewerState);
     const keepSpecialZoomLevelRef = React.useRef<SpecialZoomLevel | null>(
         typeof defaultScale === 'string' ? defaultScale : null
     );
 
     const [renderPageIndex, setRenderPageIndex] = React.useState(-1);
     const [renderQueueKey, setRenderQueueKey] = React.useState(0);
-    const scrollOffsetRef = React.useRef({
-        top: 0,
-        left: 0,
-        scale: 1,
-    });
-
     const renderQueue = useRenderQueue({ doc });
     React.useEffect(() => {
         return () => {
@@ -323,11 +317,7 @@ export const Inner: React.FC<{
             return;
         }
 
-        scrollOffsetRef.current = {
-            top: pagesEle.scrollTop,
-            left: pagesEle.scrollLeft,
-            scale: stateRef.current.scale,
-        };
+        virtualizer.zoom(updateScale / stateRef.current.scale);
 
         setRenderQueueKey((key) => key + 1);
         renderQueue.markNotRendered();
@@ -401,19 +391,8 @@ export const Inner: React.FC<{
         }
     }, [currentPage, virtualizer.isSmoothScrolling]);
 
-    useIsomorphicLayoutEffect(() => {
-        const latestPage = stateRef.current.pageIndex;
-        if (latestPage > -1) {
-            // Keep the current scroll position
-            virtualizer.scrollTo({
-                top: (scrollOffsetRef.current.top * scale) / scrollOffsetRef.current.scale,
-                left: (scrollOffsetRef.current.left * scale) / scrollOffsetRef.current.scale,
-            });
-        }
-    }, [scale]);
-
     // This hook should be placed at the end of hooks
-    React.useEffect(() => {
+    useIsomorphicLayoutEffect(() => {
         const { startRange, endRange, maxVisbilityIndex, virtualItems } = virtualizer;
         // The current page is the page which has the biggest visibility
         const currentPage = maxVisbilityIndex;

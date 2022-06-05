@@ -6,6 +6,10 @@
 
 -   Smooth scroll when jumping to a given page or destination (clicking a bookmark, for example)
 
+**Bug fix**
+
+-   Keep current position after zooming
+
 ## v3.3.3
 
 **Improvements**
