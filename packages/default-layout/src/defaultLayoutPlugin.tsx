@@ -11,6 +11,7 @@ import { attachmentPlugin } from '@react-pdf-viewer/attachment';
 import type { BookmarkPlugin } from '@react-pdf-viewer/bookmark';
 import { bookmarkPlugin } from '@react-pdf-viewer/bookmark';
 import type {
+    PdfJs,
     Plugin,
     PluginFunctions,
     PluginOnAnnotationLayerRender,
@@ -41,6 +42,7 @@ export interface DefaultLayoutPluginProps {
     thumbnailPlugin?: ThumbnailPluginProps;
     toolbarPlugin?: ToolbarPluginProps;
     renderToolbar?: (Toolbar: (props: ToolbarProps) => React.ReactElement) => React.ReactElement;
+    setInitialTab?: (doc: PdfJs.PdfDocument) => Promise<number>;
     sidebarTabs?: (defaultTabs: SidebarTab[]) => SidebarTab[];
 }
 
@@ -157,11 +159,14 @@ export const defaultLayoutPlugin = (props?: DefaultLayoutPluginProps): DefaultLa
                 }
             });
         },
-        onDocumentLoad: (props: PluginOnDocumentLoad) => {
+        onDocumentLoad: (documentLoadProps: PluginOnDocumentLoad) => {
             plugins.forEach((plugin) => {
                 if (plugin.onDocumentLoad) {
-                    plugin.onDocumentLoad(props);
+                    plugin.onDocumentLoad(documentLoadProps);
                 }
+            });
+            props?.setInitialTab(documentLoadProps.doc).then((initialTab) => {
+                store.update('currentTab', initialTab);
             });
         },
         onAnnotationLayerRender: (props: PluginOnAnnotationLayerRender) => {

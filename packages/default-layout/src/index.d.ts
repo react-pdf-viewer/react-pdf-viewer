@@ -8,7 +8,7 @@
 
 import type { AttachmentPlugin } from '@react-pdf-viewer/attachment';
 import type { BookmarkPlugin } from '@react-pdf-viewer/bookmark';
-import type { Plugin } from '@react-pdf-viewer/core';
+import type { PdfJs, Plugin } from '@react-pdf-viewer/core';
 import type { ThumbnailPlugin, ThumbnailPluginProps } from '@react-pdf-viewer/thumbnail';
 import type { ToolbarPlugin, ToolbarPluginProps, ToolbarProps, ToolbarSlot } from '@react-pdf-viewer/toolbar';
 import * as React from 'react';
@@ -35,10 +35,12 @@ export interface DefaultLayoutPluginProps {
     thumbnailPlugin?: ThumbnailPluginProps;
     toolbarPlugin?: ToolbarPluginProps;
     renderToolbar?: (Toolbar: (props: ToolbarProps) => React.ReactElement) => React.ReactElement;
+    setInitialTab?: (doc: PdfJs.PdfDocument) => Promise<number>;
     sidebarTabs?: (defaultTabs: SidebarTab[]) => SidebarTab[];
 }
 
 export function defaultLayoutPlugin(props?: DefaultLayoutPluginProps): DefaultLayoutPlugin;
+export function setInitialTabFromPageMode(doc: PdfJs.PdfDocument): Promise<number>;
 
 // Components
 export class BookmarkIcon extends React.Component {}
