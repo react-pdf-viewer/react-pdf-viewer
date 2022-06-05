@@ -444,10 +444,13 @@ export const useVirtual = ({
             const normalizedIndex = clamp(0, numberOfItems - 1, index);
             const measurement = measurements[normalizedIndex];
             if (measurement) {
-                scrollTo({
-                    left: offset.left + measurement.start.left,
-                    top: offset.top + measurement.start.top,
-                });
+                scrollTo(
+                    {
+                        left: offset.left + measurement.start.left,
+                        top: offset.top + measurement.start.top,
+                    },
+                    true
+                );
             }
         },
         [scrollTo]
@@ -524,7 +527,7 @@ export const useVirtual = ({
             left: scrollOffset.left * scale,
             top: scrollOffset.top * scale,
         };
-        scrollTo(updateOffset);
+        scrollTo(updateOffset, false);
     }, []);
 
     return {
