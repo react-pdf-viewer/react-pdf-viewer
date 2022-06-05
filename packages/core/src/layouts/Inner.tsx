@@ -392,7 +392,7 @@ export const Inner: React.FC<{
     }, [currentPage, virtualizer.isSmoothScrolling]);
 
     // This hook should be placed at the end of hooks
-    useIsomorphicLayoutEffect(() => {
+    React.useEffect(() => {
         const { startRange, endRange, maxVisbilityIndex, virtualItems } = virtualizer;
         // The current page is the page which has the biggest visibility
         const currentPage = maxVisbilityIndex;
