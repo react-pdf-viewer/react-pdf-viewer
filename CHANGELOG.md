@@ -30,8 +30,9 @@ const defaultLayoutPluginInstance = defaultLayoutPlugin({
 
 -   Smooth scroll when jumping to a given page or destination (clicking a bookmark, for example)
 
-**Bug fix**
+**Bug fixes**
 
+-   Can't add highlight to selected text
 -   Keep current position after zooming
 
 ## v3.3.3
