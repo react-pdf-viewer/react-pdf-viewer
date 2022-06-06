@@ -34,8 +34,8 @@ const IndexPage = () => {
                     {props.pageIndex + 1}
                 </div>
             </div>
-            {props.annotationLayer.children}
             {props.textLayer.children}
+            {props.annotationLayer.children}
         </>
     );
 
