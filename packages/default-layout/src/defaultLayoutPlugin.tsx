@@ -165,9 +165,11 @@ export const defaultLayoutPlugin = (props?: DefaultLayoutPluginProps): DefaultLa
                     plugin.onDocumentLoad(documentLoadProps);
                 }
             });
-            props?.setInitialTab(documentLoadProps.doc).then((initialTab) => {
-                store.update('currentTab', initialTab);
-            });
+            if (props && props.setInitialTab) {
+                props.setInitialTab(documentLoadProps.doc).then((initialTab) => {
+                    store.update('currentTab', initialTab);
+                });
+            }
         },
         onAnnotationLayerRender: (props: PluginOnAnnotationLayerRender) => {
             plugins.forEach((plugin) => {
