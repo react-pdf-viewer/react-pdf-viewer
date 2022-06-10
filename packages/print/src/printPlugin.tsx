@@ -18,6 +18,7 @@ import { PrintStatus } from './structs/PrintStatus';
 import type { StoreProps } from './types/StoreProps';
 
 export interface PrintPlugin extends Plugin {
+    print: () => void;
     Print: (props: PrintProps) => React.ReactElement;
     PrintButton: () => React.ReactElement;
     PrintMenuItem: (props: PrintMenuItemProps) => React.ReactElement;
@@ -36,6 +37,10 @@ export const printPlugin = (props?: PrintPluginProps): PrintPlugin => {
             }),
         []
     );
+
+    const print = () => {
+        store.update('printStatus', PrintStatus.CheckingPermission);
+    };
 
     const PrintDecorator = (props: PrintProps) => (
         <Print enableShortcuts={printPluginProps.enableShortcuts} {...props} store={store} />
@@ -80,6 +85,7 @@ export const printPlugin = (props?: PrintPluginProps): PrintPlugin => {
     };
 
     return {
+        print,
         renderViewer,
         Print: PrintDecorator,
         PrintButton: PrintButtonDecorator,

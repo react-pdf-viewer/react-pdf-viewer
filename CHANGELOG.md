@@ -1,5 +1,25 @@
 # CHANGELOG
 
+## v3.6.0 [WIP]
+
+-   The print plugin exposes the `print` function:
+
+```js
+import { printPlugin } from '@react-pdf-viewer/print';
+
+const printPluginInstance = printPlugin();
+const { print } = printPluginInstance;
+```
+
+The `print` function is also available if you use the default layout plugin:
+
+```js
+import { defaultLayoutPlugin } from '@react-pdf-viewer/default-layout';
+
+const defaultLayoutPluginInstance = defaultLayoutPlugin();
+const { print } = defaultLayoutPluginInstance.toolbarPluginInstance.printPluginInstance;
+```
+
 ## v3.5.0
 
 **New feature**
