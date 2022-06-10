@@ -13,10 +13,11 @@ export const PageThumbnail: React.FC<{
     canvas: HTMLCanvasElement;
     page: PdfJs.Page;
     pageHeight: number;
+    pageIndex: number;
     pageWidth: number;
     rotation: number;
     onLoad(): void;
-}> = ({ canvas, page, pageHeight, pageWidth, rotation, onLoad }) => {
+}> = ({ canvas, page, pageHeight, pageIndex, pageWidth, rotation, onLoad }) => {
     const renderTask = React.useRef<PdfJs.PageRenderTask>();
     const [src, setSrc] = React.useState('');
 
@@ -45,7 +46,8 @@ export const PageThumbnail: React.FC<{
         });
         renderTask.current.promise.then(
             () => {
-                'toBlob' in canvas
+                // `URL.createObjectURL` is not available in jest-dom yet
+                'toBlob' in canvas && 'createObjectURL' in URL
                     ? canvas.toBlob((blob) => {
                           setSrc(URL.createObjectURL(blob));
                       })
@@ -59,7 +61,7 @@ export const PageThumbnail: React.FC<{
 
     return (
         src && (
-            <div className="rpv-print__page">
+            <div className="rpv-print__page" data-testid={`print__page-${pageIndex}`}>
                 <img src={src} onLoad={() => onLoad()} />
             </div>
         )
