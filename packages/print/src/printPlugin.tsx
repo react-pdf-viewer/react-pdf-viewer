@@ -6,7 +6,7 @@
  * @copyright 2019-2022 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import type { Plugin, RenderViewer, Slot } from '@react-pdf-viewer/core';
+import type { PdfJs, Plugin, RenderViewer, Slot } from '@react-pdf-viewer/core';
 import { createStore } from '@react-pdf-viewer/core';
 import * as React from 'react';
 import { Print, PrintProps } from './Print';
@@ -26,10 +26,25 @@ export interface PrintPlugin extends Plugin {
 
 export interface PrintPluginProps {
     enableShortcuts?: boolean;
+    setPages?: (doc: PdfJs.PdfDocument) => number[];
 }
 
 export const printPlugin = (props?: PrintPluginProps): PrintPlugin => {
-    const printPluginProps = React.useMemo(() => Object.assign({}, { enableShortcuts: true }, props), []);
+    const printPluginProps = React.useMemo(
+        () =>
+            Object.assign(
+                {},
+                {
+                    enableShortcuts: true,
+                    setPages: (doc: PdfJs.PdfDocument) =>
+                        Array(doc.numPages)
+                            .fill(0)
+                            .map((_, i) => i),
+                },
+                props
+            ),
+        []
+    );
     const store = React.useMemo(
         () =>
             createStore<StoreProps>({
@@ -75,6 +90,7 @@ export const printPlugin = (props?: PrintPluginProps): PrintPlugin => {
                         pageHeight={props.pageHeight}
                         pageWidth={props.pageWidth}
                         rotation={props.rotation}
+                        setPages={printPluginProps.setPages}
                         store={store}
                     />
                     {slot.children}
