@@ -22,7 +22,7 @@ Object.defineProperty(window, 'scrollTo', {
     writable: true,
 });
 
-// Mick the `window.print` function
+// Mock the `window.print` function
 Object.defineProperty(window, 'print', {
     value: noop,
     writable: true,
