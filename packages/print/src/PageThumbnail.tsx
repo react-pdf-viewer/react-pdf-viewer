@@ -8,6 +8,7 @@
 
 import type { PdfJs } from '@react-pdf-viewer/core';
 import * as React from 'react';
+import { isRunningInJest } from './isRunningInJest';
 
 export const PageThumbnail: React.FC<{
     canvas: HTMLCanvasElement;
@@ -20,6 +21,14 @@ export const PageThumbnail: React.FC<{
 }> = ({ canvas, page, pageHeight, pageIndex, pageWidth, rotation, onLoad }) => {
     const renderTask = React.useRef<PdfJs.PageRenderTask>();
     const [src, setSrc] = React.useState('');
+    const testWithJest = React.useMemo(() => isRunningInJest(), []);
+
+    const handleImageLoad = () => {
+        // The `onload` event isn't triggered in Jest environment
+        if (!testWithJest) {
+            onLoad();
+        }
+    };
 
     React.useEffect(() => {
         const task = renderTask.current;
@@ -47,11 +56,15 @@ export const PageThumbnail: React.FC<{
         renderTask.current.promise.then(
             () => {
                 // `URL.createObjectURL` is not available in jest-dom yet
-                'toBlob' in canvas && 'createObjectURL' in URL
-                    ? canvas.toBlob((blob) => {
-                          setSrc(URL.createObjectURL(blob));
-                      })
-                    : setSrc((canvas as HTMLCanvasElement).toDataURL());
+                if ('toBlob' in canvas && 'createObjectURL' in URL) {
+                    canvas.toBlob((blob) => {
+                        setSrc(URL.createObjectURL(blob));
+                        testWithJest && onLoad();
+                    });
+                } else {
+                    setSrc(canvas.toDataURL());
+                    testWithJest && onLoad();
+                }
             },
             () => {
                 /**/
@@ -61,8 +74,8 @@ export const PageThumbnail: React.FC<{
 
     return (
         src && (
-            <div className="rpv-print__page" data-testid={`print__page-${pageIndex}`}>
-                <img src={src} onLoad={() => onLoad()} />
+            <div className="rpv-print__page">
+                <img data-testid={`print__thumbnail-${pageIndex}`} src={src} onLoad={handleImageLoad} />
             </div>
         )
     );
