@@ -33,6 +33,7 @@ export const PrintZone: React.FC<{
 
         const div = document.createElement('div');
         div.classList.add('rpv-print__zone');
+        div.setAttribute('data-testid', 'print__zone');
         document.body.appendChild(div);
         return div;
     }, []);

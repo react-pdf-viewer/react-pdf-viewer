@@ -59,6 +59,7 @@ export const PageThumbnailContainer: React.FC<{
                 canvas={canvas}
                 page={page}
                 pageHeight={isVertical ? height : width}
+                pageIndex={pageIndex}
                 pageWidth={isVertical ? width : height}
                 rotation={rotationNumber}
                 onLoad={onLoad}
