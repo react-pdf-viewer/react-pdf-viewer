@@ -1,5 +1,34 @@
 # CHANGELOG
 
+## v3.5.0 [WIP]
+
+**Improvement**
+
+-   The page navigation plugin allows to jump to the previous and next pages with shortcuts.
+
+| Shortcut                          | Action                  |
+| --------------------------------- | ----------------------- |
+| `PageUp` or `Alt` + `ArrowUp`     | Go to the previous page |
+| `PageDown` or `Alt` + `ArrowDown` | Go to the next page     |
+
+The shortcuts are enabled by default. It's possible to disable them, for example:
+
+```js
+// Use the standalone page navigation plugin
+const pageNavigationPluginInstance = pageNavigationPlugin({
+    enableShortcuts: false,
+});
+
+// Use the default layout plugin
+const defaultLayoutPluginInstance = defaultLayoutPlugin({
+    toolbarPlugin: {
+        pageNavigationPlugin: {
+            enableShortcuts: false,
+        },
+    },
+});
+```
+
 ## v3.4.0
 
 **New feature**
