@@ -65,7 +65,11 @@ export interface PageNavigationPlugin extends Plugin {
     NumberOfPages: (props: NumberOfPagesProps) => React.ReactElement;
 }
 
-export function pageNavigationPlugin(): PageNavigationPlugin;
+export interface PageNavigationPluginProps {
+    enableShortcuts?: boolean;
+}
+
+export function pageNavigationPlugin(props?: PageNavigationPluginProps): PageNavigationPlugin;
 
 // Components
 export class DownArrowIcon extends React.Component {}

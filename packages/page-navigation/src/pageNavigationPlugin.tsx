@@ -6,7 +6,14 @@
  * @copyright 2019-2022 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import type { Plugin, PluginFunctions, PluginOnDocumentLoad, ViewerState } from '@react-pdf-viewer/core';
+import type {
+    Plugin,
+    PluginFunctions,
+    PluginOnDocumentLoad,
+    RenderViewer,
+    Slot,
+    ViewerState,
+} from '@react-pdf-viewer/core';
 import { createStore } from '@react-pdf-viewer/core';
 import * as React from 'react';
 import { CurrentPageInput } from './CurrentPageInput';
@@ -24,6 +31,7 @@ import { GoToPreviousPage } from './GoToPreviousPage';
 import { GoToPreviousPageButton } from './GoToPreviousPageButton';
 import { GoToPreviousPageMenuItem } from './GoToPreviousPageMenuItem';
 import { NumberOfPages, NumberOfPagesProps } from './NumberOfPages';
+import { ShortcutHandler } from './ShortcutHandler';
 import type { GoToPageMenuItemProps, GoToPageProps } from './types';
 import type { StoreProps } from './types/StoreProps';
 
@@ -46,7 +54,12 @@ export interface PageNavigationPlugin extends Plugin {
     NumberOfPages: (props: NumberOfPagesProps) => React.ReactElement;
 }
 
-export const pageNavigationPlugin = (): PageNavigationPlugin => {
+export interface PageNavigationPluginProps {
+    enableShortcuts?: boolean;
+}
+
+export const pageNavigationPlugin = (props?: PageNavigationPluginProps): PageNavigationPlugin => {
+    const pageNavigationPluginProps = React.useMemo(() => Object.assign({}, { enableShortcuts: true }, props), []);
     const store = React.useMemo(() => createStore<StoreProps>(), []);
 
     const CurrentPageInputDecorator = () => <CurrentPageInput store={store} />;
@@ -135,10 +148,28 @@ export const pageNavigationPlugin = (): PageNavigationPlugin => {
 
     const NumberOfPagesDecorator = (props: NumberOfPagesProps) => <NumberOfPages {...props} store={store} />;
 
+    const renderViewer = (props: RenderViewer): Slot => {
+        const { slot } = props;
+        if (!pageNavigationPluginProps.enableShortcuts) {
+            return slot;
+        }
+
+        const updateSlot: Slot = {
+            children: (
+                <>
+                    <ShortcutHandler containerRef={props.containerRef} numPages={props.doc.numPages} store={store} />
+                    {slot.children}
+                </>
+            ),
+        };
+        return { ...slot, ...updateSlot };
+    };
+
     return {
         install: (pluginFunctions: PluginFunctions) => {
             store.update('jumpToPage', pluginFunctions.jumpToPage);
         },
+        renderViewer,
         onDocumentLoad: (props: PluginOnDocumentLoad) => {
             store.update('doc', props.doc);
             store.update('numberOfPages', props.doc.numPages);
