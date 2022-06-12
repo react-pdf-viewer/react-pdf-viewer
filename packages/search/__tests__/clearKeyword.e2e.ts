@@ -24,9 +24,9 @@ test('clearKeyword() when the keyword is empty', async () => {
     expect(numOfMatches).toEqual('1 of 22');
 
     // There are 3 items found on the second page
-    let textLayer = await page.waitForSelector('[data-testid="core__text-layer-1"]', { visible: true });
+    let searchHighlights = await page.waitForSelector('[data-testid="search__highlights-1"]', { visible: true });
 
-    let highlightElements = await textLayer.$$('.rpv-search__highlight');
+    let highlightElements = await searchHighlights.$$('.rpv-search__highlight');
     let numHighlights = await highlightElements.length;
     expect(numHighlights).toEqual(3);
 
@@ -38,8 +38,8 @@ test('clearKeyword() when the keyword is empty', async () => {
     await keywordInput.press('Enter');
 
     // The highlights should be removed
-    textLayer = await page.waitForSelector('[data-testid="core__text-layer-1"]', { visible: true });
-    highlightElements = await textLayer.$$('.rpv-search__highlight');
+    searchHighlights = await page.waitForSelector('[data-testid="search__highlights-1"]', { visible: true });
+    highlightElements = await searchHighlights.$$('.rpv-search__highlight');
     numHighlights = await highlightElements.length;
     expect(numHighlights).toEqual(0);
 });
