@@ -18,7 +18,7 @@ test('Keep current position after zooming out', async () => {
             pagesEle.scrollTop = 126788;
         }
     });
-    
+
     // Fint the zoom out button
     const zoomOutButton = await page.waitForSelector('[data-testid="zoom__out-button"]');
 
