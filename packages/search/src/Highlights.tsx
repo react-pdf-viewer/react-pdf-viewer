@@ -69,7 +69,7 @@ export const Highlights: React.FC<{
         (renderProps: RenderHighlightsProps) => (
             <>
                 {renderProps.highlightAreas.map((area, index) => (
-                    <HightlightItem index={index} area={area} onHighlightKeyword={onHighlightKeyword} />
+                    <HightlightItem index={index} key={index} area={area} onHighlightKeyword={onHighlightKeyword} />
                 ))}
             </>
         ),
