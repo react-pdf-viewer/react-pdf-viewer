@@ -6,7 +6,7 @@ test('Press PageDown to jump to the next page', async () => {
         width: 1920,
         height: 1080,
     });
-    await page.evaluate(() => document.querySelector('[data-testid="core__viewer"]').scrollIntoView());
+    await page.evaluate(() => document.querySelector('[data-testid="core__viewer"]')?.scrollIntoView());
 
     // Wait until the first page is rendered
     await page.waitForSelector('[data-testid="core__text-layer-0"]', { visible: true });
@@ -77,12 +77,17 @@ test('Press PageUp to jump to the previous page', async () => {
         width: 1920,
         height: 1080,
     });
-    await page.evaluate(() => document.querySelector('[data-testid="core__viewer"]').scrollIntoView());
+    await page.evaluate(() => document.querySelector('[data-testid="core__viewer"]')?.scrollIntoView());
 
     // Wait until the first page is rendered
     await page.waitForSelector('[data-testid="core__text-layer-0"]', { visible: true });
 
-    await page.evaluate(() => (document.querySelector('[data-testid=core__inner-pages]').scrollTop = 8316));
+    await page.evaluate(() => {
+        const pagesEle = document.querySelector('[data-testid=core__inner-pages]');
+        if (pagesEle) {
+            pagesEle.scrollTop = 8316;
+        }
+    });
     await page.waitForSelector('[data-testid="core__text-layer-7"]', { visible: true });
 
     // Jump to page 7

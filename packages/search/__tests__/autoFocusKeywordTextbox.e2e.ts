@@ -8,15 +8,15 @@ describe('Focus the keyword textbox automatically', () => {
             height: 800,
         });
 
-        await page.evaluate(() => document.querySelector('[data-testid="core__viewer"]').scrollIntoView());
+        await page.evaluate(() => document.querySelector('[data-testid="core__viewer"]')?.scrollIntoView());
         const seachButton = await page.waitForSelector('[aria-label="Search"]', {
             visible: true,
         });
-        await seachButton.click();
+        await seachButton?.click();
 
         // Wait for the keyword field
         const keywordFieldHandle = await page.waitForSelector('[aria-label="Enter to search"]');
-        const isKeyworFocused = await keywordFieldHandle.evaluate((ele) => ele === document.activeElement);
+        const isKeyworFocused = await keywordFieldHandle?.evaluate((ele) => ele === document.activeElement);
         expect(isKeyworFocused).toEqual(true);
     });
 
@@ -27,12 +27,12 @@ describe('Focus the keyword textbox automatically', () => {
             height: 800,
         });
 
-        await page.evaluate(() => document.querySelector('[data-testid="core__viewer"]').scrollIntoView());
+        await page.evaluate(() => document.querySelector('[data-testid="core__viewer"]')?.scrollIntoView());
 
         const seachButton = await page.waitForSelector('[aria-label="Search"]', {
             visible: true,
         });
-        await seachButton.click();
+        await seachButton?.click();
 
         // Wait for the keyword field
         await page.waitForSelector('[aria-label="Enter to search"]');

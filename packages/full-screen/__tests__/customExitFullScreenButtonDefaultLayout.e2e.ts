@@ -10,7 +10,7 @@ describe('Test exit full screen mode', () => {
     });
 
     test('Test exit button with default layout plugin', async () => {
-        await page.evaluate(() => document.querySelector('[data-testid="core__viewer"]').scrollIntoView());
+        await page.evaluate(() => document.querySelector('[data-testid="core__viewer"]')?.scrollIntoView());
 
         // To make sure the pages are rendered
         await page.waitForSelector('[data-testid="core__inner-pages"]');
@@ -18,7 +18,7 @@ describe('Test exit full screen mode', () => {
         const fullScreenButton = await page.waitForSelector('[aria-label="Full screen"]', {
             visible: true,
         });
-        await fullScreenButton.click();
+        await fullScreenButton?.click();
 
         const exitButton = await page.waitForSelector('[data-testid="exit-full-screen"]');
         const exitTestId = await page.evaluate((exitButton) => exitButton.getAttribute('data-testid'), exitButton);
