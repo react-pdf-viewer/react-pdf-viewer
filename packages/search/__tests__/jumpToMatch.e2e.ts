@@ -25,9 +25,13 @@ test('jumpToMatch in a custom search sidebar', async () => {
     expect(numOfMatches).toEqual('Found 22 results');
 
     await page.waitForSelector('[data-testid="core__text-layer-1"]', { visible: true });
+    await page.waitForSelector('[data-testid="core__annotation-layer-1"]', { visible: true });
 
-    const getPosition = async () => {
-        let highlightEle = await page.waitForSelector('.rpv-search__highlight.rpv-search__highlight--current');
+    const getPosition = async (pageIndex: number) => {
+        const searchHighlights = await page.waitForSelector(`[data-testid="search__highlights-${pageIndex}"]`, {
+            visible: true,
+        });
+        let highlightEle = await searchHighlights?.$('.rpv-search__highlight.rpv-search__highlight--current');
         return await highlightEle?.evaluate((node) => {
             const nodeEle = node as HTMLElement;
             return {
@@ -39,7 +43,7 @@ test('jumpToMatch in a custom search sidebar', async () => {
     };
 
     // Check the first hightlight position
-    let position = await getPosition();
+    let position = await getPosition(1);
     expect(position?.index).toEqual('0');
     expect(position?.left).toEqual('41.3756%');
     expect(position?.top).toEqual('48.6333%');
@@ -49,7 +53,8 @@ test('jumpToMatch in a custom search sidebar', async () => {
     await lastMatch?.click();
 
     await page.waitForSelector('[data-testid="core__text-layer-7"]', { visible: true });
-    position = await getPosition();
+    await page.waitForSelector('[data-testid="core__annotation-layer-7"]', { visible: true });
+    position = await getPosition(7);
     expect(position?.index).toEqual('0');
     expect(position?.left).toEqual('60.8208%');
     expect(position?.top).toEqual('42.0421%');
@@ -59,7 +64,8 @@ test('jumpToMatch in a custom search sidebar', async () => {
     await secondMatch?.click();
 
     await page.waitForSelector('[data-testid="core__text-layer-1"]', { visible: true });
-    position = await getPosition();
+    await page.waitForSelector('[data-testid="core__annotation-layer-1"]', { visible: true });
+    position = await getPosition(1);
     expect(position?.index).toEqual('1');
     expect(position?.left).toEqual('58.9557%');
     expect(position?.top).toEqual('50.0197%');
