@@ -35,9 +35,9 @@ test('Test the whole words matching', async () => {
     await page.waitForSelector('[data-testid="core__page-layer-3"]', { visible: true });
 
     // There are 4 items found on the 4th page
-    let textLayer = await page.waitForSelector('[data-testid="core__text-layer-3"]', { visible: true });
+    let searchHighlights = await page.waitForSelector('[data-testid="search__highlights-3"]', { visible: true });
 
-    let highlightElements = await textLayer.$$('.rpv-search__highlight');
+    let highlightElements = await searchHighlights.$$('.rpv-search__highlight');
     let numHighlights = await highlightElements.length;
     expect(numHighlights).toEqual(4);
 
@@ -49,8 +49,8 @@ test('Test the whole words matching', async () => {
     numOfMatches = await numOfMatchesLabel.evaluate((node) => node.textContent);
     expect(numOfMatches).toEqual('1 of 3');
 
-    textLayer = await page.waitForSelector('[data-testid="core__text-layer-3"]', { visible: true });
-    highlightElements = await textLayer.$$('.rpv-search__highlight');
+    searchHighlights = await page.waitForSelector('[data-testid="search__highlights-3"]', { visible: true });
+    highlightElements = await searchHighlights.$$('.rpv-search__highlight');
     numHighlights = await highlightElements.length;
     expect(numHighlights).toEqual(2);
 });

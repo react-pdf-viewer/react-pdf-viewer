@@ -90,10 +90,31 @@ export interface SearchPlugin extends Plugin {
     setTargetPages(targetPageFilter: SearchTargetPageFilter): void;
 }
 
+export interface HighlightArea {
+    keyword: RegExp;
+    keywordStr: string;
+    numPages: number;
+    pageIndex: number;
+    // The position of the highlight element
+    left: number;
+    top: number;
+    // The size of the highlight element
+    height: number;
+    width: number;
+    // The size of the page in pixels
+    pageHeight: number;
+    pageWidth: number;
+}
+export interface RenderHighlightsProps {
+    getCssProperties(area: HighlightArea): React.CSSProperties;
+    highlightAreas: HighlightArea[];
+}
+
 export interface SearchPluginProps {
     enableShortcuts?: boolean;
     // The keyword that will be highlighted in all pages
     keyword?: SingleKeyword | SingleKeyword[];
+    renderHighlights?(props: RenderHighlightsProps): React.ReactElement;
     onHighlightKeyword?(props: OnHighlightKeyword): void;
 }
 

@@ -30,9 +30,12 @@ test('Jump between matches', async () => {
     await nextMatchButton.click();
 
     await page.waitForSelector('[data-testid="core__page-layer-3"]', { visible: true });
+    await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 3743');
+
+    const searchHighlights = await page.waitForSelector('[data-testid="search__highlights-3"]');
 
     const getPosition = async () => {
-        let highlightEle = await page.waitForSelector('.rpv-search__highlight.rpv-search__highlight--current');
+        const highlightEle = await searchHighlights.$('.rpv-search__highlight.rpv-search__highlight--current');
         return await highlightEle.evaluate((node) => {
             const nodeEle = node as HTMLElement;
             return {

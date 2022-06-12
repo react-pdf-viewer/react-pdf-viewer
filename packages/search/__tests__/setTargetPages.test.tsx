@@ -53,8 +53,10 @@ test('setTargetPages() method', async () => {
 
     // Wait until the document is loaded completely
     await waitForElementToBeRemoved(() => getByTestId('core__doc-loading'));
-    const firstPage = await findByTestId('core__text-layer-0');
-    const secondPage = await findByTestId('core__text-layer-1');
+    await findByTestId('core__text-layer-0');
+    await findByTestId('core__annotation-layer-0');
+    await findByTestId('core__text-layer-1');
+    await findByTestId('core__annotation-layer-1');
 
     const highlightButton = await screen.findByText('Highlight keywords');
     fireEvent.click(highlightButton);
@@ -62,23 +64,25 @@ test('setTargetPages() method', async () => {
     // There is no result on the first page because we ignore it
     await findByText('A Simple PDF File');
 
-    let highlights = queryAllByTitle(firstPage, 'text');
+    let searchHighlights = await findByTestId('search__highlights-0');
+    let highlights = queryAllByTitle(searchHighlights, 'text');
     expect(highlights.length).toEqual(0);
 
     // Search on the second page
     await findByText('Simple PDF File 2');
 
     // Found 13 texts that match `text`
-    highlights = await findAllByTitle(secondPage, 'text');
+    searchHighlights = await findByTestId('search__highlights-1');
+    highlights = await findAllByTitle(searchHighlights, 'text');
     expect(highlights.length).toEqual(13);
     expect(highlights[0].getAttribute('title')).toEqual('text');
     expect(highlights[0]).toHaveClass('rpv-search__highlight');
 
     // Found 1 text that match `Boring`
-    highlights = getAllByTitle(secondPage, 'Boring');
+    highlights = getAllByTitle(searchHighlights, 'Boring');
     expect(highlights.length).toEqual(1);
     expect(highlights[0].getAttribute('title')).toEqual('Boring');
     expect(highlights[0]).toHaveClass('rpv-search__highlight');
 
-    expect(secondPage.querySelectorAll('.rpv-search__highlight[title="text"]').length).toEqual(13);
+    expect(searchHighlights.querySelectorAll('.rpv-search__highlight[title="text"]').length).toEqual(13);
 });

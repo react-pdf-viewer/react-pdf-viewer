@@ -16,5 +16,6 @@ export type { FlagKeyword } from './types/FlagKeyword';
 export type { Match } from './types/Match';
 export type { MatchPosition } from './types/MatchPosition';
 export type { OnHighlightKeyword } from './types/OnHighlightKeyword';
+export type { HighlightArea, RenderHighlightsProps } from './types/RenderHighlightsProps';
 export type { RenderShowSearchPopoverProps } from './types/RenderShowSearchPopoverProps';
 export type { SingleKeyword } from './types/SingleKeyword';

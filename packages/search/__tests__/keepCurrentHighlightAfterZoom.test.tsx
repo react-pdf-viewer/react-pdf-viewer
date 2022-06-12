@@ -210,8 +210,13 @@ test('Keep the current highlight after zooming the document', async () => {
     await waitForElementToBeRemoved(() => getByTestId('core__doc-loading'));
 
     await findByTestId('core__text-layer-0');
+    await findByTestId('core__annotation-layer-0');
     await findByTestId('core__text-layer-1');
+    await findByTestId('core__annotation-layer-1');
     await findByTestId('core__text-layer-2');
+    await findByTestId('core__annotation-layer-2');
+    await findByTestId('core__text-layer-3');
+    await findByTestId('core__annotation-layer-3');
 
     const customSearchInput = await findByTestId('custom-search-input');
     fireEvent.change(customSearchInput, { target: { value: 'document' } });
@@ -221,11 +226,11 @@ test('Keep the current highlight after zooming the document', async () => {
     expect(numMatchesLabel.textContent).toEqual('1 of 22');
 
     // There are 3 results found on the second page
-    let textLayer = await findByTestId('core__text-layer-1');
-    const highlights = textLayer.querySelectorAll('.rpv-search__highlight');
+    let searchHighlights = await findByTestId('search__highlights-1');
+    const highlights = searchHighlights.querySelectorAll('.rpv-search__highlight');
     expect(highlights.length).toEqual(3);
 
-    let currentHighlight = textLayer.querySelector('.rpv-search__highlight--current');
+    let currentHighlight = searchHighlights.querySelector('.rpv-search__highlight--current');
     expect(currentHighlight.getAttribute('data-index')).toEqual('0');
 
     // Click the zoom in button
@@ -234,9 +239,9 @@ test('Keep the current highlight after zooming the document', async () => {
 
     // The current highlight element should be there
     await findByTestId('core__text-layer-0');
-    textLayer = await findByTestId('core__text-layer-1');
+    searchHighlights = await findByTestId('search__highlights-1');
     await findByTestId('core__text-layer-2');
-    currentHighlight = textLayer.querySelector('.rpv-search__highlight--current');
+    currentHighlight = searchHighlights.querySelector('.rpv-search__highlight--current');
     expect(currentHighlight.getAttribute('data-index')).toEqual('0');
 
     // Jump to the next match
@@ -244,7 +249,7 @@ test('Keep the current highlight after zooming the document', async () => {
     fireEvent.click(nextMatchButton);
     fireEvent.click(nextMatchButton);
 
-    currentHighlight = textLayer.querySelector('.rpv-search__highlight--current');
+    currentHighlight = searchHighlights.querySelector('.rpv-search__highlight--current');
     expect(currentHighlight.getAttribute('data-index')).toEqual('2');
 
     // Click the zoom out button
@@ -253,8 +258,8 @@ test('Keep the current highlight after zooming the document', async () => {
 
     // The current highlight element should be there
     await findByTestId('core__text-layer-0');
-    textLayer = await findByTestId('core__text-layer-1');
+    searchHighlights = await findByTestId('search__highlights-1');
     await findByTestId('core__text-layer-2');
-    currentHighlight = textLayer.querySelector('.rpv-search__highlight--current');
+    currentHighlight = searchHighlights.querySelector('.rpv-search__highlight--current');
     expect(currentHighlight.getAttribute('data-index')).toEqual('2');
 });

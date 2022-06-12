@@ -27,7 +27,7 @@ export const Tooltip: React.FC<{
     const { opened, toggle } = useToggle(false);
     const targetRef = React.useRef<HTMLDivElement>();
     const contentRef = React.useRef<HTMLDivElement>();
-    const controlsSuffix = ariaControlsSuffix || `${uniqueId()}`;
+    const controlsSuffix = React.useMemo(() => ariaControlsSuffix || `${uniqueId()}`, []);
 
     useEscape(() => {
         if (targetRef.current && document.activeElement && targetRef.current.contains(document.activeElement)) {
@@ -47,12 +47,12 @@ export const Tooltip: React.FC<{
         // that is focused on automatically
         // For example
         //  <Popover
-        //      renderTarget=() => {
+        //      target=() => {
         //          <Tooltip
         //              target=<MinimalButton />
         //          />
         //      }
-        //      renderContent=() => <Menu />
+        //      content=() => <Menu />
         //  />
         // The following events happen when the tooltip gets focused:
         // - The tooltip is shown
