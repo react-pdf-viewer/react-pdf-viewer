@@ -10,7 +10,7 @@ const IndexPage = () => {
                 {renderProps.highlightAreas.map((area, index) => {
                     const offset = {
                         left: 0,
-                        top: 8 + (area.height * area.pageHeight) / 100,                        
+                        top: 8 + (area.height * area.pageHeight) / 100,
                     };
                     return (
                         <div

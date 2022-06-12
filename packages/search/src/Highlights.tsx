@@ -364,7 +364,7 @@ export const Highlights: React.FC<{
     }, []);
 
     return (
-        <div className="rpv-search__highlights" ref={containerRef}>
+        <div className="rpv-search__highlights" data-testid={`search__highlights-${pageIndex}`} ref={containerRef}>
             {renderHighlightElements({
                 getCssProperties,
                 highlightAreas,
