@@ -189,9 +189,13 @@ test('Test the whole words matching', async () => {
     await waitForElementToBeRemoved(() => getByTestId('core__doc-loading'));
 
     await findByTestId('core__text-layer-0');
+    await findByTestId('core__annotation-layer-0');
     await findByTestId('core__text-layer-1');
+    await findByTestId('core__annotation-layer-1');
     await findByTestId('core__text-layer-2');
-    let textLayer = await findByTestId('core__text-layer-3');
+    await findByTestId('core__annotation-layer-2');
+    await findByTestId('core__text-layer-3');
+    await findByTestId('core__annotation-layer-3');
 
     const customSearchInput = await findByTestId('custom-search-input');
     fireEvent.change(customSearchInput, { target: { value: 'PDF file' } });
@@ -201,7 +205,8 @@ test('Test the whole words matching', async () => {
     expect(numMatchesLabel.textContent).toEqual('1 of 15');
 
     // There are 4 results found on the 4th page
-    let highlights = textLayer.querySelectorAll('.rpv-search__highlight');
+    let searchHighlights = await findByTestId('search__highlights-3');
+    let highlights = searchHighlights.querySelectorAll('.rpv-search__highlight');
     expect(highlights.length).toEqual(4);
 
     // Enable the `Whole words` option
@@ -211,6 +216,6 @@ test('Test the whole words matching', async () => {
     numMatchesLabel = await findByTestId('num-matches');
     expect(numMatchesLabel.textContent).toEqual('1 of 3');
 
-    highlights = textLayer.querySelectorAll('.rpv-search__highlight');
+    highlights = searchHighlights.querySelectorAll('.rpv-search__highlight');
     expect(highlights.length).toEqual(2);
 });
