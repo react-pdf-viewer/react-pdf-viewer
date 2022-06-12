@@ -22,12 +22,10 @@ test('Keep highlighting after clicking zoom buttons in the default toolbar', asy
     await pageInput.press('Enter');
 
     const getHighlightAreas = async () => {
-        await page.waitForSelector('[data-testid="core__page-layer-4"]', { visible: true });
-
         // Wait for the text layer to be rendered completely
-        const textLayer = await page.waitForSelector('[data-testid="core__text-layer-4"]');
+        const searchHighlights = await page.waitForSelector('[data-testid="search__highlights-4"]', { visible: true });
 
-        const highlightAreas = await textLayer.$$eval('.rpv-search__highlight', (nodes) =>
+        const highlightAreas = await searchHighlights.$$eval('.rpv-search__highlight', (nodes) =>
             nodes.map((node) => ({
                 index: (node as HTMLElement).getAttribute('data-index'),
                 height: (node as HTMLElement).style.height,
@@ -38,29 +36,32 @@ test('Keep highlighting after clicking zoom buttons in the default toolbar', asy
     };
 
     // Wait for the 5th page
+    await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 3484');
+
     let areas = await getHighlightAreas();
     expect(areas.length).toEqual(8);
 
     expect(areas[0].height).toEqual('1.607%');
-    expect(areas[0].width).toEqual('7.16704%');
-    expect(areas[0].index).toEqual('7');
+    expect(areas[0].width).toEqual('7.20884%');
+    expect(areas[0].index).toEqual('0');
 
     expect(areas[1].height).toEqual('1.607%');
-    expect(areas[1].width).toEqual('7.12442%');
-    expect(areas[1].index).toEqual('6');
+    expect(areas[1].width).toEqual('7.10536%');
+    expect(areas[1].index).toEqual('1');
 
     // Click the zoom in button
     const zoomInButton = await page.waitForSelector('[data-testid="zoom__in-button"]');
     await zoomInButton.click();
 
+    await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 4117');
     areas = await getHighlightAreas();
     expect(areas.length).toEqual(8);
 
     expect(areas[2].height).toEqual('1.55401%');
-    expect(areas[2].width).toEqual('7.29661%');
-    expect(areas[2].index).toEqual('5');
+    expect(areas[2].width).toEqual('7.23812%');
+    expect(areas[2].index).toEqual('2');
 
     expect(areas[3].height).toEqual('1.55401%');
-    expect(areas[3].width).toEqual('7.22953%');
-    expect(areas[3].index).toEqual('4');
+    expect(areas[3].width).toEqual('7.20059%');
+    expect(areas[3].index).toEqual('3');
 });
