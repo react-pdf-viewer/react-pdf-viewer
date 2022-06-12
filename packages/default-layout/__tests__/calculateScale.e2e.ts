@@ -6,13 +6,13 @@ test('Calculate scale', async () => {
         width: 1920,
         height: 1080,
     });
-    await page.evaluate(() => document.querySelector('[data-testid="core__viewer"]').scrollIntoView());
+    await page.evaluate(() => document.querySelector('[data-testid="core__viewer"]')?.scrollIntoView());
 
     // Wait until the first page is rendered
     await page.waitForSelector('[data-testid="core__text-layer-0"]');
     await page.waitForSelector('[data-testid="core__text-layer-1"]');
 
     const zoomLabel = await page.waitForSelector('[data-testid=zoom__popover-target-scale]');
-    const currentZoom = await zoomLabel.evaluate((ele) => ele.textContent);
+    const currentZoom = await zoomLabel?.evaluate((ele) => ele.textContent);
     expect(currentZoom).toEqual('150%');
 });

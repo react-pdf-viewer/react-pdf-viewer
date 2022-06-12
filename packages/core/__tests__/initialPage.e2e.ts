@@ -6,7 +6,7 @@ test('Test the initialPage option', async () => {
         width: 1920,
         height: 1080,
     });
-    await page.evaluate(() => document.querySelector('[data-testid="core__viewer"]').scrollIntoView());
+    await page.evaluate(() => document.querySelector('[data-testid="core__viewer"]')?.scrollIntoView());
 
     // Wait until the initial page is rendered
     await page.waitForSelector('[data-testid="core__page-layer-6"]', { visible: true });
