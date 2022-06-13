@@ -41,9 +41,10 @@ const defaultLayoutPluginInstance = defaultLayoutPlugin({
 });
 ```
 
-**Bug fix**
+**Bug fixes**
 
 -   The highlight plugin throws an exception when double click a page without selecting any text
+-   The default layout plugin throws an exception if the `setInitialTabFromPageMode` function returns a `Promise` which resolves an invalid tab index
 
 ## v3.4.0
 

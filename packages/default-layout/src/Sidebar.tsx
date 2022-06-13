@@ -50,7 +50,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
     const containerRef = React.useRef<HTMLDivElement>();
     const { l10n } = React.useContext(LocalizationContext);
     const [opened, setOpened] = React.useState(false);
-    const [currentTab, setCurrentTab] = React.useState(store.get('currentTab') || 0);
+    const [currentTab, setCurrentTab] = React.useState(Math.max(store.get('currentTab') || 0, 0));
     const { direction } = React.useContext(ThemeContext);
     const isRtl = direction === TextDirection.RightToLeft;
 
@@ -100,8 +100,10 @@ export const Sidebar: React.FC<SidebarProps> = ({
     };
 
     const switchToTab = (index: number) => {
-        setOpened(true);
-        setCurrentTab(index);
+        if (index >= 0 && index < listTabs.length - 1) {
+            setOpened(true);
+            setCurrentTab(index);
+        }
     };
 
     React.useEffect(() => {
