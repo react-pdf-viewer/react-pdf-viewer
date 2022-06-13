@@ -55,7 +55,12 @@ export const Tracker: React.FC<{
             parentEndContainer instanceof HTMLElement && parentEndContainer.hasAttribute(HIGHLIGHT_LAYER_ATTR);
 
         let endDiv: Node, endOffset: number;
-        if (shouldIgnoreEndContainer && range.endOffset == 0) {
+
+        // Detect double-click
+        if (startDiv && startDiv.parentNode == range.endContainer) {
+            endDiv = startDiv;
+            endOffset = endDiv.textContent.length;
+        } else if (shouldIgnoreEndContainer && range.endOffset == 0) {
             endDiv = range.endContainer.previousSibling;
             endOffset = endDiv.textContent.length;
         } else if (shouldIgnoreEndContainer) {
