@@ -25,11 +25,15 @@
     // Make it displayed on top of the shadow layer
     // so users can select text of pages
     z-index: 1;
-}
 
-.rpv-core__text-layer ::selection {
-    background-color: var(--rpv-core__text-layer-text--selection-background-color);
-    color: var(--rpv-core__text-layer-text--selection-color);
+    span::selection {
+        background-color: var(--rpv-core__text-layer-text--selection-background-color);
+        color: var(--rpv-core__text-layer-text--selection-color);
+    }
+
+    br::selection {
+        color: transparent;
+    }
 }
 
 .rpv-core__text-layer-text {
