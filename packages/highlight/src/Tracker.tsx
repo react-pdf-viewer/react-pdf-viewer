@@ -19,6 +19,9 @@ import type { SelectionData } from './types/SelectionData';
 import type { StoreProps } from './types/StoreProps';
 import { useRotation } from './useRotation';
 
+// `\n` is the document selection string when double clicking a page without selecting any text
+const EMPTY_SELECTION = ['', '\n'];
+
 export const Tracker: React.FC<{
     store: Store<StoreProps>;
 }> = ({ store }) => {
@@ -40,7 +43,7 @@ export const Tracker: React.FC<{
         const hasSelection =
             (highlightState === NO_SELECTION_STATE || highlightState === SELECTING_STATE) &&
             selection.rangeCount > 0 &&
-            selection.toString() !== '';
+            EMPTY_SELECTION.indexOf(selection.toString()) === -1;
         if (!hasSelection) {
             return;
         }
