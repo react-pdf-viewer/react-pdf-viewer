@@ -98,31 +98,27 @@ export const Highlights: React.FC<{
         [store.get('targetPageFilter')]
     );
 
-    const unhighlightAll = (textLayerEle: HTMLElement): void => {
-        const highlightNodes = textLayerEle.querySelectorAll('span.rpv-search__highlight');
-        const total = highlightNodes.length;
-        for (let i = 0; i < total; i++) {
-            highlightNodes[i].parentElement.removeChild(highlightNodes[i]);
-        }
-    };
-
     const highlight = (
         keywordStr: string,
         keyword: RegExp,
         textLayerEle: Element,
         span: HTMLElement,
         charIndexSpan: CharIndex[]
-    ): HighlightArea => {
+    ): HighlightArea | null => {
         const range = document.createRange();
 
         const firstChild = span.firstChild;
-        if (!firstChild) {
-            return;
+        if (!firstChild || firstChild.nodeType !== Node.TEXT_NODE) {
+            return null;
         }
 
+        const length = firstChild.textContent.length;
         const startOffset = charIndexSpan[0].charIndexInSpan;
         const endOffset =
             charIndexSpan.length === 1 ? startOffset : charIndexSpan[charIndexSpan.length - 1].charIndexInSpan;
+        if (startOffset > length || endOffset + 1 > length) {
+            return null;
+        }
 
         range.setStart(firstChild, startOffset);
         range.setEnd(firstChild, endOffset + 1);
@@ -208,15 +204,16 @@ export const Highlights: React.FC<{
                         if (charIndexSpan.length !== 1 || charIndexSpan[0].char.trim() !== '') {
                             // Ignore the first and last spaces if we are finding the whole word
                             const normalizedCharSpan = keyword.wholeWords ? charIndexSpan.slice(1, -1) : charIndexSpan;
-                            highlightPos.push(
-                                highlight(
-                                    keywordStr,
-                                    item.keyword,
-                                    textLayerEle,
-                                    spans[normalizedCharSpan[0].spanIndex],
-                                    normalizedCharSpan
-                                )
+                            const hightlighPosition = highlight(
+                                keywordStr,
+                                item.keyword,
+                                textLayerEle,
+                                spans[normalizedCharSpan[0].spanIndex],
+                                normalizedCharSpan
                             );
+                            if (hightlighPosition) {
+                                highlightPos.push(hightlighPosition);
+                            }
                         }
                     });
                 });
@@ -302,8 +299,6 @@ export const Highlights: React.FC<{
         }
 
         const textLayerEle = renderStatus.ele;
-        unhighlightAll(textLayerEle);
-
         const highlightPos = highlightAll(textLayerEle);
         setHighlightAreas(highlightPos);
 
@@ -312,7 +307,6 @@ export const Highlights: React.FC<{
 
     React.useEffect(() => {
         if (isEmptyKeyword() && renderStatus.ele && renderStatus.status === LayerRenderStatus.DidRender) {
-            unhighlightAll(renderStatus.ele);
             setHighlightAreas([]);
         }
     }, [keywordRegexp, renderStatus.status]);
