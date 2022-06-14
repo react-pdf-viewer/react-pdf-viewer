@@ -41,6 +41,10 @@ const defaultLayoutPluginInstance = defaultLayoutPlugin({
 });
 ```
 
+**Bug fix**
+
+-   The highlight plugin throws an exception when double click a page without selecting any text
+
 ## v3.4.0
 
 **New feature**
