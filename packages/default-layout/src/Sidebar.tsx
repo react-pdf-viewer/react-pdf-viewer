@@ -100,7 +100,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
     };
 
     const switchToTab = (index: number) => {
-        if (index >= 0 && index < listTabs.length - 1) {
+        if (index >= 0 && index <= listTabs.length - 1) {
             setOpened(true);
             setCurrentTab(index);
         }
