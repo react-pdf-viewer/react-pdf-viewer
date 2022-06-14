@@ -3,8 +3,8 @@ import { findAllByTitle } from '@testing-library/dom';
 import { render, waitForElementToBeRemoved } from '@testing-library/react';
 import * as React from 'react';
 import { mockIsIntersecting } from '../../../test-utils/mockIntersectionObserver';
-import { searchPlugin } from '../src/index';
-import type { FlagKeyword } from '../src/types/FlagKeyword';
+import { searchPlugin } from '../src';
+import type { FlagKeyword } from '../src';
 
 const TestKeywordFlag: React.FC<{
     fileUrl: Uint8Array;

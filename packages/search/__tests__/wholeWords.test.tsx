@@ -2,7 +2,7 @@ import { Icon, MinimalButton, Position, Tooltip, Viewer } from '@react-pdf-viewe
 import { fireEvent, render, waitForElementToBeRemoved } from '@testing-library/react';
 import * as React from 'react';
 import { mockIsIntersecting } from '../../../test-utils/mockIntersectionObserver';
-import { NextIcon, PreviousIcon, RenderSearchProps, searchPlugin } from '../src/index';
+import { NextIcon, PreviousIcon, RenderSearchProps, searchPlugin } from '../src';
 
 const TestWholeWords: React.FC<{
     fileUrl: Uint8Array;

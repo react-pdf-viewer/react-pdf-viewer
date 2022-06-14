@@ -7,7 +7,7 @@ import { PageChangeEvent, Viewer } from '../src';
 const TestOnPageChange: React.FC<{
     fileUrl: Uint8Array;
 }> = ({ fileUrl }) => {
-    const [visitedPages, setVisitedPages] = React.useState([]);
+    const [visitedPages, setVisitedPages] = React.useState<number[]>([]);
 
     const handlePageChange = (e: PageChangeEvent) => {
         setVisitedPages((visitedPages) => visitedPages.concat(e.currentPage));

@@ -2,7 +2,7 @@ import { PrimaryButton, Viewer } from '@react-pdf-viewer/core';
 import { fireEvent, render, screen, waitForElementToBeRemoved } from '@testing-library/react';
 import * as React from 'react';
 import { mockIsIntersecting } from '../../../test-utils/mockIntersectionObserver';
-import { zoomPlugin } from '../src/index';
+import { zoomPlugin } from '../src';
 
 const TestCallZoomMethod: React.FC<{
     fileUrl: Uint8Array;

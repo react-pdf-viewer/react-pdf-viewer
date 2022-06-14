@@ -66,20 +66,20 @@ test('Bookmarks are expanded initially (level 1)', async () => {
     expect(bookmarks.length).toEqual(32);
 
     const heading1 = bookmarks[5];
-    expect(heading1.getAttribute('aria-label').localeCompare('1 Heading1')).toEqual(1);
+    expect(heading1.getAttribute('aria-label')?.localeCompare('1 Heading1')).toEqual(1);
     expect(heading1.getAttribute('aria-level')).toEqual('1');
     // The second and third child heading aren't displayed
-    expect(heading1.textContent.localeCompare('1 Heading1')).toEqual(1);
+    expect(heading1.textContent?.localeCompare('1 Heading1')).toEqual(1);
 
     const heading2 = bookmarks[6];
-    expect(heading2.getAttribute('aria-label').localeCompare('2 Heading1-1')).toEqual(1);
+    expect(heading2.getAttribute('aria-label')?.localeCompare('2 Heading1-1')).toEqual(1);
     expect(heading2.getAttribute('aria-level')).toEqual('1');
-    expect(heading2.textContent.localeCompare('2 Heading1-1')).toEqual(1);
+    expect(heading2.textContent?.localeCompare('2 Heading1-1')).toEqual(1);
 
     const heading3 = bookmarks[7];
-    expect(heading3.getAttribute('aria-label').localeCompare('3 Heading1-2')).toEqual(1);
+    expect(heading3.getAttribute('aria-label')?.localeCompare('3 Heading1-2')).toEqual(1);
     expect(heading3.getAttribute('aria-level')).toEqual('1');
-    expect(heading3.textContent.localeCompare('3 Heading1-2')).toEqual(1);
+    expect(heading3.textContent?.localeCompare('3 Heading1-2')).toEqual(1);
 });
 
 test('Bookmarks are expanded initially (level 2)', async () => {
@@ -109,20 +109,20 @@ test('Bookmarks are expanded initially (level 2)', async () => {
     expect(bookmarks.length).toEqual(77);
 
     const heading1 = bookmarks[5];
-    expect(heading1.getAttribute('aria-label').localeCompare('1 Heading1')).toEqual(1);
+    expect(heading1.getAttribute('aria-label')?.localeCompare('1 Heading1')).toEqual(1);
     expect(heading1.getAttribute('aria-level')).toEqual('1');
     // The third heading isn't displayed
-    expect(heading1.textContent.localeCompare('1 Heading11.1 Heading2')).toEqual(1);
+    expect(heading1.textContent?.localeCompare('1 Heading11.1 Heading2')).toEqual(1);
 
     const heading2 = bookmarks[6];
-    expect(heading2.getAttribute('aria-label').localeCompare('1.1 Heading2')).toEqual(1);
+    expect(heading2.getAttribute('aria-label')?.localeCompare('1.1 Heading2')).toEqual(1);
     expect(heading2.getAttribute('aria-level')).toEqual('2');
-    expect(heading2.textContent.localeCompare('1.1 Heading2')).toEqual(1);
+    expect(heading2.textContent?.localeCompare('1.1 Heading2')).toEqual(1);
 
     const heading3 = bookmarks[7];
-    expect(heading3.getAttribute('aria-label').localeCompare('2 Heading1-1')).toEqual(1);
+    expect(heading3.getAttribute('aria-label')?.localeCompare('2 Heading1-1')).toEqual(1);
     expect(heading3.getAttribute('aria-level')).toEqual('1');
-    expect(heading3.textContent.localeCompare('2 Heading1-1')).toEqual(1);
+    expect(heading3.textContent?.localeCompare('2 Heading1-1')).toEqual(1);
 });
 
 test('Bookmarks are expanded initially (level 3)', async () => {
@@ -152,18 +152,18 @@ test('Bookmarks are expanded initially (level 3)', async () => {
     expect(bookmarks.length).toEqual(78);
 
     const heading1 = bookmarks[5];
-    expect(heading1.getAttribute('aria-label').localeCompare('1 Heading1')).toEqual(1);
+    expect(heading1.getAttribute('aria-label')?.localeCompare('1 Heading1')).toEqual(1);
     expect(heading1.getAttribute('aria-level')).toEqual('1');
     // The third heading is displayed
-    expect(heading1.textContent.localeCompare('1 Heading11.1 Heading21.1.1 Heading3')).toEqual(1);
+    expect(heading1.textContent?.localeCompare('1 Heading11.1 Heading21.1.1 Heading3')).toEqual(1);
 
     const heading2 = bookmarks[6];
-    expect(heading2.getAttribute('aria-label').localeCompare('1.1 Heading2')).toEqual(1);
+    expect(heading2.getAttribute('aria-label')?.localeCompare('1.1 Heading2')).toEqual(1);
     expect(heading2.getAttribute('aria-level')).toEqual('2');
-    expect(heading2.textContent.localeCompare('1.1 Heading21.1.1 Heading3')).toEqual(1);
+    expect(heading2.textContent?.localeCompare('1.1 Heading21.1.1 Heading3')).toEqual(1);
 
     const heading3 = bookmarks[7];
-    expect(heading3.getAttribute('aria-label').localeCompare('1.1.1 Heading3')).toEqual(1);
+    expect(heading3.getAttribute('aria-label')?.localeCompare('1.1.1 Heading3')).toEqual(1);
     expect(heading3.getAttribute('aria-level')).toEqual('3');
-    expect(heading3.textContent.localeCompare('1.1.1 Heading3')).toEqual(1);
+    expect(heading3.textContent?.localeCompare('1.1.1 Heading3')).toEqual(1);
 });

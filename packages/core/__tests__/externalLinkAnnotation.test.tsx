@@ -30,6 +30,6 @@ test('Support external link annotation', async () => {
 
     const linkContainer = await findByTestId('core__annotation--link-43R');
     const link = linkContainer.querySelector('a');
-    expect(link.getAttribute('data-target')).toEqual('external');
-    expect(link.getAttribute('href')).toEqual('m1-02-01.pdf#[2,{"name":"FitR"},-86,377,681,831]');
+    expect(link?.getAttribute('data-target')).toEqual('external');
+    expect(link?.getAttribute('href')).toEqual('m1-02-01.pdf#[2,{"name":"FitR"},-86,377,681,831]');
 });

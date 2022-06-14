@@ -50,10 +50,10 @@ test('Thumbnails are not displayed when switching between tabs', async () => {
 
     let firstThumbnail = await findByLabelText('Thumbnail of page 1');
     let firstThumbnailSrc = firstThumbnail.getAttribute('src');
-    expect(firstThumbnailSrc.substring(0, 100)).toEqual(
+    expect(firstThumbnailSrc?.substring(0, 100)).toEqual(
         'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAACFCAYAAACt+l1zAAAABmJLR0QA/wD/AP+gvaeTAAAKX0lEQV'
     );
-    expect(firstThumbnailSrc.length).toEqual(3662);
+    expect(firstThumbnailSrc?.length).toEqual(3662);
 
     // Click the `Bookmark` tab
     const bookmarkTab = await findByLabelText('Bookmark');
@@ -74,8 +74,8 @@ test('Thumbnails are not displayed when switching between tabs', async () => {
 
     firstThumbnail = await findByLabelText('Thumbnail of page 1');
     firstThumbnailSrc = firstThumbnail.getAttribute('src');
-    expect(firstThumbnailSrc.substring(0, 100)).toEqual(
+    expect(firstThumbnailSrc?.substring(0, 100)).toEqual(
         'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAACFCAYAAACt+l1zAAAABmJLR0QA/wD/AP+gvaeTAAAKX0lEQV'
     );
-    expect(firstThumbnailSrc.length).toEqual(3662);
+    expect(firstThumbnailSrc?.length).toEqual(3662);
 });

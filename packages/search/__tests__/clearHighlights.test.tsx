@@ -3,8 +3,8 @@ import { findAllByTitle } from '@testing-library/dom';
 import { fireEvent, render, screen, waitForElementToBeRemoved } from '@testing-library/react';
 import * as React from 'react';
 import { mockIsIntersecting } from '../../../test-utils/mockIntersectionObserver';
-import { searchPlugin } from '../src/index';
-import type { SingleKeyword } from '../src/types/SingleKeyword';
+import { searchPlugin } from '../src';
+import type { SingleKeyword } from '../src';
 
 const TestClearHighlights: React.FC<{
     fileUrl: Uint8Array;
