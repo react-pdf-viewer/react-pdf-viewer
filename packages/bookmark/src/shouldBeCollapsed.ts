@@ -18,13 +18,13 @@ export const shouldBeCollapsed = (bookmark: PdfJs.Outline): boolean => {
         return false;
     }
 
-    const subItems = [...items];
+    let subItems = items.concat([]);
     while (subItems.length > 0) {
         const firstChild = subItems.shift();
         const children = firstChild.items;
         if (firstChild.count && children && firstChild.count > 0 && children.length > 0) {
             numSubItems += children.length;
-            subItems.push(...children);
+            subItems = subItems.concat(children);
         }
     }
 
