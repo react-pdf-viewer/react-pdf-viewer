@@ -46,8 +46,9 @@ const defaultLayoutPluginInstance = defaultLayoutPlugin({
 **Bug fixes**
 
 -   Don't highlight the entire page when selecting multiple lines
--   The highlight plugin throws an exception when double click a page without selecting any text
 -   The default layout plugin throws an exception if the `setInitialTabFromPageMode` function returns a `Promise` which resolves an invalid tab index
+-   The highlight plugin throws an exception when double click a page without selecting any text
+-   The search plugin can't set the initial keyword when using with the highlight plugins
 
 ## v3.4.0
 

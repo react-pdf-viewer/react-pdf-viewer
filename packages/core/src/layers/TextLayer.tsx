@@ -73,7 +73,12 @@ export const TextLayer: React.FC<{
                 () => {
                     containerEle.setAttribute('data-testid', `core__text-layer-${pageIndex}`);
                     const spans: HTMLElement[] = [].slice.call(containerEle.children);
-                    spans.forEach((span) => span.classList.add('rpv-core__text-layer-text'));
+                    spans.forEach((span) => {
+                        // Distinguish with other elements created by plugins
+                        if (!span.classList.contains('rpv-core__text-layer-text--not')) {
+                            span.classList.add('rpv-core__text-layer-text');
+                        }
+                    });
 
                     plugins.forEach((plugin) => {
                         if (plugin.onTextLayerRender) {

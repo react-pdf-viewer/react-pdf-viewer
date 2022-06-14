@@ -144,9 +144,12 @@ export const highlightPlugin = (props?: HighlightPluginProps): HighlightPlugin =
                 .forEach((span) => span.setAttribute(HIGHLIGHT_PAGE_ATTR, `${e.pageIndex}`));
 
             // Create an element that improves the text selection
-            const selectEnd = document.createElement('div');
-            selectEnd.classList.add(TEXT_LAYER_END_SELECTOR);
-            textEle.appendChild(selectEnd);
+            if (!textEle.querySelector(`.${TEXT_LAYER_END_SELECTOR}`)) {
+                const selectEnd = document.createElement('div');
+                selectEnd.classList.add(TEXT_LAYER_END_SELECTOR);
+                selectEnd.classList.add('rpv-core__text-layer-text--not');
+                textEle.appendChild(selectEnd);
+            }
         }
     };
 
