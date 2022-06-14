@@ -301,8 +301,6 @@ export const Highlights: React.FC<{
         const textLayerEle = renderStatus.ele;
         const highlightPos = highlightAll(textLayerEle);
         setHighlightAreas(highlightPos);
-
-        scrollToMatch();
     }, [keywordRegexp, matchPosition, renderStatus.status, characterIndexesRef.current]);
 
     React.useEffect(() => {
@@ -311,7 +309,11 @@ export const Highlights: React.FC<{
         }
     }, [keywordRegexp, renderStatus.status]);
 
-    const scrollToMatch = (): void => {
+    React.useEffect(() => {
+        if (highlightAreas.length === 0) {
+            return;
+        }
+
         const container = containerRef.current;
         if (
             matchPosition.pageIndex !== pageIndex ||
@@ -343,7 +345,7 @@ export const Highlights: React.FC<{
             currentMatchRef.current = highlightEle as HTMLElement;
             highlightEle.classList.add('rpv-search__highlight--current');
         }
-    };
+    }, [highlightAreas, matchPosition]);
 
     React.useEffect(() => {
         store.subscribe('keyword', handleKeywordChanged);
