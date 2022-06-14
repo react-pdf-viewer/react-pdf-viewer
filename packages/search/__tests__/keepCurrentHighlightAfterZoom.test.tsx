@@ -3,7 +3,7 @@ import { zoomPlugin } from '@react-pdf-viewer/zoom';
 import { fireEvent, render, waitForElementToBeRemoved } from '@testing-library/react';
 import * as React from 'react';
 import { mockIsIntersecting } from '../../../test-utils/mockIntersectionObserver';
-import { NextIcon, PreviousIcon, RenderSearchProps, searchPlugin } from '../src/index';
+import { NextIcon, PreviousIcon, RenderSearchProps, searchPlugin } from '../src';
 
 const TestKeepCurrentHighlightAfterZoom: React.FC<{
     fileUrl: Uint8Array;
@@ -231,7 +231,7 @@ test('Keep the current highlight after zooming the document', async () => {
     expect(highlights.length).toEqual(3);
 
     let currentHighlight = searchHighlights.querySelector('.rpv-search__highlight--current');
-    expect(currentHighlight.getAttribute('data-index')).toEqual('0');
+    expect(currentHighlight?.getAttribute('data-index')).toEqual('0');
 
     // Click the zoom in button
     const zoomInButton = await findByTestId('zoom__in-button');
@@ -242,7 +242,7 @@ test('Keep the current highlight after zooming the document', async () => {
     searchHighlights = await findByTestId('search__highlights-1');
     await findByTestId('core__text-layer-2');
     currentHighlight = searchHighlights.querySelector('.rpv-search__highlight--current');
-    expect(currentHighlight.getAttribute('data-index')).toEqual('0');
+    expect(currentHighlight?.getAttribute('data-index')).toEqual('0');
 
     // Jump to the next match
     const nextMatchButton = await findByTestId('next-match');
@@ -250,7 +250,7 @@ test('Keep the current highlight after zooming the document', async () => {
     fireEvent.click(nextMatchButton);
 
     currentHighlight = searchHighlights.querySelector('.rpv-search__highlight--current');
-    expect(currentHighlight.getAttribute('data-index')).toEqual('2');
+    expect(currentHighlight?.getAttribute('data-index')).toEqual('2');
 
     // Click the zoom out button
     const zoomOutButton = await findByTestId('zoom__out-button');
@@ -261,5 +261,5 @@ test('Keep the current highlight after zooming the document', async () => {
     searchHighlights = await findByTestId('search__highlights-1');
     await findByTestId('core__text-layer-2');
     currentHighlight = searchHighlights.querySelector('.rpv-search__highlight--current');
-    expect(currentHighlight.getAttribute('data-index')).toEqual('2');
+    expect(currentHighlight?.getAttribute('data-index')).toEqual('2');
 });

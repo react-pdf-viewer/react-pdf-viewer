@@ -4,7 +4,7 @@ import { fireEvent, render, waitForElementToBeRemoved } from '@testing-library/r
 import * as React from 'react';
 import { mockIsIntersecting } from '../../../test-utils/mockIntersectionObserver';
 import { mockResize } from '../../../test-utils/mockResizeObserver';
-import { searchPlugin } from '../src/index';
+import { searchPlugin } from '../src';
 
 const TestKeywordMultipleSpansOption: React.FC<{
     fileUrl: Uint8Array;

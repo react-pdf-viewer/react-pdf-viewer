@@ -1,7 +1,7 @@
 import { render, waitForElementToBeRemoved } from '@testing-library/react';
 import * as React from 'react';
 import { mockIsIntersecting } from '../../../test-utils/mockIntersectionObserver';
-import { ProgressBar, Viewer } from '../src/index';
+import { ProgressBar, Viewer } from '../src';
 
 test('renderLoader option', async () => {
     const App = () => (

@@ -5,7 +5,7 @@ import { fireEvent, render, waitForElementToBeRemoved } from '@testing-library/r
 import * as React from 'react';
 import { mockIsIntersecting } from '../../../test-utils/mockIntersectionObserver';
 import { mockResize } from '../../../test-utils/mockResizeObserver';
-import type { FlagKeyword } from '../src/types/FlagKeyword';
+import type { FlagKeyword } from '../src';
 
 const TestKeepHighlight: React.FC<{
     fileUrl: Uint8Array;

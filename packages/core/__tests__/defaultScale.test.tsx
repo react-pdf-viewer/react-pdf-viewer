@@ -1,7 +1,7 @@
 import { render } from '@testing-library/react';
 import * as React from 'react';
 import { mockIsIntersecting } from '../../../test-utils/mockIntersectionObserver';
-import { Viewer } from '../src/Viewer';
+import { Viewer } from '../src';
 
 test('defaultScale option', async () => {
     const App = () => (

@@ -3,8 +3,7 @@ import { fireEvent, render, waitFor, waitForElementToBeRemoved } from '@testing-
 import * as React from 'react';
 import { mockIsIntersecting } from '../../../test-utils/mockIntersectionObserver';
 import { mockResize } from '../../../test-utils/mockResizeObserver';
-import { SpecialZoomLevel } from '../src/structs/SpecialZoomLevel';
-import { Viewer } from '../src/Viewer';
+import { SpecialZoomLevel, Viewer } from '../src';
 
 const TestDefaultScaleSpecialZoomLevel: React.FC<{
     fileUrl: Uint8Array;

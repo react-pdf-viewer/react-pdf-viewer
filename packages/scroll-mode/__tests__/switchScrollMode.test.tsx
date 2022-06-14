@@ -2,7 +2,7 @@ import { PrimaryButton, ScrollMode, Viewer } from '@react-pdf-viewer/core';
 import { fireEvent, render, screen, waitForElementToBeRemoved } from '@testing-library/react';
 import * as React from 'react';
 import { mockIsIntersecting } from '../../../test-utils/mockIntersectionObserver';
-import { scrollModePlugin } from '../src/index';
+import { scrollModePlugin } from '../src';
 
 const TestSwitchScrollMode: React.FC<{
     fileUrl: Uint8Array;

@@ -77,8 +77,8 @@ test('Test <Cover />', async () => {
 
     const image = await findByTestId('thumbnail__cover-image');
     const src = image.getAttribute('src');
-    expect(src.length).toEqual(61722);
-    expect(src.substring(0, 100)).toEqual(
+    expect(src?.length).toEqual(61722);
+    expect(src?.substring(0, 100)).toEqual(
         'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAO4AAAE+CAYAAACKpyy5AAAABmJLR0QA/wD/AP+gvaeTAAAgAElEQV'
     );
 });
@@ -116,8 +116,8 @@ test('Test multiple <Cover />', async () => {
 
     let image = await findByTestId('thumbnail__cover-image');
     let src = image.getAttribute('src');
-    expect(src.length).toEqual(12154);
-    expect(src.slice(-100)).toEqual(
+    expect(src?.length).toEqual(12154);
+    expect(src?.slice(-100)).toEqual(
         'IeqfHGwKoSAJVwgFSbhCKEjCFUJBEq4QCpJwhVCQhCuEgiRcIRQk4QqhIAlXCAVJuEIo6P8DgxmhOluzxw0AAAAASUVORK5CYII='
     );
 
@@ -139,8 +139,8 @@ test('Test multiple <Cover />', async () => {
 
     image = await findByTestId('thumbnail__cover-image');
     src = image.getAttribute('src');
-    expect(src.length).toEqual(1998);
-    expect(src.slice(-100)).toEqual(
+    expect(src?.length).toEqual(1998);
+    expect(src?.slice(-100)).toEqual(
         'ETXEiBpiRA0xooYYUUOMqCFG1BAjaogRNcSIGmJEDTGihhhRQ4yoIUbUECNqiBE1xIgaYv4DB66eMUgszcEAAAAASUVORK5CYII='
     );
 });
@@ -199,8 +199,8 @@ test('Test <Cover /> with dynamic document', async () => {
 
     let image = await findByTestId('thumbnail__cover-image');
     let src = image.getAttribute('src');
-    expect(src.length).toEqual(11662);
-    expect(src.slice(-100)).toEqual(
+    expect(src?.length).toEqual(11662);
+    expect(src?.slice(-100)).toEqual(
         'K2IgBVfEQAquiIEUXBEDKbgiBlJwRQyk4IoYSMEVMZCCK2IgBVfEQAquiIEUXBEDKbgiBvof61fzlJ7KkmoAAAAASUVORK5CYII='
     );
 
@@ -222,8 +222,8 @@ test('Test <Cover /> with dynamic document', async () => {
 
     image = await findByTestId('thumbnail__cover-image');
     src = image.getAttribute('src');
-    expect(src.length).toEqual(1998);
-    expect(src.slice(-100)).toEqual(
+    expect(src?.length).toEqual(1998);
+    expect(src?.slice(-100)).toEqual(
         'ETXEiBpiRA0xooYYUUOMqCFG1BAjaogRNcSIGmJEDTGihhhRQ4yoIUbUECNqiBE1xIgaYv4DB66eMUgszcEAAAAASUVORK5CYII='
     );
 });

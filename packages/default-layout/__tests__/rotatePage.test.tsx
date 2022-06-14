@@ -148,10 +148,10 @@ test('Rotate single page with thumbnails using renderThumbnailItem', async () =>
     // Find the third thumbnail
     const thirdThumbnailImage = await findByLabelText('Thumbnail of page 3');
     let src = thirdThumbnailImage.getAttribute('src');
-    expect(src.substring(0, 100)).toEqual(
+    expect(src?.substring(0, 100)).toEqual(
         'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIUAAABkCAYAAACowvMbAAAABmJLR0QA/wD/AP+gvaeTAAAKA0lEQV'
     );
-    expect(src.length).toEqual(3542);
+    expect(src?.length).toEqual(3542);
     expect(thirdThumbnailImage.getAttribute('height')).toEqual('100px');
     expect(thirdThumbnailImage.getAttribute('width')).toEqual('133.33333333333334px');
 

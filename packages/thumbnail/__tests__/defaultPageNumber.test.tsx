@@ -5,9 +5,6 @@ import { mockIsIntersecting } from '../../../test-utils/mockIntersectionObserver
 import { mockResize } from '../../../test-utils/mockResizeObserver';
 import { thumbnailPlugin } from '../src';
 
-const fs = require('fs');
-const path = require('path');
-
 const TestPageLabel: React.FC<{
     fileUrl: Uint8Array;
 }> = ({ fileUrl }) => {

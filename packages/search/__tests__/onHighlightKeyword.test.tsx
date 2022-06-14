@@ -3,8 +3,8 @@ import { findAllByTitle } from '@testing-library/dom';
 import { render } from '@testing-library/react';
 import * as React from 'react';
 import { mockIsIntersecting } from '../../../test-utils/mockIntersectionObserver';
-import { searchPlugin } from '../src/index';
-import type { OnHighlightKeyword } from '../src/types/OnHighlightKeyword';
+import { searchPlugin } from '../src';
+import type { OnHighlightKeyword } from '../src';
 
 const TestOnHighlightKeywordOption: React.FC<{
     fileUrl: Uint8Array;
