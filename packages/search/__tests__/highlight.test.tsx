@@ -4,7 +4,7 @@ import { fireEvent, render, screen, waitForElementToBeRemoved } from '@testing-l
 import * as React from 'react';
 import { mockIsIntersecting } from '../../../test-utils/mockIntersectionObserver';
 import { searchPlugin } from '../src';
-import type { SingleKeyword } from '../src/';
+import type { SingleKeyword } from '../src';
 
 const TestHighlight: React.FC<{
     fileUrl: Uint8Array;
