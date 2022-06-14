@@ -82,12 +82,9 @@ test('Press PageUp to jump to the previous page', async () => {
     // Wait until the first page is rendered
     await page.waitForSelector('[data-testid="core__text-layer-0"]', { visible: true });
 
-    await page.evaluate(() => {
-        const pagesEle = document.querySelector('[data-testid=core__inner-pages]');
-        if (pagesEle) {
-            pagesEle.scrollTop = 8316;
-        }
-    });
+    const pagesEle = await page.waitForSelector('[data-testid="core__inner-pages"]');
+    await pagesEle?.evaluate((ele) => (ele.scrollTop = 8316));
+
     await page.waitForSelector('[data-testid="core__text-layer-7"]', { visible: true });
 
     // Jump to page 7

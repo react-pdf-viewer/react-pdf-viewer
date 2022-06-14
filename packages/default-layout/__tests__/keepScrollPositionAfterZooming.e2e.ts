@@ -12,12 +12,8 @@ test('Keep current position after zooming out', async () => {
     await page.waitForSelector('[data-testid="core__text-layer-100"]', { visible: true });
     await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 126300');
 
-    await page.evaluate(() => {
-        const pagesEle = document.querySelector('[data-testid="core__inner-pages"]');
-        if (pagesEle) {
-            pagesEle.scrollTop = 126788;
-        }
-    });
+    const pagesEle = await page.waitForSelector('[data-testid="core__inner-pages"]');
+    await pagesEle?.evaluate((ele) => (ele.scrollTop = 126788));
 
     // Fint the zoom out button
     const zoomOutButton = await page.waitForSelector('[data-testid="zoom__out-button"]');
@@ -137,12 +133,8 @@ test('Keep current position after zooming in', async () => {
     await page.waitForSelector('[data-testid="core__text-layer-100"]', { visible: true });
     await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 126300');
 
-    await page.evaluate(() => {
-        const pagesEle = document.querySelector('[data-testid="core__inner-pages"]');
-        if (pagesEle) {
-            pagesEle.scrollTop = 126788;
-        }
-    });
+    const pagesEle = await page.waitForSelector('[data-testid="core__inner-pages"]');
+    await pagesEle?.evaluate((ele) => (ele.scrollTop = 126788));
 
     // Fint the zoom in button
     const zoomInButton = await page.waitForSelector('[data-testid="zoom__in-button"]');
@@ -233,12 +225,8 @@ test('Keep current position after zooming to special level', async () => {
     await page.waitForSelector('[data-testid="core__text-layer-100"]', { visible: true });
     await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 126300');
 
-    await page.evaluate(() => {
-        const pagesEle = document.querySelector('[data-testid="core__inner-pages"]');
-        if (pagesEle) {
-            pagesEle.scrollTop = 126788;
-        }
-    });
+    const pagesEle = await page.waitForSelector('[data-testid="core__inner-pages"]');
+    await pagesEle?.evaluate((ele) => (ele.scrollTop = 126788));
 
     const zoomPopover = await page.waitForSelector('[data-testid="zoom__popover-target"]');
     await zoomPopover?.click();

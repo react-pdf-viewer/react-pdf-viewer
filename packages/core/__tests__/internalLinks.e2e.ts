@@ -12,12 +12,9 @@ test('Jump between internal links', async () => {
     await page.waitForSelector('[data-testid="core__text-layer-0"]', { visible: true });
 
     const jumpToTableOfContents = async () => {
-        await page.evaluate(() => {
-            const pagesEle = document.querySelector('[data-testid=core__inner-pages]');
-            if (pagesEle) {
-                pagesEle.scrollTop = 2416;
-            }
-        });
+        const pagesEle = await page.waitForSelector('[data-testid="core__inner-pages"]');
+        await pagesEle?.evaluate((ele) => (ele.scrollTop = 2416));
+
         // Wait until the page is rendered
         await page.waitForSelector('[data-testid="core__text-layer-2"]', { visible: true });
         return await page.waitForSelector('[data-testid="core__annotation-layer-2"]', { visible: true });
