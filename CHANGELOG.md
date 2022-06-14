@@ -14,7 +14,9 @@ const searchPluginInstance = searchPlugin({
 });
 ```
 
-**Improvement**
+**Improvements**
+
+-   The highlight plugin supports double click. Users can double click to select the entire text of a given element
 
 -   The page navigation plugin allows to jump to the previous and next pages with shortcuts.
 
