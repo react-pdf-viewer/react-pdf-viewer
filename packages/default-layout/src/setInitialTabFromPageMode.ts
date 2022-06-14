@@ -10,6 +10,7 @@ import type { PdfJs } from '@react-pdf-viewer/core';
 import { PageMode } from '@react-pdf-viewer/core';
 
 export const setInitialTabFromPageMode = (doc: PdfJs.PdfDocument) =>
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     new Promise<number>((resolve, _) => {
         doc.getPageMode().then((pageMode) => {
             if (!pageMode) {
