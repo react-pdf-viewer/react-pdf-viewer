@@ -6,10 +6,10 @@ import { defaultLayoutPlugin } from '../src';
 
 const TestSetInitialTab: React.FC<{
     fileUrl: Uint8Array;
-}> = ({ fileUrl }) => {
+    initialTab: number;
+}> = ({ fileUrl, initialTab }) => {
     const defaultLayoutPluginInstance = defaultLayoutPlugin({
-        // The thumbnail tab is activated initially
-        setInitialTab: () => Promise.resolve(0),
+        setInitialTab: () => Promise.resolve(initialTab),
     });
 
     return (
@@ -20,8 +20,9 @@ const TestSetInitialTab: React.FC<{
 };
 
 test('Set the initial tab', async () => {
+    // The thumbnail tab is activated initially
     const { findByLabelText, findByTestId, getByTestId } = render(
-        <TestSetInitialTab fileUrl={global['__OPEN_PARAMS_PDF__']} />
+        <TestSetInitialTab fileUrl={global['__OPEN_PARAMS_PDF__']} initialTab={0} />
     );
 
     const viewerEle = getByTestId('core__viewer');
@@ -53,4 +54,29 @@ test('Set the initial tab', async () => {
         'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAACFCAYAAACt+l1zAAAABmJLR0QA/wD/AP+gvaeTAAAKX0lEQV'
     );
     expect(firstThumbnailSrc?.length).toEqual(3662);
+});
+
+test('Set invalid initial tab', async () => {
+    const { findByTestId, getByTestId } = render(
+        <TestSetInitialTab fileUrl={global['__OPEN_PARAMS_PDF__']} initialTab={-1} />
+    );
+
+    const viewerEle = getByTestId('core__viewer');
+    mockIsIntersecting(viewerEle, true);
+    viewerEle['__jsdomMockClientHeight'] = 800;
+    viewerEle['__jsdomMockClientWidth'] = 800;
+
+    await waitForElementToBeRemoved(() => getByTestId('core__doc-loading'));
+    await findByTestId('core__text-layer-0');
+    await findByTestId('core__annotation-layer-0');
+    await findByTestId('core__text-layer-1');
+    await findByTestId('core__annotation-layer-1');
+    await findByTestId('core__text-layer-2');
+    await findByTestId('core__annotation-layer-2');
+    await findByTestId('core__text-layer-3');
+    await findByTestId('core__annotation-layer-3');
+
+    // The thumbnail tab is empty
+    let thumbnailsListContainer = await findByTestId('thumbnail__list-container');
+    expect(thumbnailsListContainer.innerHTML).toEqual('');
 });
