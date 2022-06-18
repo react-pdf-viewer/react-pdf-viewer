@@ -71,7 +71,7 @@ const { print } = defaultLayoutPluginInstance.toolbarPluginInstance.printPluginI
 
 ```js
 const printPluginInstance = printPlugin({
-    renderProgressBar: (numLoadedPages: number, numPages: number) => (
+    renderProgressBar: (numLoadedPages: number, numPages: number, onCancel: () => void) => (
         // Render the progress bar
     ),
 });

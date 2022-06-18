@@ -19,7 +19,7 @@ export const PrintContainer: React.FC<{
     pagesRotation: Map<number, number>;
     pageHeight: number;
     pageWidth: number;
-    renderProgressBar?(numLoadedPages: number, numPages: number): React.ReactElement;
+    renderProgressBar?(numLoadedPages: number, numPages: number, onCancel: () => void): React.ReactElement;
     rotation: number;
     setPages: (doc: PdfJs.PdfDocument) => number[];
     store: Store<StoreProps>;
@@ -60,7 +60,7 @@ export const PrintContainer: React.FC<{
             {printStatus === PrintStatus.CheckingPermission && <CheckPrintPermission doc={doc} store={store} />}
             {printStatus === PrintStatus.Preparing &&
                 (renderProgressBar ? (
-                    renderProgressBar(numLoadedPagesForPrint, numPrintPages)
+                    renderProgressBar(numLoadedPagesForPrint, numPrintPages, cancelPrinting)
                 ) : (
                     <PrintProgress
                         numLoadedPages={numLoadedPagesForPrint}

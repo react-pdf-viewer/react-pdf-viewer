@@ -5,7 +5,7 @@ import * as React from 'react';
 
 const IndexPage = () => {
     const renderProgressBar = React.useCallback(
-        (numLoadedPages: number, numPages: number) => (
+        (numLoadedPages: number, numPages: number, onCancel: () => void) => (
             <div
                 style={{
                     alignItems: 'center',
@@ -29,13 +29,16 @@ const IndexPage = () => {
                         display: 'flex',
                         flexDirection: 'column',
                         padding: '1.5rem',
-                        width: '15rem',
+                        width: '20rem',
                     }}
                 >
                     <div style={{ marginBottom: '1rem' }}>
                         Preparing {numLoadedPages}/{numPages} pages ...
                     </div>
-                    <Spinner />
+                    <div style={{ marginBottom: '1rem' }}>
+                        <Spinner />
+                    </div>
+                    <Button onClick={onCancel}>Cancel</Button>
                 </div>
             </div>
         ),
