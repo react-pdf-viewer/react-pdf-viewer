@@ -22,6 +22,12 @@ Object.defineProperty(window, 'scrollTo', {
     writable: true,
 });
 
+// Mock the `window.print` function
+Object.defineProperty(window, 'print', {
+    value: noop,
+    writable: true,
+});
+
 const fs = require('fs');
 const path = require('path');
 

@@ -25,6 +25,7 @@ export interface PrintProps {
 
 // Plugin
 export interface PrintPlugin extends Plugin {
+    print: () => void;
     Print: (props: PrintProps) => React.ReactElement;
     PrintButton: () => React.ReactElement;
     PrintMenuItem: (props: PrintMenuItemProps) => React.ReactElement;
