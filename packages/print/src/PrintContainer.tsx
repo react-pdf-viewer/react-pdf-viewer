@@ -19,10 +19,11 @@ export const PrintContainer: React.FC<{
     pagesRotation: Map<number, number>;
     pageHeight: number;
     pageWidth: number;
+    renderProgressBar?(numLoadedPages: number, numPages: number, onCancel: () => void): React.ReactElement;
     rotation: number;
     setPages: (doc: PdfJs.PdfDocument) => number[];
     store: Store<StoreProps>;
-}> = ({ doc, pagesRotation, pageHeight, pageWidth, rotation, setPages, store }) => {
+}> = ({ doc, pagesRotation, pageHeight, pageWidth, renderProgressBar, rotation, setPages, store }) => {
     const [printStatus, setPrintStatus] = React.useState(PrintStatus.Inactive);
     const [numLoadedPagesForPrint, setNumLoadedPagesForPrint] = React.useState(0);
     const printPages = React.useMemo(() => {
@@ -57,13 +58,16 @@ export const PrintContainer: React.FC<{
     return (
         <>
             {printStatus === PrintStatus.CheckingPermission && <CheckPrintPermission doc={doc} store={store} />}
-            {printStatus === PrintStatus.Preparing && (
-                <PrintProgress
-                    numLoadedPages={numLoadedPagesForPrint}
-                    numPages={numPrintPages}
-                    onCancel={cancelPrinting}
-                />
-            )}
+            {printStatus === PrintStatus.Preparing &&
+                (renderProgressBar ? (
+                    renderProgressBar(numLoadedPagesForPrint, numPrintPages, cancelPrinting)
+                ) : (
+                    <PrintProgress
+                        numLoadedPages={numLoadedPagesForPrint}
+                        numPages={numPrintPages}
+                        onCancel={cancelPrinting}
+                    />
+                ))}
             {(printStatus === PrintStatus.Preparing || printStatus === PrintStatus.Ready) &&
                 numLoadedPagesForPrint <= numPrintPages && (
                     <PrintZone

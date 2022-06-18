@@ -4,7 +4,7 @@ import * as React from 'react';
 import { mockIsIntersecting } from '../../../test-utils/mockIntersectionObserver';
 import { printPlugin } from '../src';
 
-const TestBookmarks: React.FC<{
+const TestPrint: React.FC<{
     fileUrl: Uint8Array;
 }> = ({ fileUrl }) => {
     const printPluginInstance = printPlugin();
@@ -47,7 +47,7 @@ const TestBookmarks: React.FC<{
 };
 
 test('Test print() function', async () => {
-    const { findByTestId, getByTestId } = render(<TestBookmarks fileUrl={global['__MULTIPLE_PAGES_PDF__']} />);
+    const { findByTestId, getByTestId } = render(<TestPrint fileUrl={global['__MULTIPLE_PAGES_PDF__']} />);
 
     const viewerEle = getByTestId('core__viewer');
     mockIsIntersecting(viewerEle, true);
