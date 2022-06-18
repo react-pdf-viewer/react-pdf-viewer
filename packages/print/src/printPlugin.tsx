@@ -26,6 +26,7 @@ export interface PrintPlugin extends Plugin {
 
 export interface PrintPluginProps {
     enableShortcuts?: boolean;
+    renderProgressBar?(numLoadedPages: number, numPages: number): React.ReactElement;
     setPages?: (doc: PdfJs.PdfDocument) => number[];
 }
 
@@ -76,20 +77,21 @@ export const printPlugin = (props?: PrintPluginProps): PrintPlugin => {
         </PrintDecorator>
     );
 
-    const renderViewer = (props: RenderViewer): Slot => {
-        const { slot } = props;
+    const renderViewer = (renderViewerProps: RenderViewer): Slot => {
+        const { slot } = renderViewerProps;
         const updateSlot: Slot = {
             children: (
                 <>
                     {printPluginProps.enableShortcuts && (
-                        <ShortcutHandler containerRef={props.containerRef} store={store} />
+                        <ShortcutHandler containerRef={renderViewerProps.containerRef} store={store} />
                     )}
                     <PrintContainer
-                        doc={props.doc}
-                        pagesRotation={props.pagesRotation}
-                        pageHeight={props.pageHeight}
-                        pageWidth={props.pageWidth}
-                        rotation={props.rotation}
+                        doc={renderViewerProps.doc}
+                        pagesRotation={renderViewerProps.pagesRotation}
+                        pageHeight={renderViewerProps.pageHeight}
+                        pageWidth={renderViewerProps.pageWidth}
+                        renderProgressBar={props?.renderProgressBar}
+                        rotation={renderViewerProps.rotation}
                         setPages={printPluginProps.setPages}
                         store={store}
                     />

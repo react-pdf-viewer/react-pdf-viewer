@@ -33,6 +33,7 @@ export interface PrintPlugin extends Plugin {
 
 export interface PrintPluginProps {
     enableShortcuts?: boolean;
+    renderProgressBar?(numLoadedPages: number, numPages: number): React.ReactElement;
     setPages?: (doc: PdfJs.PdfDocument) => number[];
 }
 

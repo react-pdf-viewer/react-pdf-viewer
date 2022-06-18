@@ -2,6 +2,8 @@
 
 ## v3.6.0 [WIP]
 
+**New features**
+
 -   Allow to choose pages when printing a document via the `setPages` option. Is is a function that takes the current document and returns the list of zero-based index of pages you want to print.
 
 ```js
@@ -63,6 +65,16 @@ import { defaultLayoutPlugin } from '@react-pdf-viewer/default-layout';
 
 const defaultLayoutPluginInstance = defaultLayoutPlugin();
 const { print } = defaultLayoutPluginInstance.toolbarPluginInstance.printPluginInstance;
+```
+
+-   You can customize the progress bar when preparing pages to print:
+
+```js
+const printPluginInstance = printPlugin({
+    renderProgressBar: (numLoadedPages: number, numPages: number) => (
+        // Render the progress bar
+    ),
+});
 ```
 
 ## v3.5.0
