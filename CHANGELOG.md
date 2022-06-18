@@ -2,6 +2,51 @@
 
 ## v3.6.0 [WIP]
 
+-   Allow to choose pages when printing a document via the `setPages` option. Is is a function that takes the current document and returns the list of zero-based index of pages you want to print.
+
+```js
+import type { PdfJs } from '@react-pdf-viewer/core';
+import { printPlugin } from '@react-pdf-viewer/print';
+
+const printPluginInstance = printPlugin({
+    setPages: (doc: PdfJs.PdfDocument) => number[],
+});
+```
+
+Here are some examples:
+
+```js
+// Only print the even pages
+const printPluginInstance = printPlugin({
+    setPages: (doc) =>
+        Array(doc.numPages)
+            .fill(0)
+            .map((_, i) => i)
+            .filter((i) => i % 2 === 0),
+});
+
+// Only print the odd pages
+const printPluginInstance = printPlugin({
+    setPages: (doc) =>
+        Array(doc.numPages)
+            .fill(0)
+            .map((_, i) => i)
+            .filter((i) => i % 2 === 1),
+});
+```
+
+The option is also available when using the default layout plugin:
+
+```js
+const defaultLayoutPluginInstance = defaultLayoutPlugin({
+    toolbarPlugin: {
+        printPlugin: {
+            setPages: ...,
+        },
+    },
+});
+```
+
 -   The print plugin exposes the `print` function:
 
 ```js

@@ -20,10 +20,17 @@ export const PrintContainer: React.FC<{
     pageHeight: number;
     pageWidth: number;
     rotation: number;
+    setPages: (doc: PdfJs.PdfDocument) => number[];
     store: Store<StoreProps>;
-}> = ({ doc, pagesRotation, pageHeight, pageWidth, rotation, store }) => {
+}> = ({ doc, pagesRotation, pageHeight, pageWidth, rotation, setPages, store }) => {
     const [printStatus, setPrintStatus] = React.useState(PrintStatus.Inactive);
     const [numLoadedPagesForPrint, setNumLoadedPagesForPrint] = React.useState(0);
+    const printPages = React.useMemo(() => {
+        const { numPages } = doc;
+        // To make sure the print pages are valid
+        return setPages(doc).filter((index) => index >= 0 && index < numPages);
+    }, [doc]);
+    const numPrintPages = printPages.length;
 
     const cancelPrinting = (): void => {
         setNumLoadedPagesForPrint(0);
@@ -34,9 +41,9 @@ export const PrintContainer: React.FC<{
 
     const onLoadPage = () => {
         const total = numLoadedPagesForPrint + 1;
-        if (total <= doc.numPages) {
+        if (total <= numPrintPages) {
             setNumLoadedPagesForPrint(total);
-            total === doc.numPages && setPrintStatus(PrintStatus.Ready);
+            total === numPrintPages && setPrintStatus(PrintStatus.Ready);
         }
     };
 
@@ -53,18 +60,19 @@ export const PrintContainer: React.FC<{
             {printStatus === PrintStatus.Preparing && (
                 <PrintProgress
                     numLoadedPages={numLoadedPagesForPrint}
-                    numPages={doc.numPages}
+                    numPages={numPrintPages}
                     onCancel={cancelPrinting}
                 />
             )}
             {(printStatus === PrintStatus.Preparing || printStatus === PrintStatus.Ready) &&
-                numLoadedPagesForPrint <= doc.numPages && (
+                numLoadedPagesForPrint <= numPrintPages && (
                     <PrintZone
                         doc={doc}
                         numLoadedPages={numLoadedPagesForPrint}
                         pagesRotation={pagesRotation}
                         pageHeight={pageHeight}
                         pageWidth={pageWidth}
+                        printPages={printPages}
                         printStatus={printStatus}
                         rotation={rotation}
                         onCancel={cancelPrinting}

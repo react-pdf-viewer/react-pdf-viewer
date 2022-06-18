@@ -6,7 +6,7 @@
  * @copyright 2019-2022 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import type { Plugin } from '@react-pdf-viewer/core';
+import type { PdfJs, Plugin } from '@react-pdf-viewer/core';
 import * as React from 'react';
 
 // Types
@@ -33,6 +33,7 @@ export interface PrintPlugin extends Plugin {
 
 export interface PrintPluginProps {
     enableShortcuts?: boolean;
+    setPages?: (doc: PdfJs.PdfDocument) => number[];
 }
 
 export function printPlugin(props?: PrintPluginProps): PrintPlugin;

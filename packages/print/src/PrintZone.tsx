@@ -18,11 +18,23 @@ export const PrintZone: React.FC<{
     pagesRotation: Map<number, number>;
     pageHeight: number;
     pageWidth: number;
+    printPages: number[];
     printStatus: PrintStatus;
     rotation: number;
     onCancel(): void;
     onLoad(): void;
-}> = ({ doc, numLoadedPages, pagesRotation, pageHeight, pageWidth, printStatus, rotation, onCancel, onLoad }) => {
+}> = ({
+    doc,
+    numLoadedPages,
+    pagesRotation,
+    pageHeight,
+    pageWidth,
+    printPages,
+    printStatus,
+    rotation,
+    onCancel,
+    onLoad,
+}) => {
     const canvas = React.useMemo(() => document.createElement('canvas') as HTMLCanvasElement, []);
 
     const container = React.useMemo(() => {
@@ -78,21 +90,19 @@ export const PrintZone: React.FC<{
     // Otherwise, it will cause a weird issue such as we can't open any popover
     return createPortal(
         <>
-            {Array(Math.min(numLoadedPages + 1, doc.numPages))
-                .fill(0)
-                .map((_, index) => (
-                    <PageThumbnailContainer
-                        key={index}
-                        canvas={canvas}
-                        doc={doc}
-                        pageHeight={pageHeight}
-                        pageIndex={index}
-                        pageRotation={pagesRotation.has(index) ? pagesRotation.get(index) : 0}
-                        pageWidth={pageWidth}
-                        rotation={rotation}
-                        onLoad={onLoad}
-                    />
-                ))}
+            {printPages.map((index) => (
+                <PageThumbnailContainer
+                    key={index}
+                    canvas={canvas}
+                    doc={doc}
+                    pageHeight={pageHeight}
+                    pageIndex={index}
+                    pageRotation={pagesRotation.has(index) ? pagesRotation.get(index) : 0}
+                    pageWidth={pageWidth}
+                    rotation={rotation}
+                    onLoad={onLoad}
+                />
+            ))}
             <style
                 dangerouslySetInnerHTML={{
                     __html: `@page { size: ${pageWidth}pt ${pageHeight}pt }`,
