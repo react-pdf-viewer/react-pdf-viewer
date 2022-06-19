@@ -29,6 +29,7 @@ export interface PrintPlugin extends Plugin {
     Print: (props: PrintProps) => React.ReactElement;
     PrintButton: () => React.ReactElement;
     PrintMenuItem: (props: PrintMenuItemProps) => React.ReactElement;
+    setPages: (printPages: (doc: PdfJs.PdfDocument) => number[]) => void;
 }
 
 export interface PrintPluginProps {

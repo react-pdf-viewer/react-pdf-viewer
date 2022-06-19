@@ -49,6 +49,28 @@ const defaultLayoutPluginInstance = defaultLayoutPlugin({
 });
 ```
 
+-   The target print pages can be determined from users' input:
+
+```js
+const printPluginInstance = printPlugin();
+
+const { setPages } = printPluginInstance;
+
+const setPrintEvenPages = (doc: PdfJs.PdfDocument) =>
+    Array(doc.numPages)
+        .fill(0)
+        .map((_, i) => i)
+        .filter((i) => (i + 1) % 2 === 0);
+
+// Show UI for users to choose pages
+const handleChooseEvenPages = () => setPages(setPrintEvenPages);
+
+<label>
+    <input type="radio" onChange={handleChooseEvenPages} />
+    Print even pages
+</label>;
+```
+
 -   The print plugin exposes the `print` function:
 
 ```js
