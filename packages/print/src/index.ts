@@ -7,6 +7,7 @@
  */
 
 export { getAllPagesNumbers } from './getAllPagesNumbers';
+export { getCustomPagesNumbers } from './getCustomPagesNumbers';
 export { getEvenPagesNumbers } from './getEvenPagesNumbers';
 export { getOddPagesNumbers } from './getOddPagesNumbers';
 export type { PrintProps } from './Print';
