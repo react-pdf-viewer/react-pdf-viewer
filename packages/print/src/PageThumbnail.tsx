@@ -7,6 +7,7 @@
  */
 
 import type { PdfJs } from '@react-pdf-viewer/core';
+import { useIsMounted } from '@react-pdf-viewer/core';
 import * as React from 'react';
 import { isRunningInJest } from './isRunningInJest';
 
@@ -19,6 +20,7 @@ export const PageThumbnail: React.FC<{
     rotation: number;
     onLoad(): void;
 }> = ({ canvas, page, pageHeight, pageIndex, pageWidth, rotation, onLoad }) => {
+    const isMounted = useIsMounted();
     const renderTask = React.useRef<PdfJs.PageRenderTask>();
     const [src, setSrc] = React.useState('');
     const testWithJest = React.useMemo(() => isRunningInJest(), []);
@@ -58,11 +60,11 @@ export const PageThumbnail: React.FC<{
                 // `URL.createObjectURL` is not available in jest-dom yet
                 if ('toBlob' in canvas && 'createObjectURL' in URL) {
                     canvas.toBlob((blob) => {
-                        setSrc(URL.createObjectURL(blob));
+                        isMounted.current && setSrc(URL.createObjectURL(blob));
                         testWithJest && onLoad();
                     });
                 } else {
-                    setSrc(canvas.toDataURL());
+                    isMounted.current && setSrc(canvas.toDataURL());
                     testWithJest && onLoad();
                 }
             },
