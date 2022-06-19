@@ -90,16 +90,17 @@ export const PrintZone: React.FC<{
     // Otherwise, it will cause a weird issue such as we can't open any popover
     return createPortal(
         <>
-            {printPages.map((index) => (
+            {printPages.map((pageIndex, loopIndex) => (
                 <PageThumbnailContainer
-                    key={index}
+                    key={pageIndex}
                     canvas={canvas}
                     doc={doc}
                     pageHeight={pageHeight}
-                    pageIndex={index}
-                    pageRotation={pagesRotation.has(index) ? pagesRotation.get(index) : 0}
+                    pageIndex={pageIndex}
+                    pageRotation={pagesRotation.has(pageIndex) ? pagesRotation.get(pageIndex) : 0}
                     pageWidth={pageWidth}
                     rotation={rotation}
+                    shouldRender={loopIndex === numLoadedPages}
                     onLoad={onLoad}
                 />
             ))}

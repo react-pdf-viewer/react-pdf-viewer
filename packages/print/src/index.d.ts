@@ -29,6 +29,7 @@ export interface PrintPlugin extends Plugin {
     Print: (props: PrintProps) => React.ReactElement;
     PrintButton: () => React.ReactElement;
     PrintMenuItem: (props: PrintMenuItemProps) => React.ReactElement;
+    setPages: (printPages: (doc: PdfJs.PdfDocument) => number[]) => void;
 }
 
 export interface PrintPluginProps {
@@ -38,6 +39,11 @@ export interface PrintPluginProps {
 }
 
 export function printPlugin(props?: PrintPluginProps): PrintPlugin;
+
+export function getAllPagesNumbers(doc: PdfJs.PdfDocument): number[];
+export function getCustomPagesNumbers(customPages: string): (doc: PdfJs.PdfDocument) => number[];
+export function getEvenPagesNumbers(doc: PdfJs.PdfDocument): number[];
+export function getOddPagesNumbers(doc: PdfJs.PdfDocument): number[];
 
 // Components
 export class PrintIcon extends React.Component {}

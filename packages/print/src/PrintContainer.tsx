@@ -30,7 +30,7 @@ export const PrintContainer: React.FC<{
         const { numPages } = doc;
         // To make sure the print pages are valid
         return setPages(doc).filter((index) => index >= 0 && index < numPages);
-    }, [doc]);
+    }, [doc, setPages]);
     const numPrintPages = printPages.length;
 
     const cancelPrinting = (): void => {

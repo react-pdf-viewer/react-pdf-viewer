@@ -24,7 +24,7 @@ const printPluginInstance = printPlugin({
         Array(doc.numPages)
             .fill(0)
             .map((_, i) => i)
-            .filter((i) => i % 2 === 0),
+            .filter((i) => (i + 1) % 2 === 0),
 });
 
 // Only print the odd pages
@@ -33,7 +33,7 @@ const printPluginInstance = printPlugin({
         Array(doc.numPages)
             .fill(0)
             .map((_, i) => i)
-            .filter((i) => i % 2 === 1),
+            .filter((i) => (i + 1) % 2 === 1),
 });
 ```
 
@@ -47,6 +47,48 @@ const defaultLayoutPluginInstance = defaultLayoutPlugin({
         },
     },
 });
+```
+
+You don't have to implement functions that return popular pages numbers. The print plugin provides useful functions for most popular cases:
+
+```js
+import {
+    getAllPagesNumbers,
+    getCustomPagesNumbers,
+    getEvenPagesNumbers,
+    getOddPagesNumbers,
+} from '@react-pdf-viewer/print';
+
+const printPluginInstance = printPlugin({
+    setPages: getEvenPagesNumbers,
+});
+```
+
+| Function                | Description                                                                                                      |
+| ----------------------- | ---------------------------------------------------------------------------------------------------------------- |
+| `getAllPagesNumbers`    | Returns all pages numbers of the document                                                                        |
+| `getCustomPagesNumbers` | Returns the custom pages numbers. The input is a string consists of given pages or ranges of pages. For example: |
+|                         | 1, 2, 3                                                                                                          |
+|                         | 1-3                                                                                                              |
+|                         | 1-3, 5, 8-11                                                                                                     |
+| `getEvenPagesNumbers`   | Returns even pages numbers                                                                                       |
+| `getOddPagesNumbers`    | Returns odd pages numbers                                                                                        |
+
+-   The target print pages can be determined from users' input:
+
+```js
+import { getEvenPagesNumbers } from '@react-pdf-viewer/print';
+const printPluginInstance = printPlugin();
+
+const { setPages } = printPluginInstance;
+
+// Show UI for users to choose pages
+const handleChooseEvenPages = () => setPages(getEvenPagesNumbers);
+
+<label>
+    <input type="radio" onChange={handleChooseEvenPages} />
+    Print even pages
+</label>;
 ```
 
 -   The print plugin exposes the `print` function:

@@ -19,6 +19,7 @@ import type { StoreProps } from './types/StoreProps';
 
 export interface PrintPlugin extends Plugin {
     print: () => void;
+    setPages: (printPages: (doc: PdfJs.PdfDocument) => number[]) => void;
     Print: (props: PrintProps) => React.ReactElement;
     PrintButton: () => React.ReactElement;
     PrintMenuItem: (props: PrintMenuItemProps) => React.ReactElement;
@@ -102,11 +103,16 @@ export const printPlugin = (props?: PrintPluginProps): PrintPlugin => {
         return { ...slot, ...updateSlot };
     };
 
+    const setPages = (printPages: (doc: PdfJs.PdfDocument) => number[]): void => {
+        printPluginProps.setPages = printPages;
+    };
+
     return {
         print,
         renderViewer,
         Print: PrintDecorator,
         PrintButton: PrintButtonDecorator,
         PrintMenuItem: PrintMenuItemDecorator,
+        setPages,
     };
 };
