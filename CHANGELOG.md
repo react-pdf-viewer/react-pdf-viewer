@@ -49,6 +49,16 @@ const defaultLayoutPluginInstance = defaultLayoutPlugin({
 });
 ```
 
+You don't have to implement functions that return popular pages numbers. The print plugin provides useful functions for most popular cases:
+
+```js
+import { getAllPagesNumbers, getEvenPagesNumbers, getOddPagesNumbers } from '@react-pdf-viewer/print';
+
+const printPluginInstance = printPlugin({
+    setPages: getEvenPagesNumbers,
+});
+```
+
 -   The target print pages can be determined from users' input:
 
 ```js

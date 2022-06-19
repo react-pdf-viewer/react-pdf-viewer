@@ -40,5 +40,9 @@ export interface PrintPluginProps {
 
 export function printPlugin(props?: PrintPluginProps): PrintPlugin;
 
+export function getAllPagesNumbers(doc: PdfJs.PdfDocument): number[];
+export function getEvenPagesNumbers(doc: PdfJs.PdfDocument): number[];
+export function getOddPagesNumbers(doc: PdfJs.PdfDocument): number[];
+
 // Components
 export class PrintIcon extends React.Component {}
