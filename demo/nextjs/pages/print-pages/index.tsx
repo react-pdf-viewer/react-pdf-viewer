@@ -1,5 +1,4 @@
-import { TextBox, Toggle } from '@react-pdf-viewer/core';
-import { Button, Modal, PrimaryButton, Viewer } from '@react-pdf-viewer/core';
+import { Button, Modal, PrimaryButton, TextBox, Toggle, Viewer } from '@react-pdf-viewer/core';
 import {
     getAllPagesNumbers,
     getCustomPagesNumbers,
@@ -47,8 +46,6 @@ const IndexPage = () => {
             setPages(getCustomPagesNumbers(value));
         }
     };
-
-    const handlePrint = () => print();
 
     return (
         <div
@@ -157,7 +154,14 @@ const IndexPage = () => {
                                 <div style={{ marginRight: '0.5rem' }}>
                                     <Button onClick={toggle}>Close</Button>
                                 </div>
-                                <PrimaryButton onClick={handlePrint}>Print</PrimaryButton>
+                                <PrimaryButton
+                                    onClick={() => {
+                                        toggle();
+                                        print();
+                                    }}
+                                >
+                                    Print
+                                </PrimaryButton>
                             </div>
                         </div>
                     )}
