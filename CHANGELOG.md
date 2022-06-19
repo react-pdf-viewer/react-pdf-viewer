@@ -24,7 +24,7 @@ const printPluginInstance = printPlugin({
         Array(doc.numPages)
             .fill(0)
             .map((_, i) => i)
-            .filter((i) => i % 2 === 0),
+            .filter((i) => (i + 1) % 2 === 0),
 });
 
 // Only print the odd pages
@@ -33,7 +33,7 @@ const printPluginInstance = printPlugin({
         Array(doc.numPages)
             .fill(0)
             .map((_, i) => i)
-            .filter((i) => i % 2 === 1),
+            .filter((i) => (i + 1) % 2 === 1),
 });
 ```
 
