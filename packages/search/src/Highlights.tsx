@@ -155,7 +155,7 @@ export const Highlights: React.FC<{
     const highlightAll = (textLayerEle: Element): HighlightArea[] => {
         const charIndexes = characterIndexesRef.current;
         if (charIndexes.length === 0) {
-            return;
+            return [];
         }
 
         const highlightPos: HighlightArea[] = [];
