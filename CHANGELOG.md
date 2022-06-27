@@ -119,6 +119,15 @@ const printPluginInstance = printPlugin({
 });
 ```
 
+**Improvement**
+
+-   Replace the icons used in buttons to download and open a document with less confusing one
+
+```js
+import { DownloadIcon } from '@react-pdf-viewer/get-file';
+import { OpenFileIcon } from '@react-pdf-viewer/open';
+```
+
 **Bug fix**
 
 -   Can't search or set the initial keyword for scanned documents
