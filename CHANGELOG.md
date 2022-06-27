@@ -119,6 +119,10 @@ const printPluginInstance = printPlugin({
 });
 ```
 
+**Bug fix**
+
+-   Can't search or set the initial keyword for scanned documents
+
 ## v3.5.0
 
 **New feature**
