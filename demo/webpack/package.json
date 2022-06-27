@@ -8,8 +8,8 @@
         "dev": "rm -rf dist && mkdir dist && npm run copy && NODE_ENV=development node_modules/.bin/webpack serve"
     },
     "dependencies": {
-        "@react-pdf-viewer/core": "3.5.0",
-        "@react-pdf-viewer/default-layout": "3.5.0"
+        "@react-pdf-viewer/core": "3.6.0",
+        "@react-pdf-viewer/default-layout": "3.6.0"
     },
     "devDependencies": {
         "@babel/core": "^7.18.2",

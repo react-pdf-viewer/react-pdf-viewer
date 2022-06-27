@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## v3.6.0 [WIP]
+## v3.6.0
 
 **New features**
 
