@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## v3.7.0 [WIP]
+
+**Bug fix**
+
+-   The page navigation options are missing when creating a toolbar plugin
+
 ## v3.6.0
 
 **New features**
