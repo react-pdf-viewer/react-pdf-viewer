@@ -9,6 +9,7 @@
 import type {
     Plugin,
     PluginFunctions,
+    PluginOnAnnotationLayerRender,
     PluginOnDocumentLoad,
     PluginOnTextLayerRender,
     PluginRenderPageLayer,
@@ -232,6 +233,13 @@ export const toolbarPlugin = (props?: ToolbarPluginProps): ToolbarPlugin => {
             plugins.forEach((plugin) => {
                 if (plugin.onDocumentLoad) {
                     plugin.onDocumentLoad(props);
+                }
+            });
+        },
+        onAnnotationLayerRender: (props: PluginOnAnnotationLayerRender) => {
+            plugins.forEach((plugin) => {
+                if (plugin.onAnnotationLayerRender) {
+                    plugin.onAnnotationLayerRender(props);
                 }
             });
         },
