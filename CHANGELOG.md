@@ -6,6 +6,7 @@
 
 -   The page navigation options are missing when creating a toolbar plugin
 -   The search popover always shows up after pressing shortcuts
+-   The viewer always navigates to previous, next pages after users press shortcuts even the document isn't focused
 
 ## v3.6.0
 
