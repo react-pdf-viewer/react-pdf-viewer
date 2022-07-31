@@ -21,10 +21,15 @@ export const ShortcutHandler: React.FC<{
     currentPageRef.current = currentPage;
 
     // Indicate whether the mouse is inside the viewer container or not
-    const [isMouseInside, setMouseInside] = React.useState(true);
+    const isMouseInsideRef = React.useRef(false);
 
-    const handleMouseEnter = () => setMouseInside(true);
-    const handleMouseLeave = () => setMouseInside(false);
+    const handleMouseEnter = () => {
+        isMouseInsideRef.current = true;
+    };
+
+    const handleMouseLeave = () => {
+        isMouseInsideRef.current = false;
+    };
 
     const goToNextPage = () => {
         const jumpToPage = store.get('jumpToPage');
@@ -45,7 +50,7 @@ export const ShortcutHandler: React.FC<{
     const handleKeydown = (e: KeyboardEvent) => {
         const containerEle = containerRef.current;
         const shouldHandleShortcuts =
-            isMouseInside || (document.activeElement && containerEle.contains(document.activeElement));
+            isMouseInsideRef.current || (document.activeElement && containerEle.contains(document.activeElement));
 
         if (!containerEle || !shouldHandleShortcuts) {
             return;
