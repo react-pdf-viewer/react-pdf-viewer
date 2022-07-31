@@ -26,6 +26,7 @@ import type {
     GoToPageProps,
     NumberOfPagesProps,
     PageNavigationPlugin,
+    PageNavigationPluginProps,
 } from '@react-pdf-viewer/page-navigation';
 import type { PrintMenuItemProps, PrintPlugin, PrintPluginProps, PrintProps } from '@react-pdf-viewer/print';
 import type { PropertiesPlugin, ShowPropertiesMenuItemProps, ShowPropertiesProps } from '@react-pdf-viewer/properties';
@@ -137,6 +138,7 @@ export interface ToolbarPluginProps {
     fullScreenPlugin?: FullScreenPluginProps;
     getFilePlugin?: GetFilePluginProps;
     openPlugin?: OpenPluginProps;
+    pageNavigationPlugin?: PageNavigationPluginProps;
     printPlugin?: PrintPluginProps;
     searchPlugin?: SearchPluginProps;
     selectionModePlugin?: SelectionModePluginProps;
