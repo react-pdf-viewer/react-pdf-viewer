@@ -9,6 +9,7 @@
 import type {
     Plugin,
     PluginFunctions,
+    PluginOnAnnotationLayerRender,
     PluginOnDocumentLoad,
     RenderViewer,
     Slot,
@@ -148,6 +149,51 @@ export const pageNavigationPlugin = (props?: PageNavigationPluginProps): PageNav
 
     const NumberOfPagesDecorator = (props: NumberOfPagesProps) => <NumberOfPages {...props} store={store} />;
 
+    const onAnnotationLayerRender = (e: PluginOnAnnotationLayerRender) => {
+        if (!e.annotations.length) {
+            return;
+        }
+        const links = e.annotations.filter(
+            (annotation) =>
+                annotation.subtype === 'Link' &&
+                !annotation.url &&
+                !annotation.unsafeUrl &&
+                !annotation.action &&
+                annotation.dest
+        );
+        if (!links.length) {
+            return;
+        }
+        links.forEach((link) => {
+            const linkEle = e.container.querySelector(`a[data-annotation-link-dest="${link.dest}"]`);
+            if (linkEle) {
+                linkEle.addEventListener('click', () => {
+                    // By default, we can't set the full size for the annotation layer
+                    // Otherwise, it's not possible to select the text in the pages
+                    // To calculate the bounding rectangle of annotation layer, we have to set the height and width styles
+                    e.container.style.setProperty('height', '100%');
+                    e.container.style.setProperty('width', '100%');
+                    const annotationLayerRect = e.container.getBoundingClientRect();
+
+                    // Then remove them
+                    e.container.style.removeProperty('height');
+                    e.container.style.removeProperty('width');
+
+                    const linkRect = linkEle.getBoundingClientRect();
+                    const leftOffset = linkRect.left - annotationLayerRect.left;
+                    const bottomOffset = annotationLayerRect.bottom - linkRect.bottom + linkRect.height;
+
+                    store.update('jumpFromAnnotation', {
+                        bottomOffset: bottomOffset / e.scale,
+                        dest: link.dest,
+                        leftOffset: leftOffset / e.scale,
+                        pageIndex: e.pageIndex,
+                    });
+                });
+            }
+        });
+    };
+
     const renderViewer = (props: RenderViewer): Slot => {
         const { slot } = props;
         if (!pageNavigationPluginProps.enableShortcuts) {
@@ -157,7 +203,12 @@ export const pageNavigationPlugin = (props?: PageNavigationPluginProps): PageNav
         const updateSlot: Slot = {
             children: (
                 <>
-                    <ShortcutHandler containerRef={props.containerRef} numPages={props.doc.numPages} store={store} />
+                    <ShortcutHandler
+                        containerRef={props.containerRef}
+                        doc={props.doc}
+                        numPages={props.doc.numPages}
+                        store={store}
+                    />
                     {slot.children}
                 </>
             ),
@@ -167,9 +218,11 @@ export const pageNavigationPlugin = (props?: PageNavigationPluginProps): PageNav
 
     return {
         install: (pluginFunctions: PluginFunctions) => {
+            store.update('jumpToDestination', pluginFunctions.jumpToDestination);
             store.update('jumpToPage', pluginFunctions.jumpToPage);
         },
         renderViewer,
+        onAnnotationLayerRender,
         onDocumentLoad: (props: PluginOnDocumentLoad) => {
             store.update('doc', props.doc);
             store.update('numberOfPages', props.doc.numPages);

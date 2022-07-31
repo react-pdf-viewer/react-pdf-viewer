@@ -2,6 +2,27 @@
 
 ## v3.7.0 [WIP]
 
+**Improvement**
+
+-   Clicking `Command` + `ArrowUp` (on macOS) or `Ctrl` + `ArrowUp` (on Windows) will bring users to the previous clicked link annotation.
+    You can disable that shortcuts via the `enableShortcuts` option:
+
+```js
+// Use the standalone page navigation plugin
+const pageNavigationPluginInstance = pageNavigationPlugin({
+    enableShortcuts: false,
+});
+
+// Use the default layout plugin
+const defaultLayoutPluginInstance = defaultLayoutPlugin({
+    toolbarPlugin: {
+        pageNavigationPlugin: {
+            enableShortcuts: false,
+        },
+    },
+});
+```
+
 **Bug fixes**
 
 -   The page navigation options are missing when creating a toolbar plugin
@@ -21,7 +42,7 @@ import { printPlugin } from '@react-pdf-viewer/print';
 const printPluginInstance = printPlugin({
     setPages: (doc: PdfJs.PdfDocument) => number[],
 });
-```
+````
 
 Here are some examples:
 

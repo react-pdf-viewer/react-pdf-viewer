@@ -7,6 +7,7 @@
  */
 
 import * as React from 'react';
+import { useIsomorphicLayoutEffect } from '../hooks/useIsomorphicLayoutEffect';
 import { SpecialZoomLevel } from '../structs/SpecialZoomLevel';
 import type { PdfJs } from '../types/PdfJs';
 import type { Plugin } from '../types/Plugin';
@@ -46,7 +47,7 @@ export const AnnotationLayerBody: React.FC<{
 
     const filterAnnotations = annotations.filter((annotation) => !annotation.parentId);
 
-    React.useEffect(() => {
+    useIsomorphicLayoutEffect(() => {
         const container = containerRef.current;
         if (!container) {
             return;
