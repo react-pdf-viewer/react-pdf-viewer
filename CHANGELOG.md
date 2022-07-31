@@ -42,7 +42,7 @@ import { printPlugin } from '@react-pdf-viewer/print';
 const printPluginInstance = printPlugin({
     setPages: (doc: PdfJs.PdfDocument) => number[],
 });
-````
+```
 
 Here are some examples:
 
