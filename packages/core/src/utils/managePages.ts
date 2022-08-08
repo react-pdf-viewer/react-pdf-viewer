@@ -61,8 +61,10 @@ const pagesMap = new Map<string, PdfJs.Page>();
 const generateRefKey = (doc: PdfJs.PdfDocument, outline: PdfJs.OutlineRef): string =>
     `${doc.loadingTask.docId}___${outline.num}R${outline.gen === 0 ? '' : outline.gen}`;
 
-const getPageIndex = (doc: PdfJs.PdfDocument, outline: PdfJs.OutlineRef): number | null =>
-    pageOutlinesMap.get(generateRefKey(doc, outline)) || null;
+const getPageIndex = (doc: PdfJs.PdfDocument, outline: PdfJs.OutlineRef): number | null => {
+    const key = generateRefKey(doc, outline);
+    return pageOutlinesMap.has(key) ? pageOutlinesMap.get(key) : null;
+};
 
 const cacheOutlineRef = (doc: PdfJs.PdfDocument, outline: PdfJs.OutlineRef, pageIndex: number) => {
     pageOutlinesMap.set(generateRefKey(doc, outline), pageIndex);
