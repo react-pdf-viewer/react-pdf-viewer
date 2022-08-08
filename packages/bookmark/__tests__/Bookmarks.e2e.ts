@@ -89,3 +89,57 @@ test('Click bookmarks', async () => {
     await page.waitForSelector('[data-testid="core__text-layer-7"]', { visible: true });
     await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 7567');
 });
+
+// Issue https://github.com/react-pdf-viewer/react-pdf-viewer/issues/1218
+test('Click bookmarks 2', async () => {
+    await page.goto('http://localhost:3000/bookmark');
+    await page.setViewport({
+        width: 1920,
+        height: 1080,
+    });
+    await page.evaluate(() => document.querySelector('[data-testid="root"]')?.scrollIntoView());
+
+    // Wait until the bookmark list is rendered
+    await page.waitForSelector('[data-testid="bookmark__container"]');
+
+    // Wait until the first page is rendered
+    await page.waitForSelector('[data-testid="core__text-layer-0"]', { visible: true });
+
+    // Click the `Load other document` button
+    const loadOtherDocumentButton = await page.waitForSelector('[data-testid="load-other-doc"]');
+    await loadOtherDocumentButton?.click();
+
+    // Wait until the bookmark list is rendered
+    await page.waitForSelector('[data-testid="bookmark__container"]');
+
+    // Wait until the first page is rendered
+    await page.waitForSelector('[data-testid="core__text-layer-0"]', { visible: true });
+
+    // Click the `1 Principle` bookmark item
+    let bookmarkItem = await page.waitForSelector('.rpv-bookmark__title[aria-label="1 Principle"]');
+    await bookmarkItem?.click();
+
+    await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 127');
+
+    // Click the `2 Method Description` bookmark item
+    bookmarkItem = await page.waitForSelector('.rpv-bookmark__title[aria-label="2 Method Description"]');
+    await bookmarkItem?.click();
+    await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 202');
+
+    // Click the `2.1 Apparatus/Equipment` bookmark item
+    bookmarkItem = await page.waitForSelector('.rpv-bookmark__title[aria-label="2.1 Apparatus/Equipment"]');
+    await bookmarkItem?.click();
+    await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 233');
+
+    // Click the `2.2 Operating Parameters` bookmark item
+    bookmarkItem = await page.waitForSelector('.rpv-bookmark__title[aria-label="2.2 Operating Parameters"]');
+    await bookmarkItem?.click();
+    await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 393');
+
+    // Click the `2.3 Reagents` bookmark item
+    bookmarkItem = await page.waitForSelector('.rpv-bookmark__title[aria-label="2.3 Reagents"]');
+    await bookmarkItem?.click();
+
+    await page.waitForSelector('[data-testid="core__text-layer-1"]', { visible: true });
+    await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 945');
+});

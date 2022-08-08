@@ -1,8 +1,9 @@
 import { bookmarkPlugin } from '@react-pdf-viewer/bookmark';
-import { Viewer } from '@react-pdf-viewer/core';
+import { Button, Viewer } from '@react-pdf-viewer/core';
 import * as React from 'react';
 
 const IndexPage = () => {
+    const [fileUrl, setFileUrl] = React.useState('/pdf-open-parameters.pdf');
     const bookmarkPluginInstance = bookmarkPlugin();
     const { Bookmarks } = bookmarkPluginInstance;
 
@@ -14,6 +15,17 @@ const IndexPage = () => {
                 width: '64rem',
             }}
         >
+            <div
+                style={{
+                    alignItems: 'center',
+                    display: 'flex',
+                    marginBottom: '1rem',
+                }}
+            >
+                <Button testId="load-other-doc" onClick={() => setFileUrl('/bookmark.pdf')}>
+                    Load other document
+                </Button>
+            </div>
             <div
                 style={{
                     border: '1px solid rgba(0, 0, 0, 0.1)',
@@ -35,7 +47,7 @@ const IndexPage = () => {
                         overflow: 'hidden',
                     }}
                 >
-                    <Viewer fileUrl="/pdf-open-parameters.pdf" plugins={[bookmarkPluginInstance]} />
+                    <Viewer fileUrl={fileUrl} plugins={[bookmarkPluginInstance]} />
                 </div>
             </div>
         </div>
