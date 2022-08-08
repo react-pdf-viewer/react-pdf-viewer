@@ -26,6 +26,7 @@ const defaultLayoutPluginInstance = defaultLayoutPlugin({
 **Bug fixes**
 
 -   Clicking a particular bookmark might not go to the destination
+-   The `CharacterMap` type isn't available
 -   The page navigation options are missing when creating a toolbar plugin
 -   The search popover always shows up after pressing shortcuts
 -   The viewer always navigates to previous, next pages after users press shortcuts even the document isn't focused

@@ -17,6 +17,7 @@ import { ScrollMode } from './structs/ScrollMode';
 import { SpecialZoomLevel } from './structs/SpecialZoomLevel';
 import { TextDirection, ThemeContext } from './theme/ThemeContext';
 import { withTheme } from './theme/withTheme';
+import type { CharacterMap } from './types/CharacterMap';
 import type { DocumentAskPasswordEvent } from './types/DocumentAskPasswordEvent';
 import type { DocumentLoadEvent } from './types/DocumentLoadEvent';
 import type { LocalizationMap } from './types/LocalizationMap';
@@ -30,11 +31,6 @@ import type { RotatePageEvent } from './types/RotatePageEvent';
 import type { VisibilityChanged } from './types/VisibilityChanged';
 import type { ZoomEvent } from './types/ZoomEvent';
 import { isSameUrl } from './utils/isSameUrl';
-
-export interface CharacterMap {
-    isCompressed: boolean;
-    url: string;
-}
 
 interface FileState {
     data: PdfJs.FileData;
