@@ -11,6 +11,7 @@ import { getDestination, SpecialZoomLevel } from '@react-pdf-viewer/core';
 import * as React from 'react';
 import { BookmarkList } from './BookmarkList';
 import type { IsBookmarkExpanded } from './types/IsBookmarkExpanded';
+import type { RenderBookmarkItem } from './types/RenderBookmarkItemProps';
 import type { StoreProps } from './types/StoreProps';
 
 enum Toggle {
@@ -22,9 +23,10 @@ export const BookmarkListRoot: React.FC<{
     bookmarks: PdfJs.Outline[];
     doc: PdfJs.PdfDocument;
     isBookmarkExpanded?: IsBookmarkExpanded;
+    renderBookmarkItem?: RenderBookmarkItem;
     store: Store<StoreProps>;
     onJumpToDest(pageIndex: number, bottomOffset: number, leftOffset: number, scaleTo: number | SpecialZoomLevel): void;
-}> = ({ bookmarks, doc, isBookmarkExpanded, store, onJumpToDest }) => {
+}> = ({ bookmarks, doc, isBookmarkExpanded, renderBookmarkItem, store, onJumpToDest }) => {
     const containerRef = React.useRef<HTMLDivElement>();
     const [links, setLinks] = React.useState(store.get('linkAnnotations') || {});
 
@@ -188,6 +190,7 @@ export const BookmarkListRoot: React.FC<{
                 doc={doc}
                 isBookmarkExpanded={isBookmarkExpanded}
                 isRoot={true}
+                renderBookmarkItem={renderBookmarkItem}
                 store={store}
                 onJumpToDest={jumpToDest}
             />

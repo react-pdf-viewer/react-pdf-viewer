@@ -18,6 +18,7 @@ import {
 import * as React from 'react';
 import { BookmarkListRoot } from './BookmarkListRoot';
 import type { IsBookmarkExpanded } from './types/IsBookmarkExpanded';
+import type { RenderBookmarkItem } from './types/RenderBookmarkItemProps';
 import type { StoreProps } from './types/StoreProps';
 
 interface BookmarkState {
@@ -28,9 +29,10 @@ interface BookmarkState {
 export const BookmarkLoader: React.FC<{
     doc: PdfJs.PdfDocument;
     isBookmarkExpanded?: IsBookmarkExpanded;
+    renderBookmarkItem?: RenderBookmarkItem;
     store: Store<StoreProps>;
     onJumpToDest(pageIndex: number, bottomOffset: number, leftOffset: number, scaleTo: number | SpecialZoomLevel): void;
-}> = ({ doc, isBookmarkExpanded, store, onJumpToDest }) => {
+}> = ({ doc, isBookmarkExpanded, renderBookmarkItem, store, onJumpToDest }) => {
     const { l10n } = React.useContext(LocalizationContext);
     const { direction } = React.useContext(ThemeContext);
     const isRtl = direction === TextDirection.RightToLeft;
@@ -78,6 +80,7 @@ export const BookmarkLoader: React.FC<{
                 bookmarks={bookmarks.items}
                 doc={doc}
                 isBookmarkExpanded={isBookmarkExpanded}
+                renderBookmarkItem={renderBookmarkItem}
                 store={store}
                 onJumpToDest={onJumpToDest}
             />

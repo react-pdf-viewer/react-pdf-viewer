@@ -22,8 +22,21 @@ export type IsBookmarkExpanded = ({
     index: number;
 }) => boolean;
 
+export interface RenderBookmarkItemProps {
+    bookmark: PdfJs.Outline;
+    depth: number;
+    hasSubItems: boolean;
+    isExpanded: boolean;
+    onClickItem: () => void;
+    onClickTitle: () => void;
+    onToggleSubItems: () => void;
+}
+
+export type RenderBookmarkItem = (props: RenderBookmarkItemProps) => React.ReactElement;
+
 export interface BookmarksProps {
     isBookmarkExpanded?: IsBookmarkExpanded;
+    renderBookmarkItem?: RenderBookmarkItem;
 }
 
 export interface BookmarkPlugin extends Plugin {

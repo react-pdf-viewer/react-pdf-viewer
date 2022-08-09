@@ -13,6 +13,7 @@ import { DownArrowIcon } from './DownArrowIcon';
 import { RightArrowIcon } from './RightArrowIcon';
 import { shouldBeCollapsed } from './shouldBeCollapsed';
 import type { IsBookmarkExpanded } from './types/IsBookmarkExpanded';
+import type { RenderBookmarkItem } from './types/RenderBookmarkItemProps';
 import type { StoreProps } from './types/StoreProps';
 
 export const BookmarkItem: React.FC<{
@@ -22,9 +23,20 @@ export const BookmarkItem: React.FC<{
     index: number;
     isBookmarkExpanded?: IsBookmarkExpanded;
     numberOfSiblings: number;
+    renderBookmarkItem?: RenderBookmarkItem;
     store: Store<StoreProps>;
     onJumpToDest(dest: PdfJs.OutlineDestinationType): void;
-}> = ({ bookmark, depth, doc, index, isBookmarkExpanded, numberOfSiblings, store, onJumpToDest }) => {
+}> = ({
+    bookmark,
+    depth,
+    doc,
+    index,
+    isBookmarkExpanded,
+    numberOfSiblings,
+    renderBookmarkItem,
+    store,
+    onJumpToDest,
+}) => {
     const defaultIsCollapsed = React.useMemo(() => shouldBeCollapsed(bookmark), [bookmark]);
     const defaultExpanded = isBookmarkExpanded
         ? isBookmarkExpanded({ bookmark, doc, depth, index })
@@ -35,7 +47,7 @@ export const BookmarkItem: React.FC<{
 
     const toggleSubItems = (): void => setExpanded((expanded) => !expanded);
 
-    const clickBookmak = (): void => {
+    const clickBookmark = (): void => {
         if (hasSubItems && bookmark.dest) {
             onJumpToDest(bookmark.dest);
         }
@@ -56,35 +68,47 @@ export const BookmarkItem: React.FC<{
             role="treeitem"
             tabIndex={-1}
         >
-            <div
-                className="rpv-bookmark__item"
-                style={{
-                    paddingLeft: `${depth * 1.25}rem`,
-                }}
-                onClick={clickItem}
-            >
-                {hasSubItems ? (
-                    <span className="rpv-bookmark__toggle" onClick={toggleSubItems}>
-                        {expanded ? <DownArrowIcon /> : <RightArrowIcon />}
-                    </span>
-                ) : (
-                    <span className="rpv-bookmark__toggle" />
-                )}
-                {bookmark.url ? (
-                    <a
-                        className="rpv-bookmark__title"
-                        href={bookmark.url}
-                        rel="noopener noreferrer nofollow"
-                        target={bookmark.newWindow ? '_blank' : ''}
-                    >
-                        {bookmark.title}
-                    </a>
-                ) : (
-                    <div className="rpv-bookmark__title" aria-label={bookmark.title} onClick={clickBookmak}>
-                        {bookmark.title}
-                    </div>
-                )}
-            </div>
+            {renderBookmarkItem ? (
+                renderBookmarkItem({
+                    bookmark,
+                    depth,
+                    hasSubItems,
+                    isExpanded: expanded,
+                    onClickItem: clickItem,
+                    onClickTitle: clickBookmark,
+                    onToggleSubItems: toggleSubItems,
+                })
+            ) : (
+                <div
+                    className="rpv-bookmark__item"
+                    style={{
+                        paddingLeft: `${depth * 1.25}rem`,
+                    }}
+                    onClick={clickItem}
+                >
+                    {hasSubItems ? (
+                        <span className="rpv-bookmark__toggle" onClick={toggleSubItems}>
+                            {expanded ? <DownArrowIcon /> : <RightArrowIcon />}
+                        </span>
+                    ) : (
+                        <span className="rpv-bookmark__toggle" />
+                    )}
+                    {bookmark.url ? (
+                        <a
+                            className="rpv-bookmark__title"
+                            href={bookmark.url}
+                            rel="noopener noreferrer nofollow"
+                            target={bookmark.newWindow ? '_blank' : ''}
+                        >
+                            {bookmark.title}
+                        </a>
+                    ) : (
+                        <div className="rpv-bookmark__title" aria-label={bookmark.title} onClick={clickBookmark}>
+                            {bookmark.title}
+                        </div>
+                    )}
+                </div>
+            )}
             {hasSubItems && expanded && (
                 <BookmarkList
                     bookmarks={bookmark.items}
@@ -92,6 +116,7 @@ export const BookmarkItem: React.FC<{
                     doc={doc}
                     isBookmarkExpanded={isBookmarkExpanded}
                     isRoot={false}
+                    renderBookmarkItem={renderBookmarkItem}
                     store={store}
                     onJumpToDest={onJumpToDest}
                 />
