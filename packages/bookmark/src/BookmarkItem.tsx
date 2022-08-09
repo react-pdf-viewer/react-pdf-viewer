@@ -58,6 +58,18 @@ export const BookmarkItem: React.FC<{
         }
     };
 
+    const defaultRenderItem = (onClickItem: () => void, children: React.ReactNode) => (
+        <div
+            className="rpv-bookmark__item"
+            style={{
+                paddingLeft: `${depth * 1.25}rem`,
+            }}
+            onClick={onClickItem}
+        >
+            {children}
+        </div>
+    );
+
     const defaultRenderToggle = (expandIcon: React.ReactElement, collapseIcon: React.ReactElement) =>
         hasSubItems ? (
             <span className="rpv-bookmark__toggle" onClick={toggleSubItems}>
@@ -93,30 +105,26 @@ export const BookmarkItem: React.FC<{
             role="treeitem"
             tabIndex={-1}
         >
-            {renderBookmarkItem ? (
-                renderBookmarkItem({
-                    bookmark,
-                    depth,
-                    hasSubItems,
-                    isExpanded: expanded,
-                    defaultRenderTitle,
-                    defaultRenderToggle,
-                    onClickItem: clickItem,
-                    onClickTitle: clickBookmark,
-                    onToggleSubItems: toggleSubItems,
-                })
-            ) : (
-                <div
-                    className="rpv-bookmark__item"
-                    style={{
-                        paddingLeft: `${depth * 1.25}rem`,
-                    }}
-                    onClick={clickItem}
-                >
-                    {defaultRenderToggle(<DownArrowIcon />, <RightArrowIcon />)}
-                    {defaultRenderTitle(clickBookmark)}
-                </div>
-            )}
+            {renderBookmarkItem
+                ? renderBookmarkItem({
+                      bookmark,
+                      depth,
+                      hasSubItems,
+                      isExpanded: expanded,
+                      defaultRenderItem,
+                      defaultRenderTitle,
+                      defaultRenderToggle,
+                      onClickItem: clickItem,
+                      onClickTitle: clickBookmark,
+                      onToggleSubItems: toggleSubItems,
+                  })
+                : defaultRenderItem(
+                      clickItem,
+                      <>
+                          {defaultRenderToggle(<DownArrowIcon />, <RightArrowIcon />)}
+                          {defaultRenderTitle(clickBookmark)}
+                      </>
+                  )}
             {hasSubItems && expanded && (
                 <BookmarkList
                     bookmarks={bookmark.items}
