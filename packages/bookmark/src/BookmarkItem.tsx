@@ -72,7 +72,11 @@ export const BookmarkItem: React.FC<{
 
     const defaultRenderToggle = (expandIcon: React.ReactElement, collapseIcon: React.ReactElement) =>
         hasSubItems ? (
-            <span className="rpv-bookmark__toggle" onClick={toggleSubItems}>
+            <span
+                className="rpv-bookmark__toggle"
+                data-testid={`bookmark__toggle-${depth}-${index}`}
+                onClick={toggleSubItems}
+            >
                 {expanded ? expandIcon : collapseIcon}
             </span>
         ) : (
@@ -110,6 +114,7 @@ export const BookmarkItem: React.FC<{
                       bookmark,
                       depth,
                       hasSubItems,
+                      index,
                       isExpanded: expanded,
                       defaultRenderItem,
                       defaultRenderTitle,

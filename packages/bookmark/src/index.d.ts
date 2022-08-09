@@ -30,6 +30,7 @@ export interface RenderBookmarkItemProps {
     defaultRenderToggle: (expandIcon: React.ReactElement, collapseIcon: React.ReactElement) => React.ReactElement;
     depth: number;
     hasSubItems: boolean;
+    index: number;
     isExpanded: boolean;
     onClickItem: () => void;
     onClickTitle: () => void;
