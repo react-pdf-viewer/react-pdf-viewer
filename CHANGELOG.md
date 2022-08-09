@@ -2,6 +2,14 @@
 
 ## v3.7.0 [WIP]
 
+**New feature**
+
+-   You can customize the bookmarks by using the `renderBookmarkItem` properly:
+
+```jsx
+<Bookmark renderBookmarkItem={renderBookmarkItem} />
+```
+
 **Improvement**
 
 -   Clicking `Command` + `ArrowUp` (on macOS) or `Ctrl` + `ArrowUp` (on Windows) will bring users to the previous clicked link annotation.

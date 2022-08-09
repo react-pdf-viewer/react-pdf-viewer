@@ -10,3 +10,4 @@ export * from './bookmarkPlugin';
 export { DownArrowIcon } from './DownArrowIcon';
 export { RightArrowIcon } from './RightArrowIcon';
 export type { IsBookmarkExpanded } from './types/IsBookmarkExpanded';
+export type { RenderBookmarkItem, RenderBookmarkItemProps } from './types/RenderBookmarkItemProps';
