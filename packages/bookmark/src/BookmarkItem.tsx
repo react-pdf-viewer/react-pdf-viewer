@@ -58,6 +58,31 @@ export const BookmarkItem: React.FC<{
         }
     };
 
+    const defaultRenderToggle = (expandIcon: React.ReactElement, collapseIcon: React.ReactElement) =>
+        hasSubItems ? (
+            <span className="rpv-bookmark__toggle" onClick={toggleSubItems}>
+                {expanded ? expandIcon : collapseIcon}
+            </span>
+        ) : (
+            <span className="rpv-bookmark__toggle" />
+        );
+
+    const defaultRenderTitle = (onClickBookmark: () => void) =>
+        bookmark.url ? (
+            <a
+                className="rpv-bookmark__title"
+                href={bookmark.url}
+                rel="noopener noreferrer nofollow"
+                target={bookmark.newWindow ? '_blank' : ''}
+            >
+                {bookmark.title}
+            </a>
+        ) : (
+            <div className="rpv-bookmark__title" aria-label={bookmark.title} onClick={onClickBookmark}>
+                {bookmark.title}
+            </div>
+        );
+
     return (
         <li
             aria-expanded={expanded ? 'true' : 'false'}
@@ -74,6 +99,8 @@ export const BookmarkItem: React.FC<{
                     depth,
                     hasSubItems,
                     isExpanded: expanded,
+                    defaultRenderTitle,
+                    defaultRenderToggle,
                     onClickItem: clickItem,
                     onClickTitle: clickBookmark,
                     onToggleSubItems: toggleSubItems,
@@ -86,27 +113,8 @@ export const BookmarkItem: React.FC<{
                     }}
                     onClick={clickItem}
                 >
-                    {hasSubItems ? (
-                        <span className="rpv-bookmark__toggle" onClick={toggleSubItems}>
-                            {expanded ? <DownArrowIcon /> : <RightArrowIcon />}
-                        </span>
-                    ) : (
-                        <span className="rpv-bookmark__toggle" />
-                    )}
-                    {bookmark.url ? (
-                        <a
-                            className="rpv-bookmark__title"
-                            href={bookmark.url}
-                            rel="noopener noreferrer nofollow"
-                            target={bookmark.newWindow ? '_blank' : ''}
-                        >
-                            {bookmark.title}
-                        </a>
-                    ) : (
-                        <div className="rpv-bookmark__title" aria-label={bookmark.title} onClick={clickBookmark}>
-                            {bookmark.title}
-                        </div>
-                    )}
+                    {defaultRenderToggle(<DownArrowIcon />, <RightArrowIcon />)}
+                    {defaultRenderTitle(clickBookmark)}
                 </div>
             )}
             {hasSubItems && expanded && (

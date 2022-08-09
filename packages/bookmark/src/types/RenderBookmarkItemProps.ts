@@ -11,6 +11,9 @@ import * as React from 'react';
 
 export interface RenderBookmarkItemProps {
     bookmark: PdfJs.Outline;
+    // You can customize the bookmark item based on the default renderers
+    defaultRenderTitle: (onClickBookmark: () => void) => React.ReactElement;
+    defaultRenderToggle: (expandIcon: React.ReactElement, collapseIcon: React.ReactElement) => React.ReactElement;
     depth: number;
     hasSubItems: boolean;
     isExpanded: boolean;
