@@ -34,6 +34,7 @@ const defaultLayoutPluginInstance = defaultLayoutPlugin({
 **Bug fixes**
 
 -   Clicking a particular bookmark might not go to the destination
+-   Link annotations with unsafe URLs won't be rendered to avoid secutiry issues
 -   The `CharacterMap` type isn't available
 -   The page navigation options are missing when creating a toolbar plugin
 -   The search popover always shows up after pressing shortcuts

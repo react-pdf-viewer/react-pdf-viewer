@@ -30,15 +30,14 @@ export const Link: React.FC<{
               });
     };
 
-    const isRenderable = !!(annotation.url || annotation.dest || annotation.action || annotation.unsafeUrl);
-    const externalUrl = annotation.url || annotation.unsafeUrl;
-    const attrs = externalUrl
+    const isRenderable = !!(annotation.url || annotation.dest || annotation.action);
+    const attrs = annotation.url
         ? {
               'data-target': 'external',
-              href: externalUrl,
+              href: annotation.url,
               rel: 'noopener noreferrer nofollow',
               target: annotation.newWindow ? '_blank' : '',
-              title: externalUrl,
+              title: annotation.url,
           }
         : {
               href: '',
