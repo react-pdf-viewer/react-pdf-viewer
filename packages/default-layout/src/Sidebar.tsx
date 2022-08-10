@@ -49,7 +49,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
 }) => {
     const containerRef = React.useRef<HTMLDivElement>();
     const { l10n } = React.useContext(LocalizationContext);
-    const [opened, setOpened] = React.useState(false);
+    const [opened, setOpened] = React.useState(store.get('isCurrentTabOpened') || false);
     const [currentTab, setCurrentTab] = React.useState(Math.max(store.get('currentTab') || 0, 0));
     const { direction } = React.useContext(ThemeContext);
     const isRtl = direction === TextDirection.RightToLeft;
@@ -85,7 +85,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
     const toggleTab = (index: number) => {
         if (currentTab === index) {
-            setOpened((isOpened) => !isOpened);
+            store.update('isCurrentTabOpened', !store.get('isCurrentTabOpened'));
             // Remove the `width` style in the case the sidebar is resized
             const container = containerRef.current;
             if (container) {
@@ -101,16 +101,22 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
     const switchToTab = (index: number) => {
         if (index >= 0 && index <= listTabs.length - 1) {
-            setOpened(true);
+            store.update('isCurrentTabOpened', true);
             setCurrentTab(index);
         }
     };
 
+    const handleCurrentTabOpened = (opened: boolean) => {
+        setOpened(opened);
+    };
+
     React.useEffect(() => {
         store.subscribe('currentTab', switchToTab);
+        store.subscribe('isCurrentTabOpened', handleCurrentTabOpened);
 
         return (): void => {
             store.unsubscribe('currentTab', switchToTab);
+            store.unsubscribe('isCurrentTabOpened', handleCurrentTabOpened);
         };
     }, []);
 
