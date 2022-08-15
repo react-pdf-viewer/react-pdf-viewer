@@ -95,7 +95,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                 }
             }
         } else {
-            switchToTab(index);
+            store.update('currentTab', index);
         }
     };
 
