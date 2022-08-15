@@ -32,6 +32,7 @@ import type { StoreProps } from './types/StoreProps';
 
 export interface DefaultLayoutPlugin extends Plugin {
     activateTab(index: number): void;
+    toggleTab(index: number): void;
     readonly attachmentPluginInstance: AttachmentPlugin;
     readonly bookmarkPluginInstance: BookmarkPlugin;
     readonly thumbnailPluginInstance: ThumbnailPlugin;
@@ -50,6 +51,7 @@ export const defaultLayoutPlugin = (props?: DefaultLayoutPluginProps): DefaultLa
     const store = React.useMemo(
         () =>
             createStore<StoreProps>({
+                isCurrentTabOpened: false,
                 currentTab: 0,
             }),
         []
@@ -77,6 +79,14 @@ export const defaultLayoutPlugin = (props?: DefaultLayoutPluginProps): DefaultLa
         toolbarPluginInstance,
         activateTab: (index: number) => {
             store.update('currentTab', index);
+        },
+        toggleTab: (index: number) => {
+            // Get the current active tab
+            const currentTab = store.get('currentTab');
+            store.update('isCurrentTabOpened', !store.get('isCurrentTabOpened'));
+            if (currentTab !== index) {
+                store.update('currentTab', index);
+            }
         },
         install: (pluginFunctions: PluginFunctions) => {
             // Install plugins
@@ -168,6 +178,7 @@ export const defaultLayoutPlugin = (props?: DefaultLayoutPluginProps): DefaultLa
             if (props && props.setInitialTab) {
                 props.setInitialTab(documentLoadProps.doc).then((initialTab) => {
                     store.update('currentTab', initialTab);
+                    store.update('isCurrentTabOpened', true);
                 });
             }
         },

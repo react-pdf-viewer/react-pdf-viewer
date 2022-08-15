@@ -10,6 +10,16 @@
 <Bookmark renderBookmarkItem={renderBookmarkItem} />
 ```
 
+-   The default layout plugin provides new `toggleTab` function to toggle a given tab in the sidebar:
+
+```js
+const defaultLayoutPluginInstance = defaultLayoutPlugin();
+const { toggleTab } = defaultLayoutPluginInstance;
+
+// Toggle the second tab
+toggleTab(1);
+```
+
 **Improvement**
 
 -   Clicking `Command` + `ArrowUp` (on macOS) or `Ctrl` + `ArrowUp` (on Windows) will bring users to the previous clicked link annotation.
