@@ -82,6 +82,7 @@ export const Inner: React.FC<{
     const containerRef = React.useRef<HTMLDivElement>();
     const pagesRef = React.useRef<HTMLDivElement>();
     const [currentPage, setCurrentPage] = React.useState(initialPage);
+    const mostRecentVisitedRef = React.useRef(null);
     const [rotation, setRotation] = React.useState(0);
     // The rotation for each page
     const [pagesRotationChanged, setPagesRotationChanged] = React.useState(false);
@@ -389,10 +390,8 @@ export const Inner: React.FC<{
         if (isSmoothScrolling) {
             return;
         }
-        if (
-            (stateRef.current.pageIndex === -1 && currentPage === initialPage) ||
-            (currentPage === stateRef.current.pageIndex && currentPage !== initialPage)
-        ) {
+        if (mostRecentVisitedRef.current === null || mostRecentVisitedRef.current !== currentPage) {
+            mostRecentVisitedRef.current = currentPage;
             onPageChange({ currentPage, doc });
         }
     }, [currentPage, virtualizer.isSmoothScrolling]);
