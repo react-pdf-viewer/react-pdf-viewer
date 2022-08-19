@@ -14,25 +14,15 @@ export const getTextFromOffsets = (
     endOffset?: number
 ): string => {
     const nodes: Node[] = [].slice.call(textLayerDiv.children);
-
-    if (startDivIdx < endDivIdx) {
-        const startDivText = nodes
-            .slice(startDivIdx, startDivIdx + 1)
-            .map((node) => node.textContent.substring(startOffset).trim())
-            .join(' ');
-
-        const middleDivText = nodes
-            .slice(startDivIdx + 1, endDivIdx)
-            .map((node) => node.textContent.trim())
-            .join(' ');
-
-        const endDivText = nodes
-            .slice(endDivIdx, endDivIdx + 1)
-            .map((endDiv) => endDiv.textContent.substring(0, endOffset || endDiv.textContent.length))
-            .join(' ');
-        return `${startDivText} ${middleDivText} ${endDivText}`;
-    } else {
-        const div = nodes[startDivIdx];
-        return div.textContent.substring(startOffset, endOffset || div.textContent.length).trim();
-    }
+    // need to include extra end node if the last node is a <br/> node without any text
+    const extraEndNode = (nodes.length > endDivIdx + 1 && nodes[endDivIdx].nodeName == "BR");
+    const selectedNodes = nodes.slice(startDivIdx, extraEndNode ? endDivIdx + 2 : endDivIdx + 1);
+    const nodesText = selectedNodes
+        .map((node) => node.textContent)
+        .filter((text) => !!text)   // filter out nodes with no text (e.g. <br/> nodes)
+        .join(' ');
+        
+    const offsetFromEnd = endOffset ? selectedNodes[selectedNodes.length - 1].textContent!.length - endOffset : 0;
+    const selectText = nodesText.substring(startOffset, nodesText.length - offsetFromEnd);
+    return selectText.replace(/\s\s+/g, ' ');   // remove duplicate spaces
 };
