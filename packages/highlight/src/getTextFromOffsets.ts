@@ -6,7 +6,7 @@
  * @copyright 2019-2022 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
- export const getTextFromOffsets = (
+export const getTextFromOffsets = (
     textLayerDiv: HTMLElement,
     startDivIdx: number,
     startOffset: number,
