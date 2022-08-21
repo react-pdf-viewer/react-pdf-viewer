@@ -10,6 +10,7 @@ import * as React from 'react';
 import { SpecialZoomLevel } from '../structs/SpecialZoomLevel';
 import type { PdfJs } from '../types/PdfJs';
 import { getDestination } from '../utils/managePages';
+import { sanitizeUrl } from '../utils/sanitizeUrl';
 import { Annotation } from './Annotation';
 
 export const Link: React.FC<{
@@ -30,20 +31,30 @@ export const Link: React.FC<{
               });
     };
 
-    const isRenderable = !!(annotation.url || annotation.dest || annotation.action);
-    const attrs = annotation.url
-        ? {
-              'data-target': 'external',
-              href: annotation.url,
-              rel: 'noopener noreferrer nofollow',
-              target: annotation.newWindow ? '_blank' : '',
-              title: annotation.url,
-          }
-        : {
-              href: '',
-              'data-annotation-link-dest': annotation.dest,
-              onClick: link,
-          };
+    let isRenderable = !!(annotation.url || annotation.dest || annotation.action || annotation.unsafeUrl);
+    // Many applications such as macOS Preview, Chrome, pdf.js don't enable links that have the `unsafeUrl` attribute
+    // However, it is requested by our customers
+    let attrs = {};
+    if (annotation.url || annotation.unsafeUrl) {
+        const targetUrl = sanitizeUrl(annotation.url || annotation.unsafeUrl, '');
+        if (targetUrl) {
+            attrs = {
+                'data-target': 'external',
+                href: targetUrl,
+                rel: 'noopener noreferrer nofollow',
+                target: annotation.newWindow ? '_blank' : '',
+                title: targetUrl,
+            };
+        } else {
+            isRenderable = false;
+        }
+    } else {
+        attrs = {
+            href: '',
+            'data-annotation-link-dest': annotation.dest,
+            onClick: link,
+        };
+    }
 
     return (
         <Annotation

@@ -44,7 +44,7 @@ const defaultLayoutPluginInstance = defaultLayoutPlugin({
 **Bug fixes**
 
 -   Clicking a particular bookmark might not go to the destination
--   Link annotations with unsafe URLs won't be rendered to avoid secutiry issues
+-   Targets of link annotations are sanitized to avoid secutiry issues
 -   The `CharacterMap` type isn't available
 -   The `onPageChange` callback does not trigger if the current page equals to the initial page
 -   The page navigation options are missing when creating a toolbar plugin
