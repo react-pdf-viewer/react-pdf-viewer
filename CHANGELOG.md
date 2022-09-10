@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## v3.8.0 [WIP]
+
+**Bug fix**
+
+-   Can't render certain PDF documents that contain an annotation whose destination consists of non alphabetical characters
+
 ## v3.7.0
 
 **New feature**

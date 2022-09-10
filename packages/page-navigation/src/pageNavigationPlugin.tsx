@@ -165,7 +165,9 @@ export const pageNavigationPlugin = (props?: PageNavigationPluginProps): PageNav
             return;
         }
         links.forEach((link) => {
-            const linkEle = e.container.querySelector(`a[data-annotation-link-dest="${link.dest}"]`);
+            const linkEle = e.container.querySelector(
+                `a[data-annotation-link-dest="${encodeURIComponent(link.dest)}"]`
+            );
             if (linkEle) {
                 linkEle.addEventListener('click', () => {
                     // By default, we can't set the full size for the annotation layer

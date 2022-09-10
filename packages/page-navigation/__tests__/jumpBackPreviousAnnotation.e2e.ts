@@ -73,7 +73,9 @@ test('Jump back to the previous clicked link annotation', async () => {
         const linkIndex = Math.floor(Math.random() * links.length);
         const { dest, targetPage, targetTop, annotationTop } = links[linkIndex];
 
-        let linkEle = await page.waitForSelector(`a[data-annotation-link-dest="${dest}"]`, { visible: true });
+        let linkEle = await page.waitForSelector(`a[data-annotation-link-dest="${encodeURIComponent(dest)}"]`, {
+            visible: true,
+        });
         await linkEle?.click();
         await page.waitForFunction(
             () => () => `document.querySelector("[data-testid=core__inner-pages]").scrollTop === ${targetTop}`

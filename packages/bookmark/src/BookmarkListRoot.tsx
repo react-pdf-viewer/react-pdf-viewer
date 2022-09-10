@@ -36,9 +36,11 @@ export const BookmarkListRoot: React.FC<{
             return;
         }
         const annotationContainer = links[dest];
-        annotationContainer.querySelectorAll(`a[data-annotation-link-dest="${dest}"]`).forEach((node) => {
-            node.setAttribute('aria-label', bookmark.title);
-        });
+        annotationContainer
+            .querySelectorAll(`a[data-annotation-link-dest="${encodeURIComponent(dest)}"]`)
+            .forEach((node) => {
+                node.setAttribute('aria-label', bookmark.title);
+            });
 
         // Loop over the child bookmarks
         if (!bookmark.items || !bookmark.items.length) {
