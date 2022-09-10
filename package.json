@@ -53,7 +53,7 @@
         "jest-environment-jsdom": "^29.0.2",
         "jest-puppeteer": "^6.1.1",
         "lerna": "^5.5.1",
-        "pdfjs-dist": "^2.15.349",
+        "pdfjs-dist": "^2.16.105",
         "postcss": "^8.4.16",
         "postcss-cli": "^10.0.0",
         "postcss-import": "^15.0.0",
