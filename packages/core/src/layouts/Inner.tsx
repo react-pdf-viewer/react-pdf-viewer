@@ -46,6 +46,7 @@ export const Inner: React.FC<{
     defaultScale?: number | SpecialZoomLevel;
     doc: PdfJs.PdfDocument;
     initialPage: number;
+    initialRotation: number;
     pageSize: PageSize;
     plugins: Plugin[];
     renderPage?: RenderPage;
@@ -62,6 +63,7 @@ export const Inner: React.FC<{
     defaultScale,
     doc,
     initialPage,
+    initialRotation,
     pageSize,
     plugins,
     renderPage,
@@ -83,7 +85,7 @@ export const Inner: React.FC<{
     const pagesRef = React.useRef<HTMLDivElement>();
     const [currentPage, setCurrentPage] = React.useState(initialPage);
     const mostRecentVisitedRef = React.useRef(null);
-    const [rotation, setRotation] = React.useState(0);
+    const [rotation, setRotation] = React.useState(initialRotation);
     // The rotation for each page
     const [pagesRotationChanged, setPagesRotationChanged] = React.useState(false);
     const [pagesRotation, setPagesRotation] = React.useState(new Map<number, number>());
@@ -276,7 +278,7 @@ export const Inner: React.FC<{
     const rotatePage = React.useCallback((pageIndex: number, direction: RotateDirection) => {
         const degrees = direction === RotateDirection.Backward ? -90 : 90;
         const rotations = stateRef.current.pagesRotation;
-        const currentPageRotation = rotations.has(pageIndex) ? rotations.get(pageIndex) : 0;
+        const currentPageRotation = rotations.has(pageIndex) ? rotations.get(pageIndex) : initialRotation;
         const finalRotation = currentPageRotation + degrees;
         const updateRotations = rotations.set(pageIndex, finalRotation);
 

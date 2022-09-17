@@ -474,6 +474,8 @@ export interface ViewerProps {
     httpHeaders?: Record<string, string | string[]>;
     // The page (zero-index based) that will be displayed initially
     initialPage?: number;
+    // The initial rotation, must be divisible by 90
+    initialRotation?: number;
     // Plugins
     plugins?: Plugin[];
     localization?: LocalizationMap;

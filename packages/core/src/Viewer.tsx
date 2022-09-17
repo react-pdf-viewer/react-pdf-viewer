@@ -53,6 +53,8 @@ export const Viewer: React.FC<{
     httpHeaders?: Record<string, string | string[]>;
     // The page (zero-index based) that will be displayed initially
     initialPage?: number;
+    // The initial rotation, must be divisible by 90
+    initialRotation?: number;
     // Plugins
     plugins?: Plugin[];
     localization?: LocalizationMap;
@@ -80,6 +82,7 @@ export const Viewer: React.FC<{
     fileUrl,
     httpHeaders = {},
     initialPage = 0,
+    initialRotation = 0,
     localization,
     plugins = [],
     renderError,
@@ -197,6 +200,7 @@ export const Viewer: React.FC<{
                                             defaultScale={defaultScale}
                                             doc={doc}
                                             initialPage={initialPage}
+                                            initialRotation={initialRotation}
                                             pageSize={ps}
                                             plugins={plugins}
                                             renderPage={renderPage}
@@ -207,7 +211,7 @@ export const Viewer: React.FC<{
                                                 pageHeight: ps.pageHeight,
                                                 pageWidth: ps.pageWidth,
                                                 pagesRotation: new Map(),
-                                                rotation: 0,
+                                                rotation: initialRotation,
                                                 scale: ps.scale,
                                                 scrollMode,
                                             }}
