@@ -2,6 +2,14 @@
 
 ## v3.8.0 [WIP]
 
+**New feature**
+
+-   Set the initial rotation with the new `initialRotation` parameter:
+
+```tsx
+<Viewer initialRotation={90} />
+```
+
 **Bug fix**
 
 -   Can't render certain PDF documents that contain an annotation whose destination consists of non alphabetical characters
