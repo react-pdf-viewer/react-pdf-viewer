@@ -67,7 +67,6 @@ export const TextLayer: React.FC<{
                 container: containerEle,
                 textContent: textContent as any,
                 viewport: viewport as any,
-                enhanceTextSelection: true,
             });
             renderTask.current.promise.then(
                 () => {
