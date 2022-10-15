@@ -7,14 +7,12 @@
  */
 
 export const getTextFromOffsets = (
-    textLayerDiv: HTMLElement,
+    nodes: Node[],
     startDivIdx: number,
     startOffset: number,
     endDivIdx: number,
     endOffset?: number
 ): string => {
-    const nodes: Node[] = [].slice.call(textLayerDiv.children);
-
     if (startDivIdx < endDivIdx) {
         const startDivText = nodes
             .slice(startDivIdx, startDivIdx + 1)
