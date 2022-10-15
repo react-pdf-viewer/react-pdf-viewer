@@ -78,11 +78,15 @@ export interface PluginOnCanvasLayerRender {
     status: LayerRenderStatus;
 }
 export interface PluginRenderPageLayer {
+    // Is the canvas layer rendered completely?
+    canvasLayerRendered: boolean;
     doc: PdfJs.PdfDocument;
     height: number;
     pageIndex: number;
     rotation: number;
     scale: number;
+    // Is the text layer rendered completely?
+    textLayerRendered: boolean;
     width: number;
 }
 export interface RenderPageProps {

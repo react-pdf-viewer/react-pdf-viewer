@@ -238,11 +238,13 @@ export const PageLayer: React.FC<{
                         plugin.renderPageLayer ? (
                             <React.Fragment key={idx}>
                                 {plugin.renderPageLayer({
+                                    canvasLayerRendered,
                                     doc,
                                     height: h,
                                     pageIndex,
                                     rotation: rotationValue,
                                     scale,
+                                    textLayerRendered,
                                     width: w,
                                 })}
                             </React.Fragment>
