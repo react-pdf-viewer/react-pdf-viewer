@@ -75,8 +75,8 @@ export const Tracker: React.FC<{
             return;
         }
 
-        const startPageIdx = parseInt(startDiv.getAttribute(HIGHLIGHT_PAGE_ATTR), 10);
-        const endPageIdx = parseInt(endDiv.getAttribute(HIGHLIGHT_PAGE_ATTR), 10);
+        const startPageIndex = parseInt(startDiv.getAttribute(HIGHLIGHT_PAGE_ATTR), 10);
+        const endPageIndex = parseInt(endDiv.getAttribute(HIGHLIGHT_PAGE_ATTR), 10);
 
         const startTextLayer = startDiv.parentElement;
         const endTextLayer = endDiv.parentElement;
@@ -95,10 +95,10 @@ export const Tracker: React.FC<{
 
         let rangeType: SelectionRange = SelectionRange.DifferentPages;
         switch (true) {
-            case startPageIdx === endPageIdx && startDivIndex === endDivIndex:
+            case startPageIndex === endPageIndex && startDivIndex === endDivIndex:
                 rangeType = SelectionRange.SameDiv;
                 break;
-            case startPageIdx === endPageIdx && startDivIndex < endDivIndex:
+            case startPageIndex === endPageIndex && startDivIndex < endDivIndex:
                 rangeType = SelectionRange.DifferentDivs;
                 break;
             default:
@@ -120,7 +120,7 @@ export const Tracker: React.FC<{
                     {
                         height: (rect.height * 100) / startPageRect.height,
                         left: ((rect.left - startPageRect.left) * 100) / startPageRect.width,
-                        pageIndex: startPageIdx,
+                        pageIndex: startPageIndex,
                         top: ((rect.top - startPageRect.top) * 100) / startPageRect.height,
                         width: (rect.width * 100) / startPageRect.width,
                     },
@@ -135,7 +135,7 @@ export const Tracker: React.FC<{
                         return {
                             height: (rect.height * 100) / startPageRect.height,
                             left: ((rect.left - startPageRect.left) * 100) / startPageRect.width,
-                            pageIndex: startPageIdx,
+                            pageIndex: startPageIndex,
                             top: ((rect.top - startPageRect.top) * 100) / startPageRect.height,
                             width: (rect.width * 100) / startPageRect.width,
                         };
@@ -150,7 +150,7 @@ export const Tracker: React.FC<{
                         return {
                             height: (rect.height * 100) / startPageRect.height,
                             left: ((rect.left - startPageRect.left) * 100) / startPageRect.width,
-                            pageIndex: startPageIdx,
+                            pageIndex: startPageIndex,
                             top: ((rect.top - startPageRect.top) * 100) / startPageRect.height,
                             width: (rect.width * 100) / startPageRect.width,
                         };
@@ -162,7 +162,7 @@ export const Tracker: React.FC<{
                         return {
                             height: (rect.height * 100) / endPageRect.height,
                             left: ((rect.left - endPageRect.left) * 100) / endPageRect.width,
-                            pageIndex: endPageIdx,
+                            pageIndex: endPageIndex,
                             top: ((rect.top - endPageRect.top) * 100) / endPageRect.height,
                             width: (rect.width * 100) / endPageRect.width,
                         };
@@ -212,15 +212,15 @@ export const Tracker: React.FC<{
             selectionRegion = {
                 height: (endDivRect.height * 100) / endPageRect.height,
                 left: ((endDivRect.left - endPageRect.left) * 100) / endPageRect.width,
-                pageIndex: endPageIdx,
+                pageIndex: endPageIndex,
                 top: ((endDivRect.top - endPageRect.top) * 100) / endPageRect.height,
                 width: (endDivRect.width * 100) / endPageRect.width,
             };
         }
 
         const selectionData: SelectionData = {
-            startPageIndex: startPageIdx - 1,
-            endPageIndex: endPageIdx - 1,
+            startPageIndex,
+            endPageIndex,
             startOffset,
             startDivIndex,
             endOffset,
