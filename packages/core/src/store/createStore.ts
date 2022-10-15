@@ -6,7 +6,7 @@
  * @copyright 2019-2022 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import { Store, StoreState } from '../types/Store';
+import type { Store, StoreKey, StoreState } from '../types/Store';
 
 export function createStore<T extends StoreState>(initialState?: T): Store<T> {
     let state: T = initialState || ({} as T);
@@ -14,6 +14,16 @@ export function createStore<T extends StoreState>(initialState?: T): Store<T> {
     const listeners: {
         [K in keyof StoreState]?: Array<(p: StoreState[K]) => void>;
     } = {};
+
+    const update = <K extends StoreKey<T>>(key: K, data: T[K]) => {
+        state = {
+            ...state,
+            [key]: data,
+        };
+        (listeners[key] || []).forEach((handler) => handler(state[key]));
+    };
+
+    const get = <K extends StoreKey<T>>(key: K) => state[key];
 
     return {
         subscribe(key, handler) {
@@ -23,14 +33,16 @@ export function createStore<T extends StoreState>(initialState?: T): Store<T> {
             listeners[key] = (listeners[key] || []).filter((f) => f !== handler);
         },
         update(key, data) {
-            state = {
-                ...state,
-                [key]: data,
-            };
-            (listeners[key] || []).forEach((handler) => handler(state[key]));
+            update(key, data);
+        },
+        updateCurrentValue(key, updater) {
+            const currentValue = get(key);
+            if (currentValue !== undefined) {
+                update(key, updater(currentValue));
+            }
         },
         get(key) {
-            return state[key];
+            return get(key);
         },
     };
 }
