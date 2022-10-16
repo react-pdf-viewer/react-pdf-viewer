@@ -14,14 +14,14 @@ import type { Plugin } from '../types/Plugin';
 import { PdfJsApi } from '../vendors/PdfJsApi';
 
 export const TextLayer: React.FC<{
+    containerRef: React.MutableRefObject<HTMLDivElement>;
     page: PdfJs.Page;
     pageIndex: number;
     plugins: Plugin[];
     rotation: number;
     scale: number;
     onRenderTextCompleted: () => void;
-}> = ({ page, pageIndex, plugins, rotation, scale, onRenderTextCompleted }) => {
-    const containerRef = React.useRef<HTMLDivElement>();
+}> = ({ containerRef, page, pageIndex, plugins, rotation, scale, onRenderTextCompleted }) => {
     const renderTask = React.useRef<PdfJs.PageRenderTask>();
 
     const empty = (): void => {

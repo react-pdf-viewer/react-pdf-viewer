@@ -51,6 +51,7 @@ export interface PluginRenderPageLayer {
     pageIndex: number;
     rotation: number;
     scale: number;
+    textLayerRef: React.MutableRefObject<HTMLDivElement>;
     // Is the text layer rendered completely?
     textLayerRendered: boolean;
     width: number;

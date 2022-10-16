@@ -71,6 +71,7 @@ export const PageLayer: React.FC<{
     });
     const [canvasLayerRendered, setCanvasLayerRendered] = React.useState(false);
     const [textLayerRendered, setTextLayerRendered] = React.useState(false);
+    const textLayerRef = React.useRef<HTMLDivElement>();
 
     const { page, pageHeight, pageWidth } = pageSize;
 
@@ -220,6 +221,7 @@ export const PageLayer: React.FC<{
                             attrs: {},
                             children: (
                                 <TextLayer
+                                    containerRef={textLayerRef}
                                     page={page}
                                     pageIndex={pageIndex}
                                     plugins={plugins}
@@ -244,6 +246,7 @@ export const PageLayer: React.FC<{
                                     pageIndex,
                                     rotation: rotationValue,
                                     scale,
+                                    textLayerRef,
                                     textLayerRendered,
                                     width: w,
                                 })}
