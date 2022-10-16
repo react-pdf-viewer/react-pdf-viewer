@@ -33,7 +33,7 @@ export const Cover: React.FC<{
     return (
         <div className="rpv-thumbnail__cover">
             {currentDoc ? (
-                <CoverInner doc={currentDoc} getPageIndex={getPageIndex} renderSpinner={renderSpinner} />
+                <CoverInner doc={currentDoc} getPageIndex={getPageIndex} renderSpinner={renderSpinner} store={store} />
             ) : (
                 <div className="rpv-thumbnail__cover-loader">{renderSpinner ? renderSpinner() : <Spinner />}</div>
             )}

@@ -13,6 +13,7 @@
 **Bug fixes**
 
 -   Can't render certain PDF documents that contain an annotation whose destination consists of non alphabetical characters
+-   The `Cover` component doesn't rotate the corresponding rotated page
 -   The `startPageIndex` and `endPageIndex` properties of `SelectionData` aren't correct
 
 ## v3.7.0
