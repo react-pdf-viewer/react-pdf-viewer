@@ -60,6 +60,7 @@ export const CoverInner: React.FC<{
             return;
         }
 
+        setSrc('');
         getPage(doc, normalizePage).then((page) => {
             const viewport = page.getViewport({ scale: 1 });
             const viewportRotation = viewport.rotation;
