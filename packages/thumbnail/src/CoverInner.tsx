@@ -122,7 +122,7 @@ export const CoverInner: React.FC<{
     }, []);
 
     return (
-        <div ref={containerRef} className="rpv-thumbnail__cover-inner">
+        <div ref={containerRef} className="rpv-thumbnail__cover-inner" data-testid="thumbnail__cover-inner">
             {src ? (
                 <img className="rpv-thumbnail__cover-image" data-testid="thumbnail__cover-image" src={src} />
             ) : (
