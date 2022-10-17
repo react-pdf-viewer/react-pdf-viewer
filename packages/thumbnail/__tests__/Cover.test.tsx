@@ -70,10 +70,10 @@ test('Test <Cover />', async () => {
     // Wait until the document is loaded completely
     await waitForElementToBeRemoved(() => getByTestId('core__doc-loading'));
 
-    const coverLoader = await findByTestId('thumbnail__cover-loader');
-    mockIsIntersecting(coverLoader, true);
-    coverLoader['__jsdomMockClientHeight'] = 318;
-    coverLoader['__jsdomMockClientWidth'] = 318;
+    const coverInner = await findByTestId('thumbnail__cover-inner');
+    mockIsIntersecting(coverInner, true);
+    coverInner['__jsdomMockClientHeight'] = 318;
+    coverInner['__jsdomMockClientWidth'] = 318;
 
     const image = await findByTestId('thumbnail__cover-image');
     const src = image.getAttribute('src');
@@ -98,7 +98,7 @@ const TestMultipleCovers = () => {
 };
 
 test('Test multiple <Cover />', async () => {
-    const { findByTestId, getAllByTestId, getByTestId } = render(<TestMultipleCovers />);
+    const { findByTestId, findAllByTestId, getAllByTestId, getByTestId } = render(<TestMultipleCovers />);
 
     // Test the cover of the first document
     const viewerEleList = getAllByTestId('core__viewer');
@@ -109,10 +109,10 @@ test('Test multiple <Cover />', async () => {
     // Wait until the document is loaded completely
     await waitForElementToBeRemoved(() => getByTestId('core__doc-loading'));
 
-    let coverLoader = await findByTestId('thumbnail__cover-loader');
-    mockIsIntersecting(coverLoader, true);
-    coverLoader['__jsdomMockClientHeight'] = 318;
-    coverLoader['__jsdomMockClientWidth'] = 318;
+    let coverInner = await findByTestId('thumbnail__cover-inner');
+    mockIsIntersecting(coverInner, true);
+    coverInner['__jsdomMockClientHeight'] = 318;
+    coverInner['__jsdomMockClientWidth'] = 318;
 
     let image = await findByTestId('thumbnail__cover-image');
     let src = image.getAttribute('src');
@@ -122,6 +122,7 @@ test('Test multiple <Cover />', async () => {
     );
 
     // So we can query the cover of second document
+    coverInner.removeAttribute('data-testid');
     image.removeAttribute('data-testid');
 
     // Test the cover of the second document
@@ -132,10 +133,10 @@ test('Test multiple <Cover />', async () => {
     // Wait until the document is loaded completely
     await waitForElementToBeRemoved(() => getByTestId('core__doc-loading'));
 
-    coverLoader = await findByTestId('thumbnail__cover-loader');
-    mockIsIntersecting(coverLoader, true);
-    coverLoader['__jsdomMockClientHeight'] = 318;
-    coverLoader['__jsdomMockClientWidth'] = 318;
+    coverInner = await findByTestId('thumbnail__cover-inner');
+    mockIsIntersecting(coverInner, true);
+    coverInner['__jsdomMockClientHeight'] = 318;
+    coverInner['__jsdomMockClientWidth'] = 318;
 
     image = await findByTestId('thumbnail__cover-image');
     src = image.getAttribute('src');
@@ -192,10 +193,10 @@ test('Test <Cover /> with dynamic document', async () => {
     // Wait until the document is loaded completely
     await waitForElementToBeRemoved(() => getByTestId('core__doc-loading'));
 
-    let coverLoader = await findByTestId('thumbnail__cover-loader');
-    mockIsIntersecting(coverLoader, true);
-    coverLoader['__jsdomMockClientHeight'] = 318;
-    coverLoader['__jsdomMockClientWidth'] = 318;
+    let coverInner = await findByTestId('thumbnail__cover-inner');
+    mockIsIntersecting(coverInner, true);
+    coverInner['__jsdomMockClientHeight'] = 318;
+    coverInner['__jsdomMockClientWidth'] = 318;
 
     let image = await findByTestId('thumbnail__cover-image');
     let src = image.getAttribute('src');
@@ -215,10 +216,10 @@ test('Test <Cover /> with dynamic document', async () => {
     // Wait until the document is loaded completely
     await waitForElementToBeRemoved(() => getByTestId('core__doc-loading'));
 
-    coverLoader = await findByTestId('thumbnail__cover-loader');
-    mockIsIntersecting(coverLoader, true);
-    coverLoader['__jsdomMockClientHeight'] = 318;
-    coverLoader['__jsdomMockClientWidth'] = 318;
+    coverInner = await findByTestId('thumbnail__cover-inner');
+    mockIsIntersecting(coverInner, true);
+    coverInner['__jsdomMockClientHeight'] = 318;
+    coverInner['__jsdomMockClientWidth'] = 318;
 
     image = await findByTestId('thumbnail__cover-image');
     src = image.getAttribute('src');

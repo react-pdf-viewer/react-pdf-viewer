@@ -120,10 +120,10 @@ test('Rotate cover', async () => {
     // Wait until the document is loaded completely
     await waitForElementToBeRemoved(() => getByTestId('core__doc-loading'));
 
-    const coverLoader = await findByTestId('thumbnail__cover-inner');
-    mockIsIntersecting(coverLoader, true);
-    coverLoader['__jsdomMockClientHeight'] = 757;
-    coverLoader['__jsdomMockClientWidth'] = 1022;
+    const coverInner = await findByTestId('thumbnail__cover-inner');
+    mockIsIntersecting(coverInner, true);
+    coverInner['__jsdomMockClientHeight'] = 757;
+    coverInner['__jsdomMockClientWidth'] = 1022;
 
     const image = await findByTestId('thumbnail__cover-image');
     const src = image.getAttribute('src');
