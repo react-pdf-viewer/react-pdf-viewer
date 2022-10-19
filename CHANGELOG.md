@@ -10,6 +10,14 @@
 <Viewer initialRotation={90} />
 ```
 
+**Improvement**
+
+-   `SelectionData` provides more information about the selected text including:
+
+| Property       | Type     | Description       |
+| -------------- | -------- | ----------------- |
+| `selectedText` | `String` | The selected text |
+
 **Bug fixes**
 
 -   Can't render certain PDF documents that contain an annotation whose destination consists of non alphabetical characters
