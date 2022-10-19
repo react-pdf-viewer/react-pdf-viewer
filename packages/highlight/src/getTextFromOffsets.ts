@@ -6,13 +6,21 @@
  * @copyright 2019-2022 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
+import type { DivText } from './types/DivText';
+
+interface Result {
+    divTexts: DivText[];
+    wholeText: string;
+}
+
 export const getTextFromOffsets = (
     nodes: Node[],
+    pageIndex: number,
     startDivIdx: number,
     startOffset: number,
     endDivIdx: number,
     endOffset?: number
-): string => {
+): Result => {
     if (startDivIdx < endDivIdx) {
         const startDivText = nodes
             .slice(startDivIdx, startDivIdx + 1)
@@ -28,9 +36,29 @@ export const getTextFromOffsets = (
             .slice(endDivIdx, endDivIdx + 1)
             .map((endDiv) => endDiv.textContent.substring(0, endOffset || endDiv.textContent.length))
             .join(' ');
-        return `${startDivText} ${middleDivText} ${endDivText}`;
+        const wholeText = `${startDivText} ${middleDivText} ${endDivText}`;
+        const divTexts = nodes.slice(startDivIdx, endDivIdx + 1).map((node, idx) => ({
+            divIndex: startDivIdx + idx,
+            pageIndex,
+            textContent: node.textContent,
+        }));
+        return {
+            divTexts,
+            wholeText,
+        };
     } else {
         const div = nodes[startDivIdx];
-        return div.textContent.substring(startOffset, endOffset || div.textContent.length).trim();
+        const wholeText = div.textContent.substring(startOffset, endOffset || div.textContent.length).trim();
+        const divTexts = [
+            {
+                divIndex: startDivIdx,
+                pageIndex,
+                textContent: div.textContent,
+            },
+        ];
+        return {
+            divTexts,
+            wholeText,
+        };
     }
 };

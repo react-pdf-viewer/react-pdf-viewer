@@ -14,9 +14,18 @@
 
 -   `SelectionData` provides more information about the selected text including:
 
-| Property       | Type     | Description       |
-| -------------- | -------- | ----------------- |
-| `selectedText` | `String` | The selected text |
+| Property       | Type        | Description                                  |
+| -------------- | ----------- | -------------------------------------------- |
+| `selectedText` | `string`    | The selected text                            |
+| `divTexts`     | `DivText[]` | List of text items contain the selected text |
+
+A `DivText` item consists of
+
+| Property      | Type     | Description                                            |
+| ------------- | -------- | ------------------------------------------------------ |
+| `divIndex`    | `number` | The zero-based text element rendered by the text layer |
+| `pageIndex`   | `number` | The zero-based page index                              |
+| `textContent` | `string` | The text content of text element                       |
 
 **Bug fixes**
 
