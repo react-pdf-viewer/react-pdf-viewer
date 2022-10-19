@@ -14,6 +14,7 @@ import { getTextFromOffsets } from './getTextFromOffsets';
 import { NO_SELECTION_STATE, SelectedState, SELECTING_STATE } from './HighlightState';
 import { SelectionRange } from './structs/SelectionRange';
 import { transformArea } from './transformArea';
+import { DivText } from './types/DivText';
 import type { HighlightArea } from './types/HighlightArea';
 import type { SelectionData } from './types/SelectionData';
 import type { StoreProps } from './types/StoreProps';
@@ -173,34 +174,49 @@ export const Tracker: React.FC<{
 
         // Determine the selected text
         let selectedText = '';
+        let divTexts: DivText[] = [];
         switch (rangeType) {
             case SelectionRange.SameDiv:
-                selectedText = getTextFromOffsets(
+                const textDataSameDiv = getTextFromOffsets(
                     startDivSiblings,
+                    startPageIndex,
                     startDivIndex,
                     startOffset,
                     startDivIndex,
                     endOffset
                 );
+                selectedText = textDataSameDiv.wholeText;
+                divTexts = textDataSameDiv.divTexts;
                 break;
 
             case SelectionRange.DifferentDivs:
-                selectedText = getTextFromOffsets(startDivSiblings, startDivIndex, startOffset, endDivIndex, endOffset);
+                const textDataDifferentDivs = getTextFromOffsets(
+                    startDivSiblings,
+                    startPageIndex,
+                    startDivIndex,
+                    startOffset,
+                    endDivIndex,
+                    endOffset
+                );
+                selectedText = textDataDifferentDivs.wholeText;
+                divTexts = textDataDifferentDivs.divTexts;
                 break;
 
             case SelectionRange.DifferentPages:
                 // eslint-disable-next-line no-case-declarations
-                const startText = getTextFromOffsets(
+                const startTextData = getTextFromOffsets(
                     startDivSiblings,
+                    startPageIndex,
                     startDivIndex,
                     startOffset,
                     startDivSiblings.length
                 );
 
                 // eslint-disable-next-line no-case-declarations
-                const endText = getTextFromOffsets(endDivSiblings, 0, 0, endDivIndex, endOffset);
+                const endTextData = getTextFromOffsets(endDivSiblings, endPageIndex, 0, 0, endDivIndex, endOffset);
 
-                selectedText = `${startText}\n${endText}`;
+                selectedText = `${startTextData.wholeText}\n${endTextData.wholeText}`;
+                divTexts = startTextData.divTexts.concat(endTextData.divTexts);
                 break;
         }
 
@@ -219,6 +235,7 @@ export const Tracker: React.FC<{
         }
 
         const selectionData: SelectionData = {
+            divTexts,
             selectedText,
             startPageIndex,
             endPageIndex,

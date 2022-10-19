@@ -42,7 +42,14 @@ export interface RenderHighlightTargetProps {
     toggle(): void;
 }
 
+export interface DivText {
+    pageIndex: number;
+    divIndex: number;
+    textContent: string;
+}
+
 export interface SelectionData {
+    divTexts: DivText[];
     selectedText: string;
     startPageIndex: number;
     endPageIndex: number;
