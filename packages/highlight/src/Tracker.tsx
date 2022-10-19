@@ -219,6 +219,7 @@ export const Tracker: React.FC<{
         }
 
         const selectionData: SelectionData = {
+            selectedText,
             startPageIndex,
             endPageIndex,
             startOffset,

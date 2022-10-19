@@ -43,6 +43,7 @@ export interface RenderHighlightTargetProps {
 }
 
 export interface SelectionData {
+    selectedText: string;
     startPageIndex: number;
     endPageIndex: number;
     startOffset: number;
