@@ -15,7 +15,16 @@ export const useClickOutside = (
 ): void => {
     const clickHandler = (e: MouseEvent): void => {
         const target = targetRef.current;
-        if (target && !target.contains(e.target as Node)) {
+        if (!target) {
+            return;
+        }
+        const clickedTarget = e.target;
+        if (clickedTarget instanceof Element && clickedTarget.shadowRoot) {
+            const paths = e.composedPath();
+            if (paths.length > 0 && !target.contains(paths[0] as Node)) {
+                onClickOutside();
+            }
+        } else if (!target.contains(clickedTarget as Node)) {
             onClickOutside();
         }
     };
