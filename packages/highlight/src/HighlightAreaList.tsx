@@ -9,8 +9,14 @@
 import type { Store } from '@react-pdf-viewer/core';
 import * as React from 'react';
 import { HighlightRect } from './HighlightRect';
-import { HighlightSelectionState, HighlightState, NO_SELECTION_STATE, SelectedState } from './HighlightState';
 import { getCssProperties } from './transformArea';
+import {
+    HighlightState,
+    HighlightStateType,
+    NO_SELECTION_STATE,
+    SelectedState,
+    SelectionState,
+} from './types/HighlightState';
 import type { RenderHighlightContentProps } from './types/RenderHighlightContentProps';
 import type { RenderHighlightsProps } from './types/RenderHighlightsProps';
 import type { RenderHighlightTargetProps } from './types/RenderHighlightTargetProps';
@@ -45,42 +51,41 @@ export const HighlightAreaList: React.FC<{
 
     // Filter the selections
     const listAreas =
-        highlightState instanceof HighlightSelectionState
+        highlightState.type === HighlightStateType.Selection
             ? highlightState.highlightAreas.filter((s) => s.pageIndex === pageIndex)
             : [];
 
     return (
         <>
             {renderHighlightTarget &&
-                highlightState instanceof SelectedState &&
-                highlightState.selectionRegion.pageIndex === pageIndex &&
+                highlightState.type === HighlightStateType.Selected &&
+                (highlightState as SelectedState).selectionRegion.pageIndex === pageIndex &&
                 renderHighlightTarget({
                     highlightAreas: highlightState.highlightAreas,
-                    selectedText: highlightState.selectedText,
-                    selectionRegion: highlightState.selectionRegion,
-                    selectionData: highlightState.selectionData,
+                    selectedText: (highlightState as SelectedState).selectedText,
+                    selectionRegion: (highlightState as SelectedState).selectionRegion,
+                    selectionData: (highlightState as SelectedState).selectionData,
                     cancel,
                     toggle: () => {
-                        store.update(
-                            'highlightState',
-                            new HighlightSelectionState(
-                                highlightState.selectedText,
-                                highlightState.highlightAreas,
-                                highlightState.selectionData,
-                                highlightState.selectionRegion
-                            )
-                        );
+                        const newState: SelectionState = {
+                            type: HighlightStateType.Selection,
+                            selectedText: (highlightState as SelectedState).selectedText,
+                            highlightAreas: highlightState.highlightAreas,
+                            selectionData: (highlightState as SelectedState).selectionData,
+                            selectionRegion: (highlightState as SelectedState).selectionRegion,
+                        };
+                        store.update('highlightState', newState);
                         window.getSelection().removeAllRanges();
                     },
                 })}
             {renderHighlightContent &&
-                highlightState instanceof HighlightSelectionState &&
-                highlightState.selectionRegion.pageIndex === pageIndex &&
+                highlightState.type == HighlightStateType.Selection &&
+                (highlightState as SelectionState).selectionRegion.pageIndex === pageIndex &&
                 renderHighlightContent({
                     highlightAreas: highlightState.highlightAreas,
-                    selectedText: highlightState.selectedText,
-                    selectionRegion: highlightState.selectionRegion,
-                    selectionData: highlightState.selectionData,
+                    selectedText: (highlightState as SelectionState).selectedText,
+                    selectionRegion: (highlightState as SelectionState).selectionRegion,
+                    selectionData: (highlightState as SelectionState).selectionData,
                     cancel,
                 })}
             {listAreas.length > 0 && (

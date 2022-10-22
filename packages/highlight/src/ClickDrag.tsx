@@ -16,9 +16,7 @@ interface Point {
 export const ClickDrag: React.FC<{
     textLayerRef: React.MutableRefObject<HTMLDivElement>;
     textLayerRendered: boolean;
-}> = ({
-    textLayerRef, textLayerRendered
-}) => {
+}> = ({ textLayerRef, textLayerRendered }) => {
     const containerRef = React.useRef<HTMLDivElement>();
     const currentCursorRef = React.useRef(document.body.style.cursor);
     const startPointRef = React.useRef<Point>({ x: 0, y: 0 });
@@ -75,7 +73,7 @@ export const ClickDrag: React.FC<{
         currentCursorRef.current
             ? (document.body.style.cursor = currentCursorRef.current)
             : document.body.style.removeProperty('cursor');
-    }
+    };
 
     React.useEffect(() => {
         const textLayerEle = textLayerRef.current;
@@ -88,7 +86,5 @@ export const ClickDrag: React.FC<{
         };
     }, [textLayerRendered]);
 
-    return (
-        <div ref={containerRef} className="rpv-highlight__click-drag" />
-    );
+    return <div ref={containerRef} className="rpv-highlight__click-drag" />;
 };
