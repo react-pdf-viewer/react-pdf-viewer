@@ -78,6 +78,7 @@ export interface PluginOnCanvasLayerRender {
     status: LayerRenderStatus;
 }
 export interface PluginRenderPageLayer {
+    canvasLayerRef: React.MutableRefObject<HTMLCanvasElement>;
     // Is the canvas layer rendered completely?
     canvasLayerRendered: boolean;
     doc: PdfJs.PdfDocument;

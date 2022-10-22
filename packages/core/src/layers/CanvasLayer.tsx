@@ -19,6 +19,7 @@ import { roundToDivide } from '../utils/roundToDivide';
 const MAX_CANVAS_SIZE = 4096 * 4096;
 
 export const CanvasLayer: React.FC<{
+    canvasLayerRef: React.MutableRefObject<HTMLCanvasElement>;
     height: number;
     page: PdfJs.Page;
     pageIndex: number;
@@ -27,8 +28,7 @@ export const CanvasLayer: React.FC<{
     scale: number;
     width: number;
     onRenderCanvasCompleted: () => void;
-}> = ({ height, page, pageIndex, plugins, rotation, scale, width, onRenderCanvasCompleted }) => {
-    const canvasRef = React.useRef<HTMLCanvasElement>();
+}> = ({ canvasLayerRef, height, page, pageIndex, plugins, rotation, scale, width, onRenderCanvasCompleted }) => {
     const renderTask = React.useRef<PdfJs.PageRenderTask>();
 
     useIsomorphicLayoutEffect(() => {
@@ -37,7 +37,7 @@ export const CanvasLayer: React.FC<{
             task.cancel();
         }
 
-        const canvasEle = canvasRef.current;
+        const canvasEle = canvasLayerRef.current;
         plugins.forEach((plugin) => {
             if (plugin.onCanvasLayerRender) {
                 plugin.onCanvasLayerRender({
@@ -122,7 +122,7 @@ export const CanvasLayer: React.FC<{
                 width: `${width}px`,
             }}
         >
-            <canvas ref={canvasRef} />
+            <canvas ref={canvasLayerRef} />
         </div>
     );
 };

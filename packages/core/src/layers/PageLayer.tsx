@@ -71,6 +71,7 @@ export const PageLayer: React.FC<{
     });
     const [canvasLayerRendered, setCanvasLayerRendered] = React.useState(false);
     const [textLayerRendered, setTextLayerRendered] = React.useState(false);
+    const canvasLayerRef = React.useRef<HTMLCanvasElement>();
     const textLayerRef = React.useRef<HTMLDivElement>();
 
     const { page, pageHeight, pageWidth } = pageSize;
@@ -194,6 +195,7 @@ export const PageLayer: React.FC<{
                             attrs: {},
                             children: (
                                 <CanvasLayer
+                                    canvasLayerRef={canvasLayerRef}
                                     height={h}
                                     page={page}
                                     pageIndex={pageIndex}
@@ -240,6 +242,7 @@ export const PageLayer: React.FC<{
                         plugin.renderPageLayer ? (
                             <React.Fragment key={idx}>
                                 {plugin.renderPageLayer({
+                                    canvasLayerRef,
                                     canvasLayerRendered,
                                     doc,
                                     height: h,
