@@ -164,6 +164,10 @@ export const highlightPlugin = (props?: HighlightPluginProps): HighlightPlugin =
                 store={store}
             />
             <ClickDrag
+                canvasLayerRef={renderPageProps.canvasLayerRef}
+                canvasLayerRendered={renderPageProps.canvasLayerRendered}
+                pageIndex={renderPageProps.pageIndex}
+                store={store}
                 textLayerRef={renderPageProps.textLayerRef}
                 textLayerRendered={renderPageProps.textLayerRendered}
             />

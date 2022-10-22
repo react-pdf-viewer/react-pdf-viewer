@@ -14,6 +14,7 @@ export enum HighlightStateType {
     Selecting,
     Selected,
     Selection,
+    ClickDragged,
 }
 
 export const NO_SELECTION_STATE = {
@@ -40,5 +41,10 @@ export interface SelectedState extends HighlightState {
 export interface SelectionState extends HighlightState {
     selectedText: string;
     selectionData: SelectionData;
+    selectionRegion: HighlightArea;
+}
+
+export interface ClickDragState extends HighlightState {
+    image: string;
     selectionRegion: HighlightArea;
 }

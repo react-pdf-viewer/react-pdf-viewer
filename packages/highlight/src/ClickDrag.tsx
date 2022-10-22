@@ -6,7 +6,11 @@
  * @copyright 2019-2022 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
+import type { Store } from '@react-pdf-viewer/core';
 import * as React from 'react';
+import { getImageFromArea } from './getImageFromArea';
+import { ClickDragState, HighlightStateType } from './types/HighlightState';
+import type { StoreProps } from './types/StoreProps';
 
 interface Point {
     x: number;
@@ -14,9 +18,13 @@ interface Point {
 }
 
 export const ClickDrag: React.FC<{
+    canvasLayerRef: React.MutableRefObject<HTMLCanvasElement>;
+    canvasLayerRendered: boolean;
+    pageIndex: number;
+    store: Store<StoreProps>;
     textLayerRef: React.MutableRefObject<HTMLDivElement>;
     textLayerRendered: boolean;
-}> = ({ textLayerRef, textLayerRendered }) => {
+}> = ({ canvasLayerRef, canvasLayerRendered, pageIndex, store, textLayerRef, textLayerRendered }) => {
     const containerRef = React.useRef<HTMLDivElement>();
     const currentCursorRef = React.useRef(document.body.style.cursor);
     const startPointRef = React.useRef<Point>({ x: 0, y: 0 });
@@ -36,8 +44,8 @@ export const ClickDrag: React.FC<{
         };
         startPointRef.current = startPoint;
 
-        container.style.top = `${startPoint.y - rect.top}px`;
-        container.style.left = `${startPoint.x - rect.left}px`;
+        container.style.top = `${((startPoint.y - rect.top) * 100) / rect.height}%`;
+        container.style.left = `${((startPoint.x - rect.left) * 100) / rect.width}%`;
 
         // Attach the listeners to `document`
         document.addEventListener('mousemove', handleDocumentMouseMove);
@@ -45,8 +53,9 @@ export const ClickDrag: React.FC<{
     };
 
     const handleDocumentMouseMove = (e: MouseEvent) => {
+        const textLayerEle = textLayerRef.current;
         const container = containerRef.current;
-        if (!container) {
+        if (!textLayerEle || !container) {
             return;
         }
         e.preventDefault();
@@ -56,9 +65,10 @@ export const ClickDrag: React.FC<{
             x: e.clientX - startPointRef.current.x,
             y: e.clientY - startPointRef.current.y,
         };
+        const rect = textLayerEle.getBoundingClientRect();
 
-        container.style.width = `${endPoint.x}px`;
-        container.style.height = `${endPoint.y}px`;
+        container.style.width = `${(endPoint.x * 100) / rect.width}%`;
+        container.style.height = `${(endPoint.y * 100) / rect.height}%`;
     };
 
     const handleDocumentMouseUp = () => {
@@ -66,6 +76,27 @@ export const ClickDrag: React.FC<{
         document.removeEventListener('mouseup', handleDocumentMouseUp);
 
         resetCursor();
+
+        const container = containerRef.current;
+        const canvasEle = canvasLayerRef.current;
+        if (!container || !canvasEle) {
+            return;
+        }
+        const highlightArea = {
+            pageIndex,
+            top: parseFloat(container.style.top.slice(0, -1)),
+            left: parseFloat(container.style.left.slice(0, -1)),
+            height: parseFloat(container.style.height.slice(0, -1)),
+            width: parseFloat(container.style.width.slice(0, -1)),
+        };
+        const image = getImageFromArea()(canvasEle, highlightArea);
+        const newState: ClickDragState = {
+            highlightAreas: [],
+            image,
+            selectionRegion: highlightArea,
+            type: HighlightStateType.ClickDragged,
+        };
+        store.update('highlightState', newState);
     };
 
     // Reset the cursor
@@ -76,8 +107,9 @@ export const ClickDrag: React.FC<{
     };
 
     React.useEffect(() => {
+        const canvasEle = canvasLayerRef.current;
         const textLayerEle = textLayerRef.current;
-        if (!textLayerRendered || !textLayerEle) {
+        if (!canvasLayerRendered || !textLayerRendered || !canvasEle || !textLayerEle) {
             return;
         }
         textLayerEle.addEventListener('mousedown', handleMouseDown);
