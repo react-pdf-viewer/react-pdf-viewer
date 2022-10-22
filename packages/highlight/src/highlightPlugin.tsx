@@ -13,10 +13,11 @@ import type {
     PluginRenderPageLayer,
     RenderViewer,
     Slot,
-    ViewerState,
+    ViewerState
 } from '@react-pdf-viewer/core';
 import { createStore, LayerRenderStatus } from '@react-pdf-viewer/core';
 import * as React from 'react';
+import { ClickDrag } from './ClickDrag';
 import { HIGHLIGHT_LAYER_ATTR, HIGHLIGHT_PAGE_ATTR } from './constants';
 import { HighlightAreaList } from './HighlightAreaList';
 import { NO_SELECTION_STATE, SelectedState, SELECTING_STATE } from './HighlightState';
@@ -154,6 +155,7 @@ export const highlightPlugin = (props?: HighlightPluginProps): HighlightPlugin =
     };
 
     const renderPageLayer = (renderPageProps: PluginRenderPageLayer) => (
+        <>
         <HighlightAreaList
             pageIndex={renderPageProps.pageIndex}
             renderHighlightContent={highlightPluginProps.renderHighlightContent}
@@ -161,6 +163,11 @@ export const highlightPlugin = (props?: HighlightPluginProps): HighlightPlugin =
             renderHighlights={highlightPluginProps.renderHighlights}
             store={store}
         />
+        <ClickDrag
+            textLayerRef={renderPageProps.textLayerRef}
+            textLayerRendered={renderPageProps.textLayerRendered}
+        />
+        </>
     );
 
     const jumpToHighlightArea = (area: HighlightArea) => {
