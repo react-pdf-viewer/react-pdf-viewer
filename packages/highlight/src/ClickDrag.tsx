@@ -109,13 +109,24 @@ export const ClickDrag: React.FC<{
             hideContainer();
             store.update('highlightState', NO_SELECTION_STATE);
         }
-        document.removeEventListener('keydown', handleDocumentKeyDown);
     };
 
-    const handleDocumentMouseUp = () => {
+    // Hide the container when clicking outside
+    const handleDocumenClick = (e: MouseEvent) => {
+        const container = containerRef.current;
+        if (!container) {
+            return;
+        }
+        const highlightType = store.get('highlightState').type;
+        if (highlightType === HighlightStateType.NoSelection && e.target !== container) {
+            hideContainer();
+        }
+    };
+
+    const handleDocumentMouseUp = (e: MouseEvent) => {
+        e.preventDefault();
         document.removeEventListener('mousemove', handleDocumentMouseMove);
         document.removeEventListener('mouseup', handleDocumentMouseUp);
-        document.addEventListener('keydown', handleDocumentKeyDown);
 
         resetCursor();
 
@@ -173,8 +184,15 @@ export const ClickDrag: React.FC<{
             return;
         }
         textLayerEle.addEventListener('mousedown', handleMouseDown);
+        const eventOptions = {
+            capture: true,
+        };
+        document.addEventListener('keydown', handleDocumentKeyDown);
+        document.addEventListener('click', handleDocumenClick, eventOptions);
         return () => {
             textLayerEle.removeEventListener('mousedown', handleMouseDown);
+            document.removeEventListener('click', handleDocumenClick, eventOptions);
+            document.removeEventListener('keydown', handleDocumentKeyDown);
         };
     }, [textLayerRendered]);
 
