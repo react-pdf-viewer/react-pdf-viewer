@@ -156,13 +156,6 @@ export const highlightPlugin = (props?: HighlightPluginProps): HighlightPlugin =
 
     const renderPageLayer = (renderPageProps: PluginRenderPageLayer) => (
         <>
-            <HighlightAreaList
-                pageIndex={renderPageProps.pageIndex}
-                renderHighlightContent={highlightPluginProps.renderHighlightContent}
-                renderHighlightTarget={highlightPluginProps.renderHighlightTarget}
-                renderHighlights={highlightPluginProps.renderHighlights}
-                store={store}
-            />
             <ClickDrag
                 canvasLayerRef={renderPageProps.canvasLayerRef}
                 canvasLayerRendered={renderPageProps.canvasLayerRendered}
@@ -170,6 +163,13 @@ export const highlightPlugin = (props?: HighlightPluginProps): HighlightPlugin =
                 store={store}
                 textLayerRef={renderPageProps.textLayerRef}
                 textLayerRendered={renderPageProps.textLayerRendered}
+            />
+            <HighlightAreaList
+                pageIndex={renderPageProps.pageIndex}
+                renderHighlightContent={highlightPluginProps.renderHighlightContent}
+                renderHighlightTarget={highlightPluginProps.renderHighlightTarget}
+                renderHighlights={highlightPluginProps.renderHighlights}
+                store={store}
             />
         </>
     );

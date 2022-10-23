@@ -10,6 +10,8 @@
     background-color: var(--rpv-highlight__click-drag-background-color);
     outline: 1px dashed var(--rpv-highlight__click-drag-border-color);
     position: absolute;
+    // Higher than text layer
+    z-index: 2;
 }
 
 .rpv-highlight__click-drag--hidden {
