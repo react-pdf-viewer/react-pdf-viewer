@@ -78,6 +78,7 @@ export interface PluginOnCanvasLayerRender {
     status: LayerRenderStatus;
 }
 export interface PluginRenderPageLayer {
+    canvasLayerRef: React.MutableRefObject<HTMLCanvasElement>;
     // Is the canvas layer rendered completely?
     canvasLayerRendered: boolean;
     doc: PdfJs.PdfDocument;
@@ -85,6 +86,7 @@ export interface PluginRenderPageLayer {
     pageIndex: number;
     rotation: number;
     scale: number;
+    textLayerRef: React.MutableRefObject<HTMLDivElement>;
     // Is the text layer rendered completely?
     textLayerRendered: boolean;
     width: number;

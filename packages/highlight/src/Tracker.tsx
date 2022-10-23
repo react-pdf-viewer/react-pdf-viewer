@@ -11,11 +11,11 @@ import * as React from 'react';
 import { HIGHLIGHT_LAYER_ATTR, HIGHLIGHT_PAGE_ATTR } from './constants';
 import { getRectFromOffsets } from './getRectFromOffsets';
 import { getTextFromOffsets } from './getTextFromOffsets';
-import { NO_SELECTION_STATE, SelectedState, SELECTING_STATE } from './HighlightState';
 import { SelectionRange } from './structs/SelectionRange';
 import { transformArea } from './transformArea';
 import { DivText } from './types/DivText';
 import type { HighlightArea } from './types/HighlightArea';
+import { HighlightStateType } from './types/HighlightState';
 import type { SelectionData } from './types/SelectionData';
 import type { StoreProps } from './types/StoreProps';
 import { useRotation } from './useRotation';
@@ -42,7 +42,8 @@ export const Tracker: React.FC<{
 
         const highlightState = store.get('highlightState');
         const hasSelection =
-            (highlightState === NO_SELECTION_STATE || highlightState === SELECTING_STATE) &&
+            (highlightState.type === HighlightStateType.NoSelection ||
+                highlightState.type === HighlightStateType.Selected) &&
             selection.rangeCount > 0 &&
             EMPTY_SELECTION.indexOf(selection.toString()) === -1;
         if (!hasSelection) {
@@ -245,15 +246,14 @@ export const Tracker: React.FC<{
             endDivIndex,
         };
 
-        store.update(
-            'highlightState',
-            new SelectedState(
-                selectedText,
-                highlightAreas.map((area) => transformArea(area, rotation)),
-                selectionData,
-                selectionRegion
-            )
-        );
+        const selectedState = {
+            type: HighlightStateType.Selected,
+            selectedText,
+            highlightAreas: highlightAreas.map((area) => transformArea(area, rotation)),
+            selectionData,
+            selectionRegion,
+        };
+        store.update('highlightState', selectedState);
     };
 
     React.useEffect(() => {

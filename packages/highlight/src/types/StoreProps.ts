@@ -8,7 +8,7 @@
 
 import type { DestinationOffsetFromViewport } from '@react-pdf-viewer/core';
 import { SpecialZoomLevel } from '@react-pdf-viewer/core';
-import { HighlightState } from '../HighlightState';
+import type { HighlightState } from './HighlightState';
 
 export interface StoreProps {
     jumpToDestination?: (

@@ -20,9 +20,10 @@ export interface HighlightArea {
 
 export interface RenderHighlightContentProps {
     highlightAreas: HighlightArea[];
+    previewImage: string;
     selectedText: string;
     selectionRegion: HighlightArea;
-    selectionData: SelectionData;
+    selectionData?: SelectionData;
     cancel(): void;
 }
 
@@ -34,9 +35,10 @@ export interface RenderHighlightsProps {
 
 export interface RenderHighlightTargetProps {
     highlightAreas: HighlightArea[];
+    previewImage: string;
     selectedText: string;
     selectionRegion: HighlightArea;
-    selectionData: SelectionData;
+    selectionData?: SelectionData;
     cancel(): void;
     // Switch to the hightlighting state
     toggle(): void;

@@ -1,0 +1,19 @@
+/**
+ * A React component to view a PDF document
+ *
+ * @see https://react-pdf-viewer.dev
+ * @license https://react-pdf-viewer.dev/license
+ * @copyright 2019-2022 Nguyen Huu Phuoc <me@phuoc.ng>
+ */
+
+.rpv-highlight__click-drag {
+    background-color: var(--rpv-highlight__click-drag-background-color);
+    outline: 1px dashed var(--rpv-highlight__click-drag-border-color);
+    position: absolute;
+    // Higher than text layer
+    z-index: 2;
+}
+
+.rpv-highlight__click-drag--hidden {
+    display: none;
+}

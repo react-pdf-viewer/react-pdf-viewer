@@ -17,12 +17,13 @@ import type {
 } from '@react-pdf-viewer/core';
 import { createStore, LayerRenderStatus } from '@react-pdf-viewer/core';
 import * as React from 'react';
+import { ClickDrag } from './ClickDrag';
 import { HIGHLIGHT_LAYER_ATTR, HIGHLIGHT_PAGE_ATTR } from './constants';
 import { HighlightAreaList } from './HighlightAreaList';
-import { NO_SELECTION_STATE, SelectedState, SELECTING_STATE } from './HighlightState';
 import { Trigger } from './structs/Trigger';
 import { Tracker } from './Tracker';
 import type { HighlightArea } from './types/HighlightArea';
+import { HighlightStateType, NO_SELECTION_STATE, SELECTING_STATE } from './types/HighlightState';
 import type { RenderHighlightContentProps } from './types/RenderHighlightContentProps';
 import type { RenderHighlightsProps } from './types/RenderHighlightsProps';
 import type { RenderHighlightTargetProps } from './types/RenderHighlightTargetProps';
@@ -74,7 +75,7 @@ export const highlightPlugin = (props?: HighlightPluginProps): HighlightPlugin =
         const textLayer = textLayerRender.ele;
         const pageRect = textLayer.getBoundingClientRect();
         const highlightState = store.get('highlightState');
-        if (highlightState instanceof SelectedState) {
+        if (highlightState.type === HighlightStateType.Selected) {
             const mouseTop = e.clientY - pageRect.top;
             const mouseLeft = e.clientX - pageRect.left;
 
@@ -154,13 +155,23 @@ export const highlightPlugin = (props?: HighlightPluginProps): HighlightPlugin =
     };
 
     const renderPageLayer = (renderPageProps: PluginRenderPageLayer) => (
-        <HighlightAreaList
-            pageIndex={renderPageProps.pageIndex}
-            renderHighlightContent={highlightPluginProps.renderHighlightContent}
-            renderHighlightTarget={highlightPluginProps.renderHighlightTarget}
-            renderHighlights={highlightPluginProps.renderHighlights}
-            store={store}
-        />
+        <>
+            <ClickDrag
+                canvasLayerRef={renderPageProps.canvasLayerRef}
+                canvasLayerRendered={renderPageProps.canvasLayerRendered}
+                pageIndex={renderPageProps.pageIndex}
+                store={store}
+                textLayerRef={renderPageProps.textLayerRef}
+                textLayerRendered={renderPageProps.textLayerRendered}
+            />
+            <HighlightAreaList
+                pageIndex={renderPageProps.pageIndex}
+                renderHighlightContent={highlightPluginProps.renderHighlightContent}
+                renderHighlightTarget={highlightPluginProps.renderHighlightTarget}
+                renderHighlights={highlightPluginProps.renderHighlights}
+                store={store}
+            />
+        </>
     );
 
     const jumpToHighlightArea = (area: HighlightArea) => {

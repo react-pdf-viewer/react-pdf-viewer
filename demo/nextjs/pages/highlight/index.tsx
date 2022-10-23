@@ -14,6 +14,7 @@ interface Note {
     id: number;
     content: string;
     highlightAreas: HighlightArea[];
+    previewImage: string;
     quote: string;
 }
 
@@ -43,7 +44,7 @@ const IndexPage = () => {
                 left: `${props.selectionRegion.left}%`,
                 top: `${props.selectionRegion.top + props.selectionRegion.height}%`,
                 transform: 'translate(0, 8px)',
-                zIndex: 1,
+                zIndex: 2,
             }}
         >
             <Tooltip
@@ -66,6 +67,7 @@ const IndexPage = () => {
                     id: ++noteId,
                     content: message,
                     highlightAreas: props.highlightAreas,
+                    previewImage: props.previewImage,
                     quote: props.selectedText,
                 };
                 setNotes(notes.concat([note]));
@@ -83,6 +85,7 @@ const IndexPage = () => {
                     position: 'absolute',
                     left: `${props.selectionRegion.left}%`,
                     top: `${props.selectionRegion.top + props.selectionRegion.height}%`,
+                    transform: 'translate(0, 8px)',
                     zIndex: 1,
                 }}
             >
@@ -180,18 +183,28 @@ const IndexPage = () => {
                             noteEles.set(note.id, ref as HTMLElement);
                         }}
                     >
-                        <blockquote
-                            style={{
-                                borderLeft: '2px solid rgba(0, 0, 0, 0.2)',
-                                fontSize: '.75rem',
-                                lineHeight: 1.5,
-                                margin: '0 0 8px 0',
-                                paddingLeft: '8px',
-                                textAlign: 'justify',
-                            }}
-                        >
-                            {note.quote}
-                        </blockquote>
+                        {note.previewImage ? (
+                            <img
+                                src={note.previewImage}
+                                style={{
+                                    height: 'auto',
+                                    width: '100%',
+                                }}
+                            />
+                        ) : (
+                            <blockquote
+                                style={{
+                                    borderLeft: '2px solid rgba(0, 0, 0, 0.2)',
+                                    fontSize: '.75rem',
+                                    lineHeight: 1.5,
+                                    margin: '0 0 8px 0',
+                                    paddingLeft: '8px',
+                                    textAlign: 'justify',
+                                }}
+                            >
+                                {note.quote}
+                            </blockquote>
+                        )}
                         {note.content}
                     </div>
                 );

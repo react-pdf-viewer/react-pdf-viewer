@@ -2,13 +2,15 @@
 
 ## v3.8.0 [WIP]
 
-**New feature**
+**New features**
 
 -   Set the initial rotation with the new `initialRotation` parameter:
 
 ```tsx
 <Viewer initialRotation={90} />
 ```
+
+-   Users can click and drag to highlight an area
 
 **Improvement**
 
@@ -33,6 +35,33 @@ A `DivText` item consists of
 -   Popover doesn't work if the `Viewer` is rendered inside ShadowDOM
 -   The `Cover` component doesn't rotate the corresponding rotated page
 -   The `startPageIndex` and `endPageIndex` properties of `SelectionData` aren't correct
+
+**Breaking change**
+
+-   In addition to selecting texts, users can click and drag to highlight a particular area. The second way doesn't provide the `SelectionData` data.
+    The `SelectionData` property in `RenderHighlightContentProps` and `RenderHighlightTargetProps` turn to optional properties.
+
+```ts
+interface RenderHighlightContentProps {
+    selectionData?: SelectionData;
+}
+
+interface RenderHighlightTargetProps {
+    selectionData?: SelectionData;
+}
+```
+
+You have to check if it exists before using it:
+
+```js
+if (renderHighlightContentProps.selectionData) {
+    // Do something ...
+}
+
+if (renderHighlightTargetProps.selectionData) {
+    // Do something ...
+}
+```
 
 ## v3.7.0
 
