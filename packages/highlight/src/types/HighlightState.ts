@@ -14,6 +14,7 @@ export enum HighlightStateType {
     Selecting = 'Selecting',
     Selected = 'Selected',
     Selection = 'Selection',
+    ClickDragging = 'ClickDragging',
     ClickDragged = 'ClickDragged',
 }
 

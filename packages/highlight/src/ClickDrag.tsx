@@ -70,6 +70,10 @@ export const ClickDrag: React.FC<{
         // Attach the listeners to `document`
         document.addEventListener('mousemove', handleDocumentMouseMove);
         document.addEventListener('mouseup', handleDocumentMouseUp);
+
+        store.updateCurrentValue('highlightState', (currentState) =>
+            Object.assign({}, currentState, { type: HighlightStateType.ClickDragging })
+        );
     };
 
     const handleDocumentMouseMove = (e: MouseEvent) => {
@@ -145,7 +149,11 @@ export const ClickDrag: React.FC<{
     };
 
     const handleHighlightState = (s: HighlightState) => {
-        if (s.type === HighlightStateType.Selection) {
+        if (
+            s.type === HighlightStateType.Selection ||
+            // User is dragging in other page
+            (s.type === HighlightStateType.ClickDragging && s.selectionRegion.pageIndex !== pageIndex)
+        ) {
             hideContainer();
         }
     };
