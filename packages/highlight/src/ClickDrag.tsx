@@ -9,7 +9,7 @@
 import type { Store } from '@react-pdf-viewer/core';
 import * as React from 'react';
 import { getImageFromArea } from './getImageFromArea';
-import { HighlightStateType } from './types/HighlightState';
+import { HighlightState, HighlightStateType } from './types/HighlightState';
 import type { StoreProps } from './types/StoreProps';
 
 interface Point {
@@ -110,6 +110,24 @@ export const ClickDrag: React.FC<{
             ? (document.body.style.cursor = currentCursorRef.current)
             : document.body.style.removeProperty('cursor');
     };
+
+    const handleHighlightState = (s: HighlightState) => {
+        if (s.type === HighlightStateType.Selection) {
+            const container = containerRef.current;
+            if (!container) {
+                return;
+            }
+            container.classList.add('rpv-highlight__click-drag--hidden');
+        }
+    };
+
+    React.useEffect(() => {
+        store.subscribe('highlightState', handleHighlightState);
+
+        return (): void => {
+            store.unsubscribe('highlightState', handleHighlightState);
+        };
+    }, []);
 
     React.useEffect(() => {
         const canvasEle = canvasLayerRef.current;
