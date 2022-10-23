@@ -9,7 +9,7 @@
 import type { Store } from '@react-pdf-viewer/core';
 import * as React from 'react';
 import { getImageFromArea } from './getImageFromArea';
-import { HighlightState, HighlightStateType } from './types/HighlightState';
+import { HighlightState, HighlightStateType, NO_SELECTION_STATE } from './types/HighlightState';
 import type { StoreProps } from './types/StoreProps';
 
 interface Point {
@@ -28,6 +28,13 @@ export const ClickDrag: React.FC<{
     const containerRef = React.useRef<HTMLDivElement>();
     const currentCursorRef = React.useRef(document.body.style.cursor);
     const startPointRef = React.useRef<Point>({ x: 0, y: 0 });
+
+    const hideContainer = () => {
+        const container = containerRef.current;
+        if (container) {
+            container.classList.add('rpv-highlight__click-drag--hidden');
+        }
+    };
 
     const handleMouseDown = (e: MouseEvent) => {
         const textLayerEle = textLayerRef.current;
@@ -76,9 +83,19 @@ export const ClickDrag: React.FC<{
         container.style.height = `${(endPoint.y * 100) / rect.height}%`;
     };
 
+    const handleDocumentKeyDown = (e: KeyboardEvent) => {
+        if (e.key === 'Escape' && store.get('highlightState').type === HighlightStateType.ClickDragged) {
+            e.preventDefault();
+            hideContainer();
+            store.update('highlightState', NO_SELECTION_STATE);
+        }
+        document.removeEventListener('keydown', handleDocumentKeyDown);
+    };
+
     const handleDocumentMouseUp = () => {
         document.removeEventListener('mousemove', handleDocumentMouseMove);
         document.removeEventListener('mouseup', handleDocumentMouseUp);
+        document.addEventListener('keydown', handleDocumentKeyDown);
 
         resetCursor();
 
@@ -113,11 +130,7 @@ export const ClickDrag: React.FC<{
 
     const handleHighlightState = (s: HighlightState) => {
         if (s.type === HighlightStateType.Selection) {
-            const container = containerRef.current;
-            if (!container) {
-                return;
-            }
-            container.classList.add('rpv-highlight__click-drag--hidden');
+            hideContainer();
         }
     };
 
