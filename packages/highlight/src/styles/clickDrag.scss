@@ -11,3 +11,7 @@
     outline: 1px dashed var(--rpv-highlight__click-drag-border-color);
     position: absolute;
 }
+
+.rpv-highlight__click-drag--hidden {
+    display: none;
+}

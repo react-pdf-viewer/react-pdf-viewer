@@ -46,6 +46,8 @@ export const ClickDrag: React.FC<{
 
         container.style.top = `${((startPoint.y - rect.top) * 100) / rect.height}%`;
         container.style.left = `${((startPoint.x - rect.left) * 100) / rect.width}%`;
+        container.style.height = '0px';
+        container.style.width = '0px';
 
         // Attach the listeners to `document`
         document.addEventListener('mousemove', handleDocumentMouseMove);
@@ -67,6 +69,9 @@ export const ClickDrag: React.FC<{
         };
         const rect = textLayerEle.getBoundingClientRect();
 
+        if (container.classList.contains('rpv-highlight__click-drag--hidden')) {
+            container.classList.remove('rpv-highlight__click-drag--hidden');
+        }
         container.style.width = `${(endPoint.x * 100) / rect.width}%`;
         container.style.height = `${(endPoint.y * 100) / rect.height}%`;
     };
@@ -118,5 +123,5 @@ export const ClickDrag: React.FC<{
         };
     }, [textLayerRendered]);
 
-    return <div ref={containerRef} className="rpv-highlight__click-drag" />;
+    return <div ref={containerRef} className="rpv-highlight__click-drag rpv-highlight__click-drag--hidden" />;
 };
