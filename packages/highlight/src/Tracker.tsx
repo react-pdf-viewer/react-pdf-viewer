@@ -15,7 +15,7 @@ import { SelectionRange } from './structs/SelectionRange';
 import { transformArea } from './transformArea';
 import { DivText } from './types/DivText';
 import type { HighlightArea } from './types/HighlightArea';
-import { HighlightStateType, SelectedState } from './types/HighlightState';
+import { HighlightStateType } from './types/HighlightState';
 import type { SelectionData } from './types/SelectionData';
 import type { StoreProps } from './types/StoreProps';
 import { useRotation } from './useRotation';
@@ -246,7 +246,7 @@ export const Tracker: React.FC<{
             endDivIndex,
         };
 
-        const selectedState: SelectedState = {
+        const selectedState = {
             type: HighlightStateType.Selected,
             selectedText,
             highlightAreas: highlightAreas.map((area) => transformArea(area, rotation)),

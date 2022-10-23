@@ -10,13 +10,7 @@ import type { Store } from '@react-pdf-viewer/core';
 import * as React from 'react';
 import { HighlightRect } from './HighlightRect';
 import { getCssProperties } from './transformArea';
-import {
-    HighlightState,
-    HighlightStateType,
-    NO_SELECTION_STATE,
-    SelectedState,
-    SelectionState,
-} from './types/HighlightState';
+import { HighlightState, HighlightStateType, NO_SELECTION_STATE } from './types/HighlightState';
 import type { RenderHighlightContentProps } from './types/RenderHighlightContentProps';
 import type { RenderHighlightsProps } from './types/RenderHighlightsProps';
 import type { RenderHighlightTargetProps } from './types/RenderHighlightTargetProps';
@@ -58,34 +52,34 @@ export const HighlightAreaList: React.FC<{
     return (
         <>
             {renderHighlightTarget &&
-                highlightState.type === HighlightStateType.Selected &&
-                (highlightState as SelectedState).selectionRegion.pageIndex === pageIndex &&
+                (highlightState.type === HighlightStateType.Selected ||
+                    highlightState.type === HighlightStateType.ClickDragged) &&
+                highlightState.selectionRegion.pageIndex === pageIndex &&
                 renderHighlightTarget({
                     highlightAreas: highlightState.highlightAreas,
-                    selectedText: (highlightState as SelectedState).selectedText,
-                    selectionRegion: (highlightState as SelectedState).selectionRegion,
-                    selectionData: (highlightState as SelectedState).selectionData,
+                    previewImage: highlightState.previewImage || '',
+                    selectedText: highlightState.selectedText || '',
+                    selectionRegion: highlightState.selectionRegion,
+                    selectionData: highlightState.selectionData,
                     cancel,
                     toggle: () => {
-                        const newState: SelectionState = {
+                        // Switch to the `Selection` state
+                        const newState = Object.assign({}, highlightState, {
                             type: HighlightStateType.Selection,
-                            selectedText: (highlightState as SelectedState).selectedText,
-                            highlightAreas: highlightState.highlightAreas,
-                            selectionData: (highlightState as SelectedState).selectionData,
-                            selectionRegion: (highlightState as SelectedState).selectionRegion,
-                        };
+                        });
                         store.update('highlightState', newState);
                         window.getSelection().removeAllRanges();
                     },
                 })}
             {renderHighlightContent &&
                 highlightState.type == HighlightStateType.Selection &&
-                (highlightState as SelectionState).selectionRegion.pageIndex === pageIndex &&
+                highlightState.selectionRegion.pageIndex === pageIndex &&
                 renderHighlightContent({
                     highlightAreas: highlightState.highlightAreas,
-                    selectedText: (highlightState as SelectionState).selectedText,
-                    selectionRegion: (highlightState as SelectionState).selectionRegion,
-                    selectionData: (highlightState as SelectionState).selectionData,
+                    previewImage: highlightState.previewImage || '',
+                    selectedText: highlightState.selectedText || '',
+                    selectionRegion: highlightState.selectionRegion,
+                    selectionData: highlightState.selectionData,
                     cancel,
                 })}
             {listAreas.length > 0 && (

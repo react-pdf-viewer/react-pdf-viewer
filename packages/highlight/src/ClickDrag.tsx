@@ -9,7 +9,7 @@
 import type { Store } from '@react-pdf-viewer/core';
 import * as React from 'react';
 import { getImageFromArea } from './getImageFromArea';
-import { ClickDragState, HighlightStateType } from './types/HighlightState';
+import { HighlightStateType } from './types/HighlightState';
 import type { StoreProps } from './types/StoreProps';
 
 interface Point {
@@ -89,10 +89,10 @@ export const ClickDrag: React.FC<{
             height: parseFloat(container.style.height.slice(0, -1)),
             width: parseFloat(container.style.width.slice(0, -1)),
         };
-        const image = getImageFromArea()(canvasEle, highlightArea);
-        const newState: ClickDragState = {
-            highlightAreas: [],
-            image,
+        const previewImage = getImageFromArea()(canvasEle, highlightArea);
+        const newState = {
+            highlightAreas: [highlightArea],
+            previewImage,
             selectionRegion: highlightArea,
             type: HighlightStateType.ClickDragged,
         };
