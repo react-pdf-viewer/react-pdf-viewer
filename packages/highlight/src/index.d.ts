@@ -70,6 +70,7 @@ export enum Trigger {
 // Plugin
 export interface HighlightPlugin extends Plugin {
     jumpToHighlightArea(area: HighlightArea): void;
+    switchTrigger(trigger: Trigger): void;
 }
 
 export interface HighlightPluginProps {

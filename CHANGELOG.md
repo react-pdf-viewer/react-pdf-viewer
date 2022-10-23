@@ -10,6 +10,19 @@
 <Viewer initialRotation={90} />
 ```
 
+-   The highlight plugin provides new function to switch the trigger mode:
+
+```ts
+const highlightPluginInstance = highlightPlugin();
+const { switchTrigger } = highlightPluginInstance;
+
+// Switch to None
+switchTrigger(Trigger.None);
+
+// Switch to Selection mode
+switchTrigger(Trigger.TextSelection);
+```
+
 -   Users can click and drag to highlight an area
 
 **Improvement**

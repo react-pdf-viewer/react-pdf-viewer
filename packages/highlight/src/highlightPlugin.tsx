@@ -31,6 +31,7 @@ import type { StoreProps } from './types/StoreProps';
 
 export interface HighlightPlugin extends Plugin {
     jumpToHighlightArea(area: HighlightArea): void;
+    switchTrigger(trigger: Trigger): void;
 }
 
 export interface HighlightPluginProps {
@@ -49,16 +50,13 @@ export const highlightPlugin = (props?: HighlightPluginProps): HighlightPlugin =
         () =>
             createStore<StoreProps>({
                 highlightState: NO_SELECTION_STATE,
+                trigger: highlightPluginProps.trigger,
             }),
         []
     );
 
     const renderViewer = (props: RenderViewer): Slot => {
         const currentSlot = props.slot;
-        if (highlightPluginProps.trigger !== Trigger.TextSelection) {
-            return currentSlot;
-        }
-
         if (currentSlot.subSlot && currentSlot.subSlot.children) {
             currentSlot.subSlot.children = (
                 <>
@@ -72,6 +70,10 @@ export const highlightPlugin = (props?: HighlightPluginProps): HighlightPlugin =
     };
 
     const handleMouseDown = (textLayerRender: PluginOnTextLayerRender) => (e: MouseEvent) => {
+        if (store.get('trigger') === Trigger.None) {
+            return;
+        }
+
         const textLayer = textLayerRender.ele;
         const pageRect = textLayer.getBoundingClientRect();
         const highlightState = store.get('highlightState');
@@ -111,6 +113,10 @@ export const highlightPlugin = (props?: HighlightPluginProps): HighlightPlugin =
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const handleMouseUp = (textLayerRender: PluginOnTextLayerRender) => (e: MouseEvent) => {
+        if (store.get('trigger') === Trigger.None) {
+            return;
+        }
+
         const selectEnd = textLayerRender.ele.querySelector(`.${TEXT_LAYER_END_SELECTOR}`);
         if (selectEnd) {
             (selectEnd as HTMLElement).style.removeProperty('top');
@@ -118,10 +124,6 @@ export const highlightPlugin = (props?: HighlightPluginProps): HighlightPlugin =
     };
 
     const onTextLayerRender = (e: PluginOnTextLayerRender) => {
-        if (highlightPluginProps.trigger !== Trigger.TextSelection) {
-            return;
-        }
-
         const mouseDownHandler = handleMouseDown(e);
         const mouseUpHandler = handleMouseUp(e);
         const textEle = e.ele;
@@ -185,6 +187,10 @@ export const highlightPlugin = (props?: HighlightPluginProps): HighlightPlugin =
         }
     };
 
+    const switchTrigger = (trigger: Trigger) => {
+        store.update('trigger', trigger);
+    };
+
     return {
         install: (pluginFunctions: PluginFunctions) => {
             store.update('jumpToDestination', pluginFunctions.jumpToDestination);
@@ -198,5 +204,6 @@ export const highlightPlugin = (props?: HighlightPluginProps): HighlightPlugin =
         renderPageLayer,
         renderViewer,
         jumpToHighlightArea,
+        switchTrigger,
     };
 };

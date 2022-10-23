@@ -12,6 +12,7 @@ import { HIGHLIGHT_LAYER_ATTR, HIGHLIGHT_PAGE_ATTR } from './constants';
 import { getRectFromOffsets } from './getRectFromOffsets';
 import { getTextFromOffsets } from './getTextFromOffsets';
 import { SelectionRange } from './structs/SelectionRange';
+import { Trigger } from './structs/Trigger';
 import { transformArea } from './transformArea';
 import { DivText } from './types/DivText';
 import type { HighlightArea } from './types/HighlightArea';
@@ -29,12 +30,15 @@ export const Tracker: React.FC<{
     const { rotation } = useRotation(store);
     const pagesRef = React.useRef<HTMLElement | null>(null);
     const [arePagesFound, setPagesFound] = React.useState(false);
+    const [trigger, setTrigger] = React.useState(store.get('trigger'));
 
     const handlePagesContainer = (getPagesContainer: () => HTMLElement) => {
         const ele = getPagesContainer();
         pagesRef.current = ele;
         setPagesFound(!!ele);
     };
+
+    const handleTrigger = (trigger: Trigger) => setTrigger(trigger);
 
     const onMouseUpHandler = () => {
         // Get the current selection
@@ -258,7 +262,7 @@ export const Tracker: React.FC<{
 
     React.useEffect(() => {
         const ele = pagesRef.current;
-        if (!ele) {
+        if (!ele || trigger === Trigger.None) {
             return;
         }
 
@@ -266,13 +270,15 @@ export const Tracker: React.FC<{
         return (): void => {
             ele.removeEventListener('mouseup', onMouseUpHandler);
         };
-    }, [arePagesFound, rotation]);
+    }, [arePagesFound, trigger, rotation]);
 
     React.useEffect(() => {
         store.subscribe('getPagesContainer', handlePagesContainer);
+        store.subscribe('trigger', handleTrigger);
 
         return (): void => {
             store.unsubscribe('getPagesContainer', handlePagesContainer);
+            store.unsubscribe('trigger', handleTrigger);
         };
     }, []);
 
