@@ -16,6 +16,10 @@ interface Point {
     x: number;
     y: number;
 }
+interface Offset {
+    top: number;
+    left: number;
+}
 
 export const ClickDrag: React.FC<{
     canvasLayerRef: React.MutableRefObject<HTMLCanvasElement>;
@@ -28,6 +32,7 @@ export const ClickDrag: React.FC<{
     const containerRef = React.useRef<HTMLDivElement>();
     const currentCursorRef = React.useRef(document.body.style.cursor);
     const startPointRef = React.useRef<Point>({ x: 0, y: 0 });
+    const offsetRef = React.useRef<Offset>({ top: 0, left: 0 });
 
     const hideContainer = () => {
         const container = containerRef.current;
@@ -51,8 +56,14 @@ export const ClickDrag: React.FC<{
         };
         startPointRef.current = startPoint;
 
-        container.style.top = `${((startPoint.y - rect.top) * 100) / rect.height}%`;
-        container.style.left = `${((startPoint.x - rect.left) * 100) / rect.width}%`;
+        const offset = {
+            top: ((startPoint.y - rect.top) * 100) / rect.height,
+            left: ((startPoint.x - rect.left) * 100) / rect.width,
+        };
+        offsetRef.current = offset;
+
+        container.style.top = `${offset.top}%`;
+        container.style.left = `${offset.left}%`;
         container.style.height = '0px';
         container.style.width = '0px';
 
@@ -79,8 +90,13 @@ export const ClickDrag: React.FC<{
         if (container.classList.contains('rpv-highlight__click-drag--hidden')) {
             container.classList.remove('rpv-highlight__click-drag--hidden');
         }
-        container.style.width = `${(endPoint.x * 100) / rect.width}%`;
-        container.style.height = `${(endPoint.y * 100) / rect.height}%`;
+
+        // Prevent users from dragging out of the page
+        const width = Math.min(100 - offsetRef.current.left, (endPoint.x * 100) / rect.width);
+        const height = Math.min(100 - offsetRef.current.top, (endPoint.y * 100) / rect.height);
+
+        container.style.width = `${width}%`;
+        container.style.height = `${height}%`;
     };
 
     const handleDocumentKeyDown = (e: KeyboardEvent) => {
