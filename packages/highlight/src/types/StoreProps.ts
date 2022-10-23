@@ -8,6 +8,7 @@
 
 import type { DestinationOffsetFromViewport } from '@react-pdf-viewer/core';
 import { SpecialZoomLevel } from '@react-pdf-viewer/core';
+import { Trigger } from '../structs/Trigger';
 import type { HighlightState } from './HighlightState';
 
 export interface StoreProps {
@@ -18,6 +19,7 @@ export interface StoreProps {
         scaleTo?: number | SpecialZoomLevel
     ) => void;
     getPagesContainer?(): HTMLElement;
-    rotation?: number;
     highlightState: HighlightState;
+    rotation?: number;
+    trigger: Trigger;
 }
