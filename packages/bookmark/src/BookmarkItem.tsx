@@ -23,6 +23,7 @@ export const BookmarkItem: React.FC<{
     index: number;
     isBookmarkExpanded?: IsBookmarkExpanded;
     numberOfSiblings: number;
+    pathFromRoot: string;
     renderBookmarkItem?: RenderBookmarkItem;
     store: Store<StoreProps>;
     onJumpToDest(dest: PdfJs.OutlineDestinationType): void;
@@ -33,25 +34,35 @@ export const BookmarkItem: React.FC<{
     index,
     isBookmarkExpanded,
     numberOfSiblings,
+    pathFromRoot,
     renderBookmarkItem,
     store,
     onJumpToDest,
 }) => {
+    const path = pathFromRoot ? `${pathFromRoot}.${index}` : `${index}`;
     const defaultIsCollapsed = React.useMemo(() => shouldBeCollapsed(bookmark), [bookmark]);
+    const bookmarkExpandedMap = store.get('bookmarkExpandedMap');
     const defaultExpanded = isBookmarkExpanded
         ? isBookmarkExpanded({ bookmark, doc, depth, index })
+        : bookmarkExpandedMap.has(path)
+        ? bookmarkExpandedMap.get(path)
         : !defaultIsCollapsed;
     const [expanded, setExpanded] = React.useState(defaultExpanded);
 
     const hasSubItems = bookmark.items && bookmark.items.length > 0;
 
-    const toggleSubItems = (): void => setExpanded((expanded) => !expanded);
+    const toggleSubItems = (): void => {
+        const newState = !expanded;
+        store.updateCurrentValue('bookmarkExpandedMap', (currentValue) => currentValue.set(path, newState));
+        setExpanded(newState);
+    };
 
     const clickBookmark = (): void => {
         if (hasSubItems && bookmark.dest) {
             onJumpToDest(bookmark.dest);
         }
     };
+
     const clickItem = (): void => {
         if (!hasSubItems && bookmark.dest) {
             onJumpToDest(bookmark.dest);
@@ -116,6 +127,7 @@ export const BookmarkItem: React.FC<{
                       hasSubItems,
                       index,
                       isExpanded: expanded,
+                      path,
                       defaultRenderItem,
                       defaultRenderTitle,
                       defaultRenderToggle,
@@ -137,6 +149,7 @@ export const BookmarkItem: React.FC<{
                     doc={doc}
                     isBookmarkExpanded={isBookmarkExpanded}
                     isRoot={false}
+                    pathFromRoot={path}
                     renderBookmarkItem={renderBookmarkItem}
                     store={store}
                     onJumpToDest={onJumpToDest}

@@ -44,7 +44,7 @@ export const ClickDrag: React.FC<{
     const handleMouseDown = (e: MouseEvent) => {
         const textLayerEle = textLayerRef.current;
         const container = containerRef.current;
-        if (!e.altKey || !textLayerEle || !container) {
+        if (!e.altKey || !textLayerEle || !container || e.button !== 0) {
             return;
         }
         e.preventDefault();

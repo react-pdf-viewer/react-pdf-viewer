@@ -32,6 +32,7 @@ export interface RenderBookmarkItemProps {
     hasSubItems: boolean;
     index: number;
     isExpanded: boolean;
+    path: string;
     onClickItem: () => void;
     onClickTitle: () => void;
     onToggleSubItems: () => void;

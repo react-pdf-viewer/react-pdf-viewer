@@ -70,7 +70,7 @@ export const highlightPlugin = (props?: HighlightPluginProps): HighlightPlugin =
     };
 
     const handleMouseDown = (textLayerRender: PluginOnTextLayerRender) => (e: MouseEvent) => {
-        if (store.get('trigger') === Trigger.None) {
+        if (store.get('trigger') === Trigger.None || e.button !== 0) {
             return;
         }
 
