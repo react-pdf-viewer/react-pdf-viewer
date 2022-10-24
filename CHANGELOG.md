@@ -25,7 +25,9 @@ switchTrigger(Trigger.TextSelection);
 
 -   Users can click and drag to highlight an area
 
-**Improvement**
+**Improvements**
+
+-   `RenderBookmarkItemProps` includes new `path` property that indicates the path from each bookmark item to the root
 
 -   `SelectionData` provides more information about the selected text including:
 

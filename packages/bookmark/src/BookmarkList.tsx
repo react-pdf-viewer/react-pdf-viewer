@@ -18,11 +18,22 @@ export const BookmarkList: React.FC<{
     depth: number;
     doc: PdfJs.PdfDocument;
     isBookmarkExpanded?: IsBookmarkExpanded;
-    renderBookmarkItem?: RenderBookmarkItem;
     isRoot: boolean;
+    pathFromRoot: string;
+    renderBookmarkItem?: RenderBookmarkItem;
     store: Store<StoreProps>;
     onJumpToDest(dest: PdfJs.OutlineDestinationType): void;
-}> = ({ bookmarks, depth = 0, doc, isBookmarkExpanded, isRoot, renderBookmarkItem, store, onJumpToDest }) => (
+}> = ({
+    bookmarks,
+    depth = 0,
+    doc,
+    isBookmarkExpanded,
+    isRoot,
+    pathFromRoot,
+    renderBookmarkItem,
+    store,
+    onJumpToDest,
+}) => (
     <ul className="rpv-bookmark__list" role={isRoot ? 'tree' : 'group'} tabIndex={-1}>
         {bookmarks.map((bookmark, index) => (
             <BookmarkItem
@@ -33,6 +44,7 @@ export const BookmarkList: React.FC<{
                 isBookmarkExpanded={isBookmarkExpanded}
                 key={index}
                 numberOfSiblings={bookmarks.length}
+                pathFromRoot={pathFromRoot}
                 renderBookmarkItem={renderBookmarkItem}
                 store={store}
                 onJumpToDest={onJumpToDest}

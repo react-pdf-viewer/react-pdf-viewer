@@ -23,6 +23,7 @@ export const BookmarkItem: React.FC<{
     index: number;
     isBookmarkExpanded?: IsBookmarkExpanded;
     numberOfSiblings: number;
+    pathFromRoot: string;
     renderBookmarkItem?: RenderBookmarkItem;
     store: Store<StoreProps>;
     onJumpToDest(dest: PdfJs.OutlineDestinationType): void;
@@ -33,10 +34,12 @@ export const BookmarkItem: React.FC<{
     index,
     isBookmarkExpanded,
     numberOfSiblings,
+    pathFromRoot,
     renderBookmarkItem,
     store,
     onJumpToDest,
 }) => {
+    const path = pathFromRoot ? `${pathFromRoot}.${index}` : `${index}`;
     const defaultIsCollapsed = React.useMemo(() => shouldBeCollapsed(bookmark), [bookmark]);
     const defaultExpanded = isBookmarkExpanded
         ? isBookmarkExpanded({ bookmark, doc, depth, index })
@@ -116,6 +119,7 @@ export const BookmarkItem: React.FC<{
                       hasSubItems,
                       index,
                       isExpanded: expanded,
+                      path,
                       defaultRenderItem,
                       defaultRenderTitle,
                       defaultRenderToggle,
@@ -137,6 +141,7 @@ export const BookmarkItem: React.FC<{
                     doc={doc}
                     isBookmarkExpanded={isBookmarkExpanded}
                     isRoot={false}
+                    pathFromRoot={path}
                     renderBookmarkItem={renderBookmarkItem}
                     store={store}
                     onJumpToDest={onJumpToDest}

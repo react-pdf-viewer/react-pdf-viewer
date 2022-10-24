@@ -192,6 +192,7 @@ export const BookmarkListRoot: React.FC<{
                 doc={doc}
                 isBookmarkExpanded={isBookmarkExpanded}
                 isRoot={true}
+                pathFromRoot=""
                 renderBookmarkItem={renderBookmarkItem}
                 store={store}
                 onJumpToDest={jumpToDest}
