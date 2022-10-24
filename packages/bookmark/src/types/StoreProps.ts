@@ -10,6 +10,8 @@ import type { PdfJs } from '@react-pdf-viewer/core';
 import { SpecialZoomLevel } from '@react-pdf-viewer/core';
 
 export interface StoreProps {
+    // Manage the expanded/collapsed state of each bookmark item
+    bookmarkExpandedMap: Map<string, boolean>;
     doc?: PdfJs.PdfDocument;
     // Map from dest to the annotation container
     linkAnnotations: Record<string, HTMLElement>;

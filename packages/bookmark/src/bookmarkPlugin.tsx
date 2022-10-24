@@ -32,6 +32,7 @@ export const bookmarkPlugin = (): BookmarkPlugin => {
     const store = React.useMemo(
         () =>
             createStore<StoreProps>({
+                bookmarkExpandedMap: new Map(),
                 linkAnnotations: {},
             }),
         []
