@@ -9,14 +9,18 @@ test('Jump back to the previous clicked link annotation', async () => {
     await page.evaluate(() => document.querySelector('[data-testid="core__viewer"]')?.scrollIntoView());
 
     // Wait until the first page is rendered
+    await page.waitForSelector('[data-testid="core__page-layer-0"]', { visible: true });
     await page.waitForSelector('[data-testid="core__text-layer-0"]', { visible: true });
+    await page.waitForSelector('[data-testid="core__annotation-layer-0"]');
 
     // Press `Tab` to focus on the first element
     await page.keyboard.press('Tab');
 
     // Scroll to the TOC page
     await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 2376');
-    await page.waitForSelector('[data-testid="core__annotation-layer-2"]', { visible: true });
+    await page.waitForSelector('[data-testid="core__page-layer-2"]', { visible: true });
+    await page.waitForSelector('[data-testid="core__text-layer-2"]', { visible: true });
+    await page.waitForSelector('[data-testid="core__annotation-layer-2"]');
 
     // Click the `Preface` link
     const clickAnnotation = async () => {
@@ -73,20 +77,25 @@ test('Jump back to the previous clicked link annotation', async () => {
         const linkIndex = Math.floor(Math.random() * links.length);
         const { dest, targetPage, targetTop, annotationTop } = links[linkIndex];
 
-        let linkEle = await page.waitForSelector(`a[data-annotation-link-dest="${encodeURIComponent(dest)}"]`, {
-            visible: true,
-        });
+        let linkEle = await page.waitForSelector(`a[data-annotation-link-dest="${encodeURIComponent(dest)}"]`);
         await linkEle?.click();
         await page.waitForFunction(
             () => () => `document.querySelector("[data-testid=core__inner-pages]").scrollTop === ${targetTop}`
         );
         await page.waitForSelector(`[data-testid="core__page-layer-${targetPage}"]`, { visible: true });
-        await page.keyboard.press('ArrowUp');
+        await page.waitForSelector(`[data-testid="core__text-layer-${targetPage}"]`, { visible: true });
+        await page.waitForSelector(`[data-testid="core__annotation-layer-${targetPage}"]`);
+
+        // The order of keys are imporant
         await page.keyboard.down('MetaLeft');
+        await page.keyboard.press('ArrowUp');
+
         await page.waitForFunction(
             () => () => `document.querySelector("[data-testid=core__inner-pages]").scrollTop === ${annotationTop}`
         );
-        await page.waitForSelector('[data-testid="core__annotation-layer-2"]', { visible: true });
+        await page.waitForSelector('[data-testid="core__page-layer-2"]', { visible: true });
+        await page.waitForSelector('[data-testid="core__text-layer-2"]', { visible: true });
+        await page.waitForSelector('[data-testid="core__annotation-layer-2"]');
     };
 
     await clickAnnotation();
