@@ -205,12 +205,7 @@ export const pageNavigationPlugin = (props?: PageNavigationPluginProps): PageNav
         const updateSlot: Slot = {
             children: (
                 <>
-                    <ShortcutHandler
-                        containerRef={props.containerRef}
-                        doc={props.doc}
-                        numPages={props.doc.numPages}
-                        store={store}
-                    />
+                    <ShortcutHandler containerRef={props.containerRef} numPages={props.doc.numPages} store={store} />
                     {slot.children}
                 </>
             ),

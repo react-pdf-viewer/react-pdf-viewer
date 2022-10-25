@@ -6,7 +6,7 @@
  * @copyright 2019-2022 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import type { PdfJs, Store } from '@react-pdf-viewer/core';
+import type { Store } from '@react-pdf-viewer/core';
 import { isMac } from '@react-pdf-viewer/core';
 import * as React from 'react';
 import type { JumpFromAnnotation, StoreProps } from './types/StoreProps';
@@ -14,10 +14,9 @@ import { useCurrentPage } from './useCurrentPage';
 
 export const ShortcutHandler: React.FC<{
     containerRef: React.RefObject<HTMLDivElement>;
-    doc: PdfJs.PdfDocument;
     numPages: number;
     store: Store<StoreProps>;
-}> = ({ containerRef, doc, numPages, store }) => {
+}> = ({ containerRef, numPages, store }) => {
     const jumpFromAnnotationRef = React.useRef<JumpFromAnnotation>(
         store.get('jumpFromAnnotation') || {
             bottomOffset: 0,

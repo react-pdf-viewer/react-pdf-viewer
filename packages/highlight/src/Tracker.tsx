@@ -182,6 +182,7 @@ export const Tracker: React.FC<{
         let divTexts: DivText[] = [];
         switch (rangeType) {
             case SelectionRange.SameDiv:
+                // eslint-disable-next-line no-case-declarations
                 const textDataSameDiv = getTextFromOffsets(
                     startDivSiblings,
                     startPageIndex,
@@ -195,6 +196,7 @@ export const Tracker: React.FC<{
                 break;
 
             case SelectionRange.DifferentDivs:
+                // eslint-disable-next-line no-case-declarations
                 const textDataDifferentDivs = getTextFromOffsets(
                     startDivSiblings,
                     startPageIndex,
