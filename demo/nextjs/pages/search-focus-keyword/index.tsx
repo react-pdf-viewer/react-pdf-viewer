@@ -9,7 +9,7 @@ const IndexPage = () => {
         <div
             style={{
                 height: '720px',
-                margin: '150vh auto 0 auto',
+                margin: '80vh auto 80vh auto',
                 width: '800px',
             }}
         >

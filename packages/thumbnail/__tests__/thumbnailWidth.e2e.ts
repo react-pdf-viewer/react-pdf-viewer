@@ -18,9 +18,9 @@ test('Test thumbnailWidth option', async () => {
         width: ele.getAttribute('width'),
         src: ele.getAttribute('src'),
     }));
-    expect(props?.src?.length).toEqual(6626);
+    expect(props?.src?.length).toEqual(6974);
     expect(props?.src?.substring(0, 100)).toEqual(
-        'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJYAAADICAYAAAAKhRhlAAAAAXNSR0IArs4c6QAAExFJREFUeF7tnQ'
+        'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJYAAADICAYAAAAKhRhlAAAAAXNSR0IArs4c6QAAFBhJREFUeF7tnQ'
     );
     expect(props?.width).toEqual('150px');
     expect(props?.height).toEqual('200px');
@@ -32,7 +32,7 @@ test('Test thumbnailWidth option', async () => {
         width: ele.getAttribute('width'),
         src: ele.getAttribute('src'),
     }));
-    expect(props?.src?.length).toEqual(18090);
+    expect(props?.src?.length).toEqual(18094);
     expect(props?.src?.substring(0, 100)).toEqual(
         'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJYAAADICAYAAAAKhRhlAAAAAXNSR0IArs4c6QAAIABJREFUeF7t3e'
     );

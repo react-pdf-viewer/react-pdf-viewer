@@ -48,8 +48,8 @@ test('jumpToMatch in a custom search sidebar', async () => {
     // Check the first hightlight position
     let position = await getPosition(1);
     expect(position?.index).toEqual('0');
-    expect(position?.left).toEqual('41.3756%');
-    expect(position?.top).toEqual('48.6333%');
+    expect(position?.left).toEqual('41.3936%');
+    expect(position?.top).toEqual('48.7486%');
 
     // Jump to the last match whose container page isn't in the virtual list
     const lastMatch = await page.waitForSelector('[data-testid="match-21"]');
@@ -60,8 +60,8 @@ test('jumpToMatch in a custom search sidebar', async () => {
     await page.waitForSelector('[data-testid="core__annotation-layer-7"]');
     position = await getPosition(7);
     expect(position?.index).toEqual('0');
-    expect(position?.left).toEqual('60.8208%');
-    expect(position?.top).toEqual('42.0421%');
+    expect(position?.left).toEqual('60.8213%');
+    expect(position?.top).toEqual('42.1574%');
 
     // Jump to the second match whose container page isn't in the virtual list
     const secondMatch = await page.waitForSelector('[data-testid="match-1"]');
@@ -72,6 +72,6 @@ test('jumpToMatch in a custom search sidebar', async () => {
     await page.waitForSelector('[data-testid="core__annotation-layer-1"]');
     position = await getPosition(1);
     expect(position?.index).toEqual('1');
-    expect(position?.left).toEqual('58.9557%');
-    expect(position?.top).toEqual('50.0197%');
+    expect(position?.left).toEqual('58.9815%');
+    expect(position?.top).toEqual('50.135%');
 });
