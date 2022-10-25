@@ -10,6 +10,8 @@ test('jumpToMatch in a custom search sidebar', async () => {
 
     // Wait for the first page is rendered
     await page.waitForSelector('[data-testid="core__page-layer-0"]', { visible: true });
+    await page.waitForSelector('[data-testid="core__text-layer-0"]', { visible: true });
+    await page.waitForSelector('[data-testid="core__annotation-layer-0"]');
 
     // Search for "document"
     const keywordInput = await page.waitForSelector('[data-testid="keyword-input"]', {
@@ -24,8 +26,9 @@ test('jumpToMatch in a custom search sidebar', async () => {
     const numOfMatches = await numOfMatchesLabel?.evaluate((node) => node.textContent);
     expect(numOfMatches).toEqual('Found 22 results');
 
+    await page.waitForSelector('[data-testid="core__page-layer-1"]', { visible: true });
     await page.waitForSelector('[data-testid="core__text-layer-1"]', { visible: true });
-    await page.waitForSelector('[data-testid="core__annotation-layer-1"]', { visible: true });
+    await page.waitForSelector('[data-testid="core__annotation-layer-1"]');
 
     const getPosition = async (pageIndex: number) => {
         const searchHighlights = await page.waitForSelector(`[data-testid="search__highlights-${pageIndex}"]`, {
@@ -52,8 +55,9 @@ test('jumpToMatch in a custom search sidebar', async () => {
     const lastMatch = await page.waitForSelector('[data-testid="match-21"]');
     await lastMatch?.click();
 
+    await page.waitForSelector('[data-testid="core__page-layer-7"]', { visible: true });
     await page.waitForSelector('[data-testid="core__text-layer-7"]', { visible: true });
-    await page.waitForSelector('[data-testid="core__annotation-layer-7"]', { visible: true });
+    await page.waitForSelector('[data-testid="core__annotation-layer-7"]');
     position = await getPosition(7);
     expect(position?.index).toEqual('0');
     expect(position?.left).toEqual('60.8208%');
@@ -63,8 +67,9 @@ test('jumpToMatch in a custom search sidebar', async () => {
     const secondMatch = await page.waitForSelector('[data-testid="match-1"]');
     await secondMatch?.click();
 
+    await page.waitForSelector('[data-testid="core__page-layer-1"]', { visible: true });
     await page.waitForSelector('[data-testid="core__text-layer-1"]', { visible: true });
-    await page.waitForSelector('[data-testid="core__annotation-layer-1"]', { visible: true });
+    await page.waitForSelector('[data-testid="core__annotation-layer-1"]');
     position = await getPosition(1);
     expect(position?.index).toEqual('1');
     expect(position?.left).toEqual('58.9557%');
