@@ -85,6 +85,6 @@ test('Jump between matches', async () => {
     await nextMatchButton?.click();
     position = await getPosition();
     expect(position?.index).toEqual('6');
-    expect(position?.left).toEqual('43.4949%');
+    expect(position?.left).toEqual('43.5513%');
     expect(position?.top).toEqual('49.5134%');
 });
