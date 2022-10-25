@@ -15,7 +15,7 @@ test('Rotate forward a Cover', async () => {
         width: ele.clientWidth,
         src: ele.getAttribute('src'),
     }));
-    expect(props?.src?.length).toEqual(150554);
+    expect(props?.src?.length).toEqual(150750);
     expect(props?.src?.substring(0, 100)).toEqual(
         'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAA/EAAAL1CAYAAACPJ2Q3AAAAAXNSR0IArs4c6QAAIABJREFUeF7snQ'
     );
@@ -32,7 +32,7 @@ test('Rotate forward a Cover', async () => {
         width: ele.clientWidth,
         src: ele.getAttribute('src'),
     }));
-    expect(props?.src?.length).toEqual(70850);
+    expect(props?.src?.length).toEqual(70910);
     expect(props?.src?.substring(0, 100)).toEqual(
         'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAjcAAAL1CAYAAAA7CMURAAAAAXNSR0IArs4c6QAAIABJREFUeF7svQ'
     );
@@ -61,7 +61,7 @@ test('Rotate backward a Cover', async () => {
         width: ele.clientWidth,
         src: ele.getAttribute('src'),
     }));
-    expect(props?.src?.length).toEqual(70142);
+    expect(props?.src?.length).toEqual(69834);
     expect(props?.src?.substring(0, 100)).toEqual(
         'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAjcAAAL1CAYAAAA7CMURAAAAAXNSR0IArs4c6QAAIABJREFUeF7snQ'
     );
