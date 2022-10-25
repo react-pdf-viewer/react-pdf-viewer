@@ -18,7 +18,7 @@ test('Rotate single page using RotatePage component', async () => {
     // Find the text
     let textLayer = await page.waitForSelector('[data-testid="core__text-layer-0"]', { visible: true });
     let numTextElements = await textLayer?.evaluate((ele) => ele.childElementCount);
-    expect(numTextElements).toEqual(16);
+    expect(numTextElements).toEqual(15);
 
     let result = await textLayer?.evaluate((ele) => {
         const textEle = ele.childNodes[2] as HTMLElement;
@@ -45,7 +45,7 @@ test('Rotate single page using RotatePage component', async () => {
     // Find the text
     textLayer = await page.waitForSelector('[data-testid="core__text-layer-0"]', { visible: true });
     numTextElements = await textLayer?.evaluate((ele) => ele.childElementCount);
-    expect(numTextElements).toEqual(16);
+    expect(numTextElements).toEqual(15);
 
     result = await textLayer?.evaluate((ele) => {
         const textEle = ele.childNodes[2] as HTMLElement;

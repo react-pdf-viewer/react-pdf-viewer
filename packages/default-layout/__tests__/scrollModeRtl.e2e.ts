@@ -22,11 +22,11 @@ test('Vertical scroll mode', async () => {
     await page.evaluate(() => document.querySelector('[data-testid="core__page-layer-2"]')?.scrollIntoView());
 
     // Click the `Specifying parameters in a URL` link
-    const link = await page.waitForSelector('[data-annotation-id="35R"]', { visible: true });
+    const link = await page.waitForSelector('[data-annotation-id="35R"]');
     await link?.click();
 
     await page.waitForSelector('[data-testid="core__text-layer-6"]', { visible: true });
-    await page.waitForSelector('[data-testid="core__annotation-layer-6"]', { visible: true });
+    await page.waitForSelector('[data-testid="core__annotation-layer-6"]');
     await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 7848');
 
     // Check the current page
@@ -63,11 +63,11 @@ test('Switch to horizontal scroll mode', async () => {
     await page.evaluate(() => document.querySelector('[data-testid="core__page-layer-2"]')?.scrollIntoView());
 
     // Click the `Specifying parameters in a URL` link
-    const link = await page.waitForSelector('[data-annotation-id="35R"]', { visible: true });
+    const link = await page.waitForSelector('[data-annotation-id="35R"]');
     await link?.click();
 
     await page.waitForSelector('[data-testid="core__text-layer-6"]', { visible: true });
-    await page.waitForSelector('[data-testid="core__annotation-layer-6"]', { visible: true });
+    await page.waitForSelector('[data-testid="core__annotation-layer-6"]');
     await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollLeft === -5400');
 
     // Check the current page
@@ -117,10 +117,10 @@ test('Switch to wrapped scroll mode', async () => {
     await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 430');
 
     // Click the `Parameters` link
-    const link = await page.waitForSelector('[data-annotation-id="34R"]', { visible: true });
+    const link = await page.waitForSelector('[data-annotation-id="34R"]');
     await link?.click();
 
     await page.waitForSelector('[data-testid="core__text-layer-4"]', { visible: true });
-    await page.waitForSelector('[data-testid="core__annotation-layer-4"]', { visible: true });
+    await page.waitForSelector('[data-testid="core__annotation-layer-4"]');
     await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 1488');
 });

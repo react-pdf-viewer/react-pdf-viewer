@@ -12,7 +12,7 @@ test('Support Strict mode', async () => {
     const firstPage = await page.waitForSelector('[data-testid="core__text-layer-0"]', { visible: true });
 
     const textElements = await firstPage?.$$('.rpv-core__text-layer-text');
-    expect(textElements?.length).toEqual(16);
+    expect(textElements?.length).toEqual(15);
 
     // Click the `Thumbnail` tab in the sidebar
     const thumbnailTab = await page.waitForSelector('button[aria-label="Thumbnail"]');
