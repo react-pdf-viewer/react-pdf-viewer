@@ -11,17 +11,20 @@ test('Press PageUp to jump to the previous page', async () => {
     // Wait until the first page is rendered
     await page.waitForSelector('[data-testid="core__page-layer-0"]', { visible: true });
     await page.waitForSelector('[data-testid="core__text-layer-0"]', { visible: true });
+    await page.waitForSelector('[data-testid="core__annotation-layer-0"]');
 
     const pagesEle = await page.waitForSelector('[data-testid="core__inner-pages"]');
     await pagesEle?.evaluate((ele) => (ele.scrollTop = 8316));
 
     await page.waitForSelector('[data-testid="core__page-layer-7"]', { visible: true });
     await page.waitForSelector('[data-testid="core__text-layer-7"]', { visible: true });
+    await page.waitForSelector('[data-testid="core__annotation-layer-7"]');
 
     // Jump to page 7
     await page.keyboard.press('PageUp');
     await page.waitForSelector('[data-testid="core__page-layer-6"]', { visible: true });
     await page.waitForSelector('[data-testid="core__text-layer-6"]', { visible: true });
+    await page.waitForSelector('[data-testid="core__annotation-layer-6"]');
     await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 7128');
     await page.waitForFunction(
         () => 'document.querySelector("[data-testid=page-navigation__current-page-input]").value === "7"'
@@ -31,6 +34,7 @@ test('Press PageUp to jump to the previous page', async () => {
     await page.keyboard.press('PageUp');
     await page.waitForSelector('[data-testid="core__page-layer-5"]', { visible: true });
     await page.waitForSelector('[data-testid="core__text-layer-5"]', { visible: true });
+    await page.waitForSelector('[data-testid="core__annotation-layer-5"]');
     await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 5940');
     await page.waitForFunction(
         () => 'document.querySelector("[data-testid=page-navigation__current-page-input]").value === "6"'
@@ -40,6 +44,7 @@ test('Press PageUp to jump to the previous page', async () => {
     await page.keyboard.press('PageUp');
     await page.waitForSelector('[data-testid="core__page-layer-4"]', { visible: true });
     await page.waitForSelector('[data-testid="core__text-layer-4"]', { visible: true });
+    await page.waitForSelector('[data-testid="core__annotation-layer-4"]');
     await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 4752');
     await page.waitForFunction(
         () => 'document.querySelector("[data-testid=page-navigation__current-page-input]").value === "5"'
@@ -49,6 +54,7 @@ test('Press PageUp to jump to the previous page', async () => {
     await page.keyboard.press('PageUp');
     await page.waitForSelector('[data-testid="core__page-layer-3"]', { visible: true });
     await page.waitForSelector('[data-testid="core__text-layer-3"]', { visible: true });
+    await page.waitForSelector('[data-testid="core__annotation-layer-3"]');
     await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 3564');
     await page.waitForFunction(
         () => 'document.querySelector("[data-testid=page-navigation__current-page-input]").value === "4"'
@@ -58,6 +64,7 @@ test('Press PageUp to jump to the previous page', async () => {
     await page.keyboard.press('PageUp');
     await page.waitForSelector('[data-testid="core__page-layer-2"]', { visible: true });
     await page.waitForSelector('[data-testid="core__text-layer-2"]', { visible: true });
+    await page.waitForSelector('[data-testid="core__annotation-layer-2"]');
     await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 2376');
     await page.waitForFunction(
         () => 'document.querySelector("[data-testid=page-navigation__current-page-input]").value === "3"'
@@ -67,17 +74,9 @@ test('Press PageUp to jump to the previous page', async () => {
     await page.keyboard.press('PageUp');
     await page.waitForSelector('[data-testid="core__page-layer-1"]', { visible: true });
     await page.waitForSelector('[data-testid="core__text-layer-1"]', { visible: true });
+    await page.waitForSelector('[data-testid="core__annotation-layer-1"]');
     await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 1188');
     await page.waitForFunction(
         () => 'document.querySelector("[data-testid=page-navigation__current-page-input]").value === "2"'
-    );
-
-    // Jump to page 1
-    await page.keyboard.press('PageUp');
-    await page.waitForSelector('[data-testid="core__page-layer-1"]', { visible: true });
-    await page.waitForSelector('[data-testid="core__text-layer-1"]', { visible: true });
-    await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 0');
-    await page.waitForFunction(
-        () => 'document.querySelector("[data-testid=page-navigation__current-page-input]").value === "1"'
     );
 });

@@ -35,35 +35,35 @@ test('Document with different page dimensions (horizontal scroll mode)', async (
     await nextPageButton?.click();
 
     await page.waitForSelector('[data-testid="core__text-layer-1"]', { visible: true });
-    await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollLeft === 461');
+    await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollLeft === 445.5');
 
     // Jump to the 3rd page
     await nextPageButton?.click();
     await page.waitForSelector('[data-testid="core__text-layer-2"]', { visible: true });
-    await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollLeft === 1071');
+    await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollLeft === 1039.5');
 
     // Jump to the 4th page
     await nextPageButton?.click();
     await page.waitForSelector('[data-testid="core__text-layer-3"]', { visible: true });
-    await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollLeft === 1533');
+    await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollLeft === 1485');
 
     // Jump to the 5th page
     await nextPageButton?.click();
     await page.waitForSelector('[data-testid="core__text-layer-4"]', { visible: true });
-    await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollLeft === 2143');
+    await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollLeft === 2079');
 
     // Jump to the 6th page
     await nextPageButton?.click();
     await page.waitForSelector('[data-testid="core__text-layer-5"]', { visible: true });
-    await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollLeft === 2753');
+    await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollLeft === 2673');
 
     // Jump to the 7th page
     await nextPageButton?.click();
     await page.waitForSelector('[data-testid="core__text-layer-6"]', { visible: true });
-    await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollLeft === 3161');
+    await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollLeft === 3032.5');
 
     // Jump to the 8th page
     await nextPageButton?.click();
     await page.waitForSelector('[data-testid="core__text-layer-7"]', { visible: true });
-    await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollLeft === 3161');
+    await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollLeft === 3032.5');
 });
