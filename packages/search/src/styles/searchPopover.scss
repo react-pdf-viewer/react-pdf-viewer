@@ -35,11 +35,13 @@
 
     &-label {
         align-items: center;
+        cursor: pointer;
         display: flex;
         margin-bottom: 0.5rem;
     }
 
     &-label-checkbox {
+        cursor: pointer;
         margin-right: 0.25rem;
     }
 
