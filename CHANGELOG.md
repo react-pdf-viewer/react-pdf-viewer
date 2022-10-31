@@ -44,6 +44,8 @@ A `DivText` item consists of
 | `pageIndex`   | `number` | The zero-based page index                              |
 | `textContent` | `string` | The text content of text element                       |
 
+-   The open file dialog filters PDF files by default
+
 **Bug fixes**
 
 -   Can't render certain PDF documents that contain an annotation whose destination consists of non alphabetical characters

@@ -26,6 +26,7 @@ export const OpenMenuItem: React.FC<{
         <MenuItem icon={<OpenFileIcon />} testId="open__menu" onClick={openFile}>
             <div className="rpv-open__input-wrapper">
                 <input
+                    accept=".pdf"
                     ref={inputRef}
                     className="rpv-open__input"
                     multiple={false}

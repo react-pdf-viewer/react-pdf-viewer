@@ -42,7 +42,6 @@ test('Keep highlighting after clicking zoom buttons in the default toolbar', asy
     await page.waitForSelector('[data-testid="core__text-layer-4"]', { visible: true });
     await page.waitForSelector('[data-testid="core__annotation-layer-4"]');
 
-
     let areas = (await getHighlightAreas()) || [];
     expect(areas.length).toEqual(8);
 
