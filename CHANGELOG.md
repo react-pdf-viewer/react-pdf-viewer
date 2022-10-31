@@ -51,6 +51,7 @@ A `DivText` item consists of
 
 -   Can't render certain PDF documents that contain an annotation whose destination consists of non alphabetical characters
 -   Popover doesn't work if the `Viewer` is rendered inside ShadowDOM
+-   Replace the deprecated `contents` and `title` properties of annotations with corresponding objects
 -   The `Cover` component doesn't rotate the corresponding rotated page
 -   The `startPageIndex` and `endPageIndex` properties of `SelectionData` aren't correct
 
