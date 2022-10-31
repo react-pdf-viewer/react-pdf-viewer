@@ -47,6 +47,13 @@ A `DivText` item consists of
 | `textContent` | `string` | The text content of text element                       |
 
 -   The open file dialog filters PDF files by default
+-   The search popover should perform search based on the initial keyword passed to the `keyword` option:
+
+```js
+const searchPluginInstance = searchPlugin({
+    keyword: '...',
+});
+```
 
 **Bug fixes**
 

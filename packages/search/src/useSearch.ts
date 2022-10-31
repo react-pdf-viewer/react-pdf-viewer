@@ -39,13 +39,30 @@ export const useSearch = (
     keyword: string;
     setKeyword(keyword: string): void;
 } => {
+    const initialKeyword = store.get('initialKeyword');
+
+    const normalizedKeywordFlags = React.useMemo(() => {
+        if (initialKeyword && initialKeyword.length === 1) {
+            const normalizedKeyword = normalizeSingleKeyword(initialKeyword[0]);
+            return {
+                matchCase: normalizedKeyword.regExp.flags.indexOf('i') === -1,
+                wholeWords: normalizedKeyword.wholeWords,
+            };
+        } else {
+            return {
+                matchCase: false,
+                wholeWords: false,
+            };
+        }
+    }, []);
+
     const currentDocRef = useDocument(store);
-    const [keywords, setKeywords] = React.useState<SingleKeyword[]>([]);
+    const [keywords, setKeywords] = React.useState<SingleKeyword[]>(initialKeyword);
     const [found, setFound] = React.useState<Match[]>([]);
     const [currentMatch, setCurrentMatch] = React.useState(0);
-    const [matchCase, setMatchCase] = React.useState(false);
+    const [matchCase, setMatchCase] = React.useState(normalizedKeywordFlags.matchCase);
     const textContents = React.useRef<string[]>([]);
-    const [wholeWords, setWholeWords] = React.useState(false);
+    const [wholeWords, setWholeWords] = React.useState(normalizedKeywordFlags.wholeWords);
 
     const defaultTargetPageFilter = () => true;
     const targetPageFilter = React.useCallback(

@@ -52,19 +52,20 @@ export const SearchPopover: React.FC<{
         setKeyword,
     } = useSearch(store);
 
+    const performSearch = (cb?: () => void) => {
+        setIsQuerying(true);
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        search().then((_) => {
+            setIsQuerying(false);
+            setSearchDone(true);
+            cb && cb();
+        });
+    };
+
     const onKeydownSearch = (e: React.KeyboardEvent<HTMLInputElement>): void => {
         // Press the Enter key
         if (e.key === 'Enter' && keyword) {
-            if (searchDone) {
-                jumpToNextMatch();
-            } else {
-                setIsQuerying(true);
-                // eslint-disable-next-line @typescript-eslint/no-unused-vars
-                search().then((_) => {
-                    setIsQuerying(false);
-                    setSearchDone(true);
-                });
-            }
+            searchDone ? jumpToNextMatch() : performSearch();
         }
     };
 
@@ -87,6 +88,15 @@ export const SearchPopover: React.FC<{
         setSearchDone(false);
         setKeyword(value);
     };
+
+    React.useEffect(() => {
+        const initialKeyword = store.get('initialKeyword');
+        if (initialKeyword && initialKeyword.length === 1 && keyword) {
+            performSearch(() => {
+                store.update('initialKeyword', []);
+            });
+        }
+    }, []);
 
     const searchLabel =
         l10n && l10n.search ? ((l10n.search as LocalizationMap).enterToSearch as string) : 'Enter to search';
