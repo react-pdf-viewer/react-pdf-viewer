@@ -33,6 +33,7 @@ export const OpenButton: React.FC<{
             target={
                 <div className="rpv-open__input-wrapper">
                     <input
+                        accept=".pdf"
                         ref={inputRef}
                         className="rpv-open__input"
                         multiple={false}
