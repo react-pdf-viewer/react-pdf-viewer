@@ -9,6 +9,8 @@
 import * as React from 'react';
 import type { PdfJs } from '../types/PdfJs';
 import { Annotation } from './Annotation';
+import { getContents } from './getContents';
+import { getTitle } from './getTitle';
 
 export const Polygon: React.FC<{
     annotation: PdfJs.Annotation;
@@ -16,7 +18,9 @@ export const Polygon: React.FC<{
     viewport: PdfJs.ViewPort;
 }> = ({ annotation, page, viewport }) => {
     const hasPopup = annotation.hasPopup === false;
-    const isRenderable = !!(annotation.hasPopup || annotation.title || annotation.contents);
+    const title = getTitle(annotation);
+    const contents = getContents(annotation);
+    const isRenderable = !!(annotation.hasPopup || title || contents);
 
     const rect = annotation.rect;
     const width = rect[2] - rect[0];

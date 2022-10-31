@@ -10,6 +10,8 @@ import * as React from 'react';
 import type { PdfJs } from '../types/PdfJs';
 import { Annotation } from './Annotation';
 import { AnnotationType } from './AnnotationType';
+import { getContents } from './getContents';
+import { getTitle } from './getTitle';
 import { Popup } from './Popup';
 
 export const Highlight: React.FC<{
@@ -19,7 +21,9 @@ export const Highlight: React.FC<{
     viewport: PdfJs.ViewPort;
 }> = ({ annotation, childAnnotation, page, viewport }) => {
     const hasPopup = annotation.hasPopup === false;
-    const isRenderable = !!(annotation.hasPopup || annotation.title || annotation.contents);
+    const title = getTitle(annotation);
+    const contents = getContents(annotation);
+    const isRenderable = !!(annotation.hasPopup || title || contents);
 
     // Check if the highlight area is constructed by multiple quadrilaterals
     const hasQuadPoints = annotation.quadPoints && annotation.quadPoints.length > 0;

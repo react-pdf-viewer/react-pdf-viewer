@@ -12,11 +12,15 @@ import type { PdfJs } from '../types/PdfJs';
 import { classNames } from '../utils/classNames';
 import { convertDate } from '../utils/convertDate';
 import { AnnotationType } from './AnnotationType';
+import { getContents } from './getContents';
+import { getTitle } from './getTitle';
 
 export const PopupWrapper: React.FC<{
     annotation: PdfJs.Annotation;
 }> = ({ annotation }) => {
     const { direction } = React.useContext(ThemeContext);
+    const title = getTitle(annotation);
+    const contents = getContents(annotation);
     const isRtl = direction === TextDirection.RightToLeft;
 
     const containerRef = React.useRef<HTMLDivElement>();
@@ -60,7 +64,7 @@ export const PopupWrapper: React.FC<{
                 top: annotation.annotationType === AnnotationType.Popup ? '' : '100%',
             }}
         >
-            {annotation.title && (
+            {title && (
                 <>
                     <div
                         className={classNames({
@@ -69,14 +73,14 @@ export const PopupWrapper: React.FC<{
                             'rpv-core__annotation-popup-title--rtl': isRtl,
                         })}
                     >
-                        {annotation.title}
+                        {title}
                     </div>
                     <div className="rpv-core__annotation-popup-date">{dateStr}</div>
                 </>
             )}
-            {annotation.contents && (
+            {contents && (
                 <div className="rpv-core__annotation-popup-content">
-                    {annotation.contents.split('\n').map((item, index) => (
+                    {contents.split('\n').map((item, index) => (
                         <React.Fragment key={index}>
                             {item}
                             <br />

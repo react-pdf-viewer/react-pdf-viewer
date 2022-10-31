@@ -10,6 +10,8 @@ import * as React from 'react';
 import { useIsomorphicLayoutEffect } from '../hooks/useIsomorphicLayoutEffect';
 import type { PdfJs } from '../types/PdfJs';
 import { Annotation } from './Annotation';
+import { getContents } from './getContents';
+import { getTitle } from './getTitle';
 import { PopupWrapper } from './PopupWrapper';
 
 export const Popup: React.FC<{
@@ -17,7 +19,9 @@ export const Popup: React.FC<{
     page: PdfJs.Page;
     viewport: PdfJs.ViewPort;
 }> = ({ annotation, page, viewport }) => {
-    const isRenderable = !!(annotation.title || annotation.contents);
+    const title = getTitle(annotation);
+    const contents = getContents(annotation);
+    const isRenderable = !!(title || contents);
 
     // Don't render the popup for annotation whose parent renders the annotation themselves
     const ignoredParents = ['Circle', 'Ink', 'Line', 'Polygon', 'PolyLine', 'Square'];
