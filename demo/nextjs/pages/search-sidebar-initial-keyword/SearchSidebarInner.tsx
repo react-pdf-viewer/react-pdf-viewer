@@ -121,6 +121,7 @@ export const SearchSidebarInner: React.FC<SearchSidebarInnerProps> = ({ renderSe
                                 }}
                             >
                                 <div
+                                    data-testid="num-matches"
                                     style={{
                                         color: 'rgba(0, 0, 0, .5)',
                                         fontSize: '.8rem',
@@ -130,11 +131,11 @@ export const SearchSidebarInner: React.FC<SearchSidebarInnerProps> = ({ renderSe
                                     Found {matches.length} results
                                 </div>
                                 <div style={{ marginLeft: 'auto', marginRight: '.5rem' }}>
-                                    <MinimalButton onClick={jumpToPreviousMatch}>
+                                    <MinimalButton ariaLabel="Previous match" onClick={jumpToPreviousMatch}>
                                         <PreviousIcon />
                                     </MinimalButton>
                                 </div>
-                                <MinimalButton onClick={jumpToNextMatch}>
+                                <MinimalButton ariaLabel="Next match" onClick={jumpToNextMatch}>
                                     <NextIcon />
                                 </MinimalButton>
                             </div>
