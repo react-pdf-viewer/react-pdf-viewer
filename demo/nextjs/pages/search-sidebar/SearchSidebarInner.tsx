@@ -74,6 +74,7 @@ export const SearchSidebarInner: React.FC<SearchSidebarInnerProps> = ({ renderSe
                 <div style={{ position: 'relative' }}>
                     <TextBox
                         placeholder="Enter to search"
+                        testId="keyword-input"
                         value={keyword}
                         onChange={setKeyword}
                         onKeyDown={handleSearchKeyDown}
@@ -107,6 +108,7 @@ export const SearchSidebarInner: React.FC<SearchSidebarInnerProps> = ({ renderSe
                                 }}
                             >
                                 <div
+                                    data-testid="num-matches"
                                     style={{
                                         color: 'rgba(0, 0, 0, .5)',
                                         fontSize: '.8rem',
@@ -153,6 +155,7 @@ export const SearchSidebarInner: React.FC<SearchSidebarInnerProps> = ({ renderSe
                                             </div>
                                         </div>
                                         <div
+                                            data-testid={`match-${index}`}
                                             style={{
                                                 backgroundColor: currentMatch === index + 1 ? 'rgba(0, 0, 0, .1)' : '',
                                                 border: '1px solid rgba(0, 0, 0, .2)',
