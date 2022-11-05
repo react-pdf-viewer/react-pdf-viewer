@@ -6,7 +6,7 @@
  * @copyright 2019-2022 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import type { Store } from '@react-pdf-viewer/core';
+import type { PdfJs, Store } from '@react-pdf-viewer/core';
 import * as React from 'react';
 import type { Match } from './types/Match';
 import type { SearchTargetPageFilter } from './types/SearchTargetPage';
@@ -18,6 +18,7 @@ export interface RenderSearchProps {
     changeMatchCase(matchCase: boolean): void;
     changeWholeWords(wholeWords: boolean): void;
     currentMatch: number;
+    isDocumentLoaded: boolean;
     jumpToMatch(matchIndex: number): Match | null;
     jumpToNextMatch(): Match | null;
     jumpToPreviousMatch(): Match | null;
@@ -41,5 +42,16 @@ export const Search: React.FC<{
     store: Store<StoreProps>;
 }> = ({ children, store }) => {
     const result = useSearch(store);
-    return children({ ...result });
+
+    const [isDocumentLoaded, setDocumentLoaded] = React.useState(false);
+    const handleDocumentChanged = (_: PdfJs.PdfDocument) => setDocumentLoaded(true);
+
+    React.useEffect(() => {
+        store.subscribe('doc', handleDocumentChanged);
+        return () => {
+            store.unsubscribe('doc', handleDocumentChanged);
+        };
+    }, []);
+
+    return children({ ...result, isDocumentLoaded });
 };

@@ -65,12 +65,14 @@ export const searchPlugin = (props?: SearchPluginProps): SearchPlugin => {
     const store = React.useMemo(
         () =>
             createStore<StoreProps>({
+                initialKeyword:
+                    props && props.keyword ? (Array.isArray(props.keyword) ? props.keyword : [props.keyword]) : [],
+                keyword: props && props.keyword ? normalizeKeywords(props.keyword) : [EMPTY_KEYWORD_REGEXP],
                 matchPosition: {
                     matchIndex: -1,
                     pageIndex: -1,
                 },
                 renderStatus: new Map<number, PluginOnTextLayerRender>(),
-                keyword: props && props.keyword ? normalizeKeywords(props.keyword) : [EMPTY_KEYWORD_REGEXP],
             }),
         []
     );
@@ -120,8 +122,11 @@ export const searchPlugin = (props?: SearchPluginProps): SearchPlugin => {
 
     return {
         install: (pluginFunctions: PluginFunctions) => {
+            const initialKeyword =
+                props && props.keyword ? (Array.isArray(props.keyword) ? props.keyword : [props.keyword]) : [];
             const keyword = props && props.keyword ? normalizeKeywords(props.keyword) : [EMPTY_KEYWORD_REGEXP];
 
+            store.update('initialKeyword', initialKeyword);
             store.update('jumpToDestination', pluginFunctions.jumpToDestination);
             store.update('jumpToPage', pluginFunctions.jumpToPage);
             store.update('keyword', keyword);

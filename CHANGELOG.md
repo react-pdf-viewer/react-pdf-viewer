@@ -47,6 +47,39 @@ A `DivText` item consists of
 | `textContent` | `string` | The text content of text element                       |
 
 -   The open file dialog filters PDF files by default
+-   The search popover should perform search based on the initial keyword passed to the `keyword` option:
+
+```js
+const searchPluginInstance = searchPlugin({
+    keyword: '...',
+});
+```
+
+-   `RenderSearchProps` adds new `isDocumentLoaded` property that indicates if the document is loaded.
+    You can use it to perform searching for a keyword in a sidebar:
+
+```ts
+import type { Match, RenderSearchProps } from '@react-pdf-viewer/search';
+
+const SearchSidebarInner: React.FC<{
+    renderSearchProps: RenderSearchProps
+}> = ({ renderSearchProps }) => {
+    const [matches, setMatches] = React.useState<Match[]>([]);
+    const { isDocumentLoaded, keyword, search } = renderSearchProps;
+
+    React.useEffect(() => {
+        if (isDocumentLoaded && keyword) {
+            search().then((matches) => {
+                setMatches(matches);
+            });
+        }
+    }, [isDocumentLoaded]);
+
+    return (
+        // Display matches ...
+    );
+};
+```
 
 **Bug fixes**
 

@@ -13,6 +13,18 @@ test('Press PageUp to jump to the previous page', async () => {
     await page.waitForSelector('[data-testid="core__text-layer-0"]', { visible: true });
     await page.waitForSelector('[data-testid="core__annotation-layer-0"]');
 
+    await page.waitForSelector('[data-testid="core__page-layer-1"]');
+    await page.waitForSelector('[data-testid="core__text-layer-1"]');
+    await page.waitForSelector('[data-testid="core__annotation-layer-1"]');
+
+    await page.waitForSelector('[data-testid="core__page-layer-2"]');
+    await page.waitForSelector('[data-testid="core__text-layer-2"]');
+    await page.waitForSelector('[data-testid="core__annotation-layer-2"]');
+
+    await page.waitForSelector('[data-testid="core__page-layer-3"]');
+    await page.waitForSelector('[data-testid="core__text-layer-3"]');
+    await page.waitForSelector('[data-testid="core__annotation-layer-3"]');
+
     const pagesEle = await page.waitForSelector('[data-testid="core__inner-pages"]');
     await pagesEle?.evaluate((ele) => (ele.scrollTop = 8316));
 

@@ -15,7 +15,12 @@ const SearchSidebar: React.FC<{
 };
 
 const IndexPage = () => {
-    const searchPluginInstance = searchPlugin();
+    const searchPluginInstance = searchPlugin({
+        keyword: {
+            keyword: 'PDF',
+            matchCase: true,
+        },
+    });
 
     return (
         <div
