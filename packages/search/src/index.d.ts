@@ -57,6 +57,7 @@ export interface RenderSearchProps {
     changeMatchCase(matchCase: boolean): void;
     changeWholeWords(wholeWords: boolean): void;
     currentMatch: number;
+    isDocumentLoaded: boolean;
     jumpToMatch(index: number): Match | null;
     jumpToNextMatch(): Match | null;
     jumpToPreviousMatch(): Match | null;

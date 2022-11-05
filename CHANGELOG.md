@@ -55,6 +55,32 @@ const searchPluginInstance = searchPlugin({
 });
 ```
 
+-   `RenderSearchProps` adds new `isDocumentLoaded` property that indicates if the document is loaded.
+    You can use it to perform searching for a keyword in a sidebar:
+
+```ts
+import type { Match, RenderSearchProps } from '@react-pdf-viewer/search';
+
+const SearchSidebarInner: React.FC<{
+    renderSearchProps: RenderSearchProps
+}> = ({ renderSearchProps }) => {
+    const [matches, setMatches] = React.useState<Match[]>([]);
+    const { isDocumentLoaded, keyword, search } = renderSearchProps;
+
+    React.useEffect(() => {
+        if (isDocumentLoaded && keyword) {
+            search().then((matches) => {
+                setMatches(matches);
+            });
+        }
+    }, [isDocumentLoaded]);
+
+    return (
+        // Display matches ...
+    );
+};
+```
+
 **Bug fixes**
 
 -   Can't render certain PDF documents that contain an annotation whose destination consists of non alphabetical characters
