@@ -87,6 +87,7 @@ const SearchSidebarInner: React.FC<{
 -   Popover doesn't work if the `Viewer` is rendered inside ShadowDOM
 -   Replace the deprecated `contents` and `title` properties of annotations with corresponding objects
 -   The `Cover` component doesn't rotate the corresponding rotated page
+-   The `jumpToHighlightArea` function does not work properly with some documents
 -   The `startPageIndex` and `endPageIndex` properties of `SelectionData` aren't correct
 
 **Breaking change**

@@ -215,9 +215,8 @@ export const Inner: React.FC<{
                         zoom(updateScale);
                         break;
                     default:
-                        const boundingRect = viewport.convertToViewportPoint(left, bottom);
-                        left = Math.max(boundingRect[0] * currentState.scale, 0);
-                        top = Math.max(boundingRect[1] * currentState.scale, 0);
+                        top = (viewport.height - bottom) * updateScale;
+                        left = left * updateScale;
                         break;
                 }
 
