@@ -232,6 +232,7 @@ const IndexPage = () => {
             {notes.map((note) => {
                 return (
                     <div
+                        data-testid={`note-${note.id}`}
                         key={note.id}
                         style={{
                             borderBottom: '1px solid rgba(0, 0, 0, .3)',
