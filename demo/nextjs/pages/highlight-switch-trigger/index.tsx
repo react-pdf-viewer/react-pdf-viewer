@@ -90,7 +90,6 @@ const IndexPage = () => {
                     previewImage: props.previewImage,
                     quote: props.selectedText,
                 };
-                console.log(note);
                 setNotes(notes.concat([note]));
                 props.cancel();
             }
