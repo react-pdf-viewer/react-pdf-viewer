@@ -32,6 +32,14 @@ test('Press PageUp to jump to the previous page', async () => {
     await page.waitForSelector('[data-testid="core__text-layer-7"]', { visible: true });
     await page.waitForSelector('[data-testid="core__annotation-layer-7"]');
 
+    await page.waitForSelector('[data-testid="core__page-layer-6"]');
+    await page.waitForSelector('[data-testid="core__text-layer-6"]');
+    await page.waitForSelector('[data-testid="core__annotation-layer-6"]');
+
+    await page.waitForSelector('[data-testid="core__page-layer-5"]');
+    await page.waitForSelector('[data-testid="core__text-layer-5"]');
+    await page.waitForSelector('[data-testid="core__annotation-layer-5"]');
+
     // Jump to page 7
     await page.keyboard.press('PageUp');
     await page.waitForSelector('[data-testid="core__page-layer-6"]', { visible: true });

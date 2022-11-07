@@ -11,6 +11,19 @@ test('Jump between internal links', async () => {
     // Wait until the first page is rendered
     await page.waitForSelector('[data-testid="core__page-layer-0"]', { visible: true });
     await page.waitForSelector('[data-testid="core__text-layer-0"]', { visible: true });
+    await page.waitForSelector('[data-testid="core__annotation-layer-0"]');
+
+    await page.waitForSelector('[data-testid="core__page-layer-1"]');
+    await page.waitForSelector('[data-testid="core__text-layer-1"]');
+    await page.waitForSelector('[data-testid="core__annotation-layer-1"]');
+
+    await page.waitForSelector('[data-testid="core__page-layer-2"]');
+    await page.waitForSelector('[data-testid="core__text-layer-2"]');
+    await page.waitForSelector('[data-testid="core__annotation-layer-2"]');
+
+    await page.waitForSelector('[data-testid="core__page-layer-3"]');
+    await page.waitForSelector('[data-testid="core__text-layer-3"]');
+    await page.waitForSelector('[data-testid="core__annotation-layer-3"]');
 
     const jumpToTableOfContents = async () => {
         const pagesEle = await page.waitForSelector('[data-testid="core__inner-pages"]');
@@ -19,7 +32,19 @@ test('Jump between internal links', async () => {
         // Wait until the page is rendered
         await page.waitForSelector('[data-testid="core__page-layer-2"]', { visible: true });
         await page.waitForSelector('[data-testid="core__text-layer-2"]', { visible: true });
-        return await page.waitForSelector('[data-testid="core__annotation-layer-2"]');
+        await page.waitForSelector('[data-testid="core__annotation-layer-2"]');
+
+        await page.waitForSelector('[data-testid="core__page-layer-3"]');
+        await page.waitForSelector('[data-testid="core__text-layer-3"]');
+        await page.waitForSelector('[data-testid="core__annotation-layer-3"]');
+
+        await page.waitForSelector('[data-testid="core__page-layer-4"]');
+        await page.waitForSelector('[data-testid="core__text-layer-4"]');
+        await page.waitForSelector('[data-testid="core__annotation-layer-4"]');
+
+        await page.waitForSelector('[data-testid="core__page-layer-5"]');
+        await page.waitForSelector('[data-testid="core__text-layer-5"]');
+        return await page.waitForSelector('[data-testid="core__annotation-layer-5"]');
     };
 
     // Jump to the 3rd page
