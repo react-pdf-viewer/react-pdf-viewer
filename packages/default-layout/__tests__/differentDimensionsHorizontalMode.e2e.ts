@@ -25,7 +25,7 @@ test('Document with different page dimensions (horizontal scroll mode)', async (
     await zoomButton?.click();
 
     const zoomPopover = await page.waitForSelector('[id="rpv-core__popover-body-inner-zoom"]');
-    const zoomMenuItem = await zoomPopover?.waitForSelector('button:nth-of-type(5)');
+    const zoomMenuItem = await zoomPopover?.$('button:nth-of-type(5)');
     const zoomLevel = await zoomMenuItem?.evaluate((ele) => ele.textContent);
     expect(zoomLevel).toEqual('75%');
     await zoomMenuItem?.click();

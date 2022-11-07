@@ -124,7 +124,7 @@ test('Click bookmarks when switching to the wrapped scroll mode', async () => {
     await zoomButton?.click();
 
     const zoomPopover = await page.waitForSelector('[id="rpv-core__popover-body-inner-zoom"]');
-    const zoomMenuItem = await zoomPopover?.waitForSelector('button:nth-of-type(4)');
+    const zoomMenuItem = await zoomPopover?.$('button:nth-of-type(4)');
     const zoomLevel = await zoomMenuItem?.evaluate((ele) => ele.textContent);
     expect(zoomLevel).toEqual('50%');
     await zoomMenuItem?.click();
