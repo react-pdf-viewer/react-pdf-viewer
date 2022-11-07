@@ -1,7 +1,7 @@
-import json from '@rollup/plugin-json';
-import terser from '@rollup/plugin-terser';
-import typescript from '@rollup/plugin-typescript';
-import path from 'path';
+const json = require('@rollup/plugin-json');
+const terser = require('@rollup/plugin-terser');
+const typescript = require('@rollup/plugin-typescript');
+const path = require('path');
 
 const rootPackagePath = process.cwd();
 const input = path.join(rootPackagePath, 'src/index.ts');
@@ -14,7 +14,7 @@ const external = [...Object.keys(pkg.dependencies || {}), ...Object.keys(pkg.pee
 
 const plugins = [json(), typescript()];
 
-export default [
+module.exports = [
     // CJS
     {
         input,
