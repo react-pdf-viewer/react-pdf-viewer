@@ -1,7 +1,7 @@
-import path from 'path';
-import { terser } from 'rollup-plugin-terser';
 import json from '@rollup/plugin-json';
+import terser from '@rollup/plugin-terser';
 import typescript from '@rollup/plugin-typescript';
+import path from 'path';
 
 const rootPackagePath = process.cwd();
 const input = path.join(rootPackagePath, 'src/index.ts');
