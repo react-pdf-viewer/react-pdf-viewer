@@ -86,6 +86,7 @@ const SearchSidebarInner: React.FC<{
 -   Can't render certain PDF documents that contain an annotation whose destination consists of non alphabetical characters
 -   Popover doesn't work if the `Viewer` is rendered inside ShadowDOM
 -   Replace the deprecated `contents` and `title` properties of annotations with corresponding objects
+-   The annotation link doesn't navigate to the correct page in some cases
 -   The `Cover` component doesn't rotate the corresponding rotated page
 -   The `jumpToHighlightArea` function does not work properly with some documents
 -   The `startPageIndex` and `endPageIndex` properties of `SelectionData` aren't correct

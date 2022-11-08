@@ -8,21 +8,25 @@
 
 import { SpecialZoomLevel } from '../structs/SpecialZoomLevel';
 import type { PdfJs } from '../types/PdfJs';
+import type { DestinationOffsetFromViewport } from '../types/PluginFunctions';
 
 export interface JumpToDestination {
-    bottomOffset: number;
-    leftOffset: number;
     pageIndex: number;
-    scaleTo: number | SpecialZoomLevel;
+    bottomOffset: number | DestinationOffsetFromViewport;
+    leftOffset: number | DestinationOffsetFromViewport;
+    scaleTo?: number | SpecialZoomLevel;
 }
 
 const normalizeDestination = (pageIndex: number, destArray: PdfJs.OutlineDestination): JumpToDestination => {
     switch (destArray[1].name) {
         case 'XYZ':
+            // The `bottom` and `left` offsets are defined by `destArray[3]` and `destArray[2]`, respectively.
+            // If they aren't provided, then they can be determined from the height of width of viewport
             return {
-                bottomOffset: destArray[3],
-                leftOffset: destArray[2] || 0,
-                pageIndex: pageIndex,
+                bottomOffset: (_: number, viewportHeight: number) =>
+                    destArray[3] === null ? viewportHeight : destArray[3],
+                leftOffset: (_: number, __: number) => (destArray[2] === null ? 0 : destArray[2]),
+                pageIndex,
                 scaleTo: destArray[4],
             };
         case 'Fit':
@@ -30,7 +34,7 @@ const normalizeDestination = (pageIndex: number, destArray: PdfJs.OutlineDestina
             return {
                 bottomOffset: 0,
                 leftOffset: 0,
-                pageIndex: pageIndex,
+                pageIndex,
                 scaleTo: SpecialZoomLevel.PageFit,
             };
         case 'FitH':
@@ -38,14 +42,14 @@ const normalizeDestination = (pageIndex: number, destArray: PdfJs.OutlineDestina
             return {
                 bottomOffset: destArray[2],
                 leftOffset: 0,
-                pageIndex: pageIndex,
+                pageIndex,
                 scaleTo: SpecialZoomLevel.PageWidth,
             };
         default:
             return {
                 bottomOffset: 0,
                 leftOffset: 0,
-                pageIndex: pageIndex,
+                pageIndex,
                 scaleTo: 1,
             };
     }

@@ -11,6 +11,7 @@ import { useIsomorphicLayoutEffect } from '../hooks/useIsomorphicLayoutEffect';
 import { SpecialZoomLevel } from '../structs/SpecialZoomLevel';
 import type { PdfJs } from '../types/PdfJs';
 import type { Plugin } from '../types/Plugin';
+import type { DestinationOffsetFromViewport } from '../types/PluginFunctions';
 import { AnnotationType } from './AnnotationType';
 import { Caret } from './Caret';
 import { Circle } from './Circle';
@@ -39,7 +40,12 @@ export const AnnotationLayerBody: React.FC<{
     rotation: number;
     scale: number;
     onExecuteNamedAction(action: string): void;
-    onJumpToDest(pageIndex: number, bottomOffset: number, leftOffset: number, scaleTo: number | SpecialZoomLevel): void;
+    onJumpToDest(
+        pageIndex: number,
+        bottomOffset: number | DestinationOffsetFromViewport,
+        leftOffset: number | DestinationOffsetFromViewport,
+        scaleTo?: number | SpecialZoomLevel
+    ): void;
 }> = ({ annotations, doc, page, pageIndex, plugins, rotation, scale, onExecuteNamedAction, onJumpToDest }) => {
     const containerRef = React.useRef<HTMLDivElement>();
     const viewport = page.getViewport({ rotation, scale });

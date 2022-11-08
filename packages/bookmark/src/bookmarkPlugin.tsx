@@ -33,7 +33,7 @@ export const bookmarkPlugin = (): BookmarkPlugin => {
         () =>
             createStore<StoreProps>({
                 bookmarkExpandedMap: new Map(),
-                linkAnnotations: {},
+                linkAnnotations: [],
             }),
         []
     );
@@ -56,10 +56,19 @@ export const bookmarkPlugin = (): BookmarkPlugin => {
         }
 
         // Filter link annotations
-        const linkAnnotations = store.get('linkAnnotations') || {};
+        const linkAnnotations = store.get('linkAnnotations') || [];
 
-        links.forEach((annotation) => (linkAnnotations[annotation.dest] = e.container));
-        store.update('linkAnnotations', linkAnnotations);
+        links.forEach((annotation) => {
+            const { id, dest } = annotation;
+            if (dest && typeof dest === 'string') {
+                linkAnnotations.push({
+                    container: e.container,
+                    dest,
+                    id,
+                });
+            }
+        });
+        store.update('linkAnnotations', [...linkAnnotations]);
     };
 
     return {
