@@ -14,6 +14,7 @@ import { RotateDirection } from '../structs/RotateDirection';
 import { SpecialZoomLevel } from '../structs/SpecialZoomLevel';
 import type { PdfJs } from '../types/PdfJs';
 import type { Plugin } from '../types/Plugin';
+import type { DestinationOffsetFromViewport } from '../types/PluginFunctions';
 import type { RenderPage, RenderPageProps } from '../types/RenderPage';
 import { getPage } from '../utils/managePages';
 import { CanvasLayer } from './CanvasLayer';
@@ -41,7 +42,12 @@ export const PageLayer: React.FC<{
     shouldRender: boolean;
     width: number;
     onExecuteNamedAction(action: string): void;
-    onJumpToDest(pageIndex: number, bottomOffset: number, leftOffset: number, scaleTo: number | SpecialZoomLevel): void;
+    onJumpToDest(
+        pageIndex: number,
+        bottomOffset: number | DestinationOffsetFromViewport,
+        leftOffset: number | DestinationOffsetFromViewport,
+        scaleTo?: number | SpecialZoomLevel
+    ): void;
     onRenderCompleted(pageIndex: number): void;
     onRotatePage(pageIndex: number, direction: RotateDirection): void;
 }> = ({
