@@ -12,7 +12,7 @@ import * as React from 'react';
 import { BookmarkList } from './BookmarkList';
 import type { IsBookmarkExpanded } from './types/IsBookmarkExpanded';
 import type { RenderBookmarkItem } from './types/RenderBookmarkItemProps';
-import type { StoreProps } from './types/StoreProps';
+import type { LinkAnnotationData, StoreProps } from './types/StoreProps';
 
 enum Toggle {
     Collapse,
@@ -28,28 +28,28 @@ export const BookmarkListRoot: React.FC<{
     onJumpToDest(pageIndex: number, bottomOffset: number, leftOffset: number, scaleTo: number | SpecialZoomLevel): void;
 }> = ({ bookmarks, doc, isBookmarkExpanded, renderBookmarkItem, store, onJumpToDest }) => {
     const containerRef = React.useRef<HTMLDivElement>();
-    const [links, setLinks] = React.useState(store.get('linkAnnotations') || {});
+    const [links, setLinks] = React.useState(store.get('linkAnnotations') || []);
 
-    const updateLinkAnnotation = (bookmark: PdfJs.Outline, links: Record<string, HTMLElement>): void => {
-        const dest = bookmark.dest;
-        if (!dest || typeof dest !== 'string' || !links[dest]) {
+    const updateLinkAnnotation = (bookmark: PdfJs.Outline, links: LinkAnnotationData[]): void => {
+        const { dest } = bookmark;
+        if (!dest || typeof dest !== 'string') {
             return;
         }
-        const annotationContainer = links[dest];
-        annotationContainer
-            .querySelectorAll(`a[data-annotation-link-dest="${encodeURIComponent(dest)}"]`)
-            .forEach((node) => {
+        // Find the container of corresponding annotation
+        const link = links.find((item) => item.dest === dest);
+        if (link) {
+            link.container.querySelectorAll(`a[data-annotation-link="${link.id}"]`).forEach((node) => {
                 node.setAttribute('aria-label', bookmark.title);
             });
+        }
 
         // Loop over the child bookmarks
-        if (!bookmark.items || !bookmark.items.length) {
-            return;
+        if (bookmark.items && bookmark.items.length) {
+            bookmark.items.forEach((item) => updateLinkAnnotation(item, links));
         }
-        bookmark.items.forEach((item) => updateLinkAnnotation(item, links));
     };
 
-    const handleLinkAnnotationsChanged = (links: Record<string, HTMLElement>) => setLinks(links);
+    const handleLinkAnnotationsChanged = (links: LinkAnnotationData[]) => setLinks(links);
 
     const jumpToDest = (dest: PdfJs.OutlineDestinationType): void => {
         getDestination(doc, dest).then((target) => {

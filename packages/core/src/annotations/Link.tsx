@@ -51,7 +51,7 @@ export const Link: React.FC<{
     } else {
         attrs = {
             href: '',
-            'data-annotation-link-dest': encodeURIComponent(annotation.dest),
+            'data-annotation-link': annotation.id,
             onClick: link,
         };
     }
