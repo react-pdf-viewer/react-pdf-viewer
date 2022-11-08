@@ -697,7 +697,7 @@ export declare namespace PdfJs {
     interface Annotation {
         annotationType: number;
         color?: Uint8ClampedArray;
-        dest: string;
+        dest: OutlineDestinationType;
         hasAppearance: boolean;
         id: string;
         rect: number[];
