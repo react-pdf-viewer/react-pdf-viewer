@@ -11,7 +11,7 @@ import { SpecialZoomLevel } from '@react-pdf-viewer/core';
 
 export interface JumpFromAnnotation {
     bottomOffset: number;
-    dest: string;
+    dest: PdfJs.OutlineDestinationType;
     leftOffset: number;
     pageIndex: number;
 }
