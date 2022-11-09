@@ -16,6 +16,7 @@ import { AnnotationLoader } from './AnnotationLoader';
 
 export const AnnotationLayer: React.FC<{
     doc: PdfJs.PdfDocument;
+    outlines: PdfJs.Outline[];
     page: PdfJs.Page;
     pageIndex: number;
     plugins: Plugin[];
@@ -28,11 +29,12 @@ export const AnnotationLayer: React.FC<{
         leftOffset: number | DestinationOffsetFromViewport,
         scaleTo?: number | SpecialZoomLevel
     ): void;
-}> = ({ doc, page, pageIndex, plugins, rotation, scale, onExecuteNamedAction, onJumpToDest }) => {
+}> = ({ doc, outlines, page, pageIndex, plugins, rotation, scale, onExecuteNamedAction, onJumpToDest }) => {
     const renderAnnotations = (annotations: PdfJs.Annotation[]): React.ReactElement => (
         <AnnotationLayerBody
             annotations={annotations}
             doc={doc}
+            outlines={outlines}
             page={page}
             pageIndex={pageIndex}
             plugins={plugins}

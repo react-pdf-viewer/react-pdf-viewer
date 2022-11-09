@@ -38,6 +38,7 @@ import { classNames } from '../utils/classNames';
 import { getFileExt } from '../utils/getFileExt';
 import { clearPagesCache, getPage } from '../utils/managePages';
 import { calculateScale } from './calculateScale';
+import { useOutlines } from './useOutlines';
 
 const NUM_OVERSCAN_PAGES = 3;
 
@@ -92,6 +93,7 @@ export const Inner: React.FC<{
 
     const [currentScrollMode, setCurrentScrollMode] = React.useState(scrollMode);
     const previousScrollMode = usePrevious(currentScrollMode);
+    const outlines = useOutlines(doc);
 
     const [scale, setScale] = React.useState(pageSize.scale);
     const stateRef = React.useRef<ViewerState>(viewerState);
@@ -510,6 +512,7 @@ export const Inner: React.FC<{
                                     doc={doc}
                                     height={pageHeight}
                                     measureRef={item.measureRef}
+                                    outlines={outlines}
                                     pageIndex={item.index}
                                     pageRotation={pagesRotation.has(item.index) ? pagesRotation.get(item.index) : 0}
                                     plugins={plugins}

@@ -17,6 +17,7 @@ import { Annotation } from './Annotation';
 export const Link: React.FC<{
     annotation: PdfJs.Annotation;
     doc: PdfJs.PdfDocument;
+    outlines: PdfJs.Outline[];
     page: PdfJs.Page;
     viewport: PdfJs.ViewPort;
     onExecuteNamedAction(action: string): void;
@@ -26,7 +27,7 @@ export const Link: React.FC<{
         leftOffset: number | DestinationOffsetFromViewport,
         scaleTo?: number | SpecialZoomLevel
     ): void;
-}> = ({ annotation, doc, page, viewport, onExecuteNamedAction, onJumpToDest }) => {
+}> = ({ annotation, doc, outlines, page, viewport, onExecuteNamedAction, onJumpToDest }) => {
     const link = (e: React.MouseEvent): void => {
         e.preventDefault();
         annotation.action
@@ -60,6 +61,18 @@ export const Link: React.FC<{
             'data-annotation-link': annotation.id,
             onClick: link,
         };
+    }
+
+    // Determine the corresponding outline that has the same destination
+    const title =
+        outlines && outlines.length && annotation.dest && typeof annotation.dest === 'string'
+            ? outlines.find((item) => item.dest === annotation.dest)?.title
+            : '';
+    if (title) {
+        attrs = Object.assign({}, attrs, {
+            title,
+            'aria-label': title,
+        });
     }
 
     return (

@@ -29,6 +29,7 @@ switchTrigger(Trigger.TextSelection);
 
 -   Adjust the pointer when hovering the mouse over checkboxes inside the search popover
 -   Keep the expanded/collapsed state of each bookmark
+-   Set the title and `aria-label` attributes for link annotations without using the Bookmark plugin
 -   Support pdf-js 3.0.279
 -   `RenderBookmarkItemProps` includes new `path` property that indicates the path from each bookmark item to the root
 -   `SelectionData` provides more information about the selected text including:
