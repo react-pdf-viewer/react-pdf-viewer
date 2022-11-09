@@ -6,12 +6,7 @@
  * @copyright 2019-2022 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import type {
-    Plugin,
-    PluginFunctions,
-    PluginOnAnnotationLayerRender,
-    PluginOnDocumentLoad,
-} from '@react-pdf-viewer/core';
+import type { Plugin, PluginFunctions, PluginOnDocumentLoad } from '@react-pdf-viewer/core';
 import { createStore } from '@react-pdf-viewer/core';
 import * as React from 'react';
 import { BookmarkListWithStore } from './BookmarkListWithStore';
@@ -33,7 +28,6 @@ export const bookmarkPlugin = (): BookmarkPlugin => {
         () =>
             createStore<StoreProps>({
                 bookmarkExpandedMap: new Map(),
-                linkAnnotations: [],
             }),
         []
     );
@@ -46,31 +40,6 @@ export const bookmarkPlugin = (): BookmarkPlugin => {
         />
     );
 
-    const onAnnotationLayerRender = (e: PluginOnAnnotationLayerRender) => {
-        if (!e.annotations.length) {
-            return;
-        }
-        const links = e.annotations.filter((annotation) => annotation.subtype === 'Link');
-        if (!links.length) {
-            return;
-        }
-
-        // Filter link annotations
-        const linkAnnotations = store.get('linkAnnotations') || [];
-
-        links.forEach((annotation) => {
-            const { id, dest } = annotation;
-            if (dest && typeof dest === 'string') {
-                linkAnnotations.push({
-                    container: e.container,
-                    dest,
-                    id,
-                });
-            }
-        });
-        store.update('linkAnnotations', [...linkAnnotations]);
-    };
-
     return {
         install: (pluginFunctions: PluginFunctions) => {
             store.update('jumpToDestination', pluginFunctions.jumpToDestination);
@@ -79,6 +48,5 @@ export const bookmarkPlugin = (): BookmarkPlugin => {
             store.update('doc', props.doc);
         },
         Bookmarks: BookmarksDecorator,
-        onAnnotationLayerRender,
     };
 };

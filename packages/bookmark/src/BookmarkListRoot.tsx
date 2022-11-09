@@ -12,7 +12,7 @@ import * as React from 'react';
 import { BookmarkList } from './BookmarkList';
 import type { IsBookmarkExpanded } from './types/IsBookmarkExpanded';
 import type { RenderBookmarkItem } from './types/RenderBookmarkItemProps';
-import type { LinkAnnotationData, StoreProps } from './types/StoreProps';
+import type { StoreProps } from './types/StoreProps';
 
 enum Toggle {
     Collapse,
@@ -33,28 +33,6 @@ export const BookmarkListRoot: React.FC<{
     ): void;
 }> = ({ bookmarks, doc, isBookmarkExpanded, renderBookmarkItem, store, onJumpToDest }) => {
     const containerRef = React.useRef<HTMLDivElement>();
-    const [links, setLinks] = React.useState(store.get('linkAnnotations') || []);
-
-    const updateLinkAnnotation = (bookmark: PdfJs.Outline, links: LinkAnnotationData[]): void => {
-        const { dest } = bookmark;
-        if (!dest || typeof dest !== 'string') {
-            return;
-        }
-        // Find the container of corresponding annotation
-        const link = links.find((item) => item.dest === dest);
-        if (link) {
-            link.container.querySelectorAll(`a[data-annotation-link="${link.id}"]`).forEach((node) => {
-                node.setAttribute('aria-label', bookmark.title);
-            });
-        }
-
-        // Loop over the child bookmarks
-        if (bookmark.items && bookmark.items.length) {
-            bookmark.items.forEach((item) => updateLinkAnnotation(item, links));
-        }
-    };
-
-    const handleLinkAnnotationsChanged = (links: LinkAnnotationData[]) => setLinks(links);
 
     const jumpToDest = (dest: PdfJs.OutlineDestinationType): void => {
         getDestination(doc, dest).then((target) => {
@@ -162,17 +140,11 @@ export const BookmarkListRoot: React.FC<{
 
     React.useEffect(() => {
         document.addEventListener('keydown', handleKeyDown);
-        store.subscribe('linkAnnotations', handleLinkAnnotationsChanged);
 
         return () => {
             document.removeEventListener('keydown', handleKeyDown);
-            store.unsubscribe('linkAnnotations', handleLinkAnnotationsChanged);
         };
     }, []);
-
-    React.useEffect(() => {
-        bookmarks.forEach((bookmark) => updateLinkAnnotation(bookmark, links));
-    }, [links]);
 
     React.useEffect(() => {
         const container = containerRef.current;
