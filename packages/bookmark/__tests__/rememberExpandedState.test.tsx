@@ -64,7 +64,7 @@ test('Remember expanded/collapsed state of each bookmark', async () => {
     fireEvent.click(toggle);
 
     let subItems = await findAllByLabelText('Specifying parameters in a URL');
-    expect(subItems.length).toEqual(2);
+    expect(subItems.length).toEqual(3);
 
     let isSubItemExpanded = subItems[0].getAttribute('aria-expanded');
     expect(isSubItemExpanded).toEqual('false');
