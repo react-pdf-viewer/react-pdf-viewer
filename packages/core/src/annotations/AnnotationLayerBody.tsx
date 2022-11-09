@@ -34,6 +34,7 @@ import { Underline } from './Underline';
 export const AnnotationLayerBody: React.FC<{
     annotations: PdfJs.Annotation[];
     doc: PdfJs.PdfDocument;
+    outlines: PdfJs.Outline[];
     page: PdfJs.Page;
     pageIndex: number;
     plugins: Plugin[];
@@ -46,7 +47,18 @@ export const AnnotationLayerBody: React.FC<{
         leftOffset: number | DestinationOffsetFromViewport,
         scaleTo?: number | SpecialZoomLevel
     ): void;
-}> = ({ annotations, doc, page, pageIndex, plugins, rotation, scale, onExecuteNamedAction, onJumpToDest }) => {
+}> = ({
+    annotations,
+    doc,
+    outlines,
+    page,
+    pageIndex,
+    plugins,
+    rotation,
+    scale,
+    onExecuteNamedAction,
+    onJumpToDest,
+}) => {
     const containerRef = React.useRef<HTMLDivElement>();
     const viewport = page.getViewport({ rotation, scale });
     const clonedViewPort = viewport.clone({ dontFlip: true });
@@ -131,6 +143,7 @@ export const AnnotationLayerBody: React.FC<{
                                 key={annotation.id}
                                 annotation={annotation}
                                 doc={doc}
+                                outlines={outlines}
                                 page={page}
                                 viewport={clonedViewPort}
                                 onExecuteNamedAction={onExecuteNamedAction}

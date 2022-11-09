@@ -9,19 +9,10 @@
 import type { DestinationOffsetFromViewport, PdfJs } from '@react-pdf-viewer/core';
 import { SpecialZoomLevel } from '@react-pdf-viewer/core';
 
-export interface LinkAnnotationData {
-    // annotation container
-    container: HTMLElement;
-    dest: string;
-    // annotation `id`
-    id: string;
-}
-
 export interface StoreProps {
     // Manage the expanded/collapsed state of each bookmark item
     bookmarkExpandedMap: Map<string, boolean>;
     doc?: PdfJs.PdfDocument;
-    linkAnnotations: LinkAnnotationData[];
     jumpToDestination?: (
         pageIndex: number,
         bottomOffset: number | DestinationOffsetFromViewport,

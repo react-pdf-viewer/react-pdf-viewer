@@ -32,6 +32,7 @@ export const PageLayer: React.FC<{
     doc: PdfJs.PdfDocument;
     height: number;
     measureRef: (ele: HTMLElement) => void;
+    outlines: PdfJs.Outline[];
     pageIndex: number;
     pageRotation: number;
     plugins: Plugin[];
@@ -54,6 +55,7 @@ export const PageLayer: React.FC<{
     doc,
     height,
     measureRef,
+    outlines,
     pageIndex,
     pageRotation,
     plugins,
@@ -187,6 +189,7 @@ export const PageLayer: React.FC<{
                             children: (
                                 <AnnotationLayer
                                     doc={doc}
+                                    outlines={outlines}
                                     page={page}
                                     pageIndex={pageIndex}
                                     plugins={plugins}
