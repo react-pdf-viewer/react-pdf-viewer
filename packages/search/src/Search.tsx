@@ -44,6 +44,8 @@ export const Search: React.FC<{
     const result = useSearch(store);
 
     const [isDocumentLoaded, setDocumentLoaded] = React.useState(false);
+
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const handleDocumentChanged = (_: PdfJs.PdfDocument) => setDocumentLoaded(true);
 
     React.useEffect(() => {
