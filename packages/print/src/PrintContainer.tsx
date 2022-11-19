@@ -6,7 +6,7 @@
  * @copyright 2019-2022 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import type { PdfJs, Store, StoreHandler } from '@react-pdf-viewer/core';
+import type { PageSize, PdfJs, Store, StoreHandler } from '@react-pdf-viewer/core';
 import * as React from 'react';
 import { CheckPrintPermission } from './CheckPrintPermission';
 import { PrintProgress } from './PrintProgress';
@@ -17,13 +17,12 @@ import type { StoreProps } from './types/StoreProps';
 export const PrintContainer: React.FC<{
     doc: PdfJs.PdfDocument;
     pagesRotation: Map<number, number>;
-    pageHeight: number;
-    pageWidth: number;
+    pageSizes: PageSize[];
     renderProgressBar?(numLoadedPages: number, numPages: number, onCancel: () => void): React.ReactElement;
     rotation: number;
     setPages: (doc: PdfJs.PdfDocument) => number[];
     store: Store<StoreProps>;
-}> = ({ doc, pagesRotation, pageHeight, pageWidth, renderProgressBar, rotation, setPages, store }) => {
+}> = ({ doc, pagesRotation, pageSizes, renderProgressBar, rotation, setPages, store }) => {
     const [printStatus, setPrintStatus] = React.useState(PrintStatus.Inactive);
     const [numLoadedPagesForPrint, setNumLoadedPagesForPrint] = React.useState(0);
     const printPages = React.useMemo(() => {
@@ -74,8 +73,7 @@ export const PrintContainer: React.FC<{
                         doc={doc}
                         numLoadedPages={numLoadedPagesForPrint}
                         pagesRotation={pagesRotation}
-                        pageHeight={pageHeight}
-                        pageWidth={pageWidth}
+                        pageSizes={pageSizes}
                         printPages={printPages}
                         printStatus={printStatus}
                         rotation={rotation}

@@ -89,8 +89,7 @@ export const printPlugin = (props?: PrintPluginProps): PrintPlugin => {
                     <PrintContainer
                         doc={renderViewerProps.doc}
                         pagesRotation={renderViewerProps.pagesRotation}
-                        pageHeight={renderViewerProps.pageHeight}
-                        pageWidth={renderViewerProps.pageWidth}
+                        pageSizes={renderViewerProps.pageSizes}
                         renderProgressBar={props?.renderProgressBar}
                         rotation={renderViewerProps.rotation}
                         setPages={printPluginProps.setPages}

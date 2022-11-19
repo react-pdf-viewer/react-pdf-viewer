@@ -554,10 +554,8 @@ export const Inner: React.FC<{
                 slot = plugin.renderViewer({
                     containerRef,
                     doc,
-                    // TODO: Replace it with the sizes of all pages
-                    pageHeight: pageSizes[0].pageHeight,
-                    pageWidth: pageSizes[0].pageWidth,
                     pagesRotation,
+                    pageSizes,
                     rotation,
                     slot,
                     themeContext,
