@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## v3.9.0 [WIP]
+
+**Bug fixes**
+
+-   Clicking a link annotation doesn't go to the correct destination position if the pages have different dimensions
+
 ## v3.8.0
 
 **New features**

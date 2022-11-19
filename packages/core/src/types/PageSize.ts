@@ -9,5 +9,5 @@
 export interface PageSize {
     pageHeight: number;
     pageWidth: number;
-    scale: number;
+    rotation: number;
 }
