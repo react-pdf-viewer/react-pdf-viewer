@@ -191,7 +191,7 @@ export const Viewer: React.FC<{
                                 <PageSizeCalculator
                                     defaultScale={defaultScale}
                                     doc={doc}
-                                    render={(ps: PageSize, initialScale: number) => (
+                                    render={(pageSizes: PageSize[], initialScale: number) => (
                                         <Inner
                                             currentFile={{
                                                 data: file.data,
@@ -202,15 +202,15 @@ export const Viewer: React.FC<{
                                             initialPage={initialPage}
                                             initialRotation={initialRotation}
                                             initialScale={initialScale}
-                                            pageSize={ps}
+                                            pageSizes={pageSizes}
                                             plugins={plugins}
                                             renderPage={renderPage}
                                             scrollMode={scrollMode}
                                             viewerState={{
                                                 file,
                                                 pageIndex: -1,
-                                                pageHeight: ps.pageHeight,
-                                                pageWidth: ps.pageWidth,
+                                                pageHeight: pageSizes[0].pageHeight,
+                                                pageWidth: pageSizes[0].pageWidth,
                                                 pagesRotation: new Map(),
                                                 rotation: initialRotation,
                                                 scale: initialScale,

@@ -48,8 +48,8 @@ export const Inner: React.FC<{
     doc: PdfJs.PdfDocument;
     initialPage: number;
     initialRotation: number;
-    initialScale: number,
-    pageSize: PageSize;
+    initialScale: number;
+    pageSizes: PageSize[];
     plugins: Plugin[];
     renderPage?: RenderPage;
     scrollMode: ScrollMode;
@@ -67,7 +67,7 @@ export const Inner: React.FC<{
     initialPage,
     initialRotation,
     initialScale,
-    pageSize,
+    pageSizes,
     plugins,
     renderPage,
     scrollMode,
@@ -112,23 +112,26 @@ export const Inner: React.FC<{
         };
     }, [docId]);
 
-    const estimateSize = React.useCallback(() => {
-        const sizes = [pageSize.pageHeight, pageSize.pageWidth];
-        const rect: Rect =
-            Math.abs(rotation) % 180 === 0
-                ? {
-                      height: sizes[0],
-                      width: sizes[1],
-                  }
-                : {
-                      height: sizes[1],
-                      width: sizes[0],
-                  };
-        return {
-            height: rect.height * scale,
-            width: rect.width * scale,
-        };
-    }, [rotation, scale]);
+    const estimateSize = React.useCallback(
+        (index: number) => {
+            const sizes = [pageSizes[index].pageHeight, pageSizes[index].pageWidth];
+            const rect: Rect =
+                Math.abs(rotation) % 180 === 0
+                    ? {
+                          height: sizes[0],
+                          width: sizes[1],
+                      }
+                    : {
+                          height: sizes[1],
+                          width: sizes[0],
+                      };
+            return {
+                height: rect.height * scale,
+                width: rect.width * scale,
+            };
+        },
+        [rotation, scale]
+    );
 
     const setStartRange = React.useCallback((startIndex: number) => Math.max(startIndex - NUM_OVERSCAN_PAGES, 0), []);
     const setEndRange = React.useCallback(
@@ -160,8 +163,6 @@ export const Inner: React.FC<{
         targetRef: pagesRef,
         onResize: handlePagesResize,
     });
-
-    const { pageWidth, pageHeight } = pageSize;
 
     // The methods that a plugin can hook on.
     // These methods are registered once and there is no chance for plugins to get the latest version of the methods.
@@ -213,7 +214,12 @@ export const Inner: React.FC<{
                         zoom(SpecialZoomLevel.PageFit);
                         break;
                     case SpecialZoomLevel.PageWidth:
-                        updateScale = calculateScale(pagesContainer, pageHeight, pageWidth, SpecialZoomLevel.PageWidth);
+                        updateScale = calculateScale(
+                            pagesContainer,
+                            pageSizes[pageIndex].pageHeight,
+                            pageSizes[pageIndex].pageWidth,
+                            SpecialZoomLevel.PageWidth
+                        );
                         top = (viewport.height - bottom) * updateScale;
                         left = left * updateScale;
                         zoom(updateScale);
@@ -310,9 +316,18 @@ export const Inner: React.FC<{
 
     const zoom = React.useCallback((newScale: number | SpecialZoomLevel) => {
         const pagesEle = pagesRef.current;
+
+        const currentPage = stateRef.current.pageIndex;
+        if (currentPage < 0 || currentPage >= numPages) {
+            return;
+        }
+
+        const currentPageHeight = pageSizes[currentPage].pageHeight;
+        const currentPageWidth = pageSizes[currentPage].pageWidth;
+
         let updateScale = pagesEle
             ? typeof newScale === 'string'
-                ? calculateScale(pagesEle, pageHeight, pageWidth, newScale)
+                ? calculateScale(pagesEle, currentPageHeight, currentPageWidth, newScale)
                 : newScale
             : 1;
 
@@ -512,18 +527,16 @@ export const Inner: React.FC<{
                             >
                                 <PageLayer
                                     doc={doc}
-                                    height={pageHeight}
-                                    measureRef={item.measureRef}
                                     outlines={outlines}
                                     pageIndex={item.index}
                                     pageRotation={pagesRotation.has(item.index) ? pagesRotation.get(item.index) : 0}
+                                    pageSize={pageSizes[item.index]}
                                     plugins={plugins}
                                     renderPage={renderPage}
                                     renderQueueKey={renderQueueKey}
                                     rotation={rotation}
                                     scale={scale}
                                     shouldRender={renderPageIndex === item.index}
-                                    width={pageWidth}
                                     onExecuteNamedAction={executeNamedAction}
                                     onJumpToDest={jumpToDestination}
                                     onRenderCompleted={handlePageRenderCompleted}
@@ -541,8 +554,9 @@ export const Inner: React.FC<{
                 slot = plugin.renderViewer({
                     containerRef,
                     doc,
-                    pageHeight,
-                    pageWidth,
+                    // TODO: Replace it with the sizes of all pages
+                    pageHeight: pageSizes[0].pageHeight,
+                    pageWidth: pageSizes[0].pageWidth,
                     pagesRotation,
                     rotation,
                     slot,

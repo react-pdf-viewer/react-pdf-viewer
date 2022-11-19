@@ -12,6 +12,7 @@ import { Spinner } from '../components/Spinner';
 import { useIsMounted } from '../hooks/useIsMounted';
 import { RotateDirection } from '../structs/RotateDirection';
 import { SpecialZoomLevel } from '../structs/SpecialZoomLevel';
+import type { PageSize } from '../types/PageSize';
 import type { PdfJs } from '../types/PdfJs';
 import type { Plugin } from '../types/Plugin';
 import type { DestinationOffsetFromViewport } from '../types/PluginFunctions';
@@ -21,27 +22,18 @@ import { CanvasLayer } from './CanvasLayer';
 import { SvgLayer } from './SvgLayer';
 import { TextLayer } from './TextLayer';
 
-interface PageSizeState {
-    page?: PdfJs.Page | null;
-    pageHeight: number;
-    pageWidth: number;
-    viewportRotation: number;
-}
-
 export const PageLayer: React.FC<{
     doc: PdfJs.PdfDocument;
-    height: number;
-    measureRef: (ele: HTMLElement) => void;
     outlines: PdfJs.Outline[];
     pageIndex: number;
     pageRotation: number;
+    pageSize: PageSize;
     plugins: Plugin[];
     renderPage?: RenderPage;
     renderQueueKey: number;
     rotation: number;
     scale: number;
     shouldRender: boolean;
-    width: number;
     onExecuteNamedAction(action: string): void;
     onJumpToDest(
         pageIndex: number,
@@ -53,60 +45,45 @@ export const PageLayer: React.FC<{
     onRotatePage(pageIndex: number, direction: RotateDirection): void;
 }> = ({
     doc,
-    height,
-    measureRef,
     outlines,
     pageIndex,
     pageRotation,
+    pageSize,
     plugins,
     renderPage,
     renderQueueKey,
     rotation,
     scale,
     shouldRender,
-    width,
     onExecuteNamedAction,
     onJumpToDest,
     onRenderCompleted,
     onRotatePage,
 }) => {
     const isMounted = useIsMounted();
-    const [pageSize, setPageSize] = React.useState<PageSizeState>({
-        page: null,
-        pageHeight: height,
-        pageWidth: width,
-        viewportRotation: 0,
-    });
+    const [page, setPage] = React.useState<PdfJs.Page>(null);
     const [canvasLayerRendered, setCanvasLayerRendered] = React.useState(false);
     const [textLayerRendered, setTextLayerRendered] = React.useState(false);
     const canvasLayerRef = React.useRef<HTMLCanvasElement>();
     const textLayerRef = React.useRef<HTMLDivElement>();
 
-    const { page, pageHeight, pageWidth } = pageSize;
-
     const isVertical = Math.abs(rotation + pageRotation) % 180 === 0;
-    const scaledWidth = pageWidth * scale;
-    const scaledHeight = pageHeight * scale;
+    const scaledWidth = pageSize.pageWidth * scale;
+    const scaledHeight = pageSize.pageHeight * scale;
 
     const w = isVertical ? scaledWidth : scaledHeight;
     const h = isVertical ? scaledHeight : scaledWidth;
 
     // To support the document which is already rotated
-    const rotationValue = (pageSize.viewportRotation + rotation + pageRotation) % 360;
+    const rotationValue = (pageSize.rotation + rotation + pageRotation) % 360;
 
     const renderQueueKeyRef = React.useRef(0);
 
-    const determinePageSize = () => {
+    const determinePageInstance = () => {
         getPage(doc, pageIndex).then((pdfPage) => {
-            const viewport = pdfPage.getViewport({ scale: 1 });
             if (isMounted.current) {
                 renderQueueKeyRef.current = renderQueueKey;
-                setPageSize({
-                    page: pdfPage,
-                    pageHeight: viewport.height,
-                    pageWidth: viewport.width,
-                    viewportRotation: viewport.rotation,
-                });
+                setPage(pdfPage);
             }
         });
     };
@@ -133,19 +110,14 @@ export const PageLayer: React.FC<{
     };
 
     React.useEffect(() => {
-        setPageSize({
-            page: null,
-            pageHeight: height,
-            pageWidth: width,
-            viewportRotation: 0,
-        });
+        setPage(null);
         setCanvasLayerRendered(false);
         setTextLayerRendered(false);
     }, [pageRotation, rotation, scale]);
 
     React.useEffect(() => {
         if (shouldRender && isMounted.current && !page) {
-            determinePageSize();
+            determinePageInstance();
         }
     }, [shouldRender, page]);
 
@@ -155,12 +127,7 @@ export const PageLayer: React.FC<{
                 // The page is rendered in the queue which is not the current queue
                 // (For example, when users zoom or rotate the document)
                 // Reset page and layer statuses
-                setPageSize({
-                    page: null,
-                    pageHeight: height,
-                    pageWidth: width,
-                    viewportRotation: 0,
-                });
+                setPage(null);
                 setCanvasLayerRendered(false);
                 setTextLayerRendered(false);
             } else {
@@ -173,7 +140,6 @@ export const PageLayer: React.FC<{
         <div
             className="rpv-core__page-layer"
             data-testid={`core__page-layer-${pageIndex}`}
-            ref={measureRef}
             style={{
                 height: `${h}px`,
                 width: `${w}px`,
