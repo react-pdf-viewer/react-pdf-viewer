@@ -25,15 +25,24 @@ const RESERVE_WIDTH = 45;
 export const PageSizeCalculator: React.FC<{
     defaultScale?: number | SpecialZoomLevel;
     doc: PdfJs.PdfDocument;
-    render(pageSize: PageSize): React.ReactElement;
+    render(pageSize: PageSize, initialScale: number): React.ReactElement;
     scrollMode: ScrollMode;
 }> = ({ defaultScale, doc, render, scrollMode }) => {
     const pagesRef = React.useRef<HTMLDivElement>();
+    const [initialScale, setInitialScale] = React.useState(1);
     const [pageSize, setPageSize] = React.useState<PageSize>({
         pageHeight: 0,
         pageWidth: 0,
-        scale: 1,
     });
+
+    React.useLayoutEffect(() => {
+        Array(doc.numPages).fill(0).map((_, i) => {
+            getPage(doc, i).then((pdfPage) => {
+                const viewport = pdfPage.getViewport({ scale: 1 });
+                console.log(i, viewport.height, viewport.width);
+            });
+        });
+    }, [doc.loadingTask.docId]);
 
     React.useLayoutEffect(() => {
         getPage(doc, 0).then((pdfPage) => {
@@ -73,8 +82,8 @@ export const PageSizeCalculator: React.FC<{
             setPageSize({
                 pageHeight: h,
                 pageWidth: w,
-                scale,
             });
+            setInitialScale(scale);
         });
     }, [doc]);
 
@@ -84,6 +93,6 @@ export const PageSizeCalculator: React.FC<{
             <Spinner />
         </div>
     ) : (
-        render(pageSize)
+        render(pageSize, initialScale)
     );
 };

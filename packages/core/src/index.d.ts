@@ -20,7 +20,6 @@ export interface OpenFile {
 export interface PageSize {
     pageHeight: number;
     pageWidth: number;
-    scale: number;
 }
 export interface Plugin {
     install?(pluginFunctions: PluginFunctions): void;

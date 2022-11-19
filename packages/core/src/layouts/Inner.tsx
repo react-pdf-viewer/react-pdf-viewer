@@ -48,6 +48,7 @@ export const Inner: React.FC<{
     doc: PdfJs.PdfDocument;
     initialPage: number;
     initialRotation: number;
+    initialScale: number,
     pageSize: PageSize;
     plugins: Plugin[];
     renderPage?: RenderPage;
@@ -65,6 +66,7 @@ export const Inner: React.FC<{
     doc,
     initialPage,
     initialRotation,
+    initialScale,
     pageSize,
     plugins,
     renderPage,
@@ -95,7 +97,7 @@ export const Inner: React.FC<{
     const previousScrollMode = usePrevious(currentScrollMode);
     const outlines = useOutlines(doc);
 
-    const [scale, setScale] = React.useState(pageSize.scale);
+    const [scale, setScale] = React.useState(initialScale);
     const stateRef = React.useRef<ViewerState>(viewerState);
     const keepSpecialZoomLevelRef = React.useRef<SpecialZoomLevel | null>(
         typeof defaultScale === 'string' ? defaultScale : null
