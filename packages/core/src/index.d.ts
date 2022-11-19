@@ -114,10 +114,9 @@ export type RenderPage = (props: RenderPageProps) => React.ReactElement;
 export interface RenderViewer {
     containerRef: React.RefObject<HTMLDivElement>;
     doc: PdfJs.PdfDocument;
-    pageHeight: number;
-    pageWidth: number;
     // The rotation for each page
     pagesRotation: Map<number, number>;
+    pageSizes: PageSize[];
     rotation: number;
     slot: Slot;
     themeContext: ThemeContextProps;

@@ -6,7 +6,7 @@
  * @copyright 2019-2022 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import type { PdfJs } from '@react-pdf-viewer/core';
+import type { PageSize, PdfJs } from '@react-pdf-viewer/core';
 import * as React from 'react';
 import { createPortal } from 'react-dom';
 import { PageThumbnailContainer } from './PageThumbnailContainer';
@@ -16,25 +16,13 @@ export const PrintZone: React.FC<{
     doc: PdfJs.PdfDocument;
     numLoadedPages: number;
     pagesRotation: Map<number, number>;
-    pageHeight: number;
-    pageWidth: number;
+    pageSizes: PageSize[];
     printPages: number[];
     printStatus: PrintStatus;
     rotation: number;
     onCancel(): void;
     onLoad(): void;
-}> = ({
-    doc,
-    numLoadedPages,
-    pagesRotation,
-    pageHeight,
-    pageWidth,
-    printPages,
-    printStatus,
-    rotation,
-    onCancel,
-    onLoad,
-}) => {
+}> = ({ doc, numLoadedPages, pagesRotation, pageSizes, printPages, printStatus, rotation, onCancel, onLoad }) => {
     const canvas = React.useMemo(() => document.createElement('canvas') as HTMLCanvasElement, []);
 
     const container = React.useMemo(() => {
@@ -88,6 +76,9 @@ export const PrintZone: React.FC<{
 
     // Don't append the pages to the `body` directly
     // Otherwise, it will cause a weird issue such as we can't open any popover
+    const pageHeight = pageSizes[0].pageHeight;
+    const pageWidth = pageSizes[0].pageWidth;
+
     return createPortal(
         <>
             {printPages.map((pageIndex, loopIndex) => (
@@ -95,10 +86,9 @@ export const PrintZone: React.FC<{
                     key={pageIndex}
                     canvas={canvas}
                     doc={doc}
-                    pageHeight={pageHeight}
                     pageIndex={pageIndex}
                     pageRotation={pagesRotation.has(pageIndex) ? pagesRotation.get(pageIndex) : 0}
-                    pageWidth={pageWidth}
+                    pageSize={pageSizes[pageIndex]}
                     rotation={rotation}
                     shouldRender={loopIndex === numLoadedPages}
                     onLoad={onLoad}

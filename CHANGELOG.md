@@ -6,6 +6,11 @@
 
 -   Clicking a link annotation doesn't go to the correct destination position if the pages have different dimensions
 
+**Breaking change**
+
+-   The `pageHeight` and `pageWidth` properties in `RenderViewer` are replaced with the `pageSizes` property that are the sizes of pages.
+    You don't have to do anything if you don't develope your own plugin using those properties.
+
 ## v3.8.0
 
 **New features**

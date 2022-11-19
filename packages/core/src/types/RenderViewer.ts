@@ -12,15 +12,15 @@ import { ScrollMode } from '../structs/ScrollMode';
 import { SpecialZoomLevel } from '../structs/SpecialZoomLevel';
 import type { ThemeContextProps } from '../theme/ThemeContext';
 import type { PdfJs } from '../types/PdfJs';
+import type { PageSize } from './PageSize';
 import type { Slot } from './Slot';
 
 export interface RenderViewer {
     containerRef: React.RefObject<HTMLDivElement>;
     doc: PdfJs.PdfDocument;
-    pageHeight: number;
-    pageWidth: number;
     // The rotation for each page
     pagesRotation: Map<number, number>;
+    pageSizes: PageSize[];
     rotation: number;
     slot: Slot;
     themeContext: ThemeContextProps;
