@@ -2,6 +2,26 @@
 
 ## v3.9.0 [WIP]
 
+**New features**
+
+-   New `pageLayout` option to customize the layout of each page.
+    The following code adds margin between pages, and center the page in its container:
+
+```tsx
+import { type PageLayout, Viewer } from '@react-pdf-viewer/core';
+
+const pageLayout: PageLayout = {
+    buildPageStyles: () => ({
+        alignItems: 'center',
+        display: 'flex',
+        justifyContent: 'center',
+    }),
+    tranformSize: ({ size }) => ({ height: size.height + 30, width: size.width + 30 }),
+};
+
+<Viewer pageLayout={pageLayout} />;
+```
+
 **Bug fixes**
 
 -   Keep the current page after rotating the document

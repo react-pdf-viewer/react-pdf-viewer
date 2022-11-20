@@ -22,6 +22,7 @@ import type { DocumentAskPasswordEvent } from './types/DocumentAskPasswordEvent'
 import type { DocumentLoadEvent } from './types/DocumentLoadEvent';
 import type { LocalizationMap } from './types/LocalizationMap';
 import type { PageChangeEvent } from './types/PageChangeEvent';
+import type { PageLayout } from './types/PageLayout';
 import type { PageSize } from './types/PageSize';
 import type { PdfJs } from './types/PdfJs';
 import { Plugin } from './types/Plugin';
@@ -55,6 +56,7 @@ export const Viewer: React.FC<{
     initialPage?: number;
     // The initial rotation, must be divisible by 90
     initialRotation?: number;
+    pageLayout?: PageLayout;
     // Plugins
     plugins?: Plugin[];
     localization?: LocalizationMap;
@@ -82,6 +84,7 @@ export const Viewer: React.FC<{
     fileUrl,
     httpHeaders = {},
     initialPage = 0,
+    pageLayout,
     initialRotation = 0,
     localization,
     plugins = [],
@@ -202,6 +205,7 @@ export const Viewer: React.FC<{
                                             initialPage={initialPage}
                                             initialRotation={initialRotation}
                                             initialScale={initialScale}
+                                            pageLayout={pageLayout}
                                             pageSizes={pageSizes}
                                             plugins={plugins}
                                             renderPage={renderPage}
