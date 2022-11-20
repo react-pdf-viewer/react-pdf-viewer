@@ -4,7 +4,10 @@
 
 **Bug fixes**
 
--   Clicking a link annotation doesn't go to the correct destination position if the pages have different dimensions
+Fix bugs that might happen with a document whose pages have different dimensions
+
+-   Clicking a link annotation doesn't go to the correct destination position
+-   Don't scroll to the top of the target page corresponding to the `initialPage` option
 
 **Breaking change**
 
