@@ -88,7 +88,10 @@ export const Inner: React.FC<{
     const pagesRef = React.useRef<HTMLDivElement>();
     const [currentPage, setCurrentPage] = React.useState(initialPage);
     const mostRecentVisitedRef = React.useRef(null);
+
     const [rotation, setRotation] = React.useState(initialRotation);
+    const previousRotation = usePrevious(rotation);
+
     // The rotation for each page
     const [pagesRotationChanged, setPagesRotationChanged] = React.useState(false);
     const [pagesRotation, setPagesRotation] = React.useState(new Map<number, number>());
@@ -404,6 +407,14 @@ export const Inner: React.FC<{
             virtualizer.scrollToItem(latestPage, { left: 0, top: 0 });
         }
     }, [currentScrollMode]);
+
+    // Keep the current page after rotating the document
+    useIsomorphicLayoutEffect(() => {
+        const latestPage = stateRef.current.pageIndex;
+        if (latestPage > -1 && previousRotation !== rotation) {
+            virtualizer.scrollToItem(latestPage, { left: 0, top: 0 });
+        }
+    }, [rotation]);
 
     React.useEffect(() => {
         const { isSmoothScrolling } = virtualizer;

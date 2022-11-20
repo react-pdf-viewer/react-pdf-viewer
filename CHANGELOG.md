@@ -4,6 +4,8 @@
 
 **Bug fixes**
 
+-   Keep the current page after rotating the document
+
 Fix bugs that might happen with a document whose pages have different dimensions
 
 -   Clicking a link annotation doesn't go to the correct destination position
