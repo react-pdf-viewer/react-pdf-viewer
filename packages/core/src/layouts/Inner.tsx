@@ -23,6 +23,7 @@ import type { DocumentLoadEvent } from '../types/DocumentLoadEvent';
 import type { LocalizationMap } from '../types/LocalizationMap';
 import type { OpenFile } from '../types/OpenFile';
 import type { PageChangeEvent } from '../types/PageChangeEvent';
+import type { PageLayout } from '../types/PageLayout';
 import type { PageSize } from '../types/PageSize';
 import type { PdfJs } from '../types/PdfJs';
 import type { Plugin } from '../types/Plugin';
@@ -42,6 +43,11 @@ import { useOutlines } from './useOutlines';
 
 const NUM_OVERSCAN_PAGES = 3;
 
+const DEFAULT_PAGE_LAYOUT: PageLayout = {
+    buildPageStyles: () => ({}),
+    tranformSize: ({ size }) => size,
+};
+
 export const Inner: React.FC<{
     currentFile: OpenFile;
     defaultScale?: number | SpecialZoomLevel;
@@ -49,6 +55,7 @@ export const Inner: React.FC<{
     initialPage: number;
     initialRotation: number;
     initialScale: number;
+    pageLayout?: PageLayout;
     pageSizes: PageSize[];
     plugins: Plugin[];
     renderPage?: RenderPage;
@@ -67,6 +74,7 @@ export const Inner: React.FC<{
     initialPage,
     initialRotation,
     initialScale,
+    pageLayout,
     pageSizes,
     plugins,
     renderPage,
@@ -115,6 +123,8 @@ export const Inner: React.FC<{
         };
     }, [docId]);
 
+    const layoutBuilder = React.useMemo(() => Object.assign({}, DEFAULT_PAGE_LAYOUT, pageLayout), []);
+
     const estimateSize = React.useCallback(
         (index: number) => {
             const sizes = [pageSizes[index].pageHeight, pageSizes[index].pageWidth];
@@ -141,7 +151,10 @@ export const Inner: React.FC<{
         (endIndex: number) => Math.min(endIndex + NUM_OVERSCAN_PAGES, numPages - 1),
         [numPages]
     );
-    const transformSize = React.useCallback((size: Rect) => size, []);
+    const transformSize = React.useCallback(
+        (pageIndex: number, size: Rect) => layoutBuilder.tranformSize({ numPages, pageIndex, size }),
+        []
+    );
 
     const virtualizer = useVirtual({
         estimateSize,
@@ -534,7 +547,11 @@ export const Inner: React.FC<{
                                 className="rpv-core__inner-page"
                                 key={item.index}
                                 role="region"
-                                style={virtualizer.getItemStyles(item)}
+                                style={Object.assign(
+                                    {},
+                                    virtualizer.getItemStyles(item),
+                                    layoutBuilder.buildPageStyles({ numPages, pageIndex: item.index })
+                                )}
                             >
                                 <PageLayer
                                     doc={doc}

@@ -274,7 +274,7 @@ export const useVirtual = ({
     parentRef: React.MutableRefObject<HTMLDivElement>;
     scrollMode: ScrollMode;
     // Modify the size of each item. For example, items might have paddings
-    transformSize: (size: Rect) => Rect;
+    transformSize: (index: number, size: Rect) => Rect;
 }): {
     isSmoothScrolling: boolean;
     startIndex: number;
@@ -325,7 +325,7 @@ export const useVirtual = ({
         // The value will be used to calculate the `start` position for items in the next row
         let maxHeight = 0;
         for (let i = 0; i < numberOfItems; i++) {
-            const size = cacheMeasure[i] || transformSize(estimateSize(i));
+            const size = cacheMeasure[i] || transformSize(i, estimateSize(i));
             let start = ZERO_OFFSET;
             if (i === 0) {
                 totalWidth = size.width;
@@ -420,7 +420,7 @@ export const useVirtual = ({
                         // This happens in the unit test environment
                         return;
                     }
-                    const measuredSize = transformSize({
+                    const measuredSize = transformSize(i, {
                         height: rect.height,
                         width: rect.width,
                     });

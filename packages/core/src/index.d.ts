@@ -17,6 +17,14 @@ export interface OpenFile {
     data: PdfJs.FileData;
     name: string;
 }
+export interface Rect {
+    height: number;
+    width: number;
+}
+export interface PageLayout {
+    buildPageStyles?: ({ numPages, pageIndex }: { numPages: number; pageIndex: number }) => React.CSSProperties;
+    tranformSize?: ({ numPages, pageIndex, size }: { numPages: number; pageIndex: number; size: Rect }) => Rect;
+}
 export interface PageSize {
     pageHeight: number;
     pageWidth: number;
@@ -482,6 +490,7 @@ export interface ViewerProps {
     initialPage?: number;
     // The initial rotation, must be divisible by 90
     initialRotation?: number;
+    pageLayout?: PageLayout;
     // Plugins
     plugins?: Plugin[];
     localization?: LocalizationMap;
