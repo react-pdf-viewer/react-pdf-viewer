@@ -53,7 +53,6 @@ export const DocumentLoader: React.FC<{
     const { direction } = React.useContext(ThemeContext);
     const isRtl = direction === TextDirection.RightToLeft;
     const [status, setStatus] = React.useState<LoadingStatus>(new LoadingState(0));
-
     const docRef = React.useRef<string>('');
     const isMounted = useIsMounted();
 
