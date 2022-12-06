@@ -583,6 +583,7 @@ export class Viewer extends React.Component<ViewerProps> {}
 
 export interface WorkerProps {
     children?: React.ReactNode;
+    pdfJsLegacy?: boolean;
     workerUrl: string;
 }
 export class Worker extends React.Component<WorkerProps> {}

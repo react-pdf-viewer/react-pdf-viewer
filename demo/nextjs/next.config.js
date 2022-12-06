@@ -6,7 +6,7 @@ module.exports = {
     webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
         // Otherwise, we will see "Invalid hook call" error
         config.resolve.alias['react'] = path.join(__dirname, '../../node_modules/react');
-        config.resolve.alias['pdfjs-dist'] = path.join(__dirname, '../../node_modules/pdfjs-dist/legacy/build/pdf');
+        // config.resolve.alias['pdfjs-dist'] = path.join(__dirname, '../../node_modules/pdfjs-dist/legacy/build/pdf');
 
         // Be able to compile TypeScript files
         const tsLoader = {

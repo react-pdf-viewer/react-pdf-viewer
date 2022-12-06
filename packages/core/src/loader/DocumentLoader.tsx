@@ -16,7 +16,7 @@ import type { DocumentAskPasswordEvent } from '../types/DocumentAskPasswordEvent
 import type { PdfJs } from '../types/PdfJs';
 import type { RenderProtectedView } from '../types/RenderProtectedView';
 import { classNames } from '../utils/classNames';
-import { PdfJsApi } from '../vendors/PdfJsApi';
+import { PdfJsApiContext } from '../vendors/PdfJsApiContext';
 import { AskForPasswordState } from './AskForPasswordState';
 import { AskingPassword } from './AskingPassword';
 import { CompletedState } from './CompletedState';
@@ -50,6 +50,7 @@ export const DocumentLoader: React.FC<{
     withCredentials,
     onDocumentAskPassword,
 }) => {
+    const { pdfJsApiProvider } = React.useContext(PdfJsApiContext);
     const { direction } = React.useContext(ThemeContext);
     const isRtl = direction === TextDirection.RightToLeft;
     const [status, setStatus] = React.useState<LoadingStatus>(new LoadingState(0));
@@ -62,7 +63,7 @@ export const DocumentLoader: React.FC<{
         setStatus(new LoadingState(0));
 
         // Create a new worker
-        const worker = new PdfJsApi.PDFWorker({ name: `PDFWorker_${Date.now()}` as any }) as PdfJs.PDFWorker;
+        const worker = new pdfJsApiProvider.PDFWorker({ name: `PDFWorker_${Date.now()}` as any }) as PdfJs.PDFWorker;
 
         const params: PdfJs.GetDocumentParams = Object.assign(
             {
@@ -80,14 +81,14 @@ export const DocumentLoader: React.FC<{
         );
         const transformParams = transformGetDocumentParams ? transformGetDocumentParams(params) : params;
 
-        const loadingTask = PdfJsApi.getDocument(transformParams as any) as unknown as PdfJs.LoadingTask;
+        const loadingTask = pdfJsApiProvider.getDocument(transformParams as any) as unknown as PdfJs.LoadingTask;
         loadingTask.onPassword = (verifyPassword: (password: string) => void, reason: number): void => {
             switch (reason) {
-                case PdfJsApi.PasswordResponses.NEED_PASSWORD:
+                case pdfJsApiProvider.PasswordResponses.NEED_PASSWORD:
                     isMounted.current &&
                         setStatus(new AskForPasswordState(verifyPassword, PasswordStatus.RequiredPassword));
                     break;
-                case PdfJsApi.PasswordResponses.INCORRECT_PASSWORD:
+                case pdfJsApiProvider.PasswordResponses.INCORRECT_PASSWORD:
                     isMounted.current &&
                         setStatus(new AskForPasswordState(verifyPassword, PasswordStatus.WrongPassword));
                     break;

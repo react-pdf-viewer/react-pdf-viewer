@@ -7,12 +7,40 @@
  */
 
 import * as React from 'react';
-import { PdfJsApi } from './vendors/PdfJsApi';
+import { Spinner } from './components/Spinner';
+import type { PdfJsApiProvider } from './types/PdfJsApiProvider';
+import { PdfJsApiContext } from './vendors/PdfJsApiContext';
 
 export const Worker: React.FC<{
     children?: React.ReactNode;
+    pdfJsLegacy?: boolean;
     workerUrl: string;
-}> = ({ children, workerUrl }) => {
-    PdfJsApi.GlobalWorkerOptions.workerSrc = workerUrl;
-    return <>{children}</>;
+}> = ({ children, pdfJsLegacy = false, workerUrl }) => {
+    const [apiProvider, setApiProvider] = React.useState<PdfJsApiProvider>();
+
+    const setProvider = React.useCallback(
+        (api: PdfJsApiProvider) => {
+            api.GlobalWorkerOptions.workerSrc = workerUrl;
+            setApiProvider(api);
+        },
+        [workerUrl]
+    );
+
+    React.useEffect(() => {
+        if (pdfJsLegacy) {
+            import('pdfjs-dist/legacy/build/pdf').then((result: unknown) => {
+                setProvider(result as PdfJsApiProvider);
+            });
+        } else {
+            import('pdfjs-dist').then((result: unknown) => {
+                setProvider(result as PdfJsApiProvider);
+            });
+        }
+    }, [pdfJsLegacy]);
+
+    return apiProvider ? (
+        <PdfJsApiContext.Provider value={{ pdfJsApiProvider: apiProvider }}>{children}</PdfJsApiContext.Provider>
+    ) : (
+        <Spinner />
+    );
 };
