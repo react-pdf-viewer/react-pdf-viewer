@@ -1,10 +1,14 @@
 # CHANGELOG
 
-## v3.10.0
+## v3.10.0 [WIP]
 
 **New feature**
 
-- `PluginFunctions` provides new `jumpToPreviousPage` and `jumpToNextPage` to jump to the previous and next pages
+-   `PluginFunctions` provides new `jumpToPreviousPage` and `jumpToNextPage` to jump to the previous and next pages
+
+**Bug fix**
+
+-   Jumping to the previous and next pages in wrapped scrol mode don't work properly
 
 ## v3.9.0
 

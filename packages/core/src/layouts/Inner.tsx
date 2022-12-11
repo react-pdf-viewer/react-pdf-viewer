@@ -21,6 +21,7 @@ import { SpecialZoomLevel } from '../structs/SpecialZoomLevel';
 import { TextDirection, ThemeContext } from '../theme/ThemeContext';
 import type { DocumentLoadEvent } from '../types/DocumentLoadEvent';
 import type { LocalizationMap } from '../types/LocalizationMap';
+import type { Offset } from '../types/Offset';
 import type { OpenFile } from '../types/OpenFile';
 import type { PageChangeEvent } from '../types/PageChangeEvent';
 import type { PageLayout } from '../types/PageLayout';
@@ -46,6 +47,11 @@ const NUM_OVERSCAN_PAGES = 3;
 const DEFAULT_PAGE_LAYOUT: PageLayout = {
     buildPageStyles: () => ({}),
     tranformSize: ({ size }) => size,
+};
+
+const ZERO_OFFSET: Offset = {
+    left: 0,
+    top: 0,
 };
 
 export const Inner: React.FC<{
@@ -248,11 +254,11 @@ export const Inner: React.FC<{
 
                 switch (currentState.scrollMode) {
                     case ScrollMode.Horizontal:
-                        virtualizer.scrollToItem(pageIndex, { left, top: 0 });
+                        virtualizer.scrollToItem(pageIndex, ZERO_OFFSET);
                         break;
                     case ScrollMode.Vertical:
                     default:
-                        virtualizer.scrollToItem(pageIndex, { left: 0, top });
+                        virtualizer.scrollToItem(pageIndex, ZERO_OFFSET);
                         break;
                 }
             });
@@ -261,17 +267,17 @@ export const Inner: React.FC<{
     );
 
     const jumpToNextPage = React.useCallback(() => {
-
-    }, []);
-
-    const jumpToPreviousPage = React.useCallback(() => {
-
+        virtualizer.scrollToNextItem(stateRef.current.pageIndex, ZERO_OFFSET);
     }, []);
 
     const jumpToPage = React.useCallback((pageIndex: number) => {
         if (0 <= pageIndex && pageIndex < numPages) {
-            virtualizer.scrollToItem(pageIndex, { left: 0, top: 0 });
+            virtualizer.scrollToItem(pageIndex, ZERO_OFFSET);
         }
+    }, []);
+
+    const jumpToPreviousPage = React.useCallback(() => {
+        virtualizer.scrollToPreviousItem(stateRef.current.pageIndex, ZERO_OFFSET);
     }, []);
 
     const openFile = React.useCallback(
@@ -427,7 +433,7 @@ export const Inner: React.FC<{
     useIsomorphicLayoutEffect(() => {
         const latestPage = stateRef.current.pageIndex;
         if (latestPage > -1 && previousScrollMode !== currentScrollMode) {
-            virtualizer.scrollToItem(latestPage, { left: 0, top: 0 });
+            virtualizer.scrollToItem(latestPage, ZERO_OFFSET);
         }
     }, [currentScrollMode]);
 
@@ -435,7 +441,7 @@ export const Inner: React.FC<{
     useIsomorphicLayoutEffect(() => {
         const latestPage = stateRef.current.pageIndex;
         if (latestPage > -1 && previousRotation !== rotation) {
-            virtualizer.scrollToItem(latestPage, { left: 0, top: 0 });
+            virtualizer.scrollToItem(latestPage, ZERO_OFFSET);
         }
     }, [rotation]);
 
