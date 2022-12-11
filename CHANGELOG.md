@@ -1,8 +1,18 @@
 # CHANGELOG
 
+## v3.10.0 [WIP]
+
+**New feature**
+
+-   `PluginFunctions` provides new `jumpToPreviousPage` and `jumpToNextPage` to jump to the previous and next pages
+
+**Bug fix**
+
+-   Jumping to the previous and next pages in wrapped scrol mode don't work properly
+
 ## v3.9.0
 
-**New features**
+**New feature**
 
 -   New `pageLayout` option to customize the layout of each page.
     The following code adds margin between pages, and center the page in its container:

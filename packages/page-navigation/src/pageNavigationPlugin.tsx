@@ -214,7 +214,9 @@ export const pageNavigationPlugin = (props?: PageNavigationPluginProps): PageNav
     return {
         install: (pluginFunctions: PluginFunctions) => {
             store.update('jumpToDestination', pluginFunctions.jumpToDestination);
+            store.update('jumpToNextPage', pluginFunctions.jumpToNextPage);
             store.update('jumpToPage', pluginFunctions.jumpToPage);
+            store.update('jumpToPreviousPage', pluginFunctions.jumpToPreviousPage);
         },
         renderViewer,
         onAnnotationLayerRender,

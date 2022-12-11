@@ -52,6 +52,8 @@ export interface PluginFunctions {
         leftOffset: number | DestinationOffsetFromViewport,
         scaleTo?: number | SpecialZoomLevel
     ): void;
+    jumpToNextPage(): void;
+    jumpToPreviousPage(): void;
     jumpToPage(pageIndex: number): void;
     openFile(file: File): void;
     rotate(direction: RotateDirection): void;

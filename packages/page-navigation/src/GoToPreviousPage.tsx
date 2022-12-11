@@ -20,9 +20,9 @@ export const GoToPreviousPage: React.FC<{
     const { currentPage } = useCurrentPage(store);
 
     const goToPreviousPage = () => {
-        const jumpToPage = store.get('jumpToPage');
-        if (jumpToPage) {
-            jumpToPage(currentPage - 1);
+        const jumpToPreviousPage = store.get('jumpToPreviousPage');
+        if (jumpToPreviousPage) {
+            jumpToPreviousPage();
         }
     };
 

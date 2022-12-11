@@ -26,6 +26,8 @@ export interface StoreProps {
         leftOffset: number | DestinationOffsetFromViewport,
         scaleTo?: number | SpecialZoomLevel
     ): void;
+    jumpToNextPage(): void;
+    jumpToPreviousPage(): void;
     jumpToPage?(pageIndex: number): void;
     numberOfPages?: number;
 }

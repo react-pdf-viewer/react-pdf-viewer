@@ -286,10 +286,15 @@ export const useVirtual = ({
     getContainerStyles: () => React.CSSProperties;
     getItemStyles: (item: VirtualItem) => React.CSSProperties;
     scrollToItem: (index: number, offset: Offset) => void;
+    scrollToNextItem: (index: number, offset: Offset) => void;
+    scrollToPreviousItem: (index: number, offset: Offset) => void;
     zoom: (scale: number) => void;
 } => {
     const [isSmoothScrolling, setSmoothScrolling] = React.useState(false);
     const onSmoothScroll = React.useCallback((isSmoothScrolling: boolean) => setSmoothScrolling(isSmoothScrolling), []);
+
+    const scrollModeRef = React.useRef(scrollMode);
+    scrollModeRef.current = scrollMode;
 
     const { scrollOffset, scrollTo } = useScroll({
         elementRef: parentRef,
@@ -456,9 +461,50 @@ export const useVirtual = ({
         [scrollTo]
     );
 
+    const scrollToNextItem = React.useCallback((index: number, offset: Offset) => {
+        switch (scrollModeRef.current) {
+            case ScrollMode.Wrapped:
+                const { measurements } = latestRef.current;
+                const start = measurements[index].start;
+                // Find the smallest item whose `top` is bigger than the current item
+                const nextItem = measurements.find((item) => item.start.top > start.top);
+                if (nextItem) {
+                    scrollToItem(nextItem.index, offset);
+                }
+                break;
+            case ScrollMode.Horizontal:
+            case ScrollMode.Vertical:
+            default:
+                scrollToItem(index + 1, offset);
+                break;
+        }
+    }, []);
+
+    const scrollToPreviousItem = React.useCallback((index: number, offset: Offset) => {
+        switch (scrollModeRef.current) {
+            case ScrollMode.Wrapped:
+                const { measurements } = latestRef.current;
+                const start = measurements[index].start;
+                // Find the smallest item whose `top` is smaller than the current item
+                // Because `findLast` isn't available for ES5 target
+                for (let i = numberOfItems - 1; i >= 0; i--) {
+                    if (measurements[i].start.top < start.top) {
+                        scrollToItem(measurements[i].index, offset);
+                        break;
+                    }
+                }
+                break;
+            case ScrollMode.Horizontal:
+            case ScrollMode.Vertical:
+            default:
+                scrollToItem(index - 1, offset);
+                break;
+        }
+    }, []);
+
     // Build the styles for the items' container
     const getContainerStyles = React.useCallback((): React.CSSProperties => {
-        switch (scrollMode) {
+        switch (scrollModeRef.current) {
             case ScrollMode.Horizontal:
                 return {
                     position: 'relative',
@@ -473,14 +519,14 @@ export const useVirtual = ({
                     width: '100%',
                 };
         }
-    }, [scrollMode, totalSize]);
+    }, [totalSize]);
 
     // Build the absolute position styles for each item
     const getItemStyles = React.useCallback(
         (item: VirtualItem): React.CSSProperties => {
             const sideProperty = isRtl ? 'right' : 'left';
             const factor = isRtl ? -1 : 1;
-            switch (scrollMode) {
+            switch (scrollModeRef.current) {
                 case ScrollMode.Horizontal:
                     return {
                         // Size
@@ -517,7 +563,7 @@ export const useVirtual = ({
                     };
             }
         },
-        [isRtl, scrollMode]
+        [isRtl]
     );
 
     const zoom = React.useCallback((scale: number) => {
@@ -541,6 +587,8 @@ export const useVirtual = ({
         getContainerStyles,
         getItemStyles,
         scrollToItem,
+        scrollToNextItem,
+        scrollToPreviousItem,
         zoom,
     };
 };
