@@ -260,6 +260,14 @@ export const Inner: React.FC<{
         []
     );
 
+    const jumpToNextPage = React.useCallback(() => {
+
+    }, []);
+
+    const jumpToPreviousPage = React.useCallback(() => {
+
+    }, []);
+
     const jumpToPage = React.useCallback((pageIndex: number) => {
         if (0 <= pageIndex && pageIndex < numPages) {
             virtualizer.scrollToItem(pageIndex, { left: 0, top: 0 });
@@ -376,6 +384,8 @@ export const Inner: React.FC<{
             getPagesContainer,
             getViewerState,
             jumpToDestination,
+            jumpToNextPage,
+            jumpToPreviousPage,
             jumpToPage,
             openFile,
             rotate,

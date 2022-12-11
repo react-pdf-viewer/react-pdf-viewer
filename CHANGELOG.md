@@ -1,8 +1,14 @@
 # CHANGELOG
 
+## v3.10.0
+
+**New feature**
+
+- `PluginFunctions` provides new `jumpToPreviousPage` and `jumpToNextPage` to jump to the previous and next pages
+
 ## v3.9.0
 
-**New features**
+**New feature**
 
 -   New `pageLayout` option to customize the layout of each page.
     The following code adds margin between pages, and center the page in its container:

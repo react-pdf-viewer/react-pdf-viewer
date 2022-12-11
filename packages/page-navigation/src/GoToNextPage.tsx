@@ -22,9 +22,9 @@ export const GoToNextPage: React.FC<{
     const { numberOfPages } = useNumberOfPages(store);
 
     const goToNextPage = () => {
-        const jumpToPage = store.get('jumpToPage');
-        if (jumpToPage) {
-            jumpToPage(currentPage + 1);
+        const jumpToNextPage = store.get('jumpToNextPage');
+        if (jumpToNextPage) {
+            jumpToNextPage();
         }
     };
 
