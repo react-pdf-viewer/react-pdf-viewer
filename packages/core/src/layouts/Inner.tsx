@@ -254,11 +254,11 @@ export const Inner: React.FC<{
 
                 switch (currentState.scrollMode) {
                     case ScrollMode.Horizontal:
-                        virtualizer.scrollToItem(pageIndex, ZERO_OFFSET);
+                        virtualizer.scrollToItem(pageIndex, { left, top: 0 });
                         break;
                     case ScrollMode.Vertical:
                     default:
-                        virtualizer.scrollToItem(pageIndex, ZERO_OFFSET);
+                        virtualizer.scrollToItem(pageIndex, { left: 0, top });
                         break;
                 }
             });
