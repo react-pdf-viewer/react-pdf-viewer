@@ -239,6 +239,12 @@ export enum SpecialZoomLevel {
     PageWidth = 'PageWidth',
 }
 
+export enum SpreadsMode {
+    EvenSpreads = 'EvenSpreads',
+    NoSpreads = 'NoSpreads',
+    OddSpreads = 'OddSpreads',
+}
+
 export enum ToggleStatus {
     Close = 'Close',
     Open = 'Open',
@@ -500,6 +506,7 @@ export interface ViewerProps {
     renderPage?: RenderPage;
     renderLoader?(percentages: number): React.ReactElement;
     scrollMode?: ScrollMode;
+    spreadsMode?: SpreadsMode;
     // Theme
     theme?: string | ThemeProps;
     transformGetDocumentParams?(options: PdfJs.GetDocumentParams): PdfJs.GetDocumentParams;

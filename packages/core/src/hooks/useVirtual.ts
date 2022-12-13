@@ -8,6 +8,7 @@
 
 import * as React from 'react';
 import { ScrollMode } from '../structs/ScrollMode';
+import { SpreadsMode } from '../structs/SpreadsMode';
 import type { Offset } from '../types/Offset';
 import type { Rect } from '../types/Rect';
 import { clamp } from '../utils/clamp';
@@ -264,6 +265,7 @@ export const useVirtual = ({
     setEndRange,
     parentRef,
     scrollMode,
+    spreadsMode,
     transformSize,
 }: {
     estimateSize: (index: number) => Rect;
@@ -273,6 +275,7 @@ export const useVirtual = ({
     setEndRange(endIndex: number): number;
     parentRef: React.MutableRefObject<HTMLDivElement>;
     scrollMode: ScrollMode;
+    spreadsMode: SpreadsMode;
     // Modify the size of each item. For example, items might have paddings
     transformSize: (index: number, size: Rect) => Rect;
 }): {
@@ -320,6 +323,32 @@ export const useVirtual = ({
 
     const measurements = React.useMemo(() => {
         const measurements: ItemMeasurement[] = [];
+
+        if (spreadsMode === SpreadsMode.OddSpreads) {
+            for (let i = 0; i < numberOfItems; i++) {
+                // const size = cacheMeasure[i] || transformSize(i, estimateSize(i));
+                const size = {
+                    height: parentRect.height,
+                    width: parentRect.width / 2,
+                };
+                const start: Offset = {
+                    left: i % 2 === 0 ? 0 : parentRect.width / 2,
+                    top: Math.floor(i / 2) * parentRect.height,
+                };
+                const end: Offset = {
+                    left: start.left + parentRect.width / 2,
+                    top: start.top + parentRect.height,
+                };
+                measurements[i] = {
+                    index: i,
+                    start,
+                    size,
+                    end,
+                    visibility: -1,
+                };
+            }
+            return measurements;
+        }
 
         let totalWidth = 0;
         let firstOfRow = {
@@ -526,6 +555,20 @@ export const useVirtual = ({
         (item: VirtualItem): React.CSSProperties => {
             const sideProperty = isRtl ? 'right' : 'left';
             const factor = isRtl ? -1 : 1;
+
+            if (spreadsMode === SpreadsMode.OddSpreads) {
+                return {
+                    // Size
+                    height: `${item.size.height}px`,
+                    width: `${item.size.width}px`,
+                    // Absolute position
+                    [sideProperty]: 0,
+                    position: 'absolute',
+                    top: 0,
+                    transform: `translate(${item.start.left}px, ${item.start.top}px)`,
+                };
+            }
+
             switch (scrollModeRef.current) {
                 case ScrollMode.Horizontal:
                     return {

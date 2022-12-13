@@ -18,6 +18,7 @@ import { LocalizationContext } from '../localization/LocalizationContext';
 import { RotateDirection } from '../structs/RotateDirection';
 import { ScrollMode } from '../structs/ScrollMode';
 import { SpecialZoomLevel } from '../structs/SpecialZoomLevel';
+import { SpreadsMode } from '../structs/SpreadsMode';
 import { TextDirection, ThemeContext } from '../theme/ThemeContext';
 import type { DocumentLoadEvent } from '../types/DocumentLoadEvent';
 import type { LocalizationMap } from '../types/LocalizationMap';
@@ -66,6 +67,7 @@ export const Inner: React.FC<{
     plugins: Plugin[];
     renderPage?: RenderPage;
     scrollMode: ScrollMode;
+    spreadsMode: SpreadsMode;
     viewerState: ViewerState;
     onDocumentLoad(e: DocumentLoadEvent): void;
     onOpenFile(fileName: string, data: Uint8Array): void;
@@ -85,6 +87,7 @@ export const Inner: React.FC<{
     plugins,
     renderPage,
     scrollMode,
+    spreadsMode,
     viewerState,
     onDocumentLoad,
     onOpenFile,
@@ -168,6 +171,7 @@ export const Inner: React.FC<{
         numberOfItems: numPages,
         parentRef: pagesRef,
         scrollMode: currentScrollMode,
+        spreadsMode,
         setStartRange,
         setEndRange,
         transformSize,
