@@ -1,4 +1,4 @@
-import { Viewer } from '@react-pdf-viewer/core';
+import { SpreadsMode, Viewer } from '@react-pdf-viewer/core';
 import '@react-pdf-viewer/core/lib/styles/index.css';
 import { defaultLayoutPlugin } from '@react-pdf-viewer/default-layout';
 import '@react-pdf-viewer/default-layout/lib/styles/index.css';
@@ -15,7 +15,12 @@ const App = () => {
                 margin: '1rem auto',
             }}
         >
-            <Viewer fileUrl={'/pdf-open-parameters.pdf'} plugins={[defaultLayoutPluginInstance]} />
+            <Viewer
+                defaultScale={0.5}
+                spreadsMode={SpreadsMode.OddSpreads}
+                fileUrl={'/pdf-open-parameters.pdf'}
+                plugins={[defaultLayoutPluginInstance]}
+            />
         </div>
     );
 };

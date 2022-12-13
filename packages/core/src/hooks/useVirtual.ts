@@ -8,6 +8,7 @@
 
 import * as React from 'react';
 import { ScrollMode } from '../structs/ScrollMode';
+import { SpreadsMode } from '../structs/SpreadsMode';
 import type { Offset } from '../types/Offset';
 import type { Rect } from '../types/Rect';
 import { clamp } from '../utils/clamp';
@@ -43,7 +44,7 @@ const calculateRange = (
 ): {
     start: number;
     end: number;
-    maxVisbilityIndex: number;
+    maxVisbilityItem: number;
     visibilities: Record<string, number>;
 } => {
     let currentOffset = 0;
@@ -87,7 +88,7 @@ const calculateRange = (
     let end = start;
     // The visiblities of each item
     const visibilities: Record<string, number> = {};
-    let maxVisbilityIndex = start;
+    let maxVisbilityItem = start;
     let maxVisbility = -1;
     while (end <= size) {
         const itemRect = measurements[end].size;
@@ -243,7 +244,7 @@ const calculateRange = (
         visibilities[end] = visibility.width * visibility.height;
         if (maxVisbility < visibilities[end]) {
             maxVisbility = visibilities[end];
-            maxVisbilityIndex = end;
+            maxVisbilityItem = end;
         }
         end++;
     }
@@ -251,7 +252,7 @@ const calculateRange = (
     return {
         start,
         end,
-        maxVisbilityIndex,
+        maxVisbilityItem,
         visibilities,
     };
 };
@@ -264,6 +265,7 @@ export const useVirtual = ({
     setEndRange,
     parentRef,
     scrollMode,
+    spreadsMode,
     transformSize,
 }: {
     estimateSize: (index: number) => Rect;
@@ -273,6 +275,7 @@ export const useVirtual = ({
     setEndRange(endIndex: number): number;
     parentRef: React.MutableRefObject<HTMLDivElement>;
     scrollMode: ScrollMode;
+    spreadsMode: SpreadsMode;
     // Modify the size of each item. For example, items might have paddings
     transformSize: (index: number, size: Rect) => Rect;
 }): {
@@ -321,6 +324,34 @@ export const useVirtual = ({
     const measurements = React.useMemo(() => {
         const measurements: ItemMeasurement[] = [];
 
+        // `OddSpreads` mode
+        if (spreadsMode === SpreadsMode.OddSpreads) {
+            for (let i = 0; i < numberOfItems; i++) {
+                const transformedSize = cacheMeasure[i] || transformSize(i, estimateSize(i));
+                const size = {
+                    height: Math.max(parentRect.height, transformedSize.height),
+                    width: Math.max(parentRect.width / 2, transformedSize.width),
+                };
+                const start: Offset = {
+                    left: i % 2 === 0 ? 0 : size.width,
+                    top: Math.floor(i / 2) * size.height,
+                };
+                const end: Offset = {
+                    left: start.left + size.width,
+                    top: start.top + size.height,
+                };
+                measurements[i] = {
+                    index: i,
+                    start,
+                    size,
+                    end,
+                    visibility: -1,
+                };
+            }
+            return measurements;
+        }
+
+        // `NoSpreads` mode
         let totalWidth = 0;
         let firstOfRow = {
             left: 0,
@@ -398,12 +429,26 @@ export const useVirtual = ({
     latestRef.current.measurements = measurements;
     latestRef.current.totalSize = totalSize;
 
-    const { maxVisbilityIndex, visibilities, start, end } = calculateRange(
+    const { maxVisbilityItem, visibilities, start, end } = calculateRange(
         scrollMode,
         latestRef.current.measurements,
         latestRef.current.parentRect,
         latestRef.current.scrollOffset
     );
+    
+    // Determine the page that has max visbility
+    let maxVisbilityIndex = maxVisbilityItem;
+    switch (spreadsMode) {
+        case SpreadsMode.EvenSpreads:
+            break;
+        case SpreadsMode.OddSpreads:
+            maxVisbilityIndex = (maxVisbilityItem % 2 === 0) ? maxVisbilityItem : maxVisbilityItem - 1;
+            break;
+        case SpreadsMode.NoSpreads:
+        default:
+            maxVisbilityIndex = maxVisbilityItem;
+            break;
+    }
 
     const startRange = setStartRange(start);
     const endRange = setEndRange(end);
@@ -461,16 +506,40 @@ export const useVirtual = ({
         [scrollTo]
     );
 
+    const scrollToSmallestItemAbove = React.useCallback((index: number, offset: Offset) => {
+        const { measurements } = latestRef.current;
+        const start = measurements[index].start;
+        // Find the smallest item whose `top` is bigger than the current item
+        const nextItem = measurements.find((item) => item.start.top > start.top);
+        if (nextItem) {
+            scrollToItem(nextItem.index, offset);
+        }
+    }, []);
+
+    const scrollToSmallestItemBelow = React.useCallback((index: number, offset: Offset) => {
+        const { measurements } = latestRef.current;
+        const start = measurements[index].start;
+        // Find the smallest item whose `top` is smaller than the current item
+        // Because `findLast` isn't available for ES5 target
+        for (let i = numberOfItems - 1; i >= 0; i--) {
+            if (measurements[i].start.top < start.top) {
+                scrollToItem(measurements[i].index, offset);
+                break;
+            }
+        }
+    }, []);
+
     const scrollToNextItem = React.useCallback((index: number, offset: Offset) => {
+        // `OddSpreads` mode
+        if (spreadsMode === SpreadsMode.OddSpreads) {
+            scrollToSmallestItemAbove(index, offset);
+            return;
+        }
+
+        // `NoSpreads` mode
         switch (scrollModeRef.current) {
             case ScrollMode.Wrapped:
-                const { measurements } = latestRef.current;
-                const start = measurements[index].start;
-                // Find the smallest item whose `top` is bigger than the current item
-                const nextItem = measurements.find((item) => item.start.top > start.top);
-                if (nextItem) {
-                    scrollToItem(nextItem.index, offset);
-                }
+                scrollToSmallestItemAbove(index, offset);
                 break;
             case ScrollMode.Horizontal:
             case ScrollMode.Vertical:
@@ -481,18 +550,16 @@ export const useVirtual = ({
     }, []);
 
     const scrollToPreviousItem = React.useCallback((index: number, offset: Offset) => {
+        // `OddSpreads` mode
+        if (spreadsMode === SpreadsMode.OddSpreads) {
+            scrollToSmallestItemBelow(index, offset);
+            return;
+        }
+
+        // `NoSpreads` mode
         switch (scrollModeRef.current) {
             case ScrollMode.Wrapped:
-                const { measurements } = latestRef.current;
-                const start = measurements[index].start;
-                // Find the smallest item whose `top` is smaller than the current item
-                // Because `findLast` isn't available for ES5 target
-                for (let i = numberOfItems - 1; i >= 0; i--) {
-                    if (measurements[i].start.top < start.top) {
-                        scrollToItem(measurements[i].index, offset);
-                        break;
-                    }
-                }
+                scrollToSmallestItemBelow(index, offset);
                 break;
             case ScrollMode.Horizontal:
             case ScrollMode.Vertical:
@@ -526,6 +593,20 @@ export const useVirtual = ({
         (item: VirtualItem): React.CSSProperties => {
             const sideProperty = isRtl ? 'right' : 'left';
             const factor = isRtl ? -1 : 1;
+
+            if (spreadsMode === SpreadsMode.OddSpreads) {
+                return {
+                    // Size
+                    height: `${item.size.height}px`,
+                    width: `${item.size.width}px`,
+                    // Absolute position
+                    [sideProperty]: 0,
+                    position: 'absolute',
+                    top: 0,
+                    transform: `translate(${item.start.left}px, ${item.start.top}px)`,
+                };
+            }
+
             switch (scrollModeRef.current) {
                 case ScrollMode.Horizontal:
                     return {

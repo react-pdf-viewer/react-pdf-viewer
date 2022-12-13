@@ -14,6 +14,7 @@ import { PageSizeCalculator } from './layouts/PageSizeCalculator';
 import { DocumentLoader, RenderError } from './loader/DocumentLoader';
 import { DefaultLocalization, LocalizationContext } from './localization/LocalizationContext';
 import { ScrollMode } from './structs/ScrollMode';
+import { SpreadsMode } from './structs/SpreadsMode';
 import { SpecialZoomLevel } from './structs/SpecialZoomLevel';
 import { TextDirection, ThemeContext } from './theme/ThemeContext';
 import { withTheme } from './theme/withTheme';
@@ -64,6 +65,7 @@ export const Viewer: React.FC<{
     renderPage?: RenderPage;
     renderLoader?(percentages: number): React.ReactElement;
     scrollMode?: ScrollMode;
+    spreadsMode?: SpreadsMode;
     transformGetDocumentParams?(options: PdfJs.GetDocumentParams): PdfJs.GetDocumentParams;
     // Theme
     theme?: string | ThemeProps;
@@ -92,6 +94,7 @@ export const Viewer: React.FC<{
     renderPage,
     renderLoader,
     scrollMode = ScrollMode.Vertical,
+    spreadsMode = SpreadsMode.NoSpreads,
     transformGetDocumentParams,
     theme = {
         direction: TextDirection.LeftToRight,
@@ -210,6 +213,7 @@ export const Viewer: React.FC<{
                                             plugins={plugins}
                                             renderPage={renderPage}
                                             scrollMode={scrollMode}
+                                            spreadsMode={spreadsMode}
                                             viewerState={{
                                                 file,
                                                 pageIndex: -1,

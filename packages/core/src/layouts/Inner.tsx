@@ -18,6 +18,7 @@ import { LocalizationContext } from '../localization/LocalizationContext';
 import { RotateDirection } from '../structs/RotateDirection';
 import { ScrollMode } from '../structs/ScrollMode';
 import { SpecialZoomLevel } from '../structs/SpecialZoomLevel';
+import { SpreadsMode } from '../structs/SpreadsMode';
 import { TextDirection, ThemeContext } from '../theme/ThemeContext';
 import type { DocumentLoadEvent } from '../types/DocumentLoadEvent';
 import type { LocalizationMap } from '../types/LocalizationMap';
@@ -66,6 +67,7 @@ export const Inner: React.FC<{
     plugins: Plugin[];
     renderPage?: RenderPage;
     scrollMode: ScrollMode;
+    spreadsMode: SpreadsMode;
     viewerState: ViewerState;
     onDocumentLoad(e: DocumentLoadEvent): void;
     onOpenFile(fileName: string, data: Uint8Array): void;
@@ -85,6 +87,7 @@ export const Inner: React.FC<{
     plugins,
     renderPage,
     scrollMode,
+    spreadsMode,
     viewerState,
     onDocumentLoad,
     onOpenFile,
@@ -168,6 +171,7 @@ export const Inner: React.FC<{
         numberOfItems: numPages,
         parentRef: pagesRef,
         scrollMode: currentScrollMode,
+        spreadsMode,
         setStartRange,
         setEndRange,
         transformSize,
@@ -560,7 +564,13 @@ export const Inner: React.FC<{
                         {virtualizer.virtualItems.map((item) => (
                             <div
                                 aria-label={pageLabel.replace('{{pageIndex}}', `${item.index + 1}`)}
-                                className="rpv-core__inner-page"
+                                className={classNames({
+                                    'rpv-core__inner-page': true,
+                                    'rpv-core__inner-page--odd-spreads-even':
+                                        spreadsMode === SpreadsMode.OddSpreads && item.index % 2 === 0,
+                                    'rpv-core__inner-page--odd-spreads-odd':
+                                        spreadsMode === SpreadsMode.OddSpreads && item.index % 2 === 1,
+                                })}
                                 key={item.index}
                                 role="region"
                                 style={Object.assign(
@@ -581,6 +591,7 @@ export const Inner: React.FC<{
                                     rotation={rotation}
                                     scale={scale}
                                     shouldRender={renderPageIndex === item.index}
+                                    spreadsMode={spreadsMode}
                                     onExecuteNamedAction={executeNamedAction}
                                     onJumpToDest={jumpToDestination}
                                     onRenderCompleted={handlePageRenderCompleted}

@@ -37,6 +37,7 @@ export { Position } from './structs/Position';
 export { RotateDirection } from './structs/RotateDirection';
 export { ScrollMode } from './structs/ScrollMode';
 export { SpecialZoomLevel } from './structs/SpecialZoomLevel';
+export { SpreadsMode } from './structs/SpreadsMode';
 export { ToggleStatus } from './structs/ToggleStatus';
 export { TextDirection, ThemeContext } from './theme/ThemeContext';
 export * from './types/index';
