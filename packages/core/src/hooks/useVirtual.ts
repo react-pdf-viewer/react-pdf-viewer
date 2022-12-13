@@ -44,7 +44,7 @@ const calculateRange = (
 ): {
     start: number;
     end: number;
-    maxVisbilityIndex: number;
+    maxVisbilityItem: number;
     visibilities: Record<string, number>;
 } => {
     let currentOffset = 0;
@@ -88,7 +88,7 @@ const calculateRange = (
     let end = start;
     // The visiblities of each item
     const visibilities: Record<string, number> = {};
-    let maxVisbilityIndex = start;
+    let maxVisbilityItem = start;
     let maxVisbility = -1;
     while (end <= size) {
         const itemRect = measurements[end].size;
@@ -244,7 +244,7 @@ const calculateRange = (
         visibilities[end] = visibility.width * visibility.height;
         if (maxVisbility < visibilities[end]) {
             maxVisbility = visibilities[end];
-            maxVisbilityIndex = end;
+            maxVisbilityItem = end;
         }
         end++;
     }
@@ -252,7 +252,7 @@ const calculateRange = (
     return {
         start,
         end,
-        maxVisbilityIndex,
+        maxVisbilityItem,
         visibilities,
     };
 };
@@ -429,12 +429,26 @@ export const useVirtual = ({
     latestRef.current.measurements = measurements;
     latestRef.current.totalSize = totalSize;
 
-    const { maxVisbilityIndex, visibilities, start, end } = calculateRange(
+    const { maxVisbilityItem, visibilities, start, end } = calculateRange(
         scrollMode,
         latestRef.current.measurements,
         latestRef.current.parentRect,
         latestRef.current.scrollOffset
     );
+    
+    // Determine the page that has max visbility
+    let maxVisbilityIndex = maxVisbilityItem;
+    switch (spreadsMode) {
+        case SpreadsMode.EvenSpreads:
+            break;
+        case SpreadsMode.OddSpreads:
+            maxVisbilityIndex = (maxVisbilityItem % 2 === 0) ? maxVisbilityItem : maxVisbilityItem - 1;
+            break;
+        case SpreadsMode.NoSpreads:
+        default:
+            maxVisbilityIndex = maxVisbilityItem;
+            break;
+    }
 
     const startRange = setStartRange(start);
     const endRange = setEndRange(end);
