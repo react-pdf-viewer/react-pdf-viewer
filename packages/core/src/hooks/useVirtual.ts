@@ -7,6 +7,7 @@
  */
 
 import * as React from 'react';
+import { ScrollDirection } from '../structs/ScrollDirection';
 import { ScrollMode } from '../structs/ScrollMode';
 import { SpreadsMode } from '../structs/SpreadsMode';
 import type { Offset } from '../types/Offset';
@@ -302,7 +303,12 @@ export const useVirtual = ({
     const { scrollOffset, scrollTo } = useScroll({
         elementRef: parentRef,
         isRtl,
-        scrollMode,
+        scrollDirection:
+            scrollMode === ScrollMode.Wrapped || spreadsMode === SpreadsMode.OddSpreads
+                ? ScrollDirection.Both
+                : scrollMode === ScrollMode.Horizontal
+                ? ScrollDirection.Horizontal
+                : ScrollDirection.Vertical,
         onSmoothScroll,
     });
     const parentRect = useMeasureRect({
@@ -435,14 +441,14 @@ export const useVirtual = ({
         latestRef.current.parentRect,
         latestRef.current.scrollOffset
     );
-    
+
     // Determine the page that has max visbility
     let maxVisbilityIndex = maxVisbilityItem;
     switch (spreadsMode) {
         case SpreadsMode.EvenSpreads:
             break;
         case SpreadsMode.OddSpreads:
-            maxVisbilityIndex = (maxVisbilityItem % 2 === 0) ? maxVisbilityItem : maxVisbilityItem - 1;
+            maxVisbilityIndex = maxVisbilityItem % 2 === 0 ? maxVisbilityItem : maxVisbilityItem - 1;
             break;
         case SpreadsMode.NoSpreads:
         default:

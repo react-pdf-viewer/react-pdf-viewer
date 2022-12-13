@@ -7,7 +7,7 @@
  */
 
 import * as React from 'react';
-import { ScrollMode } from '../structs/ScrollMode';
+import { ScrollDirection } from '../structs/ScrollDirection';
 import type { Offset } from '../types/Offset';
 import { easeOutQuart } from '../utils/easeOutQuart';
 import { smoothScroll } from '../utils/smoothScroll';
@@ -29,12 +29,12 @@ const SCROLL_DURATION = 400;
 export const useScroll = ({
     elementRef,
     isRtl,
-    scrollMode,
+    scrollDirection,
     onSmoothScroll,
 }: {
     elementRef: React.MutableRefObject<HTMLDivElement>;
     isRtl: boolean;
-    scrollMode: ScrollMode;
+    scrollDirection: ScrollDirection;
     onSmoothScroll: (isScrollingSmoothly: boolean) => void;
 }): {
     scrollOffset: Offset;
@@ -43,8 +43,8 @@ export const useScroll = ({
     const [scrollOffset, setScrollOffset] = useRafState(ZERO_OFFSET);
     const [element, setElement] = React.useState(elementRef.current);
     const factor = isRtl ? -1 : 1;
-    const latestRef = React.useRef(scrollMode);
-    latestRef.current = scrollMode;
+    const latestRef = React.useRef(scrollDirection);
+    latestRef.current = scrollDirection;
 
     const handleSmoothScrollingComplete = React.useCallback(() => onSmoothScroll(false), []);
 
@@ -53,13 +53,19 @@ export const useScroll = ({
             return;
         }
         switch (latestRef.current) {
-            case ScrollMode.Horizontal:
+            case ScrollDirection.Horizontal:
                 setScrollOffset({
                     left: factor * element.scrollLeft,
                     top: 0,
                 });
                 break;
-            case ScrollMode.Vertical:
+            case ScrollDirection.Both:
+                setScrollOffset({
+                    left: factor * element.scrollLeft,
+                    top: element.scrollTop,
+                });
+                break;
+            case ScrollDirection.Vertical:
             default:
                 setScrollOffset({
                     left: 0,
@@ -92,24 +98,32 @@ export const useScroll = ({
                 return;
             }
 
-            let updatePosition = 0;
-            let currentScrollMode = ScrollMode.Vertical;
+            let updatePosition = {
+                left: 0,
+                top: 0,
+            };
+            let currentScrollDirection = ScrollDirection.Vertical;
             switch (latestRef.current) {
-                case ScrollMode.Horizontal:
-                    updatePosition = factor * targetPosition.left;
-                    currentScrollMode = ScrollMode.Horizontal;
+                case ScrollDirection.Horizontal:
+                    updatePosition.left = factor * targetPosition.left;
+                    currentScrollDirection = ScrollDirection.Horizontal;
                     break;
-                case ScrollMode.Vertical:
+                case ScrollDirection.Both:
+                    updatePosition.left = factor * targetPosition.left;
+                    updatePosition.top = targetPosition.top;
+                    currentScrollDirection = ScrollDirection.Both;
+                    break;
+                case ScrollDirection.Vertical:
                 default:
-                    updatePosition = targetPosition.top;
-                    currentScrollMode = ScrollMode.Vertical;
+                    updatePosition.top = targetPosition.top;
+                    currentScrollDirection = ScrollDirection.Vertical;
                     break;
             }
             if (withSmoothScroll) {
                 onSmoothScroll(true);
                 smoothScroll(
                     ele,
-                    currentScrollMode,
+                    currentScrollDirection,
                     updatePosition,
                     SCROLL_DURATION,
                     easeOutQuart,
@@ -117,12 +131,16 @@ export const useScroll = ({
                 );
             } else {
                 switch (latestRef.current) {
-                    case ScrollMode.Horizontal:
-                        ele.scrollLeft = updatePosition;
+                    case ScrollDirection.Horizontal:
+                        ele.scrollLeft = updatePosition.left;
                         break;
-                    case ScrollMode.Vertical:
+                    case ScrollDirection.Both:
+                        ele.scrollLeft = updatePosition.left;
+                        ele.scrollTop = updatePosition.top;
+                        break;
+                    case ScrollDirection.Vertical:
                     default:
-                        ele.scrollTop = updatePosition;
+                        ele.scrollTop = updatePosition.top;
                         break;
                 }
             }

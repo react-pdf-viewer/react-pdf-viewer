@@ -6,30 +6,43 @@
  * @copyright 2019-2022 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import { ScrollMode } from '../structs/ScrollMode';
+import { ScrollDirection } from '../structs/ScrollDirection';
+import type { Offset } from '../types/Offset';
+
+const EPS = Number.EPSILON;
 
 export const smoothScroll = (
     ele: HTMLDivElement,
-    scrollMode: ScrollMode,
-    targetPosition: number,
+    scrollDirection: ScrollDirection,
+    targetPosition: Offset,
     duration: number,
     easing: (t: number) => number = (t) => t,
     onReachTarget: () => void = () => {}
 ) => {
-    let start = 0;
-    switch (scrollMode) {
-        case ScrollMode.Horizontal:
-            start = ele.scrollLeft;
-        case ScrollMode.Vertical:
+    let top = 0;
+    let left = 0;
+    switch (scrollDirection) {
+        case ScrollDirection.Horizontal:
+            left = ele.scrollLeft;
+            top = 0;
+        case ScrollDirection.Both:
+            left = ele.scrollLeft;
+            top = ele.scrollTop;
+            break;
+        case ScrollDirection.Vertical:
         default:
-            start = ele.scrollTop;
+            left = 0;
+            top = ele.scrollTop;
             break;
     }
 
     let startTime: number = -1;
     let requestId: number;
-    const offset = start - targetPosition;
-    if (offset === 0) {
+    const offset = {
+        left: left - targetPosition.left,
+        top: top - targetPosition.top,
+    };
+    if (offset.top === 0 && offset.left) {
         return;
     }
 
@@ -44,16 +57,27 @@ export const smoothScroll = (
         const percent = Math.min(time / duration, 1);
         const easedPercent = easing(percent);
 
-        let updatePosition = start - offset * easedPercent;
-        switch (scrollMode) {
-            case ScrollMode.Horizontal:
-                ele.scrollLeft = updatePosition;
-            case ScrollMode.Vertical:
+        let updatePosition = {
+            left: left - offset.left * easedPercent,
+            top: top - offset.top * easedPercent,
+        };
+        switch (scrollDirection) {
+            case ScrollDirection.Horizontal:
+                ele.scrollLeft = updatePosition.left;
+                break;
+            case ScrollDirection.Both:
+                ele.scrollLeft = updatePosition.left;
+                ele.scrollTop = updatePosition.top;
+                break;
+            case ScrollDirection.Vertical:
             default:
-                ele.scrollTop = updatePosition;
+                ele.scrollTop = updatePosition.top;
                 break;
         }
-        if (updatePosition === targetPosition) {
+        if (
+            Math.abs(updatePosition.top - targetPosition.top) <= EPS &&
+            Math.abs(updatePosition.left - targetPosition.left) <= EPS
+        ) {
             onReachTarget();
         }
 
