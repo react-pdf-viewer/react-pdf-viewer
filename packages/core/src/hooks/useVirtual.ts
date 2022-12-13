@@ -506,16 +506,40 @@ export const useVirtual = ({
         [scrollTo]
     );
 
+    const scrollToSmallestItemAbove = React.useCallback((index: number, offset: Offset) => {
+        const { measurements } = latestRef.current;
+        const start = measurements[index].start;
+        // Find the smallest item whose `top` is bigger than the current item
+        const nextItem = measurements.find((item) => item.start.top > start.top);
+        if (nextItem) {
+            scrollToItem(nextItem.index, offset);
+        }
+    }, []);
+
+    const scrollToSmallestItemBelow = React.useCallback((index: number, offset: Offset) => {
+        const { measurements } = latestRef.current;
+        const start = measurements[index].start;
+        // Find the smallest item whose `top` is smaller than the current item
+        // Because `findLast` isn't available for ES5 target
+        for (let i = numberOfItems - 1; i >= 0; i--) {
+            if (measurements[i].start.top < start.top) {
+                scrollToItem(measurements[i].index, offset);
+                break;
+            }
+        }
+    }, []);
+
     const scrollToNextItem = React.useCallback((index: number, offset: Offset) => {
+        // `OddSpreads` mode
+        if (spreadsMode === SpreadsMode.OddSpreads) {
+            scrollToSmallestItemAbove(index, offset);
+            return;
+        }
+
+        // `NoSpreads` mode
         switch (scrollModeRef.current) {
             case ScrollMode.Wrapped:
-                const { measurements } = latestRef.current;
-                const start = measurements[index].start;
-                // Find the smallest item whose `top` is bigger than the current item
-                const nextItem = measurements.find((item) => item.start.top > start.top);
-                if (nextItem) {
-                    scrollToItem(nextItem.index, offset);
-                }
+                scrollToSmallestItemAbove(index, offset);
                 break;
             case ScrollMode.Horizontal:
             case ScrollMode.Vertical:
@@ -526,18 +550,16 @@ export const useVirtual = ({
     }, []);
 
     const scrollToPreviousItem = React.useCallback((index: number, offset: Offset) => {
+        // `OddSpreads` mode
+        if (spreadsMode === SpreadsMode.OddSpreads) {
+            scrollToSmallestItemBelow(index, offset);
+            return;
+        }
+
+        // `NoSpreads` mode
         switch (scrollModeRef.current) {
             case ScrollMode.Wrapped:
-                const { measurements } = latestRef.current;
-                const start = measurements[index].start;
-                // Find the smallest item whose `top` is smaller than the current item
-                // Because `findLast` isn't available for ES5 target
-                for (let i = numberOfItems - 1; i >= 0; i--) {
-                    if (measurements[i].start.top < start.top) {
-                        scrollToItem(measurements[i].index, offset);
-                        break;
-                    }
-                }
+                scrollToSmallestItemBelow(index, offset);
                 break;
             case ScrollMode.Horizontal:
             case ScrollMode.Vertical:
