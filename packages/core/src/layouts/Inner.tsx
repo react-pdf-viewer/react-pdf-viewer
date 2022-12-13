@@ -564,7 +564,13 @@ export const Inner: React.FC<{
                         {virtualizer.virtualItems.map((item) => (
                             <div
                                 aria-label={pageLabel.replace('{{pageIndex}}', `${item.index + 1}`)}
-                                className="rpv-core__inner-page"
+                                className={classNames({
+                                    'rpv-core__inner-page': true,
+                                    'rpv-core__inner-page--odd-spreads-even':
+                                        spreadsMode === SpreadsMode.OddSpreads && item.index % 2 === 0,
+                                    'rpv-core__inner-page--odd-spreads-odd':
+                                        spreadsMode === SpreadsMode.OddSpreads && item.index % 2 === 1,
+                                })}
                                 key={item.index}
                                 role="region"
                                 style={Object.assign(
@@ -585,6 +591,7 @@ export const Inner: React.FC<{
                                     rotation={rotation}
                                     scale={scale}
                                     shouldRender={renderPageIndex === item.index}
+                                    spreadsMode={spreadsMode}
                                     onExecuteNamedAction={executeNamedAction}
                                     onJumpToDest={jumpToDestination}
                                     onRenderCompleted={handlePageRenderCompleted}

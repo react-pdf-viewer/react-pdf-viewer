@@ -15,3 +15,15 @@
 .rpv-core__inner-page {
     background-color: var(--rpv-core__inner-page-background-color);
 }
+
+// Spreads mode
+.rpv-core__inner-page--odd-spreads-even {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+}
+.rpv-core__inner-page--odd-spreads-odd {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+}

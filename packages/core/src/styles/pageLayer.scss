@@ -10,7 +10,6 @@
     align-items: center;    
     display: flex;
     justify-content: center;
-    margin: 0 auto;
     overflow: hidden;
     position: relative;
 
@@ -24,4 +23,8 @@
         top: 0.25rem;
         box-shadow: var(--rpv-core__page-layer-box-shadow);
     }
+}
+
+.rpv-core__page-layer--no-spreads {
+    margin: 0 auto;
 }

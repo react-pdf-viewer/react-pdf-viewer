@@ -324,20 +324,21 @@ export const useVirtual = ({
     const measurements = React.useMemo(() => {
         const measurements: ItemMeasurement[] = [];
 
+        // `OddSpreads` mode
         if (spreadsMode === SpreadsMode.OddSpreads) {
             for (let i = 0; i < numberOfItems; i++) {
-                // const size = cacheMeasure[i] || transformSize(i, estimateSize(i));
+                const transformedSize = cacheMeasure[i] || transformSize(i, estimateSize(i));
                 const size = {
-                    height: parentRect.height,
-                    width: parentRect.width / 2,
+                    height: Math.max(parentRect.height, transformedSize.height),
+                    width: Math.max(parentRect.width / 2, transformedSize.width),
                 };
                 const start: Offset = {
-                    left: i % 2 === 0 ? 0 : parentRect.width / 2,
-                    top: Math.floor(i / 2) * parentRect.height,
+                    left: i % 2 === 0 ? 0 : size.width,
+                    top: Math.floor(i / 2) * size.height,
                 };
                 const end: Offset = {
-                    left: start.left + parentRect.width / 2,
-                    top: start.top + parentRect.height,
+                    left: start.left + size.width,
+                    top: start.top + size.height,
                 };
                 measurements[i] = {
                     index: i,
@@ -350,6 +351,7 @@ export const useVirtual = ({
             return measurements;
         }
 
+        // `NoSpreads` mode
         let totalWidth = 0;
         let firstOfRow = {
             left: 0,
