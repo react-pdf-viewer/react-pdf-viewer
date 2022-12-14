@@ -7,8 +7,16 @@
  */
 
 .rpv-core__inner-pages {
+    overflow-x: auto;
+    overflow-y: auto;
+
     &--rtl {
         direction: rtl;
+    }
+
+    &--odd-spreads {
+        overflow-x: auto;
+        overflow-y: hidden;
     }
 }
 

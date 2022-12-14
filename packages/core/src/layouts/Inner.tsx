@@ -546,6 +546,7 @@ export const Inner: React.FC<{
                     'data-testid': 'core__inner-pages',
                     className: classNames({
                         'rpv-core__inner-pages': true,
+                        'rpv-core__inner-pages--odd-spreads': spreadsMode === SpreadsMode.OddSpreads,
                         'rpv-core__inner-pages--horizontal': currentScrollMode === ScrollMode.Horizontal,
                         'rpv-core__inner-pages--rtl': isRtl,
                         'rpv-core__inner-pages--vertical': currentScrollMode === ScrollMode.Vertical,
@@ -554,7 +555,6 @@ export const Inner: React.FC<{
                     ref: pagesRef,
                     style: {
                         height: '100%',
-                        overflow: 'auto',
                         // We need this to jump between destinations or searching results
                         position: 'relative',
                     },
