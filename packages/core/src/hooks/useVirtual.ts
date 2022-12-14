@@ -38,7 +38,7 @@ const ZERO_OFFSET: Offset = {
 };
 
 const calculateRange = (
-    scrollMode: ScrollMode,
+    scrollDirection: ScrollDirection,
     measurements: ItemMeasurement[],
     outerSize: Rect,
     scrollOffset: Offset
@@ -50,11 +50,11 @@ const calculateRange = (
 } => {
     let currentOffset = 0;
 
-    switch (scrollMode) {
-        case ScrollMode.Horizontal:
+    switch (scrollDirection) {
+        case ScrollDirection.Horizontal:
             currentOffset = scrollOffset.left;
             break;
-        case ScrollMode.Vertical:
+        case ScrollDirection.Vertical:
         default:
             currentOffset = scrollOffset.top;
             break;
@@ -62,18 +62,18 @@ const calculateRange = (
 
     const size = measurements.length - 1;
     const getOffset = (index: number) => {
-        switch (scrollMode) {
-            case ScrollMode.Horizontal:
+        switch (scrollDirection) {
+            case ScrollDirection.Horizontal:
                 return measurements[index].start.left;
-            case ScrollMode.Wrapped:
-            case ScrollMode.Vertical:
+            case ScrollDirection.Both:
+            case ScrollDirection.Vertical:
             default:
                 return measurements[index].start.top;
         }
     };
 
     let start = findNearest(0, size, currentOffset, getOffset);
-    if (scrollMode === ScrollMode.Wrapped) {
+    if (scrollDirection === ScrollDirection.Both) {
         // Find the first item in the same row which has the same `top` value
         // and the `left` value is greater than `scrollOffset.left`
         const startTop = measurements[start].start.top;
@@ -117,17 +117,17 @@ const calculateRange = (
         //          |                        |
         //    (6)   |           (5)          |   (4)
         //          |                        |
-        if (scrollMode === ScrollMode.Horizontal && visibleSize.width < 0) {
+        if (scrollDirection === ScrollDirection.Horizontal && visibleSize.width < 0) {
             // The top left corner belongs to the (2, 3, 4) areas
             end--;
             break;
         }
-        if (scrollMode === ScrollMode.Vertical && visibleSize.height < 0) {
+        if (scrollDirection === ScrollDirection.Vertical && visibleSize.height < 0) {
             // The top left corner belongs to the (4, 5) areas
             end--;
             break;
         }
-        if (scrollMode === ScrollMode.Wrapped && (visibleSize.width < 0 || visibleSize.height < 0)) {
+        if (scrollDirection === ScrollDirection.Both && (visibleSize.width < 0 || visibleSize.height < 0)) {
             // The top left corner belongs to the (2, 3, 4, 5) areas
             end--;
             break;
@@ -135,7 +135,7 @@ const calculateRange = (
 
         // Calculate the width that is visible within the container
         // We don't care it in the vertical scroll mode
-        if (scrollMode === ScrollMode.Vertical) {
+        if (scrollDirection === ScrollDirection.Vertical) {
             visibility.width = 1;
         } else if (topLeftCorner.left < 0) {
             // The top left corner belongs to the (1) area
@@ -189,7 +189,7 @@ const calculateRange = (
 
         // Calculate the height that is visible within the container
         // There are four cases
-        if (scrollMode === ScrollMode.Horizontal) {
+        if (scrollDirection === ScrollDirection.Horizontal) {
             visibility.height = 1;
         } else if (topLeftCorner.top < 0) {
             // The top left corner belongs to the (1) area
@@ -300,15 +300,16 @@ export const useVirtual = ({
     const scrollModeRef = React.useRef(scrollMode);
     scrollModeRef.current = scrollMode;
 
-    const { scrollOffset, scrollTo } = useScroll({
-        elementRef: parentRef,
-        isRtl,
-        scrollDirection:
-            scrollMode === ScrollMode.Wrapped || spreadsMode === SpreadsMode.OddSpreads
+    const scrollDirection = scrollMode === ScrollMode.Wrapped || spreadsMode === SpreadsMode.OddSpreads
                 ? ScrollDirection.Both
                 : scrollMode === ScrollMode.Horizontal
                 ? ScrollDirection.Horizontal
-                : ScrollDirection.Vertical,
+                : ScrollDirection.Vertical;
+
+    const { scrollOffset, scrollTo } = useScroll({
+        elementRef: parentRef,
+        isRtl,
+        scrollDirection,
         onSmoothScroll,
     });
     const parentRect = useMeasureRect({
@@ -436,7 +437,7 @@ export const useVirtual = ({
     latestRef.current.totalSize = totalSize;
 
     const { maxVisbilityItem, visibilities, start, end } = calculateRange(
-        scrollMode,
+        scrollDirection,
         latestRef.current.measurements,
         latestRef.current.parentRect,
         latestRef.current.scrollOffset
