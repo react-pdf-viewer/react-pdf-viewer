@@ -293,7 +293,7 @@ export const useVirtual = ({
     scrollToItem: (index: number, offset: Offset) => void;
     scrollToNextItem: (index: number, offset: Offset) => void;
     scrollToPreviousItem: (index: number, offset: Offset) => void;
-    zoom: (scale: number) => void;
+    zoom: (scale: number, index: number) => void;
 } => {
     const [isSmoothScrolling, setSmoothScrolling] = React.useState(false);
     const onSmoothScroll = React.useCallback((isSmoothScrolling: boolean) => setSmoothScrolling(isSmoothScrolling), []);
@@ -301,11 +301,12 @@ export const useVirtual = ({
     const scrollModeRef = React.useRef(scrollMode);
     scrollModeRef.current = scrollMode;
 
-    const scrollDirection = scrollMode === ScrollMode.Wrapped || spreadsMode === SpreadsMode.OddSpreads
-                ? ScrollDirection.Both
-                : scrollMode === ScrollMode.Horizontal
-                ? ScrollDirection.Horizontal
-                : ScrollDirection.Vertical;
+    const scrollDirection =
+        scrollMode === ScrollMode.Wrapped || spreadsMode === SpreadsMode.OddSpreads
+            ? ScrollDirection.Both
+            : scrollMode === ScrollMode.Horizontal
+            ? ScrollDirection.Horizontal
+            : ScrollDirection.Vertical;
 
     const { scrollOffset, scrollTo } = useScroll({
         elementRef: parentRef,
@@ -340,9 +341,7 @@ export const useVirtual = ({
                     height: Math.max(parentRect.height, transformedSize.height),
                     width: Math.max(parentRect.width, transformedSize.width),
                 };
-                const start: Offset = (i === 0)
-                     ? ZERO_OFFSET
-                     : measurements[i - 1].end;
+                const start: Offset = i === 0 ? ZERO_OFFSET : measurements[i - 1].end;
                 const end: Offset = {
                     left: start.left + size.width,
                     top: start.top + size.height,
@@ -528,7 +527,7 @@ export const useVirtual = ({
             const normalizedIndex = clamp(0, numberOfItems - 1, index);
             const measurement = measurements[normalizedIndex];
             // Ignore the offset in the single page scrolling mode
-            const withOffset = (scrollModeRef.current === ScrollMode.Page) ? ZERO_OFFSET : offset;
+            const withOffset = scrollModeRef.current === ScrollMode.Page ? ZERO_OFFSET : offset;
             if (measurement) {
                 scrollTo(
                     {
@@ -626,17 +625,17 @@ export const useVirtual = ({
 
     const getItemContainerStyles = React.useCallback(
         (item: VirtualItem): React.CSSProperties => {
-            return (scrollModeRef.current !== ScrollMode.Page)
+            return scrollModeRef.current !== ScrollMode.Page
                 ? {}
                 : {
-                    // Size
-                    height: `${parentRect.height}px`,
-                    width: '100%',
-                    // Absolute position
-                    position: 'absolute',
-                    top: 0,
-                    transform: `translateY(${item.start.top}px)`,
-                };
+                      // Size
+                      height: `${parentRect.height}px`,
+                      width: '100%',
+                      // Absolute position
+                      position: 'absolute',
+                      top: 0,
+                      transform: `translateY(${item.start.top}px)`,
+                  };
         },
         [parentRect]
     );
@@ -675,7 +674,7 @@ export const useVirtual = ({
                 case ScrollMode.Page:
                     return {
                         // Size
-                        height: '100%',
+                        height: `${item.size.height}px`,
                         width: `${item.size.width}px`,
                         // Absolute position
                         [sideProperty]: 0,
@@ -710,15 +709,29 @@ export const useVirtual = ({
         [isRtl]
     );
 
-    const zoom = React.useCallback((scale: number) => {
-        setCacheMeasure({});
-        const { scrollOffset } = latestRef.current;
-        const updateOffset = {
-            left: scrollOffset.left * scale,
-            top: scrollOffset.top * scale,
-        };
-        scrollTo(updateOffset, false);
-    }, []);
+    // Zoom to the given item
+    const zoom = React.useCallback(
+        (scale: number, index: number) => {
+            setCacheMeasure({});
+            const { measurements, scrollOffset } = latestRef.current;
+            const normalizedIndex = clamp(0, numberOfItems - 1, index);
+            const measurement = measurements[normalizedIndex];
+            if (measurement) {
+                const updateOffset =
+                    scrollModeRef.current === ScrollMode.Page
+                        ? {
+                              left: measurement.start.left,
+                              top: measurement.start.top,
+                          }
+                        : {
+                              left: scrollOffset.left * scale,
+                              top: scrollOffset.top * scale,
+                          };
+                scrollTo(updateOffset, false);
+            }
+        },
+        [measurements]
+    );
 
     return {
         isSmoothScrolling,

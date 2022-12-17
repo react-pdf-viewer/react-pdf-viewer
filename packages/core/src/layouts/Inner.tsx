@@ -118,6 +118,8 @@ export const Inner: React.FC<{
     const outlines = useOutlines(doc);
 
     const [scale, setScale] = React.useState(initialScale);
+    const previousScale = usePrevious(scale);
+
     const stateRef = React.useRef<ViewerState>(viewerState);
     const keepSpecialZoomLevelRef = React.useRef<SpecialZoomLevel | null>(
         typeof defaultScale === 'string' ? defaultScale : null
@@ -372,8 +374,6 @@ export const Inner: React.FC<{
             return;
         }
 
-        virtualizer.zoom(updateScale / stateRef.current.scale);
-
         setRenderQueueKey((key) => key + 1);
         renderQueue.markNotRendered();
 
@@ -448,6 +448,12 @@ export const Inner: React.FC<{
             virtualizer.scrollToItem(latestPage, ZERO_OFFSET);
         }
     }, [rotation]);
+
+    useIsomorphicLayoutEffect(() => {
+        if (stateRef.current.scale != 0 && previousScale != stateRef.current.scale) {
+            virtualizer.zoom(previousScale / stateRef.current.scale, stateRef.current.pageIndex);
+        }
+    }, [scale]);
 
     React.useEffect(() => {
         const { isSmoothScrolling } = virtualizer;
