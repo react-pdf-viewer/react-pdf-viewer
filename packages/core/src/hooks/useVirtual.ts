@@ -38,7 +38,7 @@ const ZERO_OFFSET: Offset = {
 };
 
 const calculateRange = (
-    scrollMode: ScrollMode,
+    scrollDirection: ScrollDirection,
     measurements: ItemMeasurement[],
     outerSize: Rect,
     scrollOffset: Offset
@@ -50,11 +50,11 @@ const calculateRange = (
 } => {
     let currentOffset = 0;
 
-    switch (scrollMode) {
-        case ScrollMode.Horizontal:
+    switch (scrollDirection) {
+        case ScrollDirection.Horizontal:
             currentOffset = scrollOffset.left;
             break;
-        case ScrollMode.Vertical:
+        case ScrollDirection.Vertical:
         default:
             currentOffset = scrollOffset.top;
             break;
@@ -62,18 +62,18 @@ const calculateRange = (
 
     const size = measurements.length - 1;
     const getOffset = (index: number) => {
-        switch (scrollMode) {
-            case ScrollMode.Horizontal:
+        switch (scrollDirection) {
+            case ScrollDirection.Horizontal:
                 return measurements[index].start.left;
-            case ScrollMode.Wrapped:
-            case ScrollMode.Vertical:
+            case ScrollDirection.Both:
+            case ScrollDirection.Vertical:
             default:
                 return measurements[index].start.top;
         }
     };
 
     let start = findNearest(0, size, currentOffset, getOffset);
-    if (scrollMode === ScrollMode.Wrapped) {
+    if (scrollDirection === ScrollDirection.Both) {
         // Find the first item in the same row which has the same `top` value
         // and the `left` value is greater than `scrollOffset.left`
         const startTop = measurements[start].start.top;
@@ -117,17 +117,17 @@ const calculateRange = (
         //          |                        |
         //    (6)   |           (5)          |   (4)
         //          |                        |
-        if (scrollMode === ScrollMode.Horizontal && visibleSize.width < 0) {
+        if (scrollDirection === ScrollDirection.Horizontal && visibleSize.width < 0) {
             // The top left corner belongs to the (2, 3, 4) areas
             end--;
             break;
         }
-        if (scrollMode === ScrollMode.Vertical && visibleSize.height < 0) {
+        if (scrollDirection === ScrollDirection.Vertical && visibleSize.height < 0) {
             // The top left corner belongs to the (4, 5) areas
             end--;
             break;
         }
-        if (scrollMode === ScrollMode.Wrapped && (visibleSize.width < 0 || visibleSize.height < 0)) {
+        if (scrollDirection === ScrollDirection.Both && (visibleSize.width < 0 || visibleSize.height < 0)) {
             // The top left corner belongs to the (2, 3, 4, 5) areas
             end--;
             break;
@@ -135,7 +135,7 @@ const calculateRange = (
 
         // Calculate the width that is visible within the container
         // We don't care it in the vertical scroll mode
-        if (scrollMode === ScrollMode.Vertical) {
+        if (scrollDirection === ScrollDirection.Vertical) {
             visibility.width = 1;
         } else if (topLeftCorner.left < 0) {
             // The top left corner belongs to the (1) area
@@ -189,7 +189,7 @@ const calculateRange = (
 
         // Calculate the height that is visible within the container
         // There are four cases
-        if (scrollMode === ScrollMode.Horizontal) {
+        if (scrollDirection === ScrollDirection.Horizontal) {
             visibility.height = 1;
         } else if (topLeftCorner.top < 0) {
             // The top left corner belongs to the (1) area
@@ -288,11 +288,12 @@ export const useVirtual = ({
     maxVisbilityIndex: number;
     virtualItems: VirtualItem[];
     getContainerStyles: () => React.CSSProperties;
+    getItemContainerStyles: (item: VirtualItem) => React.CSSProperties;
     getItemStyles: (item: VirtualItem) => React.CSSProperties;
     scrollToItem: (index: number, offset: Offset) => void;
     scrollToNextItem: (index: number, offset: Offset) => void;
     scrollToPreviousItem: (index: number, offset: Offset) => void;
-    zoom: (scale: number) => void;
+    zoom: (scale: number, index: number) => void;
 } => {
     const [isSmoothScrolling, setSmoothScrolling] = React.useState(false);
     const onSmoothScroll = React.useCallback((isSmoothScrolling: boolean) => setSmoothScrolling(isSmoothScrolling), []);
@@ -300,15 +301,17 @@ export const useVirtual = ({
     const scrollModeRef = React.useRef(scrollMode);
     scrollModeRef.current = scrollMode;
 
+    const scrollDirection =
+        scrollMode === ScrollMode.Wrapped || spreadsMode === SpreadsMode.OddSpreads
+            ? ScrollDirection.Both
+            : scrollMode === ScrollMode.Horizontal
+            ? ScrollDirection.Horizontal
+            : ScrollDirection.Vertical;
+
     const { scrollOffset, scrollTo } = useScroll({
         elementRef: parentRef,
         isRtl,
-        scrollDirection:
-            scrollMode === ScrollMode.Wrapped || spreadsMode === SpreadsMode.OddSpreads
-                ? ScrollDirection.Both
-                : scrollMode === ScrollMode.Horizontal
-                ? ScrollDirection.Horizontal
-                : ScrollDirection.Vertical,
+        scrollDirection,
         onSmoothScroll,
     });
     const parentRect = useMeasureRect({
@@ -329,6 +332,30 @@ export const useVirtual = ({
 
     const measurements = React.useMemo(() => {
         const measurements: ItemMeasurement[] = [];
+
+        // Single page scrolling mode
+        if (scrollMode === ScrollMode.Page) {
+            for (let i = 0; i < numberOfItems; i++) {
+                const transformedSize = cacheMeasure[i] || transformSize(i, estimateSize(i));
+                const size = {
+                    height: Math.max(parentRect.height, transformedSize.height),
+                    width: Math.max(parentRect.width, transformedSize.width),
+                };
+                const start: Offset = i === 0 ? ZERO_OFFSET : measurements[i - 1].end;
+                const end: Offset = {
+                    left: start.left + size.width,
+                    top: start.top + size.height,
+                };
+                measurements[i] = {
+                    index: i,
+                    start,
+                    size,
+                    end,
+                    visibility: -1,
+                };
+            }
+            return measurements;
+        }
 
         // `OddSpreads` mode
         if (spreadsMode === SpreadsMode.OddSpreads) {
@@ -436,7 +463,7 @@ export const useVirtual = ({
     latestRef.current.totalSize = totalSize;
 
     const { maxVisbilityItem, visibilities, start, end } = calculateRange(
-        scrollMode,
+        scrollDirection,
         latestRef.current.measurements,
         latestRef.current.parentRect,
         latestRef.current.scrollOffset
@@ -499,11 +526,13 @@ export const useVirtual = ({
             const { measurements } = latestRef.current;
             const normalizedIndex = clamp(0, numberOfItems - 1, index);
             const measurement = measurements[normalizedIndex];
+            // Ignore the offset in the single page scrolling mode
+            const withOffset = scrollModeRef.current === ScrollMode.Page ? ZERO_OFFSET : offset;
             if (measurement) {
                 scrollTo(
                     {
-                        left: offset.left + measurement.start.left,
-                        top: offset.top + measurement.start.top,
+                        left: withOffset.left + measurement.start.left,
+                        top: withOffset.top + measurement.start.top,
                     },
                     true
                 );
@@ -594,6 +623,23 @@ export const useVirtual = ({
         }
     }, [totalSize]);
 
+    const getItemContainerStyles = React.useCallback(
+        (item: VirtualItem): React.CSSProperties => {
+            return scrollModeRef.current !== ScrollMode.Page
+                ? {}
+                : {
+                      // Size
+                      height: `${parentRect.height}px`,
+                      width: '100%',
+                      // Absolute position
+                      position: 'absolute',
+                      top: 0,
+                      transform: `translateY(${item.start.top}px)`,
+                  };
+        },
+        [parentRect]
+    );
+
     // Build the absolute position styles for each item
     const getItemStyles = React.useCallback(
         (item: VirtualItem): React.CSSProperties => {
@@ -625,6 +671,16 @@ export const useVirtual = ({
                         top: 0,
                         transform: `translateX(${item.start.left * factor}px)`,
                     };
+                case ScrollMode.Page:
+                    return {
+                        // Size
+                        height: `${item.size.height}px`,
+                        width: `${item.size.width}px`,
+                        // Absolute position
+                        [sideProperty]: 0,
+                        position: 'absolute',
+                        top: 0,
+                    };
                 case ScrollMode.Wrapped:
                     return {
                         // Size
@@ -653,15 +709,29 @@ export const useVirtual = ({
         [isRtl]
     );
 
-    const zoom = React.useCallback((scale: number) => {
-        setCacheMeasure({});
-        const { scrollOffset } = latestRef.current;
-        const updateOffset = {
-            left: scrollOffset.left * scale,
-            top: scrollOffset.top * scale,
-        };
-        scrollTo(updateOffset, false);
-    }, []);
+    // Zoom to the given item
+    const zoom = React.useCallback(
+        (scale: number, index: number) => {
+            setCacheMeasure({});
+            const { measurements, scrollOffset } = latestRef.current;
+            const normalizedIndex = clamp(0, numberOfItems - 1, index);
+            const measurement = measurements[normalizedIndex];
+            if (measurement) {
+                const updateOffset =
+                    scrollModeRef.current === ScrollMode.Page
+                        ? {
+                              left: measurement.start.left,
+                              top: measurement.start.top,
+                          }
+                        : {
+                              left: scrollOffset.left * scale,
+                              top: scrollOffset.top * scale,
+                          };
+                scrollTo(updateOffset, false);
+            }
+        },
+        [measurements]
+    );
 
     return {
         isSmoothScrolling,
@@ -672,6 +742,7 @@ export const useVirtual = ({
         maxVisbilityIndex,
         virtualItems,
         getContainerStyles,
+        getItemContainerStyles,
         getItemStyles,
         scrollToItem,
         scrollToNextItem,

@@ -7,9 +7,19 @@
  */
 
 .rpv-core__inner-pages {
+    overflow: auto;
+
     &--rtl {
         direction: rtl;
     }
+
+    &--single {
+        overflow: hidden;
+    }
+}
+
+.rpv-core__inner-page-container--single {
+    overflow: auto;
 }
 
 .rpv-core__inner-page {

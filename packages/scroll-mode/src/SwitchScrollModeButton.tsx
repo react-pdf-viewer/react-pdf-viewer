@@ -19,6 +19,9 @@ export const SwitchScrollModeButton: React.FC<RenderSwitchScrollModeProps> = ({ 
         case ScrollMode.Horizontal:
             testId = 'scroll-mode__horizontal-button';
             break;
+        case ScrollMode.Page:
+            testId = 'scroll-mode__page-button';
+            break;
         case ScrollMode.Wrapped:
             testId = 'scroll-mode__wrapped-button';
             break;

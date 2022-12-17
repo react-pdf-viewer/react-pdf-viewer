@@ -4,6 +4,16 @@
 
 **New feature**
 
+-   New page scrolling mode:
+
+```tsx
+import { ScrollMode, Viewer } from '@react-pdf-viewer/core';
+
+<Viewer scrollMode={ScrollMode.Page} />;
+```
+
+You can switch to the page scrolling mode from the toolbar.
+
 -   `PluginFunctions` provides new `jumpToPreviousPage` and `jumpToNextPage` to jump to the previous and next pages
 
 **Bug fix**

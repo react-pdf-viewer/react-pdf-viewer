@@ -74,6 +74,7 @@
     },
     "scrollMode": {
         "horizontalScrolling": "Horizontal scrolling",
+        "pageScrolling": "Page scrolling",
         "verticalScrolling": "Vertical scrolling",
         "wrappedScrolling": "Wrapped scrolling"
     },

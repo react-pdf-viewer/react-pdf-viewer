@@ -118,6 +118,8 @@ export const Inner: React.FC<{
     const outlines = useOutlines(doc);
 
     const [scale, setScale] = React.useState(initialScale);
+    const previousScale = usePrevious(scale);
+
     const stateRef = React.useRef<ViewerState>(viewerState);
     const keepSpecialZoomLevelRef = React.useRef<SpecialZoomLevel | null>(
         typeof defaultScale === 'string' ? defaultScale : null
@@ -372,8 +374,6 @@ export const Inner: React.FC<{
             return;
         }
 
-        virtualizer.zoom(updateScale / stateRef.current.scale);
-
         setRenderQueueKey((key) => key + 1);
         renderQueue.markNotRendered();
 
@@ -448,6 +448,12 @@ export const Inner: React.FC<{
             virtualizer.scrollToItem(latestPage, ZERO_OFFSET);
         }
     }, [rotation]);
+
+    useIsomorphicLayoutEffect(() => {
+        if (stateRef.current.scale != 0 && previousScale != stateRef.current.scale) {
+            virtualizer.zoom(previousScale / stateRef.current.scale, stateRef.current.pageIndex);
+        }
+    }, [scale]);
 
     React.useEffect(() => {
         const { isSmoothScrolling } = virtualizer;
@@ -548,13 +554,13 @@ export const Inner: React.FC<{
                         'rpv-core__inner-pages': true,
                         'rpv-core__inner-pages--horizontal': currentScrollMode === ScrollMode.Horizontal,
                         'rpv-core__inner-pages--rtl': isRtl,
+                        'rpv-core__inner-pages--single': currentScrollMode === ScrollMode.Page,
                         'rpv-core__inner-pages--vertical': currentScrollMode === ScrollMode.Vertical,
                         'rpv-core__inner-pages--wrapped': currentScrollMode === ScrollMode.Wrapped,
                     }),
                     ref: pagesRef,
                     style: {
                         height: '100%',
-                        overflow: 'auto',
                         // We need this to jump between destinations or searching results
                         position: 'relative',
                     },
@@ -563,40 +569,48 @@ export const Inner: React.FC<{
                     <div style={virtualizer.getContainerStyles()}>
                         {virtualizer.virtualItems.map((item) => (
                             <div
-                                aria-label={pageLabel.replace('{{pageIndex}}', `${item.index + 1}`)}
                                 className={classNames({
-                                    'rpv-core__inner-page': true,
-                                    'rpv-core__inner-page--odd-spreads-even':
-                                        spreadsMode === SpreadsMode.OddSpreads && item.index % 2 === 0,
-                                    'rpv-core__inner-page--odd-spreads-odd':
-                                        spreadsMode === SpreadsMode.OddSpreads && item.index % 2 === 1,
+                                    'rpv-core__inner-page-container': true,
+                                    'rpv-core__inner-page-container--single': scrollMode === ScrollMode.Page,
                                 })}
+                                style={virtualizer.getItemContainerStyles(item)}
                                 key={item.index}
-                                role="region"
-                                style={Object.assign(
-                                    {},
-                                    virtualizer.getItemStyles(item),
-                                    layoutBuilder.buildPageStyles({ numPages, pageIndex: item.index })
-                                )}
                             >
-                                <PageLayer
-                                    doc={doc}
-                                    outlines={outlines}
-                                    pageIndex={item.index}
-                                    pageRotation={pagesRotation.has(item.index) ? pagesRotation.get(item.index) : 0}
-                                    pageSize={pageSizes[item.index]}
-                                    plugins={plugins}
-                                    renderPage={renderPage}
-                                    renderQueueKey={renderQueueKey}
-                                    rotation={rotation}
-                                    scale={scale}
-                                    shouldRender={renderPageIndex === item.index}
-                                    spreadsMode={spreadsMode}
-                                    onExecuteNamedAction={executeNamedAction}
-                                    onJumpToDest={jumpToDestination}
-                                    onRenderCompleted={handlePageRenderCompleted}
-                                    onRotatePage={rotatePage}
-                                />
+                                <div
+                                    aria-label={pageLabel.replace('{{pageIndex}}', `${item.index + 1}`)}
+                                    className={classNames({
+                                        'rpv-core__inner-page': true,
+                                        'rpv-core__inner-page--odd-spreads-even':
+                                            spreadsMode === SpreadsMode.OddSpreads && item.index % 2 === 0,
+                                        'rpv-core__inner-page--odd-spreads-odd':
+                                            spreadsMode === SpreadsMode.OddSpreads && item.index % 2 === 1,
+                                    })}
+                                    role="region"
+                                    style={Object.assign(
+                                        {},
+                                        virtualizer.getItemStyles(item),
+                                        layoutBuilder.buildPageStyles({ numPages, pageIndex: item.index })
+                                    )}
+                                >
+                                    <PageLayer
+                                        doc={doc}
+                                        outlines={outlines}
+                                        pageIndex={item.index}
+                                        pageRotation={pagesRotation.has(item.index) ? pagesRotation.get(item.index) : 0}
+                                        pageSize={pageSizes[item.index]}
+                                        plugins={plugins}
+                                        renderPage={renderPage}
+                                        renderQueueKey={renderQueueKey}
+                                        rotation={rotation}
+                                        scale={scale}
+                                        shouldRender={renderPageIndex === item.index}
+                                        spreadsMode={spreadsMode}
+                                        onExecuteNamedAction={executeNamedAction}
+                                        onJumpToDest={jumpToDestination}
+                                        onRenderCompleted={handlePageRenderCompleted}
+                                        onRotatePage={rotatePage}
+                                    />
+                                </div>
                             </div>
                         ))}
                     </div>

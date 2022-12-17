@@ -43,5 +43,6 @@ export function scrollModePlugin(): ScrollModePlugin;
 
 // Components
 export class HorizontalScrollingIcon extends React.Component {}
+export class PageScrollingIcon extends React.Component {}
 export class VerticalScrollingIcon extends React.Component {}
 export class WrappedScrollingIcon extends React.Component {}

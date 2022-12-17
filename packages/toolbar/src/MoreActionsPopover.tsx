@@ -110,6 +110,7 @@ export const MoreActionsPopover: React.FC<{
                 <SwitchSelectionModeMenuItem mode={SelectionMode.Text} onClick={toggle} />
                 <SwitchSelectionModeMenuItem mode={SelectionMode.Hand} onClick={toggle} />
                 <MenuDivider />
+                <SwitchScrollModeMenuItem mode={ScrollMode.Page} onClick={toggle} />
                 <SwitchScrollModeMenuItem mode={ScrollMode.Vertical} onClick={toggle} />
                 <SwitchScrollModeMenuItem mode={ScrollMode.Horizontal} onClick={toggle} />
                 <SwitchScrollModeMenuItem mode={ScrollMode.Wrapped} onClick={toggle} />
