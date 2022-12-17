@@ -7,17 +7,19 @@
  */
 
 .rpv-core__inner-pages {
-    overflow-x: auto;
-    overflow-y: auto;
+    overflow: auto;
 
     &--rtl {
         direction: rtl;
     }
 
-    &--odd-spreads {
-        overflow-x: auto;
-        overflow-y: hidden;
+    &--single {
+        overflow: hidden;
     }
+}
+
+.rpv-core__inner-page-container--single {
+    overflow: auto;
 }
 
 .rpv-core__inner-page {

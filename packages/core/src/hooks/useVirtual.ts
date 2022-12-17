@@ -288,6 +288,7 @@ export const useVirtual = ({
     maxVisbilityIndex: number;
     virtualItems: VirtualItem[];
     getContainerStyles: () => React.CSSProperties;
+    getItemContainerStyles: (item: VirtualItem) => React.CSSProperties;
     getItemStyles: (item: VirtualItem) => React.CSSProperties;
     scrollToItem: (index: number, offset: Offset) => void;
     scrollToNextItem: (index: number, offset: Offset) => void;
@@ -330,6 +331,32 @@ export const useVirtual = ({
 
     const measurements = React.useMemo(() => {
         const measurements: ItemMeasurement[] = [];
+
+        // Single page scrolling mode
+        if (scrollMode === ScrollMode.Page) {
+            for (let i = 0; i < numberOfItems; i++) {
+                const transformedSize = cacheMeasure[i] || transformSize(i, estimateSize(i));
+                const size = {
+                    height: Math.max(parentRect.height, transformedSize.height),
+                    width: Math.max(parentRect.width, transformedSize.width),
+                };
+                const start: Offset = (i === 0)
+                     ? ZERO_OFFSET
+                     : measurements[i - 1].end;
+                const end: Offset = {
+                    left: start.left + size.width,
+                    top: start.top + size.height,
+                };
+                measurements[i] = {
+                    index: i,
+                    start,
+                    size,
+                    end,
+                    visibility: -1,
+                };
+            }
+            return measurements;
+        }
 
         // `OddSpreads` mode
         if (spreadsMode === SpreadsMode.OddSpreads) {
@@ -500,11 +527,13 @@ export const useVirtual = ({
             const { measurements } = latestRef.current;
             const normalizedIndex = clamp(0, numberOfItems - 1, index);
             const measurement = measurements[normalizedIndex];
+            // Ignore the offset in the single page scrolling mode
+            const withOffset = (scrollModeRef.current === ScrollMode.Page) ? ZERO_OFFSET : offset;
             if (measurement) {
                 scrollTo(
                     {
-                        left: offset.left + measurement.start.left,
-                        top: offset.top + measurement.start.top,
+                        left: withOffset.left + measurement.start.left,
+                        top: withOffset.top + measurement.start.top,
                     },
                     true
                 );
@@ -595,6 +624,23 @@ export const useVirtual = ({
         }
     }, [totalSize]);
 
+    const getItemContainerStyles = React.useCallback(
+        (item: VirtualItem): React.CSSProperties => {
+            return (scrollModeRef.current !== ScrollMode.Page)
+                ? {}
+                : {
+                    // Size
+                    height: `${parentRect.height}px`,
+                    width: '100%',
+                    // Absolute position
+                    position: 'absolute',
+                    top: 0,
+                    transform: `translateY(${item.start.top}px)`,
+                };
+        },
+        [parentRect]
+    );
+
     // Build the absolute position styles for each item
     const getItemStyles = React.useCallback(
         (item: VirtualItem): React.CSSProperties => {
@@ -625,6 +671,16 @@ export const useVirtual = ({
                         position: 'absolute',
                         top: 0,
                         transform: `translateX(${item.start.left * factor}px)`,
+                    };
+                case ScrollMode.Page:
+                    return {
+                        // Size
+                        height: '100%',
+                        width: `${item.size.width}px`,
+                        // Absolute position
+                        [sideProperty]: 0,
+                        position: 'absolute',
+                        top: 0,
                     };
                 case ScrollMode.Wrapped:
                     return {
@@ -673,6 +729,7 @@ export const useVirtual = ({
         maxVisbilityIndex,
         virtualItems,
         getContainerStyles,
+        getItemContainerStyles,
         getItemStyles,
         scrollToItem,
         scrollToNextItem,
