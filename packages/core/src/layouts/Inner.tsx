@@ -450,8 +450,8 @@ export const Inner: React.FC<{
     }, [rotation]);
 
     useIsomorphicLayoutEffect(() => {
-        if (stateRef.current.scale != 0 && previousScale != stateRef.current.scale) {
-            virtualizer.zoom(previousScale / stateRef.current.scale, stateRef.current.pageIndex);
+        if (previousScale != 0 && previousScale != stateRef.current.scale) {
+            virtualizer.zoom(stateRef.current.scale / previousScale, stateRef.current.pageIndex);
         }
     }, [scale]);
 

@@ -2,7 +2,7 @@
 
 ## v3.10.0 [WIP]
 
-**New feature**
+**New features**
 
 -   New page scrolling mode:
 
@@ -16,9 +16,10 @@ You can switch to the page scrolling mode from the toolbar.
 
 -   `PluginFunctions` provides new `jumpToPreviousPage` and `jumpToNextPage` to jump to the previous and next pages
 
-**Bug fix**
+**Bug fixes**
 
 -   Jumping to the previous and next pages in wrapped scrol mode don't work properly
+-   Zooming doesn't keep current position properly
 
 ## v3.9.0
 
