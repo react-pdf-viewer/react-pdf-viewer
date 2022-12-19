@@ -362,7 +362,7 @@ export const useVirtual = ({
             for (let i = 0; i < numberOfItems; i++) {
                 const transformedSize = cacheMeasure[i] || transformSize(i, estimateSize(i));
                 const size = {
-                    height: Math.max(parentRect.height, transformedSize.height),
+                    height: transformedSize.height,
                     width: Math.max(parentRect.width / 2, transformedSize.width),
                 };
                 const start: Offset = {
@@ -469,22 +469,24 @@ export const useVirtual = ({
         latestRef.current.scrollOffset
     );
 
-    // Determine the page that has max visbility
+    // Determine the page that has max visbility and the range of pages that will be pre-rendered
     let maxVisbilityIndex = maxVisbilityItem;
+    let startRange = setStartRange(start);
+    let endRange = setEndRange(end);
+
     switch (spreadsMode) {
         case SpreadsMode.EvenSpreads:
             break;
         case SpreadsMode.OddSpreads:
             maxVisbilityIndex = maxVisbilityItem % 2 === 0 ? maxVisbilityItem : maxVisbilityItem - 1;
+            startRange = startRange % 2 === 0 ? startRange : startRange - 1;
+            endRange = endRange % 2 === 1 ? endRange : endRange - 1;
             break;
         case SpreadsMode.NoSpreads:
         default:
             maxVisbilityIndex = maxVisbilityItem;
             break;
     }
-
-    const startRange = setStartRange(start);
-    const endRange = setEndRange(end);
 
     const virtualItems = React.useMemo(() => {
         const virtualItems: VirtualItem[] = [];
