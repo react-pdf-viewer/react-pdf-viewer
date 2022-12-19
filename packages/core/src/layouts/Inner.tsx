@@ -37,6 +37,7 @@ import type { RotatePageEvent } from '../types/RotatePageEvent';
 import type { Slot } from '../types/Slot';
 import type { ViewerState } from '../types/ViewerState';
 import type { ZoomEvent } from '../types/ZoomEvent';
+import { chunk } from '../utils/chunk';
 import { classNames } from '../utils/classNames';
 import { getFileExt } from '../utils/getFileExt';
 import { clearPagesCache, getPage } from '../utils/managePages';
@@ -536,6 +537,8 @@ export const Inner: React.FC<{
     };
 
     const renderViewer = React.useCallback(() => {
+        const numItemsEachChunk = spreadsMode === SpreadsMode.NoSpreads ? 1 : 2;
+
         const pageLabel =
             l10n && l10n.core ? ((l10n.core as LocalizationMap).pageLabel as string) : 'Page {{pageIndex}}';
         let slot: Slot = {
@@ -567,50 +570,55 @@ export const Inner: React.FC<{
                 },
                 children: (
                     <div style={virtualizer.getContainerStyles()}>
-                        {virtualizer.virtualItems.map((item) => (
+                        {chunk(virtualizer.virtualItems, numItemsEachChunk).map((items) => (
                             <div
                                 className={classNames({
                                     'rpv-core__inner-page-container': true,
                                     'rpv-core__inner-page-container--single': scrollMode === ScrollMode.Page,
                                 })}
-                                style={virtualizer.getItemContainerStyles(item)}
-                                key={item.index}
+                                style={virtualizer.getItemContainerStyles(items[0])}
+                                key={items[0].index}
                             >
-                                <div
-                                    aria-label={pageLabel.replace('{{pageIndex}}', `${item.index + 1}`)}
-                                    className={classNames({
-                                        'rpv-core__inner-page': true,
-                                        'rpv-core__inner-page--odd-spreads-even':
-                                            spreadsMode === SpreadsMode.OddSpreads && item.index % 2 === 0,
-                                        'rpv-core__inner-page--odd-spreads-odd':
-                                            spreadsMode === SpreadsMode.OddSpreads && item.index % 2 === 1,
-                                    })}
-                                    role="region"
-                                    style={Object.assign(
-                                        {},
-                                        virtualizer.getItemStyles(item),
-                                        layoutBuilder.buildPageStyles({ numPages, pageIndex: item.index })
-                                    )}
-                                >
-                                    <PageLayer
-                                        doc={doc}
-                                        outlines={outlines}
-                                        pageIndex={item.index}
-                                        pageRotation={pagesRotation.has(item.index) ? pagesRotation.get(item.index) : 0}
-                                        pageSize={pageSizes[item.index]}
-                                        plugins={plugins}
-                                        renderPage={renderPage}
-                                        renderQueueKey={renderQueueKey}
-                                        rotation={rotation}
-                                        scale={scale}
-                                        shouldRender={renderPageIndex === item.index}
-                                        spreadsMode={spreadsMode}
-                                        onExecuteNamedAction={executeNamedAction}
-                                        onJumpToDest={jumpToDestination}
-                                        onRenderCompleted={handlePageRenderCompleted}
-                                        onRotatePage={rotatePage}
-                                    />
-                                </div>
+                                {items.map((item) => (
+                                    <div
+                                        aria-label={pageLabel.replace('{{pageIndex}}', `${item.index + 1}`)}
+                                        className={classNames({
+                                            'rpv-core__inner-page': true,
+                                            'rpv-core__inner-page--odd-spreads-even':
+                                                spreadsMode === SpreadsMode.OddSpreads && item.index % 2 === 0,
+                                            'rpv-core__inner-page--odd-spreads-odd':
+                                                spreadsMode === SpreadsMode.OddSpreads && item.index % 2 === 1,
+                                        })}
+                                        role="region"
+                                        key={item.index}
+                                        style={Object.assign(
+                                            {},
+                                            virtualizer.getItemStyles(item),
+                                            layoutBuilder.buildPageStyles({ numPages, pageIndex: item.index })
+                                        )}
+                                    >
+                                        <PageLayer
+                                            doc={doc}
+                                            outlines={outlines}
+                                            pageIndex={item.index}
+                                            pageRotation={
+                                                pagesRotation.has(item.index) ? pagesRotation.get(item.index) : 0
+                                            }
+                                            pageSize={pageSizes[item.index]}
+                                            plugins={plugins}
+                                            renderPage={renderPage}
+                                            renderQueueKey={renderQueueKey}
+                                            rotation={rotation}
+                                            scale={scale}
+                                            shouldRender={renderPageIndex === item.index}
+                                            spreadsMode={spreadsMode}
+                                            onExecuteNamedAction={executeNamedAction}
+                                            onJumpToDest={jumpToDestination}
+                                            onRenderCompleted={handlePageRenderCompleted}
+                                            onRotatePage={rotatePage}
+                                        />
+                                    </div>
+                                ))}
                             </div>
                         ))}
                     </div>
