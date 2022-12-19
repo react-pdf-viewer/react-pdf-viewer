@@ -17,8 +17,8 @@ const App = () => {
         >
             <Viewer
                 defaultScale={0.5}
-                scrollMode={ScrollMode.Page}
-                spreadsMode={SpreadsMode.OddSpreads}
+                // scrollMode={ScrollMode.Page}
+                spreadsMode={SpreadsMode.EvenSpreads}
                 fileUrl={'/pdf-open-parameters.pdf'}
                 plugins={[defaultLayoutPluginInstance]}
             />

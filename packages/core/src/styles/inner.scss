@@ -27,11 +27,18 @@
 }
 
 // Spreads mode
+.rpv-core__inner-page--even-spreads-cover {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.rpv-core__inner-page--even-spreads-odd,
 .rpv-core__inner-page--odd-spreads-even {
     display: flex;
     align-items: center;
     justify-content: end;
 }
+.rpv-core__inner-page--even-spreads-even,
 .rpv-core__inner-page--odd-spreads-odd {
     display: flex;
     align-items: center;
