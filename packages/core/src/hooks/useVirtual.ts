@@ -334,7 +334,7 @@ export const useVirtual = ({
         const measurements: ItemMeasurement[] = [];
 
         // Single page scrolling mode
-        if (scrollMode === ScrollMode.Page) {
+        if (scrollMode === ScrollMode.Page && spreadsMode === SpreadsMode.NoSpreads) {
             for (let i = 0; i < numberOfItems; i++) {
                 const transformedSize = cacheMeasure[i] || transformSize(i, estimateSize(i));
                 const size = {
@@ -362,7 +362,10 @@ export const useVirtual = ({
             for (let i = 0; i < numberOfItems; i++) {
                 const transformedSize = cacheMeasure[i] || transformSize(i, estimateSize(i));
                 const size = {
-                    height: transformedSize.height,
+                    height:
+                        scrollMode === ScrollMode.Page
+                            ? Math.max(parentRect.height, transformedSize.height)
+                            : transformedSize.height,
                     width: Math.max(parentRect.width / 2, transformedSize.width),
                 };
                 const start: Offset = {
@@ -657,7 +660,9 @@ export const useVirtual = ({
                     [sideProperty]: 0,
                     position: 'absolute',
                     top: 0,
-                    transform: `translate(${item.start.left}px, ${item.start.top}px)`,
+                    transform: `translate(${item.start.left}px, ${
+                        scrollModeRef.current === ScrollMode.Page ? 0 : item.start.top
+                    }px)`,
                 };
             }
 
