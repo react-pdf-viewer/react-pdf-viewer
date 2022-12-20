@@ -547,7 +547,8 @@ export const Inner: React.FC<{
             case SpreadsMode.EvenSpreads:
                 if (virtualItems.length) {
                     // Does it contain the first page?
-                    chunks = (virtualItems[0].index === 0)
+                    chunks =
+                        virtualItems[0].index === 0
                             ? [[virtualItems[0]]].concat(chunk(virtualItems.slice(1), 2))
                             : chunk(virtualItems, 2);
                 }
@@ -603,11 +604,20 @@ export const Inner: React.FC<{
                                         aria-label={pageLabel.replace('{{pageIndex}}', `${item.index + 1}`)}
                                         className={classNames({
                                             'rpv-core__inner-page': true,
-                                            'rpv-core__inner-page--odd-spreads-even': spreadsMode === SpreadsMode.OddSpreads && item.index % 2 === 0,
-                                            'rpv-core__inner-page--odd-spreads-odd': spreadsMode === SpreadsMode.OddSpreads && item.index % 2 === 1,
-                                            'rpv-core__inner-page--even-spreads-cover': spreadsMode === SpreadsMode.EvenSpreads && item.index === 0,
-                                            'rpv-core__inner-page--even-spreads-even': spreadsMode === SpreadsMode.EvenSpreads && item.index > 0 && item.index % 2 === 0,
-                                            'rpv-core__inner-page--even-spreads-odd': spreadsMode === SpreadsMode.EvenSpreads && item.index > 0 && item.index % 2 === 1,
+                                            'rpv-core__inner-page--odd-spreads-even':
+                                                spreadsMode === SpreadsMode.OddSpreads && item.index % 2 === 0,
+                                            'rpv-core__inner-page--odd-spreads-odd':
+                                                spreadsMode === SpreadsMode.OddSpreads && item.index % 2 === 1,
+                                            'rpv-core__inner-page--even-spreads-cover':
+                                                spreadsMode === SpreadsMode.EvenSpreads && item.index === 0,
+                                            'rpv-core__inner-page--even-spreads-even':
+                                                spreadsMode === SpreadsMode.EvenSpreads &&
+                                                item.index > 0 &&
+                                                item.index % 2 === 0,
+                                            'rpv-core__inner-page--even-spreads-odd':
+                                                spreadsMode === SpreadsMode.EvenSpreads &&
+                                                item.index > 0 &&
+                                                item.index % 2 === 1,
                                         })}
                                         role="region"
                                         key={item.index}

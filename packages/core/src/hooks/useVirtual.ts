@@ -302,7 +302,9 @@ export const useVirtual = ({
     scrollModeRef.current = scrollMode;
 
     const scrollDirection =
-        scrollMode === ScrollMode.Wrapped || spreadsMode === SpreadsMode.EvenSpreads || spreadsMode === SpreadsMode.OddSpreads
+        scrollMode === ScrollMode.Wrapped ||
+        spreadsMode === SpreadsMode.EvenSpreads ||
+        spreadsMode === SpreadsMode.OddSpreads
             ? ScrollDirection.Both
             : scrollMode === ScrollMode.Horizontal
             ? ScrollDirection.Horizontal
@@ -361,23 +363,32 @@ export const useVirtual = ({
         if (spreadsMode === SpreadsMode.EvenSpreads) {
             for (let i = 0; i < numberOfItems; i++) {
                 const transformedSize = cacheMeasure[i] || transformSize(i, estimateSize(i));
-                const size = i === 0
-                    ? {
-                        height: scrollMode === ScrollMode.Page ? Math.max(parentRect.height, transformedSize.height) : transformedSize.height,
-                        width: scrollMode === ScrollMode.Page ? Math.max(parentRect.width, transformedSize.width) : transformedSize.width,
-                    }
-                    : {
-                        height: scrollMode === ScrollMode.Page
-                                ? Math.max(parentRect.height, transformedSize.height)
-                                : transformedSize.height,
-                        width: Math.max(parentRect.width / 2, transformedSize.width),
-                    };
-                const start: Offset = i === 0
-                    ? ZERO_OFFSET
-                    : {
-                        left: i % 2 === 0 ? size.width : 0,
-                        top: Math.floor((i - 1) / 2) * size.height + measurements[0].end.top,
-                    };
+                const size =
+                    i === 0
+                        ? {
+                              height:
+                                  scrollMode === ScrollMode.Page
+                                      ? Math.max(parentRect.height, transformedSize.height)
+                                      : transformedSize.height,
+                              width:
+                                  scrollMode === ScrollMode.Page
+                                      ? Math.max(parentRect.width, transformedSize.width)
+                                      : transformedSize.width,
+                          }
+                        : {
+                              height:
+                                  scrollMode === ScrollMode.Page
+                                      ? Math.max(parentRect.height, transformedSize.height)
+                                      : transformedSize.height,
+                              width: Math.max(parentRect.width / 2, transformedSize.width),
+                          };
+                const start: Offset =
+                    i === 0
+                        ? ZERO_OFFSET
+                        : {
+                              left: i % 2 === 0 ? size.width : 0,
+                              top: Math.floor((i - 1) / 2) * size.height + measurements[0].end.top,
+                          };
                 const end: Offset = {
                     left: start.left + size.width,
                     top: start.top + size.height,
@@ -518,9 +529,7 @@ export const useVirtual = ({
             if (maxVisbilityItem > 0) {
                 maxVisbilityIndex = maxVisbilityItem % 2 === 1 ? maxVisbilityItem : maxVisbilityItem - 1;
             }
-            startRange = startRange === 0
-                        ? 0
-                        : startRange % 2 === 1 ? startRange : startRange - 1;
+            startRange = startRange === 0 ? 0 : startRange % 2 === 1 ? startRange : startRange - 1;
             endRange = endRange % 2 === 1 ? endRange - 1 : endRange;
             if (numberOfItems - endRange <= 2) {
                 endRange = numberOfItems - 1;
@@ -698,10 +707,12 @@ export const useVirtual = ({
             const factor = isRtl ? -1 : 1;
 
             if (spreadsMode === SpreadsMode.EvenSpreads) {
+                const transformTop = scrollModeRef.current === ScrollMode.Page ? 0 : item.start.top;
                 if (item.index === 0) {
-                    const minWidth = numberOfItems >= 3
-                        ? Math.max(item.size.width, virtualItems[1].size.width + virtualItems[2].size.width)
-                        : item.size.width;
+                    const minWidth =
+                        numberOfItems >= 3
+                            ? Math.max(item.size.width, virtualItems[1].size.width + virtualItems[2].size.width)
+                            : item.size.width;
                     return {
                         // Size
                         height: `${item.size.height}px`,
@@ -711,7 +722,7 @@ export const useVirtual = ({
                         [sideProperty]: 0,
                         position: 'absolute',
                         top: 0,
-                        transform: `translate(${item.start.left}px, ${item.start.top}px)`,
+                        transform: `translate(${item.start.left}px, ${transformTop}px)`,
                     };
                 }
 
@@ -723,7 +734,7 @@ export const useVirtual = ({
                     [sideProperty]: 0,
                     position: 'absolute',
                     top: 0,
-                    transform: `translate(${item.start.left}px, ${item.start.top}px)`,
+                    transform: `translate(${item.start.left}px, ${transformTop}px)`,
                 };
             }
 
@@ -793,28 +804,25 @@ export const useVirtual = ({
     );
 
     // Zoom to the given item
-    const zoom = React.useCallback(
-        (scale: number, index: number) => {
-            setCacheMeasure({});
-            const { measurements, scrollOffset } = latestRef.current;
-            const normalizedIndex = clamp(0, numberOfItems - 1, index);
-            const measurement = measurements[normalizedIndex];
-            if (measurement) {
-                const updateOffset =
-                    scrollModeRef.current === ScrollMode.Page
-                        ? {
-                              left: measurement.start.left,
-                              top: measurement.start.top,
-                          }
-                        : {
-                              left: scrollOffset.left * scale,
-                              top: scrollOffset.top * scale,
-                          };
-                scrollTo(updateOffset, false);
-            }
-        },
-        []
-    );
+    const zoom = React.useCallback((scale: number, index: number) => {
+        setCacheMeasure({});
+        const { measurements, scrollOffset } = latestRef.current;
+        const normalizedIndex = clamp(0, numberOfItems - 1, index);
+        const measurement = measurements[normalizedIndex];
+        if (measurement) {
+            const updateOffset =
+                scrollModeRef.current === ScrollMode.Page
+                    ? {
+                          left: measurement.start.left,
+                          top: measurement.start.top,
+                      }
+                    : {
+                          left: scrollOffset.left * scale,
+                          top: scrollOffset.top * scale,
+                      };
+            scrollTo(updateOffset, false);
+        }
+    }, []);
 
     return {
         isSmoothScrolling,
