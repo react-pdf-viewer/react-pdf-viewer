@@ -12,6 +12,7 @@ import { useIsomorphicLayoutEffect } from '../hooks/useIsomorphicLayoutEffect';
 import { usePrevious } from '../hooks/usePrevious';
 import { useRenderQueue } from '../hooks/useRenderQueue';
 import { useTrackResize } from '../hooks/useTrackResize';
+import type { VirtualItem } from '../hooks/useVirtual';
 import { useVirtual } from '../hooks/useVirtual';
 import { PageLayer } from '../layers/PageLayer';
 import { LocalizationContext } from '../localization/LocalizationContext';
@@ -537,7 +538,26 @@ export const Inner: React.FC<{
     };
 
     const renderViewer = React.useCallback(() => {
-        const numItemsEachChunk = spreadsMode === SpreadsMode.NoSpreads ? 1 : 2;
+        const { virtualItems } = virtualizer;
+        let chunks: VirtualItem[][] = [];
+        switch (spreadsMode) {
+            case SpreadsMode.OddSpreads:
+                chunks = chunk(virtualItems, 2);
+                break;
+            case SpreadsMode.EvenSpreads:
+                if (virtualItems.length) {
+                    // Does it contain the first page?
+                    chunks =
+                        virtualItems[0].index === 0
+                            ? [[virtualItems[0]]].concat(chunk(virtualItems.slice(1), 2))
+                            : chunk(virtualItems, 2);
+                }
+                break;
+            case SpreadsMode.NoSpreads:
+            default:
+                chunks = chunk(virtualItems, 1);
+                break;
+        }
 
         const pageLabel =
             l10n && l10n.core ? ((l10n.core as LocalizationMap).pageLabel as string) : 'Page {{pageIndex}}';
@@ -570,7 +590,7 @@ export const Inner: React.FC<{
                 },
                 children: (
                     <div style={virtualizer.getContainerStyles()}>
-                        {chunk(virtualizer.virtualItems, numItemsEachChunk).map((items) => (
+                        {chunks.map((items) => (
                             <div
                                 className={classNames({
                                     'rpv-core__inner-page-container': true,
@@ -588,6 +608,16 @@ export const Inner: React.FC<{
                                                 spreadsMode === SpreadsMode.OddSpreads && item.index % 2 === 0,
                                             'rpv-core__inner-page--odd-spreads-odd':
                                                 spreadsMode === SpreadsMode.OddSpreads && item.index % 2 === 1,
+                                            'rpv-core__inner-page--even-spreads-cover':
+                                                spreadsMode === SpreadsMode.EvenSpreads && item.index === 0,
+                                            'rpv-core__inner-page--even-spreads-even':
+                                                spreadsMode === SpreadsMode.EvenSpreads &&
+                                                item.index > 0 &&
+                                                item.index % 2 === 0,
+                                            'rpv-core__inner-page--even-spreads-odd':
+                                                spreadsMode === SpreadsMode.EvenSpreads &&
+                                                item.index > 0 &&
+                                                item.index % 2 === 1,
                                         })}
                                         role="region"
                                         key={item.index}
