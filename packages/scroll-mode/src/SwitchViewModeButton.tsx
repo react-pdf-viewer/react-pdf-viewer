@@ -40,7 +40,9 @@ export const SwitchViewModeButton: React.FC<RenderSwitchViewModeProps> = ({ isSe
                             isSelected={isSelected}
                             testId={testId}
                             onClick={props.onClick}
-                        />
+                        >
+                            {props.icon}
+                        </MinimalButton>
                     }
                     content={() => props.label}
                     offset={TOOLTIP_OFFSET}

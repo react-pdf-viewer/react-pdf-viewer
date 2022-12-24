@@ -29,7 +29,7 @@ export const SwitchViewModeMenuItem: React.FC<RenderSwitchViewModeProps> = ({ is
     return (
         <SwitchViewModeDecorator mode={mode} onClick={onClick}>
             {(props) => (
-                <MenuItem checked={isSelected} testId={testId} onClick={props.onClick}>
+                <MenuItem checked={isSelected} icon={props.icon} testId={testId} onClick={props.onClick}>
                     {props.label}
                 </MenuItem>
             )}
