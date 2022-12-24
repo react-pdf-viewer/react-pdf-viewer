@@ -35,6 +35,8 @@ import type {
     ScrollModePlugin,
     SwitchScrollModeMenuItemProps,
     SwitchScrollModeProps,
+    SwitchViewModeMenuItemProps,
+    SwitchViewlModeProps,
 } from '@react-pdf-viewer/scroll-mode';
 import type { SearchPlugin, SearchPluginProps, SearchProps, ShowSearchPopoverProps } from '@react-pdf-viewer/search';
 import type {
@@ -98,11 +100,15 @@ export interface ToolbarSlot {
 
     SwitchScrollMode(props: SwitchScrollModeProps): React.ReactElement;
     SwitchScrollModeMenuItem(props: SwitchScrollModeMenuItemProps): React.ReactElement;
+
     SwitchSelectionMode(props: SwitchSelectionModeProps): React.ReactElement;
     SwitchSelectionModeMenuItem(props: SwitchSelectionModeMenuItemProps): React.ReactElement;
 
     SwitchTheme(props: SwitchThemeProps): React.ReactElement;
     SwitchThemeMenuItem(props: SwitchThemeMenuItemProps): React.ReactElement;
+
+    SwitchViewMode(props: SwitchViewModeProps): React.ReactElement;
+    SwitchViewModeMenuItem(props: SwitchViewModeMenuItemProps): React.ReactElement;
 
     Zoom(props: ZoomProps): React.ReactElement;
     ZoomIn(props: ZoomInProps): React.ReactElement;

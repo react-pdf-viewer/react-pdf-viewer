@@ -126,7 +126,8 @@ export const toolbarPlugin = (props?: ToolbarPluginProps): ToolbarPlugin => {
         const { Print, PrintMenuItem } = printPluginInstance;
         const { ShowProperties, ShowPropertiesMenuItem } = propertiesPluginInstance;
         const { Rotate, RotateBackwardMenuItem, RotateForwardMenuItem } = rotatePluginInstance;
-        const { SwitchScrollMode, SwitchScrollModeMenuItem } = scrollModePluginInstance;
+        const { SwitchScrollMode, SwitchScrollModeMenuItem, SwitchViewMode, SwitchViewModeMenuItem } =
+            scrollModePluginInstance;
         const { Search, ShowSearchPopover } = searchPluginInstance;
         const { SwitchSelectionMode, SwitchSelectionModeMenuItem } = selectionModePluginInstance;
         const { SwitchTheme, SwitchThemeMenuItem } = themePluginInstance;
@@ -167,6 +168,8 @@ export const toolbarPlugin = (props?: ToolbarPluginProps): ToolbarPlugin => {
                     SwitchScrollModeMenuItem,
                     SwitchSelectionMode,
                     SwitchSelectionModeMenuItem,
+                    SwitchViewMode,
+                    SwitchViewModeMenuItem,
                     SwitchTheme,
                     SwitchThemeMenuItem,
                     Zoom,

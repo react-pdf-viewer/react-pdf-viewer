@@ -18,7 +18,12 @@ import type {
 import type { PrintMenuItemProps, PrintProps } from '@react-pdf-viewer/print';
 import type { ShowPropertiesMenuItemProps, ShowPropertiesProps } from '@react-pdf-viewer/properties';
 import type { RotateDecoratorProps, RotateProps } from '@react-pdf-viewer/rotate';
-import type { SwitchScrollModeMenuItemProps, SwitchScrollModeProps } from '@react-pdf-viewer/scroll-mode';
+import type {
+    SwitchScrollModeMenuItemProps,
+    SwitchScrollModeProps,
+    SwitchViewModeMenuItemProps,
+    SwitchViewModeProps,
+} from '@react-pdf-viewer/scroll-mode';
 import type { SearchProps, ShowSearchPopoverProps } from '@react-pdf-viewer/search';
 import type { SwitchSelectionModeMenuItemProps, SwitchSelectionModeProps } from '@react-pdf-viewer/selection-mode';
 import type { SwitchThemeMenuItemProps, SwitchThemeProps } from '@react-pdf-viewer/theme';
@@ -69,8 +74,12 @@ export interface ToolbarSlot {
 
     SwitchScrollMode(props: SwitchScrollModeProps): React.ReactElement;
     SwitchScrollModeMenuItem(props: SwitchScrollModeMenuItemProps): React.ReactElement;
+
     SwitchSelectionMode(props: SwitchSelectionModeProps): React.ReactElement;
     SwitchSelectionModeMenuItem(props: SwitchSelectionModeMenuItemProps): React.ReactElement;
+
+    SwitchViewMode(props: SwitchViewModeProps): React.ReactElement;
+    SwitchViewModeMenuItem(props: SwitchViewModeMenuItemProps): React.ReactElement;
 
     SwitchTheme(props: SwitchThemeProps): React.ReactElement;
     SwitchThemeMenuItem(props: SwitchThemeMenuItemProps): React.ReactElement;
