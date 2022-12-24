@@ -247,7 +247,9 @@ export const Inner: React.FC<{
                             pagesContainer,
                             pageSizes[pageIndex].pageHeight,
                             pageSizes[pageIndex].pageWidth,
-                            SpecialZoomLevel.PageWidth
+                            SpecialZoomLevel.PageWidth,
+                            spreadsMode,
+                            numPages
                         );
                         top = (viewport.height - bottom) * updateScale;
                         left = left * updateScale;
@@ -364,7 +366,7 @@ export const Inner: React.FC<{
 
         let updateScale = pagesEle
             ? typeof newScale === 'string'
-                ? calculateScale(pagesEle, currentPageHeight, currentPageWidth, newScale)
+                ? calculateScale(pagesEle, currentPageHeight, currentPageWidth, newScale, spreadsMode, numPages)
                 : newScale
             : 1;
 
