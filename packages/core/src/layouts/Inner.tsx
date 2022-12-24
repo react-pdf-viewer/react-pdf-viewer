@@ -117,6 +117,9 @@ export const Inner: React.FC<{
 
     const [currentScrollMode, setCurrentScrollMode] = React.useState(scrollMode);
     const previousScrollMode = usePrevious(currentScrollMode);
+
+    const [currentViewMode, setCurrentViewMode] = React.useState(viewMode);
+
     const outlines = useOutlines(doc);
 
     const [scale, setScale] = React.useState(initialScale);
@@ -353,6 +356,14 @@ export const Inner: React.FC<{
         setCurrentScrollMode(scrollMode);
     }, []);
 
+    const switchViewMode = React.useCallback((viewMode: ViewMode) => {
+        setViewerState({
+            ...stateRef.current,
+            viewMode,
+        });
+        setCurrentViewMode(viewMode);
+    }, []);
+
     const zoom = React.useCallback((newScale: number | SpecialZoomLevel) => {
         const pagesEle = pagesRef.current;
 
@@ -405,6 +416,7 @@ export const Inner: React.FC<{
             rotatePage,
             setViewerState,
             switchScrollMode,
+            switchViewMode,
             zoom,
         };
 
@@ -680,6 +692,7 @@ export const Inner: React.FC<{
                     rotate,
                     rotatePage,
                     switchScrollMode,
+                    switchViewMode,
                     zoom,
                 });
             }

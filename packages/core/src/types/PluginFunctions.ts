@@ -9,6 +9,7 @@
 import { RotateDirection } from '../structs/RotateDirection';
 import { ScrollMode } from '../structs/ScrollMode';
 import { SpecialZoomLevel } from '../structs/SpecialZoomLevel';
+import { ViewMode } from '../structs/ViewMode';
 import type { ViewerState } from './ViewerState';
 
 export type DestinationOffsetFromViewport = (viewportWidth: number, viewportHeight: number) => number;
@@ -30,5 +31,6 @@ export interface PluginFunctions {
     rotatePage(pageIndex: number, direction: RotateDirection): void;
     setViewerState(viewerState: ViewerState): void;
     switchScrollMode(scrollMode: ScrollMode): void;
+    switchViewMode(viewMode: ViewMode): void;
     zoom(scale: number | SpecialZoomLevel): void;
 }

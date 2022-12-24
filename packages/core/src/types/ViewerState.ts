@@ -7,6 +7,7 @@
  */
 
 import { ScrollMode } from '../structs/ScrollMode';
+import { ViewMode } from '../structs/ViewMode';
 import type { OpenFile } from './OpenFile';
 
 export interface ViewerState {
@@ -27,4 +28,6 @@ export interface ViewerState {
     scale: number;
     // The current scroll mode
     scrollMode: ScrollMode;
+    // The current view mode
+    viewMode: ViewMode;
 }

@@ -18,6 +18,7 @@ import {
     TextDirection,
     ThemeContext,
     Tooltip,
+    ViewMode,
 } from '@react-pdf-viewer/core';
 import { SelectionMode } from '@react-pdf-viewer/selection-mode';
 import * as React from 'react';
@@ -46,6 +47,7 @@ export const MoreActionsPopover: React.FC<{
         ShowPropertiesMenuItem,
         SwitchScrollModeMenuItem,
         SwitchSelectionModeMenuItem,
+        SwitchViewModeMenuItem,
         SwitchThemeMenuItem,
     } = toolbarSlot;
 
@@ -115,6 +117,18 @@ export const MoreActionsPopover: React.FC<{
                 <SwitchScrollModeMenuItem mode={ScrollMode.Horizontal} onClick={toggle} />
                 <SwitchScrollModeMenuItem mode={ScrollMode.Wrapped} onClick={toggle} />
                 <MenuDivider />
+                <div className="rpv-core__display--hidden rpv-core__display--block-small">
+                    <SwitchViewModeMenuItem mode={ViewMode.SinglePage} onClick={toggle} />
+                </div>
+                <div className="rpv-core__display--hidden rpv-core__display--block-small">
+                    <SwitchViewModeMenuItem mode={ViewMode.DualPage} onClick={toggle} />
+                </div>
+                <div className="rpv-core__display--hidden rpv-core__display--block-small">
+                    <SwitchViewModeMenuItem mode={ViewMode.DualPageWithCover} onClick={toggle} />
+                </div>
+                <div className="rpv-core__display--hidden rpv-core__display--block-small">
+                    <MenuDivider />
+                </div>
                 <ShowPropertiesMenuItem onClick={toggle} />
             </Menu>
         );
