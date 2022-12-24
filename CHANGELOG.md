@@ -30,6 +30,8 @@ import { ViewMode, Viewer } from '@react-pdf-viewer/core';
 
 -   `PluginFunctions` provides new `jumpToPreviousPage` and `jumpToNextPage` to jump to the previous and next pages
 
+-   The `scroll-mode` plugin provides new `DualPageCoverViewModeIcon`, `DualPageViewModeIcon` and `PageScrollingIcon` icons
+
 **Bug fixes**
 
 -   Jumping to the previous and next pages in wrapped scrol mode don't work properly

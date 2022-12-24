@@ -6,6 +6,8 @@
  * @copyright 2019-2022 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
+export { DualPageCoverViewModeIcon } from './DualPageCoverViewModeIcon';
+export { DualPageViewModeIcon } from './DualPageViewModeIcon';
 export { HorizontalScrollingIcon } from './HorizontalScrollingIcon';
 export { PageScrollingIcon } from './PageScrollingIcon';
 export * from './scrollModePlugin';
