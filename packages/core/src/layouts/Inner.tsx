@@ -594,7 +594,7 @@ export const Inner: React.FC<{
                             <div
                                 className={classNames({
                                     'rpv-core__inner-page-container': true,
-                                    'rpv-core__inner-page-container--single': scrollMode === ScrollMode.Page,
+                                    'rpv-core__inner-page-container--single': currentScrollMode === ScrollMode.Page,
                                 })}
                                 style={virtualizer.getItemContainerStyles(items[0])}
                                 key={items[0].index}
