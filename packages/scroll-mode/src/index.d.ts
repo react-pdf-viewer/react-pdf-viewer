@@ -7,7 +7,7 @@
  */
 
 import type { Plugin } from '@react-pdf-viewer/core';
-import { ScrollMode } from '@react-pdf-viewer/core';
+import { ScrollMode, ViewMode } from '@react-pdf-viewer/core';
 import * as React from 'react';
 
 // Types
@@ -31,12 +31,37 @@ export interface SwitchScrollModeMenuItemProps {
     onClick(): void;
 }
 
+export interface SwitchViewModeProps {
+    children?: (props: RenderSwitchViewModeProps) => React.ReactElement;
+    mode: ViewMode;
+}
+
+export interface RenderSwitchViewModeProps {
+    isSelected: boolean;
+    mode: ViewMode;
+    onClick(): void;
+}
+
+export interface SwitchViewModeButtonProps {
+    mode: ViewMode;
+}
+
+export interface SwitchViewModeMenuItemProps {
+    mode: ViewMode;
+    onClick(): void;
+}
+
 // Plugin
 export interface ScrollModePlugin extends Plugin {
     switchScrollMode(mode: ScrollMode): void;
     SwitchScrollMode(props: SwitchScrollModeProps): React.ReactElement;
     SwitchScrollModeButton(props: SwitchScrollModeButtonProps): React.ReactElement;
     SwitchScrollModeMenuItem(props: SwitchScrollModeMenuItemProps): React.ReactElement;
+
+    switchViewMode(mode: ViewMode): void;
+    SwitchViewMode(props: SwitchViewModeProps): React.ReactElement;
+    SwitchViewModeButton(props: SwitchViewModeButtonProps): React.ReactElement;
+    SwitchViewModeMenuItem(props: SwitchViewModeMenuItemProps): React.ReactElement;
 }
 
 export function scrollModePlugin(): ScrollModePlugin;

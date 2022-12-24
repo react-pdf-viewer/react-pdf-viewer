@@ -10,6 +10,8 @@ export { HorizontalScrollingIcon } from './HorizontalScrollingIcon';
 export { PageScrollingIcon } from './PageScrollingIcon';
 export * from './scrollModePlugin';
 export type { SwitchScrollModeProps } from './SwitchScrollMode';
+export type { SwitchViewModeProps } from './SwitchViewMode';
 export type { RenderSwitchScrollModeProps } from './types/RenderSwitchScrollModeProps';
+export type { RenderSwitchViewModeProps } from './types/RenderSwitchViewModeProps';
 export { VerticalScrollingIcon } from './VerticalScrollingIcon';
 export { WrappedScrollingIcon } from './WrappedScrollingIcon';
