@@ -19,7 +19,7 @@ import { LocalizationContext } from '../localization/LocalizationContext';
 import { RotateDirection } from '../structs/RotateDirection';
 import { ScrollMode } from '../structs/ScrollMode';
 import { SpecialZoomLevel } from '../structs/SpecialZoomLevel';
-import { SpreadsMode } from '../structs/SpreadsMode';
+import { ViewMode } from '../structs/ViewMode';
 import { TextDirection, ThemeContext } from '../theme/ThemeContext';
 import type { DocumentLoadEvent } from '../types/DocumentLoadEvent';
 import type { LocalizationMap } from '../types/LocalizationMap';
@@ -69,7 +69,7 @@ export const Inner: React.FC<{
     plugins: Plugin[];
     renderPage?: RenderPage;
     scrollMode: ScrollMode;
-    spreadsMode: SpreadsMode;
+    viewMode: ViewMode;
     viewerState: ViewerState;
     onDocumentLoad(e: DocumentLoadEvent): void;
     onOpenFile(fileName: string, data: Uint8Array): void;
@@ -89,7 +89,7 @@ export const Inner: React.FC<{
     plugins,
     renderPage,
     scrollMode,
-    spreadsMode,
+    viewMode,
     viewerState,
     onDocumentLoad,
     onOpenFile,
@@ -177,7 +177,7 @@ export const Inner: React.FC<{
         setStartRange,
         setEndRange,
         sizes,
-        spreadsMode,
+        viewMode,
     });
 
     const handlePagesResize = useDebounceCallback((_) => {
@@ -248,7 +248,7 @@ export const Inner: React.FC<{
                             pageSizes[pageIndex].pageHeight,
                             pageSizes[pageIndex].pageWidth,
                             SpecialZoomLevel.PageWidth,
-                            spreadsMode,
+                            viewMode,
                             numPages
                         );
                         top = (viewport.height - bottom) * updateScale;
@@ -366,7 +366,7 @@ export const Inner: React.FC<{
 
         let updateScale = pagesEle
             ? typeof newScale === 'string'
-                ? calculateScale(pagesEle, currentPageHeight, currentPageWidth, newScale, spreadsMode, numPages)
+                ? calculateScale(pagesEle, currentPageHeight, currentPageWidth, newScale, viewMode, numPages)
                 : newScale
             : 1;
 
@@ -541,11 +541,11 @@ export const Inner: React.FC<{
     const renderViewer = React.useCallback(() => {
         const { virtualItems } = virtualizer;
         let chunks: VirtualItem[][] = [];
-        switch (spreadsMode) {
-            case SpreadsMode.OddSpreads:
+        switch (viewMode) {
+            case ViewMode.DualPage:
                 chunks = chunk(virtualItems, 2);
                 break;
-            case SpreadsMode.EvenSpreads:
+            case ViewMode.DualPageWithCover:
                 if (virtualItems.length) {
                     // Does it contain the first page?
                     chunks =
@@ -554,7 +554,7 @@ export const Inner: React.FC<{
                             : chunk(virtualItems, 2);
                 }
                 break;
-            case SpreadsMode.NoSpreads:
+            case ViewMode.SinglePage:
             default:
                 chunks = chunk(virtualItems, 1);
                 break;
@@ -603,7 +603,7 @@ export const Inner: React.FC<{
                                 {items.map((item) => {
                                     // The first and the last items are treated as covers
                                     const isCover =
-                                        spreadsMode === SpreadsMode.EvenSpreads &&
+                                        viewMode === ViewMode.DualPageWithCover &&
                                         (item.index === 0 || (numPages % 2 === 0 && item.index === numPages - 1));
                                     return (
                                         <div
@@ -611,19 +611,19 @@ export const Inner: React.FC<{
                                             className={classNames({
                                                 'rpv-core__inner-page': true,
                                                 'rpv-core__inner-page--no-spreads-single':
-                                                    spreadsMode === SpreadsMode.NoSpreads &&
+                                                    viewMode === ViewMode.SinglePage &&
                                                     currentScrollMode === ScrollMode.Page,
                                                 'rpv-core__inner-page--odd-spreads-even':
-                                                    spreadsMode === SpreadsMode.OddSpreads && item.index % 2 === 0,
+                                                    viewMode === ViewMode.DualPage && item.index % 2 === 0,
                                                 'rpv-core__inner-page--odd-spreads-odd':
-                                                    spreadsMode === SpreadsMode.OddSpreads && item.index % 2 === 1,
+                                                    viewMode === ViewMode.DualPage && item.index % 2 === 1,
                                                 'rpv-core__inner-page--even-spreads-cover': isCover,
                                                 'rpv-core__inner-page--even-spreads-even':
-                                                    spreadsMode === SpreadsMode.EvenSpreads &&
+                                                    viewMode === ViewMode.DualPageWithCover &&
                                                     !isCover &&
                                                     item.index % 2 === 0,
                                                 'rpv-core__inner-page--even-spreads-odd':
-                                                    spreadsMode === SpreadsMode.EvenSpreads &&
+                                                    viewMode === ViewMode.DualPageWithCover &&
                                                     !isCover &&
                                                     item.index % 2 === 1,
                                             })}
@@ -649,7 +649,7 @@ export const Inner: React.FC<{
                                                 rotation={rotation}
                                                 scale={scale}
                                                 shouldRender={renderPageIndex === item.index}
-                                                spreadsMode={spreadsMode}
+                                                viewMode={viewMode}
                                                 onExecuteNamedAction={executeNamedAction}
                                                 onJumpToDest={jumpToDestination}
                                                 onRenderCompleted={handlePageRenderCompleted}

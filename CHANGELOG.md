@@ -14,6 +14,20 @@ import { ScrollMode, Viewer } from '@react-pdf-viewer/core';
 
 You can switch to the page scrolling mode from the toolbar.
 
+-   New three page viewmodes:
+
+```tsx
+import { ViewMode, Viewer } from '@react-pdf-viewer/core';
+
+<Viewer viewMode={ViewMode.DualPage} />;
+```
+
+| Mode                         | Description                                                      |
+| ---------------------------- | ---------------------------------------------------------------- |
+| `ViewMode.SinglePage`        | The default mode. View single page continuously                  |
+| `ViewMode.DualPage`          | View two pages each time                                         |
+| `ViewMode.DualPageWithCover` | View two pages each time. The first page is displayed as a cover |
+
 -   `PluginFunctions` provides new `jumpToPreviousPage` and `jumpToNextPage` to jump to the previous and next pages
 
 **Bug fixes**

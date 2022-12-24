@@ -12,7 +12,7 @@ import { Spinner } from '../components/Spinner';
 import { useIsMounted } from '../hooks/useIsMounted';
 import { RotateDirection } from '../structs/RotateDirection';
 import { SpecialZoomLevel } from '../structs/SpecialZoomLevel';
-import { SpreadsMode } from '../structs/SpreadsMode';
+import { ViewMode } from '../structs/ViewMode';
 import type { PageSize } from '../types/PageSize';
 import type { PdfJs } from '../types/PdfJs';
 import type { Plugin } from '../types/Plugin';
@@ -36,7 +36,7 @@ export const PageLayer: React.FC<{
     rotation: number;
     scale: number;
     shouldRender: boolean;
-    spreadsMode: SpreadsMode;
+    viewMode: ViewMode;
     onExecuteNamedAction(action: string): void;
     onJumpToDest(
         pageIndex: number,
@@ -58,7 +58,7 @@ export const PageLayer: React.FC<{
     rotation,
     scale,
     shouldRender,
-    spreadsMode,
+    viewMode,
     onExecuteNamedAction,
     onJumpToDest,
     onRenderCompleted,
@@ -144,8 +144,8 @@ export const PageLayer: React.FC<{
         <div
             className={classNames({
                 'rpv-core__page-layer': true,
-                'rpv-core__page-layer--no-spreads': spreadsMode === SpreadsMode.NoSpreads,
-                'rpv-core__page-layer--odd-spreads': spreadsMode === SpreadsMode.OddSpreads,
+                'rpv-core__page-layer--no-spreads': viewMode === ViewMode.SinglePage,
+                'rpv-core__page-layer--odd-spreads': viewMode === ViewMode.DualPage,
             })}
             data-testid={`core__page-layer-${pageIndex}`}
             style={{

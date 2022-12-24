@@ -9,7 +9,7 @@
 import * as React from 'react';
 import { ScrollDirection } from '../structs/ScrollDirection';
 import { ScrollMode } from '../structs/ScrollMode';
-import { SpreadsMode } from '../structs/SpreadsMode';
+import { ViewMode } from '../structs/ViewMode';
 import type { Offset } from '../types/Offset';
 import type { Rect } from '../types/Rect';
 import { chunk } from '../utils/chunk';
@@ -264,7 +264,7 @@ export const useVirtual = ({
     setEndRange,
     sizes,
     scrollMode,
-    spreadsMode,
+    viewMode,
 }: {
     isRtl: boolean;
     numberOfItems: number;
@@ -274,7 +274,7 @@ export const useVirtual = ({
     // Sizes of items
     sizes: Rect[];
     scrollMode: ScrollMode;
-    spreadsMode: SpreadsMode;
+    viewMode: ViewMode;
 }): {
     isSmoothScrolling: boolean;
     startIndex: number;
@@ -298,9 +298,7 @@ export const useVirtual = ({
     scrollModeRef.current = scrollMode;
 
     const scrollDirection =
-        scrollMode === ScrollMode.Wrapped ||
-        spreadsMode === SpreadsMode.EvenSpreads ||
-        spreadsMode === SpreadsMode.OddSpreads
+        scrollMode === ScrollMode.Wrapped || viewMode === ViewMode.DualPageWithCover || viewMode === ViewMode.DualPage
             ? ScrollDirection.Both
             : scrollMode === ScrollMode.Horizontal
             ? ScrollDirection.Horizontal
@@ -329,7 +327,7 @@ export const useVirtual = ({
         const measurements: VirtualItem[] = [];
 
         // Single page scrolling mode
-        if (scrollMode === ScrollMode.Page && spreadsMode === SpreadsMode.NoSpreads) {
+        if (scrollMode === ScrollMode.Page && viewMode === ViewMode.SinglePage) {
             for (let i = 0; i < numberOfItems; i++) {
                 const size = {
                     height: Math.max(parentRect.height, sizes[i].height),
@@ -351,8 +349,8 @@ export const useVirtual = ({
             return measurements;
         }
 
-        // `EvenSpreads` mode
-        if (spreadsMode === SpreadsMode.EvenSpreads) {
+        // `DualPageWithCover` mode
+        if (viewMode === ViewMode.DualPageWithCover) {
             for (let i = 0; i < numberOfItems; i++) {
                 const size =
                     i === 0
@@ -395,8 +393,8 @@ export const useVirtual = ({
             return measurements;
         }
 
-        // `OddSpreads` mode
-        if (spreadsMode === SpreadsMode.OddSpreads) {
+        // `DualPage` mode
+        if (viewMode === ViewMode.DualPage) {
             for (let i = 0; i < numberOfItems; i++) {
                 const size = {
                     height:
@@ -422,7 +420,7 @@ export const useVirtual = ({
             return measurements;
         }
 
-        // `NoSpreads` mode
+        // `SinglePage` mode
         let totalWidth = 0;
         let firstOfRow = {
             left: 0,
@@ -512,8 +510,8 @@ export const useVirtual = ({
     let startRange = setStartRange(start);
     let endRange = setEndRange(end);
 
-    switch (spreadsMode) {
-        case SpreadsMode.EvenSpreads:
+    switch (viewMode) {
+        case ViewMode.DualPageWithCover:
             if (maxVisbilityItem > 0) {
                 maxVisbilityIndex = maxVisbilityItem % 2 === 1 ? maxVisbilityItem : maxVisbilityItem - 1;
             }
@@ -523,12 +521,12 @@ export const useVirtual = ({
                 endRange = numberOfItems - 1;
             }
             break;
-        case SpreadsMode.OddSpreads:
+        case ViewMode.DualPage:
             maxVisbilityIndex = maxVisbilityItem % 2 === 0 ? maxVisbilityItem : maxVisbilityItem - 1;
             startRange = startRange % 2 === 0 ? startRange : startRange - 1;
             endRange = endRange % 2 === 1 ? endRange : endRange - 1;
             break;
-        case SpreadsMode.NoSpreads:
+        case ViewMode.SinglePage:
         default:
             maxVisbilityIndex = maxVisbilityItem;
             break;
@@ -593,13 +591,13 @@ export const useVirtual = ({
     }, []);
 
     const scrollToNextItem = React.useCallback((index: number, offset: Offset) => {
-        // `OddSpreads` mode
-        if (spreadsMode === SpreadsMode.EvenSpreads || spreadsMode === SpreadsMode.OddSpreads) {
+        // `DualPage` mode
+        if (viewMode === ViewMode.DualPageWithCover || viewMode === ViewMode.DualPage) {
             scrollToSmallestItemAbove(index, offset);
             return;
         }
 
-        // `NoSpreads` mode
+        // `SinglePage` mode
         switch (scrollModeRef.current) {
             case ScrollMode.Wrapped:
                 scrollToSmallestItemAbove(index, offset);
@@ -613,13 +611,13 @@ export const useVirtual = ({
     }, []);
 
     const scrollToPreviousItem = React.useCallback((index: number, offset: Offset) => {
-        // `OddSpreads` mode
-        if (spreadsMode === SpreadsMode.OddSpreads) {
+        // `DualPage` mode
+        if (viewMode === ViewMode.DualPage) {
             scrollToSmallestItemBelow(index, offset);
             return;
         }
 
-        // `NoSpreads` mode
+        // `SinglePage` mode
         switch (scrollModeRef.current) {
             case ScrollMode.Wrapped:
                 scrollToSmallestItemBelow(index, offset);
@@ -668,7 +666,7 @@ export const useVirtual = ({
         [parentRect]
     );
 
-    // Determine the min width in the `EvenSpreads` mode
+    // Determine the min width in the `DualPageWithCover` mode
     const hasDifferentSizes = React.useMemo(() => {
         if (numberOfItems === 1) {
             return false;
@@ -682,7 +680,7 @@ export const useVirtual = ({
     }, [sizes]);
 
     const minWidthOfCover = React.useMemo(() => {
-        if (spreadsMode !== SpreadsMode.EvenSpreads) {
+        if (viewMode !== ViewMode.DualPageWithCover) {
             return 0;
         }
         if (!hasDifferentSizes) {
@@ -699,7 +697,7 @@ export const useVirtual = ({
             const sideProperty = isRtl ? 'right' : 'left';
             const factor = isRtl ? -1 : 1;
 
-            if (spreadsMode === SpreadsMode.EvenSpreads) {
+            if (viewMode === ViewMode.DualPageWithCover) {
                 const transformTop = scrollModeRef.current === ScrollMode.Page ? 0 : item.start.top;
                 // The first and the last items are treated as covers
                 if (item.index === 0 || (numberOfItems % 2 === 0 && item.index === numberOfItems - 1)) {
@@ -728,7 +726,7 @@ export const useVirtual = ({
                 };
             }
 
-            if (spreadsMode === SpreadsMode.OddSpreads) {
+            if (viewMode === ViewMode.DualPage) {
                 return {
                     // Size
                     height: `${item.size.height}px`,
