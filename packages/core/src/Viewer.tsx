@@ -223,6 +223,7 @@ export const Viewer: React.FC<{
                                                 rotation: initialRotation,
                                                 scale: initialScale,
                                                 scrollMode,
+                                                viewMode,
                                             }}
                                             onDocumentLoad={onDocumentLoad}
                                             onOpenFile={openFile}

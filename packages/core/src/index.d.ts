@@ -60,6 +60,7 @@ export interface PluginFunctions {
     rotatePage(pageIndex: number, direction: RotateDirection): void;
     setViewerState(viewerState: ViewerState): void;
     switchScrollMode(scrollMode: ScrollMode): void;
+    switchViewMode(viewMode: ViewMode): void;
     zoom(scale: number | SpecialZoomLevel): void;
 }
 export interface PluginOnDocumentLoad {
@@ -136,6 +137,8 @@ export interface RenderViewer {
     jumpToPage(page: number): void;
     rotate(direction: RotateDirection): void;
     rotatePage(pageIndex: number, direction: RotateDirection): void;
+    switchScrollMode(scrollMode: ScrollMode): void;
+    switchViewMode(viewMode: ViewMode): void;
     zoom(level: number | SpecialZoomLevel): void;
 }
 export interface Slot {
@@ -166,6 +169,8 @@ export interface ViewerState {
     scale: number;
     // The current scroll mode
     scrollMode: ScrollMode;
+    // The current view mode
+    viewMode: ViewMode;
 }
 export interface VisibilityChanged {
     isVisible: boolean;
