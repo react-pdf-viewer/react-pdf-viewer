@@ -17,15 +17,12 @@ import { findNearest } from '../utils/findNearest';
 import { useMeasureRect } from './useMeasureRect';
 import { useScroll } from './useScroll';
 
-interface ItemMeasurement {
+export interface VirtualItem {
     index: number;
     start: Offset;
     size: Rect;
     end: Offset;
     visibility: number;
-}
-export interface VirtualItem extends ItemMeasurement {
-    measureRef: (ele: HTMLElement) => void;
 }
 
 const ZERO_RECT: Rect = {
@@ -39,7 +36,7 @@ const ZERO_OFFSET: Offset = {
 
 const calculateRange = (
     scrollDirection: ScrollDirection,
-    measurements: ItemMeasurement[],
+    measurements: VirtualItem[],
     outerSize: Rect,
     scrollOffset: Offset
 ): {
@@ -259,26 +256,24 @@ const calculateRange = (
 };
 
 export const useVirtual = ({
-    estimateSize,
     isRtl,
     numberOfItems,
+    parentRef,
     setStartRange,
     setEndRange,
-    parentRef,
+    sizes,
     scrollMode,
     spreadsMode,
-    transformSize,
 }: {
-    estimateSize: (index: number) => Rect;
     isRtl: boolean;
     numberOfItems: number;
+    parentRef: React.MutableRefObject<HTMLDivElement>;
     setStartRange(startIndex: number): number;
     setEndRange(endIndex: number): number;
-    parentRef: React.MutableRefObject<HTMLDivElement>;
+    // Sizes of items
+    sizes: Rect[];
     scrollMode: ScrollMode;
     spreadsMode: SpreadsMode;
-    // Modify the size of each item. For example, items might have paddings
-    transformSize: (index: number, size: Rect) => Rect;
 }): {
     isSmoothScrolling: boolean;
     startIndex: number;
@@ -322,26 +317,22 @@ export const useVirtual = ({
 
     const latestRef = React.useRef({
         scrollOffset: ZERO_OFFSET,
-        measurements: [] as ItemMeasurement[],
+        measurements: [] as VirtualItem[],
         parentRect: ZERO_RECT,
         totalSize: ZERO_RECT,
     });
     latestRef.current.scrollOffset = scrollOffset;
     latestRef.current.parentRect = parentRect;
 
-    // Support dynamic size of each item
-    const [cacheMeasure, setCacheMeasure] = React.useState<Record<number, Rect>>({});
-
     const measurements = React.useMemo(() => {
-        const measurements: ItemMeasurement[] = [];
+        const measurements: VirtualItem[] = [];
 
         // Single page scrolling mode
         if (scrollMode === ScrollMode.Page && spreadsMode === SpreadsMode.NoSpreads) {
             for (let i = 0; i < numberOfItems; i++) {
-                const transformedSize = cacheMeasure[i] || transformSize(i, estimateSize(i));
                 const size = {
-                    height: Math.max(parentRect.height, transformedSize.height),
-                    width: Math.max(parentRect.width, transformedSize.width),
+                    height: Math.max(parentRect.height, sizes[i].height),
+                    width: Math.max(parentRect.width, sizes[i].width),
                 };
                 const start: Offset = i === 0 ? ZERO_OFFSET : measurements[i - 1].end;
                 const end: Offset = {
@@ -362,25 +353,24 @@ export const useVirtual = ({
         // `EvenSpreads` mode
         if (spreadsMode === SpreadsMode.EvenSpreads) {
             for (let i = 0; i < numberOfItems; i++) {
-                const transformedSize = cacheMeasure[i] || transformSize(i, estimateSize(i));
                 const size =
                     i === 0
                         ? {
                               height:
                                   scrollMode === ScrollMode.Page
-                                      ? Math.max(parentRect.height, transformedSize.height)
-                                      : transformedSize.height,
+                                      ? Math.max(parentRect.height, sizes[i].height)
+                                      : sizes[i].height,
                               width:
                                   scrollMode === ScrollMode.Page
-                                      ? Math.max(parentRect.width, transformedSize.width)
-                                      : transformedSize.width,
+                                      ? Math.max(parentRect.width, sizes[i].width)
+                                      : sizes[i].width,
                           }
                         : {
                               height:
                                   scrollMode === ScrollMode.Page
-                                      ? Math.max(parentRect.height, transformedSize.height)
-                                      : transformedSize.height,
-                              width: Math.max(parentRect.width / 2, transformedSize.width),
+                                      ? Math.max(parentRect.height, sizes[i].height)
+                                      : sizes[i].height,
+                              width: Math.max(parentRect.width / 2, sizes[i].width),
                           };
                 const start: Offset =
                     i === 0
@@ -407,13 +397,10 @@ export const useVirtual = ({
         // `OddSpreads` mode
         if (spreadsMode === SpreadsMode.OddSpreads) {
             for (let i = 0; i < numberOfItems; i++) {
-                const transformedSize = cacheMeasure[i] || transformSize(i, estimateSize(i));
                 const size = {
                     height:
-                        scrollMode === ScrollMode.Page
-                            ? Math.max(parentRect.height, transformedSize.height)
-                            : transformedSize.height,
-                    width: Math.max(parentRect.width / 2, transformedSize.width),
+                        scrollMode === ScrollMode.Page ? Math.max(parentRect.height, sizes[i].height) : sizes[i].height,
+                    width: Math.max(parentRect.width / 2, sizes[i].width),
                 };
                 const start: Offset = {
                     left: i % 2 === 0 ? 0 : size.width,
@@ -444,7 +431,7 @@ export const useVirtual = ({
         // The value will be used to calculate the `start` position for items in the next row
         let maxHeight = 0;
         for (let i = 0; i < numberOfItems; i++) {
-            const size = cacheMeasure[i] || transformSize(i, estimateSize(i));
+            const size = sizes[i];
             let start = ZERO_OFFSET;
             if (i === 0) {
                 totalWidth = size.width;
@@ -501,7 +488,7 @@ export const useVirtual = ({
             };
         }
         return measurements;
-    }, [estimateSize, scrollMode, parentRect, cacheMeasure, transformSize]);
+    }, [scrollMode, sizes, parentRect]);
 
     const totalSize = measurements[numberOfItems - 1]
         ? {
@@ -554,32 +541,12 @@ export const useVirtual = ({
             const virtualItem: VirtualItem = {
                 ...item,
                 visibility: visibilities[i] !== undefined ? visibilities[i] : -1,
-                measureRef: (ele) => {
-                    if (!ele) {
-                        return;
-                    }
-                    const rect = ele.getBoundingClientRect();
-                    if (rect.height === 0 && rect.width === 0) {
-                        // This happens in the unit test environment
-                        return;
-                    }
-                    const measuredSize = transformSize(i, {
-                        height: rect.height,
-                        width: rect.width,
-                    });
-                    if (measuredSize.height !== item.size.height || measuredSize.width !== item.size.width) {
-                        setCacheMeasure((old) => ({
-                            ...old,
-                            [i]: measuredSize,
-                        }));
-                    }
-                },
             };
             virtualItems.push(virtualItem);
         }
 
         return virtualItems;
-    }, [transformSize, visibilities, measurements]);
+    }, [visibilities, measurements]);
 
     const scrollToItem = React.useCallback(
         (index: number, offset: Offset) => {
@@ -805,7 +772,6 @@ export const useVirtual = ({
 
     // Zoom to the given item
     const zoom = React.useCallback((scale: number, index: number) => {
-        setCacheMeasure({});
         const { measurements, scrollOffset } = latestRef.current;
         const normalizedIndex = clamp(0, numberOfItems - 1, index);
         const measurement = measurements[normalizedIndex];

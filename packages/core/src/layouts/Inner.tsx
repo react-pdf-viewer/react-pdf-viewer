@@ -138,24 +138,28 @@ export const Inner: React.FC<{
 
     const layoutBuilder = React.useMemo(() => Object.assign({}, DEFAULT_PAGE_LAYOUT, pageLayout), []);
 
-    const estimateSize = React.useCallback(
-        (index: number) => {
-            const sizes = [pageSizes[index].pageHeight, pageSizes[index].pageWidth];
-            const rect: Rect =
-                Math.abs(rotation) % 180 === 0
-                    ? {
-                          height: sizes[0],
-                          width: sizes[1],
-                      }
-                    : {
-                          height: sizes[1],
-                          width: sizes[0],
-                      };
-            return {
-                height: rect.height * scale,
-                width: rect.width * scale,
-            };
-        },
+    const sizes = React.useMemo(
+        () =>
+            Array(numPages)
+                .fill(0)
+                .map((_, pageIndex) => {
+                    const pageSize = [pageSizes[pageIndex].pageHeight, pageSizes[pageIndex].pageWidth];
+                    const rect: Rect =
+                        Math.abs(rotation) % 180 === 0
+                            ? {
+                                  height: pageSize[0],
+                                  width: pageSize[1],
+                              }
+                            : {
+                                  height: pageSize[1],
+                                  width: pageSize[0],
+                              };
+                    const pageRect = {
+                        height: rect.height * scale,
+                        width: rect.width * scale,
+                    };
+                    return layoutBuilder.tranformSize({ numPages, pageIndex, size: pageRect });
+                }),
         [rotation, scale]
     );
 
@@ -164,21 +168,16 @@ export const Inner: React.FC<{
         (endIndex: number) => Math.min(endIndex + NUM_OVERSCAN_PAGES, numPages - 1),
         [numPages]
     );
-    const transformSize = React.useCallback(
-        (pageIndex: number, size: Rect) => layoutBuilder.tranformSize({ numPages, pageIndex, size }),
-        []
-    );
 
     const virtualizer = useVirtual({
-        estimateSize,
         isRtl,
         numberOfItems: numPages,
         parentRef: pagesRef,
         scrollMode: currentScrollMode,
-        spreadsMode,
         setStartRange,
         setEndRange,
-        transformSize,
+        sizes,
+        spreadsMode,
     });
 
     const handlePagesResize = useDebounceCallback((_) => {
