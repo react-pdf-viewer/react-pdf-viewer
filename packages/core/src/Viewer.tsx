@@ -233,6 +233,7 @@ export const Viewer: React.FC<{
                                         />
                                     )}
                                     scrollMode={scrollMode}
+                                    spreadsMode={spreadsMode}
                                 />
                             )}
                             renderError={renderError}

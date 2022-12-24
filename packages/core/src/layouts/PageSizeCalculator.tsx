@@ -9,6 +9,7 @@
 import * as React from 'react';
 import { Spinner } from '../components/Spinner';
 import { ScrollMode } from '../structs/ScrollMode';
+import { SpreadsMode } from '../structs/SpreadsMode';
 import { SpecialZoomLevel } from '../structs/SpecialZoomLevel';
 import type { PageSize } from '../types/PageSize';
 import type { PdfJs } from '../types/PdfJs';
@@ -27,7 +28,8 @@ export const PageSizeCalculator: React.FC<{
     doc: PdfJs.PdfDocument;
     render(pageSizes: PageSize[], initialScale: number): React.ReactElement;
     scrollMode: ScrollMode;
-}> = ({ defaultScale, doc, render, scrollMode }) => {
+    spreadsMode: SpreadsMode;
+}> = ({ defaultScale, doc, render, scrollMode, spreadsMode }) => {
     const pagesRef = React.useRef<HTMLDivElement>();
     const [initialScale, setInitialScale] = React.useState(1);
     const [pageSizes, setPageSizes] = React.useState<PageSize[]>([]);
@@ -82,7 +84,7 @@ export const PageSizeCalculator: React.FC<{
 
             let scale = defaultScale
                 ? typeof defaultScale === 'string'
-                    ? calculateScale(parentEle, h, w, defaultScale)
+                    ? calculateScale(parentEle, h, w, defaultScale, spreadsMode, doc.numPages)
                     : defaultScale
                 : decrease(scaled);
 
