@@ -14,7 +14,7 @@ import { PageSizeCalculator } from './layouts/PageSizeCalculator';
 import { DocumentLoader, RenderError } from './loader/DocumentLoader';
 import { DefaultLocalization, LocalizationContext } from './localization/LocalizationContext';
 import { ScrollMode } from './structs/ScrollMode';
-import { SpreadsMode } from './structs/SpreadsMode';
+import { ViewMode } from './structs/ViewMode';
 import { SpecialZoomLevel } from './structs/SpecialZoomLevel';
 import { TextDirection, ThemeContext } from './theme/ThemeContext';
 import { withTheme } from './theme/withTheme';
@@ -65,10 +65,10 @@ export const Viewer: React.FC<{
     renderPage?: RenderPage;
     renderLoader?(percentages: number): React.ReactElement;
     scrollMode?: ScrollMode;
-    spreadsMode?: SpreadsMode;
     transformGetDocumentParams?(options: PdfJs.GetDocumentParams): PdfJs.GetDocumentParams;
     // Theme
     theme?: string | ThemeProps;
+    viewMode?: ViewMode;
     // Indicate the cross-site requests should be made with credentials such as cookie and authorization headers.
     // The default value is `false`
     withCredentials?: boolean;
@@ -94,12 +94,12 @@ export const Viewer: React.FC<{
     renderPage,
     renderLoader,
     scrollMode = ScrollMode.Vertical,
-    spreadsMode = SpreadsMode.NoSpreads,
     transformGetDocumentParams,
     theme = {
         direction: TextDirection.LeftToRight,
         theme: 'light',
     },
+    viewMode = ViewMode.SinglePage,
     withCredentials = false,
     onDocumentAskPassword,
     onDocumentLoad = () => {
@@ -213,7 +213,7 @@ export const Viewer: React.FC<{
                                             plugins={plugins}
                                             renderPage={renderPage}
                                             scrollMode={scrollMode}
-                                            spreadsMode={spreadsMode}
+                                            viewMode={viewMode}
                                             viewerState={{
                                                 file,
                                                 pageIndex: -1,
@@ -233,7 +233,7 @@ export const Viewer: React.FC<{
                                         />
                                     )}
                                     scrollMode={scrollMode}
-                                    spreadsMode={spreadsMode}
+                                    viewMode={viewMode}
                                 />
                             )}
                             renderError={renderError}

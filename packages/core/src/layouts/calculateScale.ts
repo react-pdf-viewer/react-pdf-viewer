@@ -7,7 +7,7 @@
  */
 
 import { SpecialZoomLevel } from '../structs/SpecialZoomLevel';
-import { SpreadsMode } from '../structs/SpreadsMode';
+import { ViewMode } from '../structs/ViewMode';
 
 const SCROLL_BAR_WIDTH = 17;
 const PAGE_PADDING = 8;
@@ -18,13 +18,13 @@ export const calculateScale = (
     pageHeight: number,
     pageWidth: number,
     scale: SpecialZoomLevel,
-    spreadsMode: SpreadsMode,
+    viewMode: ViewMode,
     numPages: number
 ): number => {
     let w = pageWidth;
     switch (true) {
-        case spreadsMode === SpreadsMode.EvenSpreads && numPages >= 3:
-        case spreadsMode === SpreadsMode.OddSpreads && numPages >= 3:
+        case viewMode === ViewMode.DualPageWithCover && numPages >= 3:
+        case viewMode === ViewMode.DualPage && numPages >= 3:
             w = 2 * pageWidth;
             break;
         default:

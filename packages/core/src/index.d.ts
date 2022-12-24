@@ -240,10 +240,10 @@ export enum SpecialZoomLevel {
     PageWidth = 'PageWidth',
 }
 
-export enum SpreadsMode {
-    EvenSpreads = 'EvenSpreads',
-    NoSpreads = 'NoSpreads',
-    OddSpreads = 'OddSpreads',
+export enum ViewMode {
+    DualPage = 'DualPage',
+    DualPageWithCover = 'DualPageWithCover',
+    SinglePage = 'SinglePage',
 }
 
 export enum ToggleStatus {
@@ -507,10 +507,10 @@ export interface ViewerProps {
     renderPage?: RenderPage;
     renderLoader?(percentages: number): React.ReactElement;
     scrollMode?: ScrollMode;
-    spreadsMode?: SpreadsMode;
     // Theme
     theme?: string | ThemeProps;
     transformGetDocumentParams?(options: PdfJs.GetDocumentParams): PdfJs.GetDocumentParams;
+    viewMode?: ViewMode;
     // Indicate the cross-site requests should be made with credentials such as cookie and authorization headers.
     // The default value is `false`
     withCredentials?: boolean;

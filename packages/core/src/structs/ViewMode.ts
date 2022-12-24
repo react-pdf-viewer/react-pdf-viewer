@@ -6,8 +6,8 @@
  * @copyright 2019-2022 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-export enum SpreadsMode {
-    EvenSpreads = 'EvenSpreads',
-    NoSpreads = 'NoSpreads',
-    OddSpreads = 'OddSpreads',
+export enum ViewMode {
+    DualPage = 'DualPage',
+    DualPageWithCover = 'DualPageWithCover',
+    SinglePage = 'SinglePage',
 }

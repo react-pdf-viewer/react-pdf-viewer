@@ -1,4 +1,4 @@
-import { ScrollMode, SpreadsMode, Viewer } from '@react-pdf-viewer/core';
+import { ScrollMode, ViewMode, Viewer } from '@react-pdf-viewer/core';
 import '@react-pdf-viewer/core/lib/styles/index.css';
 import { defaultLayoutPlugin } from '@react-pdf-viewer/default-layout';
 import '@react-pdf-viewer/default-layout/lib/styles/index.css';
@@ -18,7 +18,7 @@ const App = () => {
             <Viewer
                 defaultScale={0.5}
                 // scrollMode={ScrollMode.Page}
-                spreadsMode={SpreadsMode.EvenSpreads}
+                viewMode={ViewMode.DualPageWithCover}
                 fileUrl={'/pdf-open-parameters.pdf'}
                 plugins={[defaultLayoutPluginInstance]}
             />
