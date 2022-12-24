@@ -701,7 +701,8 @@ export const useVirtual = ({
 
             if (spreadsMode === SpreadsMode.EvenSpreads) {
                 const transformTop = scrollModeRef.current === ScrollMode.Page ? 0 : item.start.top;
-                if (item.index === 0) {
+                // The first and the last items are treated as covers
+                if (item.index === 0 || (numberOfItems % 2 === 0 && item.index === numberOfItems - 1)) {
                     return {
                         // Size
                         height: `${item.size.height}px`,
