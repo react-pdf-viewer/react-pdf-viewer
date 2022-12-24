@@ -138,24 +138,28 @@ export const Inner: React.FC<{
 
     const layoutBuilder = React.useMemo(() => Object.assign({}, DEFAULT_PAGE_LAYOUT, pageLayout), []);
 
-    const estimateSize = React.useCallback(
-        (index: number) => {
-            const sizes = [pageSizes[index].pageHeight, pageSizes[index].pageWidth];
-            const rect: Rect =
-                Math.abs(rotation) % 180 === 0
-                    ? {
-                          height: sizes[0],
-                          width: sizes[1],
-                      }
-                    : {
-                          height: sizes[1],
-                          width: sizes[0],
-                      };
-            return {
-                height: rect.height * scale,
-                width: rect.width * scale,
-            };
-        },
+    const sizes = React.useMemo(
+        () =>
+            Array(numPages)
+                .fill(0)
+                .map((_, pageIndex) => {
+                    const pageSize = [pageSizes[pageIndex].pageHeight, pageSizes[pageIndex].pageWidth];
+                    const rect: Rect =
+                        Math.abs(rotation) % 180 === 0
+                            ? {
+                                  height: pageSize[0],
+                                  width: pageSize[1],
+                              }
+                            : {
+                                  height: pageSize[1],
+                                  width: pageSize[0],
+                              };
+                    const pageRect = {
+                        height: rect.height * scale,
+                        width: rect.width * scale,
+                    };
+                    return layoutBuilder.tranformSize({ numPages, pageIndex, size: pageRect });
+                }),
         [rotation, scale]
     );
 
@@ -164,21 +168,16 @@ export const Inner: React.FC<{
         (endIndex: number) => Math.min(endIndex + NUM_OVERSCAN_PAGES, numPages - 1),
         [numPages]
     );
-    const transformSize = React.useCallback(
-        (pageIndex: number, size: Rect) => layoutBuilder.tranformSize({ numPages, pageIndex, size }),
-        []
-    );
 
     const virtualizer = useVirtual({
-        estimateSize,
         isRtl,
         numberOfItems: numPages,
         parentRef: pagesRef,
         scrollMode: currentScrollMode,
-        spreadsMode,
         setStartRange,
         setEndRange,
-        transformSize,
+        sizes,
+        spreadsMode,
     });
 
     const handlePagesResize = useDebounceCallback((_) => {
@@ -599,59 +598,64 @@ export const Inner: React.FC<{
                                 style={virtualizer.getItemContainerStyles(items[0])}
                                 key={items[0].index}
                             >
-                                {items.map((item) => (
-                                    <div
-                                        aria-label={pageLabel.replace('{{pageIndex}}', `${item.index + 1}`)}
-                                        className={classNames({
-                                            'rpv-core__inner-page': true,
-                                            'rpv-core__inner-page--no-spreads-single':
-                                                spreadsMode === SpreadsMode.NoSpreads &&
-                                                currentScrollMode === ScrollMode.Page,
-                                            'rpv-core__inner-page--odd-spreads-even':
-                                                spreadsMode === SpreadsMode.OddSpreads && item.index % 2 === 0,
-                                            'rpv-core__inner-page--odd-spreads-odd':
-                                                spreadsMode === SpreadsMode.OddSpreads && item.index % 2 === 1,
-                                            'rpv-core__inner-page--even-spreads-cover':
-                                                spreadsMode === SpreadsMode.EvenSpreads && item.index === 0,
-                                            'rpv-core__inner-page--even-spreads-even':
-                                                spreadsMode === SpreadsMode.EvenSpreads &&
-                                                item.index > 0 &&
-                                                item.index % 2 === 0,
-                                            'rpv-core__inner-page--even-spreads-odd':
-                                                spreadsMode === SpreadsMode.EvenSpreads &&
-                                                item.index > 0 &&
-                                                item.index % 2 === 1,
-                                        })}
-                                        role="region"
-                                        key={item.index}
-                                        style={Object.assign(
-                                            {},
-                                            virtualizer.getItemStyles(item),
-                                            layoutBuilder.buildPageStyles({ numPages, pageIndex: item.index })
-                                        )}
-                                    >
-                                        <PageLayer
-                                            doc={doc}
-                                            outlines={outlines}
-                                            pageIndex={item.index}
-                                            pageRotation={
-                                                pagesRotation.has(item.index) ? pagesRotation.get(item.index) : 0
-                                            }
-                                            pageSize={pageSizes[item.index]}
-                                            plugins={plugins}
-                                            renderPage={renderPage}
-                                            renderQueueKey={renderQueueKey}
-                                            rotation={rotation}
-                                            scale={scale}
-                                            shouldRender={renderPageIndex === item.index}
-                                            spreadsMode={spreadsMode}
-                                            onExecuteNamedAction={executeNamedAction}
-                                            onJumpToDest={jumpToDestination}
-                                            onRenderCompleted={handlePageRenderCompleted}
-                                            onRotatePage={rotatePage}
-                                        />
-                                    </div>
-                                ))}
+                                {items.map((item) => {
+                                    // The first and the last items are treated as covers
+                                    const isCover =
+                                        spreadsMode === SpreadsMode.EvenSpreads &&
+                                        (item.index === 0 || (numPages % 2 === 0 && item.index === numPages - 1));
+                                    return (
+                                        <div
+                                            aria-label={pageLabel.replace('{{pageIndex}}', `${item.index + 1}`)}
+                                            className={classNames({
+                                                'rpv-core__inner-page': true,
+                                                'rpv-core__inner-page--no-spreads-single':
+                                                    spreadsMode === SpreadsMode.NoSpreads &&
+                                                    currentScrollMode === ScrollMode.Page,
+                                                'rpv-core__inner-page--odd-spreads-even':
+                                                    spreadsMode === SpreadsMode.OddSpreads && item.index % 2 === 0,
+                                                'rpv-core__inner-page--odd-spreads-odd':
+                                                    spreadsMode === SpreadsMode.OddSpreads && item.index % 2 === 1,
+                                                'rpv-core__inner-page--even-spreads-cover': isCover,
+                                                'rpv-core__inner-page--even-spreads-even':
+                                                    spreadsMode === SpreadsMode.EvenSpreads &&
+                                                    !isCover &&
+                                                    item.index % 2 === 0,
+                                                'rpv-core__inner-page--even-spreads-odd':
+                                                    spreadsMode === SpreadsMode.EvenSpreads &&
+                                                    !isCover &&
+                                                    item.index % 2 === 1,
+                                            })}
+                                            role="region"
+                                            key={item.index}
+                                            style={Object.assign(
+                                                {},
+                                                virtualizer.getItemStyles(item),
+                                                layoutBuilder.buildPageStyles({ numPages, pageIndex: item.index })
+                                            )}
+                                        >
+                                            <PageLayer
+                                                doc={doc}
+                                                outlines={outlines}
+                                                pageIndex={item.index}
+                                                pageRotation={
+                                                    pagesRotation.has(item.index) ? pagesRotation.get(item.index) : 0
+                                                }
+                                                pageSize={pageSizes[item.index]}
+                                                plugins={plugins}
+                                                renderPage={renderPage}
+                                                renderQueueKey={renderQueueKey}
+                                                rotation={rotation}
+                                                scale={scale}
+                                                shouldRender={renderPageIndex === item.index}
+                                                spreadsMode={spreadsMode}
+                                                onExecuteNamedAction={executeNamedAction}
+                                                onJumpToDest={jumpToDestination}
+                                                onRenderCompleted={handlePageRenderCompleted}
+                                                onRotatePage={rotatePage}
+                                            />
+                                        </div>
+                                    );
+                                })}
                             </div>
                         ))}
                     </div>
