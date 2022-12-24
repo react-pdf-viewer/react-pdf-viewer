@@ -119,6 +119,7 @@ export const Inner: React.FC<{
     const previousScrollMode = usePrevious(currentScrollMode);
 
     const [currentViewMode, setCurrentViewMode] = React.useState(viewMode);
+    const previousViewMode = usePrevious(currentViewMode);
 
     const outlines = useOutlines(doc);
 
@@ -180,7 +181,7 @@ export const Inner: React.FC<{
         setStartRange,
         setEndRange,
         sizes,
-        viewMode,
+        viewMode: currentViewMode,
     });
 
     const handlePagesResize = useDebounceCallback((_) => {
@@ -377,7 +378,14 @@ export const Inner: React.FC<{
 
         let updateScale = pagesEle
             ? typeof newScale === 'string'
-                ? calculateScale(pagesEle, currentPageHeight, currentPageWidth, newScale, viewMode, numPages)
+                ? calculateScale(
+                      pagesEle,
+                      currentPageHeight,
+                      currentPageWidth,
+                      newScale,
+                      stateRef.current.viewMode,
+                      numPages
+                  )
                 : newScale
             : 1;
 
@@ -470,6 +478,23 @@ export const Inner: React.FC<{
         }
     }, [scale]);
 
+    useIsomorphicLayoutEffect(() => {
+        if (previousViewMode === stateRef.current.viewMode) {
+            return;
+        }
+        const { startRange, endRange, virtualItems } = virtualizer;
+
+        renderQueue.markNotRendered();
+        renderQueue.setRange(startRange, endRange);
+        for (let i = startRange; i <= endRange; i++) {
+            const item = virtualItems.find((item) => item.index === i);
+            if (item) {
+                renderQueue.setVisibility(i, item.visibility);
+            }
+        }
+        renderNextPage();
+    }, [currentViewMode]);
+
     React.useEffect(() => {
         const { isSmoothScrolling } = virtualizer;
         if (isSmoothScrolling) {
@@ -553,7 +578,7 @@ export const Inner: React.FC<{
     const renderViewer = React.useCallback(() => {
         const { virtualItems } = virtualizer;
         let chunks: VirtualItem[][] = [];
-        switch (viewMode) {
+        switch (currentViewMode) {
             case ViewMode.DualPage:
                 chunks = chunk(virtualItems, 2);
                 break;
@@ -610,12 +635,12 @@ export const Inner: React.FC<{
                                     'rpv-core__inner-page-container--single': currentScrollMode === ScrollMode.Page,
                                 })}
                                 style={virtualizer.getItemContainerStyles(items[0])}
-                                key={items[0].index}
+                                key={`${items[0].index}-${currentViewMode}`}
                             >
                                 {items.map((item) => {
                                     // The first and the last items are treated as covers
                                     const isCover =
-                                        viewMode === ViewMode.DualPageWithCover &&
+                                        currentViewMode === ViewMode.DualPageWithCover &&
                                         (item.index === 0 || (numPages % 2 === 0 && item.index === numPages - 1));
                                     return (
                                         <div
@@ -623,24 +648,24 @@ export const Inner: React.FC<{
                                             className={classNames({
                                                 'rpv-core__inner-page': true,
                                                 'rpv-core__inner-page--no-spreads-single':
-                                                    viewMode === ViewMode.SinglePage &&
+                                                    currentViewMode === ViewMode.SinglePage &&
                                                     currentScrollMode === ScrollMode.Page,
                                                 'rpv-core__inner-page--odd-spreads-even':
-                                                    viewMode === ViewMode.DualPage && item.index % 2 === 0,
+                                                    currentViewMode === ViewMode.DualPage && item.index % 2 === 0,
                                                 'rpv-core__inner-page--odd-spreads-odd':
-                                                    viewMode === ViewMode.DualPage && item.index % 2 === 1,
+                                                    currentViewMode === ViewMode.DualPage && item.index % 2 === 1,
                                                 'rpv-core__inner-page--even-spreads-cover': isCover,
                                                 'rpv-core__inner-page--even-spreads-even':
-                                                    viewMode === ViewMode.DualPageWithCover &&
+                                                    currentViewMode === ViewMode.DualPageWithCover &&
                                                     !isCover &&
                                                     item.index % 2 === 0,
                                                 'rpv-core__inner-page--even-spreads-odd':
-                                                    viewMode === ViewMode.DualPageWithCover &&
+                                                    currentViewMode === ViewMode.DualPageWithCover &&
                                                     !isCover &&
                                                     item.index % 2 === 1,
                                             })}
                                             role="region"
-                                            key={item.index}
+                                            key={`${item.index}-${currentViewMode}`}
                                             style={Object.assign(
                                                 {},
                                                 virtualizer.getItemStyles(item),
@@ -661,7 +686,7 @@ export const Inner: React.FC<{
                                                 rotation={rotation}
                                                 scale={scale}
                                                 shouldRender={renderPageIndex === item.index}
-                                                viewMode={viewMode}
+                                                viewMode={currentViewMode}
                                                 onExecuteNamedAction={executeNamedAction}
                                                 onJumpToDest={jumpToDestination}
                                                 onRenderCompleted={handlePageRenderCompleted}

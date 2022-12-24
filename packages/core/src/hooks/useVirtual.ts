@@ -297,6 +297,9 @@ export const useVirtual = ({
     const scrollModeRef = React.useRef(scrollMode);
     scrollModeRef.current = scrollMode;
 
+    const viewModeRef = React.useRef(viewMode);
+    viewModeRef.current = viewMode;
+
     const scrollDirection =
         scrollMode === ScrollMode.Wrapped || viewMode === ViewMode.DualPageWithCover || viewMode === ViewMode.DualPage
             ? ScrollDirection.Both
@@ -487,7 +490,7 @@ export const useVirtual = ({
             };
         }
         return measurements;
-    }, [scrollMode, sizes, parentRect]);
+    }, [scrollMode, sizes, viewMode, parentRect]);
 
     const totalSize = measurements[numberOfItems - 1]
         ? {
@@ -592,7 +595,7 @@ export const useVirtual = ({
 
     const scrollToNextItem = React.useCallback((index: number, offset: Offset) => {
         // `DualPage` mode
-        if (viewMode === ViewMode.DualPageWithCover || viewMode === ViewMode.DualPage) {
+        if (viewModeRef.current === ViewMode.DualPageWithCover || viewModeRef.current === ViewMode.DualPage) {
             scrollToSmallestItemAbove(index, offset);
             return;
         }
@@ -612,7 +615,7 @@ export const useVirtual = ({
 
     const scrollToPreviousItem = React.useCallback((index: number, offset: Offset) => {
         // `DualPage` mode
-        if (viewMode === ViewMode.DualPage) {
+        if (viewModeRef.current === ViewMode.DualPage) {
             scrollToSmallestItemBelow(index, offset);
             return;
         }
@@ -680,7 +683,7 @@ export const useVirtual = ({
     }, [sizes]);
 
     const minWidthOfCover = React.useMemo(() => {
-        if (viewMode !== ViewMode.DualPageWithCover) {
+        if (viewModeRef.current !== ViewMode.DualPageWithCover) {
             return 0;
         }
         if (!hasDifferentSizes) {
@@ -697,7 +700,7 @@ export const useVirtual = ({
             const sideProperty = isRtl ? 'right' : 'left';
             const factor = isRtl ? -1 : 1;
 
-            if (viewMode === ViewMode.DualPageWithCover) {
+            if (viewModeRef.current === ViewMode.DualPageWithCover) {
                 const transformTop = scrollModeRef.current === ScrollMode.Page ? 0 : item.start.top;
                 // The first and the last items are treated as covers
                 if (item.index === 0 || (numberOfItems % 2 === 0 && item.index === numberOfItems - 1)) {
@@ -726,7 +729,7 @@ export const useVirtual = ({
                 };
             }
 
-            if (viewMode === ViewMode.DualPage) {
+            if (viewModeRef.current === ViewMode.DualPage) {
                 return {
                     // Size
                     height: `${item.size.height}px`,
