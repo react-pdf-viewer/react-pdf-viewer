@@ -12,6 +12,7 @@ import { ScrollMode } from '../structs/ScrollMode';
 import { SpreadsMode } from '../structs/SpreadsMode';
 import type { Offset } from '../types/Offset';
 import type { Rect } from '../types/Rect';
+import { chunk } from '../utils/chunk';
 import { clamp } from '../utils/clamp';
 import { findNearest } from '../utils/findNearest';
 import { useMeasureRect } from './useMeasureRect';
@@ -667,6 +668,31 @@ export const useVirtual = ({
         [parentRect]
     );
 
+    // Determine the min width in the `EvenSpreads` mode
+    const hasDifferentSizes = React.useMemo(() => {
+        if (numberOfItems === 1) {
+            return false;
+        }
+        for (let i = 1; i < numberOfItems; i++) {
+            if (sizes[i].height !== sizes[0].height || sizes[i].width !== sizes[0].width) {
+                return true;
+            }
+        }
+        return false;
+    }, [sizes]);
+
+    const minWidthOfCover = React.useMemo(() => {
+        if (spreadsMode !== SpreadsMode.EvenSpreads) {
+            return 0;
+        }
+        if (!hasDifferentSizes) {
+            return 2 * sizes[0].width;
+        }
+        const chunkWidths = chunk(sizes.slice(1), 2).map((eachChunk) => eachChunk[0].width + eachChunk[1].width);
+        const widths = [sizes[0].width].concat(chunkWidths);
+        return Math.max(...widths);
+    }, [sizes]);
+
     // Build the absolute position styles for each item
     const getItemStyles = React.useCallback(
         (item: VirtualItem): React.CSSProperties => {
@@ -676,14 +702,10 @@ export const useVirtual = ({
             if (spreadsMode === SpreadsMode.EvenSpreads) {
                 const transformTop = scrollModeRef.current === ScrollMode.Page ? 0 : item.start.top;
                 if (item.index === 0) {
-                    const minWidth =
-                        numberOfItems >= 3
-                            ? Math.max(item.size.width, virtualItems[1].size.width + virtualItems[2].size.width)
-                            : item.size.width;
                     return {
                         // Size
                         height: `${item.size.height}px`,
-                        minWidth: `${minWidth}px`,
+                        minWidth: `${minWidthOfCover}px`,
                         width: '100%',
                         // Absolute position
                         [sideProperty]: 0,
@@ -767,7 +789,7 @@ export const useVirtual = ({
                     };
             }
         },
-        [virtualItems, isRtl]
+        [isRtl, sizes]
     );
 
     // Zoom to the given item
