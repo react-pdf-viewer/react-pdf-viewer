@@ -604,6 +604,9 @@ export const Inner: React.FC<{
                                         aria-label={pageLabel.replace('{{pageIndex}}', `${item.index + 1}`)}
                                         className={classNames({
                                             'rpv-core__inner-page': true,
+                                            'rpv-core__inner-page--no-spreads-single':
+                                                spreadsMode === SpreadsMode.NoSpreads &&
+                                                currentScrollMode === ScrollMode.Page,
                                             'rpv-core__inner-page--odd-spreads-even':
                                                 spreadsMode === SpreadsMode.OddSpreads && item.index % 2 === 0,
                                             'rpv-core__inner-page--odd-spreads-odd':
