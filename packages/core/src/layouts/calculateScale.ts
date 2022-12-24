@@ -21,18 +21,28 @@ export const calculateScale = (
     spreadsMode: SpreadsMode,
     numPages: number
 ): number => {
+    let w = pageWidth;
+    switch (true) {
+        case spreadsMode === SpreadsMode.EvenSpreads && numPages >= 3:
+        case spreadsMode === SpreadsMode.OddSpreads && numPages >= 3:
+            w = 2 * pageWidth;
+            break;
+        default:
+            w = pageWidth;
+            break;
+    }
+
     switch (scale) {
         case SpecialZoomLevel.ActualSize:
             return 1;
 
         case SpecialZoomLevel.PageFit:
             return Math.min(
-                (container.clientWidth - SCROLL_BAR_WIDTH) / pageWidth,
+                (container.clientWidth - SCROLL_BAR_WIDTH) / w,
                 (container.clientHeight - 2 * PAGE_PADDING) / pageHeight
             );
 
         case SpecialZoomLevel.PageWidth:
-            const w = spreadsMode === SpreadsMode.EvenSpreads && numPages >= 3 ? 2 * pageWidth : pageWidth;
             return (container.clientWidth - SCROLL_BAR_WIDTH) / w;
     }
 };
