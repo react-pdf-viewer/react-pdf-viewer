@@ -37,6 +37,7 @@ export interface SwitchViewModeProps {
 }
 
 export interface RenderSwitchViewModeProps {
+    isDisabled: boolean;
     isSelected: boolean;
     mode: ViewMode;
     onClick(): void;

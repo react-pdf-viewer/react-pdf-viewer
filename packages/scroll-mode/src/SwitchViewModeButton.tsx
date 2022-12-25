@@ -13,7 +13,12 @@ import type { RenderSwitchViewModeProps } from './types/RenderSwitchViewModeProp
 
 const TOOLTIP_OFFSET = { left: 0, top: 8 };
 
-export const SwitchViewModeButton: React.FC<RenderSwitchViewModeProps> = ({ isSelected, mode, onClick }) => {
+export const SwitchViewModeButton: React.FC<RenderSwitchViewModeProps> = ({
+    isDisabled,
+    isSelected,
+    mode,
+    onClick,
+}) => {
     let testId = '';
     switch (mode) {
         case ViewMode.DualPage:
@@ -37,6 +42,7 @@ export const SwitchViewModeButton: React.FC<RenderSwitchViewModeProps> = ({ isSe
                     target={
                         <MinimalButton
                             ariaLabel={props.label}
+                            isDisabled={isDisabled}
                             isSelected={isSelected}
                             testId={testId}
                             onClick={props.onClick}

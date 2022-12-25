@@ -11,7 +11,12 @@ import * as React from 'react';
 import { SwitchViewModeDecorator } from './SwitchViewModeDecorator';
 import type { RenderSwitchViewModeProps } from './types/RenderSwitchViewModeProps';
 
-export const SwitchViewModeMenuItem: React.FC<RenderSwitchViewModeProps> = ({ isSelected, mode, onClick }) => {
+export const SwitchViewModeMenuItem: React.FC<RenderSwitchViewModeProps> = ({
+    isDisabled,
+    isSelected,
+    mode,
+    onClick,
+}) => {
     let testId = '';
     switch (mode) {
         case ViewMode.DualPage:
@@ -29,7 +34,13 @@ export const SwitchViewModeMenuItem: React.FC<RenderSwitchViewModeProps> = ({ is
     return (
         <SwitchViewModeDecorator mode={mode} onClick={onClick}>
             {(props) => (
-                <MenuItem checked={isSelected} icon={props.icon} testId={testId} onClick={props.onClick}>
+                <MenuItem
+                    checked={isSelected}
+                    icon={props.icon}
+                    isDisabled={isDisabled}
+                    testId={testId}
+                    onClick={props.onClick}
+                >
                     {props.label}
                 </MenuItem>
             )}
