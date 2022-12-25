@@ -14,6 +14,7 @@ import { switchScrollMode } from './switchScrollMode';
 import { SwitchScrollModeButton } from './SwitchScrollModeButton';
 import { SwitchScrollModeMenuItem } from './SwitchScrollModeMenuItem';
 import { SwitchViewMode, SwitchViewModeProps } from './SwitchViewMode';
+import { switchViewMode } from './switchViewMode';
 import { SwitchViewModeButton } from './SwitchViewModeButton';
 import { SwitchViewModeMenuItem } from './SwitchViewModeMenuItem';
 import type { StoreProps } from './types/StoreProps';
@@ -131,10 +132,6 @@ export const scrollModePlugin = (): ScrollModePlugin => {
         </SwitchViewModeDecorator>
     );
 
-    const switchViewMode = (viewMode: ViewMode) => {
-        store.get('switchViewMode')(viewMode);
-    };
-
     return {
         install: (pluginFunctions: PluginFunctions) => {
             store.update('switchScrollMode', pluginFunctions.switchScrollMode);
@@ -149,7 +146,9 @@ export const scrollModePlugin = (): ScrollModePlugin => {
         switchScrollMode: (scrollMode: ScrollMode) => {
             switchScrollMode(store, scrollMode);
         },
-        switchViewMode,
+        switchViewMode: (viewMode: ViewMode) => {
+            switchViewMode(store, viewMode);
+        },
         SwitchScrollMode: SwitchScrollModeDecorator,
         SwitchScrollModeButton: SwitchScrollModeButtonDecorator,
         SwitchScrollModeMenuItem: SwitchScrollModeMenuItemDecorator,

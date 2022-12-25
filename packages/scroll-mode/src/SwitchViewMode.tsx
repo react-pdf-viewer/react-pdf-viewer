@@ -9,6 +9,7 @@
 import type { Store } from '@react-pdf-viewer/core';
 import { ScrollMode, ViewMode } from '@react-pdf-viewer/core';
 import * as React from 'react';
+import { switchViewMode } from './switchViewMode';
 import { SwitchViewModeButton } from './SwitchViewModeButton';
 import type { RenderSwitchViewModeProps } from './types/RenderSwitchViewModeProps';
 import type { StoreProps } from './types/StoreProps';
@@ -31,7 +32,7 @@ export const SwitchViewMode: React.FC<{
     const { scrollMode } = useScrollMode(store);
 
     const onClick = () => {
-        store.get('switchViewMode')(mode);
+        switchViewMode(store, mode);
     };
 
     const isSelected = viewMode === mode;
