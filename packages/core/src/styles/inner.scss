@@ -26,28 +26,41 @@
     background-color: var(--rpv-core__inner-page-background-color);
 }
 
-// Spreads mode
-.rpv-core__inner-page--no-spreads-single {
+// Single page viewmode
+.rpv-core__inner-page--single {
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-.rpv-core__inner-page--even-spreads-cover {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.rpv-core__inner-page--even-spreads-odd,
-.rpv-core__inner-page--odd-spreads-even {
+// Dual page viewmode
+.rpv-core__inner-page--dual-even {
     display: flex;
     align-items: center;
     justify-content: end;
 }
 
-.rpv-core__inner-page--even-spreads-even,
-.rpv-core__inner-page--odd-spreads-odd {
+.rpv-core__inner-page--dual-odd {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+}
+
+
+// Dual page with cover viewmode
+.rpv-core__inner-page--dual-cover {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.rpv-core__inner-page--dual-cover-odd {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+}
+
+.rpv-core__inner-page--dual-cover-even {
     display: flex;
     align-items: center;
     justify-content: start;

@@ -144,8 +144,9 @@ export const PageLayer: React.FC<{
         <div
             className={classNames({
                 'rpv-core__page-layer': true,
-                'rpv-core__page-layer--no-spreads': viewMode === ViewMode.SinglePage,
-                'rpv-core__page-layer--odd-spreads': viewMode === ViewMode.DualPage,
+                'rpv-core__page-layer--dual': viewMode === ViewMode.DualPage,
+                'rpv-core__page-layer--dual-cover': viewMode === ViewMode.DualPageWithCover,
+                'rpv-core__page-layer--single': viewMode === ViewMode.SinglePage,
             })}
             data-testid={`core__page-layer-${pageIndex}`}
             style={{
