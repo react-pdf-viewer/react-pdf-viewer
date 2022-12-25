@@ -7,11 +7,13 @@
  */
 
 import type { Store } from '@react-pdf-viewer/core';
-import { ViewMode } from '@react-pdf-viewer/core';
+import { ScrollMode, ViewMode } from '@react-pdf-viewer/core';
 import * as React from 'react';
+import { switchViewMode } from './switchViewMode';
 import { SwitchViewModeButton } from './SwitchViewModeButton';
 import type { RenderSwitchViewModeProps } from './types/RenderSwitchViewModeProps';
 import type { StoreProps } from './types/StoreProps';
+import { useScrollMode } from './useScrollMode';
 import { useViewMode } from './useViewMode';
 
 type RenderSwitchViewMode = (props: RenderSwitchViewModeProps) => React.ReactElement;
@@ -27,19 +29,28 @@ export const SwitchViewMode: React.FC<{
     store: Store<StoreProps>;
 }> = ({ children, mode, store }) => {
     const { viewMode } = useViewMode(store);
+    const { scrollMode } = useScrollMode(store);
 
     const onClick = () => {
-        store.get('switchViewMode')(mode);
+        switchViewMode(store, mode);
     };
 
     const isSelected = viewMode === mode;
+    const isDisabled =
+        (scrollMode === ScrollMode.Horizontal || scrollMode === ScrollMode.Wrapped) && mode !== ViewMode.SinglePage;
 
     const defaultChildren = (props: RenderSwitchViewModeProps) => (
-        <SwitchViewModeButton isSelected={isSelected} mode={props.mode} onClick={props.onClick} />
+        <SwitchViewModeButton
+            isDisabled={isDisabled}
+            isSelected={isSelected}
+            mode={props.mode}
+            onClick={props.onClick}
+        />
     );
     const render = children || defaultChildren;
 
     return render({
+        isDisabled,
         isSelected,
         mode,
         onClick,

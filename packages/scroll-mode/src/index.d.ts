@@ -17,6 +17,7 @@ export interface SwitchScrollModeProps {
 }
 
 export interface RenderSwitchScrollModeProps {
+    isDisabled: boolean;
     isSelected: boolean;
     mode: ScrollMode;
     onClick(): void;
@@ -37,6 +38,7 @@ export interface SwitchViewModeProps {
 }
 
 export interface RenderSwitchViewModeProps {
+    isDisabled: boolean;
     isSelected: boolean;
     mode: ViewMode;
     onClick(): void;

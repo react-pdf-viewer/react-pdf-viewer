@@ -11,7 +11,12 @@ import * as React from 'react';
 import { SwitchScrollModeDecorator } from './SwitchScrollModeDecorator';
 import type { RenderSwitchScrollModeProps } from './types/RenderSwitchScrollModeProps';
 
-export const SwitchScrollModeMenuItem: React.FC<RenderSwitchScrollModeProps> = ({ isSelected, mode, onClick }) => {
+export const SwitchScrollModeMenuItem: React.FC<RenderSwitchScrollModeProps> = ({
+    isDisabled,
+    isSelected,
+    mode,
+    onClick,
+}) => {
     let testId = '';
     switch (mode) {
         case ScrollMode.Horizontal:
@@ -32,7 +37,13 @@ export const SwitchScrollModeMenuItem: React.FC<RenderSwitchScrollModeProps> = (
     return (
         <SwitchScrollModeDecorator mode={mode} onClick={onClick}>
             {(props) => (
-                <MenuItem checked={isSelected} icon={props.icon} testId={testId} onClick={props.onClick}>
+                <MenuItem
+                    checked={isSelected}
+                    icon={props.icon}
+                    isDisabled={isDisabled}
+                    testId={testId}
+                    onClick={props.onClick}
+                >
                     {props.label}
                 </MenuItem>
             )}

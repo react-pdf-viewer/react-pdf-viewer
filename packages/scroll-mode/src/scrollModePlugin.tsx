@@ -10,12 +10,13 @@ import type { Plugin, PluginFunctions, ViewerState } from '@react-pdf-viewer/cor
 import { createStore, ScrollMode, ViewMode } from '@react-pdf-viewer/core';
 import * as React from 'react';
 import { SwitchScrollMode, SwitchScrollModeProps } from './SwitchScrollMode';
+import { switchScrollMode } from './switchScrollMode';
 import { SwitchScrollModeButton } from './SwitchScrollModeButton';
 import { SwitchScrollModeMenuItem } from './SwitchScrollModeMenuItem';
 import { SwitchViewMode, SwitchViewModeProps } from './SwitchViewMode';
+import { switchViewMode } from './switchViewMode';
 import { SwitchViewModeButton } from './SwitchViewModeButton';
 import { SwitchViewModeMenuItem } from './SwitchViewModeMenuItem';
-
 import type { StoreProps } from './types/StoreProps';
 
 export interface SwitchScrollModeButtonProps {
@@ -70,6 +71,7 @@ export const scrollModePlugin = (): ScrollModePlugin => {
         <SwitchScrollModeDecorator mode={props.mode}>
             {(p) => (
                 <SwitchScrollModeButton
+                    isDisabled={p.isDisabled}
                     isSelected={p.isSelected}
                     mode={p.mode}
                     onClick={() => {
@@ -84,6 +86,7 @@ export const scrollModePlugin = (): ScrollModePlugin => {
         <SwitchScrollModeDecorator mode={props.mode}>
             {(p) => (
                 <SwitchScrollModeMenuItem
+                    isDisabled={p.isDisabled}
                     isSelected={p.isSelected}
                     mode={p.mode}
                     onClick={() => {
@@ -102,6 +105,7 @@ export const scrollModePlugin = (): ScrollModePlugin => {
         <SwitchViewModeDecorator mode={props.mode}>
             {(p) => (
                 <SwitchViewModeButton
+                    isDisabled={p.isDisabled}
                     isSelected={p.isSelected}
                     mode={p.mode}
                     onClick={() => {
@@ -116,6 +120,7 @@ export const scrollModePlugin = (): ScrollModePlugin => {
         <SwitchViewModeDecorator mode={props.mode}>
             {(p) => (
                 <SwitchViewModeMenuItem
+                    isDisabled={p.isDisabled}
                     isSelected={p.isSelected}
                     mode={p.mode}
                     onClick={() => {
@@ -138,11 +143,11 @@ export const scrollModePlugin = (): ScrollModePlugin => {
             store.update('viewMode', viewerState.viewMode);
             return viewerState;
         },
-        switchScrollMode: (mode: ScrollMode) => {
-            store.get('switchScrollMode')(mode);
+        switchScrollMode: (scrollMode: ScrollMode) => {
+            switchScrollMode(store, scrollMode);
         },
-        switchViewMode: (mode: ViewMode) => {
-            store.get('switchViewMode')(mode);
+        switchViewMode: (viewMode: ViewMode) => {
+            switchViewMode(store, viewMode);
         },
         SwitchScrollMode: SwitchScrollModeDecorator,
         SwitchScrollModeButton: SwitchScrollModeButtonDecorator,
