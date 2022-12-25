@@ -575,9 +575,21 @@ export const useVirtual = ({
         const start = measurements[index].start;
         // Find the smallest item whose `top` is bigger than the current item
         const nextItem = measurements.find((item) => item.start.top > start.top);
-        if (nextItem) {
-            scrollToItem(nextItem.index, offset);
+        if (!nextItem) {
+            return;
         }
+        let nextIndex = nextItem.index;
+        switch (viewModeRef.current) {
+            case ViewMode.DualPage:
+                nextIndex = nextIndex % 2 === 0 ? nextIndex : nextIndex + 1;
+                break;
+            case ViewMode.DualPageWithCover:
+                nextIndex = nextIndex % 2 === 1 ? nextIndex : nextIndex + 1;
+                break;
+            default:
+                break;
+        }
+        scrollToItem(nextIndex, offset);
     }, []);
 
     const scrollToSmallestItemBelow = React.useCallback((index: number, offset: Offset) => {
