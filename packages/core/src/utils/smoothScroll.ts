@@ -9,7 +9,7 @@
 import { ScrollDirection } from '../structs/ScrollDirection';
 import type { Offset } from '../types/Offset';
 
-const EPS = Number.EPSILON;
+const EPS = 0.0001;
 
 export const smoothScroll = (
     ele: HTMLDivElement,
