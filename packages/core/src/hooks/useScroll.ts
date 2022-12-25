@@ -102,28 +102,24 @@ export const useScroll = ({
                 left: 0,
                 top: 0,
             };
-            let currentScrollDirection = ScrollDirection.Vertical;
             switch (latestRef.current) {
                 case ScrollDirection.Horizontal:
                     updatePosition.left = factor * targetPosition.left;
-                    currentScrollDirection = ScrollDirection.Horizontal;
                     break;
                 case ScrollDirection.Both:
                     updatePosition.left = factor * targetPosition.left;
                     updatePosition.top = targetPosition.top;
-                    currentScrollDirection = ScrollDirection.Both;
                     break;
                 case ScrollDirection.Vertical:
                 default:
                     updatePosition.top = targetPosition.top;
-                    currentScrollDirection = ScrollDirection.Vertical;
                     break;
             }
             if (withSmoothScroll) {
                 onSmoothScroll(true);
                 smoothScroll(
                     ele,
-                    currentScrollDirection,
+                    latestRef.current,
                     updatePosition,
                     SCROLL_DURATION,
                     easeOutQuart,
