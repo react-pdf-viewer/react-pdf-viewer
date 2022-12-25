@@ -655,22 +655,22 @@ export const Inner: React.FC<{
                                             aria-label={pageLabel.replace('{{pageIndex}}', `${item.index + 1}`)}
                                             className={classNames({
                                                 'rpv-core__inner-page': true,
-                                                'rpv-core__inner-page--no-spreads-single':
-                                                    currentViewMode === ViewMode.SinglePage &&
-                                                    currentScrollMode === ScrollMode.Page,
-                                                'rpv-core__inner-page--odd-spreads-even':
+                                                'rpv-core__inner-page--dual-even':
                                                     currentViewMode === ViewMode.DualPage && item.index % 2 === 0,
-                                                'rpv-core__inner-page--odd-spreads-odd':
+                                                'rpv-core__inner-page--dual-odd':
                                                     currentViewMode === ViewMode.DualPage && item.index % 2 === 1,
-                                                'rpv-core__inner-page--even-spreads-cover': isCover,
-                                                'rpv-core__inner-page--even-spreads-even':
+                                                'rpv-core__inner-page--dual-cover': isCover,
+                                                'rpv-core__inner-page--dual-cover-even':
                                                     currentViewMode === ViewMode.DualPageWithCover &&
                                                     !isCover &&
                                                     item.index % 2 === 0,
-                                                'rpv-core__inner-page--even-spreads-odd':
+                                                'rpv-core__inner-page--dual-cover-odd':
                                                     currentViewMode === ViewMode.DualPageWithCover &&
                                                     !isCover &&
                                                     item.index % 2 === 1,
+                                                'rpv-core__inner-page--single':
+                                                    currentViewMode === ViewMode.SinglePage &&
+                                                    currentScrollMode === ScrollMode.Page,
                                             })}
                                             role="region"
                                             key={`${item.index}-${currentViewMode}`}
