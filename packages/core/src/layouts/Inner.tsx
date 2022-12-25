@@ -495,6 +495,14 @@ export const Inner: React.FC<{
         renderNextPage();
     }, [currentViewMode]);
 
+    // Keep the current page after switching the viewmode
+    useIsomorphicLayoutEffect(() => {
+        const latestPage = stateRef.current.pageIndex;
+        if (latestPage > -1 && previousViewMode !== currentViewMode) {
+            virtualizer.scrollToItem(latestPage, ZERO_OFFSET);
+        }
+    }, [currentViewMode]);
+
     React.useEffect(() => {
         const { isSmoothScrolling } = virtualizer;
         if (isSmoothScrolling) {
