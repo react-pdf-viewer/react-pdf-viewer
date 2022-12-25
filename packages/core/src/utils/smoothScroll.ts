@@ -48,7 +48,7 @@ export const smoothScroll = (
     const offset = {
         left: left - targetPosition.left,
         top: top - targetPosition.top,
-    };    
+    };
 
     const loop = (currentTime: number) => {
         if (startTime === -1) {

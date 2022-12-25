@@ -689,7 +689,9 @@ export const useVirtual = ({
         if (!hasDifferentSizes) {
             return 2 * sizes[0].width;
         }
-        const chunkWidths = chunk(sizes.slice(1), 2).map((eachChunk) => eachChunk[0].width + eachChunk[1].width);
+        const chunkWidths = chunk(sizes.slice(1), 2).map((eachChunk) =>
+            eachChunk.length === 2 ? eachChunk[0].width + eachChunk[1].width : eachChunk[0].width
+        );
         const widths = [sizes[0].width].concat(chunkWidths);
         return Math.max(...widths);
     }, [sizes]);
