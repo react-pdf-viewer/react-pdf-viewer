@@ -13,7 +13,12 @@ import type { RenderSwitchScrollModeProps } from './types/RenderSwitchScrollMode
 
 const TOOLTIP_OFFSET = { left: 0, top: 8 };
 
-export const SwitchScrollModeButton: React.FC<RenderSwitchScrollModeProps> = ({ isSelected, mode, onClick }) => {
+export const SwitchScrollModeButton: React.FC<RenderSwitchScrollModeProps> = ({
+    isDisabled,
+    isSelected,
+    mode,
+    onClick,
+}) => {
     let testId = '';
     switch (mode) {
         case ScrollMode.Horizontal:
@@ -40,6 +45,7 @@ export const SwitchScrollModeButton: React.FC<RenderSwitchScrollModeProps> = ({ 
                     target={
                         <MinimalButton
                             ariaLabel={props.label}
+                            isDisabled={isDisabled}
                             isSelected={isSelected}
                             testId={testId}
                             onClick={props.onClick}

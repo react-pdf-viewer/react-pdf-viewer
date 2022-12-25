@@ -14,7 +14,10 @@ export const switchScrollMode = (store: Store<StoreProps>, scrollMode: ScrollMod
     store.get('switchScrollMode')(scrollMode);
     // Get the current viewmode
     const currentViewMode = store.get('viewMode');
-    if ((scrollMode === ScrollMode.Horizontal || scrollMode === ScrollMode.Wrapped) && currentViewMode !== ViewMode.SinglePage) {
+    if (
+        (scrollMode === ScrollMode.Horizontal || scrollMode === ScrollMode.Wrapped) &&
+        currentViewMode !== ViewMode.SinglePage
+    ) {
         store.get('switchViewMode')(ViewMode.SinglePage);
     }
 };

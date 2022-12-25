@@ -70,6 +70,7 @@ export const scrollModePlugin = (): ScrollModePlugin => {
         <SwitchScrollModeDecorator mode={props.mode}>
             {(p) => (
                 <SwitchScrollModeButton
+                    isDisabled={p.isDisabled}
                     isSelected={p.isSelected}
                     mode={p.mode}
                     onClick={() => {
@@ -84,6 +85,7 @@ export const scrollModePlugin = (): ScrollModePlugin => {
         <SwitchScrollModeDecorator mode={props.mode}>
             {(p) => (
                 <SwitchScrollModeMenuItem
+                    isDisabled={p.isDisabled}
                     isSelected={p.isSelected}
                     mode={p.mode}
                     onClick={() => {
