@@ -36,15 +36,19 @@ export const smoothScroll = (
             break;
     }
 
+    if (top === targetPosition.top && scrollDirection === ScrollDirection.Vertical) {
+        return;
+    }
+    if (left === targetPosition.left && scrollDirection === ScrollDirection.Horizontal) {
+        return;
+    }
+
     let startTime: number = -1;
     let requestId: number;
     const offset = {
         left: left - targetPosition.left,
         top: top - targetPosition.top,
-    };
-    if (offset.top === 0 && offset.left) {
-        return;
-    }
+    };    
 
     const loop = (currentTime: number) => {
         if (startTime === -1) {
