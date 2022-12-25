@@ -35,6 +35,8 @@ const ZERO_OFFSET: Offset = {
     top: 0,
 };
 
+const COMPARE_EPSILON = 0.000000000001;
+
 const calculateRange = (
     scrollDirection: ScrollDirection,
     measurements: VirtualItem[],
@@ -574,7 +576,7 @@ export const useVirtual = ({
         const { measurements } = latestRef.current;
         const start = measurements[index].start;
         // Find the smallest item whose `top` is bigger than the current item
-        const nextItem = measurements.find((item) => item.start.top > start.top);
+        const nextItem = measurements.find((item) => item.start.top - start.top > COMPARE_EPSILON);
         if (!nextItem) {
             return;
         }
@@ -592,17 +594,37 @@ export const useVirtual = ({
         scrollToItem(nextIndex, offset);
     }, []);
 
-    const scrollToSmallestItemBelow = React.useCallback((index: number, offset: Offset) => {
+    const scrollToBiggestItemBelow = React.useCallback((index: number, offset: Offset) => {
         const { measurements } = latestRef.current;
         const start = measurements[index].start;
         // Find the smallest item whose `top` is smaller than the current item
         // Because `findLast` isn't available for ES5 target
+        let prevIndex = index;
+        let found = false;
         for (let i = numberOfItems - 1; i >= 0; i--) {
-            if (measurements[i].start.top < start.top) {
-                scrollToItem(measurements[i].index, offset);
+            if (start.top - measurements[i].start.top > COMPARE_EPSILON) {
+                found = true;
+                prevIndex = measurements[i].index;
                 break;
             }
         }
+        if (!found) {
+            return;
+        }
+        switch (viewModeRef.current) {
+            case ViewMode.DualPage:
+                prevIndex = prevIndex % 2 === 0 ? prevIndex : prevIndex - 1;
+                break;
+            case ViewMode.DualPageWithCover:
+                prevIndex = prevIndex % 2 === 0 ? prevIndex - 1 : prevIndex;
+                break;
+            default:
+                break;
+        }
+        if (prevIndex === index) {
+            prevIndex = index - 1;
+        }
+        scrollToItem(prevIndex, offset);
     }, []);
 
     const scrollToNextItem = React.useCallback((index: number, offset: Offset) => {
@@ -627,15 +649,15 @@ export const useVirtual = ({
 
     const scrollToPreviousItem = React.useCallback((index: number, offset: Offset) => {
         // `DualPage` mode
-        if (viewModeRef.current === ViewMode.DualPage) {
-            scrollToSmallestItemBelow(index, offset);
+        if (viewModeRef.current === ViewMode.DualPageWithCover || viewModeRef.current === ViewMode.DualPage) {
+            scrollToBiggestItemBelow(index, offset);
             return;
         }
 
         // `SinglePage` mode
         switch (scrollModeRef.current) {
             case ScrollMode.Wrapped:
-                scrollToSmallestItemBelow(index, offset);
+                scrollToBiggestItemBelow(index, offset);
                 break;
             case ScrollMode.Horizontal:
             case ScrollMode.Vertical:
