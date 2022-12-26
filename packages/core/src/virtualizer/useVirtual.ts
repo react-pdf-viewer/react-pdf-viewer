@@ -7,6 +7,8 @@
  */
 
 import * as React from 'react';
+import { useMeasureRect } from '../hooks/useMeasureRect';
+import { useScroll } from '../hooks/useScroll';
 import { ScrollDirection } from '../structs/ScrollDirection';
 import { ScrollMode } from '../structs/ScrollMode';
 import { ViewMode } from '../structs/ViewMode';
@@ -15,16 +17,8 @@ import type { Rect } from '../types/Rect';
 import { chunk } from '../utils/chunk';
 import { clamp } from '../utils/clamp';
 import { findNearest } from '../utils/findNearest';
-import { useMeasureRect } from './useMeasureRect';
-import { useScroll } from './useScroll';
-
-export interface VirtualItem {
-    index: number;
-    start: Offset;
-    size: Rect;
-    end: Offset;
-    visibility: number;
-}
+import { measureDualWithCover } from './measureDualWithCover';
+import type { VirtualItem } from './VirtualItem';
 
 const ZERO_RECT: Rect = {
     height: 0,
@@ -356,46 +350,7 @@ export const useVirtual = ({
 
         // `DualPageWithCover` mode
         if (viewMode === ViewMode.DualPageWithCover) {
-            for (let i = 0; i < numberOfItems; i++) {
-                const size =
-                    i === 0
-                        ? {
-                              height:
-                                  scrollMode === ScrollMode.Page
-                                      ? Math.max(parentRect.height, sizes[i].height)
-                                      : sizes[i].height,
-                              width:
-                                  scrollMode === ScrollMode.Page
-                                      ? Math.max(parentRect.width, sizes[i].width)
-                                      : sizes[i].width,
-                          }
-                        : {
-                              height:
-                                  scrollMode === ScrollMode.Page
-                                      ? Math.max(parentRect.height, sizes[i].height)
-                                      : sizes[i].height,
-                              width: Math.max(parentRect.width / 2, sizes[i].width),
-                          };
-                const start: Offset =
-                    i === 0
-                        ? ZERO_OFFSET
-                        : {
-                              left: i % 2 === 0 ? size.width : 0,
-                              top: Math.floor((i - 1) / 2) * size.height + measurements[0].end.top,
-                          };
-                const end: Offset = {
-                    left: start.left + size.width,
-                    top: start.top + size.height,
-                };
-                measurements[i] = {
-                    index: i,
-                    start,
-                    size,
-                    end,
-                    visibility: -1,
-                };
-            }
-            return measurements;
+            return measureDualWithCover(numberOfItems, parentRect, sizes, scrollMode);
         }
 
         // `DualPage` mode
