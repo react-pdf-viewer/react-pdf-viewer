@@ -17,6 +17,7 @@ import type { Rect } from '../types/Rect';
 import { chunk } from '../utils/chunk';
 import { clamp } from '../utils/clamp';
 import { calculateRange } from './calculateRange';
+import { measureDualPage } from './measureDualPage';
 import { measureDualPageWithCover } from './measureDualPageWithCover';
 import type { VirtualItem } from './VirtualItem';
 
@@ -134,29 +135,7 @@ export const useVirtual = ({
 
         // `DualPage` mode
         if (viewMode === ViewMode.DualPage) {
-            for (let i = 0; i < numberOfItems; i++) {
-                const size = {
-                    height:
-                        scrollMode === ScrollMode.Page ? Math.max(parentRect.height, sizes[i].height) : sizes[i].height,
-                    width: Math.max(parentRect.width / 2, sizes[i].width),
-                };
-                const start: Offset = {
-                    left: i % 2 === 0 ? 0 : size.width,
-                    top: Math.floor(i / 2) * size.height,
-                };
-                const end: Offset = {
-                    left: start.left + size.width,
-                    top: start.top + size.height,
-                };
-                measurements[i] = {
-                    index: i,
-                    start,
-                    size,
-                    end,
-                    visibility: -1,
-                };
-            }
-            return measurements;
+            return measureDualPage(numberOfItems, parentRect, sizes, scrollMode);
         }
 
         // `SinglePage` mode
