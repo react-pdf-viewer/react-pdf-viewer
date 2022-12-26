@@ -16,7 +16,7 @@ const ZERO_OFFSET: Offset = {
     top: 0,
 };
 
-export const measureDualWithCover = (
+export const measureDualPageWithCover = (
     numberOfItems: number,
     parentRect: Rect,
     sizes: Rect[],
@@ -26,6 +26,7 @@ export const measureDualWithCover = (
     let top = 0;
     let maxHeight = 0;
     let start = ZERO_OFFSET;
+
     for (let i = 0; i < numberOfItems; i++) {
         const size =
             i === 0
