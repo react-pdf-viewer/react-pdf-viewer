@@ -19,6 +19,7 @@ import { clamp } from '../utils/clamp';
 import { calculateRange } from './calculateRange';
 import { measureDualPage } from './measureDualPage';
 import { measureDualPageWithCover } from './measureDualPageWithCover';
+import { measureSinglePage } from './measureSinglePage';
 import type { VirtualItem } from './VirtualItem';
 
 const ZERO_RECT: Rect = {
@@ -139,72 +140,7 @@ export const useVirtual = ({
         }
 
         // `SinglePage` mode
-        let totalWidth = 0;
-        let firstOfRow = {
-            left: 0,
-            top: 0,
-        };
-        // Maximum height of items which are in the same row (in the wrapped layout mode)
-        // The value will be used to calculate the `start` position for items in the next row
-        let maxHeight = 0;
-        for (let i = 0; i < numberOfItems; i++) {
-            const size = sizes[i];
-            let start = ZERO_OFFSET;
-            if (i === 0) {
-                totalWidth = size.width;
-                firstOfRow = {
-                    left: 0,
-                    top: 0,
-                };
-                maxHeight = size.height;
-            } else {
-                switch (scrollMode) {
-                    case ScrollMode.Wrapped:
-                        // Check if the total width exceeds the parent's width
-                        totalWidth += size.width;
-                        if (totalWidth < parentRect.width) {
-                            start = {
-                                left: measurements[i - 1].end.left,
-                                top: firstOfRow.top,
-                            };
-                            maxHeight = Math.max(maxHeight, size.height);
-                        } else {
-                            // Put the item in the next row
-                            totalWidth = size.width;
-                            start = {
-                                left: firstOfRow.left,
-                                top: firstOfRow.top + maxHeight,
-                            };
-                            firstOfRow = {
-                                left: start.left,
-                                top: start.top,
-                            };
-                            maxHeight = size.height;
-                        }
-                        break;
-                    case ScrollMode.Horizontal:
-                    case ScrollMode.Vertical:
-                    default:
-                        // Starts from the ending point of the previous item
-                        start = measurements[i - 1].end;
-                        break;
-                }
-            }
-
-            const end = {
-                left: start.left + size.width,
-                top: start.top + size.height,
-            };
-
-            measurements[i] = {
-                index: i,
-                start,
-                size,
-                end,
-                visibility: -1,
-            };
-        }
-        return measurements;
+        return measureSinglePage(numberOfItems, parentRect, sizes, scrollMode);
     }, [scrollMode, sizes, viewMode, parentRect]);
 
     const totalSize = measurements[numberOfItems - 1]
