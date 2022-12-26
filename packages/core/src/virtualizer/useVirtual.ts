@@ -17,6 +17,7 @@ import type { Rect } from '../types/Rect';
 import { chunk } from '../utils/chunk';
 import { clamp } from '../utils/clamp';
 import { calculateRange } from './calculateRange';
+import { measure } from './measure';
 import { measureDualPage } from './measureDualPage';
 import { measureDualPageWithCover } from './measureDualPageWithCover';
 import { measureSinglePage } from './measureSinglePage';
@@ -104,29 +105,9 @@ export const useVirtual = ({
     latestRef.current.parentRect = parentRect;
 
     const measurements = React.useMemo(() => {
-        const measurements: VirtualItem[] = [];
-
         // Single page scrolling mode
         if (scrollMode === ScrollMode.Page && viewMode === ViewMode.SinglePage) {
-            for (let i = 0; i < numberOfItems; i++) {
-                const size = {
-                    height: Math.max(parentRect.height, sizes[i].height),
-                    width: Math.max(parentRect.width, sizes[i].width),
-                };
-                const start: Offset = i === 0 ? ZERO_OFFSET : measurements[i - 1].end;
-                const end: Offset = {
-                    left: start.left + size.width,
-                    top: start.top + size.height,
-                };
-                measurements[i] = {
-                    index: i,
-                    start,
-                    size,
-                    end,
-                    visibility: -1,
-                };
-            }
-            return measurements;
+            return measureSinglePage(numberOfItems, parentRect, sizes);
         }
 
         // `DualPageWithCover` mode
@@ -140,7 +121,7 @@ export const useVirtual = ({
         }
 
         // `SinglePage` mode
-        return measureSinglePage(numberOfItems, parentRect, sizes, scrollMode);
+        return measure(numberOfItems, parentRect, sizes, scrollMode);
     }, [scrollMode, sizes, viewMode, parentRect]);
 
     const totalSize = measurements[numberOfItems - 1]
