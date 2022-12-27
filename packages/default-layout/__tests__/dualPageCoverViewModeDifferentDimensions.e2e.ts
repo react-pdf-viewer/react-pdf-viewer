@@ -1,6 +1,6 @@
 import 'expect-puppeteer';
 
-test('Dual page viewmode (document has different page dimensions)', async () => {
+test('Dual page with cover viewmode (document has different page dimensions)', async () => {
     await page.goto('http://localhost:3000/default-layout-different-dimensions');
     await page.setViewport({
         width: 1920,
@@ -15,8 +15,8 @@ test('Dual page viewmode (document has different page dimensions)', async () => 
     const moreActionsButton = await page.waitForSelector('[data-testid="toolbar__more-actions-popover-target"]');
     await moreActionsButton?.click();
 
-    const switchToDualPageMenu = await page.waitForSelector('[data-testid="view-mode__dual-menu"]');
-    await switchToDualPageMenu?.click();
+    const switchToDualPageCoverMenu = await page.waitForSelector('[data-testid="view-mode__dual-cover-menu"]');
+    await switchToDualPageCoverMenu?.click();
 
     await page.waitForSelector('[data-testid="core__text-layer-0"]', { visible: true });
     await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 0');
@@ -36,10 +36,10 @@ test('Dual page viewmode (document has different page dimensions)', async () => 
     await pageInput?.press('Enter');
 
     await page.waitForSelector('[data-testid="core__text-layer-13"]', { visible: true });
-    await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 2376');
+    await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 2772');
 
     await page.waitForFunction(
-        () => 'document.querySelector("[data-testid=page-navigation__current-page-input]").value === "13"'
+        () => 'document.querySelector("[data-testid=page-navigation__current-page-input]").value === "14"'
     );
 
     // Jump to the 43rd page
@@ -52,6 +52,19 @@ test('Dual page viewmode (document has different page dimensions)', async () => 
     await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 8316');
 
     await page.waitForFunction(
-        () => 'document.querySelector("[data-testid=page-navigation__current-page-input]").value === "43"'
+        () => 'document.querySelector("[data-testid=page-navigation__current-page-input]").value === "42"'
+    );
+
+    // Jump to the last page
+    await pageInput?.focus();
+    await pageInput?.click({ clickCount: 3 });
+    await pageInput?.type('70');
+    await pageInput?.press('Enter');
+
+    await page.waitForSelector('[data-testid="core__text-layer-69"]', { visible: true });
+    await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 12238');
+
+    await page.waitForFunction(
+        () => 'document.querySelector("[data-testid=page-navigation__current-page-input]").value === "68"'
     );
 });
