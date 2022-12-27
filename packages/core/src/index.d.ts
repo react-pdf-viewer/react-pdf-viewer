@@ -22,7 +22,17 @@ export interface Rect {
     width: number;
 }
 export interface PageLayout {
-    buildPageStyles?: ({ numPages, pageIndex }: { numPages: number; pageIndex: number }) => React.CSSProperties;
+    buildPageStyles?: ({
+        numPages,
+        pageIndex,
+        scrollMode,
+        viewMode,
+    }: {
+        numPages: number;
+        pageIndex: number;
+        scrollMode: ScrollMode;
+        viewMode: ViewMode;
+    }) => React.CSSProperties;
     tranformSize?: ({ numPages, pageIndex, size }: { numPages: number; pageIndex: number; size: Rect }) => Rect;
 }
 export interface PageSize {

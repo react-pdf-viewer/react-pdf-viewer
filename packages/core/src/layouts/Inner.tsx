@@ -681,7 +681,12 @@ export const Inner: React.FC<{
                                             style={Object.assign(
                                                 {},
                                                 virtualizer.getItemStyles(item),
-                                                layoutBuilder.buildPageStyles({ numPages, pageIndex: item.index })
+                                                layoutBuilder.buildPageStyles({
+                                                    numPages,
+                                                    pageIndex: item.index,
+                                                    scrollMode: currentScrollMode,
+                                                    viewMode: currentViewMode,
+                                                })
                                             )}
                                         >
                                             <PageLayer
