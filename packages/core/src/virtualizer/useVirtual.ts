@@ -182,8 +182,8 @@ export const useVirtual = ({
         clamp(0, numberOfItems - 1, start),
         clamp(0, numberOfItems - 1, end)
     );
-    // Use `Math.max` because there is a case there is only one visibile page (the zoom level is big enough)
-    let maxVisbilityItem = start + Math.max(indexOfMax(visiblePageVisibilities), 1);
+
+    let maxVisbilityItem = start + indexOfMax(visiblePageVisibilities);
     maxVisbilityItem = clamp(0, numberOfItems - 1, maxVisbilityItem);
 
     // Determine the page that has max visbility and the range of pages that will be pre-rendered

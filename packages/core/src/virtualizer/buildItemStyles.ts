@@ -51,6 +51,8 @@ export const buildItemStyles = (
     const sideProperty = isRtl ? 'right' : 'left';
     const factor = isRtl ? -1 : 1;
     const numberOfItems = sizes.length;
+    const left = item.start.left * factor;
+    const { height, width } = item.size;
 
     if (viewMode === ViewMode.DualPageWithCover) {
         const transformTop = scrollMode === ScrollMode.Page ? 0 : item.start.top;
@@ -58,39 +60,39 @@ export const buildItemStyles = (
         if (item.index === 0 || (numberOfItems % 2 === 0 && item.index === numberOfItems - 1)) {
             return {
                 // Size
-                height: `${item.size.height}px`,
+                height: `${height}px`,
                 minWidth: `${getMinWidthOfCover(sizes, viewMode)}px`,
                 width: '100%',
                 // Absolute position
                 [sideProperty]: 0,
                 position: 'absolute',
                 top: 0,
-                transform: `translate(${item.start.left}px, ${transformTop}px)`,
+                transform: `translate(${left}px, ${transformTop}px)`,
             };
         }
 
         return {
             // Size
-            height: `${item.size.height}px`,
-            width: `${item.size.width}px`,
+            height: `${height}px`,
+            width: `${width}px`,
             // Absolute position
             [sideProperty]: 0,
             position: 'absolute',
             top: 0,
-            transform: `translate(${item.start.left}px, ${transformTop}px)`,
+            transform: `translate(${left}px, ${transformTop}px)`,
         };
     }
 
     if (viewMode === ViewMode.DualPage) {
         return {
             // Size
-            height: `${item.size.height}px`,
-            width: `${item.size.width}px`,
+            height: `${height}px`,
+            width: `${width}px`,
             // Absolute position
             [sideProperty]: 0,
             position: 'absolute',
             top: 0,
-            transform: `translate(${item.start.left}px, ${scrollMode === ScrollMode.Page ? 0 : item.start.top}px)`,
+            transform: `translate(${left}px, ${scrollMode === ScrollMode.Page ? 0 : item.start.top}px)`,
         };
     }
 
@@ -99,18 +101,18 @@ export const buildItemStyles = (
             return {
                 // Size
                 height: '100%',
-                width: `${item.size.width}px`,
+                width: `${width}px`,
                 // Absolute position
                 [sideProperty]: 0,
                 position: 'absolute',
                 top: 0,
-                transform: `translateX(${item.start.left * factor}px)`,
+                transform: `translateX(${left}px)`,
             };
         case ScrollMode.Page:
             return {
                 // Size
-                height: `${item.size.height}px`,
-                width: `${item.size.width}px`,
+                height: `${height}px`,
+                width: `${width}px`,
                 // Absolute position
                 [sideProperty]: 0,
                 position: 'absolute',
@@ -119,19 +121,19 @@ export const buildItemStyles = (
         case ScrollMode.Wrapped:
             return {
                 // Size
-                height: `${item.size.height}px`,
-                width: `${item.size.width}px`,
+                height: `${height}px`,
+                width: `${width}px`,
                 // Absolute position
                 [sideProperty]: 0,
                 position: 'absolute',
                 top: 0,
-                transform: `translate(${item.start.left * factor}px, ${item.start.top}px)`,
+                transform: `translate(${left}px, ${item.start.top}px)`,
             };
         case ScrollMode.Vertical:
         default:
             return {
                 // Size
-                height: `${item.size.height}px`,
+                height: `${height}px`,
                 width: '100%',
                 // Absolute position
                 [sideProperty]: 0,
