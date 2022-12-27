@@ -11,40 +11,24 @@ test('Document with different page dimensions', async () => {
     // Wait until the first page is rendered
     await page.waitForSelector('[data-testid="core__page-layer-0"]', { visible: true });
 
-    // Jump to the 2nd page
-    let nextPageButton = await page.waitForSelector('[data-testid="page-navigation__next-button"]');
-    await nextPageButton?.click();
+    // Jump to the 14th page
+    const pageInput = await page.waitForSelector('[data-testid="page-navigation__current-page-input"]', {
+        visible: true,
+    });
+    await pageInput?.focus();
+    await pageInput?.click({ clickCount: 3 });
+    await pageInput?.type('14');
+    await pageInput?.press('Enter');
 
-    await page.waitForSelector('[data-testid="core__text-layer-1"]', { visible: true });
-    await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 1204');
+    await page.waitForSelector('[data-testid="core__text-layer-13"]', { visible: true });
+    await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 5148');
 
-    // Jump to the 3rd page
-    await nextPageButton?.click();
-    await page.waitForSelector('[data-testid="core__text-layer-2"]', { visible: true });
-    await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 2111');
+    // Jump to the 43rd page
+    await pageInput?.focus();
+    await pageInput?.click({ clickCount: 3 });
+    await pageInput?.type('43');
+    await pageInput?.press('Enter');
 
-    // Jump to the 4th page
-    await nextPageButton?.click();
-    await page.waitForSelector('[data-testid="core__text-layer-3"]', { visible: true });
-    await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 3315');
-
-    // Jump to the 5th page
-    await nextPageButton?.click();
-    await page.waitForSelector('[data-testid="core__text-layer-4"]', { visible: true });
-    await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 4222');
-
-    // Jump to the 6th page
-    await nextPageButton?.click();
-    await page.waitForSelector('[data-testid="core__text-layer-5"]', { visible: true });
-    await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 5129');
-
-    // Jump to the 7th page
-    await nextPageButton?.click();
-    await page.waitForSelector('[data-testid="core__text-layer-6"]', { visible: true });
-    await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 6333');
-
-    // Jump to the 8th page
-    await nextPageButton?.click();
-    await page.waitForSelector('[data-testid="core__text-layer-7"]', { visible: true });
-    await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 7537');
+    await page.waitForSelector('[data-testid="core__text-layer-42"]', { visible: true });
+    await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 16542');
 });

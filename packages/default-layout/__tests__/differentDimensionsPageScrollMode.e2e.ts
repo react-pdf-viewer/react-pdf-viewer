@@ -1,6 +1,6 @@
 import 'expect-puppeteer';
 
-test('Document with different page dimensions (horizontal scroll mode)', async () => {
+test('Document with different page dimensions (page scroll mode)', async () => {
     await page.goto('http://localhost:3000/default-layout-different-dimensions');
     await page.setViewport({
         width: 1920,
@@ -11,12 +11,12 @@ test('Document with different page dimensions (horizontal scroll mode)', async (
     // Wait until the first page is rendered
     await page.waitForSelector('[data-testid="core__page-layer-0"]', { visible: true });
 
-    // Switch to the horizontal scroll mode
+    // Switch to the page scroll mode
     const moreActionsButton = await page.waitForSelector('[data-testid="toolbar__more-actions-popover-target"]');
     await moreActionsButton?.click();
 
-    const switchToHorizontalMenu = await page.waitForSelector('[data-testid="scroll-mode__horizontal-menu"]');
-    await switchToHorizontalMenu?.click();
+    const switchToPageMenu = await page.waitForSelector('[data-testid="scroll-mode__page-menu"]');
+    await switchToPageMenu?.click();
 
     // Jump to the 14th page
     const pageInput = await page.waitForSelector('[data-testid="page-navigation__current-page-input"]', {
@@ -28,7 +28,7 @@ test('Document with different page dimensions (horizontal scroll mode)', async (
     await pageInput?.press('Enter');
 
     await page.waitForSelector('[data-testid="core__text-layer-13"]', { visible: true });
-    await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollLeft === 3978');
+    await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollLeft === 9854');
 
     // Jump to the 43rd page
     await pageInput?.focus();
@@ -37,5 +37,5 @@ test('Document with different page dimensions (horizontal scroll mode)', async (
     await pageInput?.press('Enter');
 
     await page.waitForSelector('[data-testid="core__text-layer-42"]', { visible: true });
-    await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollLeft === 12942');
+    await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollLeft === 31836');
 });

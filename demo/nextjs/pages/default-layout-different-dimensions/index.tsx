@@ -14,7 +14,7 @@ const IndexPage = () => {
                 width: '64rem',
             }}
         >
-            <Viewer fileUrl="/pdf-open-parameters-rotated.pdf" plugins={[defaultLayoutPluginInstance]} />
+            <Viewer defaultScale={0.5} fileUrl="/different-dimensions.pdf" plugins={[defaultLayoutPluginInstance]} />
         </div>
     );
 };

@@ -18,25 +18,34 @@ test('Document with different page dimensions (wrapped scroll mode)', async () =
     const switchToWrappedMenu = await page.waitForSelector('[data-testid="scroll-mode__wrapped-menu"]');
     await switchToWrappedMenu?.click();
 
-    // Zoom to 50%
-    const zoomButton = await page.waitForSelector('[data-testid="zoom__popover-target"]');
-    await zoomButton?.click();
+    // Jump to the 14th page
+    const pageInput = await page.waitForSelector('[data-testid="page-navigation__current-page-input"]', {
+        visible: true,
+    });
+    await pageInput?.focus();
+    await pageInput?.click({ clickCount: 3 });
+    await pageInput?.type('14');
+    await pageInput?.press('Enter');
 
-    const zoomPopover = await page.waitForSelector('[id="rpv-core__popover-body-inner-zoom"]');
-    const zoomMenuItem = await zoomPopover?.$('button:nth-of-type(4)');
-    const zoomLevel = await zoomMenuItem?.evaluate((ele) => ele.textContent);
-    expect(zoomLevel).toEqual('50%');
-    await zoomMenuItem?.click();
+    await page.waitForSelector('[data-testid="core__text-layer-13"]', { visible: true });
+    await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 1584');
 
-    await page.evaluate(() => document.querySelector('[data-testid="core__page-layer-2"]')?.scrollIntoView());
-    await page.waitForSelector('[data-testid="core__text-layer-2"]', { visible: true });
-    await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 420');
+    // Check the current page
+    await page.waitForFunction(
+        () => 'document.querySelector("[data-testid=page-navigation__current-page-input]").value === "13"'
+    );
 
-    await page.evaluate(() => document.querySelector('[data-testid="core__page-layer-5"]')?.scrollIntoView());
-    await page.waitForSelector('[data-testid="core__text-layer-5"]', { visible: true });
-    await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 832');
+    // Jump to the 43rd page
+    await pageInput?.focus();
+    await pageInput?.click({ clickCount: 3 });
+    await pageInput?.type('43');
+    await pageInput?.press('Enter');
 
-    await page.evaluate(() => document.querySelector('[data-testid="core__page-layer-7"]')?.scrollIntoView());
-    await page.waitForSelector('[data-testid="core__text-layer-7"]', { visible: true });
-    await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 890');
+    await page.waitForSelector('[data-testid="core__text-layer-42"]', { visible: true });
+    await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 5544');
+
+    // Check the current page
+    await page.waitForFunction(
+        () => 'document.querySelector("[data-testid=page-navigation__current-page-input]").value === "42"'
+    );
 });
