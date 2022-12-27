@@ -76,6 +76,8 @@ test('Customize bookmark items', async () => {
     await findByTestId('core__annotation-layer-2');
     await findByTestId('core__text-layer-3');
     await findByTestId('core__annotation-layer-3');
+    await findByTestId('core__text-layer-4');
+    await findByTestId('core__annotation-layer-4');
 
     await findByTestId('bookmark__container');
 
