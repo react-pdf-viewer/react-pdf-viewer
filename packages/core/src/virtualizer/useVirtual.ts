@@ -14,16 +14,18 @@ import { ScrollMode } from '../structs/ScrollMode';
 import { ViewMode } from '../structs/ViewMode';
 import type { Offset } from '../types/Offset';
 import type { Rect } from '../types/Rect';
-import { chunk } from '../utils/chunk';
 import { clamp } from '../utils/clamp';
+import { indexOfMax } from '../utils/indexOfMax';
+import { buildContainerStyles } from './buildContainerStyles';
+import { buildItemContainerStyles } from './buildItemContainerStyles';
+import { buildItemStyles } from './buildItemStyles';
 import { calculateRange } from './calculateRange';
+import type { ItemMeasurement } from './ItemMeasurement';
 import { measure } from './measure';
 import { measureDualPage } from './measureDualPage';
 import { measureDualPageWithCover } from './measureDualPageWithCover';
 import { measureSinglePage } from './measureSinglePage';
 import type { VirtualItem } from './VirtualItem';
-import type { ItemMeasurement } from './ItemMeasurement';
-import { indexOfMax } from '../utils/indexOfMax';
 
 const ZERO_RECT: Rect = {
     height: 0,
@@ -343,165 +345,19 @@ export const useVirtual = ({
     }, []);
 
     // Build the styles for the items' container
-    const getContainerStyles = React.useCallback((): React.CSSProperties => {
-        switch (scrollModeRef.current) {
-            case ScrollMode.Horizontal:
-                return {
-                    position: 'relative',
-                    height: '100%',
-                    width: `${totalSize.width}px`,
-                };
-            case ScrollMode.Vertical:
-            default:
-                return {
-                    position: 'relative',
-                    height: `${totalSize.height}px`,
-                    width: '100%',
-                };
-        }
-    }, [totalSize]);
+    const getContainerStyles = React.useCallback(
+        () => buildContainerStyles(totalSize, scrollModeRef.current),
+        [totalSize]
+    );
 
     const getItemContainerStyles = React.useCallback(
-        (item: VirtualItem): React.CSSProperties => {
-            return scrollModeRef.current !== ScrollMode.Page
-                ? {}
-                : {
-                      // Size
-                      height: `${parentRect.height}px`,
-                      width: '100%',
-                      // Absolute position
-                      position: 'absolute',
-                      top: 0,
-                      transform: `translateY(${item.start.top}px)`,
-                  };
-        },
+        (item: VirtualItem) => buildItemContainerStyles(item, parentRect, scrollModeRef.current),
         [parentRect]
     );
 
-    // Determine the min width in the `DualPageWithCover` mode
-    const hasDifferentSizes = React.useMemo(() => {
-        if (numberOfItems === 1) {
-            return false;
-        }
-        for (let i = 1; i < numberOfItems; i++) {
-            if (sizes[i].height !== sizes[0].height || sizes[i].width !== sizes[0].width) {
-                return true;
-            }
-        }
-        return false;
-    }, [sizes]);
-
-    const minWidthOfCover = React.useMemo(() => {
-        if (viewModeRef.current !== ViewMode.DualPageWithCover) {
-            return 0;
-        }
-        if (!hasDifferentSizes) {
-            return 2 * sizes[0].width;
-        }
-        const chunkWidths = chunk(sizes.slice(1), 2).map((eachChunk) =>
-            eachChunk.length === 2 ? eachChunk[0].width + eachChunk[1].width : eachChunk[0].width
-        );
-        const widths = [sizes[0].width].concat(chunkWidths);
-        return Math.max(...widths);
-    }, [sizes]);
-
     // Build the absolute position styles for each item
     const getItemStyles = React.useCallback(
-        (item: VirtualItem): React.CSSProperties => {
-            const sideProperty = isRtl ? 'right' : 'left';
-            const factor = isRtl ? -1 : 1;
-
-            if (viewModeRef.current === ViewMode.DualPageWithCover) {
-                const transformTop = scrollModeRef.current === ScrollMode.Page ? 0 : item.start.top;
-                // The first and the last items are treated as covers
-                if (item.index === 0 || (numberOfItems % 2 === 0 && item.index === numberOfItems - 1)) {
-                    return {
-                        // Size
-                        height: `${item.size.height}px`,
-                        minWidth: `${minWidthOfCover}px`,
-                        width: '100%',
-                        // Absolute position
-                        [sideProperty]: 0,
-                        position: 'absolute',
-                        top: 0,
-                        transform: `translate(${item.start.left}px, ${transformTop}px)`,
-                    };
-                }
-
-                return {
-                    // Size
-                    height: `${item.size.height}px`,
-                    width: `${item.size.width}px`,
-                    // Absolute position
-                    [sideProperty]: 0,
-                    position: 'absolute',
-                    top: 0,
-                    transform: `translate(${item.start.left}px, ${transformTop}px)`,
-                };
-            }
-
-            if (viewModeRef.current === ViewMode.DualPage) {
-                return {
-                    // Size
-                    height: `${item.size.height}px`,
-                    width: `${item.size.width}px`,
-                    // Absolute position
-                    [sideProperty]: 0,
-                    position: 'absolute',
-                    top: 0,
-                    transform: `translate(${item.start.left}px, ${
-                        scrollModeRef.current === ScrollMode.Page ? 0 : item.start.top
-                    }px)`,
-                };
-            }
-
-            switch (scrollModeRef.current) {
-                case ScrollMode.Horizontal:
-                    return {
-                        // Size
-                        height: '100%',
-                        width: `${item.size.width}px`,
-                        // Absolute position
-                        [sideProperty]: 0,
-                        position: 'absolute',
-                        top: 0,
-                        transform: `translateX(${item.start.left * factor}px)`,
-                    };
-                case ScrollMode.Page:
-                    return {
-                        // Size
-                        height: `${item.size.height}px`,
-                        width: `${item.size.width}px`,
-                        // Absolute position
-                        [sideProperty]: 0,
-                        position: 'absolute',
-                        top: 0,
-                    };
-                case ScrollMode.Wrapped:
-                    return {
-                        // Size
-                        height: `${item.size.height}px`,
-                        width: `${item.size.width}px`,
-                        // Absolute position
-                        [sideProperty]: 0,
-                        position: 'absolute',
-                        top: 0,
-                        transform: `translate(${item.start.left * factor}px, ${item.start.top}px)`,
-                    };
-                case ScrollMode.Vertical:
-                default:
-                    return {
-                        // Size
-                        height: `${item.size.height}px`,
-                        width: '100%',
-                        // Absolute position
-                        [sideProperty]: 0,
-                        position: 'absolute',
-                        top: 0,
-                        transform: `translateY(${item.start.top}px)`,
-                    };
-            }
-        },
+        (item: VirtualItem) => buildItemStyles(item, isRtl, sizes, viewModeRef.current, scrollModeRef.current),
         [isRtl, sizes]
     );
 
