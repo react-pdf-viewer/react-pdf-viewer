@@ -22,6 +22,8 @@ import { measureDualPage } from './measureDualPage';
 import { measureDualPageWithCover } from './measureDualPageWithCover';
 import { measureSinglePage } from './measureSinglePage';
 import type { VirtualItem } from './VirtualItem';
+import type { ItemMeasurement } from './ItemMeasurement';
+import { indexOfMax } from '../utils/indexOfMax';
 
 const ZERO_RECT: Rect = {
     height: 0,
@@ -33,6 +35,8 @@ const ZERO_OFFSET: Offset = {
 };
 
 const COMPARE_EPSILON = 0.000000000001;
+const VIRTUAL_INDEX_ATTR = 'data-virtual-index';
+const IO_THRESHOLD = [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1];
 
 export const useVirtual = ({
     isRtl,
@@ -97,12 +101,43 @@ export const useVirtual = ({
 
     const latestRef = React.useRef({
         scrollOffset: ZERO_OFFSET,
-        measurements: [] as VirtualItem[],
+        measurements: [] as ItemMeasurement[],
         parentRect: ZERO_RECT,
         totalSize: ZERO_RECT,
     });
     latestRef.current.scrollOffset = scrollOffset;
     latestRef.current.parentRect = parentRect;
+
+    // Track visibilities of pages
+    const defaultVisibilities = React.useMemo(() => Array(numberOfItems).fill(-1) as number[], []);
+    const [visibilities, setVisibilities] = React.useState(defaultVisibilities);
+
+    const intersectionTracker = React.useMemo(() => {
+        const io = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    const ratio = entry.isIntersecting ? entry.intersectionRatio : -1;
+                    const target = entry.target;
+                    const indexAttribute = target.getAttribute(VIRTUAL_INDEX_ATTR);
+                    if (!indexAttribute) {
+                        return;
+                    }
+                    const index = parseInt(indexAttribute, 10);
+                    if (0 <= index && index < numberOfItems) {
+                        setVisibilities((old) => {
+                            old[index] = ratio;
+                            return [...old];
+                        });
+                    }
+                });
+            },
+            {
+                threshold: IO_THRESHOLD,
+            }
+        );
+
+        return io;
+    }, []);
 
     const measurements = React.useMemo(() => {
         // Single page scrolling mode
@@ -133,12 +168,15 @@ export const useVirtual = ({
     latestRef.current.measurements = measurements;
     latestRef.current.totalSize = totalSize;
 
-    const { maxVisbilityItem, visibilities, start, end } = calculateRange(
+    const { start, end } = calculateRange(
         scrollDirection,
         latestRef.current.measurements,
         latestRef.current.parentRect,
         latestRef.current.scrollOffset
     );
+
+    const maxVisbilityItem =
+        start + indexOfMax(visibilities.slice(clamp(0, numberOfItems - 1, start), clamp(0, numberOfItems - 1, end)));
 
     // Determine the page that has max visbility and the range of pages that will be pre-rendered
     let maxVisbilityIndex = maxVisbilityItem;
@@ -175,12 +213,19 @@ export const useVirtual = ({
             const virtualItem: VirtualItem = {
                 ...item,
                 visibility: visibilities[i] !== undefined ? visibilities[i] : -1,
+                measureRef: (ele) => {
+                    if (!ele) {
+                        return;
+                    }
+                    ele.setAttribute(VIRTUAL_INDEX_ATTR, `${i}`);
+                    intersectionTracker.observe(ele);
+                },
             };
             virtualItems.push(virtualItem);
         }
 
         return virtualItems;
-    }, [visibilities, measurements]);
+    }, [startRange, endRange, visibilities, measurements]);
 
     const scrollToItem = React.useCallback(
         (index: number, offset: Offset) => {
@@ -478,6 +523,13 @@ export const useVirtual = ({
                       };
             scrollTo(updateOffset, false);
         }
+    }, []);
+
+    // Clean up
+    React.useEffect(() => {
+        return () => {
+            intersectionTracker.disconnect();
+        };
     }, []);
 
     return {

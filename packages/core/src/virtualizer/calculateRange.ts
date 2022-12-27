@@ -10,23 +10,16 @@ import { ScrollDirection } from '../structs/ScrollDirection';
 import type { Offset } from '../types/Offset';
 import type { Rect } from '../types/Rect';
 import { findNearest } from '../utils/findNearest';
-import type { VirtualItem } from './VirtualItem';
-
-const ZERO_RECT: Rect = {
-    height: 0,
-    width: 0,
-};
+import type { ItemMeasurement } from './ItemMeasurement';
 
 export const calculateRange = (
     scrollDirection: ScrollDirection,
-    measurements: VirtualItem[],
+    measurements: ItemMeasurement[],
     outerSize: Rect,
     scrollOffset: Offset
 ): {
     start: number;
     end: number;
-    maxVisbilityItem: number;
-    visibilities: Record<string, number>;
 } => {
     let currentOffset = 0;
 
@@ -67,13 +60,7 @@ export const calculateRange = (
     }
 
     let end = start;
-    // The visiblities of each item
-    const visibilities: Record<string, number> = {};
-    let maxVisbilityItem = start;
-    let maxVisbility = -1;
     while (end <= size) {
-        const itemRect = measurements[end].size;
-        const visibility = ZERO_RECT;
         const topLeftCorner = {
             top: measurements[end].start.top - scrollOffset.top,
             left: measurements[end].start.left - scrollOffset.left,
@@ -112,128 +99,11 @@ export const calculateRange = (
             end--;
             break;
         }
-
-        // Calculate the width that is visible within the container
-        // We don't care it in the vertical scroll mode
-        if (scrollDirection === ScrollDirection.Vertical) {
-            visibility.width = 1;
-        } else if (topLeftCorner.left < 0) {
-            // The top left corner belongs to the (1) area
-            // 1) The top right corner is inside of the container
-            // |   (top, left)          |
-            // |        ●─ ─ ─ ─ ─●     |   visibility.width = 1
-            // |           (top, right) |
-            // |                        |
-            // ┌────────────────────────┐
-            // |                        |
-            // |                        |
-            // |                        |
-            // |                        |
-            // |                        |
-            // └────────────────────────┘
-
-            // 2) The top right corner is outside of the container
-            // |   (top, left)          |       (top, right)
-            // |        ●─ ─ ─ ─ ─ ─ ─ ─┼─ ─ ─ ─ ─ ─●
-            // |                        |
-            // ┌────────────────────────┐
-            // |                        |
-            // |                        |
-            // |                        |
-            // |                        |
-            // |                        |
-            // └────────────────────────┘
-            const visibleWidth = itemRect.width - -topLeftCorner.left;
-            visibility.width = visibleWidth <= outerSize.width ? visibleWidth / outerSize.width : 1;
-        } else {
-            // The top left corner is inside of the container
-            // 1) The top right corner is inside of the container
-            // ┌────────────────────────┐
-            // |   (top, left)          |
-            // |        ●─ ─ ─ ─ ─●     |   visibility.width = 1
-            // |           (top, right) |
-            // |                        |
-            // |                        |
-            // └────────────────────────┘
-
-            // 2) The top right corner is outside of the container
-            // ┌────────────────────────┐
-            // |   (top, left)          |       (top, right)
-            // |        ●─ ─ ─ ─ ─ ─ ─ ─┼─ ─ ─ ─ ─ ─●
-            // |                        |
-            // |                        |   visibility.width = visibleSize.width / itemRect.width;
-            // |                        |
-            // └────────────────────────┘
-            visibility.width = itemRect.width <= visibleSize.width ? 1 : visibleSize.width / itemRect.width;
-        }
-
-        // Calculate the height that is visible within the container
-        // There are four cases
-        if (scrollDirection === ScrollDirection.Horizontal) {
-            visibility.height = 1;
-        } else if (topLeftCorner.top < 0) {
-            // The top left corner belongs to the (1) area
-            // 1) The bottom left corner is inside of the container
-            // |   (top, left)          |
-            // |        ●               |
-            // |        |               |
-            // ┌────────┼───────────────┐   visibility.height = visibleHeight / outerSize.height;
-            // |        |               |
-            // |        |               |
-            // |        ● (bottom, left)|
-            // |                        |
-            // └────────────────────────┘
-
-            // 2) The bottom left corner is outside of the container
-            // |   (top, left)          |
-            // |        ●               |
-            // |        |               |
-            // ┌────────┼───────────────┐
-            // |        |               |   visibility.height = 1;
-            // |        |               |
-            // |        |               |
-            // |        |               |
-            // └────────┼───────────────┘
-            // |        |               |
-            // |        ● (bottom, left)|
-            const visibleHeight = itemRect.height - -topLeftCorner.top;
-            visibility.height = visibleHeight <= outerSize.height ? visibleHeight / outerSize.height : 1;
-        } else {
-            // The top left corner is inside of the container
-            // 1) The bottom left corner is inside of the container
-            // ┌────────────────────────┐
-            // |   (top, left)          |
-            // |        ●               |
-            // |        |               |   visibility.height = 1;
-            // |        |               |
-            // |        ● (bottom, left)|
-            // └────────────────────────┘
-
-            // 2) The bottom left corner is outside of the container
-            // ┌────────────────────────┐
-            // |   (top, left)          |
-            // |        ●               |
-            // |        |               |   visibility.height = visibleSize.height / itemRect.height;
-            // |        |               |
-            // |        |               |
-            // └────────┼───────────────┘
-            //          |
-            //          ● (bottom, left)
-            visibility.height = itemRect.height <= visibleSize.height ? 1 : visibleSize.height / itemRect.height;
-        }
-
-        visibilities[end] = visibility.width * visibility.height;
-        if (maxVisbility < visibilities[end]) {
-            maxVisbility = visibilities[end];
-            maxVisbilityItem = end;
-        }
         end++;
     }
 
     return {
         start,
         end,
-        maxVisbilityItem,
-        visibilities,
     };
 };

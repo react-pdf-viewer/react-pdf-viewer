@@ -8,15 +8,15 @@
 
 import type { Offset } from '../types/Offset';
 import type { Rect } from '../types/Rect';
-import type { VirtualItem } from './VirtualItem';
+import type { ItemMeasurement } from './ItemMeasurement';
 
 const ZERO_OFFSET: Offset = {
     left: 0,
     top: 0,
 };
 
-export const measureSinglePage = (numberOfItems: number, parentRect: Rect, sizes: Rect[]): VirtualItem[] => {
-    const measurements: VirtualItem[] = [];
+export const measureSinglePage = (numberOfItems: number, parentRect: Rect, sizes: Rect[]): ItemMeasurement[] => {
+    const measurements: ItemMeasurement[] = [];
 
     for (let i = 0; i < numberOfItems; i++) {
         const size = {

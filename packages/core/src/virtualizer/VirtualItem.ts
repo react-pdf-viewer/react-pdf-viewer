@@ -6,13 +6,8 @@
  * @copyright 2019-2022 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import type { Offset } from '../types/Offset';
-import type { Rect } from '../types/Rect';
+import type { ItemMeasurement } from './ItemMeasurement';
 
-export interface VirtualItem {
-    index: number;
-    start: Offset;
-    size: Rect;
-    end: Offset;
-    visibility: number;
+export interface VirtualItem extends ItemMeasurement {
+    measureRef: (ele: HTMLElement) => void;
 }

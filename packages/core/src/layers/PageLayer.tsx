@@ -26,6 +26,7 @@ import { TextLayer } from './TextLayer';
 
 export const PageLayer: React.FC<{
     doc: PdfJs.PdfDocument;
+    measureRef: (ele: HTMLElement) => void;
     outlines: PdfJs.Outline[];
     pageIndex: number;
     pageRotation: number;
@@ -48,6 +49,7 @@ export const PageLayer: React.FC<{
     onRotatePage(pageIndex: number, direction: RotateDirection): void;
 }> = ({
     doc,
+    measureRef,
     outlines,
     pageIndex,
     pageRotation,
@@ -149,6 +151,7 @@ export const PageLayer: React.FC<{
                 'rpv-core__page-layer--single': viewMode === ViewMode.SinglePage,
             })}
             data-testid={`core__page-layer-${pageIndex}`}
+            ref={measureRef}
             style={{
                 height: `${h}px`,
                 width: `${w}px`,
