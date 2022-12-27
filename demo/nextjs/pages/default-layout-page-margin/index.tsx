@@ -7,11 +7,6 @@ const IndexPage = () => {
     const defaultLayoutPluginInstance = defaultLayoutPlugin();
 
     const pageLayout: PageLayout = {
-        buildPageStyles: () => ({
-            alignItems: 'center',
-            display: 'flex',
-            justifyContent: 'center',
-        }),
         tranformSize: ({ size }) => ({ height: size.height + 30, width: size.width + 30 }),
     };
 
