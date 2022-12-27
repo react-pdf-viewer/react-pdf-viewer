@@ -36,7 +36,7 @@ import type {
     SwitchScrollModeMenuItemProps,
     SwitchScrollModeProps,
     SwitchViewModeMenuItemProps,
-    SwitchViewlModeProps,
+    SwitchViewModeProps,
 } from '@react-pdf-viewer/scroll-mode';
 import type { SearchPlugin, SearchPluginProps, SearchProps, ShowSearchPopoverProps } from '@react-pdf-viewer/search';
 import type {

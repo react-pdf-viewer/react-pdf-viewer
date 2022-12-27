@@ -12,8 +12,6 @@ import { useIsomorphicLayoutEffect } from '../hooks/useIsomorphicLayoutEffect';
 import { usePrevious } from '../hooks/usePrevious';
 import { useRenderQueue } from '../hooks/useRenderQueue';
 import { useTrackResize } from '../hooks/useTrackResize';
-import type { VirtualItem } from '../hooks/useVirtual';
-import { useVirtual } from '../hooks/useVirtual';
 import { PageLayer } from '../layers/PageLayer';
 import { LocalizationContext } from '../localization/LocalizationContext';
 import { RotateDirection } from '../structs/RotateDirection';
@@ -42,6 +40,8 @@ import { chunk } from '../utils/chunk';
 import { classNames } from '../utils/classNames';
 import { getFileExt } from '../utils/getFileExt';
 import { clearPagesCache, getPage } from '../utils/managePages';
+import { useVirtual } from '../virtualizer/useVirtual';
+import type { VirtualItem } from '../virtualizer/VirtualItem';
 import { calculateScale } from './calculateScale';
 import { useOutlines } from './useOutlines';
 
@@ -125,6 +125,10 @@ export const Inner: React.FC<{
 
     const [scale, setScale] = React.useState(initialScale);
     const previousScale = usePrevious(scale);
+
+    // Track visibilities of pages
+    const defaultVisibilities = React.useMemo(() => Array(numPages).fill(-1) as number[], []);
+    const [visibilities, setVisibilities] = React.useState(defaultVisibilities);
 
     const stateRef = React.useRef<ViewerState>(viewerState);
     const keepSpecialZoomLevelRef = React.useRef<SpecialZoomLevel | null>(
@@ -682,6 +686,7 @@ export const Inner: React.FC<{
                                         >
                                             <PageLayer
                                                 doc={doc}
+                                                measureRef={item.measureRef}
                                                 outlines={outlines}
                                                 pageIndex={item.index}
                                                 pageRotation={

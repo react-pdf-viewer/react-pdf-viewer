@@ -9,7 +9,7 @@
 import { ScrollDirection } from '../structs/ScrollDirection';
 import type { Offset } from '../types/Offset';
 
-const EPS = Number.EPSILON;
+const EPS = 0.0001;
 
 export const smoothScroll = (
     ele: HTMLDivElement,
@@ -48,7 +48,7 @@ export const smoothScroll = (
     const offset = {
         left: left - targetPosition.left,
         top: top - targetPosition.top,
-    };    
+    };
 
     const loop = (currentTime: number) => {
         if (startTime === -1) {
