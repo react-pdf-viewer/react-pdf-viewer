@@ -86,17 +86,14 @@ export const calculateRange = (
         //          |                        |
         if (scrollDirection === ScrollDirection.Horizontal && visibleSize.width < 0) {
             // The top left corner belongs to the (2, 3, 4) areas
-            end--;
             break;
         }
         if (scrollDirection === ScrollDirection.Vertical && visibleSize.height < 0) {
             // The top left corner belongs to the (4, 5) areas
-            end--;
             break;
         }
         if (scrollDirection === ScrollDirection.Both && (visibleSize.width < 0 || visibleSize.height < 0)) {
             // The top left corner belongs to the (2, 3, 4, 5) areas
-            end--;
             break;
         }
         end++;
