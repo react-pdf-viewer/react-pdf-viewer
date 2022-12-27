@@ -33,14 +33,21 @@ test('onPageChange() callback with Strict mode', async () => {
 
     // Wait until the document is loaded completely
     await waitForElementToBeRemoved(() => getByTestId('core__doc-loading'));
+    await findByTestId('core__canvas-layer-0');
     await findByTestId('core__text-layer-0');
     await findByTestId('core__annotation-layer-0');
+    await findByTestId('core__canvas-layer-1');
     await findByTestId('core__text-layer-1');
     await findByTestId('core__annotation-layer-1');
     await findByTestId('core__text-layer-2');
+    await findByTestId('core__canvas-layer-2');
     await findByTestId('core__annotation-layer-2');
+    await findByTestId('core__canvas-layer-3');
     await findByTestId('core__text-layer-3');
     await findByTestId('core__annotation-layer-3');
+    await findByTestId('core__canvas-layer-4');
+    await findByTestId('core__text-layer-4');
+    await findByTestId('core__annotation-layer-4');
 
     const visitedPages = await findByTestId('visited-pages');
     expect(visitedPages.textContent).toEqual('0');
@@ -66,10 +73,15 @@ test('onPageChange() callback with Strict mode', async () => {
         },
     });
 
+    await findByTestId('core__canvas-layer-4');
     await findByTestId('core__text-layer-4');
     await findByTestId('core__annotation-layer-4');
+    await findByTestId('core__canvas-layer-5');
     await findByTestId('core__text-layer-5');
     await findByTestId('core__annotation-layer-5');
+    await findByTestId('core__canvas-layer-6');
+    await findByTestId('core__text-layer-6');
+    await findByTestId('core__annotation-layer-6');
 
     await findByTestId('core__text-layer-2');
     await waitFor(() => expect(visitedPages.textContent).toEqual('0,2'));
@@ -110,14 +122,21 @@ test('onPageChange() should fire after onDocumentLoad() with Strict mode', async
 
     // Wait until the document is loaded completely
     await waitForElementToBeRemoved(() => getByTestId('core__doc-loading'));
+    await findByTestId('core__canvas-layer-0');
     await findByTestId('core__text-layer-0');
     await findByTestId('core__annotation-layer-0');
+    await findByTestId('core__canvas-layer-1');
     await findByTestId('core__text-layer-1');
     await findByTestId('core__annotation-layer-1');
     await findByTestId('core__text-layer-2');
+    await findByTestId('core__canvas-layer-2');
     await findByTestId('core__annotation-layer-2');
+    await findByTestId('core__canvas-layer-3');
     await findByTestId('core__text-layer-3');
     await findByTestId('core__annotation-layer-3');
+    await findByTestId('core__canvas-layer-4');
+    await findByTestId('core__text-layer-4');
+    await findByTestId('core__annotation-layer-4');
 
     let log = await findByTestId('log');
     expect(log.textContent).toEqual('___onDocumentLoad___0___onPageChange___onDocumentLoad');
@@ -143,10 +162,15 @@ test('onPageChange() should fire after onDocumentLoad() with Strict mode', async
         },
     });
 
+    await findByTestId('core__canvas-layer-4');
     await findByTestId('core__text-layer-4');
     await findByTestId('core__annotation-layer-4');
+    await findByTestId('core__canvas-layer-5');
     await findByTestId('core__text-layer-5');
     await findByTestId('core__annotation-layer-5');
+    await findByTestId('core__canvas-layer-6');
+    await findByTestId('core__text-layer-6');
+    await findByTestId('core__annotation-layer-6');
 
     await findByTestId('core__text-layer-2');
 

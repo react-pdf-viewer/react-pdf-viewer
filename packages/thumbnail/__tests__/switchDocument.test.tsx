@@ -83,12 +83,18 @@ test('Thumbnails are updated when switching between documents', async () => {
     viewerEle['__jsdomMockClientWidth'] = 800;
 
     await waitForElementToBeRemoved(() => getByTestId('core__doc-loading'));
+    await findByTestId('core__canvas-layer-0');
     await findByTestId('core__text-layer-0');
     await findByTestId('core__annotation-layer-0');
+    await findByTestId('core__canvas-layer-1');
     await findByTestId('core__text-layer-1');
     await findByTestId('core__annotation-layer-1');
     await findByTestId('core__text-layer-2');
+    await findByTestId('core__canvas-layer-2');
     await findByTestId('core__annotation-layer-2');
+    await findByTestId('core__canvas-layer-3');
+    await findByTestId('core__text-layer-3');
+    await findByTestId('core__annotation-layer-3');
 
     const getSourceOfFirstThumbnail = async () => {
         const thumbnailsListContainer = await findByTestId('thumbnail__list-container');
@@ -120,6 +126,7 @@ test('Thumbnails are updated when switching between documents', async () => {
 
     // Wait until the document is loaded completely
     await waitForElementToBeRemoved(() => getByTestId('core__doc-loading'));
+    await findByTestId('core__canvas-layer-0');
     await findByTestId('core__text-layer-0');
     await findByTestId('core__annotation-layer-0');
 
