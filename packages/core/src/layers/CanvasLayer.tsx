@@ -38,6 +38,7 @@ export const CanvasLayer: React.FC<{
         }
 
         const canvasEle = canvasLayerRef.current;
+        canvasEle.removeAttribute('data-testid');
         plugins.forEach((plugin) => {
             if (plugin.onCanvasLayerRender) {
                 plugin.onCanvasLayerRender({
@@ -86,6 +87,7 @@ export const CanvasLayer: React.FC<{
         renderTask.current.promise.then(
             (): void => {
                 canvasEle.hidden = false;
+                canvasEle.setAttribute('data-testid', `core__canvas-layer-${pageIndex}`);
                 plugins.forEach((plugin) => {
                     if (plugin.onCanvasLayerRender) {
                         plugin.onCanvasLayerRender({
