@@ -10,7 +10,6 @@ const IndexPage = () => {
             style={{
                 display: 'flex',
                 height: '50rem',
-                margin: '5rem auto',
                 width: '64rem',
             }}
         >

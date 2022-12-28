@@ -11,20 +11,34 @@ describe('Link annotation jumps to correct position in dual page viewmode', () =
 
         // Wait until the first page is rendered
         await page.waitForSelector('[data-testid="core__page-layer-0"]', { visible: true });
-        await page.waitForSelector('[data-testid="core__text-layer-0"]', { visible: true });
+        await page.waitForSelector('[data-testid="core__text-layer-0"]');
+        await page.waitForSelector('[data-testid="core__canvas-layer-0"]');
         await page.waitForSelector('[data-testid="core__annotation-layer-0"]');
 
         await page.waitForSelector('[data-testid="core__page-layer-1"]');
         await page.waitForSelector('[data-testid="core__text-layer-1"]');
+        await page.waitForSelector('[data-testid="core__canvas-layer-1"]');
         await page.waitForSelector('[data-testid="core__annotation-layer-1"]');
 
         await page.waitForSelector('[data-testid="core__page-layer-2"]');
         await page.waitForSelector('[data-testid="core__text-layer-2"]');
+        await page.waitForSelector('[data-testid="core__canvas-layer-2"]');
         await page.waitForSelector('[data-testid="core__annotation-layer-2"]');
 
         await page.waitForSelector('[data-testid="core__page-layer-3"]');
         await page.waitForSelector('[data-testid="core__text-layer-3"]');
+        await page.waitForSelector('[data-testid="core__canvas-layer-3"]');
         await page.waitForSelector('[data-testid="core__annotation-layer-3"]');
+
+        await page.waitForSelector('[data-testid="core__page-layer-4"]');
+        await page.waitForSelector('[data-testid="core__text-layer-4"]');
+        await page.waitForSelector('[data-testid="core__canvas-layer-4"]');
+        await page.waitForSelector('[data-testid="core__annotation-layer-4"]');
+
+        await page.waitForSelector('[data-testid="core__page-layer-5"]');
+        await page.waitForSelector('[data-testid="core__text-layer-5"]');
+        await page.waitForSelector('[data-testid="core__canvas-layer-5"]');
+        await page.waitForSelector('[data-testid="core__annotation-layer-5"]');
 
         // Switch to the dual page viewmode
         const moreActionsButton = await page.waitForSelector('[data-testid="toolbar__more-actions-popover-target"]');
@@ -33,25 +47,40 @@ describe('Link annotation jumps to correct position in dual page viewmode', () =
         const switchToDualPageMenu = await page.waitForSelector('[data-testid="view-mode__dual-menu"]');
         await switchToDualPageMenu?.click();
 
+        await page.waitForSelector('[data-testid="core__page-layer-0"]', { visible: true });
+        await page.waitForSelector('[data-testid="core__text-layer-0"]');
+        await page.waitForSelector('[data-testid="core__canvas-layer-0"]');
+        await page.waitForSelector('[data-testid="core__annotation-layer-0"]');
+
         await page.waitForSelector('[data-testid="core__page-layer-1"]');
         await page.waitForSelector('[data-testid="core__text-layer-1"]');
+        await page.waitForSelector('[data-testid="core__canvas-layer-1"]');
         await page.waitForSelector('[data-testid="core__annotation-layer-1"]');
 
         await page.waitForSelector('[data-testid="core__page-layer-2"]');
         await page.waitForSelector('[data-testid="core__text-layer-2"]');
+        await page.waitForSelector('[data-testid="core__canvas-layer-2"]');
         await page.waitForSelector('[data-testid="core__annotation-layer-2"]');
 
         await page.waitForSelector('[data-testid="core__page-layer-3"]');
         await page.waitForSelector('[data-testid="core__text-layer-3"]');
+        await page.waitForSelector('[data-testid="core__canvas-layer-3"]');
         await page.waitForSelector('[data-testid="core__annotation-layer-3"]');
 
         await page.waitForSelector('[data-testid="core__page-layer-4"]');
         await page.waitForSelector('[data-testid="core__text-layer-4"]');
+        await page.waitForSelector('[data-testid="core__canvas-layer-4"]');
         await page.waitForSelector('[data-testid="core__annotation-layer-4"]');
 
         await page.waitForSelector('[data-testid="core__page-layer-5"]');
         await page.waitForSelector('[data-testid="core__text-layer-5"]');
+        await page.waitForSelector('[data-testid="core__canvas-layer-5"]');
         await page.waitForSelector('[data-testid="core__annotation-layer-5"]');
+
+        await page.waitForSelector('[data-testid="core__page-layer-6"]');
+        await page.waitForSelector('[data-testid="core__text-layer-6"]');
+        await page.waitForSelector('[data-testid="core__canvas-layer-6"]');
+        await page.waitForSelector('[data-testid="core__annotation-layer-6"]');
 
         // Jump to the 4th page
         const pageInput = await page.waitForSelector('[data-testid="page-navigation__current-page-input"]', {
@@ -64,8 +93,24 @@ describe('Link annotation jumps to correct position in dual page viewmode', () =
 
         // Wait until the page is rendered
         await page.waitForSelector('[data-testid="core__page-layer-3"]', { visible: true });
-        await page.waitForSelector('[data-testid="core__text-layer-3"]', { visible: true });
+        await page.waitForSelector('[data-testid="core__text-layer-3"]');
+        await page.waitForSelector('[data-testid="core__canvas-layer-3"]');
         await page.waitForSelector('[data-testid="core__annotation-layer-3"]');
+
+        await page.waitForSelector('[data-testid="core__page-layer-7"]');
+        await page.waitForSelector('[data-testid="core__text-layer-7"]');
+        await page.waitForSelector('[data-testid="core__canvas-layer-7"]');
+        await page.waitForSelector('[data-testid="core__annotation-layer-7"]');
+
+        await page.waitForSelector('[data-testid="core__page-layer-8"]');
+        await page.waitForSelector('[data-testid="core__text-layer-8"]');
+        await page.waitForSelector('[data-testid="core__canvas-layer-8"]');
+        await page.waitForSelector('[data-testid="core__annotation-layer-8"]');
+
+        await page.waitForSelector('[data-testid="core__page-layer-9"]');
+        await page.waitForSelector('[data-testid="core__text-layer-9"]');
+        await page.waitForSelector('[data-testid="core__canvas-layer-9"]');
+        await page.waitForSelector('[data-testid="core__annotation-layer-9"]');
 
         await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 396');
 
