@@ -725,6 +725,7 @@ export const Inner: React.FC<{
                 slot = plugin.renderViewer({
                     containerRef,
                     doc,
+                    pagesContainerRef: pagesRef,
                     pagesRotation,
                     pageSizes,
                     rotation,
