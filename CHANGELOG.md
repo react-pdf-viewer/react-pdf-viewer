@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## v3.11.0 [WIP]
+
+**New features**
+
+-   Add `pagesContainerRef` to `RenderViewer`, so the plugin can access the pages container more easily
+
 ## v3.10.0
 
 **New features**
