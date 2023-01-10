@@ -49,7 +49,7 @@ const NUM_OVERSCAN_PAGES = 3;
 
 const DEFAULT_PAGE_LAYOUT: PageLayout = {
     buildPageStyles: () => ({}),
-    tranformSize: ({ size }) => size,
+    transformSize: ({ size }) => size,
 };
 
 const ZERO_OFFSET: Offset = {
@@ -166,7 +166,7 @@ export const Inner: React.FC<{
                         height: rect.height * scale,
                         width: rect.width * scale,
                     };
-                    return layoutBuilder.tranformSize({ numPages, pageIndex, size: pageRect });
+                    return layoutBuilder.transformSize({ numPages, pageIndex, size: pageRect });
                 }),
         [rotation, scale]
     );

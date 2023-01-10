@@ -23,5 +23,5 @@ export interface PageLayout {
         scrollMode: ScrollMode;
         viewMode: ViewMode;
     }) => React.CSSProperties;
-    tranformSize?: ({ numPages, pageIndex, size }: { numPages: number; pageIndex: number; size: Rect }) => Rect;
+    transformSize?: ({ numPages, pageIndex, size }: { numPages: number; pageIndex: number; size: Rect }) => Rect;
 }
