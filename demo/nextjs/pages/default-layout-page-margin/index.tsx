@@ -7,7 +7,7 @@ const IndexPage = () => {
     const defaultLayoutPluginInstance = defaultLayoutPlugin();
 
     const pageLayout: PageLayout = {
-        tranformSize: ({ size }) => ({ height: size.height + 30, width: size.width + 30 }),
+        transformSize: ({ size }) => ({ height: size.height + 30, width: size.width + 30 }),
     };
 
     return (

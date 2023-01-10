@@ -16,7 +16,7 @@ const TestPageMargin: React.FC<{
             display: 'flex',
             justifyContent: 'center',
         }),
-        tranformSize: ({ size }) => ({ height: size.height + 30, width: size.width + 30 }),
+        transformSize: ({ size }) => ({ height: size.height + 30, width: size.width + 30 }),
     };
 
     return (

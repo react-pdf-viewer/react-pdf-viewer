@@ -6,6 +6,10 @@
 
 -   Add `pagesContainerRef` to `RenderViewer`, so the plugin can access the pages container more easily
 
+**Breaking change**
+
+-   The PageLayout's `tranformSize` property is changed to `transformSize`
+
 ## v3.10.0
 
 **New features**
