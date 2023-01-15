@@ -126,10 +126,6 @@ export const Inner: React.FC<{
     const [scale, setScale] = React.useState(initialScale);
     const previousScale = usePrevious(scale);
 
-    // Track visibilities of pages
-    const defaultVisibilities = React.useMemo(() => Array(numPages).fill(-1) as number[], []);
-    const [visibilities, setVisibilities] = React.useState(defaultVisibilities);
-
     const stateRef = React.useRef<ViewerState>(viewerState);
     const keepSpecialZoomLevelRef = React.useRef<SpecialZoomLevel | null>(
         typeof defaultScale === 'string' ? defaultScale : null
