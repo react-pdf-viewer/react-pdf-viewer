@@ -65,7 +65,7 @@ export const TextLayer: React.FC<{
             empty();
             renderTask.current = PdfJsApi.renderTextLayer({
                 container: containerEle,
-                // From pdf-js 3.2.146, the `textContent` parameter is deprecated 
+                // From pdf-js 3.2.146, the `textContent` parameter is deprecated
                 // and will be soon replaced with the `textContentSource` parameter
                 textContent: textContent as any,
                 textContentSource: textContent as any,

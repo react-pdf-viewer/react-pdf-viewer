@@ -6,6 +6,10 @@
 
 -   Add `pagesContainerRef` to `RenderViewer`, so the plugin can access the pages container more easily
 
+**Improvement**
+
+-   Support pdf-js 3.2.146
+
 **Breaking change**
 
 -   The PageLayout's `tranformSize` property is changed to `transformSize`
