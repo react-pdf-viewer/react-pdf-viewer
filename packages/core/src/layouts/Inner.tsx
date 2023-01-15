@@ -639,7 +639,15 @@ export const Inner: React.FC<{
                     },
                 },
                 children: (
-                    <div style={virtualizer.getContainerStyles()}>
+                    <div
+                        style={Object.assign(
+                            {
+                                // From pdf-js 3.2.146, the text layer renders text items depending on the `--scale-factor` property
+                                '--scale-factor': scale,
+                            },
+                            virtualizer.getContainerStyles()
+                        )}
+                    >
                         {chunks.map((items) => (
                             <div
                                 className={classNames({

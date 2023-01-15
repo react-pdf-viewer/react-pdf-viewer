@@ -159,7 +159,8 @@ export declare namespace PdfJs {
 
     // Render text layer
     interface RenderTextLayerParams {
-        textContent: PageTextContent;
+        textContent?: PageTextContent;
+        textContentSource: PageTextContent;
         container: HTMLDivElement;
         viewport: ViewPort;
     }
