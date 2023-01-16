@@ -451,10 +451,14 @@ export const Inner: React.FC<{
         plugins.forEach((plugin) => {
             plugin.onDocumentLoad && plugin.onDocumentLoad({ doc, file: currentFile });
         });
-        if (initialPage) {
+    }, [docId]);
+
+    useIsomorphicLayoutEffect(() => {
+        const rect = virtualizer.boundingClientRect;
+        if (rect.height > 0 && rect.width > 0 && initialPage) {
             jumpToPage(initialPage);
         }
-    }, [docId]);
+    }, [docId, virtualizer.boundingClientRect]);
 
     // Scroll to the current page after switching the scroll mode
     useIsomorphicLayoutEffect(() => {
