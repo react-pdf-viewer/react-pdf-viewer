@@ -14,13 +14,15 @@ import { PasswordStatus } from '../structs/PasswordStatus';
 import { TextDirection, ThemeContext } from '../theme/ThemeContext';
 import type { DocumentAskPasswordEvent } from '../types/DocumentAskPasswordEvent';
 import type { LocalizationMap } from '../types/LocalizationMap';
+import type { RenderProtectedView } from '../types/RenderProtectedView';
 import { classNames } from '../utils/classNames';
 
 export const AskingPassword: React.FC<{
     passwordStatus: PasswordStatus;
+    renderProtectedView?: RenderProtectedView;
     verifyPassword: (password: string) => void;
     onDocumentAskPassword?(e: DocumentAskPasswordEvent): void;
-}> = ({ passwordStatus, verifyPassword, onDocumentAskPassword }) => {
+}> = ({ passwordStatus, renderProtectedView, verifyPassword, onDocumentAskPassword }) => {
     const { l10n } = React.useContext(LocalizationContext);
     const [password, setPassword] = React.useState('');
     const { direction } = React.useContext(ThemeContext);
@@ -41,6 +43,13 @@ export const AskingPassword: React.FC<{
             });
         }
     }, []);
+
+    if (renderProtectedView) {
+        return renderProtectedView({
+            passwordStatus,
+            verifyPassword,
+        });
+    }
 
     return (
         <div className="rpv-core__asking-password-wrapper">

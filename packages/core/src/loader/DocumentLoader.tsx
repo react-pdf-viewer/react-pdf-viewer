@@ -9,10 +9,12 @@
 import * as React from 'react';
 import { Spinner } from '../components/Spinner';
 import { useIsMounted } from '../hooks/useIsMounted';
+import { PasswordStatus } from '../structs/PasswordStatus';
 import { TextDirection, ThemeContext } from '../theme/ThemeContext';
 import type { CharacterMap } from '../types/CharacterMap';
 import type { DocumentAskPasswordEvent } from '../types/DocumentAskPasswordEvent';
 import type { PdfJs } from '../types/PdfJs';
+import type { RenderProtectedView } from '../types/RenderProtectedView';
 import { classNames } from '../utils/classNames';
 import { PdfJsApi } from '../vendors/PdfJsApi';
 import { AskForPasswordState } from './AskForPasswordState';
@@ -22,7 +24,6 @@ import { FailureState } from './FailureState';
 import type { LoadError } from './LoadError';
 import { LoadingState } from './LoadingState';
 import { LoadingStatus } from './LoadingStatus';
-import { PasswordStatus } from '../structs/PasswordStatus';
 
 export type RenderError = (error: LoadError) => React.ReactElement;
 
@@ -33,6 +34,7 @@ export const DocumentLoader: React.FC<{
     render(doc: PdfJs.PdfDocument): React.ReactElement;
     renderError?: RenderError;
     renderLoader?(percentages: number): React.ReactElement;
+    renderProtectedView?: RenderProtectedView;
     transformGetDocumentParams?(options: PdfJs.GetDocumentParams): PdfJs.GetDocumentParams;
     withCredentials: boolean;
     onDocumentAskPassword?(e: DocumentAskPasswordEvent): void;
@@ -43,6 +45,7 @@ export const DocumentLoader: React.FC<{
     render,
     renderError,
     renderLoader,
+    renderProtectedView,
     transformGetDocumentParams,
     withCredentials,
     onDocumentAskPassword,
@@ -129,6 +132,7 @@ export const DocumentLoader: React.FC<{
         return (
             <AskingPassword
                 passwordStatus={status.passwordStatus}
+                renderProtectedView={renderProtectedView}
                 verifyPassword={status.verifyPassword}
                 onDocumentAskPassword={onDocumentAskPassword}
             />

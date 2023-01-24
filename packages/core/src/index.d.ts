@@ -530,8 +530,9 @@ export interface ViewerProps {
     plugins?: Plugin[];
     localization?: LocalizationMap;
     renderError?: RenderError;
-    renderPage?: RenderPage;
     renderLoader?(percentages: number): React.ReactElement;
+    renderPage?: RenderPage;
+    renderProtectedView?: RenderProtectedView;
     scrollMode?: ScrollMode;
     // Theme
     theme?: string | ThemeProps;
