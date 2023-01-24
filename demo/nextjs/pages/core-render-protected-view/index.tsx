@@ -29,6 +29,7 @@ const ProtectedView: React.FC<RenderProtectedViewProps> = ({ passwordStatus, ver
                 >
                     <TextBox
                         placeholder="Enter the password ..."
+                        testId="password-input"
                         type="password"
                         value={password}
                         onChange={setPassword}
@@ -36,6 +37,7 @@ const ProtectedView: React.FC<RenderProtectedViewProps> = ({ passwordStatus, ver
                 </div>
                 {passwordStatus === PasswordStatus.WrongPassword && (
                     <div
+                        data-testid="error"
                         style={{
                             color: '#c02424',
                             marginBottom: '0.5rem',
@@ -44,7 +46,9 @@ const ProtectedView: React.FC<RenderProtectedViewProps> = ({ passwordStatus, ver
                         The password is invalid. Please try again!
                     </div>
                 )}
-                <PrimaryButton onClick={submit}>Submit</PrimaryButton>
+                <PrimaryButton testId="submit-button" onClick={submit}>
+                    Submit
+                </PrimaryButton>
             </div>
         </div>
     );
