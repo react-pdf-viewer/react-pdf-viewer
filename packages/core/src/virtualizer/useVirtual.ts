@@ -60,6 +60,7 @@ export const useVirtual = ({
     scrollMode: ScrollMode;
     viewMode: ViewMode;
 }): {
+    boundingClientRect: Rect;
     isSmoothScrolling: boolean;
     startIndex: number;
     startRange: number;
@@ -395,6 +396,7 @@ export const useVirtual = ({
     }, []);
 
     return {
+        boundingClientRect: parentRect,
         isSmoothScrolling,
         startIndex: start,
         startRange,

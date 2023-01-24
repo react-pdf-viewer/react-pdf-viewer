@@ -126,10 +126,6 @@ export const Inner: React.FC<{
     const [scale, setScale] = React.useState(initialScale);
     const previousScale = usePrevious(scale);
 
-    // Track visibilities of pages
-    const defaultVisibilities = React.useMemo(() => Array(numPages).fill(-1) as number[], []);
-    const [visibilities, setVisibilities] = React.useState(defaultVisibilities);
-
     const stateRef = React.useRef<ViewerState>(viewerState);
     const keepSpecialZoomLevelRef = React.useRef<SpecialZoomLevel | null>(
         typeof defaultScale === 'string' ? defaultScale : null
@@ -455,10 +451,14 @@ export const Inner: React.FC<{
         plugins.forEach((plugin) => {
             plugin.onDocumentLoad && plugin.onDocumentLoad({ doc, file: currentFile });
         });
-        if (initialPage) {
+    }, [docId]);
+
+    useIsomorphicLayoutEffect(() => {
+        const rect = virtualizer.boundingClientRect;
+        if (rect.height > 0 && rect.width > 0 && initialPage) {
             jumpToPage(initialPage);
         }
-    }, [docId]);
+    }, [docId, virtualizer.boundingClientRect]);
 
     // Scroll to the current page after switching the scroll mode
     useIsomorphicLayoutEffect(() => {
