@@ -9,13 +9,15 @@
 import * as React from 'react';
 import { Spinner } from '../components/Spinner';
 import { useIsMounted } from '../hooks/useIsMounted';
+import { PasswordStatus } from '../structs/PasswordStatus';
 import { TextDirection, ThemeContext } from '../theme/ThemeContext';
 import type { CharacterMap } from '../types/CharacterMap';
-import type { DocumentAskPasswordEvent, VerifyPassword } from '../types/DocumentAskPasswordEvent';
+import type { DocumentAskPasswordEvent } from '../types/DocumentAskPasswordEvent';
 import type { PdfJs } from '../types/PdfJs';
+import type { RenderProtectedView } from '../types/RenderProtectedView';
 import { classNames } from '../utils/classNames';
 import { PdfJsApi } from '../vendors/PdfJsApi';
-import { AskForPasswordState, SubmitPassword } from './AskForPasswordState';
+import { AskForPasswordState } from './AskForPasswordState';
 import { AskingPassword } from './AskingPassword';
 import { CompletedState } from './CompletedState';
 import { FailureState } from './FailureState';
@@ -32,6 +34,7 @@ export const DocumentLoader: React.FC<{
     render(doc: PdfJs.PdfDocument): React.ReactElement;
     renderError?: RenderError;
     renderLoader?(percentages: number): React.ReactElement;
+    renderProtectedView?: RenderProtectedView;
     transformGetDocumentParams?(options: PdfJs.GetDocumentParams): PdfJs.GetDocumentParams;
     withCredentials: boolean;
     onDocumentAskPassword?(e: DocumentAskPasswordEvent): void;
@@ -42,6 +45,7 @@ export const DocumentLoader: React.FC<{
     render,
     renderError,
     renderLoader,
+    renderProtectedView,
     transformGetDocumentParams,
     withCredentials,
     onDocumentAskPassword,
@@ -50,9 +54,7 @@ export const DocumentLoader: React.FC<{
     const isRtl = direction === TextDirection.RightToLeft;
     const [status, setStatus] = React.useState<LoadingStatus>(new LoadingState(0));
 
-    const [percentages, setPercentages] = React.useState(0);
     const docRef = React.useRef<string>('');
-    const [loadedDocument, setLoadedDocument] = React.useState<PdfJs.PdfDocument>(null);
     const isMounted = useIsMounted();
 
     React.useEffect(() => {
@@ -80,15 +82,15 @@ export const DocumentLoader: React.FC<{
         const transformParams = transformGetDocumentParams ? transformGetDocumentParams(params) : params;
 
         const loadingTask = PdfJsApi.getDocument(transformParams as any) as unknown as PdfJs.LoadingTask;
-        loadingTask.onPassword = (verifyPassword: VerifyPassword, reason: number): void => {
+        loadingTask.onPassword = (verifyPassword: (password: string) => void, reason: number): void => {
             switch (reason) {
                 case PdfJsApi.PasswordResponses.NEED_PASSWORD:
                     isMounted.current &&
-                        setStatus(new AskForPasswordState(verifyPassword, SubmitPassword.REQUIRE_PASSWORD));
+                        setStatus(new AskForPasswordState(verifyPassword, PasswordStatus.RequiredPassword));
                     break;
                 case PdfJsApi.PasswordResponses.INCORRECT_PASSWORD:
                     isMounted.current &&
-                        setStatus(new AskForPasswordState(verifyPassword, SubmitPassword.WRONG_PASSWORD));
+                        setStatus(new AskForPasswordState(verifyPassword, PasswordStatus.WrongPassword));
                     break;
                 default:
                     break;
@@ -129,7 +131,8 @@ export const DocumentLoader: React.FC<{
     if (status instanceof AskForPasswordState) {
         return (
             <AskingPassword
-                submitPassword={status.submitPassword}
+                passwordStatus={status.passwordStatus}
+                renderProtectedView={renderProtectedView}
                 verifyPassword={status.verifyPassword}
                 onDocumentAskPassword={onDocumentAskPassword}
             />

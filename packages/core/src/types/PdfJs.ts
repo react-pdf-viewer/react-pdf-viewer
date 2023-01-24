@@ -31,7 +31,6 @@ export declare namespace PdfJs {
         INCORRECT_PASSWORD: number;
     }
 
-    type VerifyPassword = (password: string) => void;
     type FileData = string | Uint8Array;
 
     interface LoadingTaskProgress {
@@ -41,7 +40,7 @@ export declare namespace PdfJs {
 
     interface LoadingTask {
         docId: string;
-        onPassword: (verifyPassword: VerifyPassword, reason: number) => void;
+        onPassword: (verifyPassword: (password: string) => void, reason: number) => void;
         onProgress: (progress: LoadingTaskProgress) => void;
         promise: Promise<PdfDocument>;
         destroy(): void;

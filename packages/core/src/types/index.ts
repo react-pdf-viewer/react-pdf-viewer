@@ -20,6 +20,7 @@ export * from './Plugin';
 export * from './PluginFunctions';
 export * from './Rect';
 export * from './RenderPage';
+export * from './RenderProtectedView';
 export * from './RenderViewer';
 export * from './RotateEvent';
 export * from './RotatePageEvent';

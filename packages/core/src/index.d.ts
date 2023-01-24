@@ -458,10 +458,20 @@ export interface LoadError {
 export type RenderError = (error: LoadError) => React.ReactElement;
 
 // Invoked when the document asks for password
-export type VerifyPassword = (password: string) => void;
 export interface DocumentAskPasswordEvent {
-    verifyPassword: VerifyPassword;
+    verifyPassword: (password: string) => void;
 }
+
+// Customize the view of protected document
+export enum PasswordStatus {
+    RequiredPassword = 'RequiredPassword',
+    WrongPassword = 'WrongPassword',
+}
+export interface RenderProtectedViewProps {
+    passwordStatus: PasswordStatus;
+    verifyPassword: (password: string) => void;
+}
+export type RenderProtectedView = (renderProps: RenderProtectedViewProps) => React.ReactElement;
 
 // Invoked when the document is loaded successfully
 export interface DocumentLoadEvent {
@@ -520,8 +530,9 @@ export interface ViewerProps {
     plugins?: Plugin[];
     localization?: LocalizationMap;
     renderError?: RenderError;
-    renderPage?: RenderPage;
     renderLoader?(percentages: number): React.ReactElement;
+    renderPage?: RenderPage;
+    renderProtectedView?: RenderProtectedView;
     scrollMode?: ScrollMode;
     // Theme
     theme?: string | ThemeProps;

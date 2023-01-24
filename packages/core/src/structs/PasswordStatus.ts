@@ -6,6 +6,7 @@
  * @copyright 2019-2023 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-export interface DocumentAskPasswordEvent {
-    verifyPassword: (password: string) => void;
+export enum PasswordStatus {
+    RequiredPassword = 'RequiredPassword',
+    WrongPassword = 'WrongPassword',
 }

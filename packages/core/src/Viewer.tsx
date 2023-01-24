@@ -14,8 +14,8 @@ import { PageSizeCalculator } from './layouts/PageSizeCalculator';
 import { DocumentLoader, RenderError } from './loader/DocumentLoader';
 import { DefaultLocalization, LocalizationContext } from './localization/LocalizationContext';
 import { ScrollMode } from './structs/ScrollMode';
-import { ViewMode } from './structs/ViewMode';
 import { SpecialZoomLevel } from './structs/SpecialZoomLevel';
+import { ViewMode } from './structs/ViewMode';
 import { TextDirection, ThemeContext } from './theme/ThemeContext';
 import { withTheme } from './theme/withTheme';
 import type { CharacterMap } from './types/CharacterMap';
@@ -28,6 +28,7 @@ import type { PageSize } from './types/PageSize';
 import type { PdfJs } from './types/PdfJs';
 import { Plugin } from './types/Plugin';
 import type { RenderPage } from './types/RenderPage';
+import type { RenderProtectedView } from './types/RenderProtectedView';
 import type { RotateEvent } from './types/RotateEvent';
 import type { RotatePageEvent } from './types/RotatePageEvent';
 import type { VisibilityChanged } from './types/VisibilityChanged';
@@ -62,8 +63,9 @@ export const Viewer: React.FC<{
     plugins?: Plugin[];
     localization?: LocalizationMap;
     renderError?: RenderError;
-    renderPage?: RenderPage;
     renderLoader?(percentages: number): React.ReactElement;
+    renderPage?: RenderPage;
+    renderProtectedView?: RenderProtectedView;
     scrollMode?: ScrollMode;
     transformGetDocumentParams?(options: PdfJs.GetDocumentParams): PdfJs.GetDocumentParams;
     // Theme
@@ -91,8 +93,9 @@ export const Viewer: React.FC<{
     localization,
     plugins = [],
     renderError,
-    renderPage,
     renderLoader,
+    renderPage,
+    renderProtectedView,
     scrollMode = ScrollMode.Vertical,
     transformGetDocumentParams,
     theme = {
@@ -239,6 +242,7 @@ export const Viewer: React.FC<{
                             )}
                             renderError={renderError}
                             renderLoader={renderLoader}
+                            renderProtectedView={renderProtectedView}
                             transformGetDocumentParams={transformGetDocumentParams}
                             withCredentials={withCredentials}
                             onDocumentAskPassword={onDocumentAskPassword}
