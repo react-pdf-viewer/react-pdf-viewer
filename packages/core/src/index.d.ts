@@ -458,10 +458,20 @@ export interface LoadError {
 export type RenderError = (error: LoadError) => React.ReactElement;
 
 // Invoked when the document asks for password
-export type VerifyPassword = (password: string) => void;
 export interface DocumentAskPasswordEvent {
-    verifyPassword: VerifyPassword;
+    verifyPassword: (password: string) => void;
 }
+
+// Customize the view of protected document
+export enum PasswordStatus {
+    RequiredPassword = 'RequiredPassword',
+    WrongPassword = 'WrongPassword',
+}
+export interface RenderProtectedViewProps {
+    passwordStatus: PasswordStatus;
+    verifyPassword: (password: string) => void;
+}
+export type RenderProtectedView = (renderProps: RenderProtectedViewProps) => React.ReactElement;
 
 // Invoked when the document is loaded successfully
 export interface DocumentLoadEvent {

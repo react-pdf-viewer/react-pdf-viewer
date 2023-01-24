@@ -10,17 +10,17 @@ import * as React from 'react';
 import { PrimaryButton } from '../components/PrimaryButton';
 import { TextBox } from '../components/TextBox';
 import { LocalizationContext } from '../localization/LocalizationContext';
+import { PasswordStatus } from '../structs/PasswordStatus';
 import { TextDirection, ThemeContext } from '../theme/ThemeContext';
-import type { DocumentAskPasswordEvent, VerifyPassword } from '../types/DocumentAskPasswordEvent';
+import type { DocumentAskPasswordEvent } from '../types/DocumentAskPasswordEvent';
 import type { LocalizationMap } from '../types/LocalizationMap';
 import { classNames } from '../utils/classNames';
-import { SubmitPassword } from './AskForPasswordState';
 
 export const AskingPassword: React.FC<{
-    submitPassword: SubmitPassword;
-    verifyPassword: VerifyPassword;
+    passwordStatus: PasswordStatus;
+    verifyPassword: (password: string) => void;
     onDocumentAskPassword?(e: DocumentAskPasswordEvent): void;
-}> = ({ submitPassword, verifyPassword, onDocumentAskPassword }) => {
+}> = ({ passwordStatus, verifyPassword, onDocumentAskPassword }) => {
     const { l10n } = React.useContext(LocalizationContext);
     const [password, setPassword] = React.useState('');
     const { direction } = React.useContext(ThemeContext);
@@ -51,10 +51,10 @@ export const AskingPassword: React.FC<{
                 })}
             >
                 <div className="rpv-core__asking-password-message">
-                    {submitPassword === SubmitPassword.REQUIRE_PASSWORD &&
+                    {passwordStatus === PasswordStatus.RequiredPassword &&
                         (((l10n.core as LocalizationMap).askingPassword as LocalizationMap)
                             .requirePasswordToOpen as string)}
-                    {submitPassword === SubmitPassword.WRONG_PASSWORD &&
+                    {passwordStatus === PasswordStatus.WrongPassword &&
                         (((l10n.core as LocalizationMap).wrongPassword as LocalizationMap).tryAgain as string)}
                 </div>
                 <div className="rpv-core__asking-password-body">
