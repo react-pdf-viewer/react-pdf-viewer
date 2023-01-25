@@ -584,6 +584,8 @@ export interface UseRenderQueue {
 export function useRenderQueue({ doc }: { doc: PdfJs.PdfDocument }): UseRenderQueue;
 
 // Utils
+export function chunk<T>(arr: T[], size: number): T[][];
+
 export function classNames(classes: { [clazz: string]: boolean }): string;
 
 export function getPage(doc: PdfJs.PdfDocument, pageIndex: number): Promise<PdfJs.Page>;
