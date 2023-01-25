@@ -160,7 +160,7 @@ export const ThumbnailList: React.FC<{
 
         // Cache thumbnail elements
         thumbnailsRef.current = Array.from(container.querySelectorAll('.rpv-thumbnail__item'));
-    }, []);
+    }, [viewMode]);
 
     React.useEffect(() => {
         const thumbnails = thumbnailsRef.current;
@@ -176,12 +176,11 @@ export const ThumbnailList: React.FC<{
     useIsomorphicLayoutEffect(() => {
         // Scroll to the thumbnail that represents the current page
         const container = containerRef.current;
-        if (container) {
-            const thumbnailNodes = container.children;
-            if (currentPage < thumbnailNodes.length) {
-                scrollToBeVisible(thumbnailNodes.item(currentPage) as HTMLElement, container);
-            }
+        const thumbnails = thumbnailsRef.current;
+        if (!container || thumbnails.length === 0 || currentPage < 0 || currentPage > thumbnails.length) {
+            return;
         }
+        scrollToBeVisible(thumbnails[currentPage] as HTMLElement, container);
     }, [currentPage]);
 
     const handleRenderCompleted = React.useCallback(
