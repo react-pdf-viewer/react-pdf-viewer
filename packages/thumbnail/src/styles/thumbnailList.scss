@@ -28,16 +28,16 @@
 }
 
 .rpv-thumbnail__list {
-    align-content: flex-start;
-    align-items: center;
-    display: flex;
     height: 100%;
-    flex-flow: row wrap;
-    justify-content: center;
     overflow: auto;
-    padding: 0.5rem 0;
 
     &--rtl {
         direction: rtl;
     }
+}
+
+.rpv-thumbnail__list-inner {
+    align-items: center;
+    display: flex;
+    justify-content: center;
 }
