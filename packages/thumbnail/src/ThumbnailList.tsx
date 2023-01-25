@@ -237,6 +237,9 @@ export const ThumbnailList: React.FC<{
     }, [viewMode]);
 
     const renderPageThumbnail = (pageIndex: number) => {
+        const isCover =
+            viewMode === ViewMode.DualPageWithCover &&
+            (pageIndex === 0 || (numPages % 2 === 0 && pageIndex === numPages - 1));
         // The key includes the `docId` so the thumbnail list will be re-rendered when the document changes
         const key = `${doc.loadingTask.docId}___${pageIndex}`;
         const pageLabel = labels.length === numPages ? labels[pageIndex] : `${pageIndex + 1}`;
@@ -277,6 +280,14 @@ export const ThumbnailList: React.FC<{
                 <div
                     className={classNames({
                         'rpv-thumbnail__item': true,
+                        'rpv-thumbnail__item--dual-even': viewMode === ViewMode.DualPage && pageIndex % 2 === 0,
+                        'rpv-thumbnail__item--dual-odd': viewMode === ViewMode.DualPage && pageIndex % 2 === 1,
+                        'rpv-thumbnail__item--dual-cover': isCover,
+                        'rpv-thumbnail__item--dual-cover-even':
+                            viewMode === ViewMode.DualPageWithCover && !isCover && pageIndex % 2 === 0,
+                        'rpv-thumbnail__item--dual-cover-odd':
+                            viewMode === ViewMode.DualPageWithCover && !isCover && pageIndex % 2 === 1,
+                        'rpv-thumbnail__item--single': viewMode === ViewMode.SinglePage,
                         'rpv-thumbnail__item--selected': currentPage === pageIndex,
                     })}
                     role="button"
@@ -303,7 +314,15 @@ export const ThumbnailList: React.FC<{
             onKeyDown={handleKeyDown}
         >
             {chunks.map((chunkItem, index) => (
-                <div className="rpv-thumbnail__list-inner" key={`${index}___${viewMode}`}>
+                <div
+                    className={classNames({
+                        'rpv-thumbnail__items': true,
+                        'rpv-thumbnail__items--dual': viewMode === ViewMode.DualPage,
+                        'rpv-thumbnail__items--dual-cover': viewMode === ViewMode.DualPageWithCover,
+                        'rpv-thumbnail__items--single': viewMode === ViewMode.SinglePage,
+                    })}
+                    key={`${index}___${viewMode}`}
+                >
                     {chunkItem.map((pageIndex) => renderPageThumbnail(pageIndex))}
                 </div>
             ))}
