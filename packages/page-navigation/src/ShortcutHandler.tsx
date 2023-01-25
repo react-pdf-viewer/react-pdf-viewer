@@ -78,8 +78,8 @@ export const ShortcutHandler: React.FC<{
         const shouldGoToPreviousPage =
             (e.altKey && e.key === 'ArrowUp') || (!e.shiftKey && !e.altKey && e.key === 'PageUp');
 
-        const isCommandPressed = isMac() ? e.metaKey && !e.ctrlKey : e.ctrlKey;
-        const shouldJumpBackAnnotation = isCommandPressed && e.key === 'ArrowUp';
+        const isCommandPressed = isMac() ? e.metaKey && !e.ctrlKey : e.altKey;
+        const shouldJumpBackAnnotation = isCommandPressed && e.key === 'ArrowLeft';
         if (shouldGoToNextPage) {
             e.preventDefault();
             goToNextPage();

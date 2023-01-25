@@ -16,9 +16,9 @@ const App = () => {
             }}
         >
             <Viewer
-                defaultScale={0.5}
+                //defaultScale={0.5}
                 // scrollMode={ScrollMode.Page}
-                viewMode={ViewMode.DualPageWithCover}
+                //viewMode={ViewMode.DualPageWithCover}
                 fileUrl={'/pdf-open-parameters.pdf'}
                 plugins={[defaultLayoutPluginInstance]}
             />

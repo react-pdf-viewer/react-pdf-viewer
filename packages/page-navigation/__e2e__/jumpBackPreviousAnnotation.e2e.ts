@@ -88,7 +88,7 @@ test('Jump back to the previous clicked link annotation', async () => {
 
         // The order of keys are imporant
         await page.keyboard.down('MetaLeft');
-        await page.keyboard.press('ArrowUp');
+        await page.keyboard.press('ArrowLeft');
 
         await page.waitForFunction(
             () => () => `document.querySelector("[data-testid=core__inner-pages]").scrollTop === ${annotationTop}`
