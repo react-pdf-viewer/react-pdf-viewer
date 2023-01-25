@@ -46,6 +46,7 @@
 .rpv-thumbnail__list {
     height: 100%;
     overflow: auto;
+    padding: 0.5rem 0;
 
     &--rtl {
         direction: rtl;
@@ -56,4 +57,9 @@
     align-items: center;
     display: flex;
     justify-content: center;
+}
+
+// Selected state
+.rpv-thumbnail__items--selected .rpv-thumbnail__item {
+    background-color: var(--rpv-thumbnail__item--selected-background-color);
 }
