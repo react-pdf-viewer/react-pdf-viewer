@@ -15,6 +15,7 @@ import {
     ThemeContext,
     useIsMounted,
     useIsomorphicLayoutEffect,
+    usePrevious,
     useRenderQueue,
     ViewMode,
 } from '@react-pdf-viewer/core';
@@ -64,6 +65,7 @@ export const ThumbnailList: React.FC<{
     const isRtl = direction === TextDirection.RightToLeft;
     const [renderPageIndex, setRenderPageIndex] = React.useState(-1);
     const isMounted = useIsMounted();
+    const previousViewMode = usePrevious(viewMode);
 
     // To support React 18+, we need a _global_ flag to indicate that there is a thumbnail which is being rendered.
     // Without this ref, it only renders only one thumnail. Is it caused by batching in React 18?
@@ -225,6 +227,14 @@ export const ThumbnailList: React.FC<{
             setRenderPageIndex(rotatedPage);
         }
     }, [docId, rotatedPage]);
+
+    // Re-render thumbnails when users change the viewmode
+    useIsomorphicLayoutEffect(() => {
+        if (previousViewMode !== viewMode) {
+            renderQueue.markNotRendered();
+            renderNextThumbnail();
+        }
+    }, [viewMode]);
 
     const renderPageThumbnail = (pageIndex: number) => {
         // The key includes the `docId` so the thumbnail list will be re-rendered when the document changes
