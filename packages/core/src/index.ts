@@ -23,6 +23,7 @@ export { TextBox } from './components/TextBox';
 export { useIntersectionObserver } from './hooks/useIntersectionObserver';
 export { useIsMounted } from './hooks/useIsMounted';
 export { useIsomorphicLayoutEffect } from './hooks/useIsomorphicLayoutEffect';
+export { usePrevious } from './hooks/usePrevious';
 export { useRenderQueue } from './hooks/useRenderQueue';
 export type { UseRenderQueue } from './hooks/useRenderQueue';
 export { Icon } from './icons/Icon';

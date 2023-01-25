@@ -570,6 +570,8 @@ export function useIsomorphicLayoutEffect(effect: React.EffectCallback, deps?: R
 
 export function useIsMounted(): React.MutableRefObject<boolean>;
 
+export function usePrevious<T>(value: T): T;
+
 export interface UseRenderQueue {
     getHighestPriorityPage: () => number;
     isInRange: (pageIndex: number) => boolean;
