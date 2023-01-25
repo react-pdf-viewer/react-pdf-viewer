@@ -8,6 +8,7 @@
 
 .rpv-thumbnail__container {
     align-items: center;
+    background: var(--rpv-thumbnail__container-background-color);
     box-shadow: var(--rpv-thumbnail__container-box-shadow);
     display: flex;
     justify-content: center;

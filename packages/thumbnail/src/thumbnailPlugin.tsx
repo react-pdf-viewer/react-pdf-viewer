@@ -7,7 +7,7 @@
  */
 
 import type { Plugin, PluginFunctions, PluginOnDocumentLoad, ViewerState } from '@react-pdf-viewer/core';
-import { createStore } from '@react-pdf-viewer/core';
+import { createStore, ViewMode } from '@react-pdf-viewer/core';
 import * as React from 'react';
 import { Cover } from './Cover';
 import { defaultSpinner, SpinnerContext } from './SpinnerContext';
@@ -42,6 +42,7 @@ export const thumbnailPlugin = (pluginProps?: ThumbnailPluginProps): ThumbnailPl
                 rotatePage: () => {
                     /**/
                 },
+                viewMode: ViewMode.SinglePage,
             }),
         []
     );
@@ -81,6 +82,7 @@ export const thumbnailPlugin = (pluginProps?: ThumbnailPluginProps): ThumbnailPl
             store.update('pageWidth', viewerState.pageWidth);
             store.update('rotation', viewerState.rotation);
             store.update('rotatedPage', viewerState.rotatedPage);
+            store.update('viewMode', viewerState.viewMode);
             return viewerState;
         },
         Cover: CoverDecorator,

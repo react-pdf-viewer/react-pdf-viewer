@@ -8,13 +8,16 @@
 
 import type { PdfJs, VisibilityChanged } from '@react-pdf-viewer/core';
 import {
+    chunk,
     classNames,
     RotateDirection,
     TextDirection,
     ThemeContext,
     useIsMounted,
     useIsomorphicLayoutEffect,
+    usePrevious,
     useRenderQueue,
+    ViewMode,
 } from '@react-pdf-viewer/core';
 import * as React from 'react';
 import { scrollToBeVisible } from './scrollToBeVisible';
@@ -34,6 +37,7 @@ export const ThumbnailList: React.FC<{
     rotatedPage: number;
     rotation: number;
     thumbnailWidth: number;
+    viewMode: ViewMode;
     onJumpToPage(pageIndex: number): void;
     onRotatePage(pageIndex: number, direction: RotateDirection): void;
 }> = ({
@@ -48,6 +52,7 @@ export const ThumbnailList: React.FC<{
     rotatedPage,
     rotation,
     thumbnailWidth,
+    viewMode,
     onJumpToPage,
     onRotatePage,
 }) => {
@@ -60,6 +65,7 @@ export const ThumbnailList: React.FC<{
     const isRtl = direction === TextDirection.RightToLeft;
     const [renderPageIndex, setRenderPageIndex] = React.useState(-1);
     const isMounted = useIsMounted();
+    const previousViewMode = usePrevious(viewMode);
 
     // To support React 18+, we need a _global_ flag to indicate that there is a thumbnail which is being rendered.
     // Without this ref, it only renders only one thumnail. Is it caused by batching in React 18?
@@ -74,6 +80,18 @@ export const ThumbnailList: React.FC<{
                 .map((_, pageIndex) => pageIndex),
         [docId]
     );
+
+    const chunks = React.useMemo(() => {
+        switch (viewMode) {
+            case ViewMode.DualPage:
+                return chunk(pageIndexes, 2);
+            case ViewMode.DualPageWithCover:
+                return [[pageIndexes[0]]].concat(chunk(pageIndexes.slice(1), 2));
+            case ViewMode.SinglePage:
+            default:
+                return chunk(pageIndexes, 1);
+        }
+    }, [docId, viewMode]);
 
     const handleKeyDown = (e: React.KeyboardEvent) => {
         switch (e.key) {
@@ -142,7 +160,7 @@ export const ThumbnailList: React.FC<{
 
         // Cache thumbnail elements
         thumbnailsRef.current = Array.from(container.querySelectorAll('.rpv-thumbnail__item'));
-    }, []);
+    }, [viewMode]);
 
     React.useEffect(() => {
         const thumbnails = thumbnailsRef.current;
@@ -158,12 +176,11 @@ export const ThumbnailList: React.FC<{
     useIsomorphicLayoutEffect(() => {
         // Scroll to the thumbnail that represents the current page
         const container = containerRef.current;
-        if (container) {
-            const thumbnailNodes = container.children;
-            if (currentPage < thumbnailNodes.length) {
-                scrollToBeVisible(thumbnailNodes.item(currentPage) as HTMLElement, container);
-            }
+        const thumbnails = thumbnailsRef.current;
+        if (!container || thumbnails.length === 0 || currentPage < 0 || currentPage > thumbnails.length) {
+            return;
         }
+        scrollToBeVisible(thumbnails[currentPage] as HTMLElement, container);
     }, [currentPage]);
 
     const handleRenderCompleted = React.useCallback(
@@ -201,14 +218,89 @@ export const ThumbnailList: React.FC<{
         }
     }, [docId]);
 
+    // Re-render the thumbnail of page which has just been rotated
     React.useEffect(() => {
         if (rotatedPage >= 0) {
-            // Re-render the thumbnail of page which has just been rotated
             renderQueue.markRendering(rotatedPage);
             hasRenderingThumbnailRef.current = true;
             setRenderPageIndex(rotatedPage);
         }
     }, [docId, rotatedPage]);
+
+    // Re-render thumbnails when users change the viewmode
+    useIsomorphicLayoutEffect(() => {
+        if (previousViewMode !== viewMode) {
+            renderQueue.markNotRendered();
+            renderNextThumbnail();
+        }
+    }, [viewMode]);
+
+    const renderPageThumbnail = (pageIndex: number) => {
+        const isCover =
+            viewMode === ViewMode.DualPageWithCover &&
+            (pageIndex === 0 || (numPages % 2 === 0 && pageIndex === numPages - 1));
+        // The key includes the `docId` so the thumbnail list will be re-rendered when the document changes
+        const key = `${doc.loadingTask.docId}___${pageIndex}`;
+        const pageLabel = labels.length === numPages ? labels[pageIndex] : `${pageIndex + 1}`;
+        const label = renderCurrentPageLabel
+            ? renderCurrentPageLabel({ currentPage, pageIndex, numPages, pageLabel })
+            : pageLabel;
+
+        const pageRotation = pagesRotation.has(pageIndex) ? pagesRotation.get(pageIndex) : 0;
+
+        const thumbnail = (
+            <ThumbnailContainer
+                doc={doc}
+                pageHeight={pageHeight}
+                pageIndex={pageIndex}
+                pageRotation={pageRotation}
+                pageWidth={pageWidth}
+                rotation={rotation}
+                shouldRender={renderPageIndex === pageIndex}
+                thumbnailWidth={thumbnailWidth}
+                onRenderCompleted={handleRenderCompleted}
+                onVisibilityChanged={handleVisibilityChanged}
+            />
+        );
+
+        return renderThumbnailItem ? (
+            renderThumbnailItem({
+                currentPage,
+                key,
+                numPages,
+                pageIndex,
+                renderPageLabel: <>{label}</>,
+                renderPageThumbnail: thumbnail,
+                onJumpToPage: () => onJumpToPage(pageIndex),
+                onRotatePage: (direction: RotateDirection) => onRotatePage(pageIndex, direction),
+            })
+        ) : (
+            <div key={key}>
+                <div
+                    className={classNames({
+                        'rpv-thumbnail__item': true,
+                        'rpv-thumbnail__item--dual-even': viewMode === ViewMode.DualPage && pageIndex % 2 === 0,
+                        'rpv-thumbnail__item--dual-odd': viewMode === ViewMode.DualPage && pageIndex % 2 === 1,
+                        'rpv-thumbnail__item--dual-cover': isCover,
+                        'rpv-thumbnail__item--dual-cover-even':
+                            viewMode === ViewMode.DualPageWithCover && !isCover && pageIndex % 2 === 0,
+                        'rpv-thumbnail__item--dual-cover-odd':
+                            viewMode === ViewMode.DualPageWithCover && !isCover && pageIndex % 2 === 1,
+                        'rpv-thumbnail__item--single': viewMode === ViewMode.SinglePage,
+                        'rpv-thumbnail__item--selected': currentPage === pageIndex,
+                    })}
+                    role="button"
+                    tabIndex={currentPage === pageIndex ? 0 : -1}
+                    onClick={() => onJumpToPage(pageIndex)}
+                >
+                    {thumbnail}
+                </div>
+                <div data-testid={`thumbnail__label-${pageIndex}`} className="rpv-thumbnail__label">
+                    {label}
+                </div>
+            </div>
+        );
+    };
 
     return (
         <div
@@ -220,58 +312,39 @@ export const ThumbnailList: React.FC<{
             })}
             onKeyDown={handleKeyDown}
         >
-            {pageIndexes.map((pageIndex) => {
-                // The key includes the `docId` so the thumbnail list will be re-rendered when the document changes
-                const key = `${doc.loadingTask.docId}___${pageIndex}`;
-                const pageLabel = labels.length === numPages ? labels[pageIndex] : `${pageIndex + 1}`;
-                const label = renderCurrentPageLabel
-                    ? renderCurrentPageLabel({ currentPage, pageIndex, numPages, pageLabel })
-                    : pageLabel;
+            {chunks.map((chunkItem, index) => {
+                let isSelectedChunk = false;
+                switch (viewMode) {
+                    case ViewMode.DualPage:
+                        isSelectedChunk = currentPage === 2 * index || currentPage === 2 * index + 1;
+                        break;
 
-                const pageRotation = pagesRotation.has(pageIndex) ? pagesRotation.get(pageIndex) : 0;
+                    case ViewMode.DualPageWithCover:
+                        isSelectedChunk =
+                            // The first page
+                            (currentPage === 0 && index === 0) ||
+                            (index > 0 && currentPage === 2 * index - 1) ||
+                            (index > 0 && currentPage === 2 * index);
+                        break;
 
-                const thumbnail = (
-                    <ThumbnailContainer
-                        doc={doc}
-                        pageHeight={pageHeight}
-                        pageIndex={pageIndex}
-                        pageRotation={pageRotation}
-                        pageWidth={pageWidth}
-                        rotation={rotation}
-                        shouldRender={renderPageIndex === pageIndex}
-                        thumbnailWidth={thumbnailWidth}
-                        onRenderCompleted={handleRenderCompleted}
-                        onVisibilityChanged={handleVisibilityChanged}
-                    />
-                );
+                    case ViewMode.SinglePage:
+                    default:
+                        isSelectedChunk = currentPage === index;
+                        break;
+                }
 
-                return renderThumbnailItem ? (
-                    renderThumbnailItem({
-                        currentPage,
-                        key,
-                        numPages,
-                        pageIndex,
-                        renderPageLabel: <>{label}</>,
-                        renderPageThumbnail: thumbnail,
-                        onJumpToPage: () => onJumpToPage(pageIndex),
-                        onRotatePage: (direction: RotateDirection) => onRotatePage(pageIndex, direction),
-                    })
-                ) : (
-                    <div key={key}>
-                        <div
-                            className={classNames({
-                                'rpv-thumbnail__item': true,
-                                'rpv-thumbnail__item--selected': currentPage === pageIndex,
-                            })}
-                            role="button"
-                            tabIndex={currentPage === pageIndex ? 0 : -1}
-                            onClick={() => onJumpToPage(pageIndex)}
-                        >
-                            {thumbnail}
-                        </div>
-                        <div data-testid={`thumbnail__label-${pageIndex}`} className="rpv-thumbnail__label">
-                            {label}
-                        </div>
+                return (
+                    <div
+                        className={classNames({
+                            'rpv-thumbnail__items': true,
+                            'rpv-thumbnail__items--dual': viewMode === ViewMode.DualPage,
+                            'rpv-thumbnail__items--dual-cover': viewMode === ViewMode.DualPageWithCover,
+                            'rpv-thumbnail__items--single': viewMode === ViewMode.SinglePage,
+                            'rpv-thumbnail__items--selected': isSelectedChunk,
+                        })}
+                        key={`${index}___${viewMode}`}
+                    >
+                        {chunkItem.map((pageIndex) => renderPageThumbnail(pageIndex))}
                     </div>
                 );
             })}
