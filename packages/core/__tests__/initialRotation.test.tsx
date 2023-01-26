@@ -26,6 +26,6 @@ test('initialRotation option', async () => {
 
     const firstText = await findByText('Adobe Acrobat PDF Files');
     expect(firstText).toHaveClass('rpv-core__text-layer-text');
-    expect(firstText.style.top.startsWith('235.1')).toBeTruthy();
-    expect(firstText.style.left.startsWith('844')).toBeTruthy();
+    expect(firstText.style.top).toEqual('8.87%');
+    expect(firstText.style.left).toEqual('35.93%');
 });
