@@ -184,7 +184,7 @@ export const ThumbnailList: React.FC<{
             return;
         }
 
-        const thumbnailContainer = thumbnails[currentPage];
+        const thumbnailContainer = thumbnails[currentPage].closest('.rpv-thumbnail__items');
         if (thumbnailContainer) {
             thumbnailDirection === ThumbnailDirection.Vertical
                 ? scrollToBeVisibleVertically(thumbnailContainer as HTMLElement, container)
