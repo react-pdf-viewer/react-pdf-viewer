@@ -21,6 +21,7 @@ import {
 } from '@react-pdf-viewer/core';
 import * as React from 'react';
 import { scrollToBeVisible } from './scrollToBeVisible';
+import { ThumbnailDirection } from './structs/ThumbnailDirection';
 import { ThumbnailContainer } from './ThumbnailContainer';
 import type { RenderCurrentPageLabel } from './types/RenderCurrentPageLabelProps';
 import type { RenderThumbnailItem } from './types/RenderThumbnailItemProps';
@@ -36,6 +37,7 @@ export const ThumbnailList: React.FC<{
     renderThumbnailItem?: RenderThumbnailItem;
     rotatedPage: number;
     rotation: number;
+    thumbnailDirection: ThumbnailDirection;
     thumbnailWidth: number;
     viewMode: ViewMode;
     onJumpToPage(pageIndex: number): void;
@@ -51,6 +53,7 @@ export const ThumbnailList: React.FC<{
     renderThumbnailItem,
     rotatedPage,
     rotation,
+    thumbnailDirection,
     thumbnailWidth,
     viewMode,
     onJumpToPage,
@@ -180,7 +183,7 @@ export const ThumbnailList: React.FC<{
         if (!container || thumbnails.length === 0 || currentPage < 0 || currentPage > thumbnails.length) {
             return;
         }
-        scrollToBeVisible(thumbnails[currentPage] as HTMLElement, container);
+        scrollToBeVisible(thumbnails[currentPage], container);
     }, [currentPage]);
 
     const handleRenderCompleted = React.useCallback(
@@ -308,7 +311,9 @@ export const ThumbnailList: React.FC<{
             data-testid="thumbnail__list"
             className={classNames({
                 'rpv-thumbnail__list': true,
+                'rpv-thumbnail__list--horizontal': thumbnailDirection === ThumbnailDirection.Horizontal,
                 'rpv-thumbnail__list--rtl': isRtl,
+                'rpv-thumbnail__list--vertical': thumbnailDirection === ThumbnailDirection.Vertical,
             })}
             onKeyDown={handleKeyDown}
         >

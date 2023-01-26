@@ -11,6 +11,7 @@ import { LazyRender, RotateDirection, useIsomorphicLayoutEffect, ViewMode } from
 import * as React from 'react';
 import { FetchLabels } from './FetchLabels';
 import { SpinnerContext } from './SpinnerContext';
+import { ThumbnailDirection } from './structs/ThumbnailDirection';
 import { ThumbnailList } from './ThumbnailList';
 import type { RenderCurrentPageLabel } from './types/RenderCurrentPageLabelProps';
 import type { RenderThumbnailItem } from './types/RenderThumbnailItemProps';
@@ -20,8 +21,9 @@ export const ThumbnailListWithStore: React.FC<{
     renderCurrentPageLabel?: RenderCurrentPageLabel;
     renderThumbnailItem?: RenderThumbnailItem;
     store: Store<StoreProps>;
+    thumbnailDirection: ThumbnailDirection;
     thumbnailWidth: number;
-}> = ({ renderCurrentPageLabel, renderThumbnailItem, store, thumbnailWidth }) => {
+}> = ({ renderCurrentPageLabel, renderThumbnailItem, store, thumbnailDirection, thumbnailWidth }) => {
     const [currentDoc, setCurrentDoc] = React.useState<PdfJs.PdfDocument>(store.get('doc'));
     const [currentPage, setCurrentPage] = React.useState(store.get('currentPage') || 0);
     const [pageHeight, setPageHeight] = React.useState(store.get('pageHeight') || 0);
@@ -122,6 +124,7 @@ export const ThumbnailListWithStore: React.FC<{
                         renderThumbnailItem={renderThumbnailItem}
                         rotatedPage={rotatedPage}
                         rotation={rotation}
+                        thumbnailDirection={thumbnailDirection}
                         thumbnailWidth={thumbnailWidth}
                         viewMode={viewMode}
                         onJumpToPage={jump}

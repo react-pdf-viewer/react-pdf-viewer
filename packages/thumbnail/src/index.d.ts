@@ -10,9 +10,15 @@ import type { Plugin } from '@react-pdf-viewer/core';
 import { RotateDirection } from '@react-pdf-viewer/core';
 import * as React from 'react';
 
+export enum ThumbnailDirection {
+    Horizontal = 'Horizontal',
+    Vertical = 'Vertical',
+}
+
 // Plugin
 export interface ThumbnailsProps {
     renderThumbnailItem?: RenderThumbnailItem;
+    thumbnailDirection?: ThumbnailDirection;
 }
 
 export interface CoverProps {

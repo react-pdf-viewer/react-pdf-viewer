@@ -11,6 +11,7 @@ import { createStore, ViewMode } from '@react-pdf-viewer/core';
 import * as React from 'react';
 import { Cover } from './Cover';
 import { defaultSpinner, SpinnerContext } from './SpinnerContext';
+import { ThumbnailDirection } from './structs/ThumbnailDirection';
 import { ThumbnailListWithStore } from './ThumbnailListWithStore';
 import type { CoverProps } from './types/CoverProps';
 import type { RenderCurrentPageLabel } from './types/RenderCurrentPageLabelProps';
@@ -19,6 +20,7 @@ import type { StoreProps } from './types/StoreProps';
 
 export interface ThumbnailsProps {
     renderThumbnailItem?: RenderThumbnailItem;
+    thumbnailDirection?: ThumbnailDirection;
 }
 
 export interface ThumbnailPlugin extends Plugin {
@@ -59,6 +61,7 @@ export const thumbnailPlugin = (pluginProps?: ThumbnailPluginProps): ThumbnailPl
                     renderCurrentPageLabel={pluginProps?.renderCurrentPageLabel}
                     renderThumbnailItem={props?.renderThumbnailItem}
                     store={store}
+                    thumbnailDirection={props?.thumbnailDirection || ThumbnailDirection.Vertical}
                     thumbnailWidth={pluginProps?.thumbnailWidth || 100}
                 />
             </SpinnerContext.Provider>
