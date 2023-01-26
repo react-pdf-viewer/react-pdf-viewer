@@ -48,43 +48,43 @@ test('Jump between matches', async () => {
 
     let position = await getPosition();
     expect(position?.index).toEqual('0');
-    expect(position?.left).toEqual('72.1961%');
-    expect(position?.top).toEqual('15.1463%');
+    expect(position?.left).toEqual('72.1926%');
+    expect(position?.top).toEqual('15.1436%');
 
     // Jump to next match
     await nextMatchButton?.click();
     position = await getPosition();
     expect(position?.index).toEqual('1');
-    expect(position?.left).toEqual('31.053%');
-    expect(position?.top).toEqual('16.7298%');
+    expect(position?.left).toEqual('31.0495%');
+    expect(position?.top).toEqual('16.7331%');
 
     await nextMatchButton?.click();
     position = await getPosition();
     expect(position?.index).toEqual('2');
-    expect(position?.left).toEqual('60.1299%');
-    expect(position?.top).toEqual('26.3277%');
+    expect(position?.left).toEqual('60.1264%');
+    expect(position?.top).toEqual('26.3231%');
 
     await nextMatchButton?.click();
     position = await getPosition();
     expect(position?.index).toEqual('3');
-    expect(position?.left).toEqual('37.3104%');
-    expect(position?.top).toEqual('45.1389%');
+    expect(position?.left).toEqual('37.3069%');
+    expect(position?.top).toEqual('45.1435%');
 
     await nextMatchButton?.click();
     position = await getPosition();
     expect(position?.index).toEqual('4');
-    expect(position?.left).toEqual('61.2119%');
-    expect(position?.top).toEqual('45.1389%');
+    expect(position?.left).toEqual('61.2093%');
+    expect(position?.top).toEqual('45.1435%');
 
     await nextMatchButton?.click();
     position = await getPosition();
     expect(position?.index).toEqual('5');
-    expect(position?.left).toEqual('69.8298%');
-    expect(position?.top).toEqual('47.9798%');
+    expect(position?.left).toEqual('69.8271%');
+    expect(position?.top).toEqual('47.9831%');
 
     await nextMatchButton?.click();
     position = await getPosition();
     expect(position?.index).toEqual('6');
-    expect(position?.left).toEqual('43.5505%');
-    expect(position?.top).toEqual('49.5555%');
+    expect(position?.left).toEqual('43.554%');
+    expect(position?.top).toEqual('49.5535%');
 });
