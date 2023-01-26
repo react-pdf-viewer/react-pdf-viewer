@@ -32,6 +32,6 @@ test('Test the initialRotation option', async () => {
         };
     });
     expect(result?.content).toEqual('Parameters for Opening PDF Files');
-    expect(result?.left).toEqual('497.911px');
-    expect(result?.top).toEqual('125.07px');
+    expect(result?.left).toEqual('19.14%');
+    expect(result?.top).toEqual('42.85%');
 });

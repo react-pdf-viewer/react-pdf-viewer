@@ -29,8 +29,8 @@ test('Rotate single page using RotatePage component', async () => {
         };
     });
     expect(result?.content).toEqual('Parameters for Opening PDF Files');
-    expect(result?.left).toEqual('56.85px');
-    expect(result?.top).toEqual('169.677px');
+    expect(result?.left).toEqual('19.14%');
+    expect(result?.top).toEqual('42.85%');
 
     // Rotate forward the first page
     const rotateForwardBtn = await page.waitForSelector('[data-testid="rotate-forward"]');
@@ -56,6 +56,6 @@ test('Rotate single page using RotatePage component', async () => {
         };
     });
     expect(result?.content).toEqual('Parameters for Opening PDF Files');
-    expect(result?.left).toEqual('226.323px');
-    expect(result?.top).toEqual('56.85px');
+    expect(result?.left).toEqual('19.14%');
+    expect(result?.top).toEqual('42.85%');
 });
