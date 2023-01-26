@@ -57,9 +57,9 @@ test('Test <Thumbnails /> of a single page document', async () => {
     // Check if the text is rendered
     const span = await findByText('Dummy PDF file');
     expect(span.classList.contains('rpv-core__text-layer-text')).toEqual(true);
-    expect(span.style.fontSize).toEqual('17.710000000000004px');
-    expect(span.style.left).toEqual('62.480000000000004px');
-    expect(span.style.top).toEqual('79.30266666666662px');
+    expect(span.style.fontSize).toEqual('');
+    expect(span.style.left).toEqual('9.55%');
+    expect(span.style.top).toEqual('8.56%');
 
     const pagesContainer = await findByTestId('core__inner-pages');
     pagesContainer.getBoundingClientRect = jest.fn(() => ({
