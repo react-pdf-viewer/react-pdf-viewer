@@ -20,7 +20,7 @@ import {
     ViewMode,
 } from '@react-pdf-viewer/core';
 import * as React from 'react';
-import { scrollToBeVisible } from './scrollToBeVisible';
+import { scrollToBeVisibleHorizontally, scrollToBeVisibleVertically } from './scrollToBeVisible';
 import { ThumbnailDirection } from './structs/ThumbnailDirection';
 import { ThumbnailContainer } from './ThumbnailContainer';
 import type { RenderCurrentPageLabel } from './types/RenderCurrentPageLabelProps';
@@ -183,8 +183,14 @@ export const ThumbnailList: React.FC<{
         if (!container || thumbnails.length === 0 || currentPage < 0 || currentPage > thumbnails.length) {
             return;
         }
-        scrollToBeVisible(thumbnails[currentPage], container);
-    }, [currentPage]);
+
+        const thumbnailContainer = thumbnails[currentPage];
+        if (thumbnailContainer) {
+            thumbnailDirection === ThumbnailDirection.Vertical
+                ? scrollToBeVisibleVertically(thumbnailContainer as HTMLElement, container)
+                : scrollToBeVisibleHorizontally(thumbnailContainer as HTMLElement, container);
+        }
+    }, [currentPage, thumbnailDirection]);
 
     const handleRenderCompleted = React.useCallback(
         (pageIndex: number) => {
