@@ -47,7 +47,9 @@ export interface NumberOfPagesProps {
 
 // Plugin
 export interface PageNavigationPlugin extends Plugin {
+    jumpToNextPage(): void;
     jumpToPage: (pageIndex: number) => void;
+    jumpToPreviousPage(): void;
     CurrentPageInput: () => React.ReactElement;
     CurrentPageLabel: (props: CurrentPageLabelProps) => React.ReactElement;
     GoToFirstPage: (props: GoToPageProps) => React.ReactElement;
