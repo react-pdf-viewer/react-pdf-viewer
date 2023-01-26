@@ -37,7 +37,9 @@ import type { GoToPageMenuItemProps, GoToPageProps } from './types';
 import type { StoreProps } from './types/StoreProps';
 
 export interface PageNavigationPlugin extends Plugin {
+    jumpToNextPage(): void;
     jumpToPage: (pageIndex: number) => void;
+    jumpToPreviousPage(): void;
     CurrentPageInput: () => React.ReactElement;
     CurrentPageLabel: (props: CurrentPageLabelProps) => React.ReactElement;
     GoToFirstPage: (props: GoToPageProps) => React.ReactElement;
@@ -228,10 +230,22 @@ export const pageNavigationPlugin = (props?: PageNavigationPluginProps): PageNav
             store.update('currentPage', viewerState.pageIndex);
             return viewerState;
         },
+        jumpToNextPage: () => {
+            const jump = store.get('jumpToNextPage');
+            if (jump) {
+                jump();
+            }
+        },
         jumpToPage: (pageIndex: number) => {
             const jumpTo = store.get('jumpToPage');
             if (jumpTo) {
                 jumpTo(pageIndex);
+            }
+        },
+        jumpToPreviousPage: () => {
+            const jump = store.get('jumpToPreviousPage');
+            if (jump) {
+                jump();
             }
         },
         CurrentPageInput: CurrentPageInputDecorator,
