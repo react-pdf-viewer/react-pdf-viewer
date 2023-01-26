@@ -33,7 +33,7 @@ test('Support Strict mode', async () => {
 
     const span = await findByText('Adobe Acrobat PDF Files');
     expect(span.classList.contains('rpv-core__text-layer-text')).toEqual(true);
-    expect(span.style.fontSize).toEqual('15.444px');
-    expect(span.style.left).toEqual('235.13666000000003px');
-    expect(span.style.top).toEqual('82.13006999999995px');
+    expect(span.style.fontSize).toEqual('');
+    expect(span.style.left).toEqual('35.93%');
+    expect(span.style.top).toEqual('8.87%');
 });

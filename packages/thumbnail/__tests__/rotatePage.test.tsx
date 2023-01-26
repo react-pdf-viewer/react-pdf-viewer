@@ -167,6 +167,6 @@ test('Rotate single page using renderThumbnailItem', async () => {
     const textLayer = await findByTestId('core__text-layer-2');
     const textElement = textLayer.childNodes[2] as HTMLElement;
     expect(textElement.textContent).toEqual('Contents');
-    expect(textElement.style.left).toEqual('361.035px');
-    expect(textElement.style.top).toEqual('49.23px');
+    expect(textElement.style.left).toEqual('16.58%');
+    expect(textElement.style.top).toEqual('8.83%');
 });
