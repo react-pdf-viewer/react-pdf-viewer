@@ -179,10 +179,7 @@ export const useVirtual = ({
     );
 
     // Visibilities of visible pages
-    const visiblePageVisibilities = visibilities.slice(
-        clamp(0, numberOfItems - 1, start),
-        clamp(0, numberOfItems - 1, end)
-    );
+    const visiblePageVisibilities = visibilities.slice(clamp(0, numberOfItems, start), clamp(0, numberOfItems, end));
 
     let maxVisbilityItem = start + indexOfMax(visiblePageVisibilities);
     maxVisbilityItem = clamp(0, numberOfItems - 1, maxVisbilityItem);
