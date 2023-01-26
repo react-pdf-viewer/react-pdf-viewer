@@ -122,6 +122,6 @@ test('Rotate single page using RotatePage component', async () => {
     const textLayer = await findByTestId('core__text-layer-0');
     const textElement = textLayer.childNodes[2] as HTMLElement;
     expect(textElement.textContent).toEqual('Parameters for Opening PDF Files');
-    expect(textElement.style.left).toEqual('225.99px');
-    expect(textElement.style.top).toEqual('56.85px');
+    expect(textElement.style.left).toEqual('19.14%');
+    expect(textElement.style.top).toEqual('42.93%');
 });
