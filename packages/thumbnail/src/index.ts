@@ -6,6 +6,7 @@
  * @copyright 2019-2023 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
+export { ThumbnailDirection } from './structs/ThumbnailDirection';
 export * from './thumbnailPlugin';
 export type { CoverProps } from './types/CoverProps';
 export type { RenderCurrentPageLabel, RenderCurrentPageLabelProps } from './types/RenderCurrentPageLabelProps';

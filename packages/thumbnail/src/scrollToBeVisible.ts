@@ -7,7 +7,7 @@
  */
 
 // Scroll the `ele` element if it's not visible in its scrollable `container`
-export const scrollToBeVisible = (ele: HTMLElement, container: HTMLElement): void => {
+export const scrollToBeVisibleVertically = (ele: HTMLElement, container: HTMLElement): void => {
     // Calculate the distance from top of element to the top side of container
     const top = ele.getBoundingClientRect().top - container.getBoundingClientRect().top;
     const eleHeight = ele.clientHeight;
@@ -56,4 +56,21 @@ export const scrollToBeVisible = (ele: HTMLElement, container: HTMLElement): voi
     //      |               |
     //      └───────────────┘
     container.scrollTop += top + eleHeight - containerHeight;
+};
+
+export const scrollToBeVisibleHorizontally = (ele: HTMLElement, container: HTMLElement): void => {
+    const left = ele.getBoundingClientRect().left - container.getBoundingClientRect().left;
+    const eleWidth = ele.clientWidth;
+    const containerWidth = container.clientWidth;
+
+    if (left < 0) {
+        container.scrollLeft += left;
+        return;
+    }
+
+    if (left + eleWidth <= containerWidth) {
+        return;
+    }
+
+    container.scrollLeft += left + eleWidth - containerWidth;
 };
