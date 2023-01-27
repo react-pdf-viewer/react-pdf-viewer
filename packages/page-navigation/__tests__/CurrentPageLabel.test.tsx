@@ -167,15 +167,15 @@ test('Test <CurrentPageLabel> with custom page label', async () => {
         },
     });
 
-    await findByTestId('core__canvas-layer-3');
     await findByTestId('core__text-layer-3');
     await findByTestId('core__annotation-layer-3');
-    await findByTestId('core__canvas-layer-4');
+    await findByTestId('core__canvas-layer-3');
     await findByTestId('core__text-layer-4');
     await findByTestId('core__annotation-layer-4');
-    await findByTestId('core__canvas-layer-5');
+    await findByTestId('core__canvas-layer-4');
     await findByTestId('core__text-layer-5');
     await findByTestId('core__annotation-layer-5');
+    await findByTestId('core__canvas-layer-5');
 
     pageLabel = await findByTestId('current-page-label');
     expect(pageLabel.textContent).toEqual('8(298)');
