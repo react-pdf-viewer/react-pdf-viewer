@@ -31,8 +31,13 @@ export const PageSizeCalculator: React.FC<{
     viewMode: ViewMode;
 }> = ({ defaultScale, doc, render, scrollMode, viewMode }) => {
     const pagesRef = React.useRef<HTMLDivElement>();
-    const [initialScale, setInitialScale] = React.useState(1);
-    const [pageSizes, setPageSizes] = React.useState<PageSize[]>([]);
+    const [state, setState] = React.useState<{
+        pageSizes: PageSize[];
+        scale: number;
+    }>({
+        pageSizes: [],
+        scale: 0,
+    });
 
     React.useLayoutEffect(() => {
         const queryPageSizes = Array(doc.numPages)
@@ -51,8 +56,6 @@ export const PageSizeCalculator: React.FC<{
                     })
             );
         Promise.all(queryPageSizes).then((pageSizes) => {
-            setPageSizes(pageSizes);
-
             // Determine the initial scale
             const pagesEle = pagesRef.current;
             if (!pagesEle || pageSizes.length === 0) {
@@ -88,15 +91,15 @@ export const PageSizeCalculator: React.FC<{
                     : defaultScale
                 : decrease(scaled);
 
-            setInitialScale(scale);
+            setState({ pageSizes, scale });
         });
     }, [doc.loadingTask.docId]);
 
-    return pageSizes.length === 0 ? (
+    return state.pageSizes.length === 0 || state.scale === 0 ? (
         <div className="rpv-core__page-size-calculator" data-testid="core__page-size-calculating" ref={pagesRef}>
             <Spinner />
         </div>
     ) : (
-        render(pageSizes, initialScale)
+        render(state.pageSizes, state.scale)
     );
 };
