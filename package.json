@@ -53,7 +53,7 @@
         "jest-environment-jsdom": "^29.4.1",
         "jest-puppeteer": "^6.2.0",
         "lerna": "^6.4.1",
-        "pdfjs-dist": "^3.2.146",
+        "pdfjs-dist": "^3.3.122",
         "prettier": "^2.8.3",
         "puppeteer": "^19.6.2",
         "react": "^18.2.0",
