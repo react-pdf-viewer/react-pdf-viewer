@@ -20,6 +20,7 @@ export { Spinner } from './components/Spinner';
 export { Splitter } from './components/Splitter';
 export type { SplitterSize } from './components/Splitter';
 export { TextBox } from './components/TextBox';
+export { useDebounceCallback } from './hooks/useDebounceCallback';
 export { useIntersectionObserver } from './hooks/useIntersectionObserver';
 export { useIsMounted } from './hooks/useIsMounted';
 export { useIsomorphicLayoutEffect } from './hooks/useIsomorphicLayoutEffect';

@@ -559,6 +559,8 @@ export interface WorkerProps {
 export class Worker extends React.Component<WorkerProps> {}
 
 // Hooks
+export function useDebounceCallback<T extends unknown[]>(callback: (...args: T) => void, wait: number): void;
+
 export interface UseIntersectionObserverProps {
     once?: boolean;
     threshold?: number | number[];
