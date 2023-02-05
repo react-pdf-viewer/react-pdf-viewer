@@ -10,6 +10,7 @@ import type { Plugin, PluginFunctions, RenderViewer, Slot, ViewerState } from '@
 import { createStore, SpecialZoomLevel } from '@react-pdf-viewer/core';
 import * as React from 'react';
 import { CurrentScale, CurrentScaleProps } from './CurrentScale';
+import { PinchZoom } from './PinchZoom';
 import { ShortcutHandler } from './ShortcutHandler';
 import type { StoreProps } from './types/StoreProps';
 import type { ZoomMenuItemProps } from './types/ZoomMenuItemProps';
@@ -103,6 +104,7 @@ export const zoomPlugin = (props?: ZoomPluginProps): ZoomPlugin => {
             children: (
                 <>
                     <ShortcutHandler containerRef={props.containerRef} store={store} />
+                    <PinchZoom pagesContainerRef={props.pagesContainerRef} store={store} />
                     {slot.children}
                 </>
             ),
