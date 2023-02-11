@@ -38,6 +38,7 @@ export const PageLayer: React.FC<{
     shouldRender: boolean;
     viewMode: ViewMode;
     onExecuteNamedAction(action: string): void;
+    onJumpFromLinkAnnotation(destination: Destination): void;
     onJumpToDest(destination: Destination): void;
     onRenderCompleted(pageIndex: number): void;
     onRotatePage(pageIndex: number, direction: RotateDirection): void;
@@ -56,6 +57,7 @@ export const PageLayer: React.FC<{
     shouldRender,
     viewMode,
     onExecuteNamedAction,
+    onJumpFromLinkAnnotation,
     onJumpToDest,
     onRenderCompleted,
     onRotatePage,
@@ -168,6 +170,7 @@ export const PageLayer: React.FC<{
                                     rotation={rotationValue}
                                     scale={scale}
                                     onExecuteNamedAction={onExecuteNamedAction}
+                                    onJumpFromLinkAnnotation={onJumpFromLinkAnnotation}
                                     onJumpToDest={onJumpToDest}
                                 />
                             ),

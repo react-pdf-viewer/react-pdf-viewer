@@ -15,18 +15,33 @@ import { Annotation } from './Annotation';
 
 export const Link: React.FC<{
     annotation: PdfJs.Annotation;
+    annotationContainerRef: React.MutableRefObject<HTMLElement>;
     doc: PdfJs.PdfDocument;
     outlines: PdfJs.Outline[];
     page: PdfJs.Page;
+    pageIndex: number;
     viewport: PdfJs.ViewPort;
     onExecuteNamedAction(action: string): void;
+    onJumpFromLinkAnnotation(destination: Destination): void;
     onJumpToDest(destination: Destination): void;
-}> = ({ annotation, doc, outlines, page, viewport, onExecuteNamedAction, onJumpToDest }) => {
+}> = ({ annotation, annotationContainerRef, doc, outlines, page, pageIndex, viewport, onExecuteNamedAction, onJumpFromLinkAnnotation, onJumpToDest }) => {
+    const elementRef = React.useRef<HTMLLinkElement>();
+
     const link = (e: React.MouseEvent): void => {
         e.preventDefault();
         annotation.action
             ? onExecuteNamedAction(annotation.action)
             : getDestination(doc, annotation.dest).then((target) => {
+                    const element = elementRef.current;
+                    const annotationContainer = annotationContainerRef.current;
+                    if (element && annotationContainer) {
+                        const linkRect = element.getBoundingClientRect();
+                        const annotationLayerRect = annotationContainer.getBoundingClientRect();
+                        const leftOffset = linkRect.left - annotationLayerRect.left;
+                        const bottomOffset = annotationLayerRect.bottom - linkRect.bottom + linkRect.height;
+                        onJumpFromLinkAnnotation({ pageIndex, bottomOffset, leftOffset });
+                    }
+
                   onJumpToDest(target);
               });
     };

@@ -40,6 +40,7 @@ export const AnnotationLayerBody: React.FC<{
     rotation: number;
     scale: number;
     onExecuteNamedAction(action: string): void;
+    onJumpFromLinkAnnotation(destination: Destination): void;
     onJumpToDest(destination: Destination): void;
 }> = ({
     annotations,
@@ -51,6 +52,7 @@ export const AnnotationLayerBody: React.FC<{
     rotation,
     scale,
     onExecuteNamedAction,
+    onJumpFromLinkAnnotation,
     onJumpToDest,
 }) => {
     const containerRef = React.useRef<HTMLDivElement>();
@@ -136,11 +138,14 @@ export const AnnotationLayerBody: React.FC<{
                             <Link
                                 key={annotation.id}
                                 annotation={annotation}
+                                annotationContainerRef={containerRef}
                                 doc={doc}
                                 outlines={outlines}
                                 page={page}
+                                pageIndex={pageIndex}
                                 viewport={clonedViewPort}
                                 onExecuteNamedAction={onExecuteNamedAction}
+                                onJumpFromLinkAnnotation={onJumpFromLinkAnnotation}
                                 onJumpToDest={onJumpToDest}
                             />
                         );

@@ -109,6 +109,9 @@ export const Inner: React.FC<{
     const [currentPage, setCurrentPage] = React.useState(initialPage);
     const mostRecentVisitedRef = React.useRef(null);
 
+    // Visited destinations
+    const visitedDestinationsRef = React.useRef<Destination[]>([]);
+
     const [rotation, setRotation] = React.useState(initialRotation);
     const previousRotation = usePrevious(rotation);
 
@@ -137,6 +140,7 @@ export const Inner: React.FC<{
     const renderQueue = useRenderQueue({ doc });
     React.useEffect(() => {
         return () => {
+            visitedDestinationsRef.current = [];
             clearPagesCache();
         };
     }, [docId]);
@@ -217,7 +221,13 @@ export const Inner: React.FC<{
 
     const getViewerState = () => stateRef.current;
 
+    const markVisitedDestination = React.useCallback((destination: Destination) => {
+        visitedDestinationsRef.current = visitedDestinationsRef.current.concat([destination]);
+    }, []);
+
     const jumpToDestination = React.useCallback((destionation: Destination): void => {
+        markVisitedDestination(destionation);
+
         const { pageIndex, bottomOffset, leftOffset, scaleTo } = destionation;
 
         const pagesContainer = pagesRef.current;
@@ -708,6 +718,7 @@ export const Inner: React.FC<{
                                                 shouldRender={renderPageIndex === item.index}
                                                 viewMode={currentViewMode}
                                                 onExecuteNamedAction={executeNamedAction}
+                                                onJumpFromLinkAnnotation={markVisitedDestination}
                                                 onJumpToDest={jumpToDestination}
                                                 onRenderCompleted={handlePageRenderCompleted}
                                                 onRotatePage={rotatePage}
