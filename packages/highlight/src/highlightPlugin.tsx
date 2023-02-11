@@ -183,7 +183,11 @@ export const highlightPlugin = (props?: HighlightPluginProps): HighlightPlugin =
             const bottomOffset = (_: number, viewportHeight: number) => ((100 - area.top) * viewportHeight) / 100;
             const leftOffset = (viewportWidth: number, _: number) => ((100 - area.left) * viewportWidth) / 100;
             /* eslint-enable @typescript-eslint/no-unused-vars */
-            jumpToDestination(area.pageIndex, bottomOffset, leftOffset);
+            jumpToDestination({
+                pageIndex: area.pageIndex,
+                bottomOffset,
+                leftOffset,
+            });
         }
     };
 

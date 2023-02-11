@@ -6,8 +6,7 @@
  * @copyright 2019-2023 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import type { DestinationOffsetFromViewport, PdfJs } from '@react-pdf-viewer/core';
-import { SpecialZoomLevel } from '@react-pdf-viewer/core';
+import type { Destination, PdfJs } from '@react-pdf-viewer/core';
 
 export interface JumpFromAnnotation {
     bottomOffset: number;
@@ -20,12 +19,7 @@ export interface StoreProps {
     currentPage?: number;
     doc?: PdfJs.PdfDocument;
     jumpFromAnnotation?: JumpFromAnnotation;
-    jumpToDestination?(
-        pageIndex: number,
-        bottomOffset: number | DestinationOffsetFromViewport,
-        leftOffset: number | DestinationOffsetFromViewport,
-        scaleTo?: number | SpecialZoomLevel
-    ): void;
+    jumpToDestination?(destination: Destination): void;
     jumpToNextPage(): void;
     jumpToPreviousPage(): void;
     jumpToPage?(pageIndex: number): void;

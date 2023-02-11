@@ -11,12 +11,11 @@ import { AnnotationLayer } from '../annotations/AnnotationLayer';
 import { Spinner } from '../components/Spinner';
 import { useIsMounted } from '../hooks/useIsMounted';
 import { RotateDirection } from '../structs/RotateDirection';
-import { SpecialZoomLevel } from '../structs/SpecialZoomLevel';
 import { ViewMode } from '../structs/ViewMode';
+import type { Destination } from '../types/Destination';
 import type { PageSize } from '../types/PageSize';
 import type { PdfJs } from '../types/PdfJs';
 import type { Plugin } from '../types/Plugin';
-import type { DestinationOffsetFromViewport } from '../types/PluginFunctions';
 import type { RenderPage, RenderPageProps } from '../types/RenderPage';
 import { classNames } from '../utils/classNames';
 import { getPage } from '../utils/managePages';
@@ -39,12 +38,7 @@ export const PageLayer: React.FC<{
     shouldRender: boolean;
     viewMode: ViewMode;
     onExecuteNamedAction(action: string): void;
-    onJumpToDest(
-        pageIndex: number,
-        bottomOffset: number | DestinationOffsetFromViewport,
-        leftOffset: number | DestinationOffsetFromViewport,
-        scaleTo?: number | SpecialZoomLevel
-    ): void;
+    onJumpToDest(destination: Destination): void;
     onRenderCompleted(pageIndex: number): void;
     onRotatePage(pageIndex: number, direction: RotateDirection): void;
 }> = ({

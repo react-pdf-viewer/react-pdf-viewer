@@ -60,7 +60,11 @@ export const ShortcutHandler: React.FC<{
         const jumpToDestination = store.get('jumpToDestination');
         if (jumpToDestination) {
             const { pageIndex, bottomOffset, leftOffset } = target;
-            jumpToDestination(pageIndex, bottomOffset, leftOffset);
+            jumpToDestination({
+                pageIndex,
+                bottomOffset,
+                leftOffset,
+            });
         }
     };
 

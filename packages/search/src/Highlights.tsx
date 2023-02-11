@@ -333,12 +333,12 @@ export const Highlights: React.FC<{
         const { left, top } = calculateOffset(highlightEle as HTMLElement, container);
         const jump = store.get('jumpToDestination');
         if (jump) {
-            jump(
+            jump({
                 pageIndex,
-                (container.getBoundingClientRect().height - top) / renderStatus.scale,
-                left / renderStatus.scale,
-                renderStatus.scale
-            );
+                bottomOffset: (container.getBoundingClientRect().height - top) / renderStatus.scale,
+                leftOffset: left / renderStatus.scale,
+                scaleTo: renderStatus.scale,
+            });
             if (currentMatchRef.current) {
                 currentMatchRef.current.classList.remove('rpv-search__highlight--current');
             }

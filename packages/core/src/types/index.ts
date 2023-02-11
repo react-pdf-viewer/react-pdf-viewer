@@ -7,6 +7,7 @@
  */
 
 export * from './CharacterMap';
+export * from './Destination';
 export * from './DocumentAskPasswordEvent';
 export * from './DocumentLoadEvent';
 export * from './LocalizationMap';

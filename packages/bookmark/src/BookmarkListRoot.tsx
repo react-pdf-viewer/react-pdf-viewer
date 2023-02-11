@@ -6,8 +6,8 @@
  * @copyright 2019-2023 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import type { DestinationOffsetFromViewport, PdfJs, Store } from '@react-pdf-viewer/core';
-import { getDestination, SpecialZoomLevel } from '@react-pdf-viewer/core';
+import type { Destination, PdfJs, Store } from '@react-pdf-viewer/core';
+import { getDestination } from '@react-pdf-viewer/core';
 import * as React from 'react';
 import { BookmarkList } from './BookmarkList';
 import type { IsBookmarkExpanded } from './types/IsBookmarkExpanded';
@@ -25,19 +25,13 @@ export const BookmarkListRoot: React.FC<{
     isBookmarkExpanded?: IsBookmarkExpanded;
     renderBookmarkItem?: RenderBookmarkItem;
     store: Store<StoreProps>;
-    onJumpToDest(
-        pageIndex: number,
-        bottomOffset: number | DestinationOffsetFromViewport,
-        leftOffset: number | DestinationOffsetFromViewport,
-        scaleTo: number | SpecialZoomLevel
-    ): void;
+    onJumpToDest(destination: Destination): void;
 }> = ({ bookmarks, doc, isBookmarkExpanded, renderBookmarkItem, store, onJumpToDest }) => {
     const containerRef = React.useRef<HTMLDivElement>();
 
     const jumpToDest = (dest: PdfJs.OutlineDestinationType): void => {
         getDestination(doc, dest).then((target) => {
-            const { pageIndex, bottomOffset, leftOffset, scaleTo } = target;
-            onJumpToDest(pageIndex, bottomOffset, leftOffset, scaleTo);
+            onJumpToDest(target);
         });
     };
 

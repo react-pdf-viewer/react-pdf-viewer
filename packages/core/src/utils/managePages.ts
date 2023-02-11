@@ -7,17 +7,10 @@
  */
 
 import { SpecialZoomLevel } from '../structs/SpecialZoomLevel';
+import type { Destination } from '../types/Destination';
 import type { PdfJs } from '../types/PdfJs';
-import type { DestinationOffsetFromViewport } from '../types/PluginFunctions';
 
-export interface JumpToDestination {
-    pageIndex: number;
-    bottomOffset: number | DestinationOffsetFromViewport;
-    leftOffset: number | DestinationOffsetFromViewport;
-    scaleTo?: number | SpecialZoomLevel;
-}
-
-const normalizeDestination = (pageIndex: number, destArray: PdfJs.OutlineDestination): JumpToDestination => {
+const normalizeDestination = (pageIndex: number, destArray: PdfJs.OutlineDestination): Destination => {
     switch (destArray[1].name) {
         case 'XYZ':
             // The `bottom` and `left` offsets are defined by `destArray[3]` and `destArray[2]`, respectively.
@@ -101,11 +94,8 @@ export const getPage = (doc: PdfJs.PdfDocument, pageIndex: number): Promise<PdfJ
     });
 };
 
-export const getDestination = (
-    doc: PdfJs.PdfDocument,
-    dest: PdfJs.OutlineDestinationType
-): Promise<JumpToDestination> => {
-    return new Promise<JumpToDestination>((res) => {
+export const getDestination = (doc: PdfJs.PdfDocument, dest: PdfJs.OutlineDestinationType): Promise<Destination> => {
+    return new Promise<Destination>((res) => {
         new Promise<PdfJs.OutlineDestination>((resolve) => {
             if (typeof dest === 'string') {
                 doc.getDestination(dest).then((destArray) => {

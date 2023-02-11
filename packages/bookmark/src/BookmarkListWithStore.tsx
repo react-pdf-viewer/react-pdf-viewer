@@ -6,8 +6,8 @@
  * @copyright 2019-2023 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import type { PdfJs, Store, StoreHandler } from '@react-pdf-viewer/core';
-import { SpecialZoomLevel, Spinner } from '@react-pdf-viewer/core';
+import type { Destination, PdfJs, Store, StoreHandler } from '@react-pdf-viewer/core';
+import { Spinner } from '@react-pdf-viewer/core';
 import * as React from 'react';
 import { BookmarkLoader } from './BookmarkLoader';
 import type { IsBookmarkExpanded } from './types/IsBookmarkExpanded';
@@ -25,10 +25,10 @@ export const BookmarkListWithStore: React.FC<{
         setCurrentDoc(doc);
     };
 
-    const jump = (pageIndex: number, bottomOffset: number, leftOffset: number, scaleTo: number | SpecialZoomLevel) => {
+    const jump = (destination: Destination) => {
         const jumpToDestination = store.get('jumpToDestination');
         if (jumpToDestination) {
-            jumpToDestination(pageIndex, bottomOffset, leftOffset, scaleTo);
+            jumpToDestination(destination);
         }
     };
 

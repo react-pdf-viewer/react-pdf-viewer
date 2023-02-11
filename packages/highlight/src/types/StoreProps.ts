@@ -6,18 +6,12 @@
  * @copyright 2019-2023 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import type { DestinationOffsetFromViewport } from '@react-pdf-viewer/core';
-import { SpecialZoomLevel } from '@react-pdf-viewer/core';
+import type { Destination } from '@react-pdf-viewer/core';
 import { Trigger } from '../structs/Trigger';
 import type { HighlightState } from './HighlightState';
 
 export interface StoreProps {
-    jumpToDestination?: (
-        pageIndex: number,
-        bottomOffset: number | DestinationOffsetFromViewport,
-        leftOffset: number | DestinationOffsetFromViewport,
-        scaleTo?: number | SpecialZoomLevel
-    ) => void;
+    jumpToDestination?(destination: Destination): void;
     getPagesContainer?(): HTMLElement;
     highlightState: HighlightState;
     rotation?: number;
