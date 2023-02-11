@@ -20,27 +20,51 @@ export const Link: React.FC<{
     outlines: PdfJs.Outline[];
     page: PdfJs.Page;
     pageIndex: number;
+    scale: number;
     viewport: PdfJs.ViewPort;
     onExecuteNamedAction(action: string): void;
     onJumpFromLinkAnnotation(destination: Destination): void;
     onJumpToDest(destination: Destination): void;
-}> = ({ annotation, annotationContainerRef, doc, outlines, page, pageIndex, viewport, onExecuteNamedAction, onJumpFromLinkAnnotation, onJumpToDest }) => {
-    const elementRef = React.useRef<HTMLLinkElement>();
+}> = ({
+    annotation,
+    annotationContainerRef,
+    doc,
+    outlines,
+    page,
+    pageIndex,
+    scale,
+    viewport,
+    onExecuteNamedAction,
+    onJumpFromLinkAnnotation,
+    onJumpToDest,
+}) => {
+    const elementRef = React.useRef<HTMLAnchorElement>();
 
     const link = (e: React.MouseEvent): void => {
         e.preventDefault();
         annotation.action
             ? onExecuteNamedAction(annotation.action)
             : getDestination(doc, annotation.dest).then((target) => {
-                    const element = elementRef.current;
-                    const annotationContainer = annotationContainerRef.current;
-                    if (element && annotationContainer) {
-                        const linkRect = element.getBoundingClientRect();
-                        const annotationLayerRect = annotationContainer.getBoundingClientRect();
-                        const leftOffset = linkRect.left - annotationLayerRect.left;
-                        const bottomOffset = annotationLayerRect.bottom - linkRect.bottom + linkRect.height;
-                        onJumpFromLinkAnnotation({ pageIndex, bottomOffset, leftOffset });
-                    }
+                  const element = elementRef.current;
+                  const annotationContainer = annotationContainerRef.current;
+                  if (element && annotationContainer) {
+                      const linkRect = element.getBoundingClientRect();
+
+                      // By default, we can't set the full size for the annotation layer
+                      // Otherwise, it's not possible to select the text in the pages
+                      // To calculate the bounding rectangle of annotation layer, we have to set the height and width styles
+                      annotationContainer.style.setProperty('height', '100%');
+                      annotationContainer.style.setProperty('width', '100%');
+                      const annotationLayerRect = annotationContainer.getBoundingClientRect();
+
+                      // Then remove them
+                      annotationContainer.style.removeProperty('height');
+                      annotationContainer.style.removeProperty('width');
+
+                      const leftOffset = (linkRect.left - annotationLayerRect.left) / scale;
+                      const bottomOffset = (annotationLayerRect.bottom - linkRect.bottom + linkRect.height) / scale;
+                      onJumpFromLinkAnnotation({ pageIndex, bottomOffset, leftOffset });
+                  }
 
                   onJumpToDest(target);
               });
@@ -99,7 +123,7 @@ export const Link: React.FC<{
                     data-annotation-id={annotation.id}
                     data-testid={`core__annotation--link-${annotation.id}`}
                 >
-                    <a {...attrs} />
+                    <a ref={elementRef} {...attrs} />
                 </div>
             )}
         </Annotation>

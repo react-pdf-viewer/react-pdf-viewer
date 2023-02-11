@@ -24,7 +24,18 @@ export const AnnotationLayer: React.FC<{
     onExecuteNamedAction(action: string): void;
     onJumpFromLinkAnnotation(destination: Destination): void;
     onJumpToDest(destination: Destination): void;
-}> = ({ doc, outlines, page, pageIndex, plugins, rotation, scale, onExecuteNamedAction, onJumpFromLinkAnnotation, onJumpToDest }) => {
+}> = ({
+    doc,
+    outlines,
+    page,
+    pageIndex,
+    plugins,
+    rotation,
+    scale,
+    onExecuteNamedAction,
+    onJumpFromLinkAnnotation,
+    onJumpToDest,
+}) => {
     const renderAnnotations = (annotations: PdfJs.Annotation[]): React.ReactElement => (
         <AnnotationLayerBody
             annotations={annotations}

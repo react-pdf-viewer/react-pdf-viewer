@@ -143,6 +143,7 @@ export const AnnotationLayerBody: React.FC<{
                                 outlines={outlines}
                                 page={page}
                                 pageIndex={pageIndex}
+                                scale={scale}
                                 viewport={clonedViewPort}
                                 onExecuteNamedAction={onExecuteNamedAction}
                                 onJumpFromLinkAnnotation={onJumpFromLinkAnnotation}

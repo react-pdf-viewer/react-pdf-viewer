@@ -17,6 +17,8 @@ export interface PluginFunctions {
     getPagesContainer(): HTMLElement;
     getViewerState(): ViewerState;
     jumpToDestination(destination: Destination): void;
+    jumpToNextDestination(): void;
+    jumpToPreviousDestination(): void;
     jumpToNextPage(): void;
     jumpToPreviousPage(): void;
     jumpToPage(pageIndex: number): void;
