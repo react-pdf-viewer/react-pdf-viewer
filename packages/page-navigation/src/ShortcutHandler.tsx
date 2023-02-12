@@ -9,7 +9,7 @@
 import type { Store } from '@react-pdf-viewer/core';
 import { isMac } from '@react-pdf-viewer/core';
 import * as React from 'react';
-import type { JumpFromAnnotation, StoreProps } from './types/StoreProps';
+import type { StoreProps } from './types/StoreProps';
 import { useCurrentPage } from './useCurrentPage';
 
 export const ShortcutHandler: React.FC<{
@@ -17,14 +17,6 @@ export const ShortcutHandler: React.FC<{
     numPages: number;
     store: Store<StoreProps>;
 }> = ({ containerRef, numPages, store }) => {
-    const jumpFromAnnotationRef = React.useRef<JumpFromAnnotation>(
-        store.get('jumpFromAnnotation') || {
-            bottomOffset: 0,
-            dest: '',
-            leftOffset: 0,
-            pageIndex: -1,
-        }
-    );
     const { currentPage } = useCurrentPage(store);
     const currentPageRef = React.useRef(currentPage);
     currentPageRef.current = currentPage;
@@ -56,15 +48,10 @@ export const ShortcutHandler: React.FC<{
         }
     };
 
-    const jumpToAnnotation = (target: JumpFromAnnotation) => {
-        const jumpToDestination = store.get('jumpToDestination');
-        if (jumpToDestination) {
-            const { pageIndex, bottomOffset, leftOffset } = target;
-            jumpToDestination({
-                pageIndex,
-                bottomOffset,
-                leftOffset,
-            });
+    const jumpToPreviousDestination = () => {
+        const jumpToPreviousDestination = store.get('jumpToPreviousDestination');
+        if (jumpToPreviousDestination) {
+            jumpToPreviousDestination();
         }
     };
 
@@ -90,23 +77,11 @@ export const ShortcutHandler: React.FC<{
         } else if (shouldGoToPreviousPage) {
             e.preventDefault();
             goToPreviousPage();
-        } else if (shouldJumpBackAnnotation && jumpFromAnnotationRef.current && jumpFromAnnotationRef.current.dest) {
+        } else if (shouldJumpBackAnnotation) {
             e.preventDefault();
-            jumpToAnnotation(jumpFromAnnotationRef.current);
+            jumpToPreviousDestination();
         }
     };
-
-    const handleJumpFromAnnotationChanged = (target: JumpFromAnnotation) => {
-        jumpFromAnnotationRef.current = target;
-    };
-
-    React.useEffect(() => {
-        store.subscribe('jumpFromAnnotation', handleJumpFromAnnotationChanged);
-
-        return () => {
-            store.unsubscribe('jumpFromAnnotation', handleJumpFromAnnotationChanged);
-        };
-    }, []);
 
     React.useEffect(() => {
         const containerEle = containerRef.current;

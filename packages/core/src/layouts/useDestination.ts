@@ -7,11 +7,11 @@
  */
 
 import * as React from 'react';
-import { useLIFOStack } from '../hooks/useLIFOStack';
+import { useStack } from '../hooks/useStack';
 import type { Destination } from '../types/Destination';
 
 export const useDestination = ({ getCurrentPage }: { getCurrentPage: () => number }) => {
-    const previousDestinations = useLIFOStack<Destination>(20);
+    const previousDestinations = useStack<Destination>(20);
 
     const markVisitedDestination = React.useCallback((destination: Destination) => {
         previousDestinations.add(destination);

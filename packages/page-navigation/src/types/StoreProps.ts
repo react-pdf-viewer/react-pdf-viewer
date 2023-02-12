@@ -8,20 +8,14 @@
 
 import type { Destination, PdfJs } from '@react-pdf-viewer/core';
 
-export interface JumpFromAnnotation {
-    bottomOffset: number;
-    dest: PdfJs.OutlineDestinationType;
-    leftOffset: number;
-    pageIndex: number;
-}
-
 export interface StoreProps {
     currentPage?: number;
     doc?: PdfJs.PdfDocument;
-    jumpFromAnnotation?: JumpFromAnnotation;
     jumpToDestination?(destination: Destination): void;
+    jumpToNextDestination?(): void;
     jumpToNextPage(): void;
-    jumpToPreviousPage(): void;
     jumpToPage?(pageIndex: number): void;
+    jumpToPreviousDestination?(): void;
+    jumpToPreviousPage(): void;
     numberOfPages?: number;
 }

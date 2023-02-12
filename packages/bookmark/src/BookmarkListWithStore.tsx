@@ -6,7 +6,7 @@
  * @copyright 2019-2023 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import type { Destination, PdfJs, Store, StoreHandler } from '@react-pdf-viewer/core';
+import type { PdfJs, Store, StoreHandler } from '@react-pdf-viewer/core';
 import { Spinner } from '@react-pdf-viewer/core';
 import * as React from 'react';
 import { BookmarkLoader } from './BookmarkLoader';
@@ -25,13 +25,6 @@ export const BookmarkListWithStore: React.FC<{
         setCurrentDoc(doc);
     };
 
-    const jump = (destination: Destination) => {
-        const jumpToDestination = store.get('jumpToDestination');
-        if (jumpToDestination) {
-            jumpToDestination(destination);
-        }
-    };
-
     React.useEffect(() => {
         store.subscribe('doc', handleDocumentChanged);
 
@@ -46,7 +39,6 @@ export const BookmarkListWithStore: React.FC<{
             isBookmarkExpanded={isBookmarkExpanded}
             renderBookmarkItem={renderBookmarkItem}
             store={store}
-            onJumpToDest={jump}
         />
     ) : (
         <div className="rpv-bookmark__loader">

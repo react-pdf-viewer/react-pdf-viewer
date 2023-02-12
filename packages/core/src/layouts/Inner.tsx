@@ -44,6 +44,7 @@ import { clearPagesCache, getPage } from '../utils/managePages';
 import { useVirtual } from '../virtualizer/useVirtual';
 import type { VirtualItem } from '../virtualizer/VirtualItem';
 import { calculateScale } from './calculateScale';
+import { useDestination } from './useDestination';
 import { useOutlines } from './useOutlines';
 
 const NUM_OVERSCAN_PAGES = 3;
@@ -109,8 +110,10 @@ export const Inner: React.FC<{
     const [currentPage, setCurrentPage] = React.useState(initialPage);
     const mostRecentVisitedRef = React.useRef(null);
 
-    // Visited destinations
-    const visitedDestinationsRef = React.useRef<Destination[]>([]);
+    // Manage visited destinations
+    const destinationManager = useDestination({
+        getCurrentPage: () => stateRef.current.pageIndex,
+    });
 
     const [rotation, setRotation] = React.useState(initialRotation);
     const previousRotation = usePrevious(rotation);
@@ -140,7 +143,6 @@ export const Inner: React.FC<{
     const renderQueue = useRenderQueue({ doc });
     React.useEffect(() => {
         return () => {
-            visitedDestinationsRef.current = [];
             clearPagesCache();
         };
     }, [docId]);
@@ -221,14 +223,12 @@ export const Inner: React.FC<{
 
     const getViewerState = () => stateRef.current;
 
-    const markVisitedDestination = React.useCallback((destination: Destination) => {
-        visitedDestinationsRef.current = visitedDestinationsRef.current.concat([destination]);
+    const handleJumpFromLinkAnnotation = React.useCallback((destination: Destination): void => {
+        destinationManager.markVisitedDestination(destination);
     }, []);
 
-    const jumpToDestination = React.useCallback((destionation: Destination): void => {
-        markVisitedDestination(destionation);
-
-        const { pageIndex, bottomOffset, leftOffset, scaleTo } = destionation;
+    const handleJumpToDestination = React.useCallback((destination: Destination): void => {
+        const { pageIndex, bottomOffset, leftOffset, scaleTo } = destination;
 
         const pagesContainer = pagesRef.current;
         const currentState = stateRef.current;
@@ -281,6 +281,20 @@ export const Inner: React.FC<{
                     break;
             }
         });
+    }, []);
+
+    const jumpToDestination = React.useCallback((destination: Destination): void => {
+        destinationManager.markVisitedDestination(destination);
+        handleJumpToDestination(destination);
+    }, []);
+
+    const jumpToNextDestination = React.useCallback(() => {}, []);
+
+    const jumpToPreviousDestination = React.useCallback(() => {
+        const lastDestination = destinationManager.getPreviousDestination();
+        if (lastDestination) {
+            handleJumpToDestination(lastDestination);
+        }
     }, []);
 
     const jumpToNextPage = React.useCallback(() => {
@@ -420,6 +434,8 @@ export const Inner: React.FC<{
             getPagesContainer,
             getViewerState,
             jumpToDestination,
+            jumpToNextDestination,
+            jumpToPreviousDestination,
             jumpToNextPage,
             jumpToPreviousPage,
             jumpToPage,
@@ -718,8 +734,8 @@ export const Inner: React.FC<{
                                                 shouldRender={renderPageIndex === item.index}
                                                 viewMode={currentViewMode}
                                                 onExecuteNamedAction={executeNamedAction}
-                                                onJumpFromLinkAnnotation={markVisitedDestination}
-                                                onJumpToDest={jumpToDestination}
+                                                onJumpFromLinkAnnotation={handleJumpFromLinkAnnotation}
+                                                onJumpToDest={handleJumpToDestination}
                                                 onRenderCompleted={handlePageRenderCompleted}
                                                 onRotatePage={rotatePage}
                                             />

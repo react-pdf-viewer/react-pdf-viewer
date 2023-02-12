@@ -40,6 +40,12 @@ export const Link: React.FC<{
 }) => {
     const elementRef = React.useRef<HTMLAnchorElement>();
 
+    // Determine the corresponding outline that has the same destination
+    const title =
+        outlines && outlines.length && annotation.dest && typeof annotation.dest === 'string'
+            ? outlines.find((item) => item.dest === annotation.dest)?.title
+            : '';
+
     const link = (e: React.MouseEvent): void => {
         e.preventDefault();
         annotation.action
@@ -63,7 +69,12 @@ export const Link: React.FC<{
 
                       const leftOffset = (linkRect.left - annotationLayerRect.left) / scale;
                       const bottomOffset = (annotationLayerRect.bottom - linkRect.bottom + linkRect.height) / scale;
-                      onJumpFromLinkAnnotation({ pageIndex, bottomOffset, leftOffset });
+                      onJumpFromLinkAnnotation({
+                          bottomOffset,
+                          label: title,
+                          leftOffset,
+                          pageIndex,
+                      });
                   }
 
                   onJumpToDest(target);
@@ -71,6 +82,7 @@ export const Link: React.FC<{
     };
 
     let isRenderable = !!(annotation.url || annotation.dest || annotation.action || annotation.unsafeUrl);
+
     // Many applications such as macOS Preview, Chrome, pdf.js don't enable links that have the `unsafeUrl` attribute
     // However, it is requested by our customers
     let attrs = {};
@@ -95,11 +107,6 @@ export const Link: React.FC<{
         };
     }
 
-    // Determine the corresponding outline that has the same destination
-    const title =
-        outlines && outlines.length && annotation.dest && typeof annotation.dest === 'string'
-            ? outlines.find((item) => item.dest === annotation.dest)?.title
-            : '';
     if (title) {
         attrs = Object.assign({}, attrs, {
             title,

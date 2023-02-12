@@ -8,7 +8,7 @@
 
 import * as React from 'react';
 
-export const useLIFOStack = <T>(maxLength: number) => {
+export const useStack = <T>(maxLength: number) => {
     const stackRef = React.useRef<T[]>([]);
 
     // Add an item to the stack

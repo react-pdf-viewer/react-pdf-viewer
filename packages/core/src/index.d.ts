@@ -55,9 +55,10 @@ export interface Plugin {
 export type DestinationOffsetFromViewport = (viewportWidth: number, viewportHeight: number) => number;
 
 export interface Destination {
-    pageIndex: number;
     bottomOffset: number | DestinationOffsetFromViewport;
+    label?: string;
     leftOffset: number | DestinationOffsetFromViewport;
+    pageIndex: number;
     scaleTo?: number | SpecialZoomLevel;
 }
 
@@ -65,6 +66,8 @@ export interface PluginFunctions {
     getPagesContainer(): HTMLElement;
     getViewerState(): ViewerState;
     jumpToDestination(destination: Destination): void;
+    jumpToNextDestination(): void;
+    jumpToPreviousDestination(): void;
     jumpToNextPage(): void;
     jumpToPreviousPage(): void;
     jumpToPage(pageIndex: number): void;

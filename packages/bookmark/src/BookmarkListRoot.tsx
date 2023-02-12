@@ -6,8 +6,7 @@
  * @copyright 2019-2023 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import type { Destination, PdfJs, Store } from '@react-pdf-viewer/core';
-import { getDestination } from '@react-pdf-viewer/core';
+import type { PdfJs, Store } from '@react-pdf-viewer/core';
 import * as React from 'react';
 import { BookmarkList } from './BookmarkList';
 import type { IsBookmarkExpanded } from './types/IsBookmarkExpanded';
@@ -25,15 +24,8 @@ export const BookmarkListRoot: React.FC<{
     isBookmarkExpanded?: IsBookmarkExpanded;
     renderBookmarkItem?: RenderBookmarkItem;
     store: Store<StoreProps>;
-    onJumpToDest(destination: Destination): void;
-}> = ({ bookmarks, doc, isBookmarkExpanded, renderBookmarkItem, store, onJumpToDest }) => {
+}> = ({ bookmarks, doc, isBookmarkExpanded, renderBookmarkItem, store }) => {
     const containerRef = React.useRef<HTMLDivElement>();
-
-    const jumpToDest = (dest: PdfJs.OutlineDestinationType): void => {
-        getDestination(doc, dest).then((target) => {
-            onJumpToDest(target);
-        });
-    };
 
     const handleKeyDown = (e: KeyboardEvent) => {
         const container = containerRef.current;
@@ -166,7 +158,6 @@ export const BookmarkListRoot: React.FC<{
                 pathFromRoot=""
                 renderBookmarkItem={renderBookmarkItem}
                 store={store}
-                onJumpToDest={jumpToDest}
             />
         </div>
     );
