@@ -7,14 +7,7 @@
  */
 
 import type { LocalizationMap, PdfJs, Store } from '@react-pdf-viewer/core';
-import {
-    classNames,
-    LocalizationContext,
-    SpecialZoomLevel,
-    Spinner,
-    TextDirection,
-    ThemeContext,
-} from '@react-pdf-viewer/core';
+import { classNames, LocalizationContext, Spinner, TextDirection, ThemeContext } from '@react-pdf-viewer/core';
 import * as React from 'react';
 import { BookmarkListRoot } from './BookmarkListRoot';
 import type { IsBookmarkExpanded } from './types/IsBookmarkExpanded';
@@ -31,8 +24,7 @@ export const BookmarkLoader: React.FC<{
     isBookmarkExpanded?: IsBookmarkExpanded;
     renderBookmarkItem?: RenderBookmarkItem;
     store: Store<StoreProps>;
-    onJumpToDest(pageIndex: number, bottomOffset: number, leftOffset: number, scaleTo: number | SpecialZoomLevel): void;
-}> = ({ doc, isBookmarkExpanded, renderBookmarkItem, store, onJumpToDest }) => {
+}> = ({ doc, isBookmarkExpanded, renderBookmarkItem, store }) => {
     const { l10n } = React.useContext(LocalizationContext);
     const { direction } = React.useContext(ThemeContext);
     const isRtl = direction === TextDirection.RightToLeft;
@@ -82,7 +74,6 @@ export const BookmarkLoader: React.FC<{
                 isBookmarkExpanded={isBookmarkExpanded}
                 renderBookmarkItem={renderBookmarkItem}
                 store={store}
-                onJumpToDest={onJumpToDest}
             />
         </div>
     );

@@ -19,6 +19,7 @@ import { ScrollMode } from '../structs/ScrollMode';
 import { SpecialZoomLevel } from '../structs/SpecialZoomLevel';
 import { ViewMode } from '../structs/ViewMode';
 import { TextDirection, ThemeContext } from '../theme/ThemeContext';
+import type { Destination } from '../types/Destination';
 import type { DocumentLoadEvent } from '../types/DocumentLoadEvent';
 import type { LocalizationMap } from '../types/LocalizationMap';
 import type { Offset } from '../types/Offset';
@@ -28,7 +29,7 @@ import type { PageLayout } from '../types/PageLayout';
 import type { PageSize } from '../types/PageSize';
 import type { PdfJs } from '../types/PdfJs';
 import type { Plugin } from '../types/Plugin';
-import type { DestinationOffsetFromViewport, PluginFunctions } from '../types/PluginFunctions';
+import type { PluginFunctions } from '../types/PluginFunctions';
 import type { Rect } from '../types/Rect';
 import type { RenderPage } from '../types/RenderPage';
 import type { RotateEvent } from '../types/RotateEvent';
@@ -43,6 +44,7 @@ import { clearPagesCache, getPage } from '../utils/managePages';
 import { useVirtual } from '../virtualizer/useVirtual';
 import type { VirtualItem } from '../virtualizer/VirtualItem';
 import { calculateScale } from './calculateScale';
+import { useDestination } from './useDestination';
 import { useOutlines } from './useOutlines';
 
 const NUM_OVERSCAN_PAGES = 3;
@@ -107,6 +109,11 @@ export const Inner: React.FC<{
     const pagesRef = React.useRef<HTMLDivElement>();
     const [currentPage, setCurrentPage] = React.useState(initialPage);
     const mostRecentVisitedRef = React.useRef(null);
+
+    // Manage visited destinations
+    const destinationManager = useDestination({
+        getCurrentPage: () => stateRef.current.pageIndex,
+    });
 
     const [rotation, setRotation] = React.useState(initialRotation);
     const previousRotation = usePrevious(rotation);
@@ -216,68 +223,84 @@ export const Inner: React.FC<{
 
     const getViewerState = () => stateRef.current;
 
-    const jumpToDestination = React.useCallback(
-        (
-            pageIndex: number,
-            bottomOffset: number | DestinationOffsetFromViewport,
-            leftOffset: number | DestinationOffsetFromViewport,
-            scaleTo?: number | SpecialZoomLevel
-        ): void => {
-            const pagesContainer = pagesRef.current;
-            const currentState = stateRef.current;
-            if (!pagesContainer || !currentState) {
-                return;
+    const handleJumpFromLinkAnnotation = React.useCallback((destination: Destination): void => {
+        destinationManager.markVisitedDestination(destination);
+    }, []);
+
+    const handleJumpToDestination = React.useCallback((destination: Destination): void => {
+        const { pageIndex, bottomOffset, leftOffset, scaleTo } = destination;
+
+        const pagesContainer = pagesRef.current;
+        const currentState = stateRef.current;
+        if (!pagesContainer || !currentState) {
+            return;
+        }
+
+        getPage(doc, pageIndex).then((page) => {
+            const viewport = page.getViewport({ scale: 1 });
+            let top = 0;
+            const bottom =
+                (typeof bottomOffset === 'function' ? bottomOffset(viewport.width, viewport.height) : bottomOffset) ||
+                0;
+            let left =
+                (typeof leftOffset === 'function' ? leftOffset(viewport.width, viewport.height) : leftOffset) || 0;
+            let updateScale = currentState.scale;
+
+            switch (scaleTo) {
+                case SpecialZoomLevel.PageFit:
+                    top = 0;
+                    left = 0;
+                    zoom(SpecialZoomLevel.PageFit);
+                    break;
+                case SpecialZoomLevel.PageWidth:
+                    updateScale = calculateScale(
+                        pagesContainer,
+                        pageSizes[pageIndex].pageHeight,
+                        pageSizes[pageIndex].pageWidth,
+                        SpecialZoomLevel.PageWidth,
+                        viewMode,
+                        numPages
+                    );
+                    top = (viewport.height - bottom) * updateScale;
+                    left = left * updateScale;
+                    zoom(updateScale);
+                    break;
+                default:
+                    top = (viewport.height - bottom) * updateScale;
+                    left = left * updateScale;
+                    break;
             }
 
-            getPage(doc, pageIndex).then((page) => {
-                const viewport = page.getViewport({ scale: 1 });
-                let top = 0;
-                const bottom =
-                    (typeof bottomOffset === 'function'
-                        ? bottomOffset(viewport.width, viewport.height)
-                        : bottomOffset) || 0;
-                let left =
-                    (typeof leftOffset === 'function' ? leftOffset(viewport.width, viewport.height) : leftOffset) || 0;
-                let updateScale = currentState.scale;
+            switch (currentState.scrollMode) {
+                case ScrollMode.Horizontal:
+                    virtualizer.scrollToItem(pageIndex, { left, top: 0 });
+                    break;
+                case ScrollMode.Vertical:
+                default:
+                    virtualizer.scrollToItem(pageIndex, { left: 0, top });
+                    break;
+            }
+        });
+    }, []);
 
-                switch (scaleTo) {
-                    case SpecialZoomLevel.PageFit:
-                        top = 0;
-                        left = 0;
-                        zoom(SpecialZoomLevel.PageFit);
-                        break;
-                    case SpecialZoomLevel.PageWidth:
-                        updateScale = calculateScale(
-                            pagesContainer,
-                            pageSizes[pageIndex].pageHeight,
-                            pageSizes[pageIndex].pageWidth,
-                            SpecialZoomLevel.PageWidth,
-                            viewMode,
-                            numPages
-                        );
-                        top = (viewport.height - bottom) * updateScale;
-                        left = left * updateScale;
-                        zoom(updateScale);
-                        break;
-                    default:
-                        top = (viewport.height - bottom) * updateScale;
-                        left = left * updateScale;
-                        break;
-                }
+    const jumpToDestination = React.useCallback((destination: Destination): void => {
+        destinationManager.markVisitedDestination(destination);
+        handleJumpToDestination(destination);
+    }, []);
 
-                switch (currentState.scrollMode) {
-                    case ScrollMode.Horizontal:
-                        virtualizer.scrollToItem(pageIndex, { left, top: 0 });
-                        break;
-                    case ScrollMode.Vertical:
-                    default:
-                        virtualizer.scrollToItem(pageIndex, { left: 0, top });
-                        break;
-                }
-            });
-        },
-        []
-    );
+    const jumpToNextDestination = React.useCallback(() => {
+        const nextDestination = destinationManager.getNextDestination();
+        if (nextDestination) {
+            handleJumpToDestination(nextDestination);
+        }
+    }, []);
+
+    const jumpToPreviousDestination = React.useCallback(() => {
+        const lastDestination = destinationManager.getPreviousDestination();
+        if (lastDestination) {
+            handleJumpToDestination(lastDestination);
+        }
+    }, []);
 
     const jumpToNextPage = React.useCallback(() => {
         virtualizer.scrollToNextItem(stateRef.current.pageIndex, ZERO_OFFSET);
@@ -416,6 +439,8 @@ export const Inner: React.FC<{
             getPagesContainer,
             getViewerState,
             jumpToDestination,
+            jumpToNextDestination,
+            jumpToPreviousDestination,
             jumpToNextPage,
             jumpToPreviousPage,
             jumpToPage,
@@ -714,6 +739,7 @@ export const Inner: React.FC<{
                                                 shouldRender={renderPageIndex === item.index}
                                                 viewMode={currentViewMode}
                                                 onExecuteNamedAction={executeNamedAction}
+                                                onJumpFromLinkAnnotation={handleJumpFromLinkAnnotation}
                                                 onJumpToDest={jumpToDestination}
                                                 onRenderCompleted={handlePageRenderCompleted}
                                                 onRotatePage={rotatePage}

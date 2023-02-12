@@ -6,8 +6,7 @@
  * @copyright 2019-2023 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import type { PdfJs, PluginOnTextLayerRender } from '@react-pdf-viewer/core';
-import { SpecialZoomLevel } from '@react-pdf-viewer/core';
+import type { Destination, PdfJs, PluginOnTextLayerRender } from '@react-pdf-viewer/core';
 import type { MatchPosition } from './MatchPosition';
 import type { NormalizedKeyword } from './NormalizedKeyword';
 import type { SearchTargetPageFilter } from './SearchTargetPage';
@@ -20,12 +19,7 @@ export interface StoreProps {
     keyword?: NormalizedKeyword[];
     matchPosition: MatchPosition;
     renderStatus: Map<number, PluginOnTextLayerRender>;
-    jumpToDestination?(
-        pageIndex: number,
-        bottomOffset: number,
-        leftOffset: number,
-        scaleTo: number | SpecialZoomLevel
-    ): void;
+    jumpToDestination?(destination: Destination): void;
     jumpToPage?(pageIndex: number): void;
     targetPageFilter?: SearchTargetPageFilter;
 }

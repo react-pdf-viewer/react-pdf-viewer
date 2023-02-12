@@ -22,18 +22,7 @@ export const BookmarkList: React.FC<{
     pathFromRoot: string;
     renderBookmarkItem?: RenderBookmarkItem;
     store: Store<StoreProps>;
-    onJumpToDest(dest: PdfJs.OutlineDestinationType): void;
-}> = ({
-    bookmarks,
-    depth = 0,
-    doc,
-    isBookmarkExpanded,
-    isRoot,
-    pathFromRoot,
-    renderBookmarkItem,
-    store,
-    onJumpToDest,
-}) => (
+}> = ({ bookmarks, depth = 0, doc, isBookmarkExpanded, isRoot, pathFromRoot, renderBookmarkItem, store }) => (
     <ul className="rpv-bookmark__list" role={isRoot ? 'tree' : 'group'} tabIndex={-1}>
         {bookmarks.map((bookmark, index) => (
             <BookmarkItem
@@ -47,7 +36,6 @@ export const BookmarkList: React.FC<{
                 pathFromRoot={pathFromRoot}
                 renderBookmarkItem={renderBookmarkItem}
                 store={store}
-                onJumpToDest={onJumpToDest}
             />
         ))}
     </ul>

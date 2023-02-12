@@ -1,0 +1,43 @@
+/**
+ * A React component to view a PDF document
+ *
+ * @see https://react-pdf-viewer.dev
+ * @license https://react-pdf-viewer.dev/license
+ * @copyright 2019-2023 Nguyen Huu Phuoc <me@phuoc.ng>
+ */
+
+import * as React from 'react';
+import { useStack } from '../hooks/useStack';
+import { useQueue } from '../hooks/useQueue';
+import type { Destination } from '../types/Destination';
+
+export const useDestination = ({ getCurrentPage }: { getCurrentPage: () => number }) => {
+    const previousDestinations = useStack<Destination>(20);
+    const nextDestinations = useQueue<Destination>(20);
+
+    const getNextDestination = (): Destination | null => {
+        const nextDest = nextDestinations.dequeue();
+        if (nextDest) {
+            previousDestinations.push(nextDest);
+        }
+        return nextDest;
+    };
+
+    const getPreviousDestination = (): Destination | null => {
+        const prevDest = previousDestinations.pop();
+        if (prevDest) {
+            nextDestinations.enqueue(prevDest);
+        }
+        return prevDest;
+    };
+
+    const markVisitedDestination = React.useCallback((destination: Destination) => {
+        previousDestinations.push(destination);
+    }, []);
+
+    return {
+        getNextDestination,
+        getPreviousDestination,
+        markVisitedDestination,
+    };
+};

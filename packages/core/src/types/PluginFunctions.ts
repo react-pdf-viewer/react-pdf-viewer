@@ -10,19 +10,15 @@ import { RotateDirection } from '../structs/RotateDirection';
 import { ScrollMode } from '../structs/ScrollMode';
 import { SpecialZoomLevel } from '../structs/SpecialZoomLevel';
 import { ViewMode } from '../structs/ViewMode';
+import type { Destination } from './Destination';
 import type { ViewerState } from './ViewerState';
-
-export type DestinationOffsetFromViewport = (viewportWidth: number, viewportHeight: number) => number;
 
 export interface PluginFunctions {
     getPagesContainer(): HTMLElement;
     getViewerState(): ViewerState;
-    jumpToDestination(
-        pageIndex: number,
-        bottomOffset: number | DestinationOffsetFromViewport,
-        leftOffset: number | DestinationOffsetFromViewport,
-        scaleTo: number | SpecialZoomLevel
-    ): void;
+    jumpToDestination(destination: Destination): void;
+    jumpToNextDestination(): void;
+    jumpToPreviousDestination(): void;
     jumpToNextPage(): void;
     jumpToPreviousPage(): void;
     jumpToPage(pageIndex: number): void;

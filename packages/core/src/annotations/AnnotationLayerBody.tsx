@@ -8,10 +8,9 @@
 
 import * as React from 'react';
 import { useIsomorphicLayoutEffect } from '../hooks/useIsomorphicLayoutEffect';
-import { SpecialZoomLevel } from '../structs/SpecialZoomLevel';
+import type { Destination } from '../types/Destination';
 import type { PdfJs } from '../types/PdfJs';
 import type { Plugin } from '../types/Plugin';
-import type { DestinationOffsetFromViewport } from '../types/PluginFunctions';
 import { AnnotationType } from './AnnotationType';
 import { Caret } from './Caret';
 import { Circle } from './Circle';
@@ -41,12 +40,8 @@ export const AnnotationLayerBody: React.FC<{
     rotation: number;
     scale: number;
     onExecuteNamedAction(action: string): void;
-    onJumpToDest(
-        pageIndex: number,
-        bottomOffset: number | DestinationOffsetFromViewport,
-        leftOffset: number | DestinationOffsetFromViewport,
-        scaleTo?: number | SpecialZoomLevel
-    ): void;
+    onJumpFromLinkAnnotation(destination: Destination): void;
+    onJumpToDest(destination: Destination): void;
 }> = ({
     annotations,
     doc,
@@ -57,6 +52,7 @@ export const AnnotationLayerBody: React.FC<{
     rotation,
     scale,
     onExecuteNamedAction,
+    onJumpFromLinkAnnotation,
     onJumpToDest,
 }) => {
     const containerRef = React.useRef<HTMLDivElement>();
@@ -142,11 +138,15 @@ export const AnnotationLayerBody: React.FC<{
                             <Link
                                 key={annotation.id}
                                 annotation={annotation}
+                                annotationContainerRef={containerRef}
                                 doc={doc}
                                 outlines={outlines}
                                 page={page}
+                                pageIndex={pageIndex}
+                                scale={scale}
                                 viewport={clonedViewPort}
                                 onExecuteNamedAction={onExecuteNamedAction}
+                                onJumpFromLinkAnnotation={onJumpFromLinkAnnotation}
                                 onJumpToDest={onJumpToDest}
                             />
                         );

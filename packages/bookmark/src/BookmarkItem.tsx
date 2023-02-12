@@ -6,6 +6,7 @@
  * @copyright 2019-2023 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
+import { getDestination } from '@react-pdf-viewer/core';
 import type { PdfJs, Store } from '@react-pdf-viewer/core';
 import * as React from 'react';
 import { BookmarkList } from './BookmarkList';
@@ -26,7 +27,6 @@ export const BookmarkItem: React.FC<{
     pathFromRoot: string;
     renderBookmarkItem?: RenderBookmarkItem;
     store: Store<StoreProps>;
-    onJumpToDest(dest: PdfJs.OutlineDestinationType): void;
 }> = ({
     bookmark,
     depth,
@@ -37,7 +37,6 @@ export const BookmarkItem: React.FC<{
     pathFromRoot,
     renderBookmarkItem,
     store,
-    onJumpToDest,
 }) => {
     const path = pathFromRoot ? `${pathFromRoot}.${index}` : `${index}`;
     const defaultIsCollapsed = React.useMemo(() => shouldBeCollapsed(bookmark), [bookmark]);
@@ -57,15 +56,29 @@ export const BookmarkItem: React.FC<{
         setExpanded(newState);
     };
 
+    const jumpToDest = () => {
+        const { dest } = bookmark;
+        const jumpToDestination = store.get('jumpToDestination');
+
+        getDestination(doc, dest).then((target) => {
+            if (jumpToDestination) {
+                jumpToDestination({
+                    label: bookmark.title,
+                    ...target,
+                });
+            }
+        });
+    };
+
     const clickBookmark = (): void => {
         if (hasSubItems && bookmark.dest) {
-            onJumpToDest(bookmark.dest);
+            jumpToDest();
         }
     };
 
     const clickItem = (): void => {
         if (!hasSubItems && bookmark.dest) {
-            onJumpToDest(bookmark.dest);
+            jumpToDest();
         }
     };
 
@@ -152,7 +165,6 @@ export const BookmarkItem: React.FC<{
                     pathFromRoot={path}
                     renderBookmarkItem={renderBookmarkItem}
                     store={store}
-                    onJumpToDest={onJumpToDest}
                 />
             )}
         </li>

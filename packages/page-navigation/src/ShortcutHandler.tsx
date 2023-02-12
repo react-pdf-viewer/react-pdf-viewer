@@ -9,7 +9,7 @@
 import type { Store } from '@react-pdf-viewer/core';
 import { isMac } from '@react-pdf-viewer/core';
 import * as React from 'react';
-import type { JumpFromAnnotation, StoreProps } from './types/StoreProps';
+import type { StoreProps } from './types/StoreProps';
 import { useCurrentPage } from './useCurrentPage';
 
 export const ShortcutHandler: React.FC<{
@@ -17,14 +17,6 @@ export const ShortcutHandler: React.FC<{
     numPages: number;
     store: Store<StoreProps>;
 }> = ({ containerRef, numPages, store }) => {
-    const jumpFromAnnotationRef = React.useRef<JumpFromAnnotation>(
-        store.get('jumpFromAnnotation') || {
-            bottomOffset: 0,
-            dest: '',
-            leftOffset: 0,
-            pageIndex: -1,
-        }
-    );
     const { currentPage } = useCurrentPage(store);
     const currentPageRef = React.useRef(currentPage);
     currentPageRef.current = currentPage;
@@ -56,11 +48,17 @@ export const ShortcutHandler: React.FC<{
         }
     };
 
-    const jumpToAnnotation = (target: JumpFromAnnotation) => {
-        const jumpToDestination = store.get('jumpToDestination');
-        if (jumpToDestination) {
-            const { pageIndex, bottomOffset, leftOffset } = target;
-            jumpToDestination(pageIndex, bottomOffset, leftOffset);
+    const jumpToNextDestination = () => {
+        const jumpToNextDestination = store.get('jumpToNextDestination');
+        if (jumpToNextDestination) {
+            jumpToNextDestination();
+        }
+    };
+
+    const jumpToPreviousDestination = () => {
+        const jumpToPreviousDestination = store.get('jumpToPreviousDestination');
+        if (jumpToPreviousDestination) {
+            jumpToPreviousDestination();
         }
     };
 
@@ -78,31 +76,33 @@ export const ShortcutHandler: React.FC<{
         const shouldGoToPreviousPage =
             (e.altKey && e.key === 'ArrowUp') || (!e.shiftKey && !e.altKey && e.key === 'PageUp');
 
-        const isCommandPressed = isMac() ? e.metaKey && !e.ctrlKey : e.altKey;
-        const shouldJumpBackAnnotation = isCommandPressed && e.key === 'ArrowLeft';
         if (shouldGoToNextPage) {
             e.preventDefault();
             goToNextPage();
-        } else if (shouldGoToPreviousPage) {
+            return;
+        }
+        if (shouldGoToPreviousPage) {
             e.preventDefault();
             goToPreviousPage();
-        } else if (shouldJumpBackAnnotation && jumpFromAnnotationRef.current && jumpFromAnnotationRef.current.dest) {
-            e.preventDefault();
-            jumpToAnnotation(jumpFromAnnotationRef.current);
+            return;
+        }
+
+        const isCommandPressed = isMac() ? e.metaKey && !e.ctrlKey : e.altKey;
+        if (isCommandPressed) {
+            switch (e.key) {
+                case 'ArrowLeft':
+                    e.preventDefault();
+                    jumpToPreviousDestination();
+                    break;
+                case 'ArrowRight':
+                    e.preventDefault();
+                    jumpToNextDestination();
+                    break;
+                default:
+                    break;
+            }
         }
     };
-
-    const handleJumpFromAnnotationChanged = (target: JumpFromAnnotation) => {
-        jumpFromAnnotationRef.current = target;
-    };
-
-    React.useEffect(() => {
-        store.subscribe('jumpFromAnnotation', handleJumpFromAnnotationChanged);
-
-        return () => {
-            store.unsubscribe('jumpFromAnnotation', handleJumpFromAnnotationChanged);
-        };
-    }, []);
 
     React.useEffect(() => {
         const containerEle = containerRef.current;
