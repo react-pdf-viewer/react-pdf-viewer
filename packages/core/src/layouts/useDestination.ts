@@ -11,14 +11,19 @@ import { useStack } from '../hooks/useStack';
 import { useQueue } from '../hooks/useQueue';
 import type { Destination } from '../types/Destination';
 
+const MAX_QUEUE_LENGTH = 50;
+
 export const useDestination = ({ getCurrentPage }: { getCurrentPage: () => number }) => {
-    const previousDestinations = useStack<Destination>(20);
-    const nextDestinations = useQueue<Destination>(20);
+    const previousDestinations = useStack<Destination>(MAX_QUEUE_LENGTH);
+    const nextDestinations = useQueue<Destination>(MAX_QUEUE_LENGTH);
 
     const getNextDestination = (): Destination | null => {
         const nextDest = nextDestinations.dequeue();
         if (nextDest) {
             previousDestinations.push(nextDest);
+        }
+        if (nextDest && nextDest.pageIndex === getCurrentPage()) {
+            return getNextDestination();
         }
         return nextDest;
     };
@@ -28,6 +33,10 @@ export const useDestination = ({ getCurrentPage }: { getCurrentPage: () => numbe
         if (prevDest) {
             nextDestinations.enqueue(prevDest);
         }
+        if (prevDest && prevDest.pageIndex === getCurrentPage()) {
+            return getPreviousDestination();
+        }
+
         return prevDest;
     };
 
