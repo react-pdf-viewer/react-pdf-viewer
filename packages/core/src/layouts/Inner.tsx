@@ -288,7 +288,12 @@ export const Inner: React.FC<{
         handleJumpToDestination(destination);
     }, []);
 
-    const jumpToNextDestination = React.useCallback(() => {}, []);
+    const jumpToNextDestination = React.useCallback(() => {
+        const nextDestination = destinationManager.getNextDestination();
+        if (nextDestination) {
+            handleJumpToDestination(nextDestination);
+        }
+    }, []);
 
     const jumpToPreviousDestination = React.useCallback(() => {
         const lastDestination = destinationManager.getPreviousDestination();

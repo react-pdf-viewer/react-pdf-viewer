@@ -8,20 +8,35 @@
 
 import * as React from 'react';
 import { useStack } from '../hooks/useStack';
+import { useQueue } from '../hooks/useQueue';
 import type { Destination } from '../types/Destination';
 
 export const useDestination = ({ getCurrentPage }: { getCurrentPage: () => number }) => {
     const previousDestinations = useStack<Destination>(20);
+    const nextDestinations = useQueue<Destination>(20);
 
-    const markVisitedDestination = React.useCallback((destination: Destination) => {
-        previousDestinations.add(destination);
-    }, []);
-
-    const getPreviousDestination = (): Destination | null => {
-        return previousDestinations.pop();
+    const getNextDestination = (): Destination | null => {
+        const nextDest = nextDestinations.dequeue();
+        if (nextDest) {
+            previousDestinations.push(nextDest);
+        }
+        return nextDest;
     };
 
+    const getPreviousDestination = (): Destination | null => {
+        const prevDest = previousDestinations.pop();
+        if (prevDest) {
+            nextDestinations.enqueue(prevDest);
+        }
+        return prevDest;
+    };
+
+    const markVisitedDestination = React.useCallback((destination: Destination) => {
+        previousDestinations.push(destination);
+    }, []);
+
     return {
+        getNextDestination,
         getPreviousDestination,
         markVisitedDestination,
     };

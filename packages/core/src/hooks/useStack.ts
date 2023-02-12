@@ -11,20 +11,8 @@ import * as React from 'react';
 export const useStack = <T>(maxLength: number) => {
     const stackRef = React.useRef<T[]>([]);
 
-    // Add an item to the stack
-    const add = (item: T): void => {
-        const stack = stackRef.current;
-        if (stack.length + 1 > maxLength) {
-            stack.shift();
-        }
-        stack.push(item);
-        stackRef.current = stack;
-    };
-
-    // Get the last item
-    const last = (): T | null => {
-        const size = stackRef.current.length;
-        return size === 0 ? null : stackRef.current[size - 1];
+    const map = <V>(transformer: (item: T) => V): V[] => {
+        return stackRef.current.map((item) => transformer(item));
     };
 
     // Remove the last item
@@ -39,8 +27,14 @@ export const useStack = <T>(maxLength: number) => {
         return lastItem;
     };
 
-    const map = <V>(transformer: (item: T) => V): V[] => {
-        return stackRef.current.map((item) => transformer(item));
+    // Add an item to the stack
+    const push = (item: T): void => {
+        const stack = stackRef.current;
+        if (stack.length + 1 > maxLength) {
+            stack.shift();
+        }
+        stack.push(item);
+        stackRef.current = stack;
     };
 
     React.useEffect(() => {
@@ -51,8 +45,7 @@ export const useStack = <T>(maxLength: number) => {
     }, []);
 
     return {
-        add,
-        last,
+        push,
         map,
         pop,
     };
