@@ -11,15 +11,6 @@ import * as React from 'react';
 export const useQueue = <T>(maxLength: number) => {
     const queueRef = React.useRef<T[]>([]);
 
-    // Add an item to the queue
-    const enqueue = (item: T): void => {
-        const queue = queueRef.current;
-        if (queue.length + 1 > maxLength) {
-            queue.pop();
-        }
-        queueRef.current = [item].concat(queue);
-    };
-
     // Get the first item of queue
     const dequeue = (): T | null => {
         const queue = queueRef.current;
@@ -30,6 +21,15 @@ export const useQueue = <T>(maxLength: number) => {
         const firstItem = queue.shift();
         queueRef.current = queue;
         return firstItem || null;
+    };
+
+    // Add an item to the queue
+    const enqueue = (item: T): void => {
+        const queue = queueRef.current;
+        if (queue.length + 1 > maxLength) {
+            queue.pop();
+        }
+        queueRef.current = [item].concat(queue);
     };
 
     const map = <V>(transformer: (item: T) => V): V[] => {
@@ -44,8 +44,8 @@ export const useQueue = <T>(maxLength: number) => {
     }, []);
 
     return {
-        enqueue,
         dequeue,
+        enqueue,
         map,
     };
 };
