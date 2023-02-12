@@ -740,7 +740,7 @@ export const Inner: React.FC<{
                                                 viewMode={currentViewMode}
                                                 onExecuteNamedAction={executeNamedAction}
                                                 onJumpFromLinkAnnotation={handleJumpFromLinkAnnotation}
-                                                onJumpToDest={handleJumpToDestination}
+                                                onJumpToDest={jumpToDestination}
                                                 onRenderCompleted={handlePageRenderCompleted}
                                                 onRotatePage={rotatePage}
                                             />
