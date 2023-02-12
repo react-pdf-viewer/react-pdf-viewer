@@ -48,6 +48,13 @@ export const ShortcutHandler: React.FC<{
         }
     };
 
+    const jumpToNextDestination = () => {
+        const jumpToNextDestination = store.get('jumpToNextDestination');
+        if (jumpToNextDestination) {
+            jumpToNextDestination();
+        }
+    };
+
     const jumpToPreviousDestination = () => {
         const jumpToPreviousDestination = store.get('jumpToPreviousDestination');
         if (jumpToPreviousDestination) {
@@ -69,17 +76,31 @@ export const ShortcutHandler: React.FC<{
         const shouldGoToPreviousPage =
             (e.altKey && e.key === 'ArrowUp') || (!e.shiftKey && !e.altKey && e.key === 'PageUp');
 
-        const isCommandPressed = isMac() ? e.metaKey && !e.ctrlKey : e.altKey;
-        const shouldJumpBackAnnotation = isCommandPressed && e.key === 'ArrowLeft';
         if (shouldGoToNextPage) {
             e.preventDefault();
             goToNextPage();
-        } else if (shouldGoToPreviousPage) {
+            return;
+        }
+        if (shouldGoToPreviousPage) {
             e.preventDefault();
             goToPreviousPage();
-        } else if (shouldJumpBackAnnotation) {
-            e.preventDefault();
-            jumpToPreviousDestination();
+            return;
+        }
+
+        const isCommandPressed = isMac() ? e.metaKey && !e.ctrlKey : e.altKey;
+        if (isCommandPressed) {
+            switch (e.key) {
+                case 'ArrowLeft':
+                    e.preventDefault();
+                    jumpToPreviousDestination();
+                    break;
+                case 'ArrowRight':
+                    e.preventDefault();
+                    jumpToNextDestination();
+                    break;
+                default:
+                    break;
+            }
         }
     };
 
