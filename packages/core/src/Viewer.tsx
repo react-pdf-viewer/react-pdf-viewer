@@ -51,6 +51,8 @@ export const Viewer: React.FC<{
     // The default zoom level
     // If it's not set, the initial zoom level will be calculated based on the dimesion of page and the container width
     defaultScale?: number | SpecialZoomLevel;
+    // Enable smooth scroll
+    enableSmoothScroll?: boolean;
     fileUrl: string | Uint8Array;
     // Additional authentication headers
     httpHeaders?: Record<string, string | string[]>;
@@ -85,6 +87,7 @@ export const Viewer: React.FC<{
 }> = ({
     characterMap,
     defaultScale,
+    enableSmoothScroll = true,
     fileUrl,
     httpHeaders = {},
     initialPage = 0,
@@ -208,6 +211,7 @@ export const Viewer: React.FC<{
                                             }}
                                             defaultScale={defaultScale}
                                             doc={doc}
+                                            enableSmoothScroll={enableSmoothScroll}
                                             initialPage={initialPage}
                                             initialRotation={initialRotation}
                                             initialScale={initialScale}

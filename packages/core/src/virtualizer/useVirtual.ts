@@ -41,6 +41,7 @@ const VIRTUAL_INDEX_ATTR = 'data-virtual-index';
 const IO_THRESHOLD = [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1];
 
 export const useVirtual = ({
+    enableSmoothScroll,
     isRtl,
     numberOfItems,
     parentRef,
@@ -50,6 +51,7 @@ export const useVirtual = ({
     scrollMode,
     viewMode,
 }: {
+    enableSmoothScroll: boolean;
     isRtl: boolean;
     numberOfItems: number;
     parentRef: React.MutableRefObject<HTMLDivElement>;
@@ -246,11 +248,11 @@ export const useVirtual = ({
                         left: withOffset.left + measurement.start.left,
                         top: withOffset.top + measurement.start.top,
                     },
-                    true
+                    enableSmoothScroll
                 );
             }
         },
-        [scrollTo]
+        [scrollTo, enableSmoothScroll]
     );
 
     const scrollToSmallestItemAbove = React.useCallback((index: number, offset: Offset) => {
