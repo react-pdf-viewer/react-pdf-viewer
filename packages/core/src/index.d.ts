@@ -524,6 +524,8 @@ export interface ViewerProps {
     // If it's not set, the initial zoom level will be calculated based on the dimesion of page and the container width
     // So that, the document will fit best within the container
     defaultScale?: number | SpecialZoomLevel;
+    // Enable smooth scroll
+    enableSmoothScroll?: boolean;
     fileUrl: string | Uint8Array;
     // Additional authentication headers
     httpHeaders?: Record<string, string | string[]>;

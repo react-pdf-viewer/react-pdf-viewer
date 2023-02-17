@@ -63,6 +63,7 @@ export const Inner: React.FC<{
     currentFile: OpenFile;
     defaultScale?: number | SpecialZoomLevel;
     doc: PdfJs.PdfDocument;
+    enableSmoothScroll: boolean;
     initialPage: number;
     initialRotation: number;
     initialScale: number;
@@ -83,6 +84,7 @@ export const Inner: React.FC<{
     currentFile,
     defaultScale,
     doc,
+    enableSmoothScroll,
     initialPage,
     initialRotation,
     initialScale,
@@ -181,6 +183,7 @@ export const Inner: React.FC<{
     );
 
     const virtualizer = useVirtual({
+        enableSmoothScroll,
         isRtl,
         numberOfItems: numPages,
         parentRef: pagesRef,
