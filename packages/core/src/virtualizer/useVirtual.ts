@@ -12,6 +12,7 @@ import { useScroll } from '../hooks/useScroll';
 import { ScrollDirection } from '../structs/ScrollDirection';
 import { ScrollMode } from '../structs/ScrollMode';
 import { ViewMode } from '../structs/ViewMode';
+import type { SetRenderRange } from '../types/SetRenderRange';
 import type { Offset } from '../types/Offset';
 import type { Rect } from '../types/Rect';
 import { clamp } from '../utils/clamp';
@@ -45,8 +46,7 @@ export const useVirtual = ({
     isRtl,
     numberOfItems,
     parentRef,
-    setStartRange,
-    setEndRange,
+    setRenderRange,
     sizes,
     scrollMode,
     viewMode,
@@ -55,8 +55,7 @@ export const useVirtual = ({
     isRtl: boolean;
     numberOfItems: number;
     parentRef: React.MutableRefObject<HTMLDivElement>;
-    setStartRange(startIndex: number): number;
-    setEndRange(endIndex: number): number;
+    setRenderRange: SetRenderRange;
     // Sizes of items
     sizes: Rect[];
     scrollMode: ScrollMode;
@@ -64,10 +63,8 @@ export const useVirtual = ({
 }): {
     boundingClientRect: Rect;
     isSmoothScrolling: boolean;
-    startIndex: number;
-    startRange: number;
-    endIndex: number;
-    endRange: number;
+    startPage: number;
+    endPage: number;
     maxVisbilityIndex: number;
     virtualItems: VirtualItem[];
     getContainerStyles: () => React.CSSProperties;
@@ -188,24 +185,30 @@ export const useVirtual = ({
 
     // Determine the page that has max visbility and the range of pages that will be pre-rendered
     let maxVisbilityIndex = maxVisbilityItem;
-    let startRange = setStartRange(start);
-    let endRange = setEndRange(end);
+    let { startPage, endPage } = setRenderRange({
+        endPage: end,
+        numPages: numberOfItems,
+        startPage: start,
+    });
+    // Ensure that the range consists of valid pages
+    startPage = Math.max(startPage, 0);
+    endPage = Math.min(endPage, numberOfItems - 1);
 
     switch (viewMode) {
         case ViewMode.DualPageWithCover:
             if (maxVisbilityItem > 0) {
                 maxVisbilityIndex = maxVisbilityItem % 2 === 1 ? maxVisbilityItem : maxVisbilityItem - 1;
             }
-            startRange = startRange === 0 ? 0 : startRange % 2 === 1 ? startRange : startRange - 1;
-            endRange = endRange % 2 === 1 ? endRange - 1 : endRange;
-            if (numberOfItems - endRange <= 2) {
-                endRange = numberOfItems - 1;
+            startPage = startPage === 0 ? 0 : startPage % 2 === 1 ? startPage : startPage - 1;
+            endPage = endPage % 2 === 1 ? endPage - 1 : endPage;
+            if (numberOfItems - endPage <= 2) {
+                endPage = numberOfItems - 1;
             }
             break;
         case ViewMode.DualPage:
             maxVisbilityIndex = maxVisbilityItem % 2 === 0 ? maxVisbilityItem : maxVisbilityItem - 1;
-            startRange = startRange % 2 === 0 ? startRange : startRange - 1;
-            endRange = endRange % 2 === 1 ? endRange : endRange - 1;
+            startPage = startPage % 2 === 0 ? startPage : startPage - 1;
+            endPage = endPage % 2 === 1 ? endPage : endPage - 1;
             break;
         case ViewMode.SinglePage:
         default:
@@ -216,7 +219,7 @@ export const useVirtual = ({
     const virtualItems = React.useMemo(() => {
         const virtualItems: VirtualItem[] = [];
 
-        for (let i = startRange; i <= endRange; i++) {
+        for (let i = startPage; i <= endPage; i++) {
             const item = measurements[i];
             const virtualItem: VirtualItem = {
                 ...item,
@@ -233,7 +236,7 @@ export const useVirtual = ({
         }
 
         return virtualItems;
-    }, [startRange, endRange, visibilities, measurements]);
+    }, [startPage, endPage, visibilities, measurements]);
 
     const scrollToItem = React.useCallback(
         (index: number, offset: Offset) => {
@@ -397,10 +400,8 @@ export const useVirtual = ({
     return {
         boundingClientRect: parentRect,
         isSmoothScrolling,
-        startIndex: start,
-        startRange,
-        endIndex: end,
-        endRange,
+        startPage,
+        endPage,
         maxVisbilityIndex,
         virtualItems,
         getContainerStyles,

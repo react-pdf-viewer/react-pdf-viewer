@@ -32,6 +32,7 @@ import type { Plugin } from '../types/Plugin';
 import type { PluginFunctions } from '../types/PluginFunctions';
 import type { Rect } from '../types/Rect';
 import type { RenderPage } from '../types/RenderPage';
+import type { SetRenderRange, VisiblePagesRange } from '../types/SetRenderRange';
 import type { RotateEvent } from '../types/RotateEvent';
 import type { RotatePageEvent } from '../types/RotatePageEvent';
 import type { Slot } from '../types/Slot';
@@ -46,8 +47,6 @@ import type { VirtualItem } from '../virtualizer/VirtualItem';
 import { calculateScale } from './calculateScale';
 import { useDestination } from './useDestination';
 import { useOutlines } from './useOutlines';
-
-const NUM_OVERSCAN_PAGES = 3;
 
 const DEFAULT_PAGE_LAYOUT: PageLayout = {
     buildPageStyles: () => ({}),
@@ -72,6 +71,7 @@ export const Inner: React.FC<{
     plugins: Plugin[];
     renderPage?: RenderPage;
     scrollMode: ScrollMode;
+    setRenderRange: SetRenderRange;
     viewMode: ViewMode;
     viewerState: ViewerState;
     onDocumentLoad(e: DocumentLoadEvent): void;
@@ -93,6 +93,7 @@ export const Inner: React.FC<{
     plugins,
     renderPage,
     scrollMode,
+    setRenderRange,
     viewMode,
     viewerState,
     onDocumentLoad,
@@ -176,20 +177,13 @@ export const Inner: React.FC<{
         [rotation, scale]
     );
 
-    const setStartRange = React.useCallback((startIndex: number) => Math.max(startIndex - NUM_OVERSCAN_PAGES, 0), []);
-    const setEndRange = React.useCallback(
-        (endIndex: number) => Math.min(endIndex + NUM_OVERSCAN_PAGES, numPages - 1),
-        [numPages]
-    );
-
     const virtualizer = useVirtual({
         enableSmoothScroll,
         isRtl,
         numberOfItems: numPages,
         parentRef: pagesRef,
         scrollMode: currentScrollMode,
-        setStartRange,
-        setEndRange,
+        setRenderRange,
         sizes,
         viewMode: currentViewMode,
     });
@@ -514,11 +508,11 @@ export const Inner: React.FC<{
         if (previousViewMode === stateRef.current.viewMode) {
             return;
         }
-        const { startRange, endRange, virtualItems } = virtualizer;
+        const { startPage, endPage, virtualItems } = virtualizer;
 
         renderQueue.markNotRendered();
-        renderQueue.setRange(startRange, endRange);
-        for (let i = startRange; i <= endRange; i++) {
+        renderQueue.setRange(startPage, endPage);
+        for (let i = startPage; i <= endPage; i++) {
             const item = virtualItems.find((item) => item.index === i);
             if (item) {
                 renderQueue.setVisibility(i, item.visibility);
@@ -548,7 +542,7 @@ export const Inner: React.FC<{
 
     // This hook should be placed at the end of hooks
     React.useEffect(() => {
-        const { startRange, endRange, maxVisbilityIndex, virtualItems } = virtualizer;
+        const { startPage, endPage, maxVisbilityIndex, virtualItems } = virtualizer;
         // The current page is the page which has the biggest visibility
         const currentPage = maxVisbilityIndex;
 
@@ -559,8 +553,8 @@ export const Inner: React.FC<{
         });
 
         // The range of pages that will be rendered
-        renderQueue.setRange(startRange, endRange);
-        for (let i = startRange; i <= endRange; i++) {
+        renderQueue.setRange(startPage, endPage);
+        for (let i = startPage; i <= endPage; i++) {
             const item = virtualItems.find((item) => item.index === i);
             if (item) {
                 renderQueue.setVisibility(i, item.visibility);
@@ -569,8 +563,8 @@ export const Inner: React.FC<{
 
         renderNextPage();
     }, [
-        virtualizer.startRange,
-        virtualizer.endRange,
+        virtualizer.startPage,
+        virtualizer.endPage,
         virtualizer.maxVisbilityIndex,
         pagesRotationChanged,
         rotation,
