@@ -48,8 +48,6 @@ import { calculateScale } from './calculateScale';
 import { useDestination } from './useDestination';
 import { useOutlines } from './useOutlines';
 
-const NUM_OVERSCAN_PAGES = 3;
-
 const DEFAULT_PAGE_LAYOUT: PageLayout = {
     buildPageStyles: () => ({}),
     transformSize: ({ size }) => size,
@@ -73,6 +71,7 @@ export const Inner: React.FC<{
     plugins: Plugin[];
     renderPage?: RenderPage;
     scrollMode: ScrollMode;
+    setRenderRange: SetRenderRange;
     viewMode: ViewMode;
     viewerState: ViewerState;
     onDocumentLoad(e: DocumentLoadEvent): void;
@@ -94,6 +93,7 @@ export const Inner: React.FC<{
     plugins,
     renderPage,
     scrollMode,
+    setRenderRange,
     viewMode,
     viewerState,
     onDocumentLoad,
@@ -177,20 +177,13 @@ export const Inner: React.FC<{
         [rotation, scale]
     );
 
-    const defaultRenderRange: SetRenderRange = React.useCallback((visiblePagesRange: VisiblePagesRange) => {
-        return {
-            startPage: Math.max(visiblePagesRange.startPage - NUM_OVERSCAN_PAGES, 0),
-            endPage: Math.min(visiblePagesRange.endPage + NUM_OVERSCAN_PAGES, visiblePagesRange.numPages - 1),
-        };
-    }, []);
-
     const virtualizer = useVirtual({
         enableSmoothScroll,
         isRtl,
         numberOfItems: numPages,
         parentRef: pagesRef,
-        setRenderRange: defaultRenderRange,
         scrollMode: currentScrollMode,
+        setRenderRange,
         sizes,
         viewMode: currentViewMode,
     });

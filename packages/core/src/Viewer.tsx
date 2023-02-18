@@ -31,6 +31,7 @@ import type { RenderPage } from './types/RenderPage';
 import type { RenderProtectedView } from './types/RenderProtectedView';
 import type { RotateEvent } from './types/RotateEvent';
 import type { RotatePageEvent } from './types/RotatePageEvent';
+import type { SetRenderRange, VisiblePagesRange } from './types/SetRenderRange';
 import type { VisibilityChanged } from './types/VisibilityChanged';
 import type { ZoomEvent } from './types/ZoomEvent';
 import { isSameUrl } from './utils/isSameUrl';
@@ -45,6 +46,14 @@ export interface ThemeProps {
     direction?: TextDirection;
     theme?: string;
 }
+
+const NUM_OVERSCAN_PAGES = 3;
+const DEFAULT_RENDER_RANGE: SetRenderRange = (visiblePagesRange: VisiblePagesRange) => {
+    return {
+        startPage: visiblePagesRange.startPage - NUM_OVERSCAN_PAGES,
+        endPage: visiblePagesRange.endPage + NUM_OVERSCAN_PAGES,
+    };
+};
 
 export const Viewer: React.FC<{
     characterMap?: CharacterMap;
@@ -69,6 +78,7 @@ export const Viewer: React.FC<{
     renderPage?: RenderPage;
     renderProtectedView?: RenderProtectedView;
     scrollMode?: ScrollMode;
+    setRenderRange?: SetRenderRange;
     transformGetDocumentParams?(options: PdfJs.GetDocumentParams): PdfJs.GetDocumentParams;
     // Theme
     theme?: string | ThemeProps;
@@ -100,6 +110,7 @@ export const Viewer: React.FC<{
     renderPage,
     renderProtectedView,
     scrollMode = ScrollMode.Vertical,
+    setRenderRange = DEFAULT_RENDER_RANGE,
     transformGetDocumentParams,
     theme = {
         direction: TextDirection.LeftToRight,
@@ -220,6 +231,7 @@ export const Viewer: React.FC<{
                                             plugins={plugins}
                                             renderPage={renderPage}
                                             scrollMode={scrollMode}
+                                            setRenderRange={setRenderRange}
                                             viewMode={viewMode}
                                             viewerState={{
                                                 file,

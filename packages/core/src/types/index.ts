@@ -25,6 +25,7 @@ export * from './RenderProtectedView';
 export * from './RenderViewer';
 export * from './RotateEvent';
 export * from './RotatePageEvent';
+export * from './SetRenderRange';
 export * from './Slot';
 export * from './Store';
 export * from './Toggle';

@@ -518,6 +518,14 @@ export interface ThemeProps {
     theme?: string;
 }
 
+export interface VisiblePagesRange {
+    endPage: number;
+    numPages: number;
+    startPage: number;
+}
+
+export type SetRenderRange = (visiblePagesRange: VisiblePagesRange) => { endPage: number; startPage: number };
+
 export interface ViewerProps {
     characterMap?: CharacterMap;
     // The default zoom level
@@ -542,6 +550,7 @@ export interface ViewerProps {
     renderPage?: RenderPage;
     renderProtectedView?: RenderProtectedView;
     scrollMode?: ScrollMode;
+    setRenderRange?: SetRenderRange;
     // Theme
     theme?: string | ThemeProps;
     transformGetDocumentParams?(options: PdfJs.GetDocumentParams): PdfJs.GetDocumentParams;
