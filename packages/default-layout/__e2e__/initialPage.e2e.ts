@@ -11,7 +11,7 @@ test('Test the initialPage option', async () => {
     // Wait until the initial page is rendered
     await page.waitForSelector('[data-testid="core__page-layer-20"]', { visible: true });
 
-    await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 25577');
+    await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 25257');
 
     // Click the `Thumbnails` tab in the sidebar
     const thumbnailTab = await page.waitForSelector('button[aria-label="Thumbnail"]');

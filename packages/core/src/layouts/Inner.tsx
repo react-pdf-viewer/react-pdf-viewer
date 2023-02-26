@@ -11,6 +11,7 @@ import { useDebounceCallback } from '../hooks/useDebounceCallback';
 import { useIsomorphicLayoutEffect } from '../hooks/useIsomorphicLayoutEffect';
 import { usePrevious } from '../hooks/usePrevious';
 import { useRenderQueue } from '../hooks/useRenderQueue';
+import { useRunOnce } from '../hooks/useRunOnce';
 import { useTrackResize } from '../hooks/useTrackResize';
 import { PageLayer } from '../layers/PageLayer';
 import { LocalizationContext } from '../localization/LocalizationContext';
@@ -475,12 +476,12 @@ export const Inner: React.FC<{
         });
     }, [docId]);
 
-    useIsomorphicLayoutEffect(() => {
-        const rect = virtualizer.boundingClientRect;
-        if (rect.height > 0 && rect.width > 0 && initialPage) {
+    const boundingClientRect = virtualizer.boundingClientRect;
+    useRunOnce(() => {
+        if (initialPage) {
             jumpToPage(initialPage);
         }
-    }, [docId, virtualizer.boundingClientRect]);
+    }, boundingClientRect.height > 0 && boundingClientRect.width > 0);
 
     // Scroll to the current page after switching the scroll mode
     useIsomorphicLayoutEffect(() => {
