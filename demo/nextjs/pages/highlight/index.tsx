@@ -182,27 +182,69 @@ const IndexPage = () => {
     };
 
     const renderHighlights = (props: RenderHighlightsProps) => (
-        <div>
-            {notes.map((note) => (
-                <React.Fragment key={note.id}>
-                    {note.highlightAreas
-                        .filter((area) => area.pageIndex === props.pageIndex)
-                        .map((area, idx) => (
+        <div
+            style={{
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                height: '100%',
+                width: '100%',
+            }}
+        >
+            {notes.map((note) => {
+                // Find the highlight areas belonging to the same page
+                const highlightAreas = note.highlightAreas.filter(
+                    (area) => area.pageIndex === props.pageIndex && area.width > 0
+                );
+                if (!highlightAreas.length) {
+                    return <React.Fragment key={note.id}></React.Fragment>;
+                }
+
+                const topArea = highlightAreas.sort((a, b) => a.top - b.top)[0];
+                return (
+                    <React.Fragment key={note.id}>
+                        <div
+                            style={Object.assign({}, props.getCssProperties(topArea, props.rotation), {
+                                cursor: 'pointer',
+                                // Position
+                                right: '0',
+                                transform: 'translate(50%, 0)',
+                                zIndex: 2,
+                                // Reset special properties created by `getCssProperties`
+                                height: '',
+                                left: '',
+                                width: '',
+                                // Center the content
+                                alignItems: 'center',
+                                display: 'flex',
+                                justifyContent: 'center',
+                                // Misc styles
+                                background: '#fff',
+                                border: '1px solid rgba(0, 0, 0, 0.2)',
+                                borderRadius: '9999px',
+                                padding: '0.25rem 0.5rem',
+                            })}
+                            title="Jump to note"
+                            onClick={() => jumpToNote(note)}
+                        >
+                            <MessageIcon />
+                        </div>
+                        {highlightAreas.map((area, idx) => (
                             <div
                                 key={idx}
                                 style={Object.assign(
                                     {},
                                     {
                                         background: 'yellow',
-                                        opacity: 0.4,
+                                        opacity: 0.3,
                                     },
                                     props.getCssProperties(area, props.rotation)
                                 )}
-                                onClick={() => jumpToNote(note)}
                             />
                         ))}
-                </React.Fragment>
-            ))}
+                    </React.Fragment>
+                );
+            })}
         </div>
     );
 
