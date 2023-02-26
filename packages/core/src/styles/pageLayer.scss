@@ -10,7 +10,9 @@
     align-items: center;    
     display: flex;
     justify-content: center;
-    overflow: hidden;
+    
+    // Custom elements added to the page layer can be positioned outside of the page
+    overflow: visible;
     position: relative;
 
     &::after {
