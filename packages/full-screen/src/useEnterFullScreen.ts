@@ -22,6 +22,10 @@ export const useEnterFullScreen = (
 } => {
     const [isFullScreen, setFullScreen] = React.useState(false);
 
+    const handleFullScreenMode = React.useCallback((fullScreenMode: FullScreenMode) => {
+        setFullScreen(fullScreenMode === FullScreenMode.Entering || fullScreenMode === FullScreenMode.Entered);
+    }, []);
+
     const closeOtherFullScreen = () => {
         const getPagesContainer = store.get('getPagesContainer');
         if (!getPagesContainer) {
@@ -60,13 +64,7 @@ export const useEnterFullScreen = (
         });
     };
 
-    const handleFullScreen = (fullScreen: boolean) => {
-        setFullScreen(fullScreen);
-    };
-
     const exitFullScreen = () => {
-        setFullScreen(false);
-
         const getPagesContainer = store.get('getPagesContainer');
         if (!getPagesContainer) {
             return;
@@ -78,17 +76,16 @@ export const useEnterFullScreen = (
 
         const ele = getFullScreenElement();
         if (ele && ele === getFullScreenTarget(pagesEle)) {
-            exitFullScreenMode(document).then(() => {
-                store.update('fullScreenMode', FullScreenMode.Exitting);
-            });
+            store.update('fullScreenMode', FullScreenMode.Exitting);
+            exitFullScreenMode(document);
         }
     };
 
     React.useEffect(() => {
-        store.subscribe('isFullScreen', handleFullScreen);
+        store.subscribe('fullScreenMode', handleFullScreenMode);
 
         return (): void => {
-            store.unsubscribe('isFullScreen', handleFullScreen);
+            store.unsubscribe('fullScreenMode', handleFullScreenMode);
         };
     }, []);
 

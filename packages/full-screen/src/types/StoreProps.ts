@@ -13,7 +13,6 @@ export interface StoreProps {
     currentPage: number;
     fullScreenMode: FullScreenMode;
     getPagesContainer?(): HTMLElement;
-    isFullScreen?: boolean;
     jumpToPage(pageIndex: number): void;
     scrollMode?: ScrollMode;
     zoom(scale: number | SpecialZoomLevel): void;
