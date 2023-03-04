@@ -11,7 +11,6 @@ import * as React from 'react';
 import { EnterFullScreenButton } from './EnterFullScreenButton';
 import { ExitFullScreenButtonWithTooltip } from './ExitFullScreenButtonWithTooltip';
 import type { StoreProps } from './types/StoreProps';
-import type { Zoom } from './types/Zoom';
 import { useEnterFullScreen } from './useEnterFullScreen';
 
 export interface RenderEnterFullScreenProps {
@@ -29,15 +28,8 @@ export const EnterFullScreen: React.FC<{
     enableShortcuts: boolean;
     getFullScreenTarget(pagesContainer: HTMLElement): HTMLElement;
     store: Store<StoreProps>;
-    onEnterFullScreen(zoom: Zoom): void;
-    onExitFullScreen(zoom: Zoom): void;
-}> = ({ children, enableShortcuts, getFullScreenTarget, store, onEnterFullScreen, onExitFullScreen }) => {
-    const { enterFullScreen, exitFullScreen, isFullScreen } = useEnterFullScreen(
-        getFullScreenTarget,
-        store,
-        onEnterFullScreen,
-        onExitFullScreen
-    );
+}> = ({ children, enableShortcuts, getFullScreenTarget, store }) => {
+    const { enterFullScreen, exitFullScreen, isFullScreen } = useEnterFullScreen(getFullScreenTarget, store);
 
     const defaultChildren = (props: RenderEnterFullScreenProps) =>
         isFullScreen ? (

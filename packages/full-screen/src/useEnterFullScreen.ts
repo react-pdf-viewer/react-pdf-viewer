@@ -8,39 +8,41 @@
 
 import type { Store } from '@react-pdf-viewer/core';
 import * as React from 'react';
-import {
-    addFullScreenChangeListener,
-    exitFullScreenMode,
-    getFullScreenElement,
-    isFullScreenEnabled,
-    requestFullScreen,
-} from './fullScreen';
+import { exitFullScreenMode, getFullScreenElement, isFullScreenEnabled, requestFullScreen } from './fullScreen';
+import { FullScreenMode } from './structs/FullScreenMode';
 import type { StoreProps } from './types/StoreProps';
-import type { Zoom } from './types/Zoom';
 
 export const useEnterFullScreen = (
     getFullScreenTarget: (pagesContainer: HTMLElement) => HTMLElement,
-    store: Store<StoreProps>,
-    onEnterFullScreen: (zoom: Zoom) => void,
-    onExitFullScreen: (zoom: Zoom) => void
+    store: Store<StoreProps>
 ): {
     enterFullScreen: () => void;
     exitFullScreen: () => void;
     isFullScreen: boolean;
 } => {
     const [isFullScreen, setFullScreen] = React.useState(false);
-    const pagesRef = React.useRef<HTMLElement | null>(
-        store.get('getPagesContainer') ? store.get('getPagesContainer')() : null
-    );
+
+    const handleFullScreenMode = React.useCallback((fullScreenMode: FullScreenMode) => {
+        setFullScreen(fullScreenMode === FullScreenMode.Entering || fullScreenMode === FullScreenMode.Entered);
+    }, []);
 
     const closeOtherFullScreen = () => {
-        const pagesEle = pagesRef.current;
+        const getPagesContainer = store.get('getPagesContainer');
+        if (!getPagesContainer) {
+            return;
+        }
+        const pagesEle = getPagesContainer();
         if (!pagesEle) {
-            return Promise.resolve();
+            return;
         }
 
         const ele = getFullScreenElement();
-        return ele && ele !== getFullScreenTarget(pagesEle) ? exitFullScreenMode(ele) : Promise.resolve();
+        if (ele && ele !== getFullScreenTarget(pagesEle)) {
+            store.update('fullScreenMode', FullScreenMode.Normal);
+            return exitFullScreenMode(ele);
+        }
+
+        return Promise.resolve();
     };
 
     const enterFullScreen = () => {
@@ -48,48 +50,25 @@ export const useEnterFullScreen = (
             return;
         }
 
-        const pagesEle = pagesRef.current;
-        if (!pagesEle) {
-            return;
-        }
-
-        closeOtherFullScreen().then(() => {
-            requestFullScreen(getFullScreenTarget(pagesEle));
-        });
-    };
-
-    const onFullScreenChange = (): void => {
-        const ele = getFullScreenElement();
-        const pagesEle = pagesRef.current;
-        const isFullScreenMode = ele === getFullScreenTarget(pagesEle);
-        store.update('isFullScreen', isFullScreenMode);
-        isFullScreenMode
-            ? pagesEle.classList.add('rpv-full-screen__pages')
-            : pagesEle.classList.remove('rpv-full-screen__pages');
-
-        const zoom = store.get('zoom');
-        if (zoom) {
-            isFullScreenMode ? onEnterFullScreen(zoom) : onExitFullScreen(zoom);
-        }
-    };
-
-    const handlePagesContainer = (getPagesContainer: () => HTMLElement) => {
-        pagesRef.current = getPagesContainer();
-        addFullScreenChangeListener(onFullScreenChange);
-    };
-
-    const handleFullScreen = (fullScreen: boolean) => {
-        setFullScreen(fullScreen);
-    };
-
-    const exitFullScreen = () => {
-        setFullScreen(false);
-
         const getPagesContainer = store.get('getPagesContainer');
         if (!getPagesContainer) {
             return;
         }
+        const pagesEle = getPagesContainer();
+        if (!pagesEle) {
+            return;
+        }
+        closeOtherFullScreen().then(() => {
+            store.update('fullScreenMode', FullScreenMode.Entering);
+            requestFullScreen(getFullScreenTarget(pagesEle));
+        });
+    };
 
+    const exitFullScreen = () => {
+        const getPagesContainer = store.get('getPagesContainer');
+        if (!getPagesContainer) {
+            return;
+        }
         const pagesEle = getPagesContainer();
         if (!pagesEle) {
             return;
@@ -97,17 +76,16 @@ export const useEnterFullScreen = (
 
         const ele = getFullScreenElement();
         if (ele && ele === getFullScreenTarget(pagesEle)) {
+            store.update('fullScreenMode', FullScreenMode.Exitting);
             exitFullScreenMode(document);
         }
     };
 
     React.useEffect(() => {
-        store.subscribe('isFullScreen', handleFullScreen);
-        store.subscribe('getPagesContainer', handlePagesContainer);
+        store.subscribe('fullScreenMode', handleFullScreenMode);
 
         return (): void => {
-            store.unsubscribe('getPagesContainer', handlePagesContainer);
-            store.unsubscribe('isFullScreen', handleFullScreen);
+            store.unsubscribe('fullScreenMode', handleFullScreenMode);
         };
     }, []);
 
