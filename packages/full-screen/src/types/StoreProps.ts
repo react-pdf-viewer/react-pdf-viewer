@@ -16,5 +16,5 @@ export interface StoreProps {
     isFullScreen?: boolean;
     jumpToPage(pageIndex: number): void;
     scrollMode?: ScrollMode;
-    zoom?(scale: number | SpecialZoomLevel): void;
+    zoom(scale: number | SpecialZoomLevel): void;
 }

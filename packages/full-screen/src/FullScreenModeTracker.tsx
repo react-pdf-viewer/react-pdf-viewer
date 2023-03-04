@@ -7,15 +7,13 @@
  */
 
 import type { Rect, Store } from '@react-pdf-viewer/core';
-import { ScrollMode, useDebounceCallback, useIsomorphicLayoutEffect } from '@react-pdf-viewer/core';
+import { ScrollMode } from '@react-pdf-viewer/core';
 import * as React from 'react';
+import { addFullScreenChangeListener, getFullScreenElement, removeFullScreenChangeListener } from './fullScreen';
 import { FullScreenMode } from './structs/FullScreenMode';
 import type { StoreProps } from './types/StoreProps';
-
-const RESIZE_EVENT_OPTIONS = {
-    capture: false,
-    passive: true,
-};
+import type { Zoom } from './types/Zoom';
+import { useWindowResize } from './useWindowResize';
 
 const ZERO_RECT = {
     height: 0,
@@ -26,22 +24,66 @@ export const FullScreenModeTracker: React.FC<{
     getFullScreenTarget(pagesContainer: HTMLElement): HTMLElement;
     pagesContainerRef: React.RefObject<HTMLDivElement>;
     store: Store<StoreProps>;
-}> = ({ getFullScreenTarget, pagesContainerRef, store }) => {
-    const [windowRect, setWindowRect] = React.useState<Rect>(ZERO_RECT);
+    onEnterFullScreen: (zoom: Zoom) => void;
+    onExitFullScreen: (zoom: Zoom) => void;
+}> = ({ getFullScreenTarget, pagesContainerRef, store, onEnterFullScreen, onExitFullScreen }) => {
+    const windowRect = useWindowResize();
     const [targetRect, setTargetRect] = React.useState<Rect>(ZERO_RECT);
+    const windowSizeBeforeFullScreenRef = React.useRef<Rect>(ZERO_RECT);
+    const targetPageRef = React.useRef(store.get('currentPage'));
 
-    const handleResize = useDebounceCallback(() => {
-        setWindowRect({
-            height: window.innerHeight,
-            width: window.innerWidth,
-        });
-    }, 100);
+    // Keep the current page when users enter or exit the full scroll mode
+    const scrollToCurrentPage = () => {
+        if (store.get('scrollMode') === ScrollMode.Page) {
+            store.get('jumpToPage')(targetPageRef.current);
+        }
+    };
 
     const handleFullScreenMode = React.useCallback((fullScreenMode: FullScreenMode) => {
-        // Keep the current page when entering the full scroll mode
-        if (fullScreenMode === FullScreenMode.Entered && store.get('scrollMode') === ScrollMode.Page) {
-            const currentPage = store.get('currentPage');
-            store.get('jumpToPage')(currentPage);
+        const zoom = store.get('zoom');
+        switch (fullScreenMode) {
+            case FullScreenMode.Entering:
+                // Store the latest window size right after entering the full screen mode
+                targetPageRef.current = store.get('currentPage');
+                windowSizeBeforeFullScreenRef.current = {
+                    height: window.innerHeight,
+                    width: window.innerWidth,
+                };
+                break;
+
+            // Entering the full screen mode completes
+            case FullScreenMode.Entered:
+                pagesContainerRef.current.classList.add('rpv-full-screen__pages');
+                scrollToCurrentPage();
+                onEnterFullScreen(zoom);
+                break;
+
+            case FullScreenMode.Exitting:
+                targetPageRef.current = store.get('currentPage');
+                break;
+
+            // Exitting the full screen mode completes
+            case FullScreenMode.Exited:
+                pagesContainerRef.current.classList.remove('rpv-full-screen__pages');
+                store.update('fullScreenMode', FullScreenMode.Normal);
+                scrollToCurrentPage();
+                onExitFullScreen(zoom);
+                break;
+
+            default:
+                break;
+        }
+    }, []);
+
+    const handleFullScreenChange = React.useCallback(() => {
+        const pagesContainer = pagesContainerRef.current;
+        if (!pagesContainer) {
+            return;
+        }
+        const fullScreenTarget = getFullScreenTarget(pagesContainer);
+        const fullScreenEle = getFullScreenElement();
+        if (fullScreenEle !== fullScreenTarget) {
+            store.update('fullScreenMode', FullScreenMode.Exitting);
         }
     }, []);
 
@@ -49,10 +91,21 @@ export const FullScreenModeTracker: React.FC<{
         if (
             windowRect.height === targetRect.height &&
             windowRect.width === targetRect.width &&
-            targetRect.height > 0 &&
-            targetRect.width > 0
+            windowRect.height > 0 &&
+            windowRect.width > 0
         ) {
             store.update('fullScreenMode', FullScreenMode.Entered);
+            return;
+        }
+
+        if (
+            store.get('fullScreenMode') === FullScreenMode.Exitting &&
+            windowSizeBeforeFullScreenRef.current.height === windowRect.height &&
+            windowSizeBeforeFullScreenRef.current.width === windowRect.width &&
+            windowRect.height > 0 &&
+            windowRect.width > 0
+        ) {
+            store.update('fullScreenMode', FullScreenMode.Exited);
         }
     }, [windowRect, targetRect]);
 
@@ -70,9 +123,13 @@ export const FullScreenModeTracker: React.FC<{
         });
         io.observe(fullScreenTarget);
 
+        addFullScreenChangeListener(handleFullScreenChange);
+
         return (): void => {
             io.unobserve(fullScreenTarget);
             io.disconnect();
+
+            removeFullScreenChangeListener(handleFullScreenChange);
         };
     }, []);
 
@@ -81,14 +138,6 @@ export const FullScreenModeTracker: React.FC<{
 
         return (): void => {
             store.unsubscribe('fullScreenMode', handleFullScreenMode);
-        };
-    }, []);
-
-    useIsomorphicLayoutEffect(() => {
-        window.addEventListener('resize', handleResize, RESIZE_EVENT_OPTIONS);
-
-        return () => {
-            window.removeEventListener('resize', handleResize, RESIZE_EVENT_OPTIONS);
         };
     }, []);
 

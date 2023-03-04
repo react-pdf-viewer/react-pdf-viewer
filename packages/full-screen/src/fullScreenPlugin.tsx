@@ -54,6 +54,7 @@ export const fullScreenPlugin = (props?: FullScreenPluginProps): FullScreenPlugi
                 currentPage: 0,
                 fullScreenMode: FullScreenMode.Normal,
                 jumpToPage: () => {},
+                zoom: () => {},
             }),
         []
     );
@@ -64,8 +65,6 @@ export const fullScreenPlugin = (props?: FullScreenPluginProps): FullScreenPlugi
             enableShortcuts={fullScreenPluginProps.enableShortcuts}
             getFullScreenTarget={getFullScreenTarget}
             store={store}
-            onEnterFullScreen={fullScreenPluginProps.onEnterFullScreen}
-            onExitFullScreen={fullScreenPluginProps.onExitFullScreen}
         />
     );
 
@@ -91,12 +90,7 @@ export const fullScreenPlugin = (props?: FullScreenPluginProps): FullScreenPlugi
     );
 
     const ExitFullScreenDecorator = () => (
-        <ExitFullScreen
-            getFullScreenTarget={getFullScreenTarget}
-            store={store}
-            onEnterFullScreen={fullScreenPluginProps.onEnterFullScreen}
-            onExitFullScreen={fullScreenPluginProps.onExitFullScreen}
-        >
+        <ExitFullScreen getFullScreenTarget={getFullScreenTarget} store={store}>
             {props?.renderExitFullScreenButton}
         </ExitFullScreen>
     );
@@ -111,8 +105,6 @@ export const fullScreenPlugin = (props?: FullScreenPluginProps): FullScreenPlugi
                             containerRef={props.containerRef}
                             getFullScreenTarget={getFullScreenTarget}
                             store={store}
-                            onEnterFullScreen={fullScreenPluginProps.onEnterFullScreen}
-                            onExitFullScreen={fullScreenPluginProps.onExitFullScreen}
                         />
                     )}
                     <ExitFullScreenDecorator />
@@ -120,6 +112,8 @@ export const fullScreenPlugin = (props?: FullScreenPluginProps): FullScreenPlugi
                         getFullScreenTarget={getFullScreenTarget}
                         pagesContainerRef={props.pagesContainerRef}
                         store={store}
+                        onEnterFullScreen={fullScreenPluginProps.onEnterFullScreen}
+                        onExitFullScreen={fullScreenPluginProps.onExitFullScreen}
                     />
                     {currentSlot.subSlot.children}
                 </>
@@ -137,9 +131,7 @@ export const fullScreenPlugin = (props?: FullScreenPluginProps): FullScreenPlugi
         },
         onViewerStateChange: (viewerState: ViewerState) => {
             store.update('scrollMode', viewerState.scrollMode);
-            if (store.get('fullScreenMode') === FullScreenMode.Normal) {
-                store.update('currentPage', viewerState.pageIndex);
-            }
+            store.update('currentPage', viewerState.pageIndex);
             return viewerState;
         },
         renderViewer,

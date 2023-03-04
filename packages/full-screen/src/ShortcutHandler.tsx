@@ -10,17 +10,14 @@ import type { Store } from '@react-pdf-viewer/core';
 import { isMac } from '@react-pdf-viewer/core';
 import * as React from 'react';
 import type { StoreProps } from './types/StoreProps';
-import type { Zoom } from './types/Zoom';
 import { useEnterFullScreen } from './useEnterFullScreen';
 
 export const ShortcutHandler: React.FC<{
     containerRef: React.RefObject<HTMLDivElement>;
     getFullScreenTarget(pagesContainer: HTMLElement): HTMLElement;
     store: Store<StoreProps>;
-    onEnterFullScreen: (zoom: Zoom) => void;
-    onExitFullScreen: (zoom: Zoom) => void;
-}> = ({ containerRef, getFullScreenTarget, store, onEnterFullScreen, onExitFullScreen }) => {
-    const { enterFullScreen } = useEnterFullScreen(getFullScreenTarget, store, onEnterFullScreen, onExitFullScreen);
+}> = ({ containerRef, getFullScreenTarget, store }) => {
+    const { enterFullScreen } = useEnterFullScreen(getFullScreenTarget, store);
 
     const keydownHandler = (e: KeyboardEvent) => {
         if (e.shiftKey || e.altKey) {
