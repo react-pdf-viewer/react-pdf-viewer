@@ -15,6 +15,7 @@ import {
     isFullScreenEnabled,
     requestFullScreen,
 } from './fullScreen';
+import { FullScreenMode } from './structs/FullScreenMode';
 import type { StoreProps } from './types/StoreProps';
 import type { Zoom } from './types/Zoom';
 
@@ -40,7 +41,12 @@ export const useEnterFullScreen = (
         }
 
         const ele = getFullScreenElement();
-        return ele && ele !== getFullScreenTarget(pagesEle) ? exitFullScreenMode(ele) : Promise.resolve();
+        if (ele && ele !== getFullScreenTarget(pagesEle)) {
+            store.update('fullScreenMode', FullScreenMode.Normal);
+            return exitFullScreenMode(ele);
+        }
+
+        return Promise.resolve();
     };
 
     const enterFullScreen = () => {
@@ -48,12 +54,12 @@ export const useEnterFullScreen = (
             return;
         }
 
-        const pagesEle = pagesRef.current;
+        const pagesEle = store.get('getPagesContainer')();
         if (!pagesEle) {
             return;
         }
-
         closeOtherFullScreen().then(() => {
+            store.update('fullScreenMode', FullScreenMode.Entering);
             requestFullScreen(getFullScreenTarget(pagesEle));
         });
     };
@@ -73,16 +79,12 @@ export const useEnterFullScreen = (
         }
     };
 
-    const handlePagesContainer = (getPagesContainer: () => HTMLElement) => {
-        pagesRef.current = getPagesContainer();
-        addFullScreenChangeListener(onFullScreenChange);
-    };
-
     const handleFullScreen = (fullScreen: boolean) => {
         setFullScreen(fullScreen);
     };
 
     const exitFullScreen = () => {
+        store.update('fullScreenMode', FullScreenMode.Normal);
         setFullScreen(false);
 
         const getPagesContainer = store.get('getPagesContainer');
@@ -103,10 +105,8 @@ export const useEnterFullScreen = (
 
     React.useEffect(() => {
         store.subscribe('isFullScreen', handleFullScreen);
-        store.subscribe('getPagesContainer', handlePagesContainer);
 
         return (): void => {
-            store.unsubscribe('getPagesContainer', handlePagesContainer);
             store.unsubscribe('isFullScreen', handleFullScreen);
         };
     }, []);

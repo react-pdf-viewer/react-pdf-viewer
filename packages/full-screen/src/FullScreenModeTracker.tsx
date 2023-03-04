@@ -7,7 +7,7 @@
  */
 
 import type { Rect, Store } from '@react-pdf-viewer/core';
-import { useDebounceCallback, useIsomorphicLayoutEffect } from '@react-pdf-viewer/core';
+import { ScrollMode, useDebounceCallback, useIsomorphicLayoutEffect } from '@react-pdf-viewer/core';
 import * as React from 'react';
 import { FullScreenMode } from './structs/FullScreenMode';
 import type { StoreProps } from './types/StoreProps';
@@ -37,7 +37,13 @@ export const FullScreenModeTracker: React.FC<{
         });
     }, 100);
 
-    const handleFullScreenMode = React.useCallback((fullScreenMode: FullScreenMode) => {}, []);
+    const handleFullScreenMode = React.useCallback((fullScreenMode: FullScreenMode) => {
+        // Keep the current page when entering the full scroll mode
+        if (fullScreenMode === FullScreenMode.Entered && store.get('scrollMode') === ScrollMode.Page) {
+            const currentPage = store.get('currentPage');
+            store.get('jumpToPage')(currentPage);
+        }
+    }, []);
 
     React.useEffect(() => {
         if (

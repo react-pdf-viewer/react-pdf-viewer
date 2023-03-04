@@ -6,10 +6,15 @@
  * @copyright 2019-2023 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import { SpecialZoomLevel } from '@react-pdf-viewer/core';
+import { ScrollMode, SpecialZoomLevel } from '@react-pdf-viewer/core';
+import { FullScreenMode } from '../structs/FullScreenMode';
 
 export interface StoreProps {
+    currentPage: number;
+    fullScreenMode: FullScreenMode;
     getPagesContainer?(): HTMLElement;
     isFullScreen?: boolean;
+    jumpToPage(pageIndex: number): void;
+    scrollMode?: ScrollMode;
     zoom?(scale: number | SpecialZoomLevel): void;
 }
