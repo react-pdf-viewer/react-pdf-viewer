@@ -14,10 +14,9 @@ import { useEnterFullScreen } from './useEnterFullScreen';
 
 export const ShortcutHandler: React.FC<{
     containerRef: React.RefObject<HTMLDivElement>;
-    getFullScreenTarget(pagesContainer: HTMLElement): HTMLElement;
     store: Store<StoreProps>;
-}> = ({ containerRef, getFullScreenTarget, store }) => {
-    const { enterFullScreen } = useEnterFullScreen(getFullScreenTarget, store);
+}> = ({ containerRef, store }) => {
+    const { enterFullScreen } = useEnterFullScreen(store);
 
     const keydownHandler = (e: KeyboardEvent) => {
         if (e.shiftKey || e.altKey) {

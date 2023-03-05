@@ -63,6 +63,8 @@ export interface Destination {
 }
 
 export interface PluginFunctions {
+    enterFullScreenMode(): void;
+    exitFullScreenMode(): void;
     getPagesContainer(): HTMLElement;
     getViewerState(): ViewerState;
     jumpToDestination(destination: Destination): void;
@@ -172,6 +174,7 @@ export interface ViewerState {
     // The current opened file. It can be changed from outside, such as user drags and drops an external file
     // or user opens a file from toolbar
     file: OpenFile;
+    fullScreenMode: FullScreenMode;
     // The current page index
     pageIndex: number;
     // Size of page
@@ -213,6 +216,15 @@ export enum AnnotationType {
     Ink = 15,
     Popup = 16,
     FileAttachment = 17,
+}
+
+export enum FullScreenMode {
+    Normal = 'Normal',
+    // Start entering the full screen mode
+    Entering = 'Entering',
+    Entered = 'Entered',
+    Exitting = 'Exitting',
+    Exited = 'Exited',
 }
 
 export enum LayerRenderStatus {
@@ -618,6 +630,8 @@ export interface JumpToDestination {
     scaleTo: number | SpecialZoomLevel;
 }
 export function getDestination(doc: PdfJs.PdfDocument, dest: PdfJs.OutlineDestinationType): Promise<JumpToDestination>;
+
+export function isFullScreenEnabled(): boolean;
 
 export function isMac(): boolean;
 
