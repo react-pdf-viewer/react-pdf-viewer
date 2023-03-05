@@ -28,11 +28,13 @@ const SCROLL_DURATION = 400;
 
 export const useScroll = ({
     elementRef,
+    enableSmoothScroll,
     isRtl,
     scrollDirection,
     onSmoothScroll,
 }: {
     elementRef: React.MutableRefObject<HTMLDivElement>;
+    enableSmoothScroll: boolean;
     isRtl: boolean;
     scrollDirection: ScrollDirection;
     onSmoothScroll: (isScrollingSmoothly: boolean) => void;
@@ -46,7 +48,12 @@ export const useScroll = ({
     const latestRef = React.useRef(scrollDirection);
     latestRef.current = scrollDirection;
 
-    const handleSmoothScrollingComplete = React.useCallback(() => onSmoothScroll(false), []);
+    const latestOffsetRef = React.useRef(ZERO_OFFSET);
+
+    const handleSmoothScrollingComplete = React.useCallback(() => {
+        setScrollOffset(latestOffsetRef.current);
+        onSmoothScroll(false);
+    }, []);
 
     const handleScroll = React.useCallback(() => {
         if (!element) {
@@ -54,24 +61,27 @@ export const useScroll = ({
         }
         switch (latestRef.current) {
             case ScrollDirection.Horizontal:
-                setScrollOffset({
+                latestOffsetRef.current = {
                     left: factor * element.scrollLeft,
                     top: 0,
-                });
+                };
                 break;
             case ScrollDirection.Both:
-                setScrollOffset({
+                latestOffsetRef.current = {
                     left: factor * element.scrollLeft,
                     top: element.scrollTop,
-                });
+                };
                 break;
             case ScrollDirection.Vertical:
             default:
-                setScrollOffset({
+                latestOffsetRef.current = {
                     left: 0,
                     top: element.scrollTop,
-                });
+                };
                 break;
+        }
+        if (!enableSmoothScroll) {
+            setScrollOffset(latestOffsetRef.current);
         }
     }, [element]);
 
