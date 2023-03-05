@@ -93,6 +93,7 @@ export const useVirtual = ({
 
     const { scrollOffset, scrollTo } = useScroll({
         elementRef: parentRef,
+        enableSmoothScroll,
         isRtl,
         scrollDirection,
         onSmoothScroll,

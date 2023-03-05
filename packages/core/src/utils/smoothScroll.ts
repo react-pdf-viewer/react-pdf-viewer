@@ -82,6 +82,7 @@ export const smoothScroll = (
             Math.abs(updatePosition.top - targetPosition.top) <= EPS &&
             Math.abs(updatePosition.left - targetPosition.left) <= EPS
         ) {
+            window.cancelAnimationFrame(requestId);
             onReachTarget();
         }
 
