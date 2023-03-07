@@ -13,6 +13,7 @@ import { Inner } from './layouts/Inner';
 import { PageSizeCalculator } from './layouts/PageSizeCalculator';
 import { DocumentLoader, RenderError } from './loader/DocumentLoader';
 import { DefaultLocalization, LocalizationContext } from './localization/LocalizationContext';
+import { FullScreenMode } from './structs/FullScreenMode';
 import { ScrollMode } from './structs/ScrollMode';
 import { SpecialZoomLevel } from './structs/SpecialZoomLevel';
 import { ViewMode } from './structs/ViewMode';
@@ -235,6 +236,7 @@ export const Viewer: React.FC<{
                                             viewMode={viewMode}
                                             viewerState={{
                                                 file,
+                                                fullScreenMode: FullScreenMode.Normal,
                                                 pageIndex: -1,
                                                 pageHeight: pageSizes[0].pageHeight,
                                                 pageWidth: pageSizes[0].pageWidth,

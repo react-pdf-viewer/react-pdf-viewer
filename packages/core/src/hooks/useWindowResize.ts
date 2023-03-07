@@ -6,9 +6,10 @@
  * @copyright 2019-2023 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import type { Rect } from '@react-pdf-viewer/core';
-import { useDebounceCallback, useIsomorphicLayoutEffect } from '@react-pdf-viewer/core';
 import * as React from 'react';
+import { useDebounceCallback } from '../hooks/useDebounceCallback';
+import { useIsomorphicLayoutEffect } from '../hooks/useIsomorphicLayoutEffect';
+import type { Rect } from '../types/Rect';
 
 const RESIZE_EVENT_OPTIONS = {
     capture: false,

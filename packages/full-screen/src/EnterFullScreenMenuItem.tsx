@@ -7,9 +7,8 @@
  */
 
 import type { LocalizationMap } from '@react-pdf-viewer/core';
-import { LocalizationContext, MenuItem } from '@react-pdf-viewer/core';
+import { isFullScreenEnabled, LocalizationContext, MenuItem } from '@react-pdf-viewer/core';
 import * as React from 'react';
-import { isFullScreenEnabled } from './fullScreen';
 import { FullScreenIcon } from './FullScreenIcon';
 
 export interface EnterFullScreenMenuItemProps {

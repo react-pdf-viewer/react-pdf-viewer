@@ -48,6 +48,8 @@ import type { VirtualItem } from '../virtualizer/VirtualItem';
 import { calculateScale } from './calculateScale';
 import { useDestination } from './useDestination';
 import { useOutlines } from './useOutlines';
+import { useFullScreen } from '../fullscreen/useFullScreen';
+import { FullScreenMode } from '../structs/FullScreenMode';
 
 const DEFAULT_PAGE_LAYOUT: PageLayout = {
     buildPageStyles: () => ({}),
@@ -142,6 +144,13 @@ export const Inner: React.FC<{
         typeof defaultScale === 'string' ? defaultScale : null
     );
 
+    const fullScreen = useFullScreen({
+        getCurrentPage: () => stateRef.current.pageIndex,
+        getCurrentScrollMode: () => stateRef.current.scrollMode,
+        jumpToPage: (pageIndex: number) => jumpToPage(pageIndex),
+        targetRef: pagesRef,
+    });
+
     const [renderPageIndex, setRenderPageIndex] = React.useState(-1);
     const [renderQueueKey, setRenderQueueKey] = React.useState(0);
     const renderQueue = useRenderQueue({ doc });
@@ -180,6 +189,7 @@ export const Inner: React.FC<{
 
     const virtualizer = useVirtual({
         enableSmoothScroll,
+        fullScreenMode: fullScreen.fullScreenMode,
         isRtl,
         numberOfItems: numPages,
         parentRef: pagesRef,
@@ -429,11 +439,30 @@ export const Inner: React.FC<{
         });
     }, []);
 
+    // Full-screen mode
+
+    const enterFullScreenMode = React.useCallback(() => {
+        fullScreen.enterFullScreenMode();
+    }, []);
+
+    const exitFullScreenMode = React.useCallback(() => {
+        fullScreen.exitFullScreenMode();
+    }, []);
+
+    React.useEffect(() => {
+        setViewerState({
+            ...stateRef.current,
+            fullScreenMode: fullScreen.fullScreenMode,
+        });
+    }, [fullScreen.fullScreenMode]);
+
     // Internal
     // --------
 
     React.useEffect(() => {
         const pluginMethods: PluginFunctions = {
+            enterFullScreenMode,
+            exitFullScreenMode,
             getPagesContainer,
             getViewerState,
             jumpToDestination,
@@ -543,6 +572,14 @@ export const Inner: React.FC<{
 
     // This hook should be placed at the end of hooks
     React.useEffect(() => {
+        // Don't do anything if users start going to or exitting the full-screen mode
+        if (
+            fullScreen.fullScreenMode === FullScreenMode.Entering ||
+            fullScreen.fullScreenMode === FullScreenMode.Exitting
+        ) {
+            return;
+        }
+
         const { startPage, endPage, maxVisbilityIndex, virtualItems } = virtualizer;
         // The current page is the page which has the biggest visibility
         const currentPage = maxVisbilityIndex;
@@ -567,6 +604,7 @@ export const Inner: React.FC<{
         virtualizer.startPage,
         virtualizer.endPage,
         virtualizer.maxVisbilityIndex,
+        fullScreen.fullScreenMode,
         pagesRotationChanged,
         rotation,
         scale,

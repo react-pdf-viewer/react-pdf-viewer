@@ -7,9 +7,15 @@
  */
 
 import type { LocalizationMap } from '@react-pdf-viewer/core';
-import { isMac, LocalizationContext, MinimalButton, Position, Tooltip } from '@react-pdf-viewer/core';
+import {
+    isFullScreenEnabled,
+    isMac,
+    LocalizationContext,
+    MinimalButton,
+    Position,
+    Tooltip,
+} from '@react-pdf-viewer/core';
 import * as React from 'react';
-import { isFullScreenEnabled } from './fullScreen';
 import { FullScreenIcon } from './FullScreenIcon';
 
 const TOOLTIP_OFFSET = { left: 0, top: 8 };

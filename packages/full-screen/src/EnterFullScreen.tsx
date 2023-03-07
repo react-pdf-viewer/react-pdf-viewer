@@ -26,10 +26,9 @@ export interface EnterFullScreenProps {
 export const EnterFullScreen: React.FC<{
     children?: RenderEnterFullScreen;
     enableShortcuts: boolean;
-    getFullScreenTarget(pagesContainer: HTMLElement): HTMLElement;
     store: Store<StoreProps>;
-}> = ({ children, enableShortcuts, getFullScreenTarget, store }) => {
-    const { enterFullScreen, exitFullScreen, isFullScreen } = useEnterFullScreen(getFullScreenTarget, store);
+}> = ({ children, enableShortcuts, store }) => {
+    const { enterFullScreen, exitFullScreen, isFullScreen } = useEnterFullScreen(store);
 
     const defaultChildren = (props: RenderEnterFullScreenProps) =>
         isFullScreen ? (

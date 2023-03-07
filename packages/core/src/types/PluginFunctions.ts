@@ -14,6 +14,8 @@ import type { Destination } from './Destination';
 import type { ViewerState } from './ViewerState';
 
 export interface PluginFunctions {
+    enterFullScreenMode(): void;
+    exitFullScreenMode(): void;
     getPagesContainer(): HTMLElement;
     getViewerState(): ViewerState;
     jumpToDestination(destination: Destination): void;
