@@ -104,6 +104,7 @@ export const useVirtual = ({
 
     const parentRect = useMeasureRect({
         elementRef: parentRef,
+        fullScreenMode,
     });
 
     const latestRef = React.useRef({

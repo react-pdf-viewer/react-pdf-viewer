@@ -18,7 +18,7 @@ import {
     getFullScreenElement,
     isFullScreenEnabled,
     removeFullScreenChangeListener,
-    requestFullScreen
+    requestFullScreen,
 } from './fullScreen';
 
 const ZERO_RECT = {

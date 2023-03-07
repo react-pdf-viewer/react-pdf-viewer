@@ -1,4 +1,4 @@
 {
     "extends": "../../tsconfig.json",
-    "include": ["src/**/*", "../core/src/hooks/useWindowResize.ts"]
+    "include": ["src/**/*"]
 }
