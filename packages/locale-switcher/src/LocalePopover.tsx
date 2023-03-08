@@ -46,6 +46,7 @@ export const LocalePopover: React.FC<LocalePopoverProps> = ({
                         isSelected={opened}
                         testId="locale-switcher__popover-target"
                         onClick={toggle}
+                        ariaExpanded={opened}
                     >
                         <LocaleIcon />
                     </MinimalButton>
