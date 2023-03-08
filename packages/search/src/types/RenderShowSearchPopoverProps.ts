@@ -8,4 +8,6 @@
 
 export interface RenderShowSearchPopoverProps {
     onClick(): void;
+    opened: boolean;
+    ariaControls: string;
 }

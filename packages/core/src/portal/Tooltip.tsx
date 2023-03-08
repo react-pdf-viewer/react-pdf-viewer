@@ -87,7 +87,7 @@ export const Tooltip: React.FC<{
         <>
             <div
                 ref={targetRef}
-                aria-describedby={`rpv-core__tooltip-body-${controlsSuffix}`}
+                aria-describedby={opened ? `rpv-core__tooltip-body-${controlsSuffix}` : undefined}
                 onBlur={onBlur}
                 onFocus={open}
                 onMouseEnter={open}

@@ -140,12 +140,9 @@ export const Sidebar: React.FC<SidebarProps> = ({
                     <div className="rpv-default-layout__sidebar-headers" role="tablist" aria-orientation="vertical">
                         {listTabs.map((tab, index) => (
                             <div
-                                aria-controls="rpv-default-layout__sidebar-content"
-                                aria-selected={currentTab === index}
                                 key={index}
                                 className="rpv-default-layout__sidebar-header"
                                 id={`rpv-default-layout__sidebar-tab-${index}`}
-                                role="tab"
                             >
                                 <Tooltip
                                     ariaControlsSuffix={`default-layout-sidebar-tab-${index}`}
@@ -155,6 +152,9 @@ export const Sidebar: React.FC<SidebarProps> = ({
                                             ariaLabel={tab.title}
                                             isSelected={currentTab === index}
                                             onClick={() => toggleTab(index)}
+                                            role="tab"
+                                            ariaSelected={currentTab === index}
+                                            ariaControls="rpv-default-layout__sidebar-content"
                                         >
                                             {tab.icon}
                                         </MinimalButton>

@@ -655,6 +655,7 @@ export const Inner: React.FC<{
                         'rpv-core__inner-pages--wrapped': currentScrollMode === ScrollMode.Wrapped,
                     }),
                     ref: pagesRef,
+                    tabIndex: 0,
                     style: {
                         height: '100%',
                         // We need this to jump between destinations or searching results

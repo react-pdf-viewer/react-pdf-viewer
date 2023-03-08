@@ -47,12 +47,18 @@ export const ZoomPopover: React.FC<{
     const zoomDocumentLabel =
         l10n && l10n.zoom ? ((l10n.zoom as LocalizationMap).zoomDocument as string) : 'Zoom document';
 
-    const renderTarget = (toggle: Toggle): React.ReactElement => {
+    const renderTarget = (toggle: Toggle, opened: boolean, ariaControls: string): React.ReactElement => {
         const click = (): void => {
             toggle();
         };
         return (
-            <MinimalButton ariaLabel={zoomDocumentLabel as string} testId="zoom__popover-target" onClick={click}>
+            <MinimalButton
+                ariaLabel={zoomDocumentLabel as string}
+                testId="zoom__popover-target"
+                ariaExpanded={opened}
+                onClick={click}
+                ariaControls={ariaControls}
+            >
                 <span className="rpv-zoom__popover-target">
                     <span
                         data-testid="zoom__popover-target-scale"

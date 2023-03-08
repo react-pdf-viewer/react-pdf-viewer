@@ -18,7 +18,23 @@ export const MinimalButton: React.FC<{
     isSelected?: boolean;
     testId?: string;
     onClick(): void;
-}> = ({ ariaLabel = '', ariaKeyShortcuts = '', children, isDisabled = false, isSelected = false, testId, onClick }) => {
+    role?: string;
+    ariaExpanded?: boolean;
+    ariaControls?: string;
+    ariaSelected?: boolean;
+}> = ({
+    ariaLabel = '',
+    ariaKeyShortcuts = '',
+    children,
+    isDisabled = false,
+    isSelected = false,
+    testId,
+    onClick,
+    role,
+    ariaExpanded,
+    ariaControls,
+    ariaSelected,
+}) => {
     const { direction } = React.useContext(ThemeContext);
     const isRtl = direction === TextDirection.RightToLeft;
     const attrs = testId ? { 'data-testid': testId } : {};
@@ -35,6 +51,10 @@ export const MinimalButton: React.FC<{
                 'rpv-core__minimal-button--selected': isSelected,
             })}
             type="button"
+            role={role}
+            aria-expanded={ariaExpanded}
+            aria-controls={ariaControls}
+            aria-selected={ariaSelected}
             onClick={onClick}
             {...attrs}
         >
