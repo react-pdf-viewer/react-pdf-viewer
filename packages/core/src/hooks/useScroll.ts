@@ -49,9 +49,13 @@ export const useScroll = ({
     latestRef.current = scrollDirection;
 
     const latestOffsetRef = React.useRef(ZERO_OFFSET);
+    const isSmoothScrollingDoneRef = React.useRef(true);
 
     const handleSmoothScrollingComplete = React.useCallback(() => {
-        setScrollOffset(latestOffsetRef.current);
+        isSmoothScrollingDoneRef.current = true;
+        if (enableSmoothScroll) {
+            setScrollOffset(latestOffsetRef.current);
+        }
         onSmoothScroll(false);
     }, []);
 
@@ -80,7 +84,7 @@ export const useScroll = ({
                 };
                 break;
         }
-        if (!enableSmoothScroll) {
+        if (!enableSmoothScroll || isSmoothScrollingDoneRef.current) {
             setScrollOffset(latestOffsetRef.current);
         }
     }, [element]);
@@ -126,6 +130,7 @@ export const useScroll = ({
                     break;
             }
             if (withSmoothScroll) {
+                isSmoothScrollingDoneRef.current = false;
                 onSmoothScroll(true);
                 smoothScroll(
                     ele,
