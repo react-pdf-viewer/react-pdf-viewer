@@ -189,7 +189,6 @@ export const Inner: React.FC<{
 
     const virtualizer = useVirtual({
         enableSmoothScroll,
-        fullScreenMode: fullScreen.fullScreenMode,
         isRtl,
         numberOfItems: numPages,
         parentRef: pagesRef,
@@ -441,8 +440,8 @@ export const Inner: React.FC<{
 
     // Full-screen mode
 
-    const enterFullScreenMode = React.useCallback(() => {
-        fullScreen.enterFullScreenMode();
+    const enterFullScreenMode = React.useCallback((target: HTMLElement) => {
+        fullScreen.enterFullScreenMode(target);
     }, []);
 
     const exitFullScreenMode = React.useCallback(() => {

@@ -63,7 +63,7 @@ export interface Destination {
 }
 
 export interface PluginFunctions {
-    enterFullScreenMode(): void;
+    enterFullScreenMode(target: HTMLElement): void;
     exitFullScreenMode(): void;
     getPagesContainer(): HTMLElement;
     getViewerState(): ViewerState;

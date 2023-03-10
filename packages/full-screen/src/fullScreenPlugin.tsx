@@ -59,7 +59,12 @@ export const fullScreenPlugin = (props?: FullScreenPluginProps): FullScreenPlugi
     );
 
     const EnterFullScreenDecorator = (props: EnterFullScreenProps) => (
-        <EnterFullScreen {...props} enableShortcuts={fullScreenPluginProps.enableShortcuts} store={store} />
+        <EnterFullScreen
+            {...props}
+            enableShortcuts={fullScreenPluginProps.enableShortcuts}
+            getFullScreenTarget={getFullScreenTarget}
+            store={store}
+        />
     );
 
     const EnterFullScreenButtonDecorator = () => (
@@ -84,7 +89,9 @@ export const fullScreenPlugin = (props?: FullScreenPluginProps): FullScreenPlugi
     );
 
     const ExitFullScreenDecorator = () => (
-        <ExitFullScreen store={store}>{props?.renderExitFullScreenButton}</ExitFullScreen>
+        <ExitFullScreen getFullScreenTarget={getFullScreenTarget} store={store}>
+            {props?.renderExitFullScreenButton}
+        </ExitFullScreen>
     );
 
     const renderViewer = (props: RenderViewer): Slot => {
@@ -93,7 +100,11 @@ export const fullScreenPlugin = (props?: FullScreenPluginProps): FullScreenPlugi
             currentSlot.subSlot.children = (
                 <>
                     {fullScreenPluginProps.enableShortcuts && (
-                        <ShortcutHandler containerRef={props.containerRef} store={store} />
+                        <ShortcutHandler
+                            containerRef={props.containerRef}
+                            getFullScreenTarget={getFullScreenTarget}
+                            store={store}
+                        />
                     )}
                     <ExitFullScreenDecorator />
                     <FullScreenModeTracker

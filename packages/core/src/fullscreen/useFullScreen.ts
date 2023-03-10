@@ -7,7 +7,7 @@
  */
 
 import * as React from 'react';
-import { useTrackResize } from '../hooks/useTrackResize';
+import { useIsomorphicLayoutEffect } from '../hooks/useIsomorphicLayoutEffect';
 import { useWindowResize } from '../hooks/useWindowResize';
 import { FullScreenMode } from '../structs/FullScreenMode';
 import { ScrollMode } from '../structs/ScrollMode';
@@ -35,7 +35,7 @@ export const useFullScreen = ({
     getCurrentPage: () => number;
     getCurrentScrollMode: () => ScrollMode;
     jumpToPage: (pageIndex: number) => void;
-    targetRef: React.MutableRefObject<HTMLDivElement>;
+    targetRef: React.MutableRefObject<HTMLElement>;
 }) => {
     const [fullScreenMode, setFullScreenMode] = React.useState(FullScreenMode.Normal);
     const windowRect = useWindowResize();
@@ -44,58 +44,62 @@ export const useFullScreen = ({
     const targetPageRef = React.useRef(getCurrentPage());
 
     const fullScreenSizeRef = React.useRef<Rect>(ZERO_RECT);
+    const [element, setElement] = React.useState<HTMLElement>(targetRef.current);
 
-    const handleResize = React.useCallback((target: Element) => {
-        const { height, width } = target.getBoundingClientRect();
-        setTargetRect({ height, width });
+    useIsomorphicLayoutEffect(() => {
+        if (targetRef.current !== element) {
+            setElement(targetRef.current);
+        }
     }, []);
 
-    useTrackResize({
-        targetRef,
-        onResize: handleResize,
-    });
-
-    const closeOtherFullScreen = () => {
-        const element = targetRef.current;
+    useIsomorphicLayoutEffect(() => {
         if (!element) {
             return;
         }
+        const io = new ResizeObserver((entries) => {
+            entries.forEach((entry) => {
+                const { height, width } = entry.target.getBoundingClientRect();
+                setTargetRect({ height, width });
+            });
+        });
+        io.observe(element);
 
+        return (): void => {
+            io.unobserve(element);
+            io.disconnect();
+        };
+    }, [element]);
+
+    const closeOtherFullScreen = React.useCallback((target: HTMLElement) => {
         const currentFullScreenEle = getFullScreenElement();
-        if (currentFullScreenEle && currentFullScreenEle !== element) {
+        if (currentFullScreenEle && currentFullScreenEle !== target) {
             setFullScreenMode(FullScreenMode.Normal);
             return exitFullScreen(currentFullScreenEle);
         }
 
         return Promise.resolve();
-    };
+    }, []);
 
-    const enterFullScreenMode = React.useCallback(() => {
-        const element = targetRef.current;
-        if (!element || !isFullScreenEnabled()) {
+    const enterFullScreenMode = React.useCallback((target: HTMLElement) => {
+        if (!target || !isFullScreenEnabled()) {
             return;
         }
-        closeOtherFullScreen().then(() => {
+        setElement(target);
+        closeOtherFullScreen(target).then(() => {
             setFullScreenMode(FullScreenMode.Entering);
-            requestFullScreen(element);
+            requestFullScreen(target);
         });
     }, []);
 
     const exitFullScreenMode = React.useCallback(() => {
-        const element = targetRef.current;
-        if (!element) {
-            return;
-        }
-
         const currentFullScreenEle = getFullScreenElement();
-        if (currentFullScreenEle && currentFullScreenEle === element) {
+        if (currentFullScreenEle) {
             setFullScreenMode(FullScreenMode.Exitting);
             exitFullScreen(document);
         }
     }, []);
 
     const handleFullScreenChange = React.useCallback(() => {
-        const element = targetRef.current;
         if (!element) {
             return;
         }
@@ -103,7 +107,7 @@ export const useFullScreen = ({
         if (currentFullScreenEle !== element) {
             setFullScreenMode(FullScreenMode.Exitting);
         }
-    }, []);
+    }, [element]);
 
     React.useEffect(() => {
         switch (fullScreenMode) {
@@ -177,7 +181,7 @@ export const useFullScreen = ({
         return (): void => {
             removeFullScreenChangeListener(handleFullScreenChange);
         };
-    }, []);
+    }, [element]);
 
     return {
         enterFullScreenMode,

@@ -7,7 +7,6 @@
  */
 
 import * as React from 'react';
-import { FullScreenMode } from '../structs/FullScreenMode';
 import type { Rect } from '../types/Rect';
 import { useIsomorphicLayoutEffect } from './useIsomorphicLayoutEffect';
 
@@ -23,10 +22,8 @@ const rectReducer = (
 
 export const useMeasureRect = ({
     elementRef,
-    fullScreenMode,
 }: {
-    elementRef: React.MutableRefObject<HTMLDivElement>;
-    fullScreenMode: FullScreenMode;
+    elementRef: React.MutableRefObject<HTMLDivElement>
 }): Rect => {
     const [element, setElement] = React.useState(elementRef.current);
     const initializedRectRef = React.useRef(false);
@@ -56,11 +53,9 @@ export const useMeasureRect = ({
             entries.forEach((entry) => {
                 if (entry.target === element) {
                     const { height, width } = entry.contentRect;
-                    if (fullScreenMode !== FullScreenMode.Entering && fullScreenMode !== FullScreenMode.Exitting) {
-                        dispatch({
-                            rect: { height, width },
-                        });
-                    }
+                    dispatch({
+                        rect: { height, width },
+                    });
                 }
             });
         });
@@ -69,7 +64,7 @@ export const useMeasureRect = ({
         return () => {
             tracker.unobserve(element);
         };
-    }, [element, fullScreenMode]);
+    }, [element]);
 
     return rect;
 };
