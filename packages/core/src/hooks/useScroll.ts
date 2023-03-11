@@ -12,7 +12,6 @@ import type { Offset } from '../types/Offset';
 import { easeOutQuart } from '../utils/easeOutQuart';
 import { smoothScroll } from '../utils/smoothScroll';
 import { useIsomorphicLayoutEffect } from './useIsomorphicLayoutEffect';
-import { useRafState } from './useRafState';
 
 const ZERO_OFFSET: Offset = {
     left: 0,
@@ -42,7 +41,7 @@ export const useScroll = ({
     scrollOffset: Offset;
     scrollTo: (offset: Offset, withSmoothScroll: boolean) => Promise<void>;
 } => {
-    const [scrollOffset, setScrollOffset] = useRafState(ZERO_OFFSET);
+    const [scrollOffset, setScrollOffset] = React.useState(ZERO_OFFSET);
     const [element, setElement] = React.useState(elementRef.current);
     const factor = isRtl ? -1 : 1;
     const latestRef = React.useRef(scrollDirection);
