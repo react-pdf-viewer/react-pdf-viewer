@@ -49,6 +49,6 @@ export const useEnterFullScreen = (
     return {
         enterFullScreen,
         exitFullScreen,
-        isFullScreen: fullScreenMode === FullScreenMode.Entering || fullScreenMode === FullScreenMode.Entered,
+        isFullScreen: fullScreenMode === FullScreenMode.Entering || fullScreenMode === FullScreenMode.EnteredCompletely,
     };
 };

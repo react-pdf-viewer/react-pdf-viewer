@@ -109,7 +109,7 @@ export const useScroll = ({
         (targetPosition: Offset, withSmoothScroll: boolean) => {
             const ele = elementRef.current;
             if (!ele) {
-                return;
+                return Promise.resolve();
             }
 
             let updatePosition = {
