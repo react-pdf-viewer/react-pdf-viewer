@@ -7,7 +7,7 @@
  */
 
 import type { Store } from '@react-pdf-viewer/core';
-import { FullScreenMode } from '@react-pdf-viewer/core';
+import { FullScreenMode, Spinner } from '@react-pdf-viewer/core';
 import * as React from 'react';
 import type { StoreProps } from './types/StoreProps';
 import type { Zoom } from './types/Zoom';
@@ -25,18 +25,10 @@ export const FullScreenModeTracker: React.FC<{
 
     const handleEnteredFullScreen = () => {
         onEnterFullScreen(store.get('zoom'));
-        const getPagesContainer = store.get('getPagesContainer');
-        if (getPagesContainer) {
-            getPagesContainer().classList.add('rpv-full-screen__pages');
-        }
     };
 
     const handleExitedFullScreen = () => {
         onExitFullScreen(store.get('zoom'));
-        const getPagesContainer = store.get('getPagesContainer');
-        if (getPagesContainer) {
-            getPagesContainer().classList.remove('rpv-full-screen__pages');
-        }
     };
 
     React.useEffect(() => {
@@ -60,5 +52,11 @@ export const FullScreenModeTracker: React.FC<{
         };
     }, []);
 
-    return <></>;
+    return (
+        (fullScreenMode === FullScreenMode.Entering || fullScreenMode === FullScreenMode.Entered) && (
+            <div className="rpv-full-screen__overlay">
+                <Spinner />
+            </div>
+        )
+    );
 };

@@ -106,12 +106,12 @@ export const fullScreenPlugin = (props?: FullScreenPluginProps): FullScreenPlugi
                             store={store}
                         />
                     )}
-                    <ExitFullScreenDecorator />
                     <FullScreenModeTracker
                         store={store}
                         onEnterFullScreen={fullScreenPluginProps.onEnterFullScreen}
                         onExitFullScreen={fullScreenPluginProps.onExitFullScreen}
                     />
+                    <ExitFullScreenDecorator />
                     {currentSlot.subSlot.children}
                 </>
             );
