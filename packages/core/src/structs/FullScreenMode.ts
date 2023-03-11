@@ -11,6 +11,8 @@ export enum FullScreenMode {
     // Start entering the full screen mode
     Entering = 'Entering',
     Entered = 'Entered',
+    // In the single page scroll mode, this is triggered after scrolling to the current page
+    EnteredCompletely = 'EnteredCompletely',
     Exitting = 'Exitting',
     Exited = 'Exited',
 }

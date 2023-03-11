@@ -70,9 +70,9 @@ export const useVirtual = ({
     getContainerStyles: () => React.CSSProperties;
     getItemContainerStyles: (item: VirtualItem) => React.CSSProperties;
     getItemStyles: (item: VirtualItem) => React.CSSProperties;
-    scrollToItem: (index: number, offset: Offset) => void;
-    scrollToNextItem: (index: number, offset: Offset) => void;
-    scrollToPreviousItem: (index: number, offset: Offset) => void;
+    scrollToItem: (index: number, offset: Offset) => Promise<void>;
+    scrollToNextItem: (index: number, offset: Offset) => Promise<void>;
+    scrollToPreviousItem: (index: number, offset: Offset) => Promise<void>;
     zoom: (scale: number, index: number) => void;
 } => {
     const [isSmoothScrolling, setSmoothScrolling] = React.useState(false);
@@ -241,32 +241,32 @@ export const useVirtual = ({
     }, [startPage, endPage, visibilities, measurements]);
 
     const scrollToItem = React.useCallback(
-        (index: number, offset: Offset) => {
+        (index: number, offset: Offset): Promise<void> => {
             const { measurements } = latestRef.current;
             const normalizedIndex = clamp(0, numberOfItems - 1, index);
             const measurement = measurements[normalizedIndex];
             // Ignore the offset in the single page scrolling mode
             const withOffset = scrollModeRef.current === ScrollMode.Page ? ZERO_OFFSET : offset;
-            if (measurement) {
-                scrollTo(
-                    {
-                        left: withOffset.left + measurement.start.left,
-                        top: withOffset.top + measurement.start.top,
-                    },
-                    enableSmoothScroll
-                );
-            }
+            return measurement
+                ? scrollTo(
+                      {
+                          left: withOffset.left + measurement.start.left,
+                          top: withOffset.top + measurement.start.top,
+                      },
+                      enableSmoothScroll
+                  )
+                : Promise.resolve();
         },
         [scrollTo, enableSmoothScroll]
     );
 
-    const scrollToSmallestItemAbove = React.useCallback((index: number, offset: Offset) => {
+    const scrollToSmallestItemAbove = React.useCallback((index: number, offset: Offset): Promise<void> => {
         const { measurements } = latestRef.current;
         const start = measurements[index].start;
         // Find the smallest item whose `top` is bigger than the current item
         const nextItem = measurements.find((item) => item.start.top - start.top > COMPARE_EPSILON);
         if (!nextItem) {
-            return;
+            return Promise.resolve();
         }
         let nextIndex = nextItem.index;
         switch (viewModeRef.current) {
@@ -279,10 +279,10 @@ export const useVirtual = ({
             default:
                 break;
         }
-        scrollToItem(nextIndex, offset);
+        return scrollToItem(nextIndex, offset);
     }, []);
 
-    const scrollToBiggestItemBelow = React.useCallback((index: number, offset: Offset) => {
+    const scrollToBiggestItemBelow = React.useCallback((index: number, offset: Offset): Promise<void> => {
         const { measurements } = latestRef.current;
         const start = measurements[index].start;
         // Find the smallest item whose `top` is smaller than the current item
@@ -297,7 +297,7 @@ export const useVirtual = ({
             }
         }
         if (!found) {
-            return;
+            return Promise.resolve();
         }
         switch (viewModeRef.current) {
             case ViewMode.DualPage:
@@ -312,46 +312,40 @@ export const useVirtual = ({
         if (prevIndex === index) {
             prevIndex = index - 1;
         }
-        scrollToItem(prevIndex, offset);
+        return scrollToItem(prevIndex, offset);
     }, []);
 
-    const scrollToNextItem = React.useCallback((index: number, offset: Offset) => {
+    const scrollToNextItem = React.useCallback((index: number, offset: Offset): Promise<void> => {
         // `DualPage` mode
         if (viewModeRef.current === ViewMode.DualPageWithCover || viewModeRef.current === ViewMode.DualPage) {
-            scrollToSmallestItemAbove(index, offset);
-            return;
+            return scrollToSmallestItemAbove(index, offset);
         }
 
         // `SinglePage` mode
         switch (scrollModeRef.current) {
             case ScrollMode.Wrapped:
-                scrollToSmallestItemAbove(index, offset);
-                break;
+                return scrollToSmallestItemAbove(index, offset);
             case ScrollMode.Horizontal:
             case ScrollMode.Vertical:
             default:
-                scrollToItem(index + 1, offset);
-                break;
+                return scrollToItem(index + 1, offset);
         }
     }, []);
 
-    const scrollToPreviousItem = React.useCallback((index: number, offset: Offset) => {
+    const scrollToPreviousItem = React.useCallback((index: number, offset: Offset): Promise<void> => {
         // `DualPage` mode
         if (viewModeRef.current === ViewMode.DualPageWithCover || viewModeRef.current === ViewMode.DualPage) {
-            scrollToBiggestItemBelow(index, offset);
-            return;
+            return scrollToBiggestItemBelow(index, offset);
         }
 
         // `SinglePage` mode
         switch (scrollModeRef.current) {
             case ScrollMode.Wrapped:
-                scrollToBiggestItemBelow(index, offset);
-                break;
+                return scrollToBiggestItemBelow(index, offset);
             case ScrollMode.Horizontal:
             case ScrollMode.Vertical:
             default:
-                scrollToItem(index - 1, offset);
-                break;
+                return scrollToItem(index - 1, offset);
         }
     }, []);
 

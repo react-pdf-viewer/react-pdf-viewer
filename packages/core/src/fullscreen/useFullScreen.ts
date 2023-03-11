@@ -34,7 +34,7 @@ export const useFullScreen = ({
 }: {
     getCurrentPage: () => number;
     getCurrentScrollMode: () => ScrollMode;
-    jumpToPage: (pageIndex: number) => void;
+    jumpToPage: (pageIndex: number) => Promise<void>;
     targetRef: React.MutableRefObject<HTMLElement>;
 }) => {
     const [fullScreenMode, setFullScreenMode] = React.useState(FullScreenMode.Normal);
@@ -123,7 +123,11 @@ export const useFullScreen = ({
             // Entering the full screen mode completes
             case FullScreenMode.Entered:
                 if (getCurrentScrollMode() === ScrollMode.Page) {
-                    jumpToPage(targetPageRef.current);
+                    jumpToPage(targetPageRef.current).then(() => {
+                        setFullScreenMode(FullScreenMode.EnteredCompletely);
+                    });
+                } else {
+                    setFullScreenMode(FullScreenMode.EnteredCompletely);
                 }
                 break;
 

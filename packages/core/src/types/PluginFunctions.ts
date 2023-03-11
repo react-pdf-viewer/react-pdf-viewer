@@ -18,12 +18,12 @@ export interface PluginFunctions {
     exitFullScreenMode(): void;
     getPagesContainer(): HTMLElement;
     getViewerState(): ViewerState;
-    jumpToDestination(destination: Destination): void;
-    jumpToNextDestination(): void;
-    jumpToPreviousDestination(): void;
-    jumpToNextPage(): void;
-    jumpToPreviousPage(): void;
-    jumpToPage(pageIndex: number): void;
+    jumpToDestination(destination: Destination): Promise<void>;
+    jumpToNextDestination(): Promise<void>;
+    jumpToPreviousDestination(): Promise<void>;
+    jumpToNextPage(): Promise<void>;
+    jumpToPreviousPage(): Promise<void>;
+    jumpToPage(pageIndex: number): Promise<void>;
     openFile(file: File): void;
     rotate(direction: RotateDirection): void;
     rotatePage(pageIndex: number, direction: RotateDirection): void;

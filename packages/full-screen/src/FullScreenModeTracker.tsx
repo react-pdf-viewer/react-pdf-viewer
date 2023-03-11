@@ -41,7 +41,7 @@ export const FullScreenModeTracker: React.FC<{
 
     React.useEffect(() => {
         switch (fullScreenMode) {
-            case FullScreenMode.Entered:
+            case FullScreenMode.EnteredCompletely:
                 handleEnteredFullScreen();
                 break;
             case FullScreenMode.Exited:

@@ -37,9 +37,11 @@ export const smoothScroll = (
     }
 
     if (top === targetPosition.top && scrollDirection === ScrollDirection.Vertical) {
+        onReachTarget();
         return;
     }
     if (left === targetPosition.left && scrollDirection === ScrollDirection.Horizontal) {
+        onReachTarget();
         return;
     }
 
