@@ -46,6 +46,8 @@ export const useFullScreen = ({
     const fullScreenSizeRef = React.useRef<Rect>(ZERO_RECT);
     const [element, setElement] = React.useState<HTMLElement>(targetRef.current);
 
+    const fullScreenElementRef = React.useRef<HTMLElement>();
+
     useIsomorphicLayoutEffect(() => {
         if (targetRef.current !== element) {
             setElement(targetRef.current);
@@ -86,6 +88,7 @@ export const useFullScreen = ({
         }
         setElement(target);
         closeOtherFullScreen(target).then(() => {
+            fullScreenElementRef.current = target;
             setFullScreenMode(FullScreenMode.Entering);
             requestFullScreen(target);
         });
@@ -112,6 +115,12 @@ export const useFullScreen = ({
     React.useEffect(() => {
         switch (fullScreenMode) {
             case FullScreenMode.Entering:
+                // It's not possible to add a CSS class to target
+                // We have to set an inline style to avoid the black backdrop
+                if (fullScreenElementRef.current) {
+                    fullScreenElementRef.current.style.backgroundColor =
+                        'var(--rpv-core__full-screen-target-background-color)';
+                }
                 // Store the latest window size right after entering the full screen mode
                 targetPageRef.current = getCurrentPage();
                 windowSizeBeforeFullScreenRef.current = {
@@ -132,6 +141,10 @@ export const useFullScreen = ({
                 break;
 
             case FullScreenMode.Exitting:
+                if (fullScreenElementRef.current) {
+                    fullScreenElementRef.current.style.backgroundColor = '';
+                    fullScreenElementRef.current = null;
+                }
                 targetPageRef.current = getCurrentPage();
                 break;
 
