@@ -20,11 +20,7 @@ const rectReducer = (
     return state.height !== rect.height || state.width !== rect.width ? rect : state;
 };
 
-export const useMeasureRect = ({
-    elementRef,
-}: {
-    elementRef: React.MutableRefObject<HTMLDivElement>
-}): Rect => {
+export const useMeasureRect = ({ elementRef }: { elementRef: React.MutableRefObject<HTMLDivElement> }): Rect => {
     const [element, setElement] = React.useState(elementRef.current);
     const initializedRectRef = React.useRef(false);
     const [rect, dispatch] = React.useReducer(rectReducer, { height: 0, width: 0 });

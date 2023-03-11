@@ -21,9 +21,9 @@ export interface PluginFunctions {
     jumpToDestination(destination: Destination): void;
     jumpToNextDestination(): void;
     jumpToPreviousDestination(): void;
-    jumpToNextPage(): void;
-    jumpToPreviousPage(): void;
-    jumpToPage(pageIndex: number): void;
+    jumpToNextPage(): Promise<void>;
+    jumpToPreviousPage(): Promise<void>;
+    jumpToPage(pageIndex: number): Promise<void>;
     openFile(file: File): void;
     rotate(direction: RotateDirection): void;
     rotatePage(pageIndex: number, direction: RotateDirection): void;

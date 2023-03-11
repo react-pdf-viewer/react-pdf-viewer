@@ -40,7 +40,7 @@ export const useScroll = ({
     onSmoothScroll: (isScrollingSmoothly: boolean) => void;
 }): {
     scrollOffset: Offset;
-    scrollTo: (offset: Offset, withSmoothScroll: boolean) => void;
+    scrollTo: (offset: Offset, withSmoothScroll: boolean) => Promise<void>;
 } => {
     const [scrollOffset, setScrollOffset] = useRafState(ZERO_OFFSET);
     const [element, setElement] = React.useState(elementRef.current);
@@ -132,15 +132,15 @@ export const useScroll = ({
             if (withSmoothScroll) {
                 isSmoothScrollingDoneRef.current = false;
                 onSmoothScroll(true);
-                smoothScroll(
-                    ele,
-                    latestRef.current,
-                    updatePosition,
-                    SCROLL_DURATION,
-                    easeOutQuart,
-                    handleSmoothScrollingComplete
-                );
-            } else {
+                return new Promise<void>((resolve, _) => {
+                    smoothScroll(ele, latestRef.current, updatePosition, SCROLL_DURATION, easeOutQuart, () => {
+                        handleSmoothScrollingComplete();
+                        resolve();
+                    });
+                });
+            }
+
+            return new Promise<void>((resolve, _) => {
                 switch (latestRef.current) {
                     case ScrollDirection.Horizontal:
                         ele.scrollLeft = updatePosition.left;
@@ -154,7 +154,8 @@ export const useScroll = ({
                         ele.scrollTop = updatePosition.top;
                         break;
                 }
-            }
+                resolve();
+            });
         },
         [elementRef]
     );

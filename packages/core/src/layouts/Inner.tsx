@@ -309,19 +309,23 @@ export const Inner: React.FC<{
         }
     }, []);
 
-    const jumpToNextPage = React.useCallback(() => {
-        virtualizer.scrollToNextItem(stateRef.current.pageIndex, ZERO_OFFSET);
-    }, []);
+    const jumpToNextPage = React.useCallback(
+        () => virtualizer.scrollToNextItem(stateRef.current.pageIndex, ZERO_OFFSET),
+        []
+    );
 
-    const jumpToPage = React.useCallback((pageIndex: number) => {
-        if (0 <= pageIndex && pageIndex < numPages) {
-            virtualizer.scrollToItem(pageIndex, ZERO_OFFSET);
-        }
-    }, []);
+    const jumpToPage = React.useCallback(
+        (pageIndex: number) =>
+            0 <= pageIndex && pageIndex < numPages
+                ? virtualizer.scrollToItem(pageIndex, ZERO_OFFSET)
+                : Promise.resolve(),
+        []
+    );
 
-    const jumpToPreviousPage = React.useCallback(() => {
-        virtualizer.scrollToPreviousItem(stateRef.current.pageIndex, ZERO_OFFSET);
-    }, []);
+    const jumpToPreviousPage = React.useCallback(
+        () => virtualizer.scrollToPreviousItem(stateRef.current.pageIndex, ZERO_OFFSET),
+        []
+    );
 
     const openFile = React.useCallback(
         (file: File) => {
