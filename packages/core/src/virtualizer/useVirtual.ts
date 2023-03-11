@@ -106,11 +106,8 @@ export const useVirtual = ({
     const latestRef = React.useRef({
         scrollOffset: ZERO_OFFSET,
         measurements: [] as ItemMeasurement[],
-        parentRect: ZERO_RECT,
-        totalSize: ZERO_RECT,
     });
     latestRef.current.scrollOffset = scrollOffset;
-    latestRef.current.parentRect = parentRect;
 
     // Track visibilities of pages
     const defaultVisibilities = React.useMemo(() => Array(numberOfItems).fill(-1) as number[], []);
@@ -170,53 +167,58 @@ export const useVirtual = ({
           }
         : ZERO_RECT;
     latestRef.current.measurements = measurements;
-    latestRef.current.totalSize = totalSize;
 
-    const { start, end } = calculateRange(
-        scrollDirection,
-        latestRef.current.measurements,
-        latestRef.current.parentRect,
-        latestRef.current.scrollOffset
-    );
+    const { startPage, endPage, maxVisbilityIndex } = React.useMemo(() => {
+        const { start, end } = calculateRange(scrollDirection, measurements, parentRect, scrollOffset);
 
-    // Visibilities of visible pages
-    const visiblePageVisibilities = visibilities.slice(clamp(0, numberOfItems, start), clamp(0, numberOfItems, end));
+        // Visibilities of visible pages
+        const visiblePageVisibilities = visibilities.slice(
+            clamp(0, numberOfItems, start),
+            clamp(0, numberOfItems, end)
+        );
 
-    let maxVisbilityItem = start + indexOfMax(visiblePageVisibilities);
-    maxVisbilityItem = clamp(0, numberOfItems - 1, maxVisbilityItem);
+        let maxVisbilityItem = start + indexOfMax(visiblePageVisibilities);
+        maxVisbilityItem = clamp(0, numberOfItems - 1, maxVisbilityItem);
 
-    // Determine the page that has max visbility and the range of pages that will be pre-rendered
-    let maxVisbilityIndex = maxVisbilityItem;
-    let { startPage, endPage } = setRenderRange({
-        endPage: end,
-        numPages: numberOfItems,
-        startPage: start,
-    });
-    // Ensure that the range consists of valid pages
-    startPage = Math.max(startPage, 0);
-    endPage = Math.min(endPage, numberOfItems - 1);
+        // Determine the page that has max visbility and the range of pages that will be pre-rendered
+        let maxVisbilityIndex = maxVisbilityItem;
+        let { startPage, endPage } = setRenderRange({
+            endPage: end,
+            numPages: numberOfItems,
+            startPage: start,
+        });
+        // Ensure that the range consists of valid pages
+        startPage = Math.max(startPage, 0);
+        endPage = Math.min(endPage, numberOfItems - 1);
 
-    switch (viewMode) {
-        case ViewMode.DualPageWithCover:
-            if (maxVisbilityItem > 0) {
-                maxVisbilityIndex = maxVisbilityItem % 2 === 1 ? maxVisbilityItem : maxVisbilityItem - 1;
-            }
-            startPage = startPage === 0 ? 0 : startPage % 2 === 1 ? startPage : startPage - 1;
-            endPage = endPage % 2 === 1 ? endPage - 1 : endPage;
-            if (numberOfItems - endPage <= 2) {
-                endPage = numberOfItems - 1;
-            }
-            break;
-        case ViewMode.DualPage:
-            maxVisbilityIndex = maxVisbilityItem % 2 === 0 ? maxVisbilityItem : maxVisbilityItem - 1;
-            startPage = startPage % 2 === 0 ? startPage : startPage - 1;
-            endPage = endPage % 2 === 1 ? endPage : endPage - 1;
-            break;
-        case ViewMode.SinglePage:
-        default:
-            maxVisbilityIndex = maxVisbilityItem;
-            break;
-    }
+        switch (viewMode) {
+            case ViewMode.DualPageWithCover:
+                if (maxVisbilityItem > 0) {
+                    maxVisbilityIndex = maxVisbilityItem % 2 === 1 ? maxVisbilityItem : maxVisbilityItem - 1;
+                }
+                startPage = startPage === 0 ? 0 : startPage % 2 === 1 ? startPage : startPage - 1;
+                endPage = endPage % 2 === 1 ? endPage - 1 : endPage;
+                if (numberOfItems - endPage <= 2) {
+                    endPage = numberOfItems - 1;
+                }
+                break;
+            case ViewMode.DualPage:
+                maxVisbilityIndex = maxVisbilityItem % 2 === 0 ? maxVisbilityItem : maxVisbilityItem - 1;
+                startPage = startPage % 2 === 0 ? startPage : startPage - 1;
+                endPage = endPage % 2 === 1 ? endPage : endPage - 1;
+                break;
+            case ViewMode.SinglePage:
+            default:
+                maxVisbilityIndex = maxVisbilityItem;
+                break;
+        }
+
+        return {
+            startPage,
+            endPage,
+            maxVisbilityIndex,
+        };
+    }, [measurements, parentRect, scrollOffset, viewMode, visibilities]);
 
     const virtualItems = React.useMemo(() => {
         const virtualItems: VirtualItem[] = [];
