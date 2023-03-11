@@ -67,9 +67,9 @@ export interface PluginFunctions {
     exitFullScreenMode(): void;
     getPagesContainer(): HTMLElement;
     getViewerState(): ViewerState;
-    jumpToDestination(destination: Destination): void;
-    jumpToNextDestination(): void;
-    jumpToPreviousDestination(): void;
+    jumpToDestination(destination: Destination): Promise<void>;
+    jumpToNextDestination(): Promise<void>;
+    jumpToPreviousDestination(): Promise<void>;
     jumpToNextPage(): Promise<void>;
     jumpToPreviousPage(): Promise<void>;
     jumpToPage(pageIndex: number): Promise<void>;

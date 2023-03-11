@@ -234,79 +234,82 @@ export const Inner: React.FC<{
         destinationManager.markVisitedDestination(destination);
     }, []);
 
-    const handleJumpToDestination = React.useCallback((destination: Destination): void => {
+    const handleJumpToDestination = React.useCallback((destination: Destination): Promise<void> => {
         const { pageIndex, bottomOffset, leftOffset, scaleTo } = destination;
 
         const pagesContainer = pagesRef.current;
         const currentState = stateRef.current;
         if (!pagesContainer || !currentState) {
-            return;
+            return Promise.resolve();
         }
 
-        getPage(doc, pageIndex).then((page) => {
-            const viewport = page.getViewport({ scale: 1 });
-            let top = 0;
-            const bottom =
-                (typeof bottomOffset === 'function' ? bottomOffset(viewport.width, viewport.height) : bottomOffset) ||
-                0;
-            let left =
-                (typeof leftOffset === 'function' ? leftOffset(viewport.width, viewport.height) : leftOffset) || 0;
-            let updateScale = currentState.scale;
+        return new Promise<void>((resolve, _) => {
+            getPage(doc, pageIndex).then((page) => {
+                const viewport = page.getViewport({ scale: 1 });
+                let top = 0;
+                const bottom =
+                    (typeof bottomOffset === 'function'
+                        ? bottomOffset(viewport.width, viewport.height)
+                        : bottomOffset) || 0;
+                let left =
+                    (typeof leftOffset === 'function' ? leftOffset(viewport.width, viewport.height) : leftOffset) || 0;
+                let updateScale = currentState.scale;
 
-            switch (scaleTo) {
-                case SpecialZoomLevel.PageFit:
-                    top = 0;
-                    left = 0;
-                    zoom(SpecialZoomLevel.PageFit);
-                    break;
-                case SpecialZoomLevel.PageWidth:
-                    updateScale = calculateScale(
-                        pagesContainer,
-                        pageSizes[pageIndex].pageHeight,
-                        pageSizes[pageIndex].pageWidth,
-                        SpecialZoomLevel.PageWidth,
-                        viewMode,
-                        numPages
-                    );
-                    top = (viewport.height - bottom) * updateScale;
-                    left = left * updateScale;
-                    zoom(updateScale);
-                    break;
-                default:
-                    top = (viewport.height - bottom) * updateScale;
-                    left = left * updateScale;
-                    break;
-            }
+                switch (scaleTo) {
+                    case SpecialZoomLevel.PageFit:
+                        top = 0;
+                        left = 0;
+                        zoom(SpecialZoomLevel.PageFit);
+                        break;
+                    case SpecialZoomLevel.PageWidth:
+                        updateScale = calculateScale(
+                            pagesContainer,
+                            pageSizes[pageIndex].pageHeight,
+                            pageSizes[pageIndex].pageWidth,
+                            SpecialZoomLevel.PageWidth,
+                            viewMode,
+                            numPages
+                        );
+                        top = (viewport.height - bottom) * updateScale;
+                        left = left * updateScale;
+                        zoom(updateScale);
+                        break;
+                    default:
+                        top = (viewport.height - bottom) * updateScale;
+                        left = left * updateScale;
+                        break;
+                }
 
-            switch (currentState.scrollMode) {
-                case ScrollMode.Horizontal:
-                    virtualizer.scrollToItem(pageIndex, { left, top: 0 });
-                    break;
-                case ScrollMode.Vertical:
-                default:
-                    virtualizer.scrollToItem(pageIndex, { left: 0, top });
-                    break;
-            }
+                switch (currentState.scrollMode) {
+                    case ScrollMode.Horizontal:
+                        virtualizer.scrollToItem(pageIndex, { left, top: 0 }).then(() => {
+                            resolve();
+                        });
+                        break;
+                    case ScrollMode.Vertical:
+                    default:
+                        virtualizer.scrollToItem(pageIndex, { left: 0, top }).then(() => {
+                            resolve();
+                        });
+                        break;
+                }
+            });
         });
     }, []);
 
-    const jumpToDestination = React.useCallback((destination: Destination): void => {
+    const jumpToDestination = React.useCallback((destination: Destination) => {
         destinationManager.markVisitedDestination(destination);
-        handleJumpToDestination(destination);
+        return handleJumpToDestination(destination);
     }, []);
 
     const jumpToNextDestination = React.useCallback(() => {
         const nextDestination = destinationManager.getNextDestination();
-        if (nextDestination) {
-            handleJumpToDestination(nextDestination);
-        }
+        return nextDestination ? handleJumpToDestination(nextDestination) : Promise.resolve();
     }, []);
 
     const jumpToPreviousDestination = React.useCallback(() => {
         const lastDestination = destinationManager.getPreviousDestination();
-        if (lastDestination) {
-            handleJumpToDestination(lastDestination);
-        }
+        return lastDestination ? handleJumpToDestination(lastDestination) : Promise.resolve();
     }, []);
 
     const jumpToNextPage = React.useCallback(
