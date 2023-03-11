@@ -24,9 +24,10 @@ export interface ExitFullScreenProps {
 
 export const ExitFullScreen: React.FC<{
     children?: RenderExitFullScreen;
+    getFullScreenTarget(pagesContainer: HTMLElement): HTMLElement;
     store: Store<StoreProps>;
-}> = ({ children, store }) => {
-    const { enterFullScreen, exitFullScreen, isFullScreen } = useEnterFullScreen(store);
+}> = ({ children, getFullScreenTarget, store }) => {
+    const { enterFullScreen, exitFullScreen, isFullScreen } = useEnterFullScreen(getFullScreenTarget, store);
 
     const defaultChildren = (props: RenderExitFullScreenProps) => <ExitFullScreenButton onClick={props.onClick} />;
     const render = children || defaultChildren;

@@ -9,13 +9,12 @@
 import * as React from 'react';
 import { useMeasureRect } from '../hooks/useMeasureRect';
 import { useScroll } from '../hooks/useScroll';
-import { FullScreenMode } from '../structs/FullScreenMode';
 import { ScrollDirection } from '../structs/ScrollDirection';
 import { ScrollMode } from '../structs/ScrollMode';
 import { ViewMode } from '../structs/ViewMode';
-import type { SetRenderRange } from '../types/SetRenderRange';
 import type { Offset } from '../types/Offset';
 import type { Rect } from '../types/Rect';
+import type { SetRenderRange } from '../types/SetRenderRange';
 import { clamp } from '../utils/clamp';
 import { indexOfMax } from '../utils/indexOfMax';
 import { buildContainerStyles } from './buildContainerStyles';
@@ -44,7 +43,6 @@ const IO_THRESHOLD = [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1];
 
 export const useVirtual = ({
     enableSmoothScroll,
-    fullScreenMode,
     isRtl,
     numberOfItems,
     parentRef,
@@ -54,7 +52,6 @@ export const useVirtual = ({
     viewMode,
 }: {
     enableSmoothScroll: boolean;
-    fullScreenMode: FullScreenMode;
     isRtl: boolean;
     numberOfItems: number;
     parentRef: React.MutableRefObject<HTMLDivElement>;
@@ -104,7 +101,6 @@ export const useVirtual = ({
 
     const parentRect = useMeasureRect({
         elementRef: parentRef,
-        fullScreenMode,
     });
 
     const latestRef = React.useRef({
@@ -165,7 +161,7 @@ export const useVirtual = ({
 
         // `SinglePage` mode
         return measure(numberOfItems, parentRect, sizes, scrollMode);
-    }, [fullScreenMode, scrollMode, sizes, viewMode, parentRect]);
+    }, [scrollMode, sizes, viewMode, parentRect]);
 
     const totalSize = measurements[numberOfItems - 1]
         ? {

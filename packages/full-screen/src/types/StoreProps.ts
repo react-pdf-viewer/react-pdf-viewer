@@ -6,10 +6,10 @@
  * @copyright 2019-2023 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import { FullScreenMode, ScrollMode, SpecialZoomLevel } from '@react-pdf-viewer/core';
+import { FullScreenMode, SpecialZoomLevel } from '@react-pdf-viewer/core';
 
 export interface StoreProps {
-    enterFullScreenMode(): void;
+    enterFullScreenMode(target: HTMLElement): void;
     exitFullScreenMode(): void;
     fullScreenMode: FullScreenMode;
     getPagesContainer?(): HTMLElement;

@@ -12,20 +12,26 @@ import * as React from 'react';
 import type { StoreProps } from './types/StoreProps';
 
 export const useEnterFullScreen = (
+    getFullScreenTarget: (pagesContainer: HTMLElement) => HTMLElement,
     store: Store<StoreProps>
 ): {
     enterFullScreen: () => void;
     exitFullScreen: () => void;
     isFullScreen: boolean;
 } => {
-    const [isFullScreen, setFullScreen] = React.useState(false);
+    const [fullScreenMode, setFullScreenMode] = React.useState(store.get('fullScreenMode'));
 
     const handleFullScreenMode = React.useCallback((fullScreenMode: FullScreenMode) => {
-        setFullScreen(fullScreenMode === FullScreenMode.Entering || fullScreenMode === FullScreenMode.Entered);
+        setFullScreenMode(fullScreenMode);
     }, []);
 
     const enterFullScreen = () => {
-        store.get('enterFullScreenMode')();
+        const pagesContainer = store.get('getPagesContainer');
+        if (!pagesContainer) {
+            return;
+        }
+        const target = getFullScreenTarget(pagesContainer());
+        store.get('enterFullScreenMode')(target);
     };
 
     const exitFullScreen = () => {
@@ -43,6 +49,6 @@ export const useEnterFullScreen = (
     return {
         enterFullScreen,
         exitFullScreen,
-        isFullScreen,
+        isFullScreen: fullScreenMode === FullScreenMode.Entering || fullScreenMode === FullScreenMode.Entered,
     };
 };
