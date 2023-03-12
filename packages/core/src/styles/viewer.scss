@@ -1,0 +1,13 @@
+/**
+ * A React component to view a PDF document
+ *
+ * @see https://react-pdf-viewer.dev
+ * @license https://react-pdf-viewer.dev/license
+ * @copyright 2019-2023 Nguyen Huu Phuoc <me@phuoc.ng>
+ */
+
+.rpv-core__viewer {
+    // Fix the issue where its children doesn't take the full height of the parent
+    // that has a `min-height` property
+    min-height: inherit;
+}

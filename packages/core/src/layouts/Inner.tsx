@@ -684,6 +684,7 @@ export const Inner: React.FC<{
             l10n && l10n.core ? ((l10n.core as LocalizationMap).pageLabel as string) : 'Page {{pageIndex}}';
         let slot: Slot = {
             attrs: {
+                className: 'rpv-core__inner-container',
                 'data-testid': 'core__inner-container',
                 ref: containerRef,
                 style: {
