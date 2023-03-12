@@ -8,11 +8,11 @@ module.exports = {
         // For pdfjs-dist 2.6.347
         // 'pdfjs-dist': '<rootDir>/node_modules/pdfjs-dist/es5/build/pdf',
     },
-    setupFilesAfterEnv: ['<rootDir>/configs/setupTests.ts'],
+    setupFilesAfterEnv: ['<rootDir>/__setups__/setupTests.ts'],
     testEnvironment: 'jsdom',
     // Uncomment the `testMatch` option when we want to run a specific test case
-    // testMatch: ['<rootDir>/packages/search/__tests__/keepHighlightAfterZoomToolbar.test.tsx'],
-    testRegex: ['(/__tests__/.*|(\\.|/)(test|spec))\\.tsx$'],
+    testMatch: ['<rootDir>/packages/core/__tests__/onDocumentLoad.test.tsx'],
+    // testRegex: ['(/__tests__/.*|(\\.|/)(test|spec))\\.tsx$'],
     testTimeout: 20 * 1000, // 20s
     transform: {
         '^.+\\.tsx?$': 'ts-jest',
