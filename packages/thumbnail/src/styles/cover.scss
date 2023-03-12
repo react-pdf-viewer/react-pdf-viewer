@@ -18,6 +18,9 @@
     // Take the full size
     height: 100%;
     width: 100%;
+
+    // It's used when the cover is placed inside a `min-height` container
+    min-height: inherit;
 }
 
 .rpv-thumbnail__cover-inner {
@@ -29,6 +32,8 @@
     // Take the full size
     height: 100%;
     width: 100%;
+
+    min-height: inherit;
 }
 
 .rpv-thumbnail__cover-image {
@@ -43,9 +48,9 @@
     justify-content: center;
 
     // Absolute position
-    left: 0;
-    position: absolute;
-    top: 0;
+    // left: 0;
+    // position: absolute;
+    // top: 0;
 
     // Take the full size
     height: 100%;
