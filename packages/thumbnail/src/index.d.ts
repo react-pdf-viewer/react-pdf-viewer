@@ -23,6 +23,7 @@ export interface ThumbnailsProps {
 
 export interface CoverProps {
     getPageIndex?({ numPages }: { numPages: number }): number;
+    width?: number;
 }
 
 export interface RenderCurrentPageLabelProps {

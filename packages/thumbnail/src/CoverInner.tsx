@@ -16,7 +16,8 @@ export const CoverInner: React.FC<{
     getPageIndex?({ numPages }: { numPages: number }): number;
     renderSpinner?: () => React.ReactElement;
     store: Store<StoreProps>;
-}> = ({ doc, getPageIndex, renderSpinner, store }) => {
+    width?: number;
+}> = ({ doc, getPageIndex, renderSpinner, store, width }) => {
     const { numPages } = doc;
     const targetPage = getPageIndex ? getPageIndex({ numPages }) : 0;
     const normalizePage = Math.max(0, Math.min(targetPage, numPages - 1));
@@ -78,7 +79,7 @@ export const CoverInner: React.FC<{
             const containerWidth = containerEle.clientWidth;
             const containerHeight = containerEle.clientHeight;
 
-            const scaled = Math.min(containerWidth / w, containerHeight / h);
+            const scaled = width ? width / w : Math.min(containerWidth / w, containerHeight / h);
             const canvasWidth = scaled * w;
             const canvasHeight = scaled * h;
 

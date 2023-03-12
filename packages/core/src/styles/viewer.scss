@@ -6,7 +6,8 @@
  * @copyright 2019-2023 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-export interface CoverProps {
-    getPageIndex?({ numPages }: { numPages: number }): number;
-    width?: number;
+.rpv-core__viewer {
+    // Fix the issue where its children doesn't take the full height of the parent
+    // that has a `min-height` property
+    min-height: inherit;
 }

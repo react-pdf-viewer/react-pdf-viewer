@@ -6,6 +6,10 @@
  * @copyright 2019-2023 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
+.rpv-core__inner-container {
+    min-height: inherit;
+}
+
 .rpv-core__inner-pages {
     overflow: auto;
 

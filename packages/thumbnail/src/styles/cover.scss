@@ -11,13 +11,13 @@
     align-items: center;
     display: flex;
     justify-content: center;
-
-    // Used to position the spinner
-    position: relative;
     
     // Take the full size
     height: 100%;
     width: 100%;
+
+    // It's used when the cover is placed inside a `min-height` container
+    min-height: inherit;
 }
 
 .rpv-thumbnail__cover-inner {
@@ -29,6 +29,8 @@
     // Take the full size
     height: 100%;
     width: 100%;
+
+    min-height: inherit;
 }
 
 .rpv-thumbnail__cover-image {
@@ -41,11 +43,6 @@
     align-items: center;
     display: flex;
     justify-content: center;
-
-    // Absolute position
-    left: 0;
-    position: absolute;
-    top: 0;
 
     // Take the full size
     height: 100%;
