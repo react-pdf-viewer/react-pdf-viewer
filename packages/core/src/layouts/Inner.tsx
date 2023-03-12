@@ -578,10 +578,13 @@ export const Inner: React.FC<{
 
     // This hook should be placed at the end of hooks
     React.useEffect(() => {
-        // Don't do anything if users start going to or exitting the full-screen mode
         if (
+            // Don't do anything if users start going to or exitting the full-screen mode
             fullScreen.fullScreenMode === FullScreenMode.Entering ||
-            fullScreen.fullScreenMode === FullScreenMode.Exitting
+            fullScreen.fullScreenMode === FullScreenMode.Entered ||
+            fullScreen.fullScreenMode === FullScreenMode.Exitting ||
+            // Or smooth scrolling isn't completed yet
+            virtualizer.isSmoothScrolling
         ) {
             return;
         }
@@ -609,6 +612,7 @@ export const Inner: React.FC<{
     }, [
         virtualizer.startPage,
         virtualizer.endPage,
+        virtualizer.isSmoothScrolling,
         virtualizer.maxVisbilityIndex,
         fullScreen.fullScreenMode,
         pagesRotationChanged,
