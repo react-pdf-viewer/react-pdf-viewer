@@ -712,6 +712,8 @@ export const Inner: React.FC<{
                 },
                 children: (
                     <div
+                        // It's a reliable way for e2e tests to check if the browser scroll to a particular page
+                        data-testid={`core__inner-current-page-${currentPage}`}
                         style={Object.assign(
                             {
                                 // From pdf-js 3.2.146, the text layer renders text items depending on the `--scale-factor` property
