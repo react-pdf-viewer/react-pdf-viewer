@@ -21,6 +21,7 @@ export const smoothScroll = (
 ) => {
     let top = 0;
     let left = 0;
+    let reachTarget = false;
     switch (scrollDirection) {
         case ScrollDirection.Horizontal:
             left = ele.scrollLeft;
@@ -36,12 +37,22 @@ export const smoothScroll = (
             break;
     }
 
-    if (top === targetPosition.top && scrollDirection === ScrollDirection.Vertical) {
-        onReachTarget();
+    const markTargetReached = () => {
+        if (!reachTarget) {
+            // To make sure that `onReachTarget` will be executed once
+            reachTarget = true;
+            ele.scrollLeft = targetPosition.left;
+            ele.scrollTop = targetPosition.top;
+            onReachTarget();
+        }
+    };
+
+    if (Math.abs(top - targetPosition.top) <= EPS && scrollDirection === ScrollDirection.Vertical) {
+        markTargetReached();
         return;
     }
-    if (left === targetPosition.left && scrollDirection === ScrollDirection.Horizontal) {
-        onReachTarget();
+    if (Math.abs(left - targetPosition.left) <= EPS && scrollDirection === ScrollDirection.Horizontal) {
+        markTargetReached();
         return;
     }
 
@@ -82,10 +93,11 @@ export const smoothScroll = (
         }
         if (
             Math.abs(updatePosition.top - targetPosition.top) <= EPS &&
-            Math.abs(updatePosition.left - targetPosition.left) <= EPS
+            Math.abs(updatePosition.left - targetPosition.left) <= EPS &&
+            !reachTarget
         ) {
             window.cancelAnimationFrame(requestId);
-            onReachTarget();
+            markTargetReached();
         }
 
         if (time < duration) {
