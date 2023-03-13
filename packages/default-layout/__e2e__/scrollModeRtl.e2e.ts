@@ -9,7 +9,11 @@ test('Vertical scroll mode', async () => {
     await page.evaluate(() => document.querySelector('[data-testid="core__viewer"]')?.scrollIntoView());
 
     // Wait until the first page is rendered
-    await page.waitForSelector('[data-testid="core__text-layer-0"]', { visible: true });
+    await page.waitForSelector('[data-testid="core__page-layer-0"]', { visible: true });
+    await page.waitForSelector('[data-testid="core__page-layer-1"]');
+    await page.waitForSelector('[data-testid="core__page-layer-2"]');
+    await page.waitForSelector('[data-testid="core__page-layer-3"]');
+    await page.waitForSelector('[data-testid="core__page-layer-4"]');
 
     const pagesContainer = await page.waitForSelector('[data-testid="core__inner-pages"]');
 
@@ -19,19 +23,36 @@ test('Vertical scroll mode', async () => {
     expect(hasVerticalClass).toEqual(true);
 
     // Jump to the table of contents page
-    await page.evaluate(() => document.querySelector('[data-testid="core__page-layer-2"]')?.scrollIntoView());
+    const pageInput = await page.waitForSelector('[data-testid="page-navigation__current-page-input"]', {
+        visible: true,
+    });
+    await pageInput?.focus();
+    await pageInput?.click({ clickCount: 3 });
+    await pageInput?.type('3');
+    await pageInput?.press('Enter');
+
+    await page.waitForSelector('[data-testid="core__page-layer-3"]', { visible: true });
+    await page.waitForSelector('[data-testid="core__page-layer-4"]');
+    await page.waitForSelector('[data-testid="core__page-layer-5"]');
+    await page.waitForSelector('[data-testid="core__page-layer-6"]');
+
+    await page.waitForSelector('[data-testid="core__inner-current-page-2"]');
+    let scrollTop = await pagesContainer.evaluate((ele) => ele.scrollTop);
+    expect(scrollTop).toEqual(2376);
 
     // Click the `Specifying parameters in a URL` link
     const link = await page.waitForSelector('[data-annotation-id="35R"]');
     await link?.click();
 
-    await page.waitForSelector('[data-testid="core__text-layer-6"]', { visible: true });
-    await page.waitForSelector('[data-testid="core__annotation-layer-6"]');
-    await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 7848');
+    await page.waitForSelector('[data-testid="core__page-layer-6"]', { visible: true });
+    await page.waitForSelector('[data-testid="core__page-layer-7"]');
+
+    await page.waitForSelector('[data-testid="core__inner-current-page-6"]');
+    scrollTop = await pagesContainer.evaluate((ele) => ele.scrollTop);
+    expect(scrollTop).toEqual(7848);
 
     // Check the current page
-    const currentPageInput = await page.waitForSelector('[data-testid="page-navigation__current-page-input"]');
-    const currentPage = await currentPageInput?.evaluate((ele) => ele.getAttribute('value'));
+    const currentPage = await pageInput?.evaluate((ele) => ele.getAttribute('value'));
     expect(currentPage).toEqual('7');
 });
 
@@ -44,7 +65,11 @@ test('Switch to horizontal scroll mode', async () => {
     await page.evaluate(() => document.querySelector('[data-testid="core__viewer"]')?.scrollIntoView());
 
     // Wait until the first page is rendered
-    await page.waitForSelector('[data-testid="core__text-layer-0"]', { visible: true });
+    await page.waitForSelector('[data-testid="core__page-layer-0"]', { visible: true });
+    await page.waitForSelector('[data-testid="core__page-layer-1"]');
+    await page.waitForSelector('[data-testid="core__page-layer-2"]');
+    await page.waitForSelector('[data-testid="core__page-layer-3"]');
+    await page.waitForSelector('[data-testid="core__page-layer-4"]');
 
     const pagesContainer = await page.waitForSelector('[data-testid="core__inner-pages"]');
 
@@ -59,16 +84,39 @@ test('Switch to horizontal scroll mode', async () => {
     );
     expect(hasHorizontalClass).toEqual(true);
 
+    await page.waitForSelector('[data-testid="core__page-layer-0"]', { visible: true });
+    await page.waitForSelector('[data-testid="core__page-layer-1"]');
+    await page.waitForSelector('[data-testid="core__page-layer-2"]');
+    await page.waitForSelector('[data-testid="core__page-layer-3"]');
+    await page.waitForSelector('[data-testid="core__page-layer-4"]');
+    await page.waitForSelector('[data-testid="core__page-layer-5"]');
+    await page.waitForSelector('[data-testid="core__inner-current-page-0"]');
+
     // Jump to the table of contents page
-    await page.evaluate(() => document.querySelector('[data-testid="core__page-layer-2"]')?.scrollIntoView());
+    const pageInput = await page.waitForSelector('[data-testid="page-navigation__current-page-input"]', {
+        visible: true,
+    });
+    await pageInput?.focus();
+    await pageInput?.click({ clickCount: 3 });
+    await pageInput?.type('3');
+    await pageInput?.press('Enter');
+
+    await page.waitForSelector('[data-testid="core__page-layer-2"]', { visible: true });
+    await page.waitForSelector('[data-testid="core__page-layer-3"]');
+    await page.waitForSelector('[data-testid="core__inner-current-page-2"]');
+    let scrollLeft = await pagesContainer.evaluate((ele) => ele.scrollLeft);
+    expect(scrollLeft).toEqual(-1782);
 
     // Click the `Specifying parameters in a URL` link
     const link = await page.waitForSelector('[data-annotation-id="35R"]');
     await link?.click();
 
-    await page.waitForSelector('[data-testid="core__text-layer-6"]', { visible: true });
-    await page.waitForSelector('[data-testid="core__annotation-layer-6"]');
-    await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollLeft === -5400');
+    await page.waitForSelector('[data-testid="core__page-layer-6"]', { visible: true });
+    await page.waitForSelector('[data-testid="core__page-layer-7"]');
+
+    await page.waitForSelector('[data-testid="core__inner-current-page-6"]');
+    scrollLeft = await pagesContainer.evaluate((ele) => ele.scrollLeft);
+    expect(scrollLeft).toEqual(-5414);
 
     // Check the current page
     const currentPageInput = await page.waitForSelector('[data-testid="page-navigation__current-page-input"]');
@@ -85,7 +133,13 @@ test('Switch to wrapped scroll mode', async () => {
     await page.evaluate(() => document.querySelector('[data-testid="core__viewer"]')?.scrollIntoView());
 
     // Wait until the first page is rendered
-    await page.waitForSelector('[data-testid="core__text-layer-0"]', { visible: true });
+    await page.waitForSelector('[data-testid="core__page-layer-0"]', { visible: true });
+    await page.waitForSelector('[data-testid="core__page-layer-1"]');
+    await page.waitForSelector('[data-testid="core__page-layer-2"]');
+    await page.waitForSelector('[data-testid="core__page-layer-3"]');
+    await page.waitForSelector('[data-testid="core__page-layer-4"]');
+
+    const pagesContainer = await page.waitForSelector('[data-testid="core__inner-pages"]');
 
     // Zoom to 75%
     const zoomButton = await page.waitForSelector('[data-testid="zoom__popover-target"]');
@@ -97,30 +151,52 @@ test('Switch to wrapped scroll mode', async () => {
     expect(zoomLevel).toEqual('75%');
     await zoomMenuItem?.click();
 
-    // Switch to wrapped mode
-    const pagesContainer = await page.waitForSelector('[data-testid="core__inner-pages"]');
+    await page.waitForSelector('[data-testid="core__page-layer-0"]', { visible: true });
+    await page.waitForSelector('[data-testid="core__page-layer-1"]');
+    await page.waitForSelector('[data-testid="core__page-layer-2"]');
+    await page.waitForSelector('[data-testid="core__page-layer-3"]');
+    await page.waitForSelector('[data-testid="core__page-layer-4"]');
+    await page.waitForSelector('[data-testid="core__page-layer-5"]');
 
+    // Switch to wrapped mode
     const moreActionsButton = await page.waitForSelector('[data-testid="toolbar__more-actions-popover-target"]');
     await moreActionsButton?.click();
 
-    const switchToHWrappedMenu = await page.waitForSelector('[data-testid="scroll-mode__wrapped-menu"]');
-    await switchToHWrappedMenu?.click();
+    const switchToWrappedMenu = await page.waitForSelector('[data-testid="scroll-mode__wrapped-menu"]');
+    await switchToWrappedMenu?.click();
 
     const hasWrappedClass = await pagesContainer?.evaluate((ele) =>
         ele.classList.contains('rpv-core__inner-pages--wrapped')
     );
     expect(hasWrappedClass).toEqual(true);
 
-    // Jump to the table of contents page
-    await page.evaluate(() => document.querySelector('[data-testid="core__page-layer-2"]')?.scrollIntoView());
+    await page.waitForSelector('[data-testid="core__page-layer-0"]', { visible: true });
+    await page.waitForSelector('[data-testid="core__page-layer-1"]');
+    await page.waitForSelector('[data-testid="core__page-layer-2"]');
+    await page.waitForSelector('[data-testid="core__page-layer-3"]');
+    await page.waitForSelector('[data-testid="core__page-layer-4"]');
+    await page.waitForSelector('[data-testid="core__page-layer-5"]');
+    await page.waitForSelector('[data-testid="core__page-layer-6"]');
+    await page.waitForSelector('[data-testid="core__page-layer-7"]');
 
-    await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 430');
+    // Jump to the table of contents page
+    const pageInput = await page.waitForSelector('[data-testid="page-navigation__current-page-input"]', {
+        visible: true,
+    });
+    await pageInput?.focus();
+    await pageInput?.click({ clickCount: 3 });
+    await pageInput?.type('3');
+    await pageInput?.press('Enter');
+
+    await page.waitForSelector('[data-testid="core__inner-current-page-2"]');
+    let scrollTop = await pagesContainer.evaluate((ele) => ele.scrollTop);
+    expect(scrollTop).toEqual(594);
 
     // Click the `Parameters` link
     const link = await page.waitForSelector('[data-annotation-id="34R"]');
     await link?.click();
 
-    await page.waitForSelector('[data-testid="core__text-layer-4"]', { visible: true });
-    await page.waitForSelector('[data-testid="core__annotation-layer-4"]');
-    await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 1488');
+    await page.waitForSelector('[data-testid="core__inner-current-page-6"]');
+    scrollTop = await pagesContainer.evaluate((ele) => ele.scrollTop);
+    expect(scrollTop).toEqual(1488);
 });
