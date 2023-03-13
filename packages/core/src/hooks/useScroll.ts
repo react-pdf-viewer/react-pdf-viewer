@@ -50,10 +50,10 @@ export const useScroll = ({
     const latestOffsetRef = React.useRef(ZERO_OFFSET);
     const isSmoothScrollingDoneRef = React.useRef(true);
 
-    const handleSmoothScrollingComplete = React.useCallback((updatePosition: Offset) => {
+    const handleSmoothScrollingComplete = React.useCallback(() => {
         isSmoothScrollingDoneRef.current = true;
         if (enableSmoothScroll) {
-            setScrollOffset(updatePosition);
+            setScrollOffset(latestOffsetRef.current);
         }
         onSmoothScroll(false);
     }, []);
@@ -133,7 +133,7 @@ export const useScroll = ({
                 onSmoothScroll(true);
                 return new Promise<void>((resolve, _) => {
                     smoothScroll(ele, latestRef.current, updatePosition, SCROLL_DURATION, easeOutQuart, () => {
-                        handleSmoothScrollingComplete(updatePosition);
+                        handleSmoothScrollingComplete();
                         resolve();
                     });
                 });
