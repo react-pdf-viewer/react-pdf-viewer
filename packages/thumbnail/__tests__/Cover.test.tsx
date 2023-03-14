@@ -205,13 +205,13 @@ test('Test <Cover /> with dynamic document', async () => {
         'K2IgBVfEQAquiIEUXBEDKbgiBlJwRQyk4IoYSMEVMZCCK2IgBVfEQAquiIEUXBEDKbgiBvof61fzlJ7KkmoAAAAASUVORK5CYII='
     );
 
-    // Click the `Load document 2` button
-    fireEvent.click(getByText('Load document 2'));
-
     viewerEle = await findByTestId('core__viewer');
     mockIsIntersecting(viewerEle, true);
     viewerEle['__jsdomMockClientHeight'] = 318;
     viewerEle['__jsdomMockClientWidth'] = 318;
+
+    // Click the `Load document 2` button
+    fireEvent.click(getByText('Load document 2'));
 
     // Wait until the document is loaded completely
     await waitForElementToBeRemoved(() => getByTestId('core__doc-loading'));

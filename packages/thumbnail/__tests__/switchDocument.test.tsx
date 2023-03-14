@@ -115,14 +115,14 @@ test('Thumbnails are updated when switching between documents', async () => {
     );
     expect(src?.length).toEqual(3662);
 
-    // Load the second document
-    const loadSecondDoc = await findByTestId('load-doc-2');
-    fireEvent.click(loadSecondDoc);
-
     viewerEle = await findByTestId('core__viewer');
     mockIsIntersecting(viewerEle, true);
     viewerEle['__jsdomMockClientHeight'] = 631;
     viewerEle['__jsdomMockClientWidth'] = 800;
+
+    // Load the second document
+    const loadSecondDoc = await findByTestId('load-doc-2');
+    fireEvent.click(loadSecondDoc);
 
     // Wait until the document is loaded completely
     await waitForElementToBeRemoved(() => getByTestId('core__doc-loading'));

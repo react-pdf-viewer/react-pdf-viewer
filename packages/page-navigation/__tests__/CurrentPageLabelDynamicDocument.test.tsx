@@ -115,13 +115,13 @@ test('Test <CurrentPageLabel> with dynamic document', async () => {
     pageLabel = await findByTestId('current-page-label');
     expect(pageLabel.textContent).toEqual('4 of 8');
 
-    // Click the `Load document 2` button
-    fireEvent.click(getByText('Load document 2'));
-
     viewerEle = await findByTestId('core__viewer');
     mockIsIntersecting(viewerEle, true);
     viewerEle['__jsdomMockClientHeight'] = 766;
     viewerEle['__jsdomMockClientWidth'] = 798;
+
+    // Click the `Load document 2` button
+    fireEvent.click(getByText('Load document 2'));
 
     await waitForElementToBeRemoved(() => getByTestId('core__doc-loading'));
     await findByTestId('core__text-layer-0');

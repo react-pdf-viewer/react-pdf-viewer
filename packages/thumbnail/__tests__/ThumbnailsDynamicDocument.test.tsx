@@ -121,13 +121,13 @@ test('Test <Thumbnails /> with dynamic document', async () => {
     expect(firstThumbnailImage.getAttribute('width')).toEqual('150px');
     expect(firstThumbnailImage.getAttribute('height')).toEqual('200px');
 
-    // Click the `Load document 2` button
-    fireEvent.click(getByText('Load document 2'));
-
     viewerEle = await findByTestId('core__viewer');
     viewerEle['__jsdomMockClientHeight'] = 798;
     viewerEle['__jsdomMockClientWidth'] = 558;
     mockIsIntersecting(viewerEle, true);
+
+    // Click the `Load document 2` button
+    fireEvent.click(getByText('Load document 2'));
 
     // Wait until the document is loaded completely
     await waitForElementToBeRemoved(() => screen.getByTestId('core__doc-loading'));
