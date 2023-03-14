@@ -21,7 +21,7 @@ test('Scroll to the initial page automatically after resizing the container (1)'
 
     const pagesContainer = await page.waitForSelector('[data-testid=core__inner-pages]');
     let top = await pagesContainer.evaluate((ele) => ele.scrollTop);
-    expect(top).toEqual(25257);
+    expect(top).toEqual(25257.5);
 
     // Jump to the 30th page
     const pageInput = await page.waitForSelector('[data-testid="page-navigation__current-page-input"]', {
@@ -43,7 +43,7 @@ test('Scroll to the initial page automatically after resizing the container (1)'
     await page.waitForSelector('[data-testid="core__page-layer-33"]');
 
     top = await pagesContainer.evaluate((ele) => ele.scrollTop);
-    expect(top).toEqual(36623);
+    expect(top).toEqual(36623.5);
 
     // Click the `Thumbnails` tab in the sidebar
     const thumbnailTab = await page.waitForSelector('button[aria-label="Thumbnail"]');
@@ -74,7 +74,7 @@ test('Scroll to the initial page automatically after resizing the container (2)'
 
     const pagesContainer = await page.waitForSelector('[data-testid=core__inner-pages]');
     let top = await pagesContainer.evaluate((ele) => ele.scrollTop);
-    expect(top).toEqual(25257);
+    expect(top).toEqual(25257.5);
 
     // Jump to the 30th page
     const pageInput = await page.waitForSelector('[data-testid="page-navigation__current-page-input"]', {
@@ -96,7 +96,7 @@ test('Scroll to the initial page automatically after resizing the container (2)'
     await page.waitForSelector('[data-testid="core__page-layer-33"]');
 
     top = await pagesContainer.evaluate((ele) => ele.scrollTop);
-    expect(top).toEqual(36623);
+    expect(top).toEqual(36623.5);
 
     // Zoom to 75%
     let zoomPopover = await page.waitForSelector('[data-testid="zoom__popover-target"]');

@@ -57,7 +57,7 @@ test('Switch to horizontal scroll mode', async () => {
 
     await page.waitForSelector('[data-testid="core__inner-current-page-6"]');
     scrollLeft = await pagesContainer.evaluate((ele) => ele.scrollLeft);
-    expect(scrollLeft).toEqual(5413);
+    expect(scrollLeft).toEqual(5413.5);
 
     // Check the current page
     const currentPage = await pageInput?.evaluate((ele) => ele.getAttribute('value'));
@@ -134,7 +134,7 @@ test('Switch to wrapped scroll mode', async () => {
 
     await page.waitForSelector('[data-testid="core__inner-current-page-6"]');
     scrollTop = await pagesContainer.evaluate((ele) => ele.scrollTop);
-    expect(scrollTop).toEqual(1488);
+    expect(scrollTop).toEqual(1488.5);
 });
 
 test('Keep the current page after switching the scroll mode', async () => {
