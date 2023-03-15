@@ -581,7 +581,6 @@ export const Inner: React.FC<{
         if (
             // Don't do anything if users start going to or exitting the full-screen mode
             fullScreen.fullScreenMode === FullScreenMode.Entering ||
-            fullScreen.fullScreenMode === FullScreenMode.Entered ||
             fullScreen.fullScreenMode === FullScreenMode.Exitting ||
             // Or smooth scrolling isn't completed yet
             virtualizer.isSmoothScrolling
