@@ -144,6 +144,9 @@ export const Inner: React.FC<{
         typeof defaultScale === 'string' ? defaultScale : null
     );
 
+    // Force to scroll to the target page in the full-screen mode
+    const forceTargetFullScreenRef = React.useRef(-1);
+
     const fullScreen = useFullScreen({
         getCurrentPage: () => stateRef.current.pageIndex,
         getCurrentScrollMode: () => stateRef.current.scrollMode,
@@ -522,7 +525,12 @@ export const Inner: React.FC<{
     useIsomorphicLayoutEffect(() => {
         const latestPage = stateRef.current.pageIndex;
         if (latestPage > -1 && previousScrollMode !== currentScrollMode) {
-            virtualizer.scrollToItem(latestPage, ZERO_OFFSET);
+            virtualizer.scrollToItem(latestPage, ZERO_OFFSET).then(() => {
+                if (fullScreen.fullScreenMode === FullScreenMode.EnteredCompletely) {
+                    renderQueue.markNotRendered();
+                    forceTargetFullScreenRef.current = -1;
+                }
+            });
         }
     }, [currentScrollMode]);
 
@@ -576,6 +584,12 @@ export const Inner: React.FC<{
         }
     }, [currentPage, virtualizer.isSmoothScrolling]);
 
+    React.useEffect(() => {
+        if (fullScreen.fullScreenMode === FullScreenMode.Entering && stateRef.current.scrollMode === ScrollMode.Page) {
+            forceTargetFullScreenRef.current = stateRef.current.pageIndex;
+        }
+    }, [fullScreen.fullScreenMode]);
+
     // This hook should be placed at the end of hooks
     React.useEffect(() => {
         if (
@@ -591,6 +605,13 @@ export const Inner: React.FC<{
         const { startPage, endPage, maxVisbilityIndex, virtualItems } = virtualizer;
         // The current page is the page which has the biggest visibility
         const currentPage = maxVisbilityIndex;
+
+        const isFullScreen =
+            fullScreen.fullScreenMode === FullScreenMode.Entered || // Triggered when `enableSmoothScroll` is set to `false`
+            fullScreen.fullScreenMode === FullScreenMode.EnteredCompletely;
+        if (isFullScreen && currentPage !== forceTargetFullScreenRef.current && forceTargetFullScreenRef.current > -1) {
+            return;
+        }
 
         setCurrentPage(currentPage);
         setViewerState({
