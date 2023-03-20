@@ -201,13 +201,18 @@ export const Inner: React.FC<{
         viewMode: currentViewMode,
     });
 
+    // The timeout (400ms) should be big enough so the callback is executed after scrolling to the initial page
+    const handlePageSizeTimeout = enableSmoothScroll && initialPage > 0 ? 400 : 200;
     const handlePagesResize = useDebounceCallback((_) => {
+        if (stateRef.current.fullScreenMode !== FullScreenMode.Normal) {
+            return;
+        }
         if (keepSpecialZoomLevelRef.current) {
             // Mark all pages as not rendered yet
             setRenderPageIndex(-1);
             zoom(keepSpecialZoomLevelRef.current);
         }
-    }, 200);
+    }, handlePageSizeTimeout);
 
     useTrackResize({
         targetRef: pagesRef,
