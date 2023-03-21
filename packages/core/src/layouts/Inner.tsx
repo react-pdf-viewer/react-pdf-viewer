@@ -146,6 +146,8 @@ export const Inner: React.FC<{
 
     // Force to scroll to the target page in the full-screen mode
     const forceTargetFullScreenRef = React.useRef(-1);
+    // Keep the special zoom level in the full-screen mode
+    const forceTargetZoomRef = React.useRef(-1);
 
     const fullScreen = useFullScreen({
         getCurrentPage: () => stateRef.current.pageIndex,
@@ -214,10 +216,10 @@ export const Inner: React.FC<{
         }
     }, handlePageSizeTimeout);
 
-    useTrackResize({
-        targetRef: pagesRef,
-        onResize: handlePagesResize,
-    });
+    // useTrackResize({
+    //     targetRef: pagesRef,
+    //     onResize: handlePagesResize,
+    // });
 
     // The methods that a plugin can hook on.
     // These methods are registered once and there is no chance for plugins to get the latest version of the methods.
@@ -415,13 +417,13 @@ export const Inner: React.FC<{
 
         const currentPage = stateRef.current.pageIndex;
         if (currentPage < 0 || currentPage >= numPages) {
-            return;
+            return stateRef.current.scale;
         }
 
         const currentPageHeight = pageSizes[currentPage].pageHeight;
         const currentPageWidth = pageSizes[currentPage].pageWidth;
 
-        let updateScale = pagesEle
+        const updateScale = pagesEle
             ? typeof newScale === 'string'
                 ? calculateScale(
                       pagesEle,
@@ -532,7 +534,6 @@ export const Inner: React.FC<{
         if (latestPage > -1 && previousScrollMode !== currentScrollMode) {
             virtualizer.scrollToItem(latestPage, ZERO_OFFSET).then(() => {
                 if (fullScreen.fullScreenMode === FullScreenMode.EnteredCompletely) {
-                    renderQueue.markNotRendered();
                     forceTargetFullScreenRef.current = -1;
                 }
             });
@@ -549,7 +550,11 @@ export const Inner: React.FC<{
 
     useIsomorphicLayoutEffect(() => {
         if (previousScale != 0 && previousScale != stateRef.current.scale) {
-            virtualizer.zoom(stateRef.current.scale / previousScale, stateRef.current.pageIndex);
+            virtualizer.zoom(stateRef.current.scale / previousScale, stateRef.current.pageIndex).then(() => {
+                if (fullScreen.fullScreenMode === FullScreenMode.EnteredCompletely) {
+                    forceTargetZoomRef.current = -1;
+                }
+            });
         }
     }, [scale]);
 
@@ -593,6 +598,16 @@ export const Inner: React.FC<{
         if (fullScreen.fullScreenMode === FullScreenMode.Entering && stateRef.current.scrollMode === ScrollMode.Page) {
             forceTargetFullScreenRef.current = stateRef.current.pageIndex;
         }
+        if (
+            fullScreen.fullScreenMode === FullScreenMode.EnteredCompletely &&
+            stateRef.current.scrollMode === ScrollMode.Page
+        ) {
+            forceTargetFullScreenRef.current = -1;
+        }
+        if (fullScreen.fullScreenMode === FullScreenMode.EnteredCompletely && keepSpecialZoomLevelRef.current) {
+            forceTargetZoomRef.current = stateRef.current.pageIndex;
+            zoom(keepSpecialZoomLevelRef.current);
+        }
     }, [fullScreen.fullScreenMode]);
 
     // This hook should be placed at the end of hooks
@@ -615,6 +630,9 @@ export const Inner: React.FC<{
             fullScreen.fullScreenMode === FullScreenMode.Entered || // Triggered when `enableSmoothScroll` is set to `false`
             fullScreen.fullScreenMode === FullScreenMode.EnteredCompletely;
         if (isFullScreen && currentPage !== forceTargetFullScreenRef.current && forceTargetFullScreenRef.current > -1) {
+            return;
+        }
+        if (isFullScreen && currentPage !== forceTargetZoomRef.current && forceTargetZoomRef.current > -1) {
             return;
         }
 
