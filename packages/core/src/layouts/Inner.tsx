@@ -537,6 +537,10 @@ export const Inner: React.FC<{
         if (latestPage > -1 && previousScrollMode !== currentScrollMode) {
             virtualizer.scrollToItem(latestPage, ZERO_OFFSET).then(() => {
                 if (fullScreen.fullScreenMode === FullScreenMode.EnteredCompletely) {
+                    // Reset the queue
+                    if (!enableSmoothScroll) {
+                        renderQueue.markNotRendered();
+                    }
                     forceTargetFullScreenRef.current = -1;
                 }
             });
@@ -616,7 +620,8 @@ export const Inner: React.FC<{
         }
         if (
             fullScreen.fullScreenMode === FullScreenMode.EnteredCompletely &&
-            stateRef.current.scrollMode === ScrollMode.Page
+            stateRef.current.scrollMode === ScrollMode.Page &&
+            enableSmoothScroll
         ) {
             forceTargetFullScreenRef.current = -1;
         }
