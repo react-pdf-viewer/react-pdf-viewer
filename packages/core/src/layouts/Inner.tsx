@@ -208,25 +208,21 @@ export const Inner: React.FC<{
         viewMode: currentViewMode,
     });
 
-    // The timeout (400ms) should be big enough so the callback is executed after scrolling to the initial page
-    const handlePageSizeTimeout = enableSmoothScroll && initialPage > 0 ? 400 : 200;
-    const handlePagesResize = () => {
-        if (stateRef.current.fullScreenMode !== FullScreenMode.Normal) {
+    const handlePagesResize = useDebounceCallback(() => {
+        if (
+            !keepSpecialZoomLevelRef.current ||
+            stateRef.current.fullScreenMode !== FullScreenMode.Normal ||
+            (initialPage > 0 && forceTargetInitialPageRef.current === initialPage)
+        ) {
             return;
         }
-        if (keepSpecialZoomLevelRef.current) {
-            // Mark all pages as not rendered yet
-            // setRenderPageIndex(-1);
-            jumpToPage(initialPage).then(() => {
-                zoom(keepSpecialZoomLevelRef.current);
-            });
-        }
-    };
+        zoom(keepSpecialZoomLevelRef.current);
+    }, 200);
 
-    // useTrackResize({
-    //     targetRef: pagesRef,
-    //     onResize: handlePagesResize,
-    // });
+    useTrackResize({
+        targetRef: pagesRef,
+        onResize: handlePagesResize,
+    });
 
     // The methods that a plugin can hook on.
     // These methods are registered once and there is no chance for plugins to get the latest version of the methods.
@@ -424,7 +420,7 @@ export const Inner: React.FC<{
 
         const currentPage = stateRef.current.pageIndex;
         if (currentPage < 0 || currentPage >= numPages) {
-            return stateRef.current.scale;
+            return;
         }
 
         const currentPageHeight = pageSizes[currentPage].pageHeight;
@@ -680,7 +676,7 @@ export const Inner: React.FC<{
         fullScreen.fullScreenMode,
         pagesRotationChanged,
         rotation,
-        // scale,
+        scale,
     ]);
 
     const handlePageRenderCompleted = React.useCallback(
