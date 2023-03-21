@@ -73,7 +73,7 @@ export const useVirtual = ({
     scrollToItem: (index: number, offset: Offset) => Promise<void>;
     scrollToNextItem: (index: number, offset: Offset) => Promise<void>;
     scrollToPreviousItem: (index: number, offset: Offset) => Promise<void>;
-    zoom: (scale: number, index: number) => void;
+    zoom: (scale: number, index: number) => Promise<void>;
 } => {
     const [isSmoothScrolling, setSmoothScrolling] = React.useState(false);
     const onSmoothScroll = React.useCallback((isSmoothScrolling: boolean) => setSmoothScrolling(isSmoothScrolling), []);
@@ -384,8 +384,9 @@ export const useVirtual = ({
                           left: scrollOffset.left * scale,
                           top: scrollOffset.top * scale,
                       };
-            scrollTo(updateOffset, false);
+            return scrollTo(updateOffset, false);
         }
+        return Promise.resolve();
     }, []);
 
     // Clean up
