@@ -114,6 +114,7 @@ export const Inner: React.FC<{
     const containerRef = React.useRef<HTMLDivElement>();
     const pagesRef = React.useRef<HTMLDivElement>();
     const [currentPage, setCurrentPage] = React.useState(initialPage);
+
     const mostRecentVisitedRef = React.useRef(null);
 
     // Manage visited destinations
@@ -146,8 +147,12 @@ export const Inner: React.FC<{
 
     // Force to scroll to the target page in the full-screen mode
     const forceTargetFullScreenRef = React.useRef(-1);
+
     // Keep the special zoom level in the full-screen mode
     const forceTargetZoomRef = React.useRef(-1);
+
+    // Force to scroll to the initial page when using the special zoom level
+    const forceTargetInitialPageRef = React.useRef(initialPage);
 
     const fullScreen = useFullScreen({
         getCurrentPage: () => stateRef.current.pageIndex,
@@ -205,16 +210,18 @@ export const Inner: React.FC<{
 
     // The timeout (400ms) should be big enough so the callback is executed after scrolling to the initial page
     const handlePageSizeTimeout = enableSmoothScroll && initialPage > 0 ? 400 : 200;
-    const handlePagesResize = useDebounceCallback((_) => {
+    const handlePagesResize = () => {
         if (stateRef.current.fullScreenMode !== FullScreenMode.Normal) {
             return;
         }
         if (keepSpecialZoomLevelRef.current) {
             // Mark all pages as not rendered yet
-            setRenderPageIndex(-1);
-            zoom(keepSpecialZoomLevelRef.current);
+            // setRenderPageIndex(-1);
+            jumpToPage(initialPage).then(() => {
+                zoom(keepSpecialZoomLevelRef.current);
+            });
         }
-    }, handlePageSizeTimeout);
+    };
 
     // useTrackResize({
     //     targetRef: pagesRef,
@@ -583,6 +590,19 @@ export const Inner: React.FC<{
         }
     }, [currentViewMode]);
 
+    useIsomorphicLayoutEffect(() => {
+        const latestPage = stateRef.current.pageIndex;
+        if (
+            latestPage > 0 &&
+            latestPage === initialPage &&
+            forceTargetInitialPageRef.current === initialPage &&
+            keepSpecialZoomLevelRef.current
+        ) {
+            forceTargetInitialPageRef.current = -1;
+            zoom(keepSpecialZoomLevelRef.current);
+        }
+    }, [currentPage]);
+
     React.useEffect(() => {
         const { isSmoothScrolling } = virtualizer;
         if (isSmoothScrolling) {
@@ -660,7 +680,7 @@ export const Inner: React.FC<{
         fullScreen.fullScreenMode,
         pagesRotationChanged,
         rotation,
-        scale,
+        // scale,
     ]);
 
     const handlePageRenderCompleted = React.useCallback(
