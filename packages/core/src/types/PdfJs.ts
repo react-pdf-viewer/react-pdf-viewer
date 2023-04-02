@@ -278,7 +278,3 @@ export declare namespace PdfJs {
     interface PageOperatorList {}
     /* eslint-enable @typescript-eslint/no-empty-interface */
 }
-
-declare module 'pdfjs-dist' {
-    function renderTextLayer(params: PdfJs.RenderTextLayerParams): PdfJs.PageRenderTask;
-}
