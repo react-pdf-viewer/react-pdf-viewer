@@ -6,6 +6,7 @@
  * @copyright 2019-2023 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
+export { Viewer } from './Viewer';
 export { AnnotationType } from './annotations/AnnotationType';
 export { Button } from './components/Button';
 export { LazyRender } from './components/LazyRender';
@@ -50,5 +51,4 @@ export { chunk } from './utils/chunk';
 export { classNames } from './utils/classNames';
 export { isMac } from './utils/isMac';
 export { getDestination, getPage } from './utils/managePages';
-export { Viewer } from './Viewer';
-export { Worker } from './Worker';
+export { PdfJsApiContext } from './vendors/PdfJsApiContext';

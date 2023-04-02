@@ -18,10 +18,12 @@ export declare namespace PdfJs {
     interface PDFWorkerConstructorParams {
         name: string;
     }
-    class PDFWorker {
+    interface PDFWorker {
         destroyed: boolean;
-        constructor(params: PDFWorkerConstructorParams);
         destroy(): void;
+    }
+    interface PDFWorkerConstructor {
+        new (params: PDFWorkerConstructorParams): PDFWorker;
     }
 
     // Loading task

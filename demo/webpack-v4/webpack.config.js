@@ -2,12 +2,13 @@ const path = require('path');
 const webpack = require('webpack');
 const HtmlWebPackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
-    entry: './src/index.tsx',
+    entry: './src/index.jsx',
     output: {
         path: path.join(__dirname, 'dist'),
-        filename: '[name].[contenthash].js',
+        filename: '[name].[hash].js',
     },
     module: {
         rules: [
@@ -21,9 +22,16 @@ module.exports = {
                 ],
             },
             {
-                test: /\.ts(x?)$/,
-                exclude: /node_modules/,
-                use: ['babel-loader', 'ts-loader'],
+                test: /\.(j|t)s(x?)$/,
+                // The latest version of `pdfjs-dist` uses some special syntax such as the ?? operator.
+                // It has to be transpiled by babel
+                exclude: /node_modules\/(?!(pdfjs-dist)\/).*/,
+                use: {
+                    loader: 'babel-loader',
+                    options: {
+                        presets: ['@babel/preset-env', '@babel/preset-react', '@babel/preset-typescript'],
+                    },
+                },
             },
             {
                 test: /\.s[ac]ss$/i,
@@ -42,7 +50,6 @@ module.exports = {
     devServer: {
         static: path.join(__dirname, 'dist'),
         historyApiFallback: true,
-        host: '0.0.0.0',
         port: 8001,
     },
     plugins: [
@@ -53,6 +60,14 @@ module.exports = {
         new MiniCssExtractPlugin({
             filename: '[name].[contenthash].css',
             ignoreOrder: false,
+        }),
+        new CopyWebpackPlugin({
+            patterns: [
+                {
+                    from: path.join(__dirname, '../../node_modules/pdfjs-dist/legacy/build/pdf.worker.min.js'),
+                    to: path.join(__dirname, 'dist'),
+                },
+            ],
         }),
         new webpack.NormalModuleReplacementPlugin(
             // The pattern covers the package and its CSS

@@ -4,7 +4,7 @@
         "esModuleInterop": true,
         "isolatedModules": true,
         "jsx": "react",
-        "module": "es6",
+        "module": "esnext",
         "moduleResolution": "node",
         "removeComments": true,
         "resolveJsonModule": true,

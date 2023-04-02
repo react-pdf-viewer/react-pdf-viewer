@@ -9,7 +9,7 @@
 import * as React from 'react';
 import { useIsomorphicLayoutEffect } from '../hooks/useIsomorphicLayoutEffect';
 import type { PdfJs } from '../types/PdfJs';
-import { PdfJsApi } from '../vendors/PdfJsApi';
+import { PdfJsApiContext } from '../vendors/PdfJsApiContext';
 
 export const SvgLayer: React.FC<{
     height: number;
@@ -18,6 +18,7 @@ export const SvgLayer: React.FC<{
     scale: number;
     width: number;
 }> = ({ height, page, rotation, scale, width }) => {
+    const { pdfJsApiProvider } = React.useContext(PdfJsApiContext);
     const containerRef = React.useRef<HTMLDivElement>();
 
     const empty = (): void => {
@@ -34,7 +35,7 @@ export const SvgLayer: React.FC<{
 
         page.getOperatorList().then((operatorList) => {
             empty();
-            const graphic = new PdfJsApi.SVGGraphics(page.commonObjs, page.objs) as PdfJs.SVGGraphics;
+            const graphic = new pdfJsApiProvider.SVGGraphics(page.commonObjs, page.objs) as PdfJs.SVGGraphics;
             graphic.getSVG(operatorList, viewport).then((svg) => {
                 // It seems that we don't have to set the size for `svg`
                 svg.style.height = `${height}px`;

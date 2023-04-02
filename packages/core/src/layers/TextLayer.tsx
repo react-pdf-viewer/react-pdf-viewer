@@ -11,7 +11,7 @@ import { useIsomorphicLayoutEffect } from '../hooks/useIsomorphicLayoutEffect';
 import { LayerRenderStatus } from '../structs/LayerRenderStatus';
 import type { PdfJs } from '../types/PdfJs';
 import type { Plugin } from '../types/Plugin';
-import { PdfJsApi } from '../vendors/PdfJsApi';
+import { PdfJsApiContext } from '../vendors/PdfJsApiContext';
 
 export const TextLayer: React.FC<{
     containerRef: React.MutableRefObject<HTMLDivElement>;
@@ -22,6 +22,7 @@ export const TextLayer: React.FC<{
     scale: number;
     onRenderTextCompleted: () => void;
 }> = ({ containerRef, page, pageIndex, plugins, rotation, scale, onRenderTextCompleted }) => {
+    const { pdfJsApiProvider } = React.useContext(PdfJsApiContext);
     const renderTask = React.useRef<PdfJs.PageRenderTask>();
 
     const empty = (): void => {
@@ -63,7 +64,7 @@ export const TextLayer: React.FC<{
         });
         page.getTextContent().then((textContent) => {
             empty();
-            renderTask.current = PdfJsApi.renderTextLayer({
+            renderTask.current = pdfJsApiProvider.renderTextLayer({
                 container: containerEle,
                 // From pdf-js 3.2.146, the `textContent` parameter is deprecated
                 // and will be soon replaced with the `textContentSource` parameter

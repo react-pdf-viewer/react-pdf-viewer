@@ -7,12 +7,9 @@
  */
 
 import * as React from 'react';
-import { PdfJsApi } from './vendors/PdfJsApi';
 
-export const Worker: React.FC<{
+export interface LegacyWorkerProps {
     children?: React.ReactNode;
     workerUrl: string;
-}> = ({ children, workerUrl }) => {
-    PdfJsApi.GlobalWorkerOptions.workerSrc = workerUrl;
-    return <>{children}</>;
-};
+}
+export class LegacyWorker extends React.Component<LegacyWorkerProps> {}

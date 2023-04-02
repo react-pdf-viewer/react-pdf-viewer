@@ -441,6 +441,27 @@ export interface LocalizationContextProps {
 }
 export const LocalizationContext: React.Context<LocalizationContextProps>;
 
+export interface PdfJsApiProvider {
+    getDocument(params: PdfJs.GetDocumentParams): PdfJs.LoadingTask;
+
+    // Worker
+    PDFWorker: PdfJs.PDFWorkerConstructor;
+    GlobalWorkerOptions: PdfJs.GlobalWorker;
+
+    // Loading task
+    PasswordResponses: PdfJs.PasswordResponsesValue;
+
+    // Render SVG
+    SVGGraphics: PdfJs.SVGGraphicsConstructor;
+
+    // Render text layer
+    renderTextLayer(params: PdfJs.RenderTextLayerParams): PdfJs.PageRenderTask;
+}
+export interface PdfJsApiContextProps {
+    pdfJsApiProvider?: PdfJsApiProvider;
+}
+export const PdfJsApiContext: React.Context<PdfJsApiContextProps>;
+
 export enum TextDirection {
     RightToLeft = 'RTL',
     LeftToRight = 'LTR',
@@ -581,12 +602,6 @@ export interface ViewerProps {
 }
 export class Viewer extends React.Component<ViewerProps> {}
 
-export interface WorkerProps {
-    children?: React.ReactNode;
-    workerUrl: string;
-}
-export class Worker extends React.Component<WorkerProps> {}
-
 // Hooks
 export function useDebounceCallback<T extends unknown[]>(callback: (...args: T) => void, wait: number): void;
 
@@ -638,21 +653,46 @@ export function isMac(): boolean;
 // Vendors
 // pdfjs namespace
 export declare namespace PdfJs {
-    type FileData = string | Uint8Array;
-
     // Worker
+    const GlobalWorkerOptions: GlobalWorker;
+    interface GlobalWorker {
+        workerSrc: string;
+    }
+
     interface PDFWorkerConstructorParams {
         name: string;
     }
-
-    class PDFWorker {
+    interface PDFWorker {
         destroyed: boolean;
-        constructor(params: PDFWorkerConstructorParams);
         destroy(): void;
     }
+    interface PDFWorkerConstructor {
+        new (params: PDFWorkerConstructorParams): PDFWorker;
+    }
 
-    // Document
+    // Loading task
+    const PasswordResponses: PasswordResponsesValue;
+    interface PasswordResponsesValue {
+        NEED_PASSWORD: number;
+        INCORRECT_PASSWORD: number;
+    }
+
+    type FileData = string | Uint8Array;
+
+    interface LoadingTaskProgress {
+        loaded: number;
+        total: number;
+    }
+
+    interface LoadingTask {
+        docId: string;
+        onPassword: (verifyPassword: (password: string) => void, reason: number) => void;
+        onProgress: (progress: LoadingTaskProgress) => void;
+        promise: Promise<PdfDocument>;
+        destroy(): void;
+    }
     interface PdfDocument {
+        loadingTask: LoadingTask;
         numPages: number;
         getAttachments(): Promise<{ [filename: string]: Attachment }>;
         getData(): Promise<Uint8Array>;
@@ -664,6 +704,7 @@ export declare namespace PdfJs {
         getPageIndex(ref: OutlineRef): Promise<number>;
         getPageLabels(): Promise<string[] | null>;
         getPageMode(): Promise<PageMode>;
+        getPermissions(): Promise<number[] | null>;
     }
     interface GetDocumentParams {
         data?: FileData;
@@ -674,51 +715,7 @@ export declare namespace PdfJs {
         withCredentials?: boolean;
         worker?: PDFWorker;
     }
-
-    // Viewport
-    interface ViewPortParams {
-        rotation?: number;
-        scale: number;
-    }
-    interface ViewPortCloneParams {
-        dontFlip: boolean;
-    }
-    interface ViewPort {
-        height: number;
-        rotation: number;
-        transform: number[];
-        width: number;
-        clone(params: ViewPortCloneParams): ViewPort;
-        convertToViewportPoint(x: number, y: number): [number, number];
-    }
-
-    interface PageTextContent {
-        items: PageTextItem[];
-    }
-    interface PageTextItem {
-        str: string;
-    }
-
-    // Render task
-    interface PageRenderTask {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        promise: Promise<any>;
-        cancel(): void;
-    }
-
-    // Render page
-    interface PageRenderParams {
-        canvasContext: CanvasRenderingContext2D;
-        // Should be 'print' when printing
-        intent?: string;
-        transform?: number[];
-        viewport: ViewPort;
-    }
-    interface Page {
-        getTextContent(): Promise<PageTextContent>;
-        getViewport(params: ViewPortParams): ViewPort;
-        render(params: PageRenderParams): PageRenderTask;
-    }
+    function getDocument(params: GetDocumentParams): LoadingTask;
 
     // Attachment
     interface Attachment {
@@ -772,6 +769,59 @@ export declare namespace PdfJs {
         num: number;
     }
 
+    // View port
+    interface ViewPortParams {
+        rotation?: number;
+        scale: number;
+    }
+    interface ViewPortCloneParams {
+        dontFlip: boolean;
+    }
+    interface ViewPort {
+        height: number;
+        rotation: number;
+        transform: number[];
+        width: number;
+        clone(params: ViewPortCloneParams): ViewPort;
+        convertToViewportPoint(x: number, y: number): [number, number];
+    }
+
+    // Render task
+    interface PageRenderTask {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        promise: Promise<any>;
+        cancel(): void;
+    }
+
+    // Render SVG
+    interface SVGGraphics {
+        getSVG(operatorList: PageOperatorList, viewport: ViewPort): Promise<SVGElement>;
+    }
+    interface SVGGraphicsConstructor {
+        new (commonObjs: PageCommonObjects, objs: PageObjects): SVGGraphics;
+    }
+    let SVGGraphics: SVGGraphicsConstructor;
+
+    // Render text layer
+    interface RenderTextLayerParams {
+        textContent?: PageTextContent;
+        textContentSource: PageTextContent;
+        container: HTMLDivElement;
+        viewport: ViewPort;
+    }
+    interface PageTextContent {
+        items: PageTextItem[];
+    }
+    interface PageTextItem {
+        str: string;
+    }
+    function renderTextLayer(params: RenderTextLayerParams): PageRenderTask;
+
+    // Annotations layer
+    interface AnnotationsParams {
+        // Can be 'display' or 'print'
+        intent: string;
+    }
     interface AnnotationPoint {
         x: number;
         y: number;
@@ -826,4 +876,49 @@ export declare namespace PdfJs {
         // Text annotation
         name?: string;
     }
+    const AnnotationLayer: PdfAnnotationLayer;
+    interface RenderAnnotationLayerParams {
+        annotations: Annotation[];
+        div: HTMLDivElement | null;
+        linkService: LinkService;
+        page: Page;
+        viewport: ViewPort;
+    }
+    interface PdfAnnotationLayer {
+        render(params: RenderAnnotationLayerParams): void;
+        update(params: RenderAnnotationLayerParams): void;
+    }
+
+    // Link service
+    interface LinkService {
+        externalLinkTarget?: number | null;
+        getDestinationHash(dest: OutlineDestinationType): string;
+        navigateTo(dest: OutlineDestinationType): void;
+    }
+
+    // Render page
+    interface PageRenderParams {
+        canvasContext: CanvasRenderingContext2D;
+        // Should be 'print' when printing
+        intent?: string;
+        transform?: number[];
+        viewport: ViewPort;
+    }
+    interface Page {
+        getAnnotations(params: AnnotationsParams): Promise<Annotation[]>;
+        getTextContent(): Promise<PageTextContent>;
+        getViewport(params: ViewPortParams): ViewPort;
+        render(params: PageRenderParams): PageRenderTask;
+        getOperatorList(): Promise<PageOperatorList>;
+        commonObjs: PageCommonObjects;
+        objs: PageObjects;
+        ref?: OutlineRef;
+        view: number[];
+    }
+
+    /* eslint-disable @typescript-eslint/no-empty-interface */
+    interface PageCommonObjects {}
+    interface PageObjects {}
+    interface PageOperatorList {}
+    /* eslint-enable @typescript-eslint/no-empty-interface */
 }
