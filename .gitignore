@@ -1,6 +1,6 @@
 .DS_Store
+.turbo
 demo/nextjs/.next
-lerna-debug.log
 node_modules
 samples/ignore
 package-lock.json

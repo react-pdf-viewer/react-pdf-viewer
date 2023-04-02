@@ -16,21 +16,18 @@
         "pdf.js",
         "pdf viewer"
     ],
-    "private": "true",
+    "private": true,
     "workspaces": [
         "packages/*"
     ],
     "scripts": {
-        "bootstrap": "lerna bootstrap --hoist",
-        "postinstall": "npm run bootstrap",
-        "clean": "lerna run clean",
-        "build": "lerna run build",
-        "dev": "lerna run dev",
+        "clean": "turbo run clean",
+        "build": "turbo run build",
         "test:unit": "jest --no-cache --runInBand --config jest.config.js",
         "test:e2e": "jest --no-cache --runInBand --config jest-e2e.config.js",
         "lint": "eslint packages/**/src/*.ts packages/**/src/*.tsx",
         "format": "prettier --write \"**/*.+(css|js|json|jsx|less|md|ts|tsx)\"",
-        "release": "npm run build && lerna publish from-package"
+        "release": "turbo run publish"
     },
     "devDependencies": {
         "@rollup/plugin-json": "^6.0.0",
@@ -62,6 +59,7 @@
         "rollup": "^3.20.2",
         "sass": "^1.60.0",
         "ts-jest": "^29.0.5",
+        "turbo": "^1.8.8",
         "typescript": "^5.0.2"
     }
 }
