@@ -1,0 +1,34 @@
+{
+    "name": "react-pdf-viewer-webpack-v4",
+    "private": true,
+    "version": "0.0.0",
+    "scripts": {
+        "copy": "cp -rf ../../samples/* dist",
+        "build": "rm -rf dist && mkdir dist && webpack --mode production && npm run copy",
+        "dev": "rm -rf dist && mkdir dist && npm run copy && NODE_ENV=development webpack serve"
+    },
+    "dependencies": {
+        "@react-pdf-viewer/core": "../../node_modules/@react-pdf-viewer/core",
+        "@react-pdf-viewer/default-layout": "../../node_modules/@react-pdf-viewer/default-layout",
+        "@react-pdf-viewer/legacy-worker": "../../node_modules/@react-pdf-viewer/legacy-worker",
+        "pdfjs-dist": "^3.4.120",
+        "react": "^18.2.0",
+        "react-dom": "^18.2.0"
+    },
+    "devDependencies": {
+        "@babel/core": "^7.21.4",
+        "@babel/preset-env": "^7.21.4",
+        "@babel/preset-react": "^7.18.6",
+        "@babel/preset-typescript": "^7.21.4",
+        "babel-loader": "^8.3.0",
+        "copy-webpack-plugin": "^6.4.1",
+        "css-loader": "^5.2.7",
+        "html-webpack-plugin": "^4.5.2",
+        "mini-css-extract-plugin": "^1.6.2",
+        "sass-loader": "^10.4.1",
+        "style-loader": "^2.0.0",
+        "webpack": "^4.46.0",
+        "webpack-cli": "^4.10.0",
+        "webpack-dev-server": "^4.13.2"
+    }
+}
