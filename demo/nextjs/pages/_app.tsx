@@ -1,4 +1,4 @@
-import { Worker } from '@react-pdf-viewer/core';
+import { Worker } from '@react-pdf-viewer/worker';
 import '@react-pdf-viewer/core/lib/styles/index.css';
 import '@react-pdf-viewer/default-layout/lib/styles/index.css';
 import '@react-pdf-viewer/drop/lib/styles/index.css';

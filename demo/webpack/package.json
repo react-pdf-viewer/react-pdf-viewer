@@ -8,12 +8,16 @@
         "dev": "rm -rf dist && mkdir dist && npm run copy && NODE_ENV=development webpack serve"
     },
     "dependencies": {
-        "@react-pdf-viewer/core": "3.12.0",
-        "@react-pdf-viewer/default-layout": "3.12.0"
+        "@react-pdf-viewer/core": "../../node_modules/@react-pdf-viewer/core",
+        "@react-pdf-viewer/default-layout": "../../node_modules/@react-pdf-viewer/default-layout",
+        "@react-pdf-viewer/worker": "../../node_modules/@react-pdf-viewer/worker",
+        "pdfjs-dist": "^3.4.120",
+        "react": "^18.2.0",
+        "react-dom": "^18.2.0"
     },
     "devDependencies": {
-        "@babel/core": "^7.21.3",
-        "@babel/preset-env": "^7.20.2",
+        "@babel/core": "^7.21.4",
+        "@babel/preset-env": "^7.21.4",
         "@babel/preset-react": "^7.18.6",
         "babel-loader": "^9.1.2",
         "css-loader": "^6.7.3",

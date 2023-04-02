@@ -33,6 +33,11 @@ module.exports = {
     },
     resolve: {
         extensions: ['.js', '.jsx', '.ts', '.tsx'],
+        alias: {
+            // We need it because we use the local development version of `@react-pdf-viewer/xxx`
+            // Otherwise, we will see "Invalid hook call" error
+            react: path.join(__dirname, '../../node_modules/react'),
+        },
     },
     devServer: {
         static: path.join(__dirname, 'dist'),
