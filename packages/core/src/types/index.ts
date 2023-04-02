@@ -17,6 +17,7 @@ export * from './PageChangeEvent';
 export * from './PageLayout';
 export * from './PageSize';
 export * from './PdfJs';
+export * from './PdfJsApiProvider';
 export * from './Plugin';
 export * from './PluginFunctions';
 export * from './Rect';
