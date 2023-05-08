@@ -9,8 +9,8 @@
 import type { Store } from '@react-pdf-viewer/core';
 import { ScrollMode, ViewMode } from '@react-pdf-viewer/core';
 import * as React from 'react';
-import { switchViewMode } from './switchViewMode';
 import { SwitchViewModeButton } from './SwitchViewModeButton';
+import { switchViewMode } from './switchViewModeFunction';
 import type { RenderSwitchViewModeProps } from './types/RenderSwitchViewModeProps';
 import type { StoreProps } from './types/StoreProps';
 import { useScrollMode } from './useScrollMode';
