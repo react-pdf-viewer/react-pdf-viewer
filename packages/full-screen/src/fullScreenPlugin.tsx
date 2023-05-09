@@ -46,7 +46,7 @@ export const fullScreenPlugin = (props?: FullScreenPluginProps): FullScreenPlugi
             ),
         []
     );
-    /* eslint-enable @typescript-eslint/no-empty-function */
+
     const store = React.useMemo(
         () =>
             createStore<StoreProps>({
@@ -57,6 +57,7 @@ export const fullScreenPlugin = (props?: FullScreenPluginProps): FullScreenPlugi
             }),
         []
     );
+    /* eslint-enable @typescript-eslint/no-empty-function */
 
     const EnterFullScreenDecorator = (props: EnterFullScreenProps) => (
         <EnterFullScreen
