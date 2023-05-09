@@ -7,8 +7,11 @@
         "clean": {
             "dependsOn": ["^clean"]
         },
-        "publish": {
-            "dependsOn": ["^publish"]
+        "release": {
+            "dependsOn": ["^release"]
+        },
+        "test": {
+            "dependsOn": ["^test"]
         }
     }
 }
