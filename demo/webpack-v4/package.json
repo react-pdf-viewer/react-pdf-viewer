@@ -11,7 +11,7 @@
         "@react-pdf-viewer/core": "../../node_modules/@react-pdf-viewer/core",
         "@react-pdf-viewer/default-layout": "../../node_modules/@react-pdf-viewer/default-layout",
         "@react-pdf-viewer/legacy-worker": "../../node_modules/@react-pdf-viewer/legacy-worker",
-        "pdfjs-dist": "^3.4.120",
+        "pdfjs-dist": "^3.6.172",
         "react": "^18.2.0",
         "react-dom": "^18.2.0"
     },

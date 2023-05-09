@@ -47,7 +47,7 @@ import '@react-pdf-viewer/default-layout/lib/styles/index.css';
 const defaultLayoutPluginInstance = defaultLayoutPlugin();
 
 return (
-    <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.js">
+    <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.6.172/build/pdf.worker.js">
         <div style={{ height: '750px' }}>
             <Viewer fileUrl="/pdf-open-parameters.pdf" plugins={[defaultLayoutPluginInstance]} />
         </div>
