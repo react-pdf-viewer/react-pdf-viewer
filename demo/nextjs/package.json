@@ -10,7 +10,7 @@
         "@react-pdf-viewer/core": "../../node_modules/@react-pdf-viewer/core",
         "@react-pdf-viewer/default-layout": "../../node_modules/@react-pdf-viewer/default-layout",
         "@react-pdf-viewer/worker": "../../node_modules/@react-pdf-viewer/worker",
-        "next": "^13.2.4"
+        "next": "^13.4.1"
     },
     "devDependencies": {
         "serve": "^14.2.0",
