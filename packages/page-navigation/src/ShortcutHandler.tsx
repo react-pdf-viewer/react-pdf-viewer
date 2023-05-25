@@ -64,10 +64,13 @@ export const ShortcutHandler: React.FC<{
 
     const handleKeydown = (e: KeyboardEvent) => {
         const containerEle = containerRef.current;
+        if (!containerEle) {
+          return;
+        }
         const shouldHandleShortcuts =
             isMouseInsideRef.current || (document.activeElement && containerEle.contains(document.activeElement));
 
-        if (!containerEle || !shouldHandleShortcuts) {
+        if (!shouldHandleShortcuts) {
             return;
         }
 
