@@ -10,11 +10,11 @@
         "@react-pdf-viewer/core": "../../node_modules/@react-pdf-viewer/core",
         "@react-pdf-viewer/default-layout": "../../node_modules/@react-pdf-viewer/default-layout",
         "@react-pdf-viewer/worker": "../../node_modules/@react-pdf-viewer/worker",
-        "next": "^13.4.1"
+        "next": "^13.4.7"
     },
     "devDependencies": {
         "serve": "^14.2.0",
         "copy-webpack-plugin": "^11.0.0",
-        "ts-loader": "^9.4.2"
+        "ts-loader": "^9.4.3"
     }
 }
