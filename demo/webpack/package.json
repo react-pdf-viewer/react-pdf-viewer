@@ -3,9 +3,8 @@
     "private": true,
     "version": "0.0.0",
     "scripts": {
-        "copy": "cp -rf ../../samples/* dist",
         "typecheck": "tsc --noEmit",
-        "dev": "rm -rf dist && mkdir dist && npm run copy && NODE_ENV=development webpack serve"
+        "dev": "NODE_ENV=development webpack serve"
     },
     "dependencies": {
         "@react-pdf-viewer/core": "../../node_modules/@react-pdf-viewer/core",
