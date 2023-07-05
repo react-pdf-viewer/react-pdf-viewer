@@ -40,31 +40,18 @@ export const PageSizeCalculator: React.FC<{
     });
 
     React.useLayoutEffect(() => {
-        const queryPageSizes = Array(doc.numPages)
-            .fill(0)
-            .map(
-                (_, i) =>
-                    new Promise<PageSize>((resolve, _) => {
-                        getPage(doc, i).then((pdfPage) => {
-                            const viewport = pdfPage.getViewport({ scale: 1 });
-                            resolve({
-                                pageHeight: viewport.height,
-                                pageWidth: viewport.width,
-                                rotation: viewport.rotation,
-                            });
-                        });
-                    })
-            );
-        Promise.all(queryPageSizes).then((pageSizes) => {
+        getPage(doc, 0).then((pdfPage) => {
+            const viewport = pdfPage.getViewport({ scale: 1 });
+
             // Determine the initial scale
             const pagesEle = pagesRef.current;
-            if (!pagesEle || pageSizes.length === 0) {
+            if (!pagesEle) {
                 return;
             }
 
             // Get the dimension of the first page
-            const w = pageSizes[0].pageWidth;
-            const h = pageSizes[0].pageHeight;
+            const w = viewport.width;
+            const h = viewport.height;
 
             // The `pagesRef` element will be destroyed when the size calculation is completed
             // To make it more easy for testing, we take the parent element which is always visible
@@ -85,14 +72,20 @@ export const PageSizeCalculator: React.FC<{
                     break;
             }
 
-            let scale = defaultScale
+            const scale = defaultScale
                 ? typeof defaultScale === 'string'
                     ? calculateScale(parentEle, h, w, defaultScale, viewMode, doc.numPages)
                     : defaultScale
                 : decrease(scaled);
 
+            const pageSizes = Array(doc.numPages).fill(0).map((_) => ({
+                pageHeight: viewport.height,
+                pageWidth: viewport.width,
+                rotation: viewport.rotation,
+            }));
+
             setState({ pageSizes, scale });
-        });
+        })
     }, [doc.loadingTask.docId]);
 
     return state.pageSizes.length === 0 || state.scale === 0 ? (
