@@ -3,8 +3,7 @@
     "private": true,
     "version": "0.0.0",
     "scripts": {
-        "copy": "rm -rf public/* && cp -r ../../samples/* public",
-        "dev": "npm run copy && next dev"
+        "dev": "next dev"
     },
     "dependencies": {
         "@react-pdf-viewer/core": "../../node_modules/@react-pdf-viewer/core",
