@@ -66,11 +66,11 @@ export const Inner: React.FC<{
     defaultScale?: number | SpecialZoomLevel;
     doc: PdfJs.PdfDocument;
     enableSmoothScroll: boolean;
+    estimatedPageSizes: PageSize[];
     initialPage: number;
     initialRotation: number;
     initialScale: number;
     pageLayout?: PageLayout;
-    pageSizes: PageSize[];
     plugins: Plugin[];
     renderPage?: RenderPage;
     scrollMode: ScrollMode;
@@ -88,11 +88,11 @@ export const Inner: React.FC<{
     defaultScale,
     doc,
     enableSmoothScroll,
+    estimatedPageSizes,
     initialPage,
     initialRotation,
     initialScale,
     pageLayout,
-    pageSizes,
     plugins,
     renderPage,
     scrollMode,
@@ -172,6 +172,10 @@ export const Inner: React.FC<{
 
     const layoutBuilder = React.useMemo(() => Object.assign({}, DEFAULT_PAGE_LAYOUT, pageLayout), []);
 
+    // Determine whether or not the sizes of all pages are calculated
+    const areSizesCalculatedRef = React.useRef(false);
+    const [pageSizes, setPageSizes] = React.useState(estimatedPageSizes);
+
     const sizes = React.useMemo(
         () =>
             Array(numPages)
@@ -194,7 +198,7 @@ export const Inner: React.FC<{
                     };
                     return layoutBuilder.transformSize({ numPages, pageIndex, size: pageRect });
                 }),
-        [rotation, scale]
+        [rotation, scale, pageSizes]
     );
 
     const virtualizer = useVirtual({
@@ -686,8 +690,37 @@ export const Inner: React.FC<{
 
     const handlePageRenderCompleted = React.useCallback(
         (pageIndex: number) => {
-            renderQueue.markRendered(pageIndex);
-            renderNextPage();
+            new Promise<void>((resolve) => {
+                if (areSizesCalculatedRef.current) {
+                    resolve();
+                } else {
+                    // Calculate the sizes of all pages
+                    const queryPageSizes = Array(doc.numPages)
+                        .fill(0)
+                        .map(
+                            (_, i) =>
+                                new Promise<PageSize>((resolvePageSize) => {
+                                    getPage(doc, i).then((pdfPage) => {
+                                        const viewport = pdfPage.getViewport({ scale: 1 });
+                                        resolvePageSize({
+                                            pageHeight: viewport.height,
+                                            pageWidth: viewport.width,
+                                            rotation: viewport.rotation,
+                                        });
+                                    });
+                                })
+                        );
+                    Promise.all(queryPageSizes).then((pageSizes) => {
+                        areSizesCalculatedRef.current = true;
+                        setPageSizes(pageSizes);
+                        resolve();
+                    });
+                }
+            }).then(() => {
+                console.log(`[rendered] ${pageIndex}`);
+                renderQueue.markRendered(pageIndex);
+                renderNextPage();
+            });
         },
         [renderQueueKey]
     );

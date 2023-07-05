@@ -26,16 +26,16 @@ const RESERVE_WIDTH = 45;
 export const PageSizeCalculator: React.FC<{
     defaultScale?: number | SpecialZoomLevel;
     doc: PdfJs.PdfDocument;
-    render(pageSizes: PageSize[], initialScale: number): React.ReactElement;
+    render(estimatedPageSizes: PageSize[], initialScale: number): React.ReactElement;
     scrollMode: ScrollMode;
     viewMode: ViewMode;
 }> = ({ defaultScale, doc, render, scrollMode, viewMode }) => {
     const pagesRef = React.useRef<HTMLDivElement>();
     const [state, setState] = React.useState<{
-        pageSizes: PageSize[];
+        estimatedPageSizes: PageSize[];
         scale: number;
     }>({
-        pageSizes: [],
+        estimatedPageSizes: [],
         scale: 0,
     });
 
@@ -78,21 +78,23 @@ export const PageSizeCalculator: React.FC<{
                     : defaultScale
                 : decrease(scaled);
 
-            const pageSizes = Array(doc.numPages).fill(0).map((_) => ({
-                pageHeight: viewport.height,
-                pageWidth: viewport.width,
-                rotation: viewport.rotation,
-            }));
+            const estimatedPageSizes = Array(doc.numPages)
+                .fill(0)
+                .map((_) => ({
+                    pageHeight: viewport.height,
+                    pageWidth: viewport.width,
+                    rotation: viewport.rotation,
+                }));
 
-            setState({ pageSizes, scale });
-        })
+            setState({ estimatedPageSizes, scale });
+        });
     }, [doc.loadingTask.docId]);
 
-    return state.pageSizes.length === 0 || state.scale === 0 ? (
+    return state.estimatedPageSizes.length === 0 || state.scale === 0 ? (
         <div className="rpv-core__page-size-calculator" data-testid="core__page-size-calculating" ref={pagesRef}>
             <Spinner />
         </div>
     ) : (
-        render(state.pageSizes, state.scale)
+        render(state.estimatedPageSizes, state.scale)
     );
 };
