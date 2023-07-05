@@ -9,7 +9,8 @@ export const config = {
 };
 
 const handler = (req: NextApiRequest, res: NextApiResponse) => {
-    const slug = (req.query.slug as string[]).join('');
+    const slug = (req.query.slug as string[]).join('/');
+
     const documentPath = slug.endsWith('.pdf') ? slug : `${slug}.pdf`;
     const filePath = path.resolve('.', `../../samples/${documentPath}`);
 

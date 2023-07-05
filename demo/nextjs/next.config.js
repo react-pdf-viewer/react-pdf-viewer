@@ -6,9 +6,13 @@ module.exports = {
     async rewrites() {
         return [
             {
+                source: '/ignore/:document\\.pdf',
+                destination: '/api/doc/ignore/:document',
+            },
+            {
                 source: '/:document\\.pdf',
                 destination: '/api/doc/:document',
-            }
+            },
         ];
     },
     webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
