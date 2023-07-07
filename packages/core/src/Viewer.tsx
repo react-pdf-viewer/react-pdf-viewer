@@ -215,7 +215,7 @@ export const Viewer: React.FC<{
                                 <PageSizeCalculator
                                     defaultScale={defaultScale}
                                     doc={doc}
-                                    render={(pageSizes: PageSize[], initialScale: number) => (
+                                    render={(estimatedPageSizes: PageSize[], initialScale: number) => (
                                         <Inner
                                             currentFile={{
                                                 data: file.data,
@@ -224,11 +224,11 @@ export const Viewer: React.FC<{
                                             defaultScale={defaultScale}
                                             doc={doc}
                                             enableSmoothScroll={enableSmoothScroll}
+                                            estimatedPageSizes={estimatedPageSizes}
                                             initialPage={initialPage}
                                             initialRotation={initialRotation}
                                             initialScale={initialScale}
                                             pageLayout={pageLayout}
-                                            pageSizes={pageSizes}
                                             plugins={plugins}
                                             renderPage={renderPage}
                                             scrollMode={scrollMode}
@@ -238,8 +238,8 @@ export const Viewer: React.FC<{
                                                 file,
                                                 fullScreenMode: FullScreenMode.Normal,
                                                 pageIndex: -1,
-                                                pageHeight: pageSizes[0].pageHeight,
-                                                pageWidth: pageSizes[0].pageWidth,
+                                                pageHeight: estimatedPageSizes[0].pageHeight,
+                                                pageWidth: estimatedPageSizes[0].pageWidth,
                                                 pagesRotation: new Map(),
                                                 rotation: initialRotation,
                                                 scale: initialScale,

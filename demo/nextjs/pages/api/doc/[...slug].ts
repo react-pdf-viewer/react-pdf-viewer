@@ -21,12 +21,10 @@ const handler = (req: NextApiRequest, res: NextApiResponse) => {
         'Content-Type': 'application/pdf',
     });
 
-    const readStream = fs.createReadStream(filePath,
-        {
-            highWaterMark: 512,
-        }
-    );
+    const readStream = fs.createReadStream(filePath, {
+        highWaterMark: 512,
+    });
     readStream.pipe(res);
-}
+};
 
 export default handler;
