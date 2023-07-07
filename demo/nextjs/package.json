@@ -3,18 +3,17 @@
     "private": true,
     "version": "0.0.0",
     "scripts": {
-        "copy": "rm -rf public/* && cp -r ../../samples/* public",
-        "dev": "npm run copy && next dev"
+        "dev": "next dev"
     },
     "dependencies": {
         "@react-pdf-viewer/core": "../../node_modules/@react-pdf-viewer/core",
         "@react-pdf-viewer/default-layout": "../../node_modules/@react-pdf-viewer/default-layout",
         "@react-pdf-viewer/worker": "../../node_modules/@react-pdf-viewer/worker",
-        "next": "^13.4.7"
+        "next": "^13.4.8"
     },
     "devDependencies": {
-        "serve": "^14.2.0",
         "copy-webpack-plugin": "^11.0.0",
+        "serve": "^14.2.0",
         "ts-loader": "^9.4.3"
     }
 }
