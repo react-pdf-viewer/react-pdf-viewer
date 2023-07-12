@@ -7,6 +7,7 @@
  */
 
 import * as React from 'react';
+import { useFullScreen } from '../fullscreen/useFullScreen';
 import { useDebounceCallback } from '../hooks/useDebounceCallback';
 import { useIsomorphicLayoutEffect } from '../hooks/useIsomorphicLayoutEffect';
 import { usePrevious } from '../hooks/usePrevious';
@@ -15,6 +16,7 @@ import { useRunOnce } from '../hooks/useRunOnce';
 import { useTrackResize } from '../hooks/useTrackResize';
 import { PageLayer } from '../layers/PageLayer';
 import { LocalizationContext } from '../localization/LocalizationContext';
+import { FullScreenMode } from '../structs/FullScreenMode';
 import { RotateDirection } from '../structs/RotateDirection';
 import { ScrollMode } from '../structs/ScrollMode';
 import { SpecialZoomLevel } from '../structs/SpecialZoomLevel';
@@ -33,9 +35,9 @@ import type { Plugin } from '../types/Plugin';
 import type { PluginFunctions } from '../types/PluginFunctions';
 import type { Rect } from '../types/Rect';
 import type { RenderPage } from '../types/RenderPage';
-import type { SetRenderRange, VisiblePagesRange } from '../types/SetRenderRange';
 import type { RotateEvent } from '../types/RotateEvent';
 import type { RotatePageEvent } from '../types/RotatePageEvent';
+import type { SetRenderRange } from '../types/SetRenderRange';
 import type { Slot } from '../types/Slot';
 import type { ViewerState } from '../types/ViewerState';
 import type { ZoomEvent } from '../types/ZoomEvent';
@@ -43,13 +45,11 @@ import { chunk } from '../utils/chunk';
 import { classNames } from '../utils/classNames';
 import { getFileExt } from '../utils/getFileExt';
 import { clearPagesCache, getPage } from '../utils/managePages';
-import { useVirtual } from '../virtualizer/useVirtual';
 import type { VirtualItem } from '../virtualizer/VirtualItem';
+import { useVirtual } from '../virtualizer/useVirtual';
 import { calculateScale } from './calculateScale';
 import { useDestination } from './useDestination';
 import { useOutlines } from './useOutlines';
-import { useFullScreen } from '../fullscreen/useFullScreen';
-import { FullScreenMode } from '../structs/FullScreenMode';
 
 const DEFAULT_PAGE_LAYOUT: PageLayout = {
     buildPageStyles: () => ({}),
@@ -60,6 +60,34 @@ const ZERO_OFFSET: Offset = {
     left: 0,
     top: 0,
 };
+
+enum ActionType {
+    RenderPageCompleted = 'RenderPageCompleted',
+    CalculatePageSizes = 'CalculatePageSizes',
+    RenderNextPage = 'RenderNextPage',
+}
+type RenderPageCompletedAction = {
+    actionType: typeof ActionType.RenderPageCompleted;
+    pageIndex: number;
+}
+type CalculatePageSizesAction = {
+    actionType: typeof ActionType.CalculatePageSizes;
+    renderedPageIndex: number;
+}
+type RenderNextPageAction = {
+    actionType: typeof ActionType.RenderNextPage;
+    pageSizes: PageSize[];
+    renderedPageIndex: number;
+}
+
+type ActionTypes = RenderPageCompletedAction | CalculatePageSizesAction | RenderNextPageAction;
+
+interface State {
+    // Determine whether or not the sizes of all pages are calculated
+    areSizesCalculated: boolean;
+    nextAction?: ActionTypes;
+    pageSizes: PageSize[];
+}
 
 export const Inner: React.FC<{
     currentFile: OpenFile;
@@ -172,25 +200,102 @@ export const Inner: React.FC<{
 
     const layoutBuilder = React.useMemo(() => Object.assign({}, DEFAULT_PAGE_LAYOUT, pageLayout), []);
 
-    // Determine whether or not the sizes of all pages are calculated
-    const areSizesCalculatedRef = React.useRef(false);
-    const [pageSizes, setPageSizes] = React.useState(estimatedPageSizes);
+    const stateReducer = React.useCallback((state: State, action: ActionTypes): State => {
+        switch (action.actionType) {
+            case ActionType.CalculatePageSizes:
+                return state;
+            case ActionType.RenderPageCompleted:
+                return state.areSizesCalculated
+                    ? {
+                        ...state,
+                        nextAction: {
+                            actionType: ActionType.RenderNextPage,
+                            pageSizes: state.pageSizes,
+                            renderedPageIndex: action.pageIndex,
+                        },
+                    }
+                    : {
+                        ...state,
+                        nextAction: {
+                            actionType: ActionType.CalculatePageSizes,
+                            renderedPageIndex: action.pageIndex,
+                        },
+                    };
+            case ActionType.RenderNextPage:
+                return {
+                    ...state,
+                    areSizesCalculated: true,
+                    nextAction: action,
+                    pageSizes: action.pageSizes,
+                };
+            default:
+                return state;
+        }
+    }, []);
+
+    const [state, dispatch] = React.useReducer(stateReducer, {
+        areSizesCalculated: false,
+        pageSizes: estimatedPageSizes,
+    });
+
+    React.useEffect(() => {
+        if (!state.nextAction) {
+            return;
+        }
+        switch (state.nextAction.actionType) {
+            case ActionType.CalculatePageSizes:
+                calculatePageSizes(state.nextAction.renderedPageIndex);
+                break;
+            case ActionType.RenderNextPage:
+                renderQueue.markRendered(state.nextAction.renderedPageIndex);
+                renderNextPage();
+                break;
+            default:
+                break;
+        }
+    }, [state.nextAction]);
+
+    const calculatePageSizes = (renderedPageIndex: number) => {
+        const queryPageSizes = Array(doc.numPages)
+            .fill(0)
+            .map(
+                (_, i) =>
+                    new Promise<PageSize>((resolvePageSize) => {
+                        getPage(doc, i).then((pdfPage) => {
+                            const viewport = pdfPage.getViewport({ scale: 1 });
+                            resolvePageSize({
+                                pageHeight: viewport.height,
+                                pageWidth: viewport.width,
+                                rotation: viewport.rotation,
+                            });
+                        });
+                    })
+            );
+        Promise.all(queryPageSizes).then((pageSizes) => {
+            dispatch({
+                actionType: ActionType.RenderNextPage,
+                renderedPageIndex,
+                pageSizes,
+            });
+        });
+    };
 
     const sizes = React.useMemo(
         () =>
             Array(numPages)
                 .fill(0)
                 .map((_, pageIndex) => {
-                    const pageSize = [pageSizes[pageIndex].pageHeight, pageSizes[pageIndex].pageWidth];
+                    const pageHeight = state.pageSizes[pageIndex].pageHeight;
+                    const pageWidth = state.pageSizes[pageIndex].pageWidth;
                     const rect: Rect =
                         Math.abs(rotation) % 180 === 0
                             ? {
-                                  height: pageSize[0],
-                                  width: pageSize[1],
+                                  height: pageHeight,
+                                  width: pageWidth,
                               }
                             : {
-                                  height: pageSize[1],
-                                  width: pageSize[0],
+                                  height: pageWidth,
+                                  width: pageHeight,
                               };
                     const pageRect = {
                         height: rect.height * scale,
@@ -198,7 +303,7 @@ export const Inner: React.FC<{
                     };
                     return layoutBuilder.transformSize({ numPages, pageIndex, size: pageRect });
                 }),
-        [rotation, scale, pageSizes]
+        [rotation, scale, state.pageSizes]
     );
 
     const virtualizer = useVirtual({
@@ -281,8 +386,8 @@ export const Inner: React.FC<{
                     case SpecialZoomLevel.PageWidth:
                         updateScale = calculateScale(
                             pagesContainer,
-                            pageSizes[pageIndex].pageHeight,
-                            pageSizes[pageIndex].pageWidth,
+                            state.pageSizes[pageIndex].pageHeight,
+                            state.pageSizes[pageIndex].pageWidth,
                             SpecialZoomLevel.PageWidth,
                             viewMode,
                             numPages
@@ -427,8 +532,8 @@ export const Inner: React.FC<{
             return;
         }
 
-        const currentPageHeight = pageSizes[currentPage].pageHeight;
-        const currentPageWidth = pageSizes[currentPage].pageWidth;
+        const currentPageHeight = state.pageSizes[currentPage].pageHeight;
+        const currentPageWidth = state.pageSizes[currentPage].pageWidth;
 
         const updateScale = pagesEle
             ? typeof newScale === 'string'
@@ -690,36 +795,9 @@ export const Inner: React.FC<{
 
     const handlePageRenderCompleted = React.useCallback(
         (pageIndex: number) => {
-            new Promise<void>((resolve) => {
-                if (areSizesCalculatedRef.current) {
-                    resolve();
-                } else {
-                    // Calculate the sizes of all pages
-                    const queryPageSizes = Array(doc.numPages)
-                        .fill(0)
-                        .map(
-                            (_, i) =>
-                                new Promise<PageSize>((resolvePageSize) => {
-                                    getPage(doc, i).then((pdfPage) => {
-                                        const viewport = pdfPage.getViewport({ scale: 1 });
-                                        resolvePageSize({
-                                            pageHeight: viewport.height,
-                                            pageWidth: viewport.width,
-                                            rotation: viewport.rotation,
-                                        });
-                                    });
-                                })
-                        );
-                    Promise.all(queryPageSizes).then((pageSizes) => {
-                        areSizesCalculatedRef.current = true;
-                        setPageSizes(pageSizes);
-                        resolve();
-                    });
-                }
-            }).then(() => {
-                console.log(`[rendered] ${pageIndex}`);
-                renderQueue.markRendered(pageIndex);
-                renderNextPage();
+            dispatch({
+                actionType: ActionType.RenderPageCompleted,
+                pageIndex,
             });
         },
         [renderQueueKey]
@@ -876,7 +954,7 @@ export const Inner: React.FC<{
                                                 pageRotation={
                                                     pagesRotation.has(item.index) ? pagesRotation.get(item.index) : 0
                                                 }
-                                                pageSize={pageSizes[item.index]}
+                                                pageSize={state.pageSizes[item.index]}
                                                 plugins={plugins}
                                                 renderPage={renderPage}
                                                 renderQueueKey={renderQueueKey}
@@ -907,7 +985,7 @@ export const Inner: React.FC<{
                     doc,
                     pagesContainerRef: pagesRef,
                     pagesRotation,
-                    pageSizes,
+                    pageSizes: state.pageSizes,
                     rotation,
                     slot,
                     themeContext,
