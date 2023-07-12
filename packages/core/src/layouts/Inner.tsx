@@ -12,7 +12,6 @@ import { useDebounceCallback } from '../hooks/useDebounceCallback';
 import { useIsomorphicLayoutEffect } from '../hooks/useIsomorphicLayoutEffect';
 import { usePrevious } from '../hooks/usePrevious';
 import { useRenderQueue } from '../hooks/useRenderQueue';
-import { useRunOnce } from '../hooks/useRunOnce';
 import { useTrackResize } from '../hooks/useTrackResize';
 import { PageLayer } from '../layers/PageLayer';
 import { LocalizationContext } from '../localization/LocalizationContext';
@@ -65,6 +64,7 @@ enum ActionType {
     RenderPageCompleted = 'RenderPageCompleted',
     CalculatePageSizes = 'CalculatePageSizes',
     RenderNextPage = 'RenderNextPage',
+    JumpToInitialPage = 'JumpToInitialPage',
 }
 type RenderPageCompletedAction = {
     actionType: typeof ActionType.RenderPageCompleted;
@@ -79,8 +79,12 @@ type RenderNextPageAction = {
     pageSizes: PageSize[];
     renderedPageIndex: number;
 }
+type JumpToInitialPageAction = {
+    actionType: typeof ActionType.JumpToInitialPage;
+    pageSizes: PageSize[];
+}
 
-type ActionTypes = RenderPageCompletedAction | CalculatePageSizesAction | RenderNextPageAction;
+type ActionTypes = CalculatePageSizesAction | JumpToInitialPageAction | RenderNextPageAction | RenderPageCompletedAction
 
 interface State {
     // Determine whether or not the sizes of all pages are calculated
@@ -228,6 +232,13 @@ export const Inner: React.FC<{
                     nextAction: action,
                     pageSizes: action.pageSizes,
                 };
+            case ActionType.JumpToInitialPage:
+                return {
+                    ...state,
+                    areSizesCalculated: true,
+                    nextAction: action,
+                    pageSizes: action.pageSizes,
+                };
             default:
                 return state;
         }
@@ -245,6 +256,9 @@ export const Inner: React.FC<{
         switch (state.nextAction.actionType) {
             case ActionType.CalculatePageSizes:
                 calculatePageSizes(state.nextAction.renderedPageIndex);
+                break;
+            case ActionType.JumpToInitialPage:
+                jumpToPage(initialPage);
                 break;
             case ActionType.RenderNextPage:
                 renderQueue.markRendered(state.nextAction.renderedPageIndex);
@@ -272,11 +286,20 @@ export const Inner: React.FC<{
                     })
             );
         Promise.all(queryPageSizes).then((pageSizes) => {
-            dispatch({
-                actionType: ActionType.RenderNextPage,
-                renderedPageIndex,
-                pageSizes,
-            });
+            if (initialPage === 0) {
+                dispatch({
+                    actionType: ActionType.RenderNextPage,
+                    renderedPageIndex,
+                    pageSizes,
+                });
+            } else {
+                // Don't render the surrounded pages of the first page
+                // Jump to the initial page
+                dispatch({
+                    actionType: ActionType.JumpToInitialPage,
+                    pageSizes,
+                });
+            }
         });
     };
 
@@ -632,13 +655,6 @@ export const Inner: React.FC<{
             plugin.onDocumentLoad && plugin.onDocumentLoad({ doc, file: currentFile });
         });
     }, [docId]);
-
-    const boundingClientRect = virtualizer.boundingClientRect;
-    useRunOnce(() => {
-        if (initialPage) {
-            jumpToPage(initialPage);
-        }
-    }, boundingClientRect.height > 0 && boundingClientRect.width > 0);
 
     // Scroll to the current page after switching the scroll mode
     useIsomorphicLayoutEffect(() => {
