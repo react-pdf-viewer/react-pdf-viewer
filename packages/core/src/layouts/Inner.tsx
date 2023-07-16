@@ -329,6 +329,10 @@ export const Inner: React.FC<{
         [rotation, scale, state.pageSizes]
     );
 
+    const handleVisibilityChanged = React.useCallback((pageIndex: number, visibility: number) => {
+        renderQueue.setVisibility(pageIndex, visibility);
+    }, []);
+
     const virtualizer = useVirtual({
         enableSmoothScroll,
         isRtl,
@@ -338,6 +342,7 @@ export const Inner: React.FC<{
         setRenderRange,
         sizes,
         viewMode: currentViewMode,
+        onVisibilityChanged: handleVisibilityChanged,
     });
 
     const handlePagesResize = useDebounceCallback(() => {
@@ -694,16 +699,10 @@ export const Inner: React.FC<{
         if (previousViewMode === stateRef.current.viewMode) {
             return;
         }
-        const { startPage, endPage, virtualItems } = virtualizer;
+        const { startPage, endPage } = virtualizer;
 
         renderQueue.markNotRendered();
         renderQueue.setRange(startPage, endPage);
-        for (let i = startPage; i <= endPage; i++) {
-            const item = virtualItems.find((item) => item.index === i);
-            if (item) {
-                renderQueue.setVisibility(i, item.visibility);
-            }
-        }
         renderNextPage();
     }, [currentViewMode]);
 
@@ -756,59 +755,6 @@ export const Inner: React.FC<{
         }
     }, [fullScreen.fullScreenMode]);
 
-    // This hook should be placed at the end of hooks
-    React.useEffect(() => {
-        if (
-            // Don't do anything if users start going to or exitting the full-screen mode
-            fullScreen.fullScreenMode === FullScreenMode.Entering ||
-            fullScreen.fullScreenMode === FullScreenMode.Exitting ||
-            // Or smooth scrolling isn't completed yet
-            virtualizer.isSmoothScrolling
-        ) {
-            return;
-        }
-
-        const { startPage, endPage, maxVisbilityIndex, virtualItems } = virtualizer;
-        // The current page is the page which has the biggest visibility
-        const currentPage = maxVisbilityIndex;
-
-        const isFullScreen =
-            fullScreen.fullScreenMode === FullScreenMode.Entered || // Triggered when `enableSmoothScroll` is set to `false`
-            fullScreen.fullScreenMode === FullScreenMode.EnteredCompletely;
-        if (isFullScreen && currentPage !== forceTargetFullScreenRef.current && forceTargetFullScreenRef.current > -1) {
-            return;
-        }
-        if (isFullScreen && currentPage !== forceTargetZoomRef.current && forceTargetZoomRef.current > -1) {
-            return;
-        }
-
-        setCurrentPage(currentPage);
-        setViewerState({
-            ...stateRef.current,
-            pageIndex: currentPage,
-        });
-
-        // The range of pages that will be rendered
-        renderQueue.setRange(startPage, endPage);
-        for (let i = startPage; i <= endPage; i++) {
-            const item = virtualItems.find((item) => item.index === i);
-            if (item) {
-                renderQueue.setVisibility(i, item.visibility);
-            }
-        }
-
-        renderNextPage();
-    }, [
-        virtualizer.startPage,
-        virtualizer.endPage,
-        virtualizer.isSmoothScrolling,
-        virtualizer.maxVisbilityIndex,
-        fullScreen.fullScreenMode,
-        pagesRotationChanged,
-        rotation,
-        scale,
-    ]);
-
     const handlePageRenderCompleted = React.useCallback(
         (pageIndex: number) => {
             dispatch({
@@ -848,6 +794,60 @@ export const Inner: React.FC<{
                 break;
         }
     };
+
+    // This hook should be placed at the end of hooks
+    React.useEffect(() => {
+        if (
+            // Don't do anything if users start going to or exitting the full-screen mode
+            fullScreen.fullScreenMode === FullScreenMode.Entering ||
+            fullScreen.fullScreenMode === FullScreenMode.Exitting ||
+            // Or smooth scrolling isn't completed yet
+            virtualizer.isSmoothScrolling
+        ) {
+            return;
+        }
+
+        const { startPage, endPage, maxVisbilityIndex } = virtualizer;
+        // The current page is the page which has the biggest visibility
+        const currentPage = maxVisbilityIndex;
+
+        const isFullScreen =
+            fullScreen.fullScreenMode === FullScreenMode.Entered || // Triggered when `enableSmoothScroll` is set to `false`
+            fullScreen.fullScreenMode === FullScreenMode.EnteredCompletely;
+        if (isFullScreen && currentPage !== forceTargetFullScreenRef.current && forceTargetFullScreenRef.current > -1) {
+            return;
+        }
+        if (isFullScreen && currentPage !== forceTargetZoomRef.current && forceTargetZoomRef.current > -1) {
+            return;
+        }
+
+        setCurrentPage(currentPage);
+        setViewerState({
+            ...stateRef.current,
+            pageIndex: currentPage,
+        });
+
+        // The range of pages that will be rendered
+        renderQueue.setRange(startPage, endPage);
+        renderNextPage();
+    }, [
+        virtualizer.startPage,
+        virtualizer.endPage,
+        virtualizer.isSmoothScrolling,
+        virtualizer.maxVisbilityIndex,
+        fullScreen.fullScreenMode,
+        pagesRotationChanged,
+        rotation,
+        scale,
+    ]);
+
+    useIsomorphicLayoutEffect(() => {
+        // Let's get started by rendering the first page
+        renderQueue.markRendering(0);
+        setRenderPageIndex(0);
+    }, []);
+
+    /* ----- Renders ----- */
 
     const renderViewer = React.useCallback(() => {
         const { virtualItems } = virtualizer;

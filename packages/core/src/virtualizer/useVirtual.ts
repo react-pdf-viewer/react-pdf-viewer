@@ -50,6 +50,7 @@ export const useVirtual = ({
     sizes,
     scrollMode,
     viewMode,
+    onVisibilityChanged,
 }: {
     enableSmoothScroll: boolean;
     isRtl: boolean;
@@ -60,6 +61,7 @@ export const useVirtual = ({
     sizes: Rect[];
     scrollMode: ScrollMode;
     viewMode: ViewMode;
+    onVisibilityChanged: (pageIndex: number, visibility: number) => void;
 }): {
     boundingClientRect: Rect;
     isSmoothScrolling: boolean;
@@ -125,6 +127,7 @@ export const useVirtual = ({
                     }
                     const index = parseInt(indexAttribute, 10);
                     if (0 <= index && index < numberOfItems) {
+                        onVisibilityChanged(index, ratio);
                         setVisibilities((old) => {
                             old[index] = ratio;
                             return [...old];
