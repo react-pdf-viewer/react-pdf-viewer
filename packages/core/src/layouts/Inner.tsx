@@ -10,7 +10,6 @@ import * as React from 'react';
 import { useFullScreen } from '../fullscreen/useFullScreen';
 import { useDebounceCallback } from '../hooks/useDebounceCallback';
 import { useIsomorphicLayoutEffect } from '../hooks/useIsomorphicLayoutEffect';
-import { usePrevious } from '../hooks/usePrevious';
 import { useRenderQueue } from '../hooks/useRenderQueue';
 import { useTrackResize } from '../hooks/useTrackResize';
 import { PageLayer } from '../layers/PageLayer';
@@ -65,6 +64,7 @@ enum ActionType {
     JumpToInitialPage = 'JumpToInitialPage',
     RenderNextPage = 'RenderNextPage',
     RenderPageCompleted = 'RenderPageCompleted',
+    Rotate = 'Rotate',
     RotatePage = 'RotatePage',
     SwitchScrollMode = 'SwitchScrollMode',
     SwitchViewMode = 'SwitchViewMode',
@@ -73,45 +73,59 @@ enum ActionType {
 type CalculatePageSizesAction = {
     actionType: typeof ActionType.CalculatePageSizes;
     renderedPageIndex: number;
-}
+};
 type JumpToInitialPageAction = {
     actionType: typeof ActionType.JumpToInitialPage;
     pageSizes: PageSize[];
-}
+};
 type RenderNextPageAction = {
     actionType: typeof ActionType.RenderNextPage;
     pageSizes: PageSize[];
     renderedPageIndex: number;
-}
+};
 type RenderPageCompletedAction = {
     actionType: typeof ActionType.RenderPageCompleted;
     pageIndex: number;
-}
+};
+type RotateAction = {
+    actionType: typeof ActionType.Rotate;
+    direction: RotateDirection;
+};
 type RotatePageAction = {
     actionType: typeof ActionType.RotatePage;
     direction: RotateDirection;
-}
+    finalRotation: number;
+    pageIndex: number;
+};
 type SwitchScrollModeAction = {
     actionType: typeof ActionType.SwitchScrollMode;
     newScrollMode: ScrollMode;
-}
+};
 type SwitchViewModeAction = {
     actionType: typeof ActionType.SwitchViewMode;
     newViewMode: ViewMode;
-}
+};
 type ZoomAction = {
     actionType: typeof ActionType.Zoom;
     newScale: number | SpecialZoomLevel;
-}
+};
 
-type ActionTypes = CalculatePageSizesAction | JumpToInitialPageAction | RenderNextPageAction |
-    RenderPageCompletedAction | RotatePageAction | SwitchScrollModeAction |
-    SwitchViewModeAction | ZoomAction
+type ActionTypes =
+    | CalculatePageSizesAction
+    | JumpToInitialPageAction
+    | RenderNextPageAction
+    | RenderPageCompletedAction
+    | RotateAction
+    | RotatePageAction
+    | SwitchScrollModeAction
+    | SwitchViewModeAction
+    | ZoomAction;
 
 interface State {
     // Determine whether or not the sizes of all pages are calculated
     areSizesCalculated: boolean;
     nextAction?: ActionTypes;
+    pagesRotation: Map<number, number>;
     pageSizes: PageSize[];
     rotation: number;
     scale: number;
@@ -182,7 +196,6 @@ export const Inner: React.FC<{
 
     // The rotation for each page
     const [pagesRotationChanged, setPagesRotationChanged] = React.useState(false);
-    const [pagesRotation, setPagesRotation] = React.useState(new Map<number, number>());
 
     const outlines = useOutlines(doc);
 
@@ -239,84 +252,100 @@ export const Inner: React.FC<{
             case ActionType.RenderPageCompleted:
                 return state.areSizesCalculated
                     ? {
-                        ...state,
-                        nextAction: {
-                            actionType: ActionType.RenderNextPage,
-                            pageSizes: state.pageSizes,
-                            renderedPageIndex: action.pageIndex,
-                        },
-                    }
+                          ...state,
+                          nextAction: {
+                              actionType: ActionType.RenderNextPage,
+                              pageSizes: state.pageSizes,
+                              renderedPageIndex: action.pageIndex,
+                          },
+                      }
                     : {
-                        ...state,
-                        nextAction: {
-                            actionType: ActionType.CalculatePageSizes,
-                            renderedPageIndex: action.pageIndex,
-                        },
-                    };
-            case ActionType.RotatePage:
-                {
-                    const degrees = action.direction === RotateDirection.Backward ? -90 : 90;
-                    const currentRotation = state.rotation;
-                    const updateRotation = currentRotation === 360 || currentRotation === -360 ? degrees : currentRotation + degrees;
-                    return {
-                        ...state,
-                        nextAction: action,
-                        rotation: updateRotation,
-                    };
-                }
+                          ...state,
+                          nextAction: {
+                              actionType: ActionType.CalculatePageSizes,
+                              renderedPageIndex: action.pageIndex,
+                          },
+                      };
+            case ActionType.Rotate: {
+                const degrees = action.direction === RotateDirection.Backward ? -90 : 90;
+                const currentRotation = state.rotation;
+                const updateRotation =
+                    currentRotation === 360 || currentRotation === -360 ? degrees : currentRotation + degrees;
+                return {
+                    ...state,
+                    nextAction: action,
+                    rotation: updateRotation,
+                };
+            }
+            case ActionType.RotatePage: {
+                const degrees = action.direction === RotateDirection.Backward ? -90 : 90;
+                const rotations = state.pagesRotation;
+                const currentPageRotation = rotations.has(action.pageIndex)
+                    ? rotations.get(action.pageIndex)
+                    : initialRotation;
+                const finalRotation = currentPageRotation + degrees;
+                const updateRotations = rotations.set(action.pageIndex, finalRotation);
+                return {
+                    ...state,
+                    nextAction: {
+                        ...action,
+                        finalRotation,
+                    },
+                    pagesRotation: updateRotations,
+                };
+            }
             case ActionType.SwitchScrollMode:
                 return state.scrollMode === action.newScrollMode
                     ? state
                     : {
-                        ...state,
-                        nextAction: action,
-                        scrollMode: action.newScrollMode,
-                    };
+                          ...state,
+                          nextAction: action,
+                          scrollMode: action.newScrollMode,
+                      };
             case ActionType.SwitchViewMode:
                 return state.viewMode === action.newViewMode
                     ? state
                     : {
-                        ...state,
-                        nextAction: action,
-                        viewMode: action.newViewMode,
-                    };
-            case ActionType.Zoom:
-                {
-                    const pagesEle = pagesRef.current;
-                    const newScale = action.newScale;
-                    const currentPage = stateRef.current.pageIndex;
-                    if (currentPage < 0 || currentPage >= numPages) {
-                        return state;
-                    }
-
-                    const currentPageHeight = state.pageSizes[currentPage].pageHeight;
-                    const currentPageWidth = state.pageSizes[currentPage].pageWidth;
-
-                    const updateScale = pagesEle
-                        ? typeof newScale === 'string'
-                            ? calculateScale(
-                                  pagesEle,
-                                  currentPageHeight,
-                                  currentPageWidth,
-                                  newScale,
-                                  stateRef.current.viewMode,
-                                  numPages
-                              )
-                            : newScale
-                        : 1;
-
-                    keepSpecialZoomLevelRef.current = typeof newScale === 'string' ? newScale : null;
-                    if (updateScale === stateRef.current.scale) {
-                        // Prevent the case where users continue zooming
-                        // when the document reaches the minimum/maximum zooming scale
-                        return state;
-                    }
-                    return {
-                        ...state,
-                        nextAction: action,
-                        scale: updateScale,
-                    };
+                          ...state,
+                          nextAction: action,
+                          viewMode: action.newViewMode,
+                      };
+            case ActionType.Zoom: {
+                const pagesEle = pagesRef.current;
+                const newScale = action.newScale;
+                const currentPage = stateRef.current.pageIndex;
+                if (currentPage < 0 || currentPage >= numPages) {
+                    return state;
                 }
+
+                const currentPageHeight = state.pageSizes[currentPage].pageHeight;
+                const currentPageWidth = state.pageSizes[currentPage].pageWidth;
+
+                const updateScale = pagesEle
+                    ? typeof newScale === 'string'
+                        ? calculateScale(
+                              pagesEle,
+                              currentPageHeight,
+                              currentPageWidth,
+                              newScale,
+                              stateRef.current.viewMode,
+                              numPages
+                          )
+                        : newScale
+                    : 1;
+
+                keepSpecialZoomLevelRef.current = typeof newScale === 'string' ? newScale : null;
+                if (updateScale === stateRef.current.scale) {
+                    // Prevent the case where users continue zooming
+                    // when the document reaches the minimum/maximum zooming scale
+                    return state;
+                }
+                return {
+                    ...state,
+                    nextAction: action,
+                    scale: updateScale,
+                };
+            }
             default:
                 return state;
         }
@@ -324,6 +353,7 @@ export const Inner: React.FC<{
 
     const [state, dispatch] = React.useReducer(stateReducer, {
         areSizesCalculated: false,
+        pagesRotation: new Map(),
         pageSizes: estimatedPageSizes,
         rotation: initialRotation,
         scale: initialScale,
@@ -346,7 +376,7 @@ export const Inner: React.FC<{
                 renderQueue.markRendered(state.nextAction.renderedPageIndex);
                 renderNextPage();
                 break;
-            case ActionType.RotatePage:
+            case ActionType.Rotate:
                 {
                     const direction = state.nextAction.direction;
                     renderQueue.markNotRendered();
@@ -360,6 +390,28 @@ export const Inner: React.FC<{
                     if (latestPage > -1) {
                         virtualizer.scrollToItem(latestPage, ZERO_OFFSET);
                     }
+                }
+                break;
+            case ActionType.RotatePage:
+                {
+                    const pageIndex = state.nextAction.pageIndex;
+                    // Force the pages to be re-virtualized
+                    setPagesRotationChanged((value) => !value);
+                    setViewerState({
+                        ...stateRef.current,
+                        pagesRotation: state.pagesRotation,
+                        rotatedPage: pageIndex,
+                    });
+                    onRotatePage({
+                        direction: state.nextAction.direction,
+                        doc,
+                        pageIndex,
+                        rotation: state.nextAction.finalRotation,
+                    });
+
+                    // Rerender the target page
+                    renderQueue.markRendering(pageIndex);
+                    setRenderPageIndex(pageIndex);
                 }
                 break;
             case ActionType.SwitchScrollMode:
@@ -532,6 +584,114 @@ export const Inner: React.FC<{
 
     const getViewerState = () => stateRef.current;
 
+    const jumpToDestination = React.useCallback((destination: Destination) => {
+        destinationManager.markVisitedDestination(destination);
+        return handleJumpToDestination(destination);
+    }, []);
+
+    const jumpToNextDestination = React.useCallback(() => {
+        const nextDestination = destinationManager.getNextDestination();
+        return nextDestination ? handleJumpToDestination(nextDestination) : Promise.resolve();
+    }, []);
+
+    const jumpToPreviousDestination = React.useCallback(() => {
+        const lastDestination = destinationManager.getPreviousDestination();
+        return lastDestination ? handleJumpToDestination(lastDestination) : Promise.resolve();
+    }, []);
+
+    const jumpToNextPage = React.useCallback(
+        () => virtualizer.scrollToNextItem(stateRef.current.pageIndex, ZERO_OFFSET),
+        []
+    );
+
+    const jumpToPage = React.useCallback(
+        (pageIndex: number) =>
+            0 <= pageIndex && pageIndex < numPages
+                ? virtualizer.scrollToItem(pageIndex, ZERO_OFFSET)
+                : Promise.resolve(),
+        []
+    );
+
+    const jumpToPreviousPage = React.useCallback(
+        () => virtualizer.scrollToPreviousItem(stateRef.current.pageIndex, ZERO_OFFSET),
+        []
+    );
+
+    const openFile = React.useCallback(
+        (file: File) => {
+            if (getFileExt(file.name).toLowerCase() !== 'pdf') {
+                return;
+            }
+            new Promise<Uint8Array>((resolve) => {
+                const reader = new FileReader();
+                reader.readAsArrayBuffer(file);
+                reader.onload = (): void => {
+                    const bytes = new Uint8Array(reader.result as ArrayBuffer);
+                    resolve(bytes);
+                };
+            }).then((data) => {
+                onOpenFile(file.name, data);
+            });
+        },
+        [onOpenFile]
+    );
+
+    const rotate = React.useCallback((direction: RotateDirection) => {
+        dispatch({
+            actionType: ActionType.Rotate,
+            direction,
+        });
+    }, []);
+
+    const rotatePage = React.useCallback((pageIndex: number, direction: RotateDirection) => {
+        dispatch({
+            actionType: ActionType.RotatePage,
+            direction,
+            finalRotation: 0,
+            pageIndex,
+        });
+    }, []);
+
+    const switchScrollMode = React.useCallback((scrollMode: ScrollMode) => {
+        dispatch({
+            actionType: ActionType.SwitchScrollMode,
+            newScrollMode: scrollMode,
+        });
+    }, []);
+
+    const switchViewMode = React.useCallback((viewMode: ViewMode) => {
+        dispatch({
+            actionType: ActionType.SwitchViewMode,
+            newViewMode: viewMode,
+        });
+    }, []);
+
+    const zoom = React.useCallback((newScale: number | SpecialZoomLevel) => {
+        dispatch({
+            actionType: ActionType.Zoom,
+            newScale: newScale,
+        });
+    }, []);
+
+    // Full-screen mode
+
+    const enterFullScreenMode = React.useCallback((target: HTMLElement) => {
+        fullScreen.enterFullScreenMode(target);
+    }, []);
+
+    const exitFullScreenMode = React.useCallback(() => {
+        fullScreen.exitFullScreenMode();
+    }, []);
+
+    React.useEffect(() => {
+        setViewerState({
+            ...stateRef.current,
+            fullScreenMode: fullScreen.fullScreenMode,
+        });
+    }, [fullScreen.fullScreenMode]);
+
+    /* ----- Internal ----- */
+
     const handleJumpFromLinkAnnotation = React.useCallback((destination: Destination): void => {
         destinationManager.markVisitedDestination(destination);
     }, []);
@@ -598,128 +758,6 @@ export const Inner: React.FC<{
             });
         });
     }, []);
-
-    const jumpToDestination = React.useCallback((destination: Destination) => {
-        destinationManager.markVisitedDestination(destination);
-        return handleJumpToDestination(destination);
-    }, []);
-
-    const jumpToNextDestination = React.useCallback(() => {
-        const nextDestination = destinationManager.getNextDestination();
-        return nextDestination ? handleJumpToDestination(nextDestination) : Promise.resolve();
-    }, []);
-
-    const jumpToPreviousDestination = React.useCallback(() => {
-        const lastDestination = destinationManager.getPreviousDestination();
-        return lastDestination ? handleJumpToDestination(lastDestination) : Promise.resolve();
-    }, []);
-
-    const jumpToNextPage = React.useCallback(
-        () => virtualizer.scrollToNextItem(stateRef.current.pageIndex, ZERO_OFFSET),
-        []
-    );
-
-    const jumpToPage = React.useCallback(
-        (pageIndex: number) =>
-            0 <= pageIndex && pageIndex < numPages
-                ? virtualizer.scrollToItem(pageIndex, ZERO_OFFSET)
-                : Promise.resolve(),
-        []
-    );
-
-    const jumpToPreviousPage = React.useCallback(
-        () => virtualizer.scrollToPreviousItem(stateRef.current.pageIndex, ZERO_OFFSET),
-        []
-    );
-
-    const openFile = React.useCallback(
-        (file: File) => {
-            if (getFileExt(file.name).toLowerCase() !== 'pdf') {
-                return;
-            }
-            new Promise<Uint8Array>((resolve) => {
-                const reader = new FileReader();
-                reader.readAsArrayBuffer(file);
-                reader.onload = (): void => {
-                    const bytes = new Uint8Array(reader.result as ArrayBuffer);
-                    resolve(bytes);
-                };
-            }).then((data) => {
-                onOpenFile(file.name, data);
-            });
-        },
-        [onOpenFile]
-    );
-
-    const rotate = React.useCallback((direction: RotateDirection) => {
-        dispatch({
-            actionType: ActionType.RotatePage,
-            direction,
-        });
-    }, []);
-
-    const rotatePage = React.useCallback((pageIndex: number, direction: RotateDirection) => {
-        const degrees = direction === RotateDirection.Backward ? -90 : 90;
-        const rotations = stateRef.current.pagesRotation;
-        const currentPageRotation = rotations.has(pageIndex) ? rotations.get(pageIndex) : initialRotation;
-        const finalRotation = currentPageRotation + degrees;
-        const updateRotations = rotations.set(pageIndex, finalRotation);
-
-        setPagesRotation(updateRotations);
-        // Force the pages to be re-virtualized
-        setPagesRotationChanged((value) => !value);
-        setViewerState({
-            ...stateRef.current,
-            pagesRotation: updateRotations,
-            rotatedPage: pageIndex,
-        });
-        onRotatePage({ direction, doc, pageIndex, rotation: finalRotation });
-
-        // Rerender the target page
-        renderQueue.markRendering(pageIndex);
-        setRenderPageIndex(pageIndex);
-    }, []);
-
-    const switchScrollMode = React.useCallback((scrollMode: ScrollMode) => {
-        dispatch({
-            actionType: ActionType.SwitchScrollMode,
-            newScrollMode: scrollMode,
-        });
-    }, []);
-
-    const switchViewMode = React.useCallback((viewMode: ViewMode) => {
-        dispatch({
-            actionType: ActionType.SwitchViewMode,
-            newViewMode: viewMode,
-        });
-    }, []);
-
-    const zoom = React.useCallback((newScale: number | SpecialZoomLevel) => {
-        dispatch({
-            actionType: ActionType.Zoom,
-            newScale: newScale,
-        });
-    }, []);
-
-    // Full-screen mode
-
-    const enterFullScreenMode = React.useCallback((target: HTMLElement) => {
-        fullScreen.enterFullScreenMode(target);
-    }, []);
-
-    const exitFullScreenMode = React.useCallback(() => {
-        fullScreen.exitFullScreenMode();
-    }, []);
-
-    React.useEffect(() => {
-        setViewerState({
-            ...stateRef.current,
-            fullScreenMode: fullScreen.fullScreenMode,
-        });
-    }, [fullScreen.fullScreenMode]);
-
-    // Internal
-    // --------
 
     React.useEffect(() => {
         const pluginMethods: PluginFunctions = {
@@ -1021,7 +1059,9 @@ export const Inner: React.FC<{
                                                 outlines={outlines}
                                                 pageIndex={item.index}
                                                 pageRotation={
-                                                    pagesRotation.has(item.index) ? pagesRotation.get(item.index) : 0
+                                                    state.pagesRotation.has(item.index)
+                                                        ? state.pagesRotation.get(item.index)
+                                                        : 0
                                                 }
                                                 pageSize={state.pageSizes[item.index]}
                                                 plugins={plugins}
@@ -1053,7 +1093,7 @@ export const Inner: React.FC<{
                     containerRef,
                     doc,
                     pagesContainerRef: pagesRef,
-                    pagesRotation,
+                    pagesRotation: state.pagesRotation,
                     pageSizes: state.pageSizes,
                     rotation: state.rotation,
                     slot,
