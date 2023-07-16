@@ -65,6 +65,7 @@ enum ActionType {
     JumpToInitialPage = 'JumpToInitialPage',
     RenderNextPage = 'RenderNextPage',
     RenderPageCompleted = 'RenderPageCompleted',
+    RotatePage = 'RotatePage',
     SwitchScrollMode = 'SwitchScrollMode',
 }
 type CalculatePageSizesAction = {
@@ -84,18 +85,23 @@ type RenderPageCompletedAction = {
     actionType: typeof ActionType.RenderPageCompleted;
     pageIndex: number;
 }
+type RotatePageAction = {
+    actionType: typeof ActionType.RotatePage;
+    direction: RotateDirection;
+};
 type SwitchScrollModeAction = {
     actionType: typeof ActionType.SwitchScrollMode;
     newScrollMode: ScrollMode;
 }
 
-type ActionTypes = CalculatePageSizesAction | JumpToInitialPageAction | RenderNextPageAction | RenderPageCompletedAction | SwitchScrollModeAction
+type ActionTypes = CalculatePageSizesAction | JumpToInitialPageAction | RenderNextPageAction | RenderPageCompletedAction | RotatePageAction | SwitchScrollModeAction
 
 interface State {
     // Determine whether or not the sizes of all pages are calculated
     areSizesCalculated: boolean;
     nextAction?: ActionTypes;
     pageSizes: PageSize[];
+    rotation: number;
     scrollMode: ScrollMode;
 }
 
@@ -159,9 +165,6 @@ export const Inner: React.FC<{
     const destinationManager = useDestination({
         getCurrentPage: () => stateRef.current.pageIndex,
     });
-
-    const [rotation, setRotation] = React.useState(initialRotation);
-    const previousRotation = usePrevious(rotation);
 
     // The rotation for each page
     const [pagesRotationChanged, setPagesRotationChanged] = React.useState(false);
@@ -242,6 +245,17 @@ export const Inner: React.FC<{
                             renderedPageIndex: action.pageIndex,
                         },
                     };
+            case ActionType.RotatePage:
+                {
+                    const degrees = action.direction === RotateDirection.Backward ? -90 : 90;
+                    const currentRotation = state.rotation;
+                    const updateRotation = currentRotation === 360 || currentRotation === -360 ? degrees : currentRotation + degrees;
+                    return {
+                        ...state,
+                        nextAction: action,
+                        rotation: updateRotation,
+                    };
+                }
             case ActionType.SwitchScrollMode:
                 return state.scrollMode === action.newScrollMode
                     ? state
@@ -258,6 +272,7 @@ export const Inner: React.FC<{
     const [state, dispatch] = React.useReducer(stateReducer, {
         areSizesCalculated: false,
         pageSizes: estimatedPageSizes,
+        rotation: initialRotation,
         scrollMode,
     });
 
@@ -275,6 +290,22 @@ export const Inner: React.FC<{
             case ActionType.RenderNextPage:
                 renderQueue.markRendered(state.nextAction.renderedPageIndex);
                 renderNextPage();
+                break;
+            case ActionType.RotatePage:
+                {
+                    const direction = state.nextAction.direction;
+                    renderQueue.markNotRendered();
+                    setViewerState({
+                        ...stateRef.current,
+                        rotation: state.rotation,
+                    });
+                    onRotate({ direction, doc, rotation: state.rotation });
+                    // Keep the current page after rotating the document
+                    const latestPage = stateRef.current.pageIndex;
+                    if (latestPage > -1) {
+                        virtualizer.scrollToItem(latestPage, ZERO_OFFSET);
+                    }
+                }
                 break;
             case ActionType.SwitchScrollMode:
                 {
@@ -344,7 +375,7 @@ export const Inner: React.FC<{
                     const pageHeight = state.pageSizes[pageIndex].pageHeight;
                     const pageWidth = state.pageSizes[pageIndex].pageWidth;
                     const rect: Rect =
-                        Math.abs(rotation) % 180 === 0
+                        Math.abs(state.rotation) % 180 === 0
                             ? {
                                   height: pageHeight,
                                   width: pageWidth,
@@ -359,7 +390,7 @@ export const Inner: React.FC<{
                     };
                     return layoutBuilder.transformSize({ numPages, pageIndex, size: pageRect });
                 }),
-        [rotation, scale, state.pageSizes]
+        [state.rotation, scale, state.pageSizes]
     );
 
     const handleVisibilityChanged = React.useCallback((pageIndex: number, visibility: number) => {
@@ -535,18 +566,10 @@ export const Inner: React.FC<{
     );
 
     const rotate = React.useCallback((direction: RotateDirection) => {
-        const degrees = direction === RotateDirection.Backward ? -90 : 90;
-        const currentRotation = stateRef.current.rotation;
-        const updateRotation =
-            currentRotation === 360 || currentRotation === -360 ? degrees : currentRotation + degrees;
-
-        renderQueue.markNotRendered();
-        setRotation(updateRotation);
-        setViewerState({
-            ...stateRef.current,
-            rotation: updateRotation,
+        dispatch({
+            actionType: ActionType.RotatePage,
+            direction,
         });
-        onRotate({ direction, doc, rotation: updateRotation });
     }, []);
 
     const rotatePage = React.useCallback((pageIndex: number, direction: RotateDirection) => {
@@ -694,14 +717,6 @@ export const Inner: React.FC<{
             plugin.onDocumentLoad && plugin.onDocumentLoad({ doc, file: currentFile });
         });
     }, [docId]);
-
-    // Keep the current page after rotating the document
-    useIsomorphicLayoutEffect(() => {
-        const latestPage = stateRef.current.pageIndex;
-        if (latestPage > -1 && previousRotation !== rotation) {
-            virtualizer.scrollToItem(latestPage, ZERO_OFFSET);
-        }
-    }, [rotation]);
 
     useIsomorphicLayoutEffect(() => {
         if (previousScale != 0 && previousScale != stateRef.current.scale) {
@@ -855,7 +870,7 @@ export const Inner: React.FC<{
         virtualizer.maxVisbilityIndex,
         fullScreen.fullScreenMode,
         pagesRotationChanged,
-        rotation,
+        state.rotation,
         scale,
     ]);
 
@@ -992,7 +1007,7 @@ export const Inner: React.FC<{
                                                 plugins={plugins}
                                                 renderPage={renderPage}
                                                 renderQueueKey={renderQueueKey}
-                                                rotation={rotation}
+                                                rotation={state.rotation}
                                                 scale={scale}
                                                 shouldRender={renderPageIndex === item.index}
                                                 viewMode={currentViewMode}
@@ -1020,7 +1035,7 @@ export const Inner: React.FC<{
                     pagesContainerRef: pagesRef,
                     pagesRotation,
                     pageSizes: state.pageSizes,
-                    rotation,
+                    rotation: state.rotation,
                     slot,
                     themeContext,
                     jumpToPage,
