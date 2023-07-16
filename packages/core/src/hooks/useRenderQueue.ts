@@ -126,16 +126,24 @@ export const useRenderQueue = ({ doc }: { doc: PdfJs.PdfDocument }): UseRenderQu
         const firstVisiblePage = visiblePages[0].pageIndex;
         const lastVisiblePage = visiblePages[visiblePages.length - 1].pageIndex;
 
-        // Find the first visible page that isn't rendered yet
+        // Find the most visible page that isn't rendered yet
         const numVisiblePages = visiblePages.length;
+        let maxVisibilityPageIndex = -1;
+        let maxVisibility = -1;
         for (let i = 0; i < numVisiblePages; i++) {
             // There is a page that is being rendered
             if (visiblePages[i].renderStatus === PageRenderStatus.Rendering) {
                 return -1;
             }
             if (visiblePages[i].renderStatus === PageRenderStatus.NotRenderedYet) {
-                return visiblePages[i].pageIndex;
+                if (maxVisibilityPageIndex === -1 || visiblePages[i].visibility > maxVisibility) {
+                    maxVisibilityPageIndex = visiblePages[i].pageIndex;
+                    maxVisibility = visiblePages[i].visibility;
+                }
             }
+        }
+        if (maxVisibilityPageIndex > -1) {
+            return maxVisibilityPageIndex;
         }
 
         // All visible pages are rendered
