@@ -67,6 +67,7 @@ enum ActionType {
     RenderPageCompleted = 'RenderPageCompleted',
     RotatePage = 'RotatePage',
     SwitchScrollMode = 'SwitchScrollMode',
+    Zoom = 'Zoom',
 }
 type CalculatePageSizesAction = {
     actionType: typeof ActionType.CalculatePageSizes;
@@ -93,8 +94,12 @@ type SwitchScrollModeAction = {
     actionType: typeof ActionType.SwitchScrollMode;
     newScrollMode: ScrollMode;
 }
+type ZoomAction = {
+    actionType: typeof ActionType.Zoom;
+    newScale: number | SpecialZoomLevel;
+}
 
-type ActionTypes = CalculatePageSizesAction | JumpToInitialPageAction | RenderNextPageAction | RenderPageCompletedAction | RotatePageAction | SwitchScrollModeAction
+type ActionTypes = CalculatePageSizesAction | JumpToInitialPageAction | RenderNextPageAction | RenderPageCompletedAction | RotatePageAction | SwitchScrollModeAction | ZoomAction
 
 interface State {
     // Determine whether or not the sizes of all pages are calculated
@@ -102,6 +107,7 @@ interface State {
     nextAction?: ActionTypes;
     pageSizes: PageSize[];
     rotation: number;
+    scale: number;
     scrollMode: ScrollMode;
 }
 
@@ -174,9 +180,6 @@ export const Inner: React.FC<{
     const previousViewMode = usePrevious(currentViewMode);
 
     const outlines = useOutlines(doc);
-
-    const [scale, setScale] = React.useState(initialScale);
-    const previousScale = usePrevious(scale);
 
     const stateRef = React.useRef<ViewerState>(viewerState);
     const keepSpecialZoomLevelRef = React.useRef<SpecialZoomLevel | null>(
@@ -264,6 +267,43 @@ export const Inner: React.FC<{
                         nextAction: action,
                         scrollMode: action.newScrollMode,
                     };
+            case ActionType.Zoom:
+                {
+                    const pagesEle = pagesRef.current;
+                    const newScale = action.newScale;
+                    const currentPage = stateRef.current.pageIndex;
+                    if (currentPage < 0 || currentPage >= numPages) {
+                        return state;
+                    }
+
+                    const currentPageHeight = state.pageSizes[currentPage].pageHeight;
+                    const currentPageWidth = state.pageSizes[currentPage].pageWidth;
+
+                    const updateScale = pagesEle
+                        ? typeof newScale === 'string'
+                            ? calculateScale(
+                                  pagesEle,
+                                  currentPageHeight,
+                                  currentPageWidth,
+                                  newScale,
+                                  stateRef.current.viewMode,
+                                  numPages
+                              )
+                            : newScale
+                        : 1;
+
+                    keepSpecialZoomLevelRef.current = typeof newScale === 'string' ? newScale : null;
+                    if (updateScale === stateRef.current.scale) {
+                        // Prevent the case where users continue zooming
+                        // when the document reaches the minimum/maximum zooming scale
+                        return state;
+                    }
+                    return {
+                        ...state,
+                        nextAction: action,
+                        scale: updateScale,
+                    };
+                }
             default:
                 return state;
         }
@@ -273,6 +313,7 @@ export const Inner: React.FC<{
         areSizesCalculated: false,
         pageSizes: estimatedPageSizes,
         rotation: initialRotation,
+        scale: initialScale,
         scrollMode,
     });
 
@@ -326,6 +367,23 @@ export const Inner: React.FC<{
                             }
                         });
                     }
+                }
+                break;
+            case ActionType.Zoom:
+                {
+                    setRenderQueueKey((key) => key + 1);
+                    renderQueue.markNotRendered();
+                    const previousScale = stateRef.current.scale;
+                    setViewerState({
+                        ...stateRef.current,
+                        scale: state.scale,
+                    });
+                    onZoom({ doc, scale: state.scale });
+                    virtualizer.zoom(state.scale / previousScale, stateRef.current.pageIndex).then(() => {
+                        if (fullScreen.fullScreenMode === FullScreenMode.EnteredCompletely) {
+                            forceTargetZoomRef.current = -1;
+                        }
+                    });
                 }
                 break;
             default:
@@ -385,12 +443,12 @@ export const Inner: React.FC<{
                                   width: pageHeight,
                               };
                     const pageRect = {
-                        height: rect.height * scale,
-                        width: rect.width * scale,
+                        height: rect.height * state.scale,
+                        width: rect.width * state.scale,
                     };
                     return layoutBuilder.transformSize({ numPages, pageIndex, size: pageRect });
                 }),
-        [state.rotation, scale, state.pageSizes]
+        [state.rotation, state.scale, state.pageSizes]
     );
 
     const handleVisibilityChanged = React.useCallback((pageIndex: number, visibility: number) => {
@@ -610,45 +668,9 @@ export const Inner: React.FC<{
     }, []);
 
     const zoom = React.useCallback((newScale: number | SpecialZoomLevel) => {
-        const pagesEle = pagesRef.current;
-
-        const currentPage = stateRef.current.pageIndex;
-        if (currentPage < 0 || currentPage >= numPages) {
-            return;
-        }
-
-        const currentPageHeight = state.pageSizes[currentPage].pageHeight;
-        const currentPageWidth = state.pageSizes[currentPage].pageWidth;
-
-        const updateScale = pagesEle
-            ? typeof newScale === 'string'
-                ? calculateScale(
-                      pagesEle,
-                      currentPageHeight,
-                      currentPageWidth,
-                      newScale,
-                      stateRef.current.viewMode,
-                      numPages
-                  )
-                : newScale
-            : 1;
-
-        keepSpecialZoomLevelRef.current = typeof newScale === 'string' ? newScale : null;
-        if (updateScale === stateRef.current.scale) {
-            // Prevent the case where users continue zooming
-            // when the document reaches the minimum/maximum zooming scale
-            return;
-        }
-
-        setRenderQueueKey((key) => key + 1);
-        renderQueue.markNotRendered();
-
-        setScale(updateScale);
-        onZoom({ doc, scale: updateScale });
-
-        setViewerState({
-            ...stateRef.current,
-            scale: updateScale,
+        dispatch({
+            actionType: ActionType.Zoom,
+            newScale: newScale,
         });
     }, []);
 
@@ -717,16 +739,6 @@ export const Inner: React.FC<{
             plugin.onDocumentLoad && plugin.onDocumentLoad({ doc, file: currentFile });
         });
     }, [docId]);
-
-    useIsomorphicLayoutEffect(() => {
-        if (previousScale != 0 && previousScale != stateRef.current.scale) {
-            virtualizer.zoom(stateRef.current.scale / previousScale, stateRef.current.pageIndex).then(() => {
-                if (fullScreen.fullScreenMode === FullScreenMode.EnteredCompletely) {
-                    forceTargetZoomRef.current = -1;
-                }
-            });
-        }
-    }, [scale]);
 
     useIsomorphicLayoutEffect(() => {
         if (previousViewMode === stateRef.current.viewMode) {
@@ -871,7 +883,7 @@ export const Inner: React.FC<{
         fullScreen.fullScreenMode,
         pagesRotationChanged,
         state.rotation,
-        scale,
+        state.scale,
     ]);
 
     useIsomorphicLayoutEffect(() => {
@@ -941,7 +953,7 @@ export const Inner: React.FC<{
                         style={Object.assign(
                             {
                                 // From pdf-js 3.2.146, the text layer renders text items depending on the `--scale-factor` property
-                                '--scale-factor': scale,
+                                '--scale-factor': state.scale,
                             },
                             virtualizer.getContainerStyles()
                         )}
@@ -1008,7 +1020,7 @@ export const Inner: React.FC<{
                                                 renderPage={renderPage}
                                                 renderQueueKey={renderQueueKey}
                                                 rotation={state.rotation}
-                                                scale={scale}
+                                                scale={state.scale}
                                                 shouldRender={renderPageIndex === item.index}
                                                 viewMode={currentViewMode}
                                                 onExecuteNamedAction={executeNamedAction}
