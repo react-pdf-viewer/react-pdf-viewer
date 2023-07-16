@@ -61,36 +61,42 @@ const ZERO_OFFSET: Offset = {
 };
 
 enum ActionType {
-    RenderPageCompleted = 'RenderPageCompleted',
     CalculatePageSizes = 'CalculatePageSizes',
-    RenderNextPage = 'RenderNextPage',
     JumpToInitialPage = 'JumpToInitialPage',
-}
-type RenderPageCompletedAction = {
-    actionType: typeof ActionType.RenderPageCompleted;
-    pageIndex: number;
+    RenderNextPage = 'RenderNextPage',
+    RenderPageCompleted = 'RenderPageCompleted',
+    SwitchScrollMode = 'SwitchScrollMode',
 }
 type CalculatePageSizesAction = {
     actionType: typeof ActionType.CalculatePageSizes;
-    renderedPageIndex: number;
-}
-type RenderNextPageAction = {
-    actionType: typeof ActionType.RenderNextPage;
-    pageSizes: PageSize[];
     renderedPageIndex: number;
 }
 type JumpToInitialPageAction = {
     actionType: typeof ActionType.JumpToInitialPage;
     pageSizes: PageSize[];
 }
+type RenderNextPageAction = {
+    actionType: typeof ActionType.RenderNextPage;
+    pageSizes: PageSize[];
+    renderedPageIndex: number;
+}
+type RenderPageCompletedAction = {
+    actionType: typeof ActionType.RenderPageCompleted;
+    pageIndex: number;
+}
+type SwitchScrollModeAction = {
+    actionType: typeof ActionType.SwitchScrollMode;
+    newScrollMode: ScrollMode;
+}
 
-type ActionTypes = CalculatePageSizesAction | JumpToInitialPageAction | RenderNextPageAction | RenderPageCompletedAction
+type ActionTypes = CalculatePageSizesAction | JumpToInitialPageAction | RenderNextPageAction | RenderPageCompletedAction | SwitchScrollModeAction
 
 interface State {
     // Determine whether or not the sizes of all pages are calculated
     areSizesCalculated: boolean;
     nextAction?: ActionTypes;
     pageSizes: PageSize[];
+    scrollMode: ScrollMode;
 }
 
 export const Inner: React.FC<{
@@ -161,9 +167,6 @@ export const Inner: React.FC<{
     const [pagesRotationChanged, setPagesRotationChanged] = React.useState(false);
     const [pagesRotation, setPagesRotation] = React.useState(new Map<number, number>());
 
-    const [currentScrollMode, setCurrentScrollMode] = React.useState(scrollMode);
-    const previousScrollMode = usePrevious(currentScrollMode);
-
     const [currentViewMode, setCurrentViewMode] = React.useState(viewMode);
     const previousViewMode = usePrevious(currentViewMode);
 
@@ -208,6 +211,20 @@ export const Inner: React.FC<{
         switch (action.actionType) {
             case ActionType.CalculatePageSizes:
                 return state;
+            case ActionType.JumpToInitialPage:
+                return {
+                    ...state,
+                    areSizesCalculated: true,
+                    nextAction: action,
+                    pageSizes: action.pageSizes,
+                };
+            case ActionType.RenderNextPage:
+                return {
+                    ...state,
+                    areSizesCalculated: true,
+                    nextAction: action,
+                    pageSizes: action.pageSizes,
+                };
             case ActionType.RenderPageCompleted:
                 return state.areSizesCalculated
                     ? {
@@ -225,20 +242,14 @@ export const Inner: React.FC<{
                             renderedPageIndex: action.pageIndex,
                         },
                     };
-            case ActionType.RenderNextPage:
-                return {
-                    ...state,
-                    areSizesCalculated: true,
-                    nextAction: action,
-                    pageSizes: action.pageSizes,
-                };
-            case ActionType.JumpToInitialPage:
-                return {
-                    ...state,
-                    areSizesCalculated: true,
-                    nextAction: action,
-                    pageSizes: action.pageSizes,
-                };
+            case ActionType.SwitchScrollMode:
+                return state.scrollMode === action.newScrollMode
+                    ? state
+                    : {
+                        ...state,
+                        nextAction: action,
+                        scrollMode: action.newScrollMode,
+                    };
             default:
                 return state;
         }
@@ -247,9 +258,10 @@ export const Inner: React.FC<{
     const [state, dispatch] = React.useReducer(stateReducer, {
         areSizesCalculated: false,
         pageSizes: estimatedPageSizes,
+        scrollMode,
     });
 
-    React.useEffect(() => {
+    useIsomorphicLayoutEffect(() => {
         if (!state.nextAction) {
             return;
         }
@@ -263,6 +275,27 @@ export const Inner: React.FC<{
             case ActionType.RenderNextPage:
                 renderQueue.markRendered(state.nextAction.renderedPageIndex);
                 renderNextPage();
+                break;
+            case ActionType.SwitchScrollMode:
+                {
+                    setViewerState({
+                        ...stateRef.current,
+                        scrollMode: state.nextAction.newScrollMode,
+                    });
+                    // Scroll to the current page after switching the scroll mode
+                    const latestPage = stateRef.current.pageIndex;
+                    if (latestPage > -1) {
+                        virtualizer.scrollToItem(latestPage, ZERO_OFFSET).then(() => {
+                            if (fullScreen.fullScreenMode === FullScreenMode.EnteredCompletely) {
+                                // Reset the queue
+                                if (!enableSmoothScroll) {
+                                    renderQueue.markNotRendered();
+                                }
+                                forceTargetFullScreenRef.current = -1;
+                            }
+                        });
+                    }
+                }
                 break;
             default:
                 break;
@@ -338,7 +371,7 @@ export const Inner: React.FC<{
         isRtl,
         numberOfItems: numPages,
         parentRef: pagesRef,
-        scrollMode: currentScrollMode,
+        scrollMode: state.scrollMode,
         setRenderRange,
         sizes,
         viewMode: currentViewMode,
@@ -361,7 +394,9 @@ export const Inner: React.FC<{
         onResize: handlePagesResize,
     });
 
-    // The methods that a plugin can hook on.
+    /* ----- Plugin methods ----- */
+
+    // The methods that a plugin can hook on
     // These methods are registered once and there is no chance for plugins to get the latest version of the methods.
     // Hence, don't pass any dependencies or internal states if they use React hooks such as React.useCallback()
 
@@ -537,11 +572,10 @@ export const Inner: React.FC<{
     }, []);
 
     const switchScrollMode = React.useCallback((scrollMode: ScrollMode) => {
-        setViewerState({
-            ...stateRef.current,
-            scrollMode,
+        dispatch({
+            actionType: ActionType.SwitchScrollMode,
+            newScrollMode: scrollMode,
         });
-        setCurrentScrollMode(scrollMode);
     }, []);
 
     const switchViewMode = React.useCallback((viewMode: ViewMode) => {
@@ -660,22 +694,6 @@ export const Inner: React.FC<{
             plugin.onDocumentLoad && plugin.onDocumentLoad({ doc, file: currentFile });
         });
     }, [docId]);
-
-    // Scroll to the current page after switching the scroll mode
-    useIsomorphicLayoutEffect(() => {
-        const latestPage = stateRef.current.pageIndex;
-        if (latestPage > -1 && previousScrollMode !== currentScrollMode) {
-            virtualizer.scrollToItem(latestPage, ZERO_OFFSET).then(() => {
-                if (fullScreen.fullScreenMode === FullScreenMode.EnteredCompletely) {
-                    // Reset the queue
-                    if (!enableSmoothScroll) {
-                        renderQueue.markNotRendered();
-                    }
-                    forceTargetFullScreenRef.current = -1;
-                }
-            });
-        }
-    }, [currentScrollMode]);
 
     // Keep the current page after rotating the document
     useIsomorphicLayoutEffect(() => {
@@ -888,11 +906,11 @@ export const Inner: React.FC<{
                     'data-testid': 'core__inner-pages',
                     className: classNames({
                         'rpv-core__inner-pages': true,
-                        'rpv-core__inner-pages--horizontal': currentScrollMode === ScrollMode.Horizontal,
+                        'rpv-core__inner-pages--horizontal': state.scrollMode === ScrollMode.Horizontal,
                         'rpv-core__inner-pages--rtl': isRtl,
-                        'rpv-core__inner-pages--single': currentScrollMode === ScrollMode.Page,
-                        'rpv-core__inner-pages--vertical': currentScrollMode === ScrollMode.Vertical,
-                        'rpv-core__inner-pages--wrapped': currentScrollMode === ScrollMode.Wrapped,
+                        'rpv-core__inner-pages--single': state.scrollMode === ScrollMode.Page,
+                        'rpv-core__inner-pages--vertical': state.scrollMode === ScrollMode.Vertical,
+                        'rpv-core__inner-pages--wrapped': state.scrollMode === ScrollMode.Wrapped,
                     }),
                     ref: pagesRef,
                     style: {
@@ -917,7 +935,7 @@ export const Inner: React.FC<{
                             <div
                                 className={classNames({
                                     'rpv-core__inner-page-container': true,
-                                    'rpv-core__inner-page-container--single': currentScrollMode === ScrollMode.Page,
+                                    'rpv-core__inner-page-container--single': state.scrollMode === ScrollMode.Page,
                                 })}
                                 style={virtualizer.getItemContainerStyles(items[0])}
                                 key={`${items[0].index}-${currentViewMode}`}
@@ -947,7 +965,7 @@ export const Inner: React.FC<{
                                                     item.index % 2 === 1,
                                                 'rpv-core__inner-page--single':
                                                     currentViewMode === ViewMode.SinglePage &&
-                                                    currentScrollMode === ScrollMode.Page,
+                                                    state.scrollMode === ScrollMode.Page,
                                             })}
                                             role="region"
                                             key={`${item.index}-${currentViewMode}`}
@@ -957,7 +975,7 @@ export const Inner: React.FC<{
                                                 layoutBuilder.buildPageStyles({
                                                     numPages,
                                                     pageIndex: item.index,
-                                                    scrollMode: currentScrollMode,
+                                                    scrollMode: state.scrollMode,
                                                     viewMode: currentViewMode,
                                                 })
                                             )}
