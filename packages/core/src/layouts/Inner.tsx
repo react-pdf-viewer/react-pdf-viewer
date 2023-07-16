@@ -607,7 +607,12 @@ export const Inner: React.FC<{
     const jumpToPage = React.useCallback(
         (pageIndex: number) =>
             0 <= pageIndex && pageIndex < numPages
-                ? virtualizer.scrollToItem(pageIndex, ZERO_OFFSET)
+                ? new Promise<void>((resolve) => {
+                    virtualizer.scrollToItem(pageIndex, ZERO_OFFSET).then(() => {
+                        setRenderPageIndex(pageIndex);
+                        resolve();
+                    });
+                })
                 : Promise.resolve(),
         []
     );
