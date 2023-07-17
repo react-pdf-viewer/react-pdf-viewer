@@ -66,6 +66,7 @@ enum ActionType {
     RenderPageCompleted = 'RenderPageCompleted',
     Rotate = 'Rotate',
     RotatePage = 'RotatePage',
+    SetCurrentPage = 'SetCurrentPage',
     SwitchScrollMode = 'SwitchScrollMode',
     SwitchViewMode = 'SwitchViewMode',
     Zoom = 'Zoom',
@@ -97,6 +98,12 @@ type RotatePageAction = {
     finalRotation: number;
     pageIndex: number;
 };
+type SetCurrentPageAction = {
+    actionType: typeof ActionType.SetCurrentPage;
+    endPage: number;
+    pageIndex: number;
+    startPage: number;
+};
 type SwitchScrollModeAction = {
     actionType: typeof ActionType.SwitchScrollMode;
     newScrollMode: ScrollMode;
@@ -117,6 +124,7 @@ type ActionTypes =
     | RenderPageCompletedAction
     | RotateAction
     | RotatePageAction
+    | SetCurrentPageAction
     | SwitchScrollModeAction
     | SwitchViewModeAction
     | ZoomAction;
@@ -124,6 +132,7 @@ type ActionTypes =
 interface State {
     // Determine whether or not the sizes of all pages are calculated
     areSizesCalculated: boolean;
+    currentPage: number;
     nextAction?: ActionTypes;
     pagesRotation: Map<number, number>;
     pageSizes: PageSize[];
@@ -185,9 +194,6 @@ export const Inner: React.FC<{
     const isRtl = themeContext.direction === TextDirection.RightToLeft;
     const containerRef = React.useRef<HTMLDivElement>();
     const pagesRef = React.useRef<HTMLDivElement>();
-    const [currentPage, setCurrentPage] = React.useState(initialPage);
-
-    const mostRecentVisitedRef = React.useRef(null);
 
     // Manage visited destinations
     const destinationManager = useDestination({
@@ -294,6 +300,12 @@ export const Inner: React.FC<{
                     pagesRotation: updateRotations,
                 };
             }
+            case ActionType.SetCurrentPage:
+                return {
+                    ...state,
+                    currentPage: action.pageIndex,
+                    nextAction: action,
+                };
             case ActionType.SwitchScrollMode:
                 return state.scrollMode === action.newScrollMode
                     ? state
@@ -353,6 +365,7 @@ export const Inner: React.FC<{
 
     const [state, dispatch] = React.useReducer(stateReducer, {
         areSizesCalculated: false,
+        currentPage: 0,
         pagesRotation: new Map(),
         pageSizes: estimatedPageSizes,
         rotation: initialRotation,
@@ -412,6 +425,23 @@ export const Inner: React.FC<{
                     // Rerender the target page
                     renderQueue.markRendering(pageIndex);
                     setRenderPageIndex(pageIndex);
+                }
+                break;
+            case ActionType.SetCurrentPage:
+                {
+                    const previousCurrentPage = stateRef.current.pageIndex;
+                    const currentPage = state.currentPage;
+                    setViewerState({
+                        ...stateRef.current,
+                        pageIndex: currentPage,
+                    });
+                    if (currentPage !== previousCurrentPage && !virtualizer.isSmoothScrolling) {
+                        onPageChange({ currentPage, doc });
+                    }
+
+                    // The range of pages that will be rendered
+                    renderQueue.setRange(state.nextAction.startPage, state.nextAction.endPage);
+                    renderNextPage();
                 }
                 break;
             case ActionType.SwitchScrollMode:
@@ -608,11 +638,11 @@ export const Inner: React.FC<{
         (pageIndex: number) =>
             0 <= pageIndex && pageIndex < numPages
                 ? new Promise<void>((resolve) => {
-                    virtualizer.scrollToItem(pageIndex, ZERO_OFFSET).then(() => {
-                        setRenderPageIndex(pageIndex);
-                        resolve();
-                    });
-                })
+                      virtualizer.scrollToItem(pageIndex, ZERO_OFFSET).then(() => {
+                          setRenderPageIndex(pageIndex);
+                          resolve();
+                      });
+                  })
                 : Promise.resolve(),
         []
     );
@@ -821,18 +851,7 @@ export const Inner: React.FC<{
             forceTargetInitialPageRef.current = -1;
             zoom(keepSpecialZoomLevelRef.current);
         }
-    }, [currentPage]);
-
-    React.useEffect(() => {
-        const { isSmoothScrolling } = virtualizer;
-        if (isSmoothScrolling) {
-            return;
-        }
-        if (mostRecentVisitedRef.current === null || mostRecentVisitedRef.current !== currentPage) {
-            mostRecentVisitedRef.current = currentPage;
-            onPageChange({ currentPage, doc });
-        }
-    }, [currentPage, virtualizer.isSmoothScrolling]);
+    }, [state.currentPage]);
 
     React.useEffect(() => {
         if (fullScreen.fullScreenMode === FullScreenMode.Entering && stateRef.current.scrollMode === ScrollMode.Page) {
@@ -871,8 +890,8 @@ export const Inner: React.FC<{
 
     // `action` can be `FirstPage`, `PrevPage`, `NextPage`, `LastPage`, `GoBack`, `GoForward`
     const executeNamedAction = (action: string): void => {
-        const previousPage = currentPage - 1;
-        const nextPage = currentPage + 1;
+        const previousPage = state.currentPage - 1;
+        const nextPage = state.currentPage + 1;
         switch (action) {
             case 'FirstPage':
                 jumpToPage(0);
@@ -917,15 +936,12 @@ export const Inner: React.FC<{
             return;
         }
 
-        setCurrentPage(currentPage);
-        setViewerState({
-            ...stateRef.current,
+        dispatch({
+            actionType: ActionType.SetCurrentPage,
+            endPage,
             pageIndex: currentPage,
+            startPage,
         });
-
-        // The range of pages that will be rendered
-        renderQueue.setRange(startPage, endPage);
-        renderNextPage();
     }, [
         virtualizer.startPage,
         virtualizer.endPage,
@@ -1000,7 +1016,7 @@ export const Inner: React.FC<{
                 children: (
                     <div
                         // It's a reliable way for e2e tests to check if the browser scroll to a particular page
-                        data-testid={`core__inner-current-page-${currentPage}`}
+                        data-testid={`core__inner-current-page-${state.currentPage}`}
                         style={Object.assign(
                             {
                                 // From pdf-js 3.2.146, the text layer renders text items depending on the `--scale-factor` property
