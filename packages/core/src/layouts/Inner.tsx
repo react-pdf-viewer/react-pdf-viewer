@@ -493,6 +493,7 @@ export const Inner: React.FC<{
                         if (fullScreen.fullScreenMode === FullScreenMode.EnteredCompletely) {
                             forceTargetZoomRef.current = -1;
                         }
+                        renderNextPage();
                     });
                 }
                 break;
