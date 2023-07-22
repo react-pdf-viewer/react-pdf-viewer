@@ -50,7 +50,7 @@
         "jest-environment-jsdom": "^29.5.0",
         "jest-puppeteer": "^9.0.0",
         "path2d-polyfill": "^2.0.1",
-        "pdfjs-dist": "^3.7.107",
+        "pdfjs-dist": "^3.8.162",
         "prettier": "^2.8.8",
         "puppeteer": "^20.7.3",
         "react": "^18.2.0",
