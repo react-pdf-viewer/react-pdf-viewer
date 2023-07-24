@@ -1,5 +1,6 @@
-import { Button, Viewer } from '@react-pdf-viewer/core';
+import { Button, PdfJsApiContext, Viewer, type PdfJsApiProvider } from '@react-pdf-viewer/core';
 import { fireEvent, render, waitForElementToBeRemoved } from '@testing-library/react';
+import * as PdfJs from 'pdfjs-dist';
 import * as React from 'react';
 import { mockIsIntersecting } from '../../../test-utils/mockIntersectionObserver';
 import { thumbnailPlugin } from '../src';
@@ -8,6 +9,7 @@ const fs = require('fs');
 const path = require('path');
 
 const TestSwitchDocument = () => {
+    const apiProvider = PdfJs as unknown as PdfJsApiProvider;
     const secondDocument = React.useMemo(
         () => new Uint8Array(fs.readFileSync(path.resolve(__dirname, '../../../samples/sample-2.pdf'))),
         [],
@@ -19,57 +21,59 @@ const TestSwitchDocument = () => {
 
     return (
         <React.StrictMode>
-            <div
-                style={{
-                    margin: '1rem auto',
-                    width: '64rem',
-                }}
-            >
+            <PdfJsApiContext.Provider value={{ pdfJsApiProvider: apiProvider }}>
                 <div
                     style={{
-                        alignItems: 'center',
-                        display: 'flex',
-                        marginBottom: '1rem',
-                    }}
-                >
-                    <div style={{ marginRight: '0.5rem' }}>
-                        <Button testId="load-doc-1" onClick={() => setFileUrl(global['__OPEN_PARAMS_PDF__'])}>
-                            Load document 1
-                        </Button>
-                    </div>
-                    <Button testId="load-doc-2" onClick={() => setFileUrl(secondDocument)}>
-                        Load document 2
-                    </Button>
-                </div>
-                <div
-                    style={{
-                        border: '1px solid rgba(0, 0, 0, 0.1)',
-                        display: 'flex',
-                        height: '50rem',
-                        width: '50rem',
+                        margin: '1rem auto',
+                        width: '64rem',
                     }}
                 >
                     <div
                         style={{
                             alignItems: 'center',
-                            borderRight: '1px solid rgba(0, 0, 0, 0.1)',
                             display: 'flex',
-                            padding: '0.25rem',
-                            width: '20%',
+                            marginBottom: '1rem',
                         }}
                     >
-                        <Thumbnails />
+                        <div style={{ marginRight: '0.5rem' }}>
+                            <Button testId="load-doc-1" onClick={() => setFileUrl(global['__OPEN_PARAMS_PDF__'])}>
+                                Load document 1
+                            </Button>
+                        </div>
+                        <Button testId="load-doc-2" onClick={() => setFileUrl(secondDocument)}>
+                            Load document 2
+                        </Button>
                     </div>
                     <div
                         style={{
-                            flex: 1,
-                            overflow: 'hidden',
+                            border: '1px solid rgba(0, 0, 0, 0.1)',
+                            display: 'flex',
+                            height: '50rem',
+                            width: '50rem',
                         }}
                     >
-                        <Viewer fileUrl={fileUrl} plugins={[thumbnailPluginInstance]} />
+                        <div
+                            style={{
+                                alignItems: 'center',
+                                borderRight: '1px solid rgba(0, 0, 0, 0.1)',
+                                display: 'flex',
+                                padding: '0.25rem',
+                                width: '20%',
+                            }}
+                        >
+                            <Thumbnails />
+                        </div>
+                        <div
+                            style={{
+                                flex: 1,
+                                overflow: 'hidden',
+                            }}
+                        >
+                            <Viewer fileUrl={fileUrl} plugins={[thumbnailPluginInstance]} />
+                        </div>
                     </div>
                 </div>
-            </div>
+            </PdfJsApiContext.Provider>
         </React.StrictMode>
     );
 };

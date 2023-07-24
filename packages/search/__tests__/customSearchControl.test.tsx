@@ -1,5 +1,6 @@
-import { Viewer } from '@react-pdf-viewer/core';
+import { PdfJsApiContext, Viewer, type PdfJsApiProvider } from '@react-pdf-viewer/core';
 import { fireEvent, render, waitForElementToBeRemoved } from '@testing-library/react';
+import * as PdfJs from 'pdfjs-dist';
 import * as React from 'react';
 import { mockIsIntersecting } from '../../../test-utils/mockIntersectionObserver';
 import { mockResize } from '../../../test-utils/mockResizeObserver';
@@ -8,11 +9,12 @@ import { searchPlugin } from '../src';
 const TestCustomSearchControl: React.FC<{
     fileUrl: Uint8Array;
 }> = ({ fileUrl }) => {
+    const apiProvider = PdfJs as unknown as PdfJsApiProvider;
     const searchPluginInstance = searchPlugin();
     const { Search } = searchPluginInstance;
 
     return (
-        <div>
+        <PdfJsApiContext.Provider value={{ pdfJsApiProvider: apiProvider }}>
             <div>
                 <Search>
                     {(renderSearchProps) => (
@@ -41,7 +43,7 @@ const TestCustomSearchControl: React.FC<{
             >
                 <Viewer fileUrl={fileUrl} plugins={[searchPluginInstance]} />
             </div>
-        </div>
+        </PdfJsApiContext.Provider>
     );
 };
 

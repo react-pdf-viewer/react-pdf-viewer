@@ -1,5 +1,6 @@
-import { classNames, Viewer } from '@react-pdf-viewer/core';
+import { classNames, PdfJsApiContext, Viewer, type PdfJsApiProvider } from '@react-pdf-viewer/core';
 import { fireEvent, render, screen, waitForElementToBeRemoved } from '@testing-library/react';
+import * as PdfJs from 'pdfjs-dist';
 import * as React from 'react';
 import { mockIsIntersecting } from '../../../test-utils/mockIntersectionObserver';
 import { mockResize } from '../../../test-utils/mockResizeObserver';
@@ -8,6 +9,7 @@ import { RenderThumbnailItemProps, thumbnailPlugin } from '../src';
 const TestRenderThumbnailItem: React.FC<{
     fileUrl: Uint8Array;
 }> = ({ fileUrl }) => {
+    const apiProvider = PdfJs as unknown as PdfJsApiProvider;
     const renderThumbnailItem = (props: RenderThumbnailItemProps) => (
         <div
             key={props.pageIndex}
@@ -33,27 +35,29 @@ const TestRenderThumbnailItem: React.FC<{
     const { Thumbnails } = thumbnailPluginInstance;
 
     return (
-        <div
-            style={{
-                border: '1px solid rgba(0, 0, 0, 0.3)',
-                display: 'flex',
-                height: '50rem',
-                width: '50rem',
-            }}
-        >
+        <PdfJsApiContext.Provider value={{ pdfJsApiProvider: apiProvider }}>
             <div
                 style={{
-                    borderRight: '1px solid rgba(0, 0, 0, 0.3)',
-                    overflow: 'auto',
-                    width: '30%',
+                    border: '1px solid rgba(0, 0, 0, 0.3)',
+                    display: 'flex',
+                    height: '50rem',
+                    width: '50rem',
                 }}
             >
-                <Thumbnails renderThumbnailItem={renderThumbnailItem} />
+                <div
+                    style={{
+                        borderRight: '1px solid rgba(0, 0, 0, 0.3)',
+                        overflow: 'auto',
+                        width: '30%',
+                    }}
+                >
+                    <Thumbnails renderThumbnailItem={renderThumbnailItem} />
+                </div>
+                <div style={{ flex: 1 }}>
+                    <Viewer fileUrl={fileUrl} plugins={[thumbnailPluginInstance]} />
+                </div>
             </div>
-            <div style={{ flex: 1 }}>
-                <Viewer fileUrl={fileUrl} plugins={[thumbnailPluginInstance]} />
-            </div>
-        </div>
+        </PdfJsApiContext.Provider>
     );
 };
 

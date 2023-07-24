@@ -1,15 +1,25 @@
-import { MinimalButton, Position, RotateDirection, Tooltip, Viewer } from '@react-pdf-viewer/core';
+import {
+    MinimalButton,
+    PdfJsApiContext,
+    Position,
+    RotateDirection,
+    Tooltip,
+    Viewer,
+    type PdfJsApiProvider,
+} from '@react-pdf-viewer/core';
 import { RotateBackwardIcon, RotateForwardIcon } from '@react-pdf-viewer/rotate';
 import type { RenderThumbnailItemProps } from '@react-pdf-viewer/thumbnail';
 import { fireEvent, render, waitForElementToBeRemoved } from '@testing-library/react';
+import * as PdfJs from 'pdfjs-dist';
 import * as React from 'react';
 import { mockIsIntersecting } from '../../../test-utils/mockIntersectionObserver';
 import { mockResize } from '../../../test-utils/mockResizeObserver';
-import { defaultLayoutPlugin, ThumbnailIcon } from '../src';
+import { ThumbnailIcon, defaultLayoutPlugin } from '../src';
 
 const TestRotatePage: React.FC<{
     fileUrl: Uint8Array;
 }> = ({ fileUrl }) => {
+    const apiProvider = PdfJs as unknown as PdfJsApiProvider;
     const renderThumbnailItem = (props: RenderThumbnailItemProps) => (
         <div
             key={props.key}
@@ -79,15 +89,17 @@ const TestRotatePage: React.FC<{
     const { Thumbnails } = thumbnailPluginInstance;
 
     return (
-        <div
-            style={{
-                margin: '1rem auto',
-                height: '50rem',
-                width: '64rem',
-            }}
-        >
-            <Viewer defaultScale={0.5} fileUrl={fileUrl} plugins={[defaultLayoutPluginInstance]} />
-        </div>
+        <PdfJsApiContext.Provider value={{ pdfJsApiProvider: apiProvider }}>
+            <div
+                style={{
+                    margin: '1rem auto',
+                    height: '50rem',
+                    width: '64rem',
+                }}
+            >
+                <Viewer defaultScale={0.5} fileUrl={fileUrl} plugins={[defaultLayoutPluginInstance]} />
+            </div>
+        </PdfJsApiContext.Provider>
     );
 };
 

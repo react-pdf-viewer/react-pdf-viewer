@@ -1,5 +1,6 @@
-import { TextDirection, Viewer } from '@react-pdf-viewer/core';
+import { PdfJsApiContext, TextDirection, Viewer, type PdfJsApiProvider } from '@react-pdf-viewer/core';
 import { render } from '@testing-library/react';
+import * as PdfJs from 'pdfjs-dist';
 import * as React from 'react';
 import { mockIsIntersecting } from '../../../test-utils/mockIntersectionObserver';
 import { defaultLayoutPlugin } from '../src';
@@ -7,18 +8,21 @@ import { defaultLayoutPlugin } from '../src';
 const TestRtl: React.FC<{
     fileUrl: Uint8Array;
 }> = ({ fileUrl }) => {
+    const apiProvider = PdfJs as unknown as PdfJsApiProvider;
     const defaultLayoutPluginInstance = defaultLayoutPlugin();
 
     return (
-        <div style={{ height: '50rem', width: '50rem' }}>
-            <Viewer
-                fileUrl={fileUrl}
-                theme={{
-                    direction: TextDirection.RightToLeft,
-                }}
-                plugins={[defaultLayoutPluginInstance]}
-            />
-        </div>
+        <PdfJsApiContext.Provider value={{ pdfJsApiProvider: apiProvider }}>
+            <div style={{ height: '50rem', width: '50rem' }}>
+                <Viewer
+                    fileUrl={fileUrl}
+                    theme={{
+                        direction: TextDirection.RightToLeft,
+                    }}
+                    plugins={[defaultLayoutPluginInstance]}
+                />
+            </div>
+        </PdfJsApiContext.Provider>
     );
 };
 

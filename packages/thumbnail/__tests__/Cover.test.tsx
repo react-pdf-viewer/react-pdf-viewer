@@ -1,6 +1,7 @@
 import type { Plugin, RenderViewer } from '@react-pdf-viewer/core';
-import { Button, Viewer } from '@react-pdf-viewer/core';
+import { Button, PdfJsApiContext, Viewer, type PdfJsApiProvider } from '@react-pdf-viewer/core';
 import { fireEvent, render, waitForElementToBeRemoved } from '@testing-library/react';
+import * as PdfJs from 'pdfjs-dist';
 import * as React from 'react';
 import { mockIsIntersecting } from '../../../test-utils/mockIntersectionObserver';
 import { thumbnailPlugin } from '../src';
@@ -34,13 +35,18 @@ const ThumbnailCover: React.FC<{
     fileUrl: Uint8Array;
     pageIndex: number;
 }> = ({ fileUrl, pageIndex }) => {
+    const apiProvider = PdfJs as unknown as PdfJsApiProvider;
     const thumbnailPluginInstance = thumbnailPlugin();
     const { Cover } = thumbnailPluginInstance;
     const pageThumbnailPluginInstance = pageThumbnailPlugin({
         PageThumbnail: <Cover getPageIndex={() => pageIndex} />,
     });
 
-    return <Viewer fileUrl={fileUrl} plugins={[pageThumbnailPluginInstance, thumbnailPluginInstance]} />;
+    return (
+        <PdfJsApiContext.Provider value={{ pdfJsApiProvider: apiProvider }}>
+            <Viewer fileUrl={fileUrl} plugins={[pageThumbnailPluginInstance, thumbnailPluginInstance]} />
+        </PdfJsApiContext.Provider>
+    );
 };
 
 const TestCover: React.FC<{

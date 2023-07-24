@@ -1,5 +1,6 @@
-import { Viewer } from '@react-pdf-viewer/core';
+import { PdfJsApiContext, Viewer, type PdfJsApiProvider } from '@react-pdf-viewer/core';
 import { fireEvent, render, waitForElementToBeRemoved } from '@testing-library/react';
+import * as PdfJs from 'pdfjs-dist';
 import * as React from 'react';
 import { mockIsIntersecting } from '../../../test-utils/mockIntersectionObserver';
 import { defaultLayoutPlugin } from '../src';
@@ -7,11 +8,12 @@ import { defaultLayoutPlugin } from '../src';
 const TestOnSwitchTheme: React.FC<{
     fileUrl: Uint8Array;
 }> = ({ fileUrl }) => {
+    const apiProvider = PdfJs as unknown as PdfJsApiProvider;
     const [theme, setTheme] = React.useState('');
     const defaultLayoutPluginInstance = defaultLayoutPlugin();
 
     return (
-        <div>
+        <PdfJsApiContext.Provider value={{ pdfJsApiProvider: apiProvider }}>
             <div>
                 Current theme: <span data-testid="current-theme">{theme}</span>
             </div>
@@ -23,7 +25,7 @@ const TestOnSwitchTheme: React.FC<{
             >
                 <Viewer fileUrl={fileUrl} onSwitchTheme={setTheme} plugins={[defaultLayoutPluginInstance]} />
             </div>
-        </div>
+        </PdfJsApiContext.Provider>
     );
 };
 

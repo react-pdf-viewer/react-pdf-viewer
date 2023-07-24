@@ -1,13 +1,17 @@
 import { fireEvent, render } from '@testing-library/react';
+import * as PdfJs from 'pdfjs-dist';
 import * as React from 'react';
 import { mockAllIsIntersecting } from '../../../test-utils/mockIntersectionObserver';
-import { Viewer } from '../src';
+import { PdfJsApiContext, Viewer, type PdfJsApiProvider } from '../src';
 
 test('fileUrl as a prop', async () => {
+    const apiProvider = PdfJs as unknown as PdfJsApiProvider;
     const App = ({ fileUrl }) => (
-        <div style={{ height: '720px' }}>
-            <Viewer fileUrl={fileUrl} />
-        </div>
+        <PdfJsApiContext.Provider value={{ pdfJsApiProvider: apiProvider }}>
+            <div style={{ height: '720px' }}>
+                <Viewer fileUrl={fileUrl} />
+            </div>
+        </PdfJsApiContext.Provider>
     );
     const { findByText, rerender } = render(<App fileUrl={global['__SAMPLE_PDF__']} />);
     mockAllIsIntersecting(true);
@@ -21,10 +25,11 @@ test('fileUrl as a prop', async () => {
 });
 
 test('fileUrl as a state', async () => {
+    const apiProvider = PdfJs as unknown as PdfJsApiProvider;
     const App = () => {
         const [fileUrl, setFileUrl] = React.useState(global['__HELLO_PDF__']);
         return (
-            <>
+            <PdfJsApiContext.Provider value={{ pdfJsApiProvider: apiProvider }}>
                 <div style={{ marginRight: '8px' }}>
                     <button onClick={() => setFileUrl(global['__SAMPLE_PDF__'])}>Load document 1</button>
                     <button onClick={() => setFileUrl(global['__MULTIPLE_PAGES_PDF__'])}>Load document 2</button>
@@ -32,7 +37,7 @@ test('fileUrl as a state', async () => {
                 <div style={{ height: '720px' }}>
                     <Viewer fileUrl={fileUrl} />
                 </div>
-            </>
+            </PdfJsApiContext.Provider>
         );
     };
     const { getByText, findByText } = render(<App />);

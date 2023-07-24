@@ -1,12 +1,14 @@
 import { render, waitForElementToBeRemoved } from '@testing-library/react';
+import * as PdfJs from 'pdfjs-dist';
 import * as React from 'react';
 import { mockIsIntersecting } from '../../../test-utils/mockIntersectionObserver';
 import type { DocumentLoadEvent } from '../src';
-import { Viewer } from '../src';
+import { PdfJsApiContext, Viewer, type PdfJsApiProvider } from '../src';
 
 const TestOnDocumentLoad: React.FC<{
     fileUrl: Uint8Array;
 }> = ({ fileUrl }) => {
+    const apiProvider = PdfJs as unknown as PdfJsApiProvider;
     const [numPages, setNumPages] = React.useState(0);
     const [fileLength, setFileLength] = React.useState(0);
 
@@ -16,13 +18,13 @@ const TestOnDocumentLoad: React.FC<{
     };
 
     return (
-        <>
+        <PdfJsApiContext.Provider value={{ pdfJsApiProvider: apiProvider }}>
             <div data-testid="file-length">{fileLength}</div>
             <div data-testid="num-pages">{numPages}</div>
             <div style={{ height: '50rem', width: '50rem' }}>
                 <Viewer fileUrl={fileUrl} onDocumentLoad={handleDocumentLoad} />
             </div>
-        </>
+        </PdfJsApiContext.Provider>
     );
 };
 

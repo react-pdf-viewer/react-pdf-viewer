@@ -1,17 +1,25 @@
 import { defaultLayoutPlugin } from '@react-pdf-viewer/default-layout';
 import { fireEvent, render, waitFor, waitForElementToBeRemoved } from '@testing-library/react';
+import * as PdfJs from 'pdfjs-dist';
 import * as React from 'react';
 import { mockIsIntersecting } from '../../../test-utils/mockIntersectionObserver';
 import { mockResize } from '../../../test-utils/mockResizeObserver';
-import { SpecialZoomLevel, Viewer } from '../src';
+import { PdfJsApiContext, SpecialZoomLevel, Viewer, type PdfJsApiProvider } from '../src';
 
 const TestDefaultScaleSpecialZoomLevel: React.FC<{
     fileUrl: Uint8Array;
 }> = ({ fileUrl }) => {
+    const apiProvider = PdfJs as unknown as PdfJsApiProvider;
     const defaultLayoutPluginInstance = defaultLayoutPlugin();
 
     return (
-        <Viewer fileUrl={fileUrl} defaultScale={SpecialZoomLevel.PageWidth} plugins={[defaultLayoutPluginInstance]} />
+        <PdfJsApiContext.Provider value={{ pdfJsApiProvider: apiProvider }}>
+            <Viewer
+                fileUrl={fileUrl}
+                defaultScale={SpecialZoomLevel.PageWidth}
+                plugins={[defaultLayoutPluginInstance]}
+            />
+        </PdfJsApiContext.Provider>
     );
 };
 

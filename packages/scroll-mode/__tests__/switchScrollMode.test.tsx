@@ -1,5 +1,6 @@
-import { PrimaryButton, ScrollMode, Viewer } from '@react-pdf-viewer/core';
+import { PdfJsApiContext, PrimaryButton, ScrollMode, Viewer, type PdfJsApiProvider } from '@react-pdf-viewer/core';
 import { fireEvent, render, screen, waitForElementToBeRemoved } from '@testing-library/react';
+import * as PdfJs from 'pdfjs-dist';
 import * as React from 'react';
 import { mockIsIntersecting } from '../../../test-utils/mockIntersectionObserver';
 import { scrollModePlugin } from '../src';
@@ -7,11 +8,12 @@ import { scrollModePlugin } from '../src';
 const TestSwitchScrollMode: React.FC<{
     fileUrl: Uint8Array;
 }> = ({ fileUrl }) => {
+    const apiProvider = PdfJs as unknown as PdfJsApiProvider;
     const scrollModePluginInstance = scrollModePlugin();
     const { switchScrollMode } = scrollModePluginInstance;
 
     return (
-        <>
+        <PdfJsApiContext.Provider value={{ pdfJsApiProvider: apiProvider }}>
             <div
                 style={{
                     marginBottom: '1rem',
@@ -30,7 +32,7 @@ const TestSwitchScrollMode: React.FC<{
             >
                 <Viewer fileUrl={fileUrl} defaultScale={0.5} plugins={[scrollModePluginInstance]} />
             </div>
-        </>
+        </PdfJsApiContext.Provider>
     );
 };
 
