@@ -64,13 +64,16 @@ export const TextLayer: React.FC<{
         });
         page.getTextContent().then((textContent) => {
             empty();
+            // Despite the fact that the `--scale-factor` is already set at the root element,
+            // pdf-js still complains about setting it either on the element or higher up in the DOM
+            containerEle.style.setProperty('--scale-factor', `${scale}`);
             renderTask.current = pdfJsApiProvider.renderTextLayer({
                 container: containerEle,
                 // From pdf-js 3.2.146, the `textContent` parameter is deprecated
                 // and will be soon replaced with the `textContentSource` parameter
-                textContent: textContent as any,
-                textContentSource: textContent as any,
-                viewport: viewport as any,
+                textContent: textContent,
+                textContentSource: textContent,
+                viewport: viewport,
             });
             renderTask.current.promise.then(
                 () => {

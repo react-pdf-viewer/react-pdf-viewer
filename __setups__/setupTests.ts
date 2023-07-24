@@ -1,6 +1,10 @@
 import '@testing-library/jest-dom/extend-expect';
 import { SimpleMockResizeObserver } from './SimpleMockResizeObserver';
 
+// Polyfill ReadableStream
+import { ReadableStream } from 'web-streams-polyfill/ponyfill';
+global.ReadableStream = ReadableStream;
+
 global.ResizeObserver = SimpleMockResizeObserver;
 
 // Mock `clientWidth`, `clientHeight`
