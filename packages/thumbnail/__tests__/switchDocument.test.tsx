@@ -10,7 +10,7 @@ const path = require('path');
 const TestSwitchDocument = () => {
     const secondDocument = React.useMemo(
         () => new Uint8Array(fs.readFileSync(path.resolve(__dirname, '../../../samples/sample-2.pdf'))),
-        []
+        [],
     );
 
     const [fileUrl, setFileUrl] = React.useState(global['__OPEN_PARAMS_PDF__']);
@@ -111,7 +111,7 @@ test('Thumbnails are updated when switching between documents', async () => {
 
     let src = await getSourceOfFirstThumbnail();
     expect(src?.slice(-100)).toEqual(
-        'g5q5u9+1tNDZs+y0tLZiUW7cJm7ZQhRFYcdbf7xnA1vITNN8XeAtW4h0f8mDumBkEMHIIIL5Hw+y6qIMqKXCAAAAAElFTkSuQmCC'
+        'g5q5u9+1tNDZs+y0tLZiUW7cJm7ZQhRFYcdbf7xnA1vITNN8XeAtW4h0f8mDumBkEMHIIIL5Hw+y6qIMqKXCAAAAAElFTkSuQmCC',
     );
     expect(src?.length).toEqual(3662);
 
@@ -132,7 +132,7 @@ test('Thumbnails are updated when switching between documents', async () => {
 
     src = await getSourceOfFirstThumbnail();
     expect(src?.slice(-100)).toEqual(
-        '5PuuE+APbyzyd7/y/Lt6z597+Cw/e+H+bfd9hrzH6L3nB/9TTu8z5D1G7zPkPUbvM+Q9Rv8f7w4oIdTXLq4AAAAASUVORK5CYII='
+        '5PuuE+APbyzyd7/y/Lt6z597+Cw/e+H+bfd9hrzH6L3nB/9TTu8z5D1G7zPkPUbvM+Q9Rv8f7w4oIdTXLq4AAAAASUVORK5CYII=',
     );
     expect(src?.length).toEqual(19974);
 });

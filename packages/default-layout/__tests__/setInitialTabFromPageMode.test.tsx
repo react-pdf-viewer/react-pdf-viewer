@@ -20,7 +20,7 @@ const TestSetInitialTabFromPageMode: React.FC<{
 
 test('Set the initial tab from document page mode', async () => {
     const { findByLabelText, findByTestId, getByTestId } = render(
-        <TestSetInitialTabFromPageMode fileUrl={global['__OPEN_PARAMS_PDF__']} />
+        <TestSetInitialTabFromPageMode fileUrl={global['__OPEN_PARAMS_PDF__']} />,
     );
 
     const viewerEle = getByTestId('core__viewer');

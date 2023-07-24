@@ -81,7 +81,7 @@ export const ThumbnailList: React.FC<{
             Array(numPages)
                 .fill(0)
                 .map((_, pageIndex) => pageIndex),
-        [docId]
+        [docId],
     );
 
     const chunks = React.useMemo(() => {
@@ -200,7 +200,7 @@ export const ThumbnailList: React.FC<{
                 renderNextThumbnail();
             }
         },
-        [docId]
+        [docId],
     );
 
     const handleVisibilityChanged = React.useCallback(
@@ -211,7 +211,7 @@ export const ThumbnailList: React.FC<{
                   renderQueue.setOutOfRange(pageIndex);
             renderNextThumbnail();
         },
-        [docId]
+        [docId],
     );
 
     const renderNextThumbnail = React.useCallback(() => {

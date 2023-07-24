@@ -112,7 +112,7 @@ const TestOnPageChangeDocumentLoad: React.FC<{
 
 test('onPageChange() should fire after onDocumentLoad() with Strict mode', async () => {
     const { findByTestId, getByTestId } = render(
-        <TestOnPageChangeDocumentLoad fileUrl={global['__OPEN_PARAMS_PDF__']} />
+        <TestOnPageChangeDocumentLoad fileUrl={global['__OPEN_PARAMS_PDF__']} />,
     );
 
     const viewerEle = getByTestId('core__viewer');
@@ -176,6 +176,6 @@ test('onPageChange() should fire after onDocumentLoad() with Strict mode', async
 
     log = await findByTestId('log');
     await waitFor(() =>
-        expect(log.textContent).toEqual('___onDocumentLoad___0___onPageChange___onDocumentLoad___2___onPageChange')
+        expect(log.textContent).toEqual('___onDocumentLoad___0___onPageChange___onDocumentLoad___2___onPageChange'),
     );
 });

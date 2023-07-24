@@ -77,7 +77,7 @@ export const DocumentLoader: React.FC<{
                       cMapUrl: characterMap.url,
                       cMapPacked: characterMap.isCompressed,
                   }
-                : {}
+                : {},
         );
         const transformParams = transformGetDocumentParams ? transformGetDocumentParams(params) : params;
 
@@ -118,8 +118,8 @@ export const DocumentLoader: React.FC<{
                     new FailureState({
                         message: err.message || 'Cannot load document',
                         name: err.name,
-                    })
-                )
+                    }),
+                ),
         );
 
         return (): void => {

@@ -43,16 +43,16 @@ export const printPlugin = (props?: PrintPluginProps): PrintPlugin => {
                             .fill(0)
                             .map((_, i) => i),
                 },
-                props
+                props,
             ),
-        []
+        [],
     );
     const store = React.useMemo(
         () =>
             createStore<StoreProps>({
                 printStatus: PrintStatus.Inactive,
             }),
-        []
+        [],
     );
 
     const print = () => {

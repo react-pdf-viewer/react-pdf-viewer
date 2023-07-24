@@ -54,7 +54,7 @@ export const useRenderQueue = ({ doc }: { doc: PdfJs.PdfDocument }): UseRenderQu
                     renderStatus: PageRenderStatus.NotRenderedYet,
                     visibility: OUT_OF_RANGE_VISIBILITY,
                 })),
-        [docId]
+        [docId],
     );
 
     const latestRef = React.useRef<RenderQueue>({

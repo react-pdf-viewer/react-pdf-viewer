@@ -48,7 +48,7 @@ import type { TransformToolbarSlot } from './types/TransformToolbarSlot';
 
 export interface ToolbarPlugin extends Plugin {
     renderDefaultToolbar: (
-        transformToolbarSlot: TransformToolbarSlot
+        transformToolbarSlot: TransformToolbarSlot,
     ) => (defaultToolbarSlot: ToolbarSlot) => React.ReactElement;
     Toolbar: (props: ToolbarProps) => React.ReactElement;
     // Plugins instance
@@ -211,7 +211,7 @@ export const toolbarPlugin = (props?: ToolbarPluginProps): ToolbarPlugin => {
                         <React.Fragment key={idx}>{plugin.renderPageLayer(renderProps)}</React.Fragment>
                     ) : (
                         <React.Fragment key={idx}></React.Fragment>
-                    )
+                    ),
                 )}
             </React.Fragment>
         ),

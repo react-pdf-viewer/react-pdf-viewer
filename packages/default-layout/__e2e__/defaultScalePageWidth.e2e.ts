@@ -13,6 +13,6 @@ test('Test the defaultScale to fit page width', async () => {
     await page.waitForSelector('[data-testid="core__text-layer-1"]');
 
     await page.waitForFunction(
-        () => 'document.querySelector("[data-testid=zoom__popover-target-scale]").textContent === "162%"'
+        () => 'document.querySelector("[data-testid=zoom__popover-target-scale]").textContent === "162%"',
     );
 });

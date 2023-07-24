@@ -17,7 +17,7 @@ export const usePosition = (
     targetRef: React.RefObject<HTMLElement>,
     anchorRef: React.RefObject<HTMLElement>,
     position: Position,
-    offset: Offset
+    offset: Offset,
 ): void => {
     useIsomorphicLayoutEffect(() => {
         const targetEle = targetRef.current;

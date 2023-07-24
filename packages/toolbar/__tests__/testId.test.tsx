@@ -32,7 +32,7 @@ const TestTestIdAttribute: React.FC<{
 
 test('Test data-testid attribute', async () => {
     const { findByLabelText, findByTestId, getByTestId } = render(
-        <TestTestIdAttribute fileUrl={global['__SAMPLE_PDF__']} />
+        <TestTestIdAttribute fileUrl={global['__SAMPLE_PDF__']} />,
     );
 
     const viewerEle = getByTestId('core__viewer');

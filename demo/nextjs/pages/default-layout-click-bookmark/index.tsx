@@ -29,7 +29,7 @@ const IndexPage = () => {
                     renderProps.onClickTitle();
                     toggleBookmarkTab();
                 })}
-            </>
+            </>,
         );
 
     const defaultLayoutPluginInstance = defaultLayoutPlugin({

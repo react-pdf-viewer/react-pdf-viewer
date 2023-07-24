@@ -19,7 +19,7 @@ export const calculateScale = (
     pageWidth: number,
     scale: SpecialZoomLevel,
     viewMode: ViewMode,
-    numPages: number
+    numPages: number,
 ): number => {
     let w = pageWidth;
     switch (true) {
@@ -39,7 +39,7 @@ export const calculateScale = (
         case SpecialZoomLevel.PageFit:
             return Math.min(
                 (container.clientWidth - SCROLL_BAR_WIDTH) / w,
-                (container.clientHeight - 2 * PAGE_PADDING) / pageHeight
+                (container.clientHeight - 2 * PAGE_PADDING) / pageHeight,
             );
 
         case SpecialZoomLevel.PageWidth:

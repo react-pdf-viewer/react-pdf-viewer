@@ -23,7 +23,7 @@ test('Dual page with cover viewmode (document has different page dimensions)', a
 
     // Check the current page
     await page.waitForFunction(
-        () => 'document.querySelector("[data-testid=page-navigation__current-page-input]").value === "1"'
+        () => 'document.querySelector("[data-testid=page-navigation__current-page-input]").value === "1"',
     );
 
     // Jump to the 14th page
@@ -39,7 +39,7 @@ test('Dual page with cover viewmode (document has different page dimensions)', a
     await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 2772');
 
     await page.waitForFunction(
-        () => 'document.querySelector("[data-testid=page-navigation__current-page-input]").value === "14"'
+        () => 'document.querySelector("[data-testid=page-navigation__current-page-input]").value === "14"',
     );
 
     // Jump to the 43rd page
@@ -52,7 +52,7 @@ test('Dual page with cover viewmode (document has different page dimensions)', a
     await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 8316');
 
     await page.waitForFunction(
-        () => 'document.querySelector("[data-testid=page-navigation__current-page-input]").value === "42"'
+        () => 'document.querySelector("[data-testid=page-navigation__current-page-input]").value === "42"',
     );
 
     // Jump to the last page
@@ -65,6 +65,6 @@ test('Dual page with cover viewmode (document has different page dimensions)', a
     await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 12238');
 
     await page.waitForFunction(
-        () => 'document.querySelector("[data-testid=page-navigation__current-page-input]").value === "68"'
+        () => 'document.querySelector("[data-testid=page-navigation__current-page-input]").value === "68"',
     );
 });

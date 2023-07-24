@@ -31,7 +31,7 @@ const TestPageMargin: React.FC<{
 
 test('Page margin', async () => {
     const { findByLabelText, findByTestId, getByTestId } = render(
-        <TestPageMargin fileUrl={global['__OPEN_PARAMS_PDF__']} />
+        <TestPageMargin fileUrl={global['__OPEN_PARAMS_PDF__']} />,
     );
 
     const viewerEle = getByTestId('core__viewer');

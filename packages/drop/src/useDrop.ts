@@ -10,7 +10,7 @@ import * as React from 'react';
 
 export const useDrop = (
     ref: React.RefObject<HTMLDivElement>,
-    onDrop: (files: FileList) => void
+    onDrop: (files: FileList) => void,
 ): {
     isDragging: boolean;
 } => {

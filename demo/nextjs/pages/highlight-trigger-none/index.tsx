@@ -45,7 +45,7 @@ const IndexPage = () => {
                                 background: 'yellow',
                                 opacity: 0.4,
                             },
-                            props.getCssProperties(area, props.rotation)
+                            props.getCssProperties(area, props.rotation),
                         )}
                     />
                 ))}

@@ -207,7 +207,7 @@ export const Inner: React.FC<{
 
     const stateRef = React.useRef<ViewerState>(viewerState);
     const keepSpecialZoomLevelRef = React.useRef<SpecialZoomLevel | null>(
-        typeof defaultScale === 'string' ? defaultScale : null
+        typeof defaultScale === 'string' ? defaultScale : null,
     );
 
     // Force to scroll to the target page in the full-screen mode
@@ -341,7 +341,7 @@ export const Inner: React.FC<{
                               currentPageWidth,
                               newScale,
                               stateRef.current.viewMode,
-                              numPages
+                              numPages,
                           )
                         : newScale
                     : 1;
@@ -516,7 +516,7 @@ export const Inner: React.FC<{
                                 rotation: viewport.rotation,
                             });
                         });
-                    })
+                    }),
             );
         Promise.all(queryPageSizes).then((pageSizes) => {
             if (initialPage === 0) {
@@ -559,7 +559,7 @@ export const Inner: React.FC<{
                     };
                     return layoutBuilder.transformSize({ numPages, pageIndex, size: pageRect });
                 }),
-        [state.rotation, state.scale, state.pageSizes]
+        [state.rotation, state.scale, state.pageSizes],
     );
 
     const handleVisibilityChanged = React.useCallback((pageIndex: number, visibility: number) => {
@@ -632,7 +632,7 @@ export const Inner: React.FC<{
 
     const jumpToNextPage = React.useCallback(
         () => virtualizer.scrollToNextItem(stateRef.current.pageIndex, ZERO_OFFSET),
-        []
+        [],
     );
 
     const jumpToPage = React.useCallback(
@@ -645,12 +645,12 @@ export const Inner: React.FC<{
                       });
                   })
                 : Promise.resolve(),
-        []
+        [],
     );
 
     const jumpToPreviousPage = React.useCallback(
         () => virtualizer.scrollToPreviousItem(stateRef.current.pageIndex, ZERO_OFFSET),
-        []
+        [],
     );
 
     const openFile = React.useCallback(
@@ -669,7 +669,7 @@ export const Inner: React.FC<{
                 onOpenFile(file.name, data);
             });
         },
-        [onOpenFile]
+        [onOpenFile],
     );
 
     const rotate = React.useCallback((direction: RotateDirection) => {
@@ -766,7 +766,7 @@ export const Inner: React.FC<{
                             state.pageSizes[pageIndex].pageWidth,
                             SpecialZoomLevel.PageWidth,
                             viewMode,
-                            numPages
+                            numPages,
                         );
                         top = (viewport.height - bottom) * updateScale;
                         left = left * updateScale;
@@ -878,7 +878,7 @@ export const Inner: React.FC<{
                 pageIndex,
             });
         },
-        [renderQueueKey]
+        [renderQueueKey],
     );
 
     const renderNextPage = () => {
@@ -1023,7 +1023,7 @@ export const Inner: React.FC<{
                                 // From pdf-js 3.2.146, the text layer renders text items depending on the `--scale-factor` property
                                 '--scale-factor': state.scale,
                             },
-                            virtualizer.getContainerStyles()
+                            virtualizer.getContainerStyles(),
                         )}
                     >
                         {chunks.map((items) => (
@@ -1072,7 +1072,7 @@ export const Inner: React.FC<{
                                                     pageIndex: item.index,
                                                     scrollMode: state.scrollMode,
                                                     viewMode: state.viewMode,
-                                                })
+                                                }),
                                             )}
                                         >
                                             <PageLayer
@@ -1141,7 +1141,7 @@ export const Inner: React.FC<{
                 {slot.subSlot && renderSlot(slot.subSlot)}
             </div>
         ),
-        []
+        [],
     );
 
     return renderSlot(renderViewer());

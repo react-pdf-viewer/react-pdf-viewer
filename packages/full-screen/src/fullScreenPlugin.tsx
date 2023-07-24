@@ -42,9 +42,9 @@ export const fullScreenPlugin = (props?: FullScreenPluginProps): FullScreenPlugi
             Object.assign(
                 {},
                 { enableShortcuts: true, onEnterFullScreen: () => {}, onExitFullScreen: () => {} },
-                props
+                props,
             ),
-        []
+        [],
     );
 
     const store = React.useMemo(
@@ -55,7 +55,7 @@ export const fullScreenPlugin = (props?: FullScreenPluginProps): FullScreenPlugi
                 fullScreenMode: FullScreenMode.Normal,
                 zoom: () => {},
             }),
-        []
+        [],
     );
     /* eslint-enable @typescript-eslint/no-empty-function */
 

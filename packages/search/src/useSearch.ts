@@ -18,7 +18,7 @@ import type { StoreProps } from './types/StoreProps';
 import { useDocument } from './useDocument';
 
 export const useSearch = (
-    store: Store<StoreProps>
+    store: Store<StoreProps>,
 ): {
     clearKeyword(): void;
     changeMatchCase(matchCase: boolean): void;
@@ -67,7 +67,7 @@ export const useSearch = (
     const defaultTargetPageFilter = () => true;
     const targetPageFilter = React.useCallback(
         () => store.get('targetPageFilter') || defaultTargetPageFilter,
-        [store.get('targetPageFilter')]
+        [store.get('targetPageFilter')],
     );
 
     const changeMatchCase = (isChecked: boolean): void => {
@@ -140,7 +140,7 @@ export const useSearch = (
                             pageContent,
                             pageIndex,
                         });
-                    })
+                    }),
             );
         return Promise.all(promises).then((data) => {
             data.sort((a, b) => a.pageIndex - b.pageIndex);
@@ -173,7 +173,7 @@ export const useSearch = (
     const searchFor = (
         keywordParam: SingleKeyword[],
         matchCaseParam?: boolean,
-        wholeWordsParam?: boolean
+        wholeWordsParam?: boolean,
     ): Promise<Match[]> => {
         const currentDoc = currentDocRef.current;
         if (!currentDoc) {

@@ -23,7 +23,7 @@ describe('Test trigger option', () => {
                 nodes.map((node) => ({
                     height: (node as HTMLElement).style.height,
                     width: (node as HTMLElement).style.width,
-                }))
+                })),
             )) || [];
 
         expect(highlightAreas.length).toEqual(3);

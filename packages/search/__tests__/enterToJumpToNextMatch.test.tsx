@@ -24,7 +24,7 @@ const TestEnterToJump: React.FC<{
 
 test('Press Enter to jump to the next match', async () => {
     const { findByLabelText, findByTestId, getByTestId } = render(
-        <TestEnterToJump fileUrl={global['__OPEN_PARAMS_PDF__']} />
+        <TestEnterToJump fileUrl={global['__OPEN_PARAMS_PDF__']} />,
     );
 
     const viewerEle = getByTestId('core__viewer');

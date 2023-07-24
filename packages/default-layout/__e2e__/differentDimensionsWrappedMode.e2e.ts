@@ -32,7 +32,7 @@ test('Document with different page dimensions (wrapped scroll mode)', async () =
 
     // Check the current page
     await page.waitForFunction(
-        () => 'document.querySelector("[data-testid=page-navigation__current-page-input]").value === "13"'
+        () => 'document.querySelector("[data-testid=page-navigation__current-page-input]").value === "13"',
     );
 
     // Jump to the 43rd page
@@ -46,6 +46,6 @@ test('Document with different page dimensions (wrapped scroll mode)', async () =
 
     // Check the current page
     await page.waitForFunction(
-        () => 'document.querySelector("[data-testid=page-navigation__current-page-input]").value === "42"'
+        () => 'document.querySelector("[data-testid=page-navigation__current-page-input]").value === "42"',
     );
 });

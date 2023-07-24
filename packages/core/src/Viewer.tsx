@@ -185,7 +185,7 @@ export const Viewer: React.FC<{
     const themeContext = Object.assign(
         {},
         { direction: themeProps.direction },
-        withTheme(themeProps.theme || 'light', onSwitchTheme)
+        withTheme(themeProps.theme || 'light', onSwitchTheme),
     );
 
     React.useEffect(() => {

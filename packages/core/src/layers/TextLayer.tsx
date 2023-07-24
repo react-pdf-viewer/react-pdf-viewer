@@ -101,7 +101,7 @@ export const TextLayer: React.FC<{
                 () => {
                     containerEle.removeAttribute('data-testid');
                     onRenderTextCompleted();
-                }
+                },
             );
         });
 

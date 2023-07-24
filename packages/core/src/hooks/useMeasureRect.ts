@@ -14,7 +14,7 @@ const rectReducer = (
     state: Rect,
     action: {
         rect: Rect;
-    }
+    },
 ) => {
     const rect = action.rect;
     return state.height !== rect.height || state.width !== rect.width ? rect : state;

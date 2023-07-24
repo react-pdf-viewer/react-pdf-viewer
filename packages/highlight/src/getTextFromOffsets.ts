@@ -19,7 +19,7 @@ export const getTextFromOffsets = (
     startDivIdx: number,
     startOffset: number,
     endDivIdx: number,
-    endOffset?: number
+    endOffset?: number,
 ): Result => {
     if (startDivIdx < endDivIdx) {
         const startDivText = nodes

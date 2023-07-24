@@ -35,7 +35,7 @@ export const Highlight: React.FC<{
                     rect: [quadPoint[2].x, quadPoint[2].y, quadPoint[1].x, quadPoint[1].y],
                     // Reset the `quadPoints` property to avoid the infinitive loop
                     quadPoints: [],
-                }) as PdfJs.Annotation
+                }) as PdfJs.Annotation,
         );
         return (
             <>

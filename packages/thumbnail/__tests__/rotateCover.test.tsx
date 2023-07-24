@@ -108,7 +108,7 @@ const TestCover: React.FC<{
 
 test('Rotate cover', async () => {
     const rotatedDocument = new Uint8Array(
-        fs.readFileSync(path.resolve(__dirname, '../../../samples/pdf-open-parameters-rotated.pdf'))
+        fs.readFileSync(path.resolve(__dirname, '../../../samples/pdf-open-parameters-rotated.pdf')),
     );
     const { findByTestId, getByTestId } = render(<TestCover fileUrl={rotatedDocument} pageIndex={3} />);
 
@@ -129,6 +129,6 @@ test('Rotate cover', async () => {
     const src = image.getAttribute('src');
     expect(src?.length).toEqual(162698);
     expect(src?.slice(-100)).toEqual(
-        'AQAAYELiAQAAYELiAQAAYELiAQAAYELiAQAAYELiAQAAYELiAQAAYELiAQAAYELiAQAAYCIgIrPpY7RHcwAAAABJRU5ErkJggg=='
+        'AQAAYELiAQAAYELiAQAAYELiAQAAYELiAQAAYELiAQAAYELiAQAAYELiAQAAYELiAQAAYCIgIrPpY7RHcwAAAABJRU5ErkJggg==',
     );
 });

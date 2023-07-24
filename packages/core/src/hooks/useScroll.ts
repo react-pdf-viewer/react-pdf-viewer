@@ -156,7 +156,7 @@ export const useScroll = ({
                 resolve();
             });
         },
-        [elementRef]
+        [elementRef],
     );
 
     return {

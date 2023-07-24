@@ -8,12 +8,12 @@ const IndexPage = () => {
             fullScreenPlugin: {
                 onEnterFullScreen: () => {
                     defaultLayoutPluginInstance.toolbarPluginInstance.scrollModePluginInstance.switchScrollMode(
-                        ScrollMode.Vertical
+                        ScrollMode.Vertical,
                     );
                 },
                 onExitFullScreen: () => {
                     defaultLayoutPluginInstance.toolbarPluginInstance.scrollModePluginInstance.switchScrollMode(
-                        ScrollMode.Page
+                        ScrollMode.Page,
                     );
                 },
             },

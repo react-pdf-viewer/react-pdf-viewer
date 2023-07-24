@@ -97,7 +97,7 @@ export const BookmarkListRoot: React.FC<{
 
         const targetIndex = Math.min(
             bookmarkElements.length - 1,
-            Math.max(0, getItemIndex(bookmarkElements, activeEle as HTMLElement))
+            Math.max(0, getItemIndex(bookmarkElements, activeEle as HTMLElement)),
         );
         const targetEle = bookmarkElements[targetIndex];
 

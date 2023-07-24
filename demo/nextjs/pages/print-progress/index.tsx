@@ -42,7 +42,7 @@ const IndexPage = () => {
                 </div>
             </div>
         ),
-        []
+        [],
     );
 
     const printPluginInstance = printPlugin({

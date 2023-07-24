@@ -72,7 +72,7 @@ export const ClickDrag: React.FC<{
         document.addEventListener('mouseup', handleDocumentMouseUp);
 
         store.updateCurrentValue('highlightState', (currentState) =>
-            Object.assign({}, currentState, { type: HighlightStateType.ClickDragging })
+            Object.assign({}, currentState, { type: HighlightStateType.ClickDragging }),
         );
     };
 

@@ -23,7 +23,7 @@ test('Naivgate to the last page', async () => {
     await page.waitForSelector('[data-testid="core__text-layer-7"]', { visible: true });
     await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 8316');
     await page.waitForFunction(
-        () => 'document.querySelector("[data-testid=page-navigation__current-page-input]").value === "8"'
+        () => 'document.querySelector("[data-testid=page-navigation__current-page-input]").value === "8"',
     );
 
     // Zoom to 50%
@@ -36,7 +36,7 @@ test('Naivgate to the last page', async () => {
 
     await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 2410');
     await page.waitForFunction(
-        () => 'document.querySelector("[data-testid=page-navigation__current-page-input]").value === "8"'
+        () => 'document.querySelector("[data-testid=page-navigation__current-page-input]").value === "8"',
     );
 
     // Jump to the second page ...
@@ -56,6 +56,6 @@ test('Naivgate to the last page', async () => {
 
     await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 2410');
     await page.waitForFunction(
-        () => 'document.querySelector("[data-testid=page-navigation__current-page-input]").value === "8"'
+        () => 'document.querySelector("[data-testid=page-navigation__current-page-input]").value === "8"',
     );
 });

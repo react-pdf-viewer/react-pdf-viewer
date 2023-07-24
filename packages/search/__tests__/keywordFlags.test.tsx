@@ -33,7 +33,7 @@ test('keyword with flag matchCase=false', async () => {
     };
 
     const { findByText, findByTestId, getByTestId } = render(
-        <TestKeywordFlag fileUrl={global['__MULTIPLE_PAGES_PDF__']} keyword={flagKeyword} />
+        <TestKeywordFlag fileUrl={global['__MULTIPLE_PAGES_PDF__']} keyword={flagKeyword} />,
     );
     mockIsIntersecting(getByTestId('core__viewer'), true);
 
@@ -53,7 +53,7 @@ test('keyword with flag matchCase=true', async () => {
     };
 
     const { findByText, findByTestId, getByTestId } = render(
-        <TestKeywordFlag fileUrl={global['__MULTIPLE_PAGES_PDF__']} keyword={flagKeyword} />
+        <TestKeywordFlag fileUrl={global['__MULTIPLE_PAGES_PDF__']} keyword={flagKeyword} />,
     );
 
     const viewerEle = getByTestId('core__viewer');

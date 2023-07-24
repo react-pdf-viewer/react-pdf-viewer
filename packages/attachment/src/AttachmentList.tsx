@@ -73,7 +73,7 @@ export const AttachmentList: React.FC<{
 
         const targetIndex = Math.min(
             attachmentItems.length - 1,
-            Math.max(0, getItemIndex(attachmentItems, activeEle as HTMLElement))
+            Math.max(0, getItemIndex(attachmentItems, activeEle as HTMLElement)),
         );
         const targetEle = attachmentItems[targetIndex];
 

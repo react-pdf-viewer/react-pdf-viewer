@@ -37,7 +37,7 @@ const TestSwitchScrollMode: React.FC<{
 
 test('Switch scroll mode from menu items', async () => {
     const { findByLabelText, findByText, findByTestId, getByTestId } = render(
-        <TestSwitchScrollMode fileUrl={global['__OPEN_PARAMS_PDF__']} />
+        <TestSwitchScrollMode fileUrl={global['__OPEN_PARAMS_PDF__']} />,
     );
 
     const viewerEle = getByTestId('core__viewer');

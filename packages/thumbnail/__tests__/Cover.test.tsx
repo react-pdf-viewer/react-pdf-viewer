@@ -79,14 +79,14 @@ test('Test <Cover />', async () => {
     const src = image.getAttribute('src');
     expect(src?.length).toEqual(61722);
     expect(src?.substring(0, 100)).toEqual(
-        'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAO4AAAE+CAYAAACKpyy5AAAABmJLR0QA/wD/AP+gvaeTAAAgAElEQV'
+        'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAO4AAAE+CAYAAACKpyy5AAAABmJLR0QA/wD/AP+gvaeTAAAgAElEQV',
     );
 });
 
 const TestMultipleCovers = () => {
     const pageLabelDocument = React.useMemo(
         () => new Uint8Array(fs.readFileSync(path.resolve(__dirname, '../../../samples/ignore/page-labels.pdf'))),
-        []
+        [],
     );
 
     return (
@@ -118,7 +118,7 @@ test('Test multiple <Cover />', async () => {
     let src = image.getAttribute('src');
     expect(src?.length).toEqual(12154);
     expect(src?.slice(-100)).toEqual(
-        'IeqfHGwKoSAJVwgFSbhCKEjCFUJBEq4QCpJwhVCQhCuEgiRcIRQk4QqhIAlXCAVJuEIo6P8DgxmhOluzxw0AAAAASUVORK5CYII='
+        'IeqfHGwKoSAJVwgFSbhCKEjCFUJBEq4QCpJwhVCQhCuEgiRcIRQk4QqhIAlXCAVJuEIo6P8DgxmhOluzxw0AAAAASUVORK5CYII=',
     );
 
     // So we can query the cover of second document
@@ -142,14 +142,14 @@ test('Test multiple <Cover />', async () => {
     src = image.getAttribute('src');
     expect(src?.length).toEqual(1998);
     expect(src?.slice(-100)).toEqual(
-        'ETXEiBpiRA0xooYYUUOMqCFG1BAjaogRNcSIGmJEDTGihhhRQ4yoIUbUECNqiBE1xIgaYv4DB66eMUgszcEAAAAASUVORK5CYII='
+        'ETXEiBpiRA0xooYYUUOMqCFG1BAjaogRNcSIGmJEDTGihhhRQ4yoIUbUECNqiBE1xIgaYv4DB66eMUgszcEAAAAASUVORK5CYII=',
     );
 });
 
 const TestCoverDynamicDocument = () => {
     const pageLabelDocument = React.useMemo(
         () => new Uint8Array(fs.readFileSync(path.resolve(__dirname, '../../../samples/ignore/page-labels.pdf'))),
-        []
+        [],
     );
     const [fileUrl, setFileUrl] = React.useState(global['__OPEN_PARAMS_PDF__']);
 
@@ -202,7 +202,7 @@ test('Test <Cover /> with dynamic document', async () => {
     let src = image.getAttribute('src');
     expect(src?.length).toEqual(11662);
     expect(src?.slice(-100)).toEqual(
-        'K2IgBVfEQAquiIEUXBEDKbgiBlJwRQyk4IoYSMEVMZCCK2IgBVfEQAquiIEUXBEDKbgiBvof61fzlJ7KkmoAAAAASUVORK5CYII='
+        'K2IgBVfEQAquiIEUXBEDKbgiBlJwRQyk4IoYSMEVMZCCK2IgBVfEQAquiIEUXBEDKbgiBvof61fzlJ7KkmoAAAAASUVORK5CYII=',
     );
 
     viewerEle = await findByTestId('core__viewer');
@@ -225,6 +225,6 @@ test('Test <Cover /> with dynamic document', async () => {
     src = image.getAttribute('src');
     expect(src?.length).toEqual(1998);
     expect(src?.slice(-100)).toEqual(
-        'ETXEiBpiRA0xooYYUUOMqCFG1BAjaogRNcSIGmJEDTGihhhRQ4yoIUbUECNqiBE1xIgaYv4DB66eMUgszcEAAAAASUVORK5CYII='
+        'ETXEiBpiRA0xooYYUUOMqCFG1BAjaogRNcSIGmJEDTGihhhRQ4yoIUbUECNqiBE1xIgaYv4DB66eMUgszcEAAAAASUVORK5CYII=',
     );
 });

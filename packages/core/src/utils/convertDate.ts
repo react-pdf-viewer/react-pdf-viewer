@@ -18,7 +18,7 @@ const dateRegex = new RegExp(
         '(\\d{2})?' + // group 8: Offset hour
         "'?" +
         '(\\d{2})?' + // group 9: Offset minute
-        "'?"
+        "'?",
 );
 
 const parse = (value: string, min: number, max: number, defaultValue: number): number => {

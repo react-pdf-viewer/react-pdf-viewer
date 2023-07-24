@@ -80,7 +80,7 @@ test('Jump back to the previous clicked link annotation', async () => {
         let linkEle = await page.waitForSelector(`a[data-annotation-link="${id}"]`);
         await linkEle?.click();
         await page.waitForFunction(
-            () => () => `document.querySelector("[data-testid=core__inner-pages]").scrollTop === ${targetTop}`
+            () => () => `document.querySelector("[data-testid=core__inner-pages]").scrollTop === ${targetTop}`,
         );
         await page.waitForSelector(`[data-testid="core__page-layer-${targetPage}"]`, { visible: true });
         await page.waitForSelector(`[data-testid="core__text-layer-${targetPage}"]`, { visible: true });
@@ -91,7 +91,7 @@ test('Jump back to the previous clicked link annotation', async () => {
         await page.keyboard.press('ArrowLeft');
 
         await page.waitForFunction(
-            () => () => `document.querySelector("[data-testid=core__inner-pages]").scrollTop === ${annotationTop}`
+            () => () => `document.querySelector("[data-testid=core__inner-pages]").scrollTop === ${annotationTop}`,
         );
         await page.waitForSelector('[data-testid="core__page-layer-2"]', { visible: true });
         await page.waitForSelector('[data-testid="core__text-layer-2"]', { visible: true });

@@ -60,7 +60,7 @@ const TestCover: React.FC<{
 
 test('Test Cover width property', async () => {
     const { findByTestId, getByTestId } = render(
-        <TestCover fileUrl={global['__OPEN_PARAMS_PDF__']} pageIndex={1} width={300} />
+        <TestCover fileUrl={global['__OPEN_PARAMS_PDF__']} pageIndex={1} width={300} />,
     );
 
     const viewerEle = getByTestId('core__viewer');
@@ -80,6 +80,6 @@ test('Test Cover width property', async () => {
     const src = image.getAttribute('src');
     expect(src?.length).toEqual(96570);
     expect(src?.substring(0, 100)).toEqual(
-        'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAGQCAYAAAAUdV17AAAABmJLR0QA/wD/AP+gvaeTAAAgAElEQV'
+        'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAGQCAYAAAAUdV17AAAABmJLR0QA/wD/AP+gvaeTAAAgAElEQV',
     );
 });

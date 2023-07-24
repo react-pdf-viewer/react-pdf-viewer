@@ -116,7 +116,7 @@ describe('Link annotation jumps to correct position in dual page viewmode', () =
 
         // Check the current page input
         await page.waitForFunction(
-            () => 'document.querySelector("[data-testid=page-navigation__current-page-input]").value === "3"'
+            () => 'document.querySelector("[data-testid=page-navigation__current-page-input]").value === "3"',
         );
     });
 
@@ -128,10 +128,10 @@ describe('Link annotation jumps to correct position in dual page viewmode', () =
         await page.waitForSelector('[data-testid="core__text-layer-26"]', { visible: true });
         await page.waitForSelector('[data-testid="core__annotation-layer-26"]');
         await page.waitForFunction(
-            () => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 5406'
+            () => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 5406',
         );
         await page.waitForFunction(
-            () => 'document.querySelector("[data-testid=page-navigation__current-page-input]").value === "29"'
+            () => 'document.querySelector("[data-testid=page-navigation__current-page-input]").value === "29"',
         );
     });
 
@@ -143,10 +143,10 @@ describe('Link annotation jumps to correct position in dual page viewmode', () =
         await page.waitForSelector('[data-testid="core__text-layer-23"]', { visible: true });
         await page.waitForSelector('[data-testid="core__annotation-layer-23"]');
         await page.waitForFunction(
-            () => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 4638'
+            () => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 4638',
         );
         await page.waitForFunction(
-            () => 'document.querySelector("[data-testid=page-navigation__current-page-input]").value === "25"'
+            () => 'document.querySelector("[data-testid=page-navigation__current-page-input]").value === "25"',
         );
     });
 
@@ -158,10 +158,10 @@ describe('Link annotation jumps to correct position in dual page viewmode', () =
         await page.waitForSelector('[data-testid="core__text-layer-20"]', { visible: true });
         await page.waitForSelector('[data-testid="core__annotation-layer-20"]');
         await page.waitForFunction(
-            () => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 4003'
+            () => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 4003',
         );
         await page.waitForFunction(
-            () => 'document.querySelector("[data-testid=page-navigation__current-page-input]").value === "23"'
+            () => 'document.querySelector("[data-testid=page-navigation__current-page-input]").value === "23"',
         );
     });
 
@@ -173,10 +173,10 @@ describe('Link annotation jumps to correct position in dual page viewmode', () =
         await page.waitForSelector('[data-testid="core__text-layer-19"]', { visible: true });
         await page.waitForSelector('[data-testid="core__annotation-layer-19"]');
         await page.waitForFunction(
-            () => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 3607'
+            () => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 3607',
         );
         await page.waitForFunction(
-            () => 'document.querySelector("[data-testid=page-navigation__current-page-input]").value === "21"'
+            () => 'document.querySelector("[data-testid=page-navigation__current-page-input]").value === "21"',
         );
     });
 
@@ -188,10 +188,10 @@ describe('Link annotation jumps to correct position in dual page viewmode', () =
         await page.waitForSelector('[data-testid="core__text-layer-17"]', { visible: true });
         await page.waitForSelector('[data-testid="core__annotation-layer-17"]');
         await page.waitForFunction(
-            () => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 3207'
+            () => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 3207',
         );
         await page.waitForFunction(
-            () => 'document.querySelector("[data-testid=page-navigation__current-page-input]").value === "19"'
+            () => 'document.querySelector("[data-testid=page-navigation__current-page-input]").value === "19"',
         );
     });
 });

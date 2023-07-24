@@ -23,7 +23,7 @@ test('Press PageDown to jump to the next page', async () => {
     await page.waitForSelector('[data-testid="core__annotation-layer-1"]');
     await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 1188');
     await page.waitForFunction(
-        () => 'document.querySelector("[data-testid=page-navigation__current-page-input]").value === "2"'
+        () => 'document.querySelector("[data-testid=page-navigation__current-page-input]").value === "2"',
     );
 
     // Jump to page 3
@@ -33,7 +33,7 @@ test('Press PageDown to jump to the next page', async () => {
     await page.waitForSelector('[data-testid="core__annotation-layer-2"]');
     await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 2376');
     await page.waitForFunction(
-        () => 'document.querySelector("[data-testid=page-navigation__current-page-input]").value === "3"'
+        () => 'document.querySelector("[data-testid=page-navigation__current-page-input]").value === "3"',
     );
 
     // Jump to page 4
@@ -43,7 +43,7 @@ test('Press PageDown to jump to the next page', async () => {
     await page.waitForSelector('[data-testid="core__annotation-layer-3"]');
     await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 3564');
     await page.waitForFunction(
-        () => 'document.querySelector("[data-testid=page-navigation__current-page-input]").value === "4"'
+        () => 'document.querySelector("[data-testid=page-navigation__current-page-input]").value === "4"',
     );
 
     // Jump to page 5
@@ -53,7 +53,7 @@ test('Press PageDown to jump to the next page', async () => {
     await page.waitForSelector('[data-testid="core__annotation-layer-4"]');
     await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 4752');
     await page.waitForFunction(
-        () => 'document.querySelector("[data-testid=page-navigation__current-page-input]").value === "5"'
+        () => 'document.querySelector("[data-testid=page-navigation__current-page-input]").value === "5"',
     );
 
     // Jump to page 6
@@ -63,7 +63,7 @@ test('Press PageDown to jump to the next page', async () => {
     await page.waitForSelector('[data-testid="core__annotation-layer-5"]');
     await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 5940');
     await page.waitForFunction(
-        () => 'document.querySelector("[data-testid=page-navigation__current-page-input]").value === "6"'
+        () => 'document.querySelector("[data-testid=page-navigation__current-page-input]").value === "6"',
     );
 
     // Jump to page 7
@@ -73,6 +73,6 @@ test('Press PageDown to jump to the next page', async () => {
     await page.waitForSelector('[data-testid="core__annotation-layer-6"]');
     await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 7128');
     await page.waitForFunction(
-        () => 'document.querySelector("[data-testid=page-navigation__current-page-input]").value === "7"'
+        () => 'document.querySelector("[data-testid=page-navigation__current-page-input]").value === "7"',
     );
 });

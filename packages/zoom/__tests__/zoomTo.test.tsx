@@ -34,7 +34,7 @@ const TestCallZoomMethod: React.FC<{
 
 test('call zoom() method', async () => {
     const { findByTestId, findByText, getByTestId } = render(
-        <TestCallZoomMethod fileUrl={global['__MULTIPLE_PAGES_PDF__']} />
+        <TestCallZoomMethod fileUrl={global['__MULTIPLE_PAGES_PDF__']} />,
     );
 
     const viewerEle = getByTestId('core__viewer');

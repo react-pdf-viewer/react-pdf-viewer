@@ -153,7 +153,7 @@ export const BookmarkItem: React.FC<{
                       <>
                           {defaultRenderToggle(<DownArrowIcon />, <RightArrowIcon />)}
                           {defaultRenderTitle(clickBookmark)}
-                      </>
+                      </>,
                   )}
             {hasSubItems && expanded && (
                 <BookmarkList

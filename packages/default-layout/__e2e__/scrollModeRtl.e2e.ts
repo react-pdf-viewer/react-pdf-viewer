@@ -18,7 +18,7 @@ test('Vertical scroll mode', async () => {
     const pagesContainer = await page.waitForSelector('[data-testid="core__inner-pages"]');
 
     const hasVerticalClass = await pagesContainer?.evaluate((ele) =>
-        ele.classList.contains('rpv-core__inner-pages--vertical')
+        ele.classList.contains('rpv-core__inner-pages--vertical'),
     );
     expect(hasVerticalClass).toEqual(true);
 
@@ -80,7 +80,7 @@ test('Switch to horizontal scroll mode', async () => {
     await switchToHorizontalMenu?.click();
 
     const hasHorizontalClass = await pagesContainer?.evaluate((ele) =>
-        ele.classList.contains('rpv-core__inner-pages--horizontal')
+        ele.classList.contains('rpv-core__inner-pages--horizontal'),
     );
     expect(hasHorizontalClass).toEqual(true);
 
@@ -166,7 +166,7 @@ test('Switch to wrapped scroll mode', async () => {
     await switchToWrappedMenu?.click();
 
     const hasWrappedClass = await pagesContainer?.evaluate((ele) =>
-        ele.classList.contains('rpv-core__inner-pages--wrapped')
+        ele.classList.contains('rpv-core__inner-pages--wrapped'),
     );
     expect(hasWrappedClass).toEqual(true);
 

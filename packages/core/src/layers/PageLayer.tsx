@@ -240,7 +240,7 @@ export const PageLayer: React.FC<{
                             </React.Fragment>
                         ) : (
                             <React.Fragment key={idx} />
-                        )
+                        ),
                     )}
                 </>
             )}

@@ -27,7 +27,7 @@ export const normalizeFlagKeyword = (flagKeyword: FlagKeyword): NormalizedKeywor
 export const normalizeSingleKeyword = (
     keyword: SingleKeyword,
     matchCase?: boolean,
-    wholeWords?: boolean
+    wholeWords?: boolean,
 ): NormalizedKeyword => {
     if (keyword instanceof RegExp) {
         return {

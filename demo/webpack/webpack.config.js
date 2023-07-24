@@ -84,7 +84,7 @@ module.exports = {
                         resource.request = path.join(rootDir, `packages/${pkgName}/src`);
                         break;
                 }
-            }
+            },
         ),
     ],
 };

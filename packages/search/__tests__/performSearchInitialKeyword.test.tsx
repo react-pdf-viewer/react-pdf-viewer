@@ -34,7 +34,7 @@ const TestSearchPopoverInitialKeyword: React.FC<{
 
 test('Search popover performs search based on the initial keyword', async () => {
     const { findByLabelText, findByTestId, findByText, getByTestId } = render(
-        <TestSearchPopoverInitialKeyword fileUrl={global['__OPEN_PARAMS_PDF__']} keyword="PDF" />
+        <TestSearchPopoverInitialKeyword fileUrl={global['__OPEN_PARAMS_PDF__']} keyword="PDF" />,
     );
 
     const viewerEle = getByTestId('core__viewer');

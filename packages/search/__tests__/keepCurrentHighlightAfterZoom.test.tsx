@@ -200,7 +200,7 @@ const TestKeepCurrentHighlightAfterZoom: React.FC<{
 
 test('Keep the current highlight after zooming the document', async () => {
     const { findByTestId, getByTestId } = render(
-        <TestKeepCurrentHighlightAfterZoom fileUrl={global['__OPEN_PARAMS_PDF__']} />
+        <TestKeepCurrentHighlightAfterZoom fileUrl={global['__OPEN_PARAMS_PDF__']} />,
     );
 
     const viewerEle = getByTestId('core__viewer');

@@ -100,7 +100,7 @@ const TestOnPageChangeDocumentLoad: React.FC<{
 
 test('onPageChange() should fire after onDocumentLoad()', async () => {
     const { findByTestId, getByTestId } = render(
-        <TestOnPageChangeDocumentLoad fileUrl={global['__OPEN_PARAMS_PDF__']} />
+        <TestOnPageChangeDocumentLoad fileUrl={global['__OPEN_PARAMS_PDF__']} />,
     );
 
     const viewerEle = getByTestId('core__viewer');

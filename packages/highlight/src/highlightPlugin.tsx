@@ -52,7 +52,7 @@ export const highlightPlugin = (props?: HighlightPluginProps): HighlightPlugin =
                 highlightState: NO_SELECTION_STATE,
                 trigger: highlightPluginProps.trigger,
             }),
-        []
+        [],
     );
 
     const renderViewer = (props: RenderViewer): Slot => {

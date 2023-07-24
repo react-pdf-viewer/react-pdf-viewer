@@ -13,7 +13,7 @@ import type { StoreProps } from './types/StoreProps';
 
 export const useEnterFullScreen = (
     getFullScreenTarget: (pagesContainer: HTMLElement) => HTMLElement,
-    store: Store<StoreProps>
+    store: Store<StoreProps>,
 ): {
     enterFullScreen: () => void;
     exitFullScreen: () => void;

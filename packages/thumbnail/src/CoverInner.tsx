@@ -101,7 +101,7 @@ export const CoverInner: React.FC<{
                 },
                 (): void => {
                     /**/
-                }
+                },
             );
         });
     }, [pageRotation, isVisible]);

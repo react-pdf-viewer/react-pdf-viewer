@@ -41,7 +41,7 @@ const TestThumbnails: React.FC<{
 
 test('Test <Thumbnails /> of a single page document', async () => {
     const { findByLabelText, findByTestId, findByText, getByTestId } = render(
-        <TestThumbnails fileUrl={global['__DUMMY_PDF__']} />
+        <TestThumbnails fileUrl={global['__DUMMY_PDF__']} />,
     );
 
     const viewerEle = getByTestId('core__viewer');
@@ -88,7 +88,7 @@ test('Test <Thumbnails /> of a single page document', async () => {
     const firstThumbnailImage = await findByLabelText('Thumbnail of page 1');
     let src = firstThumbnailImage.getAttribute('src');
     expect(src?.substring(0, 100)).toEqual(
-        'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAACNCAYAAABBqd8eAAAABmJLR0QA/wD/AP+gvaeTAAACe0lEQV'
+        'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAACNCAYAAABBqd8eAAAABmJLR0QA/wD/AP+gvaeTAAACe0lEQV',
     );
     expect(src?.length).toEqual(970);
 });

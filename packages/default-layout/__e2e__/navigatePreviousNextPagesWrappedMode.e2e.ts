@@ -36,7 +36,7 @@ test('Navigate to the previous and next pages in wrapped scroll mode', async () 
 
     // Check the current page
     await page.waitForFunction(
-        () => 'document.querySelector("[data-testid=page-navigation__current-page-input]").value === "3"'
+        () => 'document.querySelector("[data-testid=page-navigation__current-page-input]").value === "3"',
     );
 
     // Click to the next page button again
@@ -44,7 +44,7 @@ test('Navigate to the previous and next pages in wrapped scroll mode', async () 
     await page.waitForSelector('[data-testid="core__text-layer-4"]', { visible: true });
     await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 1188');
     await page.waitForFunction(
-        () => 'document.querySelector("[data-testid=page-navigation__current-page-input]").value === "5"'
+        () => 'document.querySelector("[data-testid=page-navigation__current-page-input]").value === "5"',
     );
 
     // Click to the next page button again
@@ -52,7 +52,7 @@ test('Navigate to the previous and next pages in wrapped scroll mode', async () 
     await page.waitForSelector('[data-testid="core__text-layer-6"]', { visible: true });
     await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 1618');
     await page.waitForFunction(
-        () => 'document.querySelector("[data-testid=page-navigation__current-page-input]").value === "7"'
+        () => 'document.querySelector("[data-testid=page-navigation__current-page-input]").value === "7"',
     );
 
     // Click to the previous page button
@@ -62,7 +62,7 @@ test('Navigate to the previous and next pages in wrapped scroll mode', async () 
     await page.waitForSelector('[data-testid="core__text-layer-4"]', { visible: true });
     await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 1188');
     await page.waitForFunction(
-        () => 'document.querySelector("[data-testid=page-navigation__current-page-input]").value === "5"'
+        () => 'document.querySelector("[data-testid=page-navigation__current-page-input]").value === "5"',
     );
 
     // Click to the previous page button again
@@ -71,7 +71,7 @@ test('Navigate to the previous and next pages in wrapped scroll mode', async () 
     await page.waitForSelector('[data-testid="core__text-layer-2"]', { visible: true });
     await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 594');
     await page.waitForFunction(
-        () => 'document.querySelector("[data-testid=page-navigation__current-page-input]").value === "3"'
+        () => 'document.querySelector("[data-testid=page-navigation__current-page-input]").value === "3"',
     );
 
     // Click to the previous page button again
@@ -80,7 +80,7 @@ test('Navigate to the previous and next pages in wrapped scroll mode', async () 
     await page.waitForSelector('[data-testid="core__text-layer-0"]', { visible: true });
     await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 0');
     await page.waitForFunction(
-        () => 'document.querySelector("[data-testid=page-navigation__current-page-input]").value === "1"'
+        () => 'document.querySelector("[data-testid=page-navigation__current-page-input]").value === "1"',
     );
 });
 
@@ -125,7 +125,7 @@ test('Jump to a particular page in wrapped scroll mode', async () => {
     await page.waitForSelector('[data-testid="core__text-layer-4"]', { visible: true });
     await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 1188');
     await page.waitForFunction(
-        () => 'document.querySelector("[data-testid=page-navigation__current-page-input]").value === "5"'
+        () => 'document.querySelector("[data-testid=page-navigation__current-page-input]").value === "5"',
     );
 
     await pageInput?.focus();
@@ -137,7 +137,7 @@ test('Jump to a particular page in wrapped scroll mode', async () => {
     await page.waitForSelector('[data-testid="core__text-layer-2"]', { visible: true });
     await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 594');
     await page.waitForFunction(
-        () => 'document.querySelector("[data-testid=page-navigation__current-page-input]").value === "3"'
+        () => 'document.querySelector("[data-testid=page-navigation__current-page-input]").value === "3"',
     );
 
     await pageInput?.focus();
@@ -149,6 +149,6 @@ test('Jump to a particular page in wrapped scroll mode', async () => {
     await page.waitForSelector('[data-testid="core__text-layer-0"]', { visible: true });
     await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 0');
     await page.waitForFunction(
-        () => 'document.querySelector("[data-testid=page-navigation__current-page-input]").value === "1"'
+        () => 'document.querySelector("[data-testid=page-navigation__current-page-input]").value === "1"',
     );
 });

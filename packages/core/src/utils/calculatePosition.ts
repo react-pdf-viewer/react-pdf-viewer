@@ -13,7 +13,7 @@ export const calculatePosition = (
     content: HTMLElement,
     target: HTMLElement,
     position: Position,
-    offset: Offset
+    offset: Offset,
 ): Offset => {
     const targetRect = target.getBoundingClientRect();
     const contentRect = content.getBoundingClientRect();

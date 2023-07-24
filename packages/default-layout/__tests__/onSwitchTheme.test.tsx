@@ -29,7 +29,7 @@ const TestOnSwitchTheme: React.FC<{
 
 test('onSwitchTheme() callback', async () => {
     const { findByTestId, getByLabelText, getByTestId } = render(
-        <TestOnSwitchTheme fileUrl={global['__OPEN_PARAMS_PDF__']} />
+        <TestOnSwitchTheme fileUrl={global['__OPEN_PARAMS_PDF__']} />,
     );
     const viewerEle = getByTestId('core__viewer');
     mockIsIntersecting(viewerEle, true);

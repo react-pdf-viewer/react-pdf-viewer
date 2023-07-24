@@ -56,7 +56,7 @@ const IndexPage = () => {
                 })}
             </>
         ),
-        []
+        [],
     );
 
     const defaultLayoutPluginInstance = defaultLayoutPlugin({

@@ -16,7 +16,7 @@ export const calculateRange = (
     scrollDirection: ScrollDirection,
     measurements: ItemMeasurement[],
     outerSize: Rect,
-    scrollOffset: Offset
+    scrollOffset: Offset,
 ): {
     start: number;
     end: number;

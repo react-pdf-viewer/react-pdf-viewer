@@ -20,7 +20,7 @@ export const measureDualPage = (
     numberOfItems: number,
     parentRect: Rect,
     sizes: Rect[],
-    scrollMode: ScrollMode
+    scrollMode: ScrollMode,
 ): ItemMeasurement[] => {
     const measurements: ItemMeasurement[] = [];
     let top = 0;

@@ -18,7 +18,7 @@ test('Cover of a rotated page', async () => {
 
     expect(result?.cls).toEqual('rpv-thumbnail__cover-image');
     expect(result?.src?.substring(0, 100)).toEqual(
-        'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAn4AAAHeCAYAAAAFJAYTAAAAAXNSR0IArs4c6QAAIABJREFUeF7snQ'
+        'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAn4AAAHeCAYAAAAFJAYTAAAAAXNSR0IArs4c6QAAIABJREFUeF7snQ',
     );
     expect(result?.src?.length).toEqual(73242);
     expect(result?.height).toEqual(478);
