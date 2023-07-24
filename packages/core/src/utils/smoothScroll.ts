@@ -17,7 +17,7 @@ export const smoothScroll = (
     targetPosition: Offset,
     duration: number,
     easing: (t: number) => number = (t) => t,
-    onReachTarget: () => void = () => {}
+    onReachTarget: () => void = () => {},
 ) => {
     let top = 0;
     let left = 0;

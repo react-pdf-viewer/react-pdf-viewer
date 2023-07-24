@@ -12,7 +12,7 @@ import * as React from 'react';
 import type { StoreProps } from './types/StoreProps';
 
 export const useViewMode = (
-    store: Store<StoreProps>
+    store: Store<StoreProps>,
 ): {
     viewMode: ViewMode;
 } => {

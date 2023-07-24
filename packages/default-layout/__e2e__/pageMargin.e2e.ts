@@ -102,7 +102,7 @@ describe('Page margin', () => {
         await page.waitForSelector('[data-testid="core__annotation-layer-7"]');
 
         await page.waitForFunction(
-            () => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 4872'
+            () => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 4872',
         );
     });
 
@@ -133,7 +133,7 @@ describe('Page margin', () => {
         await page.waitForSelector('[data-testid="core__annotation-layer-5"]');
 
         await page.waitForFunction(
-            () => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 2436'
+            () => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 2436',
         );
 
         // Click the `Specifying parameters in a URL` link
@@ -149,7 +149,7 @@ describe('Page margin', () => {
         await page.waitForSelector('[data-testid="core__annotation-layer-7"]');
 
         await page.waitForFunction(
-            () => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 8028'
+            () => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 8028',
         );
     });
 });

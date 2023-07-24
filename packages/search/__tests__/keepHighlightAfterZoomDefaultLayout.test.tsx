@@ -36,7 +36,7 @@ test('Keep highlighting after zooming', async () => {
     const keyword = 'document';
 
     const { findByTestId, getByTestId } = render(
-        <TestKeepHighlight fileUrl={global['__OPEN_PARAMS_PDF__']} keyword={keyword} />
+        <TestKeepHighlight fileUrl={global['__OPEN_PARAMS_PDF__']} keyword={keyword} />,
     );
 
     const viewerEle = getByTestId('core__viewer');

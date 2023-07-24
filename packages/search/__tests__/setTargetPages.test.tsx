@@ -44,7 +44,7 @@ test('setTargetPages() method', async () => {
     ];
 
     const { findByText, findByTestId, getByTestId } = render(
-        <TestSetTargetPages fileUrl={global['__MULTIPLE_PAGES_PDF__']} keywords={keywords} />
+        <TestSetTargetPages fileUrl={global['__MULTIPLE_PAGES_PDF__']} keywords={keywords} />,
     );
     const viewerEle = getByTestId('core__viewer');
     viewerEle['__jsdomMockClientHeight'] = 798;

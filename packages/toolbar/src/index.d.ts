@@ -122,7 +122,7 @@ export type TransformToolbarSlot = (toolbarSlot: ToolbarSlot) => ToolbarSlot;
 // Plugin
 export interface ToolbarPlugin extends Plugin {
     renderDefaultToolbar: (
-        transformToolbarSlot: TransformToolbarSlot
+        transformToolbarSlot: TransformToolbarSlot,
     ) => (defaultToolbarSlot: ToolbarSlot) => React.ReactElement;
     Toolbar: (props: ToolbarProps) => React.ReactElement;
     // Plugins instance

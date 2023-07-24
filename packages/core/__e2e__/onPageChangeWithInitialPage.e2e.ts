@@ -31,6 +31,6 @@ test('Test the onPageChange() callback with initial page', async () => {
     // Jump back to the 5th page
     await page.evaluate(() => document.querySelector('[data-testid="core__page-layer-5"]')?.scrollIntoView());
     await page.waitForFunction(
-        () => 'document.querySelector("[data-testid=visited-pages]").textContent === "5, 6, 7, 5"'
+        () => 'document.querySelector("[data-testid=visited-pages]").textContent === "5, 6, 7, 5"',
     );
 });

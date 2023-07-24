@@ -10,5 +10,5 @@ root.render(
         <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.8.162/build/pdf.worker.js">
             <App />
         </Worker>
-    </React.StrictMode>
+    </React.StrictMode>,
 );

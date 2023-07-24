@@ -54,7 +54,7 @@ export const defaultLayoutPlugin = (props?: DefaultLayoutPluginProps): DefaultLa
                 isCurrentTabOpened: false,
                 currentTab: 0,
             }),
-        []
+        [],
     );
 
     const attachmentPluginInstance = attachmentPlugin();
@@ -105,7 +105,7 @@ export const defaultLayoutPlugin = (props?: DefaultLayoutPluginProps): DefaultLa
                         <React.Fragment key={idx}>
                             <></>
                         </React.Fragment>
-                    )
+                    ),
                 )}
             </React.Fragment>
         ),

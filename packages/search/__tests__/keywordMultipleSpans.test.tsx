@@ -31,7 +31,7 @@ test('keyword belongs to multiple spans', async () => {
     const keyword = 'format PDF';
 
     const { findByText, findByTestId, getByTestId } = render(
-        <TestKeywordMultipleSpansOption fileUrl={global['__OPEN_PARAMS_PDF__']} keyword={keyword} />
+        <TestKeywordMultipleSpansOption fileUrl={global['__OPEN_PARAMS_PDF__']} keyword={keyword} />,
     );
 
     const viewerEle = getByTestId('core__viewer');

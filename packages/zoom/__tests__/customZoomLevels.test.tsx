@@ -44,7 +44,7 @@ const TestZoomLevels: React.FC<{
 
 test('Custom zoom levels with <Zoom />', async () => {
     const { findByTestId, findByText, getByRole, getByTestId } = render(
-        <TestZoomLevels fileUrl={global['__OPEN_PARAMS_PDF__']} />
+        <TestZoomLevels fileUrl={global['__OPEN_PARAMS_PDF__']} />,
     );
 
     const viewerEle = getByTestId('core__viewer');

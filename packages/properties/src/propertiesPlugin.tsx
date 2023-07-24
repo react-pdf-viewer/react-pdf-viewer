@@ -29,7 +29,7 @@ export const propertiesPlugin = (): PropertiesPlugin => {
             createStore<StoreProps>({
                 fileName: '',
             }),
-        []
+        [],
     );
 
     const ShowPropertiesDecorator = (props: ShowPropertiesProps) => <ShowProperties {...props} store={store} />;

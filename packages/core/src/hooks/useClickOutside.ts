@@ -11,7 +11,7 @@ import * as React from 'react';
 export const useClickOutside = (
     closeOnClickOutside: boolean,
     targetRef: React.RefObject<HTMLElement>,
-    onClickOutside: () => void
+    onClickOutside: () => void,
 ): void => {
     const clickHandler = (e: MouseEvent): void => {
         const target = targetRef.current;

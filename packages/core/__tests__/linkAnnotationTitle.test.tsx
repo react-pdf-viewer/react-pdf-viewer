@@ -13,7 +13,7 @@ const TestSetLinkAnnotationTitle: React.FC<{
 
 test('Set title for link annotations', async () => {
     const { findByTestId, getByTestId } = render(
-        <TestSetLinkAnnotationTitle fileUrl={new Uint8Array(global['__OPEN_PARAMS_PDF__'])} />
+        <TestSetLinkAnnotationTitle fileUrl={new Uint8Array(global['__OPEN_PARAMS_PDF__'])} />,
     );
 
     const viewerEle = getByTestId('core__viewer');

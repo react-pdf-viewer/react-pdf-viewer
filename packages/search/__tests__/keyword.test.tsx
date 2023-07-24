@@ -32,7 +32,7 @@ test('keyword option', async () => {
     const keyword = 'text';
 
     const { findByText, findByTestId, getByTestId } = render(
-        <TestKeywordOption fileUrl={global['__MULTIPLE_PAGES_PDF__']} keyword={keyword} />
+        <TestKeywordOption fileUrl={global['__MULTIPLE_PAGES_PDF__']} keyword={keyword} />,
     );
     const viewerEle = getByTestId('core__viewer');
     mockIsIntersecting(viewerEle, true);
@@ -58,7 +58,7 @@ test('Special character in the keyword', async () => {
     const keyword = '(a';
 
     const { findByText, findByTestId, getByTestId } = render(
-        <TestKeywordOption fileUrl={global['__OPEN_PARAMS_PDF__']} keyword={keyword} />
+        <TestKeywordOption fileUrl={global['__OPEN_PARAMS_PDF__']} keyword={keyword} />,
     );
     const viewerEle = getByTestId('core__viewer');
     mockIsIntersecting(viewerEle, true);
@@ -108,7 +108,7 @@ test('Match case of special character', async () => {
     };
 
     const { findByText, findByTestId, getByTestId } = render(
-        <TestKeywordOption fileUrl={global['__OPEN_PARAMS_PDF__']} keyword={flagKeyword} />
+        <TestKeywordOption fileUrl={global['__OPEN_PARAMS_PDF__']} keyword={flagKeyword} />,
     );
     const viewerEle = getByTestId('core__viewer');
     mockIsIntersecting(viewerEle, true);

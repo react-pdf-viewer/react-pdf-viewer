@@ -12,7 +12,7 @@ import * as React from 'react';
 import type { StoreProps } from './types/StoreProps';
 
 export const useScrollMode = (
-    store: Store<StoreProps>
+    store: Store<StoreProps>,
 ): {
     scrollMode: ScrollMode;
 } => {

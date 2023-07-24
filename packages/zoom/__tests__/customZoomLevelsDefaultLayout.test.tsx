@@ -39,7 +39,7 @@ const TestZoomLevelsWithDefaultLayout: React.FC<{
 
 test('Custom zoom levels with the default layout', async () => {
     const { findByTestId, findByText, getByRole, getByTestId } = render(
-        <TestZoomLevelsWithDefaultLayout fileUrl={global['__OPEN_PARAMS_PDF__']} />
+        <TestZoomLevelsWithDefaultLayout fileUrl={global['__OPEN_PARAMS_PDF__']} />,
     );
 
     const viewerEle = getByTestId('core__viewer');

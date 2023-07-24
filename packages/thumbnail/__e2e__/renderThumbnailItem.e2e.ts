@@ -24,7 +24,7 @@ test('Test renderThumbnailItem', async () => {
 
     expect(props?.src?.length).toEqual(6974);
     expect(props?.src?.substring(0, 100)).toEqual(
-        'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJYAAADICAYAAAAKhRhlAAAAAXNSR0IArs4c6QAAFBhJREFUeF7tnQ'
+        'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJYAAADICAYAAAAKhRhlAAAAAXNSR0IArs4c6QAAFBhJREFUeF7tnQ',
     );
     expect(props?.width).toEqual('150px');
     expect(props?.height).toEqual('200px');
@@ -39,7 +39,7 @@ test('Test renderThumbnailItem', async () => {
 
     expect(props?.src?.length).toEqual(18094);
     expect(props?.src?.substring(0, 100)).toEqual(
-        'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJYAAADICAYAAAAKhRhlAAAAAXNSR0IArs4c6QAAIABJREFUeF7t3e'
+        'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJYAAADICAYAAAAKhRhlAAAAAXNSR0IArs4c6QAAIABJREFUeF7t3e',
     );
     expect(props?.width).toEqual('150px');
     expect(props?.height).toEqual('200px');

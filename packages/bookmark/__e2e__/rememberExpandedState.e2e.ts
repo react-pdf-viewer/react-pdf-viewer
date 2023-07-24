@@ -16,13 +16,13 @@ test('Remember expanded/collapsed state of each bookmark', async () => {
 
     // Toggle the `Parameters for Opening PDF Files` item
     let toggleIcon = await page.waitForSelector(
-        'li[aria-label="Parameters for Opening PDF Files"] .rpv-bookmark__toggle'
+        'li[aria-label="Parameters for Opening PDF Files"] .rpv-bookmark__toggle',
     );
     await toggleIcon?.click();
 
     // Toggle the `Specifying parameters in a URL` item
     let toggleSubItem = await page.waitForSelector(
-        'li[aria-label="Specifying parameters in a URL"] .rpv-bookmark__toggle'
+        'li[aria-label="Specifying parameters in a URL"] .rpv-bookmark__toggle',
     );
     await toggleSubItem?.click();
 

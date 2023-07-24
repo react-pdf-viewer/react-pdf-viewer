@@ -11,7 +11,7 @@ import * as React from 'react';
 import type { StoreProps } from './types/StoreProps';
 
 export const useTriggerOpen = (
-    store: Store<StoreProps>
+    store: Store<StoreProps>,
 ): {
     inputRef: React.MutableRefObject<HTMLInputElement>;
     openFile: () => void;

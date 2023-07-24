@@ -25,6 +25,6 @@ test('Keep to fit page width when click sidebar', async () => {
     await page.waitForSelector('[data-testid="core__text-layer-1"]');
 
     await page.waitForFunction(
-        () => 'document.querySelector("[data-testid=zoom__popover-target-scale]").textContent === "115%"'
+        () => 'document.querySelector("[data-testid=zoom__popover-target-scale]").textContent === "115%"',
     );
 });

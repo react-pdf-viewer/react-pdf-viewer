@@ -38,7 +38,7 @@ const TestRememberExpandedState: React.FC<{
 
 test('Remember expanded/collapsed state of each bookmark', async () => {
     const { findAllByLabelText, findByTestId, getByTestId } = render(
-        <TestRememberExpandedState fileUrl={global['__OPEN_PARAMS_PDF__']} />
+        <TestRememberExpandedState fileUrl={global['__OPEN_PARAMS_PDF__']} />,
     );
 
     const viewerEle = getByTestId('core__viewer');

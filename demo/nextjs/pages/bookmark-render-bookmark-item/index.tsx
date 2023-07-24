@@ -25,7 +25,7 @@ const IndexPage = () => {
             <>
                 {renderProps.defaultRenderToggle(<ExpandIcon />, <CollapseIcon />)}
                 {renderProps.defaultRenderTitle(renderProps.onClickTitle)}
-            </>
+            </>,
         );
 
     return (

@@ -29,7 +29,7 @@ const TestCustomizeBookmarks: React.FC<{
             <>
                 {renderProps.defaultRenderToggle(<ExpandIcon />, <CollapseIcon />)}
                 {renderProps.defaultRenderTitle(renderProps.onClickTitle)}
-            </>
+            </>,
         );
 
     return (

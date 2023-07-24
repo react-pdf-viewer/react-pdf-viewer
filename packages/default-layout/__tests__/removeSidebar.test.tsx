@@ -26,7 +26,7 @@ const TestRemoveSidebar: React.FC<{
 
 test('Remove the sidebar', async () => {
     const { findByTestId, getByTestId, queryByTestId } = render(
-        <TestRemoveSidebar fileUrl={global['__OPEN_PARAMS_PDF__']} />
+        <TestRemoveSidebar fileUrl={global['__OPEN_PARAMS_PDF__']} />,
     );
 
     const viewerEle = getByTestId('core__viewer');

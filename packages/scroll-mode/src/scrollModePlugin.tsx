@@ -62,7 +62,7 @@ export const scrollModePlugin = (): ScrollModePlugin => {
                     /**/
                 },
             }),
-        []
+        [],
     );
 
     const SwitchScrollModeDecorator = (props: SwitchScrollModeProps) => <SwitchScrollMode {...props} store={store} />;

@@ -16,7 +16,7 @@ test('The thumbnails are stuck at loading', async () => {
     let src = await firstThumbnail?.evaluate((ele) => ele.getAttribute('src'));
     expect(src?.length).toEqual(3678);
     expect(src?.substring(0, 100)).toEqual(
-        'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAACFCAYAAACt+l1zAAAAAXNSR0IArs4c6QAACm5JREFUeF7tnX'
+        'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAACFCAYAAACt+l1zAAAAAXNSR0IArs4c6QAACm5JREFUeF7tnX',
     );
 
     // Trigger re-renderer
@@ -46,6 +46,6 @@ test('The thumbnails are stuck at loading', async () => {
     src = await firstThumbnail?.evaluate((ele) => ele.getAttribute('src'));
     expect(src?.length).toEqual(5154);
     expect(src?.substring(0, 100)).toEqual(
-        'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAACNCAYAAABBqd8eAAAAAXNSR0IArs4c6QAADsFJREFUeF7t3N'
+        'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAACNCAYAAABBqd8eAAAAAXNSR0IArs4c6QAADsFJREFUeF7t3N',
     );
 });

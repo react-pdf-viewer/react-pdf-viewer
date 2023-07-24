@@ -18,7 +18,7 @@ const TestExternalLinkAnnotation: React.FC<{
 
 test('Support external link annotation', async () => {
     const externalLinkDocument = new Uint8Array(
-        fs.readFileSync(path.resolve(__dirname, '../../../samples/external-link.pdf'))
+        fs.readFileSync(path.resolve(__dirname, '../../../samples/external-link.pdf')),
     );
     const { findByTestId, getByTestId } = render(<TestExternalLinkAnnotation fileUrl={externalLinkDocument} />);
 

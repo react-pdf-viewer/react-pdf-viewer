@@ -36,7 +36,7 @@ test('onHighlightKeyword option', async () => {
     const keyword = 'text';
 
     const { findByText, findByTestId, getByTestId } = render(
-        <TestOnHighlightKeywordOption fileUrl={global['__MULTIPLE_PAGES_PDF__']} keyword={keyword} />
+        <TestOnHighlightKeywordOption fileUrl={global['__MULTIPLE_PAGES_PDF__']} keyword={keyword} />,
     );
     mockIsIntersecting(getByTestId('core__viewer'), true);
 

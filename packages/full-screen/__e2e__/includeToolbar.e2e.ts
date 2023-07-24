@@ -23,7 +23,7 @@ describe('Include the toolbar', () => {
         const exitFullScreenButton = await page.waitForSelector('[aria-label="Exit full screen"]');
         const exitFullScreenButtonId = await page.evaluate(
             (ele) => ele.getAttribute('data-testid'),
-            exitFullScreenButton
+            exitFullScreenButton,
         );
         expect(exitFullScreenButtonId).toEqual('full-screen__exit-button-with-tooltip');
         await exitFullScreenButton?.click();

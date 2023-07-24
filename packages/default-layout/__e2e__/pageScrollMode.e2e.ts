@@ -42,7 +42,7 @@ test('Single page scroll mode', async () => {
     await switchToPageMenu?.click();
 
     const hasSingleClass = await pagesContainer?.evaluate((ele) =>
-        ele.classList.contains('rpv-core__inner-pages--single')
+        ele.classList.contains('rpv-core__inner-pages--single'),
     );
     expect(hasSingleClass).toEqual(true);
     await page.waitForSelector('[data-testid="core__inner-current-page-4"]');

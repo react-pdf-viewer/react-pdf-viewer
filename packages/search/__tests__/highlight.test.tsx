@@ -41,7 +41,7 @@ test('highlight() method', async () => {
     ];
 
     const { findByText, findByTestId, getByTestId } = render(
-        <TestHighlight fileUrl={global['__MULTIPLE_PAGES_PDF__']} keywords={keywords} />
+        <TestHighlight fileUrl={global['__MULTIPLE_PAGES_PDF__']} keywords={keywords} />,
     );
     const viewerEle = getByTestId('core__viewer');
     mockIsIntersecting(viewerEle, true);

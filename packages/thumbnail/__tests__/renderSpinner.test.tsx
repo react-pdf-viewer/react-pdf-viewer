@@ -39,7 +39,7 @@ const TestRenderSpinner: React.FC<{
 
 test('Test renderSpinner option', async () => {
     const { findByLabelText, findByTestId, getByTestId } = render(
-        <TestRenderSpinner fileUrl={global['__OPEN_PARAMS_PDF__']} />
+        <TestRenderSpinner fileUrl={global['__OPEN_PARAMS_PDF__']} />,
     );
 
     const viewerEle = getByTestId('core__viewer');

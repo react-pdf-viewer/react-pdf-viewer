@@ -56,7 +56,7 @@ module.exports = {
                         resource.request = path.join(rootDir, `packages/${pkgName}/src`);
                         break;
                 }
-            }
+            },
         );
         config.externals.push({
             canvas: 'canvas',
@@ -72,7 +72,7 @@ module.exports = {
                         to: path.join(__dirname, 'public'),
                     },
                 ],
-            })
+            }),
         );
 
         return config;

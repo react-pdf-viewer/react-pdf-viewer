@@ -57,7 +57,7 @@ export const ThumbnailItem: React.FC<{
             },
             () => {
                 onRenderCompleted(pageIndex);
-            }
+            },
         );
 
         return () => {

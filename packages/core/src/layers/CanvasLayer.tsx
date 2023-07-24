@@ -105,7 +105,7 @@ export const CanvasLayer: React.FC<{
                 // Keep the canvas hidden to avoid black flickering
                 // The issue only happens with React 18's Strict mode
                 onRenderCanvasCompleted();
-            }
+            },
         );
 
         return () => {

@@ -73,7 +73,7 @@ export const Annotation: React.FC<{
                     {
                         borderBottomStyle: 'solid',
                     },
-                    styles
+                    styles,
                 );
                 break;
             case AnnotationBorderStyleType.Beveled:
@@ -126,7 +126,7 @@ export const Annotation: React.FC<{
                                     transformOrigin: `-${bound[0]}px -${bound[1]}px`,
                                     width: `${width}px`,
                                 },
-                                styles
+                                styles,
                             ),
                         },
                         children: <>{hasPopup && opened && <PopupWrapper annotation={annotation} />}</>,

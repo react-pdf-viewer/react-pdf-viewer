@@ -89,7 +89,7 @@ export const Tracker: React.FC<{
 
         const startPageRect = startTextLayer.getBoundingClientRect();
         const startDivSiblings: HTMLElement[] = [].slice.call(
-            startTextLayer.querySelectorAll(`[${HIGHLIGHT_PAGE_ATTR}]`)
+            startTextLayer.querySelectorAll(`[${HIGHLIGHT_PAGE_ATTR}]`),
         );
         const startDivIndex = startDivSiblings.indexOf(startDiv);
 
@@ -189,7 +189,7 @@ export const Tracker: React.FC<{
                     startDivIndex,
                     startOffset,
                     startDivIndex,
-                    endOffset
+                    endOffset,
                 );
                 selectedText = textDataSameDiv.wholeText;
                 divTexts = textDataSameDiv.divTexts;
@@ -203,7 +203,7 @@ export const Tracker: React.FC<{
                     startDivIndex,
                     startOffset,
                     endDivIndex,
-                    endOffset
+                    endOffset,
                 );
                 selectedText = textDataDifferentDivs.wholeText;
                 divTexts = textDataDifferentDivs.divTexts;
@@ -216,7 +216,7 @@ export const Tracker: React.FC<{
                     startPageIndex,
                     startDivIndex,
                     startOffset,
-                    startDivSiblings.length
+                    startDivSiblings.length,
                 );
 
                 // eslint-disable-next-line no-case-declarations

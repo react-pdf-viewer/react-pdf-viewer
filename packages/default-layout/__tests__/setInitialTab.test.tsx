@@ -22,7 +22,7 @@ const TestSetInitialTab: React.FC<{
 test('Set the initial tab', async () => {
     // The thumbnail tab is activated initially
     const { findByLabelText, findByTestId, getByTestId } = render(
-        <TestSetInitialTab fileUrl={global['__OPEN_PARAMS_PDF__']} initialTab={0} />
+        <TestSetInitialTab fileUrl={global['__OPEN_PARAMS_PDF__']} initialTab={0} />,
     );
 
     const viewerEle = getByTestId('core__viewer');
@@ -51,14 +51,14 @@ test('Set the initial tab', async () => {
     let firstThumbnail = await findByLabelText('Thumbnail of page 1');
     let firstThumbnailSrc = firstThumbnail.getAttribute('src');
     expect(firstThumbnailSrc?.substring(0, 100)).toEqual(
-        'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAACFCAYAAACt+l1zAAAABmJLR0QA/wD/AP+gvaeTAAAKX0lEQV'
+        'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAACFCAYAAACt+l1zAAAABmJLR0QA/wD/AP+gvaeTAAAKX0lEQV',
     );
     expect(firstThumbnailSrc?.length).toEqual(3662);
 });
 
 test('Set invalid initial tab', async () => {
     const { findByTestId, getByTestId } = render(
-        <TestSetInitialTab fileUrl={global['__OPEN_PARAMS_PDF__']} initialTab={-1} />
+        <TestSetInitialTab fileUrl={global['__OPEN_PARAMS_PDF__']} initialTab={-1} />,
     );
 
     const viewerEle = getByTestId('core__viewer');

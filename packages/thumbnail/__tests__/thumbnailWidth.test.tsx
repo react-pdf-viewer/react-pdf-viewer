@@ -41,7 +41,7 @@ const TestThumbnailWidth: React.FC<{
 
 test('Test thumbnailWidth option', async () => {
     const { findByLabelText, findByTestId, getByTestId } = render(
-        <TestThumbnailWidth fileUrl={global['__OPEN_PARAMS_PDF__']} />
+        <TestThumbnailWidth fileUrl={global['__OPEN_PARAMS_PDF__']} />,
     );
 
     const viewerEle = getByTestId('core__viewer');
@@ -87,7 +87,7 @@ test('Test thumbnailWidth option', async () => {
     const firstThumbnailImage = await findByLabelText('Thumbnail of page 1');
     let src = firstThumbnailImage.getAttribute('src');
     expect(src?.slice(-100)).toEqual(
-        '22YLv+E21w1r9JgxV/1eSYivjBo96rrXX/djM0J8W7I7EkpIWEIJCUsoIWEJJSQsoYSEJZT4P6H2Uzo/EGifAAAAAElFTkSuQmCC'
+        '22YLv+E21w1r9JgxV/1eSYivjBo96rrXX/djM0J8W7I7EkpIWEIJCUsoIWEJJSQsoYSEJZT4P6H2Uzo/EGifAAAAAElFTkSuQmCC',
     );
     expect(src?.length).toEqual(6458);
     expect(firstThumbnailImage.getAttribute('width')).toEqual('150px');
@@ -100,7 +100,7 @@ test('Test thumbnailWidth option', async () => {
     const secondThumbnailImage = await findByLabelText('Thumbnail of page 2');
     src = secondThumbnailImage.getAttribute('src');
     expect(src?.substring(0, 100)).toEqual(
-        'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJYAAADICAYAAAAKhRhlAAAABmJLR0QA/wD/AP+gvaeTAAAgAElEQV'
+        'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJYAAADICAYAAAAKhRhlAAAABmJLR0QA/wD/AP+gvaeTAAAgAElEQV',
     );
     expect(src?.length).toEqual(25166);
     expect(secondThumbnailImage.getAttribute('width')).toEqual('150px');

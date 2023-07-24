@@ -46,7 +46,7 @@ const TestCustomProgressBar: React.FC<{
                 </div>
             </div>
         ),
-        []
+        [],
     );
 
     const printPluginInstance = printPlugin({

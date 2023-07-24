@@ -46,7 +46,7 @@ export const thumbnailPlugin = (pluginProps?: ThumbnailPluginProps): ThumbnailPl
                 },
                 viewMode: ViewMode.SinglePage,
             }),
-        []
+        [],
     );
     const [docId, setDocId] = React.useState('');
 
@@ -66,7 +66,7 @@ export const thumbnailPlugin = (pluginProps?: ThumbnailPluginProps): ThumbnailPl
                 />
             </SpinnerContext.Provider>
         ),
-        [docId]
+        [docId],
     );
 
     return {

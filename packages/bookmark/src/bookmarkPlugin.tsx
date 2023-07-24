@@ -29,7 +29,7 @@ export const bookmarkPlugin = (): BookmarkPlugin => {
             createStore<StoreProps>({
                 bookmarkExpandedMap: new Map(),
             }),
-        []
+        [],
     );
 
     const BookmarksDecorator = (props?: BookmarksProps) => (

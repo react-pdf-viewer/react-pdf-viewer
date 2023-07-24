@@ -112,7 +112,7 @@ test('Test <CurrentPageLabel>', async () => {
 
 test('Test <CurrentPageLabel> with custom page label', async () => {
     const pageLabelDocument2 = new Uint8Array(
-        fs.readFileSync(path.resolve(__dirname, '../../../samples/ignore/page-labels-2.pdf'))
+        fs.readFileSync(path.resolve(__dirname, '../../../samples/ignore/page-labels-2.pdf')),
     );
     const { findByTestId, getByTestId } = render(<TestCurrentPageLabel fileUrl={pageLabelDocument2} />);
 

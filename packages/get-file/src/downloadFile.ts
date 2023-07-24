@@ -18,7 +18,7 @@ const encodeUint8Array = (data: Uint8Array): string =>
         Array(data.length)
             .fill('')
             .map((_, i) => String.fromCharCode(data[i]))
-            .join('')
+            .join(''),
     );
 
 const download = (url: string, saveAs: string): void => {

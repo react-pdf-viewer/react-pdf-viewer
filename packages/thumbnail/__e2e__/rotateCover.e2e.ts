@@ -17,7 +17,7 @@ test('Rotate forward a Cover', async () => {
     }));
     expect(props?.src?.length).toEqual(150554);
     expect(props?.src?.substring(0, 100)).toEqual(
-        'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAA/EAAAL1CAYAAACPJ2Q3AAAAAXNSR0IArs4c6QAAIABJREFUeF7snQ'
+        'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAA/EAAAL1CAYAAACPJ2Q3AAAAAXNSR0IArs4c6QAAIABJREFUeF7snQ',
     );
     expect(props?.width).toEqual(1009);
     expect(props?.height).toEqual(757);
@@ -34,7 +34,7 @@ test('Rotate forward a Cover', async () => {
     }));
     expect(props?.src?.length).toEqual(70850);
     expect(props?.src?.substring(0, 100)).toEqual(
-        'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAjcAAAL1CAYAAAA7CMURAAAAAXNSR0IArs4c6QAAIABJREFUeF7svQ'
+        'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAjcAAAL1CAYAAAA7CMURAAAAAXNSR0IArs4c6QAAIABJREFUeF7svQ',
     );
     expect(props?.width).toEqual(567);
     expect(props?.height).toEqual(757);
@@ -63,7 +63,7 @@ test('Rotate backward a Cover', async () => {
     }));
     expect(props?.src?.length).toEqual(70142);
     expect(props?.src?.substring(0, 100)).toEqual(
-        'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAjcAAAL1CAYAAAA7CMURAAAAAXNSR0IArs4c6QAAIABJREFUeF7snQ'
+        'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAjcAAAL1CAYAAAA7CMURAAAAAXNSR0IArs4c6QAAIABJREFUeF7snQ',
     );
     expect(props?.width).toEqual(567);
     expect(props?.height).toEqual(757);

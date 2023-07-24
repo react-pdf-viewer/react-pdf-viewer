@@ -236,7 +236,7 @@ const TestSearchInitialKeywordSidebar: React.FC<{
 
 test('Perform search for the initial keyword in a sidebar', async () => {
     const { findByPlaceholderText, findByTestId, getByTestId } = render(
-        <TestSearchInitialKeywordSidebar fileUrl={global['__OPEN_PARAMS_PDF__']} keyword="PDF" />
+        <TestSearchInitialKeywordSidebar fileUrl={global['__OPEN_PARAMS_PDF__']} keyword="PDF" />,
     );
 
     const viewerEle = getByTestId('core__viewer');

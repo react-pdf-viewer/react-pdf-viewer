@@ -59,7 +59,7 @@ const TestRenderThumbnailItem: React.FC<{
 
 test('Test renderThumbnailItem option', async () => {
     const { findByLabelText, findByTestId, getByTestId } = render(
-        <TestRenderThumbnailItem fileUrl={global['__OPEN_PARAMS_PDF__']} />
+        <TestRenderThumbnailItem fileUrl={global['__OPEN_PARAMS_PDF__']} />,
     );
 
     const viewerEle = getByTestId('core__viewer');
@@ -118,7 +118,7 @@ test('Test renderThumbnailItem option', async () => {
     const secondThumbnailImage = await findByLabelText('Thumbnail of page 2');
     const src = secondThumbnailImage.getAttribute('src');
     expect(src?.substring(0, 100)).toEqual(
-        'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJYAAADICAYAAAAKhRhlAAAABmJLR0QA/wD/AP+gvaeTAAAgAElEQV'
+        'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJYAAADICAYAAAAKhRhlAAAABmJLR0QA/wD/AP+gvaeTAAAgAElEQV',
     );
     expect(src?.length).toEqual(25166);
     expect(secondThumbnailImage.getAttribute('width')).toEqual('150px');

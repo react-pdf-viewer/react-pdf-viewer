@@ -50,7 +50,7 @@ test('Keep highlighting after clicking zoom buttons in the default toolbar', asy
     const keyword = 'document';
 
     const { findByTestId, getByTestId } = render(
-        <TestKeepHighlight fileUrl={global['__OPEN_PARAMS_PDF__']} keyword={keyword} />
+        <TestKeepHighlight fileUrl={global['__OPEN_PARAMS_PDF__']} keyword={keyword} />,
     );
 
     const viewerEle = getByTestId('core__viewer');

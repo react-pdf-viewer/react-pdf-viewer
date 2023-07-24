@@ -18,7 +18,7 @@ const TestThumbnails: React.FC<{
 
 test('Thumbnails are not displayed when switching between tabs', async () => {
     const { findByLabelText, findByTestId, getByTestId } = render(
-        <TestThumbnails fileUrl={global['__OPEN_PARAMS_PDF__']} />
+        <TestThumbnails fileUrl={global['__OPEN_PARAMS_PDF__']} />,
     );
 
     const viewerEle = getByTestId('core__viewer');
@@ -51,7 +51,7 @@ test('Thumbnails are not displayed when switching between tabs', async () => {
     let firstThumbnail = await findByLabelText('Thumbnail of page 1');
     let firstThumbnailSrc = firstThumbnail.getAttribute('src');
     expect(firstThumbnailSrc?.substring(0, 100)).toEqual(
-        'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAACFCAYAAACt+l1zAAAABmJLR0QA/wD/AP+gvaeTAAAKX0lEQV'
+        'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAACFCAYAAACt+l1zAAAABmJLR0QA/wD/AP+gvaeTAAAKX0lEQV',
     );
     expect(firstThumbnailSrc?.length).toEqual(3662);
 
@@ -75,7 +75,7 @@ test('Thumbnails are not displayed when switching between tabs', async () => {
     firstThumbnail = await findByLabelText('Thumbnail of page 1');
     firstThumbnailSrc = firstThumbnail.getAttribute('src');
     expect(firstThumbnailSrc?.substring(0, 100)).toEqual(
-        'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAACFCAYAAACt+l1zAAAABmJLR0QA/wD/AP+gvaeTAAAKX0lEQV'
+        'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAACFCAYAAACt+l1zAAAABmJLR0QA/wD/AP+gvaeTAAAKX0lEQV',
     );
     expect(firstThumbnailSrc?.length).toEqual(3662);
 });

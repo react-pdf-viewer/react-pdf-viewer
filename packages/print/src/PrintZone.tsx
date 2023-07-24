@@ -100,6 +100,6 @@ export const PrintZone: React.FC<{
                 }}
             ></style>
         </>,
-        container
+        container,
     );
 };

@@ -37,6 +37,6 @@ test('Test the onPageChange() callback', async () => {
     await page.waitForSelector('[data-testid="core__text-layer-7"]', { visible: true });
     await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 8436');
     await page.waitForFunction(
-        () => 'document.querySelector("[data-testid=visited-pages]").textContent === "0, 2, 6, 7"'
+        () => 'document.querySelector("[data-testid=visited-pages]").textContent === "0, 2, 6, 7"',
     );
 });

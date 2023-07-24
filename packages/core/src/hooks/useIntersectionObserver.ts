@@ -41,7 +41,7 @@ export const useIntersectionObserver = (props: UseIntersectionObserverProps) => 
             },
             {
                 threshold: threshold || 0,
-            }
+            },
         );
         intersectionTracker.observe(container);
 

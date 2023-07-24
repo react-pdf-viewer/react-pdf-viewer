@@ -11,7 +11,7 @@ const path = require('path');
 const TestThumbnailsDynamicDocument = () => {
     const pageLabelDocument = React.useMemo(
         () => new Uint8Array(fs.readFileSync(path.resolve(__dirname, '../../../samples/ignore/page-labels.pdf'))),
-        []
+        [],
     );
 
     const [fileUrl, setFileUrl] = React.useState(global['__OPEN_PARAMS_PDF__']);
@@ -115,7 +115,7 @@ test('Test <Thumbnails /> with dynamic document', async () => {
     const firstThumbnailImage = await findByLabelText('Thumbnail of page 1');
     let src = firstThumbnailImage.getAttribute('src');
     expect(src?.slice(-100)).toEqual(
-        '22YLv+E21w1r9JgxV/1eSYivjBo96rrXX/djM0J8W7I7EkpIWEIJCUsoIWEJJSQsoYSEJZT4P6H2Uzo/EGifAAAAAElFTkSuQmCC'
+        '22YLv+E21w1r9JgxV/1eSYivjBo96rrXX/djM0J8W7I7EkpIWEIJCUsoIWEJJSQsoYSEJZT4P6H2Uzo/EGifAAAAAElFTkSuQmCC',
     );
     expect(src?.length).toEqual(6458);
     expect(firstThumbnailImage.getAttribute('width')).toEqual('150px');
@@ -167,7 +167,7 @@ test('Test <Thumbnails /> with dynamic document', async () => {
     const secondThumbnailImage = await findByLabelText('Thumbnail of page 2');
     src = secondThumbnailImage.getAttribute('src');
     expect(src?.substring(0, 100)).toEqual(
-        'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJYAAADCCAYAAACrHjsDAAAABmJLR0QA/wD/AP+gvaeTAAADCklEQV'
+        'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJYAAADCCAYAAACrHjsDAAAABmJLR0QA/wD/AP+gvaeTAAADCklEQV',
     );
     expect(src?.length).toEqual(1162);
     expect(secondThumbnailImage.getAttribute('width')).toEqual('150px');

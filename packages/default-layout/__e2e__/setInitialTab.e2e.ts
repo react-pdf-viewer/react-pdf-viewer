@@ -19,7 +19,7 @@ test('Set the initial tab', async () => {
     }));
     expect(props?.src?.length).toEqual(3678);
     expect(props?.src?.substring(0, 100)).toEqual(
-        'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAACFCAYAAACt+l1zAAAAAXNSR0IArs4c6QAACm5JREFUeF7tnX'
+        'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAACFCAYAAACt+l1zAAAAAXNSR0IArs4c6QAACm5JREFUeF7tnX',
     );
     expect(props?.height).toEqual('133.33333333333334px');
     expect(props?.width).toEqual('100px');

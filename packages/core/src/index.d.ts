@@ -759,7 +759,7 @@ export declare namespace PdfJs {
         OutlineRef | number,
         OutlineDestinationName,
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        ...any[]
+        ...any[],
     ];
     interface OutlineDestinationName {
         name: string; // Can be 'WYZ', 'Fit', ...

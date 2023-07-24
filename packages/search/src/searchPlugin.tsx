@@ -60,7 +60,7 @@ export const searchPlugin = (props?: SearchPluginProps): SearchPlugin => {
     const searchPluginProps = React.useMemo(
         // eslint-disable-next-line @typescript-eslint/no-empty-function
         () => Object.assign({}, { enableShortcuts: true, onHighlightKeyword: () => {} }, props),
-        []
+        [],
     );
     const store = React.useMemo(
         () =>
@@ -74,7 +74,7 @@ export const searchPlugin = (props?: SearchPluginProps): SearchPlugin => {
                 },
                 renderStatus: new Map<number, PluginOnTextLayerRender>(),
             }),
-        []
+        [],
     );
     const { clearKeyword, jumpToMatch, jumpToNextMatch, jumpToPreviousMatch, searchFor, setKeywords, setTargetPages } =
         useSearch(store);

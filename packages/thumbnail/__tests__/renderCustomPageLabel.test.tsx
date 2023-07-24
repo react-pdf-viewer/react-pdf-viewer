@@ -46,7 +46,7 @@ const TestPageLabel: React.FC<{
 
 test('Render custom page label', async () => {
     const pageLabelDocument = new Uint8Array(
-        fs.readFileSync(path.resolve(__dirname, '../../../samples/ignore/page-labels.pdf'))
+        fs.readFileSync(path.resolve(__dirname, '../../../samples/ignore/page-labels.pdf')),
     );
     const { findByTestId, findByText, getByTestId } = render(<TestPageLabel fileUrl={pageLabelDocument} />);
 
@@ -62,7 +62,7 @@ test('Render custom page label', async () => {
 
 test('Render custom page label 2', async () => {
     const pageLabelDocument2 = new Uint8Array(
-        fs.readFileSync(path.resolve(__dirname, '../../../samples/ignore/page-labels-2.pdf'))
+        fs.readFileSync(path.resolve(__dirname, '../../../samples/ignore/page-labels-2.pdf')),
     );
     const { findByTestId, findByText, getByTestId } = render(<TestPageLabel fileUrl={pageLabelDocument2} />);
 

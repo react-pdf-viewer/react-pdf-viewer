@@ -104,7 +104,7 @@ const TestRotatePageWithThumbnails: React.FC<{
 
 test('Rotate single page with thumbnails using renderPage', async () => {
     const { findByLabelText, findByTestId, getByTestId } = render(
-        <TestRotatePageWithThumbnails fileUrl={global['__OPEN_PARAMS_PDF__']} />
+        <TestRotatePageWithThumbnails fileUrl={global['__OPEN_PARAMS_PDF__']} />,
     );
 
     const viewerEle = getByTestId('core__viewer');
@@ -153,7 +153,7 @@ test('Rotate single page with thumbnails using renderPage', async () => {
     const thirdThumbnailImage = await findByLabelText('Thumbnail of page 3');
     let src = thirdThumbnailImage.getAttribute('src');
     expect(src?.substring(0, 100)).toEqual(
-        'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIUAAABkCAYAAACowvMbAAAABmJLR0QA/wD/AP+gvaeTAAAKA0lEQV'
+        'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIUAAABkCAYAAACowvMbAAAABmJLR0QA/wD/AP+gvaeTAAAKA0lEQV',
     );
     expect(src?.length).toEqual(3542);
     expect(thirdThumbnailImage.getAttribute('height')).toEqual('100px');

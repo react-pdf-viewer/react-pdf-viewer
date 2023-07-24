@@ -14,7 +14,7 @@ import type { VirtualItem } from './VirtualItem';
 export const buildItemContainerStyles = (
     item: VirtualItem,
     parentRect: Rect,
-    scrollMode: ScrollMode
+    scrollMode: ScrollMode,
 ): React.CSSProperties =>
     scrollMode !== ScrollMode.Page
         ? {}

@@ -70,7 +70,7 @@ export const PageThumbnail: React.FC<{
             },
             () => {
                 /**/
-            }
+            },
         );
     }, []);
 

@@ -11,7 +11,7 @@ const path = require('path');
 const TestCurrentPageLabelDynamicDocument = () => {
     const pageLabelDocument = React.useMemo(
         () => new Uint8Array(fs.readFileSync(path.resolve(__dirname, '../../../samples/ignore/page-labels-2.pdf'))),
-        []
+        [],
     );
 
     const [fileUrl, setFileUrl] = React.useState<Uint8Array>();

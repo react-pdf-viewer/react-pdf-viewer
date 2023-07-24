@@ -30,7 +30,7 @@ test('Keep highlighting after clicking zoom buttons in the default toolbar', asy
                 index: (node as HTMLElement).getAttribute('data-index'),
                 height: (node as HTMLElement).style.height,
                 width: (node as HTMLElement).style.width,
-            }))
+            })),
         );
         return highlightAreas;
     };

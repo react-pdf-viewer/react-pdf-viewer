@@ -23,7 +23,7 @@ test('Test renderThumbnailItem option with dynamic document', async () => {
 
     expect(props?.src?.length).toEqual(6974);
     expect(props?.src?.substring(0, 100)).toEqual(
-        'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJYAAADICAYAAAAKhRhlAAAAAXNSR0IArs4c6QAAFBhJREFUeF7tnQ'
+        'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJYAAADICAYAAAAKhRhlAAAAAXNSR0IArs4c6QAAFBhJREFUeF7tnQ',
     );
     expect(props?.width).toEqual('150px');
     expect(props?.height).toEqual('200px');
@@ -54,7 +54,7 @@ test('Test renderThumbnailItem option with dynamic document', async () => {
 
     expect(props?.src?.length).toEqual(5146);
     expect(props?.src?.substring(0, 100)).toEqual(
-        'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJYAAADCCAYAAACrHjsDAAAAAXNSR0IArs4c6QAADrtJREFUeF7tnQ'
+        'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJYAAADCCAYAAACrHjsDAAAAAXNSR0IArs4c6QAADrtJREFUeF7tnQ',
     );
     expect(props?.width).toEqual('150px');
     expect(props?.height).toEqual('194.11764705882354px');
