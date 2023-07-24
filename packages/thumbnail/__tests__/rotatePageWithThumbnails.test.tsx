@@ -1,7 +1,17 @@
-import type { RenderPage, RenderPageProps } from '@react-pdf-viewer/core';
-import { MinimalButton, Position, RotateDirection, Tooltip, Viewer } from '@react-pdf-viewer/core';
+import {
+    MinimalButton,
+    PdfJsApiContext,
+    Position,
+    RotateDirection,
+    Tooltip,
+    Viewer,
+    type PdfJsApiProvider,
+    type RenderPage,
+    type RenderPageProps,
+} from '@react-pdf-viewer/core';
 import { RotateBackwardIcon, RotateForwardIcon } from '@react-pdf-viewer/rotate';
 import { fireEvent, render, waitForElementToBeRemoved } from '@testing-library/react';
+import * as PdfJs from 'pdfjs-dist';
 import * as React from 'react';
 import { mockIsIntersecting } from '../../../test-utils/mockIntersectionObserver';
 import { mockResize } from '../../../test-utils/mockResizeObserver';
@@ -10,6 +20,7 @@ import { thumbnailPlugin } from '../src';
 const TestRotatePageWithThumbnails: React.FC<{
     fileUrl: Uint8Array;
 }> = ({ fileUrl }) => {
+    const apiProvider = PdfJs as unknown as PdfJsApiProvider;
     const thumbnailPluginInstance = thumbnailPlugin();
     const { Thumbnails } = thumbnailPluginInstance;
 
@@ -68,37 +79,39 @@ const TestRotatePageWithThumbnails: React.FC<{
     );
 
     return (
-        <div
-            style={{
-                border: '1px solid rgba(0, 0, 0, 0.1)',
-                display: 'flex',
-                height: '50rem',
-                margin: '1rem auto',
-                width: '64rem',
-            }}
-        >
+        <PdfJsApiContext.Provider value={{ pdfJsApiProvider: apiProvider }}>
             <div
                 style={{
-                    borderRight: '1px solid rgba(0, 0, 0, 0.1)',
-                    width: '20%',
+                    border: '1px solid rgba(0, 0, 0, 0.1)',
+                    display: 'flex',
+                    height: '50rem',
+                    margin: '1rem auto',
+                    width: '64rem',
                 }}
             >
-                <Thumbnails />
+                <div
+                    style={{
+                        borderRight: '1px solid rgba(0, 0, 0, 0.1)',
+                        width: '20%',
+                    }}
+                >
+                    <Thumbnails />
+                </div>
+                <div
+                    style={{
+                        flex: 1,
+                        overflow: 'hidden',
+                    }}
+                >
+                    <Viewer
+                        defaultScale={0.5}
+                        fileUrl={fileUrl}
+                        plugins={[thumbnailPluginInstance]}
+                        renderPage={renderPage}
+                    />
+                </div>
             </div>
-            <div
-                style={{
-                    flex: 1,
-                    overflow: 'hidden',
-                }}
-            >
-                <Viewer
-                    defaultScale={0.5}
-                    fileUrl={fileUrl}
-                    plugins={[thumbnailPluginInstance]}
-                    renderPage={renderPage}
-                />
-            </div>
-        </div>
+        </PdfJsApiContext.Provider>
     );
 };
 

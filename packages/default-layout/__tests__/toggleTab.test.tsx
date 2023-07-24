@@ -1,5 +1,6 @@
-import { Button, Viewer } from '@react-pdf-viewer/core';
+import { Button, PdfJsApiContext, Viewer, type PdfJsApiProvider } from '@react-pdf-viewer/core';
 import { fireEvent, render, waitForElementToBeRemoved } from '@testing-library/react';
+import * as PdfJs from 'pdfjs-dist';
 import * as React from 'react';
 import { mockIsIntersecting } from '../../../test-utils/mockIntersectionObserver';
 import { defaultLayoutPlugin } from '../src';
@@ -8,41 +9,44 @@ const TestToggleTab: React.FC<{
     fileUrl: Uint8Array;
     initialTab: number;
 }> = ({ fileUrl, initialTab }) => {
+    const apiProvider = PdfJs as unknown as PdfJsApiProvider;
     const defaultLayoutPluginInstance = defaultLayoutPlugin();
     const { toggleTab } = defaultLayoutPluginInstance;
 
     return (
-        <div
-            style={{
-                margin: '1rem auto',
-                width: '50rem',
-            }}
-        >
+        <PdfJsApiContext.Provider value={{ pdfJsApiProvider: apiProvider }}>
             <div
                 style={{
-                    alignItems: 'center',
-                    display: 'flex',
-                    marginBottom: '1rem',
+                    margin: '1rem auto',
+                    width: '50rem',
                 }}
             >
-                <div style={{ marginRight: '0.5rem' }}>
-                    <Button testId="toggle-thumbnail-tab" onClick={() => toggleTab(0)}>
-                        Toggle thumbnail tab
+                <div
+                    style={{
+                        alignItems: 'center',
+                        display: 'flex',
+                        marginBottom: '1rem',
+                    }}
+                >
+                    <div style={{ marginRight: '0.5rem' }}>
+                        <Button testId="toggle-thumbnail-tab" onClick={() => toggleTab(0)}>
+                            Toggle thumbnail tab
+                        </Button>
+                    </div>
+                    <div style={{ marginRight: '0.5rem' }}>
+                        <Button testId="toggle-bookmark-tab" onClick={() => toggleTab(1)}>
+                            Toggle bookmark tab
+                        </Button>
+                    </div>
+                    <Button testId="toggle-attachment-tab" onClick={() => toggleTab(2)}>
+                        Toggle attachment tab
                     </Button>
                 </div>
-                <div style={{ marginRight: '0.5rem' }}>
-                    <Button testId="toggle-bookmark-tab" onClick={() => toggleTab(1)}>
-                        Toggle bookmark tab
-                    </Button>
+                <div style={{ height: '50rem' }}>
+                    <Viewer fileUrl={fileUrl} plugins={[defaultLayoutPluginInstance]} />
                 </div>
-                <Button testId="toggle-attachment-tab" onClick={() => toggleTab(2)}>
-                    Toggle attachment tab
-                </Button>
             </div>
-            <div style={{ height: '50rem' }}>
-                <Viewer fileUrl={fileUrl} plugins={[defaultLayoutPluginInstance]} />
-            </div>
-        </div>
+        </PdfJsApiContext.Provider>
     );
 };
 

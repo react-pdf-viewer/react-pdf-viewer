@@ -1,5 +1,6 @@
-import { PrimaryButton, Viewer } from '@react-pdf-viewer/core';
+import { PdfJsApiContext, PrimaryButton, Viewer, type PdfJsApiProvider } from '@react-pdf-viewer/core';
 import { fireEvent, render, screen, waitForElementToBeRemoved } from '@testing-library/react';
+import * as PdfJs from 'pdfjs-dist';
 import * as React from 'react';
 import { mockIsIntersecting } from '../../../test-utils/mockIntersectionObserver';
 import { zoomPlugin } from '../src';
@@ -7,11 +8,12 @@ import { zoomPlugin } from '../src';
 const TestCallZoomMethod: React.FC<{
     fileUrl: Uint8Array;
 }> = ({ fileUrl }) => {
+    const apiProvider = PdfJs as unknown as PdfJsApiProvider;
     const zoomPluginInstance = zoomPlugin();
     const { zoomTo } = zoomPluginInstance;
 
     return (
-        <>
+        <PdfJsApiContext.Provider value={{ pdfJsApiProvider: apiProvider }}>
             <div
                 style={{
                     marginBottom: '16px',
@@ -28,7 +30,7 @@ const TestCallZoomMethod: React.FC<{
             >
                 <Viewer fileUrl={fileUrl} plugins={[zoomPluginInstance]} />
             </div>
-        </>
+        </PdfJsApiContext.Provider>
     );
 };
 

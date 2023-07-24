@@ -1,13 +1,17 @@
 import { render } from '@testing-library/react';
+import * as PdfJs from 'pdfjs-dist';
 import * as React from 'react';
 import { mockIsIntersecting } from '../../../test-utils/mockIntersectionObserver';
-import { Viewer } from '../src';
+import { PdfJsApiContext, Viewer, type PdfJsApiProvider } from '../src';
 
 test('Lazy load page', async () => {
+    const apiProvider = PdfJs as unknown as PdfJsApiProvider;
     const App = () => (
-        <div style={{ height: '720px' }}>
-            <Viewer fileUrl={new Uint8Array(global['__MULTIPLE_PAGES_PDF__'])} />
-        </div>
+        <PdfJsApiContext.Provider value={{ pdfJsApiProvider: apiProvider }}>
+            <div style={{ height: '720px' }}>
+                <Viewer fileUrl={new Uint8Array(global['__MULTIPLE_PAGES_PDF__'])} />
+            </div>
+        </PdfJsApiContext.Provider>
     );
     const { findByText, getByTestId } = render(<App />);
     mockIsIntersecting(getByTestId('core__viewer'), true);

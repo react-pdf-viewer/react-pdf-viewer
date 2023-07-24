@@ -1,5 +1,6 @@
-import { Button, Viewer } from '@react-pdf-viewer/core';
+import { Button, PdfJsApiContext, Viewer, type PdfJsApiProvider } from '@react-pdf-viewer/core';
 import { fireEvent, render, screen, waitForElementToBeRemoved } from '@testing-library/react';
+import * as PdfJs from 'pdfjs-dist';
 import * as React from 'react';
 import { mockIsIntersecting } from '../../../test-utils/mockIntersectionObserver';
 import { mockResize } from '../../../test-utils/mockResizeObserver';
@@ -9,6 +10,7 @@ const fs = require('fs');
 const path = require('path');
 
 const TestThumbnailsDynamicDocument = () => {
+    const apiProvider = PdfJs as unknown as PdfJsApiProvider;
     const pageLabelDocument = React.useMemo(
         () => new Uint8Array(fs.readFileSync(path.resolve(__dirname, '../../../samples/ignore/page-labels.pdf'))),
         [],
@@ -21,51 +23,53 @@ const TestThumbnailsDynamicDocument = () => {
     const { Thumbnails } = thumbnailPluginInstance;
 
     return (
-        <div
-            data-testid="root"
-            style={{
-                margin: '1rem auto',
-                width: '64rem',
-            }}
-        >
+        <PdfJsApiContext.Provider value={{ pdfJsApiProvider: apiProvider }}>
             <div
+                data-testid="root"
                 style={{
-                    alignItems: 'center',
-                    display: 'flex',
-                    marginBottom: '1rem',
-                }}
-            >
-                <div style={{ marginRight: '0.5rem' }}>
-                    <Button testId="load-doc-1" onClick={() => setFileUrl(global['__OPEN_PARAMS_PDF__'])}>
-                        Load document 1
-                    </Button>
-                </div>
-                <Button testId="load-doc-2" onClick={() => setFileUrl(pageLabelDocument)}>
-                    Load document 2
-                </Button>
-            </div>
-            <div
-                style={{
-                    border: '1px solid rgba(0, 0, 0, 0.3)',
-                    display: 'flex',
-                    height: '50rem',
-                    width: '50rem',
+                    margin: '1rem auto',
+                    width: '64rem',
                 }}
             >
                 <div
                     style={{
-                        borderRight: '1px solid rgba(0, 0, 0, 0.3)',
-                        overflow: 'auto',
-                        width: '15rem',
+                        alignItems: 'center',
+                        display: 'flex',
+                        marginBottom: '1rem',
                     }}
                 >
-                    <Thumbnails />
+                    <div style={{ marginRight: '0.5rem' }}>
+                        <Button testId="load-doc-1" onClick={() => setFileUrl(global['__OPEN_PARAMS_PDF__'])}>
+                            Load document 1
+                        </Button>
+                    </div>
+                    <Button testId="load-doc-2" onClick={() => setFileUrl(pageLabelDocument)}>
+                        Load document 2
+                    </Button>
                 </div>
-                <div style={{ flex: 1 }}>
-                    <Viewer fileUrl={fileUrl} plugins={[thumbnailPluginInstance]} />
+                <div
+                    style={{
+                        border: '1px solid rgba(0, 0, 0, 0.3)',
+                        display: 'flex',
+                        height: '50rem',
+                        width: '50rem',
+                    }}
+                >
+                    <div
+                        style={{
+                            borderRight: '1px solid rgba(0, 0, 0, 0.3)',
+                            overflow: 'auto',
+                            width: '15rem',
+                        }}
+                    >
+                        <Thumbnails />
+                    </div>
+                    <div style={{ flex: 1 }}>
+                        <Viewer fileUrl={fileUrl} plugins={[thumbnailPluginInstance]} />
+                    </div>
                 </div>
             </div>
-        </div>
+        </PdfJsApiContext.Provider>
     );
 };
 

@@ -1,13 +1,17 @@
 import { render } from '@testing-library/react';
+import * as PdfJs from 'pdfjs-dist';
 import * as React from 'react';
 import { mockAllIsIntersecting } from '../../../test-utils/mockIntersectionObserver';
-import { Viewer } from '../src';
+import { PdfJsApiContext, Viewer, type PdfJsApiProvider } from '../src';
 
 test('Load document successfully', async () => {
+    const apiProvider = PdfJs as unknown as PdfJsApiProvider;
     const App = () => (
-        <div style={{ height: '720px' }}>
-            <Viewer fileUrl={global['__SAMPLE_PDF__']} />
-        </div>
+        <PdfJsApiContext.Provider value={{ pdfJsApiProvider: apiProvider }}>
+            <div style={{ height: '720px' }}>
+                <Viewer fileUrl={global['__SAMPLE_PDF__']} />
+            </div>
+        </PdfJsApiContext.Provider>
     );
     const { findByText } = render(<App />);
     mockAllIsIntersecting(true);

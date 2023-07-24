@@ -1,5 +1,6 @@
-import { Icon, Viewer } from '@react-pdf-viewer/core';
+import { Icon, PdfJsApiContext, Viewer, type PdfJsApiProvider } from '@react-pdf-viewer/core';
 import { fireEvent, render, waitForElementToBeRemoved } from '@testing-library/react';
+import * as PdfJs from 'pdfjs-dist';
 import * as React from 'react';
 import { mockIsIntersecting } from '../../../test-utils/mockIntersectionObserver';
 import type { RenderBookmarkItemProps } from '../src';
@@ -20,6 +21,7 @@ const CollapseIcon = () => (
 const TestCustomizeBookmarks: React.FC<{
     fileUrl: Uint8Array;
 }> = ({ fileUrl }) => {
+    const apiProvider = PdfJs as unknown as PdfJsApiProvider;
     const bookmarkPluginInstance = bookmarkPlugin();
     const { Bookmarks } = bookmarkPluginInstance;
 
@@ -33,28 +35,30 @@ const TestCustomizeBookmarks: React.FC<{
         );
 
     return (
-        <div
-            style={{
-                border: '1px solid rgba(0, 0, 0, 0.3)',
-                display: 'flex',
-                height: '50rem',
-                width: '50rem',
-                margin: '1rem auto',
-            }}
-        >
+        <PdfJsApiContext.Provider value={{ pdfJsApiProvider: apiProvider }}>
             <div
                 style={{
-                    borderRight: '1px solid rgba(0, 0, 0, 0.3)',
-                    overflow: 'auto',
-                    width: '15%',
+                    border: '1px solid rgba(0, 0, 0, 0.3)',
+                    display: 'flex',
+                    height: '50rem',
+                    width: '50rem',
+                    margin: '1rem auto',
                 }}
             >
-                <Bookmarks renderBookmarkItem={renderBookmarkItem} />
+                <div
+                    style={{
+                        borderRight: '1px solid rgba(0, 0, 0, 0.3)',
+                        overflow: 'auto',
+                        width: '15%',
+                    }}
+                >
+                    <Bookmarks renderBookmarkItem={renderBookmarkItem} />
+                </div>
+                <div style={{ flex: 1 }}>
+                    <Viewer fileUrl={fileUrl} plugins={[bookmarkPluginInstance]} />
+                </div>
             </div>
-            <div style={{ flex: 1 }}>
-                <Viewer fileUrl={fileUrl} plugins={[bookmarkPluginInstance]} />
-            </div>
-        </div>
+        </PdfJsApiContext.Provider>
     );
 };
 

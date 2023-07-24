@@ -1,5 +1,6 @@
-import { Viewer } from '@react-pdf-viewer/core';
+import { PdfJsApiContext, Viewer, type PdfJsApiProvider } from '@react-pdf-viewer/core';
 import { render, waitForElementToBeRemoved } from '@testing-library/react';
+import * as PdfJs from 'pdfjs-dist';
 import * as React from 'react';
 import { mockIsIntersecting } from '../../../test-utils/mockIntersectionObserver';
 import { defaultLayoutPlugin } from '../src';
@@ -8,14 +9,17 @@ const TestSetInitialTab: React.FC<{
     fileUrl: Uint8Array;
     initialTab: number;
 }> = ({ fileUrl, initialTab }) => {
+    const apiProvider = PdfJs as unknown as PdfJsApiProvider;
     const defaultLayoutPluginInstance = defaultLayoutPlugin({
         setInitialTab: () => Promise.resolve(initialTab),
     });
 
     return (
-        <div style={{ height: '50rem', width: '50rem' }}>
-            <Viewer fileUrl={fileUrl} plugins={[defaultLayoutPluginInstance]} />
-        </div>
+        <PdfJsApiContext.Provider value={{ pdfJsApiProvider: apiProvider }}>
+            <div style={{ height: '50rem', width: '50rem' }}>
+                <Viewer fileUrl={fileUrl} plugins={[defaultLayoutPluginInstance]} />
+            </div>
+        </PdfJsApiContext.Provider>
     );
 };
 

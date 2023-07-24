@@ -1,5 +1,6 @@
-import { Viewer } from '@react-pdf-viewer/core';
+import { PdfJsApiContext, Viewer, type PdfJsApiProvider } from '@react-pdf-viewer/core';
 import { fireEvent, render, waitForElementToBeRemoved } from '@testing-library/react';
+import * as PdfJs from 'pdfjs-dist';
 import * as React from 'react';
 import { mockIsIntersecting } from '../../../test-utils/mockIntersectionObserver';
 import { toolbarPlugin } from '../src';
@@ -7,31 +8,34 @@ import { toolbarPlugin } from '../src';
 const TestSwitchScrollMode: React.FC<{
     fileUrl: Uint8Array;
 }> = ({ fileUrl }) => {
+    const apiProvider = PdfJs as unknown as PdfJsApiProvider;
     const toolbarPluginInstance = toolbarPlugin();
     const { Toolbar } = toolbarPluginInstance;
 
     return (
-        <div
-            style={{
-                border: '1px solid rgba(0, 0, 0, 0.3)',
-                display: 'flex',
-                flexDirection: 'column',
-                height: '50rem',
-                width: '50rem',
-            }}
-        >
-            <div>
-                <Toolbar />
-            </div>
+        <PdfJsApiContext.Provider value={{ pdfJsApiProvider: apiProvider }}>
             <div
                 style={{
-                    flex: 1,
-                    overflow: 'hidden',
+                    border: '1px solid rgba(0, 0, 0, 0.3)',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    height: '50rem',
+                    width: '50rem',
                 }}
             >
-                <Viewer fileUrl={fileUrl} plugins={[toolbarPluginInstance]} />
+                <div>
+                    <Toolbar />
+                </div>
+                <div
+                    style={{
+                        flex: 1,
+                        overflow: 'hidden',
+                    }}
+                >
+                    <Viewer fileUrl={fileUrl} plugins={[toolbarPluginInstance]} />
+                </div>
             </div>
-        </div>
+        </PdfJsApiContext.Provider>
     );
 };
 

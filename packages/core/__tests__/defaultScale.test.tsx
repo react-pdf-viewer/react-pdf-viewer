@@ -1,13 +1,17 @@
 import { render } from '@testing-library/react';
+import * as PdfJs from 'pdfjs-dist';
 import * as React from 'react';
 import { mockIsIntersecting } from '../../../test-utils/mockIntersectionObserver';
-import { Viewer } from '../src';
+import { PdfJsApiContext, Viewer, type PdfJsApiProvider } from '../src';
 
 test('defaultScale option', async () => {
+    const apiProvider = PdfJs as unknown as PdfJsApiProvider;
     const App = () => (
-        <div style={{ height: '720px', width: '600px' }}>
-            <Viewer fileUrl={global['__SAMPLE_PDF__']} defaultScale={1.5} />
-        </div>
+        <PdfJsApiContext.Provider value={{ pdfJsApiProvider: apiProvider }}>
+            <div style={{ height: '720px', width: '600px' }}>
+                <Viewer fileUrl={global['__SAMPLE_PDF__']} defaultScale={1.5} />
+            </div>
+        </PdfJsApiContext.Provider>
     );
     const { getByTestId, findByTestId } = render(<App />);
     mockIsIntersecting(getByTestId('core__viewer'), true);

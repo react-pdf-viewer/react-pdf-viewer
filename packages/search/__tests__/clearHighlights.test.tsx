@@ -1,20 +1,22 @@
-import { Viewer } from '@react-pdf-viewer/core';
+import { PdfJsApiContext, Viewer, type PdfJsApiProvider } from '@react-pdf-viewer/core';
 import { findAllByTitle } from '@testing-library/dom';
 import { fireEvent, render, screen, waitForElementToBeRemoved } from '@testing-library/react';
+import * as PdfJs from 'pdfjs-dist';
 import * as React from 'react';
 import { mockIsIntersecting } from '../../../test-utils/mockIntersectionObserver';
-import { searchPlugin } from '../src';
 import type { SingleKeyword } from '../src';
+import { searchPlugin } from '../src';
 
 const TestClearHighlights: React.FC<{
     fileUrl: Uint8Array;
     keywords: SingleKeyword[];
 }> = ({ fileUrl, keywords }) => {
+    const apiProvider = PdfJs as unknown as PdfJsApiProvider;
     const searchPluginInstance = searchPlugin();
     const { clearHighlights, highlight } = searchPluginInstance;
 
     return (
-        <div>
+        <PdfJsApiContext.Provider value={{ pdfJsApiProvider: apiProvider }}>
             <div
                 style={{
                     display: 'flex',
@@ -37,7 +39,7 @@ const TestClearHighlights: React.FC<{
             >
                 <Viewer fileUrl={fileUrl} plugins={[searchPluginInstance]} />
             </div>
-        </div>
+        </PdfJsApiContext.Provider>
     );
 };
 

@@ -1,6 +1,7 @@
-import { ThemeContext, Viewer } from '@react-pdf-viewer/core';
-import { defaultLayoutPlugin, ToolbarProps } from '@react-pdf-viewer/default-layout';
+import { PdfJsApiContext, ThemeContext, Viewer, type PdfJsApiProvider } from '@react-pdf-viewer/core';
+import { ToolbarProps, defaultLayoutPlugin } from '@react-pdf-viewer/default-layout';
 import { fireEvent, render, waitForElementToBeRemoved } from '@testing-library/react';
+import * as PdfJs from 'pdfjs-dist';
 import * as React from 'react';
 import { mockIsIntersecting } from '../../../test-utils/mockIntersectionObserver';
 import { themePlugin } from '../src';
@@ -8,6 +9,7 @@ import { themePlugin } from '../src';
 const TestSwitchThemeButtonWithDefaultLayout: React.FC<{
     fileUrl: Uint8Array;
 }> = ({ fileUrl }) => {
+    const apiProvider = PdfJs as unknown as PdfJsApiProvider;
     const renderToolbar = (Toolbar: (props: ToolbarProps) => React.ReactElement) => (
         <div style={{ display: 'flex' }}>
             <SwitchThemeButton />
@@ -22,15 +24,17 @@ const TestSwitchThemeButtonWithDefaultLayout: React.FC<{
     const { SwitchThemeButton } = themePluginInstance;
 
     return (
-        <div
-            style={{
-                border: '1px solid rgba(0, 0, 0, .3)',
-                height: '50rem',
-                width: '50rem',
-            }}
-        >
-            <Viewer fileUrl={fileUrl} plugins={[defaultLayoutPluginInstance]} />
-        </div>
+        <PdfJsApiContext.Provider value={{ pdfJsApiProvider: apiProvider }}>
+            <div
+                style={{
+                    border: '1px solid rgba(0, 0, 0, .3)',
+                    height: '50rem',
+                    width: '50rem',
+                }}
+            >
+                <Viewer fileUrl={fileUrl} plugins={[defaultLayoutPluginInstance]} />
+            </div>
+        </PdfJsApiContext.Provider>
     );
 };
 
