@@ -1,10 +1,10 @@
-import { classNames, PdfJsApiContext, Viewer, type PdfJsApiProvider } from '@react-pdf-viewer/core';
+import { PdfJsApiContext, Viewer, classNames, type PdfJsApiProvider } from '@react-pdf-viewer/core';
 import { fireEvent, render, screen, waitForElementToBeRemoved } from '@testing-library/react';
 import * as PdfJs from 'pdfjs-dist';
 import * as React from 'react';
 import { mockIsIntersecting } from '../../../test-utils/mockIntersectionObserver';
 import { mockResize } from '../../../test-utils/mockResizeObserver';
-import { RenderThumbnailItemProps, thumbnailPlugin } from '../src';
+import { thumbnailPlugin, type RenderThumbnailItemProps } from '../src';
 
 const TestRenderThumbnailItem: React.FC<{
     fileUrl: Uint8Array;

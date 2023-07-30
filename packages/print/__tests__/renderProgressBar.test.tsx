@@ -3,8 +3,7 @@ import { fireEvent, render, waitForElementToBeRemoved } from '@testing-library/r
 import * as PdfJs from 'pdfjs-dist';
 import * as React from 'react';
 import { mockIsIntersecting } from '../../../test-utils/mockIntersectionObserver';
-import type { RenderPrintProps } from '../src';
-import { printPlugin } from '../src';
+import { printPlugin, type RenderPrintProps } from '../src';
 
 const TestCustomProgressBar: React.FC<{
     fileUrl: Uint8Array;

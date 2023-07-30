@@ -4,8 +4,7 @@ import { fireEvent, render, screen, waitForElementToBeRemoved } from '@testing-l
 import * as PdfJs from 'pdfjs-dist';
 import * as React from 'react';
 import { mockIsIntersecting } from '../../../test-utils/mockIntersectionObserver';
-import type { SingleKeyword } from '../src';
-import { searchPlugin } from '../src';
+import { searchPlugin, type SingleKeyword } from '../src';
 
 const TestClearHighlights: React.FC<{
     fileUrl: Uint8Array;

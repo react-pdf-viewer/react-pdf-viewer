@@ -1,5 +1,12 @@
-import type { Plugin, RenderViewer } from '@react-pdf-viewer/core';
-import { PdfJsApiContext, PrimaryButton, RotateDirection, Viewer, type PdfJsApiProvider } from '@react-pdf-viewer/core';
+import {
+    PdfJsApiContext,
+    PrimaryButton,
+    RotateDirection,
+    Viewer,
+    type PdfJsApiProvider,
+    type Plugin,
+    type RenderViewer,
+} from '@react-pdf-viewer/core';
 import { rotatePlugin } from '@react-pdf-viewer/rotate';
 import { render, waitForElementToBeRemoved } from '@testing-library/react';
 import * as PdfJs from 'pdfjs-dist';

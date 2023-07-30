@@ -1,4 +1,3 @@
-import type { Toggle } from '@react-pdf-viewer/core';
 import {
     Button,
     Modal,
@@ -7,6 +6,7 @@ import {
     TextBox,
     Viewer,
     type PdfJsApiProvider,
+    type Toggle,
 } from '@react-pdf-viewer/core';
 import { fireEvent, render, waitForElementToBeRemoved } from '@testing-library/react';
 import * as PdfJs from 'pdfjs-dist';
