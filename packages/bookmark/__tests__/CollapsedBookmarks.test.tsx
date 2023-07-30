@@ -1,12 +1,11 @@
 import { PdfJsApiContext, Viewer, type PdfJsApiProvider } from '@react-pdf-viewer/core';
 import { render, waitForElementToBeRemoved } from '@testing-library/react';
+import * as fs from 'node:fs';
+import * as path from 'path';
 import * as PdfJs from 'pdfjs-dist';
 import * as React from 'react';
 import { mockIsIntersecting } from '../../../test-utils/mockIntersectionObserver';
 import { bookmarkPlugin } from '../src';
-
-const fs = require('fs');
-const path = require('path');
 
 const TestCollapsedBookmarks: React.FC<{
     fileUrl: Uint8Array;
