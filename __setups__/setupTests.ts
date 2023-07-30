@@ -1,11 +1,15 @@
 import '@testing-library/jest-dom/extend-expect';
+import { TextDecoder } from 'util';
+import { ReadableStream } from 'web-streams-polyfill/ponyfill';
 import { SimpleMockResizeObserver } from './SimpleMockResizeObserver';
 
 // Polyfill ReadableStream
-import { ReadableStream } from 'web-streams-polyfill/ponyfill';
 global.ReadableStream = ReadableStream;
 
 global.ResizeObserver = SimpleMockResizeObserver;
+
+// Fix issue `TextDecoder is not defined`
+global.TextDecoder = TextDecoder;
 
 // Mock `clientWidth`, `clientHeight`
 Object.defineProperty(window.HTMLElement.prototype, 'clientHeight', {
