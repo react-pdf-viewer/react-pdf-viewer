@@ -6,7 +6,7 @@
  * @copyright 2019-2023 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import type { HighlightArea } from './types/HighlightArea';
+import { type HighlightArea } from './types/HighlightArea';
 
 export const getImageFromArea = () => {
     const newCanvas = document.createElement('canvas');

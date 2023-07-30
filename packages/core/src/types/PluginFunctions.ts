@@ -10,8 +10,8 @@ import { RotateDirection } from '../structs/RotateDirection';
 import { ScrollMode } from '../structs/ScrollMode';
 import { SpecialZoomLevel } from '../structs/SpecialZoomLevel';
 import { ViewMode } from '../structs/ViewMode';
-import type { Destination } from './Destination';
-import type { ViewerState } from './ViewerState';
+import { type Destination } from './Destination';
+import { type ViewerState } from './ViewerState';
 
 export interface PluginFunctions {
     enterFullScreenMode(target: HTMLElement): void;

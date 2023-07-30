@@ -7,8 +7,8 @@
  */
 
 import * as React from 'react';
-import type { PdfJs } from '../types/PdfJs';
-import type { Slot } from '../types/Slot';
+import { type PdfJs } from '../types/PdfJs';
+import { type Slot } from '../types/Slot';
 import { AnnotationBorderStyleType } from './AnnotationBorderStyleType';
 import { PopupWrapper } from './PopupWrapper';
 import { useTogglePopup } from './useTogglePopup';

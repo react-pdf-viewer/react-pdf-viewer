@@ -8,7 +8,7 @@
 
 import * as React from 'react';
 import { ToggleStatus } from '../structs/ToggleStatus';
-import type { Toggle } from '../types/Toggle';
+import { type Toggle } from '../types/Toggle';
 
 export const useToggle = (isOpened: boolean): { opened: boolean; toggle: Toggle } => {
     const [opened, setOpened] = React.useState(isOpened);

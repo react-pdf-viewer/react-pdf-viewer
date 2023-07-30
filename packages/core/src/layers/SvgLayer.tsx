@@ -8,7 +8,7 @@
 
 import * as React from 'react';
 import { useIsomorphicLayoutEffect } from '../hooks/useIsomorphicLayoutEffect';
-import type { PdfJs } from '../types/PdfJs';
+import { type PdfJs } from '../types/PdfJs';
 import { PdfJsApiContext } from '../vendors/PdfJsApiContext';
 
 export const SvgLayer: React.FC<{

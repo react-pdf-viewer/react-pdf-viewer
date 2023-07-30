@@ -6,13 +6,12 @@
  * @copyright 2019-2023 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import type { Store, Toggle } from '@react-pdf-viewer/core';
-import { Popover, Position, TextDirection, ThemeContext } from '@react-pdf-viewer/core';
+import { Popover, Position, TextDirection, ThemeContext, type Store, type Toggle } from '@react-pdf-viewer/core';
 import * as React from 'react';
 import { SearchPopover } from './SearchPopover';
 import { ShowSearchPopoverButton } from './ShowSearchPopoverButton';
-import type { RenderShowSearchPopoverProps } from './types/RenderShowSearchPopoverProps';
-import type { StoreProps } from './types/StoreProps';
+import { type RenderShowSearchPopoverProps } from './types/RenderShowSearchPopoverProps';
+import { type StoreProps } from './types/StoreProps';
 
 type RenderShowSearchPopover = (props: RenderShowSearchPopoverProps) => React.ReactElement;
 

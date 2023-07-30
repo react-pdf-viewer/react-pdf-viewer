@@ -6,8 +6,7 @@
  * @copyright 2019-2023 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import type { LocalizationMap } from '@react-pdf-viewer/core';
-import { LocalizationContext, ScrollMode } from '@react-pdf-viewer/core';
+import { LocalizationContext, ScrollMode, type LocalizationMap } from '@react-pdf-viewer/core';
 import * as React from 'react';
 import { HorizontalScrollingIcon } from './HorizontalScrollingIcon';
 import { PageScrollingIcon } from './PageScrollingIcon';

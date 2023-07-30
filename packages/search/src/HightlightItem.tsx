@@ -9,8 +9,8 @@
 import { useIsomorphicLayoutEffect } from '@react-pdf-viewer/core';
 import * as React from 'react';
 import { getCssProperties } from './getCssProperties';
-import type { OnHighlightKeyword } from './types/OnHighlightKeyword';
-import type { HighlightArea } from './types/RenderHighlightsProps';
+import { type OnHighlightKeyword } from './types/OnHighlightKeyword';
+import { type HighlightArea } from './types/RenderHighlightsProps';
 
 export const HightlightItem: React.FC<{
     index: number;

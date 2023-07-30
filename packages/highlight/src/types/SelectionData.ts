@@ -6,7 +6,7 @@
  * @copyright 2019-2023 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import type { DivText } from './DivText';
+import { type DivText } from './DivText';
 
 export interface SelectionData {
     divTexts: DivText[];

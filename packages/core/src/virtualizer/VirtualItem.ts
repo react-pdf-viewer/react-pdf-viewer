@@ -6,7 +6,7 @@
  * @copyright 2019-2023 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import type { ItemMeasurement } from './ItemMeasurement';
+import { type ItemMeasurement } from './ItemMeasurement';
 
 export interface VirtualItem extends ItemMeasurement {
     measureRef: (ele: HTMLElement) => void;

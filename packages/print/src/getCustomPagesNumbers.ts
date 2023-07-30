@@ -6,7 +6,7 @@
  * @copyright 2019-2023 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import type { PdfJs } from '@react-pdf-viewer/core';
+import { type PdfJs } from '@react-pdf-viewer/core';
 
 const generateRange = (min: number, max: number): number[] =>
     Array(max - min + 1)

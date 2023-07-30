@@ -9,9 +9,9 @@
 import * as React from 'react';
 import { ScrollMode } from '../structs/ScrollMode';
 import { ViewMode } from '../structs/ViewMode';
-import type { Rect } from '../types/Rect';
+import { type Rect } from '../types/Rect';
 import { chunk } from '../utils/chunk';
-import type { VirtualItem } from './VirtualItem';
+import { type VirtualItem } from './VirtualItem';
 
 const hasDifferentSizes = (sizes: Rect[]): boolean => {
     const numberOfItems = sizes.length;

@@ -6,9 +6,9 @@
  * @copyright 2019-2023 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import type { PdfJs, Store, StoreHandler } from '@react-pdf-viewer/core';
+import { type PdfJs, type Store, type StoreHandler } from '@react-pdf-viewer/core';
 import * as React from 'react';
-import type { StoreProps } from './types/StoreProps';
+import { type StoreProps } from './types/StoreProps';
 
 export const useDocument = (store: Store<StoreProps>): PdfJs.PdfDocument => {
     const [currentDoc, setCurrentDoc] = React.useState(store.get('doc'));

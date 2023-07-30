@@ -12,9 +12,9 @@ import { TextBox } from '../components/TextBox';
 import { LocalizationContext } from '../localization/LocalizationContext';
 import { PasswordStatus } from '../structs/PasswordStatus';
 import { TextDirection, ThemeContext } from '../theme/ThemeContext';
-import type { DocumentAskPasswordEvent } from '../types/DocumentAskPasswordEvent';
-import type { LocalizationMap } from '../types/LocalizationMap';
-import type { RenderProtectedView } from '../types/RenderProtectedView';
+import { type DocumentAskPasswordEvent } from '../types/DocumentAskPasswordEvent';
+import { type LocalizationMap } from '../types/LocalizationMap';
+import { type RenderProtectedView } from '../types/RenderProtectedView';
 import { classNames } from '../utils/classNames';
 
 export const AskingPassword: React.FC<{

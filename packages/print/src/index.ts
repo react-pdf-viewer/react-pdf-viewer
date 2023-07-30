@@ -6,12 +6,12 @@
  * @copyright 2019-2023 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
+export { type PrintProps } from './Print';
+export { PrintIcon } from './PrintIcon';
+export { type PrintMenuItemProps } from './PrintMenuItem';
 export { getAllPagesNumbers } from './getAllPagesNumbers';
 export { getCustomPagesNumbers } from './getCustomPagesNumbers';
 export { getEvenPagesNumbers } from './getEvenPagesNumbers';
 export { getOddPagesNumbers } from './getOddPagesNumbers';
-export type { PrintProps } from './Print';
-export { PrintIcon } from './PrintIcon';
-export type { PrintMenuItemProps } from './PrintMenuItem';
 export * from './printPlugin';
-export type { RenderPrintProps } from './types/RenderPrintProps';
+export { type RenderPrintProps } from './types/RenderPrintProps';

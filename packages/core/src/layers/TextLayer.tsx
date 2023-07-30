@@ -9,8 +9,8 @@
 import * as React from 'react';
 import { useIsomorphicLayoutEffect } from '../hooks/useIsomorphicLayoutEffect';
 import { LayerRenderStatus } from '../structs/LayerRenderStatus';
-import type { PdfJs } from '../types/PdfJs';
-import type { Plugin } from '../types/Plugin';
+import { type PdfJs } from '../types/PdfJs';
+import { type Plugin } from '../types/Plugin';
 import { PdfJsApiContext } from '../vendors/PdfJsApiContext';
 
 export const TextLayer: React.FC<{

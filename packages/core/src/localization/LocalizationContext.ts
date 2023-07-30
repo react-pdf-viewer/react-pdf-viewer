@@ -7,7 +7,7 @@
  */
 
 import * as React from 'react';
-import type { LocalizationMap } from '../types/LocalizationMap';
+import { type LocalizationMap } from '../types/LocalizationMap';
 import enUs from './en_US.json';
 
 export interface LocalizationContextProps {

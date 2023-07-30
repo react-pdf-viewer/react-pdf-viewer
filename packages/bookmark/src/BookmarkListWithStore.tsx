@@ -6,13 +6,12 @@
  * @copyright 2019-2023 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import type { PdfJs, Store, StoreHandler } from '@react-pdf-viewer/core';
-import { Spinner } from '@react-pdf-viewer/core';
+import { Spinner, type PdfJs, type Store, type StoreHandler } from '@react-pdf-viewer/core';
 import * as React from 'react';
 import { BookmarkLoader } from './BookmarkLoader';
-import type { IsBookmarkExpanded } from './types/IsBookmarkExpanded';
-import type { RenderBookmarkItem } from './types/RenderBookmarkItemProps';
-import type { StoreProps } from './types/StoreProps';
+import { type IsBookmarkExpanded } from './types/IsBookmarkExpanded';
+import { type RenderBookmarkItem } from './types/RenderBookmarkItemProps';
+import { type StoreProps } from './types/StoreProps';
 
 export const BookmarkListWithStore: React.FC<{
     isBookmarkExpanded: IsBookmarkExpanded;

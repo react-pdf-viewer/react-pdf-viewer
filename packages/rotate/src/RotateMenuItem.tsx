@@ -6,12 +6,11 @@
  * @copyright 2019-2023 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import type { LocalizationMap } from '@react-pdf-viewer/core';
-import { LocalizationContext, MenuItem, RotateDirection } from '@react-pdf-viewer/core';
+import { LocalizationContext, MenuItem, RotateDirection, type LocalizationMap } from '@react-pdf-viewer/core';
 import * as React from 'react';
 import { RotateBackwardIcon } from './RotateBackwardIcon';
 import { RotateForwardIcon } from './RotateForwardIcon';
-import type { RenderRotateProps } from './types/RenderRotateProps';
+import { type RenderRotateProps } from './types/RenderRotateProps';
 
 export const RotateMenuItem: React.FC<RenderRotateProps> = ({ direction, onClick }) => {
     const { l10n } = React.useContext(LocalizationContext);

@@ -8,7 +8,7 @@
 
 import * as React from 'react';
 import { getCssProperties } from './transformArea';
-import type { HighlightArea } from './types/HighlightArea';
+import { type HighlightArea } from './types/HighlightArea';
 
 export const HighlightRect: React.FC<{
     area: HighlightArea;

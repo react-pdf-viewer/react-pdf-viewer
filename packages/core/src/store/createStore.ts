@@ -6,7 +6,7 @@
  * @copyright 2019-2023 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import type { Store, StoreKey, StoreState } from '../types/Store';
+import { type Store, type StoreKey, type StoreState } from '../types/Store';
 
 export function createStore<T extends StoreState>(initialState?: T): Store<T> {
     let state: T = initialState || ({} as T);

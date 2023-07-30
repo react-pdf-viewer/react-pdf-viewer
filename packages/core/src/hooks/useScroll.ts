@@ -8,7 +8,7 @@
 
 import * as React from 'react';
 import { ScrollDirection } from '../structs/ScrollDirection';
-import type { Offset } from '../types/Offset';
+import { type Offset } from '../types/Offset';
 import { easeOutQuart } from '../utils/easeOutQuart';
 import { smoothScroll } from '../utils/smoothScroll';
 import { useIsomorphicLayoutEffect } from './useIsomorphicLayoutEffect';

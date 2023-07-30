@@ -6,8 +6,7 @@
  * @copyright 2019-2023 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import type { LocalizationMap } from '@react-pdf-viewer/core';
-import { LocalizationContext, ViewMode } from '@react-pdf-viewer/core';
+import { LocalizationContext, ViewMode, type LocalizationMap } from '@react-pdf-viewer/core';
 import * as React from 'react';
 import { DualPageCoverViewModeIcon } from './DualPageCoverViewModeIcon';
 import { DualPageViewModeIcon } from './DualPageViewModeIcon';

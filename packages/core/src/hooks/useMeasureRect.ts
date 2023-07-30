@@ -7,7 +7,7 @@
  */
 
 import * as React from 'react';
-import type { Rect } from '../types/Rect';
+import { type Rect } from '../types/Rect';
 import { useIsomorphicLayoutEffect } from './useIsomorphicLayoutEffect';
 
 const rectReducer = (

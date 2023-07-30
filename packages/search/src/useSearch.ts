@@ -6,15 +6,14 @@
  * @copyright 2019-2023 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import type { Store } from '@react-pdf-viewer/core';
-import { getPage } from '@react-pdf-viewer/core';
+import { getPage, type Store } from '@react-pdf-viewer/core';
 import * as React from 'react';
 import { EMPTY_KEYWORD_REGEXP } from './constants';
 import { normalizeSingleKeyword } from './normalizeKeyword';
-import type { Match } from './types/Match';
-import type { SearchTargetPageFilter } from './types/SearchTargetPage';
-import type { SingleKeyword } from './types/SingleKeyword';
-import type { StoreProps } from './types/StoreProps';
+import { type Match } from './types/Match';
+import { type SearchTargetPageFilter } from './types/SearchTargetPage';
+import { type SingleKeyword } from './types/SingleKeyword';
+import { type StoreProps } from './types/StoreProps';
 import { useDocument } from './useDocument';
 
 export const useSearch = (

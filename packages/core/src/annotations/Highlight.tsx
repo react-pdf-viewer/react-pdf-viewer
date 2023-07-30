@@ -7,12 +7,12 @@
  */
 
 import * as React from 'react';
-import type { PdfJs } from '../types/PdfJs';
+import { type PdfJs } from '../types/PdfJs';
 import { Annotation } from './Annotation';
 import { AnnotationType } from './AnnotationType';
+import { Popup } from './Popup';
 import { getContents } from './getContents';
 import { getTitle } from './getTitle';
-import { Popup } from './Popup';
 
 export const Highlight: React.FC<{
     annotation: PdfJs.Annotation;

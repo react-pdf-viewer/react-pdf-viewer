@@ -6,11 +6,10 @@
  * @copyright 2019-2023 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import type { LocalizationMap, Store } from '@react-pdf-viewer/core';
-import { LocalizationContext, MenuItem } from '@react-pdf-viewer/core';
+import { LocalizationContext, MenuItem, type LocalizationMap, type Store } from '@react-pdf-viewer/core';
 import * as React from 'react';
 import { OpenFileIcon } from './OpenFileIcon';
-import type { StoreProps } from './types/StoreProps';
+import { type StoreProps } from './types/StoreProps';
 import { useTriggerOpen } from './useTriggerOpen';
 
 export const OpenMenuItem: React.FC<{

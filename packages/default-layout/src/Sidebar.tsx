@@ -6,9 +6,7 @@
  * @copyright 2019-2023 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import type { LocalizationMap, SplitterSize, Store } from '@react-pdf-viewer/core';
 import {
-    classNames,
     LocalizationContext,
     MinimalButton,
     Position,
@@ -16,12 +14,16 @@ import {
     TextDirection,
     ThemeContext,
     Tooltip,
+    classNames,
+    type LocalizationMap,
+    type SplitterSize,
+    type Store,
 } from '@react-pdf-viewer/core';
 import * as React from 'react';
 import { BookmarkIcon } from './BookmarkIcon';
 import { FileIcon } from './FileIcon';
 import { ThumbnailIcon } from './ThumbnailIcon';
-import type { StoreProps } from './types/StoreProps';
+import { type StoreProps } from './types/StoreProps';
 
 export interface SidebarTab {
     content: React.ReactElement;

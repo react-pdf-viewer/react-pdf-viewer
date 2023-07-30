@@ -11,7 +11,7 @@ import { useIsomorphicLayoutEffect } from '../hooks/useIsomorphicLayoutEffect';
 import { useWindowResize } from '../hooks/useWindowResize';
 import { FullScreenMode } from '../structs/FullScreenMode';
 import { ScrollMode } from '../structs/ScrollMode';
-import type { Rect } from '../types/Rect';
+import { type Rect } from '../types/Rect';
 import {
     addFullScreenChangeListener,
     exitFullScreen,

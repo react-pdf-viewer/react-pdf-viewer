@@ -7,8 +7,8 @@
  */
 
 import * as React from 'react';
-import type { Destination } from '../types/Destination';
-import type { PdfJs } from '../types/PdfJs';
+import { type Destination } from '../types/Destination';
+import { type PdfJs } from '../types/PdfJs';
 import { getDestination } from '../utils/managePages';
 import { sanitizeUrl } from '../utils/sanitizeUrl';
 import { Annotation } from './Annotation';

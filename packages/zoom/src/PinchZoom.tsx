@@ -6,10 +6,9 @@
  * @copyright 2019-2023 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import type { Store } from '@react-pdf-viewer/core';
-import { useDebounceCallback, useIsomorphicLayoutEffect } from '@react-pdf-viewer/core';
+import { useDebounceCallback, useIsomorphicLayoutEffect, type Store } from '@react-pdf-viewer/core';
 import * as React from 'react';
-import type { StoreProps } from './types/StoreProps';
+import { type StoreProps } from './types/StoreProps';
 
 const WHEEL_EVENT_OPTIONS = {
     passive: false,

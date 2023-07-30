@@ -7,8 +7,8 @@
  */
 
 import { SpecialZoomLevel } from '../structs/SpecialZoomLevel';
-import type { Destination } from '../types/Destination';
-import type { PdfJs } from '../types/PdfJs';
+import { type Destination } from '../types/Destination';
+import { type PdfJs } from '../types/PdfJs';
 
 const normalizeDestination = (pageIndex: number, destArray: PdfJs.OutlineDestination): Destination => {
     switch (destArray[1].name) {

@@ -6,15 +6,15 @@
  * @copyright 2019-2023 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import type {
-    Plugin,
-    PluginFunctions,
-    PluginOnDocumentLoad,
-    RenderViewer,
-    Slot,
-    ViewerState,
+import {
+    createStore,
+    type Plugin,
+    type PluginFunctions,
+    type PluginOnDocumentLoad,
+    type RenderViewer,
+    type Slot,
+    type ViewerState,
 } from '@react-pdf-viewer/core';
-import { createStore } from '@react-pdf-viewer/core';
 import * as React from 'react';
 import { CurrentPageInput } from './CurrentPageInput';
 import { CurrentPageLabel, CurrentPageLabelProps } from './CurrentPageLabel';
@@ -32,8 +32,8 @@ import { GoToPreviousPageButton } from './GoToPreviousPageButton';
 import { GoToPreviousPageMenuItem } from './GoToPreviousPageMenuItem';
 import { NumberOfPages, NumberOfPagesProps } from './NumberOfPages';
 import { ShortcutHandler } from './ShortcutHandler';
-import type { GoToPageMenuItemProps, GoToPageProps } from './types';
-import type { StoreProps } from './types/StoreProps';
+import { type GoToPageMenuItemProps, type GoToPageProps } from './types';
+import { type StoreProps } from './types/StoreProps';
 
 export interface PageNavigationPlugin extends Plugin {
     jumpToNextPage(): void;
