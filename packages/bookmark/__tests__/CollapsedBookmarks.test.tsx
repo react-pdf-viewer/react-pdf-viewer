@@ -1,5 +1,5 @@
 import { PdfJsApiContext, Viewer, type PdfJsApiProvider } from '@react-pdf-viewer/core';
-import { render, screen, waitForElementToBeRemoved } from '@testing-library/react';
+import { render, waitForElementToBeRemoved } from '@testing-library/react';
 import * as PdfJs from 'pdfjs-dist';
 import * as React from 'react';
 import { mockIsIntersecting } from '../../../test-utils/mockIntersectionObserver';
@@ -53,7 +53,7 @@ test('Bookmarks are expanded initially (level 1)', async () => {
     viewerEle['__jsdomMockClientWidth'] = 560;
 
     // Wait until the document is loaded completely
-    await waitForElementToBeRemoved(() => screen.getByTestId('core__doc-loading'));
+    await waitForElementToBeRemoved(() => getByTestId('core__doc-loading'));
     await findByTestId('core__text-layer-0');
     await findByTestId('core__annotation-layer-0');
     await findByTestId('core__text-layer-1');
@@ -96,7 +96,7 @@ test('Bookmarks are expanded initially (level 2)', async () => {
     viewerEle['__jsdomMockClientWidth'] = 560;
 
     // Wait until the document is loaded completely
-    await waitForElementToBeRemoved(() => screen.getByTestId('core__doc-loading'));
+    await waitForElementToBeRemoved(() => getByTestId('core__doc-loading'));
     await findByTestId('core__text-layer-0');
     await findByTestId('core__annotation-layer-0');
     await findByTestId('core__text-layer-1');
@@ -139,7 +139,7 @@ test('Bookmarks are expanded initially (level 3)', async () => {
     viewerEle['__jsdomMockClientWidth'] = 560;
 
     // Wait until the document is loaded completely
-    await waitForElementToBeRemoved(() => screen.getByTestId('core__doc-loading'));
+    await waitForElementToBeRemoved(() => getByTestId('core__doc-loading'));
     await findByTestId('core__text-layer-0');
     await findByTestId('core__annotation-layer-0');
     await findByTestId('core__text-layer-1');

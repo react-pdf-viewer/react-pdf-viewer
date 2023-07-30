@@ -51,7 +51,7 @@ const TestToggleTab: React.FC<{
 };
 
 test('Toggle a tab', async () => {
-    const { findByLabelText, findByTestId, getByTestId } = render(
+    const { findByTestId, getByTestId } = render(
         <TestToggleTab fileUrl={global['__OPEN_PARAMS_PDF__']} initialTab={0} />,
     );
 

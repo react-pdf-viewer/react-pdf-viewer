@@ -36,7 +36,7 @@ const TestKeywordWithHighlightPlugin: React.FC<{
 test('keyword option with the highlight plugin', async () => {
     const keyword = 'and';
 
-    const { findByText, findByTestId, getByTestId } = render(
+    const { findByTestId, getByTestId } = render(
         <TestKeywordWithHighlightPlugin fileUrl={global['__OPEN_PARAMS_PDF__']} keyword={keyword} />,
     );
     const viewerEle = getByTestId('core__viewer');

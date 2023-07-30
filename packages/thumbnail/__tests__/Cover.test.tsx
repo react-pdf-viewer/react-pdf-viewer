@@ -1,5 +1,11 @@
-import type { Plugin, RenderViewer } from '@react-pdf-viewer/core';
-import { Button, PdfJsApiContext, Viewer, type PdfJsApiProvider } from '@react-pdf-viewer/core';
+import {
+    Button,
+    PdfJsApiContext,
+    Viewer,
+    type PdfJsApiProvider,
+    type Plugin,
+    type RenderViewer,
+} from '@react-pdf-viewer/core';
 import { fireEvent, render, waitForElementToBeRemoved } from '@testing-library/react';
 import * as PdfJs from 'pdfjs-dist';
 import * as React from 'react';
@@ -104,7 +110,7 @@ const TestMultipleCovers = () => {
 };
 
 test('Test multiple <Cover />', async () => {
-    const { findByTestId, findAllByTestId, getAllByTestId, getByTestId } = render(<TestMultipleCovers />);
+    const { findByTestId, getAllByTestId, getByTestId } = render(<TestMultipleCovers />);
 
     // Test the cover of the first document
     const viewerEleList = getAllByTestId('core__viewer');

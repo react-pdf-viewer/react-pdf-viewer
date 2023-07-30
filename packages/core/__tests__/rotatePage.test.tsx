@@ -4,7 +4,6 @@ import * as PdfJs from 'pdfjs-dist';
 import * as React from 'react';
 import { mockIsIntersecting } from '../../../test-utils/mockIntersectionObserver';
 import { mockResize } from '../../../test-utils/mockResizeObserver';
-import type { RenderPage, RenderPageProps } from '../src';
 import {
     MinimalButton,
     PdfJsApiContext,
@@ -13,6 +12,8 @@ import {
     Tooltip,
     Viewer,
     type PdfJsApiProvider,
+    type RenderPage,
+    type RenderPageProps,
 } from '../src';
 
 const TestRotatePage: React.FC<{

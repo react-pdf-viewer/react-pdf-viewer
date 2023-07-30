@@ -1,5 +1,5 @@
 import { PdfJsApiContext, Viewer, type PdfJsApiProvider } from '@react-pdf-viewer/core';
-import { render, screen, waitForElementToBeRemoved } from '@testing-library/react';
+import { render, waitForElementToBeRemoved } from '@testing-library/react';
 import * as PdfJs from 'pdfjs-dist';
 import * as React from 'react';
 import { mockIsIntersecting } from '../../../test-utils/mockIntersectionObserver';
@@ -48,7 +48,7 @@ test('Set bookmarks expanded initially', async () => {
     mockIsIntersecting(viewerEle, true);
 
     // Wait until the document is loaded completely
-    await waitForElementToBeRemoved(() => screen.getByTestId('core__doc-loading'));
+    await waitForElementToBeRemoved(() => getByTestId('core__doc-loading'));
 
     const bookmarksContainer = await findByTestId('bookmark__container');
 

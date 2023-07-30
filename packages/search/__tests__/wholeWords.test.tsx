@@ -11,7 +11,7 @@ import { fireEvent, render, waitForElementToBeRemoved } from '@testing-library/r
 import * as PdfJs from 'pdfjs-dist';
 import * as React from 'react';
 import { mockIsIntersecting } from '../../../test-utils/mockIntersectionObserver';
-import { NextIcon, PreviousIcon, RenderSearchProps, searchPlugin } from '../src';
+import { NextIcon, PreviousIcon, searchPlugin, type RenderSearchProps } from '../src';
 
 const TestWholeWords: React.FC<{
     fileUrl: Uint8Array;
