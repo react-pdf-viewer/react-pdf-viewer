@@ -1,7 +1,6 @@
 import { Viewer } from '@react-pdf-viewer/core';
 import { defaultLayoutPlugin } from '@react-pdf-viewer/default-layout';
 import { dropPlugin } from '@react-pdf-viewer/drop';
-import * as React from 'react';
 
 const Index = () => {
     const defaultLayoutPluginInstance = defaultLayoutPlugin();

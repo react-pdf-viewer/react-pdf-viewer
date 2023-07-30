@@ -1,5 +1,4 @@
 import { Viewer } from '@react-pdf-viewer/core';
-import * as React from 'react';
 
 const IndexPage = () => (
     <div

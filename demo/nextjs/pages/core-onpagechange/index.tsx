@@ -1,5 +1,4 @@
-import type { PageChangeEvent } from '@react-pdf-viewer/core';
-import { Viewer } from '@react-pdf-viewer/core';
+import { Viewer, type PageChangeEvent } from '@react-pdf-viewer/core';
 import * as React from 'react';
 
 const IndexPage = () => {

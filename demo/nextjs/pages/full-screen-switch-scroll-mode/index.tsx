@@ -1,5 +1,4 @@
-import type { RenderPage, RenderPageProps } from '@react-pdf-viewer/core';
-import { ScrollMode, Viewer, ViewMode } from '@react-pdf-viewer/core';
+import { ScrollMode, ViewMode, Viewer, type RenderPage, type RenderPageProps } from '@react-pdf-viewer/core';
 import { defaultLayoutPlugin } from '@react-pdf-viewer/default-layout';
 
 const IndexPage = () => {

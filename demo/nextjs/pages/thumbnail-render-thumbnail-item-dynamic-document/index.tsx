@@ -1,6 +1,5 @@
 import { Button, Viewer } from '@react-pdf-viewer/core';
-import type { RenderThumbnailItemProps } from '@react-pdf-viewer/thumbnail';
-import { thumbnailPlugin } from '@react-pdf-viewer/thumbnail';
+import { thumbnailPlugin, type RenderThumbnailItemProps } from '@react-pdf-viewer/thumbnail';
 import * as React from 'react';
 
 const IndexPage = () => {

@@ -1,12 +1,12 @@
 import { Button, Position, PrimaryButton, Tooltip, Viewer } from '@react-pdf-viewer/core';
 import {
     HighlightArea,
-    highlightPlugin,
     MessageIcon,
     RenderHighlightContentProps,
-    RenderHighlightsProps,
     RenderHighlightTargetProps,
+    RenderHighlightsProps,
     Trigger,
+    highlightPlugin,
 } from '@react-pdf-viewer/highlight';
 import * as React from 'react';
 
