@@ -6,8 +6,14 @@
  * @copyright 2019-2023 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import type { LocalizationMap } from '@react-pdf-viewer/core';
-import { LocalizationContext, MinimalButton, Position, ThemeContext, Tooltip } from '@react-pdf-viewer/core';
+import {
+    LocalizationContext,
+    MinimalButton,
+    Position,
+    ThemeContext,
+    Tooltip,
+    type LocalizationMap,
+} from '@react-pdf-viewer/core';
 import * as React from 'react';
 import { DarkIcon } from './DarkIcon';
 import { LightIcon } from './LightIcon';

@@ -6,12 +6,11 @@
  * @copyright 2019-2023 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import type { LocalizationMap, PdfJs } from '@react-pdf-viewer/core';
-import { Button, LocalizationContext, Separator } from '@react-pdf-viewer/core';
+import { Button, LocalizationContext, Separator, type LocalizationMap, type PdfJs } from '@react-pdf-viewer/core';
 import * as React from 'react';
 import { PropertiesLoader } from './PropertiesLoader';
 import { PropertyItem } from './PropertyItem';
-import type { PropertiesData } from './types/PropertiesData';
+import { type PropertiesData } from './types/PropertiesData';
 import { convertDate } from './utils/convertDate';
 import { getFileName } from './utils/getFileName';
 import { getFileSize } from './utils/getFileSize';

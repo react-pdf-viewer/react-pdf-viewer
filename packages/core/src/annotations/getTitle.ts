@@ -6,7 +6,7 @@
  * @copyright 2019-2023 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import type { PdfJs } from '../types/PdfJs';
+import { type PdfJs } from '../types/PdfJs';
 
 export const getTitle = (annotation: PdfJs.Annotation): string => {
     // `title` property is deprecated

@@ -6,11 +6,10 @@
  * @copyright 2019-2023 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import type { Plugin, PluginOnDocumentLoad } from '@react-pdf-viewer/core';
-import { createStore } from '@react-pdf-viewer/core';
+import { createStore, type Plugin, type PluginOnDocumentLoad } from '@react-pdf-viewer/core';
 import * as React from 'react';
 import { AttachmentListWithStore } from './AttachmentListWithStore';
-import type { StoreProps } from './types/StoreProps';
+import { type StoreProps } from './types/StoreProps';
 
 export interface AttachmentPlugin extends Plugin {
     Attachments: () => React.ReactElement;

@@ -10,7 +10,7 @@ import * as React from 'react';
 import { usePosition } from '../hooks/usePosition';
 import { Position } from '../structs/Position';
 import { TextDirection, ThemeContext } from '../theme/ThemeContext';
-import type { Offset } from '../types/Offset';
+import { type Offset } from '../types/Offset';
 import { classNames } from '../utils/classNames';
 import { Arrow } from './Arrow';
 

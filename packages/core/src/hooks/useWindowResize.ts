@@ -9,7 +9,7 @@
 import * as React from 'react';
 import { useDebounceCallback } from '../hooks/useDebounceCallback';
 import { useIsomorphicLayoutEffect } from '../hooks/useIsomorphicLayoutEffect';
-import type { Rect } from '../types/Rect';
+import { type Rect } from '../types/Rect';
 
 const RESIZE_EVENT_OPTIONS = {
     capture: false,

@@ -9,10 +9,10 @@
 import * as React from 'react';
 import { Spinner } from '../components/Spinner';
 import { ScrollMode } from '../structs/ScrollMode';
-import { ViewMode } from '../structs/ViewMode';
 import { SpecialZoomLevel } from '../structs/SpecialZoomLevel';
-import type { PageSize } from '../types/PageSize';
-import type { PdfJs } from '../types/PdfJs';
+import { ViewMode } from '../structs/ViewMode';
+import { type PageSize } from '../types/PageSize';
+import { type PdfJs } from '../types/PdfJs';
 import { getPage } from '../utils/managePages';
 import { decrease } from '../zoom/zoomingLevel';
 import { calculateScale } from './calculateScale';

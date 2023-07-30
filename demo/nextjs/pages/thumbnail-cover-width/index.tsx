@@ -1,4 +1,4 @@
-import { Plugin, RenderViewer, Viewer } from '@react-pdf-viewer/core';
+import { Viewer, type Plugin, type RenderViewer } from '@react-pdf-viewer/core';
 import { thumbnailPlugin } from '@react-pdf-viewer/thumbnail';
 import * as React from 'react';
 

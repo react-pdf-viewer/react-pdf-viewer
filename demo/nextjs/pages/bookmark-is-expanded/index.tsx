@@ -1,6 +1,5 @@
 import { bookmarkPlugin } from '@react-pdf-viewer/bookmark';
 import { Viewer } from '@react-pdf-viewer/core';
-import * as React from 'react';
 
 const IndexPage = () => {
     const bookmarkPluginInstance = bookmarkPlugin();

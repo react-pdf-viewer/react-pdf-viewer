@@ -6,11 +6,11 @@
  * @copyright 2019-2023 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-export type { CurrentPageLabelProps, RenderCurrentPageLabelProps } from './CurrentPageLabel';
+export { type CurrentPageLabelProps, type RenderCurrentPageLabelProps } from './CurrentPageLabel';
 export { DownArrowIcon } from './DownArrowIcon';
 export { NextIcon } from './NextIcon';
-export type { NumberOfPagesProps, RenderNumberOfPages, RenderNumberOfPagesProps } from './NumberOfPages';
-export * from './pageNavigationPlugin';
+export { type NumberOfPagesProps, type RenderNumberOfPages, type RenderNumberOfPagesProps } from './NumberOfPages';
 export { PreviousIcon } from './PreviousIcon';
-export type { GoToPageMenuItemProps, GoToPageProps, RenderGoToPage, RenderGoToPageProps } from './types';
 export { UpArrowIcon } from './UpArrowIcon';
+export * from './pageNavigationPlugin';
+export { type GoToPageMenuItemProps, type GoToPageProps, type RenderGoToPage, type RenderGoToPageProps } from './types';

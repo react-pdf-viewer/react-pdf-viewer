@@ -9,8 +9,8 @@
 import { classNames, TextDirection, ThemeContext } from '@react-pdf-viewer/core';
 import * as React from 'react';
 import { MoreActionsPopover } from './MoreActionsPopover';
-import type { ToolbarSlot } from './types/ToolbarSlot';
-import type { TransformToolbarSlot } from './types/TransformToolbarSlot';
+import { type ToolbarSlot } from './types/ToolbarSlot';
+import { type TransformToolbarSlot } from './types/TransformToolbarSlot';
 
 export const renderDefaultToolbar =
     (transformToolbarSlot: TransformToolbarSlot) =>

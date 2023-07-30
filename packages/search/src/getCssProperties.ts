@@ -7,7 +7,7 @@
  */
 
 import * as React from 'react';
-import type { HighlightArea } from './types/RenderHighlightsProps';
+import { type HighlightArea } from './types/RenderHighlightsProps';
 
 export const getCssProperties = (area: HighlightArea): React.CSSProperties => {
     return {

@@ -6,6 +6,6 @@
  * @copyright 2019-2023 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import type { FlagKeyword } from './FlagKeyword';
+import { type FlagKeyword } from './FlagKeyword';
 
 export type SingleKeyword = string | RegExp | FlagKeyword;

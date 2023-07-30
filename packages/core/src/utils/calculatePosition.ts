@@ -7,7 +7,7 @@
  */
 
 import { Position } from '../structs/Position';
-import type { Offset } from '../types/Offset';
+import { type Offset } from '../types/Offset';
 
 export const calculatePosition = (
     content: HTMLElement,

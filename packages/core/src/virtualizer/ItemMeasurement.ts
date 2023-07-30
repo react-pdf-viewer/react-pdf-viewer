@@ -6,8 +6,8 @@
  * @copyright 2019-2023 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import type { Offset } from '../types/Offset';
-import type { Rect } from '../types/Rect';
+import { type Offset } from '../types/Offset';
+import { type Rect } from '../types/Rect';
 
 export interface ItemMeasurement {
     index: number;

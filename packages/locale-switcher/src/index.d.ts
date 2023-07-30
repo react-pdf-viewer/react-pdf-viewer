@@ -6,7 +6,7 @@
  * @copyright 2019-2023 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import type { LocalizationMap, Plugin } from '@react-pdf-viewer/core';
+import { type LocalizationMap, type Plugin } from '@react-pdf-viewer/core';
 import * as React from 'react';
 
 // Types

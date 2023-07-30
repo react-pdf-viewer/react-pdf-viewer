@@ -6,19 +6,18 @@
  * @copyright 2019-2023 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import type { PluginOnTextLayerRender, Store } from '@react-pdf-viewer/core';
-import { LayerRenderStatus } from '@react-pdf-viewer/core';
+import { LayerRenderStatus, type PluginOnTextLayerRender, type Store } from '@react-pdf-viewer/core';
 import * as React from 'react';
-import { calculateOffset } from './calculateOffset';
 import { HightlightItem } from './HightlightItem';
+import { calculateOffset } from './calculateOffset';
 import { EMPTY_KEYWORD_REGEXP } from './constants';
-import type { HighlightArea, RenderHighlightsProps } from './types/RenderHighlightsProps';
-import type { MatchPosition } from './types/MatchPosition';
-import type { NormalizedKeyword } from './types/NormalizedKeyword';
-import type { OnHighlightKeyword } from './types/OnHighlightKeyword';
-import type { StoreProps } from './types/StoreProps';
-import { unwrap } from './unwrap';
 import { getCssProperties } from './getCssProperties';
+import { type MatchPosition } from './types/MatchPosition';
+import { type NormalizedKeyword } from './types/NormalizedKeyword';
+import { type OnHighlightKeyword } from './types/OnHighlightKeyword';
+import { type HighlightArea, type RenderHighlightsProps } from './types/RenderHighlightsProps';
+import { type StoreProps } from './types/StoreProps';
+import { unwrap } from './unwrap';
 
 interface RenderStatus {
     ele?: HTMLElement;

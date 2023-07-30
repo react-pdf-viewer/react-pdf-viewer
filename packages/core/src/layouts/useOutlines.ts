@@ -8,7 +8,7 @@
 
 import * as React from 'react';
 import { useIsMounted } from '../hooks/useIsMounted';
-import type { PdfJs } from '../types/PdfJs';
+import { type PdfJs } from '../types/PdfJs';
 
 const flaternSingleOutline = (outline: PdfJs.Outline): PdfJs.Outline[] => {
     let result = [] as PdfJs.Outline[];

@@ -6,11 +6,11 @@
  * @copyright 2019-2023 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import type { PdfJs, Store } from '@react-pdf-viewer/core';
+import { type PdfJs, type Store } from '@react-pdf-viewer/core';
 import * as React from 'react';
-import type { Match } from './types/Match';
-import type { SearchTargetPageFilter } from './types/SearchTargetPage';
-import type { StoreProps } from './types/StoreProps';
+import { type Match } from './types/Match';
+import { type SearchTargetPageFilter } from './types/SearchTargetPage';
+import { type StoreProps } from './types/StoreProps';
 import { useSearch } from './useSearch';
 
 export interface RenderSearchProps {

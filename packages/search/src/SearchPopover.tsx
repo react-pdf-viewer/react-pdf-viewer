@@ -6,10 +6,8 @@
  * @copyright 2019-2023 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import type { LocalizationMap, Store } from '@react-pdf-viewer/core';
 import {
     Button,
-    classNames,
     LocalizationContext,
     MinimalButton,
     Position,
@@ -18,11 +16,14 @@ import {
     TextDirection,
     ThemeContext,
     Tooltip,
+    classNames,
+    type LocalizationMap,
+    type Store,
 } from '@react-pdf-viewer/core';
 import * as React from 'react';
 import { NextIcon } from './NextIcon';
 import { PreviousIcon } from './PreviousIcon';
-import type { StoreProps } from './types/StoreProps';
+import { type StoreProps } from './types/StoreProps';
 import { useSearch } from './useSearch';
 
 const PORTAL_OFFSET = { left: 0, top: 8 };

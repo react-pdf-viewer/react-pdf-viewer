@@ -6,12 +6,12 @@
  * @copyright 2019-2023 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import type { Store } from '@react-pdf-viewer/core';
+import { type Store } from '@react-pdf-viewer/core';
 import * as React from 'react';
 import { PrintButton } from './PrintButton';
 import { PrintStatus } from './structs/PrintStatus';
-import type { RenderPrintProps } from './types/RenderPrintProps';
-import type { StoreProps } from './types/StoreProps';
+import { type RenderPrintProps } from './types/RenderPrintProps';
+import { type StoreProps } from './types/StoreProps';
 
 type RenderPrint = (props: RenderPrintProps) => React.ReactElement;
 

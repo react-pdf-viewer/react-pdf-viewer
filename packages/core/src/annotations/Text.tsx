@@ -14,12 +14,12 @@ import { KeyIcon } from '../icons/KeyIcon';
 import { NoteIcon } from '../icons/NoteIcon';
 import { ParagraphIcon } from '../icons/ParagraphIcon';
 import { TriangleIcon } from '../icons/TriangleIcon';
-import type { PdfJs } from '../types/PdfJs';
+import { type PdfJs } from '../types/PdfJs';
 import { Annotation } from './Annotation';
 import { AnnotationType } from './AnnotationType';
+import { Popup } from './Popup';
 import { getContents } from './getContents';
 import { getTitle } from './getTitle';
-import { Popup } from './Popup';
 
 export const Text: React.FC<{
     annotation: PdfJs.Annotation;

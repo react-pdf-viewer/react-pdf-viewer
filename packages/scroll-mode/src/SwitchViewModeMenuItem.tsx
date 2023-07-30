@@ -9,7 +9,7 @@
 import { MenuItem, ViewMode } from '@react-pdf-viewer/core';
 import * as React from 'react';
 import { SwitchViewModeDecorator } from './SwitchViewModeDecorator';
-import type { RenderSwitchViewModeProps } from './types/RenderSwitchViewModeProps';
+import { type RenderSwitchViewModeProps } from './types/RenderSwitchViewModeProps';
 
 export const SwitchViewModeMenuItem: React.FC<RenderSwitchViewModeProps> = ({
     isDisabled,

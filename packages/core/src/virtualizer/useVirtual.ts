@@ -12,21 +12,21 @@ import { useScroll } from '../hooks/useScroll';
 import { ScrollDirection } from '../structs/ScrollDirection';
 import { ScrollMode } from '../structs/ScrollMode';
 import { ViewMode } from '../structs/ViewMode';
-import type { Offset } from '../types/Offset';
-import type { Rect } from '../types/Rect';
-import type { SetRenderRange } from '../types/SetRenderRange';
+import { type Offset } from '../types/Offset';
+import { type Rect } from '../types/Rect';
+import { type SetRenderRange } from '../types/SetRenderRange';
 import { clamp } from '../utils/clamp';
 import { indexOfMax } from '../utils/indexOfMax';
+import { type ItemMeasurement } from './ItemMeasurement';
+import { type VirtualItem } from './VirtualItem';
 import { buildContainerStyles } from './buildContainerStyles';
 import { buildItemContainerStyles } from './buildItemContainerStyles';
 import { buildItemStyles } from './buildItemStyles';
 import { calculateRange } from './calculateRange';
-import type { ItemMeasurement } from './ItemMeasurement';
 import { measure } from './measure';
 import { measureDualPage } from './measureDualPage';
 import { measureDualPageWithCover } from './measureDualPageWithCover';
 import { measureSinglePage } from './measureSinglePage';
-import type { VirtualItem } from './VirtualItem';
 
 const ZERO_RECT: Rect = {
     height: 0,

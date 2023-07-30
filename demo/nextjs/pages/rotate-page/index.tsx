@@ -1,6 +1,5 @@
 import { PrimaryButton, RotateDirection, Viewer } from '@react-pdf-viewer/core';
 import { rotatePlugin } from '@react-pdf-viewer/rotate';
-import * as React from 'react';
 
 const IndexPage = () => {
     const rotatePluginInstance = rotatePlugin();

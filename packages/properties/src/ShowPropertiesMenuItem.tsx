@@ -6,11 +6,10 @@
  * @copyright 2019-2023 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import type { LocalizationMap } from '@react-pdf-viewer/core';
-import { LocalizationContext, MenuItem } from '@react-pdf-viewer/core';
+import { LocalizationContext, MenuItem, type LocalizationMap } from '@react-pdf-viewer/core';
 import * as React from 'react';
 import { InfoIcon } from './InfoIcon';
-import type { RenderShowPropertiesProps } from './types/RenderShowPropertiesProps';
+import { type RenderShowPropertiesProps } from './types/RenderShowPropertiesProps';
 
 export const ShowPropertiesMenuItem: React.FC<RenderShowPropertiesProps> = ({ onClick }) => {
     const { l10n } = React.useContext(LocalizationContext);

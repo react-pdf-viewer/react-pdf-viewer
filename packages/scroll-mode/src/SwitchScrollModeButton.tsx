@@ -9,7 +9,7 @@
 import { MinimalButton, Position, ScrollMode, Tooltip } from '@react-pdf-viewer/core';
 import * as React from 'react';
 import { SwitchScrollModeDecorator } from './SwitchScrollModeDecorator';
-import type { RenderSwitchScrollModeProps } from './types/RenderSwitchScrollModeProps';
+import { type RenderSwitchScrollModeProps } from './types/RenderSwitchScrollModeProps';
 
 const TOOLTIP_OFFSET = { left: 0, top: 8 };
 

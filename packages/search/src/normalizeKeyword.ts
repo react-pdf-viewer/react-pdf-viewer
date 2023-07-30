@@ -7,9 +7,9 @@
  */
 
 import { EMPTY_KEYWORD_REGEXP } from './constants';
-import type { FlagKeyword } from './types/FlagKeyword';
-import type { NormalizedKeyword } from './types/NormalizedKeyword';
-import type { SingleKeyword } from './types/SingleKeyword';
+import { type FlagKeyword } from './types/FlagKeyword';
+import { type NormalizedKeyword } from './types/NormalizedKeyword';
+import { type SingleKeyword } from './types/SingleKeyword';
 
 // `$&` means the whole matched string
 const escapeRegExp = (input: string): string => input.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');

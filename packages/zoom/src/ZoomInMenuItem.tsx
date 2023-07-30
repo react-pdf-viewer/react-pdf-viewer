@@ -6,11 +6,10 @@
  * @copyright 2019-2023 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import type { LocalizationMap } from '@react-pdf-viewer/core';
-import { LocalizationContext, MenuItem } from '@react-pdf-viewer/core';
+import { LocalizationContext, MenuItem, type LocalizationMap } from '@react-pdf-viewer/core';
 import * as React from 'react';
-import type { ZoomMenuItemProps } from './types/ZoomMenuItemProps';
 import { ZoomInIcon } from './ZoomInIcon';
+import { type ZoomMenuItemProps } from './types/ZoomMenuItemProps';
 
 export const ZoomInMenuItem: React.FC<ZoomMenuItemProps> = ({ onClick }) => {
     const { l10n } = React.useContext(LocalizationContext);

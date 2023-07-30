@@ -7,9 +7,9 @@
  */
 
 import * as React from 'react';
-import type { Destination } from '../types/Destination';
-import type { PdfJs } from '../types/PdfJs';
-import type { Plugin } from '../types/Plugin';
+import { type Destination } from '../types/Destination';
+import { type PdfJs } from '../types/PdfJs';
+import { type Plugin } from '../types/Plugin';
 import { AnnotationLayerBody } from './AnnotationLayerBody';
 import { AnnotationLoader } from './AnnotationLoader';
 

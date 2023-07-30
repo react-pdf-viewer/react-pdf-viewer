@@ -1,5 +1,5 @@
-import type { NextApiRequest, NextApiResponse } from 'next';
 import fs from 'fs';
+import { type NextApiRequest, type NextApiResponse } from 'next';
 import path from 'path';
 
 export const config = {

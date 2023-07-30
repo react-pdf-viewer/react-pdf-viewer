@@ -6,11 +6,10 @@
  * @copyright 2019-2023 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import type { LocalizationMap } from '@react-pdf-viewer/core';
-import { LocalizationContext, MenuItem } from '@react-pdf-viewer/core';
+import { LocalizationContext, MenuItem, type LocalizationMap } from '@react-pdf-viewer/core';
 import * as React from 'react';
 import { DownArrowIcon } from './DownArrowIcon';
-import type { RenderGoToPageProps } from './types/index';
+import { type RenderGoToPageProps } from './types/index';
 
 export const GoToLastPageMenuItem: React.FC<RenderGoToPageProps> = ({ isDisabled, onClick }) => {
     const { l10n } = React.useContext(LocalizationContext);

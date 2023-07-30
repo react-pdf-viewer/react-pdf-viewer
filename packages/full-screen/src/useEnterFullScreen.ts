@@ -6,10 +6,9 @@
  * @copyright 2019-2023 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import type { Store } from '@react-pdf-viewer/core';
-import { FullScreenMode } from '@react-pdf-viewer/core';
+import { FullScreenMode, type Store } from '@react-pdf-viewer/core';
 import * as React from 'react';
-import type { StoreProps } from './types/StoreProps';
+import { type StoreProps } from './types/StoreProps';
 
 export const useEnterFullScreen = (
     getFullScreenTarget: (pagesContainer: HTMLElement) => HTMLElement,

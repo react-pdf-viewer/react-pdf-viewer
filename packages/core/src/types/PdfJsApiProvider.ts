@@ -6,7 +6,7 @@
  * @copyright 2019-2022 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import type { PdfJs } from './PdfJs';
+import { type PdfJs } from './PdfJs';
 
 export interface PdfJsApiProvider {
     getDocument(params: PdfJs.GetDocumentParams): PdfJs.LoadingTask;

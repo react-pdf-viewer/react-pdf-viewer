@@ -6,15 +6,20 @@
  * @copyright 2019-2023 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import type { AttachmentPlugin } from '@react-pdf-viewer/attachment';
-import type { BookmarkPlugin } from '@react-pdf-viewer/bookmark';
-import type { PdfJs, Plugin } from '@react-pdf-viewer/core';
-import type { ThumbnailPlugin, ThumbnailPluginProps } from '@react-pdf-viewer/thumbnail';
-import type { ToolbarPlugin, ToolbarPluginProps, ToolbarProps, ToolbarSlot } from '@react-pdf-viewer/toolbar';
+import { type AttachmentPlugin } from '@react-pdf-viewer/attachment';
+import { type BookmarkPlugin } from '@react-pdf-viewer/bookmark';
+import { type PdfJs, type Plugin } from '@react-pdf-viewer/core';
+import { type ThumbnailPlugin, type ThumbnailPluginProps } from '@react-pdf-viewer/thumbnail';
+import {
+    type ToolbarPlugin,
+    type ToolbarPluginProps,
+    type ToolbarProps,
+    type ToolbarSlot,
+} from '@react-pdf-viewer/toolbar';
 import * as React from 'react';
 
 // Types
-export type { ToolbarPluginProps, ToolbarProps, ToolbarSlot };
+export { type ToolbarPluginProps, type ToolbarProps, type ToolbarSlot };
 
 export interface SidebarTab {
     content: React.ReactElement;

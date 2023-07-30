@@ -9,7 +9,7 @@
 import * as React from 'react';
 import { useIsomorphicLayoutEffect } from '../hooks/useIsomorphicLayoutEffect';
 import { Position } from '../structs/Position';
-import type { Offset } from '../types/Offset';
+import { type Offset } from '../types/Offset';
 import { calculatePosition } from '../utils/calculatePosition';
 
 export const usePosition = (

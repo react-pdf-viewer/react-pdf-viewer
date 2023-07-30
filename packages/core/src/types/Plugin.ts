@@ -8,12 +8,12 @@
 
 import * as React from 'react';
 import { LayerRenderStatus } from '../structs/LayerRenderStatus';
-import type { OpenFile } from './OpenFile';
-import type { PdfJs } from './PdfJs';
-import type { PluginFunctions } from './PluginFunctions';
-import type { RenderViewer } from './RenderViewer';
-import type { Slot } from './Slot';
-import type { ViewerState } from './ViewerState';
+import { type OpenFile } from './OpenFile';
+import { type PdfJs } from './PdfJs';
+import { type PluginFunctions } from './PluginFunctions';
+import { type RenderViewer } from './RenderViewer';
+import { type Slot } from './Slot';
+import { type ViewerState } from './ViewerState';
 
 export interface PluginOnDocumentLoad {
     doc: PdfJs.PdfDocument;

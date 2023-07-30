@@ -9,7 +9,7 @@
 import * as React from 'react';
 import { useToggle } from '../hooks/useToggle';
 import { Position } from '../structs/Position';
-import type { Offset } from '../types/Offset';
+import { type Offset } from '../types/Offset';
 import { uniqueId } from '../utils/uniqueId';
 import { PopoverBody } from './PopoverBody';
 import { PopoverOverlay } from './PopoverOverlay';

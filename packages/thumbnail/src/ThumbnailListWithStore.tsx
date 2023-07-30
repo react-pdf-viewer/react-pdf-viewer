@@ -6,16 +6,23 @@
  * @copyright 2019-2023 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import type { PdfJs, Store, StoreHandler } from '@react-pdf-viewer/core';
-import { LazyRender, RotateDirection, useIsomorphicLayoutEffect, ViewMode } from '@react-pdf-viewer/core';
+import {
+    LazyRender,
+    RotateDirection,
+    ViewMode,
+    useIsomorphicLayoutEffect,
+    type PdfJs,
+    type Store,
+    type StoreHandler,
+} from '@react-pdf-viewer/core';
 import * as React from 'react';
 import { FetchLabels } from './FetchLabels';
 import { SpinnerContext } from './SpinnerContext';
-import { ThumbnailDirection } from './structs/ThumbnailDirection';
 import { ThumbnailList } from './ThumbnailList';
-import type { RenderCurrentPageLabel } from './types/RenderCurrentPageLabelProps';
-import type { RenderThumbnailItem } from './types/RenderThumbnailItemProps';
-import type { StoreProps } from './types/StoreProps';
+import { ThumbnailDirection } from './structs/ThumbnailDirection';
+import { type RenderCurrentPageLabel } from './types/RenderCurrentPageLabelProps';
+import { type RenderThumbnailItem } from './types/RenderThumbnailItemProps';
+import { type StoreProps } from './types/StoreProps';
 
 export const ThumbnailListWithStore: React.FC<{
     renderCurrentPageLabel?: RenderCurrentPageLabel;

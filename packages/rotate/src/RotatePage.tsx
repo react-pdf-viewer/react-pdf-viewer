@@ -6,11 +6,10 @@
  * @copyright 2019-2023 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import type { Store } from '@react-pdf-viewer/core';
-import { RotateDirection } from '@react-pdf-viewer/core';
+import { RotateDirection, type Store } from '@react-pdf-viewer/core';
 import * as React from 'react';
-import type { RenderRotatePageProps } from './types/RenderRotatePageProps';
-import type { StoreProps } from './types/StoreProps';
+import { type RenderRotatePageProps } from './types/RenderRotatePageProps';
+import { type StoreProps } from './types/StoreProps';
 
 type RenderRotatePage = (props: RenderRotatePageProps) => React.ReactElement;
 

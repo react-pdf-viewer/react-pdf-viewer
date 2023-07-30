@@ -8,7 +8,7 @@
 
 import * as React from 'react';
 import { ScrollMode } from '../structs/ScrollMode';
-import type { Rect } from '../types/Rect';
+import { type Rect } from '../types/Rect';
 
 export const buildContainerStyles = (totalSize: Rect, scrollMode: ScrollMode): React.CSSProperties => {
     switch (scrollMode) {

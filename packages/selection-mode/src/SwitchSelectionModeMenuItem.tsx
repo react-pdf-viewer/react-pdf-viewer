@@ -8,8 +8,8 @@
 
 import { MenuItem } from '@react-pdf-viewer/core';
 import * as React from 'react';
-import { SelectionMode } from './structs/SelectionMode';
 import { SwitchSelectionModeDecorator } from './SwitchSelectionModeDecorator';
+import { SelectionMode } from './structs/SelectionMode';
 import { RenderSwitchSelectionModeProps } from './types/RenderSwitchSelectionModeProps';
 
 export const SwitchSelectionModeMenuItem: React.FC<RenderSwitchSelectionModeProps> = ({
