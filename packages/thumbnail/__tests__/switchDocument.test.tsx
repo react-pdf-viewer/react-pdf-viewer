@@ -1,12 +1,11 @@
 import { Button, PdfJsApiContext, Viewer, type PdfJsApiProvider } from '@react-pdf-viewer/core';
 import { fireEvent, render, waitForElementToBeRemoved } from '@testing-library/react';
+import * as fs from 'node:fs';
+import * as path from 'path';
 import * as PdfJs from 'pdfjs-dist';
 import * as React from 'react';
 import { mockIsIntersecting } from '../../../test-utils/mockIntersectionObserver';
 import { thumbnailPlugin } from '../src';
-
-const fs = require('fs');
-const path = require('path');
 
 const TestSwitchDocument = () => {
     const apiProvider = PdfJs as unknown as PdfJsApiProvider;

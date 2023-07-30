@@ -1,14 +1,13 @@
 import { PdfJsApiContext, Viewer, type PdfJsApiProvider } from '@react-pdf-viewer/core';
 import type { ToolbarProps, ToolbarSlot, TransformToolbarSlot } from '@react-pdf-viewer/toolbar';
 import { fireEvent, render, waitForElementToBeRemoved } from '@testing-library/react';
+import * as fs from 'node:fs';
+import * as path from 'path';
 import * as PdfJs from 'pdfjs-dist';
 import * as React from 'react';
 import { mockIsIntersecting } from '../../../test-utils/mockIntersectionObserver';
 import { mockResize } from '../../../test-utils/mockResizeObserver';
 import { defaultLayoutPlugin } from '../src';
-
-const fs = require('fs');
-const path = require('path');
 
 const TestCurrentPageLabel: React.FC<{
     fileUrl: Uint8Array;

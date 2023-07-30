@@ -1,4 +1,6 @@
 import '@testing-library/jest-dom/extend-expect';
+import * as fs from 'node:fs';
+import * as path from 'path';
 import { TextDecoder } from 'util';
 import { ReadableStream } from 'web-streams-polyfill/ponyfill';
 import { SimpleMockResizeObserver } from './SimpleMockResizeObserver';
@@ -35,9 +37,6 @@ Object.defineProperty(window, 'print', {
     value: noop,
     writable: true,
 });
-
-const fs = require('fs');
-const path = require('path');
 
 // Read data from files and make them available for all tests
 const HELLO_PDF = new Uint8Array([
