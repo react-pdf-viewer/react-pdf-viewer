@@ -51,16 +51,15 @@ export const CanvasLayer: React.FC<{
             }
         });
 
+        // Support high DPI screens
+        const outputScale = window.devicePixelRatio || 1;
         const viewport = page.getViewport({
             rotation,
-            scale,
+            scale: scale * outputScale,
         });
 
-        // Support high DPI screens
-        let outputScale = window.devicePixelRatio || 1;
-
         // Calculate the maximum scale
-        const maxScale = Math.sqrt(MAX_CANVAS_SIZE / (viewport.width * viewport.height));
+        const maxScale = Math.sqrt((MAX_CANVAS_SIZE * outputScale * outputScale) / (viewport.width * viewport.height));
 
         // Scale by CSS to avoid the crash
         const shouldScaleByCSS = outputScale > maxScale;
@@ -72,8 +71,8 @@ export const CanvasLayer: React.FC<{
         // Set the size for canvas here instead of inside `render` to avoid the black flickering
         canvasEle.width = roundToDivide(viewport.width * possibleScale, x);
         canvasEle.height = roundToDivide(viewport.height * possibleScale, x);
-        canvasEle.style.width = `${roundToDivide(viewport.width, y)}px`;
-        canvasEle.style.height = `${roundToDivide(viewport.height, y)}px`;
+        canvasEle.style.width = `${roundToDivide(viewport.width / outputScale, y)}px`;
+        canvasEle.style.height = `${roundToDivide(viewport.height / outputScale, y)}px`;
 
         // Hide the canvas element
         // Setting `hidden` is safer than the opacity (such as canvasEle.style.opacity = '0')
