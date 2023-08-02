@@ -4,7 +4,7 @@ import * as PdfJs from 'pdfjs-dist';
 import * as React from 'react';
 import { mockIsIntersecting } from '../../../test-utils/mockIntersectionObserver';
 import { mockResize } from '../../../test-utils/mockResizeObserver';
-import { ToolbarProps, ToolbarSlot, defaultLayoutPlugin } from '../src';
+import { defaultLayoutPlugin, type ToolbarProps, type ToolbarSlot } from '../src';
 
 const TestRenderToolbar: React.FC<{
     fileUrl: Uint8Array;

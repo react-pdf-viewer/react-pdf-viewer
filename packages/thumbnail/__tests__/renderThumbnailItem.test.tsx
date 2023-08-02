@@ -103,7 +103,7 @@ test('Test renderThumbnailItem option', async () => {
     expect(thumbnailsContainer.querySelectorAll('.custom-thumbnail-item').length).toEqual(8);
 
     // Find the second thumbnail
-    let secondThumbnail = await findByTestId('thumbnail-1');
+    const secondThumbnail = await findByTestId('thumbnail-1');
     expect(secondThumbnail).toHaveClass('custom-thumbnail-item');
 
     // Scroll to the second page
@@ -116,7 +116,7 @@ test('Test renderThumbnailItem option', async () => {
     await findByTestId('core__text-layer-2');
 
     // Wait until the second thumbnail is rendered
-    let secondThumbnailContainer = await findByTestId('thumbnail__container-1');
+    const secondThumbnailContainer = await findByTestId('thumbnail__container-1');
     mockIsIntersecting(secondThumbnailContainer, true);
 
     const secondThumbnailImage = await findByLabelText('Thumbnail of page 2');

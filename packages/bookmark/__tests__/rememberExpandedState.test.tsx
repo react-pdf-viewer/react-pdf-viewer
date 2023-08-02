@@ -96,6 +96,6 @@ test('Remember expanded/collapsed state of each bookmark', async () => {
     expect(isSubItemExpanded).toEqual('true');
 
     // There are two sub-items which are `URL examples` and `URL limitations`
-    const numSubItems = await subItems[0].querySelectorAll('li').length;
+    const numSubItems = subItems[0].querySelectorAll('li').length;
     expect(numSubItems).toEqual(2);
 });

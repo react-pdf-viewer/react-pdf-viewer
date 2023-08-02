@@ -63,7 +63,7 @@ test('Custom zoom levels with <ZoomPopover />', async () => {
     await findByTestId('core__text-layer-2');
 
     // Zoom the document
-    let zoomButton = await getByRole('button', { name: 'Zoom document' });
+    const zoomButton = getByRole('button', { name: 'Zoom document' });
     fireEvent.click(zoomButton);
 
     const menuItem = await findByText('80%');

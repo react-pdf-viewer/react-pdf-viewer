@@ -1,5 +1,5 @@
 import { PdfJsApiContext, PrimaryButton, ScrollMode, Viewer, type PdfJsApiProvider } from '@react-pdf-viewer/core';
-import { fireEvent, render, screen, waitForElementToBeRemoved } from '@testing-library/react';
+import { fireEvent, render, waitForElementToBeRemoved } from '@testing-library/react';
 import * as PdfJs from 'pdfjs-dist';
 import * as React from 'react';
 import { mockIsIntersecting } from '../../../test-utils/mockIntersectionObserver';
@@ -37,7 +37,9 @@ const TestSwitchScrollMode: React.FC<{
 };
 
 test('call switchScrollMode() method', async () => {
-    const { findByTestId, getByTestId } = render(<TestSwitchScrollMode fileUrl={global['__OPEN_PARAMS_PDF__']} />);
+    const { findByTestId, findByText, getByTestId } = render(
+        <TestSwitchScrollMode fileUrl={global['__OPEN_PARAMS_PDF__']} />,
+    );
     mockIsIntersecting(getByTestId('core__viewer'), true);
 
     const viewerEle = getByTestId('core__viewer');
@@ -63,7 +65,7 @@ test('call switchScrollMode() method', async () => {
     expect(parseInt(page.style.width, 10)).toEqual(297);
     expect(parseInt(page.style.height, 10)).toEqual(396);
 
-    const switchModeButton = await screen.findByText('Switch to horizontal mode');
+    const switchModeButton = await findByText('Switch to horizontal mode');
     fireEvent.click(switchModeButton);
 
     const pagesContainer = await findByTestId('core__inner-pages');

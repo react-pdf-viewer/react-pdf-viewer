@@ -11,7 +11,7 @@ const TestIsBookmarkExpanded: React.FC<{
     const apiProvider = PdfJs as unknown as PdfJsApiProvider;
     const bookmarkPluginInstance = bookmarkPlugin();
     const { Bookmarks } = bookmarkPluginInstance;
-    const setBookmarkExpanded = ({ bookmark, depth, doc, index }) => depth === 0;
+    const setBookmarkExpanded = ({ depth }) => depth === 0;
 
     return (
         <PdfJsApiContext.Provider value={{ pdfJsApiProvider: apiProvider }}>

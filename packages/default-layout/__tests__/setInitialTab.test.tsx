@@ -44,16 +44,16 @@ test('Set the initial tab', async () => {
     await findByTestId('core__text-layer-3');
     await findByTestId('core__annotation-layer-3');
 
-    let thumbnailsListContainer = await findByTestId('thumbnail__list-container');
+    const thumbnailsListContainer = await findByTestId('thumbnail__list-container');
     mockIsIntersecting(thumbnailsListContainer, true);
-    let thumbnailsContainer = await findByTestId('thumbnail__list');
+    const thumbnailsContainer = await findByTestId('thumbnail__list');
 
     // Make the first thumbnail item visible
-    let thumbnailItems = Array.from(thumbnailsContainer.querySelectorAll('.rpv-thumbnail__container'));
+    const thumbnailItems = Array.from(thumbnailsContainer.querySelectorAll('.rpv-thumbnail__container'));
     mockIsIntersecting(thumbnailItems[0], true);
 
-    let firstThumbnail = await findByLabelText('Thumbnail of page 1');
-    let firstThumbnailSrc = firstThumbnail.getAttribute('src');
+    const firstThumbnail = await findByLabelText('Thumbnail of page 1');
+    const firstThumbnailSrc = firstThumbnail.getAttribute('src');
     expect(firstThumbnailSrc?.substring(0, 100)).toEqual(
         'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAACFCAYAAACt+l1zAAAABmJLR0QA/wD/AP+gvaeTAAAKX0lEQV',
     );
@@ -81,6 +81,6 @@ test('Set invalid initial tab', async () => {
     await findByTestId('core__annotation-layer-3');
 
     // The thumbnail tab is empty
-    let thumbnailsListContainer = await findByTestId('thumbnail__list-container');
+    const thumbnailsListContainer = await findByTestId('thumbnail__list-container');
     expect(thumbnailsListContainer.innerHTML).toEqual('');
 });

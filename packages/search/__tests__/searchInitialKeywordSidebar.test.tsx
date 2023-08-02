@@ -266,12 +266,12 @@ test('Perform search for the initial keyword in a sidebar', async () => {
     await findByTestId('core__annotation-layer-3');
 
     // Check if the keyword is populated properly
-    let searchInput = await findByPlaceholderText('Enter to search');
-    let currentKeyword = (searchInput as HTMLInputElement).value;
+    const searchInput = await findByPlaceholderText('Enter to search');
+    const currentKeyword = (searchInput as HTMLInputElement).value;
     expect(currentKeyword).toEqual('PDF');
 
     // Check the number of matches
-    let numOfMatchesLabel = await findByTestId('num-matches');
-    let numOfMatches = numOfMatchesLabel.textContent;
+    const numOfMatchesLabel = await findByTestId('num-matches');
+    const numOfMatches = numOfMatchesLabel.textContent;
     expect(numOfMatches).toEqual('Found 28 results');
 });

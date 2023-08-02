@@ -1,5 +1,5 @@
 import { PdfJsApiContext, Viewer, type PdfJsApiProvider } from '@react-pdf-viewer/core';
-import type { ToolbarProps, ToolbarSlot, TransformToolbarSlot } from '@react-pdf-viewer/toolbar';
+import { type ToolbarProps, type ToolbarSlot, type TransformToolbarSlot } from '@react-pdf-viewer/toolbar';
 import { fireEvent, render, waitForElementToBeRemoved } from '@testing-library/react';
 import * as fs from 'node:fs';
 import * as path from 'path';

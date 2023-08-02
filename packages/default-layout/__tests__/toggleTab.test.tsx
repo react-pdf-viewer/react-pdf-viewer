@@ -77,9 +77,9 @@ test('Toggle a tab', async () => {
     // Toggle the thumbnail tab
     fireEvent.click(toggleThumbnailTab);
 
-    let thumbnailsListContainer = await findByTestId('thumbnail__list-container');
+    const thumbnailsListContainer = await findByTestId('thumbnail__list-container');
     mockIsIntersecting(thumbnailsListContainer, true);
-    let thumbnailsContainer = await findByTestId('thumbnail__list');
+    const thumbnailsContainer = await findByTestId('thumbnail__list');
     expect(thumbnailsContainer.childElementCount).toEqual(8);
 
     // Toggle the bookmark tab
@@ -92,7 +92,7 @@ test('Toggle a tab', async () => {
     // Toggle the attachment tab
     fireEvent.click(toggleAttachmentTab);
 
-    let attachmentContainer = await findByTestId('attachment__empty');
+    const attachmentContainer = await findByTestId('attachment__empty');
     expect(attachmentContainer.textContent).toEqual('There is no attachment');
 
     // Toggle the bookmark tab again

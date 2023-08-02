@@ -71,7 +71,7 @@ test('clearHighlights() method', async () => {
     await findByText('Simple PDF File 2');
 
     // Found 13 texts that match `PDF`
-    let highlights = await findAllByTitle(page, 'text');
+    const highlights = await findAllByTitle(page, 'text');
     expect(highlights.length).toEqual(13);
 
     // Click the `Clear highlights` button

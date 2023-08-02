@@ -160,11 +160,11 @@ test('Rotate single page with thumbnails using renderPage', async () => {
     await findByTestId('thumbnail__list');
 
     // Find the third thumbnail
-    let thirdThumbnailContainer = await findByTestId('thumbnail__container-2');
+    const thirdThumbnailContainer = await findByTestId('thumbnail__container-2');
     mockIsIntersecting(thirdThumbnailContainer, true);
 
     const thirdThumbnailImage = await findByLabelText('Thumbnail of page 3');
-    let src = thirdThumbnailImage.getAttribute('src');
+    const src = thirdThumbnailImage.getAttribute('src');
     expect(src?.substring(0, 100)).toEqual(
         'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIUAAABkCAYAAACowvMbAAAABmJLR0QA/wD/AP+gvaeTAAAKA0lEQV',
     );

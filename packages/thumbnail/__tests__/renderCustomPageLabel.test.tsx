@@ -5,7 +5,7 @@ import * as path from 'path';
 import * as PdfJs from 'pdfjs-dist';
 import * as React from 'react';
 import { mockIsIntersecting } from '../../../test-utils/mockIntersectionObserver';
-import { RenderCurrentPageLabelProps, thumbnailPlugin } from '../src';
+import { thumbnailPlugin, type RenderCurrentPageLabelProps } from '../src';
 
 const TestPageLabel: React.FC<{
     fileUrl: Uint8Array;

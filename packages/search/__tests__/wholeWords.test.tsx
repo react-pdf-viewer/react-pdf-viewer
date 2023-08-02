@@ -221,7 +221,7 @@ test('Test the whole words matching', async () => {
     expect(numMatchesLabel.textContent).toEqual('1 of 15');
 
     // There are 4 results found on the 4th page
-    let searchHighlights = await findByTestId('search__highlights-3');
+    const searchHighlights = await findByTestId('search__highlights-3');
     let highlights = searchHighlights.querySelectorAll('.rpv-search__highlight');
     expect(highlights.length).toEqual(4);
 

@@ -1,5 +1,5 @@
 import { PdfJsApiContext, Viewer, type PdfJsApiProvider } from '@react-pdf-viewer/core';
-import { render, screen, waitForElementToBeRemoved } from '@testing-library/react';
+import { render, waitForElementToBeRemoved } from '@testing-library/react';
 import * as PdfJs from 'pdfjs-dist';
 import * as React from 'react';
 import { mockIsIntersecting } from '../../../test-utils/mockIntersectionObserver';
@@ -54,7 +54,7 @@ test('Test thumbnailWidth option', async () => {
     viewerEle['__jsdomMockClientWidth'] = 798;
 
     // Wait until the document is loaded completely
-    await waitForElementToBeRemoved(() => screen.getByTestId('core__doc-loading'));
+    await waitForElementToBeRemoved(() => getByTestId('core__doc-loading'));
     await findByTestId('core__text-layer-0');
     await findByTestId('core__annotation-layer-0');
     await findByTestId('core__text-layer-1');
@@ -85,7 +85,7 @@ test('Test thumbnailWidth option', async () => {
     expect(thumbnailsContainer.querySelectorAll('.rpv-thumbnail__item').length).toEqual(8);
 
     // Find the first thumbnail
-    let firstThumbnailContainer = await findByTestId('thumbnail__container-0');
+    const firstThumbnailContainer = await findByTestId('thumbnail__container-0');
     mockIsIntersecting(firstThumbnailContainer, true);
 
     const firstThumbnailImage = await findByLabelText('Thumbnail of page 1');
@@ -98,7 +98,7 @@ test('Test thumbnailWidth option', async () => {
     expect(firstThumbnailImage.getAttribute('height')).toEqual('200px');
 
     // Wait until the second thumbnail is rendered
-    let secondThumbnailContainer = await findByTestId('thumbnail__container-1');
+    const secondThumbnailContainer = await findByTestId('thumbnail__container-1');
     mockIsIntersecting(secondThumbnailContainer, true);
 
     const secondThumbnailImage = await findByLabelText('Thumbnail of page 2');

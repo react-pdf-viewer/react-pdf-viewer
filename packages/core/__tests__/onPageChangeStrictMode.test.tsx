@@ -3,7 +3,7 @@ import * as PdfJs from 'pdfjs-dist';
 import * as React from 'react';
 import { mockIsIntersecting } from '../../../test-utils/mockIntersectionObserver';
 import { mockResize } from '../../../test-utils/mockResizeObserver';
-import { PageChangeEvent, PdfJsApiContext, Viewer, type PdfJsApiProvider } from '../src';
+import { PdfJsApiContext, Viewer, type PageChangeEvent, type PdfJsApiProvider } from '../src';
 
 const TestOnPageChange: React.FC<{
     fileUrl: Uint8Array;
