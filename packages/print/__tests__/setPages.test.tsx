@@ -72,7 +72,7 @@ test('Set pages', async () => {
     await findByTestId('core__annotation-layer-3');
 
     // Click the `Print` button
-    const printButton = await getByTestId('print-button');
+    const printButton = getByTestId('print-button');
     fireEvent.click(printButton);
 
     const printZone = await findByTestId('print__zone');

@@ -3,8 +3,7 @@ import { fireEvent, render, waitForElementToBeRemoved } from '@testing-library/r
 import * as PdfJs from 'pdfjs-dist';
 import * as React from 'react';
 import { mockIsIntersecting } from '../../../test-utils/mockIntersectionObserver';
-import type { RenderBookmarkItemProps } from '../src';
-import { bookmarkPlugin } from '../src';
+import { bookmarkPlugin, type RenderBookmarkItemProps } from '../src';
 
 const ExpandIcon = () => (
     <Icon size={16}>

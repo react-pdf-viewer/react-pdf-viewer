@@ -1,6 +1,6 @@
 import { PdfJsApiContext, Viewer, type PdfJsApiProvider } from '@react-pdf-viewer/core';
 import { defaultLayoutPlugin } from '@react-pdf-viewer/default-layout';
-import type { ToolbarProps, ToolbarSlot, TransformToolbarSlot } from '@react-pdf-viewer/toolbar';
+import { type ToolbarProps, type ToolbarSlot, type TransformToolbarSlot } from '@react-pdf-viewer/toolbar';
 import { fireEvent, render, waitForElementToBeRemoved } from '@testing-library/react';
 import * as PdfJs from 'pdfjs-dist';
 import * as React from 'react';
@@ -71,7 +71,7 @@ test('Custom zoom levels with the default layout', async () => {
     const firstPage = await findByTestId('core__page-layer-0');
 
     // Zoom the document
-    let zoomButton = await getByRole('button', { name: 'Zoom document' });
+    const zoomButton = getByRole('button', { name: 'Zoom document' });
     fireEvent.click(zoomButton);
 
     const menuItem = await findByText('320%');

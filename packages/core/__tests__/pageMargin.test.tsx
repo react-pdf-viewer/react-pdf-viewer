@@ -2,8 +2,7 @@ import { render, waitForElementToBeRemoved } from '@testing-library/react';
 import * as PdfJs from 'pdfjs-dist';
 import * as React from 'react';
 import { mockIsIntersecting } from '../../../test-utils/mockIntersectionObserver';
-import type { PageLayout } from '../src';
-import { PdfJsApiContext, SpecialZoomLevel, Viewer, type PdfJsApiProvider } from '../src';
+import { PdfJsApiContext, SpecialZoomLevel, Viewer, type PageLayout, type PdfJsApiProvider } from '../src';
 
 const TestPageMargin: React.FC<{
     fileUrl: Uint8Array;

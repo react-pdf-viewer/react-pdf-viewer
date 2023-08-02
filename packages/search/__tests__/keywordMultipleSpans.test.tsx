@@ -81,7 +81,7 @@ test('keyword belongs to multiple spans', async () => {
     await findByTestId('core__text-layer-3');
     await findByText('Who should read this guide?');
 
-    let searchHighlights = await findByTestId('search__highlights-3');
+    const searchHighlights = await findByTestId('search__highlights-3');
     const highlights = await findAllByTitle(searchHighlights, keyword);
     expect(highlights.length).toEqual(2);
     expect(highlights[0].getAttribute('title')).toEqual(keyword);

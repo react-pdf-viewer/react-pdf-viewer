@@ -8,7 +8,7 @@ import {
     type PdfJsApiProvider,
 } from '@react-pdf-viewer/core';
 import { RotateBackwardIcon, RotateForwardIcon } from '@react-pdf-viewer/rotate';
-import type { RenderThumbnailItemProps } from '@react-pdf-viewer/thumbnail';
+import { type RenderThumbnailItemProps } from '@react-pdf-viewer/thumbnail';
 import { fireEvent, render, waitForElementToBeRemoved } from '@testing-library/react';
 import * as PdfJs from 'pdfjs-dist';
 import * as React from 'react';
@@ -151,7 +151,7 @@ test('Rotate single page with thumbnails using renderThumbnailItem', async () =>
     mockIsIntersecting(thumbnailsListContainer, true);
     await findByTestId('thumbnail__list');
 
-    let thirdThumbnailContainer = await findByTestId('thumbnail__container-2');
+    const thirdThumbnailContainer = await findByTestId('thumbnail__container-2');
     mockIsIntersecting(thirdThumbnailContainer, true);
 
     const forwardBtn = getByTestId('rotate-forward-2');
@@ -159,7 +159,7 @@ test('Rotate single page with thumbnails using renderThumbnailItem', async () =>
 
     // Find the third thumbnail
     const thirdThumbnailImage = await findByLabelText('Thumbnail of page 3');
-    let src = thirdThumbnailImage.getAttribute('src');
+    const src = thirdThumbnailImage.getAttribute('src');
     expect(src?.substring(0, 100)).toEqual(
         'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIUAAABkCAYAAACowvMbAAAABmJLR0QA/wD/AP+gvaeTAAAKA0lEQV',
     );

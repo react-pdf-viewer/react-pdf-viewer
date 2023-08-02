@@ -220,16 +220,16 @@ test('Set pages with setPages() function', async () => {
     await findByTestId('core__annotation-layer-3');
 
     // Open the modal to choose pages
-    const choosePagesButton = await getByTestId('open-choose-pages');
+    const choosePagesButton = getByTestId('open-choose-pages');
     fireEvent.click(choosePagesButton);
 
     await findByTestId('choose-pages');
 
-    const oddPagesRadio = await getByTestId('odd-pages-option');
+    const oddPagesRadio = getByTestId('odd-pages-option');
     fireEvent.click(oddPagesRadio);
 
     // Click the `Print` button
-    const printButton = await getByTestId('print-button');
+    const printButton = getByTestId('print-button');
     fireEvent.click(printButton);
 
     const printZone = await findByTestId('print__zone');

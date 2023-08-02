@@ -53,7 +53,7 @@ test('onSwitchTheme() callback', async () => {
     await findByTestId('core__annotation-layer-4');
 
     // Click the switch theme button
-    const switchButton = await getByLabelText('Switch to the dark theme');
+    const switchButton = getByLabelText('Switch to the dark theme');
     fireEvent.click(switchButton);
 
     expect(viewerEle.classList.contains('rpv-core__viewer--dark')).toEqual(true);
@@ -62,7 +62,7 @@ test('onSwitchTheme() callback', async () => {
     expect(currentThemeLabel.textContent).toEqual('dark');
 
     // Click again to switch back to the light theme
-    const switchLightButton = await getByLabelText('Switch to the light theme');
+    const switchLightButton = getByLabelText('Switch to the light theme');
     fireEvent.click(switchLightButton);
 
     expect(viewerEle.classList.contains('rpv-core__viewer--light')).toEqual(true);

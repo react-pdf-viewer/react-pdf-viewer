@@ -113,7 +113,7 @@ test('Customize progress bar', async () => {
     await findByTestId('core__annotation-layer-1');
 
     // Click the `Print` button
-    const printButton = await getByTestId('print-button');
+    const printButton = getByTestId('print-button');
     fireEvent.click(printButton);
 
     let preparingLabel = await findByTestId('preparing-label-0');
