@@ -41,6 +41,7 @@ const TestSwitchThemeButtonWithDefaultLayout: React.FC<{
 const TestSwitchThemeButtonWithoutDefaultLayout: React.FC<{
     fileUrl: Uint8Array;
 }> = ({ fileUrl }) => {
+    const apiProvider = PdfJs as unknown as PdfJsApiProvider;
     const themePluginInstance = themePlugin();
     const { SwitchThemeButton } = themePluginInstance;
 
@@ -52,20 +53,22 @@ const TestSwitchThemeButtonWithoutDefaultLayout: React.FC<{
     };
 
     return (
-        <ThemeContext.Provider value={themeContext}>
-            <div style={{ display: 'flex' }}>
-                <SwitchThemeButton />
-            </div>
-            <div
-                style={{
-                    border: '1px solid rgba(0, 0, 0, .3)',
-                    height: '50rem',
-                    width: '50rem',
-                }}
-            >
-                <Viewer fileUrl={fileUrl} theme={currentTheme} plugins={[themePluginInstance]} />
-            </div>
-        </ThemeContext.Provider>
+        <PdfJsApiContext.Provider value={{ pdfJsApiProvider: apiProvider }}>
+            <ThemeContext.Provider value={themeContext}>
+                <div style={{ display: 'flex' }}>
+                    <SwitchThemeButton />
+                </div>
+                <div
+                    style={{
+                        border: '1px solid rgba(0, 0, 0, .3)',
+                        height: '50rem',
+                        width: '50rem',
+                    }}
+                >
+                    <Viewer fileUrl={fileUrl} theme={currentTheme} plugins={[themePluginInstance]} />
+                </div>
+            </ThemeContext.Provider>
+        </PdfJsApiContext.Provider>
     );
 };
 
