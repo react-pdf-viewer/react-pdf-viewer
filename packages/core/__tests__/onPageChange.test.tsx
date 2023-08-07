@@ -80,6 +80,7 @@ test('onPageChange() callback', async () => {
 const TestOnPageChangeDocumentLoad: React.FC<{
     fileUrl: Uint8Array;
 }> = ({ fileUrl }) => {
+    const apiProvider = PdfJs as unknown as PdfJsApiProvider;
     const [log, setLog] = React.useState('');
 
     const handlePageChange = (e: PageChangeEvent) => {
@@ -91,12 +92,12 @@ const TestOnPageChangeDocumentLoad: React.FC<{
     };
 
     return (
-        <>
+        <PdfJsApiContext.Provider value={{ pdfJsApiProvider: apiProvider }}>
             <div data-testid="log">{log}</div>
             <div style={{ height: '50rem', width: '50rem' }}>
                 <Viewer fileUrl={fileUrl} onPageChange={handlePageChange} onDocumentLoad={handleDocumentLoad} />
             </div>
-        </>
+        </PdfJsApiContext.Provider>
     );
 };
 
