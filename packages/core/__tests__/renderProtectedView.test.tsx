@@ -69,7 +69,10 @@ const TestProtectedView = () => {
     return (
         <PdfJsApiContext.Provider value={{ pdfJsApiProvider: apiProvider }}>
             <div style={{ height: '50rem', width: '50rem' }}>
-                <Viewer fileUrl={global['__SAMPLE_PROTECTED_PDF__']} renderProtectedView={ProtectedView} />
+                <Viewer
+                    fileUrl={global['__SAMPLE_PROTECTED_PDF__']}
+                    renderProtectedView={(props: RenderProtectedViewProps) => <ProtectedView {...props} />}
+                />
             </div>
         </PdfJsApiContext.Provider>
     );
