@@ -7,7 +7,7 @@ const rootElement = document.getElementById('root');
 const root = createRoot(rootElement);
 root.render(
     <React.StrictMode>
-        <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.8.162/build/pdf.worker.js">
+        <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.9.179/build/pdf.worker.js">
             <App />
         </Worker>
     </React.StrictMode>,
