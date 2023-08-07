@@ -59,10 +59,13 @@ test('Set defaultScale as a special zoom level', async () => {
 });
 
 test('Keep special defaultScale after resizing', async () => {
+    const apiProvider = PdfJs as unknown as PdfJsApiProvider;
     const App = () => (
-        <div style={{ height: '50rem', width: '50rem' }}>
-            <Viewer defaultScale={SpecialZoomLevel.PageWidth} fileUrl={global['__OPEN_PARAMS_PDF__']} />
-        </div>
+        <PdfJsApiContext.Provider value={{ pdfJsApiProvider: apiProvider }}>
+            <div style={{ height: '50rem', width: '50rem' }}>
+                <Viewer defaultScale={SpecialZoomLevel.PageWidth} fileUrl={global['__OPEN_PARAMS_PDF__']} />
+            </div>
+        </PdfJsApiContext.Provider>
     );
     const { findByTestId, getByTestId } = render(<App />);
 
