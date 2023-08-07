@@ -44,7 +44,7 @@ const TestThumbnails: React.FC<{
 };
 
 test('Test <Thumbnails /> of a single page document', async () => {
-    const { findByLabelText, findByTestId, findByText, getByTestId } = render(
+    const { findAllByText, findByLabelText, findByTestId, getByTestId } = render(
         <TestThumbnails fileUrl={global['__DUMMY_PDF__']} />,
     );
 
@@ -59,7 +59,7 @@ test('Test <Thumbnails /> of a single page document', async () => {
     await findByTestId('core__annotation-layer-0');
 
     // Check if the text is rendered
-    const span = await findByText('Dummy PDF file');
+    const span = (await findAllByText('Dummy PDF file'))[0];
     expect(span.classList.contains('rpv-core__text-layer-text')).toEqual(true);
     expect(span.style.fontSize).toEqual('');
     expect(span.style.left).toEqual('9.55%');
