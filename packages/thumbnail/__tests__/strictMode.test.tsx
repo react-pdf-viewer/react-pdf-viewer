@@ -98,7 +98,7 @@ test('Support Strict mode', async () => {
     const firstThumbnailImage = await findByLabelText('Thumbnail of page 1');
     let src = firstThumbnailImage.getAttribute('src');
     expect(src?.slice(0, 150)).toEqual(
-        'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAACFCAYAAACt+l1zAAAABmJLR0QA/wD/AP+gvaeTAAAKX0lEQVR4nO3dX1ATdwLA8W+STQIBQkIiIaE0MNWoLVSLqHjnHxD/wEP/'
+        'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAACFCAYAAACt+l1zAAAABmJLR0QA/wD/AP+gvaeTAAAKX0lEQVR4nO3dX1ATdwLA8W+STQIBQkIiIaE0MNWoLVSLqHjnHxD/wEP/',
     );
     expect(src?.length).toEqual(3662);
 
