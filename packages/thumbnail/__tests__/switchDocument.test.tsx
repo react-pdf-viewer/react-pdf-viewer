@@ -114,7 +114,7 @@ test('Thumbnails are updated when switching between documents', async () => {
 
     let src = await getSourceOfFirstThumbnail();
     expect(src?.slice(0, 150)).toEqual(
-        'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAACFCAYAAACt+l1zAAAABmJLR0QA/wD/AP+gvaeTAAAKX0lEQVR4nO3dX1ATdwLA8W+STQIBQkIiIaE0MNWoLVSLqHjnHxD/wEP/'
+        'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAACFCAYAAACt+l1zAAAABmJLR0QA/wD/AP+gvaeTAAAKX0lEQVR4nO3dX1ATdwLA8W+STQIBQkIiIaE0MNWoLVSLqHjnHxD/wEP/',
     );
     expect(src?.length).toEqual(3662);
 
@@ -135,7 +135,7 @@ test('Thumbnails are updated when switching between documents', async () => {
 
     src = await getSourceOfFirstThumbnail();
     expect(src?.slice(0, 150)).toEqual(
-        'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAACBCAYAAAA2ax9lAAAABmJLR0QA/wD/AP+gvaeTAAAgAElEQVR4nO29eZBlWX7X9znn3OXdt7/cl9qX7q7unp7pdUazaDTSaEME'
+        'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAACBCAYAAAA2ax9lAAAABmJLR0QA/wD/AP+gvaeTAAAgAElEQVR4nO29eZBlWX7X9znn3OXdt7/cl9qX7q7unp7pdUazaDTSaEME',
     );
     expect(src?.length).toEqual(19942);
 });
