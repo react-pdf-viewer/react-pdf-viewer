@@ -97,8 +97,8 @@ test('Support Strict mode', async () => {
 
     const firstThumbnailImage = await findByLabelText('Thumbnail of page 1');
     let src = firstThumbnailImage.getAttribute('src');
-    expect(src?.slice(-100)).toEqual(
-        'g5q5u9+1tNDZs+y0tLZiUW7cJm7ZQhRFYcdbf7xnA1vITNN8XeAtW4h0f8mDumBkEMHIIIL5Hw+y6qIMqKXCAAAAAElFTkSuQmCC',
+    expect(src?.slice(0, 150)).toEqual(
+        'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAACFCAYAAACt+l1zAAAABmJLR0QA/wD/AP+gvaeTAAAKX0lEQVR4nO3dX1ATdwLA8W+STQIBQkIiIaE0MNWoLVSLqHjnHxD/wEP/'
     );
     expect(src?.length).toEqual(3662);
 
@@ -108,8 +108,8 @@ test('Support Strict mode', async () => {
 
     const secondThumbnailImage = await findByLabelText('Thumbnail of page 2');
     src = secondThumbnailImage.getAttribute('src');
-    expect(src?.substring(0, 100)).toEqual(
-        'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAACFCAYAAACt+l1zAAAABmJLR0QA/wD/AP+gvaeTAAAgAElEQV',
+    expect(src?.slice(0, 150)).toEqual(
+        'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAACFCAYAAACt+l1zAAAABmJLR0QA/wD/AP+gvaeTAAAgAElEQVR4nO1dSZMjZ7U9Sk0ppea5BtXY1W43YJtwQBgwC4INC/4tsGKD',
     );
     expect(src?.length).toEqual(11582);
 });

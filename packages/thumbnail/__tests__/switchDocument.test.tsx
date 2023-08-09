@@ -113,8 +113,8 @@ test('Thumbnails are updated when switching between documents', async () => {
     };
 
     let src = await getSourceOfFirstThumbnail();
-    expect(src?.slice(-100)).toEqual(
-        'g5q5u9+1tNDZs+y0tLZiUW7cJm7ZQhRFYcdbf7xnA1vITNN8XeAtW4h0f8mDumBkEMHIIIL5Hw+y6qIMqKXCAAAAAElFTkSuQmCC',
+    expect(src?.slice(0, 150)).toEqual(
+        'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAACFCAYAAACt+l1zAAAABmJLR0QA/wD/AP+gvaeTAAAKX0lEQVR4nO3dX1ATdwLA8W+STQIBQkIiIaE0MNWoLVSLqHjnHxD/wEP/'
     );
     expect(src?.length).toEqual(3662);
 
@@ -134,8 +134,8 @@ test('Thumbnails are updated when switching between documents', async () => {
     await findByTestId('core__annotation-layer-0');
 
     src = await getSourceOfFirstThumbnail();
-    expect(src?.slice(-100)).toEqual(
-        '5PuuE+APbyzyd7/y/Lt6z597+Cw/e+H+bfd9hrzH6L3nB/9TTu8z5D1G7zPkPUbvM+Q9Rv8f7w4oIdTXLq4AAAAASUVORK5CYII=',
+    expect(src?.slice(0, 150)).toEqual(
+        'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAACBCAYAAAA2ax9lAAAABmJLR0QA/wD/AP+gvaeTAAAgAElEQVR4nO29eZBlWX7X9znn3OXdt7/cl9qX7q7unp7pdUazaDTSaEME'
     );
-    expect(src?.length).toEqual(19974);
+    expect(src?.length).toEqual(19942);
 });
