@@ -32,11 +32,11 @@ test('Naivgate to the last page', async () => {
     );
 
     // Zoom to 50%
-    let zoomPopover = await page.waitForSelector('[data-testid="zoom__popover-target"]');
+    const zoomPopover = await page.waitForSelector('[data-testid="zoom__popover-target"]');
     await zoomPopover?.click();
 
-    let zoomPooverBody = await page.waitForSelector('[id="rpv-core__popover-body-inner-zoom"]');
-    let zoomButtons = await zoomPooverBody?.$$('button');
+    const zoomPooverBody = await page.waitForSelector('[id="rpv-core__popover-body-inner-zoom"]');
+    const zoomButtons = await zoomPooverBody?.$$('button');
     await zoomButtons[3]?.click();
 
     await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 2410');

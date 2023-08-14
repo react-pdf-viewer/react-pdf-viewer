@@ -39,7 +39,7 @@ test('jumpToMatch in a custom search sidebar', async () => {
         const searchHighlights = await page.waitForSelector(`[data-testid="search__highlights-${pageIndex}"]`, {
             visible: true,
         });
-        let highlightEle = await searchHighlights?.$('.rpv-search__highlight.rpv-search__highlight--current');
+        const highlightEle = await searchHighlights?.$('.rpv-search__highlight.rpv-search__highlight--current');
         return await highlightEle?.evaluate((node) => {
             const nodeEle = node as HTMLElement;
             return {

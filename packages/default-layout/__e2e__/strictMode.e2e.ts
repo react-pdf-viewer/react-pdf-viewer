@@ -27,7 +27,7 @@ test('Support Strict mode', async () => {
     await page.waitForSelector('[data-testid="thumbnail__list"]');
 
     const firstThumbnail = await page.waitForSelector('[aria-label="Thumbnail of page 1"]');
-    let props = await firstThumbnail?.evaluate((ele) => ({
+    const props = await firstThumbnail?.evaluate((ele) => ({
         height: ele.getAttribute('height'),
         width: ele.getAttribute('width'),
         src: ele.getAttribute('src'),

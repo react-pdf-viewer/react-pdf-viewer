@@ -44,7 +44,7 @@ test('Switch to horizontal scroll mode', async () => {
     await pageInput?.press('Enter');
 
     await page.waitForSelector('[data-testid="core__inner-current-page-2"]');
-    let scrollLeft = await pagesContainer.evaluate((ele) => ele.scrollLeft);
+    let scrollLeft = await pagesContainer?.evaluate((ele) => ele.scrollLeft);
     expect(scrollLeft).toEqual(1782);
 
     await page.waitForSelector('[data-testid="core__page-layer-3"]');
@@ -61,7 +61,7 @@ test('Switch to horizontal scroll mode', async () => {
     await page.waitForSelector('[data-testid="core__page-layer-7"]');
 
     await page.waitForSelector('[data-testid="core__inner-current-page-6"]');
-    scrollLeft = await pagesContainer.evaluate((ele) => ele.scrollLeft);
+    scrollLeft = await pagesContainer?.evaluate((ele) => ele.scrollLeft);
     expect(scrollLeft).toEqual(5413.5);
 
     // Check the current page
@@ -135,7 +135,7 @@ test('Switch to wrapped scroll mode', async () => {
 
     await page.waitForSelector('[data-testid="core__page-layer-2"]');
     await page.waitForSelector('[data-testid="core__inner-current-page-2"]');
-    let scrollTop = await pagesContainer.evaluate((ele) => ele.scrollTop);
+    let scrollTop = await pagesContainer?.evaluate((ele) => ele.scrollTop);
     expect(scrollTop).toEqual(594);
 
     // Click the `Parameters` link
@@ -143,7 +143,7 @@ test('Switch to wrapped scroll mode', async () => {
     await link?.click();
 
     await page.waitForSelector('[data-testid="core__inner-current-page-6"]');
-    scrollTop = await pagesContainer.evaluate((ele) => ele.scrollTop);
+    scrollTop = await pagesContainer?.evaluate((ele) => ele.scrollTop);
     expect(scrollTop).toEqual(1488.5);
     await browser.close();
 });
@@ -200,7 +200,7 @@ test('Keep the current page after switching the scroll mode', async () => {
     await page.waitForSelector('[data-testid="core__page-layer-6"]');
     await page.waitForSelector('[data-testid="core__page-layer-7"]');
 
-    let scrollLeft = await pagesContainer.evaluate((ele) => ele.scrollLeft);
+    let scrollLeft = await pagesContainer?.evaluate((ele) => ele.scrollLeft);
     expect(scrollLeft).toEqual(2673);
 
     // Zoom to 50%
@@ -223,7 +223,7 @@ test('Keep the current page after switching the scroll mode', async () => {
     await page.waitForSelector('[data-testid="core__page-layer-7"]');
 
     await page.waitForSelector('[data-testid="core__inner-current-page-3"]');
-    scrollLeft = await pagesContainer.evaluate((ele) => ele.scrollLeft);
+    scrollLeft = await pagesContainer?.evaluate((ele) => ele.scrollLeft);
     expect(scrollLeft).toEqual(891);
     await browser.close();
 });

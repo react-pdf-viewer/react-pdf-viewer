@@ -57,11 +57,11 @@ test('Keep the current page after rotating a document', async () => {
 
     // Click the `More actions` button
     const moreActions = await page.waitForSelector('[data-testid="toolbar__more-actions-popover-target"]');
-    moreActions.click().catch((e) => e);
+    moreActions?.click().catch((e) => e);
 
     // Rotate forward
     const rotateForward = await page.waitForSelector('[data-testid="rotate__forward-menu"]');
-    rotateForward.click().catch((e) => e);
+    rotateForward?.click().catch((e) => e);
 
     await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 3564');
 
@@ -90,11 +90,11 @@ test('Keep the current page after rotating a document', async () => {
     await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 1782');
 
     // Click the `More actions` button
-    moreActions.click().catch((e) => e);
+    moreActions?.click().catch((e) => e);
 
     // Rotate backward
     const rotateBackward = await page.waitForSelector('[data-testid="rotate__backward-menu"]');
-    rotateBackward.click().catch((e) => e);
+    rotateBackward?.click().catch((e) => e);
 
     await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 2376');
     await browser.close();

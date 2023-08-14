@@ -13,8 +13,8 @@ test('Cover width property', async () => {
     });
     await page.evaluate(() => document.querySelector('[data-testid="core__viewer"]')?.scrollIntoView());
 
-    let imageEle = await page.waitForSelector('[data-testid="thumbnail__cover-image"]');
-    let result = await imageEle?.evaluate((node) => ({
+    const imageEle = await page.waitForSelector('[data-testid="thumbnail__cover-image"]');
+    const result = await imageEle?.evaluate((node) => ({
         cls: node.getAttribute('class'),
         src: node.getAttribute('src'),
         height: node.clientHeight,

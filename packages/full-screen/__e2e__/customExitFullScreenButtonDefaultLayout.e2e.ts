@@ -22,7 +22,7 @@ test('Test exit button with default layout plugin', async () => {
     await fullScreenButton?.click();
 
     const exitButton = await page.waitForSelector('[data-testid="exit-full-screen"]');
-    const exitTestId = await page.evaluate((exitButton) => exitButton.getAttribute('data-testid'), exitButton);
+    const exitTestId = await page.evaluate((exitButton) => exitButton?.getAttribute('data-testid'), exitButton);
     expect(exitTestId).toEqual('exit-full-screen');
     await browser.close();
 });

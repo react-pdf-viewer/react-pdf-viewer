@@ -86,10 +86,10 @@ test('Search popover performs search based on the initial keyword', async () => 
     await page.keyboard.press('Enter');
 
     // All highlights are removed
-    let searchHighlights = await page.waitForSelector('[data-testid="search__highlights-2"]', { visible: true });
+    const searchHighlights = await page.waitForSelector('[data-testid="search__highlights-2"]', { visible: true });
 
-    let highlightElements = await searchHighlights?.$$('.rpv-search__highlight');
-    let numHighlights = await highlightElements?.length;
+    const highlightElements = await searchHighlights?.$$('.rpv-search__highlight');
+    const numHighlights = highlightElements?.length;
     expect(numHighlights).toEqual(0);
 
     // Open the search popover again

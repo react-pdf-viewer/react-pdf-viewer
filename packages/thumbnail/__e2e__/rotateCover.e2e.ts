@@ -65,8 +65,8 @@ test('Rotate backward a Cover', async () => {
     const rotateBtn = await page.waitForSelector('[data-testid="rotate-backward"]');
     await rotateBtn?.click();
 
-    let image = await page.waitForSelector('[data-testid="thumbnail__cover-image"]');
-    let props = await image?.evaluate((ele) => ({
+    const image = await page.waitForSelector('[data-testid="thumbnail__cover-image"]');
+    const props = await image?.evaluate((ele) => ({
         height: ele.clientHeight,
         width: ele.clientWidth,
         src: ele.getAttribute('src'),

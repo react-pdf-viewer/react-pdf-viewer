@@ -43,7 +43,7 @@ test('Test the whole words matching', async () => {
     let searchHighlights = await page.waitForSelector('[data-testid="search__highlights-3"]', { visible: true });
 
     let highlightElements = await searchHighlights?.$$('.rpv-search__highlight');
-    let numHighlights = await highlightElements?.length;
+    let numHighlights = highlightElements?.length;
     expect(numHighlights).toEqual(4);
 
     // Enable the `Whole Words` option
@@ -56,7 +56,7 @@ test('Test the whole words matching', async () => {
 
     searchHighlights = await page.waitForSelector('[data-testid="search__highlights-3"]', { visible: true });
     highlightElements = await searchHighlights?.$$('.rpv-search__highlight');
-    numHighlights = await highlightElements?.length;
+    numHighlights = highlightElements?.length;
     expect(numHighlights).toEqual(2);
     await browser.close();
 });

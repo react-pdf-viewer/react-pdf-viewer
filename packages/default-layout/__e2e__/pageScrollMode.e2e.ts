@@ -36,7 +36,7 @@ test('Single page scroll mode', async () => {
     await page.waitForSelector('[data-testid="core__page-layer-7"]');
 
     await page.waitForSelector('[data-testid="core__inner-current-page-4"]');
-    let scrollTop = await pagesContainer.evaluate((ele) => ele.scrollTop);
+    let scrollTop = await pagesContainer?.evaluate((ele) => ele.scrollTop);
     expect(scrollTop).toEqual(4752);
 
     // Switch to the single page scroll mode
@@ -52,7 +52,7 @@ test('Single page scroll mode', async () => {
     expect(hasSingleClass).toEqual(true);
     await page.waitForSelector('[data-testid="core__inner-current-page-4"]');
 
-    scrollTop = await pagesContainer.evaluate((ele) => ele.scrollTop);
+    scrollTop = await pagesContainer?.evaluate((ele) => ele.scrollTop);
     expect(scrollTop).toEqual(4752);
 
     let currentPage = await pageInput?.evaluate((ele) => ele.getAttribute('value'));
@@ -80,7 +80,7 @@ test('Single page scroll mode', async () => {
 
     await page.waitForSelector('[data-testid="core__inner-current-page-4"]');
 
-    scrollTop = await pagesContainer.evaluate((ele) => ele.scrollTop);
+    scrollTop = await pagesContainer?.evaluate((ele) => ele.scrollTop);
     expect(scrollTop).toEqual(3032);
 
     // Check the current page

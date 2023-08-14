@@ -33,7 +33,7 @@ test('Test renderThumbnailItem option with dynamic document', async () => {
     expect(props?.width).toEqual('150px');
     expect(props?.height).toEqual('200px');
 
-    let thumbnailItems = await page.$$('.custom-thumbnail-item');
+    const thumbnailItems = await page.$$('.custom-thumbnail-item');
     expect(thumbnailItems.length).toEqual(8);
 
     // Load the second document
