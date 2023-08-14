@@ -32,7 +32,7 @@ test('clearKeyword() when the keyword is empty', async () => {
     let searchHighlights = await page.waitForSelector('[data-testid="search__highlights-1"]', { visible: true });
 
     let highlightElements = await searchHighlights?.$$('.rpv-search__highlight');
-    let numHighlights = await highlightElements?.length;
+    let numHighlights = highlightElements?.length;
     expect(numHighlights).toEqual(3);
 
     // Clear the keyword
@@ -45,7 +45,7 @@ test('clearKeyword() when the keyword is empty', async () => {
     // The highlights should be removed
     searchHighlights = await page.waitForSelector('[data-testid="search__highlights-1"]', { visible: true });
     highlightElements = await searchHighlights?.$$('.rpv-search__highlight');
-    numHighlights = await highlightElements?.length;
+    numHighlights = highlightElements?.length;
     expect(numHighlights).toEqual(0);
     await browser.close();
 });

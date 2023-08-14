@@ -36,7 +36,7 @@ test('Keep current position after zooming', async () => {
     await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 5353');
 
     // Zoom to 50%
-    let zoomPopover = await page.waitForSelector('[data-testid="zoom__popover-target"]');
+    const zoomPopover = await page.waitForSelector('[data-testid="zoom__popover-target"]');
     await zoomPopover?.click();
 
     let zoomPooverBody = await page.waitForSelector('[id="rpv-core__popover-body-inner-zoom"]');

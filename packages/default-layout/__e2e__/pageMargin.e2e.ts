@@ -37,27 +37,27 @@ describe('Page margin', () => {
     });
 
     test('Page size', async () => {
-        let pageContainer = await page.waitForSelector('[aria-label="Page 1"]');
-        let height = await pageContainer.evaluate((ele) => (ele as HTMLElement).style.height);
+        const pageContainer = await page.waitForSelector('[aria-label="Page 1"]');
+        const height = await pageContainer?.evaluate((ele) => (ele as HTMLElement).style.height);
         expect(height).toEqual('1218px');
 
-        let pageLayer = await page.waitForSelector('[data-testid="core__page-layer-0"]');
-        let pageHeight = await pageLayer.evaluate((ele) => (ele as HTMLElement).style.height);
+        const pageLayer = await page.waitForSelector('[data-testid="core__page-layer-0"]');
+        const pageHeight = await pageLayer?.evaluate((ele) => (ele as HTMLElement).style.height);
         expect(pageHeight).toEqual('1188px');
     });
 
     test('Zoom', async () => {
         // Click the `Zoom document` button in the toolbar
         const zoomButton = await page.waitForSelector('[aria-label="Zoom document"]');
-        await zoomButton.click();
+        await zoomButton?.click();
 
         const zoomMenu = await page.waitForSelector('[id="rpv-core__popover-body-inner-zoom"]');
 
-        const zoomItems = await zoomMenu.$$('button.rpv-core__menu-item');
-        const zoomTo75 = zoomItems.at(4);
+        const zoomItems = await zoomMenu?.$$('button.rpv-core__menu-item');
+        const zoomTo75 = zoomItems?.at(4);
         const text = await zoomTo75.evaluate((ele) => ele.textContent);
         expect(text).toEqual('75%');
-        await zoomTo75.click();
+        await zoomTo75?.click();
 
         await page.waitForSelector('[data-testid="core__page-layer-0"]', { visible: true });
         await page.waitForSelector('[data-testid="core__text-layer-0"]');
@@ -75,12 +75,12 @@ describe('Page margin', () => {
         await page.waitForSelector('[data-testid="core__text-layer-3"]');
         await page.waitForSelector('[data-testid="core__annotation-layer-3"]');
 
-        let pageContainer = await page.waitForSelector('[aria-label="Page 1"]');
-        let height = await pageContainer.evaluate((ele) => (ele as HTMLElement).style.height);
+        const pageContainer = await page.waitForSelector('[aria-label="Page 1"]');
+        const height = await pageContainer?.evaluate((ele) => (ele as HTMLElement).style.height);
         expect(height).toEqual('624px');
 
-        let pageLayer = await page.waitForSelector('[data-testid="core__page-layer-0"]');
-        let pageHeight = await pageLayer.evaluate((ele) => (ele as HTMLElement).style.height);
+        const pageLayer = await page.waitForSelector('[data-testid="core__page-layer-0"]');
+        const pageHeight = await pageLayer?.evaluate((ele) => (ele as HTMLElement).style.height);
         expect(pageHeight).toEqual('594px');
     });
 
@@ -147,7 +147,7 @@ describe('Page margin', () => {
 
         // Click the `Specifying parameters in a URL` link
         const link = await page.waitForSelector('[data-annotation-link="35R"]');
-        await link.click();
+        await link?.click();
 
         await page.waitForSelector('[data-testid="core__page-layer-6"]');
         await page.waitForSelector('[data-testid="core__text-layer-6"]');

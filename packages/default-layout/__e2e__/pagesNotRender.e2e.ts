@@ -87,8 +87,8 @@ test('Pages do not render when users zoom the document continuously', async () =
 
     // Pages are rendered completely
     for (let i = 97; i < 113; i++) {
-        let documentPage = await page.waitForSelector(`[data-testid="core__text-layer-${i}"]`);
-        let textContent = await documentPage?.evaluate((ele) => ele.textContent);
+        const documentPage = await page.waitForSelector(`[data-testid="core__text-layer-${i}"]`);
+        const textContent = await documentPage?.evaluate((ele) => ele.textContent);
         expect(textContent).toEqual('Dummy PDF file');
     }
     await browser.close();

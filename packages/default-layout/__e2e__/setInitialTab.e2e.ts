@@ -17,7 +17,7 @@ test('Set the initial tab', async () => {
     await page.waitForSelector('[data-testid="core__page-layer-0"]', { visible: true });
 
     const thumbnail = await page.waitForSelector('[aria-label="Thumbnail of page 1"]');
-    let props = await thumbnail?.evaluate((ele) => ({
+    const props = await thumbnail?.evaluate((ele) => ({
         height: ele.getAttribute('height'),
         width: ele.getAttribute('width'),
         src: ele.getAttribute('src'),

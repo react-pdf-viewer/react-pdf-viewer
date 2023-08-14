@@ -52,7 +52,7 @@ test('Keep the current page after rotating a document', async () => {
 
     // Rotate forward
     const rotateForward = await page.waitForSelector('[data-testid="rotate__forward-button"]');
-    rotateForward.click().catch((e) => e);
+    rotateForward?.click().catch((e) => e);
 
     await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 1782');
 
@@ -61,7 +61,7 @@ test('Keep the current page after rotating a document', async () => {
 
     // Rotate backward
     const rotateBackward = await page.waitForSelector('[data-testid="rotate__backward-button"]');
-    rotateBackward.click().catch((e) => e);
+    rotateBackward?.click().catch((e) => e);
 
     await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 1188');
     await browser.close();

@@ -30,7 +30,7 @@ test('Include the toolbar', async () => {
     expect(fullscreenEleId).toEqual('default-layout__body');
 
     const exitFullScreenButton = await page.waitForSelector('[aria-label="Exit full screen"]');
-    const exitFullScreenButtonId = await page.evaluate((ele) => ele.getAttribute('data-testid'), exitFullScreenButton);
+    const exitFullScreenButtonId = await page.evaluate((ele) => ele?.getAttribute('data-testid'), exitFullScreenButton);
     expect(exitFullScreenButtonId).toEqual('full-screen__exit-button-with-tooltip');
     await exitFullScreenButton?.click();
 
