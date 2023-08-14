@@ -1,6 +1,11 @@
 import 'expect-puppeteer';
+import puppeteer from 'puppeteer';
 
 test('Test setHighlightAreas() function', async () => {
+    const browser = await puppeteer.launch({
+        headless: false,
+    });
+    const page = await browser.newPage();
     await page.goto('http://localhost:3000/highlight-dynamic-areas');
     await page.setViewport({
         width: 1200,
@@ -50,4 +55,5 @@ test('Test setHighlightAreas() function', async () => {
     expect(highlightAreas.length).toEqual(1);
     expect(highlightAreas[0].height).toEqual('1.32637%');
     expect(highlightAreas[0].width).toEqual('37.477%');
+    await browser.close();
 });

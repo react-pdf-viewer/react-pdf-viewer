@@ -1,7 +1,12 @@
 import 'expect-puppeteer';
+import puppeteer from 'puppeteer';
 
 describe('Page margin', () => {
     beforeEach(async () => {
+        const browser = await puppeteer.launch({
+            headless: false,
+        });
+        const page = await browser.newPage();
         await page.goto('http://localhost:3000/default-layout-page-margin');
         await page.setViewport({
             width: 1920,
@@ -25,6 +30,10 @@ describe('Page margin', () => {
         await page.waitForSelector('[data-testid="core__page-layer-3"]');
         await page.waitForSelector('[data-testid="core__text-layer-3"]');
         await page.waitForSelector('[data-testid="core__annotation-layer-3"]');
+    });
+
+    afterEach(async () => {
+        await browser.close();
     });
 
     test('Page size', async () => {

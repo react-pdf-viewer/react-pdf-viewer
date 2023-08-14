@@ -1,7 +1,12 @@
 import 'expect-puppeteer';
+import puppeteer from 'puppeteer';
 
 // https://github.com/react-pdf-viewer/react-pdf-viewer/issues/1128
 test('Pages do not render when users zoom the document continuously', async () => {
+    const browser = await puppeteer.launch({
+        headless: false,
+    });
+    const page = await browser.newPage();
     await page.goto('http://localhost:3000/5000-of-dummy');
     await page.setViewport({
         width: 1920,
@@ -86,4 +91,5 @@ test('Pages do not render when users zoom the document continuously', async () =
         let textContent = await documentPage?.evaluate((ele) => ele.textContent);
         expect(textContent).toEqual('Dummy PDF file');
     }
+    await browser.close();
 });

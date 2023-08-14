@@ -1,6 +1,11 @@
 import 'expect-puppeteer';
+import puppeteer from 'puppeteer';
 
 test('Keep current position after zooming', async () => {
+    const browser = await puppeteer.launch({
+        headless: false,
+    });
+    const page = await browser.newPage();
     await page.goto('http://localhost:3000/default-layout');
     await page.setViewport({
         width: 1920,
@@ -59,4 +64,5 @@ test('Keep current position after zooming', async () => {
     zoomButtons = await zoomPooverBody?.$$('button');
     await zoomButtons[10]?.click();
     await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 14272');
+    await browser.close();
 });

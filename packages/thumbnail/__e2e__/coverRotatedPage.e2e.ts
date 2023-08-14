@@ -1,6 +1,11 @@
 import 'expect-puppeteer';
+import puppeteer from 'puppeteer';
 
 test('Cover of a rotated page', async () => {
+    const browser = await puppeteer.launch({
+        headless: false,
+    });
+    const page = await browser.newPage();
     await page.goto('http://localhost:3000/thumbnail-cover-rotated');
     await page.setViewport({
         width: 1200,
@@ -23,4 +28,5 @@ test('Cover of a rotated page', async () => {
     expect(result?.src?.length).toEqual(73242);
     expect(result?.height).toEqual(478);
     expect(result?.width).toEqual(638);
+    await browser.close();
 });

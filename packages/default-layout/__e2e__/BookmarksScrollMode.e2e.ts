@@ -1,6 +1,11 @@
 import 'expect-puppeteer';
+import puppeteer from 'puppeteer';
 
 test('Click bookmarks when switching to the horizontal scroll mode', async () => {
+    const browser = await puppeteer.launch({
+        headless: false,
+    });
+    const page = await browser.newPage();
     await page.goto('http://localhost:3000/default-layout');
     await page.setViewport({
         width: 1920,
@@ -99,9 +104,14 @@ test('Click bookmarks when switching to the horizontal scroll mode', async () =>
 
     await page.waitForSelector('[data-testid="core__text-layer-7"]', { visible: true });
     await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollLeft === 6403');
+    await browser.close();
 });
 
 test('Click bookmarks when switching to the wrapped scroll mode', async () => {
+    const browser = await puppeteer.launch({
+        headless: false,
+    });
+    const page = await browser.newPage();
     await page.goto('http://localhost:3000/default-layout');
     await page.setViewport({
         width: 1920,
@@ -213,4 +223,5 @@ test('Click bookmarks when switching to the wrapped scroll mode', async () => {
 
     await page.waitForSelector('[data-testid="core__text-layer-7"]', { visible: true });
     await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 890');
+    await browser.close();
 });

@@ -1,6 +1,11 @@
 import 'expect-puppeteer';
+import puppeteer from 'puppeteer';
 
 test('Test renderThumbnailItem', async () => {
+    const browser = await puppeteer.launch({
+        headless: false,
+    });
+    const page = await browser.newPage();
     await page.goto('http://localhost:3000/thumbnail-render-thumbnail-item');
     await page.setViewport({
         width: 1920,
@@ -43,4 +48,5 @@ test('Test renderThumbnailItem', async () => {
     );
     expect(props?.width).toEqual('150px');
     expect(props?.height).toEqual('200px');
+    await browser.close();
 });

@@ -1,6 +1,11 @@
 import 'expect-puppeteer';
+import puppeteer from 'puppeteer';
 
 test('Keep current position after zooming out', async () => {
+    const browser = await puppeteer.launch({
+        headless: false,
+    });
+    const page = await browser.newPage();
     await page.goto('http://localhost:3000/5000-of-dummy');
     await page.setViewport({
         width: 1920,
@@ -119,9 +124,14 @@ test('Keep current position after zooming out', async () => {
     // Zoom in to 460%
     await zoomInButton?.click();
     await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 388792');
+    await browser.close();
 });
 
 test('Keep current position after zooming in', async () => {
+    const browser = await puppeteer.launch({
+        headless: false,
+    });
+    const page = await browser.newPage();
     await page.goto('http://localhost:3000/5000-of-dummy');
     await page.setViewport({
         width: 1920,
@@ -211,9 +221,14 @@ test('Keep current position after zooming in', async () => {
     // Zoom in to 1000%
     await zoomInButton?.click();
     await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 845237');
+    await browser.close();
 });
 
 test('Keep current position after zooming to special level', async () => {
+    const browser = await puppeteer.launch({
+        headless: false,
+    });
+    const page = await browser.newPage();
     await page.goto('http://localhost:3000/5000-of-dummy');
     await page.setViewport({
         width: 1920,
@@ -246,4 +261,5 @@ test('Keep current position after zooming to special level', async () => {
     const zoomToFitWidthButton = zoomButtons ? zoomButtons[2] : null;
     await zoomToFitWidthButton?.click();
     await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 136375');
+    await browser.close();
 });

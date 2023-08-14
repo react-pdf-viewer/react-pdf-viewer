@@ -1,6 +1,11 @@
 import 'expect-puppeteer';
+import puppeteer from 'puppeteer';
 
 test('Press PageUp to jump to the previous page', async () => {
+    const browser = await puppeteer.launch({
+        headless: false,
+    });
+    const page = await browser.newPage();
     await page.goto('http://localhost:3000/default-layout');
     await page.setViewport({
         width: 1920,
@@ -99,4 +104,5 @@ test('Press PageUp to jump to the previous page', async () => {
     await page.waitForFunction(
         () => 'document.querySelector("[data-testid=page-navigation__current-page-input]").value === "2"',
     );
+    await browser.close();
 });

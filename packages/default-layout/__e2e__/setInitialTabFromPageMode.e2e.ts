@@ -1,6 +1,11 @@
 import 'expect-puppeteer';
+import puppeteer from 'puppeteer';
 
 test('Set the initial tab from document page mode', async () => {
+    const browser = await puppeteer.launch({
+        headless: false,
+    });
+    const page = await browser.newPage();
     await page.goto('http://localhost:3000/default-layout-initial-tab-page-mode');
     await page.setViewport({
         width: 1920,
@@ -49,4 +54,5 @@ test('Set the initial tab from document page mode', async () => {
 
     await page.waitForSelector('[data-testid="core__text-layer-4"]', { visible: true });
     await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 4849');
+    await browser.close();
 });

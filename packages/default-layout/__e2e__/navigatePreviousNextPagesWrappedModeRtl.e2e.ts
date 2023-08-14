@@ -1,6 +1,11 @@
 import 'expect-puppeteer';
+import puppeteer from 'puppeteer';
 
 test('Navigate to the previous and next pages in wrapped scroll mode (RTL enabled)', async () => {
+    const browser = await puppeteer.launch({
+        headless: false,
+    });
+    const page = await browser.newPage();
     await page.goto('http://localhost:3000/default-layout-rtl');
     await page.setViewport({
         width: 1920,
@@ -82,9 +87,14 @@ test('Navigate to the previous and next pages in wrapped scroll mode (RTL enable
     await page.waitForFunction(
         () => 'document.querySelector("[data-testid=page-navigation__current-page-input]").value === "1"',
     );
+    await browser.close();
 });
 
 test('Jump to a particular page in wrapped scroll mode (RTL enabled)', async () => {
+    const browser = await puppeteer.launch({
+        headless: false,
+    });
+    const page = await browser.newPage();
     await page.goto('http://localhost:3000/default-layout');
     await page.setViewport({
         width: 1920,
@@ -151,4 +161,5 @@ test('Jump to a particular page in wrapped scroll mode (RTL enabled)', async () 
     await page.waitForFunction(
         () => 'document.querySelector("[data-testid=page-navigation__current-page-input]").value === "1"',
     );
+    await browser.close();
 });

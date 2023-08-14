@@ -1,6 +1,11 @@
 import 'expect-puppeteer';
+import puppeteer from 'puppeteer';
 
 test('Test the onPageChange() callback with the default layout', async () => {
+    const browser = await puppeteer.launch({
+        headless: false,
+    });
+    const page = await browser.newPage();
     await page.goto('http://localhost:3000/default-layout-onpagechange');
     await page.setViewport({
         width: 1920,
@@ -37,9 +42,14 @@ test('Test the onPageChange() callback with the default layout', async () => {
     visitedPagesLabel = await page.waitForSelector('[data-testid="visited-pages-4"]');
     visitedPages = await visitedPagesLabel?.evaluate((ele) => ele.textContent);
     expect(visitedPages).toEqual('0, 2, 6, 7');
+    await browser.close();
 });
 
 test('Test the onPageChange() when navigating between pages', async () => {
+    const browser = await puppeteer.launch({
+        headless: false,
+    });
+    const page = await browser.newPage();
     await page.goto('http://localhost:3000/default-layout-onpagechange');
     await page.setViewport({
         width: 1920,
@@ -104,4 +114,5 @@ test('Test the onPageChange() when navigating between pages', async () => {
     visitedPagesLabel = await page.waitForSelector('[data-testid="visited-pages-8"]');
     visitedPages = await visitedPagesLabel?.evaluate((ele) => ele.textContent);
     expect(visitedPages).toEqual('0, 1, 2, 3, 4, 3, 2, 1');
+    await browser.close();
 });

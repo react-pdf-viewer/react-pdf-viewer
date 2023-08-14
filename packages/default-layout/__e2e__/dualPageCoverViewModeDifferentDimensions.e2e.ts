@@ -1,6 +1,11 @@
 import 'expect-puppeteer';
+import puppeteer from 'puppeteer';
 
 test('Dual page with cover viewmode (document has different page dimensions)', async () => {
+    const browser = await puppeteer.launch({
+        headless: false,
+    });
+    const page = await browser.newPage();
     await page.goto('http://localhost:3000/default-layout-different-dimensions');
     await page.setViewport({
         width: 1920,
@@ -67,4 +72,5 @@ test('Dual page with cover viewmode (document has different page dimensions)', a
     await page.waitForFunction(
         () => 'document.querySelector("[data-testid=page-navigation__current-page-input]").value === "68"',
     );
+    await browser.close();
 });

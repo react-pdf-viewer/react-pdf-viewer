@@ -1,6 +1,11 @@
 import 'expect-puppeteer';
+import puppeteer from 'puppeteer';
 
 test('Cover component', async () => {
+    const browser = await puppeteer.launch({
+        headless: false,
+    });
+    const page = await browser.newPage();
     await page.goto('http://localhost:3000/thumbnail-cover');
     await page.setViewport({
         width: 1200,
@@ -42,4 +47,5 @@ test('Cover component', async () => {
     expect(result?.src?.length).toEqual(19926);
     expect(result?.height).toEqual(318);
     expect(result?.width).toEqual(224);
+    await browser.close();
 });

@@ -1,6 +1,11 @@
 import 'expect-puppeteer';
+import puppeteer from 'puppeteer';
 
 test('Single page scroll mode', async () => {
+    const browser = await puppeteer.launch({
+        headless: false,
+    });
+    const page = await browser.newPage();
     await page.goto('http://localhost:3000/default-layout');
     await page.setViewport({
         width: 1920,
@@ -81,4 +86,5 @@ test('Single page scroll mode', async () => {
     // Check the current page
     currentPage = await pageInput?.evaluate((ele) => ele.getAttribute('value'));
     expect(currentPage).toEqual('5');
+    await browser.close();
 });
