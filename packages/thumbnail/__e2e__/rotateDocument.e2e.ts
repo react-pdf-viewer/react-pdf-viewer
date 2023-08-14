@@ -1,6 +1,11 @@
 import 'expect-puppeteer';
+import puppeteer from 'puppeteer';
 
 test('Rotate thumbnails after rotating the document', async () => {
+    const browser = await puppeteer.launch({
+        headless: false,
+    });
+    const page = await browser.newPage();
     await page.goto('http://localhost:3000/default-layout');
     await page.setViewport({
         width: 1920,
@@ -50,4 +55,5 @@ test('Rotate thumbnails after rotating the document', async () => {
     );
     expect(props?.height).toEqual('100px');
     expect(props?.width).toEqual('133.33333333333334px');
+    await browser.close();
 });

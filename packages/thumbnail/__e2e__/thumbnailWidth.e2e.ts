@@ -1,6 +1,11 @@
 import 'expect-puppeteer';
+import puppeteer from 'puppeteer';
 
 test('Test thumbnailWidth option', async () => {
+    const browser = await puppeteer.launch({
+        headless: false,
+    });
+    const page = await browser.newPage();
     await page.goto('http://localhost:3000/thumbnail-width');
     await page.setViewport({
         width: 1920,
@@ -38,4 +43,5 @@ test('Test thumbnailWidth option', async () => {
     );
     expect(props?.width).toEqual('150px');
     expect(props?.height).toEqual('200px');
+    await browser.close();
 });

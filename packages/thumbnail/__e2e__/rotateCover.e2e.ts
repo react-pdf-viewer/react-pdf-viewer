@@ -1,6 +1,11 @@
 import 'expect-puppeteer';
+import puppeteer from 'puppeteer';
 
 test('Rotate forward a Cover', async () => {
+    const browser = await puppeteer.launch({
+        headless: false,
+    });
+    const page = await browser.newPage();
     await page.goto('http://localhost:3000/rotate-cover');
     await page.setViewport({
         width: 1920,
@@ -38,9 +43,14 @@ test('Rotate forward a Cover', async () => {
     );
     expect(props?.width).toEqual(567);
     expect(props?.height).toEqual(757);
+    await browser.close();
 });
 
 test('Rotate backward a Cover', async () => {
+    const browser = await puppeteer.launch({
+        headless: false,
+    });
+    const page = await browser.newPage();
     await page.goto('http://localhost:3000/rotate-cover');
     await page.setViewport({
         width: 1920,
@@ -67,4 +77,5 @@ test('Rotate backward a Cover', async () => {
     );
     expect(props?.width).toEqual(567);
     expect(props?.height).toEqual(757);
+    await browser.close();
 });

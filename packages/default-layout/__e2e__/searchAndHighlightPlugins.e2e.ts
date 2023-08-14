@@ -1,7 +1,12 @@
 // https://github.com/react-pdf-viewer/react-pdf-viewer/issues/1137
 import 'expect-puppeteer';
+import puppeteer from 'puppeteer';
 
 test('Set initial keyword and use the highlight plugin', async () => {
+    const browser = await puppeteer.launch({
+        headless: false,
+    });
+    const page = await browser.newPage();
     await page.goto('http://localhost:3000/default-layout-search-highlight');
     await page.setViewport({
         width: 1920,
@@ -42,4 +47,5 @@ test('Set initial keyword and use the highlight plugin', async () => {
     searchHighlights = await page.waitForSelector('[data-testid="search__highlights-1"]', { visible: true });
     highlights = await searchHighlights?.$$('.rpv-search__highlight');
     expect(highlights?.length).toEqual(3);
+    await browser.close();
 });

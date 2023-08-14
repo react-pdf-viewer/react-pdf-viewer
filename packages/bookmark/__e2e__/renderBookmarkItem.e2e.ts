@@ -1,6 +1,11 @@
 import 'expect-puppeteer';
+import puppeteer from 'puppeteer';
 
 test('Customize bookmark items', async () => {
+    const browser = await puppeteer.launch({
+        headless: false,
+    });
+    const page = await browser.newPage();
     await page.goto('http://localhost:3000/bookmark-render-bookmark-item');
     await page.setViewport({
         width: 1920,
@@ -23,4 +28,5 @@ test('Customize bookmark items', async () => {
     await firstToggle.click();
     firstToggleIcon = await firstToggle.evaluate((ele) => ele.querySelector('svg path').getAttribute('d'));
     expect(firstToggleIcon).toEqual('M.541,5.627,11.666,18.2a.5.5,0,0,0,.749,0L23.541,5.627');
+    await browser.close();
 });

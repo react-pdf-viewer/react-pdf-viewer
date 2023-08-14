@@ -1,6 +1,11 @@
 import 'expect-puppeteer';
+import puppeteer from 'puppeteer';
 
 test('Test the renderPage option', async () => {
+    const browser = await puppeteer.launch({
+        headless: false,
+    });
+    const page = await browser.newPage();
     await page.goto('http://localhost:3000/core-render-page');
     await page.setViewport({
         width: 1920,
@@ -20,4 +25,5 @@ test('Test the renderPage option', async () => {
     const secondPage = await page.waitForSelector('[data-testid="custom-page-1"]');
     pageText = await secondPage?.evaluate((ele) => ele.textContent);
     expect(pageText).toEqual('Page 2');
+    await browser.close();
 });

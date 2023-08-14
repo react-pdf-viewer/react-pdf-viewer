@@ -1,6 +1,11 @@
 import 'expect-puppeteer';
+import puppeteer from 'puppeteer';
 
 test('Keep the current page after rotating a document', async () => {
+    const browser = await puppeteer.launch({
+        headless: false,
+    });
+    const page = await browser.newPage();
     await page.goto('http://localhost:3000/default-layout');
     await page.setViewport({
         width: 1920,
@@ -92,4 +97,5 @@ test('Keep the current page after rotating a document', async () => {
     rotateBackward.click().catch((e) => e);
 
     await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 2376');
+    await browser.close();
 });

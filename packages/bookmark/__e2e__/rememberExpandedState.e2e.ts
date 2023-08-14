@@ -1,6 +1,11 @@
 import 'expect-puppeteer';
+import puppeteer from 'puppeteer';
 
 test('Remember expanded/collapsed state of each bookmark', async () => {
+    const browser = await puppeteer.launch({
+        headless: false,
+    });
+    const page = await browser.newPage();
     await page.goto('http://localhost:3000/bookmark');
     await page.setViewport({
         width: 1920,
@@ -15,13 +20,13 @@ test('Remember expanded/collapsed state of each bookmark', async () => {
     await page.waitForSelector('[data-testid="core__text-layer-0"]', { visible: true });
 
     // Toggle the `Parameters for Opening PDF Files` item
-    let toggleIcon = await page.waitForSelector(
+    const toggleIcon = await page.waitForSelector(
         'li[aria-label="Parameters for Opening PDF Files"] .rpv-bookmark__toggle',
     );
     await toggleIcon?.click();
 
     // Toggle the `Specifying parameters in a URL` item
-    let toggleSubItem = await page.waitForSelector(
+    const toggleSubItem = await page.waitForSelector(
         'li[aria-label="Specifying parameters in a URL"] .rpv-bookmark__toggle',
     );
     await toggleSubItem?.click();
@@ -30,7 +35,7 @@ test('Remember expanded/collapsed state of each bookmark', async () => {
     let subItemExpanded = await subItemHeading?.evaluate((ele) => ele.getAttribute('aria-expanded'));
     expect(subItemExpanded).toEqual('true');
 
-    let numSubItems = await subItemHeading?.evaluate((ele) => ele.querySelectorAll('li').length);
+    const numSubItems = await subItemHeading?.evaluate((ele) => ele.querySelectorAll('li').length);
     expect(numSubItems).toEqual(2);
 
     // Close the `Parameters for Opening PDF Files` item
@@ -43,4 +48,5 @@ test('Remember expanded/collapsed state of each bookmark', async () => {
     subItemHeading = await page.waitForSelector('li[aria-label="Specifying parameters in a URL"]');
     subItemExpanded = await subItemHeading?.evaluate((ele) => ele.getAttribute('aria-expanded'));
     expect(subItemExpanded).toEqual('true');
+    await browser.close();
 });

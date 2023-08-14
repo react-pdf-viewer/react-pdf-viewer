@@ -1,6 +1,11 @@
 import 'expect-puppeteer';
+import puppeteer from 'puppeteer';
 
 test('Click bookmarks', async () => {
+    const browser = await puppeteer.launch({
+        headless: false,
+    });
+    const page = await browser.newPage();
     await page.goto('http://localhost:3000/bookmark');
     await page.setViewport({
         width: 1920,
@@ -88,10 +93,15 @@ test('Click bookmarks', async () => {
 
     await page.waitForSelector('[data-testid="core__text-layer-7"]', { visible: true });
     await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 7567');
+    await browser.close();
 });
 
 // Issue https://github.com/react-pdf-viewer/react-pdf-viewer/issues/1218
 test('Click bookmarks 2', async () => {
+    const browser = await puppeteer.launch({
+        headless: false,
+    });
+    const page = await browser.newPage();
     await page.goto('http://localhost:3000/bookmark');
     await page.setViewport({
         width: 1920,
@@ -142,4 +152,5 @@ test('Click bookmarks 2', async () => {
 
     await page.waitForSelector('[data-testid="core__text-layer-1"]', { visible: true });
     await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 945');
+    await browser.close();
 });

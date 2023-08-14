@@ -1,6 +1,11 @@
 import 'expect-puppeteer';
+import puppeteer from 'puppeteer';
 
 test('Perform search for the initial keyword in a sidebar', async () => {
+    const browser = await puppeteer.launch({
+        headless: false,
+    });
+    const page = await browser.newPage();
     await page.goto('http://localhost:3000/search-sidebar-initial-keyword');
     await page.setViewport({
         width: 1920,
@@ -54,4 +59,5 @@ test('Perform search for the initial keyword in a sidebar', async () => {
     await page.waitForSelector('[data-testid="core__text-layer-2"]', { visible: true });
     await page.waitForSelector('[data-testid="core__annotation-layer-2"]');
     await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 2745.5');
+    await browser.close();
 });

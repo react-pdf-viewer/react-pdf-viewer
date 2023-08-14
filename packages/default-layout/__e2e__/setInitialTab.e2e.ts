@@ -1,6 +1,11 @@
 import 'expect-puppeteer';
+import puppeteer from 'puppeteer';
 
 test('Set the initial tab', async () => {
+    const browser = await puppeteer.launch({
+        headless: false,
+    });
+    const page = await browser.newPage();
     await page.goto('http://localhost:3000/default-layout-initial-tab');
     await page.setViewport({
         width: 1920,
@@ -23,4 +28,5 @@ test('Set the initial tab', async () => {
     );
     expect(props?.height).toEqual('133.33333333333334px');
     expect(props?.width).toEqual('100px');
+    await browser.close();
 });

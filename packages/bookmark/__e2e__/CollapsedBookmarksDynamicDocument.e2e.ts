@@ -1,6 +1,11 @@
 import 'expect-puppeteer';
+import puppeteer from 'puppeteer';
 
 test('Bookmarks are expanded initially', async () => {
+    const browser = await puppeteer.launch({
+        headless: false,
+    });
+    const page = await browser.newPage();
     await page.goto('http://localhost:3000/bookmark-expanded-dynamic-document');
     await page.setViewport({
         width: 1920,
@@ -113,4 +118,5 @@ test('Bookmarks are expanded initially', async () => {
     expect(props3?.label).toEqual('1.1.1 Heading3');
     expect(props3?.level).toEqual('3');
     expect(props3?.text).toEqual('1.1.1 Heading3');
+    await browser.close();
 });

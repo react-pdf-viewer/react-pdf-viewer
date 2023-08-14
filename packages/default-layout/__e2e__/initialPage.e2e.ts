@@ -1,6 +1,11 @@
 import 'expect-puppeteer';
+import puppeteer from 'puppeteer';
 
 test('Test the initialPage option', async () => {
+    const browser = await puppeteer.launch({
+        headless: false,
+    });
+    const page = await browser.newPage();
     await page.goto('http://localhost:3000/default-layout-initial-page');
     await page.setViewport({
         width: 1920,
@@ -32,4 +37,5 @@ test('Test the initialPage option', async () => {
     );
     expect(props?.height).toEqual('141.40884813060566px');
     expect(props?.width).toEqual('100px');
+    await browser.close();
 });

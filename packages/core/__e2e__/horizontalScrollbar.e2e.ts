@@ -1,6 +1,11 @@
 import 'expect-puppeteer';
+import puppeteer from 'puppeteer';
 
 test('No horizontal scrollbar', async () => {
+    const browser = await puppeteer.launch({
+        headless: false,
+    });
+    const page = await browser.newPage();
     await page.goto('http://localhost:3000/core');
     await page.setViewport({
         width: 1920,
@@ -18,4 +23,5 @@ test('No horizontal scrollbar', async () => {
 
     const scrollWidth = await pagesContainer?.evaluate((ele) => ele.scrollWidth);
     expect(scrollWidth).toEqual(clientWidth);
+    await browser.close();
 });

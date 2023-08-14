@@ -1,6 +1,11 @@
 import 'expect-puppeteer';
+import puppeteer from 'puppeteer';
 
 test('Scroll to the initial page automatically after resizing the container (1)', async () => {
+    const browser = await puppeteer.launch({
+        headless: false,
+    });
+    const page = await browser.newPage();
     await page.goto('http://localhost:3000/default-layout-initial-page');
     await page.setViewport({
         width: 1920,
@@ -51,9 +56,14 @@ test('Scroll to the initial page automatically after resizing the container (1)'
 
     top = await pagesContainer.evaluate((ele) => ele.scrollTop);
     expect(top).toEqual(36623);
+    await browser.close();
 });
 
 test('Scroll to the initial page automatically after resizing the container (2)', async () => {
+    const browser = await puppeteer.launch({
+        headless: false,
+    });
+    const page = await browser.newPage();
     await page.goto('http://localhost:3000/default-layout-initial-page');
     await page.setViewport({
         width: 1920,
@@ -115,4 +125,5 @@ test('Scroll to the initial page automatically after resizing the container (2)'
 
     top = await pagesContainer.evaluate((ele) => ele.scrollTop);
     expect(top).toEqual(18311);
+    await browser.close();
 });

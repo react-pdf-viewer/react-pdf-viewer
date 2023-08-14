@@ -1,6 +1,11 @@
 import 'expect-puppeteer';
+import puppeteer from 'puppeteer';
 
 test('Press Enter to jump to the next match', async () => {
+    const browser = await puppeteer.launch({
+        headless: false,
+    });
+    const page = await browser.newPage();
     await page.goto('http://localhost:3000/default-layout');
     await page.setViewport({
         width: 1920,
@@ -69,4 +74,5 @@ test('Press Enter to jump to the next match', async () => {
     await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 5033');
     numOfMatches = await numOfMatchesLabel?.evaluate((node) => node.textContent);
     expect(numOfMatches).toEqual('1/6');
+    await browser.close();
 });

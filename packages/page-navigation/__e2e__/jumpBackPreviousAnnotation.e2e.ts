@@ -1,6 +1,11 @@
 import 'expect-puppeteer';
+import puppeteer from 'puppeteer';
 
 test('Jump back to the previous clicked link annotation', async () => {
+    const browser = await puppeteer.launch({
+        headless: false,
+    });
+    const page = await browser.newPage();
     await page.goto('http://localhost:3000/default-layout');
     await page.setViewport({
         width: 1920,
@@ -99,4 +104,5 @@ test('Jump back to the previous clicked link annotation', async () => {
     };
 
     await clickAnnotation();
+    await browser.close();
 });

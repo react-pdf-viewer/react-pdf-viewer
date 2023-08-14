@@ -1,6 +1,11 @@
 import 'expect-puppeteer';
+import puppeteer from 'puppeteer';
 
 test('Test renderThumbnailItem option with dynamic document', async () => {
+    const browser = await puppeteer.launch({
+        headless: false,
+    });
+    const page = await browser.newPage();
     await page.goto('http://localhost:3000/thumbnail-render-thumbnail-item-dynamic-document');
     await page.setViewport({
         width: 1920,
@@ -58,4 +63,5 @@ test('Test renderThumbnailItem option with dynamic document', async () => {
     );
     expect(props?.width).toEqual('150px');
     expect(props?.height).toEqual('194.11764705882354px');
+    await browser.close();
 });

@@ -1,6 +1,11 @@
 import 'expect-puppeteer';
+import puppeteer from 'puppeteer';
 
 test('jumpToHighlightArea() function', async () => {
+    const browser = await puppeteer.launch({
+        headless: false,
+    });
+    const page = await browser.newPage();
     await page.goto('http://localhost:3000/highlight');
     await page.setViewport({
         width: 1200,
@@ -33,4 +38,5 @@ test('jumpToHighlightArea() function', async () => {
     await page.waitForSelector('[data-testid="core__text-layer-4"]', { visible: true });
     await page.waitForSelector('[data-testid="core__annotation-layer-4"]');
     await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 6676');
+    await browser.close();
 });

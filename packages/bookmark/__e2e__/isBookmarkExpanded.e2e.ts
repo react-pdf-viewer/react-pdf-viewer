@@ -1,6 +1,11 @@
 import 'expect-puppeteer';
+import puppeteer from 'puppeteer';
 
 test('Set bookmarks expanded initially', async () => {
+    const browser = await puppeteer.launch({
+        headless: false,
+    });
+    const page = await browser.newPage();
     await page.goto('http://localhost:3000/bookmark-is-expanded');
     await page.setViewport({
         width: 1920,
@@ -12,15 +17,15 @@ test('Set bookmarks expanded initially', async () => {
     await page.waitForSelector('[data-testid="core__text-layer-0"]', { visible: true });
 
     // To make sure the bookmarks are rendered
-    let bookmarksContainer = await page.waitForSelector('[data-testid="bookmark__container"]');
+    const bookmarksContainer = await page.waitForSelector('[data-testid="bookmark__container"]');
 
     // Check the number of bookmarks
-    let numBookmarks = await bookmarksContainer?.evaluate((ele) => ele.querySelectorAll('li').length);
+    const numBookmarks = await bookmarksContainer?.evaluate((ele) => ele.querySelectorAll('li').length);
     expect(numBookmarks).toEqual(7);
 
     // Check the last bookmark
-    let heading = await page.waitForSelector('[aria-label="Specifying parameters in a URL"]');
-    let props = await heading?.evaluate((ele) => ({
+    const heading = await page.waitForSelector('[aria-label="Specifying parameters in a URL"]');
+    const props = await heading?.evaluate((ele) => ({
         label: ele.getAttribute('aria-label'),
         level: ele.getAttribute('aria-level'),
         text: ele.textContent,
@@ -28,4 +33,5 @@ test('Set bookmarks expanded initially', async () => {
     expect(props?.label).toEqual('Specifying parameters in a URL');
     expect(props?.level).toEqual('2');
     expect(props?.text).toEqual('Specifying parameters in a URL');
+    await browser.close();
 });

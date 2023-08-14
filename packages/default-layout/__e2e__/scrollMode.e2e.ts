@@ -1,6 +1,11 @@
 import 'expect-puppeteer';
+import puppeteer from 'puppeteer';
 
 test('Switch to horizontal scroll mode', async () => {
+    const browser = await puppeteer.launch({
+        headless: false,
+    });
+    const page = await browser.newPage();
     await page.goto('http://localhost:3000/default-layout');
     await page.setViewport({
         width: 1920,
@@ -62,9 +67,14 @@ test('Switch to horizontal scroll mode', async () => {
     // Check the current page
     const currentPage = await pageInput?.evaluate((ele) => ele.getAttribute('value'));
     expect(currentPage).toEqual('7');
+    await browser.close();
 });
 
 test('Switch to wrapped scroll mode', async () => {
+    const browser = await puppeteer.launch({
+        headless: false,
+    });
+    const page = await browser.newPage();
     await page.goto('http://localhost:3000/default-layout');
     await page.setViewport({
         width: 1920,
@@ -135,9 +145,14 @@ test('Switch to wrapped scroll mode', async () => {
     await page.waitForSelector('[data-testid="core__inner-current-page-6"]');
     scrollTop = await pagesContainer.evaluate((ele) => ele.scrollTop);
     expect(scrollTop).toEqual(1488.5);
+    await browser.close();
 });
 
 test('Keep the current page after switching the scroll mode', async () => {
+    const browser = await puppeteer.launch({
+        headless: false,
+    });
+    const page = await browser.newPage();
     await page.goto('http://localhost:3000/default-layout');
     await page.setViewport({
         width: 1920,
@@ -210,4 +225,5 @@ test('Keep the current page after switching the scroll mode', async () => {
     await page.waitForSelector('[data-testid="core__inner-current-page-3"]');
     scrollLeft = await pagesContainer.evaluate((ele) => ele.scrollLeft);
     expect(scrollLeft).toEqual(891);
+    await browser.close();
 });

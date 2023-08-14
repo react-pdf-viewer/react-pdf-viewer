@@ -1,6 +1,11 @@
 import 'expect-puppeteer';
+import puppeteer from 'puppeteer';
 
 test('Support Strict mode', async () => {
+    const browser = await puppeteer.launch({
+        headless: false,
+    });
+    const page = await browser.newPage();
     await page.goto('http://localhost:3000/default-layout-strict-mode');
     await page.setViewport({
         width: 1920,
@@ -33,4 +38,5 @@ test('Support Strict mode', async () => {
     );
     expect(props?.width).toEqual('100px');
     expect(props?.height).toEqual('133.33333333333334px');
+    await browser.close();
 });

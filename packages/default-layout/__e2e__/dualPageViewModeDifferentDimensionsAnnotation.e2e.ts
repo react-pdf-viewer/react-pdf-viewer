@@ -1,7 +1,12 @@
 import 'expect-puppeteer';
+import puppeteer from 'puppeteer';
 
 describe('Link annotation jumps to correct position in dual page viewmode', () => {
     beforeEach(async () => {
+        const browser = await puppeteer.launch({
+            headless: false,
+        });
+        const page = await browser.newPage();
         await page.goto('http://localhost:3000/default-layout-different-dimensions');
         await page.setViewport({
             width: 1920,
@@ -118,6 +123,10 @@ describe('Link annotation jumps to correct position in dual page viewmode', () =
         await page.waitForFunction(
             () => 'document.querySelector("[data-testid=page-navigation__current-page-input]").value === "3"',
         );
+    });
+
+    afterEach(async () => {
+        await browser.close();
     });
 
     test('Click the `6.3.4` link', async () => {

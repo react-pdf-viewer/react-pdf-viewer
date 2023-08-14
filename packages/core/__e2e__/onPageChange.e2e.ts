@@ -1,6 +1,11 @@
 import 'expect-puppeteer';
+import puppeteer from 'puppeteer';
 
 test('Test the onPageChange() callback', async () => {
+    const browser = await puppeteer.launch({
+        headless: false,
+    });
+    const page = await browser.newPage();
     await page.goto('http://localhost:3000/core-onpagechange');
     await page.setViewport({
         width: 1920,
@@ -39,4 +44,5 @@ test('Test the onPageChange() callback', async () => {
     await page.waitForFunction(
         () => 'document.querySelector("[data-testid=visited-pages]").textContent === "0, 2, 6, 7"',
     );
+    await browser.close();
 });

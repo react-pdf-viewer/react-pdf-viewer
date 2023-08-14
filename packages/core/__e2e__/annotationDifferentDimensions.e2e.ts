@@ -1,7 +1,12 @@
 import 'expect-puppeteer';
+import puppeteer from 'puppeteer';
 
 describe('Link annotation jumps to correct position if the pages have different dimensions', () => {
     beforeEach(async () => {
+        const browser = await puppeteer.launch({
+            headless: false,
+        });
+        const page = await browser.newPage();
         await page.goto('http://localhost:3000/core-different-dimensions');
         await page.setViewport({
             width: 1920,
@@ -50,6 +55,10 @@ describe('Link annotation jumps to correct position if the pages have different 
         };
 
         await jumpToFourthPage();
+    });
+
+    afterEach(async () => {
+        await browser.close();
     });
 
     test('Click the `6.3.4` link', async () => {

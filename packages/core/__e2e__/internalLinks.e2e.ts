@@ -1,6 +1,11 @@
 import 'expect-puppeteer';
+import puppeteer from 'puppeteer';
 
 test('Jump between internal links', async () => {
+    const browser = await puppeteer.launch({
+        headless: false,
+    });
+    const page = await browser.newPage();
     await page.goto('http://localhost:3000/core');
     await page.setViewport({
         width: 1920,
@@ -108,4 +113,5 @@ test('Jump between internal links', async () => {
     await page.waitForSelector('[data-testid="core__text-layer-6"]', { visible: true });
     await page.waitForSelector('[data-testid="core__annotation-layer-6"]');
     await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 7848');
+    await browser.close();
 });

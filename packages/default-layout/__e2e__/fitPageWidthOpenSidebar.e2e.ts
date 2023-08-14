@@ -1,6 +1,11 @@
 import 'expect-puppeteer';
+import puppeteer from 'puppeteer';
 
 test('Keep to fit page width when click sidebar', async () => {
+    const browser = await puppeteer.launch({
+        headless: false,
+    });
+    const page = await browser.newPage();
     await page.goto('http://localhost:3000/default-layout-fit-page-with');
     await page.setViewport({
         width: 1920,
@@ -27,4 +32,5 @@ test('Keep to fit page width when click sidebar', async () => {
     await page.waitForFunction(
         () => 'document.querySelector("[data-testid=zoom__popover-target-scale]").textContent === "115%"',
     );
+    await browser.close();
 });
