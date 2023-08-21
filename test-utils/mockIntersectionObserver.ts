@@ -40,7 +40,7 @@ beforeEach(() => {
             observerMap.set(instance, item);
 
             return instance;
-        }
+        },
     );
 });
 
@@ -53,7 +53,7 @@ const triggerIntersection = (
     elements: Element[],
     trigger: boolean | number,
     observer: IntersectionObserver,
-    item: Item
+    item: Item,
 ) => {
     const entries: IntersectionObserverEntry[] = [];
 

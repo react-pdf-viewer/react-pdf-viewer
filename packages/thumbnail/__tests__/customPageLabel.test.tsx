@@ -1,47 +1,50 @@
-import { Viewer } from '@react-pdf-viewer/core';
+import { PdfJsApiContext, Viewer, type PdfJsApiProvider } from '@react-pdf-viewer/core';
 import { render, waitForElementToBeRemoved } from '@testing-library/react';
+import * as fs from 'node:fs';
+import * as path from 'path';
+import * as PdfJs from 'pdfjs-dist';
 import * as React from 'react';
 import { mockIsIntersecting } from '../../../test-utils/mockIntersectionObserver';
 import { mockResize } from '../../../test-utils/mockResizeObserver';
 import { thumbnailPlugin } from '../src';
 
-const fs = require('fs');
-const path = require('path');
-
 const TestPageLabel: React.FC<{
     fileUrl: Uint8Array;
 }> = ({ fileUrl }) => {
+    const apiProvider = PdfJs as unknown as PdfJsApiProvider;
     const thumbnailPluginInstance = thumbnailPlugin();
     const { Thumbnails } = thumbnailPluginInstance;
 
     return (
-        <div
-            style={{
-                border: '1px solid rgba(0, 0, 0, 0.3)',
-                display: 'flex',
-                height: '50rem',
-                width: '50rem',
-            }}
-        >
+        <PdfJsApiContext.Provider value={{ pdfJsApiProvider: apiProvider }}>
             <div
                 style={{
-                    borderRight: '1px solid rgba(0, 0, 0, 0.3)',
-                    overflow: 'auto',
-                    width: '30%',
+                    border: '1px solid rgba(0, 0, 0, 0.3)',
+                    display: 'flex',
+                    height: '50rem',
+                    width: '50rem',
                 }}
             >
-                <Thumbnails />
+                <div
+                    style={{
+                        borderRight: '1px solid rgba(0, 0, 0, 0.3)',
+                        overflow: 'auto',
+                        width: '30%',
+                    }}
+                >
+                    <Thumbnails />
+                </div>
+                <div style={{ flex: 1 }}>
+                    <Viewer fileUrl={fileUrl} plugins={[thumbnailPluginInstance]} />
+                </div>
             </div>
-            <div style={{ flex: 1 }}>
-                <Viewer fileUrl={fileUrl} plugins={[thumbnailPluginInstance]} />
-            </div>
-        </div>
+        </PdfJsApiContext.Provider>
     );
 };
 
 test('Show custom page label', async () => {
     const pageLabelDocument = new Uint8Array(
-        fs.readFileSync(path.resolve(__dirname, '../../../samples/ignore/page-labels.pdf'))
+        fs.readFileSync(path.resolve(__dirname, '../../../samples/ignore/page-labels.pdf')),
     );
     const { findByTestId, getByTestId } = render(<TestPageLabel fileUrl={pageLabelDocument} />);
 
@@ -87,7 +90,7 @@ test('Show custom page label', async () => {
 
 test('Show custom page label 2', async () => {
     const pageLabelDocument2 = new Uint8Array(
-        fs.readFileSync(path.resolve(__dirname, '../../../samples/ignore/page-labels-2.pdf'))
+        fs.readFileSync(path.resolve(__dirname, '../../../samples/ignore/page-labels-2.pdf')),
     );
     const { findByTestId, getByTestId } = render(<TestPageLabel fileUrl={pageLabelDocument2} />);
 

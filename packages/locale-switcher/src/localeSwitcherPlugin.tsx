@@ -6,7 +6,7 @@
  * @copyright 2019-2023 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import type { Plugin } from '@react-pdf-viewer/core';
+import { type Plugin } from '@react-pdf-viewer/core';
 import * as React from 'react';
 import { LocalePopover, LocalePopoverProps } from './LocalePopover';
 

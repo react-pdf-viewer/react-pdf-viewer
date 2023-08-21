@@ -6,9 +6,9 @@
  * @copyright 2019-2023 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import type { Offset } from '../types/Offset';
-import type { Rect } from '../types/Rect';
-import type { ItemMeasurement } from './ItemMeasurement';
+import { type Offset } from '../types/Offset';
+import { type Rect } from '../types/Rect';
+import { type ItemMeasurement } from './ItemMeasurement';
 
 const ZERO_OFFSET: Offset = {
     left: 0,

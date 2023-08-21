@@ -1,17 +1,25 @@
 import { defaultLayoutPlugin } from '@react-pdf-viewer/default-layout';
 import { fireEvent, render, waitFor, waitForElementToBeRemoved } from '@testing-library/react';
+import * as PdfJs from 'pdfjs-dist';
 import * as React from 'react';
 import { mockIsIntersecting } from '../../../test-utils/mockIntersectionObserver';
 import { mockResize } from '../../../test-utils/mockResizeObserver';
-import { SpecialZoomLevel, Viewer } from '../src';
+import { PdfJsApiContext, SpecialZoomLevel, Viewer, type PdfJsApiProvider } from '../src';
 
 const TestDefaultScaleSpecialZoomLevel: React.FC<{
     fileUrl: Uint8Array;
 }> = ({ fileUrl }) => {
+    const apiProvider = PdfJs as unknown as PdfJsApiProvider;
     const defaultLayoutPluginInstance = defaultLayoutPlugin();
 
     return (
-        <Viewer fileUrl={fileUrl} defaultScale={SpecialZoomLevel.PageWidth} plugins={[defaultLayoutPluginInstance]} />
+        <PdfJsApiContext.Provider value={{ pdfJsApiProvider: apiProvider }}>
+            <Viewer
+                fileUrl={fileUrl}
+                defaultScale={SpecialZoomLevel.PageWidth}
+                plugins={[defaultLayoutPluginInstance]}
+            />
+        </PdfJsApiContext.Provider>
     );
 };
 
@@ -51,10 +59,13 @@ test('Set defaultScale as a special zoom level', async () => {
 });
 
 test('Keep special defaultScale after resizing', async () => {
+    const apiProvider = PdfJs as unknown as PdfJsApiProvider;
     const App = () => (
-        <div style={{ height: '50rem', width: '50rem' }}>
-            <Viewer defaultScale={SpecialZoomLevel.PageWidth} fileUrl={global['__OPEN_PARAMS_PDF__']} />
-        </div>
+        <PdfJsApiContext.Provider value={{ pdfJsApiProvider: apiProvider }}>
+            <div style={{ height: '50rem', width: '50rem' }}>
+                <Viewer defaultScale={SpecialZoomLevel.PageWidth} fileUrl={global['__OPEN_PARAMS_PDF__']} />
+            </div>
+        </PdfJsApiContext.Provider>
     );
     const { findByTestId, getByTestId } = render(<App />);
 
@@ -74,7 +85,7 @@ test('Keep special defaultScale after resizing', async () => {
     await findByTestId('core__text-layer-3');
     await findByTestId('core__annotation-layer-3');
 
-    let firstPage = await findByTestId('core__page-layer-0');
+    const firstPage = await findByTestId('core__page-layer-0');
     const w1 = parseInt(firstPage.style.width, 10);
     const h1 = parseInt(firstPage.style.height, 10);
     expect(w1).toEqual(783);

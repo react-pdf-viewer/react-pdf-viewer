@@ -10,7 +10,7 @@ export const findNearest = (
     low: number,
     high: number,
     value: number,
-    getItemValue: (index: number) => number
+    getItemValue: (index: number) => number,
 ): number => {
     while (low <= high) {
         const middle = ((low + high) / 2) | 0;

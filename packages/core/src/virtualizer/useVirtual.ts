@@ -12,21 +12,21 @@ import { useScroll } from '../hooks/useScroll';
 import { ScrollDirection } from '../structs/ScrollDirection';
 import { ScrollMode } from '../structs/ScrollMode';
 import { ViewMode } from '../structs/ViewMode';
-import type { Offset } from '../types/Offset';
-import type { Rect } from '../types/Rect';
-import type { SetRenderRange } from '../types/SetRenderRange';
+import { type Offset } from '../types/Offset';
+import { type Rect } from '../types/Rect';
+import { type SetRenderRange } from '../types/SetRenderRange';
 import { clamp } from '../utils/clamp';
 import { indexOfMax } from '../utils/indexOfMax';
+import { type ItemMeasurement } from './ItemMeasurement';
+import { type VirtualItem } from './VirtualItem';
 import { buildContainerStyles } from './buildContainerStyles';
 import { buildItemContainerStyles } from './buildItemContainerStyles';
 import { buildItemStyles } from './buildItemStyles';
 import { calculateRange } from './calculateRange';
-import type { ItemMeasurement } from './ItemMeasurement';
 import { measure } from './measure';
 import { measureDualPage } from './measureDualPage';
 import { measureDualPageWithCover } from './measureDualPageWithCover';
 import { measureSinglePage } from './measureSinglePage';
-import type { VirtualItem } from './VirtualItem';
 
 const ZERO_RECT: Rect = {
     height: 0,
@@ -50,6 +50,7 @@ export const useVirtual = ({
     sizes,
     scrollMode,
     viewMode,
+    onVisibilityChanged,
 }: {
     enableSmoothScroll: boolean;
     isRtl: boolean;
@@ -60,6 +61,7 @@ export const useVirtual = ({
     sizes: Rect[];
     scrollMode: ScrollMode;
     viewMode: ViewMode;
+    onVisibilityChanged: (pageIndex: number, visibility: number) => void;
 }): {
     boundingClientRect: Rect;
     isSmoothScrolling: boolean;
@@ -125,6 +127,7 @@ export const useVirtual = ({
                     }
                     const index = parseInt(indexAttribute, 10);
                     if (0 <= index && index < numberOfItems) {
+                        onVisibilityChanged(index, ratio);
                         setVisibilities((old) => {
                             old[index] = ratio;
                             return [...old];
@@ -134,7 +137,7 @@ export const useVirtual = ({
             },
             {
                 threshold: IO_THRESHOLD,
-            }
+            },
         );
 
         return io;
@@ -174,7 +177,7 @@ export const useVirtual = ({
         // Visibilities of visible pages
         const visiblePageVisibilities = visibilities.slice(
             clamp(0, numberOfItems, start),
-            clamp(0, numberOfItems, end)
+            clamp(0, numberOfItems, end),
         );
 
         let maxVisbilityItem = start + indexOfMax(visiblePageVisibilities);
@@ -255,11 +258,11 @@ export const useVirtual = ({
                           left: withOffset.left + measurement.start.left,
                           top: withOffset.top + measurement.start.top,
                       },
-                      enableSmoothScroll
+                      enableSmoothScroll,
                   )
                 : Promise.resolve();
         },
-        [scrollTo, enableSmoothScroll]
+        [scrollTo, enableSmoothScroll],
     );
 
     const scrollToSmallestItemAbove = React.useCallback((index: number, offset: Offset): Promise<void> => {
@@ -354,18 +357,18 @@ export const useVirtual = ({
     // Build the styles for the items' container
     const getContainerStyles = React.useCallback(
         () => buildContainerStyles(totalSize, scrollModeRef.current),
-        [totalSize]
+        [totalSize],
     );
 
     const getItemContainerStyles = React.useCallback(
         (item: VirtualItem) => buildItemContainerStyles(item, parentRect, scrollModeRef.current),
-        [parentRect]
+        [parentRect],
     );
 
     // Build the absolute position styles for each item
     const getItemStyles = React.useCallback(
         (item: VirtualItem) => buildItemStyles(item, isRtl, sizes, viewModeRef.current, scrollModeRef.current),
-        [isRtl, sizes]
+        [isRtl, sizes],
     );
 
     // Zoom to the given item

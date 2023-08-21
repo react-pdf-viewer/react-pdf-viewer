@@ -2,11 +2,11 @@ import { Button, DocumentLoadEvent, PdfJs, Position, PrimaryButton, Tooltip, Vie
 import { defaultLayoutPlugin } from '@react-pdf-viewer/default-layout';
 import {
     HighlightArea,
-    highlightPlugin,
     MessageIcon,
     RenderHighlightContentProps,
-    RenderHighlightsProps,
     RenderHighlightTargetProps,
+    RenderHighlightsProps,
+    highlightPlugin,
 } from '@react-pdf-viewer/highlight';
 import * as React from 'react';
 
@@ -194,7 +194,7 @@ const IndexPage = () => {
             {notes.map((note) => {
                 // Find the highlight areas belonging to the same page
                 const highlightAreas = note.highlightAreas.filter(
-                    (area) => area.pageIndex === props.pageIndex && area.width > 0
+                    (area) => area.pageIndex === props.pageIndex && area.width > 0,
                 );
                 if (!highlightAreas.length) {
                     return <React.Fragment key={note.id}></React.Fragment>;
@@ -238,7 +238,7 @@ const IndexPage = () => {
                                         background: 'yellow',
                                         opacity: 0.3,
                                     },
-                                    props.getCssProperties(area, props.rotation)
+                                    props.getCssProperties(area, props.rotation),
                                 )}
                             />
                         ))}

@@ -1,55 +1,59 @@
-import { Viewer } from '@react-pdf-viewer/core';
+import { PdfJsApiContext, Viewer, type PdfJsApiProvider } from '@react-pdf-viewer/core';
 import { fireEvent, render, waitForElementToBeRemoved } from '@testing-library/react';
+import * as PdfJs from 'pdfjs-dist';
 import * as React from 'react';
 import { mockIsIntersecting } from '../../../test-utils/mockIntersectionObserver';
 import { mockResize } from '../../../test-utils/mockResizeObserver';
-import { toolbarPlugin, ToolbarSlot } from '../src';
+import { toolbarPlugin, type ToolbarSlot } from '../src';
 
 const TestRenderToolbar: React.FC<{
     fileUrl: Uint8Array;
 }> = ({ fileUrl }) => {
+    const apiProvider = PdfJs as unknown as PdfJsApiProvider;
     const toolbarPluginInstance = toolbarPlugin();
     const { Toolbar } = toolbarPluginInstance;
 
     return (
-        <div
-            style={{
-                border: '1px solid rgba(0, 0, 0, 0.3)',
-                display: 'flex',
-                flexDirection: 'column',
-                height: '50rem',
-                width: '50rem',
-            }}
-        >
+        <PdfJsApiContext.Provider value={{ pdfJsApiProvider: apiProvider }}>
             <div
                 style={{
-                    alignItems: 'center',
-                    borderBottom: '1px solid rgba(0, 0, 0, 0.3)',
+                    border: '1px solid rgba(0, 0, 0, 0.3)',
                     display: 'flex',
-                    height: '2rem',
-                    justifyContent: 'center',
+                    flexDirection: 'column',
+                    height: '50rem',
+                    width: '50rem',
                 }}
             >
-                <Toolbar>
-                    {(toolbarSlot: ToolbarSlot) => {
-                        const { CurrentPageLabel, NumberOfPages } = toolbarSlot;
-                        return (
-                            <div data-testid="current-page-label">
-                                <CurrentPageLabel /> of <NumberOfPages />
-                            </div>
-                        );
+                <div
+                    style={{
+                        alignItems: 'center',
+                        borderBottom: '1px solid rgba(0, 0, 0, 0.3)',
+                        display: 'flex',
+                        height: '2rem',
+                        justifyContent: 'center',
                     }}
-                </Toolbar>
+                >
+                    <Toolbar>
+                        {(toolbarSlot: ToolbarSlot) => {
+                            const { CurrentPageLabel, NumberOfPages } = toolbarSlot;
+                            return (
+                                <div data-testid="current-page-label">
+                                    <CurrentPageLabel /> of <NumberOfPages />
+                                </div>
+                            );
+                        }}
+                    </Toolbar>
+                </div>
+                <div
+                    style={{
+                        flex: 1,
+                        overflow: 'hidden',
+                    }}
+                >
+                    <Viewer fileUrl={fileUrl} plugins={[toolbarPluginInstance]} />
+                </div>
             </div>
-            <div
-                style={{
-                    flex: 1,
-                    overflow: 'hidden',
-                }}
-            >
-                <Viewer fileUrl={fileUrl} plugins={[toolbarPluginInstance]} />
-            </div>
-        </div>
+        </PdfJsApiContext.Provider>
     );
 };
 

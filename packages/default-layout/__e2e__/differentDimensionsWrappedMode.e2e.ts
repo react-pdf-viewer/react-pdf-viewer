@@ -1,6 +1,11 @@
 import 'expect-puppeteer';
+import puppeteer from 'puppeteer';
 
 test('Document with different page dimensions (wrapped scroll mode)', async () => {
+    const browser = await puppeteer.launch({
+        headless: false,
+    });
+    const page = await browser.newPage();
     await page.goto('http://localhost:3000/default-layout-different-dimensions');
     await page.setViewport({
         width: 1920,
@@ -32,7 +37,7 @@ test('Document with different page dimensions (wrapped scroll mode)', async () =
 
     // Check the current page
     await page.waitForFunction(
-        () => 'document.querySelector("[data-testid=page-navigation__current-page-input]").value === "13"'
+        () => 'document.querySelector("[data-testid=page-navigation__current-page-input]").value === "13"',
     );
 
     // Jump to the 43rd page
@@ -46,6 +51,7 @@ test('Document with different page dimensions (wrapped scroll mode)', async () =
 
     // Check the current page
     await page.waitForFunction(
-        () => 'document.querySelector("[data-testid=page-navigation__current-page-input]").value === "42"'
+        () => 'document.querySelector("[data-testid=page-navigation__current-page-input]").value === "42"',
     );
+    await browser.close();
 });

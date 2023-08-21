@@ -6,16 +6,15 @@
  * @copyright 2019-2023 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import { getDestination } from '@react-pdf-viewer/core';
-import type { PdfJs, Store } from '@react-pdf-viewer/core';
+import { getDestination, type PdfJs, type Store } from '@react-pdf-viewer/core';
 import * as React from 'react';
 import { BookmarkList } from './BookmarkList';
 import { DownArrowIcon } from './DownArrowIcon';
 import { RightArrowIcon } from './RightArrowIcon';
 import { shouldBeCollapsed } from './shouldBeCollapsed';
-import type { IsBookmarkExpanded } from './types/IsBookmarkExpanded';
-import type { RenderBookmarkItem } from './types/RenderBookmarkItemProps';
-import type { StoreProps } from './types/StoreProps';
+import { type IsBookmarkExpanded } from './types/IsBookmarkExpanded';
+import { type RenderBookmarkItem } from './types/RenderBookmarkItemProps';
+import { type StoreProps } from './types/StoreProps';
 
 export const BookmarkItem: React.FC<{
     bookmark: PdfJs.Outline;
@@ -153,7 +152,7 @@ export const BookmarkItem: React.FC<{
                       <>
                           {defaultRenderToggle(<DownArrowIcon />, <RightArrowIcon />)}
                           {defaultRenderTitle(clickBookmark)}
-                      </>
+                      </>,
                   )}
             {hasSubItems && expanded && (
                 <BookmarkList

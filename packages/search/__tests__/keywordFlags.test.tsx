@@ -1,29 +1,32 @@
-import { Viewer } from '@react-pdf-viewer/core';
+import { PdfJsApiContext, Viewer, type PdfJsApiProvider } from '@react-pdf-viewer/core';
 import { findAllByTitle } from '@testing-library/dom';
 import { render, waitForElementToBeRemoved } from '@testing-library/react';
+import * as PdfJs from 'pdfjs-dist';
 import * as React from 'react';
 import { mockIsIntersecting } from '../../../test-utils/mockIntersectionObserver';
-import { searchPlugin } from '../src';
-import type { FlagKeyword } from '../src';
+import { searchPlugin, type FlagKeyword } from '../src';
 
 const TestKeywordFlag: React.FC<{
     fileUrl: Uint8Array;
     keyword: FlagKeyword;
 }> = ({ fileUrl, keyword }) => {
+    const apiProvider = PdfJs as unknown as PdfJsApiProvider;
     const searchPluginInstance = searchPlugin({
         keyword,
     });
 
     return (
-        <div
-            style={{
-                border: '1px solid rgba(0, 0, 0, .3)',
-                height: '50rem',
-                width: '50rem',
-            }}
-        >
-            <Viewer fileUrl={fileUrl} plugins={[searchPluginInstance]} />
-        </div>
+        <PdfJsApiContext.Provider value={{ pdfJsApiProvider: apiProvider }}>
+            <div
+                style={{
+                    border: '1px solid rgba(0, 0, 0, .3)',
+                    height: '50rem',
+                    width: '50rem',
+                }}
+            >
+                <Viewer fileUrl={fileUrl} plugins={[searchPluginInstance]} />
+            </div>
+        </PdfJsApiContext.Provider>
     );
 };
 
@@ -33,7 +36,7 @@ test('keyword with flag matchCase=false', async () => {
     };
 
     const { findByText, findByTestId, getByTestId } = render(
-        <TestKeywordFlag fileUrl={global['__MULTIPLE_PAGES_PDF__']} keyword={flagKeyword} />
+        <TestKeywordFlag fileUrl={global['__MULTIPLE_PAGES_PDF__']} keyword={flagKeyword} />,
     );
     mockIsIntersecting(getByTestId('core__viewer'), true);
 
@@ -53,7 +56,7 @@ test('keyword with flag matchCase=true', async () => {
     };
 
     const { findByText, findByTestId, getByTestId } = render(
-        <TestKeywordFlag fileUrl={global['__MULTIPLE_PAGES_PDF__']} keyword={flagKeyword} />
+        <TestKeywordFlag fileUrl={global['__MULTIPLE_PAGES_PDF__']} keyword={flagKeyword} />,
     );
 
     const viewerEle = getByTestId('core__viewer');

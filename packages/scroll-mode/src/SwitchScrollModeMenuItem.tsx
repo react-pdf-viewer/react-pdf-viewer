@@ -9,7 +9,7 @@
 import { MenuItem, ScrollMode } from '@react-pdf-viewer/core';
 import * as React from 'react';
 import { SwitchScrollModeDecorator } from './SwitchScrollModeDecorator';
-import type { RenderSwitchScrollModeProps } from './types/RenderSwitchScrollModeProps';
+import { type RenderSwitchScrollModeProps } from './types/RenderSwitchScrollModeProps';
 
 export const SwitchScrollModeMenuItem: React.FC<RenderSwitchScrollModeProps> = ({
     isDisabled,

@@ -1,6 +1,11 @@
 import 'expect-puppeteer';
+import puppeteer from 'puppeteer';
 
 test('Rotate single page using renderPage', async () => {
+    const browser = await puppeteer.launch({
+        headless: false,
+    });
+    const page = await browser.newPage();
     await page.goto('http://localhost:3000/core-rotate-page');
     await page.setViewport({
         width: 1920,
@@ -58,4 +63,5 @@ test('Rotate single page using renderPage', async () => {
     expect(result?.content).toEqual('Parameters for Opening PDF Files');
     expect(result?.left).toEqual('19.14%');
     expect(result?.top).toEqual('42.85%');
+    await browser.close();
 });

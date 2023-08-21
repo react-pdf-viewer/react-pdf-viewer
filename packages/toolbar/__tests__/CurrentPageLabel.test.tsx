@@ -1,16 +1,17 @@
-import { Viewer } from '@react-pdf-viewer/core';
+import { PdfJsApiContext, Viewer, type PdfJsApiProvider } from '@react-pdf-viewer/core';
 import { fireEvent, render, waitFor, waitForElementToBeRemoved } from '@testing-library/react';
+import * as fs from 'node:fs';
+import * as path from 'path';
+import * as PdfJs from 'pdfjs-dist';
 import * as React from 'react';
 import { mockIsIntersecting } from '../../../test-utils/mockIntersectionObserver';
 import { mockResize } from '../../../test-utils/mockResizeObserver';
-import { toolbarPlugin, ToolbarSlot, TransformToolbarSlot } from '../src';
-
-const fs = require('fs');
-const path = require('path');
+import { toolbarPlugin, type ToolbarSlot, type TransformToolbarSlot } from '../src';
 
 const TestCurrentPageLabel: React.FC<{
     fileUrl: Uint8Array;
 }> = ({ fileUrl }) => {
+    const apiProvider = PdfJs as unknown as PdfJsApiProvider;
     const toolbarPluginInstance = toolbarPlugin();
     const { renderDefaultToolbar, Toolbar } = toolbarPluginInstance;
 
@@ -31,27 +32,29 @@ const TestCurrentPageLabel: React.FC<{
     };
 
     return (
-        <div
-            style={{
-                border: '1px solid rgba(0, 0, 0, 0.3)',
-                display: 'flex',
-                flexDirection: 'column',
-                width: '50rem',
-                height: '50rem',
-            }}
-        >
-            <div>
-                <Toolbar>{renderDefaultToolbar(transform)}</Toolbar>
-            </div>
+        <PdfJsApiContext.Provider value={{ pdfJsApiProvider: apiProvider }}>
             <div
                 style={{
-                    flex: 1,
-                    overflow: 'hidden',
+                    border: '1px solid rgba(0, 0, 0, 0.3)',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    width: '50rem',
+                    height: '50rem',
                 }}
             >
-                <Viewer fileUrl={fileUrl} plugins={[toolbarPluginInstance]} />
+                <div>
+                    <Toolbar>{renderDefaultToolbar(transform)}</Toolbar>
+                </div>
+                <div
+                    style={{
+                        flex: 1,
+                        overflow: 'hidden',
+                    }}
+                >
+                    <Viewer fileUrl={fileUrl} plugins={[toolbarPluginInstance]} />
+                </div>
             </div>
-        </div>
+        </PdfJsApiContext.Provider>
     );
 };
 
@@ -112,7 +115,7 @@ test('Test <CurrentPageLabel>', async () => {
 
 test('Test <CurrentPageLabel> with custom page label', async () => {
     const pageLabelDocument2 = new Uint8Array(
-        fs.readFileSync(path.resolve(__dirname, '../../../samples/ignore/page-labels-2.pdf'))
+        fs.readFileSync(path.resolve(__dirname, '../../../samples/ignore/page-labels-2.pdf')),
     );
     const { findByTestId, getByTestId } = render(<TestCurrentPageLabel fileUrl={pageLabelDocument2} />);
 

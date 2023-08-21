@@ -6,9 +6,9 @@
  * @copyright 2019-2023 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import type { Store, StoreHandler } from '@react-pdf-viewer/core';
+import { type Store, type StoreHandler } from '@react-pdf-viewer/core';
 import * as React from 'react';
-import type { StoreProps } from './types/StoreProps';
+import { type StoreProps } from './types/StoreProps';
 
 export const useNumberOfPages = (store: Store<StoreProps>): { numberOfPages: number } => {
     // It's safer to set the initial state from `store.get('numberOfPages')` instead of `0`.

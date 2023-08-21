@@ -1,12 +1,11 @@
-import type { Plugin, RenderViewer } from '@react-pdf-viewer/core';
-import { Viewer } from '@react-pdf-viewer/core';
+import { PdfJsApiContext, Viewer, type PdfJsApiProvider, type Plugin, type RenderViewer } from '@react-pdf-viewer/core';
 import { render, waitForElementToBeRemoved } from '@testing-library/react';
+import * as fs from 'node:fs';
+import * as path from 'path';
+import * as PdfJs from 'pdfjs-dist';
 import * as React from 'react';
 import { mockIsIntersecting } from '../../../test-utils/mockIntersectionObserver';
 import { thumbnailPlugin } from '../src';
-
-const fs = require('fs');
-const path = require('path');
 
 interface PageThumbnailPluginProps {
     PageThumbnail: React.ReactElement;
@@ -34,13 +33,18 @@ const ThumbnailCover: React.FC<{
     fileUrl: Uint8Array;
     pageIndex: number;
 }> = ({ fileUrl, pageIndex }) => {
+    const apiProvider = PdfJs as unknown as PdfJsApiProvider;
     const thumbnailPluginInstance = thumbnailPlugin();
     const { Cover } = thumbnailPluginInstance;
     const pageThumbnailPluginInstance = pageThumbnailPlugin({
         PageThumbnail: <Cover getPageIndex={() => pageIndex} />,
     });
 
-    return <Viewer fileUrl={fileUrl} plugins={[pageThumbnailPluginInstance, thumbnailPluginInstance]} />;
+    return (
+        <PdfJsApiContext.Provider value={{ pdfJsApiProvider: apiProvider }}>
+            <Viewer fileUrl={fileUrl} plugins={[pageThumbnailPluginInstance, thumbnailPluginInstance]} />
+        </PdfJsApiContext.Provider>
+    );
 };
 
 const TestCover: React.FC<{
@@ -61,7 +65,7 @@ const TestCover: React.FC<{
 
 test('Test <Cover /> of a rotated page', async () => {
     const rotatedDocument = new Uint8Array(
-        fs.readFileSync(path.resolve(__dirname, '../../../samples/pdf-open-parameters-rotated.pdf'))
+        fs.readFileSync(path.resolve(__dirname, '../../../samples/pdf-open-parameters-rotated.pdf')),
     );
     const { findByTestId, getByTestId } = render(<TestCover fileUrl={rotatedDocument} pageIndex={3} />);
 
@@ -82,6 +86,6 @@ test('Test <Cover /> of a rotated page', async () => {
     const src = image.getAttribute('src');
     expect(src?.length).toEqual(88414);
     expect(src?.slice(-100)).toEqual(
-        '8RNCCCGEKCOk+AkhhBBClBFS/IQQQgghyggpfkIIIYQQZYQUPyGEEEKIMkKKnxBCCCFEGfF/V53apR4vTaIAAAAASUVORK5CYII='
+        '8RNCCCGEKCOk+AkhhBBClBFS/IQQQgghyggpfkIIIYQQZYQUPyGEEEKIMkKKnxBCCCFEGfF/V53apR4vTaIAAAAASUVORK5CYII=',
     );
 });

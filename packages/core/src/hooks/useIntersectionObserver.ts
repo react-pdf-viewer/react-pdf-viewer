@@ -8,7 +8,7 @@
 
 import * as React from 'react';
 import { useIsomorphicLayoutEffect } from '../hooks/useIsomorphicLayoutEffect';
-import type { VisibilityChanged } from '../types/VisibilityChanged';
+import { type VisibilityChanged } from '../types/VisibilityChanged';
 
 interface UseIntersectionObserverProps {
     once?: boolean;
@@ -41,7 +41,7 @@ export const useIntersectionObserver = (props: UseIntersectionObserverProps) => 
             },
             {
                 threshold: threshold || 0,
-            }
+            },
         );
         intersectionTracker.observe(container);
 

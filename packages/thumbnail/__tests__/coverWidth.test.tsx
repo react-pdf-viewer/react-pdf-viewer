@@ -1,6 +1,6 @@
-import type { Plugin, RenderViewer } from '@react-pdf-viewer/core';
-import { Viewer } from '@react-pdf-viewer/core';
+import { PdfJsApiContext, Viewer, type PdfJsApiProvider, type Plugin, type RenderViewer } from '@react-pdf-viewer/core';
 import { render, waitForElementToBeRemoved } from '@testing-library/react';
+import * as PdfJs from 'pdfjs-dist';
 import * as React from 'react';
 import { mockIsIntersecting } from '../../../test-utils/mockIntersectionObserver';
 import { thumbnailPlugin } from '../src';
@@ -32,13 +32,18 @@ const ThumbnailCover: React.FC<{
     pageIndex: number;
     width: number;
 }> = ({ fileUrl, pageIndex, width }) => {
+    const apiProvider = PdfJs as unknown as PdfJsApiProvider;
     const thumbnailPluginInstance = thumbnailPlugin();
     const { Cover } = thumbnailPluginInstance;
     const pageThumbnailPluginInstance = pageThumbnailPlugin({
         PageThumbnail: <Cover getPageIndex={() => pageIndex} width={width} />,
     });
 
-    return <Viewer fileUrl={fileUrl} plugins={[pageThumbnailPluginInstance, thumbnailPluginInstance]} />;
+    return (
+        <PdfJsApiContext.Provider value={{ pdfJsApiProvider: apiProvider }}>
+            <Viewer fileUrl={fileUrl} plugins={[pageThumbnailPluginInstance, thumbnailPluginInstance]} />
+        </PdfJsApiContext.Provider>
+    );
 };
 
 const TestCover: React.FC<{
@@ -60,7 +65,7 @@ const TestCover: React.FC<{
 
 test('Test Cover width property', async () => {
     const { findByTestId, getByTestId } = render(
-        <TestCover fileUrl={global['__OPEN_PARAMS_PDF__']} pageIndex={1} width={300} />
+        <TestCover fileUrl={global['__OPEN_PARAMS_PDF__']} pageIndex={1} width={300} />,
     );
 
     const viewerEle = getByTestId('core__viewer');
@@ -80,6 +85,6 @@ test('Test Cover width property', async () => {
     const src = image.getAttribute('src');
     expect(src?.length).toEqual(96570);
     expect(src?.substring(0, 100)).toEqual(
-        'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAGQCAYAAAAUdV17AAAABmJLR0QA/wD/AP+gvaeTAAAgAElEQV'
+        'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAGQCAYAAAAUdV17AAAABmJLR0QA/wD/AP+gvaeTAAAgAElEQV',
     );
 });

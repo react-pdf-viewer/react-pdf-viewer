@@ -1,4 +1,6 @@
-module.exports = {
+import { type Config } from 'jest';
+
+const config: Config = {
     moduleNameMapper: {
         '@react-pdf-viewer/core': '<rootDir>/packages/core/src',
         '@react-pdf-viewer/default-layout': '<rootDir>/packages/default-layout/src',
@@ -21,3 +23,5 @@ module.exports = {
     },
     verbose: true,
 };
+
+export default config;

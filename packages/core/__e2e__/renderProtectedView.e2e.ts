@@ -1,6 +1,11 @@
 import 'expect-puppeteer';
+import puppeteer from 'puppeteer';
 
 test('Customize the view of a protected document', async () => {
+    const browser = await puppeteer.launch({
+        headless: false,
+    });
+    const page = await browser.newPage();
     await page.goto('http://localhost:3000/core-render-protected-view');
     await page.setViewport({
         width: 1920,
@@ -15,20 +20,21 @@ test('Customize the view of a protected document', async () => {
     await passwordInput?.click({ clickCount: 3 });
     await passwordInput?.type('123');
 
-    let submitButton = await page.waitForSelector('[data-testid="submit-button"]');
-    await submitButton.click();
+    const submitButton = await page.waitForSelector('[data-testid="submit-button"]');
+    await submitButton?.click();
 
     const error = await page.waitForSelector('[data-testid="error"]');
-    const message = await error.evaluate((ele) => ele.textContent);
+    const message = await error?.evaluate((ele) => ele.textContent);
     expect(message).toEqual('The password is invalid. Please try again!');
 
     // Provide the correct password
     await passwordInput?.type('456');
-    await submitButton.click();
+    await submitButton?.click();
 
     await page.waitForSelector('[data-testid="core__page-layer-0"]', { visible: true });
     const textLayer = await page.waitForSelector('[data-testid="core__text-layer-0"]');
-    const textElements = await textLayer.$$('.rpv-core__text-layer-text');
-    const numTexts = textElements.length;
+    const textElements = await textLayer?.$$('.rpv-core__text-layer-text');
+    const numTexts = textElements?.length;
     expect(numTexts).toEqual(75);
+    await browser.close();
 });

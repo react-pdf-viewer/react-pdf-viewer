@@ -1,6 +1,11 @@
 import 'expect-puppeteer';
+import puppeteer from 'puppeteer';
 
 test('Navigate to the previous and next pages in dual page with cover viewmode', async () => {
+    const browser = await puppeteer.launch({
+        headless: false,
+    });
+    const page = await browser.newPage();
     await page.goto('http://localhost:3000/default-layout');
     await page.setViewport({
         width: 1920,
@@ -36,7 +41,7 @@ test('Navigate to the previous and next pages in dual page with cover viewmode',
 
     // Check the current page
     await page.waitForFunction(
-        () => 'document.querySelector("[data-testid=page-navigation__current-page-input]").value === "2"'
+        () => 'document.querySelector("[data-testid=page-navigation__current-page-input]").value === "2"',
     );
 
     // Click to the next page button again
@@ -44,7 +49,7 @@ test('Navigate to the previous and next pages in dual page with cover viewmode',
     await page.waitForSelector('[data-testid="core__text-layer-3"]', { visible: true });
     await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 792');
     await page.waitForFunction(
-        () => 'document.querySelector("[data-testid=page-navigation__current-page-input]").value === "4"'
+        () => 'document.querySelector("[data-testid=page-navigation__current-page-input]").value === "4"',
     );
 
     // Click to the next page button again
@@ -52,7 +57,7 @@ test('Navigate to the previous and next pages in dual page with cover viewmode',
     await page.waitForSelector('[data-testid="core__text-layer-5"]', { visible: true });
     await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 1188');
     await page.waitForFunction(
-        () => 'document.querySelector("[data-testid=page-navigation__current-page-input]").value === "6"'
+        () => 'document.querySelector("[data-testid=page-navigation__current-page-input]").value === "6"',
     );
 
     // Click to the next page button again
@@ -60,7 +65,7 @@ test('Navigate to the previous and next pages in dual page with cover viewmode',
     await page.waitForSelector('[data-testid="core__text-layer-7"]', { visible: true });
     await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 1222');
     await page.waitForFunction(
-        () => 'document.querySelector("[data-testid=page-navigation__current-page-input]").value === "6"'
+        () => 'document.querySelector("[data-testid=page-navigation__current-page-input]").value === "6"',
     );
 
     // Click to the previous page button
@@ -70,7 +75,7 @@ test('Navigate to the previous and next pages in dual page with cover viewmode',
     await page.waitForSelector('[data-testid="core__text-layer-4"]', { visible: true });
     await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 1188');
     await page.waitForFunction(
-        () => 'document.querySelector("[data-testid=page-navigation__current-page-input]").value === "5"'
+        () => 'document.querySelector("[data-testid=page-navigation__current-page-input]").value === "5"',
     );
 
     // Click to the previous page button again
@@ -79,7 +84,7 @@ test('Navigate to the previous and next pages in dual page with cover viewmode',
     await page.waitForSelector('[data-testid="core__text-layer-3"]', { visible: true });
     await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 792');
     await page.waitForFunction(
-        () => 'document.querySelector("[data-testid=page-navigation__current-page-input]").value === "4"'
+        () => 'document.querySelector("[data-testid=page-navigation__current-page-input]").value === "4"',
     );
 
     // Click to the previous page button again
@@ -88,7 +93,7 @@ test('Navigate to the previous and next pages in dual page with cover viewmode',
     await page.waitForSelector('[data-testid="core__text-layer-1"]', { visible: true });
     await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 396');
     await page.waitForFunction(
-        () => 'document.querySelector("[data-testid=page-navigation__current-page-input]").value === "2"'
+        () => 'document.querySelector("[data-testid=page-navigation__current-page-input]").value === "2"',
     );
 
     // Click to the previous page button again
@@ -97,11 +102,16 @@ test('Navigate to the previous and next pages in dual page with cover viewmode',
     await page.waitForSelector('[data-testid="core__text-layer-0"]', { visible: true });
     await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 0');
     await page.waitForFunction(
-        () => 'document.querySelector("[data-testid=page-navigation__current-page-input]").value === "1"'
+        () => 'document.querySelector("[data-testid=page-navigation__current-page-input]").value === "1"',
     );
+    await browser.close();
 });
 
 test('Jump to a particular page in dual page with cover viewmode', async () => {
+    const browser = await puppeteer.launch({
+        headless: false,
+    });
+    const page = await browser.newPage();
     await page.goto('http://localhost:3000/default-layout');
     await page.setViewport({
         width: 1920,
@@ -142,7 +152,7 @@ test('Jump to a particular page in dual page with cover viewmode', async () => {
     await page.waitForSelector('[data-testid="core__text-layer-5"]', { visible: true });
     await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 1188');
     await page.waitForFunction(
-        () => 'document.querySelector("[data-testid=page-navigation__current-page-input]").value === "6"'
+        () => 'document.querySelector("[data-testid=page-navigation__current-page-input]").value === "6"',
     );
 
     await pageInput?.focus();
@@ -154,7 +164,7 @@ test('Jump to a particular page in dual page with cover viewmode', async () => {
     await page.waitForSelector('[data-testid="core__text-layer-3"]', { visible: true });
     await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 792');
     await page.waitForFunction(
-        () => 'document.querySelector("[data-testid=page-navigation__current-page-input]").value === "4"'
+        () => 'document.querySelector("[data-testid=page-navigation__current-page-input]").value === "4"',
     );
 
     await pageInput?.focus();
@@ -166,7 +176,7 @@ test('Jump to a particular page in dual page with cover viewmode', async () => {
     await page.waitForSelector('[data-testid="core__text-layer-1"]', { visible: true });
     await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 396');
     await page.waitForFunction(
-        () => 'document.querySelector("[data-testid=page-navigation__current-page-input]").value === "2"'
+        () => 'document.querySelector("[data-testid=page-navigation__current-page-input]").value === "2"',
     );
 
     await pageInput?.focus();
@@ -178,6 +188,7 @@ test('Jump to a particular page in dual page with cover viewmode', async () => {
     await page.waitForSelector('[data-testid="core__text-layer-0"]', { visible: true });
     await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 0');
     await page.waitForFunction(
-        () => 'document.querySelector("[data-testid=page-navigation__current-page-input]").value === "1"'
+        () => 'document.querySelector("[data-testid=page-navigation__current-page-input]").value === "1"',
     );
+    await browser.close();
 });

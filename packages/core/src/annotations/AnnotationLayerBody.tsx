@@ -8,9 +8,9 @@
 
 import * as React from 'react';
 import { useIsomorphicLayoutEffect } from '../hooks/useIsomorphicLayoutEffect';
-import type { Destination } from '../types/Destination';
-import type { PdfJs } from '../types/PdfJs';
-import type { Plugin } from '../types/Plugin';
+import { type Destination } from '../types/Destination';
+import { type PdfJs } from '../types/PdfJs';
+import { type Plugin } from '../types/Plugin';
 import { AnnotationType } from './AnnotationType';
 import { Caret } from './Caret';
 import { Circle } from './Circle';

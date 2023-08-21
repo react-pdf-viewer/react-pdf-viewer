@@ -6,6 +6,6 @@
  * @copyright 2019-2023 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import type { ToolbarSlot } from './ToolbarSlot';
+import { type ToolbarSlot } from './ToolbarSlot';
 
 export type TransformToolbarSlot = (toolbarSlot: ToolbarSlot) => ToolbarSlot;

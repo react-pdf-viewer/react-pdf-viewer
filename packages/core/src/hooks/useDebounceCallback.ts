@@ -28,6 +28,6 @@ export const useDebounceCallback = <T extends unknown[]>(callback: (...args: T) 
                 callback(...args);
             }, wait);
         },
-        [callback, wait]
+        [callback, wait],
     );
 };

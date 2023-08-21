@@ -6,7 +6,7 @@
  * @copyright 2019-2023 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import type { PdfJs } from '../types/PdfJs';
+import { type PdfJs } from '../types/PdfJs';
 
 // Return `true` if `a` is the same as `b`
 export const isSameUrl = (a: PdfJs.FileData, b: PdfJs.FileData): boolean => {

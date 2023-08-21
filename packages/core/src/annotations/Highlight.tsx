@@ -7,12 +7,12 @@
  */
 
 import * as React from 'react';
-import type { PdfJs } from '../types/PdfJs';
+import { type PdfJs } from '../types/PdfJs';
 import { Annotation } from './Annotation';
 import { AnnotationType } from './AnnotationType';
+import { Popup } from './Popup';
 import { getContents } from './getContents';
 import { getTitle } from './getTitle';
-import { Popup } from './Popup';
 
 export const Highlight: React.FC<{
     annotation: PdfJs.Annotation;
@@ -35,7 +35,7 @@ export const Highlight: React.FC<{
                     rect: [quadPoint[2].x, quadPoint[2].y, quadPoint[1].x, quadPoint[1].y],
                     // Reset the `quadPoints` property to avoid the infinitive loop
                     quadPoints: [],
-                }) as PdfJs.Annotation
+                }) as PdfJs.Annotation,
         );
         return (
             <>

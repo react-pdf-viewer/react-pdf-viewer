@@ -1,6 +1,11 @@
 import 'expect-puppeteer';
+import puppeteer from 'puppeteer';
 
 test('Search popover performs search based on the initial keyword', async () => {
+    const browser = await puppeteer.launch({
+        headless: false,
+    });
+    const page = await browser.newPage();
     await page.goto('http://localhost:3000/default-layout-initial-keyword');
     await page.setViewport({
         width: 1920,
@@ -81,10 +86,10 @@ test('Search popover performs search based on the initial keyword', async () => 
     await page.keyboard.press('Enter');
 
     // All highlights are removed
-    let searchHighlights = await page.waitForSelector('[data-testid="search__highlights-2"]', { visible: true });
+    const searchHighlights = await page.waitForSelector('[data-testid="search__highlights-2"]', { visible: true });
 
-    let highlightElements = await searchHighlights?.$$('.rpv-search__highlight');
-    let numHighlights = await highlightElements?.length;
+    const highlightElements = await searchHighlights?.$$('.rpv-search__highlight');
+    const numHighlights = highlightElements?.length;
     expect(numHighlights).toEqual(0);
 
     // Open the search popover again
@@ -104,4 +109,5 @@ test('Search popover performs search based on the initial keyword', async () => 
     matchCaseCheckBox = await page.waitForSelector('[data-testid="search__popover-match-case"]');
     isMatchCaseChecked = await matchCaseCheckBox?.evaluate((ele) => (ele as HTMLInputElement).checked);
     expect(isMatchCaseChecked).toEqual(false);
+    await browser.close();
 });

@@ -6,13 +6,12 @@
  * @copyright 2019-2023 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import type { Store, StoreHandler } from '@react-pdf-viewer/core';
-import { ViewMode } from '@react-pdf-viewer/core';
+import { ViewMode, type Store, type StoreHandler } from '@react-pdf-viewer/core';
 import * as React from 'react';
-import type { StoreProps } from './types/StoreProps';
+import { type StoreProps } from './types/StoreProps';
 
 export const useViewMode = (
-    store: Store<StoreProps>
+    store: Store<StoreProps>,
 ): {
     viewMode: ViewMode;
 } => {

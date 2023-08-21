@@ -6,49 +6,45 @@
  * @copyright 2019-2023 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import type {
-    Plugin,
-    PluginFunctions,
-    PluginOnAnnotationLayerRender,
-    PluginOnDocumentLoad,
-    PluginOnTextLayerRender,
-    PluginRenderPageLayer,
-    RenderViewer,
-    ViewerState,
+import {
+    type Plugin,
+    type PluginFunctions,
+    type PluginOnAnnotationLayerRender,
+    type PluginOnDocumentLoad,
+    type PluginOnTextLayerRender,
+    type PluginRenderPageLayer,
+    type RenderViewer,
+    type ViewerState,
 } from '@react-pdf-viewer/core';
-import type { FullScreenPlugin, FullScreenPluginProps } from '@react-pdf-viewer/full-screen';
-import { fullScreenPlugin } from '@react-pdf-viewer/full-screen';
-import type { GetFilePlugin, GetFilePluginProps } from '@react-pdf-viewer/get-file';
-import { getFilePlugin } from '@react-pdf-viewer/get-file';
-import type { OpenPlugin, OpenPluginProps } from '@react-pdf-viewer/open';
-import { openPlugin } from '@react-pdf-viewer/open';
-import type { PageNavigationPlugin, PageNavigationPluginProps } from '@react-pdf-viewer/page-navigation';
-import { pageNavigationPlugin } from '@react-pdf-viewer/page-navigation';
-import type { PrintPlugin, PrintPluginProps } from '@react-pdf-viewer/print';
-import { printPlugin } from '@react-pdf-viewer/print';
-import type { PropertiesPlugin } from '@react-pdf-viewer/properties';
-import { propertiesPlugin } from '@react-pdf-viewer/properties';
-import type { RotatePlugin } from '@react-pdf-viewer/rotate';
-import { rotatePlugin } from '@react-pdf-viewer/rotate';
-import type { ScrollModePlugin } from '@react-pdf-viewer/scroll-mode';
-import { scrollModePlugin } from '@react-pdf-viewer/scroll-mode';
-import type { SearchPlugin, SearchPluginProps } from '@react-pdf-viewer/search';
-import { searchPlugin } from '@react-pdf-viewer/search';
-import type { SelectionModePlugin, SelectionModePluginProps } from '@react-pdf-viewer/selection-mode';
-import { selectionModePlugin } from '@react-pdf-viewer/selection-mode';
-import type { ThemePlugin } from '@react-pdf-viewer/theme';
-import { themePlugin } from '@react-pdf-viewer/theme';
-import type { ZoomPlugin, ZoomPluginProps } from '@react-pdf-viewer/zoom';
-import { zoomPlugin } from '@react-pdf-viewer/zoom';
+import { fullScreenPlugin, type FullScreenPlugin, type FullScreenPluginProps } from '@react-pdf-viewer/full-screen';
+import { getFilePlugin, type GetFilePlugin, type GetFilePluginProps } from '@react-pdf-viewer/get-file';
+import { openPlugin, type OpenPlugin, type OpenPluginProps } from '@react-pdf-viewer/open';
+import {
+    pageNavigationPlugin,
+    type PageNavigationPlugin,
+    type PageNavigationPluginProps,
+} from '@react-pdf-viewer/page-navigation';
+import { printPlugin, type PrintPlugin, type PrintPluginProps } from '@react-pdf-viewer/print';
+import { propertiesPlugin, type PropertiesPlugin } from '@react-pdf-viewer/properties';
+import { rotatePlugin, type RotatePlugin } from '@react-pdf-viewer/rotate';
+import { scrollModePlugin, type ScrollModePlugin } from '@react-pdf-viewer/scroll-mode';
+import { searchPlugin, type SearchPlugin, type SearchPluginProps } from '@react-pdf-viewer/search';
+import {
+    selectionModePlugin,
+    type SelectionModePlugin,
+    type SelectionModePluginProps,
+} from '@react-pdf-viewer/selection-mode';
+import { themePlugin, type ThemePlugin } from '@react-pdf-viewer/theme';
+import { zoomPlugin, type ZoomPlugin, type ZoomPluginProps } from '@react-pdf-viewer/zoom';
 import * as React from 'react';
-import { renderDefaultToolbar } from './renderDefaultToolbar';
 import { Toolbar, ToolbarProps } from './Toolbar';
-import type { ToolbarSlot } from './types/ToolbarSlot';
-import type { TransformToolbarSlot } from './types/TransformToolbarSlot';
+import { renderDefaultToolbar } from './renderDefaultToolbar';
+import { type ToolbarSlot } from './types/ToolbarSlot';
+import { type TransformToolbarSlot } from './types/TransformToolbarSlot';
 
 export interface ToolbarPlugin extends Plugin {
     renderDefaultToolbar: (
-        transformToolbarSlot: TransformToolbarSlot
+        transformToolbarSlot: TransformToolbarSlot,
     ) => (defaultToolbarSlot: ToolbarSlot) => React.ReactElement;
     Toolbar: (props: ToolbarProps) => React.ReactElement;
     // Plugins instance
@@ -211,7 +207,7 @@ export const toolbarPlugin = (props?: ToolbarPluginProps): ToolbarPlugin => {
                         <React.Fragment key={idx}>{plugin.renderPageLayer(renderProps)}</React.Fragment>
                     ) : (
                         <React.Fragment key={idx}></React.Fragment>
-                    )
+                    ),
                 )}
             </React.Fragment>
         ),

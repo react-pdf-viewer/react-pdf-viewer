@@ -1,15 +1,16 @@
-import { Viewer } from '@react-pdf-viewer/core';
+import { PdfJsApiContext, Viewer, type PdfJsApiProvider } from '@react-pdf-viewer/core';
 import { findAllByTitle, getAllByTitle, queryAllByTitle, waitForElementToBeRemoved } from '@testing-library/dom';
 import { fireEvent, render, screen } from '@testing-library/react';
+import * as PdfJs from 'pdfjs-dist';
 import * as React from 'react';
 import { mockIsIntersecting } from '../../../test-utils/mockIntersectionObserver';
-import { searchPlugin } from '../src';
-import type { SingleKeyword } from '../src';
+import { searchPlugin, type SingleKeyword } from '../src';
 
 const TestSetTargetPages: React.FC<{
     fileUrl: Uint8Array;
     keywords: SingleKeyword[];
 }> = ({ fileUrl, keywords }) => {
+    const apiProvider = PdfJs as unknown as PdfJsApiProvider;
     const searchPluginInstance = searchPlugin();
     const { highlight, setTargetPages } = searchPluginInstance;
 
@@ -17,7 +18,7 @@ const TestSetTargetPages: React.FC<{
     setTargetPages((targetPage) => targetPage.pageIndex === 1);
 
     return (
-        <div>
+        <PdfJsApiContext.Provider value={{ pdfJsApiProvider: apiProvider }}>
             <div style={{ marginRight: '8px' }}>
                 <button onClick={() => highlight(keywords)}>Highlight keywords</button>
             </div>
@@ -30,7 +31,7 @@ const TestSetTargetPages: React.FC<{
             >
                 <Viewer fileUrl={fileUrl} plugins={[searchPluginInstance]} />
             </div>
-        </div>
+        </PdfJsApiContext.Provider>
     );
 };
 
@@ -44,7 +45,7 @@ test('setTargetPages() method', async () => {
     ];
 
     const { findByText, findByTestId, getByTestId } = render(
-        <TestSetTargetPages fileUrl={global['__MULTIPLE_PAGES_PDF__']} keywords={keywords} />
+        <TestSetTargetPages fileUrl={global['__MULTIPLE_PAGES_PDF__']} keywords={keywords} />,
     );
     const viewerEle = getByTestId('core__viewer');
     viewerEle['__jsdomMockClientHeight'] = 798;

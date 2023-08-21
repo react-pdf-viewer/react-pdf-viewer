@@ -6,10 +6,9 @@
  * @copyright 2019-2023 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import type { Store } from '@react-pdf-viewer/core';
-import { isMac } from '@react-pdf-viewer/core';
+import { isMac, type Store } from '@react-pdf-viewer/core';
 import * as React from 'react';
-import type { StoreProps } from './types/StoreProps';
+import { type StoreProps } from './types/StoreProps';
 import { useEnterFullScreen } from './useEnterFullScreen';
 
 export const ShortcutHandler: React.FC<{

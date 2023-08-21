@@ -6,17 +6,17 @@
  * @copyright 2019-2023 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import type { LocalizationMap } from '@react-pdf-viewer/core';
 import {
-    classNames,
     LocalizationContext,
     TextDirection,
     ThemeContext,
+    classNames,
     useIsomorphicLayoutEffect,
+    type LocalizationMap,
 } from '@react-pdf-viewer/core';
 import * as React from 'react';
 import { downloadFile } from './downloadFile';
-import type { FileItem } from './types/FileItem';
+import { type FileItem } from './types/FileItem';
 
 export const AttachmentList: React.FC<{
     files: FileItem[];
@@ -73,7 +73,7 @@ export const AttachmentList: React.FC<{
 
         const targetIndex = Math.min(
             attachmentItems.length - 1,
-            Math.max(0, getItemIndex(attachmentItems, activeEle as HTMLElement))
+            Math.max(0, getItemIndex(attachmentItems, activeEle as HTMLElement)),
         );
         const targetEle = attachmentItems[targetIndex];
 

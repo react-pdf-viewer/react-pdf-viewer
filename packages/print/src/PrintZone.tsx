@@ -6,7 +6,7 @@
  * @copyright 2019-2023 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import type { PageSize, PdfJs } from '@react-pdf-viewer/core';
+import { type PageSize, type PdfJs } from '@react-pdf-viewer/core';
 import * as React from 'react';
 import { createPortal } from 'react-dom';
 import { PageThumbnailContainer } from './PageThumbnailContainer';
@@ -100,6 +100,6 @@ export const PrintZone: React.FC<{
                 }}
             ></style>
         </>,
-        container
+        container,
     );
 };

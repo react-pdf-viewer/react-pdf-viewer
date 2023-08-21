@@ -19,22 +19,22 @@ import { SpecialZoomLevel } from './structs/SpecialZoomLevel';
 import { ViewMode } from './structs/ViewMode';
 import { TextDirection, ThemeContext } from './theme/ThemeContext';
 import { withTheme } from './theme/withTheme';
-import type { CharacterMap } from './types/CharacterMap';
-import type { DocumentAskPasswordEvent } from './types/DocumentAskPasswordEvent';
-import type { DocumentLoadEvent } from './types/DocumentLoadEvent';
-import type { LocalizationMap } from './types/LocalizationMap';
-import type { PageChangeEvent } from './types/PageChangeEvent';
-import type { PageLayout } from './types/PageLayout';
-import type { PageSize } from './types/PageSize';
-import type { PdfJs } from './types/PdfJs';
-import { Plugin } from './types/Plugin';
-import type { RenderPage } from './types/RenderPage';
-import type { RenderProtectedView } from './types/RenderProtectedView';
-import type { RotateEvent } from './types/RotateEvent';
-import type { RotatePageEvent } from './types/RotatePageEvent';
-import type { SetRenderRange, VisiblePagesRange } from './types/SetRenderRange';
-import type { VisibilityChanged } from './types/VisibilityChanged';
-import type { ZoomEvent } from './types/ZoomEvent';
+import { type CharacterMap } from './types/CharacterMap';
+import { type DocumentAskPasswordEvent } from './types/DocumentAskPasswordEvent';
+import { type DocumentLoadEvent } from './types/DocumentLoadEvent';
+import { type LocalizationMap } from './types/LocalizationMap';
+import { type PageChangeEvent } from './types/PageChangeEvent';
+import { type PageLayout } from './types/PageLayout';
+import { type PageSize } from './types/PageSize';
+import { type PdfJs } from './types/PdfJs';
+import { type Plugin } from './types/Plugin';
+import { type RenderPage } from './types/RenderPage';
+import { type RenderProtectedView } from './types/RenderProtectedView';
+import { type RotateEvent } from './types/RotateEvent';
+import { type RotatePageEvent } from './types/RotatePageEvent';
+import { type SetRenderRange, type VisiblePagesRange } from './types/SetRenderRange';
+import { type VisibilityChanged } from './types/VisibilityChanged';
+import { type ZoomEvent } from './types/ZoomEvent';
 import { isSameUrl } from './utils/isSameUrl';
 
 interface FileState {
@@ -185,7 +185,7 @@ export const Viewer: React.FC<{
     const themeContext = Object.assign(
         {},
         { direction: themeProps.direction },
-        withTheme(themeProps.theme || 'light', onSwitchTheme)
+        withTheme(themeProps.theme || 'light', onSwitchTheme),
     );
 
     React.useEffect(() => {
@@ -215,7 +215,7 @@ export const Viewer: React.FC<{
                                 <PageSizeCalculator
                                     defaultScale={defaultScale}
                                     doc={doc}
-                                    render={(pageSizes: PageSize[], initialScale: number) => (
+                                    render={(estimatedPageSizes: PageSize[], initialScale: number) => (
                                         <Inner
                                             currentFile={{
                                                 data: file.data,
@@ -224,11 +224,11 @@ export const Viewer: React.FC<{
                                             defaultScale={defaultScale}
                                             doc={doc}
                                             enableSmoothScroll={enableSmoothScroll}
+                                            estimatedPageSizes={estimatedPageSizes}
                                             initialPage={initialPage}
                                             initialRotation={initialRotation}
                                             initialScale={initialScale}
                                             pageLayout={pageLayout}
-                                            pageSizes={pageSizes}
                                             plugins={plugins}
                                             renderPage={renderPage}
                                             scrollMode={scrollMode}
@@ -238,8 +238,8 @@ export const Viewer: React.FC<{
                                                 file,
                                                 fullScreenMode: FullScreenMode.Normal,
                                                 pageIndex: -1,
-                                                pageHeight: pageSizes[0].pageHeight,
-                                                pageWidth: pageSizes[0].pageWidth,
+                                                pageHeight: estimatedPageSizes[0].pageHeight,
+                                                pageWidth: estimatedPageSizes[0].pageWidth,
                                                 pagesRotation: new Map(),
                                                 rotation: initialRotation,
                                                 scale: initialScale,

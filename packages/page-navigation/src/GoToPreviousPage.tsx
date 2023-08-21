@@ -6,11 +6,11 @@
  * @copyright 2019-2023 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import type { Store } from '@react-pdf-viewer/core';
+import { type Store } from '@react-pdf-viewer/core';
 import * as React from 'react';
 import { GoToPreviousPageButton } from './GoToPreviousPageButton';
-import type { RenderGoToPage, RenderGoToPageProps } from './types/index';
-import type { StoreProps } from './types/StoreProps';
+import { type StoreProps } from './types/StoreProps';
+import { type RenderGoToPage, type RenderGoToPageProps } from './types/index';
 import { useCurrentPage } from './useCurrentPage';
 
 export const GoToPreviousPage: React.FC<{

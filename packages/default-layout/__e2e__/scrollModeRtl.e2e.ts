@@ -1,6 +1,11 @@
 import 'expect-puppeteer';
+import puppeteer from 'puppeteer';
 
 test('Vertical scroll mode', async () => {
+    const browser = await puppeteer.launch({
+        headless: false,
+    });
+    const page = await browser.newPage();
     await page.goto('http://localhost:3000/default-layout-rtl');
     await page.setViewport({
         width: 1920,
@@ -18,7 +23,7 @@ test('Vertical scroll mode', async () => {
     const pagesContainer = await page.waitForSelector('[data-testid="core__inner-pages"]');
 
     const hasVerticalClass = await pagesContainer?.evaluate((ele) =>
-        ele.classList.contains('rpv-core__inner-pages--vertical')
+        ele.classList.contains('rpv-core__inner-pages--vertical'),
     );
     expect(hasVerticalClass).toEqual(true);
 
@@ -37,7 +42,7 @@ test('Vertical scroll mode', async () => {
     await page.waitForSelector('[data-testid="core__page-layer-6"]');
 
     await page.waitForSelector('[data-testid="core__inner-current-page-2"]');
-    let scrollTop = await pagesContainer.evaluate((ele) => ele.scrollTop);
+    let scrollTop = await pagesContainer?.evaluate((ele) => ele.scrollTop);
     expect(scrollTop).toEqual(2376);
 
     // Click the `Specifying parameters in a URL` link
@@ -48,15 +53,20 @@ test('Vertical scroll mode', async () => {
     await page.waitForSelector('[data-testid="core__page-layer-7"]');
 
     await page.waitForSelector('[data-testid="core__inner-current-page-6"]');
-    scrollTop = await pagesContainer.evaluate((ele) => ele.scrollTop);
+    scrollTop = await pagesContainer?.evaluate((ele) => ele.scrollTop);
     expect(scrollTop).toEqual(7848);
 
     // Check the current page
     const currentPage = await pageInput?.evaluate((ele) => ele.getAttribute('value'));
     expect(currentPage).toEqual('7');
+    await browser.close();
 });
 
 test('Switch to horizontal scroll mode', async () => {
+    const browser = await puppeteer.launch({
+        headless: false,
+    });
+    const page = await browser.newPage();
     await page.goto('http://localhost:3000/default-layout-rtl');
     await page.setViewport({
         width: 1920,
@@ -80,7 +90,7 @@ test('Switch to horizontal scroll mode', async () => {
     await switchToHorizontalMenu?.click();
 
     const hasHorizontalClass = await pagesContainer?.evaluate((ele) =>
-        ele.classList.contains('rpv-core__inner-pages--horizontal')
+        ele.classList.contains('rpv-core__inner-pages--horizontal'),
     );
     expect(hasHorizontalClass).toEqual(true);
 
@@ -104,7 +114,7 @@ test('Switch to horizontal scroll mode', async () => {
     await page.waitForSelector('[data-testid="core__page-layer-2"]', { visible: true });
     await page.waitForSelector('[data-testid="core__page-layer-3"]');
     await page.waitForSelector('[data-testid="core__inner-current-page-2"]');
-    let scrollLeft = await pagesContainer.evaluate((ele) => ele.scrollLeft);
+    let scrollLeft = await pagesContainer?.evaluate((ele) => ele.scrollLeft);
     expect(scrollLeft).toEqual(-1782);
 
     // Click the `Specifying parameters in a URL` link
@@ -115,16 +125,21 @@ test('Switch to horizontal scroll mode', async () => {
     await page.waitForSelector('[data-testid="core__page-layer-7"]');
 
     await page.waitForSelector('[data-testid="core__inner-current-page-6"]');
-    scrollLeft = await pagesContainer.evaluate((ele) => ele.scrollLeft);
+    scrollLeft = await pagesContainer?.evaluate((ele) => ele.scrollLeft);
     expect(scrollLeft).toEqual(-5413.5);
 
     // Check the current page
     const currentPageInput = await page.waitForSelector('[data-testid="page-navigation__current-page-input"]');
     const currentPage = await currentPageInput?.evaluate((ele) => ele.getAttribute('value'));
     expect(currentPage).toEqual('7');
+    await browser.close();
 });
 
 test('Switch to wrapped scroll mode', async () => {
+    const browser = await puppeteer.launch({
+        headless: false,
+    });
+    const page = await browser.newPage();
     await page.goto('http://localhost:3000/default-layout-rtl');
     await page.setViewport({
         width: 1920,
@@ -166,7 +181,7 @@ test('Switch to wrapped scroll mode', async () => {
     await switchToWrappedMenu?.click();
 
     const hasWrappedClass = await pagesContainer?.evaluate((ele) =>
-        ele.classList.contains('rpv-core__inner-pages--wrapped')
+        ele.classList.contains('rpv-core__inner-pages--wrapped'),
     );
     expect(hasWrappedClass).toEqual(true);
 
@@ -189,7 +204,7 @@ test('Switch to wrapped scroll mode', async () => {
     await pageInput?.press('Enter');
 
     await page.waitForSelector('[data-testid="core__inner-current-page-2"]');
-    let scrollTop = await pagesContainer.evaluate((ele) => ele.scrollTop);
+    let scrollTop = await pagesContainer?.evaluate((ele) => ele.scrollTop);
     expect(scrollTop).toEqual(594);
 
     // Click the `Parameters` link
@@ -197,6 +212,7 @@ test('Switch to wrapped scroll mode', async () => {
     await link?.click();
 
     await page.waitForSelector('[data-testid="core__inner-current-page-6"]');
-    scrollTop = await pagesContainer.evaluate((ele) => ele.scrollTop);
+    scrollTop = await pagesContainer?.evaluate((ele) => ele.scrollTop);
     expect(scrollTop).toEqual(1488.5);
+    await browser.close();
 });

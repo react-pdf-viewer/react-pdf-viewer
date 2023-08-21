@@ -1,6 +1,5 @@
 import { Viewer } from '@react-pdf-viewer/core';
 import { thumbnailPlugin } from '@react-pdf-viewer/thumbnail';
-import * as React from 'react';
 
 const IndexPage = () => {
     const thumbnailPluginInstance = thumbnailPlugin({

@@ -11,10 +11,10 @@ import { RotateDirection } from '../structs/RotateDirection';
 import { ScrollMode } from '../structs/ScrollMode';
 import { SpecialZoomLevel } from '../structs/SpecialZoomLevel';
 import { ViewMode } from '../structs/ViewMode';
-import type { ThemeContextProps } from '../theme/ThemeContext';
-import type { PdfJs } from '../types/PdfJs';
-import type { PageSize } from './PageSize';
-import type { Slot } from './Slot';
+import { type ThemeContextProps } from '../theme/ThemeContext';
+import { type PdfJs } from '../types/PdfJs';
+import { type PageSize } from './PageSize';
+import { type Slot } from './Slot';
 
 export interface RenderViewer {
     containerRef: React.RefObject<HTMLDivElement>;

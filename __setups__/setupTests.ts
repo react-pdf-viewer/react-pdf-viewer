@@ -1,7 +1,17 @@
 import '@testing-library/jest-dom/extend-expect';
+import * as fs from 'node:fs';
+import * as path from 'path';
+import { TextDecoder } from 'util';
+import { ReadableStream } from 'web-streams-polyfill/ponyfill';
 import { SimpleMockResizeObserver } from './SimpleMockResizeObserver';
 
+// Polyfill ReadableStream
+global.ReadableStream = ReadableStream;
+
 global.ResizeObserver = SimpleMockResizeObserver;
+
+// Fix issue `TextDecoder is not defined`
+global.TextDecoder = TextDecoder;
 
 // Mock `clientWidth`, `clientHeight`
 Object.defineProperty(window.HTMLElement.prototype, 'clientHeight', {
@@ -27,9 +37,6 @@ Object.defineProperty(window, 'print', {
     value: noop,
     writable: true,
 });
-
-const fs = require('fs');
-const path = require('path');
 
 // Read data from files and make them available for all tests
 const HELLO_PDF = new Uint8Array([
@@ -63,7 +70,7 @@ const HELLO_PDF = new Uint8Array([
 const DUMMY_PDF = new Uint8Array(fs.readFileSync(path.resolve(__dirname, '../samples/dummy.pdf')));
 const SAMPLE_PDF = new Uint8Array(fs.readFileSync(path.resolve(__dirname, '../samples/sample.pdf')));
 const SAMPLE_PROTECTED_PDF = new Uint8Array(
-    fs.readFileSync(path.resolve(__dirname, '../samples/sample-protected.pdf'))
+    fs.readFileSync(path.resolve(__dirname, '../samples/sample-protected.pdf')),
 );
 const MULTIPLE_PAGES_PDF = new Uint8Array(fs.readFileSync(path.resolve(__dirname, '../samples/sample-two-pages.pdf')));
 const OPEN_PARAMS_PDF = new Uint8Array(fs.readFileSync(path.resolve(__dirname, '../samples/pdf-open-parameters.pdf')));

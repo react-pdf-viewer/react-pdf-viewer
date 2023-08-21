@@ -6,11 +6,11 @@
  * @copyright 2019-2023 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import type { Store } from '@react-pdf-viewer/core';
+import { type Store } from '@react-pdf-viewer/core';
 import * as React from 'react';
 import { getImageFromArea } from './getImageFromArea';
 import { HighlightState, HighlightStateType, NO_SELECTION_STATE } from './types/HighlightState';
-import type { StoreProps } from './types/StoreProps';
+import { type StoreProps } from './types/StoreProps';
 
 interface Point {
     x: number;
@@ -72,7 +72,7 @@ export const ClickDrag: React.FC<{
         document.addEventListener('mouseup', handleDocumentMouseUp);
 
         store.updateCurrentValue('highlightState', (currentState) =>
-            Object.assign({}, currentState, { type: HighlightStateType.ClickDragging })
+            Object.assign({}, currentState, { type: HighlightStateType.ClickDragging }),
         );
     };
 

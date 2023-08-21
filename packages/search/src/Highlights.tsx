@@ -6,19 +6,18 @@
  * @copyright 2019-2023 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import type { PluginOnTextLayerRender, Store } from '@react-pdf-viewer/core';
-import { LayerRenderStatus } from '@react-pdf-viewer/core';
+import { LayerRenderStatus, type PluginOnTextLayerRender, type Store } from '@react-pdf-viewer/core';
 import * as React from 'react';
-import { calculateOffset } from './calculateOffset';
 import { HightlightItem } from './HightlightItem';
+import { calculateOffset } from './calculateOffset';
 import { EMPTY_KEYWORD_REGEXP } from './constants';
-import type { HighlightArea, RenderHighlightsProps } from './types/RenderHighlightsProps';
-import type { MatchPosition } from './types/MatchPosition';
-import type { NormalizedKeyword } from './types/NormalizedKeyword';
-import type { OnHighlightKeyword } from './types/OnHighlightKeyword';
-import type { StoreProps } from './types/StoreProps';
-import { unwrap } from './unwrap';
 import { getCssProperties } from './getCssProperties';
+import { type MatchPosition } from './types/MatchPosition';
+import { type NormalizedKeyword } from './types/NormalizedKeyword';
+import { type OnHighlightKeyword } from './types/OnHighlightKeyword';
+import { type HighlightArea, type RenderHighlightsProps } from './types/RenderHighlightsProps';
+import { type StoreProps } from './types/StoreProps';
+import { unwrap } from './unwrap';
 
 interface RenderStatus {
     ele?: HTMLElement;
@@ -73,7 +72,7 @@ export const Highlights: React.FC<{
                 ))}
             </>
         ),
-        []
+        [],
     );
     const renderHighlightElements = renderHighlights || defaultRenderHighlights;
 
@@ -81,7 +80,7 @@ export const Highlights: React.FC<{
     // So the current highlight is kept (after zooming the document, for example)
     const [matchPosition, setMatchPosition] = React.useState<MatchPosition>(store.get('matchPosition'));
     const [keywordRegexp, setKeywordRegexp] = React.useState<NormalizedKeyword[]>(
-        store.get('keyword') || [EMPTY_KEYWORD_REGEXP]
+        store.get('keyword') || [EMPTY_KEYWORD_REGEXP],
     );
     const [renderStatus, setRenderStatus] = React.useState<RenderStatus>({
         pageIndex,
@@ -95,7 +94,7 @@ export const Highlights: React.FC<{
     const defaultTargetPageFilter = () => true;
     const targetPageFilter = React.useCallback(
         () => store.get('targetPageFilter') || defaultTargetPageFilter,
-        [store.get('targetPageFilter')]
+        [store.get('targetPageFilter')],
     );
 
     const highlight = (
@@ -103,7 +102,7 @@ export const Highlights: React.FC<{
         keyword: RegExp,
         textLayerEle: Element,
         span: HTMLElement,
-        charIndexSpan: CharIndex[]
+        charIndexSpan: CharIndex[],
     ): HighlightArea | null => {
         const range = document.createRange();
 
@@ -195,10 +194,13 @@ export const Highlights: React.FC<{
                 }))
                 .forEach((item) => {
                     // Group by the span index
-                    const spanIndexes = item.indexes.reduce((acc, item) => {
-                        acc[item.spanIndex] = (acc[item.spanIndex] || ([] as CharIndex[])).concat([item]);
-                        return acc;
-                    }, {} as { [spanIndex: number]: CharIndex[] });
+                    const spanIndexes = item.indexes.reduce(
+                        (acc, item) => {
+                            acc[item.spanIndex] = (acc[item.spanIndex] || ([] as CharIndex[])).concat([item]);
+                            return acc;
+                        },
+                        {} as { [spanIndex: number]: CharIndex[] },
+                    );
                     Object.values(spanIndexes).forEach((charIndexSpan) => {
                         // Ignore the space between words
                         if (charIndexSpan.length !== 1 || charIndexSpan[0].char.trim() !== '') {
@@ -209,7 +211,7 @@ export const Highlights: React.FC<{
                                 item.keyword,
                                 textLayerEle,
                                 spans[normalizedCharSpan[0].spanIndex],
-                                normalizedCharSpan
+                                normalizedCharSpan,
                             );
                             if (hightlighPosition) {
                                 highlightPos.push(hightlighPosition);
@@ -273,7 +275,7 @@ export const Highlights: React.FC<{
                             char: c,
                             charIndexInSpan: i,
                             spanIndex: index,
-                        }))
+                        })),
                     ),
                 [
                     {
@@ -281,7 +283,7 @@ export const Highlights: React.FC<{
                         charIndexInSpan: 0,
                         spanIndex: 0,
                     },
-                ]
+                ],
             )
             .slice(1);
 
@@ -324,7 +326,7 @@ export const Highlights: React.FC<{
         }
 
         const highlightEle = container.querySelector(
-            `.rpv-search__highlight[data-index="${matchPosition.matchIndex}"]`
+            `.rpv-search__highlight[data-index="${matchPosition.matchIndex}"]`,
         );
         if (!highlightEle) {
             return;

@@ -7,9 +7,9 @@
  */
 
 import * as React from 'react';
-import { useStack } from '../hooks/useStack';
 import { useQueue } from '../hooks/useQueue';
-import type { Destination } from '../types/Destination';
+import { useStack } from '../hooks/useStack';
+import { type Destination } from '../types/Destination';
 
 const MAX_QUEUE_LENGTH = 50;
 

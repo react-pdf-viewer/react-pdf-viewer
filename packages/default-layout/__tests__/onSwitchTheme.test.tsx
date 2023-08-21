@@ -1,5 +1,6 @@
-import { Viewer } from '@react-pdf-viewer/core';
+import { PdfJsApiContext, Viewer, type PdfJsApiProvider } from '@react-pdf-viewer/core';
 import { fireEvent, render, waitForElementToBeRemoved } from '@testing-library/react';
+import * as PdfJs from 'pdfjs-dist';
 import * as React from 'react';
 import { mockIsIntersecting } from '../../../test-utils/mockIntersectionObserver';
 import { defaultLayoutPlugin } from '../src';
@@ -7,11 +8,12 @@ import { defaultLayoutPlugin } from '../src';
 const TestOnSwitchTheme: React.FC<{
     fileUrl: Uint8Array;
 }> = ({ fileUrl }) => {
+    const apiProvider = PdfJs as unknown as PdfJsApiProvider;
     const [theme, setTheme] = React.useState('');
     const defaultLayoutPluginInstance = defaultLayoutPlugin();
 
     return (
-        <div>
+        <PdfJsApiContext.Provider value={{ pdfJsApiProvider: apiProvider }}>
             <div>
                 Current theme: <span data-testid="current-theme">{theme}</span>
             </div>
@@ -23,13 +25,13 @@ const TestOnSwitchTheme: React.FC<{
             >
                 <Viewer fileUrl={fileUrl} onSwitchTheme={setTheme} plugins={[defaultLayoutPluginInstance]} />
             </div>
-        </div>
+        </PdfJsApiContext.Provider>
     );
 };
 
 test('onSwitchTheme() callback', async () => {
     const { findByTestId, getByLabelText, getByTestId } = render(
-        <TestOnSwitchTheme fileUrl={global['__OPEN_PARAMS_PDF__']} />
+        <TestOnSwitchTheme fileUrl={global['__OPEN_PARAMS_PDF__']} />,
     );
     const viewerEle = getByTestId('core__viewer');
     mockIsIntersecting(viewerEle, true);
@@ -51,7 +53,7 @@ test('onSwitchTheme() callback', async () => {
     await findByTestId('core__annotation-layer-4');
 
     // Click the switch theme button
-    const switchButton = await getByLabelText('Switch to the dark theme');
+    const switchButton = getByLabelText('Switch to the dark theme');
     fireEvent.click(switchButton);
 
     expect(viewerEle.classList.contains('rpv-core__viewer--dark')).toEqual(true);
@@ -60,7 +62,7 @@ test('onSwitchTheme() callback', async () => {
     expect(currentThemeLabel.textContent).toEqual('dark');
 
     // Click again to switch back to the light theme
-    const switchLightButton = await getByLabelText('Switch to the light theme');
+    const switchLightButton = getByLabelText('Switch to the light theme');
     fireEvent.click(switchLightButton);
 
     expect(viewerEle.classList.contains('rpv-core__viewer--light')).toEqual(true);

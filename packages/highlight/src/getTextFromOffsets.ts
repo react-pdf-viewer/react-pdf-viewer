@@ -6,7 +6,7 @@
  * @copyright 2019-2023 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import type { DivText } from './types/DivText';
+import { type DivText } from './types/DivText';
 
 interface Result {
     divTexts: DivText[];
@@ -19,7 +19,7 @@ export const getTextFromOffsets = (
     startDivIdx: number,
     startOffset: number,
     endDivIdx: number,
-    endOffset?: number
+    endOffset?: number,
 ): Result => {
     if (startDivIdx < endDivIdx) {
         const startDivText = nodes

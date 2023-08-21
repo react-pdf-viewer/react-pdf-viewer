@@ -1,6 +1,6 @@
 import { Popover, Position, Tooltip, Viewer } from '@react-pdf-viewer/core';
 import { defaultLayoutPlugin } from '@react-pdf-viewer/default-layout';
-import type { RenderHighlightsProps } from '@react-pdf-viewer/search';
+import { type RenderHighlightsProps } from '@react-pdf-viewer/search';
 import * as React from 'react';
 
 const IndexPage = () => {
@@ -56,7 +56,7 @@ const IndexPage = () => {
                 })}
             </>
         ),
-        []
+        [],
     );
 
     const defaultLayoutPluginInstance = defaultLayoutPlugin({

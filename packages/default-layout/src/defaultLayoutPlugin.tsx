@@ -6,29 +6,32 @@
  * @copyright 2019-2023 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import type { AttachmentPlugin } from '@react-pdf-viewer/attachment';
-import { attachmentPlugin } from '@react-pdf-viewer/attachment';
-import type { BookmarkPlugin } from '@react-pdf-viewer/bookmark';
-import { bookmarkPlugin } from '@react-pdf-viewer/bookmark';
-import type {
-    PdfJs,
-    Plugin,
-    PluginFunctions,
-    PluginOnAnnotationLayerRender,
-    PluginOnDocumentLoad,
-    PluginOnTextLayerRender,
-    PluginRenderPageLayer,
-    RenderViewer,
-    ViewerState,
+import { attachmentPlugin, type AttachmentPlugin } from '@react-pdf-viewer/attachment';
+import { bookmarkPlugin, type BookmarkPlugin } from '@react-pdf-viewer/bookmark';
+import {
+    TextDirection,
+    classNames,
+    createStore,
+    type PdfJs,
+    type Plugin,
+    type PluginFunctions,
+    type PluginOnAnnotationLayerRender,
+    type PluginOnDocumentLoad,
+    type PluginOnTextLayerRender,
+    type PluginRenderPageLayer,
+    type RenderViewer,
+    type ViewerState,
 } from '@react-pdf-viewer/core';
-import { classNames, createStore, TextDirection } from '@react-pdf-viewer/core';
-import type { ThumbnailPlugin, ThumbnailPluginProps } from '@react-pdf-viewer/thumbnail';
-import { thumbnailPlugin } from '@react-pdf-viewer/thumbnail';
-import type { ToolbarPlugin, ToolbarPluginProps, ToolbarProps } from '@react-pdf-viewer/toolbar';
-import { toolbarPlugin } from '@react-pdf-viewer/toolbar';
+import { thumbnailPlugin, type ThumbnailPlugin, type ThumbnailPluginProps } from '@react-pdf-viewer/thumbnail';
+import {
+    toolbarPlugin,
+    type ToolbarPlugin,
+    type ToolbarPluginProps,
+    type ToolbarProps,
+} from '@react-pdf-viewer/toolbar';
 import * as React from 'react';
 import { Sidebar, SidebarTab } from './Sidebar';
-import type { StoreProps } from './types/StoreProps';
+import { type StoreProps } from './types/StoreProps';
 
 export interface DefaultLayoutPlugin extends Plugin {
     activateTab(index: number): void;
@@ -54,7 +57,7 @@ export const defaultLayoutPlugin = (props?: DefaultLayoutPluginProps): DefaultLa
                 isCurrentTabOpened: false,
                 currentTab: 0,
             }),
-        []
+        [],
     );
 
     const attachmentPluginInstance = attachmentPlugin();
@@ -105,7 +108,7 @@ export const defaultLayoutPlugin = (props?: DefaultLayoutPluginProps): DefaultLa
                         <React.Fragment key={idx}>
                             <></>
                         </React.Fragment>
-                    )
+                    ),
                 )}
             </React.Fragment>
         ),

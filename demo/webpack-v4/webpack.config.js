@@ -4,10 +4,13 @@ const HtmlWebPackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
+const distDir = path.join(__dirname, 'dist');
+const rootDir = path.join(__dirname, '../..');
+
 module.exports = {
     entry: './src/index.jsx',
     output: {
-        path: path.join(__dirname, 'dist'),
+        path: distDir,
         filename: '[name].[hash].js',
     },
     module: {
@@ -44,11 +47,19 @@ module.exports = {
         alias: {
             // We need it because we use the local development version of `@react-pdf-viewer/xxx`
             // Otherwise, we will see "Invalid hook call" error
-            react: path.join(__dirname, '../../node_modules/react'),
+            react: path.join(rootDir, 'node_modules/react'),
         },
     },
     devServer: {
-        static: path.join(__dirname, 'dist'),
+        static: [
+            {
+                directory: distDir,
+            },
+            // Serve the local PDF documents
+            {
+                directory: path.join(rootDir, 'samples'),
+            },
+        ],
         historyApiFallback: true,
         port: 8001,
     },
@@ -64,8 +75,8 @@ module.exports = {
         new CopyWebpackPlugin({
             patterns: [
                 {
-                    from: path.join(__dirname, '../../node_modules/pdfjs-dist/legacy/build/pdf.worker.min.js'),
-                    to: path.join(__dirname, 'dist'),
+                    from: path.join(rootDir, 'node_modules/pdfjs-dist/legacy/build/pdf.worker.min.js'),
+                    to: distDir,
                 },
             ],
         }),
@@ -80,14 +91,14 @@ module.exports = {
 
                 switch (true) {
                     case request.endsWith('.css'):
-                        resource.request = path.join(__dirname, `../../packages/${pkgName}/src/styles/index.scss`);
+                        resource.request = path.join(rootDir, `packages/${pkgName}/src/styles/index.scss`);
                         break;
 
                     default:
-                        resource.request = path.join(__dirname, `../../packages/${pkgName}/src`);
+                        resource.request = path.join(rootDir, `packages/${pkgName}/src`);
                         break;
                 }
-            }
+            },
         ),
     ],
 };

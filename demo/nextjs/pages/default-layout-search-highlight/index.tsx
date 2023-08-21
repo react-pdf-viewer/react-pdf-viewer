@@ -2,11 +2,11 @@ import { Button, DocumentLoadEvent, PdfJs, Position, PrimaryButton, Tooltip, Vie
 import { defaultLayoutPlugin } from '@react-pdf-viewer/default-layout';
 import {
     HighlightArea,
-    highlightPlugin,
     MessageIcon,
     RenderHighlightContentProps,
-    RenderHighlightsProps,
     RenderHighlightTargetProps,
+    RenderHighlightsProps,
+    highlightPlugin,
 } from '@react-pdf-viewer/highlight';
 import * as React from 'react';
 
@@ -133,7 +133,7 @@ const IndexPage = () => {
                                         background: 'yellow',
                                         opacity: 0.4,
                                     },
-                                    props.getCssProperties(area, props.rotation)
+                                    props.getCssProperties(area, props.rotation),
                                 )}
                                 onClick={() => jumpToNote(note)}
                             />

@@ -7,16 +7,16 @@
  */
 
 import { ScrollDirection } from '../structs/ScrollDirection';
-import type { Offset } from '../types/Offset';
-import type { Rect } from '../types/Rect';
+import { type Offset } from '../types/Offset';
+import { type Rect } from '../types/Rect';
 import { findNearest } from '../utils/findNearest';
-import type { ItemMeasurement } from './ItemMeasurement';
+import { type ItemMeasurement } from './ItemMeasurement';
 
 export const calculateRange = (
     scrollDirection: ScrollDirection,
     measurements: ItemMeasurement[],
     outerSize: Rect,
-    scrollOffset: Offset
+    scrollOffset: Offset,
 ): {
     start: number;
     end: number;

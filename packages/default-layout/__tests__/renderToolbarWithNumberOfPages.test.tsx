@@ -1,13 +1,15 @@
-import { Viewer } from '@react-pdf-viewer/core';
+import { PdfJsApiContext, Viewer, type PdfJsApiProvider } from '@react-pdf-viewer/core';
 import { fireEvent, render, waitForElementToBeRemoved } from '@testing-library/react';
+import * as PdfJs from 'pdfjs-dist';
 import * as React from 'react';
 import { mockIsIntersecting } from '../../../test-utils/mockIntersectionObserver';
 import { mockResize } from '../../../test-utils/mockResizeObserver';
-import { defaultLayoutPlugin, ToolbarProps, ToolbarSlot } from '../src';
+import { defaultLayoutPlugin, type ToolbarProps, type ToolbarSlot } from '../src';
 
 const TestRenderToolbar: React.FC<{
     fileUrl: Uint8Array;
 }> = ({ fileUrl }) => {
+    const apiProvider = PdfJs as unknown as PdfJsApiProvider;
     const renderToolbar = (Toolbar: (props: ToolbarProps) => React.ReactElement) => (
         <Toolbar>
             {(toolbarSlot: ToolbarSlot) => {
@@ -26,9 +28,11 @@ const TestRenderToolbar: React.FC<{
     });
 
     return (
-        <div style={{ height: '50rem', width: '50rem' }}>
-            <Viewer fileUrl={fileUrl} plugins={[defaultLayoutPluginInstance]} />
-        </div>
+        <PdfJsApiContext.Provider value={{ pdfJsApiProvider: apiProvider }}>
+            <div style={{ height: '50rem', width: '50rem' }}>
+                <Viewer fileUrl={fileUrl} plugins={[defaultLayoutPluginInstance]} />
+            </div>
+        </PdfJsApiContext.Provider>
     );
 };
 

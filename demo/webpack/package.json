@@ -3,31 +3,30 @@
     "private": true,
     "version": "0.0.0",
     "scripts": {
-        "copy": "cp -rf ../../samples/* dist",
         "typecheck": "tsc --noEmit",
-        "dev": "rm -rf dist && mkdir dist && npm run copy && NODE_ENV=development webpack serve"
+        "dev": "NODE_ENV=development webpack serve"
     },
     "dependencies": {
         "@react-pdf-viewer/core": "../../node_modules/@react-pdf-viewer/core",
         "@react-pdf-viewer/default-layout": "../../node_modules/@react-pdf-viewer/default-layout",
         "@react-pdf-viewer/worker": "../../node_modules/@react-pdf-viewer/worker",
-        "pdfjs-dist": "^3.4.120",
         "react": "^18.2.0",
         "react-dom": "^18.2.0"
     },
     "devDependencies": {
-        "@babel/core": "^7.21.4",
-        "@babel/preset-env": "^7.21.4",
-        "@babel/preset-react": "^7.18.6",
-        "babel-loader": "^9.1.2",
-        "css-loader": "^6.7.3",
-        "html-webpack-plugin": "^5.5.0",
-        "mini-css-extract-plugin": "^2.7.5",
-        "sass-loader": "^13.2.2",
-        "style-loader": "^3.3.2",
-        "ts-loader": "^9.4.2",
-        "webpack": "^5.76.3",
-        "webpack-cli": "^5.0.1",
-        "webpack-dev-server": "^4.13.1"
+        "@babel/core": "^7.22.9",
+        "@babel/preset-env": "^7.22.9",
+        "@babel/preset-react": "^7.22.5",
+        "babel-loader": "^9.1.3",
+        "css-loader": "^6.8.1",
+        "html-webpack-plugin": "^5.5.3",
+        "mini-css-extract-plugin": "^2.7.6",
+        "pdfjs-dist": "^3.9.179",
+        "sass-loader": "^13.3.2",
+        "style-loader": "^3.3.3",
+        "ts-loader": "^9.4.4",
+        "webpack": "^5.88.2",
+        "webpack-cli": "^5.1.4",
+        "webpack-dev-server": "^4.15.1"
     }
 }

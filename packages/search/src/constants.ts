@@ -6,7 +6,7 @@
  * @copyright 2019-2023 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import type { NormalizedKeyword } from './types/NormalizedKeyword';
+import { type NormalizedKeyword } from './types/NormalizedKeyword';
 
 // `new RegExp('')` will treat the source as `(?:)` which is not an empty string
 export const EMPTY_KEYWORD_REGEXP: NormalizedKeyword = {

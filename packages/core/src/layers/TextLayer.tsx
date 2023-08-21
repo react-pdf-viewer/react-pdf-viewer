@@ -9,8 +9,8 @@
 import * as React from 'react';
 import { useIsomorphicLayoutEffect } from '../hooks/useIsomorphicLayoutEffect';
 import { LayerRenderStatus } from '../structs/LayerRenderStatus';
-import type { PdfJs } from '../types/PdfJs';
-import type { Plugin } from '../types/Plugin';
+import { type PdfJs } from '../types/PdfJs';
+import { type Plugin } from '../types/Plugin';
 import { PdfJsApiContext } from '../vendors/PdfJsApiContext';
 
 export const TextLayer: React.FC<{
@@ -64,13 +64,16 @@ export const TextLayer: React.FC<{
         });
         page.getTextContent().then((textContent) => {
             empty();
+            // Despite the fact that the `--scale-factor` is already set at the root element,
+            // pdf-js still complains about setting it either on the element or higher up in the DOM
+            containerEle.style.setProperty('--scale-factor', `${scale}`);
             renderTask.current = pdfJsApiProvider.renderTextLayer({
                 container: containerEle,
                 // From pdf-js 3.2.146, the `textContent` parameter is deprecated
                 // and will be soon replaced with the `textContentSource` parameter
-                textContent: textContent as any,
-                textContentSource: textContent as any,
-                viewport: viewport as any,
+                textContent: textContent,
+                textContentSource: textContent,
+                viewport: viewport,
             });
             renderTask.current.promise.then(
                 () => {
@@ -98,7 +101,7 @@ export const TextLayer: React.FC<{
                 () => {
                     containerEle.removeAttribute('data-testid');
                     onRenderTextCompleted();
-                }
+                },
             );
         });
 

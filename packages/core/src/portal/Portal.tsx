@@ -8,7 +8,7 @@
 
 import * as React from 'react';
 import { useToggle } from '../hooks/useToggle';
-import type { Toggle } from '../types/Toggle';
+import { type Toggle } from '../types/Toggle';
 
 export type RenderContent = (toggle: Toggle) => React.ReactNode;
 export type RenderTarget = (toggle: Toggle, opened: boolean) => React.ReactNode;

@@ -1,16 +1,18 @@
-import { Viewer } from '@react-pdf-viewer/core';
+import { PdfJsApiContext, Viewer, type PdfJsApiProvider } from '@react-pdf-viewer/core';
 import { defaultLayoutPlugin } from '@react-pdf-viewer/default-layout';
 import { findAllByTitle } from '@testing-library/dom';
 import { fireEvent, render, waitForElementToBeRemoved } from '@testing-library/react';
+import * as PdfJs from 'pdfjs-dist';
 import * as React from 'react';
 import { mockIsIntersecting } from '../../../test-utils/mockIntersectionObserver';
 import { mockResize } from '../../../test-utils/mockResizeObserver';
-import type { FlagKeyword } from '../src';
+import { type FlagKeyword } from '../src';
 
 const TestKeepHighlight: React.FC<{
     fileUrl: Uint8Array;
     keyword: string | FlagKeyword;
 }> = ({ fileUrl, keyword }) => {
+    const apiProvider = PdfJs as unknown as PdfJsApiProvider;
     const defaultLayoutPluginInstance = defaultLayoutPlugin({
         toolbarPlugin: {
             searchPlugin: {
@@ -20,15 +22,17 @@ const TestKeepHighlight: React.FC<{
     });
 
     return (
-        <div
-            style={{
-                border: '1px solid rgba(0, 0, 0, .3)',
-                height: '50rem',
-                width: '50rem',
-            }}
-        >
-            <Viewer fileUrl={fileUrl} plugins={[defaultLayoutPluginInstance]} />
-        </div>
+        <PdfJsApiContext.Provider value={{ pdfJsApiProvider: apiProvider }}>
+            <div
+                style={{
+                    border: '1px solid rgba(0, 0, 0, .3)',
+                    height: '50rem',
+                    width: '50rem',
+                }}
+            >
+                <Viewer fileUrl={fileUrl} plugins={[defaultLayoutPluginInstance]} />
+            </div>
+        </PdfJsApiContext.Provider>
     );
 };
 
@@ -36,7 +40,7 @@ test('Keep highlighting after zooming', async () => {
     const keyword = 'document';
 
     const { findByTestId, getByTestId } = render(
-        <TestKeepHighlight fileUrl={global['__OPEN_PARAMS_PDF__']} keyword={keyword} />
+        <TestKeepHighlight fileUrl={global['__OPEN_PARAMS_PDF__']} keyword={keyword} />,
     );
 
     const viewerEle = getByTestId('core__viewer');

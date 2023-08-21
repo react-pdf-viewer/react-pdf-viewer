@@ -6,13 +6,13 @@
  * @copyright 2019-2023 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import type { PageSize, PdfJs, Store, StoreHandler } from '@react-pdf-viewer/core';
+import { type PageSize, type PdfJs, type Store, type StoreHandler } from '@react-pdf-viewer/core';
 import * as React from 'react';
 import { CheckPrintPermission } from './CheckPrintPermission';
 import { PrintProgress } from './PrintProgress';
 import { PrintZone } from './PrintZone';
 import { PrintStatus } from './structs/PrintStatus';
-import type { StoreProps } from './types/StoreProps';
+import { type StoreProps } from './types/StoreProps';
 
 export const PrintContainer: React.FC<{
     doc: PdfJs.PdfDocument;

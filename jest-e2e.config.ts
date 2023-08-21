@@ -1,4 +1,6 @@
-module.exports = {
+import { type Config } from 'jest';
+
+const config: Config = {
     preset: 'jest-puppeteer',
     // Uncomment the `testMatch` option when we want to run a specific test case
     // testMatch: ['<rootDir>/packages/search/__e2e__/jumpBetweenMatches.e2e.ts'],
@@ -9,3 +11,5 @@ module.exports = {
     },
     verbose: true,
 };
+
+export default config;

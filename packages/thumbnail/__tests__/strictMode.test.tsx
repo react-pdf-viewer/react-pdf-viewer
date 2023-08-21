@@ -1,5 +1,6 @@
-import { Viewer } from '@react-pdf-viewer/core';
-import { render, screen, waitForElementToBeRemoved } from '@testing-library/react';
+import { PdfJsApiContext, Viewer, type PdfJsApiProvider } from '@react-pdf-viewer/core';
+import { render, waitForElementToBeRemoved } from '@testing-library/react';
+import * as PdfJs from 'pdfjs-dist';
 import * as React from 'react';
 import { mockIsIntersecting } from '../../../test-utils/mockIntersectionObserver';
 import { mockResize } from '../../../test-utils/mockResizeObserver';
@@ -8,40 +9,43 @@ import { thumbnailPlugin } from '../src';
 const TestThumbnails: React.FC<{
     fileUrl: Uint8Array;
 }> = ({ fileUrl }) => {
+    const apiProvider = PdfJs as unknown as PdfJsApiProvider;
     const thumbnailPluginInstance = thumbnailPlugin();
     const { Thumbnails } = thumbnailPluginInstance;
 
     return (
         <React.StrictMode>
-            <div
-                style={{
-                    border: '1px solid rgba(0, 0, 0, 0.3)',
-                    display: 'flex',
-                    height: '50rem',
-                    width: '50rem',
-                    margin: '1rem auto',
-                }}
-            >
+            <PdfJsApiContext.Provider value={{ pdfJsApiProvider: apiProvider }}>
                 <div
                     style={{
-                        borderRight: '1px solid rgba(0, 0, 0, 0.3)',
-                        overflow: 'auto',
-                        width: '15rem',
+                        border: '1px solid rgba(0, 0, 0, 0.3)',
+                        display: 'flex',
+                        height: '50rem',
+                        width: '50rem',
+                        margin: '1rem auto',
                     }}
                 >
-                    <Thumbnails />
+                    <div
+                        style={{
+                            borderRight: '1px solid rgba(0, 0, 0, 0.3)',
+                            overflow: 'auto',
+                            width: '15rem',
+                        }}
+                    >
+                        <Thumbnails />
+                    </div>
+                    <div style={{ flex: 1 }}>
+                        <Viewer fileUrl={fileUrl} plugins={[thumbnailPluginInstance]} />
+                    </div>
                 </div>
-                <div style={{ flex: 1 }}>
-                    <Viewer fileUrl={fileUrl} plugins={[thumbnailPluginInstance]} />
-                </div>
-            </div>
+            </PdfJsApiContext.Provider>
         </React.StrictMode>
     );
 };
 
 test('Support Strict mode', async () => {
     const { findByLabelText, findByTestId, getByTestId } = render(
-        <TestThumbnails fileUrl={global['__OPEN_PARAMS_PDF__']} />
+        <TestThumbnails fileUrl={global['__OPEN_PARAMS_PDF__']} />,
     );
 
     const viewerEle = getByTestId('core__viewer');
@@ -50,7 +54,7 @@ test('Support Strict mode', async () => {
     viewerEle['__jsdomMockClientWidth'] = 798;
 
     // Wait until the document is loaded completely
-    await waitForElementToBeRemoved(() => screen.getByTestId('core__doc-loading'));
+    await waitForElementToBeRemoved(() => getByTestId('core__doc-loading'));
     await findByTestId('core__canvas-layer-0');
     await findByTestId('core__text-layer-0');
     await findByTestId('core__annotation-layer-0');
@@ -88,24 +92,24 @@ test('Support Strict mode', async () => {
     expect(thumbnailsContainer.querySelectorAll('.rpv-thumbnail__item').length).toEqual(8);
 
     // Find the first thumbnail
-    let firstThumbnailContainer = await findByTestId('thumbnail__container-0');
+    const firstThumbnailContainer = await findByTestId('thumbnail__container-0');
     mockIsIntersecting(firstThumbnailContainer, true);
 
     const firstThumbnailImage = await findByLabelText('Thumbnail of page 1');
     let src = firstThumbnailImage.getAttribute('src');
-    expect(src?.slice(-100)).toEqual(
-        'g5q5u9+1tNDZs+y0tLZiUW7cJm7ZQhRFYcdbf7xnA1vITNN8XeAtW4h0f8mDumBkEMHIIIL5Hw+y6qIMqKXCAAAAAElFTkSuQmCC'
+    expect(src?.slice(0, 150)).toEqual(
+        'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAACFCAYAAACt+l1zAAAABmJLR0QA/wD/AP+gvaeTAAAKX0lEQVR4nO3dX1ATdwLA8W+STQIBQkIiIaE0MNWoLVSLqHjnHxD/wEP/',
     );
     expect(src?.length).toEqual(3662);
 
     // Wait until the second thumbnail is rendered
-    let secondThumbnailContainer = await findByTestId('thumbnail__container-1');
+    const secondThumbnailContainer = await findByTestId('thumbnail__container-1');
     mockIsIntersecting(secondThumbnailContainer, true);
 
     const secondThumbnailImage = await findByLabelText('Thumbnail of page 2');
     src = secondThumbnailImage.getAttribute('src');
-    expect(src?.substring(0, 100)).toEqual(
-        'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAACFCAYAAACt+l1zAAAABmJLR0QA/wD/AP+gvaeTAAAgAElEQV'
+    expect(src?.slice(0, 150)).toEqual(
+        'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAACFCAYAAACt+l1zAAAABmJLR0QA/wD/AP+gvaeTAAAgAElEQVR4nO1dSZMjZ7U9Sk0ppea5BtXY1W43YJtwQBgwC4INC/4tsGKD',
     );
     expect(src?.length).toEqual(11582);
 });

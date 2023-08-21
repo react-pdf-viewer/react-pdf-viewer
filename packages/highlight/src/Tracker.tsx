@@ -6,7 +6,7 @@
  * @copyright 2019-2023 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import type { Store } from '@react-pdf-viewer/core';
+import { type Store } from '@react-pdf-viewer/core';
 import * as React from 'react';
 import { HIGHLIGHT_LAYER_ATTR, HIGHLIGHT_PAGE_ATTR } from './constants';
 import { getRectFromOffsets } from './getRectFromOffsets';
@@ -15,10 +15,10 @@ import { SelectionRange } from './structs/SelectionRange';
 import { Trigger } from './structs/Trigger';
 import { transformArea } from './transformArea';
 import { DivText } from './types/DivText';
-import type { HighlightArea } from './types/HighlightArea';
+import { type HighlightArea } from './types/HighlightArea';
 import { HighlightStateType } from './types/HighlightState';
-import type { SelectionData } from './types/SelectionData';
-import type { StoreProps } from './types/StoreProps';
+import { type SelectionData } from './types/SelectionData';
+import { type StoreProps } from './types/StoreProps';
 import { useRotation } from './useRotation';
 
 // `\n` is the document selection string when double clicking a page without selecting any text
@@ -89,7 +89,7 @@ export const Tracker: React.FC<{
 
         const startPageRect = startTextLayer.getBoundingClientRect();
         const startDivSiblings: HTMLElement[] = [].slice.call(
-            startTextLayer.querySelectorAll(`[${HIGHLIGHT_PAGE_ATTR}]`)
+            startTextLayer.querySelectorAll(`[${HIGHLIGHT_PAGE_ATTR}]`),
         );
         const startDivIndex = startDivSiblings.indexOf(startDiv);
 
@@ -189,7 +189,7 @@ export const Tracker: React.FC<{
                     startDivIndex,
                     startOffset,
                     startDivIndex,
-                    endOffset
+                    endOffset,
                 );
                 selectedText = textDataSameDiv.wholeText;
                 divTexts = textDataSameDiv.divTexts;
@@ -203,7 +203,7 @@ export const Tracker: React.FC<{
                     startDivIndex,
                     startOffset,
                     endDivIndex,
-                    endOffset
+                    endOffset,
                 );
                 selectedText = textDataDifferentDivs.wholeText;
                 divTexts = textDataDifferentDivs.divTexts;
@@ -216,7 +216,7 @@ export const Tracker: React.FC<{
                     startPageIndex,
                     startDivIndex,
                     startOffset,
-                    startDivSiblings.length
+                    startDivSiblings.length,
                 );
 
                 // eslint-disable-next-line no-case-declarations

@@ -6,8 +6,8 @@
  * @copyright 2019-2023 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-export * from './bookmarkPlugin';
 export { DownArrowIcon } from './DownArrowIcon';
 export { RightArrowIcon } from './RightArrowIcon';
-export type { IsBookmarkExpanded } from './types/IsBookmarkExpanded';
-export type { RenderBookmarkItem, RenderBookmarkItemProps } from './types/RenderBookmarkItemProps';
+export * from './bookmarkPlugin';
+export { type IsBookmarkExpanded } from './types/IsBookmarkExpanded';
+export { type RenderBookmarkItem, type RenderBookmarkItemProps } from './types/RenderBookmarkItemProps';

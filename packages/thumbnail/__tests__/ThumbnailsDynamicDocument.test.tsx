@@ -1,17 +1,18 @@
-import { Button, Viewer } from '@react-pdf-viewer/core';
-import { fireEvent, render, screen, waitForElementToBeRemoved } from '@testing-library/react';
+import { Button, PdfJsApiContext, Viewer, type PdfJsApiProvider } from '@react-pdf-viewer/core';
+import { fireEvent, render, waitForElementToBeRemoved } from '@testing-library/react';
+import * as fs from 'node:fs';
+import * as path from 'path';
+import * as PdfJs from 'pdfjs-dist';
 import * as React from 'react';
 import { mockIsIntersecting } from '../../../test-utils/mockIntersectionObserver';
 import { mockResize } from '../../../test-utils/mockResizeObserver';
 import { thumbnailPlugin } from '../src';
 
-const fs = require('fs');
-const path = require('path');
-
 const TestThumbnailsDynamicDocument = () => {
+    const apiProvider = PdfJs as unknown as PdfJsApiProvider;
     const pageLabelDocument = React.useMemo(
         () => new Uint8Array(fs.readFileSync(path.resolve(__dirname, '../../../samples/ignore/page-labels.pdf'))),
-        []
+        [],
     );
 
     const [fileUrl, setFileUrl] = React.useState(global['__OPEN_PARAMS_PDF__']);
@@ -21,51 +22,53 @@ const TestThumbnailsDynamicDocument = () => {
     const { Thumbnails } = thumbnailPluginInstance;
 
     return (
-        <div
-            data-testid="root"
-            style={{
-                margin: '1rem auto',
-                width: '64rem',
-            }}
-        >
+        <PdfJsApiContext.Provider value={{ pdfJsApiProvider: apiProvider }}>
             <div
+                data-testid="root"
                 style={{
-                    alignItems: 'center',
-                    display: 'flex',
-                    marginBottom: '1rem',
-                }}
-            >
-                <div style={{ marginRight: '0.5rem' }}>
-                    <Button testId="load-doc-1" onClick={() => setFileUrl(global['__OPEN_PARAMS_PDF__'])}>
-                        Load document 1
-                    </Button>
-                </div>
-                <Button testId="load-doc-2" onClick={() => setFileUrl(pageLabelDocument)}>
-                    Load document 2
-                </Button>
-            </div>
-            <div
-                style={{
-                    border: '1px solid rgba(0, 0, 0, 0.3)',
-                    display: 'flex',
-                    height: '50rem',
-                    width: '50rem',
+                    margin: '1rem auto',
+                    width: '64rem',
                 }}
             >
                 <div
                     style={{
-                        borderRight: '1px solid rgba(0, 0, 0, 0.3)',
-                        overflow: 'auto',
-                        width: '15rem',
+                        alignItems: 'center',
+                        display: 'flex',
+                        marginBottom: '1rem',
                     }}
                 >
-                    <Thumbnails />
+                    <div style={{ marginRight: '0.5rem' }}>
+                        <Button testId="load-doc-1" onClick={() => setFileUrl(global['__OPEN_PARAMS_PDF__'])}>
+                            Load document 1
+                        </Button>
+                    </div>
+                    <Button testId="load-doc-2" onClick={() => setFileUrl(pageLabelDocument)}>
+                        Load document 2
+                    </Button>
                 </div>
-                <div style={{ flex: 1 }}>
-                    <Viewer fileUrl={fileUrl} plugins={[thumbnailPluginInstance]} />
+                <div
+                    style={{
+                        border: '1px solid rgba(0, 0, 0, 0.3)',
+                        display: 'flex',
+                        height: '50rem',
+                        width: '50rem',
+                    }}
+                >
+                    <div
+                        style={{
+                            borderRight: '1px solid rgba(0, 0, 0, 0.3)',
+                            overflow: 'auto',
+                            width: '15rem',
+                        }}
+                    >
+                        <Thumbnails />
+                    </div>
+                    <div style={{ flex: 1 }}>
+                        <Viewer fileUrl={fileUrl} plugins={[thumbnailPluginInstance]} />
+                    </div>
                 </div>
             </div>
-        </div>
+        </PdfJsApiContext.Provider>
     );
 };
 
@@ -78,7 +81,7 @@ test('Test <Thumbnails /> with dynamic document', async () => {
     viewerEle['__jsdomMockClientWidth'] = 558;
 
     // Wait until the document is loaded completely
-    await waitForElementToBeRemoved(() => screen.getByTestId('core__doc-loading'));
+    await waitForElementToBeRemoved(() => getByTestId('core__doc-loading'));
     await findByTestId('core__text-layer-0');
     await findByTestId('core__annotation-layer-0');
     await findByTestId('core__text-layer-1');
@@ -115,7 +118,7 @@ test('Test <Thumbnails /> with dynamic document', async () => {
     const firstThumbnailImage = await findByLabelText('Thumbnail of page 1');
     let src = firstThumbnailImage.getAttribute('src');
     expect(src?.slice(-100)).toEqual(
-        '22YLv+E21w1r9JgxV/1eSYivjBo96rrXX/djM0J8W7I7EkpIWEIJCUsoIWEJJSQsoYSEJZT4P6H2Uzo/EGifAAAAAElFTkSuQmCC'
+        '22YLv+E21w1r9JgxV/1eSYivjBo96rrXX/djM0J8W7I7EkpIWEIJCUsoIWEJJSQsoYSEJZT4P6H2Uzo/EGifAAAAAElFTkSuQmCC',
     );
     expect(src?.length).toEqual(6458);
     expect(firstThumbnailImage.getAttribute('width')).toEqual('150px');
@@ -130,7 +133,7 @@ test('Test <Thumbnails /> with dynamic document', async () => {
     fireEvent.click(getByText('Load document 2'));
 
     // Wait until the document is loaded completely
-    await waitForElementToBeRemoved(() => screen.getByTestId('core__doc-loading'));
+    await waitForElementToBeRemoved(() => getByTestId('core__doc-loading'));
     await findByTestId('core__text-layer-0');
     await findByTestId('core__annotation-layer-0');
     await findByTestId('core__text-layer-1');
@@ -167,7 +170,7 @@ test('Test <Thumbnails /> with dynamic document', async () => {
     const secondThumbnailImage = await findByLabelText('Thumbnail of page 2');
     src = secondThumbnailImage.getAttribute('src');
     expect(src?.substring(0, 100)).toEqual(
-        'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJYAAADCCAYAAACrHjsDAAAABmJLR0QA/wD/AP+gvaeTAAADCklEQV'
+        'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJYAAADCCAYAAACrHjsDAAAABmJLR0QA/wD/AP+gvaeTAAADCklEQV',
     );
     expect(src?.length).toEqual(1162);
     expect(secondThumbnailImage.getAttribute('width')).toEqual('150px');

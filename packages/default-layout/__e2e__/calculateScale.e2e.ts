@@ -1,6 +1,11 @@
 import 'expect-puppeteer';
+import puppeteer from 'puppeteer';
 
 test('Calculate scale', async () => {
+    const browser = await puppeteer.launch({
+        headless: false,
+    });
+    const page = await browser.newPage();
     await page.goto('http://localhost:3000/default-layout');
     await page.setViewport({
         width: 1920,
@@ -15,4 +20,5 @@ test('Calculate scale', async () => {
     const zoomLabel = await page.waitForSelector('[data-testid=zoom__popover-target-scale]');
     const currentZoom = await zoomLabel?.evaluate((ele) => ele.textContent);
     expect(currentZoom).toEqual('150%');
+    await browser.close();
 });

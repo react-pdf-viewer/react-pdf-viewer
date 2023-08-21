@@ -6,13 +6,12 @@
  * @copyright 2019-2023 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import type { Plugin, PluginFunctions, RenderViewer, Slot } from '@react-pdf-viewer/core';
-import { createStore } from '@react-pdf-viewer/core';
+import { createStore, type Plugin, type PluginFunctions, type RenderViewer, type Slot } from '@react-pdf-viewer/core';
 import * as React from 'react';
 import { Open, OpenProps } from './Open';
 import { OpenMenuItem } from './OpenMenuItem';
 import { ShortcutHandler } from './ShortcutHandler';
-import type { StoreProps } from './types/StoreProps';
+import { type StoreProps } from './types/StoreProps';
 
 export interface OpenPlugin extends Plugin {
     Open: (props: OpenProps) => React.ReactElement;

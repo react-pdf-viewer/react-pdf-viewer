@@ -1,5 +1,6 @@
-import { Viewer } from '@react-pdf-viewer/core';
+import { PdfJsApiContext, Viewer, type PdfJsApiProvider } from '@react-pdf-viewer/core';
 import { render, waitForElementToBeRemoved } from '@testing-library/react';
+import * as PdfJs from 'pdfjs-dist';
 import * as React from 'react';
 import { mockIsIntersecting } from '../../../test-utils/mockIntersectionObserver';
 import { thumbnailPlugin } from '../src';
@@ -7,39 +8,42 @@ import { thumbnailPlugin } from '../src';
 const TestRenderSpinner: React.FC<{
     fileUrl: Uint8Array;
 }> = ({ fileUrl }) => {
+    const apiProvider = PdfJs as unknown as PdfJsApiProvider;
     const thumbnailPluginInstance = thumbnailPlugin({
         renderSpinner: () => <div className="custom-spinner" />,
     });
     const { Thumbnails } = thumbnailPluginInstance;
 
     return (
-        <div
-            style={{
-                border: '1px solid rgba(0, 0, 0, 0.3)',
-                display: 'flex',
-                height: '50rem',
-                width: '50rem',
-            }}
-        >
+        <PdfJsApiContext.Provider value={{ pdfJsApiProvider: apiProvider }}>
             <div
                 style={{
-                    borderRight: '1px solid rgba(0, 0, 0, 0.3)',
-                    overflow: 'auto',
-                    width: '30%',
+                    border: '1px solid rgba(0, 0, 0, 0.3)',
+                    display: 'flex',
+                    height: '50rem',
+                    width: '50rem',
                 }}
             >
-                <Thumbnails />
+                <div
+                    style={{
+                        borderRight: '1px solid rgba(0, 0, 0, 0.3)',
+                        overflow: 'auto',
+                        width: '30%',
+                    }}
+                >
+                    <Thumbnails />
+                </div>
+                <div style={{ flex: 1 }}>
+                    <Viewer fileUrl={fileUrl} plugins={[thumbnailPluginInstance]} />
+                </div>
             </div>
-            <div style={{ flex: 1 }}>
-                <Viewer fileUrl={fileUrl} plugins={[thumbnailPluginInstance]} />
-            </div>
-        </div>
+        </PdfJsApiContext.Provider>
     );
 };
 
 test('Test renderSpinner option', async () => {
     const { findByLabelText, findByTestId, getByTestId } = render(
-        <TestRenderSpinner fileUrl={global['__OPEN_PARAMS_PDF__']} />
+        <TestRenderSpinner fileUrl={global['__OPEN_PARAMS_PDF__']} />,
     );
 
     const viewerEle = getByTestId('core__viewer');

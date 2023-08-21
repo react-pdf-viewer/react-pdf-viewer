@@ -9,8 +9,8 @@
 import * as React from 'react';
 import { useIsomorphicLayoutEffect } from '../hooks/useIsomorphicLayoutEffect';
 import { LayerRenderStatus } from '../structs/LayerRenderStatus';
-import type { PdfJs } from '../types/PdfJs';
-import type { Plugin } from '../types/Plugin';
+import { type PdfJs } from '../types/PdfJs';
+import { type Plugin } from '../types/Plugin';
 import { floatToRatio } from '../utils/floatToRatio';
 import { roundToDivide } from '../utils/roundToDivide';
 
@@ -105,7 +105,7 @@ export const CanvasLayer: React.FC<{
                 // Keep the canvas hidden to avoid black flickering
                 // The issue only happens with React 18's Strict mode
                 onRenderCanvasCompleted();
-            }
+            },
         );
 
         return () => {

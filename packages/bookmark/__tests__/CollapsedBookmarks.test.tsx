@@ -1,41 +1,44 @@
-import { Viewer } from '@react-pdf-viewer/core';
-import { render, screen, waitForElementToBeRemoved } from '@testing-library/react';
+import { PdfJsApiContext, Viewer, type PdfJsApiProvider } from '@react-pdf-viewer/core';
+import { render, waitForElementToBeRemoved } from '@testing-library/react';
+import * as fs from 'node:fs';
+import * as path from 'path';
+import * as PdfJs from 'pdfjs-dist';
 import * as React from 'react';
 import { mockIsIntersecting } from '../../../test-utils/mockIntersectionObserver';
 import { bookmarkPlugin } from '../src';
 
-const fs = require('fs');
-const path = require('path');
-
 const TestCollapsedBookmarks: React.FC<{
     fileUrl: Uint8Array;
 }> = ({ fileUrl }) => {
+    const apiProvider = PdfJs as unknown as PdfJsApiProvider;
     const bookmarkPluginInstance = bookmarkPlugin();
     const { Bookmarks } = bookmarkPluginInstance;
 
     return (
-        <div
-            style={{
-                border: '1px solid rgba(0, 0, 0, 0.3)',
-                display: 'flex',
-                height: '50rem',
-                width: '50rem',
-                margin: '1rem auto',
-            }}
-        >
+        <PdfJsApiContext.Provider value={{ pdfJsApiProvider: apiProvider }}>
             <div
                 style={{
-                    borderRight: '1px solid rgba(0, 0, 0, 0.3)',
-                    overflow: 'auto',
-                    width: '15rem',
+                    border: '1px solid rgba(0, 0, 0, 0.3)',
+                    display: 'flex',
+                    height: '50rem',
+                    width: '50rem',
+                    margin: '1rem auto',
                 }}
             >
-                <Bookmarks />
+                <div
+                    style={{
+                        borderRight: '1px solid rgba(0, 0, 0, 0.3)',
+                        overflow: 'auto',
+                        width: '15rem',
+                    }}
+                >
+                    <Bookmarks />
+                </div>
+                <div style={{ flex: 1 }}>
+                    <Viewer fileUrl={fileUrl} plugins={[bookmarkPluginInstance]} />
+                </div>
             </div>
-            <div style={{ flex: 1 }}>
-                <Viewer fileUrl={fileUrl} plugins={[bookmarkPluginInstance]} />
-            </div>
-        </div>
+        </PdfJsApiContext.Provider>
     );
 };
 
@@ -49,7 +52,7 @@ test('Bookmarks are expanded initially (level 1)', async () => {
     viewerEle['__jsdomMockClientWidth'] = 560;
 
     // Wait until the document is loaded completely
-    await waitForElementToBeRemoved(() => screen.getByTestId('core__doc-loading'));
+    await waitForElementToBeRemoved(() => getByTestId('core__doc-loading'));
     await findByTestId('core__text-layer-0');
     await findByTestId('core__annotation-layer-0');
     await findByTestId('core__text-layer-1');
@@ -66,20 +69,20 @@ test('Bookmarks are expanded initially (level 1)', async () => {
     expect(bookmarks.length).toEqual(32);
 
     const heading1 = bookmarks[5];
-    expect(heading1.getAttribute('aria-label')?.localeCompare('1 Heading1')).toEqual(1);
+    expect(heading1.getAttribute('aria-label')).toEqual('1 Heading1');
     expect(heading1.getAttribute('aria-level')).toEqual('1');
     // The second and third child heading aren't displayed
-    expect(heading1.textContent?.localeCompare('1 Heading1')).toEqual(1);
+    expect(heading1.textContent).toEqual('1 Heading1');
 
     const heading2 = bookmarks[6];
-    expect(heading2.getAttribute('aria-label')?.localeCompare('2 Heading1-1')).toEqual(1);
+    expect(heading2.getAttribute('aria-label')).toEqual('2 Heading1-1');
     expect(heading2.getAttribute('aria-level')).toEqual('1');
-    expect(heading2.textContent?.localeCompare('2 Heading1-1')).toEqual(1);
+    expect(heading2.textContent).toEqual('2 Heading1-1');
 
     const heading3 = bookmarks[7];
-    expect(heading3.getAttribute('aria-label')?.localeCompare('3 Heading1-2')).toEqual(1);
+    expect(heading3.getAttribute('aria-label')).toEqual('3 Heading1-2');
     expect(heading3.getAttribute('aria-level')).toEqual('1');
-    expect(heading3.textContent?.localeCompare('3 Heading1-2')).toEqual(1);
+    expect(heading3.textContent).toEqual('3 Heading1-2');
 });
 
 test('Bookmarks are expanded initially (level 2)', async () => {
@@ -92,7 +95,7 @@ test('Bookmarks are expanded initially (level 2)', async () => {
     viewerEle['__jsdomMockClientWidth'] = 560;
 
     // Wait until the document is loaded completely
-    await waitForElementToBeRemoved(() => screen.getByTestId('core__doc-loading'));
+    await waitForElementToBeRemoved(() => getByTestId('core__doc-loading'));
     await findByTestId('core__text-layer-0');
     await findByTestId('core__annotation-layer-0');
     await findByTestId('core__text-layer-1');
@@ -109,20 +112,20 @@ test('Bookmarks are expanded initially (level 2)', async () => {
     expect(bookmarks.length).toEqual(77);
 
     const heading1 = bookmarks[5];
-    expect(heading1.getAttribute('aria-label')?.localeCompare('1 Heading1')).toEqual(1);
+    expect(heading1.getAttribute('aria-label')).toEqual('1 Heading1');
     expect(heading1.getAttribute('aria-level')).toEqual('1');
     // The third heading isn't displayed
-    expect(heading1.textContent?.localeCompare('1 Heading11.1 Heading2')).toEqual(1);
+    expect(heading1.textContent).toEqual('1 Heading11.1 Heading2');
 
     const heading2 = bookmarks[6];
-    expect(heading2.getAttribute('aria-label')?.localeCompare('1.1 Heading2')).toEqual(1);
+    expect(heading2.getAttribute('aria-label')).toEqual('1.1 Heading2');
     expect(heading2.getAttribute('aria-level')).toEqual('2');
-    expect(heading2.textContent?.localeCompare('1.1 Heading2')).toEqual(1);
+    expect(heading2.textContent).toEqual('1.1 Heading2');
 
     const heading3 = bookmarks[7];
-    expect(heading3.getAttribute('aria-label')?.localeCompare('2 Heading1-1')).toEqual(1);
+    expect(heading3.getAttribute('aria-label')).toEqual('2 Heading1-1');
     expect(heading3.getAttribute('aria-level')).toEqual('1');
-    expect(heading3.textContent?.localeCompare('2 Heading1-1')).toEqual(1);
+    expect(heading3.textContent).toEqual('2 Heading1-1');
 });
 
 test('Bookmarks are expanded initially (level 3)', async () => {
@@ -135,7 +138,7 @@ test('Bookmarks are expanded initially (level 3)', async () => {
     viewerEle['__jsdomMockClientWidth'] = 560;
 
     // Wait until the document is loaded completely
-    await waitForElementToBeRemoved(() => screen.getByTestId('core__doc-loading'));
+    await waitForElementToBeRemoved(() => getByTestId('core__doc-loading'));
     await findByTestId('core__text-layer-0');
     await findByTestId('core__annotation-layer-0');
     await findByTestId('core__text-layer-1');
@@ -152,18 +155,18 @@ test('Bookmarks are expanded initially (level 3)', async () => {
     expect(bookmarks.length).toEqual(78);
 
     const heading1 = bookmarks[5];
-    expect(heading1.getAttribute('aria-label')?.localeCompare('1 Heading1')).toEqual(1);
+    expect(heading1.getAttribute('aria-label')).toEqual('1 Heading1');
     expect(heading1.getAttribute('aria-level')).toEqual('1');
     // The third heading is displayed
-    expect(heading1.textContent?.localeCompare('1 Heading11.1 Heading21.1.1 Heading3')).toEqual(1);
+    expect(heading1.textContent).toEqual('1 Heading11.1 Heading21.1.1 Heading3');
 
     const heading2 = bookmarks[6];
-    expect(heading2.getAttribute('aria-label')?.localeCompare('1.1 Heading2')).toEqual(1);
+    expect(heading2.getAttribute('aria-label')).toEqual('1.1 Heading2');
     expect(heading2.getAttribute('aria-level')).toEqual('2');
-    expect(heading2.textContent?.localeCompare('1.1 Heading21.1.1 Heading3')).toEqual(1);
+    expect(heading2.textContent).toEqual('1.1 Heading21.1.1 Heading3');
 
     const heading3 = bookmarks[7];
-    expect(heading3.getAttribute('aria-label')?.localeCompare('1.1.1 Heading3')).toEqual(1);
+    expect(heading3.getAttribute('aria-label')).toEqual('1.1.1 Heading3');
     expect(heading3.getAttribute('aria-level')).toEqual('3');
-    expect(heading3.textContent?.localeCompare('1.1.1 Heading3')).toEqual(1);
+    expect(heading3.textContent).toEqual('1.1.1 Heading3');
 });

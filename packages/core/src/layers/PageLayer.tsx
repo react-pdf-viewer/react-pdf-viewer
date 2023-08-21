@@ -12,11 +12,11 @@ import { Spinner } from '../components/Spinner';
 import { useIsMounted } from '../hooks/useIsMounted';
 import { RotateDirection } from '../structs/RotateDirection';
 import { ViewMode } from '../structs/ViewMode';
-import type { Destination } from '../types/Destination';
-import type { PageSize } from '../types/PageSize';
-import type { PdfJs } from '../types/PdfJs';
-import type { Plugin } from '../types/Plugin';
-import type { RenderPage, RenderPageProps } from '../types/RenderPage';
+import { type Destination } from '../types/Destination';
+import { type PageSize } from '../types/PageSize';
+import { type PdfJs } from '../types/PdfJs';
+import { type Plugin } from '../types/Plugin';
+import { type RenderPage, type RenderPageProps } from '../types/RenderPage';
 import { classNames } from '../utils/classNames';
 import { getPage } from '../utils/managePages';
 import { CanvasLayer } from './CanvasLayer';
@@ -240,7 +240,7 @@ export const PageLayer: React.FC<{
                             </React.Fragment>
                         ) : (
                             <React.Fragment key={idx} />
-                        )
+                        ),
                     )}
                 </>
             )}

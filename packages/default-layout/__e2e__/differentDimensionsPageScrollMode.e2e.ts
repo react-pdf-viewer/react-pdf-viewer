@@ -1,6 +1,11 @@
 import 'expect-puppeteer';
+import puppeteer from 'puppeteer';
 
 test('Document with different page dimensions (page scroll mode)', async () => {
+    const browser = await puppeteer.launch({
+        headless: false,
+    });
+    const page = await browser.newPage();
     await page.goto('http://localhost:3000/default-layout-different-dimensions');
     await page.setViewport({
         width: 1920,
@@ -38,4 +43,5 @@ test('Document with different page dimensions (page scroll mode)', async () => {
 
     await page.waitForSelector('[data-testid="core__text-layer-42"]', { visible: true });
     await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollLeft === 31836');
+    await browser.close();
 });

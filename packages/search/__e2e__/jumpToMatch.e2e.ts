@@ -1,6 +1,11 @@
 import 'expect-puppeteer';
+import puppeteer from 'puppeteer';
 
 test('jumpToMatch in a custom search sidebar', async () => {
+    const browser = await puppeteer.launch({
+        headless: false,
+    });
+    const page = await browser.newPage();
     await page.goto('http://localhost:3000/search-sidebar');
     await page.setViewport({
         width: 1920,
@@ -34,7 +39,7 @@ test('jumpToMatch in a custom search sidebar', async () => {
         const searchHighlights = await page.waitForSelector(`[data-testid="search__highlights-${pageIndex}"]`, {
             visible: true,
         });
-        let highlightEle = await searchHighlights?.$('.rpv-search__highlight.rpv-search__highlight--current');
+        const highlightEle = await searchHighlights?.$('.rpv-search__highlight.rpv-search__highlight--current');
         return await highlightEle?.evaluate((node) => {
             const nodeEle = node as HTMLElement;
             return {
@@ -74,4 +79,5 @@ test('jumpToMatch in a custom search sidebar', async () => {
     expect(position?.index).toEqual('1');
     expect(position?.left).toEqual('58.9815%');
     expect(position?.top).toEqual('50.135%');
+    await browser.close();
 });

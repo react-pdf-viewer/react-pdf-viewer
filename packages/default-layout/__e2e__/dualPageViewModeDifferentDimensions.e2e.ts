@@ -1,6 +1,11 @@
 import 'expect-puppeteer';
+import puppeteer from 'puppeteer';
 
 test('Dual page viewmode (document has different page dimensions)', async () => {
+    const browser = await puppeteer.launch({
+        headless: false,
+    });
+    const page = await browser.newPage();
     await page.goto('http://localhost:3000/default-layout-different-dimensions');
     await page.setViewport({
         width: 1920,
@@ -23,7 +28,7 @@ test('Dual page viewmode (document has different page dimensions)', async () => 
 
     // Check the current page
     await page.waitForFunction(
-        () => 'document.querySelector("[data-testid=page-navigation__current-page-input]").value === "1"'
+        () => 'document.querySelector("[data-testid=page-navigation__current-page-input]").value === "1"',
     );
 
     // Jump to the 14th page
@@ -39,7 +44,7 @@ test('Dual page viewmode (document has different page dimensions)', async () => 
     await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 2376');
 
     await page.waitForFunction(
-        () => 'document.querySelector("[data-testid=page-navigation__current-page-input]").value === "13"'
+        () => 'document.querySelector("[data-testid=page-navigation__current-page-input]").value === "13"',
     );
 
     // Jump to the 43rd page
@@ -52,6 +57,7 @@ test('Dual page viewmode (document has different page dimensions)', async () => 
     await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 8316');
 
     await page.waitForFunction(
-        () => 'document.querySelector("[data-testid=page-navigation__current-page-input]").value === "43"'
+        () => 'document.querySelector("[data-testid=page-navigation__current-page-input]").value === "43"',
     );
+    await browser.close();
 });

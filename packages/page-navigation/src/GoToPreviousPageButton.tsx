@@ -6,11 +6,10 @@
  * @copyright 2019-2023 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import type { LocalizationMap } from '@react-pdf-viewer/core';
-import { LocalizationContext, MinimalButton, Position, Tooltip } from '@react-pdf-viewer/core';
+import { LocalizationContext, MinimalButton, Position, Tooltip, type LocalizationMap } from '@react-pdf-viewer/core';
 import * as React from 'react';
 import { PreviousIcon } from './PreviousIcon';
-import type { RenderGoToPageProps } from './types/index';
+import { type RenderGoToPageProps } from './types/index';
 
 const TOOLTIP_OFFSET = { left: 0, top: 8 };
 

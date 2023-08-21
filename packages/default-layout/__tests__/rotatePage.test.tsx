@@ -1,15 +1,25 @@
-import { MinimalButton, Position, RotateDirection, Tooltip, Viewer } from '@react-pdf-viewer/core';
+import {
+    MinimalButton,
+    PdfJsApiContext,
+    Position,
+    RotateDirection,
+    Tooltip,
+    Viewer,
+    type PdfJsApiProvider,
+} from '@react-pdf-viewer/core';
 import { RotateBackwardIcon, RotateForwardIcon } from '@react-pdf-viewer/rotate';
-import type { RenderThumbnailItemProps } from '@react-pdf-viewer/thumbnail';
+import { type RenderThumbnailItemProps } from '@react-pdf-viewer/thumbnail';
 import { fireEvent, render, waitForElementToBeRemoved } from '@testing-library/react';
+import * as PdfJs from 'pdfjs-dist';
 import * as React from 'react';
 import { mockIsIntersecting } from '../../../test-utils/mockIntersectionObserver';
 import { mockResize } from '../../../test-utils/mockResizeObserver';
-import { defaultLayoutPlugin, ThumbnailIcon } from '../src';
+import { ThumbnailIcon, defaultLayoutPlugin } from '../src';
 
 const TestRotatePage: React.FC<{
     fileUrl: Uint8Array;
 }> = ({ fileUrl }) => {
+    const apiProvider = PdfJs as unknown as PdfJsApiProvider;
     const renderThumbnailItem = (props: RenderThumbnailItemProps) => (
         <div
             key={props.key}
@@ -79,21 +89,23 @@ const TestRotatePage: React.FC<{
     const { Thumbnails } = thumbnailPluginInstance;
 
     return (
-        <div
-            style={{
-                margin: '1rem auto',
-                height: '50rem',
-                width: '64rem',
-            }}
-        >
-            <Viewer defaultScale={0.5} fileUrl={fileUrl} plugins={[defaultLayoutPluginInstance]} />
-        </div>
+        <PdfJsApiContext.Provider value={{ pdfJsApiProvider: apiProvider }}>
+            <div
+                style={{
+                    margin: '1rem auto',
+                    height: '50rem',
+                    width: '64rem',
+                }}
+            >
+                <Viewer defaultScale={0.5} fileUrl={fileUrl} plugins={[defaultLayoutPluginInstance]} />
+            </div>
+        </PdfJsApiContext.Provider>
     );
 };
 
 test('Rotate single page with thumbnails using renderThumbnailItem', async () => {
     const { findByLabelText, findByTestId, getByTestId } = render(
-        <TestRotatePage fileUrl={global['__OPEN_PARAMS_PDF__']} />
+        <TestRotatePage fileUrl={global['__OPEN_PARAMS_PDF__']} />,
     );
 
     const viewerEle = getByTestId('core__viewer');
@@ -139,7 +151,7 @@ test('Rotate single page with thumbnails using renderThumbnailItem', async () =>
     mockIsIntersecting(thumbnailsListContainer, true);
     await findByTestId('thumbnail__list');
 
-    let thirdThumbnailContainer = await findByTestId('thumbnail__container-2');
+    const thirdThumbnailContainer = await findByTestId('thumbnail__container-2');
     mockIsIntersecting(thirdThumbnailContainer, true);
 
     const forwardBtn = getByTestId('rotate-forward-2');
@@ -147,9 +159,9 @@ test('Rotate single page with thumbnails using renderThumbnailItem', async () =>
 
     // Find the third thumbnail
     const thirdThumbnailImage = await findByLabelText('Thumbnail of page 3');
-    let src = thirdThumbnailImage.getAttribute('src');
+    const src = thirdThumbnailImage.getAttribute('src');
     expect(src?.substring(0, 100)).toEqual(
-        'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIUAAABkCAYAAACowvMbAAAABmJLR0QA/wD/AP+gvaeTAAAKA0lEQV'
+        'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIUAAABkCAYAAACowvMbAAAABmJLR0QA/wD/AP+gvaeTAAAKA0lEQV',
     );
     expect(src?.length).toEqual(3542);
     expect(thirdThumbnailImage.getAttribute('height')).toEqual('100px');

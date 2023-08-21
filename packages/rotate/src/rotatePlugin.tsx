@@ -6,14 +6,13 @@
  * @copyright 2019-2023 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import type { Plugin, PluginFunctions } from '@react-pdf-viewer/core';
-import { createStore, RotateDirection } from '@react-pdf-viewer/core';
+import { RotateDirection, createStore, type Plugin, type PluginFunctions } from '@react-pdf-viewer/core';
 import * as React from 'react';
 import { Rotate, RotateProps } from './Rotate';
 import { RotateButton } from './RotateButton';
 import { RotateMenuItem } from './RotateMenuItem';
 import { RotatePage, RotatePageProps } from './RotatePage';
-import type { StoreProps } from './types/StoreProps';
+import { type StoreProps } from './types/StoreProps';
 
 export interface RotateDecoratorProps {
     onClick(): void;

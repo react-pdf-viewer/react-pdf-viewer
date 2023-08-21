@@ -1,7 +1,12 @@
 import 'expect-puppeteer';
+import puppeteer from 'puppeteer';
 
 describe('Keep current position after zooming in dual page viewmode', () => {
     beforeEach(async () => {
+        const browser = await puppeteer.launch({
+            headless: false,
+        });
+        const page = await browser.newPage();
         await page.goto('http://localhost:3000/default-layout-different-dimensions');
         await page.setViewport({
             width: 1920,
@@ -116,8 +121,12 @@ describe('Keep current position after zooming in dual page viewmode', () => {
 
         // Check the current page input
         await page.waitForFunction(
-            () => 'document.querySelector("[data-testid=page-navigation__current-page-input]").value === "3"'
+            () => 'document.querySelector("[data-testid=page-navigation__current-page-input]").value === "3"',
         );
+    });
+
+    afterEach(async () => {
+        await browser.close();
     });
 
     test('Click the `6.3.4` link', async () => {
@@ -130,11 +139,11 @@ describe('Keep current position after zooming in dual page viewmode', () => {
         await page.waitForSelector('[data-testid="core__annotation-layer-26"]');
 
         // Zoom to 200%
-        let zoomPopover = await page.waitForSelector('[data-testid="zoom__popover-target"]');
+        const zoomPopover = await page.waitForSelector('[data-testid="zoom__popover-target"]');
         await zoomPopover?.click();
 
-        let zoomPooverBody = await page.waitForSelector('[id="rpv-core__popover-body-inner-zoom"]');
-        let zoomButtons = await zoomPooverBody?.$$('button');
+        const zoomPooverBody = await page.waitForSelector('[id="rpv-core__popover-body-inner-zoom"]');
+        const zoomButtons = await zoomPooverBody?.$$('button');
         await zoomButtons[8]?.click();
 
         await page.waitForSelector('[data-testid="core__page-layer-26"]', { visible: true });
@@ -142,10 +151,10 @@ describe('Keep current position after zooming in dual page viewmode', () => {
         await page.waitForSelector('[data-testid="core__canvas-layer-26"]');
         await page.waitForSelector('[data-testid="core__annotation-layer-26"]');
         await page.waitForFunction(
-            () => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 21624'
+            () => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 21624',
         );
         await page.waitForFunction(
-            () => 'document.querySelector("[data-testid=page-navigation__current-page-input]").value === "27"'
+            () => 'document.querySelector("[data-testid=page-navigation__current-page-input]").value === "27"',
         );
     });
 
@@ -159,11 +168,11 @@ describe('Keep current position after zooming in dual page viewmode', () => {
         await page.waitForSelector('[data-testid="core__annotation-layer-23"]');
 
         // Zoom to 150%
-        let zoomPopover = await page.waitForSelector('[data-testid="zoom__popover-target"]');
+        const zoomPopover = await page.waitForSelector('[data-testid="zoom__popover-target"]');
         await zoomPopover?.click();
 
-        let zoomPooverBody = await page.waitForSelector('[id="rpv-core__popover-body-inner-zoom"]');
-        let zoomButtons = await zoomPooverBody?.$$('button');
+        const zoomPooverBody = await page.waitForSelector('[id="rpv-core__popover-body-inner-zoom"]');
+        const zoomButtons = await zoomPooverBody?.$$('button');
         await zoomButtons[7]?.click();
 
         await page.waitForSelector('[data-testid="core__page-layer-23"]', { visible: true });
@@ -171,10 +180,10 @@ describe('Keep current position after zooming in dual page viewmode', () => {
         await page.waitForSelector('[data-testid="core__canvas-layer-23"]');
         await page.waitForSelector('[data-testid="core__annotation-layer-23"]');
         await page.waitForFunction(
-            () => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 13914'
+            () => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 13914',
         );
         await page.waitForFunction(
-            () => 'document.querySelector("[data-testid=page-navigation__current-page-input]").value === "25"'
+            () => 'document.querySelector("[data-testid=page-navigation__current-page-input]").value === "25"',
         );
     });
 
@@ -188,11 +197,11 @@ describe('Keep current position after zooming in dual page viewmode', () => {
         await page.waitForSelector('[data-testid="core__annotation-layer-20"]');
 
         // Zoom to 125%
-        let zoomPopover = await page.waitForSelector('[data-testid="zoom__popover-target"]');
+        const zoomPopover = await page.waitForSelector('[data-testid="zoom__popover-target"]');
         await zoomPopover?.click();
 
-        let zoomPooverBody = await page.waitForSelector('[id="rpv-core__popover-body-inner-zoom"]');
-        let zoomButtons = await zoomPooverBody?.$$('button');
+        const zoomPooverBody = await page.waitForSelector('[id="rpv-core__popover-body-inner-zoom"]');
+        const zoomButtons = await zoomPooverBody?.$$('button');
         await zoomButtons[6]?.click();
 
         await page.waitForSelector('[data-testid="core__page-layer-16"]');
@@ -220,10 +229,10 @@ describe('Keep current position after zooming in dual page viewmode', () => {
         await page.waitForSelector('[data-testid="core__canvas-layer-20"]');
         await page.waitForSelector('[data-testid="core__annotation-layer-20"]');
         await page.waitForFunction(
-            () => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 10007.5'
+            () => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 10007.5',
         );
         await page.waitForFunction(
-            () => 'document.querySelector("[data-testid=page-navigation__current-page-input]").value === "21"'
+            () => 'document.querySelector("[data-testid=page-navigation__current-page-input]").value === "21"',
         );
     });
 
@@ -237,11 +246,11 @@ describe('Keep current position after zooming in dual page viewmode', () => {
         await page.waitForSelector('[data-testid="core__annotation-layer-19"]');
 
         // Zoom to 300%
-        let zoomPopover = await page.waitForSelector('[data-testid="zoom__popover-target"]');
+        const zoomPopover = await page.waitForSelector('[data-testid="zoom__popover-target"]');
         await zoomPopover?.click();
 
-        let zoomPooverBody = await page.waitForSelector('[id="rpv-core__popover-body-inner-zoom"]');
-        let zoomButtons = await zoomPooverBody?.$$('button');
+        const zoomPooverBody = await page.waitForSelector('[id="rpv-core__popover-body-inner-zoom"]');
+        const zoomButtons = await zoomPooverBody?.$$('button');
         await zoomButtons[6]?.click();
 
         await page.waitForSelector('[data-testid="core__page-layer-14"]');
@@ -269,10 +278,10 @@ describe('Keep current position after zooming in dual page viewmode', () => {
         await page.waitForSelector('[data-testid="core__canvas-layer-18"]');
         await page.waitForSelector('[data-testid="core__annotation-layer-18"]');
         await page.waitForFunction(
-            () => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 21642'
+            () => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 21642',
         );
         await page.waitForFunction(
-            () => 'document.querySelector("[data-testid=page-navigation__current-page-input]").value === "19"'
+            () => 'document.querySelector("[data-testid=page-navigation__current-page-input]").value === "19"',
         );
     });
 
@@ -286,11 +295,11 @@ describe('Keep current position after zooming in dual page viewmode', () => {
         await page.waitForSelector('[data-testid="core__annotation-layer-17"]');
 
         // Zoom to 100%
-        let zoomPopover = await page.waitForSelector('[data-testid="zoom__popover-target"]');
+        const zoomPopover = await page.waitForSelector('[data-testid="zoom__popover-target"]');
         await zoomPopover?.click();
 
-        let zoomPooverBody = await page.waitForSelector('[id="rpv-core__popover-body-inner-zoom"]');
-        let zoomButtons = await zoomPooverBody?.$$('button');
+        const zoomPooverBody = await page.waitForSelector('[id="rpv-core__popover-body-inner-zoom"]');
+        const zoomButtons = await zoomPooverBody?.$$('button');
         await zoomButtons[6]?.click();
 
         await page.waitForSelector('[data-testid="core__page-layer-12"]');
@@ -323,10 +332,10 @@ describe('Keep current position after zooming in dual page viewmode', () => {
         await page.waitForSelector('[data-testid="core__canvas-layer-17"]');
         await page.waitForSelector('[data-testid="core__annotation-layer-17"]');
         await page.waitForFunction(
-            () => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 8017.5'
+            () => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 8017.5',
         );
         await page.waitForFunction(
-            () => 'document.querySelector("[data-testid=page-navigation__current-page-input]").value === "17"'
+            () => 'document.querySelector("[data-testid=page-navigation__current-page-input]").value === "17"',
         );
     });
 });

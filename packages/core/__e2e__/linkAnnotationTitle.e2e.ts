@@ -1,6 +1,11 @@
 import 'expect-puppeteer';
+import puppeteer from 'puppeteer';
 
 test('Set title for link annotations', async () => {
+    const browser = await puppeteer.launch({
+        headless: false,
+    });
+    const page = await browser.newPage();
     await page.goto('http://localhost:3000/core');
     await page.setViewport({
         width: 1920,
@@ -22,7 +27,7 @@ test('Set title for link annotations', async () => {
     const annotationLayer = await page.waitForSelector('[data-testid="core__annotation-layer-2"]');
 
     const getAttributes = async (id: string) => {
-        let link = await annotationLayer.$(`[data-annotation-link="${id}"]`);
+        const link = await annotationLayer?.$(`[data-annotation-link="${id}"]`);
         return await link?.evaluate((ele) => ({
             title: ele.getAttribute('title'),
             ariaLabel: ele.getAttribute('aria-label'),
@@ -68,4 +73,5 @@ test('Set title for link annotations', async () => {
     props = await getAttributes('33R');
     expect(props?.title).toEqual('URL limitations');
     expect(props?.ariaLabel).toEqual('URL limitations');
+    await browser.close();
 });

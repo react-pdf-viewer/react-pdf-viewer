@@ -1,20 +1,21 @@
-import { Viewer } from '@react-pdf-viewer/core';
+import { PdfJsApiContext, Viewer, type PdfJsApiProvider } from '@react-pdf-viewer/core';
 import { findAllByTitle, getAllByTitle } from '@testing-library/dom';
-import { fireEvent, render, screen, waitForElementToBeRemoved } from '@testing-library/react';
+import { fireEvent, render, waitForElementToBeRemoved } from '@testing-library/react';
+import * as PdfJs from 'pdfjs-dist';
 import * as React from 'react';
 import { mockIsIntersecting } from '../../../test-utils/mockIntersectionObserver';
-import { searchPlugin } from '../src';
-import type { SingleKeyword } from '../src';
+import { searchPlugin, type SingleKeyword } from '../src';
 
 const TestHighlight: React.FC<{
     fileUrl: Uint8Array;
     keywords: SingleKeyword[];
 }> = ({ fileUrl, keywords }) => {
+    const apiProvider = PdfJs as unknown as PdfJsApiProvider;
     const searchPluginInstance = searchPlugin();
     const { highlight } = searchPluginInstance;
 
     return (
-        <div>
+        <PdfJsApiContext.Provider value={{ pdfJsApiProvider: apiProvider }}>
             <div style={{ marginRight: '8px' }}>
                 <button onClick={() => highlight(keywords)}>Highlight keywords</button>
             </div>
@@ -27,7 +28,7 @@ const TestHighlight: React.FC<{
             >
                 <Viewer fileUrl={fileUrl} plugins={[searchPluginInstance]} />
             </div>
-        </div>
+        </PdfJsApiContext.Provider>
     );
 };
 
@@ -41,7 +42,7 @@ test('highlight() method', async () => {
     ];
 
     const { findByText, findByTestId, getByTestId } = render(
-        <TestHighlight fileUrl={global['__MULTIPLE_PAGES_PDF__']} keywords={keywords} />
+        <TestHighlight fileUrl={global['__MULTIPLE_PAGES_PDF__']} keywords={keywords} />,
     );
     const viewerEle = getByTestId('core__viewer');
     mockIsIntersecting(viewerEle, true);
@@ -49,11 +50,11 @@ test('highlight() method', async () => {
     viewerEle['__jsdomMockClientWidth'] = 798;
 
     // Wait until the document is loaded completely
-    await waitForElementToBeRemoved(() => screen.getByTestId('core__doc-loading'));
+    await waitForElementToBeRemoved(() => getByTestId('core__doc-loading'));
     await findByTestId('core__text-layer-0');
     await findByTestId('core__text-layer-1');
 
-    const highlightButton = await screen.findByText('Highlight keywords');
+    const highlightButton = await findByText('Highlight keywords');
     fireEvent.click(highlightButton);
 
     const page = await findByTestId('core__page-layer-1');

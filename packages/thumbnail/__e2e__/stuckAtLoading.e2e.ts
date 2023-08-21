@@ -1,6 +1,11 @@
 import 'expect-puppeteer';
+import puppeteer from 'puppeteer';
 
 test('The thumbnails are stuck at loading', async () => {
+    const browser = await puppeteer.launch({
+        headless: false,
+    });
+    const page = await browser.newPage();
     await page.goto('http://localhost:3000/thumbnail-stuck-loading');
     await page.setViewport({
         width: 1200,
@@ -16,7 +21,7 @@ test('The thumbnails are stuck at loading', async () => {
     let src = await firstThumbnail?.evaluate((ele) => ele.getAttribute('src'));
     expect(src?.length).toEqual(3678);
     expect(src?.substring(0, 100)).toEqual(
-        'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAACFCAYAAACt+l1zAAAAAXNSR0IArs4c6QAACm5JREFUeF7tnX'
+        'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAACFCAYAAACt+l1zAAAAAXNSR0IArs4c6QAACm5JREFUeF7tnX',
     );
 
     // Trigger re-renderer
@@ -46,6 +51,7 @@ test('The thumbnails are stuck at loading', async () => {
     src = await firstThumbnail?.evaluate((ele) => ele.getAttribute('src'));
     expect(src?.length).toEqual(5154);
     expect(src?.substring(0, 100)).toEqual(
-        'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAACNCAYAAABBqd8eAAAAAXNSR0IArs4c6QAADsFJREFUeF7t3N'
+        'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAACNCAYAAABBqd8eAAAAAXNSR0IArs4c6QAADsFJREFUeF7t3N',
     );
+    await browser.close();
 });

@@ -1,6 +1,11 @@
 import 'expect-puppeteer';
+import puppeteer from 'puppeteer';
 
 test('Test the initialRotation option', async () => {
+    const browser = await puppeteer.launch({
+        headless: false,
+    });
+    const page = await browser.newPage();
     await page.goto('http://localhost:3000/core-initial-rotation');
     await page.setViewport({
         width: 1920,
@@ -19,11 +24,11 @@ test('Test the initialRotation option', async () => {
     expect(pageSize?.width).toEqual(871);
     expect(pageSize?.height).toEqual(653);
 
-    let textLayer = await page.waitForSelector('[data-testid="core__text-layer-0"]', { visible: true });
-    let numTextElements = await textLayer?.evaluate((ele) => ele.childElementCount);
+    const textLayer = await page.waitForSelector('[data-testid="core__text-layer-0"]', { visible: true });
+    const numTextElements = await textLayer?.evaluate((ele) => ele.childElementCount);
     expect(numTextElements).toEqual(15);
 
-    let result = await textLayer?.evaluate((ele) => {
+    const result = await textLayer?.evaluate((ele) => {
         const textEle = ele.childNodes[2] as HTMLElement;
         return {
             content: textEle.textContent,
@@ -34,4 +39,5 @@ test('Test the initialRotation option', async () => {
     expect(result?.content).toEqual('Parameters for Opening PDF Files');
     expect(result?.left).toEqual('19.14%');
     expect(result?.top).toEqual('42.85%');
+    await browser.close();
 });

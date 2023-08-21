@@ -6,7 +6,6 @@
  * @copyright 2019-2023 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import type { LocalizationMap, Toggle } from '@react-pdf-viewer/core';
 import {
     LocalizationContext,
     Menu,
@@ -19,11 +18,13 @@ import {
     ThemeContext,
     Tooltip,
     ViewMode,
+    type LocalizationMap,
+    type Toggle,
 } from '@react-pdf-viewer/core';
 import { SelectionMode } from '@react-pdf-viewer/selection-mode';
 import * as React from 'react';
 import { MoreIcon } from './MoreIcon';
-import type { ToolbarSlot } from './types/ToolbarSlot';
+import { type ToolbarSlot } from './types/ToolbarSlot';
 
 const PORTAL_OFFSET = { left: 0, top: 8 };
 

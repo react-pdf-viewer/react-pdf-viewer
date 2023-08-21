@@ -1,5 +1,6 @@
-import { Viewer } from '@react-pdf-viewer/core';
+import { PdfJsApiContext, Viewer, type PdfJsApiProvider } from '@react-pdf-viewer/core';
 import { fireEvent, render, waitForElementToBeRemoved } from '@testing-library/react';
+import * as PdfJs from 'pdfjs-dist';
 import * as React from 'react';
 import { mockIsIntersecting } from '../../../test-utils/mockIntersectionObserver';
 import { defaultLayoutPlugin } from '../src';
@@ -7,18 +8,21 @@ import { defaultLayoutPlugin } from '../src';
 const TestThumbnails: React.FC<{
     fileUrl: Uint8Array;
 }> = ({ fileUrl }) => {
+    const apiProvider = PdfJs as unknown as PdfJsApiProvider;
     const defaultLayoutPluginInstance = defaultLayoutPlugin();
 
     return (
-        <div style={{ height: '50rem', width: '50rem' }}>
-            <Viewer fileUrl={fileUrl} plugins={[defaultLayoutPluginInstance]} />
-        </div>
+        <PdfJsApiContext.Provider value={{ pdfJsApiProvider: apiProvider }}>
+            <div style={{ height: '50rem', width: '50rem' }}>
+                <Viewer fileUrl={fileUrl} plugins={[defaultLayoutPluginInstance]} />
+            </div>
+        </PdfJsApiContext.Provider>
     );
 };
 
 test('Thumbnails are not displayed when switching between tabs', async () => {
     const { findByLabelText, findByTestId, getByTestId } = render(
-        <TestThumbnails fileUrl={global['__OPEN_PARAMS_PDF__']} />
+        <TestThumbnails fileUrl={global['__OPEN_PARAMS_PDF__']} />,
     );
 
     const viewerEle = getByTestId('core__viewer');
@@ -51,7 +55,7 @@ test('Thumbnails are not displayed when switching between tabs', async () => {
     let firstThumbnail = await findByLabelText('Thumbnail of page 1');
     let firstThumbnailSrc = firstThumbnail.getAttribute('src');
     expect(firstThumbnailSrc?.substring(0, 100)).toEqual(
-        'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAACFCAYAAACt+l1zAAAABmJLR0QA/wD/AP+gvaeTAAAKX0lEQV'
+        'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAACFCAYAAACt+l1zAAAABmJLR0QA/wD/AP+gvaeTAAAKX0lEQV',
     );
     expect(firstThumbnailSrc?.length).toEqual(3662);
 
@@ -75,7 +79,7 @@ test('Thumbnails are not displayed when switching between tabs', async () => {
     firstThumbnail = await findByLabelText('Thumbnail of page 1');
     firstThumbnailSrc = firstThumbnail.getAttribute('src');
     expect(firstThumbnailSrc?.substring(0, 100)).toEqual(
-        'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAACFCAYAAACt+l1zAAAABmJLR0QA/wD/AP+gvaeTAAAKX0lEQV'
+        'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAACFCAYAAACt+l1zAAAABmJLR0QA/wD/AP+gvaeTAAAKX0lEQV',
     );
     expect(firstThumbnailSrc?.length).toEqual(3662);
 });

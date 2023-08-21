@@ -11,17 +11,17 @@ import { Spinner } from '../components/Spinner';
 import { useIsMounted } from '../hooks/useIsMounted';
 import { PasswordStatus } from '../structs/PasswordStatus';
 import { TextDirection, ThemeContext } from '../theme/ThemeContext';
-import type { CharacterMap } from '../types/CharacterMap';
-import type { DocumentAskPasswordEvent } from '../types/DocumentAskPasswordEvent';
-import type { PdfJs } from '../types/PdfJs';
-import type { RenderProtectedView } from '../types/RenderProtectedView';
+import { type CharacterMap } from '../types/CharacterMap';
+import { type DocumentAskPasswordEvent } from '../types/DocumentAskPasswordEvent';
+import { type PdfJs } from '../types/PdfJs';
+import { type RenderProtectedView } from '../types/RenderProtectedView';
 import { classNames } from '../utils/classNames';
 import { PdfJsApiContext } from '../vendors/PdfJsApiContext';
 import { AskForPasswordState } from './AskForPasswordState';
 import { AskingPassword } from './AskingPassword';
 import { CompletedState } from './CompletedState';
 import { FailureState } from './FailureState';
-import type { LoadError } from './LoadError';
+import { type LoadError } from './LoadError';
 import { LoadingState } from './LoadingState';
 import { LoadingStatus } from './LoadingStatus';
 
@@ -77,7 +77,7 @@ export const DocumentLoader: React.FC<{
                       cMapUrl: characterMap.url,
                       cMapPacked: characterMap.isCompressed,
                   }
-                : {}
+                : {},
         );
         const transformParams = transformGetDocumentParams ? transformGetDocumentParams(params) : params;
 
@@ -118,8 +118,8 @@ export const DocumentLoader: React.FC<{
                     new FailureState({
                         message: err.message || 'Cannot load document',
                         name: err.name,
-                    })
-                )
+                    }),
+                ),
         );
 
         return (): void => {

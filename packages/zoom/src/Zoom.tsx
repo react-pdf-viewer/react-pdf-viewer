@@ -6,13 +6,12 @@
  * @copyright 2019-2023 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import type { Store } from '@react-pdf-viewer/core';
-import { SpecialZoomLevel } from '@react-pdf-viewer/core';
+import { SpecialZoomLevel, type Store } from '@react-pdf-viewer/core';
 import * as React from 'react';
-import type { RenderZoomProps } from './types/RenderZoomProps';
-import type { StoreProps } from './types/StoreProps';
-import { useZoom } from './useZoom';
 import { ZoomPopover } from './ZoomPopover';
+import { type RenderZoomProps } from './types/RenderZoomProps';
+import { type StoreProps } from './types/StoreProps';
+import { useZoom } from './useZoom';
 
 type RenderZoom = (props: RenderZoomProps) => React.ReactElement;
 

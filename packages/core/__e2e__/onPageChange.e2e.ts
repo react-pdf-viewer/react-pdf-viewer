@@ -1,6 +1,11 @@
 import 'expect-puppeteer';
+import puppeteer from 'puppeteer';
 
 test('Test the onPageChange() callback', async () => {
+    const browser = await puppeteer.launch({
+        headless: false,
+    });
+    const page = await browser.newPage();
     await page.goto('http://localhost:3000/core-onpagechange');
     await page.setViewport({
         width: 1920,
@@ -37,6 +42,7 @@ test('Test the onPageChange() callback', async () => {
     await page.waitForSelector('[data-testid="core__text-layer-7"]', { visible: true });
     await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 8436');
     await page.waitForFunction(
-        () => 'document.querySelector("[data-testid=visited-pages]").textContent === "0, 2, 6, 7"'
+        () => 'document.querySelector("[data-testid=visited-pages]").textContent === "0, 2, 6, 7"',
     );
+    await browser.close();
 });

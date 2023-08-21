@@ -1,12 +1,14 @@
 import { fireEvent, render, waitFor, waitForElementToBeRemoved } from '@testing-library/react';
+import * as PdfJs from 'pdfjs-dist';
 import * as React from 'react';
 import { mockIsIntersecting } from '../../../test-utils/mockIntersectionObserver';
 import { mockResize } from '../../../test-utils/mockResizeObserver';
-import { PageChangeEvent, Viewer } from '../src';
+import { PdfJsApiContext, Viewer, type PageChangeEvent, type PdfJsApiProvider } from '../src';
 
 const TestOnPageChange: React.FC<{
     fileUrl: Uint8Array;
 }> = ({ fileUrl }) => {
+    const apiProvider = PdfJs as unknown as PdfJsApiProvider;
     const [visitedPages, setVisitedPages] = React.useState<number[]>([]);
 
     const handlePageChange = (e: PageChangeEvent) => {
@@ -15,10 +17,12 @@ const TestOnPageChange: React.FC<{
 
     return (
         <React.StrictMode>
-            <div data-testid="visited-pages">{visitedPages.join(',')}</div>
-            <div style={{ height: '50rem', width: '50rem' }}>
-                <Viewer fileUrl={fileUrl} onPageChange={handlePageChange} />
-            </div>
+            <PdfJsApiContext.Provider value={{ pdfJsApiProvider: apiProvider }}>
+                <div data-testid="visited-pages">{visitedPages.join(',')}</div>
+                <div style={{ height: '50rem', width: '50rem' }}>
+                    <Viewer fileUrl={fileUrl} onPageChange={handlePageChange} />
+                </div>
+            </PdfJsApiContext.Provider>
         </React.StrictMode>
     );
 };
@@ -90,29 +94,32 @@ test('onPageChange() callback with Strict mode', async () => {
 const TestOnPageChangeDocumentLoad: React.FC<{
     fileUrl: Uint8Array;
 }> = ({ fileUrl }) => {
+    const apiProvider = PdfJs as unknown as PdfJsApiProvider;
     const [log, setLog] = React.useState('');
 
     const handlePageChange = (e: PageChangeEvent) => {
         setLog((log) => `${log}___${e.currentPage}___onPageChange`);
     };
 
-    const handleDocumentLoad = (e) => {
+    const handleDocumentLoad = () => {
         setLog((log) => `${log}___onDocumentLoad`);
     };
 
     return (
         <React.StrictMode>
-            <div data-testid="log">{log}</div>
-            <div style={{ height: '50rem', width: '50rem' }}>
-                <Viewer fileUrl={fileUrl} onPageChange={handlePageChange} onDocumentLoad={handleDocumentLoad} />
-            </div>
+            <PdfJsApiContext.Provider value={{ pdfJsApiProvider: apiProvider }}>
+                <div data-testid="log">{log}</div>
+                <div style={{ height: '50rem', width: '50rem' }}>
+                    <Viewer fileUrl={fileUrl} onPageChange={handlePageChange} onDocumentLoad={handleDocumentLoad} />
+                </div>
+            </PdfJsApiContext.Provider>
         </React.StrictMode>
     );
 };
 
 test('onPageChange() should fire after onDocumentLoad() with Strict mode', async () => {
     const { findByTestId, getByTestId } = render(
-        <TestOnPageChangeDocumentLoad fileUrl={global['__OPEN_PARAMS_PDF__']} />
+        <TestOnPageChangeDocumentLoad fileUrl={global['__OPEN_PARAMS_PDF__']} />,
     );
 
     const viewerEle = getByTestId('core__viewer');
@@ -139,7 +146,7 @@ test('onPageChange() should fire after onDocumentLoad() with Strict mode', async
     await findByTestId('core__annotation-layer-4');
 
     let log = await findByTestId('log');
-    expect(log.textContent).toEqual('___onDocumentLoad___0___onPageChange___onDocumentLoad');
+    expect(log.textContent).toEqual('___onDocumentLoad___onDocumentLoad___0___onPageChange');
 
     const pagesContainer = await findByTestId('core__inner-pages');
     pagesContainer.getBoundingClientRect = jest.fn(() => ({
@@ -176,6 +183,6 @@ test('onPageChange() should fire after onDocumentLoad() with Strict mode', async
 
     log = await findByTestId('log');
     await waitFor(() =>
-        expect(log.textContent).toEqual('___onDocumentLoad___0___onPageChange___onDocumentLoad___2___onPageChange')
+        expect(log.textContent).toEqual('___onDocumentLoad___onDocumentLoad___0___onPageChange___2___onPageChange'),
     );
 });

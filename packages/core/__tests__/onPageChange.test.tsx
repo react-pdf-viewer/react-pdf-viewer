@@ -1,12 +1,14 @@
 import { fireEvent, render, waitFor, waitForElementToBeRemoved } from '@testing-library/react';
+import * as PdfJs from 'pdfjs-dist';
 import * as React from 'react';
 import { mockIsIntersecting } from '../../../test-utils/mockIntersectionObserver';
 import { mockResize } from '../../../test-utils/mockResizeObserver';
-import { PageChangeEvent, Viewer } from '../src';
+import { PageChangeEvent, PdfJsApiContext, Viewer, type PdfJsApiProvider } from '../src';
 
 const TestOnPageChange: React.FC<{
     fileUrl: Uint8Array;
 }> = ({ fileUrl }) => {
+    const apiProvider = PdfJs as unknown as PdfJsApiProvider;
     const [visitedPages, setVisitedPages] = React.useState<number[]>([]);
 
     const handlePageChange = (e: PageChangeEvent) => {
@@ -14,12 +16,12 @@ const TestOnPageChange: React.FC<{
     };
 
     return (
-        <>
+        <PdfJsApiContext.Provider value={{ pdfJsApiProvider: apiProvider }}>
             <div data-testid="visited-pages">{visitedPages.join(',')}</div>
             <div style={{ height: '50rem', width: '50rem' }}>
                 <Viewer fileUrl={fileUrl} onPageChange={handlePageChange} />
             </div>
-        </>
+        </PdfJsApiContext.Provider>
     );
 };
 
@@ -78,6 +80,7 @@ test('onPageChange() callback', async () => {
 const TestOnPageChangeDocumentLoad: React.FC<{
     fileUrl: Uint8Array;
 }> = ({ fileUrl }) => {
+    const apiProvider = PdfJs as unknown as PdfJsApiProvider;
     const [log, setLog] = React.useState('');
 
     const handlePageChange = (e: PageChangeEvent) => {
@@ -89,18 +92,18 @@ const TestOnPageChangeDocumentLoad: React.FC<{
     };
 
     return (
-        <>
+        <PdfJsApiContext.Provider value={{ pdfJsApiProvider: apiProvider }}>
             <div data-testid="log">{log}</div>
             <div style={{ height: '50rem', width: '50rem' }}>
                 <Viewer fileUrl={fileUrl} onPageChange={handlePageChange} onDocumentLoad={handleDocumentLoad} />
             </div>
-        </>
+        </PdfJsApiContext.Provider>
     );
 };
 
 test('onPageChange() should fire after onDocumentLoad()', async () => {
     const { findByTestId, getByTestId } = render(
-        <TestOnPageChangeDocumentLoad fileUrl={global['__OPEN_PARAMS_PDF__']} />
+        <TestOnPageChangeDocumentLoad fileUrl={global['__OPEN_PARAMS_PDF__']} />,
     );
 
     const viewerEle = getByTestId('core__viewer');

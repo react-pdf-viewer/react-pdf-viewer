@@ -9,7 +9,7 @@
 import * as React from 'react';
 import { ScrollMode } from '../structs/ScrollMode';
 import { ViewMode } from '../structs/ViewMode';
-import type { Rect } from './Rect';
+import { type Rect } from './Rect';
 
 export interface PageLayout {
     buildPageStyles?: ({

@@ -7,9 +7,9 @@
  */
 
 import { ScrollMode } from '../structs/ScrollMode';
-import type { Offset } from '../types/Offset';
-import type { Rect } from '../types/Rect';
-import type { ItemMeasurement } from './ItemMeasurement';
+import { type Offset } from '../types/Offset';
+import { type Rect } from '../types/Rect';
+import { type ItemMeasurement } from './ItemMeasurement';
 
 const ZERO_OFFSET: Offset = {
     left: 0,
@@ -20,7 +20,7 @@ export const measureDualPageWithCover = (
     numberOfItems: number,
     parentRect: Rect,
     sizes: Rect[],
-    scrollMode: ScrollMode
+    scrollMode: ScrollMode,
 ): ItemMeasurement[] => {
     const measurements: ItemMeasurement[] = [];
     let top = 0;

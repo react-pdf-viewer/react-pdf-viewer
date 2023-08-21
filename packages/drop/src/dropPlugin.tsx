@@ -6,7 +6,7 @@
  * @copyright 2019-2023 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import type { Plugin, RenderViewer, Slot } from '@react-pdf-viewer/core';
+import { type Plugin, type RenderViewer, type Slot } from '@react-pdf-viewer/core';
 import * as React from 'react';
 import { DropArea } from './DropArea';
 

@@ -6,13 +6,12 @@
  * @copyright 2019-2023 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import type { Store, Toggle } from '@react-pdf-viewer/core';
-import { Modal } from '@react-pdf-viewer/core';
+import { Modal, type Store, type Toggle } from '@react-pdf-viewer/core';
 import * as React from 'react';
 import { PropertiesModal } from './PropertiesModal';
 import { ShowPropertiesButton } from './ShowPropertiesButton';
-import type { RenderShowPropertiesProps } from './types/RenderShowPropertiesProps';
-import type { StoreProps } from './types/StoreProps';
+import { type RenderShowPropertiesProps } from './types/RenderShowPropertiesProps';
+import { type StoreProps } from './types/StoreProps';
 import { useDocument } from './useDocument';
 
 type RenderShowProperties = (props: RenderShowPropertiesProps) => React.ReactElement;

@@ -1,13 +1,14 @@
-import { Button, Spinner, Viewer } from '@react-pdf-viewer/core';
+import { Button, PdfJsApiContext, Spinner, Viewer, type PdfJsApiProvider } from '@react-pdf-viewer/core';
 import { fireEvent, render, waitForElementToBeRemoved } from '@testing-library/react';
+import * as PdfJs from 'pdfjs-dist';
 import * as React from 'react';
 import { mockIsIntersecting } from '../../../test-utils/mockIntersectionObserver';
-import type { RenderPrintProps } from '../src';
-import { printPlugin } from '../src';
+import { printPlugin, type RenderPrintProps } from '../src';
 
 const TestCustomProgressBar: React.FC<{
     fileUrl: Uint8Array;
 }> = ({ fileUrl }) => {
+    const apiProvider = PdfJs as unknown as PdfJsApiProvider;
     const renderProgressBar = React.useCallback(
         (numLoadedPages: number, numPages: number, onCancel: () => void) => (
             <div
@@ -46,7 +47,7 @@ const TestCustomProgressBar: React.FC<{
                 </div>
             </div>
         ),
-        []
+        [],
     );
 
     const printPluginInstance = printPlugin({
@@ -55,42 +56,44 @@ const TestCustomProgressBar: React.FC<{
     const { Print } = printPluginInstance;
 
     return (
-        <div
-            data-testid="root"
-            style={{
-                display: 'flex',
-                border: '1px solid rgba(0, 0, 0, .2)',
-                flexDirection: 'column',
-                height: '50rem',
-                margin: '5rem auto',
-                width: '64rem',
-            }}
-        >
+        <PdfJsApiContext.Provider value={{ pdfJsApiProvider: apiProvider }}>
             <div
+                data-testid="root"
                 style={{
-                    alignItems: 'center',
-                    borderBottom: '1px solid rgba(0, 0, 0, .2)',
                     display: 'flex',
-                    padding: '0.25rem',
+                    border: '1px solid rgba(0, 0, 0, .2)',
+                    flexDirection: 'column',
+                    height: '50rem',
+                    margin: '5rem auto',
+                    width: '64rem',
                 }}
             >
-                <Print>
-                    {(props: RenderPrintProps) => (
-                        <Button testId="print-button" onClick={props.onClick}>
-                            Print
-                        </Button>
-                    )}
-                </Print>
+                <div
+                    style={{
+                        alignItems: 'center',
+                        borderBottom: '1px solid rgba(0, 0, 0, .2)',
+                        display: 'flex',
+                        padding: '0.25rem',
+                    }}
+                >
+                    <Print>
+                        {(props: RenderPrintProps) => (
+                            <Button testId="print-button" onClick={props.onClick}>
+                                Print
+                            </Button>
+                        )}
+                    </Print>
+                </div>
+                <div
+                    style={{
+                        flex: 1,
+                        overflow: 'hidden',
+                    }}
+                >
+                    <Viewer fileUrl={fileUrl} plugins={[printPluginInstance]} />
+                </div>
             </div>
-            <div
-                style={{
-                    flex: 1,
-                    overflow: 'hidden',
-                }}
-            >
-                <Viewer fileUrl={fileUrl} plugins={[printPluginInstance]} />
-            </div>
-        </div>
+        </PdfJsApiContext.Provider>
     );
 };
 
@@ -110,7 +113,7 @@ test('Customize progress bar', async () => {
     await findByTestId('core__annotation-layer-1');
 
     // Click the `Print` button
-    const printButton = await getByTestId('print-button');
+    const printButton = getByTestId('print-button');
     fireEvent.click(printButton);
 
     let preparingLabel = await findByTestId('preparing-label-0');

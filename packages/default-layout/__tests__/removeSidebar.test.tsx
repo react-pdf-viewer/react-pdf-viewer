@@ -1,5 +1,6 @@
-import { TextDirection, Viewer } from '@react-pdf-viewer/core';
+import { PdfJsApiContext, TextDirection, Viewer, type PdfJsApiProvider } from '@react-pdf-viewer/core';
 import { render, waitForElementToBeRemoved } from '@testing-library/react';
+import * as PdfJs from 'pdfjs-dist';
 import * as React from 'react';
 import { mockIsIntersecting } from '../../../test-utils/mockIntersectionObserver';
 import { defaultLayoutPlugin } from '../src';
@@ -7,26 +8,29 @@ import { defaultLayoutPlugin } from '../src';
 const TestRemoveSidebar: React.FC<{
     fileUrl: Uint8Array;
 }> = ({ fileUrl }) => {
+    const apiProvider = PdfJs as unknown as PdfJsApiProvider;
     const defaultLayoutPluginInstance = defaultLayoutPlugin({
         sidebarTabs: () => [],
     });
 
     return (
-        <div style={{ height: '720px', width: '720px' }}>
-            <Viewer
-                fileUrl={fileUrl}
-                theme={{
-                    direction: TextDirection.RightToLeft,
-                }}
-                plugins={[defaultLayoutPluginInstance]}
-            />
-        </div>
+        <PdfJsApiContext.Provider value={{ pdfJsApiProvider: apiProvider }}>
+            <div style={{ height: '720px', width: '720px' }}>
+                <Viewer
+                    fileUrl={fileUrl}
+                    theme={{
+                        direction: TextDirection.RightToLeft,
+                    }}
+                    plugins={[defaultLayoutPluginInstance]}
+                />
+            </div>
+        </PdfJsApiContext.Provider>
     );
 };
 
 test('Remove the sidebar', async () => {
     const { findByTestId, getByTestId, queryByTestId } = render(
-        <TestRemoveSidebar fileUrl={global['__OPEN_PARAMS_PDF__']} />
+        <TestRemoveSidebar fileUrl={global['__OPEN_PARAMS_PDF__']} />,
     );
 
     const viewerEle = getByTestId('core__viewer');

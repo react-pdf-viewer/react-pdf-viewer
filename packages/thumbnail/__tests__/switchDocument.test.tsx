@@ -1,16 +1,17 @@
-import { Button, Viewer } from '@react-pdf-viewer/core';
+import { Button, PdfJsApiContext, Viewer, type PdfJsApiProvider } from '@react-pdf-viewer/core';
 import { fireEvent, render, waitForElementToBeRemoved } from '@testing-library/react';
+import * as fs from 'node:fs';
+import * as path from 'path';
+import * as PdfJs from 'pdfjs-dist';
 import * as React from 'react';
 import { mockIsIntersecting } from '../../../test-utils/mockIntersectionObserver';
 import { thumbnailPlugin } from '../src';
 
-const fs = require('fs');
-const path = require('path');
-
 const TestSwitchDocument = () => {
+    const apiProvider = PdfJs as unknown as PdfJsApiProvider;
     const secondDocument = React.useMemo(
         () => new Uint8Array(fs.readFileSync(path.resolve(__dirname, '../../../samples/sample-2.pdf'))),
-        []
+        [],
     );
 
     const [fileUrl, setFileUrl] = React.useState(global['__OPEN_PARAMS_PDF__']);
@@ -19,57 +20,59 @@ const TestSwitchDocument = () => {
 
     return (
         <React.StrictMode>
-            <div
-                style={{
-                    margin: '1rem auto',
-                    width: '64rem',
-                }}
-            >
+            <PdfJsApiContext.Provider value={{ pdfJsApiProvider: apiProvider }}>
                 <div
                     style={{
-                        alignItems: 'center',
-                        display: 'flex',
-                        marginBottom: '1rem',
-                    }}
-                >
-                    <div style={{ marginRight: '0.5rem' }}>
-                        <Button testId="load-doc-1" onClick={() => setFileUrl(global['__OPEN_PARAMS_PDF__'])}>
-                            Load document 1
-                        </Button>
-                    </div>
-                    <Button testId="load-doc-2" onClick={() => setFileUrl(secondDocument)}>
-                        Load document 2
-                    </Button>
-                </div>
-                <div
-                    style={{
-                        border: '1px solid rgba(0, 0, 0, 0.1)',
-                        display: 'flex',
-                        height: '50rem',
-                        width: '50rem',
+                        margin: '1rem auto',
+                        width: '64rem',
                     }}
                 >
                     <div
                         style={{
                             alignItems: 'center',
-                            borderRight: '1px solid rgba(0, 0, 0, 0.1)',
                             display: 'flex',
-                            padding: '0.25rem',
-                            width: '20%',
+                            marginBottom: '1rem',
                         }}
                     >
-                        <Thumbnails />
+                        <div style={{ marginRight: '0.5rem' }}>
+                            <Button testId="load-doc-1" onClick={() => setFileUrl(global['__OPEN_PARAMS_PDF__'])}>
+                                Load document 1
+                            </Button>
+                        </div>
+                        <Button testId="load-doc-2" onClick={() => setFileUrl(secondDocument)}>
+                            Load document 2
+                        </Button>
                     </div>
                     <div
                         style={{
-                            flex: 1,
-                            overflow: 'hidden',
+                            border: '1px solid rgba(0, 0, 0, 0.1)',
+                            display: 'flex',
+                            height: '50rem',
+                            width: '50rem',
                         }}
                     >
-                        <Viewer fileUrl={fileUrl} plugins={[thumbnailPluginInstance]} />
+                        <div
+                            style={{
+                                alignItems: 'center',
+                                borderRight: '1px solid rgba(0, 0, 0, 0.1)',
+                                display: 'flex',
+                                padding: '0.25rem',
+                                width: '20%',
+                            }}
+                        >
+                            <Thumbnails />
+                        </div>
+                        <div
+                            style={{
+                                flex: 1,
+                                overflow: 'hidden',
+                            }}
+                        >
+                            <Viewer fileUrl={fileUrl} plugins={[thumbnailPluginInstance]} />
+                        </div>
                     </div>
                 </div>
-            </div>
+            </PdfJsApiContext.Provider>
         </React.StrictMode>
     );
 };
@@ -110,8 +113,8 @@ test('Thumbnails are updated when switching between documents', async () => {
     };
 
     let src = await getSourceOfFirstThumbnail();
-    expect(src?.slice(-100)).toEqual(
-        'g5q5u9+1tNDZs+y0tLZiUW7cJm7ZQhRFYcdbf7xnA1vITNN8XeAtW4h0f8mDumBkEMHIIIL5Hw+y6qIMqKXCAAAAAElFTkSuQmCC'
+    expect(src?.slice(0, 150)).toEqual(
+        'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAACFCAYAAACt+l1zAAAABmJLR0QA/wD/AP+gvaeTAAAKX0lEQVR4nO3dX1ATdwLA8W+STQIBQkIiIaE0MNWoLVSLqHjnHxD/wEP/',
     );
     expect(src?.length).toEqual(3662);
 
@@ -131,8 +134,8 @@ test('Thumbnails are updated when switching between documents', async () => {
     await findByTestId('core__annotation-layer-0');
 
     src = await getSourceOfFirstThumbnail();
-    expect(src?.slice(-100)).toEqual(
-        '5PuuE+APbyzyd7/y/Lt6z597+Cw/e+H+bfd9hrzH6L3nB/9TTu8z5D1G7zPkPUbvM+Q9Rv8f7w4oIdTXLq4AAAAASUVORK5CYII='
+    expect(src?.slice(0, 150)).toEqual(
+        'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAACBCAYAAAA2ax9lAAAABmJLR0QA/wD/AP+gvaeTAAAgAElEQVR4nO29eZBlWX7X9znn3OXdt7/cl9qX7q7unp7pdUazaDTSaEME',
     );
-    expect(src?.length).toEqual(19974);
+    expect(src?.length).toEqual(19942);
 });

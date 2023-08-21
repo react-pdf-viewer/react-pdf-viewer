@@ -6,28 +6,29 @@
  * @copyright 2019-2023 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import type {
-    Plugin,
-    PluginFunctions,
-    PluginOnTextLayerRender,
-    PluginRenderPageLayer,
-    RenderViewer,
-    Slot,
-    ViewerState,
+import {
+    LayerRenderStatus,
+    createStore,
+    type Plugin,
+    type PluginFunctions,
+    type PluginOnTextLayerRender,
+    type PluginRenderPageLayer,
+    type RenderViewer,
+    type Slot,
+    type ViewerState,
 } from '@react-pdf-viewer/core';
-import { createStore, LayerRenderStatus } from '@react-pdf-viewer/core';
 import * as React from 'react';
 import { ClickDrag } from './ClickDrag';
-import { HIGHLIGHT_LAYER_ATTR, HIGHLIGHT_PAGE_ATTR } from './constants';
 import { HighlightAreaList } from './HighlightAreaList';
-import { Trigger } from './structs/Trigger';
 import { Tracker } from './Tracker';
-import type { HighlightArea } from './types/HighlightArea';
+import { HIGHLIGHT_LAYER_ATTR, HIGHLIGHT_PAGE_ATTR } from './constants';
+import { Trigger } from './structs/Trigger';
+import { type HighlightArea } from './types/HighlightArea';
 import { HighlightStateType, NO_SELECTION_STATE, SELECTING_STATE } from './types/HighlightState';
-import type { RenderHighlightContentProps } from './types/RenderHighlightContentProps';
-import type { RenderHighlightsProps } from './types/RenderHighlightsProps';
-import type { RenderHighlightTargetProps } from './types/RenderHighlightTargetProps';
-import type { StoreProps } from './types/StoreProps';
+import { type RenderHighlightContentProps } from './types/RenderHighlightContentProps';
+import { type RenderHighlightTargetProps } from './types/RenderHighlightTargetProps';
+import { type RenderHighlightsProps } from './types/RenderHighlightsProps';
+import { type StoreProps } from './types/StoreProps';
 
 export interface HighlightPlugin extends Plugin {
     jumpToHighlightArea(area: HighlightArea): void;
@@ -52,7 +53,7 @@ export const highlightPlugin = (props?: HighlightPluginProps): HighlightPlugin =
                 highlightState: NO_SELECTION_STATE,
                 trigger: highlightPluginProps.trigger,
             }),
-        []
+        [],
     );
 
     const renderViewer = (props: RenderViewer): Slot => {

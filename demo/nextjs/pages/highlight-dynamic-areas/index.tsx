@@ -1,7 +1,6 @@
 import { Button, Viewer } from '@react-pdf-viewer/core';
 import { defaultLayoutPlugin } from '@react-pdf-viewer/default-layout';
-import type { HighlightArea, RenderHighlightsProps } from '@react-pdf-viewer/highlight';
-import { highlightPlugin, Trigger } from '@react-pdf-viewer/highlight';
+import { Trigger, highlightPlugin, type HighlightArea, type RenderHighlightsProps } from '@react-pdf-viewer/highlight';
 import * as React from 'react';
 
 const IndexPage = () => {
@@ -50,7 +49,7 @@ const IndexPage = () => {
                                 background: 'yellow',
                                 opacity: 0.4,
                             },
-                            props.getCssProperties(area, props.rotation)
+                            props.getCssProperties(area, props.rotation),
                         )}
                     />
                 ))}

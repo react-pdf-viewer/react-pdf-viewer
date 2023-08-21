@@ -1,6 +1,11 @@
 import 'expect-puppeteer';
+import puppeteer from 'puppeteer';
 
 test('Keep current position after zooming', async () => {
+    const browser = await puppeteer.launch({
+        headless: false,
+    });
+    const page = await browser.newPage();
     await page.goto('http://localhost:3000/default-layout');
     await page.setViewport({
         width: 1920,
@@ -31,7 +36,7 @@ test('Keep current position after zooming', async () => {
     await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 5353');
 
     // Zoom to 50%
-    let zoomPopover = await page.waitForSelector('[data-testid="zoom__popover-target"]');
+    const zoomPopover = await page.waitForSelector('[data-testid="zoom__popover-target"]');
     await zoomPopover?.click();
 
     let zoomPooverBody = await page.waitForSelector('[id="rpv-core__popover-body-inner-zoom"]');
@@ -59,4 +64,5 @@ test('Keep current position after zooming', async () => {
     zoomButtons = await zoomPooverBody?.$$('button');
     await zoomButtons[10]?.click();
     await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 14272');
+    await browser.close();
 });

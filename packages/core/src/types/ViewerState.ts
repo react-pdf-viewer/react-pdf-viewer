@@ -9,7 +9,7 @@
 import { FullScreenMode } from '../structs/FullScreenMode';
 import { ScrollMode } from '../structs/ScrollMode';
 import { ViewMode } from '../structs/ViewMode';
-import type { OpenFile } from './OpenFile';
+import { type OpenFile } from './OpenFile';
 
 export interface ViewerState {
     // The current opened file. It can be changed from outside, such as user drags and drops an external file

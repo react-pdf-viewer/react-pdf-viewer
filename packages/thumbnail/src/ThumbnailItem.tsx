@@ -6,8 +6,7 @@
  * @copyright 2019-2023 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import type { LocalizationMap, PdfJs } from '@react-pdf-viewer/core';
-import { LocalizationContext } from '@react-pdf-viewer/core';
+import { LocalizationContext, type LocalizationMap, type PdfJs } from '@react-pdf-viewer/core';
 import * as React from 'react';
 import { SpinnerContext } from './SpinnerContext';
 
@@ -57,7 +56,7 @@ export const ThumbnailItem: React.FC<{
             },
             () => {
                 onRenderCompleted(pageIndex);
-            }
+            },
         );
 
         return () => {

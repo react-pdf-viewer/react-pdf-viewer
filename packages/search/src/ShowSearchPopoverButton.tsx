@@ -6,11 +6,10 @@
  * @copyright 2019-2023 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import type { Store, StoreHandler } from '@react-pdf-viewer/core';
-import { isMac, MinimalButton, Position, Tooltip } from '@react-pdf-viewer/core';
+import { MinimalButton, Position, Tooltip, isMac, type Store, type StoreHandler } from '@react-pdf-viewer/core';
 import * as React from 'react';
 import { ShowSearchPopoverDecorator } from './ShowSearchPopoverDecorator';
-import type { StoreProps } from './types/StoreProps';
+import { type StoreProps } from './types/StoreProps';
 
 const TOOLTIP_OFFSET = { left: 0, top: 8 };
 

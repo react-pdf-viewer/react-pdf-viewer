@@ -1,6 +1,11 @@
 import 'expect-puppeteer';
+import puppeteer from 'puppeteer';
 
 test('Perform search for the initial keyword in a sidebar', async () => {
+    const browser = await puppeteer.launch({
+        headless: false,
+    });
+    const page = await browser.newPage();
     await page.goto('http://localhost:3000/search-sidebar-initial-keyword');
     await page.setViewport({
         width: 1920,
@@ -14,13 +19,13 @@ test('Perform search for the initial keyword in a sidebar', async () => {
     await page.waitForSelector('[data-testid="core__annotation-layer-0"]');
 
     // Check if the keyword is populated properly
-    let searchInput = await page.waitForSelector('[placeholder="Enter to search"]');
-    let currentKeyword = await searchInput?.evaluate((ele) => (ele as HTMLInputElement).value);
+    const searchInput = await page.waitForSelector('[placeholder="Enter to search"]');
+    const currentKeyword = await searchInput?.evaluate((ele) => (ele as HTMLInputElement).value);
     expect(currentKeyword).toEqual('PDF');
 
     // Check the number of matches
-    let numOfMatchesLabel = await page.waitForSelector('[data-testid="num-matches"]');
-    let numOfMatches = await numOfMatchesLabel?.evaluate((node) => node.textContent);
+    const numOfMatchesLabel = await page.waitForSelector('[data-testid="num-matches"]');
+    const numOfMatches = await numOfMatchesLabel?.evaluate((node) => node.textContent);
     expect(numOfMatches).toEqual('Found 28 results');
 
     // Scroll to the first match automatically
@@ -54,4 +59,5 @@ test('Perform search for the initial keyword in a sidebar', async () => {
     await page.waitForSelector('[data-testid="core__text-layer-2"]', { visible: true });
     await page.waitForSelector('[data-testid="core__annotation-layer-2"]');
     await page.waitForFunction(() => 'document.querySelector("[data-testid=core__inner-pages]").scrollTop === 2745.5');
+    await browser.close();
 });

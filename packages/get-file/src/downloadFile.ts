@@ -6,7 +6,7 @@
  * @copyright 2019-2023 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import type { PdfJs } from '@react-pdf-viewer/core';
+import { type PdfJs } from '@react-pdf-viewer/core';
 
 const isChromeIOS = () => /iphone|ipod|ipad/i.test(navigator.userAgent) && /CriOS/i.test(navigator.userAgent);
 
@@ -18,7 +18,7 @@ const encodeUint8Array = (data: Uint8Array): string =>
         Array(data.length)
             .fill('')
             .map((_, i) => String.fromCharCode(data[i]))
-            .join('')
+            .join(''),
     );
 
 const download = (url: string, saveAs: string): void => {

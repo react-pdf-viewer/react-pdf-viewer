@@ -7,7 +7,7 @@
  */
 
 import { ScrollDirection } from '../structs/ScrollDirection';
-import type { Offset } from '../types/Offset';
+import { type Offset } from '../types/Offset';
 
 const EPS = 0.0001;
 
@@ -17,7 +17,7 @@ export const smoothScroll = (
     targetPosition: Offset,
     duration: number,
     easing: (t: number) => number = (t) => t,
-    onReachTarget: () => void = () => {}
+    onReachTarget: () => void = () => {},
 ) => {
     let top = 0;
     let left = 0;

@@ -1,14 +1,25 @@
 import { RotateBackwardIcon, RotateForwardIcon } from '@react-pdf-viewer/rotate';
 import { fireEvent, render, waitForElementToBeRemoved } from '@testing-library/react';
+import * as PdfJs from 'pdfjs-dist';
 import * as React from 'react';
 import { mockIsIntersecting } from '../../../test-utils/mockIntersectionObserver';
 import { mockResize } from '../../../test-utils/mockResizeObserver';
-import type { RenderPage, RenderPageProps } from '../src';
-import { MinimalButton, Position, RotateDirection, Tooltip, Viewer } from '../src';
+import {
+    MinimalButton,
+    PdfJsApiContext,
+    Position,
+    RotateDirection,
+    Tooltip,
+    Viewer,
+    type PdfJsApiProvider,
+    type RenderPage,
+    type RenderPageProps,
+} from '../src';
 
 const TestRotatePage: React.FC<{
     fileUrl: Uint8Array;
 }> = ({ fileUrl }) => {
+    const apiProvider = PdfJs as unknown as PdfJsApiProvider;
     const renderPage: RenderPage = (props: RenderPageProps) => (
         <>
             {props.canvasLayer.children}
@@ -64,17 +75,19 @@ const TestRotatePage: React.FC<{
     );
 
     return (
-        <div
-            style={{
-                border: '1px solid rgba(0, 0, 0, .3)',
-                display: 'flex',
-                height: '50rem',
-                margin: '5rem auto',
-                width: '64rem',
-            }}
-        >
-            <Viewer defaultScale={0.5} fileUrl={fileUrl} renderPage={renderPage} />
-        </div>
+        <PdfJsApiContext.Provider value={{ pdfJsApiProvider: apiProvider }}>
+            <div
+                style={{
+                    border: '1px solid rgba(0, 0, 0, .3)',
+                    display: 'flex',
+                    height: '50rem',
+                    margin: '5rem auto',
+                    width: '64rem',
+                }}
+            >
+                <Viewer defaultScale={0.5} fileUrl={fileUrl} renderPage={renderPage} />
+            </div>
+        </PdfJsApiContext.Provider>
     );
 };
 

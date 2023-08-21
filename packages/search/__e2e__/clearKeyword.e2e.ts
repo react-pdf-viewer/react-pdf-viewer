@@ -1,6 +1,11 @@
 import 'expect-puppeteer';
+import puppeteer from 'puppeteer';
 
 test('clearKeyword() when the keyword is empty', async () => {
+    const browser = await puppeteer.launch({
+        headless: false,
+    });
+    const page = await browser.newPage();
     await page.goto('http://localhost:3000/search-custom-control');
     await page.setViewport({
         width: 1920,
@@ -27,7 +32,7 @@ test('clearKeyword() when the keyword is empty', async () => {
     let searchHighlights = await page.waitForSelector('[data-testid="search__highlights-1"]', { visible: true });
 
     let highlightElements = await searchHighlights?.$$('.rpv-search__highlight');
-    let numHighlights = await highlightElements?.length;
+    let numHighlights = highlightElements?.length;
     expect(numHighlights).toEqual(3);
 
     // Clear the keyword
@@ -40,6 +45,7 @@ test('clearKeyword() when the keyword is empty', async () => {
     // The highlights should be removed
     searchHighlights = await page.waitForSelector('[data-testid="search__highlights-1"]', { visible: true });
     highlightElements = await searchHighlights?.$$('.rpv-search__highlight');
-    numHighlights = await highlightElements?.length;
+    numHighlights = highlightElements?.length;
     expect(numHighlights).toEqual(0);
+    await browser.close();
 });

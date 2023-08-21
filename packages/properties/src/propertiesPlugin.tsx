@@ -6,12 +6,11 @@
  * @copyright 2019-2023 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import type { Plugin, PluginOnDocumentLoad, ViewerState } from '@react-pdf-viewer/core';
-import { createStore } from '@react-pdf-viewer/core';
+import { createStore, type Plugin, type PluginOnDocumentLoad, type ViewerState } from '@react-pdf-viewer/core';
 import * as React from 'react';
 import { ShowProperties, ShowPropertiesProps } from './ShowProperties';
 import { ShowPropertiesMenuItem } from './ShowPropertiesMenuItem';
-import type { StoreProps } from './types/StoreProps';
+import { type StoreProps } from './types/StoreProps';
 
 export interface ShowPropertiesMenuItemProps {
     onClick: () => void;
@@ -29,7 +28,7 @@ export const propertiesPlugin = (): PropertiesPlugin => {
             createStore<StoreProps>({
                 fileName: '',
             }),
-        []
+        [],
     );
 
     const ShowPropertiesDecorator = (props: ShowPropertiesProps) => <ShowProperties {...props} store={store} />;

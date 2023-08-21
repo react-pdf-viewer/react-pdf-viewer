@@ -8,7 +8,7 @@
 
 import * as React from 'react';
 import { useIntersectionObserver } from '../hooks/useIntersectionObserver';
-import type { VisibilityChanged } from '../types/VisibilityChanged';
+import { type VisibilityChanged } from '../types/VisibilityChanged';
 
 export const LazyRender: React.FC<{
     attrs?: React.HTMLAttributes<HTMLDivElement>;

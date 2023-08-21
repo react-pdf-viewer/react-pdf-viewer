@@ -1,13 +1,15 @@
-import { Viewer } from '@react-pdf-viewer/core';
+import { PdfJsApiContext, Viewer, type PdfJsApiProvider } from '@react-pdf-viewer/core';
 import { render, waitForElementToBeRemoved } from '@testing-library/react';
+import * as PdfJs from 'pdfjs-dist';
 import * as React from 'react';
 import { mockIsIntersecting } from '../../../test-utils/mockIntersectionObserver';
 import { mockResize } from '../../../test-utils/mockResizeObserver';
-import { toolbarPlugin, ToolbarSlot, TransformToolbarSlot } from '../src';
+import { toolbarPlugin, type ToolbarSlot, type TransformToolbarSlot } from '../src';
 
 const TestRenderDefaultToolbar: React.FC<{
     fileUrl: Uint8Array;
 }> = ({ fileUrl }) => {
+    const apiProvider = PdfJs as unknown as PdfJsApiProvider;
     const toolbarPluginInstance = toolbarPlugin();
     const { renderDefaultToolbar, Toolbar } = toolbarPluginInstance;
 
@@ -23,22 +25,24 @@ const TestRenderDefaultToolbar: React.FC<{
     };
 
     return (
-        <div
-            style={{
-                border: '1px solid rgba(0, 0, 0, 0.3)',
-                display: 'flex',
-                flexDirection: 'column',
-                height: '50rem',
-                width: '50rem',
-            }}
-        >
-            <div>
-                <Toolbar>{renderDefaultToolbar(transform)}</Toolbar>
+        <PdfJsApiContext.Provider value={{ pdfJsApiProvider: apiProvider }}>
+            <div
+                style={{
+                    border: '1px solid rgba(0, 0, 0, 0.3)',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    height: '50rem',
+                    width: '50rem',
+                }}
+            >
+                <div>
+                    <Toolbar>{renderDefaultToolbar(transform)}</Toolbar>
+                </div>
+                <div style={{ flex: 1 }}>
+                    <Viewer fileUrl={fileUrl} plugins={[toolbarPluginInstance]} />
+                </div>
             </div>
-            <div style={{ flex: 1 }}>
-                <Viewer fileUrl={fileUrl} plugins={[toolbarPluginInstance]} />
-            </div>
-        </div>
+        </PdfJsApiContext.Provider>
     );
 };
 

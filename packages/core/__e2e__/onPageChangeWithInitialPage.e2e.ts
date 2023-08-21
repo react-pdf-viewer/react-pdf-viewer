@@ -1,6 +1,11 @@
 import 'expect-puppeteer';
+import puppeteer from 'puppeteer';
 
 test('Test the onPageChange() callback with initial page', async () => {
+    const browser = await puppeteer.launch({
+        headless: false,
+    });
+    const page = await browser.newPage();
     await page.goto('http://localhost:3000/core-initial-page-onpagechange');
     await page.setViewport({
         width: 1920,
@@ -11,8 +16,8 @@ test('Test the onPageChange() callback with initial page', async () => {
     // Wait until the first page is rendered
     await page.waitForSelector('[data-testid="core__page-layer-0"]', { visible: true });
 
-    let visitedPagesLabel = await page.waitForSelector('[data-testid="visited-pages"]');
-    let visitedPages = await visitedPagesLabel?.evaluate((ele) => ele.textContent);
+    const visitedPagesLabel = await page.waitForSelector('[data-testid="visited-pages"]');
+    const visitedPages = await visitedPagesLabel?.evaluate((ele) => ele.textContent);
     expect(visitedPages).toEqual('5');
 
     // Issue 1197 (https://github.com/react-pdf-viewer/react-pdf-viewer/issues/1197)
@@ -31,6 +36,7 @@ test('Test the onPageChange() callback with initial page', async () => {
     // Jump back to the 5th page
     await page.evaluate(() => document.querySelector('[data-testid="core__page-layer-5"]')?.scrollIntoView());
     await page.waitForFunction(
-        () => 'document.querySelector("[data-testid=visited-pages]").textContent === "5, 6, 7, 5"'
+        () => 'document.querySelector("[data-testid=visited-pages]").textContent === "5, 6, 7, 5"',
     );
+    await browser.close();
 });

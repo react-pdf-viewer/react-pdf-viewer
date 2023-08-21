@@ -8,5 +8,5 @@ const root = createRoot(rootElement);
 root.render(
     <LegacyWorker workerUrl="/pdf.worker.min.js">
         <App />
-    </LegacyWorker>
+    </LegacyWorker>,
 );

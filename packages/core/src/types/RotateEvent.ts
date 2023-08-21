@@ -7,7 +7,7 @@
  */
 
 import { RotateDirection } from '../structs/RotateDirection';
-import type { PdfJs } from './PdfJs';
+import { type PdfJs } from './PdfJs';
 
 export interface RotateEvent {
     direction: RotateDirection;

@@ -1,30 +1,33 @@
-import { Viewer } from '@react-pdf-viewer/core';
+import { PdfJsApiContext, Viewer, type PdfJsApiProvider } from '@react-pdf-viewer/core';
 import { findAllByTitle } from '@testing-library/dom';
 import { fireEvent, render, waitForElementToBeRemoved } from '@testing-library/react';
+import * as PdfJs from 'pdfjs-dist';
 import * as React from 'react';
 import { mockIsIntersecting } from '../../../test-utils/mockIntersectionObserver';
 import { mockResize } from '../../../test-utils/mockResizeObserver';
-import { searchPlugin } from '../src';
-import type { FlagKeyword } from '../src';
+import { searchPlugin, type FlagKeyword } from '../src';
 
 const TestKeywordOption: React.FC<{
     fileUrl: Uint8Array;
     keyword: string | FlagKeyword;
 }> = ({ fileUrl, keyword }) => {
+    const apiProvider = PdfJs as unknown as PdfJsApiProvider;
     const searchPluginInstance = searchPlugin({
         keyword,
     });
 
     return (
-        <div
-            style={{
-                border: '1px solid rgba(0, 0, 0, .3)',
-                height: '50rem',
-                width: '50rem',
-            }}
-        >
-            <Viewer fileUrl={fileUrl} plugins={[searchPluginInstance]} />
-        </div>
+        <PdfJsApiContext.Provider value={{ pdfJsApiProvider: apiProvider }}>
+            <div
+                style={{
+                    border: '1px solid rgba(0, 0, 0, .3)',
+                    height: '50rem',
+                    width: '50rem',
+                }}
+            >
+                <Viewer fileUrl={fileUrl} plugins={[searchPluginInstance]} />
+            </div>
+        </PdfJsApiContext.Provider>
     );
 };
 
@@ -32,7 +35,7 @@ test('keyword option', async () => {
     const keyword = 'text';
 
     const { findByText, findByTestId, getByTestId } = render(
-        <TestKeywordOption fileUrl={global['__MULTIPLE_PAGES_PDF__']} keyword={keyword} />
+        <TestKeywordOption fileUrl={global['__MULTIPLE_PAGES_PDF__']} keyword={keyword} />,
     );
     const viewerEle = getByTestId('core__viewer');
     mockIsIntersecting(viewerEle, true);
@@ -58,7 +61,7 @@ test('Special character in the keyword', async () => {
     const keyword = '(a';
 
     const { findByText, findByTestId, getByTestId } = render(
-        <TestKeywordOption fileUrl={global['__OPEN_PARAMS_PDF__']} keyword={keyword} />
+        <TestKeywordOption fileUrl={global['__OPEN_PARAMS_PDF__']} keyword={keyword} />,
     );
     const viewerEle = getByTestId('core__viewer');
     mockIsIntersecting(viewerEle, true);
@@ -108,7 +111,7 @@ test('Match case of special character', async () => {
     };
 
     const { findByText, findByTestId, getByTestId } = render(
-        <TestKeywordOption fileUrl={global['__OPEN_PARAMS_PDF__']} keyword={flagKeyword} />
+        <TestKeywordOption fileUrl={global['__OPEN_PARAMS_PDF__']} keyword={flagKeyword} />,
     );
     const viewerEle = getByTestId('core__viewer');
     mockIsIntersecting(viewerEle, true);

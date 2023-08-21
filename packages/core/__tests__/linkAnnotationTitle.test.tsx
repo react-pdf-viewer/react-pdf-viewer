@@ -1,19 +1,25 @@
 import { render, waitForElementToBeRemoved } from '@testing-library/react';
+import * as PdfJs from 'pdfjs-dist';
 import * as React from 'react';
 import { mockIsIntersecting } from '../../../test-utils/mockIntersectionObserver';
-import { Viewer } from '../src';
+import { PdfJsApiContext, Viewer, type PdfJsApiProvider } from '../src';
 
 const TestSetLinkAnnotationTitle: React.FC<{
     fileUrl: Uint8Array;
-}> = ({ fileUrl }) => (
-    <div style={{ height: '50rem', width: '50rem' }}>
-        <Viewer fileUrl={fileUrl} />
-    </div>
-);
+}> = ({ fileUrl }) => {
+    const apiProvider = PdfJs as unknown as PdfJsApiProvider;
+    return (
+        <PdfJsApiContext.Provider value={{ pdfJsApiProvider: apiProvider }}>
+            <div style={{ height: '50rem', width: '50rem' }}>
+                <Viewer fileUrl={fileUrl} />
+            </div>
+        </PdfJsApiContext.Provider>
+    );
+};
 
 test('Set title for link annotations', async () => {
     const { findByTestId, getByTestId } = render(
-        <TestSetLinkAnnotationTitle fileUrl={new Uint8Array(global['__OPEN_PARAMS_PDF__'])} />
+        <TestSetLinkAnnotationTitle fileUrl={new Uint8Array(global['__OPEN_PARAMS_PDF__'])} />,
     );
 
     const viewerEle = getByTestId('core__viewer');

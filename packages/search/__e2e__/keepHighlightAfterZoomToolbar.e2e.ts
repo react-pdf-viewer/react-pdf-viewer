@@ -1,6 +1,11 @@
 import 'expect-puppeteer';
+import puppeteer from 'puppeteer';
 
 test('Keep highlighting after clicking zoom buttons in the default toolbar', async () => {
+    const browser = await puppeteer.launch({
+        headless: false,
+    });
+    const page = await browser.newPage();
     await page.goto('http://localhost:3000/search-keyword-toolbar');
     await page.setViewport({
         width: 1920,
@@ -30,7 +35,7 @@ test('Keep highlighting after clicking zoom buttons in the default toolbar', asy
                 index: (node as HTMLElement).getAttribute('data-index'),
                 height: (node as HTMLElement).style.height,
                 width: (node as HTMLElement).style.width,
-            }))
+            })),
         );
         return highlightAreas;
     };
@@ -68,4 +73,5 @@ test('Keep highlighting after clicking zoom buttons in the default toolbar', asy
     expect(areas[3].height).toEqual('1.50545%');
     expect(areas[3].width).toEqual('7.20052%');
     expect(areas[3].index).toEqual('3');
+    await browser.close();
 });

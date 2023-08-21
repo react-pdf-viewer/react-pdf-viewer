@@ -6,12 +6,12 @@
  * @copyright 2019-2023 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import type { PdfJs, Store } from '@react-pdf-viewer/core';
+import { type PdfJs, type Store } from '@react-pdf-viewer/core';
 import * as React from 'react';
 import { BookmarkList } from './BookmarkList';
-import type { IsBookmarkExpanded } from './types/IsBookmarkExpanded';
-import type { RenderBookmarkItem } from './types/RenderBookmarkItemProps';
-import type { StoreProps } from './types/StoreProps';
+import { type IsBookmarkExpanded } from './types/IsBookmarkExpanded';
+import { type RenderBookmarkItem } from './types/RenderBookmarkItemProps';
+import { type StoreProps } from './types/StoreProps';
 
 enum Toggle {
     Collapse,
@@ -97,7 +97,7 @@ export const BookmarkListRoot: React.FC<{
 
         const targetIndex = Math.min(
             bookmarkElements.length - 1,
-            Math.max(0, getItemIndex(bookmarkElements, activeEle as HTMLElement))
+            Math.max(0, getItemIndex(bookmarkElements, activeEle as HTMLElement)),
         );
         const targetEle = bookmarkElements[targetIndex];
 

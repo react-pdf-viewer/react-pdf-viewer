@@ -6,31 +6,31 @@
  * @copyright 2019-2023 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import type {
-    Plugin,
-    PluginFunctions,
-    PluginOnDocumentLoad,
-    PluginOnTextLayerRender,
-    PluginRenderPageLayer,
-    RenderViewer,
-    Slot,
+import {
+    createStore,
+    type Plugin,
+    type PluginFunctions,
+    type PluginOnDocumentLoad,
+    type PluginOnTextLayerRender,
+    type PluginRenderPageLayer,
+    type RenderViewer,
+    type Slot,
 } from '@react-pdf-viewer/core';
-import { createStore } from '@react-pdf-viewer/core';
 import * as React from 'react';
-import { EMPTY_KEYWORD_REGEXP } from './constants';
 import { Highlights } from './Highlights';
-import { normalizeSingleKeyword } from './normalizeKeyword';
 import { Search, SearchProps } from './Search';
 import { ShortcutHandler } from './ShortcutHandler';
 import { ShowSearchPopover, ShowSearchPopoverProps } from './ShowSearchPopover';
 import { ShowSearchPopoverButton } from './ShowSearchPopoverButton';
-import type { Match } from './types/Match';
-import type { NormalizedKeyword } from './types/NormalizedKeyword';
-import type { OnHighlightKeyword } from './types/OnHighlightKeyword';
-import type { RenderHighlightsProps } from './types/RenderHighlightsProps';
-import type { SearchTargetPageFilter } from './types/SearchTargetPage';
-import type { SingleKeyword } from './types/SingleKeyword';
-import type { StoreProps } from './types/StoreProps';
+import { EMPTY_KEYWORD_REGEXP } from './constants';
+import { normalizeSingleKeyword } from './normalizeKeyword';
+import { type Match } from './types/Match';
+import { type NormalizedKeyword } from './types/NormalizedKeyword';
+import { type OnHighlightKeyword } from './types/OnHighlightKeyword';
+import { type RenderHighlightsProps } from './types/RenderHighlightsProps';
+import { type SearchTargetPageFilter } from './types/SearchTargetPage';
+import { type SingleKeyword } from './types/SingleKeyword';
+import { type StoreProps } from './types/StoreProps';
 import { useSearch } from './useSearch';
 
 export interface SearchPlugin extends Plugin {
@@ -60,7 +60,7 @@ export const searchPlugin = (props?: SearchPluginProps): SearchPlugin => {
     const searchPluginProps = React.useMemo(
         // eslint-disable-next-line @typescript-eslint/no-empty-function
         () => Object.assign({}, { enableShortcuts: true, onHighlightKeyword: () => {} }, props),
-        []
+        [],
     );
     const store = React.useMemo(
         () =>
@@ -74,7 +74,7 @@ export const searchPlugin = (props?: SearchPluginProps): SearchPlugin => {
                 },
                 renderStatus: new Map<number, PluginOnTextLayerRender>(),
             }),
-        []
+        [],
     );
     const { clearKeyword, jumpToMatch, jumpToNextMatch, jumpToPreviousMatch, searchFor, setKeywords, setTargetPages } =
         useSearch(store);

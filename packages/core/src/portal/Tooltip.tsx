@@ -11,7 +11,7 @@ import { useEscape } from '../hooks/useEscape';
 import { useToggle } from '../hooks/useToggle';
 import { Position } from '../structs/Position';
 import { ToggleStatus } from '../structs/ToggleStatus';
-import type { Offset } from '../types/Offset';
+import { type Offset } from '../types/Offset';
 import { uniqueId } from '../utils/uniqueId';
 import { TooltipBody } from './TooltipBody';
 

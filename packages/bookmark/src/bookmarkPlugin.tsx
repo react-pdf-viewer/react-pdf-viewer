@@ -6,13 +6,12 @@
  * @copyright 2019-2023 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import type { Plugin, PluginFunctions, PluginOnDocumentLoad } from '@react-pdf-viewer/core';
-import { createStore } from '@react-pdf-viewer/core';
+import { createStore, type Plugin, type PluginFunctions, type PluginOnDocumentLoad } from '@react-pdf-viewer/core';
 import * as React from 'react';
 import { BookmarkListWithStore } from './BookmarkListWithStore';
-import type { IsBookmarkExpanded } from './types/IsBookmarkExpanded';
-import type { RenderBookmarkItem } from './types/RenderBookmarkItemProps';
-import type { StoreProps } from './types/StoreProps';
+import { type IsBookmarkExpanded } from './types/IsBookmarkExpanded';
+import { type RenderBookmarkItem } from './types/RenderBookmarkItemProps';
+import { type StoreProps } from './types/StoreProps';
 
 export interface BookmarksProps {
     isBookmarkExpanded?: IsBookmarkExpanded;
@@ -29,7 +28,7 @@ export const bookmarkPlugin = (): BookmarkPlugin => {
             createStore<StoreProps>({
                 bookmarkExpandedMap: new Map(),
             }),
-        []
+        [],
     );
 
     const BookmarksDecorator = (props?: BookmarksProps) => (

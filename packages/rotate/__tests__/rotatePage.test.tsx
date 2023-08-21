@@ -1,5 +1,6 @@
-import { PrimaryButton, RotateDirection, Viewer } from '@react-pdf-viewer/core';
+import { PdfJsApiContext, PrimaryButton, RotateDirection, Viewer, type PdfJsApiProvider } from '@react-pdf-viewer/core';
 import { fireEvent, render, waitForElementToBeRemoved } from '@testing-library/react';
+import * as PdfJs from 'pdfjs-dist';
 import * as React from 'react';
 import { mockIsIntersecting } from '../../../test-utils/mockIntersectionObserver';
 import { mockResize } from '../../../test-utils/mockResizeObserver';
@@ -8,66 +9,69 @@ import { rotatePlugin } from '../src';
 const TestRotatePage: React.FC<{
     fileUrl: Uint8Array;
 }> = ({ fileUrl }) => {
+    const apiProvider = PdfJs as unknown as PdfJsApiProvider;
     const rotatePluginInstance = rotatePlugin();
     const { RotatePage } = rotatePluginInstance;
 
     return (
-        <div
-            data-testid="root"
-            className="rpv-core__viewer"
-            style={{
-                border: '1px solid rgba(0, 0, 0, 0.3)',
-                display: 'flex',
-                flexDirection: 'column',
-                height: '50rem',
-                margin: '5rem auto',
-                width: '64rem',
-            }}
-        >
+        <PdfJsApiContext.Provider value={{ pdfJsApiProvider: apiProvider }}>
             <div
+                data-testid="root"
+                className="rpv-core__viewer"
                 style={{
-                    alignItems: 'center',
-                    backgroundColor: '#eeeeee',
-                    borderBottom: '1px solid rgba(0, 0, 0, 0.1)',
+                    border: '1px solid rgba(0, 0, 0, 0.3)',
                     display: 'flex',
-                    justifyContent: 'center',
-                    padding: '4px',
+                    flexDirection: 'column',
+                    height: '50rem',
+                    margin: '5rem auto',
+                    width: '64rem',
                 }}
             >
-                <div style={{ padding: '0 0.25rem' }}>
-                    <RotatePage>
-                        {(props) => (
-                            <PrimaryButton
-                                testId="rotate-forward"
-                                onClick={() => props.onRotatePage(0, RotateDirection.Forward)}
-                            >
-                                Rotate the first page forward
-                            </PrimaryButton>
-                        )}
-                    </RotatePage>
+                <div
+                    style={{
+                        alignItems: 'center',
+                        backgroundColor: '#eeeeee',
+                        borderBottom: '1px solid rgba(0, 0, 0, 0.1)',
+                        display: 'flex',
+                        justifyContent: 'center',
+                        padding: '4px',
+                    }}
+                >
+                    <div style={{ padding: '0 0.25rem' }}>
+                        <RotatePage>
+                            {(props) => (
+                                <PrimaryButton
+                                    testId="rotate-forward"
+                                    onClick={() => props.onRotatePage(0, RotateDirection.Forward)}
+                                >
+                                    Rotate the first page forward
+                                </PrimaryButton>
+                            )}
+                        </RotatePage>
+                    </div>
+                    <div style={{ padding: '0 0.25rem' }}>
+                        <RotatePage>
+                            {(props) => (
+                                <PrimaryButton
+                                    testId="rotate-backward"
+                                    onClick={() => props.onRotatePage(0, RotateDirection.Backward)}
+                                >
+                                    Rotate the first page backward
+                                </PrimaryButton>
+                            )}
+                        </RotatePage>
+                    </div>
                 </div>
-                <div style={{ padding: '0 0.25rem' }}>
-                    <RotatePage>
-                        {(props) => (
-                            <PrimaryButton
-                                testId="rotate-backward"
-                                onClick={() => props.onRotatePage(0, RotateDirection.Backward)}
-                            >
-                                Rotate the first page backward
-                            </PrimaryButton>
-                        )}
-                    </RotatePage>
+                <div
+                    style={{
+                        flex: 1,
+                        overflow: 'hidden',
+                    }}
+                >
+                    <Viewer defaultScale={0.5} fileUrl={fileUrl} plugins={[rotatePluginInstance]} />
                 </div>
             </div>
-            <div
-                style={{
-                    flex: 1,
-                    overflow: 'hidden',
-                }}
-            >
-                <Viewer defaultScale={0.5} fileUrl={fileUrl} plugins={[rotatePluginInstance]} />
-            </div>
-        </div>
+        </PdfJsApiContext.Provider>
     );
 };
 

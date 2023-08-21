@@ -44,6 +44,7 @@
         "build": "npm run clean && npm run js && npm run css",
         "js": "cp src/index.d.ts lib && cp dist/index.js lib && rollup -c ../../rollup.config.cjs",
         "css": "sass --no-source-map --style compressed src/styles/index.scss lib/styles/index.css",
-        "test": "jest --config ../../jest.config.js"
+        "test": "jest --config ../../jest.config.js",
+        "release": "npm publish --access public"
     }
 }

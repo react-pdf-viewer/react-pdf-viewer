@@ -1,6 +1,7 @@
-import { Viewer } from '@react-pdf-viewer/core';
+import { PdfJsApiContext, Viewer, type PdfJsApiProvider } from '@react-pdf-viewer/core';
 import { defaultLayoutPlugin } from '@react-pdf-viewer/default-layout';
 import { fireEvent, render, waitForElementToBeRemoved } from '@testing-library/react';
+import * as PdfJs from 'pdfjs-dist';
 import * as React from 'react';
 import { mockIsIntersecting } from '../../../test-utils/mockIntersectionObserver';
 
@@ -8,6 +9,7 @@ const TestSearchPopoverInitialKeyword: React.FC<{
     fileUrl: Uint8Array;
     keyword: string;
 }> = ({ fileUrl, keyword }) => {
+    const apiProvider = PdfJs as unknown as PdfJsApiProvider;
     const defaultLayoutPluginInstance = defaultLayoutPlugin({
         toolbarPlugin: {
             searchPlugin: {
@@ -20,21 +22,23 @@ const TestSearchPopoverInitialKeyword: React.FC<{
     });
 
     return (
-        <div
-            style={{
-                border: '1px solid rgba(0, 0, 0, .3)',
-                height: '50rem',
-                width: '64rem',
-            }}
-        >
-            <Viewer fileUrl={fileUrl} plugins={[defaultLayoutPluginInstance]} />
-        </div>
+        <PdfJsApiContext.Provider value={{ pdfJsApiProvider: apiProvider }}>
+            <div
+                style={{
+                    border: '1px solid rgba(0, 0, 0, .3)',
+                    height: '50rem',
+                    width: '64rem',
+                }}
+            >
+                <Viewer fileUrl={fileUrl} plugins={[defaultLayoutPluginInstance]} />
+            </div>
+        </PdfJsApiContext.Provider>
     );
 };
 
 test('Search popover performs search based on the initial keyword', async () => {
     const { findByLabelText, findByTestId, findByText, getByTestId } = render(
-        <TestSearchPopoverInitialKeyword fileUrl={global['__OPEN_PARAMS_PDF__']} keyword="PDF" />
+        <TestSearchPopoverInitialKeyword fileUrl={global['__OPEN_PARAMS_PDF__']} keyword="PDF" />,
     );
 
     const viewerEle = getByTestId('core__viewer');

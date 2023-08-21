@@ -1,17 +1,18 @@
-import { Viewer } from '@react-pdf-viewer/core';
-import type { ToolbarProps, ToolbarSlot, TransformToolbarSlot } from '@react-pdf-viewer/toolbar';
+import { PdfJsApiContext, Viewer, type PdfJsApiProvider } from '@react-pdf-viewer/core';
+import { type ToolbarProps, type ToolbarSlot, type TransformToolbarSlot } from '@react-pdf-viewer/toolbar';
 import { fireEvent, render, waitForElementToBeRemoved } from '@testing-library/react';
+import * as fs from 'node:fs';
+import * as path from 'path';
+import * as PdfJs from 'pdfjs-dist';
 import * as React from 'react';
 import { mockIsIntersecting } from '../../../test-utils/mockIntersectionObserver';
 import { mockResize } from '../../../test-utils/mockResizeObserver';
 import { defaultLayoutPlugin } from '../src';
 
-const fs = require('fs');
-const path = require('path');
-
 const TestCurrentPageLabel: React.FC<{
     fileUrl: Uint8Array;
 }> = ({ fileUrl }) => {
+    const apiProvider = PdfJs as unknown as PdfJsApiProvider;
     const transform: TransformToolbarSlot = (slot: ToolbarSlot) => {
         const { CurrentPageLabel } = slot;
         return {
@@ -41,9 +42,11 @@ const TestCurrentPageLabel: React.FC<{
     const { renderDefaultToolbar } = defaultLayoutPluginInstance.toolbarPluginInstance;
 
     return (
-        <div style={{ height: '50rem', width: '50rem' }}>
-            <Viewer fileUrl={fileUrl} plugins={[defaultLayoutPluginInstance]} />
-        </div>
+        <PdfJsApiContext.Provider value={{ pdfJsApiProvider: apiProvider }}>
+            <div style={{ height: '50rem', width: '50rem' }}>
+                <Viewer fileUrl={fileUrl} plugins={[defaultLayoutPluginInstance]} />
+            </div>
+        </PdfJsApiContext.Provider>
     );
 };
 
@@ -95,7 +98,7 @@ test('Test <CurrentPageLabel>', async () => {
 
 test('Test <CurrentPageLabel> with custom page label', async () => {
     const pageLabelDocument = new Uint8Array(
-        fs.readFileSync(path.resolve(__dirname, '../../../samples/ignore/page-labels-2.pdf'))
+        fs.readFileSync(path.resolve(__dirname, '../../../samples/ignore/page-labels-2.pdf')),
     );
     const { findByTestId, getByTestId } = render(<TestCurrentPageLabel fileUrl={pageLabelDocument} />);
 

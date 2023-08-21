@@ -8,8 +8,8 @@
 
 import * as React from 'react';
 import { renderDefaultToolbar } from './renderDefaultToolbar';
-import type { ToolbarSlot } from './types/ToolbarSlot';
-import type { TransformToolbarSlot } from './types/TransformToolbarSlot';
+import { type ToolbarSlot } from './types/ToolbarSlot';
+import { type TransformToolbarSlot } from './types/TransformToolbarSlot';
 
 const defaultTransform: TransformToolbarSlot = (slot: ToolbarSlot) => {
     const { NumberOfPages } = slot;

@@ -7,7 +7,7 @@
  */
 
 import * as React from 'react';
-import type { PdfJs } from '../types/PdfJs';
+import { type PdfJs } from '../types/PdfJs';
 import { Annotation } from './Annotation';
 import { getContents } from './getContents';
 import { getTitle } from './getTitle';

@@ -1,6 +1,11 @@
 import 'expect-puppeteer';
+import puppeteer from 'puppeteer';
 
 test('Cover component', async () => {
+    const browser = await puppeteer.launch({
+        headless: false,
+    });
+    const page = await browser.newPage();
     await page.goto('http://localhost:3000/thumbnail-cover');
     await page.setViewport({
         width: 1200,
@@ -18,7 +23,7 @@ test('Cover component', async () => {
 
     expect(result?.cls).toEqual('rpv-thumbnail__cover-image');
     expect(result?.src?.substring(0, 100)).toEqual(
-        'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAO4AAAE+CAYAAACKpyy5AAAAAXNSR0IArs4c6QAAIABJREFUeF7tnQ'
+        'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAO4AAAE+CAYAAACKpyy5AAAAAXNSR0IArs4c6QAAIABJREFUeF7tnQ',
     );
     expect(result?.src?.length).toEqual(14026);
     expect(result?.height).toEqual(318);
@@ -37,9 +42,10 @@ test('Cover component', async () => {
 
     expect(result?.cls).toEqual('rpv-thumbnail__cover-image');
     expect(result?.src?.substring(0, 100)).toEqual(
-        'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOAAAAE+CAYAAACUbhwKAAAAAXNSR0IArs4c6QAAIABJREFUeF7t3Q'
+        'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOAAAAE+CAYAAACUbhwKAAAAAXNSR0IArs4c6QAAIABJREFUeF7t3Q',
     );
     expect(result?.src?.length).toEqual(19926);
     expect(result?.height).toEqual(318);
     expect(result?.width).toEqual(224);
+    await browser.close();
 });

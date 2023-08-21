@@ -1,12 +1,13 @@
 import { render, waitForElementToBeRemoved } from '@testing-library/react';
+import * as PdfJs from 'pdfjs-dist';
 import * as React from 'react';
 import { mockIsIntersecting } from '../../../test-utils/mockIntersectionObserver';
-import type { PageLayout } from '../src';
-import { SpecialZoomLevel, Viewer } from '../src';
+import { PdfJsApiContext, SpecialZoomLevel, Viewer, type PageLayout, type PdfJsApiProvider } from '../src';
 
 const TestPageMargin: React.FC<{
     fileUrl: Uint8Array;
 }> = ({ fileUrl }) => {
+    const apiProvider = PdfJs as unknown as PdfJsApiProvider;
     const pageLayout: PageLayout = {
         buildPageStyles: () => ({
             alignItems: 'center',
@@ -17,21 +18,23 @@ const TestPageMargin: React.FC<{
     };
 
     return (
-        <div
-            style={{
-                border: '1px solid rgba(0, 0, 0, .3)',
-                height: '50rem',
-                width: '50rem',
-            }}
-        >
-            <Viewer fileUrl={fileUrl} defaultScale={SpecialZoomLevel.PageFit} pageLayout={pageLayout} />
-        </div>
+        <PdfJsApiContext.Provider value={{ pdfJsApiProvider: apiProvider }}>
+            <div
+                style={{
+                    border: '1px solid rgba(0, 0, 0, .3)',
+                    height: '50rem',
+                    width: '50rem',
+                }}
+            >
+                <Viewer fileUrl={fileUrl} defaultScale={SpecialZoomLevel.PageFit} pageLayout={pageLayout} />
+            </div>
+        </PdfJsApiContext.Provider>
     );
 };
 
 test('Page margin', async () => {
     const { findByLabelText, findByTestId, getByTestId } = render(
-        <TestPageMargin fileUrl={global['__OPEN_PARAMS_PDF__']} />
+        <TestPageMargin fileUrl={global['__OPEN_PARAMS_PDF__']} />,
     );
 
     const viewerEle = getByTestId('core__viewer');

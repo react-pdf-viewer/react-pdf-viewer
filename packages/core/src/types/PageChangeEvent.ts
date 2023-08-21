@@ -6,7 +6,7 @@
  * @copyright 2019-2023 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import type { PdfJs } from './PdfJs';
+import { type PdfJs } from './PdfJs';
 
 export interface PageChangeEvent {
     currentPage: number;

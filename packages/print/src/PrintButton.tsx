@@ -6,11 +6,17 @@
  * @copyright 2019-2023 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import type { LocalizationMap } from '@react-pdf-viewer/core';
-import { isMac, LocalizationContext, MinimalButton, Position, Tooltip } from '@react-pdf-viewer/core';
+import {
+    isMac,
+    LocalizationContext,
+    MinimalButton,
+    Position,
+    Tooltip,
+    type LocalizationMap,
+} from '@react-pdf-viewer/core';
 import * as React from 'react';
 import { PrintIcon } from './PrintIcon';
-import type { RenderPrintProps } from './types/RenderPrintProps';
+import { type RenderPrintProps } from './types/RenderPrintProps';
 
 const TOOLTIP_OFFSET = { left: 0, top: 8 };
 

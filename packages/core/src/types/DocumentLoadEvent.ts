@@ -6,8 +6,8 @@
  * @copyright 2019-2023 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import type { OpenFile } from './OpenFile';
-import type { PdfJs } from './PdfJs';
+import { type OpenFile } from './OpenFile';
+import { type PdfJs } from './PdfJs';
 
 export interface DocumentLoadEvent {
     doc: PdfJs.PdfDocument;

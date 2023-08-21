@@ -6,25 +6,26 @@
  * @copyright 2019-2023 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-import type { PdfJs, VisibilityChanged } from '@react-pdf-viewer/core';
 import {
-    chunk,
-    classNames,
     RotateDirection,
     TextDirection,
     ThemeContext,
+    ViewMode,
+    chunk,
+    classNames,
     useIsMounted,
     useIsomorphicLayoutEffect,
     usePrevious,
     useRenderQueue,
-    ViewMode,
+    type PdfJs,
+    type VisibilityChanged,
 } from '@react-pdf-viewer/core';
 import * as React from 'react';
+import { ThumbnailContainer } from './ThumbnailContainer';
 import { scrollToBeVisibleHorizontally, scrollToBeVisibleVertically } from './scrollToBeVisible';
 import { ThumbnailDirection } from './structs/ThumbnailDirection';
-import { ThumbnailContainer } from './ThumbnailContainer';
-import type { RenderCurrentPageLabel } from './types/RenderCurrentPageLabelProps';
-import type { RenderThumbnailItem } from './types/RenderThumbnailItemProps';
+import { type RenderCurrentPageLabel } from './types/RenderCurrentPageLabelProps';
+import { type RenderThumbnailItem } from './types/RenderThumbnailItemProps';
 
 export const ThumbnailList: React.FC<{
     currentPage: number;
@@ -81,7 +82,7 @@ export const ThumbnailList: React.FC<{
             Array(numPages)
                 .fill(0)
                 .map((_, pageIndex) => pageIndex),
-        [docId]
+        [docId],
     );
 
     const chunks = React.useMemo(() => {
@@ -200,7 +201,7 @@ export const ThumbnailList: React.FC<{
                 renderNextThumbnail();
             }
         },
-        [docId]
+        [docId],
     );
 
     const handleVisibilityChanged = React.useCallback(
@@ -211,7 +212,7 @@ export const ThumbnailList: React.FC<{
                   renderQueue.setOutOfRange(pageIndex);
             renderNextThumbnail();
         },
-        [docId]
+        [docId],
     );
 
     const renderNextThumbnail = React.useCallback(() => {

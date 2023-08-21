@@ -1,6 +1,11 @@
 import 'expect-puppeteer';
+import puppeteer from 'puppeteer';
 
 test('Jump between matches', async () => {
+    const browser = await puppeteer.launch({
+        headless: false,
+    });
+    const page = await browser.newPage();
     await page.goto('http://localhost:3000/search-custom-control');
     await page.setViewport({
         width: 1920,
@@ -87,4 +92,5 @@ test('Jump between matches', async () => {
     expect(position?.index).toEqual('6');
     expect(position?.left).toEqual('43.554%');
     expect(position?.top).toEqual('49.5535%');
+    await browser.close();
 });
