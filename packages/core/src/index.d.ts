@@ -602,6 +602,12 @@ export interface ViewerProps {
 }
 export class Viewer extends React.Component<ViewerProps> {}
 
+export interface WorkerProps {
+    children?: React.ReactNode;
+    workerUrl: string;
+}
+export class Worker extends React.Component<WorkerProps> {}
+
 // Hooks
 export function useDebounceCallback<T extends unknown[]>(callback: (...args: T) => void, wait: number): void;
 
