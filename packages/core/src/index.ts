@@ -7,6 +7,7 @@
  */
 
 export { Viewer } from './Viewer';
+export { Worker } from './Worker';
 export { AnnotationType } from './annotations/AnnotationType';
 export { Button } from './components/Button';
 export { LazyRender } from './components/LazyRender';
