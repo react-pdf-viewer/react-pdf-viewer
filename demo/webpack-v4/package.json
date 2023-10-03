@@ -14,10 +14,10 @@
         "react-dom": "^18.2.0"
     },
     "devDependencies": {
-        "@babel/core": "^7.22.9",
-        "@babel/preset-env": "^7.22.9",
-        "@babel/preset-react": "^7.22.5",
-        "@babel/preset-typescript": "^7.22.5",
+        "@babel/core": "^7.23.0",
+        "@babel/preset-env": "^7.22.20",
+        "@babel/preset-react": "^7.22.15",
+        "@babel/preset-typescript": "^7.23.0",
         "babel-loader": "^8.3.0",
         "copy-webpack-plugin": "^6.4.1",
         "css-loader": "^5.2.7",
