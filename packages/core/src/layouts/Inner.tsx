@@ -6,6 +6,8 @@
  * @copyright 2019-2023 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
+'use client';
+
 import * as React from 'react';
 import { useFullScreen } from '../fullscreen/useFullScreen';
 import { useDebounceCallback } from '../hooks/useDebounceCallback';

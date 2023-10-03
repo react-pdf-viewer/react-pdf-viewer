@@ -6,6 +6,8 @@
  * @copyright 2019-2023 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
+'use client';
+
 import { createStore, type Plugin, type PluginFunctions, type RenderViewer, type Slot } from '@react-pdf-viewer/core';
 import * as React from 'react';
 import { SwitchSelectionMode, SwitchSelectionModeProps } from './SwitchSelectionMode';

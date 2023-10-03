@@ -6,6 +6,8 @@
  * @copyright 2019-2023 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
+'use client';
+
 export { type EnterFullScreenProps, type RenderEnterFullScreenProps } from './EnterFullScreen';
 export { type EnterFullScreenMenuItemProps } from './EnterFullScreenMenuItem';
 export { type RenderExitFullScreenProps } from './ExitFullScreen';

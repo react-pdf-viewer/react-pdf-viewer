@@ -6,5 +6,7 @@
  * @copyright 2019-2023 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
+'use client';
+
 // Plugin
 export * from './dropPlugin';

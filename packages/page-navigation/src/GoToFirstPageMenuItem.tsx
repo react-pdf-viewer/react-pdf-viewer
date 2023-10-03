@@ -6,6 +6,8 @@
  * @copyright 2019-2023 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
+'use client';
+
 import { LocalizationContext, MenuItem, type LocalizationMap } from '@react-pdf-viewer/core';
 import * as React from 'react';
 import { UpArrowIcon } from './UpArrowIcon';

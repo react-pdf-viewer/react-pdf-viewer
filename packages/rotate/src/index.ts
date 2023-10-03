@@ -6,6 +6,8 @@
  * @copyright 2019-2023 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
+'use client';
+
 export { type RotateProps } from './Rotate';
 export { RotateBackwardIcon } from './RotateBackwardIcon';
 export { RotateForwardIcon } from './RotateForwardIcon';

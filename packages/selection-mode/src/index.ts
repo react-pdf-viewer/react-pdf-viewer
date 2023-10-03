@@ -6,6 +6,8 @@
  * @copyright 2019-2023 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
+'use client';
+
 export { HandToolIcon } from './HandToolIcon';
 export { type SwitchSelectionModeProps } from './SwitchSelectionMode';
 export { TextSelectionIcon } from './TextSelectionIcon';

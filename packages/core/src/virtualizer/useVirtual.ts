@@ -6,6 +6,8 @@
  * @copyright 2019-2023 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
+'use client';
+
 import * as React from 'react';
 import { useMeasureRect } from '../hooks/useMeasureRect';
 import { useScroll } from '../hooks/useScroll';
