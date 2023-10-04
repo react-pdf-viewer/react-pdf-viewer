@@ -6,6 +6,8 @@
  * @copyright 2019-2023 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
+'use client';
+
 import { ScrollMode, ViewMode, type Store } from '@react-pdf-viewer/core';
 import * as React from 'react';
 import { SwitchScrollModeButton } from './SwitchScrollModeButton';

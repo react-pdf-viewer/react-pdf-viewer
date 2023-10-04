@@ -6,6 +6,8 @@
  * @copyright 2019-2023 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
+'use client';
+
 import { attachmentPlugin, type AttachmentPlugin } from '@react-pdf-viewer/attachment';
 import { bookmarkPlugin, type BookmarkPlugin } from '@react-pdf-viewer/bookmark';
 import {

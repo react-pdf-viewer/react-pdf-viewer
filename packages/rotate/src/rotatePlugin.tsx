@@ -6,6 +6,8 @@
  * @copyright 2019-2023 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
+'use client';
+
 import { RotateDirection, createStore, type Plugin, type PluginFunctions } from '@react-pdf-viewer/core';
 import * as React from 'react';
 import { Rotate, RotateProps } from './Rotate';

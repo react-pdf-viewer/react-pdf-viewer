@@ -6,6 +6,8 @@
  * @copyright 2019-2023 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
+'use client';
+
 export { type CurrentScaleProps, type RenderCurrentScaleProps } from './CurrentScale';
 export { type ZoomProps } from './Zoom';
 export { type ZoomInProps } from './ZoomIn';

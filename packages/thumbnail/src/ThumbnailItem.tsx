@@ -6,6 +6,8 @@
  * @copyright 2019-2023 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
+'use client';
+
 import { LocalizationContext, type LocalizationMap, type PdfJs } from '@react-pdf-viewer/core';
 import * as React from 'react';
 import { SpinnerContext } from './SpinnerContext';

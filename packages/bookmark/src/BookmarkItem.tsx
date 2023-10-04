@@ -6,6 +6,8 @@
  * @copyright 2019-2023 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
+'use client';
+
 import { getDestination, type PdfJs, type Store } from '@react-pdf-viewer/core';
 import * as React from 'react';
 import { BookmarkList } from './BookmarkList';

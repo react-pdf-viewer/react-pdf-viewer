@@ -6,6 +6,8 @@
  * @copyright 2019-2023 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
+'use client';
+
 import * as React from 'react';
 import { ScrollDirection } from '../structs/ScrollDirection';
 import { type Offset } from '../types/Offset';
