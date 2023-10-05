@@ -9,7 +9,7 @@
 import { EMPTY_KEYWORD_REGEXP } from './constants';
 import { type FlagKeyword } from './types/FlagKeyword';
 import { type NormalizedKeyword } from './types/NormalizedKeyword';
-import { type SingleKeyword } from './types/SingleKeyword';
+import { SingleKeyword } from './types/SingleKeyword';
 
 // `$&` means the whole matched string
 const escapeRegExp = (input: string): string => input.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
@@ -21,6 +21,7 @@ export const normalizeFlagKeyword = (flagKeyword: FlagKeyword): NormalizedKeywor
         keyword: flagKeyword.keyword,
         regExp: new RegExp(escapeRegExp(source), flags),
         wholeWords: flagKeyword.wholeWords || false,
+        indexes: flagKeyword.indexes || {},
     };
 };
 
@@ -28,12 +29,14 @@ export const normalizeSingleKeyword = (
     keyword: SingleKeyword,
     matchCase?: boolean,
     wholeWords?: boolean,
+    indexes?: { [pageIndex: string | number]: number[] },
 ): NormalizedKeyword => {
     if (keyword instanceof RegExp) {
         return {
             keyword: keyword.source,
             regExp: keyword,
             wholeWords: wholeWords || false,
+            indexes: indexes || {},
         };
     }
 
@@ -45,6 +48,7 @@ export const normalizeSingleKeyword = (
                   keyword,
                   matchCase: matchCase || false,
                   wholeWords: wholeWords || false,
+                  indexes,
               });
     }
 

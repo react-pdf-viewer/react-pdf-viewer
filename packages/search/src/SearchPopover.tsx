@@ -6,8 +6,6 @@
  * @copyright 2019-2023 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-'use client';
-
 import {
     Button,
     LocalizationContext,
@@ -27,6 +25,7 @@ import { NextIcon } from './NextIcon';
 import { PreviousIcon } from './PreviousIcon';
 import { type StoreProps } from './types/StoreProps';
 import { useSearch } from './useSearch';
+import { normalizeSingleKeyword } from './normalizeKeyword';
 
 const PORTAL_OFFSET = { left: 0, top: 8 };
 
@@ -89,7 +88,7 @@ export const SearchPopover: React.FC<{
 
     const onChangeKeyword = (value: string) => {
         setSearchDone(false);
-        setKeyword(value);
+        setKeyword(normalizeSingleKeyword(value));
     };
 
     React.useEffect(() => {

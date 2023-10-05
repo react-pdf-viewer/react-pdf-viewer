@@ -13,4 +13,5 @@ export const EMPTY_KEYWORD_REGEXP: NormalizedKeyword = {
     keyword: '',
     regExp: new RegExp(' '),
     wholeWords: false,
+    indexes: {},
 };

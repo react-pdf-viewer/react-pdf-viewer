@@ -14,6 +14,7 @@ export interface FlagKeyword {
     keyword: string;
     matchCase?: boolean; // `false` by default
     wholeWords?: boolean; // `false` by default
+    indexes?: { [pageIndex: string | number]: number[] }; // `{}` by default
 }
 
 export interface Match {

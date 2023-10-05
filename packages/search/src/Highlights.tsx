@@ -6,8 +6,6 @@
  * @copyright 2019-2023 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-'use client';
-
 import { LayerRenderStatus, type PluginOnTextLayerRender, type Store } from '@react-pdf-viewer/core';
 import * as React from 'react';
 import { HightlightItem } from './HightlightItem';
@@ -70,7 +68,12 @@ export const Highlights: React.FC<{
         (renderProps: RenderHighlightsProps) => (
             <>
                 {renderProps.highlightAreas.map((area, index) => (
-                    <HightlightItem index={index} key={index} area={area} onHighlightKeyword={onHighlightKeyword} />
+                    <HightlightItem
+                        index={area.index}
+                        key={index}
+                        area={area}
+                        onHighlightKeyword={onHighlightKeyword}
+                    />
                 ))}
             </>
         ),
@@ -89,7 +92,7 @@ export const Highlights: React.FC<{
         scale: 1,
         status: LayerRenderStatus.PreRender,
     });
-    const currentMatchRef = React.useRef<HTMLElement | null>(null);
+    const currentMatchRef = React.useRef<NodeListOf<HTMLElement> | null>(null);
     const characterIndexesRef = React.useRef<CharIndex[]>([]);
     const [highlightAreas, setHighlightAreas] = React.useState<HighlightArea[]>([]);
 
@@ -105,6 +108,7 @@ export const Highlights: React.FC<{
         textLayerEle: Element,
         span: HTMLElement,
         charIndexSpan: CharIndex[],
+        index: number,
     ): HighlightArea | null => {
         const range = document.createRange();
 
@@ -150,6 +154,7 @@ export const Highlights: React.FC<{
             width,
             pageHeight,
             pageWidth,
+            index,
         };
     };
 
@@ -190,11 +195,21 @@ export const Highlights: React.FC<{
             }
 
             matches
-                .map((item) => ({
-                    keyword: item.keyword,
-                    indexes: charIndexes.slice(item.startIndex, item.endIndex),
-                }))
-                .forEach((item) => {
+
+                .map((item, i) => {
+                    const returnValue = {
+                        keyword: item.keyword,
+                        indexes: charIndexes.slice(item.startIndex, item.endIndex),
+                    };
+
+                    return Object.keys(keyword.indexes).length > 0
+                        ? keyword.indexes[pageIndex]?.includes(i)
+                            ? returnValue
+                            : null
+                        : returnValue;
+                })
+                .forEach((item, i) => {
+                    if (!item) return;
                     // Group by the span index
                     const spanIndexes = item.indexes.reduce(
                         (acc, item) => {
@@ -214,6 +229,7 @@ export const Highlights: React.FC<{
                                 textLayerEle,
                                 spans[normalizedCharSpan[0].spanIndex],
                                 normalizedCharSpan,
+                                i,
                             );
                             if (hightlighPosition) {
                                 highlightPos.push(hightlighPosition);
@@ -319,22 +335,28 @@ export const Highlights: React.FC<{
         }
 
         const container = containerRef.current;
+
         if (
             matchPosition.pageIndex !== pageIndex ||
             !container ||
             renderStatus.status !== LayerRenderStatus.DidRender
         ) {
+            if (currentMatchRef.current) {
+                currentMatchRef.current.forEach((el) => el.classList.remove('rpv-search__highlight--current'));
+                currentMatchRef.current = null;
+            }
             return;
         }
 
-        const highlightEle = container.querySelector(
-            `.rpv-search__highlight[data-index="${matchPosition.matchIndex}"]`,
+        const highlightEls: NodeListOf<HTMLElement> = container.querySelectorAll(
+            `.rpv-search__highlight[data-index="${matchPosition.matchIndex}"][title="${matchPosition.title}"]`,
         );
-        if (!highlightEle) {
+
+        if (!highlightEls || highlightEls.length === 0) {
             return;
         }
 
-        const { left, top } = calculateOffset(highlightEle as HTMLElement, container);
+        const { left, top } = calculateOffset(highlightEls.item(0), container);
         const jump = store.get('jumpToDestination');
         if (jump) {
             jump({
@@ -344,10 +366,10 @@ export const Highlights: React.FC<{
                 scaleTo: renderStatus.scale,
             });
             if (currentMatchRef.current) {
-                currentMatchRef.current.classList.remove('rpv-search__highlight--current');
+                currentMatchRef.current.forEach((el) => el.classList.remove('rpv-search__highlight--current'));
             }
-            currentMatchRef.current = highlightEle as HTMLElement;
-            highlightEle.classList.add('rpv-search__highlight--current');
+            currentMatchRef.current = highlightEls;
+            highlightEls.forEach((el) => el.classList.add('rpv-search__highlight--current'));
         }
     }, [highlightAreas, matchPosition]);
 
