@@ -41,7 +41,7 @@ export const LocalePopover: React.FC<LocalePopoverProps> = ({
 }) => {
     const { l10n } = React.useContext(LocalizationContext);
 
-    const renderTarget = (toggle: Toggle, opened: boolean) => {
+    const renderTarget = (toggle: Toggle, opened: boolean, ariaControls: string) => {
         const label =
             l10n && l10n.localeSwitcher
                 ? ((l10n.localeSwitcher as LocalizationMap).switchLocale as string)
@@ -57,6 +57,8 @@ export const LocalePopover: React.FC<LocalePopoverProps> = ({
                         isSelected={opened}
                         testId="locale-switcher__popover-target"
                         onClick={toggle}
+                        ariaControls={ariaControls}
+                        ariaExpanded={opened}
                     >
                         <LocaleIcon />
                     </MinimalButton>

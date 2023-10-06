@@ -43,13 +43,8 @@ export const Popover: React.FC<{
     const controlsSuffix = React.useMemo(() => ariaControlsSuffix || `${uniqueId()}`, []);
 
     return (
-        <div
-            ref={targetRef}
-            aria-expanded={opened ? 'true' : 'false'}
-            aria-haspopup={ariaHasPopup}
-            aria-controls={`rpv-core__popver-body-${controlsSuffix}`}
-        >
-            {target(toggle, opened)}
+        <div ref={targetRef} aria-haspopup={ariaHasPopup}>
+            {target(toggle, opened, `rpv-core__popver-body-${ariaControlsSuffix}`)}
 
             {opened && (
                 <>

@@ -40,9 +40,11 @@ export const ShowSearchPopover: React.FC<{
             ariaControlsSuffix="search"
             lockScroll={false}
             position={portalPosition}
-            target={(toggle: Toggle) =>
+            target={(toggle: Toggle, opened: boolean, ariaControls: string) =>
                 render({
                     onClick: toggle,
+                    opened: opened,
+                    ariaControls: ariaControls,
                 })
             }
             content={(toggle: Toggle) => <SearchPopover store={store} onToggle={toggle} />}

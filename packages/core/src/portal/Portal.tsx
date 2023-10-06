@@ -13,17 +13,18 @@ import { useToggle } from '../hooks/useToggle';
 import { type Toggle } from '../types/Toggle';
 
 export type RenderContent = (toggle: Toggle) => React.ReactNode;
-export type RenderTarget = (toggle: Toggle, opened: boolean) => React.ReactNode;
+export type RenderTarget = (toggle: Toggle, opened: boolean, ariaControls: string) => React.ReactNode;
 
 export const Portal: React.FC<{
     content: RenderContent;
     isOpened?: boolean;
     target?: RenderTarget;
-}> = ({ content, isOpened = false, target }) => {
+    ariaControls?: string;
+}> = ({ content, isOpened = false, target, ariaControls }) => {
     const { opened, toggle } = useToggle(isOpened);
     return (
         <>
-            {target && target(toggle, opened)}
+            {target && target(toggle, opened, ariaControls)}
             {opened && content(toggle)}
         </>
     );

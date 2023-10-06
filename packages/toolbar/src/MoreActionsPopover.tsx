@@ -54,7 +54,7 @@ export const MoreActionsPopover: React.FC<{
         SwitchThemeMenuItem,
     } = toolbarSlot;
 
-    const renderTarget = (toggle: Toggle, opened: boolean): React.ReactElement => {
+    const renderTarget = (toggle: Toggle, opened: boolean, ariaControls: string): React.ReactElement => {
         const label = l10n && l10n.toolbar ? ((l10n.toolbar as LocalizationMap).moreActions as string) : 'More actions';
 
         return (
@@ -66,7 +66,9 @@ export const MoreActionsPopover: React.FC<{
                         ariaLabel={label}
                         isSelected={opened}
                         testId="toolbar__more-actions-popover-target"
+                        ariaExpanded={opened}
                         onClick={toggle}
+                        ariaControls={ariaControls}
                     >
                         <MoreIcon />
                     </MinimalButton>

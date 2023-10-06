@@ -129,6 +129,7 @@ export const defaultLayoutPlugin = (props?: DefaultLayoutPluginProps): DefaultLa
                           'data-testid': slot.subSlot.attrs['data-testid'],
                           ref: slot.subSlot.attrs.ref,
                           style: slot.subSlot.attrs.style,
+                          tabIndex: slot.subSlot.attrs.tabIndex,
                       }
                     : {};
 
