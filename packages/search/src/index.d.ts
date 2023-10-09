@@ -106,6 +106,7 @@ export interface HighlightArea {
     // The size of the page in pixels
     pageHeight: number;
     pageWidth: number;
+    index: number;
 }
 export interface RenderHighlightsProps {
     getCssProperties(area: HighlightArea): React.CSSProperties;

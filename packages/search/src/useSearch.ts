@@ -13,8 +13,8 @@ import { normalizeSingleKeyword } from './normalizeKeyword';
 import { type Match } from './types/Match';
 import { type SearchTargetPageFilter } from './types/SearchTargetPage';
 import { type StoreProps } from './types/StoreProps';
+import { type SingleKeyword } from './types/SingleKeyword';
 import { useDocument } from './useDocument';
-import { SingleKeyword } from './types/SingleKeyword';
 
 export const useSearch = (
     store: Store<StoreProps>,

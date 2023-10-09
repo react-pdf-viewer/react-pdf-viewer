@@ -13,8 +13,8 @@ import * as React from 'react';
 import { type Match } from './types/Match';
 import { type SearchTargetPageFilter } from './types/SearchTargetPage';
 import { type StoreProps } from './types/StoreProps';
+import { type SingleKeyword } from './types/SingleKeyword';
 import { useSearch } from './useSearch';
-import { SingleKeyword } from './types/SingleKeyword';
 
 export interface RenderSearchProps {
     clearKeyword(): void;

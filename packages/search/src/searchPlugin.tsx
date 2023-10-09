@@ -30,8 +30,8 @@ import { type OnHighlightKeyword } from './types/OnHighlightKeyword';
 import { type RenderHighlightsProps } from './types/RenderHighlightsProps';
 import { type SearchTargetPageFilter } from './types/SearchTargetPage';
 import { type StoreProps } from './types/StoreProps';
+import { type SingleKeyword } from './types/SingleKeyword';
 import { useSearch } from './useSearch';
-import { SingleKeyword } from './types/SingleKeyword';
 
 export interface SearchPlugin extends Plugin {
     Search(props: SearchProps): React.ReactElement;
