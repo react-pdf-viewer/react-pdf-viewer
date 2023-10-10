@@ -35,6 +35,7 @@ export interface MatchPosition {
     // Each page may have multiple matches
     matchIndex: number;
     pageIndex: number;
+    title: string;
 }
 
 export interface OnHighlightKeyword {
