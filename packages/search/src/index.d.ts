@@ -19,7 +19,7 @@ export interface FlagKeyword {
 
 export interface Match {
     keyword: RegExp;
-    original: string;
+    source: string;
     // The index of match in the page
     // Each page may have multiple matches
     matchIndex: number;
