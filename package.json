@@ -31,9 +31,11 @@
         "release": "turbo run release"
     },
     "devDependencies": {
+        "@rollup/plugin-image": "^3.0.3",
         "@rollup/plugin-json": "^6.0.0",
         "@rollup/plugin-terser": "^0.4.3",
         "@rollup/plugin-typescript": "^11.1.4",
+        "@rollup/plugin-url": "^8.0.2",
         "@testing-library/jest-dom": "^6.1.3",
         "@testing-library/react": "^14.0.0",
         "@types/expect-puppeteer": "^5.0.4",

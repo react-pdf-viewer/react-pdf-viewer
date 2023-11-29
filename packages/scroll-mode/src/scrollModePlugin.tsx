@@ -17,14 +17,14 @@ import {
     type ViewerState,
 } from '@react-pdf-viewer/core';
 import * as React from 'react';
-import { SwitchScrollMode, SwitchScrollModeProps } from './SwitchScrollMode';
+import { SwitchScrollMode } from './SwitchScrollMode';
 import { SwitchScrollModeButton } from './SwitchScrollModeButton';
 import { SwitchScrollModeMenuItem } from './SwitchScrollModeMenuItem';
-import { SwitchViewMode, SwitchViewModeProps } from './SwitchViewMode';
+import { SwitchViewMode } from './SwitchViewMode';
 import { SwitchViewModeButton } from './SwitchViewModeButton';
 import { SwitchViewModeMenuItem } from './SwitchViewModeMenuItem';
-import { switchScrollMode } from './switchScrollMode';
-import { switchViewMode } from './switchViewMode';
+// import { switchScrollMode } from './switchScrollMode';
+// import { switchViewMode } from './switchViewMode';
 import { type StoreProps } from './types/StoreProps';
 
 export interface SwitchScrollModeButtonProps {
@@ -47,12 +47,12 @@ export interface SwitchViewModeMenuItemProps {
 
 export interface ScrollModePlugin extends Plugin {
     switchScrollMode(mode: ScrollMode): void;
-    SwitchScrollMode(props: SwitchScrollModeProps): React.ReactElement;
+    // SwitchScrollMode(props: SwitchScrollModeProps): React.ReactElement;
     SwitchScrollModeButton(props: SwitchScrollModeButtonProps): React.ReactElement;
     SwitchScrollModeMenuItem(props: SwitchScrollModeMenuItemProps): React.ReactElement;
 
     switchViewMode(mode: ViewMode): void;
-    SwitchViewMode(props: SwitchViewModeProps): React.ReactElement;
+    // SwitchViewMode(props: SwitchViewModeProps): React.ReactElement;
     SwitchViewModeButton(props: SwitchViewModeButtonProps): React.ReactElement;
     SwitchViewModeMenuItem(props: SwitchViewModeMenuItemProps): React.ReactElement;
 }
