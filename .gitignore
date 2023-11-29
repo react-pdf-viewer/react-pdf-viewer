@@ -4,5 +4,4 @@ demo/nextjs/.next
 node_modules
 samples/ignore
 package-lock.json
-packages/**/lib
 packages/**/node_modules
