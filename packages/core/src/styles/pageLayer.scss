@@ -3,14 +3,14 @@
  *
  * @see https://react-pdf-viewer.dev
  * @license https://react-pdf-viewer.dev/license
- * @copyright 2019-2023 Nguyen Huu Phuoc <me@phuoc.ng>
+ * @copyright 2019-2024 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
 .rpv-core__page-layer {
-    align-items: center;    
+    align-items: center;
     display: flex;
     justify-content: center;
-    
+
     // Custom elements added to the page layer can be positioned outside of the page
     overflow: visible;
     position: relative;
@@ -20,7 +20,7 @@
         position: absolute;
         // Position
         bottom: 0.25rem;
-        left: 0.25rem;      
+        left: 0.25rem;
         right: 0.25rem;
         top: 0.25rem;
         box-shadow: var(--rpv-core__page-layer-box-shadow);
