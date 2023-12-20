@@ -656,6 +656,8 @@ export function isFullScreenEnabled(): boolean;
 
 export function isMac(): boolean;
 
+export function mergeRefs<T>(refs: Array<React.MutableRefObject<T> | React.LegacyRef<T> | null>): React.RefCallback<T>;
+
 // Vendors
 // pdfjs namespace
 export declare namespace PdfJs {

@@ -52,4 +52,5 @@ export { chunk } from './utils/chunk';
 export { classNames } from './utils/classNames';
 export { isMac } from './utils/isMac';
 export { getDestination, getPage } from './utils/managePages';
+export { mergeRefs } from './utils/mergeRefs';
 export { PdfJsApiContext } from './vendors/PdfJsApiContext';
