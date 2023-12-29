@@ -44,8 +44,8 @@ export const Portal: React.FC<{
             if (rects.some((rect, i) => !areRectsEqual(rect, prevBoundingRectsRef.current[i] || EMPTY_DOM_RECT))) {
                 prevBoundingRectsRef.current = rects;
 
-                const bestPosition = determineBestPosition(referenceRect, targetRect, containerRect, position, offset);
-                ele.style.transform = `translate(${bestPosition.left}px, ${bestPosition.top}px)`;
+                const bestPlacement = determineBestPosition(referenceRect, targetRect, containerRect, position, offset);
+                ele.style.transform = `translate(${bestPlacement.rect.left}px, ${bestPlacement.rect.top}px)`;
             }
         },
         true,

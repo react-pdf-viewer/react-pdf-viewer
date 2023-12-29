@@ -114,38 +114,56 @@ export const determineBestPosition = (
     containerRect: DOMRect,
     position: Position,
     offset: number,
-): DOMRect => {
+): {
+    position: Position;
+    rect: DOMRect;
+} => {
     // Check if the reference element is outside of the container
     if (!isIntersection(referenceRect, containerRect)) {
-        return EMPTY_DOM_RECT;
+        return {
+            position,
+            rect: EMPTY_DOM_RECT,
+        };
     }
 
     const desiredOffset = calculateOffset(referenceRect, targetRect, position, offset);
 
     // Find the positions that won't make the target overflow
-    const availableOffsets = AVAILABLE_POSITIONS.map((pos) => calculateOffset(referenceRect, targetRect, pos, offset));
-    const notOverflowOffsets = availableOffsets.filter((offset) => {
+    const availableOffsets = AVAILABLE_POSITIONS.map((pos) => ({
+        offset: calculateOffset(referenceRect, targetRect, pos, offset),
+        position: pos,
+    }));
+    const notOverflowOffsets = availableOffsets.filter(({ offset }) => {
         const rect = new DOMRect(offset.left, offset.top, targetRect.width, targetRect.height);
         return isIntersection(rect, containerRect);
     });
 
     // Sort by the distance calculated from the desired position
     const sortedDistances = notOverflowOffsets.sort((a, b) => {
-        const x = new DOMRect(b.left, b.top, targetRect.width, targetRect.height);
-        const y = new DOMRect(a.left, a.top, targetRect.width, targetRect.height);
+        const x = new DOMRect(b.offset.left, b.offset.top, targetRect.width, targetRect.height);
+        const y = new DOMRect(a.offset.left, a.offset.top, targetRect.width, targetRect.height);
         return (
             calculateArea(union(x, containerRect)) - calculateArea(union(y, containerRect)) ||
-            distance(a, desiredOffset) - distance(b, desiredOffset)
+            distance(a.offset, desiredOffset) - distance(b.offset, desiredOffset)
         );
     });
 
     if (sortedDistances.length === 0) {
-        return EMPTY_DOM_RECT;
+        return {
+            position,
+            rect: EMPTY_DOM_RECT,
+        };
     }
-    const { top, left } = sortedDistances[0];
-    const shortestDistanceRect = new DOMRect(left, top, targetRect.width, targetRect.height);
 
-    return new DOMRect(
+    const bestPlacement = sortedDistances[0];
+    const shortestDistanceRect = new DOMRect(
+        bestPlacement.offset.left,
+        bestPlacement.offset.top,
+        targetRect.width,
+        targetRect.height,
+    );
+
+    const rect = new DOMRect(
         Math.round(
             clamp(shortestDistanceRect.left, containerRect.left, containerRect.right - shortestDistanceRect.width),
         ),
@@ -155,4 +173,8 @@ export const determineBestPosition = (
         shortestDistanceRect.width,
         shortestDistanceRect.height,
     );
+    return {
+        position: bestPlacement.position,
+        rect,
+    };
 };
