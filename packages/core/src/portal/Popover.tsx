@@ -11,11 +11,14 @@
 import * as React from 'react';
 import { useToggle } from '../hooks/useToggle';
 import { Position } from '../structs/Position';
-import { type Offset } from '../types/Offset';
+import type { Toggle } from '../types/Toggle';
 import { uniqueId } from '../utils/uniqueId';
 import { PopoverBody } from './PopoverBody';
 import { PopoverOverlay } from './PopoverOverlay';
-import { RenderContent, RenderTarget } from './Portal';
+import { Portal } from './Portal';
+
+export type RenderContent = (toggle: Toggle) => React.ReactNode;
+export type RenderTarget = (toggle: Toggle, opened: boolean) => React.ReactNode;
 
 export const Popover: React.FC<{
     ariaControlsSuffix?: string;
@@ -24,7 +27,6 @@ export const Popover: React.FC<{
     closeOnEscape: boolean;
     content: RenderContent;
     lockScroll?: boolean;
-    offset: Offset;
     position: Position;
     target: RenderTarget;
 }> = ({
@@ -34,7 +36,6 @@ export const Popover: React.FC<{
     closeOnEscape,
     content,
     lockScroll = true,
-    offset,
     position,
     target,
 }) => {
@@ -43,29 +44,39 @@ export const Popover: React.FC<{
     const controlsSuffix = React.useMemo(() => ariaControlsSuffix || `${uniqueId()}`, []);
 
     return (
-        <div
-            ref={targetRef}
-            aria-expanded={opened ? 'true' : 'false'}
-            aria-haspopup={ariaHasPopup}
-            aria-controls={`rpv-core__popver-body-${controlsSuffix}`}
-        >
-            {target(toggle, opened)}
-
+        <>
+            <div
+                ref={targetRef}
+                aria-expanded={opened ? 'true' : 'false'}
+                aria-haspopup={ariaHasPopup}
+                aria-controls={`rpv-core__popver-body-${controlsSuffix}`}
+            >
+                {target(toggle, opened)}
+            </div>
             {opened && (
-                <>
-                    {lockScroll && <PopoverOverlay closeOnEscape={closeOnEscape} onClose={toggle} />}
-                    <PopoverBody
-                        ariaControlsSuffix={controlsSuffix}
-                        closeOnClickOutside={closeOnClickOutside}
-                        offset={offset}
-                        position={position}
-                        targetRef={targetRef}
-                        onClose={toggle}
-                    >
-                        {content(toggle)}
-                    </PopoverBody>
-                </>
+                <Portal offset={8} position={position} referenceRef={targetRef}>
+                    {({ ref }) => {
+                        const popoverBody = (
+                            <PopoverBody
+                                ariaControlsSuffix={controlsSuffix}
+                                closeOnClickOutside={closeOnClickOutside}
+                                position={position}
+                                ref={ref}
+                                onClose={toggle}
+                            >
+                                {content(toggle)}
+                            </PopoverBody>
+                        );
+                        return lockScroll ? (
+                            <PopoverOverlay closeOnEscape={closeOnEscape} onClose={toggle}>
+                                {popoverBody}
+                            </PopoverOverlay>
+                        ) : (
+                            popoverBody
+                        );
+                    }}
+                </Portal>
             )}
-        </div>
+        </>
     );
 };

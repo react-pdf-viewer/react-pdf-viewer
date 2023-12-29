@@ -13,8 +13,8 @@
     color: var(--rpv-core__popover-body-color);
     left: 0;
     padding: 0.5rem 0;
-    position: absolute;
-    top: -9999px;
+    position: fixed;
+    top: 0;
     z-index: 9999;
 
     &-arrow {

@@ -11,30 +11,29 @@
 import * as React from 'react';
 import { useClickOutside } from '../hooks/useClickOutside';
 import { useIsomorphicLayoutEffect } from '../hooks/useIsomorphicLayoutEffect';
-import { usePosition } from '../hooks/usePosition';
 import { Position } from '../structs/Position';
 import { TextDirection, ThemeContext } from '../theme/ThemeContext';
-import { type Offset } from '../types/Offset';
 import { classNames } from '../utils/classNames';
 import { Arrow } from './Arrow';
 
-export const PopoverBody: React.FC<{
-    ariaControlsSuffix: string;
-    children?: React.ReactNode;
-    closeOnClickOutside: boolean;
-    offset: Offset;
-    position: Position;
-    targetRef: React.RefObject<HTMLElement>;
-    onClose(): void;
-}> = ({ ariaControlsSuffix, children, closeOnClickOutside, offset, position, targetRef, onClose }) => {
+export const PopoverBody = React.forwardRef<
+    HTMLDivElement,
+    {
+        ariaControlsSuffix: string;
+        children?: React.ReactNode;
+        closeOnClickOutside: boolean;
+        position: Position;
+        onClose(): void;
+    }
+>((props, ref) => {
+    const { ariaControlsSuffix, children, closeOnClickOutside, position, onClose } = props;
+
     const contentRef = React.useRef<HTMLDivElement>();
     const innerRef = React.useRef<HTMLDivElement>();
-    const anchorRef = React.useRef<HTMLDivElement>();
     const { direction } = React.useContext(ThemeContext);
     const isRtl = direction === TextDirection.RightToLeft;
 
     useClickOutside(closeOnClickOutside, contentRef, onClose);
-    usePosition(contentRef, targetRef, anchorRef, position, offset);
 
     useIsomorphicLayoutEffect(() => {
         const innerContentEle = innerRef.current;
@@ -53,24 +52,23 @@ export const PopoverBody: React.FC<{
     const innerId = `rpv-core__popover-body-inner-${ariaControlsSuffix}`;
 
     return (
-        <>
-            <div ref={anchorRef} style={{ left: 0, position: 'absolute', top: 0 }} />
-            <div
-                aria-describedby={innerId}
-                className={classNames({
-                    'rpv-core__popover-body': true,
-                    'rpv-core__popover-body--rtl': isRtl,
-                })}
-                id={`rpv-core__popover-body-${ariaControlsSuffix}`}
-                ref={contentRef}
-                role="dialog"
-                tabIndex={-1}
-            >
-                <Arrow customClassName="rpv-core__popover-body-arrow" position={position} />
-                <div id={innerId} ref={innerRef}>
-                    {children}
-                </div>
+        <div
+            aria-describedby={innerId}
+            className={classNames({
+                'rpv-core__popover-body': true,
+                'rpv-core__popover-body--rtl': isRtl,
+            })}
+            id={`rpv-core__popover-body-${ariaControlsSuffix}`}
+            ref={ref}
+            role="dialog"
+            tabIndex={-1}
+        >
+            <Arrow customClassName="rpv-core__popover-body-arrow" position={position} />
+            <div id={innerId} ref={innerRef}>
+                {children}
             </div>
-        </>
+        </div>
     );
-};
+});
+
+PopoverBody.displayName = 'PopoverBody';

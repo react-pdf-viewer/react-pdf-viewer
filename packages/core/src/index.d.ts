@@ -399,7 +399,6 @@ export interface PopoverProps {
     closeOnEscape: boolean;
     content: RenderContent;
     lockScroll?: boolean;
-    offset: Offset;
     position: Position;
     target?: RenderTarget;
 }

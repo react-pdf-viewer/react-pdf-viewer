@@ -26,7 +26,6 @@ import {
 import * as React from 'react';
 
 const DEFAULT_LEVELS = [0.5, 0.75, 1, 1.25, 1.5, 2, 3, 4];
-const PORTAL_OFFSET = { left: 0, top: 8 };
 
 export const ZoomPopover: React.FC<{
     levels?: number[];
@@ -109,7 +108,6 @@ export const ZoomPopover: React.FC<{
             position={Position.BottomCenter}
             target={renderTarget}
             content={renderContent}
-            offset={PORTAL_OFFSET}
             closeOnClickOutside={true}
             closeOnEscape={true}
         />
