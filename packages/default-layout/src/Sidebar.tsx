@@ -41,9 +41,6 @@ interface SidebarProps {
     tabs?: (defaultTabs: SidebarTab[]) => SidebarTab[];
 }
 
-const TOOLTIP_OFFSET_LTR = { left: 8, top: 0 };
-const TOOLTIP_OFFSET_RTL = { left: -8, top: 0 };
-
 export const Sidebar: React.FC<SidebarProps> = ({
     attachmentTabContent,
     bookmarkTabContent,
@@ -164,7 +161,6 @@ export const Sidebar: React.FC<SidebarProps> = ({
                                         </MinimalButton>
                                     }
                                     content={() => tab.title}
-                                    offset={isRtl ? TOOLTIP_OFFSET_RTL : TOOLTIP_OFFSET_LTR}
                                 />
                             </div>
                         ))}

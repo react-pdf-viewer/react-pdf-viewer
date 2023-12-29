@@ -20,8 +20,6 @@ import * as React from 'react';
 import { DarkIcon } from './DarkIcon';
 import { LightIcon } from './LightIcon';
 
-const TOOLTIP_OFFSET = { left: 0, top: 8 };
-
 export const SwitchThemeButton: React.FC<{
     onClick(): void;
 }> = ({ onClick }) => {
@@ -48,7 +46,6 @@ export const SwitchThemeButton: React.FC<{
                 </MinimalButton>
             }
             content={() => label}
-            offset={TOOLTIP_OFFSET}
         />
     );
 };

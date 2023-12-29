@@ -13,8 +13,6 @@ import * as React from 'react';
 import { PreviousIcon } from './PreviousIcon';
 import { type RenderGoToPageProps } from './types/index';
 
-const TOOLTIP_OFFSET = { left: 0, top: 8 };
-
 export const GoToPreviousPageButton: React.FC<RenderGoToPageProps> = ({ isDisabled, onClick }) => {
     const { l10n } = React.useContext(LocalizationContext);
     const label =
@@ -37,7 +35,6 @@ export const GoToPreviousPageButton: React.FC<RenderGoToPageProps> = ({ isDisabl
                 </MinimalButton>
             }
             content={() => label}
-            offset={TOOLTIP_OFFSET}
         />
     );
 };

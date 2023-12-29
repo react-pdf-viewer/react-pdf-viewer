@@ -12,8 +12,6 @@ import { LocalizationContext, MinimalButton, Position, Tooltip, type Localizatio
 import * as React from 'react';
 import { ExitFullScreenIcon } from './ExitFullScreenIcon';
 
-const TOOLTIP_OFFSET = { left: 0, top: 8 };
-
 export const ExitFullScreenButtonWithTooltip: React.FC<{
     onClick(): void;
 }> = ({ onClick }) => {
@@ -36,7 +34,6 @@ export const ExitFullScreenButtonWithTooltip: React.FC<{
                 </MinimalButton>
             }
             content={() => exitFullScreenLabel}
-            offset={TOOLTIP_OFFSET}
         />
     );
 };

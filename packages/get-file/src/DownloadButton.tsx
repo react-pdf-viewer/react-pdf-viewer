@@ -13,8 +13,6 @@ import * as React from 'react';
 import { DownloadIcon } from './DownloadIcon';
 import { type RenderDownloadProps } from './types/RenderDownloadProps';
 
-const TOOLTIP_OFFSET = { left: 0, top: 8 };
-
 export const DownloadButton: React.FC<RenderDownloadProps> = ({ onClick }) => {
     const { l10n } = React.useContext(LocalizationContext);
     const label = l10n && l10n.download ? ((l10n.download as LocalizationMap).download as string) : 'Download';
@@ -29,7 +27,6 @@ export const DownloadButton: React.FC<RenderDownloadProps> = ({ onClick }) => {
                 </MinimalButton>
             }
             content={() => label}
-            offset={TOOLTIP_OFFSET}
         />
     );
 };

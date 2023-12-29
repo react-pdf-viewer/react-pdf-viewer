@@ -14,8 +14,6 @@ import { SwitchSelectionModeDecorator } from './SwitchSelectionModeDecorator';
 import { SelectionMode } from './structs/SelectionMode';
 import { RenderSwitchSelectionModeProps } from './types/RenderSwitchSelectionModeProps';
 
-const TOOLTIP_OFFSET = { left: 0, top: 8 };
-
 export const SwitchSelectionModeButton: React.FC<RenderSwitchSelectionModeProps> = ({ isSelected, mode, onClick }) => {
     let testId = '';
     switch (mode) {
@@ -44,7 +42,6 @@ export const SwitchSelectionModeButton: React.FC<RenderSwitchSelectionModeProps>
                         </MinimalButton>
                     }
                     content={() => props.label}
-                    offset={TOOLTIP_OFFSET}
                 />
             )}
         </SwitchSelectionModeDecorator>

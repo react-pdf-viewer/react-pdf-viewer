@@ -21,8 +21,6 @@ import { RotateBackwardIcon } from './RotateBackwardIcon';
 import { RotateForwardIcon } from './RotateForwardIcon';
 import { type RenderRotateProps } from './types/RenderRotateProps';
 
-const TOOLTIP_OFFSET = { left: 0, top: 8 };
-
 export const RotateButton: React.FC<RenderRotateProps> = ({ direction, onClick }) => {
     const { l10n } = React.useContext(LocalizationContext);
 
@@ -49,7 +47,6 @@ export const RotateButton: React.FC<RenderRotateProps> = ({ direction, onClick }
                 </MinimalButton>
             }
             content={() => label}
-            offset={TOOLTIP_OFFSET}
         />
     );
 };

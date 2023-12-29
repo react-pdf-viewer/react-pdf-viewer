@@ -23,10 +23,9 @@ type RenderTooltipContent = () => React.ReactNode;
 export const Tooltip: React.FC<{
     ariaControlsSuffix?: string;
     content: RenderTooltipContent;
-    offset: Offset;
     position: Position;
     target: React.ReactElement;
-}> = ({ ariaControlsSuffix, content, offset, position, target }) => {
+}> = ({ ariaControlsSuffix, content, position, target }) => {
     const { opened, toggle } = useToggle(false);
     const targetRef = React.useRef<HTMLDivElement>();
     const contentRef = React.useRef<HTMLDivElement>();

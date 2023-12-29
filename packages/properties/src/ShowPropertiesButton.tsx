@@ -13,8 +13,6 @@ import * as React from 'react';
 import { InfoIcon } from './InfoIcon';
 import { type RenderShowPropertiesProps } from './types/RenderShowPropertiesProps';
 
-const TOOLTIP_OFFSET = { left: 0, top: 8 };
-
 export const ShowPropertiesButton: React.FC<RenderShowPropertiesProps> = ({ onClick }) => {
     const { l10n } = React.useContext(LocalizationContext);
     const label =
@@ -30,7 +28,6 @@ export const ShowPropertiesButton: React.FC<RenderShowPropertiesProps> = ({ onCl
                 </MinimalButton>
             }
             content={() => label}
-            offset={TOOLTIP_OFFSET}
         />
     );
 };

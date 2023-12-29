@@ -16,8 +16,6 @@ import {
     Popover,
     Position,
     ScrollMode,
-    TextDirection,
-    ThemeContext,
     Tooltip,
     ViewMode,
     type LocalizationMap,
@@ -28,14 +26,10 @@ import * as React from 'react';
 import { MoreIcon } from './MoreIcon';
 import { type ToolbarSlot } from './types/ToolbarSlot';
 
-const PORTAL_OFFSET = { left: 0, top: 8 };
-
 export const MoreActionsPopover: React.FC<{
     toolbarSlot: ToolbarSlot;
 }> = ({ toolbarSlot }) => {
     const { l10n } = React.useContext(LocalizationContext);
-    const { direction } = React.useContext(ThemeContext);
-    const portalPosition = direction === TextDirection.RightToLeft ? Position.BottomLeft : Position.BottomRight;
     const {
         DownloadMenuItem,
         EnterFullScreenMenuItem,
@@ -60,7 +54,7 @@ export const MoreActionsPopover: React.FC<{
         return (
             <Tooltip
                 ariaControlsSuffix="toolbar-more-actions"
-                position={portalPosition}
+                position={Position.BottomCenter}
                 target={
                     <MinimalButton
                         ariaLabel={label}
@@ -72,7 +66,6 @@ export const MoreActionsPopover: React.FC<{
                     </MinimalButton>
                 }
                 content={() => label}
-                offset={PORTAL_OFFSET}
             />
         );
     };

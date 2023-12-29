@@ -13,8 +13,6 @@ import * as React from 'react';
 import { SwitchScrollModeDecorator } from './SwitchScrollModeDecorator';
 import { type RenderSwitchScrollModeProps } from './types/RenderSwitchScrollModeProps';
 
-const TOOLTIP_OFFSET = { left: 0, top: 8 };
-
 export const SwitchScrollModeButton: React.FC<RenderSwitchScrollModeProps> = ({
     isDisabled,
     isSelected,
@@ -56,7 +54,6 @@ export const SwitchScrollModeButton: React.FC<RenderSwitchScrollModeProps> = ({
                         </MinimalButton>
                     }
                     content={() => props.label}
-                    offset={TOOLTIP_OFFSET}
                 />
             )}
         </SwitchScrollModeDecorator>
