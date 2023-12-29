@@ -9,6 +9,7 @@
 'use client';
 
 import * as React from 'react';
+import * as ReactDOM from 'react-dom';
 import { useToggle } from '../hooks/useToggle';
 import type { Toggle } from '../types/Toggle';
 import { uniqueId } from '../utils/uniqueId';
@@ -55,7 +56,7 @@ export const Modal: React.FC<{
     return (
         <>
             {target && renderTarget(toggle, opened)}
-            {opened && renderContent(toggle)}
+            {opened && ReactDOM.createPortal(renderContent(toggle), document.body)}
         </>
     );
 };
