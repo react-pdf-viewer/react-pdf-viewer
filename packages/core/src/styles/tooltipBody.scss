@@ -12,9 +12,9 @@
     color: var(--rpv-core__tooltip-body-color);
     left: 0;
     max-width: 20rem;
-    position: absolute;
+    position: fixed;
     text-align: center;
-    top: -9999px;
+    top: 0;
     z-index: 9999;
 
     &--rtl {
