@@ -46,59 +46,59 @@ const calculateArea = (rect: DOMRect): number => rect.width * rect.height;
 
 const distance = (a: Offset, b: Offset): number => Math.abs(a.left - b.left) + Math.abs(a.top - b.top);
 
-const calculateOffset = (position: Position, referenceRect: DOMRect, targetRect: DOMRect): Offset => {
+const calculateOffset = (referenceRect: DOMRect, targetRect: DOMRect, position: Position, offset: number): Offset => {
     let top = 0;
     let left = 0;
     switch (position) {
         case Position.TopLeft:
-            top = referenceRect.top - targetRect.height;
+            top = referenceRect.top - targetRect.height - offset;
             left = referenceRect.left;
             break;
         case Position.TopCenter:
-            top = referenceRect.top - targetRect.height;
+            top = referenceRect.top - targetRect.height - offset;
             left = referenceRect.left + referenceRect.width / 2 - targetRect.width / 2;
             break;
         case Position.TopRight:
-            top = referenceRect.top - targetRect.height;
+            top = referenceRect.top - targetRect.height - offset;
             left = referenceRect.left + referenceRect.width - targetRect.width;
             break;
         case Position.RightTop:
             top = referenceRect.top;
-            left = referenceRect.left + referenceRect.width;
+            left = referenceRect.left + referenceRect.width + offset;
             break;
         case Position.RightCenter:
             top = referenceRect.top + referenceRect.height / 2 - targetRect.height / 2;
-            left = referenceRect.left + referenceRect.width;
+            left = referenceRect.left + referenceRect.width + offset;
             break;
         case Position.RightBottom:
             top = referenceRect.top + referenceRect.height - targetRect.height;
-            left = referenceRect.left + referenceRect.width;
+            left = referenceRect.left + referenceRect.width + offset;
             break;
 
         case Position.BottomLeft:
-            top = referenceRect.top + referenceRect.height;
+            top = referenceRect.top + referenceRect.height + offset;
             left = referenceRect.left;
             break;
         case Position.BottomCenter:
-            top = referenceRect.top + referenceRect.height;
+            top = referenceRect.top + referenceRect.height + offset;
             left = referenceRect.left + referenceRect.width / 2 - targetRect.width / 2;
             break;
         case Position.BottomRight:
-            top = referenceRect.top + referenceRect.height;
+            top = referenceRect.top + referenceRect.height + offset;
             left = referenceRect.left + referenceRect.width - targetRect.width;
             break;
 
         case Position.LeftTop:
             top = referenceRect.top;
-            left = referenceRect.left - targetRect.width;
+            left = referenceRect.left - targetRect.width - offset;
             break;
         case Position.LeftCenter:
             top = referenceRect.top + referenceRect.height / 2 - targetRect.height / 2;
-            left = referenceRect.left - targetRect.width;
+            left = referenceRect.left - targetRect.width - offset;
             break;
         case Position.LeftBottom:
             top = referenceRect.top + referenceRect.height - targetRect.height;
-            left = referenceRect.left - targetRect.width;
+            left = referenceRect.left - targetRect.width - offset;
             break;
 
         default:
@@ -109,20 +109,21 @@ const calculateOffset = (position: Position, referenceRect: DOMRect, targetRect:
 
 // Determine the best position to place a target element
 export const determineBestPosition = (
-    position: Position,
     referenceRect: DOMRect,
     targetRect: DOMRect,
     containerRect: DOMRect,
+    position: Position,
+    offset: number,
 ): DOMRect => {
     // Check if the reference element is outside of the container
     if (!isIntersection(referenceRect, containerRect)) {
         return EMPTY_DOM_RECT;
     }
 
-    const desiredOffset = calculateOffset(position, referenceRect, targetRect);
+    const desiredOffset = calculateOffset(referenceRect, targetRect, position, offset);
 
     // Find the positions that won't make the target overflow
-    const availableOffsets = AVAILABLE_POSITIONS.map((pos) => calculateOffset(pos, referenceRect, targetRect));
+    const availableOffsets = AVAILABLE_POSITIONS.map((pos) => calculateOffset(referenceRect, targetRect, pos, offset));
     const notOverflowOffsets = availableOffsets.filter((offset) => {
         const rect = new DOMRect(offset.left, offset.top, targetRect.width, targetRect.height);
         return isIntersection(rect, containerRect);

@@ -21,9 +21,10 @@ const areRectsEqual = (a: DOMRect, b: DOMRect) =>
 
 export const Portal: React.FC<{
     children: ({ ref }: { ref: React.RefCallback<HTMLElement> }) => React.ReactNode;
+    offset?: number;
     position: Position;
     referenceRef: React.MutableRefObject<HTMLElement>;
-}> = ({ children, position, referenceRef }) => {
+}> = ({ children, offset = 0, position, referenceRef }) => {
     const [ele, setEle] = React.useState<HTMLElement>();
 
     const targetRef = React.useCallback((ele: HTMLElement) => {
@@ -43,7 +44,7 @@ export const Portal: React.FC<{
             if (rects.some((rect, i) => !areRectsEqual(rect, prevBoundingRectsRef.current[i] || EMPTY_DOM_RECT))) {
                 prevBoundingRectsRef.current = rects;
 
-                const bestPosition = determineBestPosition(position, referenceRect, targetRect, containerRect);
+                const bestPosition = determineBestPosition(referenceRect, targetRect, containerRect, position, offset);
                 ele.style.transform = `translate(${bestPosition.left}px, ${bestPosition.top}px)`;
             }
         },
