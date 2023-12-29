@@ -20,12 +20,13 @@ const areRectsEqual = (a: DOMRect, b: DOMRect) =>
     ['top', 'left', 'width', 'height'].every((key) => a[key as keyof DOMRect] === b[key as keyof DOMRect]);
 
 export const Portal: React.FC<{
-    children: ({ ref }: { ref: React.RefCallback<HTMLElement> }) => React.ReactNode;
+    children: ({ position, ref }: { position: Position; ref: React.RefCallback<HTMLElement> }) => React.ReactNode;
     offset?: number;
     position: Position;
     referenceRef: React.MutableRefObject<HTMLElement>;
 }> = ({ children, offset = 0, position, referenceRef }) => {
     const [ele, setEle] = React.useState<HTMLElement>();
+    const [updatedPosition, setUpdatedPosition] = React.useState(position);
 
     const targetRef = React.useCallback((ele: HTMLElement) => {
         setEle(ele);
@@ -46,6 +47,7 @@ export const Portal: React.FC<{
 
                 const bestPlacement = determineBestPosition(referenceRect, targetRect, containerRect, position, offset);
                 ele.style.transform = `translate(${bestPlacement.rect.left}px, ${bestPlacement.rect.top}px)`;
+                setUpdatedPosition(bestPlacement.position);
             }
         },
         true,
@@ -58,5 +60,5 @@ export const Portal: React.FC<{
         }
     }, [ele]);
 
-    return ReactDOM.createPortal(children({ ref: targetRef }), document.body);
+    return ReactDOM.createPortal(children({ position: updatedPosition, ref: targetRef }), document.body);
 };
