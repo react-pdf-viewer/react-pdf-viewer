@@ -29,7 +29,6 @@ export const ShowSearchPopover: React.FC<{
     store: Store<StoreProps>;
 }> = ({ children, enableShortcuts, store }) => {
     const { direction } = React.useContext(ThemeContext);
-    const portalPosition = direction === TextDirection.RightToLeft ? Position.BottomRight : Position.BottomLeft;
     const defaultChildren = (props: RenderShowSearchPopoverProps) => (
         <ShowSearchPopoverButton enableShortcuts={enableShortcuts} store={store} {...props} />
     );
@@ -39,7 +38,7 @@ export const ShowSearchPopover: React.FC<{
         <Popover
             ariaControlsSuffix="search"
             lockScroll={false}
-            position={portalPosition}
+            position={Position.BottomCenter}
             target={(toggle: Toggle) =>
                 render({
                     onClick: toggle,

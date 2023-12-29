@@ -141,7 +141,7 @@ export const MoreActionsPopover: React.FC<{
         <Popover
             ariaControlsSuffix="toolbar-more-actions"
             ariaHasPopup="menu"
-            position={portalPosition}
+            position={Position.BottomCenter}
             target={renderTarget}
             content={renderContent}
             offset={PORTAL_OFFSET}
