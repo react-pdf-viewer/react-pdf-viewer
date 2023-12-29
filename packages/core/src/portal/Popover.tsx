@@ -55,12 +55,12 @@ export const Popover: React.FC<{
             </div>
             {opened && (
                 <Portal offset={8} position={position} referenceRef={targetRef}>
-                    {({ ref }) => {
+                    {({ position: updatedPosition, ref }) => {
                         const popoverBody = (
                             <PopoverBody
                                 ariaControlsSuffix={controlsSuffix}
                                 closeOnClickOutside={closeOnClickOutside}
-                                position={position}
+                                position={updatedPosition}
                                 ref={ref}
                                 onClose={toggle}
                             >
