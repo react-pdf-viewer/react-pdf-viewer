@@ -12,7 +12,7 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { useAnimationFrame } from '../hooks/useAnimationFrame';
 import { Position } from '../structs/Position';
-import { determineBestPosition } from '../utils/determineBestPosition';
+import { determineBestPosition, HIDDEN_RECT } from '../utils/determineBestPosition';
 
 const EMPTY_DOM_RECT = new DOMRect();
 
@@ -45,9 +45,17 @@ export const Portal: React.FC<{
             if (rects.some((rect, i) => !areRectsEqual(rect, prevBoundingRectsRef.current[i] || EMPTY_DOM_RECT))) {
                 prevBoundingRectsRef.current = rects;
 
-                const bestPlacement = determineBestPosition(referenceRect, targetRect, containerRect, position, offset);
-                ele.style.transform = `translate(${bestPlacement.rect.left}px, ${bestPlacement.rect.top}px)`;
-                setUpdatedPosition(bestPlacement.position);
+                const updatedPlacement = determineBestPosition(
+                    referenceRect,
+                    targetRect,
+                    containerRect,
+                    position,
+                    offset,
+                );
+                if (!areRectsEqual(updatedPlacement.rect, HIDDEN_RECT)) {
+                    ele.style.transform = `translate(${updatedPlacement.rect.left}px, ${updatedPlacement.rect.top}px)`;
+                    setUpdatedPosition(updatedPlacement.position);
+                }
             }
         },
         true,

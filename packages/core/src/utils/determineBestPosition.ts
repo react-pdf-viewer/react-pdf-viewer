@@ -10,7 +10,7 @@ import { Position } from '../structs/Position';
 import { type Offset } from '../types/Offset';
 import { clamp } from './clamp';
 
-const EMPTY_DOM_RECT = new DOMRect();
+export const HIDDEN_RECT = new DOMRect(-1, -1, -1, -1);
 const AVAILABLE_POSITIONS = [
     // Top side
     Position.TopLeft,
@@ -122,7 +122,7 @@ export const determineBestPosition = (
     if (!isIntersection(referenceRect, containerRect)) {
         return {
             position,
-            rect: EMPTY_DOM_RECT,
+            rect: HIDDEN_RECT,
         };
     }
 
@@ -151,7 +151,7 @@ export const determineBestPosition = (
     if (sortedDistances.length === 0) {
         return {
             position,
-            rect: EMPTY_DOM_RECT,
+            rect: HIDDEN_RECT,
         };
     }
 
