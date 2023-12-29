@@ -3,8 +3,6 @@ import { ThumbnailIcon, defaultLayoutPlugin } from '@react-pdf-viewer/default-la
 import { RotateBackwardIcon, RotateForwardIcon } from '@react-pdf-viewer/rotate';
 import { type RenderThumbnailItemProps } from '@react-pdf-viewer/thumbnail';
 
-const TOOLTIP_OFFSET = { left: 0, top: 8 };
-
 const IndexPage = () => {
     const renderThumbnailItem = (props: RenderThumbnailItemProps) => (
         <div
@@ -41,7 +39,6 @@ const IndexPage = () => {
                         </MinimalButton>
                     }
                     content={() => 'Rotate clockwise'}
-                    offset={TOOLTIP_OFFSET}
                 />
                 <Tooltip
                     position={Position.BottomCenter}
@@ -54,7 +51,6 @@ const IndexPage = () => {
                         </MinimalButton>
                     }
                     content={() => 'Rotate counterclockwise'}
-                    offset={TOOLTIP_OFFSET}
                 />
             </div>
         </div>

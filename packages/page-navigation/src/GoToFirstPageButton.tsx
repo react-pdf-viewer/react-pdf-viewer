@@ -13,8 +13,6 @@ import * as React from 'react';
 import { UpArrowIcon } from './UpArrowIcon';
 import { type RenderGoToPageProps } from './types/index';
 
-const TOOLTIP_OFFSET = { left: 0, top: 8 };
-
 export const GoToFirstPageButton: React.FC<RenderGoToPageProps> = ({ isDisabled, onClick }) => {
     const { l10n } = React.useContext(LocalizationContext);
     const label =
@@ -35,7 +33,6 @@ export const GoToFirstPageButton: React.FC<RenderGoToPageProps> = ({ isDisabled,
                 </MinimalButton>
             }
             content={() => label}
-            offset={TOOLTIP_OFFSET}
         />
     );
 };

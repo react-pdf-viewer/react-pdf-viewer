@@ -408,7 +408,6 @@ export type RenderTooltipContent = () => React.ReactNode;
 export interface TooltipProps {
     ariaControlsSuffix?: string;
     content: RenderTooltipContent;
-    offset: Offset;
     position: Position;
     target: React.ReactElement;
 }

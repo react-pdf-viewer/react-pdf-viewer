@@ -13,8 +13,6 @@ import * as React from 'react';
 import { ShowSearchPopoverDecorator } from './ShowSearchPopoverDecorator';
 import { type StoreProps } from './types/StoreProps';
 
-const TOOLTIP_OFFSET = { left: 0, top: 8 };
-
 export const ShowSearchPopoverButton: React.FC<{
     enableShortcuts: boolean;
     store: Store<StoreProps>;
@@ -53,7 +51,6 @@ export const ShowSearchPopoverButton: React.FC<{
                         </MinimalButton>
                     }
                     content={() => p.label}
-                    offset={TOOLTIP_OFFSET}
                 />
             )}
         </ShowSearchPopoverDecorator>

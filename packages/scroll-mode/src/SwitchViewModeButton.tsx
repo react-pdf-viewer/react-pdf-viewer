@@ -13,8 +13,6 @@ import * as React from 'react';
 import { SwitchViewModeDecorator } from './SwitchViewModeDecorator';
 import { type RenderSwitchViewModeProps } from './types/RenderSwitchViewModeProps';
 
-const TOOLTIP_OFFSET = { left: 0, top: 8 };
-
 export const SwitchViewModeButton: React.FC<RenderSwitchViewModeProps> = ({
     isDisabled,
     isSelected,
@@ -53,7 +51,6 @@ export const SwitchViewModeButton: React.FC<RenderSwitchViewModeProps> = ({
                         </MinimalButton>
                     }
                     content={() => props.label}
-                    offset={TOOLTIP_OFFSET}
                 />
             )}
         </SwitchViewModeDecorator>

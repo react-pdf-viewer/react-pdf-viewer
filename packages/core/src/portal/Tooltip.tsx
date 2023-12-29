@@ -15,6 +15,7 @@ import { Position } from '../structs/Position';
 import { ToggleStatus } from '../structs/ToggleStatus';
 import { type Offset } from '../types/Offset';
 import { uniqueId } from '../utils/uniqueId';
+import { Portal } from './Portal';
 import { TooltipBody } from './TooltipBody';
 
 type RenderTooltipContent = () => React.ReactNode;
@@ -22,10 +23,9 @@ type RenderTooltipContent = () => React.ReactNode;
 export const Tooltip: React.FC<{
     ariaControlsSuffix?: string;
     content: RenderTooltipContent;
-    offset: Offset;
     position: Position;
     target: React.ReactElement;
-}> = ({ ariaControlsSuffix, content, offset, position, target }) => {
+}> = ({ ariaControlsSuffix, content, position, target }) => {
     const { opened, toggle } = useToggle(false);
     const targetRef = React.useRef<HTMLDivElement>();
     const contentRef = React.useRef<HTMLDivElement>();
@@ -98,15 +98,13 @@ export const Tooltip: React.FC<{
                 {target}
             </div>
             {opened && (
-                <TooltipBody
-                    ariaControlsSuffix={controlsSuffix}
-                    contentRef={contentRef}
-                    offset={offset}
-                    position={position}
-                    targetRef={targetRef}
-                >
-                    {content()}
-                </TooltipBody>
+                <Portal offset={8} position={position} referenceRef={targetRef}>
+                    {({ position: updatedPosition, ref }) => (
+                        <TooltipBody ariaControlsSuffix={controlsSuffix} position={updatedPosition} ref={ref}>
+                            {content()}
+                        </TooltipBody>
+                    )}
+                </Portal>
             )}
         </>
     );

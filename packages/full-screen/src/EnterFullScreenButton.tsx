@@ -20,8 +20,6 @@ import {
 import * as React from 'react';
 import { FullScreenIcon } from './FullScreenIcon';
 
-const TOOLTIP_OFFSET = { left: 0, top: 8 };
-
 export const EnterFullScreenButton: React.FC<{
     enableShortcuts: boolean;
     onClick(): void;
@@ -47,7 +45,6 @@ export const EnterFullScreenButton: React.FC<{
                 </MinimalButton>
             }
             content={() => label}
-            offset={TOOLTIP_OFFSET}
         />
     );
 };

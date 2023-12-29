@@ -22,8 +22,6 @@ import { OpenFileIcon } from './OpenFileIcon';
 import { type StoreProps } from './types/StoreProps';
 import { useTriggerOpen } from './useTriggerOpen';
 
-const TOOLTIP_OFFSET = { left: 0, top: 8 };
-
 export const OpenButton: React.FC<{
     enableShortcuts: boolean;
     store: Store<StoreProps>;
@@ -62,7 +60,6 @@ export const OpenButton: React.FC<{
                 </div>
             }
             content={() => label}
-            offset={TOOLTIP_OFFSET}
         />
     );
 };

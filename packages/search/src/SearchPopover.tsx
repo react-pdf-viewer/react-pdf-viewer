@@ -28,8 +28,6 @@ import { PreviousIcon } from './PreviousIcon';
 import { type StoreProps } from './types/StoreProps';
 import { useSearch } from './useSearch';
 
-const PORTAL_OFFSET = { left: 0, top: 8 };
-
 export const SearchPopover: React.FC<{
     store: Store<StoreProps>;
     onToggle(): void;
@@ -170,7 +168,6 @@ export const SearchPopover: React.FC<{
                             </MinimalButton>
                         }
                         content={() => previousMatchLabel}
-                        offset={PORTAL_OFFSET}
                     />
                 </div>
                 <div className="rpv-search__popover-footer-item">
@@ -187,7 +184,6 @@ export const SearchPopover: React.FC<{
                             </MinimalButton>
                         }
                         content={() => nextMatchLabel}
-                        offset={PORTAL_OFFSET}
                     />
                 </div>
                 <div

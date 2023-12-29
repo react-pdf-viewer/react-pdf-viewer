@@ -20,8 +20,6 @@ import * as React from 'react';
 import { type RenderZoomInProps } from './types/RenderZoomInProps';
 import { ZoomInIcon } from './ZoomInIcon';
 
-const TOOLTIP_OFFSET = { left: 0, top: 8 };
-
 export const ZoomInButton: React.FC<RenderZoomInProps> = ({ enableShortcuts, onClick }) => {
     const { l10n } = React.useContext(LocalizationContext);
     const label = l10n && l10n.zoom ? ((l10n.zoom as LocalizationMap).zoomIn as string) : 'Zoom in';
@@ -42,7 +40,6 @@ export const ZoomInButton: React.FC<RenderZoomInProps> = ({ enableShortcuts, onC
                 </MinimalButton>
             }
             content={() => label}
-            offset={TOOLTIP_OFFSET}
         />
     );
 };
