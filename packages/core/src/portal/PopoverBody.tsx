@@ -13,7 +13,6 @@ import { useClickOutside } from '../hooks/useClickOutside';
 import { useIsomorphicLayoutEffect } from '../hooks/useIsomorphicLayoutEffect';
 import { Position } from '../structs/Position';
 import { TextDirection, ThemeContext } from '../theme/ThemeContext';
-import { type Offset } from '../types/Offset';
 import { classNames } from '../utils/classNames';
 import { Arrow } from './Arrow';
 
@@ -23,12 +22,11 @@ export const PopoverBody = React.forwardRef<
         ariaControlsSuffix: string;
         children?: React.ReactNode;
         closeOnClickOutside: boolean;
-        offset: Offset;
         position: Position;
         onClose(): void;
     }
 >((props, ref) => {
-    const { ariaControlsSuffix, children, closeOnClickOutside, offset, position, onClose } = props;
+    const { ariaControlsSuffix, children, closeOnClickOutside, position, onClose } = props;
 
     const contentRef = React.useRef<HTMLDivElement>();
     const innerRef = React.useRef<HTMLDivElement>();

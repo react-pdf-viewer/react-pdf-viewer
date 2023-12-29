@@ -144,7 +144,6 @@ export const MoreActionsPopover: React.FC<{
             position={Position.BottomCenter}
             target={renderTarget}
             content={renderContent}
-            offset={PORTAL_OFFSET}
             closeOnClickOutside={true}
             closeOnEscape={true}
         />

@@ -11,7 +11,6 @@
 import * as React from 'react';
 import { useToggle } from '../hooks/useToggle';
 import { Position } from '../structs/Position';
-import { type Offset } from '../types/Offset';
 import type { Toggle } from '../types/Toggle';
 import { uniqueId } from '../utils/uniqueId';
 import { PopoverBody } from './PopoverBody';
@@ -28,7 +27,6 @@ export const Popover: React.FC<{
     closeOnEscape: boolean;
     content: RenderContent;
     lockScroll?: boolean;
-    offset: Offset;
     position: Position;
     target: RenderTarget;
 }> = ({
@@ -38,7 +36,6 @@ export const Popover: React.FC<{
     closeOnEscape,
     content,
     lockScroll = true,
-    offset,
     position,
     target,
 }) => {
@@ -57,13 +54,12 @@ export const Popover: React.FC<{
                 {target(toggle, opened)}
             </div>
             {opened && (
-                <Portal position={position} referenceRef={targetRef}>
+                <Portal offset={8} position={position} referenceRef={targetRef}>
                     {({ ref }) => {
                         const popoverBody = (
                             <PopoverBody
                                 ariaControlsSuffix={controlsSuffix}
                                 closeOnClickOutside={closeOnClickOutside}
-                                offset={offset}
                                 position={position}
                                 ref={ref}
                                 onClose={toggle}

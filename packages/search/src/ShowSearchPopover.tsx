@@ -21,8 +21,6 @@ export interface ShowSearchPopoverProps {
     children?: RenderShowSearchPopover;
 }
 
-const PORTAL_OFFSET = { left: 0, top: 8 };
-
 export const ShowSearchPopover: React.FC<{
     children?: RenderShowSearchPopover;
     enableShortcuts: boolean;
@@ -45,7 +43,6 @@ export const ShowSearchPopover: React.FC<{
                 })
             }
             content={(toggle: Toggle) => <SearchPopover store={store} onToggle={toggle} />}
-            offset={PORTAL_OFFSET}
             closeOnClickOutside={false}
             closeOnEscape={true}
         />
