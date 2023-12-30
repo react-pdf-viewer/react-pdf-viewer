@@ -72,7 +72,7 @@
 }
 
 /* Dark theme */
-.rpv-core__viewer--dark {
+:is(.rpv--dark) {
     /* Core tokens */
     --rpv-core-border-color: rgb(75 85 99);
 

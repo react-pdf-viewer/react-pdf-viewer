@@ -11,6 +11,6 @@
 }
 
 /* Dark theme */
-.rpv-core__viewer--dark {
+:is(.rpv--dark) {
     --rpv-toolbar__label--color: #fff;
 }

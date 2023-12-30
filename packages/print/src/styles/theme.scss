@@ -12,7 +12,7 @@
 }
 
 /* Dark theme */
-.rpv-core__viewer--dark {
+:is(.rpv--dark) {
     --rpv-print__progress-body-background-color: #363636;
     --rpv-print__progress-body-color: #fff;
 }
