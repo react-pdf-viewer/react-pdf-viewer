@@ -7,17 +7,17 @@
  */
 
 :root {
+    /* Core tokens */
+    --rpv-core-border-color: rgb(209 213 219);
+
     --rpv-core__annotation--link-hover-background-color: rgba(255, 255, 0, 0.2);
     --rpv-core__annotation-popup-wrapper-background-color: #faf089;
     --rpv-core__annotation-popup-wrapper-box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
         0 4px 6px -2px rgba(0, 0, 0, 0.05);
     --rpv-core__annotation-popup-content-border-top-color: #1a202c;
 
-    --rpv-core__arrow-border-color: rgba(0, 0, 0, 0.3);
-
     --rpv-core__asking-password-color: #000;
     --rpv-core__asking-password-wrapper-background-color: #fff;
-    --rpv-core__asking-password-wrapper-border-color: rgba(0, 0, 0, 0.3);
 
     --rpv-core__button-background-color: rgba(0, 0, 0, 0.3);
     --rpv-core__button-color: #000;
@@ -31,7 +31,6 @@
 
     --rpv-core__inner-page-background-color: #fff;
 
-    --rpv-core__menu-divider-border-bottom-color: rgba(0, 0, 0, 0.3);
     --rpv-core__menu-item-color: #000;
     --rpv-core__menu-item--hover-background-color: rgba(0, 0, 0, 0.1);
     --rpv-core__menu-item--disabled-color: rgba(0, 0, 0, 0.3);
@@ -42,13 +41,11 @@
     --rpv-core__minimal-button--selected-background-color: rgba(0, 0, 0, 0.1);
 
     --rpv-core__modal-body-background-color: #fff;
-    --rpv-core__modal-body-border-color: rgba(0, 0, 0, 0.3);
     --rpv-core__modal-overlay-background-color: rgba(0, 0, 0, 0.5);
 
     --rpv-core__page-layer-box-shadow: 2px 2px 8px 0 rgba(0, 0, 0, 0.2);
 
     --rpv-core__popover-body-background-color: #fff;
-    --rpv-core__popover-body-border-color: rgba(0, 0, 0, 0.3);
     --rpv-core__popover-body-color: #000;
 
     --rpv-core__primary-button-background-color: #2566e8;
@@ -57,8 +54,6 @@
     --rpv-core__progress-bar-background-color: rgba(0, 0, 0, 0.1);
     --rpv-core__progress-bar-progress-background-color: #2566e8;
     --rpv-core__progress-bar-progress-color: #fff;
-
-    --rpv-core__separator-border-bottom-color: rgba(0, 0, 0, 0.3);
 
     --rpv-core__spinner-border-color: rgba(0, 0, 0, 0.4);
     --rpv-core__spinner-border-transparent-color: transparent;
@@ -70,7 +65,6 @@
     --rpv-core__text-layer-text--selection-color: transparent;
 
     --rpv-core__textbox-background-color: #fff;
-    --rpv-core__textbox-border-color: rgba(0, 0, 0, 0.2);
     --rpv-core__textbox-color: #000;
 
     --rpv-core__tooltip-body-background-color: #000;
@@ -79,9 +73,11 @@
 
 /* Dark theme */
 .rpv-core__viewer--dark {
+    /* Core tokens */
+    --rpv-core-border-color: rgb(75 85 99);
+
     --rpv-core__asking-password-background-color: #363636;
     --rpv-core__asking-password-color: #fff;
-    --rpv-core__asking-password-wrapper-border-color: #191919;
     --rpv-core__asking-password-wrapper-background-color: #191919;
 
     --rpv-core__button-background-color: #171717;
@@ -96,7 +92,6 @@
 
     --rpv-core__inner-page-background-color: #1a1a1a;
 
-    --rpv-core__menu-divider-border-bottom-color: #000;
     --rpv-core__menu-item-color: #fff;
     --rpv-core__menu-item--hover-background-color: #2566e8;
     --rpv-core__menu-item--disabled-color: #5e5e5e;
@@ -115,15 +110,12 @@
 
     --rpv-core__progress-bar-background-color: #000;
 
-    --rpv-core__separator-border-bottom-color: #000;
-
     --rpv-core__spinner-border-color: #fff;
 
     --rpv-core__splitter-background-color: #1a1a1a;
     --rpv-core__splitter--hover-background-color: #2566e8;
 
     --rpv-core__textbox-background-color: #121212;
-    --rpv-core__textbox-border-color: #121212;
     --rpv-core__textbox-color: #fff;
 
     --rpv-core__tooltip-body-background-color: #414141;
