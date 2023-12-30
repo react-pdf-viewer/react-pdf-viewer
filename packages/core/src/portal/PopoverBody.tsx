@@ -9,13 +9,13 @@
 'use client';
 
 import * as React from 'react';
-import { useClickOutside } from '../hooks/useClickOutside';
 import { useIsomorphicLayoutEffect } from '../hooks/useIsomorphicLayoutEffect';
 import { Position } from '../structs/Position';
 import { TextDirection, ThemeContext } from '../theme/ThemeContext';
 import { classNames } from '../utils/classNames';
 import { mergeRefs } from '../utils/mergeRefs';
 import { Arrow } from './Arrow';
+import { useClickOutsideStack } from './useClickOutsideStack';
 
 export const PopoverBody = React.forwardRef<
     HTMLDivElement,
@@ -33,7 +33,7 @@ export const PopoverBody = React.forwardRef<
     const { direction } = React.useContext(ThemeContext);
     const isRtl = direction === TextDirection.RightToLeft;
 
-    const [contentRef] = useClickOutside(closeOnClickOutside, onClose);
+    const [contentRef] = useClickOutsideStack(closeOnClickOutside, onClose);
     const mergedContentRef = mergeRefs([ref, contentRef]);
 
     useIsomorphicLayoutEffect(() => {

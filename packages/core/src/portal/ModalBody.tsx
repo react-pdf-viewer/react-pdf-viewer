@@ -9,12 +9,12 @@
 'use client';
 
 import * as React from 'react';
-import { useClickOutside } from '../hooks/useClickOutside';
 import { useIsomorphicLayoutEffect } from '../hooks/useIsomorphicLayoutEffect';
 import { useLockScroll } from '../hooks/useLockScroll';
 import { TextDirection, ThemeContext } from '../theme/ThemeContext';
 import { classNames } from '../utils/classNames';
 import { mergeRefs } from '../utils/mergeRefs';
+import { useClickOutsideStack } from './useClickOutsideStack';
 import { useEscapeStack } from './useEscapeStack';
 
 export const ModalBody: React.FC<{
@@ -28,7 +28,7 @@ export const ModalBody: React.FC<{
     const isRtl = direction === TextDirection.RightToLeft;
 
     const contentRef = React.useRef<HTMLElement>();
-    const [contentCallbackRef] = useClickOutside(closeOnClickOutside, onClose);
+    const [contentCallbackRef] = useClickOutsideStack(closeOnClickOutside, onClose);
     const mergedContentRef = mergeRefs([contentRef, contentCallbackRef]);
 
     useLockScroll();
