@@ -9,20 +9,23 @@
 'use client';
 
 import * as React from 'react';
+import { StackContext } from './StackContext';
 
-export const useClickOutside = (
+export const useClickOutsideStack = (
     closeOnClickOutside: boolean,
     onClickOutside: () => void,
 ): [React.RefCallback<HTMLElement>] => {
+    const stackContext = React.useContext(StackContext);
     const [ele, setEle] = React.useState<HTMLElement>();
 
     const ref = React.useCallback((ele: HTMLElement) => {
         setEle(ele);
     }, []);
 
-    const clickHandler = React.useCallback(
+    const handleClickDocument = React.useCallback(
         (e: MouseEvent): void => {
-            if (!ele) {
+            // Only process if we're on the topmost stack
+            if (!ele || stackContext.currentIndex !== stackContext.numStacks) {
                 return;
             }
             const clickedTarget = e.target;
@@ -36,7 +39,7 @@ export const useClickOutside = (
                 onClickOutside();
             }
         },
-        [ele],
+        [ele, stackContext.currentIndex, stackContext.numStacks],
     );
 
     React.useEffect(() => {
@@ -46,11 +49,11 @@ export const useClickOutside = (
         const eventOptions = {
             capture: true,
         };
-        document.addEventListener('click', clickHandler, eventOptions);
+        document.addEventListener('click', handleClickDocument, eventOptions);
         return (): void => {
-            document.removeEventListener('click', clickHandler, eventOptions);
+            document.removeEventListener('click', handleClickDocument, eventOptions);
         };
-    }, [ele]);
+    }, [ele, stackContext.currentIndex, stackContext.numStacks]);
 
     return [ref];
 };
