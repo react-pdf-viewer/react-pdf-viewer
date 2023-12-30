@@ -11,10 +11,8 @@
 import * as React from 'react';
 import { useAnimationFrame } from '../hooks/useAnimationFrame';
 import { Position } from '../structs/Position';
-import { determineBestPosition, HIDDEN_RECT } from '../utils/determineBestPosition';
+import { determineBestPosition } from '../utils/determineBestPosition';
 import { Stack } from './Stack';
-
-const EMPTY_DOM_RECT = new DOMRect();
 
 const areRectsEqual = (a: DOMRect, b: DOMRect) =>
     ['top', 'left', 'width', 'height'].every((key) => a[key as keyof DOMRect] === b[key as keyof DOMRect]);
@@ -25,6 +23,8 @@ export const Portal: React.FC<{
     position: Position;
     referenceRef: React.MutableRefObject<HTMLElement>;
 }> = ({ children, offset = 0, position, referenceRef }) => {
+    const EMPTY_DOM_RECT = new DOMRect();
+
     const [ele, setEle] = React.useState<HTMLElement>();
     const [updatedPosition, setUpdatedPosition] = React.useState(position);
 
@@ -52,7 +52,7 @@ export const Portal: React.FC<{
                     position,
                     offset,
                 );
-                if (!areRectsEqual(updatedPlacement.rect, HIDDEN_RECT)) {
+                if (updatedPlacement.rect) {
                     ele.style.transform = `translate(${updatedPlacement.rect.left}px, ${updatedPlacement.rect.top}px)`;
                     setUpdatedPosition(updatedPlacement.position);
                 }
