@@ -8,7 +8,7 @@
 
 'use client';
 
-import { getPage, useIsMounted, type PageSize, type PdfJs } from '@react-pdf-viewer/core';
+import { getPage, useSafeState, type PageSize, type PdfJs } from '@react-pdf-viewer/core';
 import * as React from 'react';
 import { PageThumbnail } from './PageThumbnail';
 
@@ -22,14 +22,13 @@ export const PageThumbnailContainer: React.FC<{
     shouldRender: boolean;
     onLoad(): void;
 }> = ({ canvas, doc, pageIndex, pageRotation, pageSize, rotation, shouldRender, onLoad }) => {
-    const isMounted = useIsMounted();
-    const [page, setPage] = React.useState<PdfJs.Page>(null);
+    const [page, setPage] = useSafeState<PdfJs.Page>(null);
     const isVertical = Math.abs(rotation + pageRotation) % 180 === 0;
 
     React.useEffect(() => {
         if (shouldRender) {
             getPage(doc, pageIndex).then((pdfPage) => {
-                isMounted.current && setPage(pdfPage);
+                setPage(pdfPage);
             });
         }
     }, [shouldRender]);

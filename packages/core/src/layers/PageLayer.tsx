@@ -12,6 +12,7 @@ import * as React from 'react';
 import { AnnotationLayer } from '../annotations/AnnotationLayer';
 import { Spinner } from '../components/Spinner';
 import { useIsMounted } from '../hooks/useIsMounted';
+import { useSafeState } from '../hooks/useSafeState';
 import { RotateDirection } from '../structs/RotateDirection';
 import { ViewMode } from '../structs/ViewMode';
 import { type Destination } from '../types/Destination';
@@ -64,10 +65,10 @@ export const PageLayer: React.FC<{
     onRenderCompleted,
     onRotatePage,
 }) => {
-    const isMounted = useIsMounted();
-    const [page, setPage] = React.useState<PdfJs.Page>(null);
-    const [canvasLayerRendered, setCanvasLayerRendered] = React.useState(false);
-    const [textLayerRendered, setTextLayerRendered] = React.useState(false);
+    const isMountedRef = useIsMounted();
+    const [page, setPage] = useSafeState<PdfJs.Page>(null);
+    const [canvasLayerRendered, setCanvasLayerRendered] = useSafeState(false);
+    const [textLayerRendered, setTextLayerRendered] = useSafeState(false);
     const canvasLayerRef = React.useRef<HTMLCanvasElement>();
     const textLayerRef = React.useRef<HTMLDivElement>();
 
@@ -85,10 +86,8 @@ export const PageLayer: React.FC<{
 
     const determinePageInstance = () => {
         getPage(doc, pageIndex).then((pdfPage) => {
-            if (isMounted.current) {
-                renderQueueKeyRef.current = renderQueueKey;
-                setPage(pdfPage);
-            }
+            renderQueueKeyRef.current = renderQueueKey;
+            setPage(pdfPage);
         });
     };
 
@@ -103,14 +102,10 @@ export const PageLayer: React.FC<{
     const renderPageLayer = renderPage || defaultPageRenderer;
 
     const handleRenderCanvasCompleted = () => {
-        if (isMounted.current) {
-            setCanvasLayerRendered(true);
-        }
+        setCanvasLayerRendered(true);
     };
     const handleRenderTextCompleted = () => {
-        if (isMounted.current) {
-            setTextLayerRendered(true);
-        }
+        setTextLayerRendered(true);
     };
 
     React.useEffect(() => {
@@ -120,7 +115,7 @@ export const PageLayer: React.FC<{
     }, [pageRotation, rotation, scale]);
 
     React.useEffect(() => {
-        if (shouldRender && isMounted.current && !page) {
+        if (shouldRender && isMountedRef.current && !page) {
             determinePageInstance();
         }
     }, [shouldRender, page]);

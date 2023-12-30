@@ -8,15 +8,14 @@
 
 'use client';
 
-import { useIsMounted, type PdfJs } from '@react-pdf-viewer/core';
+import { useSafeState, type PdfJs } from '@react-pdf-viewer/core';
 import * as React from 'react';
 
 export const FetchLabels: React.FC<{
     children: (labels: string[]) => React.ReactElement;
     doc: PdfJs.PdfDocument;
 }> = ({ children, doc }) => {
-    const isMounted = useIsMounted();
-    const [status, setStatus] = React.useState<{
+    const [status, setStatus] = useSafeState<{
         loading: boolean;
         labels: string[];
     }>({
@@ -26,7 +25,7 @@ export const FetchLabels: React.FC<{
 
     React.useEffect(() => {
         doc.getPageLabels().then((result) => {
-            isMounted.current && setStatus({ loading: false, labels: result || [] });
+            setStatus({ loading: false, labels: result || [] });
         });
     }, [doc.loadingTask.docId]);
 
