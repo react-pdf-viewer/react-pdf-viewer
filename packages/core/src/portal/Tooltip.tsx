@@ -92,7 +92,13 @@ export const Tooltip: React.FC<{
             {opened && (
                 <Portal offset={8} position={position} referenceRef={targetRef}>
                     {({ position: updatedPosition, ref }) => (
-                        <TooltipBody ariaControlsSuffix={controlsSuffix} closeOnEscape={true} position={updatedPosition} ref={ref} onClose={close}>
+                        <TooltipBody
+                            ariaControlsSuffix={controlsSuffix}
+                            closeOnEscape={true}
+                            position={updatedPosition}
+                            ref={ref}
+                            onClose={close}
+                        >
                             {content()}
                         </TooltipBody>
                     )}
