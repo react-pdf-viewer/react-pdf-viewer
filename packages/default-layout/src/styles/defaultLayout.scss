@@ -10,7 +10,7 @@ $rpv-default-layout-toolbar-height: 2.5rem;
 
 .rpv-default-layout__container {
     /* Border */
-    border: 1px solid var(--rpv-default-layout__container-border-color);
+    border: 1px solid var(--rpv-core-border-color);
     box-sizing: border-box;
 
     /* Full size */
@@ -21,7 +21,7 @@ $rpv-default-layout-toolbar-height: 2.5rem;
 .rpv-default-layout__toolbar {
     align-items: center;
     background-color: var(--rpv-default-layout__toolbar-background-color);
-    border-bottom: 1px solid var(--rpv-default-layout__toolbar-border-bottom-color);
+    border-bottom: 1px solid var(--rpv-core-border-color);
     display: flex;
 
     /* Postion */
@@ -57,10 +57,10 @@ $rpv-default-layout-toolbar-height: 2.5rem;
     }
 
     &--ltr {
-        border-right: 1px solid var(--rpv-default-layout__sidebar-border-color);
+        border-right: 1px solid var(--rpv-core-border-color);
     }
     &--rtl {
-        border-left: 1px solid var(--rpv-default-layout__sidebar-border-color);
+        border-left: 1px solid var(--rpv-core-border-color);
     }
 }
 
