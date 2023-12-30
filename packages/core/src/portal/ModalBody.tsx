@@ -10,31 +10,31 @@
 
 import * as React from 'react';
 import { useClickOutside } from '../hooks/useClickOutside';
-import { useEscape } from '../hooks/useEscape';
 import { useIsomorphicLayoutEffect } from '../hooks/useIsomorphicLayoutEffect';
 import { useLockScroll } from '../hooks/useLockScroll';
 import { TextDirection, ThemeContext } from '../theme/ThemeContext';
 import { classNames } from '../utils/classNames';
 import { mergeRefs } from '../utils/mergeRefs';
+import { useEscapeStack } from './useEscapeStack';
 
 export const ModalBody: React.FC<{
     ariaControlsSuffix: string;
     children?: React.ReactNode;
     closeOnClickOutside: boolean;
     closeOnEscape: boolean;
-    onToggle(): void;
-}> = ({ ariaControlsSuffix, children, closeOnClickOutside, closeOnEscape, onToggle }) => {
+    onClose(): void;
+}> = ({ ariaControlsSuffix, children, closeOnClickOutside, closeOnEscape, onClose }) => {
     const { direction } = React.useContext(ThemeContext);
     const isRtl = direction === TextDirection.RightToLeft;
 
     const contentRef = React.useRef<HTMLElement>();
-    const [contentCallbackRef] = useClickOutside(closeOnClickOutside, onToggle);
+    const [contentCallbackRef] = useClickOutside(closeOnClickOutside, onClose);
     const mergedContentRef = mergeRefs([contentRef, contentCallbackRef]);
 
     useLockScroll();
-    useEscape(() => {
-        if (contentRef.current && closeOnEscape) {
-            onToggle();
+    useEscapeStack(() => {
+        if (closeOnEscape) {
+            onClose();
         }
     });
 

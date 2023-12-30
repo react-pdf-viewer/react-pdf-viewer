@@ -9,7 +9,7 @@
 'use client';
 
 import * as React from 'react';
-import { useEscape } from '../hooks/useEscape';
+import { useEscapeStack } from './useEscapeStack';
 
 export const PopoverOverlay: React.FC<{
     children: React.ReactNode;
@@ -17,8 +17,9 @@ export const PopoverOverlay: React.FC<{
     onClose(): void;
 }> = ({ children, closeOnEscape, onClose }) => {
     const containerRef = React.useRef<HTMLDivElement>();
-    useEscape(() => {
-        if (containerRef.current && closeOnEscape) {
+
+    useEscapeStack(() => {
+        if (closeOnEscape) {
             onClose();
         }
     });
