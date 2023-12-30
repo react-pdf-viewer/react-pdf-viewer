@@ -30,6 +30,7 @@ export { useIsMounted } from './hooks/useIsMounted';
 export { useIsomorphicLayoutEffect } from './hooks/useIsomorphicLayoutEffect';
 export { usePrevious } from './hooks/usePrevious';
 export { useRenderQueue, type UseRenderQueue } from './hooks/useRenderQueue';
+export { useSafeState } from './hooks/useSafeState';
 export { Icon } from './icons/Icon';
 export { LocalizationContext } from './localization/LocalizationContext';
 export { Modal } from './portal/Modal';
