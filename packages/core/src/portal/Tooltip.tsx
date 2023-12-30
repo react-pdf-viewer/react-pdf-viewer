@@ -9,11 +9,9 @@
 'use client';
 
 import * as React from 'react';
-import { useEscape } from '../hooks/useEscape';
 import { useToggle } from '../hooks/useToggle';
 import { Position } from '../structs/Position';
 import { ToggleStatus } from '../structs/ToggleStatus';
-import { type Offset } from '../types/Offset';
 import { uniqueId } from '../utils/uniqueId';
 import { Portal } from './Portal';
 import { TooltipBody } from './TooltipBody';
@@ -30,12 +28,6 @@ export const Tooltip: React.FC<{
     const targetRef = React.useRef<HTMLDivElement>();
     const contentRef = React.useRef<HTMLDivElement>();
     const controlsSuffix = React.useMemo(() => ariaControlsSuffix || `${uniqueId()}`, []);
-
-    useEscape(() => {
-        if (targetRef.current && document.activeElement && targetRef.current.contains(document.activeElement)) {
-            close();
-        }
-    });
 
     const open = (): void => {
         toggle(ToggleStatus.Open);
@@ -100,7 +92,7 @@ export const Tooltip: React.FC<{
             {opened && (
                 <Portal offset={8} position={position} referenceRef={targetRef}>
                     {({ position: updatedPosition, ref }) => (
-                        <TooltipBody ariaControlsSuffix={controlsSuffix} position={updatedPosition} ref={ref}>
+                        <TooltipBody ariaControlsSuffix={controlsSuffix} closeOnEscape={true} position={updatedPosition} ref={ref} onClose={close}>
                             {content()}
                         </TooltipBody>
                     )}

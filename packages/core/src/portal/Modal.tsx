@@ -9,12 +9,12 @@
 'use client';
 
 import * as React from 'react';
-import * as ReactDOM from 'react-dom';
 import { useToggle } from '../hooks/useToggle';
 import type { Toggle } from '../types/Toggle';
 import { uniqueId } from '../utils/uniqueId';
 import { ModalBody } from './ModalBody';
 import { ModalOverlay } from './ModalOverlay';
+import { Stack } from './Stack';
 
 export type RenderContent = (toggle: Toggle) => React.ReactNode;
 export type RenderTarget = (toggle: Toggle, opened: boolean) => React.ReactNode;
@@ -46,7 +46,7 @@ export const Modal: React.FC<{
                 ariaControlsSuffix={controlsSuffix}
                 closeOnClickOutside={closeOnClickOutside}
                 closeOnEscape={closeOnEscape}
-                onToggle={toggle}
+                onClose={toggle}
             >
                 {content(toggle)}
             </ModalBody>
@@ -56,7 +56,7 @@ export const Modal: React.FC<{
     return (
         <>
             {target && renderTarget(toggle, opened)}
-            {opened && ReactDOM.createPortal(renderContent(toggle), document.body)}
+            {opened && <Stack>{renderContent(toggle)}</Stack>}
         </>
     );
 };

@@ -38,6 +38,7 @@ import { type SetRenderRange, type VisiblePagesRange } from './types/SetRenderRa
 import { type VisibilityChanged } from './types/VisibilityChanged';
 import { type ZoomEvent } from './types/ZoomEvent';
 import { isSameUrl } from './utils/isSameUrl';
+import { StackContext } from './portal/StackContext';
 
 interface FileState {
     data: PdfJs.FileData;
@@ -189,6 +190,9 @@ export const Viewer: React.FC<{
         { direction: themeProps.direction },
         withTheme(themeProps.theme || 'light', onSwitchTheme),
     );
+    const [numStacks, setNumStacks] = React.useState(0);
+    const increaseNumStacks = () => setNumStacks((v) => v + 1);
+    const decreaseNumStacks = () => setNumStacks((v) => v - 1);
 
     React.useEffect(() => {
         if (localization) {
@@ -197,79 +201,81 @@ export const Viewer: React.FC<{
     }, [localization]);
 
     return (
-        <LocalizationContext.Provider value={localizationContext}>
-            <ThemeContext.Provider value={themeContext}>
-                <div
-                    ref={containerRef}
-                    className={`rpv-core__viewer rpv-core__viewer--${themeContext.currentTheme}`}
-                    data-testid="core__viewer"
-                    style={{
-                        height: '100%',
-                        width: '100%',
-                    }}
-                >
-                    {file.shouldLoad && (
-                        <DocumentLoader
-                            characterMap={characterMap}
-                            file={file.data}
-                            httpHeaders={httpHeaders}
-                            render={(doc: PdfJs.PdfDocument) => (
-                                <PageSizeCalculator
-                                    defaultScale={defaultScale}
-                                    doc={doc}
-                                    render={(estimatedPageSizes: PageSize[], initialScale: number) => (
-                                        <Inner
-                                            currentFile={{
-                                                data: file.data,
-                                                name: file.name,
-                                            }}
-                                            defaultScale={defaultScale}
-                                            doc={doc}
-                                            enableSmoothScroll={enableSmoothScroll}
-                                            estimatedPageSizes={estimatedPageSizes}
-                                            initialPage={initialPage}
-                                            initialRotation={initialRotation}
-                                            initialScale={initialScale}
-                                            pageLayout={pageLayout}
-                                            plugins={plugins}
-                                            renderPage={renderPage}
-                                            scrollMode={scrollMode}
-                                            setRenderRange={setRenderRange}
-                                            viewMode={viewMode}
-                                            viewerState={{
-                                                file,
-                                                fullScreenMode: FullScreenMode.Normal,
-                                                pageIndex: -1,
-                                                pageHeight: estimatedPageSizes[0].pageHeight,
-                                                pageWidth: estimatedPageSizes[0].pageWidth,
-                                                pagesRotation: new Map(),
-                                                rotation: initialRotation,
-                                                scale: initialScale,
-                                                scrollMode,
-                                                viewMode,
-                                            }}
-                                            onDocumentLoad={onDocumentLoad}
-                                            onOpenFile={openFile}
-                                            onPageChange={onPageChange}
-                                            onRotate={onRotate}
-                                            onRotatePage={onRotatePage}
-                                            onZoom={onZoom}
-                                        />
-                                    )}
-                                    scrollMode={scrollMode}
-                                    viewMode={viewMode}
-                                />
-                            )}
-                            renderError={renderError}
-                            renderLoader={renderLoader}
-                            renderProtectedView={renderProtectedView}
-                            transformGetDocumentParams={transformGetDocumentParams}
-                            withCredentials={withCredentials}
-                            onDocumentAskPassword={onDocumentAskPassword}
-                        />
-                    )}
-                </div>
-            </ThemeContext.Provider>
-        </LocalizationContext.Provider>
+        <StackContext.Provider value={{ currentIndex: 0, increaseNumStacks, decreaseNumStacks, numStacks }}>
+            <LocalizationContext.Provider value={localizationContext}>
+                <ThemeContext.Provider value={themeContext}>
+                    <div
+                        ref={containerRef}
+                        className={`rpv-core__viewer rpv-core__viewer--${themeContext.currentTheme}`}
+                        data-testid="core__viewer"
+                        style={{
+                            height: '100%',
+                            width: '100%',
+                        }}
+                    >
+                        {file.shouldLoad && (
+                            <DocumentLoader
+                                characterMap={characterMap}
+                                file={file.data}
+                                httpHeaders={httpHeaders}
+                                render={(doc: PdfJs.PdfDocument) => (
+                                    <PageSizeCalculator
+                                        defaultScale={defaultScale}
+                                        doc={doc}
+                                        render={(estimatedPageSizes: PageSize[], initialScale: number) => (
+                                            <Inner
+                                                currentFile={{
+                                                    data: file.data,
+                                                    name: file.name,
+                                                }}
+                                                defaultScale={defaultScale}
+                                                doc={doc}
+                                                enableSmoothScroll={enableSmoothScroll}
+                                                estimatedPageSizes={estimatedPageSizes}
+                                                initialPage={initialPage}
+                                                initialRotation={initialRotation}
+                                                initialScale={initialScale}
+                                                pageLayout={pageLayout}
+                                                plugins={plugins}
+                                                renderPage={renderPage}
+                                                scrollMode={scrollMode}
+                                                setRenderRange={setRenderRange}
+                                                viewMode={viewMode}
+                                                viewerState={{
+                                                    file,
+                                                    fullScreenMode: FullScreenMode.Normal,
+                                                    pageIndex: -1,
+                                                    pageHeight: estimatedPageSizes[0].pageHeight,
+                                                    pageWidth: estimatedPageSizes[0].pageWidth,
+                                                    pagesRotation: new Map(),
+                                                    rotation: initialRotation,
+                                                    scale: initialScale,
+                                                    scrollMode,
+                                                    viewMode,
+                                                }}
+                                                onDocumentLoad={onDocumentLoad}
+                                                onOpenFile={openFile}
+                                                onPageChange={onPageChange}
+                                                onRotate={onRotate}
+                                                onRotatePage={onRotatePage}
+                                                onZoom={onZoom}
+                                            />
+                                        )}
+                                        scrollMode={scrollMode}
+                                        viewMode={viewMode}
+                                    />
+                                )}
+                                renderError={renderError}
+                                renderLoader={renderLoader}
+                                renderProtectedView={renderProtectedView}
+                                transformGetDocumentParams={transformGetDocumentParams}
+                                withCredentials={withCredentials}
+                                onDocumentAskPassword={onDocumentAskPassword}
+                            />
+                        )}
+                    </div>
+                </ThemeContext.Provider>
+            </LocalizationContext.Provider>
+        </StackContext.Provider>
     );
 };

@@ -9,10 +9,10 @@
 'use client';
 
 import * as React from 'react';
-import * as ReactDOM from 'react-dom';
 import { useAnimationFrame } from '../hooks/useAnimationFrame';
 import { Position } from '../structs/Position';
 import { determineBestPosition, HIDDEN_RECT } from '../utils/determineBestPosition';
+import { Stack } from './Stack';
 
 const EMPTY_DOM_RECT = new DOMRect();
 
@@ -68,5 +68,5 @@ export const Portal: React.FC<{
         }
     }, [ele]);
 
-    return ReactDOM.createPortal(children({ position: updatedPosition, ref: targetRef }), document.body);
+    return <Stack>{children({ position: updatedPosition, ref: targetRef })}</Stack>;
 };
