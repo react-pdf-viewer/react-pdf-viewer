@@ -12,7 +12,7 @@
 }
 
 /* Dark theme */
-.rpv-core__viewer--dark {
+:is(.rpv--dark) {
     --rpv-drop__area-background-color: #191919;
     --rpv-drop__area-body-color: #fff;
 }

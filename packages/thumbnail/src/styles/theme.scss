@@ -13,6 +13,6 @@
 }
 
 /* Dark theme */
-.rpv-core__viewer--dark {
+:is(.rpv--dark) {
     --rpv-thumbnail__item--selected-background-color: #2566e8;
 }

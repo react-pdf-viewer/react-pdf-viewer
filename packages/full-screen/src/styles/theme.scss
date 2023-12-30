@@ -11,6 +11,6 @@
 }
 
 /* Dark theme */
-.rpv-core__viewer--dark {
+:is(.rpv--dark) {
     --rpv-full-screen__overlay-background-color: #1a1a1a;
 }
