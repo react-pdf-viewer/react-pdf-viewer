@@ -14,6 +14,7 @@ import { useIsomorphicLayoutEffect } from '../hooks/useIsomorphicLayoutEffect';
 import { Position } from '../structs/Position';
 import { TextDirection, ThemeContext } from '../theme/ThemeContext';
 import { classNames } from '../utils/classNames';
+import { mergeRefs } from '../utils/mergeRefs';
 import { Arrow } from './Arrow';
 
 export const PopoverBody = React.forwardRef<
@@ -28,12 +29,12 @@ export const PopoverBody = React.forwardRef<
 >((props, ref) => {
     const { ariaControlsSuffix, children, closeOnClickOutside, position, onClose } = props;
 
-    const contentRef = React.useRef<HTMLDivElement>();
     const innerRef = React.useRef<HTMLDivElement>();
     const { direction } = React.useContext(ThemeContext);
     const isRtl = direction === TextDirection.RightToLeft;
 
-    useClickOutside(closeOnClickOutside, contentRef, onClose);
+    const [contentRef] = useClickOutside(closeOnClickOutside, onClose);
+    const mergedContentRef = mergeRefs([ref, contentRef]);
 
     useIsomorphicLayoutEffect(() => {
         const innerContentEle = innerRef.current;
@@ -59,7 +60,7 @@ export const PopoverBody = React.forwardRef<
                 'rpv-core__popover-body--rtl': isRtl,
             })}
             id={`rpv-core__popover-body-${ariaControlsSuffix}`}
-            ref={ref}
+            ref={mergedContentRef}
             role="dialog"
             tabIndex={-1}
         >

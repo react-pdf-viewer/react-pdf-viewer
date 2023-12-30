@@ -12,27 +12,35 @@ import * as React from 'react';
 
 export const useClickOutside = (
     closeOnClickOutside: boolean,
-    targetRef: React.RefObject<HTMLElement>,
     onClickOutside: () => void,
-): void => {
-    const clickHandler = (e: MouseEvent): void => {
-        const target = targetRef.current;
-        if (!target) {
-            return;
-        }
-        const clickedTarget = e.target;
-        if (clickedTarget instanceof Element && clickedTarget.shadowRoot) {
-            const paths = e.composedPath();
-            if (paths.length > 0 && !target.contains(paths[0] as Node)) {
+): [React.RefCallback<HTMLElement>] => {
+    const [ele, setEle] = React.useState<HTMLElement>();
+
+    const ref = React.useCallback((ele: HTMLElement) => {
+        setEle(ele);
+    }, []);
+
+    const clickHandler = React.useCallback(
+        (e: MouseEvent): void => {
+            if (!ele) {
+                return;
+            }
+            const clickedTarget = e.target;
+            // Support Shadow DOM
+            if (clickedTarget instanceof Element && clickedTarget.shadowRoot) {
+                const paths = e.composedPath();
+                if (paths.length > 0 && !ele.contains(paths[0] as Node)) {
+                    onClickOutside();
+                }
+            } else if (!ele.contains(clickedTarget as Node)) {
                 onClickOutside();
             }
-        } else if (!target.contains(clickedTarget as Node)) {
-            onClickOutside();
-        }
-    };
+        },
+        [ele],
+    );
 
     React.useEffect(() => {
-        if (!closeOnClickOutside) {
+        if (!closeOnClickOutside || !ele) {
             return;
         }
         const eventOptions = {
@@ -42,5 +50,7 @@ export const useClickOutside = (
         return (): void => {
             document.removeEventListener('click', clickHandler, eventOptions);
         };
-    }, []);
+    }, [ele]);
+
+    return [ref];
 };
