@@ -37,8 +37,10 @@ export const withTheme = (theme: string, onSwitchTheme?: (theme: string) => void
     }, []);
 
     React.useEffect(() => {
-        if (currentTheme !== prevTheme && onSwitchTheme) {
-            onSwitchTheme(currentTheme);
+        document.documentElement.classList.add(`rpv--${currentTheme}`);
+        if (currentTheme !== prevTheme) {
+            document.documentElement.classList.remove(`rpv--${prevTheme}`);
+            onSwitchTheme && onSwitchTheme(currentTheme);
         }
     }, [currentTheme]);
 
