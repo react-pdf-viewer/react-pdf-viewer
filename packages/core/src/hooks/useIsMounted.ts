@@ -10,7 +10,7 @@
 
 import * as React from 'react';
 
-export const useIsMounted = () => {
+export const useIsMounted = (): React.MutableRefObject<boolean> => {
     const isMountedRef = React.useRef(false);
 
     React.useEffect(() => {

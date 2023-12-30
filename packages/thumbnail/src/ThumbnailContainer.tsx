@@ -11,7 +11,7 @@
 import {
     getPage,
     useIntersectionObserver,
-    useIsMounted,
+    useSafeState,
     type PdfJs,
     type VisibilityChanged,
 } from '@react-pdf-viewer/core';
@@ -49,8 +49,7 @@ export const ThumbnailContainer: React.FC<{
     onRenderCompleted,
     onVisibilityChanged,
 }) => {
-    const isMounted = useIsMounted();
-    const [pageSize, setPageSize] = React.useState<PageState>({
+    const [pageSize, setPageSize] = useSafeState<PageState>({
         height: pageHeight,
         page: null,
         viewportRotation: 0,
@@ -67,13 +66,12 @@ export const ThumbnailContainer: React.FC<{
         if (shouldRender) {
             getPage(doc, pageIndex).then((pdfPage) => {
                 const viewport = pdfPage.getViewport({ scale: 1 });
-                isMounted.current &&
-                    setPageSize({
-                        height: viewport.height,
-                        page: pdfPage,
-                        viewportRotation: viewport.rotation,
-                        width: viewport.width,
-                    });
+                setPageSize({
+                    height: viewport.height,
+                    page: pdfPage,
+                    viewportRotation: viewport.rotation,
+                    width: viewport.width,
+                });
             });
         }
     }, [shouldRender]);

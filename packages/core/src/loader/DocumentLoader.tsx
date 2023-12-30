@@ -10,7 +10,7 @@
 
 import * as React from 'react';
 import { Spinner } from '../components/Spinner';
-import { useIsMounted } from '../hooks/useIsMounted';
+import { useSafeState } from '../hooks/useSafeState';
 import { PasswordStatus } from '../structs/PasswordStatus';
 import { TextDirection, ThemeContext } from '../theme/ThemeContext';
 import { type CharacterMap } from '../types/CharacterMap';
@@ -55,9 +55,8 @@ export const DocumentLoader: React.FC<{
     const { pdfJsApiProvider } = React.useContext(PdfJsApiContext);
     const { direction } = React.useContext(ThemeContext);
     const isRtl = direction === TextDirection.RightToLeft;
-    const [status, setStatus] = React.useState<LoadingStatus>(new LoadingState(0));
+    const [status, setStatus] = useSafeState<LoadingStatus>(new LoadingState(0));
     const docRef = React.useRef<string>('');
-    const isMounted = useIsMounted();
 
     React.useEffect(() => {
         // Reset the status when new `file` is provided (for example, when opening file from the toolbar)
@@ -87,12 +86,10 @@ export const DocumentLoader: React.FC<{
         loadingTask.onPassword = (verifyPassword: (password: string) => void, reason: number): void => {
             switch (reason) {
                 case pdfJsApiProvider.PasswordResponses.NEED_PASSWORD:
-                    isMounted.current &&
-                        setStatus(new AskForPasswordState(verifyPassword, PasswordStatus.RequiredPassword));
+                    setStatus(new AskForPasswordState(verifyPassword, PasswordStatus.RequiredPassword));
                     break;
                 case pdfJsApiProvider.PasswordResponses.INCORRECT_PASSWORD:
-                    isMounted.current &&
-                        setStatus(new AskForPasswordState(verifyPassword, PasswordStatus.WrongPassword));
+                    setStatus(new AskForPasswordState(verifyPassword, PasswordStatus.WrongPassword));
                     break;
                 default:
                     break;
@@ -104,17 +101,16 @@ export const DocumentLoader: React.FC<{
                     ? // It seems weird but there is a case that `loaded` is greater than `total`
                       Math.min(100, (100 * progress.loaded) / progress.total)
                     : 100;
-            if (isMounted.current && docRef.current === '') {
+            if (docRef.current === '') {
                 setStatus(new LoadingState(loaded));
             }
         };
         loadingTask.promise.then(
             (doc) => {
                 docRef.current = doc.loadingTask.docId;
-                isMounted.current && setStatus(new CompletedState(doc));
+                setStatus(new CompletedState(doc));
             },
             (err) =>
-                isMounted.current &&
                 !worker.destroyed &&
                 setStatus(
                     new FailureState({

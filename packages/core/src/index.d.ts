@@ -622,6 +622,8 @@ export function useIsMounted(): React.MutableRefObject<boolean>;
 
 export function usePrevious<T>(value: T): T;
 
+export function useSafeState<T>(initialState: T | (() => T)): [T, React.Dispatch<React.SetStateAction<T>>];
+
 export interface UseRenderQueue {
     getHighestPriorityPage: () => number;
     isInRange: (pageIndex: number) => boolean;
