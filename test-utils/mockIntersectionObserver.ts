@@ -64,8 +64,8 @@ const triggerIntersection = (
         typeof trigger === 'number'
             ? observer.thresholds.find((threshold) => trigger >= threshold) ?? 0
             : trigger
-            ? 1
-            : 0;
+              ? 1
+              : 0;
 
     elements.forEach((element) => {
         entries.push({

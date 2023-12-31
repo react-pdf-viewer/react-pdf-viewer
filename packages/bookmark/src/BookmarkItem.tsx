@@ -45,8 +45,8 @@ export const BookmarkItem: React.FC<{
     const defaultExpanded = isBookmarkExpanded
         ? isBookmarkExpanded({ bookmark, doc, depth, index })
         : bookmarkExpandedMap.has(path)
-        ? bookmarkExpandedMap.get(path)
-        : !defaultIsCollapsed;
+          ? bookmarkExpandedMap.get(path)
+          : !defaultIsCollapsed;
     const [expanded, setExpanded] = React.useState(defaultExpanded);
 
     const hasSubItems = bookmark.items && bookmark.items.length > 0;

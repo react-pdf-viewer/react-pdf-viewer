@@ -92,8 +92,8 @@ export const useVirtual = ({
         scrollMode === ScrollMode.Wrapped || viewMode === ViewMode.DualPageWithCover || viewMode === ViewMode.DualPage
             ? ScrollDirection.Both
             : scrollMode === ScrollMode.Horizontal
-            ? ScrollDirection.Horizontal
-            : ScrollDirection.Vertical;
+              ? ScrollDirection.Horizontal
+              : ScrollDirection.Vertical;
 
     const { scrollOffset, scrollTo } = useScroll({
         elementRef: parentRef,
