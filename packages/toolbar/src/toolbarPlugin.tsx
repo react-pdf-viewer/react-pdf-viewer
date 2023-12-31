@@ -10,7 +10,6 @@
 
 import {
     type Plugin,
-    type PluginOnAnnotationLayerRender,
     type PluginOnTextLayerRender,
     type PluginRenderPageLayer,
     type RenderViewer,
@@ -212,13 +211,6 @@ export const toolbarPlugin = (props?: ToolbarPluginProps): ToolbarPlugin => {
                 }
             });
             return slot;
-        },
-        onAnnotationLayerRender: (props: PluginOnAnnotationLayerRender) => {
-            plugins.forEach((plugin) => {
-                if (plugin.onAnnotationLayerRender) {
-                    plugin.onAnnotationLayerRender(props);
-                }
-            });
         },
         onTextLayerRender: (props: PluginOnTextLayerRender) => {
             plugins.forEach((plugin) => {

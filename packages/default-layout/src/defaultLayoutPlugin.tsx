@@ -16,7 +16,6 @@ import {
     createStore,
     type PdfJs,
     type Plugin,
-    type PluginOnAnnotationLayerRender,
     type PluginOnDocumentLoad,
     type PluginOnTextLayerRender,
     type PluginRenderPageLayer,
@@ -165,13 +164,6 @@ export const defaultLayoutPlugin = (props?: DefaultLayoutPluginProps): DefaultLa
                     store.update('isCurrentTabOpened', true);
                 });
             }
-        },
-        onAnnotationLayerRender: (props: PluginOnAnnotationLayerRender) => {
-            plugins.forEach((plugin) => {
-                if (plugin.onAnnotationLayerRender) {
-                    plugin.onAnnotationLayerRender(props);
-                }
-            });
         },
         onTextLayerRender: (props: PluginOnTextLayerRender) => {
             plugins.forEach((plugin) => {
