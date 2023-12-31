@@ -88,15 +88,24 @@ export const TextLayer: React.FC<{
                         }
                     });
 
-                    plugins.forEach((plugin) => {
-                        if (plugin.onTextLayerRender) {
-                            plugin.onTextLayerRender({
-                                ele: containerEle,
-                                pageIndex,
-                                scale,
-                                status: LayerRenderStatus.DidRender,
+                    const renderProps = {
+                        ele: containerEle,
+                        pageIndex,
+                        scale,
+                        status: LayerRenderStatus.DidRender,
+                    };
+                    const handleRenderTextLayer = (plugin: Plugin) => {
+                        if (plugin.dependencies) {
+                            plugin.dependencies.forEach((dep) => {
+                                handleRenderTextLayer(dep);
                             });
                         }
+                        if (plugin.onTextLayerRender) {
+                            plugin.onTextLayerRender(renderProps);
+                        }
+                    };
+                    plugins.forEach((plugin) => {
+                        handleRenderTextLayer(plugin);
                     });
                     onRenderTextCompleted();
                 },

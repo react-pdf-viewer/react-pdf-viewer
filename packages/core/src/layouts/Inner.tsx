@@ -604,12 +604,18 @@ export const Inner: React.FC<{
 
     const setViewerState = (viewerState: ViewerState) => {
         let newState = viewerState;
+
         // Loop over the plugins and notify the state changed
-        plugins.forEach((plugin) => {
+        const transformState = (plugin: Plugin) => {
+            if (plugin.dependencies) {
+                plugin.dependencies.forEach((dep) => transformState(dep));
+            }
             if (plugin.onViewerStateChange) {
                 newState = plugin.onViewerStateChange(newState);
             }
-        });
+        };
+
+        plugins.forEach((plugin) => transformState(plugin));
         stateRef.current = newState;
     };
 
@@ -818,28 +824,59 @@ export const Inner: React.FC<{
             zoom,
         };
 
-        // Install the plugins
-        plugins.forEach((plugin) => {
+        const installPlugin = (plugin: Plugin) => {
+            if (plugin.dependencies) {
+                plugin.dependencies.forEach((dep) => {
+                    installPlugin(dep);
+                });
+            }
             if (plugin.install) {
                 plugin.install(pluginMethods);
             }
+        };
+
+        const uninstallPlugin = (plugin: Plugin) => {
+            if (plugin.dependencies) {
+                plugin.dependencies.forEach((dep) => {
+                    uninstallPlugin(dep);
+                });
+            }
+            if (plugin.uninstall) {
+                plugin.uninstall(pluginMethods);
+            }
+        };
+
+        // Install the plugins
+        plugins.forEach((plugin) => {
+            installPlugin(plugin);
         });
 
         return () => {
             // Uninstall the plugins
             plugins.forEach((plugin) => {
-                if (plugin.uninstall) {
-                    plugin.uninstall(pluginMethods);
-                }
+                uninstallPlugin(plugin);
             });
         };
     }, [docId]);
 
     React.useEffect(() => {
-        onDocumentLoad({ doc, file: currentFile });
+        const documentLoadProps = { doc, file: currentFile };
+        onDocumentLoad(documentLoadProps);
+
+        const handleDocumentLoad = (plugin: Plugin) => {
+            if (plugin.dependencies) {
+                plugin.dependencies.forEach((dep) => {
+                    handleDocumentLoad(dep);
+                });
+            }
+            if (plugin.onDocumentLoad) {
+                plugin.onDocumentLoad(documentLoadProps);
+            }
+        };
+
         // Loop over the plugins
         plugins.forEach((plugin) => {
-            plugin.onDocumentLoad && plugin.onDocumentLoad({ doc, file: currentFile });
+            handleDocumentLoad(plugin);
         });
     }, [docId]);
 
@@ -1111,26 +1148,37 @@ export const Inner: React.FC<{
             },
         };
 
-        plugins.forEach((plugin) => {
-            if (plugin.renderViewer) {
-                slot = plugin.renderViewer({
-                    containerRef,
-                    doc,
-                    pagesContainerRef: pagesRef,
-                    pagesRotation: state.pagesRotation,
-                    pageSizes: state.pageSizes,
-                    rotation: state.rotation,
-                    slot,
-                    themeContext,
-                    jumpToPage,
-                    openFile,
-                    rotate,
-                    rotatePage,
-                    switchScrollMode,
-                    switchViewMode,
-                    zoom,
+        const renderViewerProps = {
+            containerRef,
+            doc,
+            pagesContainerRef: pagesRef,
+            pagesRotation: state.pagesRotation,
+            pageSizes: state.pageSizes,
+            rotation: state.rotation,
+            slot,
+            themeContext,
+            jumpToPage,
+            openFile,
+            rotate,
+            rotatePage,
+            switchScrollMode,
+            switchViewMode,
+            zoom,
+        };
+
+        const transformSlot = (plugin: Plugin) => {
+            if (plugin.dependencies) {
+                plugin.dependencies.forEach((dep) => {
+                    transformSlot(dep);
                 });
             }
+            if (plugin.renderViewer) {
+                slot = plugin.renderViewer({ ...renderViewerProps, slot });
+            }
+        };
+
+        plugins.forEach((plugin) => {
+            transformSlot(plugin);
         });
 
         return slot;

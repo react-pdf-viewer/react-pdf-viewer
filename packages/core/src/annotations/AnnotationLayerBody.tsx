@@ -69,16 +69,26 @@ export const AnnotationLayerBody: React.FC<{
             return;
         }
 
-        plugins.forEach((plugin) => {
-            if (plugin.onAnnotationLayerRender) {
-                plugin.onAnnotationLayerRender({
-                    annotations: filterAnnotations,
-                    container,
-                    pageIndex,
-                    rotation,
-                    scale,
+        const renderProps = {
+            annotations: filterAnnotations,
+            container,
+            pageIndex,
+            rotation,
+            scale,
+        };
+        const handleRenderAnnotationLayer = (plugin: Plugin) => {
+            if (plugin.dependencies) {
+                plugin.dependencies.forEach((dep) => {
+                    handleRenderAnnotationLayer(dep);
                 });
             }
+            if (plugin.onAnnotationLayerRender) {
+                plugin.onAnnotationLayerRender(renderProps);
+            }
+        };
+
+        plugins.forEach((plugin) => {
+            handleRenderAnnotationLayer(plugin);
         });
     }, []);
 

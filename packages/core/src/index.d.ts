@@ -41,6 +41,7 @@ export interface PageSize {
     rotation: number;
 }
 export interface Plugin {
+    dependencies?: Plugin[];
     install?(pluginFunctions: PluginFunctions): void;
     renderPageLayer?(props: PluginRenderPageLayer): React.ReactElement;
     renderViewer?(props: RenderViewer): Slot;

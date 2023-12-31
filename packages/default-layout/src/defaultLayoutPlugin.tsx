@@ -16,13 +16,8 @@ import {
     createStore,
     type PdfJs,
     type Plugin,
-    type PluginFunctions,
-    type PluginOnAnnotationLayerRender,
     type PluginOnDocumentLoad,
-    type PluginOnTextLayerRender,
-    type PluginRenderPageLayer,
     type RenderViewer,
-    type ViewerState,
 } from '@react-pdf-viewer/core';
 import { thumbnailPlugin, type ThumbnailPlugin, type ThumbnailPluginProps } from '@react-pdf-viewer/thumbnail';
 import {
@@ -82,6 +77,7 @@ export const defaultLayoutPlugin = (props?: DefaultLayoutPluginProps): DefaultLa
         bookmarkPluginInstance,
         thumbnailPluginInstance,
         toolbarPluginInstance,
+        dependencies: plugins,
         activateTab: (index: number) => {
             store.update('currentTab', index);
         },
@@ -93,35 +89,8 @@ export const defaultLayoutPlugin = (props?: DefaultLayoutPluginProps): DefaultLa
                 store.update('currentTab', index);
             }
         },
-        install: (pluginFunctions: PluginFunctions) => {
-            // Install plugins
-            plugins.forEach((plugin) => {
-                if (plugin.install) {
-                    plugin.install(pluginFunctions);
-                }
-            });
-        },
-        renderPageLayer: (renderProps: PluginRenderPageLayer) => (
-            <React.Fragment>
-                {plugins.map((plugin, idx) =>
-                    plugin.renderPageLayer ? (
-                        <React.Fragment key={idx}>{plugin.renderPageLayer(renderProps)}</React.Fragment>
-                    ) : (
-                        <React.Fragment key={idx}>
-                            <></>
-                        </React.Fragment>
-                    ),
-                )}
-            </React.Fragment>
-        ),
         renderViewer: (renderProps: RenderViewer) => {
-            let { slot } = renderProps;
-            plugins.forEach((plugin) => {
-                if (plugin.renderViewer) {
-                    slot = plugin.renderViewer({ ...renderProps, slot });
-                }
-            });
-
+            const { slot } = renderProps;
             const mergeSubSlot =
                 slot.subSlot && slot.subSlot.attrs
                     ? {
@@ -166,49 +135,13 @@ export const defaultLayoutPlugin = (props?: DefaultLayoutPluginProps): DefaultLa
 
             return slot;
         },
-        uninstall: (pluginFunctions: PluginFunctions) => {
-            // Unistall plugins
-            plugins.forEach((plugin) => {
-                if (plugin.uninstall) {
-                    plugin.uninstall(pluginFunctions);
-                }
-            });
-        },
         onDocumentLoad: (documentLoadProps: PluginOnDocumentLoad) => {
-            plugins.forEach((plugin) => {
-                if (plugin.onDocumentLoad) {
-                    plugin.onDocumentLoad(documentLoadProps);
-                }
-            });
             if (props && props.setInitialTab) {
                 props.setInitialTab(documentLoadProps.doc).then((initialTab) => {
                     store.update('currentTab', initialTab);
                     store.update('isCurrentTabOpened', true);
                 });
             }
-        },
-        onAnnotationLayerRender: (props: PluginOnAnnotationLayerRender) => {
-            plugins.forEach((plugin) => {
-                if (plugin.onAnnotationLayerRender) {
-                    plugin.onAnnotationLayerRender(props);
-                }
-            });
-        },
-        onTextLayerRender: (props: PluginOnTextLayerRender) => {
-            plugins.forEach((plugin) => {
-                if (plugin.onTextLayerRender) {
-                    plugin.onTextLayerRender(props);
-                }
-            });
-        },
-        onViewerStateChange: (viewerState: ViewerState) => {
-            let newState = viewerState;
-            plugins.forEach((plugin) => {
-                if (plugin.onViewerStateChange) {
-                    newState = plugin.onViewerStateChange(newState);
-                }
-            });
-            return newState;
         },
     };
 };
