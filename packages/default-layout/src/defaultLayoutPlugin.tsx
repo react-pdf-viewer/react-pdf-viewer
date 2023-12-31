@@ -17,7 +17,6 @@ import {
     type PdfJs,
     type Plugin,
     type PluginOnDocumentLoad,
-    type PluginOnTextLayerRender,
     type PluginRenderPageLayer,
     type RenderViewer,
     type ViewerState,
@@ -164,13 +163,6 @@ export const defaultLayoutPlugin = (props?: DefaultLayoutPluginProps): DefaultLa
                     store.update('isCurrentTabOpened', true);
                 });
             }
-        },
-        onTextLayerRender: (props: PluginOnTextLayerRender) => {
-            plugins.forEach((plugin) => {
-                if (plugin.onTextLayerRender) {
-                    plugin.onTextLayerRender(props);
-                }
-            });
         },
         onViewerStateChange: (viewerState: ViewerState) => {
             let newState = viewerState;

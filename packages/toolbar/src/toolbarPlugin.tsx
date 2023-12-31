@@ -10,7 +10,6 @@
 
 import {
     type Plugin,
-    type PluginOnTextLayerRender,
     type PluginRenderPageLayer,
     type RenderViewer,
     type ViewerState,
@@ -211,13 +210,6 @@ export const toolbarPlugin = (props?: ToolbarPluginProps): ToolbarPlugin => {
                 }
             });
             return slot;
-        },
-        onTextLayerRender: (props: PluginOnTextLayerRender) => {
-            plugins.forEach((plugin) => {
-                if (plugin.onTextLayerRender) {
-                    plugin.onTextLayerRender(props);
-                }
-            });
         },
         onViewerStateChange: (viewerState: ViewerState) => {
             let newState = viewerState;
