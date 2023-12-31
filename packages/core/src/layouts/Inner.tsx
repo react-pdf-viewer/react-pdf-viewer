@@ -1142,26 +1142,37 @@ export const Inner: React.FC<{
             },
         };
 
-        plugins.forEach((plugin) => {
-            if (plugin.renderViewer) {
-                slot = plugin.renderViewer({
-                    containerRef,
-                    doc,
-                    pagesContainerRef: pagesRef,
-                    pagesRotation: state.pagesRotation,
-                    pageSizes: state.pageSizes,
-                    rotation: state.rotation,
-                    slot,
-                    themeContext,
-                    jumpToPage,
-                    openFile,
-                    rotate,
-                    rotatePage,
-                    switchScrollMode,
-                    switchViewMode,
-                    zoom,
+        const renderViewerProps = {
+            containerRef,
+            doc,
+            pagesContainerRef: pagesRef,
+            pagesRotation: state.pagesRotation,
+            pageSizes: state.pageSizes,
+            rotation: state.rotation,
+            slot,
+            themeContext,
+            jumpToPage,
+            openFile,
+            rotate,
+            rotatePage,
+            switchScrollMode,
+            switchViewMode,
+            zoom,
+        };
+
+        const transformSlot = (plugin: Plugin) => {
+            if (plugin.dependencies) {
+                plugin.dependencies.forEach((dep) => {
+                    transformSlot(dep);
                 });
             }
+            if (plugin.renderViewer) {
+                slot = plugin.renderViewer({ ...renderViewerProps, slot });
+            }
+        };
+
+        plugins.forEach((plugin) => {
+            transformSlot(plugin);
         });
 
         return slot;

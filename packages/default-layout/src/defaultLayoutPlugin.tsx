@@ -91,13 +91,7 @@ export const defaultLayoutPlugin = (props?: DefaultLayoutPluginProps): DefaultLa
             }
         },
         renderViewer: (renderProps: RenderViewer) => {
-            let { slot } = renderProps;
-            plugins.forEach((plugin) => {
-                if (plugin.renderViewer) {
-                    slot = plugin.renderViewer({ ...renderProps, slot });
-                }
-            });
-
+            const { slot } = renderProps;
             const mergeSubSlot =
                 slot.subSlot && slot.subSlot.attrs
                     ? {
