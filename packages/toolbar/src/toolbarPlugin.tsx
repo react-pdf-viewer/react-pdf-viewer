@@ -194,14 +194,7 @@ export const toolbarPlugin = (props?: ToolbarPluginProps): ToolbarPlugin => {
         selectionModePluginInstance,
         themePluginInstance,
         zoomPluginInstance,
-        install: (pluginFunctions: PluginFunctions) => {
-            // Install plugins
-            plugins.forEach((plugin) => {
-                if (plugin.install) {
-                    plugin.install(pluginFunctions);
-                }
-            });
-        },
+        dependencies: plugins,
         renderPageLayer: (renderProps: PluginRenderPageLayer) => (
             <React.Fragment>
                 {plugins.map((plugin, idx) =>

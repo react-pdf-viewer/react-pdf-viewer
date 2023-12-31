@@ -818,11 +818,20 @@ export const Inner: React.FC<{
             zoom,
         };
 
-        // Install the plugins
-        plugins.forEach((plugin) => {
+        const installPlugin = (plugin: Plugin) => {
+            if (plugin.dependencies) {
+                plugin.dependencies.forEach((dep) => {
+                    installPlugin(dep);
+                });
+            }
             if (plugin.install) {
                 plugin.install(pluginMethods);
             }
+        };
+
+        // Install the plugins
+        plugins.forEach((plugin) => {
+            installPlugin(plugin);
         });
 
         return () => {

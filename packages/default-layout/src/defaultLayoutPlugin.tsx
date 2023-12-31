@@ -82,6 +82,7 @@ export const defaultLayoutPlugin = (props?: DefaultLayoutPluginProps): DefaultLa
         bookmarkPluginInstance,
         thumbnailPluginInstance,
         toolbarPluginInstance,
+        dependencies: plugins,
         activateTab: (index: number) => {
             store.update('currentTab', index);
         },
@@ -92,14 +93,6 @@ export const defaultLayoutPlugin = (props?: DefaultLayoutPluginProps): DefaultLa
             if (currentTab !== index) {
                 store.update('currentTab', index);
             }
-        },
-        install: (pluginFunctions: PluginFunctions) => {
-            // Install plugins
-            plugins.forEach((plugin) => {
-                if (plugin.install) {
-                    plugin.install(pluginFunctions);
-                }
-            });
         },
         renderPageLayer: (renderProps: PluginRenderPageLayer) => (
             <React.Fragment>
