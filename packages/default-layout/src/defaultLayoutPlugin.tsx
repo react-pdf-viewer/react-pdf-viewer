@@ -18,7 +18,6 @@ import {
     type Plugin,
     type PluginOnDocumentLoad,
     type RenderViewer,
-    type ViewerState,
 } from '@react-pdf-viewer/core';
 import { thumbnailPlugin, type ThumbnailPlugin, type ThumbnailPluginProps } from '@react-pdf-viewer/thumbnail';
 import {
@@ -143,15 +142,6 @@ export const defaultLayoutPlugin = (props?: DefaultLayoutPluginProps): DefaultLa
                     store.update('isCurrentTabOpened', true);
                 });
             }
-        },
-        onViewerStateChange: (viewerState: ViewerState) => {
-            let newState = viewerState;
-            plugins.forEach((plugin) => {
-                if (plugin.onViewerStateChange) {
-                    newState = plugin.onViewerStateChange(newState);
-                }
-            });
-            return newState;
         },
     };
 };

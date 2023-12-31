@@ -604,12 +604,18 @@ export const Inner: React.FC<{
 
     const setViewerState = (viewerState: ViewerState) => {
         let newState = viewerState;
+
         // Loop over the plugins and notify the state changed
-        plugins.forEach((plugin) => {
+        const transformState = (plugin: Plugin) => {
+            if (plugin.dependencies) {
+                plugin.dependencies.forEach((dep) => transformState(dep));
+            }
             if (plugin.onViewerStateChange) {
                 newState = plugin.onViewerStateChange(newState);
             }
-        });
+        };
+
+        plugins.forEach((plugin) => transformState(plugin));
         stateRef.current = newState;
     };
 
