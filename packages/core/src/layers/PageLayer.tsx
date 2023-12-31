@@ -108,6 +108,26 @@ export const PageLayer: React.FC<{
         setTextLayerRendered(true);
     };
 
+    const renderPluginsLayer = (plugins: Plugin[]) =>
+        plugins.map((plugin, idx) => (
+            <React.Fragment key={idx}>
+                {plugin.dependencies && renderPluginsLayer(plugin.dependencies)}
+                {plugin.renderPageLayer &&
+                    plugin.renderPageLayer({
+                        canvasLayerRef,
+                        canvasLayerRendered,
+                        doc,
+                        height: h,
+                        pageIndex,
+                        rotation: rotationValue,
+                        scale,
+                        textLayerRef,
+                        textLayerRendered,
+                        width: w,
+                    })}
+            </React.Fragment>
+        ));
+
     React.useEffect(() => {
         setPage(null);
         setCanvasLayerRendered(false);
@@ -219,26 +239,7 @@ export const PageLayer: React.FC<{
                         markRendered: onRenderCompleted,
                         onRotatePage: (direction: RotateDirection) => onRotatePage(pageIndex, direction),
                     })}
-                    {plugins.map((plugin, idx) =>
-                        plugin.renderPageLayer ? (
-                            <React.Fragment key={idx}>
-                                {plugin.renderPageLayer({
-                                    canvasLayerRef,
-                                    canvasLayerRendered,
-                                    doc,
-                                    height: h,
-                                    pageIndex,
-                                    rotation: rotationValue,
-                                    scale,
-                                    textLayerRef,
-                                    textLayerRendered,
-                                    width: w,
-                                })}
-                            </React.Fragment>
-                        ) : (
-                            <React.Fragment key={idx} />
-                        ),
-                    )}
+                    {renderPluginsLayer(plugins)}
                 </>
             )}
         </div>

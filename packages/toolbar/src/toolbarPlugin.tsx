@@ -8,12 +8,7 @@
 
 'use client';
 
-import {
-    type Plugin,
-    type PluginRenderPageLayer,
-    type RenderViewer,
-    type ViewerState,
-} from '@react-pdf-viewer/core';
+import { type Plugin, type RenderViewer, type ViewerState } from '@react-pdf-viewer/core';
 import { fullScreenPlugin, type FullScreenPlugin, type FullScreenPluginProps } from '@react-pdf-viewer/full-screen';
 import { getFilePlugin, type GetFilePlugin, type GetFilePluginProps } from '@react-pdf-viewer/get-file';
 import { openPlugin, type OpenPlugin, type OpenPluginProps } from '@react-pdf-viewer/open';
@@ -191,17 +186,6 @@ export const toolbarPlugin = (props?: ToolbarPluginProps): ToolbarPlugin => {
         themePluginInstance,
         zoomPluginInstance,
         dependencies: plugins,
-        renderPageLayer: (renderProps: PluginRenderPageLayer) => (
-            <React.Fragment>
-                {plugins.map((plugin, idx) =>
-                    plugin.renderPageLayer ? (
-                        <React.Fragment key={idx}>{plugin.renderPageLayer(renderProps)}</React.Fragment>
-                    ) : (
-                        <React.Fragment key={idx}></React.Fragment>
-                    ),
-                )}
-            </React.Fragment>
-        ),
         renderViewer: (props: RenderViewer) => {
             let { slot } = props;
             plugins.forEach((plugin) => {
