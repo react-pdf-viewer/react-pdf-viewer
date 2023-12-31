@@ -33,8 +33,8 @@ export const SwitchThemeButton: React.FC<{
                 ? ((l10n.theme as LocalizationMap).switchLightTheme as string)
                 : ((l10n.theme as LocalizationMap).switchDarkTheme as string)
             : isDarkTheme
-            ? 'Switch to the light theme'
-            : 'Switch to the dark theme';
+              ? 'Switch to the light theme'
+              : 'Switch to the dark theme';
 
     return (
         <Tooltip
