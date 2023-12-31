@@ -159,11 +159,6 @@ export const defaultLayoutPlugin = (props?: DefaultLayoutPluginProps): DefaultLa
             return slot;
         },
         onDocumentLoad: (documentLoadProps: PluginOnDocumentLoad) => {
-            plugins.forEach((plugin) => {
-                if (plugin.onDocumentLoad) {
-                    plugin.onDocumentLoad(documentLoadProps);
-                }
-            });
             if (props && props.setInitialTab) {
                 props.setInitialTab(documentLoadProps.doc).then((initialTab) => {
                     store.update('currentTab', initialTab);

@@ -854,10 +854,23 @@ export const Inner: React.FC<{
     }, [docId]);
 
     React.useEffect(() => {
-        onDocumentLoad({ doc, file: currentFile });
+        const documentLoadProps = { doc, file: currentFile };
+        onDocumentLoad(documentLoadProps);
+
+        const handleDocumentLoad = (plugin: Plugin) => {
+            if (plugin.dependencies) {
+                plugin.dependencies.forEach((dep) => {
+                    handleDocumentLoad(dep);
+                });
+            }
+            if (plugin.onDocumentLoad) {
+                plugin.onDocumentLoad(documentLoadProps);
+            }
+        };
+
         // Loop over the plugins
         plugins.forEach((plugin) => {
-            plugin.onDocumentLoad && plugin.onDocumentLoad({ doc, file: currentFile });
+            handleDocumentLoad(plugin);
         });
     }, [docId]);
 
