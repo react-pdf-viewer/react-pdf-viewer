@@ -829,6 +829,17 @@ export const Inner: React.FC<{
             }
         };
 
+        const uninstallPlugin = (plugin: Plugin) => {
+            if (plugin.dependencies) {
+                plugin.dependencies.forEach((dep) => {
+                    uninstallPlugin(dep);
+                });
+            }
+            if (plugin.uninstall) {
+                plugin.uninstall(pluginMethods);
+            }
+        };
+
         // Install the plugins
         plugins.forEach((plugin) => {
             installPlugin(plugin);
@@ -837,9 +848,7 @@ export const Inner: React.FC<{
         return () => {
             // Uninstall the plugins
             plugins.forEach((plugin) => {
-                if (plugin.uninstall) {
-                    plugin.uninstall(pluginMethods);
-                }
+                uninstallPlugin(plugin);
             });
         };
     }, [docId]);

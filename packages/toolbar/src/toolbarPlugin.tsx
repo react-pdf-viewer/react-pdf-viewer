@@ -10,7 +10,6 @@
 
 import {
     type Plugin,
-    type PluginFunctions,
     type PluginOnAnnotationLayerRender,
     type PluginOnDocumentLoad,
     type PluginOnTextLayerRender,
@@ -214,14 +213,6 @@ export const toolbarPlugin = (props?: ToolbarPluginProps): ToolbarPlugin => {
                 }
             });
             return slot;
-        },
-        uninstall: (pluginFunctions: PluginFunctions) => {
-            // Unistall plugins
-            plugins.forEach((plugin) => {
-                if (plugin.uninstall) {
-                    plugin.uninstall(pluginFunctions);
-                }
-            });
         },
         onDocumentLoad: (props: PluginOnDocumentLoad) => {
             plugins.forEach((plugin) => {

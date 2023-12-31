@@ -16,7 +16,6 @@ import {
     createStore,
     type PdfJs,
     type Plugin,
-    type PluginFunctions,
     type PluginOnAnnotationLayerRender,
     type PluginOnDocumentLoad,
     type PluginOnTextLayerRender,
@@ -158,14 +157,6 @@ export const defaultLayoutPlugin = (props?: DefaultLayoutPluginProps): DefaultLa
             slot.subSlot.children = <></>;
 
             return slot;
-        },
-        uninstall: (pluginFunctions: PluginFunctions) => {
-            // Unistall plugins
-            plugins.forEach((plugin) => {
-                if (plugin.uninstall) {
-                    plugin.uninstall(pluginFunctions);
-                }
-            });
         },
         onDocumentLoad: (documentLoadProps: PluginOnDocumentLoad) => {
             plugins.forEach((plugin) => {
