@@ -235,12 +235,12 @@ export const Viewer: React.FC<{
                                                 initialPage={initialPage}
                                                 initialRotation={initialRotation}
                                                 initialScale={initialScale}
+                                                initialScrollMode={scrollMode}
+                                                initialViewMode={viewMode}
                                                 pageLayout={pageLayout}
                                                 plugins={plugins}
                                                 renderPage={renderPage}
-                                                scrollMode={scrollMode}
                                                 setRenderRange={setRenderRange}
-                                                viewMode={viewMode}
                                                 viewerState={{
                                                     file,
                                                     fullScreenMode: FullScreenMode.Normal,
