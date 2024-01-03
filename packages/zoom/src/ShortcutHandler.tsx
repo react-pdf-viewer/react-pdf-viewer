@@ -17,59 +17,66 @@ export const ShortcutHandler: React.FC<{
     containerRef: React.RefObject<HTMLDivElement>;
     store: Store<StoreProps>;
 }> = ({ containerRef, store }) => {
-    const keydownHandler = (e: KeyboardEvent) => {
-        if (e.shiftKey || e.altKey) {
-            return;
-        }
-        const isCommandPressed = isMac() ? e.metaKey : e.ctrlKey;
-        if (!isCommandPressed) {
-            return;
-        }
-
-        const containerEle = containerRef.current;
-        if (!containerEle || !document.activeElement || !containerEle.contains(document.activeElement)) {
-            return;
-        }
-
-        const zoom = store.get('zoom');
-        if (!zoom) {
-            return;
-        }
-
-        const scale = store.get('scale') || 1;
-        let newScale = 1;
-        switch (e.key) {
-            case '-':
-                newScale = decrease(scale);
-                break;
-            case '=':
-                newScale = increase(scale);
-                break;
-            case '0':
-                newScale = 1;
-                break;
-            default:
-                newScale = scale;
-                break;
-        }
-
-        if (newScale !== scale) {
-            e.preventDefault();
-            zoom(newScale);
-        }
-    };
+    const [element, setElement] = React.useState(containerRef.current);
 
     React.useEffect(() => {
-        const containerEle = containerRef.current;
-        if (!containerEle) {
+        if (containerRef.current !== element) {
+            setElement(containerRef.current);
+        }
+    }, []);
+
+    const handleDocumentKeyDown = React.useCallback(
+        (e: KeyboardEvent) => {
+            if (!element || e.shiftKey || e.altKey) {
+                return;
+            }
+            const isCommandPressed = isMac() ? e.metaKey : e.ctrlKey;
+            if (!isCommandPressed) {
+                return;
+            }
+            if (!document.activeElement || !element.contains(document.activeElement)) {
+                return;
+            }
+            const zoom = store.get('zoom');
+            if (!zoom) {
+                return;
+            }
+
+            const scale = store.get('scale') || 1;
+            let newScale = 1;
+            switch (e.key) {
+                case '-':
+                    newScale = decrease(scale);
+                    break;
+                case '=':
+                    newScale = increase(scale);
+                    break;
+                case '0':
+                    newScale = 1;
+                    break;
+                default:
+                    newScale = scale;
+                    break;
+            }
+
+            if (newScale !== scale) {
+                e.preventDefault();
+                zoom(newScale);
+            }
+        },
+        [element],
+    );
+
+    React.useEffect(() => {
+        if (!element) {
             return;
         }
+        document.addEventListener('keydown', handleDocumentKeyDown);
 
-        document.addEventListener('keydown', keydownHandler);
         return () => {
-            document.removeEventListener('keydown', keydownHandler);
+            document.removeEventListener('keydown', handleDocumentKeyDown);
         };
-    }, [containerRef.current]);
+    }, [element]);
 
     return <></>;
 };
