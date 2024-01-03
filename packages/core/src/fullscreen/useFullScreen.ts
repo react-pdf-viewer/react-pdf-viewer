@@ -28,6 +28,10 @@ const ZERO_RECT = {
     width: 0,
 };
 
+const EPSILON = 2;
+
+const equal = (a: number, b: number) => Math.abs(a - b) <= EPSILON;
+
 export const useFullScreen = ({
     getCurrentPage,
     getCurrentScrollMode,
@@ -62,8 +66,12 @@ export const useFullScreen = ({
         }
         const io = new ResizeObserver((entries) => {
             entries.forEach((entry) => {
-                const { height, width } = entry.target.getBoundingClientRect();
-                setTargetRect({ height, width });
+                // Always use `clientHeight` instead of the bounding rect (`getBoundingClientRect().height`) because they aren't the same
+                // Causing the comparison with the `window.innerHeight` doesn't work properly
+                setTargetRect({
+                    height: entry.target.clientHeight,
+                    width: entry.target.clientWidth,
+                });
             });
         });
         io.observe(element);
@@ -170,11 +178,11 @@ export const useFullScreen = ({
 
         if (
             fullScreenMode === FullScreenMode.Entering &&
-            windowRect.height === targetRect.height &&
-            windowRect.width === targetRect.width &&
+            equal(windowRect.height, targetRect.height) &&
+            equal(windowRect.width, targetRect.width) &&
             windowRect.height > 0 &&
             windowRect.width > 0 &&
-            (fullScreenSizeRef.current.height === 0 || windowRect.height == fullScreenSizeRef.current.height)
+            (fullScreenSizeRef.current.height === 0 || equal(windowRect.height, fullScreenSizeRef.current.height))
         ) {
             fullScreenSizeRef.current = {
                 height: window.innerHeight,
@@ -186,8 +194,8 @@ export const useFullScreen = ({
 
         if (
             fullScreenMode === FullScreenMode.Exitting &&
-            windowSizeBeforeFullScreenRef.current.height === windowRect.height &&
-            windowSizeBeforeFullScreenRef.current.width === windowRect.width &&
+            equal(windowSizeBeforeFullScreenRef.current.height, windowRect.height) &&
+            equal(windowSizeBeforeFullScreenRef.current.width, windowRect.width) &&
             windowRect.height > 0 &&
             windowRect.width > 0
         ) {
