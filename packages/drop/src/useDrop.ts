@@ -19,7 +19,15 @@ export const useDrop = (
     const dragCount = React.useRef(0);
     const [isDragging, setDragging] = React.useState(false);
 
-    const onDropHandler = (e: DragEvent): void => {
+    const [element, setElement] = React.useState(ref.current);
+
+    React.useEffect(() => {
+        if (ref.current !== element) {
+            setElement(ref.current);
+        }
+    }, []);
+
+    const handleDrop = (e: DragEvent): void => {
         e.preventDefault();
         setDragging(false);
         dragCount.current = 0;
@@ -29,11 +37,11 @@ export const useDrop = (
         }
     };
 
-    const onDragOverHandler = (e: DragEvent): void => {
+    const handleDragOver = (e: DragEvent): void => {
         e.preventDefault();
     };
 
-    const onDragEnterHandler = (e: DragEvent): void => {
+    const handleDragEnter = (e: DragEvent): void => {
         e.preventDefault();
         dragCount.current += 1;
         if (dragCount.current <= 1) {
@@ -41,7 +49,7 @@ export const useDrop = (
         }
     };
 
-    const onDragLeaveHandler = (e: DragEvent): void => {
+    const handleDragLeave = (e: DragEvent): void => {
         e.preventDefault();
         dragCount.current -= 1;
         if (dragCount.current <= 0) {
@@ -50,23 +58,22 @@ export const useDrop = (
     };
 
     React.useEffect(() => {
-        const ele = ref.current;
-        if (!ele) {
+        if (!element) {
             return;
         }
 
-        ele.addEventListener('drop', onDropHandler);
-        ele.addEventListener('dragover', onDragOverHandler);
-        ele.addEventListener('dragenter', onDragEnterHandler);
-        ele.addEventListener('dragleave', onDragLeaveHandler);
+        element.addEventListener('drop', handleDrop);
+        element.addEventListener('dragover', handleDragOver);
+        element.addEventListener('dragenter', handleDragEnter);
+        element.addEventListener('dragleave', handleDragLeave);
 
         return (): void => {
-            ele.removeEventListener('drop', onDropHandler);
-            ele.removeEventListener('dragover', onDragOverHandler);
-            ele.removeEventListener('dragenter', onDragEnterHandler);
-            ele.removeEventListener('dragleave', onDragLeaveHandler);
+            element.removeEventListener('drop', handleDrop);
+            element.removeEventListener('dragover', handleDragOver);
+            element.removeEventListener('dragenter', handleDragEnter);
+            element.removeEventListener('dragleave', handleDragLeave);
         };
-    }, [ref.current]);
+    }, [element]);
 
     return { isDragging };
 };

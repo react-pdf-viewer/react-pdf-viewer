@@ -25,6 +25,14 @@ export const ShortcutHandler: React.FC<{
     // Indicate whether the mouse is inside the viewer container or not
     const isMouseInsideRef = React.useRef(false);
 
+    const [element, setElement] = React.useState(containerRef.current);
+
+    React.useEffect(() => {
+        if (containerRef.current !== element) {
+            setElement(containerRef.current);
+        }
+    }, []);
+
     const handleMouseEnter = () => {
         isMouseInsideRef.current = true;
     };
@@ -63,64 +71,67 @@ export const ShortcutHandler: React.FC<{
         }
     };
 
-    const handleKeydown = (e: KeyboardEvent) => {
-        const containerEle = containerRef.current;
-        const shouldHandleShortcuts =
-            isMouseInsideRef.current || (document.activeElement && containerEle.contains(document.activeElement));
-
-        if (!containerEle || !shouldHandleShortcuts) {
-            return;
-        }
-
-        const shouldGoToNextPage =
-            (e.altKey && e.key === 'ArrowDown') || (!e.shiftKey && !e.altKey && e.key === 'PageDown');
-        const shouldGoToPreviousPage =
-            (e.altKey && e.key === 'ArrowUp') || (!e.shiftKey && !e.altKey && e.key === 'PageUp');
-
-        if (shouldGoToNextPage) {
-            e.preventDefault();
-            goToNextPage();
-            return;
-        }
-        if (shouldGoToPreviousPage) {
-            e.preventDefault();
-            goToPreviousPage();
-            return;
-        }
-
-        const isCommandPressed = isMac() ? e.metaKey && !e.ctrlKey : e.altKey;
-        if (isCommandPressed) {
-            switch (e.key) {
-                case 'ArrowLeft':
-                    e.preventDefault();
-                    jumpToPreviousDestination();
-                    break;
-                case 'ArrowRight':
-                    e.preventDefault();
-                    jumpToNextDestination();
-                    break;
-                default:
-                    break;
+    const handleDocumentKeyDown = React.useCallback(
+        (e: KeyboardEvent) => {
+            if (!element) {
+                return;
             }
-        }
-    };
+            const shouldHandleShortcuts =
+                isMouseInsideRef.current || (document.activeElement && element.contains(document.activeElement));
+            if (!shouldHandleShortcuts) {
+                return;
+            }
+
+            const shouldGoToNextPage =
+                (e.altKey && e.key === 'ArrowDown') || (!e.shiftKey && !e.altKey && e.key === 'PageDown');
+            const shouldGoToPreviousPage =
+                (e.altKey && e.key === 'ArrowUp') || (!e.shiftKey && !e.altKey && e.key === 'PageUp');
+
+            if (shouldGoToNextPage) {
+                e.preventDefault();
+                goToNextPage();
+                return;
+            }
+            if (shouldGoToPreviousPage) {
+                e.preventDefault();
+                goToPreviousPage();
+                return;
+            }
+
+            const isCommandPressed = isMac() ? e.metaKey && !e.ctrlKey : e.altKey;
+            if (isCommandPressed) {
+                switch (e.key) {
+                    case 'ArrowLeft':
+                        e.preventDefault();
+                        jumpToPreviousDestination();
+                        break;
+                    case 'ArrowRight':
+                        e.preventDefault();
+                        jumpToNextDestination();
+                        break;
+                    default:
+                        break;
+                }
+            }
+        },
+        [element],
+    );
 
     React.useEffect(() => {
-        const containerEle = containerRef.current;
-        if (!containerEle) {
+        if (!element) {
             return;
         }
 
-        document.addEventListener('keydown', handleKeydown);
-        containerEle.addEventListener('mouseenter', handleMouseEnter);
-        containerEle.addEventListener('mouseleave', handleMouseLeave);
+        document.addEventListener('keydown', handleDocumentKeyDown);
+        element.addEventListener('mouseenter', handleMouseEnter);
+        element.addEventListener('mouseleave', handleMouseLeave);
 
         return () => {
-            document.removeEventListener('keydown', handleKeydown);
-            containerEle.removeEventListener('mouseenter', handleMouseEnter);
-            containerEle.removeEventListener('mouseleave', handleMouseLeave);
+            document.removeEventListener('keydown', handleDocumentKeyDown);
+            element.removeEventListener('mouseenter', handleMouseEnter);
+            element.removeEventListener('mouseleave', handleMouseLeave);
         };
-    }, [containerRef.current]);
+    }, [element]);
 
     return <></>;
 };

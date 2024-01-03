@@ -18,37 +18,45 @@ export const ShortcutHandler: React.FC<{
     getFullScreenTarget(pagesContainer: HTMLElement): HTMLElement;
     store: Store<StoreProps>;
 }> = ({ containerRef, getFullScreenTarget, store }) => {
-    const { enterFullScreen } = useEnterFullScreen(getFullScreenTarget, store);
-
-    const keydownHandler = (e: KeyboardEvent) => {
-        if (e.shiftKey || e.altKey) {
-            return;
-        }
-        const areShortcutsPressed = isMac() ? e.metaKey && e.ctrlKey && e.key === 'f' : e.key === 'F11';
-        if (!areShortcutsPressed) {
-            return;
-        }
-
-        const containerEle = containerRef.current;
-        if (!containerEle || !document.activeElement || !containerEle.contains(document.activeElement)) {
-            return;
-        }
-
-        e.preventDefault();
-        enterFullScreen();
-    };
+    const [element, setElement] = React.useState(containerRef.current);
 
     React.useEffect(() => {
-        const containerEle = containerRef.current;
-        if (!containerEle) {
+        if (containerRef.current !== element) {
+            setElement(containerRef.current);
+        }
+    }, []);
+
+    const { enterFullScreen } = useEnterFullScreen(getFullScreenTarget, store);
+
+    const handleDocumentKeyDown = React.useCallback(
+        (e: KeyboardEvent) => {
+            if (!element || e.shiftKey || e.altKey) {
+                return;
+            }
+            const areShortcutsPressed = isMac() ? e.metaKey && e.ctrlKey && e.key === 'f' : e.key === 'F11';
+            if (!areShortcutsPressed) {
+                return;
+            }
+            if (!document.activeElement || !element.contains(document.activeElement)) {
+                return;
+            }
+
+            e.preventDefault();
+            enterFullScreen();
+        },
+        [element],
+    );
+
+    React.useEffect(() => {
+        if (!element) {
             return;
         }
+        document.addEventListener('keydown', handleDocumentKeyDown);
 
-        document.addEventListener('keydown', keydownHandler);
         return () => {
-            document.removeEventListener('keydown', keydownHandler);
+            document.removeEventListener('keydown', handleDocumentKeyDown);
         };
-    }, [containerRef.current]);
+    }, [element]);
 
     return <></>;
 };
