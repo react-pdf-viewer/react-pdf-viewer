@@ -133,6 +133,10 @@ export const Inner: React.FC<{
     // Force to scroll to the target page in the full-screen mode
     const forceTargetFullScreenRef = React.useRef(-1);
 
+    // Force to scroll to the target page.
+    // It happens in some cases such as after users change scroll mode, view mode
+    const forceTargetPageRef = React.useRef(-1);
+
     // Keep the special zoom level in the full-screen mode
     const forceTargetZoomRef = React.useRef(-1);
 
@@ -323,10 +327,7 @@ export const Inner: React.FC<{
             });
             onRotate({ direction, doc, rotation: updateRotation });
             // Keep the current page after rotating the document
-            const latestPage = stateRef.current.pageIndex;
-            if (latestPage > -1) {
-                virtualizer.scrollToItem(latestPage, ZERO_OFFSET);
-            }
+            forceTargetPageRef.current = stateRef.current.pageIndex;
         },
         [rotation],
     );
@@ -362,24 +363,13 @@ export const Inner: React.FC<{
     );
 
     const switchScrollMode = React.useCallback((newScrollMode: ScrollMode) => {
+        renderQueue.markNotRendered();
         setScrollMode(newScrollMode);
         setViewerState({
             ...stateRef.current,
             scrollMode: newScrollMode,
         });
-        // Scroll to the current page after switching the scroll mode
-        const latestPage = stateRef.current.pageIndex;
-        if (latestPage > -1) {
-            virtualizer.scrollToItem(latestPage, ZERO_OFFSET).then(() => {
-                if (fullScreen.fullScreenMode === FullScreenMode.EnteredCompletely) {
-                    // Reset the queue
-                    if (!enableSmoothScroll) {
-                        renderQueue.markNotRendered();
-                    }
-                    forceTargetFullScreenRef.current = -1;
-                }
-            });
-        }
+        forceTargetPageRef.current = stateRef.current.pageIndex;
     }, []);
 
     const switchViewMode = React.useCallback((newViewMode: ViewMode) => {
@@ -389,11 +379,8 @@ export const Inner: React.FC<{
             ...stateRef.current,
             viewMode: newViewMode,
         });
-        // Keep the current page after switching the viewmode
-        const latestPage = stateRef.current.pageIndex;
-        if (latestPage > -1) {
-            virtualizer.scrollToItem(latestPage, ZERO_OFFSET);
-        }
+        // Keep the current page after switching the view mode
+        forceTargetPageRef.current = stateRef.current.pageIndex;
     }, []);
 
     const zoom = React.useCallback(
@@ -754,8 +741,20 @@ export const Inner: React.FC<{
         scale,
     ]);
 
+    // Scroll to the current page after users switch scroll mode, view mode, or rotate pages
+    React.useEffect(() => {
+        if (forceTargetPageRef.current !== -1) {
+            jumpToPage(forceTargetPageRef.current).then(() => {
+                forceTargetPageRef.current = -1;
+            });
+        }
+    }, [forceTargetPageRef.current]);
+
     const [renderNextPageInQueue] = useAnimationFrame(
         () => {
+            if (forceTargetPageRef.current !== -1) {
+                return;
+            }
             const nextPage = renderQueue.getHighestPriorityPage();
             if (nextPage > -1 && renderQueue.isInRange(nextPage)) {
                 renderQueue.markRendering(nextPage);
