@@ -234,7 +234,7 @@ export const Inner: React.FC<{
 
     // The methods that a plugin can hook on
     // These methods are registered once and there is no chance for plugins to get the latest version of the methods.
-    // Hence, don't pass any dependencies or internal states if they use React hooks such as React.useCallback()
+    // Hence, don't pass any dependencies or internal states if they use React hooks such as `useCallback()`
 
     const setViewerState = (viewerState: ViewerState) => {
         let newState = viewerState;
@@ -316,6 +316,7 @@ export const Inner: React.FC<{
 
     const rotate = React.useCallback(
         (direction: RotateDirection) => {
+            const rotation = stateRef.current.rotation;
             const degrees = direction === RotateDirection.Backward ? -90 : 90;
             const updateRotation = rotation === 360 || rotation === -360 ? degrees : rotation + degrees;
 
@@ -329,13 +330,13 @@ export const Inner: React.FC<{
             // Keep the current page after rotating the document
             forceTargetPageRef.current = stateRef.current.pageIndex;
         },
-        [rotation],
+        [],
     );
 
     const rotatePage = React.useCallback(
         (pageIndex: number, direction: RotateDirection) => {
             const degrees = direction === RotateDirection.Backward ? -90 : 90;
-            const rotations = pagesRotation;
+            const rotations = stateRef.current.pagesRotation;
             const currentPageRotation = rotations.has(pageIndex) ? rotations.get(pageIndex) : initialRotation;
             const finalRotation = currentPageRotation + degrees;
             const updateRotations = rotations.set(pageIndex, finalRotation);
@@ -359,7 +360,7 @@ export const Inner: React.FC<{
             renderQueue.markRendering(pageIndex);
             setRenderPageIndex(pageIndex);
         },
-        [pagesRotation],
+        [],
     );
 
     const switchScrollMode = React.useCallback((newScrollMode: ScrollMode) => {
@@ -431,7 +432,7 @@ export const Inner: React.FC<{
                 }
             });
         },
-        [pageSizes],
+        [],
     );
 
     // Full-screen mode
