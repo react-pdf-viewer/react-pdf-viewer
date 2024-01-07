@@ -1,6 +1,7 @@
 import { Viewer } from '@react-pdf-viewer/core';
 import { defaultLayoutPlugin } from '@react-pdf-viewer/default-layout';
-import { highlightPlugin, Trigger, type RenderHighlightsProps } from '@react-pdf-viewer/highlight';
+import { Trigger, highlightPlugin, type RenderHighlightsProps } from '@react-pdf-viewer/highlight';
+import * as React from 'react';
 
 const IndexPage = () => {
     const defaultLayoutPluginInstance = defaultLayoutPlugin();

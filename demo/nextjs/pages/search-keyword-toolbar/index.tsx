@@ -1,5 +1,6 @@
 import { Viewer } from '@react-pdf-viewer/core';
 import { toolbarPlugin } from '@react-pdf-viewer/toolbar';
+import * as React from 'react';
 
 const IndexPage = () => {
     const toolbarPluginInstance = toolbarPlugin({

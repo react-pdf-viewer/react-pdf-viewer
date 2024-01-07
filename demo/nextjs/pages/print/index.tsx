@@ -1,5 +1,6 @@
 import { Button, Viewer } from '@react-pdf-viewer/core';
 import { printPlugin } from '@react-pdf-viewer/print';
+import * as React from 'react';
 
 const IndexPage = () => {
     const printPluginInstance = printPlugin();

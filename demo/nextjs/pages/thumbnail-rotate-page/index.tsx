@@ -1,6 +1,7 @@
 import { MinimalButton, Position, RotateDirection, Tooltip, Viewer } from '@react-pdf-viewer/core';
 import { RotateBackwardIcon, RotateForwardIcon } from '@react-pdf-viewer/rotate';
 import { thumbnailPlugin, type RenderThumbnailItemProps } from '@react-pdf-viewer/thumbnail';
+import * as React from 'react';
 
 const IndexPage = () => {
     const renderThumbnailItem = (props: RenderThumbnailItemProps) => (
