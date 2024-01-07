@@ -130,9 +130,6 @@ export const Inner: React.FC<{
         typeof defaultScale === 'string' ? defaultScale : null,
     );
 
-    // Force to scroll to the target page in the full-screen mode
-    const forceTargetFullScreenRef = React.useRef(-1);
-
     // Force to scroll to the target page.
     // It happens in some cases such as after users change scroll mode, view mode
     const forceTargetPageRef = React.useRef(-1);
@@ -144,9 +141,6 @@ export const Inner: React.FC<{
     const forceTargetInitialPageRef = React.useRef(initialPage);
 
     const fullScreen = useFullScreen({
-        getCurrentPage: () => stateRef.current.pageIndex,
-        getCurrentScrollMode: () => stateRef.current.scrollMode,
-        jumpToPage: (pageIndex: number) => jumpToPage(pageIndex),
         targetRef: pagesRef,
     });
 
@@ -314,54 +308,48 @@ export const Inner: React.FC<{
         [onOpenFile],
     );
 
-    const rotate = React.useCallback(
-        (direction: RotateDirection) => {
-            const rotation = stateRef.current.rotation;
-            const degrees = direction === RotateDirection.Backward ? -90 : 90;
-            const updateRotation = rotation === 360 || rotation === -360 ? degrees : rotation + degrees;
+    const rotate = React.useCallback((direction: RotateDirection) => {
+        const rotation = stateRef.current.rotation;
+        const degrees = direction === RotateDirection.Backward ? -90 : 90;
+        const updateRotation = rotation === 360 || rotation === -360 ? degrees : rotation + degrees;
 
-            renderQueue.markNotRendered();
-            setRotation(updateRotation);
-            setViewerState({
-                ...stateRef.current,
-                rotation: updateRotation,
-            });
-            onRotate({ direction, doc, rotation: updateRotation });
-            // Keep the current page after rotating the document
-            forceTargetPageRef.current = stateRef.current.pageIndex;
-        },
-        [],
-    );
+        renderQueue.markNotRendered();
+        setRotation(updateRotation);
+        setViewerState({
+            ...stateRef.current,
+            rotation: updateRotation,
+        });
+        onRotate({ direction, doc, rotation: updateRotation });
+        // Keep the current page after rotating the document
+        forceTargetPageRef.current = stateRef.current.pageIndex;
+    }, []);
 
-    const rotatePage = React.useCallback(
-        (pageIndex: number, direction: RotateDirection) => {
-            const degrees = direction === RotateDirection.Backward ? -90 : 90;
-            const rotations = stateRef.current.pagesRotation;
-            const currentPageRotation = rotations.has(pageIndex) ? rotations.get(pageIndex) : initialRotation;
-            const finalRotation = currentPageRotation + degrees;
-            const updateRotations = rotations.set(pageIndex, finalRotation);
+    const rotatePage = React.useCallback((pageIndex: number, direction: RotateDirection) => {
+        const degrees = direction === RotateDirection.Backward ? -90 : 90;
+        const rotations = stateRef.current.pagesRotation;
+        const currentPageRotation = rotations.has(pageIndex) ? rotations.get(pageIndex) : initialRotation;
+        const finalRotation = currentPageRotation + degrees;
+        const updateRotations = rotations.set(pageIndex, finalRotation);
 
-            // Force the pages to be re-virtualized
-            setPagesRotationChanged((value) => !value);
-            setPagesRotation(updateRotations);
-            setViewerState({
-                ...stateRef.current,
-                pagesRotation: updateRotations,
-                rotatedPage: pageIndex,
-            });
-            onRotatePage({
-                direction,
-                doc,
-                pageIndex,
-                rotation: finalRotation,
-            });
+        // Force the pages to be re-virtualized
+        setPagesRotationChanged((value) => !value);
+        setPagesRotation(updateRotations);
+        setViewerState({
+            ...stateRef.current,
+            pagesRotation: updateRotations,
+            rotatedPage: pageIndex,
+        });
+        onRotatePage({
+            direction,
+            doc,
+            pageIndex,
+            rotation: finalRotation,
+        });
 
-            // Rerender the target page
-            renderQueue.markRendering(pageIndex);
-            setRenderPageIndex(pageIndex);
-        },
-        [],
-    );
+        // Rerender the target page
+        renderQueue.markRendering(pageIndex);
+        setRenderPageIndex(pageIndex);
+    }, []);
 
     const switchScrollMode = React.useCallback((newScrollMode: ScrollMode) => {
         renderQueue.markNotRendered();
@@ -370,6 +358,7 @@ export const Inner: React.FC<{
             ...stateRef.current,
             scrollMode: newScrollMode,
         });
+        // Keep the current page after switching the scroll mode
         forceTargetPageRef.current = stateRef.current.pageIndex;
     }, []);
 
@@ -384,64 +373,63 @@ export const Inner: React.FC<{
         forceTargetPageRef.current = stateRef.current.pageIndex;
     }, []);
 
-    const zoom = React.useCallback(
-        (newScale: number | SpecialZoomLevel) => {
-            const pagesEle = pagesRef.current;
-            const currentPage = stateRef.current.pageIndex;
-            if (currentPage < 0 || currentPage >= numPages) {
-                return;
+    const zoom = React.useCallback((newScale: number | SpecialZoomLevel) => {
+        const pagesEle = pagesRef.current;
+        const currentPage = stateRef.current.pageIndex;
+        if (currentPage < 0 || currentPage >= numPages) {
+            return;
+        }
+
+        const currentPageHeight = pageSizes[currentPage].pageHeight;
+        const currentPageWidth = pageSizes[currentPage].pageWidth;
+
+        const updateScale = pagesEle
+            ? typeof newScale === 'string'
+                ? calculateScale(
+                      pagesEle,
+                      currentPageHeight,
+                      currentPageWidth,
+                      newScale,
+                      stateRef.current.viewMode,
+                      numPages,
+                  )
+                : newScale
+            : 1;
+
+        keepSpecialZoomLevelRef.current = typeof newScale === 'string' ? newScale : null;
+        if (updateScale === stateRef.current.scale) {
+            // Prevent the case where users continue zooming
+            // when the document reaches the minimum/maximum zooming scale
+            return;
+        }
+
+        setRenderQueueKey((key) => key + 1);
+        renderQueue.markNotRendered();
+
+        const previousScale = stateRef.current.scale;
+        setViewerState({
+            ...stateRef.current,
+            scale: updateScale,
+        });
+        setScale(updateScale);
+        onZoom({ doc, scale: updateScale });
+
+        virtualizer.zoom(updateScale / previousScale, currentPage).then(() => {
+            if (fullScreen.fullScreenMode === FullScreenMode.Entered) {
+                forceTargetZoomRef.current = -1;
             }
-
-            const currentPageHeight = pageSizes[currentPage].pageHeight;
-            const currentPageWidth = pageSizes[currentPage].pageWidth;
-
-            const updateScale = pagesEle
-                ? typeof newScale === 'string'
-                    ? calculateScale(
-                          pagesEle,
-                          currentPageHeight,
-                          currentPageWidth,
-                          newScale,
-                          stateRef.current.viewMode,
-                          numPages,
-                      )
-                    : newScale
-                : 1;
-
-            keepSpecialZoomLevelRef.current = typeof newScale === 'string' ? newScale : null;
-            if (updateScale === stateRef.current.scale) {
-                // Prevent the case where users continue zooming
-                // when the document reaches the minimum/maximum zooming scale
-                return;
-            }
-
-            setRenderQueueKey((key) => key + 1);
-            renderQueue.markNotRendered();
-
-            const previousScale = stateRef.current.scale;
-            setViewerState({
-                ...stateRef.current,
-                scale: updateScale,
-            });
-            setScale(updateScale);
-            onZoom({ doc, scale: updateScale });
-
-            virtualizer.zoom(updateScale / previousScale, currentPage).then(() => {
-                if (fullScreen.fullScreenMode === FullScreenMode.EnteredCompletely) {
-                    forceTargetZoomRef.current = -1;
-                }
-            });
-        },
-        [],
-    );
+        });
+    }, []);
 
     // Full-screen mode
 
     const enterFullScreenMode = React.useCallback((target: HTMLElement) => {
+        forceTargetPageRef.current = stateRef.current.pageIndex;
         fullScreen.enterFullScreenMode(target);
     }, []);
 
     const exitFullScreenMode = React.useCallback(() => {
+        forceTargetPageRef.current = stateRef.current.pageIndex;
         fullScreen.exitFullScreenMode();
     }, []);
 
@@ -651,17 +639,7 @@ export const Inner: React.FC<{
     }, [currentPage]);
 
     React.useEffect(() => {
-        if (fullScreen.fullScreenMode === FullScreenMode.Entering && stateRef.current.scrollMode === ScrollMode.Page) {
-            forceTargetFullScreenRef.current = stateRef.current.pageIndex;
-        }
-        if (
-            fullScreen.fullScreenMode === FullScreenMode.EnteredCompletely &&
-            stateRef.current.scrollMode === ScrollMode.Page &&
-            enableSmoothScroll
-        ) {
-            forceTargetFullScreenRef.current = -1;
-        }
-        if (fullScreen.fullScreenMode === FullScreenMode.EnteredCompletely && keepSpecialZoomLevelRef.current) {
+        if (fullScreen.fullScreenMode === FullScreenMode.Entered && keepSpecialZoomLevelRef.current) {
             forceTargetZoomRef.current = stateRef.current.pageIndex;
             zoom(keepSpecialZoomLevelRef.current);
         }
@@ -705,14 +683,9 @@ export const Inner: React.FC<{
         // The current page is the page which has the biggest visibility
         const updateCurrentPage = maxVisbilityIndex;
 
-        const isFullScreen =
-            fullScreen.fullScreenMode === FullScreenMode.Entered || // Triggered when `enableSmoothScroll` is set to `false`
-            fullScreen.fullScreenMode === FullScreenMode.EnteredCompletely;
-        if (
-            isFullScreen &&
-            updateCurrentPage !== forceTargetFullScreenRef.current &&
-            forceTargetFullScreenRef.current > -1
-        ) {
+        // Triggered when `enableSmoothScroll` is set to `false`
+        const isFullScreen = fullScreen.fullScreenMode === FullScreenMode.Entered;
+        if (isFullScreen && updateCurrentPage !== forceTargetPageRef.current && forceTargetPageRef.current > -1) {
             return;
         }
         if (isFullScreen && updateCurrentPage !== forceTargetZoomRef.current && forceTargetZoomRef.current > -1) {
@@ -742,18 +715,20 @@ export const Inner: React.FC<{
         scale,
     ]);
 
-    // Scroll to the current page after users switch scroll mode, view mode, or rotate pages
-    React.useEffect(() => {
-        if (forceTargetPageRef.current !== -1) {
-            jumpToPage(forceTargetPageRef.current).then(() => {
-                forceTargetPageRef.current = -1;
-            });
-        }
-    }, [forceTargetPageRef.current]);
-
     const [renderNextPageInQueue] = useAnimationFrame(
         () => {
-            if (forceTargetPageRef.current !== -1) {
+            const targetPage = forceTargetPageRef.current;
+            if (
+                stateRef.current.fullScreenMode === FullScreenMode.Entering ||
+                stateRef.current.fullScreenMode === FullScreenMode.Exitting
+            ) {
+                return;
+            }
+            // Scroll to the current page after users switch scroll mode, view mode, or rotate pages
+            if (targetPage !== -1) {
+                jumpToPage(targetPage).then(() => {
+                    forceTargetPageRef.current = -1;
+                });
                 return;
             }
             const nextPage = renderQueue.getHighestPriorityPage();

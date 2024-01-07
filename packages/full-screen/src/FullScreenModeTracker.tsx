@@ -34,7 +34,7 @@ export const FullScreenModeTracker: React.FC<{
 
     React.useEffect(() => {
         switch (fullScreenMode) {
-            case FullScreenMode.EnteredCompletely:
+            case FullScreenMode.Entered:
                 handleEnteredFullScreen();
                 break;
             case FullScreenMode.Exited:
@@ -54,7 +54,7 @@ export const FullScreenModeTracker: React.FC<{
     }, []);
 
     return (
-        (fullScreenMode === FullScreenMode.Entering || fullScreenMode === FullScreenMode.Entered) && (
+        fullScreenMode === FullScreenMode.Entering && (
             <div className="rpv-full-screen__overlay">
                 <Spinner />
             </div>
