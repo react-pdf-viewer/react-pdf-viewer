@@ -9,6 +9,7 @@ import {
 } from '@react-pdf-viewer/core';
 import { RotateBackwardIcon, RotateForwardIcon } from '@react-pdf-viewer/rotate';
 import { thumbnailPlugin } from '@react-pdf-viewer/thumbnail';
+import * as React from 'react';
 
 const IndexPage = () => {
     const thumbnailPluginInstance = thumbnailPlugin();

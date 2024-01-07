@@ -8,6 +8,7 @@ import {
     type RenderPageProps,
 } from '@react-pdf-viewer/core';
 import { RotateBackwardIcon, RotateForwardIcon } from '@react-pdf-viewer/rotate';
+import * as React from 'react';
 
 const IndexPage = () => {
     const renderPage: RenderPage = (props: RenderPageProps) => (
