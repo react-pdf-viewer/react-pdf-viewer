@@ -12,7 +12,6 @@ import * as React from 'react';
 import { useIsomorphicLayoutEffect } from '../hooks/useIsomorphicLayoutEffect';
 import { useWindowResize } from '../hooks/useWindowResize';
 import { FullScreenMode } from '../structs/FullScreenMode';
-import { ScrollMode } from '../structs/ScrollMode';
 import { type Rect } from '../types/Rect';
 import {
     addFullScreenChangeListener,
@@ -32,22 +31,11 @@ const EPSILON = 2;
 
 const equal = (a: number, b: number) => Math.abs(a - b) <= EPSILON;
 
-export const useFullScreen = ({
-    getCurrentPage,
-    getCurrentScrollMode,
-    jumpToPage,
-    targetRef,
-}: {
-    getCurrentPage: () => number;
-    getCurrentScrollMode: () => ScrollMode;
-    jumpToPage: (pageIndex: number) => Promise<void>;
-    targetRef: React.MutableRefObject<HTMLElement>;
-}) => {
+export const useFullScreen = ({ targetRef }: { targetRef: React.MutableRefObject<HTMLElement> }) => {
     const [fullScreenMode, setFullScreenMode] = React.useState(FullScreenMode.Normal);
     const windowRect = useWindowResize();
     const [targetRect, setTargetRect] = React.useState<Rect>(ZERO_RECT);
     const windowSizeBeforeFullScreenRef = React.useRef<Rect>(ZERO_RECT);
-    const targetPageRef = React.useRef(getCurrentPage());
 
     const fullScreenSizeRef = React.useRef<Rect>(ZERO_RECT);
     const [element, setElement] = React.useState<HTMLElement>(targetRef.current);
@@ -132,7 +120,6 @@ export const useFullScreen = ({
                         'var(--rpv-core__full-screen-target-background-color)';
                 }
                 // Store the latest window size right after entering the full screen mode
-                targetPageRef.current = getCurrentPage();
                 windowSizeBeforeFullScreenRef.current = {
                     height: window.innerHeight,
                     width: window.innerWidth,
@@ -141,13 +128,6 @@ export const useFullScreen = ({
 
             // Entering the full screen mode completes
             case FullScreenMode.Entered:
-                if (getCurrentScrollMode() === ScrollMode.Page) {
-                    jumpToPage(targetPageRef.current).then(() => {
-                        setFullScreenMode(FullScreenMode.EnteredCompletely);
-                    });
-                } else {
-                    setFullScreenMode(FullScreenMode.EnteredCompletely);
-                }
                 break;
 
             case FullScreenMode.Exitting:
@@ -155,15 +135,11 @@ export const useFullScreen = ({
                     fullScreenElementRef.current.style.backgroundColor = '';
                     fullScreenElementRef.current = null;
                 }
-                targetPageRef.current = getCurrentPage();
                 break;
 
             // Exitting the full screen mode completes
             case FullScreenMode.Exited:
                 setFullScreenMode(FullScreenMode.Normal);
-                if (getCurrentScrollMode() === ScrollMode.Page) {
-                    jumpToPage(targetPageRef.current);
-                }
                 break;
 
             default:
