@@ -41,17 +41,23 @@ export const CanvasLayer: React.FC<{
 
         const canvasEle = canvasLayerRef.current;
         canvasEle.removeAttribute('data-testid');
-        plugins.forEach((plugin) => {
-            if (plugin.onCanvasLayerRender) {
-                plugin.onCanvasLayerRender({
-                    ele: canvasEle,
-                    pageIndex,
-                    rotation,
-                    scale,
-                    status: LayerRenderStatus.PreRender,
-                });
+
+        const preRenderProps = {
+            ele: canvasEle,
+            pageIndex,
+            rotation,
+            scale,
+            status: LayerRenderStatus.PreRender,
+        };
+        const handlePreRenderCanvasLayer = (plugin: Plugin) => {
+            if (plugin.dependencies) {
+                plugin.dependencies.forEach((dep) => handlePreRenderCanvasLayer(dep));
             }
-        });
+            if (plugin.onCanvasLayerRender) {
+                plugin.onCanvasLayerRender(preRenderProps);
+            }
+        };
+        plugins.forEach((plugin) => handlePreRenderCanvasLayer(plugin));
 
         const viewport = page.getViewport({
             rotation,
@@ -90,17 +96,24 @@ export const CanvasLayer: React.FC<{
             (): void => {
                 canvasEle.hidden = false;
                 canvasEle.setAttribute('data-testid', `core__canvas-layer-${pageIndex}`);
-                plugins.forEach((plugin) => {
-                    if (plugin.onCanvasLayerRender) {
-                        plugin.onCanvasLayerRender({
-                            ele: canvasEle,
-                            pageIndex,
-                            rotation,
-                            scale,
-                            status: LayerRenderStatus.DidRender,
-                        });
+
+                const didRenderProps = {
+                    ele: canvasEle,
+                    pageIndex,
+                    rotation,
+                    scale,
+                    status: LayerRenderStatus.DidRender,
+                };
+                const handleDidRenderCanvasLayer = (plugin: Plugin) => {
+                    if (plugin.dependencies) {
+                        plugin.dependencies.forEach((dep) => handleDidRenderCanvasLayer(dep));
                     }
-                });
+                    if (plugin.onCanvasLayerRender) {
+                        plugin.onCanvasLayerRender(didRenderProps);
+                    }
+                };
+                plugins.forEach((plugin) => handleDidRenderCanvasLayer(plugin));
+
                 onRenderCanvasCompleted();
             },
             (): void => {
