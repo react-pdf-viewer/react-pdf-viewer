@@ -748,7 +748,7 @@ export const Inner: React.FC<{
 
     /* ----- Renders ----- */
 
-    const renderViewer = React.useCallback(() => {
+    const renderViewer = () => {
         const { virtualItems } = virtualizer;
         let chunks: VirtualItem[][] = [];
         switch (viewMode) {
@@ -819,7 +819,7 @@ export const Inner: React.FC<{
                                     'rpv-core__inner-page-container--single': scrollMode === ScrollMode.Page,
                                 })}
                                 style={virtualizer.getItemContainerStyles(items[0])}
-                                key={`${items[0].index}-${viewMode}`}
+                                key={`${items[0].index}-${viewMode}-${scrollMode}`}
                             >
                                 {items.map((item) => {
                                     // The first and the last items are treated as covers
@@ -926,7 +926,7 @@ export const Inner: React.FC<{
         });
 
         return slot;
-    }, [plugins, virtualizer]);
+    };
 
     const renderSlot = React.useCallback(
         (slot: Slot) => (
