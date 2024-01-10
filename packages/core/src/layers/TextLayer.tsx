@@ -54,16 +54,23 @@ export const TextLayer: React.FC<{
         containerEle.removeAttribute('data-testid');
         const viewport = page.getViewport({ rotation, scale });
 
-        plugins.forEach((plugin) => {
-            if (plugin.onTextLayerRender) {
-                plugin.onTextLayerRender({
-                    ele: containerEle,
-                    pageIndex,
-                    scale,
-                    status: LayerRenderStatus.PreRender,
-                });
+        // Trigger `onTextLayerRender`
+        const preRenderProps = {
+            ele: containerEle,
+            pageIndex,
+            scale,
+            status: LayerRenderStatus.PreRender,
+        };
+        const handlePreRenderTextLayer = (plugin: Plugin) => {
+            if (plugin.dependencies) {
+                plugin.dependencies.forEach((dep) => handlePreRenderTextLayer(dep));
             }
-        });
+            if (plugin.onTextLayerRender) {
+                plugin.onTextLayerRender(preRenderProps);
+            }
+        };
+        plugins.forEach((plugin) => handlePreRenderTextLayer(plugin));
+
         page.getTextContent().then((textContent) => {
             empty();
             // Despite the fact that the `--scale-factor` is already set at the root element,
@@ -88,25 +95,21 @@ export const TextLayer: React.FC<{
                         }
                     });
 
-                    const renderProps = {
+                    const didRenderProps = {
                         ele: containerEle,
                         pageIndex,
                         scale,
                         status: LayerRenderStatus.DidRender,
                     };
-                    const handleRenderTextLayer = (plugin: Plugin) => {
+                    const handleDidRenderTextLayer = (plugin: Plugin) => {
                         if (plugin.dependencies) {
-                            plugin.dependencies.forEach((dep) => {
-                                handleRenderTextLayer(dep);
-                            });
+                            plugin.dependencies.forEach((dep) => handleDidRenderTextLayer(dep));
                         }
                         if (plugin.onTextLayerRender) {
-                            plugin.onTextLayerRender(renderProps);
+                            plugin.onTextLayerRender(didRenderProps);
                         }
                     };
-                    plugins.forEach((plugin) => {
-                        handleRenderTextLayer(plugin);
-                    });
+                    plugins.forEach((plugin) => handleDidRenderTextLayer(plugin));
                     onRenderTextCompleted();
                 },
                 () => {
