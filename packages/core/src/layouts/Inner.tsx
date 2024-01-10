@@ -571,9 +571,7 @@ export const Inner: React.FC<{
 
         const installPlugin = (plugin: Plugin) => {
             if (plugin.dependencies) {
-                plugin.dependencies.forEach((dep) => {
-                    installPlugin(dep);
-                });
+                plugin.dependencies.forEach((dep) => installPlugin(dep));
             }
             if (plugin.install) {
                 plugin.install(pluginMethods);
@@ -582,9 +580,7 @@ export const Inner: React.FC<{
 
         const uninstallPlugin = (plugin: Plugin) => {
             if (plugin.dependencies) {
-                plugin.dependencies.forEach((dep) => {
-                    uninstallPlugin(dep);
-                });
+                plugin.dependencies.forEach((dep) => uninstallPlugin(dep));
             }
             if (plugin.uninstall) {
                 plugin.uninstall(pluginMethods);
@@ -592,15 +588,11 @@ export const Inner: React.FC<{
         };
 
         // Install the plugins
-        plugins.forEach((plugin) => {
-            installPlugin(plugin);
-        });
+        plugins.forEach((plugin) => installPlugin(plugin));
 
         return () => {
             // Uninstall the plugins
-            plugins.forEach((plugin) => {
-                uninstallPlugin(plugin);
-            });
+            plugins.forEach((plugin) => uninstallPlugin(plugin));
         };
     }, [docId]);
 
@@ -610,9 +602,7 @@ export const Inner: React.FC<{
 
         const handleDocumentLoad = (plugin: Plugin) => {
             if (plugin.dependencies) {
-                plugin.dependencies.forEach((dep) => {
-                    handleDocumentLoad(dep);
-                });
+                plugin.dependencies.forEach((dep) => handleDocumentLoad(dep));
             }
             if (plugin.onDocumentLoad) {
                 plugin.onDocumentLoad(documentLoadProps);
@@ -620,23 +610,8 @@ export const Inner: React.FC<{
         };
 
         // Loop over the plugins
-        plugins.forEach((plugin) => {
-            handleDocumentLoad(plugin);
-        });
+        plugins.forEach((plugin) => handleDocumentLoad(plugin));
     }, [docId]);
-
-    useIsomorphicLayoutEffect(() => {
-        const latestPage = stateRef.current.pageIndex;
-        if (
-            latestPage > 0 &&
-            latestPage === initialPage &&
-            forceTargetInitialPageRef.current === initialPage &&
-            keepSpecialZoomLevelRef.current
-        ) {
-            forceTargetInitialPageRef.current = -1;
-            zoom(keepSpecialZoomLevelRef.current);
-        }
-    }, [currentPage]);
 
     React.useEffect(() => {
         if (fullScreen.fullScreenMode === FullScreenMode.Entered && keepSpecialZoomLevelRef.current) {
@@ -912,18 +887,14 @@ export const Inner: React.FC<{
 
         const transformSlot = (plugin: Plugin) => {
             if (plugin.dependencies) {
-                plugin.dependencies.forEach((dep) => {
-                    transformSlot(dep);
-                });
+                plugin.dependencies.forEach((dep) => transformSlot(dep));
             }
             if (plugin.renderViewer) {
                 slot = plugin.renderViewer({ ...renderViewerProps, slot });
             }
         };
 
-        plugins.forEach((plugin) => {
-            transformSlot(plugin);
-        });
+        plugins.forEach((plugin) => transformSlot(plugin));
 
         return slot;
     };
