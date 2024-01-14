@@ -12,7 +12,7 @@ import { type Offset } from '../types/Offset';
 const EPS = 0.0001;
 
 export const smoothScroll = (
-    ele: HTMLDivElement,
+    ele: HTMLElement,
     scrollDirection: ScrollDirection,
     targetPosition: Offset,
     duration: number,
@@ -26,6 +26,7 @@ export const smoothScroll = (
         case ScrollDirection.Horizontal:
             left = ele.scrollLeft;
             top = 0;
+            break;
         case ScrollDirection.Both:
             left = ele.scrollLeft;
             top = ele.scrollTop;
@@ -74,7 +75,7 @@ export const smoothScroll = (
         const percent = Math.min(time / duration, 1);
         const easedPercent = easing(percent);
 
-        let updatePosition = {
+        const updatePosition = {
             left: left - offset.left * easedPercent,
             top: top - offset.top * easedPercent,
         };
