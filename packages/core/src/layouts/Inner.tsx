@@ -132,7 +132,13 @@ export const Inner: React.FC<{
 
     // Force to scroll to the target page.
     // It happens in some cases such as after users change scroll mode, view mode
-    const forceTargetPageRef = React.useRef(-1);
+    const forceTargetPageRef = React.useRef<{
+        targetPage: number;
+        zoomRatio: number;
+    }>({
+        targetPage: -1,
+        zoomRatio: 1,
+    });
 
     // Keep the special zoom level in the full-screen mode
     const forceTargetZoomRef = React.useRef(-1);
@@ -321,7 +327,10 @@ export const Inner: React.FC<{
         });
         onRotate({ direction, doc, rotation: updateRotation });
         // Keep the current page after rotating the document
-        forceTargetPageRef.current = stateRef.current.pageIndex;
+        forceTargetPageRef.current = {
+            targetPage: stateRef.current.pageIndex,
+            zoomRatio: 1,
+        };
     }, []);
 
     const rotatePage = React.useCallback((pageIndex: number, direction: RotateDirection) => {
@@ -359,7 +368,10 @@ export const Inner: React.FC<{
             scrollMode: newScrollMode,
         });
         // Keep the current page after switching the scroll mode
-        forceTargetPageRef.current = stateRef.current.pageIndex;
+        forceTargetPageRef.current = {
+            targetPage: stateRef.current.pageIndex,
+            zoomRatio: 1,
+        };
     }, []);
 
     const switchViewMode = React.useCallback((newViewMode: ViewMode) => {
@@ -370,7 +382,10 @@ export const Inner: React.FC<{
             viewMode: newViewMode,
         });
         // Keep the current page after switching the view mode
-        forceTargetPageRef.current = stateRef.current.pageIndex;
+        forceTargetPageRef.current = {
+            targetPage: stateRef.current.pageIndex,
+            zoomRatio: 1,
+        };
     }, []);
 
     const zoom = React.useCallback((newScale: number | SpecialZoomLevel) => {
@@ -413,23 +428,27 @@ export const Inner: React.FC<{
         });
         setScale(updateScale);
         onZoom({ doc, scale: updateScale });
-
-        virtualizer.zoom(updateScale / previousScale, currentPage).then(() => {
-            if (fullScreen.fullScreenMode === FullScreenMode.Entered) {
-                forceTargetZoomRef.current = -1;
-            }
-        });
+        forceTargetPageRef.current = {
+            targetPage: currentPage,
+            zoomRatio: updateScale / previousScale,
+        };
     }, []);
 
     // Full-screen mode
 
     const enterFullScreenMode = React.useCallback((target: HTMLElement) => {
-        forceTargetPageRef.current = stateRef.current.pageIndex;
+        forceTargetPageRef.current = {
+            targetPage: stateRef.current.pageIndex,
+            zoomRatio: 1,
+        };
         fullScreen.enterFullScreenMode(target);
     }, []);
 
     const exitFullScreenMode = React.useCallback(() => {
-        forceTargetPageRef.current = stateRef.current.pageIndex;
+        forceTargetPageRef.current = {
+            targetPage: stateRef.current.pageIndex,
+            zoomRatio: 1,
+        };
         fullScreen.exitFullScreenMode();
     }, []);
 
@@ -660,7 +679,11 @@ export const Inner: React.FC<{
 
         // Triggered when `enableSmoothScroll` is set to `false`
         const isFullScreen = fullScreen.fullScreenMode === FullScreenMode.Entered;
-        if (isFullScreen && updateCurrentPage !== forceTargetPageRef.current && forceTargetPageRef.current > -1) {
+        if (
+            isFullScreen &&
+            updateCurrentPage !== forceTargetPageRef.current.targetPage &&
+            forceTargetPageRef.current.targetPage > -1
+        ) {
             return;
         }
         if (isFullScreen && updateCurrentPage !== forceTargetZoomRef.current && forceTargetZoomRef.current > -1) {
@@ -692,17 +715,26 @@ export const Inner: React.FC<{
 
     const [renderNextPageInQueue] = useAnimationFrame(
         () => {
-            const targetPage = forceTargetPageRef.current;
             if (
                 stateRef.current.fullScreenMode === FullScreenMode.Entering ||
                 stateRef.current.fullScreenMode === FullScreenMode.Exitting
             ) {
                 return;
             }
-            // Scroll to the current page after users switch scroll mode, view mode, or rotate pages
+            const { targetPage, zoomRatio } = forceTargetPageRef.current;
+            // Scroll to the current page
             if (targetPage !== -1) {
-                jumpToPage(targetPage).then(() => {
-                    forceTargetPageRef.current = -1;
+                const promise =
+                    zoomRatio === 1
+                        ? // Users switch scroll mode, view mode, or rotate pages
+                          jumpToPage(targetPage)
+                        : // Users zoom the document
+                          virtualizer.zoom(zoomRatio, targetPage);
+                promise.then(() => {
+                    forceTargetPageRef.current = {
+                        targetPage: -1,
+                        zoomRatio: 1,
+                    };
                 });
                 return;
             }
