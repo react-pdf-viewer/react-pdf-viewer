@@ -158,7 +158,7 @@ export const useScroll = ({
                 resolve();
             });
         },
-        [elementRef],
+        [elementRef.current],
     );
 
     return {
