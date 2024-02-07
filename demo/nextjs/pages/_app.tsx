@@ -2,13 +2,13 @@ import '@react-pdf-viewer/core/lib/styles/index.css';
 import '@react-pdf-viewer/default-layout/lib/styles/index.css';
 import '@react-pdf-viewer/drop/lib/styles/index.css';
 import '@react-pdf-viewer/highlight/lib/styles/index.css';
-import { Worker } from '@react-pdf-viewer/worker';
+import { Worker } from '@react-pdf-viewer/core';
 import * as React from 'react';
 import '../styles/index.css';
 
 export default function MyApp({ Component, pageProps }) {
     return (
-        <Worker workerUrl="/pdf.worker.min.js">
+        <Worker workerUrl="/pdf.worker.min.mjs">
             <Component {...pageProps} />
         </Worker>
     );
