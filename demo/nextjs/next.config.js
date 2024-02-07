@@ -68,7 +68,7 @@ module.exports = {
             new CopyWebpackPlugin({
                 patterns: [
                     {
-                        from: path.join(rootDir, 'node_modules/pdfjs-dist/build/pdf.worker.min.js'),
+                        from: path.join(rootDir, 'node_modules/pdfjs-dist/build/pdf.worker.min.mjs'),
                         to: path.join(__dirname, 'public'),
                     },
                 ],
