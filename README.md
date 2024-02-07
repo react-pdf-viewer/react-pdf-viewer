@@ -66,8 +66,5 @@ You have to purchase a Commercial License at the [official website](https://reac
 
 This project is developed by _Nguyen Huu Phuoc_. I love building products and sharing knowledge.
 
-Be my friend on
-
--   [Twitter](https://twitter.com/nghuuphuoc)
--   [dev.to](https://dev.to/phuocng)
--   [Github](https://github.com/phuoc-ng)
+-   [DEV](https://dev.to/phuocng)
+-   [Github](https://github.com/phuocng)
