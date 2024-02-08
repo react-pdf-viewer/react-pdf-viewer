@@ -9,7 +9,7 @@
 .rpv-core__minimal-button {
     background-color: transparent;
     border: none;
-    border-radius: 0.25rem;
+    border-radius: var(--rpv-radius-sm);
     color: var(--rpv-core__minimal-button-color);
     cursor: pointer;
     height: 2rem;

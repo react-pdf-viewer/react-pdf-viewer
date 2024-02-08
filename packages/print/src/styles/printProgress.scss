@@ -20,7 +20,7 @@
     &-body {
         background-color: var(--rpv-print__progress-body-background-color);
         border: 1px solid var(--rpv-core-border-color);
-        border-radius: 0.25rem;
+        border-radius: var(--rpv-radius-sm);
         color: var(--rpv-print__progress-body-color);
         padding: 1.5rem;
         text-align: center;
