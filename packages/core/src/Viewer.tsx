@@ -15,11 +15,15 @@ import { Inner } from './layouts/Inner';
 import { PageSizeCalculator } from './layouts/PageSizeCalculator';
 import { DocumentLoader, RenderError } from './loader/DocumentLoader';
 import { DefaultLocalization, LocalizationContext } from './localization/LocalizationContext';
+import { StackContext } from './portal/StackContext';
 import { FullScreenMode } from './structs/FullScreenMode';
 import { ScrollMode } from './structs/ScrollMode';
 import { SpecialZoomLevel } from './structs/SpecialZoomLevel';
 import { ViewMode } from './structs/ViewMode';
 import { TextDirection, ThemeContext } from './theme/ThemeContext';
+import { DARK_THEME } from './theme/darkTheme';
+import { LIGHT_THEME } from './theme/lightTheme';
+import { useTheme } from './theme/useTheme';
 import { withTheme } from './theme/withTheme';
 import { type CharacterMap } from './types/CharacterMap';
 import { type DocumentAskPasswordEvent } from './types/DocumentAskPasswordEvent';
@@ -38,7 +42,6 @@ import { type SetRenderRange, type VisiblePagesRange } from './types/SetRenderRa
 import { type VisibilityChanged } from './types/VisibilityChanged';
 import { type ZoomEvent } from './types/ZoomEvent';
 import { isSameUrl } from './utils/isSameUrl';
-import { StackContext } from './portal/StackContext';
 
 interface FileState {
     data: PdfJs.FileData;
@@ -183,16 +186,16 @@ export const Viewer: React.FC<{
 
     // Manage contexts
     const themeProps = typeof theme === 'string' ? { direction: TextDirection.LeftToRight, theme } : theme;
+    const themeStr = themeProps.theme || 'light';
     const [l10n, setL10n] = React.useState(localization || DefaultLocalization);
     const localizationContext = { l10n, setL10n };
-    const themeContext = Object.assign(
-        {},
-        { direction: themeProps.direction },
-        withTheme(themeProps.theme || 'light', onSwitchTheme),
-    );
+    const themeContext = Object.assign({}, { direction: themeProps.direction }, withTheme(themeStr, onSwitchTheme));
     const [numStacks, setNumStacks] = React.useState(0);
     const increaseNumStacks = () => setNumStacks((v) => v + 1);
     const decreaseNumStacks = () => setNumStacks((v) => v - 1);
+
+    // TODO: Migrate the old `theme` property
+    useTheme(themeStr === 'light' ? LIGHT_THEME : DARK_THEME);
 
     React.useEffect(() => {
         if (localization) {
