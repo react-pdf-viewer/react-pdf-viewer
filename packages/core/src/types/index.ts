@@ -29,6 +29,7 @@ export * from './RotatePageEvent';
 export * from './SetRenderRange';
 export * from './Slot';
 export * from './Store';
+export * from './Theme';
 export * from './Toggle';
 export * from './ViewerState';
 export * from './VisibilityChanged';

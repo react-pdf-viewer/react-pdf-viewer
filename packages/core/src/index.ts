@@ -48,6 +48,8 @@ export { SpecialZoomLevel } from './structs/SpecialZoomLevel';
 export { ToggleStatus } from './structs/ToggleStatus';
 export { ViewMode } from './structs/ViewMode';
 export { TextDirection, ThemeContext } from './theme/ThemeContext';
+export { DARK_THEME } from './theme/darkTheme';
+export { LIGHT_THEME } from './theme/lightTheme';
 export * from './types/index';
 export { chunk } from './utils/chunk';
 export { classNames } from './utils/classNames';
