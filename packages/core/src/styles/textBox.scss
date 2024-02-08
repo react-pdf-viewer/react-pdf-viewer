@@ -10,7 +10,7 @@
     background-color: var(--rpv-core__textbox-background-color);
     border: 1px solid var(--rpv-core-border-color);
     box-sizing: border-box;
-    border-radius: 0.25rem;
+    border-radius: var(--rpv-radius-sm);
     color: var(--rpv-core__textbox-color);
     padding: 0 0.5rem;
     height: 2rem;

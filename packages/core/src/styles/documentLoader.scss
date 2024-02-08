@@ -19,7 +19,7 @@
 
     &-text {
         background-color: var(--rpv-core__doc-error-text-background-color);
-        border-radius: 0.25rem;
+        border-radius: var(--rpv-radius-sm);
         color: var(--rpv-core__doc-error-text-color);
         line-height: 1.5;
         max-width: 50%;
