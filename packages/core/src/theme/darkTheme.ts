@@ -25,8 +25,8 @@ export const DARK_THEME: Theme = {
         errorContent: '',
     },
     radius: {
-        sm: '',
-        md: '',
-        lg: '',
+        sm: '0.25rem',
+        md: '0.5rem',
+        lg: '1rem',
     },
 };
