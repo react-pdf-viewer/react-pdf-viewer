@@ -430,6 +430,31 @@ export interface Store<T extends StoreState> {
 
 export function createStore<T extends StoreState>(initialState?: T): Store<T>;
 
+// Theme
+export interface Theme {
+    name: string;
+    colors: {
+        primary: string;
+        // Foreground content color used on primary color
+        primaryContent?: string;
+        secondary: string;
+        secondaryContent?: string;
+        accent: string;
+        accentContent?: string;
+        neutral: string;
+        neutralContent?: string;
+        base: string;
+        baseContent?: string;
+        error?: string;
+        errorContent?: string;
+    };
+    radius: {
+        sm: string;
+        md: string;
+        lg: string;
+    };
+}
+
 // Contexts
 export interface LocalizationMap {
     [key: string]: string | LocalizationMap;
