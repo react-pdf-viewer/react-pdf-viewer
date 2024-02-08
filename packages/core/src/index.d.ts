@@ -455,6 +455,9 @@ export interface Theme {
     };
 }
 
+export const DARK_THEME: Theme;
+export const LIGHT_THEME: Theme;
+
 // Contexts
 export interface LocalizationMap {
     [key: string]: string | LocalizationMap;
