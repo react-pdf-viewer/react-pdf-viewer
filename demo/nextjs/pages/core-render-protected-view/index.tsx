@@ -38,7 +38,7 @@ const ProtectedView: React.FC<RenderProtectedViewProps> = ({ passwordStatus, ver
                     <div
                         data-testid="error"
                         style={{
-                            color: '#c02424',
+                            color: '#ff6f70',
                             marginBottom: '0.5rem',
                         }}
                     >

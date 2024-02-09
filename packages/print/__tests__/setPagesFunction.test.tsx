@@ -151,7 +151,7 @@ const TestSetPagesFunction: React.FC<{
                                     {customPagesInvalid && printPages === PrintPages.CustomPages && (
                                         <div
                                             style={{
-                                                color: '#c02424',
+                                                color: '#ff6f70',
                                                 fontSize: '0.75rem',
                                                 marginTop: '0.5rem',
                                             }}
