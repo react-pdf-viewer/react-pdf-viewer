@@ -20,7 +20,7 @@ export const LIGHT_THEME: Theme = {
         neutral: '#2b3440',
         neutralContent: '#d7dde4',
         base: '',
-        baseContent: '',
+        baseContent: '31, 41, 55',
         error: '#ff6f70',
         errorContent: '#000',
     },

@@ -20,7 +20,7 @@ export const DARK_THEME: Theme = {
         neutral: '#2a323c',
         neutralContent: '#a6adbb',
         base: '',
-        baseContent: '',
+        baseContent: '166, 173, 187',
         error: '#ff6f70',
         errorContent: '#000',
     },

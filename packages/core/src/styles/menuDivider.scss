@@ -7,6 +7,6 @@
  */
 
 .rpv-core__menu-divider {
-    border-bottom: 1px solid var(--rpv-core-border-color);
+    border-bottom: 1px solid rgba(var(--rpv-color-base-content), 0.1);
     margin: 0.25rem 0;
 }
