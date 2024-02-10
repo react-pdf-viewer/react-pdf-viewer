@@ -19,7 +19,7 @@ export const DARK_THEME: Theme = {
         accentContent: '',
         neutral: '#2a323c',
         neutralContent: '#a6adbb',
-        base: '',
+        base: '29, 35, 42',
         baseDarker: '25, 30, 36',
         baseMoreDarker: '',
         baseContent: '166, 173, 187',

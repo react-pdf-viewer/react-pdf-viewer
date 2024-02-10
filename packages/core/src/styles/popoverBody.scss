@@ -7,10 +7,10 @@
  */
 
 .rpv-core__popover-body {
-    background-color: var(--rpv-core__popover-body-background-color);
+    background-color: rgb(var(--rpv-color-base));
     border: 1px solid rgba(var(--rpv-color-base-content), 0.1);
     border-radius: var(--rpv-radius-sm);
-    color: var(--rpv-core__popover-body-color);
+    color: rgb(var(--rpv-color-base-content));
     left: 0;
     padding: 0.5rem 0;
     position: fixed;
@@ -18,7 +18,7 @@
     z-index: 9999;
 
     &-arrow {
-        background-color: var(--rpv-core__popover-body-background-color);
+        background-color: inherit;
     }
 
     &--rtl {

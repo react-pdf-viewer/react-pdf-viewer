@@ -19,7 +19,7 @@ export const LIGHT_THEME: Theme = {
         accentContent: '',
         neutral: '#2b3440',
         neutralContent: '#d7dde4',
-        base: '',
+        base: '255, 255, 255',
         baseDarker: '242, 242, 242',
         baseMoreDarker: '',
         baseContent: '31, 41, 55',

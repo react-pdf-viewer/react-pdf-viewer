@@ -7,7 +7,7 @@
  */
 
 .rpv-core__modal-body {
-    background-color: var(--rpv-core__modal-body-background-color);
+    background-color: rgb(var(--rpv-color-base));
     border: 1px solid rgba(var(--rpv-color-base-content), 0.1);
     border-radius: var(--rpv-radius-sm);
     margin: 1rem;
