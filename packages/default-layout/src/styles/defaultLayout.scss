@@ -20,7 +20,7 @@ $rpv-default-layout-toolbar-height: 2.5rem;
 
 .rpv-default-layout__toolbar {
     align-items: center;
-    background-color: var(--rpv-default-layout__toolbar-background-color);
+    background-color: rgb(var(--rpv-color-base-darker));
     border-bottom: 1px solid rgba(var(--rpv-color-base-content), 0.1);
     display: flex;
 
