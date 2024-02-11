@@ -21,7 +21,7 @@ export const DARK_THEME: Theme = {
         neutralContent: '166, 173, 187',
         base: '29, 35, 42',
         baseDarker: '25, 30, 36',
-        baseMoreDarker: '',
+        baseMoreDarker: '21, 25, 30',
         baseContent: '166, 173, 187',
         error: '255, 111, 112',
         errorContent: '0, 0, 0',

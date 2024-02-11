@@ -21,7 +21,7 @@ export const LIGHT_THEME: Theme = {
         neutralContent: '215, 221, 228',
         base: '255, 255, 255',
         baseDarker: '242, 242, 242',
-        baseMoreDarker: '',
+        baseMoreDarker: '210, 210, 210',
         baseContent: '31, 41, 55',
         error: '255, 111, 112',
         errorContent: '0, 0, 0',

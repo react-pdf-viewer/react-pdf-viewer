@@ -16,12 +16,12 @@
     padding-top: 0.25rem;
 
     &:focus {
-        background-color: var(--rpv-bookmark__item--hover-background-color);
+        background-color: rgba(var(--rpv-color-base-content), 0.1);
         outline: 0;
     }
 
     &:hover {
-        background-color: var(--rpv-bookmark__item--hover-background-color);
+        background-color: rgba(var(--rpv-color-base-content), 0.1);
     }
 }
 
