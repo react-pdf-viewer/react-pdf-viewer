@@ -11,8 +11,8 @@ import { type Theme } from '../types/Theme';
 export const DARK_THEME: Theme = {
     name: 'dark',
     colors: {
-        primary: '',
-        primaryContent: '',
+        primary: '117, 130, 255',
+        primaryContent: '5, 6, 23',
         secondary: '',
         secondaryContent: '',
         accent: '',

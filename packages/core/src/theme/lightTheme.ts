@@ -11,8 +11,8 @@ import { type Theme } from '../types/Theme';
 export const LIGHT_THEME: Theme = {
     name: 'light',
     colors: {
-        primary: '',
-        primaryContent: '',
+        primary: '73, 30, 255',
+        primaryContent: '212, 219, 255',
         secondary: '',
         secondaryContent: '',
         accent: '',

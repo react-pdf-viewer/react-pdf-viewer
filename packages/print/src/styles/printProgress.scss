@@ -18,10 +18,10 @@
     z-index: 9999;
 
     &-body {
-        background-color: var(--rpv-print__progress-body-background-color);
+        background-color: rgb(var(--rpv-color-base));
         border: 1px solid rgba(var(--rpv-color-base-content), 0.1);
         border-radius: var(--rpv-radius-sm);
-        color: var(--rpv-print__progress-body-color);
+        color: rgb(var(--rpv-color-base-content));
         padding: 1.5rem;
         text-align: center;
         width: 15rem;
