@@ -52,7 +52,7 @@ export const defaultLayoutPlugin = (props?: DefaultLayoutPluginProps): DefaultLa
         () =>
             createStore<StoreProps>({
                 isCurrentTabOpened: false,
-                currentTab: 0,
+                currentTab: -1,
             }),
         [],
     );
