@@ -18,9 +18,9 @@
     }
 
     &-text {
-        background-color: var(--rpv-color-error);
+        background-color: rgb(var(--rpv-color-error));
         border-radius: var(--rpv-radius-sm);
-        color: var(--rpv-color-error-content);
+        color: rgb(var(--rpv-color-error-content));
         line-height: 1.5;
         max-width: 50%;
         padding: 0.5rem;
