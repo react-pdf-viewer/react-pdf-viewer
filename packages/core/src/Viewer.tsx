@@ -21,9 +21,6 @@ import { ScrollMode } from './structs/ScrollMode';
 import { SpecialZoomLevel } from './structs/SpecialZoomLevel';
 import { ViewMode } from './structs/ViewMode';
 import { TextDirection, ThemeContext } from './theme/ThemeContext';
-import { DARK_THEME } from './theme/darkTheme';
-import { LIGHT_THEME } from './theme/lightTheme';
-import { useTheme } from './theme/useTheme';
 import { withTheme } from './theme/withTheme';
 import { type CharacterMap } from './types/CharacterMap';
 import { type DocumentAskPasswordEvent } from './types/DocumentAskPasswordEvent';
@@ -193,9 +190,6 @@ export const Viewer: React.FC<{
     const [numStacks, setNumStacks] = React.useState(0);
     const increaseNumStacks = () => setNumStacks((v) => v + 1);
     const decreaseNumStacks = () => setNumStacks((v) => v - 1);
-
-    // TODO: Migrate the old `theme` property
-    useTheme(themeStr === 'light' ? LIGHT_THEME : DARK_THEME);
 
     React.useEffect(() => {
         if (localization) {
