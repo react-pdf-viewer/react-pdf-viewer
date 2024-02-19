@@ -30,7 +30,7 @@
 .rpv-thumbnail__item--dual-cover:hover,
 .rpv-thumbnail__items--dual:hover .rpv-thumbnail__item,
 .rpv-thumbnail__items--dual-cover:hover .rpv-thumbnail__item {
-    background-color: var(--rpv-thumbnail__item--selected-background-color);
+    background-color: rgba(var(--rpv-color-base-content), 0.1);
 }
 
 .rpv-thumbnail__item:focus {
@@ -71,5 +71,5 @@
 
 // Selected state
 .rpv-thumbnail__items--selected .rpv-thumbnail__item {
-    background-color: var(--rpv-thumbnail__item--selected-background-color);
+    background-color: rgb(var(--rpv-color-neutral));
 }

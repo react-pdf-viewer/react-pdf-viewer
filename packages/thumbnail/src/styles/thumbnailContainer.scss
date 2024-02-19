@@ -9,7 +9,10 @@
 .rpv-thumbnail__container {
     align-items: center;
     background: var(--rpv-thumbnail__container-background-color);
-    box-shadow: var(--rpv-thumbnail__container-box-shadow);
+    box-shadow: rgba(0, 0, 0, 0) 0px 0px 0px 0px,
+                rgba(0, 0, 0, 0) 0px 0px 0px 0px,
+                rgba(0, 0, 0, 0.1) 0px 1px 3px 0px,
+                rgba(0, 0, 0, 0.1) 0px 1px 2px -1px;
     display: flex;
     justify-content: center;
     margin: 0 auto;
