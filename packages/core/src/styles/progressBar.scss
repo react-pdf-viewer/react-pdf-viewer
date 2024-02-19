@@ -7,7 +7,7 @@
  */
 
 .rpv-core__progress-bar {
-    background-color: var(--rpv-core__progress-bar-background-color);
+    background-color: rgba(var(--rpv-color-base-content), 0.2);
     border-radius: 9999px;
     padding: 0.125rem;
 
@@ -17,9 +17,9 @@
 
     &-progress {
         align-items: center;
-        background-color: var(--rpv-core__progress-bar-progress-background-color);
+        background-color: rgb(var(--rpv-color-primary));
         border-radius: 9999px;
-        color: var(--rpv-core__progress-bar-progress-color);
+        color: rgb(var(--rpv-color-primary-content));
         display: flex;
         font-size: 0.75rem;
         justify-content: center;

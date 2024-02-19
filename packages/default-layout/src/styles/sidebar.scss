@@ -33,9 +33,9 @@
         overflow: hidden;
     }
     &--ltr {
-        border-left: 1px solid var(--rpv-core-border-color);
+        border-left: 1px solid rgba(var(--rpv-color-base-content), 0.1);
     }
     &--rtl {
-        border-right: 1px solid var(--rpv-core-border-color);
+        border-right: 1px solid rgba(var(--rpv-color-base-content), 0.1);
     }
 }

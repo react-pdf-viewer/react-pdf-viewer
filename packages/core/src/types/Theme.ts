@@ -19,6 +19,8 @@ export interface Theme {
         neutral: string;
         neutralContent?: string;
         base: string;
+        baseDarker?: string;
+        baseMoreDarker?: string;
         baseContent?: string;
         error?: string;
         errorContent?: string;

@@ -7,10 +7,10 @@
  */
 
 .rpv-core__primary-button {
-    background-color: var(--rpv-core__primary-button-background-color);
+    background-color: rgb(var(--rpv-color-primary));
     border: none;
     border-radius: var(--rpv-radius-sm);
-    color: var(--rpv-core__primary-button-color);
+    color: rgb(var(--rpv-color-primary-content));
     cursor: pointer;
     height: 2rem;
     padding: 0 1rem;

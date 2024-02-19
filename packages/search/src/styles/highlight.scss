@@ -16,7 +16,7 @@
 }
 
 .rpv-search__highlight {
-    background-color: var(--rpv-search__highlight-background-color);
+    background-color: rgba(var(--rpv-color-secondary), .4);
     border-radius: var(--rpv-radius-sm);
     position: absolute;
     // Display on top of the text layer
@@ -24,5 +24,5 @@
 }
 
 .rpv-search__highlight--current {
-    background-color: var(--rpv-search__highlight--current-background-color);
+    background-color: rgba(var(--rpv-color-primary), .4);
 }

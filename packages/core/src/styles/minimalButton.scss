@@ -10,13 +10,13 @@
     background-color: transparent;
     border: none;
     border-radius: var(--rpv-radius-sm);
-    color: var(--rpv-core__minimal-button-color);
+    color: rgb(var(--rpv-color-base-content));
     cursor: pointer;
     height: 2rem;
     padding: 0 0.5rem;
 
     &:hover {
-        background-color: var(--rpv-core__minimal-button--hover-background-color);
+        background-color: rgba(var(--rpv-color-base-content), 0.1);
     }
 
     &--disabled {
@@ -28,6 +28,12 @@
     }
 
     &--selected {
-        background-color: var(--rpv-core__minimal-button--selected-background-color);
+        background-color: rgb(var(--rpv-color-neutral));
+        color: rgb(var(--rpv-color-neutral-content));
+    }
+
+    &--selected:hover {
+        background-color: rgb(var(--rpv-color-neutral));
+        color: rgb(var(--rpv-color-neutral-content));
     }
 }

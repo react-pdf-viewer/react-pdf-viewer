@@ -11,6 +11,9 @@
 import * as React from 'react';
 import { usePrevious } from '../hooks/usePrevious';
 import { isDarkMode } from '../utils/isDarkMode';
+import { DARK_THEME } from './darkTheme';
+import { LIGHT_THEME } from './lightTheme';
+import { useTheme } from './useTheme';
 
 export interface RenderThemeChildrenProps {
     currentTheme: string;
@@ -21,6 +24,8 @@ export const withTheme = (theme: string, onSwitchTheme?: (theme: string) => void
     const initialTheme = React.useMemo(() => (theme === 'auto' ? (isDarkMode() ? 'dark' : 'light') : theme), []);
     const [currentTheme, setCurrentTheme] = React.useState(initialTheme);
     const prevTheme = usePrevious(currentTheme);
+
+    useTheme(currentTheme === 'light' ? LIGHT_THEME : DARK_THEME);
 
     React.useEffect(() => {
         if (theme !== 'auto') {
@@ -37,9 +42,7 @@ export const withTheme = (theme: string, onSwitchTheme?: (theme: string) => void
     }, []);
 
     React.useEffect(() => {
-        document.documentElement.classList.add(`rpv--${currentTheme}`);
         if (currentTheme !== prevTheme) {
-            document.documentElement.classList.remove(`rpv--${prevTheme}`);
             onSwitchTheme && onSwitchTheme(currentTheme);
         }
     }, [currentTheme]);

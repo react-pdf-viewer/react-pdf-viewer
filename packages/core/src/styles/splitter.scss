@@ -7,7 +7,7 @@
  */
 
 .rpv-core__splitter {
-    background-color: var(--rpv-core__splitter-background-color);
+    background-color: rgb(var(--rpv-color-base));
     cursor: ew-resize;
     height: 100%;
     width: 0.25rem;
@@ -15,7 +15,7 @@
     &:hover,
     &--resizing {
         cursor: col-resize;
-        background-color: var(--rpv-core__splitter--hover-background-color);
+        background-color: rgba(var(--rpv-color-base-content), 0.1);
     }
 }
 

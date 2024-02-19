@@ -51,7 +51,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
     const containerRef = React.useRef<HTMLDivElement>();
     const { l10n } = React.useContext(LocalizationContext);
     const [opened, setOpened] = React.useState(store.get('isCurrentTabOpened') || false);
-    const [currentTab, setCurrentTab] = React.useState(Math.max(store.get('currentTab') || 0, 0));
+    const [currentTab, setCurrentTab] = React.useState(store.get('currentTab'));
     const { direction } = React.useContext(ThemeContext);
     const isRtl = direction === TextDirection.RightToLeft;
 
@@ -165,20 +165,22 @@ export const Sidebar: React.FC<SidebarProps> = ({
                             </div>
                         ))}
                     </div>
-                    <div
-                        aria-labelledby={`rpv-default-layout__sidebar-tab-${currentTab}`}
-                        id="rpv-default-layout__sidebar-content"
-                        className={classNames({
-                            'rpv-default-layout__sidebar-content': true,
-                            'rpv-default-layout__sidebar-content--opened': opened,
-                            'rpv-default-layout__sidebar-content--ltr': !isRtl,
-                            'rpv-default-layout__sidebar-content--rtl': isRtl,
-                        })}
-                        role="tabpanel"
-                        tabIndex={-1}
-                    >
-                        {listTabs[currentTab].content}
-                    </div>
+                    {currentTab >=0 && (
+                        <div
+                            aria-labelledby={`rpv-default-layout__sidebar-tab-${currentTab}`}
+                            id="rpv-default-layout__sidebar-content"
+                            className={classNames({
+                                'rpv-default-layout__sidebar-content': true,
+                                'rpv-default-layout__sidebar-content--opened': opened,
+                                'rpv-default-layout__sidebar-content--ltr': !isRtl,
+                                'rpv-default-layout__sidebar-content--rtl': isRtl,
+                            })}
+                            role="tabpanel"
+                            tabIndex={-1}
+                        >
+                            {listTabs[currentTab].content}
+                        </div>
+                    )}
                 </div>
             </div>
             {opened && <Splitter constrain={resizeConstrain} />}

@@ -7,10 +7,10 @@
  */
 
 .rpv-core__spinner {
-    border-bottom: 2px solid var(--rpv-core__spinner-border-transparent-color);
-    border-left: 2px solid var(--rpv-core__spinner-border-transparent-color);
-    border-right: 2px solid var(--rpv-core__spinner-border-color);
-    border-top: 2px solid var(--rpv-core__spinner-border-color);
+    border-bottom: 2px solid transparent;
+    border-left: 2px solid transparent;
+    border-right: 2px solid rgb(var(--rpv-color-primary));
+    border-top: 2px solid rgb(var(--rpv-color-primary));
 
     border-radius: 9999px;
 

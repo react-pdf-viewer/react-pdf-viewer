@@ -39,6 +39,8 @@ export const useTheme = (theme: Theme): void => {
     --rpv-color-neutral: ${theme.colors.neutral};
     --rpv-color-neutral-content: ${theme.colors.neutralContent};
     --rpv-color-base: ${theme.colors.base};
+    --rpv-color-base-darker: ${theme.colors.baseDarker};
+    --rpv-color-base-more-darker: ${theme.colors.baseMoreDarker};
     --rpv-color-base-content: ${theme.colors.baseContent};
     --rpv-color-error: ${theme.colors.error};
     --rpv-color-error-content: ${theme.colors.errorContent};
