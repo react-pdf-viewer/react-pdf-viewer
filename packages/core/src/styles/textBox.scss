@@ -7,11 +7,11 @@
  */
 
 .rpv-core__textbox {
-    background-color: var(--rpv-core__textbox-background-color);
-    border: 1px solid rgba(var(--rpv-color-base-content), 0.1);
+    background-color: rgb(var(--rpv-color-base));
+    border: 1px solid rgba(var(--rpv-color-base-content), 0.2);
     box-sizing: border-box;
     border-radius: var(--rpv-radius-sm);
-    color: var(--rpv-core__textbox-color);
+    color: rgb(var(--rpv-color-base-content));
     padding: 0 0.5rem;
     height: 2rem;
     width: 100%;
