@@ -15,6 +15,10 @@
     height: 2rem;
     padding: 0 0.5rem;
 
+    align-items: center;
+    display: flex;
+    justify-content: center;
+
     &:hover {
         background-color: rgba(var(--rpv-color-base-content), 0.1);
     }
