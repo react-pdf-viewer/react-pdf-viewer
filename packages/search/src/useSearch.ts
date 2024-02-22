@@ -219,13 +219,17 @@ export const useSearch = (
                         });
                     }
                 });
-                setFound(arr);
-                if (arr.length > 0) {
-                    setCurrentMatch(1);
-                    jumpToGivenMatch(arr[0]);
-                }
+                const threshold = 1;
+                const avgIndex = arr.reduce((sum, item) => sum + item.pageIndex, 0) / arr.length;
 
-                resolve(arr);
+                const filteredArr = arr.filter(item => Math.round(Math.abs(item.pageIndex - avgIndex)) <= threshold);
+                const matches = matchCaseParam ? filteredArr : arr;
+                setFound(matches);
+                if (matches.length > 0) {
+                    setCurrentMatch(1);
+                    jumpToGivenMatch(matches[0]);
+                }
+                resolve(matches);
             });
         });
     };
