@@ -60,7 +60,8 @@ const defaultLayoutPluginInstance = defaultLayoutPlugin();
 
 ## License
 
-You have to purchase a Commercial License at the [official website](https://react-pdf-viewer.dev).
+This project was licensed under a commercial license up to v3.12.0.
+Since June 2024 the project is licensed under the Apache License 2.0. 
 
 ## About
 
