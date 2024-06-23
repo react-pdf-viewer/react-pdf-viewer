@@ -1,12 +1,17 @@
-const path = require('path');
-const webpack = require('webpack');
-const HtmlWebPackPlugin = require('html-webpack-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+import path from 'path';
+import { fileURLToPath } from 'url';
+import webpack from 'webpack';
+import HtmlWebPackPlugin from 'html-webpack-plugin';
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+import CopyWebpackPlugin from 'copy-webpack-plugin';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const distDir = path.join(__dirname, 'dist');
 const rootDir = path.join(__dirname, '../..');
 
-module.exports = {
+export default {
     entry: './src/index.tsx',
     output: {
         path: distDir,
@@ -86,5 +91,13 @@ module.exports = {
                 }
             },
         ),
+        new CopyWebpackPlugin({
+            patterns: [
+                {
+                    from: path.join(rootDir, 'node_modules/pdfjs-dist/build/pdf.worker.min.mjs'),
+                    to: distDir,
+                },
+            ],
+        }),
     ],
 };
