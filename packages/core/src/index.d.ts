@@ -588,6 +588,13 @@ export interface VisiblePagesRange {
 
 export type SetRenderRange = (visiblePagesRange: VisiblePagesRange) => { endPage: number; startPage: number };
 
+export interface ProviderProps {
+    children?: React.ReactNode;
+    pdfApiProvider: PdfJsApiProvider;
+    workerUrl: string;
+}
+export class Provider extends React.Component<ProviderProps> {}
+
 export interface ViewerProps {
     characterMap?: CharacterMap;
     // The default zoom level
@@ -630,12 +637,6 @@ export interface ViewerProps {
     onZoom?(e: ZoomEvent): void;
 }
 export class Viewer extends React.Component<ViewerProps> {}
-
-export interface WorkerProps {
-    children?: React.ReactNode;
-    workerUrl: string;
-}
-export class Worker extends React.Component<WorkerProps> {}
 
 // Hooks
 export function useDebounceCallback<T extends unknown[]>(callback: (...args: T) => void, wait: number): void;

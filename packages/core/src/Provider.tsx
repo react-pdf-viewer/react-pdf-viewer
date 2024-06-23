@@ -8,17 +8,16 @@
 
 'use client';
 
-import * as PdfJs from 'pdfjs-dist';
 import * as React from 'react';
 import { type PdfJsApiProvider } from './types/PdfJsApiProvider';
 import { PdfJsApiContext } from './vendors/PdfJsApiContext';
 
-export const Worker: React.FC<{
+export const Provider: React.FC<{
     children?: React.ReactNode;
+    pdfApiProvider: PdfJsApiProvider;
     workerUrl: string;
-}> = ({ children, workerUrl }) => {
-    const apiProvider = PdfJs as unknown as PdfJsApiProvider;
-    apiProvider.GlobalWorkerOptions.workerSrc = workerUrl;
+}> = ({ children, pdfApiProvider, workerUrl }) => {
+    pdfApiProvider.GlobalWorkerOptions.workerSrc = workerUrl;
 
-    return <PdfJsApiContext.Provider value={{ pdfJsApiProvider: apiProvider }}>{children}</PdfJsApiContext.Provider>;
+    return <PdfJsApiContext.Provider value={{ pdfJsApiProvider: pdfApiProvider }}>{children}</PdfJsApiContext.Provider>;
 };
