@@ -9,7 +9,6 @@
     "dependencies": {
         "@react-pdf-viewer/core": "../../node_modules/@react-pdf-viewer/core",
         "@react-pdf-viewer/default-layout": "../../node_modules/@react-pdf-viewer/default-layout",
-        "@react-pdf-viewer/worker": "../../node_modules/@react-pdf-viewer/worker",
         "react": "^18.2.0",
         "react-dom": "^18.2.0"
     },
