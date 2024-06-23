@@ -160,11 +160,15 @@ export declare namespace PdfJs {
     let SVGGraphics: SVGGraphicsConstructor;
 
     // Render text layer
-    interface RenderTextLayerParams {
-        textContent?: PageTextContent;
+    interface TextLayerConstructorParams {
         textContentSource: PageTextContent;
         container: HTMLDivElement;
         viewport: ViewPort;
+    }
+    interface TextLayer {
+        new (params: TextLayerConstructorParams): TextLayer;
+        render(): Promise<any>;
+        cancel(): void;
     }
     interface PageTextContent {
         items: PageTextItem[];
@@ -172,7 +176,6 @@ export declare namespace PdfJs {
     interface PageTextItem {
         str: string;
     }
-    function renderTextLayer(params: RenderTextLayerParams): PageRenderTask;
 
     // Annotations layer
     interface AnnotationsParams {

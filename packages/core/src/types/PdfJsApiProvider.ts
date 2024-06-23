@@ -22,5 +22,5 @@ export interface PdfJsApiProvider {
     SVGGraphics: PdfJs.SVGGraphicsConstructor;
 
     // Render text layer
-    renderTextLayer(params: PdfJs.RenderTextLayerParams): PdfJs.PageRenderTask;
+    TextLayer: PdfJs.TextLayer;
 }

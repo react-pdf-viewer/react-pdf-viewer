@@ -484,7 +484,7 @@ export interface PdfJsApiProvider {
     SVGGraphics: PdfJs.SVGGraphicsConstructor;
 
     // Render text layer
-    renderTextLayer(params: PdfJs.RenderTextLayerParams): PdfJs.PageRenderTask;
+    TextLayer: PdfJs.TextLayer;
 }
 export interface PdfJsApiContextProps {
     pdfJsApiProvider?: PdfJsApiProvider;
@@ -844,11 +844,16 @@ export declare namespace PdfJs {
     let SVGGraphics: SVGGraphicsConstructor;
 
     // Render text layer
-    interface RenderTextLayerParams {
-        textContent?: PageTextContent;
+    const TextLayer: TextLayer;
+    interface TextLayerConstructorParams {
         textContentSource: PageTextContent;
         container: HTMLDivElement;
         viewport: ViewPort;
+    }
+    interface TextLayer {
+        new (params: TextLayerConstructorParams): TextLayer;
+        render(): Promise<any>;
+        cancel(): void;
     }
     interface PageTextContent {
         items: PageTextItem[];
@@ -856,7 +861,6 @@ export declare namespace PdfJs {
     interface PageTextItem {
         str: string;
     }
-    function renderTextLayer(params: RenderTextLayerParams): PageRenderTask;
 
     // Annotations layer
     interface AnnotationsParams {
