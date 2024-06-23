@@ -696,6 +696,7 @@ export declare namespace PdfJs {
     // Worker
     const GlobalWorkerOptions: GlobalWorker;
     interface GlobalWorker {
+        workerPort: Worker;
         workerSrc: string;
     }
 
