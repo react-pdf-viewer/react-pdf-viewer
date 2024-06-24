@@ -20,7 +20,7 @@ $rpv-default-layout-toolbar-height: 2.5rem;
 
 .rpv-default-layout__toolbar {
     align-items: center;
-    background-color: hsl(var(--rpv-muted));
+    background-color: hsl(var(--rpv-muted) / .4);
     border-bottom: 1px solid hsl(var(--rpv-border));
     color: hsl(var(--rpv-muted-foreground));
     display: flex;
@@ -40,7 +40,7 @@ $rpv-default-layout-toolbar-height: 2.5rem;
 
 .rpv-default-layout__sidebar {
     display: flex;
-    nargin-top: $rpv-default-layout-toolbar-height;
+    margin-top: $rpv-default-layout-toolbar-height;
 
     &--opened {
         /* Absolute position */
