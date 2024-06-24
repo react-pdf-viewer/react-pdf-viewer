@@ -7,10 +7,10 @@
  */
 
 .rpv-core__arrow {
-    border-bottom: 1px solid rgba(var(--rpv-color-base-content), 0.1);
-    border-left-color: rgba(var(--rpv-color-base-content), 0.1);
-    border-right: 1px solid rgba(var(--rpv-color-base-content), 0.1);
-    border-top-color: rgba(var(--rpv-color-base-content), 0.1);
+    border-bottom: 1px solid hsl(var(--rpv-border));
+    border-left-color: hsl(var(--rpv-border));
+    border-right: 1px solid hsl(var(--rpv-border));
+    border-top-color: hsl(var(--rpv-border));
     height: 10px;
     position: absolute;
     width: 10px;

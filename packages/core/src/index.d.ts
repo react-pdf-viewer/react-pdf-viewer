@@ -436,6 +436,7 @@ export interface Theme {
     variables: {
         border: string;
         radius: string;
+        ring: string;
         // Colors
         background: string;
         foreground: string;

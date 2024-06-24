@@ -32,6 +32,7 @@ export const useTheme = (theme: Theme): void => {
 :root[${THEME_ATTR}="${theme.name}"] {
     --rpv-border: ${theme.variables.border};
     --rpv-radius: ${theme.variables.radius};
+    --rpv-ring: ${theme.variables.ring};
     --rpv-background: ${theme.variables.background};
     --rpv-foreground: ${theme.variables.foreground};
     --rpv-muted: ${theme.variables.muted};
