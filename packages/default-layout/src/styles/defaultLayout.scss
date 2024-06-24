@@ -40,7 +40,7 @@ $rpv-default-layout-toolbar-height: 2.5rem;
 
 .rpv-default-layout__sidebar {
     display: flex;
-    padding-top: $rpv-default-layout-toolbar-height;
+    nargin-top: $rpv-default-layout-toolbar-height;
 
     &--opened {
         /* Absolute position */

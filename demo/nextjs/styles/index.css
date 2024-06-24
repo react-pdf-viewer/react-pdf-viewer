@@ -3,6 +3,9 @@ body {
         'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
     margin: 0;
     padding: 0;
+    -webkit-font-smoothing: antialiased;
+    font-synthesis-weight: none;
+    text-rendering: optimizeLegibility;
 }
 * {
     box-sizing: border-box;

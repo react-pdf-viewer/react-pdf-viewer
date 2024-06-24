@@ -7,10 +7,9 @@
  */
 
 .rpv-core__tooltip-body {
-    background-color: hsl(var(--rpv-background));
-    border: 1px solid hsl(var(--rpv-border));
+    background-color: hsl(var(--rpv-primary));
     border-radius: var(--rpv-radius);
-    color: hsl(var(--rpv-foreground));
+    color: hsl(var(--rpv-primary-foreground));
     left: 0;
     max-width: 20rem;
     position: fixed;
