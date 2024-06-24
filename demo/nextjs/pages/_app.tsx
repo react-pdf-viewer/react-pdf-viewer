@@ -1,18 +1,27 @@
-import { Provider, type PdfJsApiProvider } from '@react-pdf-viewer/core';
+import { Provider, Spinner, type PdfJsApiProvider } from '@react-pdf-viewer/core';
 import '@react-pdf-viewer/core/lib/styles/index.css';
 import '@react-pdf-viewer/default-layout/lib/styles/index.css';
 import '@react-pdf-viewer/drop/lib/styles/index.css';
 import '@react-pdf-viewer/highlight/lib/styles/index.css';
-import * as PdfJs from 'pdfjs-dist';
 import * as React from 'react';
 import '../styles/index.css';
 
 export default function MyApp({ Component, pageProps }) {
-    const apiProvider = PdfJs as unknown as PdfJsApiProvider;
+    const [apiProvider, setApiProvider] = React.useState<PdfJsApiProvider>();
 
-    return (
+    // A workaround to get rid of the issue
+    // `Promise.withResolvers` is not a function
+    React.useEffect(() => {
+        import('pdfjs-dist').then((module) => {
+            setApiProvider(module as unknown as PdfJsApiProvider);
+        });
+    }, []);
+
+    return apiProvider ? (
         <Provider pdfApiProvider={apiProvider} workerUrl="/pdf.worker.min.mjs">
             <Component {...pageProps} />
         </Provider>
+    ) : (
+        <Spinner />
     );
 }
