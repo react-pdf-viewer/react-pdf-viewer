@@ -9,7 +9,7 @@
 .rpv-core__menu-item {
     align-items: center;
     background-color: transparent;
-    color: var(--rpv-core__menu-item-color);
+    color: hsl(var(--rpv-foreground));
     border: none;
     cursor: pointer;
     display: flex;
@@ -20,12 +20,14 @@
     width: 100%;
 
     &:focus {
-        background-color: rgba(var(--rpv-color-base-content), 0.1);
+        background-color: hsl(var(--rpv-accent));
+        color: hsl(var(--rpv-accent-foreground));
         outline: 0;
     }
 
     &:hover {
-        background-color: rgba(var(--rpv-color-base-content), 0.1);
+        background-color: hsl(var(--rpv-accent));
+        color: hsl(var(--rpv-accent-foreground));
     }
 
     &-icon {
@@ -62,11 +64,12 @@
     }
 
     &--disabled {
-        color: rgba(var(--rpv-color-base-content), 0.3);
+        color: hsl(var(--rpv-muted-foreground));
     }
 
     &--disabled:hover {
         background-color: transparent;
+        color: hsl(var(--rpv-muted-foreground));
     }
 
     &--ltr {

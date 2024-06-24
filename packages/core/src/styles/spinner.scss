@@ -9,8 +9,8 @@
 .rpv-core__spinner {
     border-bottom: 2px solid transparent;
     border-left: 2px solid transparent;
-    border-right: 2px solid rgb(var(--rpv-color-primary));
-    border-top: 2px solid rgb(var(--rpv-color-primary));
+    border-right: 2px solid hsl(var(--rpv-primary));
+    border-top: 2px solid hsl(var(--rpv-primary));
 
     border-radius: 9999px;
 

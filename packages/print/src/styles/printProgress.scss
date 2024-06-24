@@ -19,9 +19,13 @@
 
     &-body {
         background-color: rgb(var(--rpv-color-base));
-        border: 1px solid rgba(var(--rpv-color-base-content), 0.1);
-        border-radius: var(--rpv-radius-sm);
-        color: rgb(var(--rpv-color-base-content));
+        border: 1px solid hsl(var(--rpv-border));
+        border-radius: var(--rpv-radius);
+        box-shadow: rgba(0, 0, 0, 0) 0px 0px 0px 0px,
+                    rgba(0, 0, 0, 0) 0px 0px 0px 0px,
+                    rgba(0, 0, 0, 0.1) 0px 4px 6px -1px,
+                    rgba(0, 0, 0, 0.1) 0px 2px 4px -2px;
+        color: hsl(var(--rpv-foreground));
         padding: 1.5rem;
         text-align: center;
         width: 15rem;

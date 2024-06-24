@@ -7,17 +7,13 @@
  */
 
 .rpv-core__button {
-    background-color: rgb(var(--rpv-color-base-darker));
+    background-color: hsl(var(--rpv-secondary));
     border: none;
-    border-radius: var(--rpv-radius-sm);
-    color: rgb(var(--rpv-color-base-content));
+    border-radius: var(--rpv-radius);
+    color: hsl(var(--rpv-secondary-foreground));
     cursor: pointer;
     height: 2rem;
     padding: 0 1rem;
-
-    &:hover {
-        background-color: rgb(var(--rpv-color-base-more-darker));
-    }
 
     &--rtl {
         direction: rtl;

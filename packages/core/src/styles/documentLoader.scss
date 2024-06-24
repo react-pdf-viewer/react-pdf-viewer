@@ -8,7 +8,6 @@
 
 .rpv-core__doc-error {
     align-items: center;
-    background-color: var(--rpv-core__doc-error-background-color);
     display: flex;
     justify-content: center;
     height: 100%;
@@ -18,9 +17,9 @@
     }
 
     &-text {
-        background-color: rgb(var(--rpv-color-error));
-        border-radius: var(--rpv-radius-sm);
-        color: rgb(var(--rpv-color-error-content));
+        background-color: hsl(var(--rpv-destructive));
+        border-radius: var(--rpv-radius);
+        color: hsl(var(--rpv-destructive-foreground));
         line-height: 1.5;
         max-width: 50%;
         padding: 0.5rem;
@@ -28,8 +27,6 @@
 }
 
 .rpv-core__doc-loading {
-    background-color: var(--rpv-core__doc-loading-background-color);
-
     align-items: center;
     display: flex;
     justify-content: center;

@@ -7,7 +7,9 @@
  */
 
 .rpv-drop__area {
-    background-color: var(--rpv-drop__area-background-color);
+    background-color: hsl(var(--rpv-background));
+    border: 2px dashed hsl(var(--rpv-border));
+    color: hsl(var(--rpv-foreground));
 
     // Position
     bottom: 0;
@@ -20,8 +22,6 @@
     z-index: 9999;
 
     &-body {
-        border: 2px dashed rgba(var(--rpv-color-base-content), 0.1);
-        color: var(--rpv-drop__area-body-color);
         font-size: 1.5rem;
 
         // Center the content

@@ -18,6 +18,6 @@
     display: flex;
     justify-content: center;
 
-    background-color: var(--rpv-full-screen__overlay-background-color);
+    background-color: hsl(var(--rpv-background));
     z-index: 1;
 }

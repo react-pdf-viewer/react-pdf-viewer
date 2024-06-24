@@ -17,7 +17,7 @@
 
 .rpv-search__highlight {
     background-color: rgba(var(--rpv-color-secondary), .4);
-    border-radius: var(--rpv-radius-sm);
+    border-radius: var(--rpv-radius);
     position: absolute;
     // Display on top of the text layer
     z-index: 1;

@@ -7,16 +7,22 @@
  */
 
 .rpv-core__textbox {
-    background-color: rgb(var(--rpv-color-base));
-    border: 1px solid rgba(var(--rpv-color-base-content), 0.2);
+    background-color: hsl(var(--rpv-background));
+    border: 1px solid hsl(var(--rpv-border));
     box-sizing: border-box;
-    border-radius: var(--rpv-radius-sm);
-    color: rgb(var(--rpv-color-base-content));
+    border-radius: calc(var(--rpv-radius) - 2px);
+    color: hsl(var(--rpv-foreground));
     padding: 0 0.5rem;
     height: 2rem;
     width: 100%;
 
     &--rtl {
         direction: rtl;
+    }
+
+    &:focus-visible {
+        box-shadow: hsl(var(--rpv-background)) 0px 0px 0px 2px, hsl(var(--rpv-ring)) 0px 0px 0px 4px, rgba(0, 0, 0, 0) 0px 0px 0px 0px;
+        outline: 2px solid transparent;
+        outline-offset: 2px;
     }
 }

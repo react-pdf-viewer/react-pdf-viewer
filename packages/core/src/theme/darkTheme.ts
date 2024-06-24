@@ -13,6 +13,7 @@ export const DARK_THEME: Theme = {
     variables: {
         border: '240 3.7% 15.9%',
         radius: '0.5rem',
+        ring: '240 4.9% 83.9%',
         background: '240 10% 3.9%',
         foreground: '0 0% 98%',
         muted: '240 3.7% 15.9%',

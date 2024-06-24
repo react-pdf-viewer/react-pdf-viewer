@@ -8,7 +8,7 @@
 
 .rpv-bookmark__item {
     align-items: center;
-    color: var(--rpv-bookmark__item-color);
+    color: hsl(var(--rpv-foreground));
     cursor: pointer;
     display: flex;
     padding-bottom: 0.25rem;
@@ -21,7 +21,8 @@
     }
 
     &:hover {
-        background-color: rgba(var(--rpv-color-base-content), 0.1);
+        background-color: hsl(var(--rpv-accent));
+        color: hsl(var(--rpv-accent-foreground));
     }
 }
 

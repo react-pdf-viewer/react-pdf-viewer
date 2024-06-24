@@ -8,7 +8,6 @@
 
 .rpv-zoom__popover-target {
     align-items: center;
-    color: var(--rpv-zoom__popover-target-color);
     display: flex;
 
     &-scale--ltr {
@@ -19,7 +18,7 @@
     }
 
     &-arrow {
-        border-color: var(--rpv-zoom__popover-target-arrow-border-color) transparent transparent;
+        border-color: hsl(var(--rpv-muted-foreground)) transparent transparent;
         border-style: solid;
         border-width: 0.5rem 0.25rem 0;
         height: 0;

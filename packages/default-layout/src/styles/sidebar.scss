@@ -13,7 +13,7 @@
 }
 
 .rpv-default-layout__sidebar-headers {
-    background-color: var(--rpv-default-layout__sidebar-headers-background-color);
+    background-color: hsl(var(--rpv-muted));
     padding: 0.25rem;
 }
 
@@ -33,9 +33,9 @@
         overflow: hidden;
     }
     &--ltr {
-        border-left: 1px solid rgba(var(--rpv-color-base-content), 0.1);
+        border-left: 1px solid hsl(var(--rpv-border));
     }
     &--rtl {
-        border-right: 1px solid rgba(var(--rpv-color-base-content), 0.1);
+        border-right: 1px solid hsl(var(--rpv-border));
     }
 }
