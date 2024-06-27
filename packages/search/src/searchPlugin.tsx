@@ -6,8 +6,6 @@
  * @copyright 2019-2024 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-'use client';
-
 import {
     createStore,
     type Plugin,
@@ -31,8 +29,8 @@ import { type NormalizedKeyword } from './types/NormalizedKeyword';
 import { type OnHighlightKeyword } from './types/OnHighlightKeyword';
 import { type RenderHighlightsProps } from './types/RenderHighlightsProps';
 import { type SearchTargetPageFilter } from './types/SearchTargetPage';
-import { type SingleKeyword } from './types/SingleKeyword';
 import { type StoreProps } from './types/StoreProps';
+import { type SingleKeyword } from './types/SingleKeyword';
 import { useSearch } from './useSearch';
 
 export interface SearchPlugin extends Plugin {
@@ -73,6 +71,7 @@ export const searchPlugin = (props?: SearchPluginProps): SearchPlugin => {
                 matchPosition: {
                     matchIndex: -1,
                     pageIndex: -1,
+                    title: '',
                 },
                 renderStatus: new Map<number, PluginOnTextLayerRender>(),
             }),
