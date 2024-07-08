@@ -124,5 +124,23 @@ export const TextLayer: React.FC<{
         };
     }, []);
 
-    return <div className="rpv-core__text-layer" ref={containerRef} />;
+    let transform = '';
+    switch (Math.abs(rotation)) {
+        case 90:
+            transform = 'rotate(90deg) translateY(-100%)';
+            break;
+        case 180:
+            transform = 'rotate(180deg) translate(-100%, -100%)';
+            break;
+        case 270:
+            transform = 'rotate(270deg) translateX(-100%)';
+            break;
+        default:
+            transform = '';
+            break;
+    }
+
+    return <div className="rpv-core__text-layer" ref={containerRef} style={{
+        transform,
+    }} />;
 };
