@@ -12,7 +12,6 @@ import * as React from 'react';
 import { useFullScreen } from '../fullscreen/useFullScreen';
 import { useAnimationFrame } from '../hooks/useAnimationFrame';
 import { useDebounceCallback } from '../hooks/useDebounceCallback';
-import { useIsomorphicLayoutEffect } from '../hooks/useIsomorphicLayoutEffect';
 import { useRenderQueue } from '../hooks/useRenderQueue';
 import { useTrackResize } from '../hooks/useTrackResize';
 import { PageLayer } from '../layers/PageLayer';
@@ -314,18 +313,22 @@ export const Inner: React.FC<{
         [onOpenFile],
     );
 
+    const normalizeRotation = (rotation: number): number => {
+        return rotation < 0 ? 360 + rotation : rotation >= 360 ? rotation - 360 : rotation;
+    };
+
     const rotate = React.useCallback((direction: RotateDirection) => {
         const rotation = stateRef.current.rotation;
         const degrees = direction === RotateDirection.Backward ? -90 : 90;
-        const updateRotation = rotation === 360 || rotation === -360 ? degrees : rotation + degrees;
+        const finalRotation = normalizeRotation(rotation + degrees);
 
         renderQueue.markNotRendered();
-        setRotation(updateRotation);
+        setRotation(finalRotation);
         setViewerState({
             ...stateRef.current,
-            rotation: updateRotation,
+            rotation: finalRotation,
         });
-        onRotate({ direction, doc, rotation: updateRotation });
+        onRotate({ direction, doc, rotation: finalRotation });
         // Keep the current page after rotating the document
         forceTargetPageRef.current = {
             targetPage: stateRef.current.pageIndex,
@@ -337,7 +340,7 @@ export const Inner: React.FC<{
         const degrees = direction === RotateDirection.Backward ? -90 : 90;
         const rotations = stateRef.current.pagesRotation;
         const currentPageRotation = rotations.has(pageIndex) ? rotations.get(pageIndex) : initialRotation;
-        const finalRotation = currentPageRotation + degrees;
+        const finalRotation = normalizeRotation(currentPageRotation + degrees);
         const updateRotations = rotations.set(pageIndex, finalRotation);
 
         // Force the pages to be re-virtualized
