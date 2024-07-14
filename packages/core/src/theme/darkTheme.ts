@@ -26,5 +26,6 @@ export const DARK_THEME: Theme = {
         accentForeground: '0 0% 98%',
         destructive: '0 62.8% 30.6%',
         destructiveForeground: '0 85.7% 97.3%',
+        highlight: '80.9 95.67% 54.71%',
     },
 };

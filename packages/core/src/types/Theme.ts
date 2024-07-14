@@ -25,5 +25,6 @@ export interface Theme {
         accentForeground: string;
         destructive: string;
         destructiveForeground: string;
+        highlight: string;
     };
 }

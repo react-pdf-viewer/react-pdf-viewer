@@ -26,5 +26,6 @@ export const LIGHT_THEME: Theme = {
         accentForeground: '240 5.9% 10%',
         destructive: '0 72.22% 50.59%',
         destructiveForeground: '0 0% 98%',
+        highlight: '80.9 95.67% 54.71%',
     },
 };
