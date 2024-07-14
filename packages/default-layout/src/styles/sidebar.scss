@@ -27,8 +27,6 @@
     flex-shrink: 1;
 
     &--opened {
-        background-color: var(--rpv-default-layout__sidebar-content--opened-background-color);
-        color: var(--rpv-default-layout__sidebar-content--opened-color);
         display: flex;
         overflow: hidden;
     }
