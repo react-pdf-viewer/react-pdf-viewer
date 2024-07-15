@@ -45,6 +45,7 @@ export const useTheme = (theme: Theme): void => {
     --rpv-accent-foreground: ${theme.variables.accentForeground};
     --rpv-destructive: ${theme.variables.destructive};
     --rpv-destructive-foreground: ${theme.variables.destructiveForeground};
+    --rpv-highlight: ${theme.variables.highlight};
 }`;
     }, [theme]);
 

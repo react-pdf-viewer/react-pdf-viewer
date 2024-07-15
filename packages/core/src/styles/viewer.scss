@@ -7,6 +7,8 @@
  */
 
 .rpv-core__viewer {
+    background-color: hsl(var(--rpv-background));
+    color: hsl(var(--rpv-foreground));
     // Fix the issue where its children doesn't take the full height of the parent
     // that has a `min-height` property
     min-height: inherit;

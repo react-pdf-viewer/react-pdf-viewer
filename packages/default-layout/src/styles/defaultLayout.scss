@@ -20,7 +20,7 @@ $rpv-default-layout-toolbar-height: 2.5rem;
 
 .rpv-default-layout__toolbar {
     align-items: center;
-    background-color: hsl(var(--rpv-muted));
+    background-color: hsl(var(--rpv-muted) / .4);
     border-bottom: 1px solid hsl(var(--rpv-border));
     color: hsl(var(--rpv-muted-foreground));
     display: flex;
@@ -40,7 +40,7 @@ $rpv-default-layout-toolbar-height: 2.5rem;
 
 .rpv-default-layout__sidebar {
     display: flex;
-    nargin-top: $rpv-default-layout-toolbar-height;
+    margin-top: $rpv-default-layout-toolbar-height;
 
     &--opened {
         /* Absolute position */
@@ -53,7 +53,6 @@ $rpv-default-layout-toolbar-height: 2.5rem;
         width: 12rem;
 
         /* Display it on top of pages */
-        background-color: var(--rpv-default-layout__sidebar--opened-background-color);
         z-index: 1;
     }
 
@@ -80,7 +79,6 @@ $rpv-default-layout-toolbar-height: 2.5rem;
 }
 
 .rpv-default-layout__body {
-    background-color: var(--rpv-default-layout__body-background-color);
     flex: 1;
     overflow: auto;
     padding-top: $rpv-default-layout-toolbar-height;

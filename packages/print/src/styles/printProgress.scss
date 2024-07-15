@@ -18,7 +18,7 @@
     z-index: 9999;
 
     &-body {
-        background-color: rgb(var(--rpv-color-base));
+        background-color: hsl(var(--rpv-background));
         border: 1px solid hsl(var(--rpv-border));
         border-radius: var(--rpv-radius);
         box-shadow: rgba(0, 0, 0, 0) 0px 0px 0px 0px,

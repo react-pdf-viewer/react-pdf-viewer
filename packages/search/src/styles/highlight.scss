@@ -16,13 +16,13 @@
 }
 
 .rpv-search__highlight {
-    background-color: rgba(var(--rpv-color-secondary), .4);
-    border-radius: var(--rpv-radius);
+    background-color: hsl(var(--rpv-primary) / .4);
+    border-radius: calc(var(--rpv-radius) - 4px);
     position: absolute;
     // Display on top of the text layer
     z-index: 1;
 }
 
 .rpv-search__highlight--current {
-    background-color: rgba(var(--rpv-color-primary), .4);
+    background-color: hsl(var(--rpv-highlight) / .4);
 }

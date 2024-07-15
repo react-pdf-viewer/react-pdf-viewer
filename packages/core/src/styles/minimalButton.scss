@@ -33,12 +33,7 @@
     }
 
     &--selected {
-        background-color: rgb(var(--rpv-color-neutral));
-        color: rgb(var(--rpv-color-neutral-content));
-    }
-
-    &--selected:hover {
-        background-color: rgb(var(--rpv-color-neutral));
-        color: rgb(var(--rpv-color-neutral-content));
+        background-color: hsl(var(--rpv-secondary));
+        color: hsl(var(--rpv-secondary-foreground));
     }
 }
