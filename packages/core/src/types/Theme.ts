@@ -8,26 +8,22 @@
 
 export interface Theme {
     name: string;
-    colors: {
+    variables: {
+        border: string;
+        radius: string;
+        ring: string;
+        // Colors
+        background: string;
+        foreground: string;
+        muted: string;
+        mutedForeground: string;
         primary: string;
-        // Foreground content color used on primary color
-        primaryContent?: string;
+        primaryForeground: string;
         secondary: string;
-        secondaryContent?: string;
+        secondaryForeground: string;
         accent: string;
-        accentContent?: string;
-        neutral: string;
-        neutralContent?: string;
-        base: string;
-        baseDarker?: string;
-        baseMoreDarker?: string;
-        baseContent?: string;
-        error?: string;
-        errorContent?: string;
-    };
-    radius: {
-        sm: string;
-        md: string;
-        lg: string;
+        accentForeground: string;
+        destructive: string;
+        destructiveForeground: string;
     };
 }

@@ -3,6 +3,7 @@ import * as PdfJs from 'pdfjs-dist';
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import App from './App';
+import './styles.css';
 
 const apiProvider = PdfJs as unknown as PdfJsApiProvider;
 

@@ -30,23 +30,21 @@ export const useTheme = (theme: Theme): void => {
         // Set color variables
         styleEle.textContent = `
 :root[${THEME_ATTR}="${theme.name}"] {
-    --rpv-color-primary: ${theme.colors.primary};
-    --rpv-color-primary-content: ${theme.colors.primaryContent};
-    --rpv-color-secondary: ${theme.colors.secondary};
-    --rpv-color-secondary-content: ${theme.colors.secondaryContent};
-    --rpv-color-accent: ${theme.colors.accent};
-    --rpv-color-accent-content: ${theme.colors.accentContent};
-    --rpv-color-neutral: ${theme.colors.neutral};
-    --rpv-color-neutral-content: ${theme.colors.neutralContent};
-    --rpv-color-base: ${theme.colors.base};
-    --rpv-color-base-darker: ${theme.colors.baseDarker};
-    --rpv-color-base-more-darker: ${theme.colors.baseMoreDarker};
-    --rpv-color-base-content: ${theme.colors.baseContent};
-    --rpv-color-error: ${theme.colors.error};
-    --rpv-color-error-content: ${theme.colors.errorContent};
-    --rpv-radius-sm: ${theme.radius.sm};
-    --rpv-radius-md: ${theme.radius.md};
-    --rpv-radius-lg: ${theme.radius.lg};
+    --rpv-border: ${theme.variables.border};
+    --rpv-radius: ${theme.variables.radius};
+    --rpv-ring: ${theme.variables.ring};
+    --rpv-background: ${theme.variables.background};
+    --rpv-foreground: ${theme.variables.foreground};
+    --rpv-muted: ${theme.variables.muted};
+    --rpv-muted-foreground: ${theme.variables.mutedForeground};
+    --rpv-primary: ${theme.variables.primary};
+    --rpv-primary-foreground: ${theme.variables.primaryForeground};
+    --rpv-secondary: ${theme.variables.secondary};
+    --rpv-secondary-foreground: ${theme.variables.secondaryForeground};
+    --rpv-accent: ${theme.variables.accent};
+    --rpv-accent-foreground: ${theme.variables.accentForeground};
+    --rpv-destructive: ${theme.variables.destructive};
+    --rpv-destructive-foreground: ${theme.variables.destructiveForeground};
 }`;
     }, [theme]);
 
