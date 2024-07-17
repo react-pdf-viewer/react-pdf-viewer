@@ -16,5 +16,6 @@
         },
         "types": ["expect-puppeteer", "jest-environment-puppeteer", "puppeteer", "@testing-library/jest-dom"]
     },
+    "include": ["./@types"],
     "exclude": ["node_modules"]
 }
