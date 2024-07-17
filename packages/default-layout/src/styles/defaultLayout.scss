@@ -40,9 +40,10 @@ $rpv-default-layout-toolbar-height: 2.5rem;
 
 .rpv-default-layout__sidebar {
     display: flex;
-    margin-top: $rpv-default-layout-toolbar-height;
+    border-color: hsl(var(--rpv-border));
 
     &--opened {
+        border-color: transparent;
         /* Absolute position */
         bottom: 0;
         left: 0;
@@ -57,15 +58,18 @@ $rpv-default-layout-toolbar-height: 2.5rem;
     }
 
     &--ltr {
-        border-right: 1px solid hsl(var(--rpv-border));
+        border-right-width: 1px;
+        border-right-style: solid;
     }
     &--rtl {
-        border-left: 1px solid hsl(var(--rpv-border));
+        border-left-width: 1px;
+        border-left-style: solid;
     }
 }
 
 .rpv-default-layout__main {
     display: flex;
+    padding-top: $rpv-default-layout-toolbar-height;
 
     /* Fix the scroll issue on Safari */
     height: 100%;
@@ -81,7 +85,6 @@ $rpv-default-layout-toolbar-height: 2.5rem;
 .rpv-default-layout__body {
     flex: 1;
     overflow: auto;
-    padding-top: $rpv-default-layout-toolbar-height;
 }
 
 @media (min-width: 768px) {

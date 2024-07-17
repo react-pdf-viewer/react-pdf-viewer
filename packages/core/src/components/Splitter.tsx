@@ -9,6 +9,7 @@
 'use client';
 
 import * as React from 'react';
+import { ResizeIcon } from '../icons/ResizeIcon';
 import { TextDirection, ThemeContext } from '../theme/ThemeContext';
 
 export interface SplitterSize {
@@ -122,5 +123,11 @@ export const Splitter: React.FC<{
         rightSideRef.current = resizerEle.nextElementSibling as HTMLElement;
     }, []);
 
-    return <div ref={resizerRef} className="rpv-core__splitter" onMouseDown={handleMouseDown} />;
+    return (
+        <div ref={resizerRef} className="rpv-core__splitter" onMouseDown={handleMouseDown}>
+            <div className="rpv-core__splitter-handle">
+                <ResizeIcon />
+            </div>
+        </div>
+    );
 };
