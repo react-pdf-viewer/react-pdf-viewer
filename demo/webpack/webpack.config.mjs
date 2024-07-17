@@ -35,7 +35,19 @@ export default {
             },
             {
                 test: /\.s[ac]ss$/i,
-                use: ['style-loader', 'css-loader', 'sass-loader'],
+                use: [
+                    'style-loader',
+                    {
+                        loader: 'css-loader',
+                        options: {
+                            modules: {
+                                localIdentName: "[hash:base64]",
+                                auto: true,
+                            },
+                        },
+                    },
+                    'sass-loader',
+                ],
             },
         ],
     },
