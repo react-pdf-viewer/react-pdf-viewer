@@ -14,7 +14,9 @@
             "@react-pdf-viewer/*": ["packages/*/src"],
             "*": ["node_modules", "packages"]
         },
+        "plugins": [{ "name": "typescript-plugin-css-modules" }],
         "types": ["expect-puppeteer", "jest-environment-puppeteer", "puppeteer", "@testing-library/jest-dom"]
     },
+    "include": ["./@types"],
     "exclude": ["node_modules"]
 }
