@@ -20,6 +20,7 @@ import { FullScreenMode } from './structs/FullScreenMode';
 import { ScrollMode } from './structs/ScrollMode';
 import { SpecialZoomLevel } from './structs/SpecialZoomLevel';
 import { ViewMode } from './structs/ViewMode';
+import * as styles from './styles/viewer.module.css';
 import { TextDirection, ThemeContext } from './theme/ThemeContext';
 import { withTheme } from './theme/withTheme';
 import { type CharacterMap } from './types/CharacterMap';
@@ -203,7 +204,7 @@ export const Viewer: React.FC<{
                 <ThemeContext.Provider value={themeContext}>
                     <div
                         ref={containerRef}
-                        className="rpv-core__viewer"
+                        className={styles.viewer}
                         data-testid="core__viewer"
                         style={{
                             height: '100%',

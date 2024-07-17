@@ -15,6 +15,7 @@ import { useIsMounted } from '../hooks/useIsMounted';
 import { useSafeState } from '../hooks/useSafeState';
 import { RotateDirection } from '../structs/RotateDirection';
 import { ViewMode } from '../structs/ViewMode';
+import * as styles from '../styles/pageLayer.module.css';
 import { type Destination } from '../types/Destination';
 import { type PageSize } from '../types/PageSize';
 import { type PdfJs } from '../types/PdfJs';
@@ -158,10 +159,8 @@ export const PageLayer: React.FC<{
     return (
         <div
             className={classNames({
-                'rpv-core__page-layer': true,
-                'rpv-core__page-layer--dual': viewMode === ViewMode.DualPage,
-                'rpv-core__page-layer--dual-cover': viewMode === ViewMode.DualPageWithCover,
-                'rpv-core__page-layer--single': viewMode === ViewMode.SinglePage,
+                [styles.layer]: true,
+                [styles.layerSingle]: viewMode === ViewMode.SinglePage,
             })}
             data-testid={`core__page-layer-${pageIndex}`}
             ref={measureRef}

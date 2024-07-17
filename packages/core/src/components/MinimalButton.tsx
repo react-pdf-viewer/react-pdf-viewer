@@ -9,6 +9,7 @@
 'use client';
 
 import * as React from 'react';
+import * as styles from '../styles/minimalButton.module.css';
 import { TextDirection, ThemeContext } from '../theme/ThemeContext';
 import { classNames } from '../utils/classNames';
 
@@ -31,10 +32,10 @@ export const MinimalButton: React.FC<{
             {...(ariaKeyShortcuts && { 'aria-keyshortcuts': ariaKeyShortcuts })}
             {...(isDisabled && { 'aria-disabled': true })}
             className={classNames({
-                'rpv-core__minimal-button': true,
-                'rpv-core__minimal-button--disabled': isDisabled,
-                'rpv-core__minimal-button--rtl': isRtl,
-                'rpv-core__minimal-button--selected': isSelected,
+                [styles.button]: true,
+                [styles.buttonDisabled]: isDisabled,
+                [styles.buttonRtl]: isRtl,
+                [styles.buttonSelected]: isSelected,
             })}
             type="button"
             onClick={onClick}

@@ -10,6 +10,7 @@
 
 import * as React from 'react';
 import { Position } from '../structs/Position';
+import * as styles from '../styles/tooltipBody.module.css';
 import { TextDirection, ThemeContext } from '../theme/ThemeContext';
 import { classNames } from '../utils/classNames';
 import { Arrow } from './Arrow';
@@ -38,15 +39,15 @@ export const TooltipBody = React.forwardRef<
     return (
         <div
             className={classNames({
-                'rpv-core__tooltip-body': true,
-                'rpv-core__tooltip-body--rtl': isRtl,
+                [styles.body]: true,
+                [styles.bodyRtl]: isRtl,
             })}
             id={`rpv-core__tooltip-body-${ariaControlsSuffix}`}
             ref={ref}
             role="tooltip"
         >
-            <Arrow customClassName="rpv-core__tooltip-body-arrow" position={position} />
-            <div className="rpv-core__tooltip-body-content">{children}</div>
+            <Arrow customClassName={styles.arrow} position={position} />
+            <div className={styles.content}>{children}</div>
         </div>
     );
 });

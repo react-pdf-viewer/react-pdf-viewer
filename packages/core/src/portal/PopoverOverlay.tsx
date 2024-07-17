@@ -9,6 +9,7 @@
 'use client';
 
 import * as React from 'react';
+import * as styles from '../styles/popoverOverlay.module.css';
 import { useEscapeStack } from './useEscapeStack';
 
 export const PopoverOverlay: React.FC<{
@@ -25,7 +26,7 @@ export const PopoverOverlay: React.FC<{
     });
 
     return (
-        <div className="rpv-core__popover-overlay" ref={containerRef}>
+        <div className={styles.overlay} ref={containerRef}>
             {children}
         </div>
     );

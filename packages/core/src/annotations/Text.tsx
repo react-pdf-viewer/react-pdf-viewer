@@ -9,6 +9,7 @@
 'use client';
 
 import * as React from 'react';
+import * as styles from '../styles/annotation.module.css';
 import { CheckIcon } from '../icons/CheckIcon';
 import { CommentIcon } from '../icons/CommentIcon';
 import { HelpIcon } from '../icons/HelpIcon';
@@ -48,8 +49,9 @@ export const Text: React.FC<{
                 <>
                     <div
                         {...props.slot.attrs}
-                        className="rpv-core__annotation rpv-core__annotation--text"
+                        className={styles.annotation}
                         data-annotation-id={annotation.id}
+                        data-annotation-type="text"
                         onClick={props.popup.toggleOnClick}
                         onMouseEnter={props.popup.openOnHover}
                         onMouseLeave={props.popup.closeOnHover}

@@ -13,6 +13,7 @@ import { PrimaryButton } from '../components/PrimaryButton';
 import { TextBox } from '../components/TextBox';
 import { LocalizationContext } from '../localization/LocalizationContext';
 import { PasswordStatus } from '../structs/PasswordStatus';
+import * as styles from '../styles/askingPassword.module.css';
 import { TextDirection, ThemeContext } from '../theme/ThemeContext';
 import { type DocumentAskPasswordEvent } from '../types/DocumentAskPasswordEvent';
 import { type LocalizationMap } from '../types/LocalizationMap';
@@ -54,26 +55,26 @@ export const AskingPassword: React.FC<{
     }
 
     return (
-        <div className="rpv-core__asking-password-wrapper">
+        <div className={styles.container}>
             <div
                 className={classNames({
-                    'rpv-core__asking-password': true,
-                    'rpv-core__asking-password--rtl': isRtl,
+                    [styles.inner]: true,
+                    [styles.innerRtl]: isRtl,
                 })}
             >
-                <div className="rpv-core__asking-password-message">
+                <div className={styles.message}>
                     {passwordStatus === PasswordStatus.RequiredPassword &&
                         (((l10n.core as LocalizationMap).askingPassword as LocalizationMap)
                             .requirePasswordToOpen as string)}
                     {passwordStatus === PasswordStatus.WrongPassword &&
                         (((l10n.core as LocalizationMap).wrongPassword as LocalizationMap).tryAgain as string)}
                 </div>
-                <div className="rpv-core__asking-password-body">
+                <div className={styles.body}>
                     <div
                         className={classNames({
-                            'rpv-core__asking-password-input': true,
-                            'rpv-core__asking-password-input--ltr': !isRtl,
-                            'rpv-core__asking-password-input--rtl': isRtl,
+                            [styles.input]: true,
+                            [styles.inputLtr]: !isRtl,
+                            [styles.inputRtl]: isRtl,
                         })}
                     >
                         <TextBox

@@ -10,6 +10,7 @@
 
 import * as React from 'react';
 import { CheckIcon } from '../icons/CheckIcon';
+import * as styles from '../styles/menuItem.module.css';
 import { TextDirection, ThemeContext } from '../theme/ThemeContext';
 import { classNames } from '../utils/classNames';
 
@@ -28,10 +29,10 @@ export const MenuItem: React.FC<{
     return (
         <button
             className={classNames({
-                'rpv-core__menu-item': true,
-                'rpv-core__menu-item--disabled': isDisabled,
-                'rpv-core__menu-item--ltr': !isRtl,
-                'rpv-core__menu-item--rtl': isRtl,
+                [styles.item]: true,
+                [styles.itemDisabled]: isDisabled,
+                [styles.itemLtr]: !isRtl,
+                [styles.itemRtl]: isRtl,
             })}
             role="menuitem"
             tabIndex={-1}
@@ -41,27 +42,26 @@ export const MenuItem: React.FC<{
         >
             <div
                 className={classNames({
-                    'rpv-core__menu-item-icon': true,
-                    'rpv-core__menu-item-icon--ltr': !isRtl,
-                    'rpv-core__menu-item-icon--rtl': isRtl,
+                    [styles.icon]: true,
+                    [styles.iconLtr]: !isRtl,
+                    [styles.iconRtl]: isRtl,
                 })}
             >
                 {icon}
             </div>
             <div
                 className={classNames({
-                    'rpv-core__menu-item-label': true,
-                    'rpv-core__menu-item-label--ltr': !isRtl,
-                    'rpv-core__menu-item-label--rtl': isRtl,
+                    [styles.label]: true,
+                    [styles.labelLtr]: !isRtl,
+                    [styles.labelRtl]: isRtl,
                 })}
             >
                 {children}
             </div>
             <div
                 className={classNames({
-                    'rpv-core__menu-item-check': true,
-                    'rpv-core__menu-item-check--ltr': !isRtl,
-                    'rpv-core__menu-item-check--rtl': isRtl,
+                    [styles.checkLtr]: !isRtl,
+                    [styles.checkRtl]: isRtl,
                 })}
             >
                 {checked && <CheckIcon />}

@@ -6,19 +6,19 @@
  * @copyright 2019-2024 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-.rpv-core__page-layer {
+.layer {
     align-items: center;
     display: flex;
     justify-content: center;
 
-    // Custom elements added to the page layer can be positioned outside of the page
+    /* Custom elements added to the page layer can be positioned outside of the page */
     overflow: visible;
     position: relative;
 
     &::after {
         content: '';
         position: absolute;
-        // Position
+        /* Position */
         bottom: 0.25rem;
         left: 0.25rem;
         right: 0.25rem;
@@ -30,6 +30,6 @@
     }
 }
 
-.rpv-core__page-layer--single {
+.layerSingle {
     margin: 0 auto;
 }

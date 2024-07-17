@@ -9,6 +9,7 @@
 'use client';
 
 import * as React from 'react';
+import * as styles from '../styles/annotation.module.css';
 import { type PdfJs } from '../types/PdfJs';
 import { Annotation } from './Annotation';
 import { getContents } from './getContents';
@@ -42,8 +43,9 @@ export const Ink: React.FC<{
             {(props): React.ReactElement => (
                 <div
                     {...props.slot.attrs}
-                    className="rpv-core__annotation rpv-core__annotation--ink"
+                    className={styles.annotation}
                     data-annotation-id={annotation.id}
+                    data-annotation-type="ink"
                     onClick={props.popup.toggleOnClick}
                     onMouseEnter={props.popup.openOnHover}
                     onMouseLeave={props.popup.closeOnHover}

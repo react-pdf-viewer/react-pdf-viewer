@@ -9,6 +9,7 @@
 'use client';
 
 import * as React from 'react';
+import * as styles from '../styles/primaryButton.module.css';
 import { TextDirection, ThemeContext } from '../theme/ThemeContext';
 import { classNames } from '../utils/classNames';
 
@@ -24,8 +25,8 @@ export const PrimaryButton: React.FC<{
     return (
         <button
             className={classNames({
-                'rpv-core__primary-button': true,
-                'rpv-core__primary-button--rtl': isRtl,
+                [styles.button]: true,
+                [styles.buttonRtl]: isRtl,
             })}
             type="button"
             onClick={onClick}

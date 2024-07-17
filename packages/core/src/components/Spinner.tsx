@@ -10,6 +10,7 @@
 
 import * as React from 'react';
 import { useIntersectionObserver } from '../hooks/useIntersectionObserver';
+import * as styles from '../styles/spinner.module.css';
 import { type VisibilityChanged } from '../types/VisibilityChanged';
 import { classNames } from '../utils/classNames';
 
@@ -32,8 +33,8 @@ export const Spinner: React.FC<{
         <div
             {...attrs}
             className={classNames({
-                'rpv-core__spinner': true,
-                'rpv-core__spinner--animating': visible,
+                [styles.spinner]: true,
+                [styles.spinnerAnimation]: visible,
             })}
             ref={containerRef}
             style={{ height: size, width: size }}

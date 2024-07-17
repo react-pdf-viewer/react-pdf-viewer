@@ -6,61 +6,59 @@
  * @copyright 2019-2024 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-.rpv-core__inner-container {
+.container {
     min-height: inherit;
 }
 
-.rpv-core__inner-pages {
+.pages {
     overflow: auto;
-
-    &--rtl {
-        direction: rtl;
-    }
-
-    &--single {
-        overflow: hidden;
-    }
+}
+.pagesRtl {
+    direction: rtl;
+}
+.pagesSingle {
+    overflow: hidden;
 }
 
-.rpv-core__inner-page-container--single {
+.pageContainerSingle {
     overflow: auto;
 }
 
-// Single page viewmode
-.rpv-core__inner-page--single {
+/* Single page viewmode */
+.pageSingle {
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-// Dual page viewmode
-.rpv-core__inner-page--dual-even {
+/* Dual page viewmode */
+.pageDualEven {
     display: flex;
     align-items: center;
     justify-content: flex-end;
 }
 
-.rpv-core__inner-page--dual-odd {
+.pageDualOdd {
     display: flex;
     align-items: center;
     justify-content: flex-start;
 }
 
 
-// Dual page with cover viewmode
-.rpv-core__inner-page--dual-cover {
+/* Dual page with cover viewmode */
+.pageDualCover {
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-.rpv-core__inner-page--dual-cover-odd {
+.pageDualCoverOdd {
     display: flex;
     align-items: center;
     justify-content: flex-end;
 }
 
-.rpv-core__inner-page--dual-cover-even {
+.pageDualCoverEven {
     display: flex;
     align-items: center;
     justify-content: flex-start;

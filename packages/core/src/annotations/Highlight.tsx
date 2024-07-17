@@ -9,6 +9,7 @@
 'use client';
 
 import * as React from 'react';
+import * as styles from '../styles/annotation.module.css';
 import { type PdfJs } from '../types/PdfJs';
 import { Annotation } from './Annotation';
 import { AnnotationType } from './AnnotationType';
@@ -67,8 +68,9 @@ export const Highlight: React.FC<{
                 <>
                     <div
                         {...props.slot.attrs}
-                        className="rpv-core__annotation rpv-core__annotation--highlight"
+                        className={styles.annotation}
                         data-annotation-id={annotation.id}
+                        data-annotation-type="highlight"
                         onClick={props.popup.toggleOnClick}
                         onMouseEnter={props.popup.openOnHover}
                         onMouseLeave={props.popup.closeOnHover}

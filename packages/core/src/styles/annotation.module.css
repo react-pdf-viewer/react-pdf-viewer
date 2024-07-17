@@ -6,15 +6,18 @@
  * @copyright 2019-2024 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-.rpv-core__icon {
-    fill: none;
-    stroke: currentColor;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-    stroke-width: 1;
-    text-align: center;
+.annotation {
+    position: absolute;
+}
 
-    &--rtl {
-        transform: scale(-1, 1);
+.link {
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+
+    &:hover {
+        background-color: hsl(var(--rpv-highlight) / .3);
     }
 }

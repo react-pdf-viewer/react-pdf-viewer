@@ -21,6 +21,7 @@ import { RotateDirection } from '../structs/RotateDirection';
 import { ScrollMode } from '../structs/ScrollMode';
 import { SpecialZoomLevel } from '../structs/SpecialZoomLevel';
 import { ViewMode } from '../structs/ViewMode';
+import * as styles from '../styles/inner.module.css';
 import { TextDirection, ThemeContext } from '../theme/ThemeContext';
 import { type Destination } from '../types/Destination';
 import { type DocumentLoadEvent } from '../types/DocumentLoadEvent';
@@ -784,7 +785,7 @@ export const Inner: React.FC<{
             l10n && l10n.core ? ((l10n.core as LocalizationMap).pageLabel as string) : 'Page {{pageIndex}}';
         let slot: Slot = {
             attrs: {
-                className: 'rpv-core__inner-container',
+                className: styles.container,
                 'data-testid': 'core__inner-container',
                 ref: containerRef,
                 style: {
@@ -796,10 +797,10 @@ export const Inner: React.FC<{
                 attrs: {
                     'data-testid': 'core__inner-pages',
                     className: classNames({
-                        'rpv-core__inner-pages': true,
+                        [styles.pages]: true,
                         'rpv-core__inner-pages--horizontal': scrollMode === ScrollMode.Horizontal,
-                        'rpv-core__inner-pages--rtl': isRtl,
-                        'rpv-core__inner-pages--single': scrollMode === ScrollMode.Page,
+                        [styles.pagesRtl]: isRtl,
+                        [styles.pagesSingle]: scrollMode === ScrollMode.Page,
                         'rpv-core__inner-pages--vertical': scrollMode === ScrollMode.Vertical,
                         'rpv-core__inner-pages--wrapped': scrollMode === ScrollMode.Wrapped,
                     }),
@@ -825,8 +826,7 @@ export const Inner: React.FC<{
                         {chunks.map((items) => (
                             <div
                                 className={classNames({
-                                    'rpv-core__inner-page-container': true,
-                                    'rpv-core__inner-page-container--single': scrollMode === ScrollMode.Page,
+                                    [styles.pageContainerSingle]: scrollMode === ScrollMode.Page,
                                 })}
                                 style={virtualizer.getItemContainerStyles(items[0])}
                                 key={`${items[0].index}-${viewMode}-${scrollMode}`}
@@ -840,21 +840,20 @@ export const Inner: React.FC<{
                                         <div
                                             aria-label={pageLabel.replace('{{pageIndex}}', `${item.index + 1}`)}
                                             className={classNames({
-                                                'rpv-core__inner-page': true,
-                                                'rpv-core__inner-page--dual-even':
+                                                [styles.pageDualEven]:
                                                     viewMode === ViewMode.DualPage && item.index % 2 === 0,
-                                                'rpv-core__inner-page--dual-odd':
+                                                [styles.pageDualOdd]:
                                                     viewMode === ViewMode.DualPage && item.index % 2 === 1,
-                                                'rpv-core__inner-page--dual-cover': isCover,
-                                                'rpv-core__inner-page--dual-cover-even':
+                                                [styles.pageDualCover]: isCover,
+                                                [styles.pageDualCoverEven]:
                                                     viewMode === ViewMode.DualPageWithCover &&
                                                     !isCover &&
                                                     item.index % 2 === 0,
-                                                'rpv-core__inner-page--dual-cover-odd':
+                                                [styles.pageDualCoverOdd]:
                                                     viewMode === ViewMode.DualPageWithCover &&
                                                     !isCover &&
                                                     item.index % 2 === 1,
-                                                'rpv-core__inner-page--single':
+                                                [styles.pageSingle]:
                                                     viewMode === ViewMode.SinglePage && scrollMode === ScrollMode.Page,
                                             })}
                                             role="region"

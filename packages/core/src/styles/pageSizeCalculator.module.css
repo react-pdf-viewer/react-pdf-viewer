@@ -6,8 +6,10 @@
  * @copyright 2019-2024 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-.rpv-core__annotation-layer {
-    // Make it displayed on top of the shadow layer
-    // so users can interact with the annotations (for example, follow links)
-    z-index: 1;
+.container {
+    align-items: center;
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    width: 100%;
 }

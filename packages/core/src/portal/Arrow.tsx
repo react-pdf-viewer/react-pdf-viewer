@@ -8,6 +8,7 @@
 
 import * as React from 'react';
 import { Position } from '../structs/Position';
+import * as styles from '../styles/arrow.module.css';
 import { classNames } from '../utils/classNames';
 
 export const Arrow: React.FC<{
@@ -16,19 +17,19 @@ export const Arrow: React.FC<{
 }> = ({ customClassName, position }) => (
     <div
         className={classNames({
-            'rpv-core__arrow': true,
-            'rpv-core__arrow--tl': position === Position.TopLeft,
-            'rpv-core__arrow--tc': position === Position.TopCenter,
-            'rpv-core__arrow--tr': position === Position.TopRight,
-            'rpv-core__arrow--rt': position === Position.RightTop,
-            'rpv-core__arrow--rc': position === Position.RightCenter,
-            'rpv-core__arrow--rb': position === Position.RightBottom,
-            'rpv-core__arrow--bl': position === Position.BottomLeft,
-            'rpv-core__arrow--bc': position === Position.BottomCenter,
-            'rpv-core__arrow--br': position === Position.BottomRight,
-            'rpv-core__arrow--lt': position === Position.LeftTop,
-            'rpv-core__arrow--lc': position === Position.LeftCenter,
-            'rpv-core__arrow--lb': position === Position.LeftBottom,
+            [styles.arrow]: true,
+            [styles.arrowTopLeft]: position === Position.TopLeft,
+            [styles.arrowTopCenter]: position === Position.TopCenter,
+            [styles.arrowTopRight]: position === Position.TopRight,
+            [styles.arrowRightTop]: position === Position.RightTop,
+            [styles.arrowRightCenter]: position === Position.RightCenter,
+            [styles.arrowRightBottom]: position === Position.RightBottom,
+            [styles.arrowBottomLeft]: position === Position.BottomLeft,
+            [styles.arrowBottomCenter]: position === Position.BottomCenter,
+            [styles.arrowBottomRight]: position === Position.BottomRight,
+            [styles.arrowLeftTop]: position === Position.LeftTop,
+            [styles.arrowLeftCenter]: position === Position.LeftCenter,
+            [styles.arrowLeftBottom]: position === Position.LeftBottom,
             [`${customClassName}`]: customClassName !== '',
         })}
     />
