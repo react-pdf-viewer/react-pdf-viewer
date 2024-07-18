@@ -1,0 +1,98 @@
+/**
+ * A React component to view a PDF document
+ *
+ * @see https://react-pdf-viewer.dev
+ * @license https://react-pdf-viewer.dev/license
+ * @copyright 2019-2024 Nguyen Huu Phuoc <me@phuoc.ng>
+ */
+
+.arrow {
+    border-bottom-color: inherit;
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+
+    border-left-color: inherit;
+
+    border-right-color: inherit;
+    border-right-style: solid;
+    border-right-width: 1px;
+
+    border-top-color: inherit;
+
+    height: 10px;
+    position: absolute;
+    width: 10px;
+    z-index: 0;
+}
+
+.arrowTopLeft {
+    bottom: 0;
+    left: 0;
+    transform: translate(50%, 50%) rotate(45deg);
+}
+
+.arrowTopCenter {
+    bottom: 0;
+    left: 50%;
+    transform: translate(-50%, 50%) rotate(45deg);
+}
+
+.arrowTopRight {
+    bottom: 0;
+    right: 0;
+    transform: translate(-50%, 50%) rotate(45deg);
+}
+
+.arrowRightTop {
+    left: 0;
+    top: 0;
+    transform: translate(-50%, 50%) rotate(135deg);
+}
+
+.arrowRightCenter {
+    left: 0;
+    top: 50%;
+    transform: translate(-50%, -50%) rotate(135deg);
+}
+
+.arrowRightBottom {
+    bottom: 0;
+    left: 0;
+    transform: translate(-50%, -50%) rotate(135deg);
+}
+
+.arrowBottomLeft {
+    left: 0;
+    top: 0;
+    transform: translate(50%, -50%) rotate(225deg);
+}
+
+.arrowBottomCenter {
+    left: 50%;
+    top: 0;
+    transform: translate(-50%, -50%) rotate(225deg);
+}
+
+.arrowBottomRight {
+    right: 0;
+    top: 0;
+    transform: translate(-50%, -50%) rotate(225deg);
+}
+
+.arrowLeftTop {
+    right: 0;
+    top: 0;
+    transform: translate(50%, 50%) rotate(315deg);
+}
+
+.arrowLeftCenter {
+    right: 0;
+    top: 50%;
+    transform: translate(50%, -50%) rotate(315deg);
+}
+
+.arrowLeftBottom {
+    bottom: 0;
+    right: 0;
+    transform: translate(50%, -50%) rotate(315deg);
+}

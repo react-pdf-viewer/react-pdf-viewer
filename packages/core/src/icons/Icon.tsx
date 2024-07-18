@@ -9,6 +9,7 @@
 'use client';
 
 import * as React from 'react';
+import * as styles from '../styles/icon.module.css';
 import { TextDirection, ThemeContext } from '../theme/ThemeContext';
 import { classNames } from '../utils/classNames';
 
@@ -27,8 +28,8 @@ export const Icon: React.FC<{
         <svg
             aria-hidden="true"
             className={classNames({
-                'rpv-core__icon': true,
-                'rpv-core__icon--rtl': isRtl,
+                [styles.icon]: true,
+                [styles.iconRtl]: isRtl,
             })}
             focusable="false"
             height={width}

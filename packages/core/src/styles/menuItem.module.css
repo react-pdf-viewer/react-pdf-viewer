@@ -1,0 +1,80 @@
+/**
+ * A React component to view a PDF document
+ *
+ * @see https://react-pdf-viewer.dev
+ * @license https://react-pdf-viewer.dev/license
+ * @copyright 2019-2024 Nguyen Huu Phuoc <me@phuoc.ng>
+ */
+
+.item {
+    align-items: center;
+    background-color: transparent;
+    color: hsl(var(--rpv-foreground));
+    border: none;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    padding: 0.25rem 0;
+
+    /* The menu item can be placed inside a container, such as a modal target */
+    width: 100%;
+
+    &:focus {
+        background-color: hsl(var(--rpv-accent));
+        color: hsl(var(--rpv-accent-foreground));
+        outline: 0;
+    }
+
+    &:hover {
+        background-color: hsl(var(--rpv-accent));
+        color: hsl(var(--rpv-accent-foreground));
+    }
+}
+.itemDisabled {
+    color: hsl(var(--rpv-muted-foreground));
+
+    &:hover {
+        background-color: transparent;
+        color: hsl(var(--rpv-muted-foreground));
+    }
+}
+.itemLtr {
+    text-align: left;
+}
+.itemRtl {
+    direction: rtl;
+    text-align: right;
+}
+
+.icon {
+    /* Center the icon */
+    align-items: center;
+    display: flex;
+}
+.iconLtr {
+    padding-left: 1rem;
+    padding-right: 0.5rem;
+}
+.iconRtl {
+    padding-left: 0.5rem;
+    padding-right: 1rem;
+}
+
+.label {
+    flex-grow: 1;
+    flex-shrink: 1;
+    white-space: nowrap;
+}
+.labelLtr {
+    padding-right: 2rem;
+}
+.labelRtl {
+    padding-left: 2rem;
+}
+
+.checkLtr {
+    padding-right: 1rem;
+}
+.checkRtl {
+    padding-left: 1rem;
+}

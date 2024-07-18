@@ -6,7 +6,7 @@
  * @copyright 2019-2024 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-.rpv-core__tooltip-body {
+.body {
     background-color: hsl(var(--rpv-primary));
     border-color: transparent;
     border-radius: var(--rpv-radius);
@@ -17,16 +17,15 @@
     text-align: center;
     top: 0;
     z-index: 9999;
+}
+.bodyRtl {
+    direction: rtl;
+}
 
-    &--rtl {
-        direction: rtl;
-    }
+.arrow {
+    background-color: inherit;
+}
 
-    &-arrow {
-        background-color: inherit;
-    }
-
-    &-content {
-        padding: 0.5rem;
-    }
+.content {
+    padding: 0.5rem;
 }

@@ -11,6 +11,7 @@
 import * as React from 'react';
 import { useIsomorphicLayoutEffect } from '../hooks/useIsomorphicLayoutEffect';
 import { LayerRenderStatus } from '../structs/LayerRenderStatus';
+import * as styles from '../styles/canvasLayer.module.css';
 import { type PdfJs } from '../types/PdfJs';
 import { type Plugin } from '../types/Plugin';
 import { floatToRatio } from '../utils/floatToRatio';
@@ -65,7 +66,7 @@ export const CanvasLayer: React.FC<{
         });
 
         // Support high DPI screens
-        let outputScale = window.devicePixelRatio || 1;
+        const outputScale = window.devicePixelRatio || 1;
 
         // Calculate the maximum scale
         const maxScale = Math.sqrt(MAX_CANVAS_SIZE / (viewport.width * viewport.height));
@@ -133,7 +134,7 @@ export const CanvasLayer: React.FC<{
 
     return (
         <div
-            className="rpv-core__canvas-layer"
+            className={styles.layer}
             style={{
                 height: `${height}px`,
                 width: `${width}px`,

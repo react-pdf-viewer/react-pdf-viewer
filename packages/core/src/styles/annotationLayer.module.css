@@ -6,7 +6,10 @@
  * @copyright 2019-2024 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-.rpv-core__menu-divider {
-    border-bottom: 1px solid hsl(var(--rpv-border));
-    margin: 0.25rem 0;
+.layer {
+    /*
+     * Make it displayed on top of the shadow layer
+     * so users can interact with the annotations (for example, follow links)
+     */
+    z-index: 1;
 }

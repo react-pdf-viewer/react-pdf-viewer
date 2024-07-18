@@ -10,6 +10,7 @@
 
 import * as React from 'react';
 import { useIsomorphicLayoutEffect } from '../hooks/useIsomorphicLayoutEffect';
+import * as styles from '../styles/annotationLayer.module.css';
 import { type Destination } from '../types/Destination';
 import { type PdfJs } from '../types/PdfJs';
 import { type Plugin } from '../types/Plugin';
@@ -95,7 +96,7 @@ export const AnnotationLayerBody: React.FC<{
     return (
         <div
             ref={containerRef}
-            className="rpv-core__annotation-layer"
+            className={styles.layer}
             data-testid={`core__annotation-layer-${pageIndex}`}
         >
             {filterAnnotations.map((annotation) => {

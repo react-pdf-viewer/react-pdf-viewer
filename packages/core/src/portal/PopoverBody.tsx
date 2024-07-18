@@ -11,6 +11,7 @@
 import * as React from 'react';
 import { useIsomorphicLayoutEffect } from '../hooks/useIsomorphicLayoutEffect';
 import { Position } from '../structs/Position';
+import * as styles from '../styles/popoverBody.module.css';
 import { TextDirection, ThemeContext } from '../theme/ThemeContext';
 import { classNames } from '../utils/classNames';
 import { mergeRefs } from '../utils/mergeRefs';
@@ -56,15 +57,15 @@ export const PopoverBody = React.forwardRef<
         <div
             aria-describedby={innerId}
             className={classNames({
-                'rpv-core__popover-body': true,
-                'rpv-core__popover-body--rtl': isRtl,
+                [styles.body]: true,
+                [styles.bodyRtl]: isRtl,
             })}
             id={`rpv-core__popover-body-${ariaControlsSuffix}`}
             ref={mergedContentRef}
             role="dialog"
             tabIndex={-1}
         >
-            <Arrow customClassName="rpv-core__popover-body-arrow" position={position} />
+            <Arrow customClassName={styles.bodyArrow} position={position} />
             <div id={innerId} ref={innerRef}>
                 {children}
             </div>

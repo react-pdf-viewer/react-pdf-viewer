@@ -6,6 +6,7 @@
  * @copyright 2019-2024 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-.rpv-core__separator {
+.divider {
     border-bottom: 1px solid hsl(var(--rpv-border));
+    margin: 0.25rem 0;
 }

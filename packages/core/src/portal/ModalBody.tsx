@@ -11,6 +11,7 @@
 import * as React from 'react';
 import { useIsomorphicLayoutEffect } from '../hooks/useIsomorphicLayoutEffect';
 import { useLockScroll } from '../hooks/useLockScroll';
+import * as styles from '../styles/modalBody.module.css';
 import { TextDirection, ThemeContext } from '../theme/ThemeContext';
 import { classNames } from '../utils/classNames';
 import { mergeRefs } from '../utils/mergeRefs';
@@ -56,8 +57,8 @@ export const ModalBody: React.FC<{
         <div
             aria-modal="true"
             className={classNames({
-                'rpv-core__modal-body': true,
-                'rpv-core__modal-body--rtl': isRtl,
+                [styles.body]: true,
+                [styles.bodyRtl]: isRtl,
             })}
             id={`rpv-core__modal-body-${ariaControlsSuffix}`}
             ref={mergedContentRef}

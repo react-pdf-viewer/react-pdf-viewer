@@ -153,7 +153,8 @@ export const highlightPlugin = (props?: HighlightPluginProps): HighlightPlugin =
             if (!textEle.querySelector(`.${TEXT_LAYER_END_SELECTOR}`)) {
                 const selectEnd = document.createElement('div');
                 selectEnd.classList.add(TEXT_LAYER_END_SELECTOR);
-                selectEnd.classList.add('rpv-core__text-layer-text--not');
+                // To distinguish with other text items
+                selectEnd.setAttribute('data-text', 'false');
                 textEle.appendChild(selectEnd);
             }
         }

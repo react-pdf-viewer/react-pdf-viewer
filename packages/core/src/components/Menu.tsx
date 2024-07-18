@@ -10,6 +10,7 @@
 
 import * as React from 'react';
 import { useIsomorphicLayoutEffect } from '../hooks/useIsomorphicLayoutEffect';
+import * as styles from '../styles/menu.module.css';
 import { TextDirection, ThemeContext } from '../theme/ThemeContext';
 import { classNames } from '../utils/classNames';
 
@@ -128,8 +129,8 @@ export const Menu: React.FC<{
             ref={containerRef}
             aria-orientation="vertical"
             className={classNames({
-                'rpv-core__menu': true,
-                'rpv-core__menu--rtl': isRtl,
+                [styles.menu]: true,
+                [styles.menuRtl]: isRtl,
             })}
             role="menu"
             tabIndex={0}

@@ -6,12 +6,10 @@
  * @copyright 2019-2024 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-.rpv-core__menu {
-    display: flex;
-    flex-direction: column;
-
-    &--rtl {
-        direction: rtl;
-        text-align: right;
-    }
+.layer {
+    direction: ltr;
+    left: 0;
+    position: absolute;
+    overflow: hidden;
+    top: 0;
 }

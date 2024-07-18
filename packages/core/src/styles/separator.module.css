@@ -6,14 +6,6 @@
  * @copyright 2019-2024 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-.rpv-core__annotation--link a {
-    height: 100%;
-    left: 0;
-    position: absolute;
-    top: 0;
-    width: 100%;
-
-    &:hover {
-        background-color: hsl(var(--rpv-highlight) / .3);
-    }
+.separator {
+    border-bottom: 1px solid hsl(var(--rpv-border));
 }

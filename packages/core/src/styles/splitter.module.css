@@ -6,7 +6,7 @@
  * @copyright 2019-2024 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-.rpv-core__splitter {
+.splitter {
     align-items: center;
     display: flex;
     justify-content: center;
@@ -27,17 +27,19 @@
         transform: translateX(-50%);
     }
 
-    &:hover,
-    &--resizing {
+    &:hover {
         cursor: col-resize;
     }
 }
-
-.rpv-core__splitter-body--resizing {
+.splitterResizing {
     cursor: col-resize;
 }
 
-.rpv-core__splitter-handle {
+.bodyResizing {
+    cursor: col-resize;
+}
+
+.handle {
     align-items: center;
     display: flex;
     justify-content: center;
@@ -50,7 +52,7 @@
     z-index: 9;
 }
 
-.rpv-core__splitter-sibling--resizing {
+.siblingResizing {
     pointer-events: none;
     user-select: none;
 }

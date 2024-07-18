@@ -10,6 +10,7 @@
 
 import * as React from 'react';
 import { useIsomorphicLayoutEffect } from '../hooks/useIsomorphicLayoutEffect';
+import * as styles from '../styles/textBox.module.css';
 import { TextDirection, ThemeContext } from '../theme/ThemeContext';
 import { classNames } from '../utils/classNames';
 
@@ -41,8 +42,8 @@ export const TextBox: React.FC<{
         'data-testid': '',
         'aria-label': ariaLabel,
         className: classNames({
-            'rpv-core__textbox': true,
-            'rpv-core__textbox--rtl': isRtl,
+            [styles.textbox]: true,
+            [styles.textboxRtl]: isRtl,
         }),
         placeholder,
         value,

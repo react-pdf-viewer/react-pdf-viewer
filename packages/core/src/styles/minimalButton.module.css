@@ -6,7 +6,7 @@
  * @copyright 2019-2024 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-.rpv-core__minimal-button {
+.button {
     background-color: transparent;
     border: none;
     border-radius: var(--rpv-radius);
@@ -23,17 +23,17 @@
         background-color: hsl(var(--rpv-accent));
         color: hsl(var(--rpv-accent-foreground));
     }
+}
 
-    &--disabled {
-        color: rgba(var(--rpv-color-base-content), 0.3);
-    }
+.buttonDisabled {
+    opacity: .5;
+}
 
-    &--rtl {
-        direction: rtl;
-    }
+.buttonRtl {
+    direction: rtl;
+}
 
-    &--selected {
-        background-color: hsl(var(--rpv-secondary));
-        color: hsl(var(--rpv-secondary-foreground));
-    }
+.buttonSelected {
+    background-color: hsl(var(--rpv-secondary));
+    color: hsl(var(--rpv-secondary-foreground));
 }

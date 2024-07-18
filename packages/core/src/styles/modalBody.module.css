@@ -6,7 +6,7 @@
  * @copyright 2019-2024 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-.rpv-core__modal-body {
+.body {
     background-color: hsl(var(--rpv-background));
     border-color: hsl(var(--rpv-border));
     border-radius: var(--rpv-radius);
@@ -14,8 +14,8 @@
     margin: 1rem;
     max-width: 32rem;
     overflow: auto;
+}
 
-    &--rtl {
-        direction: rtl;
-    }
+.bodyRtl {
+    direction: rtl;
 }

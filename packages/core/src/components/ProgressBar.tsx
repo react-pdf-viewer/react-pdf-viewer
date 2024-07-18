@@ -9,6 +9,7 @@
 'use client';
 
 import * as React from 'react';
+import * as styles from '../styles/progressBar.module.css';
 import { TextDirection, ThemeContext } from '../theme/ThemeContext';
 import { classNames } from '../utils/classNames';
 
@@ -21,11 +22,11 @@ export const ProgressBar: React.FC<{
     return (
         <div
             className={classNames({
-                'rpv-core__progress-bar': true,
-                'rpv-core__progress-bar--rtl': isRtl,
+                [styles.bar]: true,
+                [styles.barRtl]: isRtl,
             })}
         >
-            <div className="rpv-core__progress-bar-progress" style={{ width: `${progress}%` }}>
+            <div className={styles.progress} style={{ width: `${progress}%` }}>
                 {progress}%
             </div>
         </div>

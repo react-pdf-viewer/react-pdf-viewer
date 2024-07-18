@@ -9,6 +9,7 @@
 'use client';
 
 import * as React from 'react';
+import * as styles from '../styles/annotationPopup.module.css';
 import { TextDirection, ThemeContext } from '../theme/ThemeContext';
 import { type PdfJs } from '../types/PdfJs';
 import { classNames } from '../utils/classNames';
@@ -59,8 +60,8 @@ export const PopupWrapper: React.FC<{
         <div
             ref={containerRef}
             className={classNames({
-                'rpv-core__annotation-popup-wrapper': true,
-                'rpv-core__annotation-popup-wrapper--rtl': isRtl,
+                [styles.wrapper]: true,
+                [styles.wrapperRtl]: isRtl,
             })}
             style={{
                 top: annotation.annotationType === AnnotationType.Popup ? '' : '100%',
@@ -70,18 +71,16 @@ export const PopupWrapper: React.FC<{
                 <>
                     <div
                         className={classNames({
-                            'rpv-core__annotation-popup-title': true,
-                            'rpv-core__annotation-popup-title--ltr': !isRtl,
-                            'rpv-core__annotation-popup-title--rtl': isRtl,
+                            [styles.title]: true,
                         })}
                     >
                         {title}
                     </div>
-                    <div className="rpv-core__annotation-popup-date">{dateStr}</div>
+                    <div className={styles.date}>{dateStr}</div>
                 </>
             )}
             {contents && (
-                <div className="rpv-core__annotation-popup-content">
+                <div className={styles.content}>
                     {contents.split('\n').map((item, index) => (
                         <React.Fragment key={index}>
                             {item}

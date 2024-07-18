@@ -6,7 +6,7 @@
  * @copyright 2019-2024 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-.rpv-core__primary-button {
+.button {
     background-color: hsl(var(--rpv-primary));
     border: none;
     border-radius: calc(var(--rpv-radius) - 2px);
@@ -14,8 +14,8 @@
     cursor: pointer;
     height: 2rem;
     padding: 0 1rem;
+}
 
-    &--rtl {
-        direction: rtl;
-    }
+.buttonRtl {
+    direction: rtl;
 }

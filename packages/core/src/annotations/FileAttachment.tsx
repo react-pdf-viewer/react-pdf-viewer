@@ -9,6 +9,7 @@
 'use client';
 
 import * as React from 'react';
+import * as styles from '../styles/annotation.module.css';
 import { type PdfJs } from '../types/PdfJs';
 import { downloadFile } from '../utils/downloadFile';
 import { Annotation } from './Annotation';
@@ -41,8 +42,9 @@ export const FileAttachment: React.FC<{
             {(props): React.ReactElement => (
                 <div
                     {...props.slot.attrs}
-                    className="rpv-core__annotation rpv-core__annotation--file-attachment"
+                    className={styles.annotation}
                     data-annotation-id={annotation.id}
+                    data-annotation-type="attachment"
                     onClick={props.popup.toggleOnClick}
                     onDoubleClick={doubleClick}
                     onMouseEnter={props.popup.openOnHover}

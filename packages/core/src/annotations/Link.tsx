@@ -9,6 +9,7 @@
 'use client';
 
 import * as React from 'react';
+import * as styles from '../styles/annotation.module.css';
 import { type Destination } from '../types/Destination';
 import { type PdfJs } from '../types/PdfJs';
 import { getDestination } from '../utils/managePages';
@@ -128,11 +129,12 @@ export const Link: React.FC<{
             {(props): React.ReactElement => (
                 <div
                     {...props.slot.attrs}
-                    className="rpv-core__annotation rpv-core__annotation--link"
+                    className={styles.annotation}
                     data-annotation-id={annotation.id}
+                    data-annotation-type="link"
                     data-testid={`core__annotation--link-${annotation.id}`}
                 >
-                    <a ref={elementRef} {...attrs} />
+                    <a className={styles.link} ref={elementRef} {...attrs} />
                 </div>
             )}
         </Annotation>

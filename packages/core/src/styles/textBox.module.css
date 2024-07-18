@@ -6,7 +6,7 @@
  * @copyright 2019-2024 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-.rpv-core__textbox {
+.textbox {
     background-color: hsl(var(--rpv-background));
     border: 1px solid hsl(var(--rpv-border));
     box-sizing: border-box;
@@ -16,13 +16,12 @@
     height: 2rem;
     width: 100%;
 
-    &--rtl {
-        direction: rtl;
-    }
-
     &:focus-visible {
         box-shadow: hsl(var(--rpv-background)) 0px 0px 0px 2px, hsl(var(--rpv-ring)) 0px 0px 0px 4px, rgba(0, 0, 0, 0) 0px 0px 0px 0px;
         outline: 2px solid transparent;
         outline-offset: 2px;
     }
+}
+.textboxRtl {
+    direction: rtl;
 }

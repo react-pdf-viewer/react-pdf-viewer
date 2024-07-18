@@ -13,6 +13,7 @@ import { Spinner } from '../components/Spinner';
 import { ScrollMode } from '../structs/ScrollMode';
 import { SpecialZoomLevel } from '../structs/SpecialZoomLevel';
 import { ViewMode } from '../structs/ViewMode';
+import * as styles from '../styles/pageSizeCalculator.module.css';
 import { type PageSize } from '../types/PageSize';
 import { type PdfJs } from '../types/PdfJs';
 import { getPage } from '../utils/managePages';
@@ -93,7 +94,7 @@ export const PageSizeCalculator: React.FC<{
     }, [doc.loadingTask.docId]);
 
     return state.estimatedPageSizes.length === 0 || state.scale === 0 ? (
-        <div className="rpv-core__page-size-calculator" data-testid="core__page-size-calculating" ref={pagesRef}>
+        <div className={styles.container} data-testid="core__page-size-calculating" ref={pagesRef}>
             <Spinner />
         </div>
     ) : (
