@@ -16,6 +16,7 @@ import {
     type LocalizationMap,
 } from '@react-pdf-viewer/core';
 import * as React from 'react';
+import * as styles from '../styles/dropArea.module.css';
 import { useDrop } from './useDrop';
 
 export const DropArea: React.FC<{
@@ -36,11 +37,11 @@ export const DropArea: React.FC<{
     return (
         <>
             {isDragging && (
-                <div className="rpv-drop__area">
+                <div className={styles.container}>
                     <div
                         className={classNames({
-                            'rpv-drop__area-body': true,
-                            'rpv-drop__area-body--rtl': isRtl,
+                            [styles.inner]: true,
+                            [styles.innerRtl]: isRtl,
                         })}
                     >
                         {l10n && l10n.drop

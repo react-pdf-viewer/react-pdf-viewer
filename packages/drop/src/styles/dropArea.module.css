@@ -6,12 +6,12 @@
  * @copyright 2019-2024 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-.rpv-drop__area {
+.container {
     background-color: hsl(var(--rpv-background));
     border: 2px dashed hsl(var(--rpv-border));
     color: hsl(var(--rpv-foreground));
 
-    // Position
+    /* Position */
     bottom: 0;
     left: 0;
     position: absolute;
@@ -20,20 +20,20 @@
 
     padding: 0.5rem;
     z-index: 9999;
+}
 
-    &-body {
-        font-size: 1.5rem;
+.inner {
+    font-size: 1.5rem;
 
-        // Center the content
-        align-items: center;
-        display: flex;
-        justify-content: center;
+    /* Center the content */
+    align-items: center;
+    display: flex;
+    justify-content: center;
 
-        // Take the full height
-        height: 100%;
-    }
+    /* Take the full height */
+    height: 100%;
+}
 
-    &-body--rtl {
-        direction: rtl;
-    }
+.innerRtl {
+    direction: rtl;
 }
