@@ -6,7 +6,7 @@
  * @copyright 2019-2024 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-.rpv-full-screen__overlay {
+.overlay {
     position: fixed;
     top: 0;
     left: 0;

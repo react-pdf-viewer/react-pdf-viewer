@@ -18,6 +18,7 @@ import {
 } from '@react-pdf-viewer/core';
 import * as React from 'react';
 import { ExitFullScreenIcon } from './ExitFullScreenIcon';
+import * as styles from './styles/exitFullScreenButton.module.css';
 
 export const ExitFullScreenButton: React.FC<{
     onClick(): void;
@@ -32,9 +33,9 @@ export const ExitFullScreenButton: React.FC<{
     return (
         <div
             className={classNames({
-                'rpv-full-screen__exit-button': true,
-                'rpv-full-screen__exit-button--ltr': !isRtl,
-                'rpv-full-screen__exit-button--rtl': isRtl,
+                [styles.button]: true,
+                [styles.buttonLtr]: !isRtl,
+                [styles.buttonRtl]: isRtl,
             })}
         >
             <MinimalButton
