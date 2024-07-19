@@ -24,6 +24,7 @@ import {
     type Toggle,
 } from '@react-pdf-viewer/core';
 import * as React from 'react';
+import * as styles from './styles/zoomPopover.module.css';
 
 const DEFAULT_LEVELS = [0.5, 0.75, 1, 1.25, 1.5, 2, 3, 4];
 
@@ -55,18 +56,17 @@ export const ZoomPopover: React.FC<{
         };
         return (
             <MinimalButton ariaLabel={zoomDocumentLabel as string} testId="zoom__popover-target" onClick={click}>
-                <span className="rpv-zoom__popover-target">
+                <span className={styles.target}>
                     <span
                         data-testid="zoom__popover-target-scale"
                         className={classNames({
-                            'rpv-zoom__popover-target-scale': true,
-                            'rpv-zoom__popover-target-scale--ltr': !isRtl,
-                            'rpv-zoom__popover-target-scale--rtl': isRtl,
+                            [styles.scaleLtr]: !isRtl,
+                            [styles.scaleRtl]: isRtl,
                         })}
                     >
                         {Math.round(scale * 100)}%
                     </span>
-                    <span className="rpv-zoom__popover-target-arrow" />
+                    <span className={styles.arrow} />
                 </span>
             </MinimalButton>
         );
