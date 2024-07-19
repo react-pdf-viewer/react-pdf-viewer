@@ -13,6 +13,7 @@ import * as React from 'react';
 import { type Match } from './types/Match';
 import { type SearchTargetPageFilter } from './types/SearchTargetPage';
 import { type StoreProps } from './types/StoreProps';
+import { type SingleKeyword } from './types/SingleKeyword';
 import { useSearch } from './useSearch';
 
 export interface RenderSearchProps {
@@ -29,7 +30,7 @@ export interface RenderSearchProps {
     numberOfMatches: number;
     wholeWords: boolean;
     search(): Promise<Match[]>;
-    setKeyword(keyword: string): void;
+    setKeyword(keyword: SingleKeyword[] | SingleKeyword): void;
     setTargetPages(targetPageFilter: SearchTargetPageFilter): void;
 }
 

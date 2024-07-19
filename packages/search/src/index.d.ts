@@ -14,10 +14,12 @@ export interface FlagKeyword {
     keyword: string;
     matchCase?: boolean; // `false` by default
     wholeWords?: boolean; // `false` by default
+    indexes?: { [pageIndex: string | number]: number[] }; // `{}` by default
 }
 
 export interface Match {
     keyword: RegExp;
+    source: string;
     // The index of match in the page
     // Each page may have multiple matches
     matchIndex: number;
@@ -33,6 +35,7 @@ export interface MatchPosition {
     // Each page may have multiple matches
     matchIndex: number;
     pageIndex: number;
+    title: string;
 }
 
 export interface OnHighlightKeyword {
@@ -105,6 +108,7 @@ export interface HighlightArea {
     // The size of the page in pixels
     pageHeight: number;
     pageWidth: number;
+    index: number;
 }
 export interface RenderHighlightsProps {
     getCssProperties(area: HighlightArea): React.CSSProperties;

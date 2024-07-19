@@ -10,4 +10,5 @@ export interface NormalizedKeyword {
     keyword: string;
     regExp: RegExp;
     wholeWords: boolean;
+    indexes: { [pageIndex: string | number]: number[] };
 }
