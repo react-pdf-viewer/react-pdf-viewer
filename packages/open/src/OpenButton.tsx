@@ -19,6 +19,7 @@ import {
 } from '@react-pdf-viewer/core';
 import * as React from 'react';
 import { OpenFileIcon } from './OpenFileIcon';
+import * as styles from './styles/openInput.module.css';
 import { type StoreProps } from './types/StoreProps';
 import { useTriggerOpen } from './useTriggerOpen';
 
@@ -38,11 +39,11 @@ export const OpenButton: React.FC<{
             ariaControlsSuffix="open"
             position={Position.BottomCenter}
             target={
-                <div className="rpv-open__input-wrapper">
+                <div className={styles.container}>
                     <input
                         accept=".pdf"
                         ref={inputRef}
-                        className="rpv-open__input"
+                        className={styles.input}
                         multiple={false}
                         tabIndex={-1}
                         title=""
