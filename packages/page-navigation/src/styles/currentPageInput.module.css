@@ -6,4 +6,8 @@
  * @copyright 2019-2024 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-@import './currentPageInput';
+.container {
+    margin: 0 0.25rem;
+    text-align: right;
+    width: 3rem;
+}
