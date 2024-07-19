@@ -10,6 +10,7 @@
 
 import { LocalizationContext, TextBox, type LocalizationMap, type Store } from '@react-pdf-viewer/core';
 import * as React from 'react';
+import * as styles from './styles/currentPageInput.module.css';
 import { type StoreProps } from './types/StoreProps';
 import { useCurrentPage } from './useCurrentPage';
 import { useNumberOfPages } from './useNumberOfPages';
@@ -80,7 +81,7 @@ export const CurrentPageInput: React.FC<{
             : 'Enter a page number';
 
     return (
-        <span className="rpv-page-navigation__current-page-input">
+        <span className={styles.container}>
             <TextBox
                 ariaLabel={label}
                 testId="page-navigation__current-page-input"
