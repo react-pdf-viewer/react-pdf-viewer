@@ -11,6 +11,7 @@
 import { type PdfJs, type Store } from '@react-pdf-viewer/core';
 import * as React from 'react';
 import { BookmarkItem } from './BookmarkItem';
+import * as styles from './styles/bookmarkList.module.css';
 import { type IsBookmarkExpanded } from './types/IsBookmarkExpanded';
 import { type RenderBookmarkItem } from './types/RenderBookmarkItemProps';
 import { type StoreProps } from './types/StoreProps';
@@ -25,7 +26,7 @@ export const BookmarkList: React.FC<{
     renderBookmarkItem?: RenderBookmarkItem;
     store: Store<StoreProps>;
 }> = ({ bookmarks, depth = 0, doc, isBookmarkExpanded, isRoot, pathFromRoot, renderBookmarkItem, store }) => (
-    <ul className="rpv-bookmark__list" role={isRoot ? 'tree' : 'group'} tabIndex={-1}>
+    <ul className={styles.list} role={isRoot ? 'tree' : 'group'} tabIndex={-1}>
         {bookmarks.map((bookmark, index) => (
             <BookmarkItem
                 bookmark={bookmark}

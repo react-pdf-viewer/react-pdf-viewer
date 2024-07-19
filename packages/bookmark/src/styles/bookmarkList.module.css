@@ -6,7 +6,9 @@
  * @copyright 2019-2024 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-@import './bookmarkItem';
-@import './bookmarkList';
-@import './bookmarkListLoader';
-@import './bookmarkLoaded';
+.list {
+    list-style-type: none;
+    overflow: auto;
+    margin: 0;
+    padding: 0;
+}

@@ -10,6 +10,7 @@
 
 import { getDestination, type PdfJs, type Store } from '@react-pdf-viewer/core';
 import * as React from 'react';
+import * as styles from './styles/bookmarkItem.module.css';
 import { BookmarkList } from './BookmarkList';
 import { DownArrowIcon } from './DownArrowIcon';
 import { RightArrowIcon } from './RightArrowIcon';
@@ -85,7 +86,7 @@ export const BookmarkItem: React.FC<{
 
     const defaultRenderItem = (onClickItem: () => void, children: React.ReactNode) => (
         <div
-            className="rpv-bookmark__item"
+            className={styles.item}
             style={{
                 paddingLeft: `${depth * 1.25}rem`,
             }}
@@ -98,20 +99,20 @@ export const BookmarkItem: React.FC<{
     const defaultRenderToggle = (expandIcon: React.ReactElement, collapseIcon: React.ReactElement) =>
         hasSubItems ? (
             <span
-                className="rpv-bookmark__toggle"
+                className={styles.toggle}
                 data-testid={`bookmark__toggle-${depth}-${index}`}
                 onClick={toggleSubItems}
             >
                 {expanded ? expandIcon : collapseIcon}
             </span>
         ) : (
-            <span className="rpv-bookmark__toggle" />
+            <span className={styles.toggle} />
         );
 
     const defaultRenderTitle = (onClickBookmark: () => void) =>
         bookmark.url ? (
             <a
-                className="rpv-bookmark__title"
+                className={styles.title}
                 href={bookmark.url}
                 rel="noopener noreferrer nofollow"
                 target={bookmark.newWindow ? '_blank' : ''}
@@ -119,7 +120,7 @@ export const BookmarkItem: React.FC<{
                 {bookmark.title}
             </a>
         ) : (
-            <div className="rpv-bookmark__title" aria-label={bookmark.title} onClick={onClickBookmark}>
+            <div className={styles.title} aria-label={bookmark.title} onClick={onClickBookmark}>
                 {bookmark.title}
             </div>
         );
