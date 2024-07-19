@@ -11,6 +11,7 @@
 import { type PdfJs, type Store } from '@react-pdf-viewer/core';
 import * as React from 'react';
 import { BookmarkList } from './BookmarkList';
+import * as styles from './styles/bookmarkItem.module.css';
 import { type IsBookmarkExpanded } from './types/IsBookmarkExpanded';
 import { type RenderBookmarkItem } from './types/RenderBookmarkItemProps';
 import { type StoreProps } from './types/StoreProps';
@@ -81,8 +82,8 @@ export const BookmarkListRoot: React.FC<{
     };
 
     const clickBookmark = () => {
-        const closestItem = document.activeElement.closest('.rpv-bookmark__item');
-        const titleEle = closestItem.querySelector('.rpv-bookmark__title');
+        const closestItem = document.activeElement.closest(`.${styles.item}`);
+        const titleEle = closestItem.querySelector(`.${styles.title}`);
         if (titleEle) {
             (titleEle as HTMLElement).click();
         }
@@ -90,7 +91,7 @@ export const BookmarkListRoot: React.FC<{
 
     const moveToItem = (getItemIndex: (bookmarkElements: Element[], activeElement: Element) => number) => {
         const container = containerRef.current;
-        const bookmarkElements: Element[] = [].slice.call(container.getElementsByClassName('rpv-bookmark__item'));
+        const bookmarkElements: Element[] = [].slice.call(container.getElementsByClassName(styles.item));
         if (bookmarkElements.length === 0) {
             return;
         }
@@ -110,16 +111,16 @@ export const BookmarkListRoot: React.FC<{
 
     const toggle = (toggle: Toggle) => {
         const container = containerRef.current;
-        const bookmarkElements: Element[] = [].slice.call(container.getElementsByClassName('rpv-bookmark__item'));
+        const bookmarkElements: Element[] = [].slice.call(container.getElementsByClassName(styles.item));
         if (bookmarkElements.length === 0) {
             return;
         }
 
-        const closestItem = document.activeElement.closest('.rpv-bookmark__item');
+        const closestItem = document.activeElement.closest(`.${styles.item}`);
         const expanedAttribute = toggle === Toggle.Collapse ? 'true' : 'false';
         if (closestItem && closestItem.parentElement.getAttribute('aria-expanded') === expanedAttribute) {
             // Toggle the current node
-            const toggleEle = closestItem.querySelector('.rpv-bookmark__toggle');
+            const toggleEle = closestItem.querySelector(`.${styles.toggle}`);
             if (toggleEle) {
                 (toggleEle as HTMLElement).click();
             }
@@ -140,7 +141,7 @@ export const BookmarkListRoot: React.FC<{
             return;
         }
 
-        const bookmarkElements: HTMLElement[] = [].slice.call(container.getElementsByClassName('rpv-bookmark__item'));
+        const bookmarkElements: HTMLElement[] = [].slice.call(container.getElementsByClassName(styles.item));
 
         // Focus on the first bookmark item
         if (bookmarkElements.length > 0) {
