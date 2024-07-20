@@ -11,6 +11,7 @@
 import { classNames, TextDirection, ThemeContext } from '@react-pdf-viewer/core';
 import * as React from 'react';
 import { MoreActionsPopover } from './MoreActionsPopover';
+import * as styles from './styles/defaultToolbar.module.css';
 import { type ToolbarSlot } from './types/ToolbarSlot';
 import { type TransformToolbarSlot } from './types/TransformToolbarSlot';
 
@@ -41,73 +42,73 @@ export const renderDefaultToolbar =
             <div
                 data-testid="toolbar"
                 className={classNames({
-                    'rpv-toolbar': true,
-                    'rpv-toolbar--rtl': isRtl,
+                    [styles.toolbar]: true,
+                    [styles.toolbarRtl]: isRtl,
                 })}
                 role="toolbar"
                 aria-orientation="horizontal"
             >
-                <div className="rpv-toolbar__left">
-                    <div className="rpv-toolbar__item">
+                <div className={styles.left}>
+                    <div className={styles.item}>
                         <ShowSearchPopover />
                     </div>
                     <div className="rpv-core__display--hidden rpv-core__display--block-small">
-                        <div className="rpv-toolbar__item">
+                        <div className={styles.item}>
                             <GoToPreviousPage />
                         </div>
                     </div>
-                    <div className="rpv-toolbar__item">
+                    <div className={styles.item}>
                         <CurrentPageInput />
-                        <span className="rpv-toolbar__label">
+                        <span className={styles.label}>
                             <NumberOfPages />
                         </span>
                     </div>
                     <div className="rpv-core__display--hidden rpv-core__display--block-small">
-                        <div className="rpv-toolbar__item">
+                        <div className={styles.item}>
                             <GoToNextPage />
                         </div>
                     </div>
                 </div>
-                <div className="rpv-toolbar__center">
-                    <div className="rpv-toolbar__item">
+                <div className={styles.center}>
+                    <div className={styles.item}>
                         <ZoomOut />
                     </div>
                     <div className="rpv-core__display--hidden rpv-core__display--block-small">
-                        <div className="rpv-toolbar__item">
+                        <div className={styles.item}>
                             <Zoom />
                         </div>
                     </div>
-                    <div className="rpv-toolbar__item">
+                    <div className={styles.item}>
                         <ZoomIn />
                     </div>
                 </div>
-                <div className="rpv-toolbar__right">
+                <div className={styles.right}>
                     <div className="rpv-core__display--hidden rpv-core__display--block-medium">
-                        <div className="rpv-toolbar__item">
+                        <div className={styles.item}>
                             <SwitchTheme />
                         </div>
                     </div>
                     <div className="rpv-core__display--hidden rpv-core__display--block-medium">
-                        <div className="rpv-toolbar__item">
+                        <div className={styles.item}>
                             <EnterFullScreen />
                         </div>
                     </div>
                     <div className="rpv-core__display--hidden rpv-core__display--block-medium">
-                        <div className="rpv-toolbar__item">
+                        <div className={styles.item}>
                             <Open />
                         </div>
                     </div>
                     <div className="rpv-core__display--hidden rpv-core__display--block-medium">
-                        <div className="rpv-toolbar__item">
+                        <div className={styles.item}>
                             <Download />
                         </div>
                     </div>
                     <div className="rpv-core__display--hidden rpv-core__display--block-medium">
-                        <div className="rpv-toolbar__item">
+                        <div className={styles.item}>
                             <Print />
                         </div>
                     </div>
-                    <div className="rpv-toolbar__item">
+                    <div className={styles.item}>
                         <MoreActionsPopover toolbarSlot={toolbarSlot} />
                     </div>
                 </div>
