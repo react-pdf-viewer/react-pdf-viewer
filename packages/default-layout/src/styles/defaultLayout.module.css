@@ -1,0 +1,58 @@
+/**
+ * A React component to view a PDF document
+ *
+ * @see https://react-pdf-viewer.dev
+ * @license https://react-pdf-viewer.dev/license
+ * @copyright 2019-2024 Nguyen Huu Phuoc <me@phuoc.ng>
+ */
+
+$toolbarHeight: 2.5rem;
+
+.container {
+    /* Border */
+    border: 1px solid hsl(var(--rpv-border));
+    box-sizing: border-box;
+
+    /* Full size */
+    height: 100%;
+    width: 100%;
+}
+
+.main {
+    display: flex;
+    padding-top: $toolbarHeight;
+
+    /* Fix the scroll issue on Safari */
+    height: 100%;
+
+    /* Used to position the sidebar */
+    position: relative;
+}
+.mainRtl {
+    direction: rtl;
+}
+
+.body {
+    flex: 1;
+    overflow: auto;
+}
+
+.toolbar {
+    align-items: center;
+    background-color: hsl(var(--rpv-muted) / .4);
+    border-bottom: 1px solid hsl(var(--rpv-border));
+    color: hsl(var(--rpv-muted-foreground));
+    display: flex;
+
+    /* Postion */
+    left: 0;
+    position: absolute;
+    top: 0;
+
+    /* Size */
+    height: $toolbarHeight;
+    width: 100%;
+
+    /* To make the tooltip displayed on top of the pages */
+    z-index: 1;
+}

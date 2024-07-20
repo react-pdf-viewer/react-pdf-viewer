@@ -24,6 +24,7 @@ import {
 import * as React from 'react';
 import { BookmarkIcon } from './BookmarkIcon';
 import { FileIcon } from './FileIcon';
+import * as styles from './styles/sidebar.module.css';
 import { ThumbnailIcon } from './ThumbnailIcon';
 import { type StoreProps } from './types/StoreProps';
 
@@ -130,21 +131,21 @@ export const Sidebar: React.FC<SidebarProps> = ({
             <div
                 data-testid="default-layout__sidebar"
                 className={classNames({
-                    'rpv-default-layout__sidebar': true,
-                    'rpv-default-layout__sidebar--opened': opened,
-                    'rpv-default-layout__sidebar--ltr': !isRtl,
-                    'rpv-default-layout__sidebar--rtl': isRtl,
+                    [styles.sidebar]: true,
+                    [styles.sidebarOpened]: opened,
+                    [styles.sidebarLtr]: !isRtl,
+                    [styles.sidebarRtl]: isRtl,
                 })}
                 ref={containerRef}
             >
-                <div className="rpv-default-layout__sidebar-tabs">
-                    <div className="rpv-default-layout__sidebar-headers" role="tablist" aria-orientation="vertical">
+                <div className={styles.tabs}>
+                    <div className={styles.headers} role="tablist" aria-orientation="vertical">
                         {listTabs.map((tab, index) => (
                             <div
                                 aria-controls="rpv-default-layout__sidebar-content"
                                 aria-selected={currentTab === index}
                                 key={index}
-                                className="rpv-default-layout__sidebar-header"
+                                className={styles.header}
                                 id={`rpv-default-layout__sidebar-tab-${index}`}
                                 role="tab"
                             >
@@ -170,10 +171,10 @@ export const Sidebar: React.FC<SidebarProps> = ({
                             aria-labelledby={`rpv-default-layout__sidebar-tab-${currentTab}`}
                             id="rpv-default-layout__sidebar-content"
                             className={classNames({
-                                'rpv-default-layout__sidebar-content': true,
-                                'rpv-default-layout__sidebar-content--opened': opened,
-                                'rpv-default-layout__sidebar-content--ltr': !isRtl,
-                                'rpv-default-layout__sidebar-content--rtl': isRtl,
+                                [styles.content]: true,
+                                [styles.contentOpened]: opened,
+                                [styles.contentLtr]: !isRtl,
+                                [styles.contentRtl]: isRtl,
                             })}
                             role="tabpanel"
                             tabIndex={-1}
