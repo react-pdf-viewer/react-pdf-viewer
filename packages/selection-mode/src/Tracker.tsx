@@ -11,6 +11,7 @@
 import { type Store } from '@react-pdf-viewer/core';
 import * as React from 'react';
 import { SelectionMode } from './structs/SelectionMode';
+import * as styles from './styles/selectionMode.module.css';
 import { type StoreProps } from './types/StoreProps';
 
 export const Tracker: React.FC<{
@@ -36,8 +37,8 @@ export const Tracker: React.FC<{
             return;
         }
 
-        ele.classList.add('rpv-selection-mode__grab');
-        ele.classList.remove('rpv-selection-mode__grabbing');
+        ele.classList.add(styles.grab);
+        ele.classList.remove(styles.grabbing);
 
         document.removeEventListener('mousemove', onMouseMoveHandler);
         document.removeEventListener('mouseup', onMouseUpHandler);
@@ -49,8 +50,8 @@ export const Tracker: React.FC<{
             return;
         }
 
-        ele.classList.remove('rpv-selection-mode__grab');
-        ele.classList.add('rpv-selection-mode__grabbing');
+        ele.classList.remove(styles.grab);
+        ele.classList.add(styles.grabbing);
 
         e.preventDefault();
         e.stopPropagation();
@@ -81,8 +82,8 @@ export const Tracker: React.FC<{
         }
 
         selectionMode === SelectionMode.Hand
-            ? ele.classList.add('rpv-selection-mode__grab')
-            : ele.classList.remove('rpv-selection-mode__grab');
+            ? ele.classList.add(styles.grab)
+            : ele.classList.remove(styles.grab);
 
         ele.addEventListener('mousedown', onMouseDownHandler);
         return (): void => {
