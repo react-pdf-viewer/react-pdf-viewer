@@ -6,6 +6,17 @@
  * @copyright 2019-2024 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-@import './propertiesLoader';
-@import './propertiesModal';
-@import './propertyItem';
+.modal {
+    min-height: 20rem;
+    padding: 0.5rem 0;
+}
+
+.section {
+    padding: 0 0.5rem;
+}
+
+.footer {
+    display: flex;
+    justify-content: center;
+    margin-top: 0.5rem;
+}

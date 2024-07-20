@@ -10,6 +10,7 @@
 
 import { classNames, TextDirection, ThemeContext } from '@react-pdf-viewer/core';
 import * as React from 'react';
+import * as styles from './styles/propertyItem.module.css';
 
 export const PropertyItem: React.FC<{
     label: string;
@@ -21,12 +22,12 @@ export const PropertyItem: React.FC<{
     return (
         <dl
             className={classNames({
-                'rpv-properties__item': true,
-                'rpv-properties__item--rtl': isRtl,
+                [styles.item]: true,
+                [styles.itemRtl]: isRtl,
             })}
         >
-            <dt className="rpv-properties__item-label">{label}:</dt>
-            <dd className="rpv-properties__item-value">{value || '-'}</dd>
+            <dt className={styles.label}>{label}:</dt>
+            <dd className={styles.value}>{value || '-'}</dd>
         </dl>
     );
 };

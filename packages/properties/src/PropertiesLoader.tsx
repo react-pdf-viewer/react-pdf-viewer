@@ -10,6 +10,7 @@
 
 import { Spinner, type PdfJs } from '@react-pdf-viewer/core';
 import * as React from 'react';
+import * as styles from './styles/propertiesLoader.module.css';
 import { type PropertiesData } from './types/PropertiesData';
 
 export const PropertiesLoader: React.FC<{
@@ -40,7 +41,7 @@ export const PropertiesLoader: React.FC<{
     return data ? (
         render(data)
     ) : (
-        <div className="rpv-properties__loader">
+        <div className={styles.loader}>
             <Spinner />
         </div>
     );
