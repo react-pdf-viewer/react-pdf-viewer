@@ -1,0 +1,80 @@
+/**
+ * A React component to view a PDF document
+ *
+ * @see https://react-pdf-viewer.dev
+ * @license https://react-pdf-viewer.dev/license
+ * @copyright 2019-2024 Nguyen Huu Phuoc <me@phuoc.ng>
+ */
+
+.sidebar {
+    display: flex;
+    border-color: hsl(var(--rpv-border));
+}
+.sidebarOpened {
+    border-color: transparent;
+    /* Absolute position */
+    bottom: 0;
+    left: 0;
+    position: absolute;
+    top: 0;
+
+    /* Size */
+    width: 12rem;
+
+    /* Display it on top of pages */
+    z-index: 1;
+}
+.sidebarLtr {
+    border-right-width: 1px;
+    border-right-style: solid;
+}
+.sidebarRtl {
+    border-left-width: 1px;
+    border-left-style: solid;
+}
+
+@media (min-width: 768px) {
+    .sidebarOpened {
+        width: 16rem;
+    }
+}
+
+@media (min-width: 1024px) {
+    .sidebarOpened {
+        background: inherit;
+        position: inherit;
+        width: 20rem;
+        z-index: inherit;
+    }
+}
+
+.tabs {
+    display: flex;
+    height: 100%;
+    width: 100%;
+}
+
+.headers {
+    background-color: hsl(var(--rpv-muted) / .4);
+    padding: 0.25rem;
+}
+
+.header {
+    padding: 0.125rem;
+}
+
+.content {
+    display: none;
+    flex-grow: 1;
+    flex-shrink: 1;
+}
+.contentOpened {
+    display: flex;
+    overflow: hidden;
+}
+.contentLtr {
+    border-left: 1px solid hsl(var(--rpv-border));
+}
+.contentRtl {
+    border-right: 1px solid hsl(var(--rpv-border));
+}

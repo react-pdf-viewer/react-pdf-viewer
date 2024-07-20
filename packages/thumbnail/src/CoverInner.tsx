@@ -19,6 +19,7 @@ import {
     type VisibilityChanged,
 } from '@react-pdf-viewer/core';
 import * as React from 'react';
+import * as styles from './styles/cover.module.css';
 import { type StoreProps } from './types/StoreProps';
 
 export const CoverInner: React.FC<{
@@ -132,11 +133,11 @@ export const CoverInner: React.FC<{
     }, []);
 
     return (
-        <div ref={containerRef} className="rpv-thumbnail__cover-inner" data-testid="thumbnail__cover-inner">
+        <div ref={containerRef} className={styles.inner} data-testid="thumbnail__cover-inner">
             {src ? (
-                <img className="rpv-thumbnail__cover-image" data-testid="thumbnail__cover-image" src={src} />
+                <img className={styles.image} data-testid="thumbnail__cover-image" src={src} />
             ) : (
-                <div className="rpv-thumbnail__cover-loader" data-testid="thumbnail__cover-loader">
+                <div className={styles.loader} data-testid="thumbnail__cover-loader">
                     {renderSpinner ? renderSpinner() : <Spinner />}
                 </div>
             )}
