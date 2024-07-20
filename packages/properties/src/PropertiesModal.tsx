@@ -12,6 +12,7 @@ import { Button, LocalizationContext, Separator, type LocalizationMap, type PdfJ
 import * as React from 'react';
 import { PropertiesLoader } from './PropertiesLoader';
 import { PropertyItem } from './PropertyItem';
+import * as styles from './styles/propertiesModal.module.css';
 import { type PropertiesData } from './types/PropertiesData';
 import { convertDate } from './utils/convertDate';
 import { getFileName } from './utils/getFileName';
@@ -31,7 +32,7 @@ export const PropertiesModal: React.FC<{
 
     const renderData = (data: PropertiesData): React.ReactElement => (
         <>
-            <div className="rpv-properties__modal-section">
+            <div className={styles.section}>
                 <PropertyItem
                     label={
                         l10n && l10n.properties
@@ -50,7 +51,7 @@ export const PropertiesModal: React.FC<{
                 />
             </div>
             <Separator />
-            <div className="rpv-properties__modal-section">
+            <div className={styles.section}>
                 <PropertyItem
                     label={l10n && l10n.properties ? ((l10n.properties as LocalizationMap).title as string) : 'Title'}
                     value={data.info.Title}
@@ -95,7 +96,7 @@ export const PropertiesModal: React.FC<{
                 />
             </div>
             <Separator />
-            <div className="rpv-properties__modal-section">
+            <div className={styles.section}>
                 <PropertyItem
                     label={
                         l10n && l10n.properties
@@ -125,9 +126,9 @@ export const PropertiesModal: React.FC<{
     );
 
     return (
-        <div className="rpv-properties__modal">
+        <div className={styles.modal}>
             <PropertiesLoader doc={doc} render={renderData} />
-            <div className="rpv-properties__modal-footer">
+            <div className={styles.footer}>
                 <Button onClick={onToggle}>
                     {l10n && l10n.properties ? ((l10n.properties as LocalizationMap).close as string) : 'Close'}
                 </Button>
