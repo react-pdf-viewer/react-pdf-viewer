@@ -14,6 +14,7 @@ import { HightlightItem } from './HightlightItem';
 import { calculateOffset } from './calculateOffset';
 import { EMPTY_KEYWORD_REGEXP } from './constants';
 import { getCssProperties } from './getCssProperties';
+import * as styles from './styles/highlight.module.css';
 import { type MatchPosition } from './types/MatchPosition';
 import { type NormalizedKeyword } from './types/NormalizedKeyword';
 import { type OnHighlightKeyword } from './types/OnHighlightKeyword';
@@ -160,7 +161,7 @@ export const Highlights: React.FC<{
         }
 
         const highlightPos: HighlightArea[] = [];
-        const spans: HTMLElement[] = [].slice.call(textLayerEle.querySelectorAll('.rpv-core__text-layer-text'));
+        const spans: HTMLElement[] = [].slice.call(textLayerEle.querySelectorAll('[data-text="true"]'));
 
         // Generate the full text of page
         const fullText = charIndexes.map((item) => item.char).join('');
@@ -266,7 +267,7 @@ export const Highlights: React.FC<{
         }
 
         const textLayerEle = renderStatus.ele;
-        const spans: HTMLElement[] = [].slice.call(textLayerEle.querySelectorAll('.rpv-core__text-layer-text'));
+        const spans: HTMLElement[] = [].slice.call(textLayerEle.querySelectorAll('[data-text="true"]'));
 
         const charIndexes: CharIndex[] = spans
             .map((span) => span.textContent)
@@ -328,7 +329,7 @@ export const Highlights: React.FC<{
         }
 
         const highlightEle = container.querySelector(
-            `.rpv-search__highlight[data-index="${matchPosition.matchIndex}"]`,
+            `.${styles.highlight}[data-index="${matchPosition.matchIndex}"]`,
         );
         if (!highlightEle) {
             return;
@@ -344,10 +345,10 @@ export const Highlights: React.FC<{
                 scaleTo: renderStatus.scale,
             });
             if (currentMatchRef.current) {
-                currentMatchRef.current.classList.remove('rpv-search__highlight--current');
+                currentMatchRef.current.classList.remove(styles.highlightCurrent);
             }
             currentMatchRef.current = highlightEle as HTMLElement;
-            highlightEle.classList.add('rpv-search__highlight--current');
+            highlightEle.classList.add(styles.highlightCurrent);
         }
     }, [highlightAreas, matchPosition]);
 
@@ -364,7 +365,7 @@ export const Highlights: React.FC<{
     }, []);
 
     return (
-        <div className="rpv-search__highlights" data-testid={`search__highlights-${pageIndex}`} ref={containerRef}>
+        <div className={styles.highlights} data-testid={`search__highlights-${pageIndex}`} ref={containerRef}>
             {renderHighlightElements({
                 getCssProperties,
                 highlightAreas,
