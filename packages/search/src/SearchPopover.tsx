@@ -25,6 +25,7 @@ import {
 import * as React from 'react';
 import { NextIcon } from './NextIcon';
 import { PreviousIcon } from './PreviousIcon';
+import * as styles from './styles/searchPopover.module.css';
 import { type StoreProps } from './types/StoreProps';
 import { useSearch } from './useSearch';
 
@@ -107,8 +108,8 @@ export const SearchPopover: React.FC<{
     const closeButtonLabel = l10n && l10n.search ? ((l10n.search as LocalizationMap).close as string) : 'Close';
 
     return (
-        <div className="rpv-search__popover">
-            <div className="rpv-search__popover-input-counter">
+        <div className={styles.popover}>
+            <div className={styles.inputCounter}>
                 <TextBox
                     ariaLabel={searchLabel}
                     autoFocus={true}
@@ -120,9 +121,9 @@ export const SearchPopover: React.FC<{
                 />
                 <div
                     className={classNames({
-                        'rpv-search__popover-counter': true,
-                        'rpv-search__popover-counter--ltr': !isRtl,
-                        'rpv-search__popover-counter--rtl': isRtl,
+                        [styles.counter]: true,
+                        [styles.counterLtr]: !isRtl,
+                        [styles.counterRtl]: isRtl,
                     })}
                 >
                     {isQuerying && <Spinner testId="search__popover-searching" size="1rem" />}
@@ -133,9 +134,9 @@ export const SearchPopover: React.FC<{
                     )}
                 </div>
             </div>
-            <label className="rpv-search__popover-label">
+            <label className={styles.label}>
                 <input
-                    className="rpv-search__popover-label-checkbox"
+                    className={styles.checkbox}
                     data-testid="search__popover-match-case"
                     checked={matchCase}
                     type="checkbox"
@@ -143,9 +144,9 @@ export const SearchPopover: React.FC<{
                 />{' '}
                 {l10n && l10n.search ? ((l10n.search as LocalizationMap).matchCase as string) : 'Match case'}
             </label>
-            <label className="rpv-search__popover-label">
+            <label className={styles.label}>
                 <input
-                    className="rpv-search__popover-label-checkbox"
+                    className={styles.checkbox}
                     checked={wholeWords}
                     data-testid="search__popover-whole-words"
                     type="checkbox"
@@ -153,8 +154,8 @@ export const SearchPopover: React.FC<{
                 />{' '}
                 {l10n && l10n.search ? ((l10n.search as LocalizationMap).wholeWords as string) : 'Whole words'}
             </label>
-            <div className="rpv-search__popover-footer">
-                <div className="rpv-search__popover-footer-item">
+            <div className={styles.footer}>
+                <div className={styles.footerItem}>
                     <Tooltip
                         ariaControlsSuffix="search-previous-match"
                         position={isRtl ? Position.BottomRight : Position.BottomCenter}
@@ -170,7 +171,7 @@ export const SearchPopover: React.FC<{
                         content={() => previousMatchLabel}
                     />
                 </div>
-                <div className="rpv-search__popover-footer-item">
+                <div className={styles.footerItem}>
                     <Tooltip
                         ariaControlsSuffix="search-next-match"
                         position={Position.BottomCenter}
@@ -188,9 +189,8 @@ export const SearchPopover: React.FC<{
                 </div>
                 <div
                     className={classNames({
-                        'rpv-search__popover-footer-button': true,
-                        'rpv-search__popover-footer-button--ltr': !isRtl,
-                        'rpv-search__popover-footer-button--rtl': isRtl,
+                        [styles.footerButtonLtr]: !isRtl,
+                        [styles.footerButtonRtl]: isRtl,
                     })}
                 >
                     <Button onClick={onClose}>{closeButtonLabel}</Button>
