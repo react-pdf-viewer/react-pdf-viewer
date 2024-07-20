@@ -6,13 +6,13 @@
  * @copyright 2019-2024 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-.rpv-attachment__loader {
-    // Center the content
-    align-items: center;
-    display: flex;
-    justify-content: center;
-
-    // Take full size
+.empty {
     height: 100%;
+    overflow: auto;
+    padding: 0.5rem 0;
+    text-align: center;
     width: 100%;
+}
+.emptyRtl {
+    direction: rtl;
 }

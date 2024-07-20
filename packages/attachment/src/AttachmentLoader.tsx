@@ -19,6 +19,7 @@ import {
 } from '@react-pdf-viewer/core';
 import * as React from 'react';
 import { AttachmentList } from './AttachmentList';
+import * as styles from './styles/attachmentLoader.module.css';
 import { type FileItem } from './types/FileItem';
 
 interface AttachmentState {
@@ -66,8 +67,8 @@ export const AttachmentLoader: React.FC<{
         <div
             data-testid="attachment__empty"
             className={classNames({
-                'rpv-attachment__empty': true,
-                'rpv-attachment__empty--rtl': isRtl,
+                [styles.empty]: true,
+                [styles.emptyRtl]: isRtl,
             })}
         >
             {noAttachmentLabel}
