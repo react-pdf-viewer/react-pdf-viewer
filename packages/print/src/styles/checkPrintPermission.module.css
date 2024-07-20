@@ -6,6 +6,12 @@
  * @copyright 2019-2024 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-@import './permission';
-@import './printProgress';
-@import './printZone';
+.body {
+    padding: 1rem;
+}
+
+.footer {
+    display: flex;
+    justify-content: center;
+    padding: 0 1rem 1rem 0;
+}

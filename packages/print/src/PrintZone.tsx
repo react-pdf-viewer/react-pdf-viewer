@@ -13,6 +13,7 @@ import * as React from 'react';
 import { createPortal } from 'react-dom';
 import { PageThumbnailContainer } from './PageThumbnailContainer';
 import { PrintStatus } from './structs/PrintStatus';
+import * as styles from './styles/printZone.module.css';
 
 export const PrintZone: React.FC<{
     doc: PdfJs.PdfDocument;
@@ -28,13 +29,13 @@ export const PrintZone: React.FC<{
     const canvas = React.useMemo(() => document.createElement('canvas') as HTMLCanvasElement, []);
 
     const container = React.useMemo(() => {
-        const zoneEle = document.querySelector('.rpv-print__zone');
+        const zoneEle = document.querySelector(`.${styles.zone}`);
         if (zoneEle) {
             return zoneEle;
         }
 
         const div = document.createElement('div');
-        div.classList.add('rpv-print__zone');
+        div.classList.add(styles.zone);
         div.setAttribute('data-testid', 'print__zone');
         document.body.appendChild(div);
         return div;
@@ -42,19 +43,19 @@ export const PrintZone: React.FC<{
 
     React.useEffect(() => {
         if (printStatus === PrintStatus.Ready) {
-            document.documentElement.classList.add('rpv-print__html-printing');
-            document.body.classList.add('rpv-print__body-printing');
+            document.documentElement.classList.add(styles.htmlPrinting);
+            document.body.classList.add(styles.bodyPrinting);
             window.print();
         }
 
         // Handle the case user clicks the `Cancel` button in the print window
         const handler = (): void => {
             if (printStatus === PrintStatus.Ready) {
-                document.documentElement.classList.remove('rpv-print__html-printing');
-                document.body.classList.remove('rpv-print__body-printing');
+                document.documentElement.classList.remove(styles.htmlPrinting);
+                document.body.classList.remove(styles.bodyPrinting);
 
                 // Remove the container
-                const zones = document.querySelectorAll('.rpv-print__zone');
+                const zones = document.querySelectorAll(`.${styles.zone}`);
                 if (zones) {
                     zones.forEach((zoneEle) => {
                         zoneEle.parentElement.removeChild(zoneEle);
