@@ -6,7 +6,7 @@
  * @copyright 2019-2024 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-.rpv-selection-mode__grab {
+.grab {
     cursor: grab;
 
     :not(input),
@@ -16,7 +16,7 @@
     }
 }
 
-.rpv-selection-mode__grabbing {
+.grabbing {
     cursor: grabbing;
 
     :not(input),
