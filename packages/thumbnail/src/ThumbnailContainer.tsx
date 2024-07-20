@@ -18,6 +18,7 @@ import {
 import * as React from 'react';
 import { SpinnerContext } from './SpinnerContext';
 import { ThumbnailItem } from './ThumbnailItem';
+import * as styles from './styles/thumbnailContainer.module.css';
 
 interface PageState {
     height: number;
@@ -87,7 +88,7 @@ export const ThumbnailContainer: React.FC<{
 
     return (
         <div
-            className="rpv-thumbnail__container"
+            className={styles.container}
             data-testid={`thumbnail__container-${pageIndex}`}
             ref={containerRef}
             style={{
