@@ -1,0 +1,32 @@
+/**
+ * A React component to view a PDF document
+ *
+ * @see https://react-pdf-viewer.dev
+ * @license https://react-pdf-viewer.dev/license
+ * @copyright 2019-2024 Nguyen Huu Phuoc <me@phuoc.ng>
+ */
+
+.zone {
+    display: none;
+}
+
+@media print {
+    /* To make it work across browsers */
+    .htmlPrinting {
+        height: 100%;
+    }
+
+    .bodyPrinting {
+        height: 100%;
+        margin: 0;
+    }
+
+    .bodyPrinting * {
+        display: none;
+    }
+
+    .zone {
+        display: block;
+        height: 100%;
+    }
+}

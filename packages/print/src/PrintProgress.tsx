@@ -18,6 +18,7 @@ import {
     type LocalizationMap,
 } from '@react-pdf-viewer/core';
 import * as React from 'react';
+import * as styles from './styles/printProgress.module.css';
 
 export const PrintProgress: React.FC<{
     numLoadedPages: number;
@@ -30,19 +31,19 @@ export const PrintProgress: React.FC<{
     const progress = Math.floor((numLoadedPages * 100) / numPages);
 
     return (
-        <div className="rpv-print__progress">
+        <div className={styles.container}>
             <div
                 className={classNames({
-                    'rpv-print__progress-body': true,
-                    'rpv-print__progress-body--rtl': isRtl,
+                    [styles.inner]: true,
+                    [styles.innerRtl]: isRtl,
                 })}
             >
-                <div className="rpv-print__progress-message">
+                <div className={styles.message}>
                     {l10n && l10n.print
                         ? ((l10n.print as LocalizationMap).preparingDocument as string)
                         : 'Preparing document ...'}
                 </div>
-                <div className="rpv-print__progress-bar">
+                <div className={styles.progress}>
                     <ProgressBar progress={progress} />
                 </div>
                 <Button onClick={onCancel}>

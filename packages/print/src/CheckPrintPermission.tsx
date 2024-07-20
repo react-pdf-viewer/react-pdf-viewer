@@ -18,6 +18,7 @@ import {
 } from '@react-pdf-viewer/core';
 import * as React from 'react';
 import { PrintStatus } from './structs/PrintStatus';
+import * as styles from './styles/checkPrintPermission.module.css';
 import { type StoreProps } from './types/StoreProps';
 
 const PERMISSION_PRINT = 4;
@@ -55,12 +56,12 @@ export const CheckPrintPermission: React.FC<{
                 };
                 return (
                     <>
-                        <div className="rpv-print__permission-body">
+                        <div className={styles.body}>
                             {l10n && l10n.print
                                 ? ((l10n.print as LocalizationMap).disallowPrint as string)
                                 : 'The document does not allow to print'}
                         </div>
-                        <div className="rpv-print__permission-footer">
+                        <div className={styles.footer}>
                             <Button onClick={close}>
                                 {l10n && l10n.print ? ((l10n.print as LocalizationMap).close as string) : 'Close'}
                             </Button>
