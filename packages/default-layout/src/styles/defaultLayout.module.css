@@ -6,8 +6,6 @@
  * @copyright 2019-2024 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-$toolbarHeight: 2.5rem;
-
 .container {
     /* Border */
     border: 1px solid hsl(var(--rpv-border));
@@ -20,7 +18,7 @@ $toolbarHeight: 2.5rem;
 
 .main {
     display: flex;
-    padding-top: $toolbarHeight;
+    padding-top: 2.5rem;
 
     /* Fix the scroll issue on Safari */
     height: 100%;
@@ -50,7 +48,7 @@ $toolbarHeight: 2.5rem;
     top: 0;
 
     /* Size */
-    height: $toolbarHeight;
+    height: 2.5rem;
     width: 100%;
 
     /* To make the tooltip displayed on top of the pages */
