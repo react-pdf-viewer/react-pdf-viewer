@@ -92,8 +92,9 @@ export const TextLayer: React.FC<{
                     const spans: HTMLElement[] = [].slice.call(containerEle.children);
                     spans.forEach((span) => {
                         // Distinguish with other elements created by plugins
-                        if (span.getAttribute('data-text') !== 'false') {
+                        if (span.getAttribute('data-text') !== 'true') {
                             span.classList.add(styles.text);
+                            span.setAttribute('data-text', 'true');
                         }
                     });
 
