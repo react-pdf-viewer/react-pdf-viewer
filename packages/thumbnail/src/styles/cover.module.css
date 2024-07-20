@@ -6,45 +6,45 @@
  * @copyright 2019-2024 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-.rpv-thumbnail__cover {
-    // Center the canvas
+.cover {
+    /* Center the canvas */
     align-items: center;
     display: flex;
     justify-content: center;
 
-    // Take the full size
+    /* Take the full size */
     height: 100%;
     width: 100%;
 
-    // It's used when the cover is placed inside a `min-height` container
+    /* It's used when the cover is placed inside a `min-height` container */
     min-height: inherit;
 }
 
-.rpv-thumbnail__cover-inner {
-    // Center the spinner
+.loader {
+    /* Center the spinner */
     align-items: center;
     display: flex;
     justify-content: center;
 
-    // Take the full size
+    /* Take the full size */
+    height: 100%;
+    width: 100%;
+}
+
+.inner {
+    /* Center the spinner */
+    align-items: center;
+    display: flex;
+    justify-content: center;
+
+    /* Take the full size */
     height: 100%;
     width: 100%;
 
     min-height: inherit;
 }
 
-.rpv-thumbnail__cover-image {
+.image {
     max-height: 100%;
     max-width: 100%;
-}
-
-.rpv-thumbnail__cover-loader {
-    // Center the spinner
-    align-items: center;
-    display: flex;
-    justify-content: center;
-
-    // Take the full size
-    height: 100%;
-    width: 100%;
 }
