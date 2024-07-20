@@ -1,0 +1,73 @@
+/**
+ * A React component to view a PDF document
+ *
+ * @see https://react-pdf-viewer.dev
+ * @license https://react-pdf-viewer.dev/license
+ * @copyright 2019-2024 Nguyen Huu Phuoc <me@phuoc.ng>
+ */
+
+.container {
+    overflow: auto;
+    padding: 0.5rem;
+}
+.containerRtl {
+    direction: rtl;
+}
+.containerHorizontal {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+.containerVertical {
+    height: 100%;
+}
+
+.inner {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}
+.innerDual:hover .item,
+.innerDualCover:hover .item {
+    background-color: hsl(var(--rpv-accent));
+}
+
+.item {
+    cursor: pointer;
+    &:focus {
+        outline: 0;
+    }
+}
+
+/* Spacing between items */
+.itemSingle,
+.itemDualCover {
+    padding: 0.5rem;
+}
+
+.itemDualEven,
+.itemDualCoverOdd {
+    padding: 0.5rem 0 0.5rem 0.5rem;
+}
+.itemDualOdd,
+.itemDualCoverEven {
+    padding: 0.5rem 0.5rem 0.5rem 0;
+}
+
+/* Hover state */
+.itemSingle:hover,
+.itemDualCover:hover {
+    background-color: hsl(var(--rpv-accent));
+}
+
+/* Selected state */
+.itemSelected {
+    background-color: hsl(var(--rpv-accent));
+}
+
+.label {
+    font-size: 0.75em;
+    text-align: center;
+    padding: 0.25rem;
+}

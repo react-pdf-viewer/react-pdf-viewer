@@ -26,6 +26,7 @@ import * as React from 'react';
 import { ThumbnailContainer } from './ThumbnailContainer';
 import { scrollToBeVisibleHorizontally, scrollToBeVisibleVertically } from './scrollToBeVisible';
 import { ThumbnailDirection } from './structs/ThumbnailDirection';
+import * as styles from './styles/thumbnailList.module.css';
 import { type RenderCurrentPageLabel } from './types/RenderCurrentPageLabelProps';
 import { type RenderThumbnailItem } from './types/RenderThumbnailItemProps';
 
@@ -165,7 +166,7 @@ export const ThumbnailList: React.FC<{
         }
 
         // Cache thumbnail elements
-        thumbnailsRef.current = Array.from(container.querySelectorAll('.rpv-thumbnail__item'));
+        thumbnailsRef.current = Array.from(container.querySelectorAll(`.${styles.item}`));
     }, [viewMode]);
 
     React.useEffect(() => {
@@ -187,7 +188,7 @@ export const ThumbnailList: React.FC<{
             return;
         }
 
-        const thumbnailContainer = thumbnails[currentPage].closest('.rpv-thumbnail__items');
+        const thumbnailContainer = thumbnails[currentPage].closest(`.${styles.inner}`);
         if (thumbnailContainer) {
             thumbnailDirection === ThumbnailDirection.Vertical
                 ? scrollToBeVisibleVertically(thumbnailContainer as HTMLElement, container)
@@ -290,16 +291,16 @@ export const ThumbnailList: React.FC<{
             <div key={key}>
                 <div
                     className={classNames({
-                        'rpv-thumbnail__item': true,
-                        'rpv-thumbnail__item--dual-even': viewMode === ViewMode.DualPage && pageIndex % 2 === 0,
-                        'rpv-thumbnail__item--dual-odd': viewMode === ViewMode.DualPage && pageIndex % 2 === 1,
-                        'rpv-thumbnail__item--dual-cover': isCover,
-                        'rpv-thumbnail__item--dual-cover-even':
+                        [styles.item]: true,
+                        [styles.itemDualEven]: viewMode === ViewMode.DualPage && pageIndex % 2 === 0,
+                        [styles.itemDualOdd]: viewMode === ViewMode.DualPage && pageIndex % 2 === 1,
+                        [styles.itemDualCover]: isCover,
+                        [styles.itemDualCoverEven]:
                             viewMode === ViewMode.DualPageWithCover && !isCover && pageIndex % 2 === 0,
-                        'rpv-thumbnail__item--dual-cover-odd':
+                        [styles.itemDualCoverOdd]:
                             viewMode === ViewMode.DualPageWithCover && !isCover && pageIndex % 2 === 1,
-                        'rpv-thumbnail__item--single': viewMode === ViewMode.SinglePage,
-                        'rpv-thumbnail__item--selected': currentPage === pageIndex,
+                        [styles.itemSingle]: viewMode === ViewMode.SinglePage,
+                        [styles.itemSelected]: currentPage === pageIndex,
                     })}
                     role="button"
                     tabIndex={currentPage === pageIndex ? 0 : -1}
@@ -307,7 +308,7 @@ export const ThumbnailList: React.FC<{
                 >
                     {thumbnail}
                 </div>
-                <div data-testid={`thumbnail__label-${pageIndex}`} className="rpv-thumbnail__label">
+                <div data-testid={`thumbnail__label-${pageIndex}`} className={styles.label}>
                     {label}
                 </div>
             </div>
@@ -319,10 +320,10 @@ export const ThumbnailList: React.FC<{
             ref={containerRef}
             data-testid="thumbnail__list"
             className={classNames({
-                'rpv-thumbnail__list': true,
-                'rpv-thumbnail__list--horizontal': thumbnailDirection === ThumbnailDirection.Horizontal,
-                'rpv-thumbnail__list--rtl': isRtl,
-                'rpv-thumbnail__list--vertical': thumbnailDirection === ThumbnailDirection.Vertical,
+                [styles.container]: true,
+                [styles.containerHorizontal]: thumbnailDirection === ThumbnailDirection.Horizontal,
+                [styles.containerRtl]: isRtl,
+                [styles.containerVertical]: thumbnailDirection === ThumbnailDirection.Vertical,
             })}
             onKeyDown={handleKeyDown}
         >
@@ -350,11 +351,9 @@ export const ThumbnailList: React.FC<{
                 return (
                     <div
                         className={classNames({
-                            'rpv-thumbnail__items': true,
-                            'rpv-thumbnail__items--dual': viewMode === ViewMode.DualPage,
-                            'rpv-thumbnail__items--dual-cover': viewMode === ViewMode.DualPageWithCover,
-                            'rpv-thumbnail__items--single': viewMode === ViewMode.SinglePage,
-                            'rpv-thumbnail__items--selected': isSelectedChunk,
+                            [styles.inner]: true,
+                            [styles.innerDual]: viewMode === ViewMode.DualPage,
+                            [styles.innerDualCover]: viewMode === ViewMode.DualPageWithCover,
                         })}
                         key={`${index}___${viewMode}`}
                     >
