@@ -1,6 +1,7 @@
 const json = require('@rollup/plugin-json');
 const terser = require('@rollup/plugin-terser');
 const typescript = require('@rollup/plugin-typescript');
+const postcss = require('rollup-plugin-postcss');
 const path = require('path');
 
 const rootPackagePath = process.cwd();
@@ -12,7 +13,15 @@ const pgkName = pkg.name.split('/').pop();
 
 const external = [...Object.keys(pkg.dependencies || {}), ...Object.keys(pkg.peerDependencies || {})];
 
-const plugins = [json(), typescript()];
+const plugins = [
+    json(),
+    // Inject CSS modules
+    postcss({
+        //extract: true,
+        modules: true,
+    }),
+    typescript(),
+];
 
 module.exports = [
     // CJS
@@ -26,7 +35,6 @@ module.exports = [
         external,
         plugins,
     },
-
     // Minified CJS
     {
         input,
