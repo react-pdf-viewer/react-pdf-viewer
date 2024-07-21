@@ -14,7 +14,7 @@ import { HightlightItem } from './HightlightItem';
 import { calculateOffset } from './calculateOffset';
 import { EMPTY_KEYWORD_REGEXP } from './constants';
 import { getCssProperties } from './getCssProperties';
-import * as styles from './styles/highlight.module.css';
+import styles from './styles/highlight.module.css';
 import { type MatchPosition } from './types/MatchPosition';
 import { type NormalizedKeyword } from './types/NormalizedKeyword';
 import { type OnHighlightKeyword } from './types/OnHighlightKeyword';

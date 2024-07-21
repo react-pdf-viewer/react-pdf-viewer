@@ -11,7 +11,7 @@
 import { useSafeState, type PdfJs } from '@react-pdf-viewer/core';
 import * as React from 'react';
 import { isRunningInJest } from './isRunningInJest';
-import * as styles from './styles/pageThumbnail.module.css';
+import styles from './styles/pageThumbnail.module.css';
 
 export const PageThumbnail: React.FC<{
     canvas: HTMLCanvasElement;

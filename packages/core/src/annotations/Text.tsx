@@ -9,7 +9,7 @@
 'use client';
 
 import * as React from 'react';
-import * as styles from '../styles/annotation.module.css';
+import styles from '../styles/annotation.module.css';
 import { CheckIcon } from '../icons/CheckIcon';
 import { CommentIcon } from '../icons/CommentIcon';
 import { HelpIcon } from '../icons/HelpIcon';

@@ -9,6 +9,6 @@
 'use client';
 
 import * as React from 'react';
-import * as styles from '../styles/separator.module.css';
+import styles from '../styles/separator.module.css';
 
 export const Separator: React.FC = () => <div className={styles.separator} />;

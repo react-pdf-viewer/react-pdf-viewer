@@ -18,7 +18,7 @@ import {
 } from '@react-pdf-viewer/core';
 import * as React from 'react';
 import { PrintStatus } from './structs/PrintStatus';
-import * as styles from './styles/checkPrintPermission.module.css';
+import styles from './styles/checkPrintPermission.module.css';
 import { type StoreProps } from './types/StoreProps';
 
 const PERMISSION_PRINT = 4;

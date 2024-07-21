@@ -21,7 +21,7 @@ import { RotateDirection } from '../structs/RotateDirection';
 import { ScrollMode } from '../structs/ScrollMode';
 import { SpecialZoomLevel } from '../structs/SpecialZoomLevel';
 import { ViewMode } from '../structs/ViewMode';
-import * as styles from '../styles/inner.module.css';
+import styles from '../styles/inner.module.css';
 import { TextDirection, ThemeContext } from '../theme/ThemeContext';
 import { type Destination } from '../types/Destination';
 import { type DocumentLoadEvent } from '../types/DocumentLoadEvent';

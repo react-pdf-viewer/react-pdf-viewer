@@ -10,7 +10,7 @@
 
 import { Spinner, type PdfJs } from '@react-pdf-viewer/core';
 import * as React from 'react';
-import * as styles from './styles/propertiesLoader.module.css';
+import styles from './styles/propertiesLoader.module.css';
 import { type PropertiesData } from './types/PropertiesData';
 
 export const PropertiesLoader: React.FC<{

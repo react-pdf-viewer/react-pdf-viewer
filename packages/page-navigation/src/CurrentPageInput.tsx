@@ -10,7 +10,7 @@
 
 import { LocalizationContext, TextBox, type LocalizationMap, type Store } from '@react-pdf-viewer/core';
 import * as React from 'react';
-import * as styles from './styles/currentPageInput.module.css';
+import styles from './styles/currentPageInput.module.css';
 import { type StoreProps } from './types/StoreProps';
 import { useCurrentPage } from './useCurrentPage';
 import { useNumberOfPages } from './useNumberOfPages';

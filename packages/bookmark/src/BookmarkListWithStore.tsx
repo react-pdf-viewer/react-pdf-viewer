@@ -11,7 +11,7 @@
 import { Spinner, type PdfJs, type Store, type StoreHandler } from '@react-pdf-viewer/core';
 import * as React from 'react';
 import { BookmarkLoader } from './BookmarkLoader';
-import * as styles from './styles/bookmarkListLoader.module.css';
+import styles from './styles/bookmarkListLoader.module.css';
 import { type IsBookmarkExpanded } from './types/IsBookmarkExpanded';
 import { type RenderBookmarkItem } from './types/RenderBookmarkItemProps';
 import { type StoreProps } from './types/StoreProps';

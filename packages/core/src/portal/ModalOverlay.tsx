@@ -7,7 +7,7 @@
  */
 
 import * as React from 'react';
-import * as styles from '../styles/modalOverlay.module.css';
+import styles from '../styles/modalOverlay.module.css';
 
 export const ModalOverlay: React.FC<{
     children?: React.ReactNode;

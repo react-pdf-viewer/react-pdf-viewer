@@ -16,7 +16,7 @@ import {
     type LocalizationMap,
 } from '@react-pdf-viewer/core';
 import * as React from 'react';
-import * as styles from './styles/dropArea.module.css';
+import styles from './styles/dropArea.module.css';
 import { useDrop } from './useDrop';
 
 export const DropArea: React.FC<{

@@ -10,7 +10,7 @@
 
 import * as React from 'react';
 import { ResizeIcon } from '../icons/ResizeIcon';
-import * as styles from '../styles/splitter.module.css';
+import styles from '../styles/splitter.module.css';
 import { TextDirection, ThemeContext } from '../theme/ThemeContext';
 
 export interface SplitterSize {

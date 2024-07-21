@@ -9,7 +9,7 @@
 'use client';
 
 import * as React from 'react';
-import * as styles from '../styles/button.module.css';
+import styles from '../styles/button.module.css';
 import { TextDirection, ThemeContext } from '../theme/ThemeContext';
 import { classNames } from '../utils/classNames';
 

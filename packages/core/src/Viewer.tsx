@@ -20,7 +20,7 @@ import { FullScreenMode } from './structs/FullScreenMode';
 import { ScrollMode } from './structs/ScrollMode';
 import { SpecialZoomLevel } from './structs/SpecialZoomLevel';
 import { ViewMode } from './structs/ViewMode';
-import * as styles from './styles/viewer.module.css';
+import styles from './styles/viewer.module.css';
 import { TextDirection, ThemeContext } from './theme/ThemeContext';
 import { withTheme } from './theme/withTheme';
 import { type CharacterMap } from './types/CharacterMap';

@@ -19,7 +19,7 @@ import {
     type VisibilityChanged,
 } from '@react-pdf-viewer/core';
 import * as React from 'react';
-import * as styles from './styles/cover.module.css';
+import styles from './styles/cover.module.css';
 import { type StoreProps } from './types/StoreProps';
 
 export const CoverInner: React.FC<{

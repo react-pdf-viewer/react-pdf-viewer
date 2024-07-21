@@ -11,7 +11,7 @@
 import * as React from 'react';
 import { useIsomorphicLayoutEffect } from '../hooks/useIsomorphicLayoutEffect';
 import { LayerRenderStatus } from '../structs/LayerRenderStatus';
-import * as styles from '../styles/canvasLayer.module.css';
+import styles from '../styles/canvasLayer.module.css';
 import { type PdfJs } from '../types/PdfJs';
 import { type Plugin } from '../types/Plugin';
 import { floatToRatio } from '../utils/floatToRatio';

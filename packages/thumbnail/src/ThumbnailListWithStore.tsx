@@ -22,7 +22,7 @@ import { FetchLabels } from './FetchLabels';
 import { SpinnerContext } from './SpinnerContext';
 import { ThumbnailList } from './ThumbnailList';
 import { ThumbnailDirection } from './structs/ThumbnailDirection';
-import * as styles from './styles/thumbnailListWithStore.module.css';
+import styles from './styles/thumbnailListWithStore.module.css';
 import { type RenderCurrentPageLabel } from './types/RenderCurrentPageLabelProps';
 import { type RenderThumbnailItem } from './types/RenderThumbnailItemProps';
 import { type StoreProps } from './types/StoreProps';

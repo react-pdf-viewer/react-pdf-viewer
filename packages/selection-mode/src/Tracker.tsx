@@ -11,7 +11,7 @@
 import { type Store } from '@react-pdf-viewer/core';
 import * as React from 'react';
 import { SelectionMode } from './structs/SelectionMode';
-import * as styles from './styles/selectionMode.module.css';
+import styles from './styles/selectionMode.module.css';
 import { type StoreProps } from './types/StoreProps';
 
 export const Tracker: React.FC<{

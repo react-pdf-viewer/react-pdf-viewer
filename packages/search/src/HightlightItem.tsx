@@ -11,7 +11,7 @@
 import { useIsomorphicLayoutEffect } from '@react-pdf-viewer/core';
 import * as React from 'react';
 import { getCssProperties } from './getCssProperties';
-import * as styles from './styles/highlight.module.css';
+import styles from './styles/highlight.module.css';
 import { type OnHighlightKeyword } from './types/OnHighlightKeyword';
 import { type HighlightArea } from './types/RenderHighlightsProps';
 

@@ -18,7 +18,7 @@ import {
     type LocalizationMap,
 } from '@react-pdf-viewer/core';
 import * as React from 'react';
-import * as styles from './styles/printProgress.module.css';
+import styles from './styles/printProgress.module.css';
 
 export const PrintProgress: React.FC<{
     numLoadedPages: number;

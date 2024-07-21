@@ -24,7 +24,7 @@ import {
     type Toggle,
 } from '@react-pdf-viewer/core';
 import * as React from 'react';
-import * as styles from './styles/zoomPopover.module.css';
+import styles from './styles/zoomPopover.module.css';
 
 const DEFAULT_LEVELS = [0.5, 0.75, 1, 1.25, 1.5, 2, 3, 4];
 
