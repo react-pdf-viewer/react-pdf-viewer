@@ -1,4 +1,21 @@
 {
-    "extends": "../../tsconfig.json",
-    "include": ["src/**/*"]
+    "include": [
+        "src/**/*",
+        "../../@types"
+    ],
+    "exclude": ["./dist", "./lib"],
+    "compilerOptions": {
+        "esModuleInterop": true,
+        "jsx": "react",
+        "lib": ["DOM", "ESNext"],
+        "module": "ESNext",
+        "moduleResolution": "Node",
+        "removeComments": true,
+        "resolveJsonModule": true,
+        "rootDir": "src",
+        "strict": true,
+        "skipLibCheck": true,
+        "target": "ES2015",
+        "types": ["node", "jest", "@testing-library/jest-dom"]
+    }
 }
