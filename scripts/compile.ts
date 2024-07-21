@@ -55,6 +55,13 @@ const rollupOptions: RollupOptions = {
     ],
     external,
     plugins,
+    onwarn: (warning, warn) => {
+        // Ignore the warning shown when the `use client` directive is used at the top of files
+        if (warning.code === "MODULE_LEVEL_DIRECTIVE") {
+            return;
+        }
+        warn(warning);
+    },
 };
 
 // Compile
