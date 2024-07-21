@@ -10,7 +10,7 @@
 
 import { getDestination, type PdfJs, type Store } from '@react-pdf-viewer/core';
 import * as React from 'react';
-import * as styles from './styles/bookmarkItem.module.css';
+import styles from './styles/bookmarkItem.module.css';
 import { BookmarkList } from './BookmarkList';
 import { DownArrowIcon } from './DownArrowIcon';
 import { RightArrowIcon } from './RightArrowIcon';

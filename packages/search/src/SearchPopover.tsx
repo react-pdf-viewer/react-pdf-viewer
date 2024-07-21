@@ -25,7 +25,7 @@ import {
 import * as React from 'react';
 import { NextIcon } from './NextIcon';
 import { PreviousIcon } from './PreviousIcon';
-import * as styles from './styles/searchPopover.module.css';
+import styles from './styles/searchPopover.module.css';
 import { type StoreProps } from './types/StoreProps';
 import { useSearch } from './useSearch';
 

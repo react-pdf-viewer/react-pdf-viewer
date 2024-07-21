@@ -9,7 +9,7 @@
 'use client';
 
 import * as React from 'react';
-import * as styles from '../styles/popoverOverlay.module.css';
+import styles from '../styles/popoverOverlay.module.css';
 import { useEscapeStack } from './useEscapeStack';
 
 export const PopoverOverlay: React.FC<{

@@ -10,7 +10,7 @@
 
 import * as React from 'react';
 import { Position } from '../structs/Position';
-import * as styles from '../styles/tooltipBody.module.css';
+import styles from '../styles/tooltipBody.module.css';
 import { TextDirection, ThemeContext } from '../theme/ThemeContext';
 import { classNames } from '../utils/classNames';
 import { Arrow } from './Arrow';

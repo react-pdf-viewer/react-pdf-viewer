@@ -19,7 +19,7 @@ import {
 } from '@react-pdf-viewer/core';
 import * as React from 'react';
 import { AttachmentList } from './AttachmentList';
-import * as styles from './styles/attachmentLoader.module.css';
+import styles from './styles/attachmentLoader.module.css';
 import { type FileItem } from './types/FileItem';
 
 interface AttachmentState {

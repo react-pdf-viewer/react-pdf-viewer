@@ -11,7 +11,7 @@
 import { Spinner, type PdfJs, type Store, type StoreHandler } from '@react-pdf-viewer/core';
 import * as React from 'react';
 import { CoverInner } from './CoverInner';
-import * as styles from './styles/cover.module.css';
+import styles from './styles/cover.module.css';
 import { StoreProps } from './types/StoreProps';
 
 export const Cover: React.FC<{

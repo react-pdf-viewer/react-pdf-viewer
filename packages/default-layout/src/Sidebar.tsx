@@ -24,7 +24,7 @@ import {
 import * as React from 'react';
 import { BookmarkIcon } from './BookmarkIcon';
 import { FileIcon } from './FileIcon';
-import * as styles from './styles/sidebar.module.css';
+import styles from './styles/sidebar.module.css';
 import { ThumbnailIcon } from './ThumbnailIcon';
 import { type StoreProps } from './types/StoreProps';
 

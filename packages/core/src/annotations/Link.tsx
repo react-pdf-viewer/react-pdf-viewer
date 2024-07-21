@@ -9,7 +9,7 @@
 'use client';
 
 import * as React from 'react';
-import * as styles from '../styles/annotation.module.css';
+import styles from '../styles/annotation.module.css';
 import { type Destination } from '../types/Destination';
 import { type PdfJs } from '../types/PdfJs';
 import { getDestination } from '../utils/managePages';

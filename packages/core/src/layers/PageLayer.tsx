@@ -15,7 +15,7 @@ import { useIsMounted } from '../hooks/useIsMounted';
 import { useSafeState } from '../hooks/useSafeState';
 import { RotateDirection } from '../structs/RotateDirection';
 import { ViewMode } from '../structs/ViewMode';
-import * as styles from '../styles/pageLayer.module.css';
+import styles from '../styles/pageLayer.module.css';
 import { type Destination } from '../types/Destination';
 import { type PageSize } from '../types/PageSize';
 import { type PdfJs } from '../types/PdfJs';

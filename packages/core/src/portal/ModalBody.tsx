@@ -11,7 +11,7 @@
 import * as React from 'react';
 import { useIsomorphicLayoutEffect } from '../hooks/useIsomorphicLayoutEffect';
 import { useLockScroll } from '../hooks/useLockScroll';
-import * as styles from '../styles/modalBody.module.css';
+import styles from '../styles/modalBody.module.css';
 import { TextDirection, ThemeContext } from '../theme/ThemeContext';
 import { classNames } from '../utils/classNames';
 import { mergeRefs } from '../utils/mergeRefs';

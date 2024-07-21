@@ -9,7 +9,7 @@
 'use client';
 
 import * as React from 'react';
-import * as styles from '../styles/menuDivider.module.css';
+import styles from '../styles/menuDivider.module.css';
 
 export const MenuDivider: React.FC = () => (
     <div aria-orientation="horizontal" className={styles.divider} role="separator" />

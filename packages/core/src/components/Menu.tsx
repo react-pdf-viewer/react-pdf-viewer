@@ -10,7 +10,7 @@
 
 import * as React from 'react';
 import { useIsomorphicLayoutEffect } from '../hooks/useIsomorphicLayoutEffect';
-import * as styles from '../styles/menu.module.css';
+import styles from '../styles/menu.module.css';
 import { TextDirection, ThemeContext } from '../theme/ThemeContext';
 import { classNames } from '../utils/classNames';
 

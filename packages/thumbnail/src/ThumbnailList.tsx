@@ -26,7 +26,7 @@ import * as React from 'react';
 import { ThumbnailContainer } from './ThumbnailContainer';
 import { scrollToBeVisibleHorizontally, scrollToBeVisibleVertically } from './scrollToBeVisible';
 import { ThumbnailDirection } from './structs/ThumbnailDirection';
-import * as styles from './styles/thumbnailList.module.css';
+import styles from './styles/thumbnailList.module.css';
 import { type RenderCurrentPageLabel } from './types/RenderCurrentPageLabelProps';
 import { type RenderThumbnailItem } from './types/RenderThumbnailItemProps';
 

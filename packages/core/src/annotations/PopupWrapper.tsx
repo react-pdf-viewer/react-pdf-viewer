@@ -9,7 +9,7 @@
 'use client';
 
 import * as React from 'react';
-import * as styles from '../styles/annotationPopup.module.css';
+import styles from '../styles/annotationPopup.module.css';
 import { TextDirection, ThemeContext } from '../theme/ThemeContext';
 import { type PdfJs } from '../types/PdfJs';
 import { classNames } from '../utils/classNames';

@@ -13,7 +13,7 @@ import * as React from 'react';
 import { createPortal } from 'react-dom';
 import { PageThumbnailContainer } from './PageThumbnailContainer';
 import { PrintStatus } from './structs/PrintStatus';
-import * as styles from './styles/printZone.module.css';
+import styles from './styles/printZone.module.css';
 
 export const PrintZone: React.FC<{
     doc: PdfJs.PdfDocument;

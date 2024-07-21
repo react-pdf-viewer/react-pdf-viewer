@@ -10,7 +10,7 @@
 
 import { classNames, TextDirection, ThemeContext } from '@react-pdf-viewer/core';
 import * as React from 'react';
-import * as styles from './styles/propertyItem.module.css';
+import styles from './styles/propertyItem.module.css';
 
 export const PropertyItem: React.FC<{
     label: string;

@@ -18,7 +18,7 @@ import {
 } from '@react-pdf-viewer/core';
 import * as React from 'react';
 import { ExitFullScreenIcon } from './ExitFullScreenIcon';
-import * as styles from './styles/exitFullScreenButton.module.css';
+import styles from './styles/exitFullScreenButton.module.css';
 
 export const ExitFullScreenButton: React.FC<{
     onClick(): void;

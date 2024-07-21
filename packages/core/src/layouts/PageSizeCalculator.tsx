@@ -13,7 +13,7 @@ import { Spinner } from '../components/Spinner';
 import { ScrollMode } from '../structs/ScrollMode';
 import { SpecialZoomLevel } from '../structs/SpecialZoomLevel';
 import { ViewMode } from '../structs/ViewMode';
-import * as styles from '../styles/pageSizeCalculator.module.css';
+import styles from '../styles/pageSizeCalculator.module.css';
 import { type PageSize } from '../types/PageSize';
 import { type PdfJs } from '../types/PdfJs';
 import { getPage } from '../utils/managePages';

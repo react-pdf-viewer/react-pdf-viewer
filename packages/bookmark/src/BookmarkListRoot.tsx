@@ -11,7 +11,7 @@
 import { type PdfJs, type Store } from '@react-pdf-viewer/core';
 import * as React from 'react';
 import { BookmarkList } from './BookmarkList';
-import * as styles from './styles/bookmarkItem.module.css';
+import styles from './styles/bookmarkItem.module.css';
 import { type IsBookmarkExpanded } from './types/IsBookmarkExpanded';
 import { type RenderBookmarkItem } from './types/RenderBookmarkItemProps';
 import { type StoreProps } from './types/StoreProps';

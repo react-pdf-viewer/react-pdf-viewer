@@ -8,7 +8,7 @@
 
 import * as React from 'react';
 import { Position } from '../structs/Position';
-import * as styles from '../styles/arrow.module.css';
+import styles from '../styles/arrow.module.css';
 import { classNames } from '../utils/classNames';
 
 export const Arrow: React.FC<{

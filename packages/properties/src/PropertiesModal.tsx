@@ -12,7 +12,7 @@ import { Button, LocalizationContext, Separator, type LocalizationMap, type PdfJ
 import * as React from 'react';
 import { PropertiesLoader } from './PropertiesLoader';
 import { PropertyItem } from './PropertyItem';
-import * as styles from './styles/propertiesModal.module.css';
+import styles from './styles/propertiesModal.module.css';
 import { type PropertiesData } from './types/PropertiesData';
 import { convertDate } from './utils/convertDate';
 import { getFileName } from './utils/getFileName';

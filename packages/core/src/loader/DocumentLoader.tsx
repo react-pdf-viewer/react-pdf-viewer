@@ -12,7 +12,7 @@ import * as React from 'react';
 import { Spinner } from '../components/Spinner';
 import { useSafeState } from '../hooks/useSafeState';
 import { PasswordStatus } from '../structs/PasswordStatus';
-import * as styles from '../styles/documentLoader.module.css';
+import styles from '../styles/documentLoader.module.css';
 import { TextDirection, ThemeContext } from '../theme/ThemeContext';
 import { type CharacterMap } from '../types/CharacterMap';
 import { type DocumentAskPasswordEvent } from '../types/DocumentAskPasswordEvent';

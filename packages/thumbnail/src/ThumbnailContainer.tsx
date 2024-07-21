@@ -18,7 +18,7 @@ import {
 import * as React from 'react';
 import { SpinnerContext } from './SpinnerContext';
 import { ThumbnailItem } from './ThumbnailItem';
-import * as styles from './styles/thumbnailContainer.module.css';
+import styles from './styles/thumbnailContainer.module.css';
 
 interface PageState {
     height: number;

@@ -10,7 +10,7 @@
 
 import * as React from 'react';
 import { CheckIcon } from '../icons/CheckIcon';
-import * as styles from '../styles/menuItem.module.css';
+import styles from '../styles/menuItem.module.css';
 import { TextDirection, ThemeContext } from '../theme/ThemeContext';
 import { classNames } from '../utils/classNames';
 

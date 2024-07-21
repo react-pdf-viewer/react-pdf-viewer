@@ -10,7 +10,7 @@
 
 import * as React from 'react';
 import { useIsomorphicLayoutEffect } from '../hooks/useIsomorphicLayoutEffect';
-import * as styles from '../styles/annotationLayer.module.css';
+import styles from '../styles/annotationLayer.module.css';
 import { type Destination } from '../types/Destination';
 import { type PdfJs } from '../types/PdfJs';
 import { type Plugin } from '../types/Plugin';

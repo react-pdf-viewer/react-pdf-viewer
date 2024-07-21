@@ -28,7 +28,7 @@ import {
 } from '@react-pdf-viewer/toolbar';
 import * as React from 'react';
 import { Sidebar, SidebarTab } from './Sidebar';
-import * as styles from './styles/defaultLayout.module.css';
+import styles from './styles/defaultLayout.module.css';
 import { type StoreProps } from './types/StoreProps';
 
 export interface DefaultLayoutPlugin extends Plugin {

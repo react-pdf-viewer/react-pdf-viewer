@@ -10,7 +10,7 @@
 
 import * as React from 'react';
 import { useIntersectionObserver } from '../hooks/useIntersectionObserver';
-import * as styles from '../styles/spinner.module.css';
+import styles from '../styles/spinner.module.css';
 import { type VisibilityChanged } from '../types/VisibilityChanged';
 import { classNames } from '../utils/classNames';
 
