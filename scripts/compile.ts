@@ -6,11 +6,11 @@ type PackageJson = {
 
 import json from '@rollup/plugin-json';
 import terser from '@rollup/plugin-terser';
-import typescript from '@rollup/plugin-typescript';
 import fs from 'node:fs';
 import path from 'node:path';
-import postcss from 'rollup-plugin-postcss';
 import { rollup, type RollupOptions } from 'rollup';
+import esbuild from 'rollup-plugin-esbuild';
+import postcss from 'rollup-plugin-postcss';
 
 const rootPackagePath = process.cwd();
 const input = path.join(rootPackagePath, 'src/index.ts');
@@ -32,9 +32,8 @@ const plugins = [
         //extract: true,
         modules: true,
     }),
-    typescript({
-        include: path.join(rootPackagePath, "../../@types"),
-        //noEmitOnError: true,
+    esbuild({
+        sourceMap: false,
         tsconfig: path.join(rootPackagePath, 'tsconfig.json'),
     }),
 ];
@@ -47,12 +46,12 @@ const rollupOptions: RollupOptions = {
             file: path.join(outputDir, `cjs/${packageName}.js`),
             format: 'cjs',
         },
-        {
-            exports: 'named',
-            file: path.join(outputDir, `cjs/${packageName}.min.js`),
-            format: 'cjs',
-            plugins: plugins.concat([terser()]),
-        },
+        // {
+        //     exports: 'named',
+        //     file: path.join(outputDir, `cjs/${packageName}.min.js`),
+        //     format: 'cjs',
+        //     plugins: plugins.concat([terser()]),
+        // },
     ],
     external,
     plugins,
