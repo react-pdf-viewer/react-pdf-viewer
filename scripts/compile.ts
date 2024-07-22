@@ -10,6 +10,7 @@ import { createGenerateScopedName } from 'hash-css-selector';
 import fs from 'node:fs';
 import path from 'node:path';
 import { rollup, type OutputOptions, type RollupOptions, type RollupOutput, type WarningHandlerWithDefault } from 'rollup';
+import copy from 'rollup-plugin-copy';
 import esbuild from 'rollup-plugin-esbuild';
 import postcss from 'rollup-plugin-postcss';
 
@@ -55,6 +56,14 @@ const buildPackage = async (rootPackagePath: string) => {
                         generateScopedName: createGenerateScopedName('rpv'),
                     },
                 }),
+                copy({
+                    targets: [{
+                        src: path.join(outputDir, 'cjs/index.css'),
+                        dest: path.join(outputDir, 'styles'),
+                    }],
+                    verbose: true,
+                    hook: 'writeBundle',
+                }),
             ],
             onwarn: handleOnWarn,
         },
@@ -79,6 +88,14 @@ const buildPackage = async (rootPackagePath: string) => {
                         // By default, all CSS classes are prefixed with `m-`
                         generateScopedName: createGenerateScopedName('rpv'),
                     },
+                }),
+                copy({
+                    targets: [{
+                        src: path.join(outputDir, 'cjs/index.min.css'),
+                        dest: path.join(outputDir, 'styles'),
+                    }],
+                    verbose: true,
+                    hook: 'writeBundle',
                 }),
                 terser(),
             ],
