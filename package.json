@@ -24,8 +24,7 @@
     ],
     "scripts": {
         "build:clearcache": "rm -rf node_modules/.cache/turbo",
-        "clean": "turbo run clean",
-        "build": "turbo run build",
+        "js": "turbo run js",
         "css": "turbo run css",
         "test:unit": "jest --no-cache --runInBand --config jest.config.ts",
         "test:e2e": "jest --no-cache --runInBand --config jest-e2e.config.ts",
