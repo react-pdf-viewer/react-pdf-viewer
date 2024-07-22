@@ -19,7 +19,8 @@
     "private": true,
     "packageManager": "npm@10.7.0",
     "workspaces": [
-        "packages/*"
+        "packages/*",
+        "demo/*"
     ],
     "scripts": {
         "build:clearcache": "rm -rf node_modules/.cache/turbo",

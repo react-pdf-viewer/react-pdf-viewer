@@ -7,8 +7,8 @@
         "dev": "NODE_ENV=development webpack serve"
     },
     "dependencies": {
-        "@react-pdf-viewer/core": "../../node_modules/@react-pdf-viewer/core",
-        "@react-pdf-viewer/default-layout": "../../node_modules/@react-pdf-viewer/default-layout",
+        "@react-pdf-viewer/core": "*",
+        "@react-pdf-viewer/default-layout": "*",
         "react": "^18.3.1",
         "react-dom": "^18.3.1"
     },
