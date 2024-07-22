@@ -9,7 +9,9 @@ import terser from '@rollup/plugin-terser';
 import { createGenerateScopedName } from 'hash-css-selector';
 import fs from 'node:fs';
 import path from 'node:path';
-import { rollup, type OutputOptions, type RollupOptions } from 'rollup';
+import { rollup, type OutputOptions, type RollupOptions, type RollupOutput, type WarningHandlerWithDefault } from 'rollup';
+import copy from 'rollup-plugin-copy';
+import del from 'rollup-plugin-delete';
 import esbuild from 'rollup-plugin-esbuild';
 import postcss from 'rollup-plugin-postcss';
 
@@ -25,57 +27,107 @@ const buildPackage = async (rootPackagePath: string) => {
         ...Object.keys(packageJson.dependencies || {}),
         ...Object.keys(packageJson.peerDependencies || {}),
     ];
-
-    const plugins = [
-        json(),
-        esbuild({
-            sourceMap: false,
-            tsconfig: path.join(rootPackagePath, 'tsconfig.json'),
-        }),
-        // Inject CSS modules
-        postcss({
-            // extract: true,
-            modules: {
-                // By default, all CSS classes are prefixed with `m-`
-                generateScopedName: createGenerateScopedName('rpv'),
-            },
-        }),
-    ];
-
-    const outputs: OutputOptions[] = [
-        {
-            exports: 'named',
-            file: path.join(outputDir, `cjs/${packageName}.js`),
-            format: 'cjs',
-            plugins,
-        },
-        {
-            exports: 'named',
-            file: path.join(outputDir, `cjs/${packageName}.min.js`),
-            format: 'cjs',
-            plugins: plugins.concat([terser()]),
-        },
-    ];
-
-    const rollupOptions: RollupOptions = {
-        input,
-        output: outputs,
-        external,
-        plugins,
-        onwarn: (warning, warn) => {
-            // Ignore the warning shown when the `use client` directive is used at the top of files
-            if (warning.code === "MODULE_LEVEL_DIRECTIVE") {
-                return;
-            }
-            warn(warning);
-        },
+    const handleOnWarn: WarningHandlerWithDefault = (warning, warn) => {
+        // Ignore the warning shown when the `use client` directive is used at the top of files
+        if (warning.code === "MODULE_LEVEL_DIRECTIVE") {
+            return;
+        }
+        warn(warning);
     };
 
+    const rollupOptions: RollupOptions[] = [
+        {
+            input,
+            output: {
+                exports: 'named',
+                file: path.join(outputDir, `cjs/${packageName}.js`),
+                format: 'cjs',
+            },
+            external,
+            plugins: [
+                json(),
+                esbuild({
+                    sourceMap: false,
+                    tsconfig: path.join(rootPackagePath, 'tsconfig.json'),
+                }),
+                postcss({
+                    extract: 'index.css',
+                    modules: {
+                        // By default, all CSS classes are prefixed with `m-`
+                        generateScopedName: createGenerateScopedName('rpv'),
+                    },
+                }),
+                copy({
+                    // Copy file synchronously, so it can be removed by using the `del` plugin
+                    copySync: true,
+                    hook: 'writeBundle',
+                    targets: [{
+                        src: path.join(outputDir, 'cjs/index.css'),
+                        dest: path.join(outputDir, 'styles'),
+                    }],
+                }),
+                del({
+                    hook: 'writeBundle',
+                    targets: path.join(outputDir, 'cjs/index.css'),
+                }),
+            ],
+            onwarn: handleOnWarn,
+        },
+        {
+            input,
+            output: {
+                exports: 'named',
+                file: path.join(outputDir, `cjs/${packageName}.min.js`),
+                format: 'cjs',
+            },
+            external,
+            plugins: [
+                json(),
+                esbuild({
+                    sourceMap: false,
+                    tsconfig: path.join(rootPackagePath, 'tsconfig.json'),
+                }),
+                postcss({
+                    extract: 'index.min.css',
+                    minimize: true,
+                    modules: {
+                        // By default, all CSS classes are prefixed with `m-`
+                        generateScopedName: createGenerateScopedName('rpv'),
+                    },
+                }),
+                copy({
+                    copySync: true,
+                    hook: 'writeBundle',
+                    targets: [{
+                        src: path.join(outputDir, 'cjs/index.min.css'),
+                        dest: path.join(outputDir, 'styles'),
+                    }],
+                }),
+                del({
+                    hook: 'writeBundle',
+                    targets: path.join(outputDir, 'cjs/index.min.css'),
+                }),
+                terser(),
+            ],
+            onwarn: handleOnWarn,
+        },
+    ];
+
     // Compile
-    const build = await rollup(rollupOptions);
-    return Promise.all(outputs.map((output) => build.write(output)));
+    return Promise.all(
+        rollupOptions.map((rollupOption) => {
+            new Promise<RollupOutput>((resolveBuild) => {
+                rollup(rollupOption).then((build) => {
+                    build.write(rollupOption.output as OutputOptions).then((out) => {
+                        resolveBuild(out);
+                    });
+                })
+            });
+        })
+    );
 };
 
 (async () => {
-    buildPackage(process.cwd());
+    const rootPackagePath = process.cwd();
+    buildPackage(rootPackagePath);
 })();

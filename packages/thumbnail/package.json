@@ -28,6 +28,7 @@
     "types": "lib/index.d.ts",
     "files": [
         "lib/cjs/*.*",
+        "lib/styles/*.*",
         "lib/index.d.ts",
         "lib/index.js"
     ],
