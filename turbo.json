@@ -8,6 +8,10 @@
         "clean": {
             "dependsOn": ["^clean"]
         },
+        "css": {
+            "cache": false,
+            "dependsOn": ["^css"]
+        },
         "release": {
             "dependsOn": ["^release"]
         },
