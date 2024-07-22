@@ -50,6 +50,7 @@
         "clean": "rm -rf lib && mkdir lib",
         "build": "npm run clean && npm run js",
         "js": "cp src/index.d.ts lib && cp dist/index.js lib && tsx ../../scripts/compile",
+        "css": "tsx ../../scripts/buildCss",
         "release": "npm publish --access public"
     }
 }

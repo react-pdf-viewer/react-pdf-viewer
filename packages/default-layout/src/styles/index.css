@@ -1,0 +1,15 @@
+/**
+ * A React component to view a PDF document
+ *
+ * @see https://react-pdf-viewer.dev
+ * @license https://react-pdf-viewer.dev/license
+ * @copyright 2019-2024 Nguyen Huu Phuoc <me@phuoc.ng>
+ */
+
+@import '../../../default-layout/lib/styles/default-layout.css';
+
+/* Include other plugins */
+@import '../../../attachment/lib/styles/index.css';
+@import '../../../bookmark/lib/styles/index.css';
+@import '../../../thumbnail/lib/styles/index.css';
+@import '../../../toolbar/lib/styles/index.css';

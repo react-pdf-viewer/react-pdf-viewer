@@ -43,7 +43,6 @@
         "clean": "rm -rf lib && mkdir lib",
         "build": "npm run clean && npm run js",
         "js": "cp src/index.d.ts lib && cp dist/index.js lib && tsx ../../scripts/compile",
-        "css": "sass --no-source-map --style compressed src/styles/index.scss lib/styles/index.css",
         "test": "jest --config ../../jest.config.js",
         "release": "npm publish --access public"
     }
