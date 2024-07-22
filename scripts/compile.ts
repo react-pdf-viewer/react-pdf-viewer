@@ -11,6 +11,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { rollup, type OutputOptions, type RollupOptions, type RollupOutput, type WarningHandlerWithDefault } from 'rollup';
 import copy from 'rollup-plugin-copy';
+import del from 'rollup-plugin-delete';
 import esbuild from 'rollup-plugin-esbuild';
 import postcss from 'rollup-plugin-postcss';
 
@@ -57,12 +58,17 @@ const buildPackage = async (rootPackagePath: string) => {
                     },
                 }),
                 copy({
+                    // Copy file synchronously, so it can be removed by using the `del` plugin
+                    copySync: true,
+                    hook: 'writeBundle',
                     targets: [{
                         src: path.join(outputDir, 'cjs/index.css'),
                         dest: path.join(outputDir, 'styles'),
                     }],
-                    verbose: true,
+                }),
+                del({
                     hook: 'writeBundle',
+                    targets: path.join(outputDir, 'cjs/index.css'),
                 }),
             ],
             onwarn: handleOnWarn,
@@ -90,12 +96,16 @@ const buildPackage = async (rootPackagePath: string) => {
                     },
                 }),
                 copy({
+                    copySync: true,
+                    hook: 'writeBundle',
                     targets: [{
                         src: path.join(outputDir, 'cjs/index.min.css'),
                         dest: path.join(outputDir, 'styles'),
                     }],
-                    verbose: true,
+                }),
+                del({
                     hook: 'writeBundle',
+                    targets: path.join(outputDir, 'cjs/index.min.css'),
                 }),
                 terser(),
             ],
@@ -106,10 +116,10 @@ const buildPackage = async (rootPackagePath: string) => {
     // Compile
     return Promise.all(
         rollupOptions.map((rollupOption) => {
-            new Promise<RollupOutput>((resolve) => {
+            new Promise<RollupOutput>((resolveBuild) => {
                 rollup(rollupOption).then((build) => {
                     build.write(rollupOption.output as OutputOptions).then((out) => {
-                        resolve(out);
+                        resolveBuild(out);
                     });
                 })
             });
@@ -118,5 +128,6 @@ const buildPackage = async (rootPackagePath: string) => {
 };
 
 (async () => {
-    buildPackage(process.cwd());
+    const rootPackagePath = process.cwd();
+    buildPackage(rootPackagePath);
 })();
