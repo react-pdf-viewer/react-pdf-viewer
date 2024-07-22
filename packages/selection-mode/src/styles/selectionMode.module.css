@@ -8,20 +8,18 @@
 
 .grab {
     cursor: grab;
-
-    :not(input),
-    :not(select),
-    :not(textarea) {
-        cursor: grab !important;
-    }
+}
+.grab :not(input),
+.grab :not(select),
+.grab :not(textarea) {
+    cursor: grab !important;
 }
 
 .grabbing {
     cursor: grabbing;
-
-    :not(input),
-    :not(select),
-    :not(textarea) {
-        cursor: grabbing !important;
-    }
+}
+.grabbing :not(input),
+.grabbing :not(select),
+.grabbing :not(textarea) {
+    cursor: grabbing !important;
 }

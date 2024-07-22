@@ -26,15 +26,13 @@
     z-index: 1;
 
     transform-origin: 0 0;
-
-    span::selection {
-        background-color: var(--rpv-core__text-layer-text--selection-background-color);
-        color: var(--rpv-core__text-layer-text--selection-color);
-    }
-
-    br::selection {
-        color: transparent;
-    }
+}
+.layer span::selection {
+    background-color: var(--rpv-core__text-layer-text--selection-background-color);
+    color: var(--rpv-core__text-layer-text--selection-color);
+}
+.layer br::selection {
+    color: transparent;
 }
 
 .text {
