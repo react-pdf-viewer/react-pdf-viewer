@@ -6,8 +6,8 @@
         "dev": "next dev"
     },
     "dependencies": {
-        "@react-pdf-viewer/core": "../../node_modules/@react-pdf-viewer/core",
-        "@react-pdf-viewer/default-layout": "../../node_modules/@react-pdf-viewer/default-layout",
+        "@react-pdf-viewer/core": "*",
+        "@react-pdf-viewer/default-layout": "*",
         "next": "^14.2.4"
     },
     "devDependencies": {

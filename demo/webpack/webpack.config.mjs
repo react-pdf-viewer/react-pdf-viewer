@@ -1,9 +1,8 @@
-import path from 'path';
-import { fileURLToPath } from 'url';
-import webpack from 'webpack';
+import CopyWebpackPlugin from 'copy-webpack-plugin';
 import HtmlWebPackPlugin from 'html-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
-import CopyWebpackPlugin from 'copy-webpack-plugin';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -83,26 +82,6 @@ export default {
             filename: '[name].[contenthash].css',
             ignoreOrder: false,
         }),
-        new webpack.NormalModuleReplacementPlugin(
-            // The pattern covers the package and its CSS
-            // @react-pdf-viewer/core
-            // @react-pdf-viewer/core/lib/styles/index.css
-            /^@react-pdf-viewer\/[a-z-]+[\/lib\/styles]*[\/index.(css)]*$/,
-            (resource) => {
-                const request = resource.request;
-                const pkgName = request.split('/')[1];
-
-                switch (true) {
-                    case request.endsWith('.css'):
-                        resource.request = path.join(rootDir, `packages/${pkgName}/src/styles/index.scss`);
-                        break;
-
-                    default:
-                        resource.request = path.join(rootDir, `packages/${pkgName}/src`);
-                        break;
-                }
-            },
-        ),
         new CopyWebpackPlugin({
             patterns: [
                 {
