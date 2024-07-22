@@ -51,7 +51,7 @@ const buildPackage = async (rootPackagePath: string) => {
                     tsconfig: path.join(rootPackagePath, 'tsconfig.json'),
                 }),
                 postcss({
-                    extract: 'index.css',
+                    extract: `${packageName}.css`,
                     modules: {
                         // By default, all CSS classes are prefixed with `m-`
                         generateScopedName: createGenerateScopedName('rpv'),
@@ -62,13 +62,17 @@ const buildPackage = async (rootPackagePath: string) => {
                     copySync: true,
                     hook: 'writeBundle',
                     targets: [{
-                        src: path.join(outputDir, 'cjs/index.css'),
+                        src: path.join(outputDir, `cjs/${packageName}.css`),
                         dest: path.join(outputDir, 'styles'),
+                    }, {
+                        src: path.join(outputDir, `cjs/${packageName}.css`),
+                        dest: path.join(outputDir, 'styles'),
+                        rename: 'index.css',
                     }],
                 }),
                 del({
                     hook: 'writeBundle',
-                    targets: path.join(outputDir, 'cjs/index.css'),
+                    targets: path.join(outputDir, `cjs/${packageName}.css`),
                 }),
             ],
             onwarn: handleOnWarn,
@@ -88,7 +92,7 @@ const buildPackage = async (rootPackagePath: string) => {
                     tsconfig: path.join(rootPackagePath, 'tsconfig.json'),
                 }),
                 postcss({
-                    extract: 'index.min.css',
+                    extract: `${packageName}.min.css`,
                     minimize: true,
                     modules: {
                         // By default, all CSS classes are prefixed with `m-`
@@ -99,13 +103,17 @@ const buildPackage = async (rootPackagePath: string) => {
                     copySync: true,
                     hook: 'writeBundle',
                     targets: [{
-                        src: path.join(outputDir, 'cjs/index.min.css'),
+                        src: path.join(outputDir, `cjs/${packageName}.min.css`),
                         dest: path.join(outputDir, 'styles'),
+                    }, {
+                        src: path.join(outputDir, `cjs/${packageName}.min.css`),
+                        dest: path.join(outputDir, 'styles'),
+                        rename: 'index.min.css',
                     }],
                 }),
                 del({
                     hook: 'writeBundle',
-                    targets: path.join(outputDir, 'cjs/index.min.css'),
+                    targets: path.join(outputDir, `cjs/${packageName}.min.css`),
                 }),
                 terser(),
             ],
