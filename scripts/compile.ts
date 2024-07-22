@@ -47,13 +47,12 @@ const buildPackage = async (rootPackagePath: string) => {
             exports: 'named',
             file: path.join(outputDir, `cjs/${packageName}.js`),
             format: 'cjs',
-            plugins,
         },
         {
             exports: 'named',
             file: path.join(outputDir, `cjs/${packageName}.min.js`),
             format: 'cjs',
-            plugins: plugins.concat([terser()]),
+            plugins: [terser()],
         },
     ];
 
