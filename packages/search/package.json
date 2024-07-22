@@ -43,9 +43,7 @@
         "access": "public"
     },
     "scripts": {
-        "clean": "rm -rf lib && mkdir lib",
-        "build": "npm run clean && npm run js",
-        "js": "cp src/index.d.ts lib && cp dist/index.js lib && tsx ../../scripts/compile",
+        "js": "tsx ../../scripts/buildJs",
         "test": "jest --config ../../jest.config.js",
         "release": "npm publish --access public"
     }

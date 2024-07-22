@@ -121,6 +121,18 @@ const buildPackage = async (rootPackagePath: string) => {
         },
     ];
 
+    // Copy Typescript definitions
+    fs.rmSync(outputDir, { recursive: true, force: true });
+    fs.mkdirSync(outputDir);
+    fs.copyFileSync(
+        path.join(rootPackagePath, 'src/index.d.ts'),
+        path.join(rootPackagePath, 'lib/index.d.ts'),
+    );
+    fs.copyFileSync(
+        path.join(rootPackagePath, 'dist/index.js'),
+        path.join(rootPackagePath, 'lib/index.js'),
+    );
+
     // Compile
     return Promise.all(
         rollupOptions.map((rollupOption) => {

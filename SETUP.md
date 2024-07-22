@@ -9,13 +9,8 @@ $ npm install --workspace=@react-pdf-viewer/webpack-typescript-demo
 -   Build all packages
 
 ```console
-npm run build
-```
-
--   Remove the built files in all packages:
-
-```console
-npm run clean
+$ npm run js
+$ npm run css
 ```
 
 -   Check the formats
