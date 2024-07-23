@@ -3,7 +3,8 @@
     "private": true,
     "version": "0.0.0",
     "scripts": {
-        "build": "next build",
+        "copyworker": "cp ../../node_modules/pdfjs-dist/build/pdf.worker.min.mjs public",
+        "build": "npm run copyworker && next build",
         "dev": "next dev"
     },
     "dependencies": {
@@ -12,7 +13,6 @@
         "next": "^14.2.4"
     },
     "devDependencies": {
-        "copy-webpack-plugin": "^12.0.2",
         "serve": "^14.2.3",
         "ts-loader": "^9.5.1"
     }
