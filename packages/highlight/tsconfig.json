@@ -12,7 +12,6 @@
         "moduleResolution": "Node",
         "removeComments": true,
         "resolveJsonModule": true,
-        "rootDir": "src",
         "strict": true,
         "skipLibCheck": true,
         "target": "ES2015",

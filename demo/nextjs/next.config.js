@@ -3,6 +3,29 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
     reactStrictMode: true,
+    transpilePackages: [
+        "@react-pdf-viewer/attachment",
+        "@react-pdf-viewer/bookmark",
+        "@react-pdf-viewer/core",
+        "@react-pdf-viewer/default-layout",
+        "@react-pdf-viewer/drop",
+        "@react-pdf-viewer/full-screen",
+        "@react-pdf-viewer/get-file",
+        "@react-pdf-viewer/highlight",
+        "@react-pdf-viewer/locale-switcher",
+        "@react-pdf-viewer/open",
+        "@react-pdf-viewer/page-navigation",
+        "@react-pdf-viewer/print",
+        "@react-pdf-viewer/properties",
+        "@react-pdf-viewer/rotate",
+        "@react-pdf-viewer/scroll-mode",
+        "@react-pdf-viewer/search",
+        "@react-pdf-viewer/selection-mode",
+        "@react-pdf-viewer/theme",
+        "@react-pdf-viewer/thumbnail",
+        "@react-pdf-viewer/toolbar",
+        "@react-pdf-viewer/zoom",
+    ],
     async rewrites() {
         return [
             {
@@ -15,7 +38,7 @@ module.exports = {
             },
         ];
     },
-    webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
+    webpack: (config) => {
         const rootDir = path.join(__dirname, '../..');
 
         // We need it because we use the local development version of `@react-pdf-viewer/xxx`
