@@ -3,6 +3,7 @@
     "private": true,
     "version": "0.0.0",
     "scripts": {
+        "build": "NODE_ENV=production webpack build",
         "typecheck": "tsc --noEmit",
         "dev": "NODE_ENV=development webpack serve"
     },

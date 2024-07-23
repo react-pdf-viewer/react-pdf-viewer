@@ -75,7 +75,6 @@ const IndexPage = () => {
                     </Button>
                 }
                 content={() => <div style={{ width: '100px' }}>Add a note</div>}
-                offset={{ left: 0, top: -8 }}
             />
         </div>
     );

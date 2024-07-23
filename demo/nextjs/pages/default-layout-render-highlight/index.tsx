@@ -8,10 +8,6 @@ const IndexPage = () => {
         (renderProps: RenderHighlightsProps) => (
             <>
                 {renderProps.highlightAreas.map((area, index) => {
-                    const offset = {
-                        left: 0,
-                        top: 8 + (area.height * area.pageHeight) / 100,
-                    };
                     return (
                         <div
                             key={`${area.pageIndex}-${index}`}
@@ -26,12 +22,10 @@ const IndexPage = () => {
                                 content={() => (
                                     <div style={{ padding: '0.5rem', width: '12rem' }}>More information go here</div>
                                 )}
-                                offset={offset}
                                 position={Position.BottomCenter}
                                 target={(toggle) => (
                                     <Tooltip
                                         content={() => 'Click to see more information'}
-                                        offset={offset}
                                         position={Position.BottomCenter}
                                         target={
                                             <div
