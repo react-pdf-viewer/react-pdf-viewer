@@ -28,7 +28,7 @@ const IndexPage = () => {
                                 )}
                                 offset={offset}
                                 position={Position.BottomCenter}
-                                target={(toggle, _) => (
+                                target={(toggle) => (
                                     <Tooltip
                                         content={() => 'Click to see more information'}
                                         offset={offset}
