@@ -24,11 +24,11 @@ interface Offset {
 }
 
 export const ClickDrag: React.FC<{
-    canvasLayerRef: React.MutableRefObject<HTMLCanvasElement>;
+    canvasLayerRef: React.RefObject<HTMLCanvasElement>;
     canvasLayerRendered: boolean;
     pageIndex: number;
     store: Store<StoreProps>;
-    textLayerRef: React.MutableRefObject<HTMLDivElement>;
+    textLayerRef: React.RefObject<HTMLDivElement>;
     textLayerRendered: boolean;
 }> = ({ canvasLayerRef, canvasLayerRendered, pageIndex, store, textLayerRef, textLayerRendered }) => {
     const containerRef = React.useRef<HTMLDivElement>(null);
