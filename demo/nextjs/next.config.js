@@ -1,7 +1,18 @@
 const path = require('path');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
+    async rewrites() {
+        return [
+            {
+                source: '/ignore/:document\\.pdf',
+                destination: '/api/doc/ignore/:document',
+            },
+            {
+                source: '/:document\\.pdf',
+                destination: '/api/doc/:document',
+            },
+        ];
+    },
     reactStrictMode: true,
     transpilePackages: [
         "@react-pdf-viewer/attachment",
@@ -26,18 +37,6 @@ module.exports = {
         "@react-pdf-viewer/toolbar",
         "@react-pdf-viewer/zoom",
     ],
-    async rewrites() {
-        return [
-            {
-                source: '/ignore/:document\\.pdf',
-                destination: '/api/doc/ignore/:document',
-            },
-            {
-                source: '/:document\\.pdf',
-                destination: '/api/doc/:document',
-            },
-        ];
-    },
     webpack: (config) => {
         const rootDir = path.join(__dirname, '../..');
 
@@ -56,18 +55,6 @@ module.exports = {
         config.externals.push({
             canvas: 'canvas',
         });
-
-        // Copy pdfjs worker to `public`
-        config.plugins.push(
-            new CopyWebpackPlugin({
-                patterns: [
-                    {
-                        from: path.join(rootDir, 'node_modules/pdfjs-dist/build/pdf.worker.min.mjs'),
-                        to: path.join(__dirname, 'public'),
-                    },
-                ],
-            }),
-        );
 
         return config;
     },
