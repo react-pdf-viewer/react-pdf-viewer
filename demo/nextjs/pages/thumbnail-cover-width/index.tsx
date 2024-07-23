@@ -11,7 +11,7 @@ const pageThumbnailPlugin = (props: PageThumbnailPluginProps): Plugin => {
 
     return {
         renderViewer: (renderProps: RenderViewer) => {
-            let { slot } = renderProps;
+            const { slot } = renderProps;
 
             slot.children = PageThumbnail;
 

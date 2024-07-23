@@ -1,7 +1,7 @@
-import { PasswordStatus, PrimaryButton, TextBox, Viewer, type RenderProtectedViewProps } from '@react-pdf-viewer/core';
+import { PasswordStatus, PrimaryButton, TextBox, Viewer, type RenderProtectedView } from '@react-pdf-viewer/core';
 import * as React from 'react';
 
-const ProtectedView: React.FC<RenderProtectedViewProps> = ({ passwordStatus, verifyPassword }) => {
+const ProtectedView: RenderProtectedView = ({ passwordStatus, verifyPassword }) => {
     const [password, setPassword] = React.useState('');
     const submit = (): void => verifyPassword(password);
 

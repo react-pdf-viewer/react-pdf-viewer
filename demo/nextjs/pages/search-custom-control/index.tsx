@@ -95,7 +95,6 @@ const IndexPage = () => {
                                             </button>
                                         }
                                         content={() => 'Match case'}
-                                        offset={{ left: 0, top: 8 }}
                                     />
                                     <Tooltip
                                         position={Position.BottomCenter}
@@ -122,7 +121,6 @@ const IndexPage = () => {
                                             </button>
                                         }
                                         content={() => 'Match whole word'}
-                                        offset={{ left: 0, top: 8 }}
                                     />
                                 </div>
                                 {searchDone && renderSearchProps.keyword && renderSearchProps.numberOfMatches === 0 && (
@@ -144,7 +142,6 @@ const IndexPage = () => {
                                             </MinimalButton>
                                         }
                                         content={() => 'Previous match'}
-                                        offset={{ left: 0, top: 8 }}
                                     />
                                 </div>
                                 <div style={{ padding: '0 2px' }}>
@@ -159,7 +156,6 @@ const IndexPage = () => {
                                             </MinimalButton>
                                         }
                                         content={() => 'Next match'}
-                                        offset={{ left: 0, top: 8 }}
                                     />
                                 </div>
                             </>

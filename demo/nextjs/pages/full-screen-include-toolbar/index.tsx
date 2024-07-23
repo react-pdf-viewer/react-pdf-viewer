@@ -7,7 +7,7 @@ const IndexPage = () => {
         toolbarPlugin: {
             fullScreenPlugin: {
                 getFullScreenTarget: (pagesContainer) => pagesContainer.closest('[data-testid="default-layout__body"]'),
-                renderExitFullScreenButton: (_) => <></>,
+                renderExitFullScreenButton: () => <></>,
             },
         },
     });
