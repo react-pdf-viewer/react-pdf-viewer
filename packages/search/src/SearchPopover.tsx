@@ -64,7 +64,7 @@ export const SearchPopover: React.FC<{
         });
     };
 
-    const onKeydownSearch = (e: React.KeyboardEvent<HTMLInputElement>): void => {
+    const onKeydownSearch = (e: React.KeyboardEvent<Element>): void => {
         // Press the Enter key
         if (e.key === 'Enter' && keyword) {
             searchDone ? jumpToNextMatch() : performSearch();

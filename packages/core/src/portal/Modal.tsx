@@ -30,15 +30,17 @@ export const Modal: React.FC<{
     const controlsSuffix = ariaControlsSuffix || `${uniqueId()}`;
     const { opened, toggle } = useToggle(isOpened);
 
-    const renderTarget = (toggle: Toggle, opened: boolean): React.ReactElement => (
-        <div
-            aria-expanded={opened ? 'true' : 'false'}
-            aria-haspopup="dialog"
-            aria-controls={`rpv-core__modal-body-${controlsSuffix}`}
-        >
-            {target(toggle, opened)}
-        </div>
-    );
+    const renderTarget = (toggle: Toggle, opened: boolean): React.ReactElement => {
+        return target ? (
+            <div
+                aria-expanded={opened ? 'true' : 'false'}
+                aria-haspopup="dialog"
+                aria-controls={`rpv-core__modal-body-${controlsSuffix}`}
+            >
+                {target(toggle, opened)}
+            </div>
+        ) : <></>;
+    };
 
     const renderContent = (toggle: Toggle): React.ReactElement => (
         <ModalOverlay>
@@ -55,7 +57,7 @@ export const Modal: React.FC<{
 
     return (
         <>
-            {target && renderTarget(toggle, opened)}
+            {renderTarget(toggle, opened)}
             {opened && <Stack>{renderContent(toggle)}</Stack>}
         </>
     );

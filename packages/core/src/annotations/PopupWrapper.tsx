@@ -26,7 +26,7 @@ export const PopupWrapper: React.FC<{
     const contents = getContents(annotation);
     const isRtl = direction === TextDirection.RightToLeft;
 
-    const containerRef = React.useRef<HTMLDivElement>();
+    const containerRef = React.useRef<HTMLDivElement>(null);
     let dateStr = '';
     if (annotation.modificationDate) {
         const date = convertDate(annotation.modificationDate);

@@ -33,7 +33,7 @@ export const PageSizeCalculator: React.FC<{
     scrollMode: ScrollMode;
     viewMode: ViewMode;
 }> = ({ defaultScale, doc, render, scrollMode, viewMode }) => {
-    const pagesRef = React.useRef<HTMLDivElement>();
+    const pagesRef = React.useRef<HTMLDivElement>(null);
     const [state, setState] = React.useState<{
         estimatedPageSizes: PageSize[];
         scale: number;
@@ -59,6 +59,9 @@ export const PageSizeCalculator: React.FC<{
             // The `pagesRef` element will be destroyed when the size calculation is completed
             // To make it more easy for testing, we take the parent element which is always visible
             const parentEle = pagesEle.parentElement;
+            if (!parentEle) {
+                return;
+            }
 
             // Determine the best scale that fits the document within the container
             const scaleWidth = (parentEle.clientWidth - RESERVE_WIDTH) / w;

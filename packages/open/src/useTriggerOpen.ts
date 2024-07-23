@@ -15,10 +15,10 @@ import { type StoreProps } from './types/StoreProps';
 export const useTriggerOpen = (
     store: Store<StoreProps>,
 ): {
-    inputRef: React.MutableRefObject<HTMLInputElement>;
+    inputRef: React.RefObject<HTMLInputElement>;
     openFile: () => void;
 } => {
-    const inputRef = React.useRef<HTMLInputElement>();
+    const inputRef = React.useRef<HTMLInputElement>(null);
 
     const openFile = () => {
         const inputEle = inputRef.current;

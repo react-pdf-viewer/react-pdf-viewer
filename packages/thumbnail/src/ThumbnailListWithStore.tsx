@@ -34,14 +34,14 @@ export const ThumbnailListWithStore: React.FC<{
     thumbnailDirection: ThumbnailDirection;
     thumbnailWidth: number;
 }> = ({ renderCurrentPageLabel, renderThumbnailItem, store, thumbnailDirection, thumbnailWidth }) => {
-    const [currentDoc, setCurrentDoc] = React.useState<PdfJs.PdfDocument>(store.get('doc'));
+    const [currentDoc, setCurrentDoc] = React.useState<PdfJs.PdfDocument>(store.get('doc')!);
     const [currentPage, setCurrentPage] = React.useState(store.get('currentPage') || 0);
     const [pageHeight, setPageHeight] = React.useState(store.get('pageHeight') || 0);
     const [pageWidth, setPageWidth] = React.useState(store.get('pageWidth') || 0);
     const [rotation, setRotation] = React.useState(store.get('rotation') || 0);
     const [pagesRotation, setPagesRotation] = React.useState(store.get('pagesRotation') || new Map());
     const [rotatedPage, setRotatedPage] = React.useState(store.get('rotatedPage') || -1);
-    const [viewMode, setViewMode] = React.useState(store.get('viewMode'));
+    const [viewMode, setViewMode] = React.useState(store.get('viewMode')!);
 
     const handleCurrentPageChanged: StoreHandler<number> = (currentPageIndex: number) => {
         setCurrentPage(currentPageIndex);
@@ -83,7 +83,7 @@ export const ThumbnailListWithStore: React.FC<{
     };
 
     const rotatePage = (pageIndex: number, direction: RotateDirection) => {
-        store.get('rotatePage')(pageIndex, direction);
+        store.get('rotatePage')!(pageIndex, direction);
     };
 
     React.useEffect(() => {

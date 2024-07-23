@@ -17,7 +17,7 @@ import { type RenderBookmarkItem } from './types/RenderBookmarkItemProps';
 import { type StoreProps } from './types/StoreProps';
 
 export const BookmarkListWithStore: React.FC<{
-    isBookmarkExpanded: IsBookmarkExpanded;
+    isBookmarkExpanded?: IsBookmarkExpanded;
     renderBookmarkItem?: RenderBookmarkItem;
     store: Store<StoreProps>;
 }> = ({ isBookmarkExpanded, renderBookmarkItem, store }) => {

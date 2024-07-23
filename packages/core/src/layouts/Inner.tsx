@@ -112,8 +112,8 @@ export const Inner: React.FC<{
     const { l10n } = React.useContext(LocalizationContext);
     const themeContext = React.useContext(ThemeContext);
     const isRtl = themeContext.direction === TextDirection.RightToLeft;
-    const containerRef = React.useRef<HTMLDivElement>();
-    const pagesRef = React.useRef<HTMLDivElement>();
+    const containerRef = React.useRef<HTMLDivElement>(null);
+    const pagesRef = React.useRef<HTMLDivElement>(null);
 
     // Manage visited destinations
     const destinationManager = useDestination({
@@ -193,7 +193,7 @@ export const Inner: React.FC<{
                         height: rect.height * scale,
                         width: rect.width * scale,
                     };
-                    return layoutBuilder.transformSize({ numPages, pageIndex, size: pageRect });
+                    return layoutBuilder.transformSize ? layoutBuilder.transformSize({ numPages, pageIndex, size: pageRect }) : pageRect;
                 }),
         [rotation, scale, pageSizes],
     );
@@ -253,7 +253,7 @@ export const Inner: React.FC<{
         stateRef.current = newState;
     };
 
-    const getPagesContainer = () => pagesRef.current;
+    const getPagesContainer = () => pagesRef.current!;
 
     const getViewerState = () => stateRef.current;
 
@@ -340,7 +340,7 @@ export const Inner: React.FC<{
     const rotatePage = React.useCallback((pageIndex: number, direction: RotateDirection) => {
         const degrees = direction === RotateDirection.Backward ? -90 : 90;
         const rotations = stateRef.current.pagesRotation;
-        const currentPageRotation = rotations.has(pageIndex) ? rotations.get(pageIndex) : initialRotation;
+        const currentPageRotation = rotations.has(pageIndex) ? rotations.get(pageIndex)! : initialRotation;
         const finalRotation = normalizeRotation(currentPageRotation + degrees);
         const updateRotations = rotations.set(pageIndex, finalRotation);
 
@@ -861,12 +861,12 @@ export const Inner: React.FC<{
                                             style={Object.assign(
                                                 {},
                                                 virtualizer.getItemStyles(item),
-                                                layoutBuilder.buildPageStyles({
+                                                layoutBuilder.buildPageStyles ? layoutBuilder.buildPageStyles({
                                                     numPages,
                                                     pageIndex: item.index,
                                                     scrollMode,
                                                     viewMode,
-                                                }),
+                                                }) : {},
                                             )}
                                         >
                                             <PageLayer

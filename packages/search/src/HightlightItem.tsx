@@ -20,7 +20,7 @@ export const HightlightItem: React.FC<{
     area: HighlightArea;
     onHighlightKeyword?(props: OnHighlightKeyword): void;
 }> = ({ index, area, onHighlightKeyword }) => {
-    const containerRef = React.useRef<HTMLDivElement>();
+    const containerRef = React.useRef<HTMLDivElement>(null);
 
     useIsomorphicLayoutEffect(() => {
         const highlightEle = containerRef.current;

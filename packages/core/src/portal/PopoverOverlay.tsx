@@ -17,7 +17,7 @@ export const PopoverOverlay: React.FC<{
     closeOnEscape: boolean;
     onClose(): void;
 }> = ({ children, closeOnEscape, onClose }) => {
-    const containerRef = React.useRef<HTMLDivElement>();
+    const containerRef = React.useRef<HTMLDivElement>(null);
 
     useEscapeStack(() => {
         if (closeOnEscape) {

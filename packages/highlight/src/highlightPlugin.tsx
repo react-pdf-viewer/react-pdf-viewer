@@ -80,6 +80,10 @@ export const highlightPlugin = (props?: HighlightPluginProps): HighlightPlugin =
         const textLayer = textLayerRender.ele;
         const pageRect = textLayer.getBoundingClientRect();
         const highlightState = store.get('highlightState');
+        if (!highlightState) {
+            return;
+        }
+
         if (highlightState.type === HighlightStateType.Selected) {
             const mouseTop = e.clientY - pageRect.top;
             const mouseLeft = e.clientX - pageRect.left;
@@ -96,7 +100,7 @@ export const highlightPlugin = (props?: HighlightPluginProps): HighlightPlugin =
                 });
             if (userClickedInsideArea) {
                 // Cancel the selection
-                window.getSelection().removeAllRanges();
+                window.getSelection()?.removeAllRanges();
                 store.update('highlightState', NO_SELECTION_STATE);
             } else {
                 store.update('highlightState', SELECTING_STATE);

@@ -259,7 +259,7 @@ export const ThumbnailList: React.FC<{
             ? renderCurrentPageLabel({ currentPage, pageIndex, numPages, pageLabel })
             : pageLabel;
 
-        const pageRotation = pagesRotation.has(pageIndex) ? pagesRotation.get(pageIndex) : 0;
+        const pageRotation = pagesRotation.has(pageIndex) ? pagesRotation.get(pageIndex)! : 0;
 
         const thumbnail = (
             <ThumbnailContainer

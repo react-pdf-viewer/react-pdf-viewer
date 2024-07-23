@@ -26,11 +26,17 @@ export const FullScreenModeTracker: React.FC<{
     }, []);
 
     const handleEnteredFullScreen = () => {
-        onEnterFullScreen(store.get('zoom'));
+        const zoom = store.get('zoom');
+        if (zoom) {
+            onEnterFullScreen(zoom);
+        }
     };
 
     const handleExitedFullScreen = () => {
-        onExitFullScreen(store.get('zoom'));
+        const zoom = store.get('zoom');
+        if (zoom) {
+            onExitFullScreen(zoom);
+        }
     };
 
     React.useEffect(() => {

@@ -17,7 +17,7 @@ import { classNames } from '../utils/classNames';
 export const Menu: React.FC<{
     children?: React.ReactNode;
 }> = ({ children }) => {
-    const containerRef = React.useRef<HTMLDivElement>();
+    const containerRef = React.useRef<HTMLDivElement>(null);
     const visibleMenuItemsRef = React.useRef<HTMLElement[]>([]);
     const { direction } = React.useContext(ThemeContext);
     const isRtl = direction === TextDirection.RightToLeft;
@@ -85,7 +85,7 @@ export const Menu: React.FC<{
 
         container.querySelectorAll('.rpv-core__menu-item[role="menuitem"]').forEach((item) => {
             if (item instanceof HTMLElement) {
-                const parent = item.parentElement;
+                const parent = item.parentElement!;
                 if (parent === container) {
                     visibleItems.push(item);
                 } else {

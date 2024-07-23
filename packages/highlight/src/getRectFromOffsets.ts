@@ -8,9 +8,9 @@
 
 export const getRectFromOffsets = (textDiv: HTMLElement, startOffset: number, endOffset: number): DOMRect => {
     const clonedEle = textDiv.cloneNode(true);
-    textDiv.parentNode.appendChild(clonedEle);
+    textDiv.parentNode!.appendChild(clonedEle);
 
-    const firstChild = clonedEle.firstChild;
+    const firstChild = clonedEle.firstChild!;
     const range = new Range();
     range.setStart(firstChild, startOffset);
     range.setEnd(firstChild, endOffset);
@@ -21,7 +21,7 @@ export const getRectFromOffsets = (textDiv: HTMLElement, startOffset: number, en
     const rect = wrapper.getBoundingClientRect();
 
     // Remove the clone element
-    clonedEle.parentNode.removeChild(clonedEle);
+    clonedEle.parentNode!.removeChild(clonedEle);
 
     return rect;
 };

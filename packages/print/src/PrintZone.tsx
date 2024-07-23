@@ -58,7 +58,7 @@ export const PrintZone: React.FC<{
                 const zones = document.querySelectorAll(`.${styles.zone}`);
                 if (zones) {
                     zones.forEach((zoneEle) => {
-                        zoneEle.parentElement.removeChild(zoneEle);
+                        zoneEle.parentElement?.removeChild(zoneEle);
                     });
                 }
 
@@ -90,7 +90,7 @@ export const PrintZone: React.FC<{
                     canvas={canvas}
                     doc={doc}
                     pageIndex={pageIndex}
-                    pageRotation={pagesRotation.has(pageIndex) ? pagesRotation.get(pageIndex) : 0}
+                    pageRotation={pagesRotation.has(pageIndex) ? pagesRotation.get(pageIndex)! : 0}
                     pageSize={pageSizes[pageIndex]}
                     rotation={rotation}
                     shouldRender={loopIndex === numLoadedPages}

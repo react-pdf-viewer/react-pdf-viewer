@@ -30,7 +30,7 @@ export const PopoverBody = React.forwardRef<
 >((props, ref) => {
     const { ariaControlsSuffix, children, closeOnClickOutside, position, onClose } = props;
 
-    const innerRef = React.useRef<HTMLDivElement>();
+    const innerRef = React.useRef<HTMLDivElement>(null);
     const { direction } = React.useContext(ThemeContext);
     const isRtl = direction === TextDirection.RightToLeft;
 

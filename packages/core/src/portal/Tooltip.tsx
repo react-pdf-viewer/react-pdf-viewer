@@ -25,7 +25,7 @@ export const Tooltip: React.FC<{
     target: React.ReactElement;
 }> = ({ ariaControlsSuffix, content, position, target }) => {
     const { opened, toggle } = useToggle(false);
-    const targetRef = React.useRef<HTMLDivElement>();
+    const targetRef = React.useRef<HTMLDivElement>(null);
     const contentRef = React.useRef<HTMLDivElement>();
     const controlsSuffix = React.useMemo(() => ariaControlsSuffix || `${uniqueId()}`, []);
 

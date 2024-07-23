@@ -60,7 +60,7 @@ const generateRefKey = (doc: PdfJs.PdfDocument, outline: PdfJs.OutlineRef): stri
 
 const getPageIndex = (doc: PdfJs.PdfDocument, outline: PdfJs.OutlineRef): number | null => {
     const key = generateRefKey(doc, outline);
-    return pageOutlinesMap.has(key) ? pageOutlinesMap.get(key) : null;
+    return pageOutlinesMap.has(key) ? pageOutlinesMap.get(key)! : null;
 };
 
 const cacheOutlineRef = (doc: PdfJs.PdfDocument, outline: PdfJs.OutlineRef, pageIndex: number) => {

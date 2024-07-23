@@ -26,9 +26,9 @@ export const Splitter: React.FC<{
     const { direction } = React.useContext(ThemeContext);
     const isRtl = direction === TextDirection.RightToLeft;
 
-    const resizerRef = React.useRef<HTMLDivElement>();
-    const leftSideRef = React.useRef<HTMLElement>();
-    const rightSideRef = React.useRef<HTMLElement>();
+    const resizerRef = React.useRef<HTMLDivElement>(null);
+    const leftSideRef = React.useRef<HTMLElement | null>(null);
+    const rightSideRef = React.useRef<HTMLElement | null>(null);
 
     // The current position of mouse
     const xRef = React.useRef(0);
@@ -54,7 +54,7 @@ export const Splitter: React.FC<{
         const dx = e.clientX - xRef.current;
 
         const firstHalfSize = leftWidthRef.current + (isRtl ? -dx : dx);
-        const containerWidth = resizerEle.parentElement.getBoundingClientRect().width;
+        const containerWidth = resizerEle.parentElement!.getBoundingClientRect().width;
         const firstHalfPercentage = (firstHalfSize * 100) / containerWidth;
 
         resizerEle.classList.add(styles.splitterResizing);

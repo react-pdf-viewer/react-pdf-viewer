@@ -28,7 +28,7 @@ export const BookmarkListRoot: React.FC<{
     renderBookmarkItem?: RenderBookmarkItem;
     store: Store<StoreProps>;
 }> = ({ bookmarks, doc, isBookmarkExpanded, renderBookmarkItem, store }) => {
-    const containerRef = React.useRef<HTMLDivElement>();
+    const containerRef = React.useRef<HTMLDivElement>(null);
 
     const handleKeyDown = (e: KeyboardEvent) => {
         const container = containerRef.current;
@@ -82,8 +82,8 @@ export const BookmarkListRoot: React.FC<{
     };
 
     const clickBookmark = () => {
-        const closestItem = document.activeElement.closest(`.${styles.item}`);
-        const titleEle = closestItem.querySelector(`.${styles.title}`);
+        const closestItem = document.activeElement?.closest(`.${styles.item}`);
+        const titleEle = closestItem?.querySelector(`.${styles.title}`);
         if (titleEle) {
             (titleEle as HTMLElement).click();
         }
@@ -91,12 +91,12 @@ export const BookmarkListRoot: React.FC<{
 
     const moveToItem = (getItemIndex: (bookmarkElements: Element[], activeElement: Element) => number) => {
         const container = containerRef.current;
-        const bookmarkElements: Element[] = [].slice.call(container.getElementsByClassName(styles.item));
+        const bookmarkElements: Element[] = [].slice.call(container?.getElementsByClassName(styles.item));
         if (bookmarkElements.length === 0) {
             return;
         }
 
-        const activeEle = document.activeElement;
+        const activeEle = document.activeElement!;
 
         const targetIndex = Math.min(
             bookmarkElements.length - 1,
@@ -111,14 +111,14 @@ export const BookmarkListRoot: React.FC<{
 
     const toggle = (toggle: Toggle) => {
         const container = containerRef.current;
-        const bookmarkElements: Element[] = [].slice.call(container.getElementsByClassName(styles.item));
+        const bookmarkElements: Element[] = [].slice.call(container?.getElementsByClassName(styles.item));
         if (bookmarkElements.length === 0) {
             return;
         }
 
-        const closestItem = document.activeElement.closest(`.${styles.item}`);
+        const closestItem = document.activeElement?.closest(`.${styles.item}`);
         const expanedAttribute = toggle === Toggle.Collapse ? 'true' : 'false';
-        if (closestItem && closestItem.parentElement.getAttribute('aria-expanded') === expanedAttribute) {
+        if (closestItem && closestItem.parentElement?.getAttribute('aria-expanded') === expanedAttribute) {
             // Toggle the current node
             const toggleEle = closestItem.querySelector(`.${styles.toggle}`);
             if (toggleEle) {

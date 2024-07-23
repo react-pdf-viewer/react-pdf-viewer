@@ -57,7 +57,7 @@ export const useVirtual = ({
     enableSmoothScroll: boolean;
     isRtl: boolean;
     numberOfItems: number;
-    parentRef: React.MutableRefObject<HTMLDivElement>;
+    parentRef: React.RefObject<HTMLDivElement>;
     setRenderRange: SetRenderRange;
     // Sizes of items
     sizes: Rect[];

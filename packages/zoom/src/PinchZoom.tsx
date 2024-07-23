@@ -16,7 +16,7 @@ const WHEEL_EVENT_OPTIONS = {
     passive: false,
 };
 
-let svgElement: SVGSVGElement = null;
+let svgElement: SVGSVGElement;
 const createSvgElement = () => {
     return svgElement || (svgElement = document.createElementNS('http://www.w3.org/2000/svg', 'svg'));
 };

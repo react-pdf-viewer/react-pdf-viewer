@@ -24,7 +24,7 @@ export const useStack = <T>(maxLength: number) => {
         if (size === 0) {
             return null;
         }
-        const lastItem = stack.pop();
+        const lastItem = stack.pop()!;
         stackRef.current = stack;
         return lastItem;
     };

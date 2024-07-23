@@ -26,14 +26,14 @@ export const HighlightAreaList: React.FC<{
     renderHighlights?(props: RenderHighlightsProps): React.ReactElement;
     store: Store<StoreProps>;
 }> = ({ pageIndex, renderHighlightContent, renderHighlightTarget, renderHighlights, store }) => {
-    const [highlightState, setHighlightState] = React.useState<HighlightState>(store.get('highlightState'));
+    const [highlightState, setHighlightState] = React.useState<HighlightState>(store.get('highlightState')!);
     const { rotation } = useRotation(store);
 
     const handleHighlightState = (s: HighlightState) => setHighlightState(s);
 
     // Cancel the selection
     const cancel = () => {
-        window.getSelection().removeAllRanges();
+        window.getSelection()?.removeAllRanges();
         store.update('highlightState', NO_SELECTION_STATE);
     };
 
@@ -70,7 +70,7 @@ export const HighlightAreaList: React.FC<{
                             type: HighlightStateType.Selection,
                         });
                         store.update('highlightState', newState);
-                        window.getSelection().removeAllRanges();
+                        window.getSelection()?.removeAllRanges();
                     },
                 })}
             {renderHighlightContent &&

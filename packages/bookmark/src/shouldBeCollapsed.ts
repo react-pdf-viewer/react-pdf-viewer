@@ -10,6 +10,10 @@ import { type PdfJs } from '@react-pdf-viewer/core';
 
 export const shouldBeCollapsed = (bookmark: PdfJs.Outline): boolean => {
     const { count, items } = bookmark;
+    if (count === undefined) {
+        return false;
+    }
+
     if (count >= 0) {
         return false;
     }
@@ -20,7 +24,7 @@ export const shouldBeCollapsed = (bookmark: PdfJs.Outline): boolean => {
 
     let subItems = items.concat([]);
     while (subItems.length > 0) {
-        const firstChild = subItems.shift();
+        const firstChild = subItems.shift()!;
         const children = firstChild.items;
         if (firstChild.count && children && firstChild.count > 0 && children.length > 0) {
             numSubItems += children.length;

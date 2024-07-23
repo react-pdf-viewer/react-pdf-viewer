@@ -34,7 +34,7 @@ export const useScroll = ({
     scrollDirection,
     onSmoothScroll,
 }: {
-    elementRef: React.MutableRefObject<HTMLDivElement>;
+    elementRef: React.RefObject<HTMLDivElement>;
     enableSmoothScroll: boolean;
     isRtl: boolean;
     scrollDirection: ScrollDirection;
@@ -113,7 +113,7 @@ export const useScroll = ({
                 return Promise.resolve();
             }
 
-            let updatePosition = {
+            const updatePosition = {
                 left: 0,
                 top: 0,
             };
