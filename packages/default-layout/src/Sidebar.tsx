@@ -49,10 +49,10 @@ export const Sidebar: React.FC<SidebarProps> = ({
     thumbnailTabContent,
     tabs,
 }) => {
-    const containerRef = React.useRef<HTMLDivElement>();
+    const containerRef = React.useRef<HTMLDivElement>(null);
     const { l10n } = React.useContext(LocalizationContext);
     const [opened, setOpened] = React.useState(store.get('isCurrentTabOpened') || false);
-    const [currentTab, setCurrentTab] = React.useState(store.get('currentTab'));
+    const [currentTab, setCurrentTab] = React.useState(store.get('currentTab')!);
     const { direction } = React.useContext(ThemeContext);
     const isRtl = direction === TextDirection.RightToLeft;
 

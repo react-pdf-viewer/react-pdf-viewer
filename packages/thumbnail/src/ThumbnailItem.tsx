@@ -39,6 +39,9 @@ export const ThumbnailItem: React.FC<{
 
         const canvas = document.createElement('canvas');
         const canvasContext = canvas.getContext('2d', { alpha: false });
+        if (!canvasContext) {
+            return;
+        }
 
         const w = thumbnailWidth;
         const h = w / (pageWidth / pageHeight);

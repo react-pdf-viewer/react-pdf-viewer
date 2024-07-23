@@ -61,8 +61,10 @@ export const PageThumbnail: React.FC<{
                 // `URL.createObjectURL` is not available in jest-dom yet
                 if ('toBlob' in canvas && 'createObjectURL' in URL) {
                     canvas.toBlob((blob) => {
-                        setSrc(URL.createObjectURL(blob));
-                        testWithJest && onLoad();
+                        if (blob) {
+                            setSrc(URL.createObjectURL(blob));
+                            testWithJest && onLoad();
+                        }
                     });
                 } else {
                     setSrc(canvas.toDataURL());

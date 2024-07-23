@@ -24,7 +24,7 @@ import { type FileItem } from './types/FileItem';
 export const AttachmentList: React.FC<{
     files: FileItem[];
 }> = ({ files }) => {
-    const containerRef = React.useRef<HTMLDivElement>();
+    const containerRef = React.useRef<HTMLDivElement>(null);
     const { l10n } = React.useContext(LocalizationContext);
     const { direction } = React.useContext(ThemeContext);
     const isRtl = direction === TextDirection.RightToLeft;
@@ -65,7 +65,7 @@ export const AttachmentList: React.FC<{
     };
 
     const moveToItem = (getItemIndex: (attachmentItems: Element[], activeElement: Element) => number) => {
-        const container = containerRef.current;
+        const container = containerRef.current!;
         const attachmentItems: Element[] = [].slice.call(container.getElementsByClassName(styles.item));
         if (attachmentItems.length === 0) {
             return;

@@ -34,7 +34,7 @@ export const TextBox: React.FC<{
     onKeyDown = () => {},
 }) => {
     const { direction } = React.useContext(ThemeContext);
-    const textboxRef = React.useRef<HTMLInputElement>();
+    const textboxRef = React.useRef<HTMLInputElement>(null);
     const isRtl = direction === TextDirection.RightToLeft;
 
     const attrs = {

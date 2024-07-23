@@ -20,7 +20,7 @@ export const Cover: React.FC<{
     store: Store<StoreProps>;
     width?: number;
 }> = ({ getPageIndex, renderSpinner, store, width }) => {
-    const [currentDoc, setCurrentDoc] = React.useState<PdfJs.PdfDocument>(store.get('doc'));
+    const [currentDoc, setCurrentDoc] = React.useState<PdfJs.PdfDocument>(store.get('doc')!);
 
     const handleDocumentChanged: StoreHandler<PdfJs.PdfDocument> = (doc: PdfJs.PdfDocument) => {
         setCurrentDoc(doc);

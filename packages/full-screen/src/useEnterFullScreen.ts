@@ -32,11 +32,11 @@ export const useEnterFullScreen = (
             return;
         }
         const target = getFullScreenTarget(pagesContainer());
-        store.get('enterFullScreenMode')(target);
+        store.get('enterFullScreenMode')!(target);
     };
 
     const exitFullScreen = () => {
-        store.get('exitFullScreenMode')();
+        store.get('exitFullScreenMode')!();
     };
 
     React.useEffect(() => {

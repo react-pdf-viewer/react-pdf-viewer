@@ -31,7 +31,7 @@ export const ClickDrag: React.FC<{
     textLayerRef: React.MutableRefObject<HTMLDivElement>;
     textLayerRendered: boolean;
 }> = ({ canvasLayerRef, canvasLayerRendered, pageIndex, store, textLayerRef, textLayerRendered }) => {
-    const containerRef = React.useRef<HTMLDivElement>();
+    const containerRef = React.useRef<HTMLDivElement>(null);
     const currentCursorRef = React.useRef(document.body.style.cursor);
     const startPointRef = React.useRef<Point>({ x: 0, y: 0 });
     const offsetRef = React.useRef<Offset>({ top: 0, left: 0 });
@@ -106,7 +106,7 @@ export const ClickDrag: React.FC<{
     };
 
     const handleDocumentKeyDown = (e: KeyboardEvent) => {
-        if (e.key === 'Escape' && store.get('highlightState').type === HighlightStateType.ClickDragged) {
+        if (e.key === 'Escape' && store.get('highlightState')!.type === HighlightStateType.ClickDragged) {
             e.preventDefault();
             hideContainer();
             store.update('highlightState', NO_SELECTION_STATE);
@@ -119,7 +119,7 @@ export const ClickDrag: React.FC<{
         if (!container) {
             return;
         }
-        const highlightType = store.get('highlightState').type;
+        const highlightType = store.get('highlightState')!.type;
         if (highlightType === HighlightStateType.NoSelection && e.target !== container) {
             hideContainer();
         }

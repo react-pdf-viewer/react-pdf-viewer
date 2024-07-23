@@ -13,7 +13,7 @@ import * as React from 'react';
 import { type StoreProps } from './types/StoreProps';
 
 export const useDocument = (store: Store<StoreProps>): PdfJs.PdfDocument => {
-    const [currentDoc, setCurrentDoc] = React.useState(store.get('doc'));
+    const [currentDoc, setCurrentDoc] = React.useState(store.get('doc')!);
 
     const handleDocumentChanged: StoreHandler<PdfJs.PdfDocument> = (doc: PdfJs.PdfDocument) => {
         setCurrentDoc(doc);

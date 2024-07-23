@@ -12,7 +12,7 @@ import * as React from 'react';
 import { useIsomorphicLayoutEffect } from '../hooks/useIsomorphicLayoutEffect';
 
 interface UseTrackResizeProps {
-    targetRef: React.MutableRefObject<HTMLDivElement>;
+    targetRef: React.RefObject<HTMLDivElement>;
     onResize(target: Element): void;
 }
 

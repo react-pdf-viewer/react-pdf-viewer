@@ -56,7 +56,7 @@ export interface SearchPluginProps {
 }
 
 const normalizeKeywords = (keyword?: SingleKeyword | SingleKeyword[]): NormalizedKeyword[] =>
-    Array.isArray(keyword) ? keyword.map((k) => normalizeSingleKeyword(k)) : [normalizeSingleKeyword(keyword)];
+    Array.isArray(keyword) ? keyword.map((k) => normalizeSingleKeyword(k)) : (keyword ? [normalizeSingleKeyword(keyword)] : []);
 
 export const searchPlugin = (props?: SearchPluginProps): SearchPlugin => {
     const searchPluginProps = React.useMemo(

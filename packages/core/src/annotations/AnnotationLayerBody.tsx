@@ -58,7 +58,7 @@ export const AnnotationLayerBody: React.FC<{
     onJumpFromLinkAnnotation,
     onJumpToDest,
 }) => {
-    const containerRef = React.useRef<HTMLDivElement>();
+    const containerRef = React.useRef<HTMLDivElement>(null);
     const viewport = page.getViewport({ rotation, scale });
     const clonedViewPort = viewport.clone({ dontFlip: true });
 

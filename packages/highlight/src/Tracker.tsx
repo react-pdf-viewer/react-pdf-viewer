@@ -44,9 +44,9 @@ export const Tracker: React.FC<{
 
     const onMouseUpHandler = () => {
         // Get the current selection
-        const selection = document.getSelection();
+        const selection = document.getSelection()!;
 
-        const highlightState = store.get('highlightState');
+        const highlightState = store.get('highlightState')!;
         const hasSelection =
             (highlightState.type === HighlightStateType.NoSelection ||
                 highlightState.type === HighlightStateType.Selected) &&
@@ -62,15 +62,15 @@ export const Tracker: React.FC<{
         const shouldIgnoreEndContainer =
             parentEndContainer instanceof HTMLElement && parentEndContainer.hasAttribute(HIGHLIGHT_LAYER_ATTR);
 
-        let endDiv: Node, endOffset: number;
+        let endDiv: Node | null, endOffset: number;
 
         // Detect double-click
         if (startDiv && startDiv.parentNode == range.endContainer) {
             endDiv = startDiv;
-            endOffset = endDiv.textContent.length;
+            endOffset = endDiv.textContent!.length;
         } else if (shouldIgnoreEndContainer && range.endOffset == 0) {
             endDiv = range.endContainer.previousSibling;
-            endOffset = endDiv.textContent.length;
+            endOffset = endDiv!.textContent!.length;
         } else if (shouldIgnoreEndContainer) {
             endDiv = range.endContainer;
             endOffset = range.endOffset;
@@ -83,11 +83,11 @@ export const Tracker: React.FC<{
             return;
         }
 
-        const startPageIndex = parseInt(startDiv.getAttribute(HIGHLIGHT_PAGE_ATTR), 10);
-        const endPageIndex = parseInt(endDiv.getAttribute(HIGHLIGHT_PAGE_ATTR), 10);
+        const startPageIndex = parseInt(startDiv.getAttribute(HIGHLIGHT_PAGE_ATTR) || '', 10);
+        const endPageIndex = parseInt(endDiv.getAttribute(HIGHLIGHT_PAGE_ATTR) || '', 10);
 
-        const startTextLayer = startDiv.parentElement;
-        const endTextLayer = endDiv.parentElement;
+        const startTextLayer = startDiv.parentElement!;
+        const endTextLayer = endDiv.parentElement!;
 
         const startPageRect = startTextLayer.getBoundingClientRect();
         const startDivSiblings: HTMLElement[] = [].slice.call(
@@ -136,7 +136,7 @@ export const Tracker: React.FC<{
                 break;
 
             case SelectionRange.DifferentDivs:
-                highlightAreas = [getRectFromOffsets(startDiv, startOffset, startDiv.textContent.length)]
+                highlightAreas = [getRectFromOffsets(startDiv, startOffset, startDiv.textContent!.length)]
                     .concat(getRectBetween(startDivIndex + 1, endDivIndex - 1, startDivSiblings))
                     .concat([getRectFromOffsets(endDiv, 0, endOffset)])
                     .map((rect) => {
@@ -152,7 +152,7 @@ export const Tracker: React.FC<{
 
             case SelectionRange.DifferentPages:
                 // eslint-disable-next-line no-case-declarations
-                const startAreas = [getRectFromOffsets(startDiv, startOffset, startDiv.textContent.length)]
+                const startAreas = [getRectFromOffsets(startDiv, startOffset, startDiv.textContent!.length)]
                     .concat(getRectBetween(startDivIndex + 1, startDivSiblings.length - 1, startDivSiblings))
                     .map((rect) => {
                         return {

@@ -123,7 +123,7 @@ export const defaultLayoutPlugin = (props?: DefaultLayoutPluginProps): DefaultLa
                             <div className={styles.toolbar}>
                                 {props && props.renderToolbar ? props.renderToolbar(Toolbar) : <Toolbar />}
                             </div>
-                            <div {...mergeSubSlot}>{slot.subSlot.children}</div>
+                            <div {...mergeSubSlot}>{slot.subSlot!.children}</div>
                         </div>
                     </div>
                     {slot.children}
@@ -131,8 +131,8 @@ export const defaultLayoutPlugin = (props?: DefaultLayoutPluginProps): DefaultLa
             );
 
             // Reset the sub slot
-            slot.subSlot.attrs = {};
-            slot.subSlot.children = <></>;
+            slot.subSlot!.attrs = {};
+            slot.subSlot!.children = <></>;
 
             return slot;
         },

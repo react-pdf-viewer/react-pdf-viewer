@@ -60,6 +60,9 @@ export const DocumentLoader: React.FC<{
     const docRef = React.useRef<string>('');
 
     React.useEffect(() => {
+        if (!pdfJsApiProvider) {
+            return;
+        }
         // Reset the status when new `file` is provided (for example, when opening file from the toolbar)
         docRef.current = '';
         setStatus(new LoadingState(0));

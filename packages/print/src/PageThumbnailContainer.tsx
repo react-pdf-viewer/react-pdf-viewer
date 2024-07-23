@@ -22,7 +22,7 @@ export const PageThumbnailContainer: React.FC<{
     shouldRender: boolean;
     onLoad(): void;
 }> = ({ canvas, doc, pageIndex, pageRotation, pageSize, rotation, shouldRender, onLoad }) => {
-    const [page, setPage] = useSafeState<PdfJs.Page>(null);
+    const [page, setPage] = useSafeState<PdfJs.Page | null>(null);
     const isVertical = Math.abs(rotation + pageRotation) % 180 === 0;
 
     React.useEffect(() => {

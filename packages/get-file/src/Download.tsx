@@ -26,8 +26,8 @@ export const Download: React.FC<{
     fileNameGenerator: (file: OpenFile) => string;
     store: Store<StoreProps>;
 }> = ({ children, fileNameGenerator, store }) => {
-    const [currentFile, setCurrentFile] = React.useState<OpenFile>(store.get('file'));
-    const [currentDocument, setCurrentDocument] = React.useState<PdfJs.PdfDocument>(store.get('doc'));
+    const [currentFile, setCurrentFile] = React.useState<OpenFile>(store.get('file')!);
+    const [currentDocument, setCurrentDocument] = React.useState<PdfJs.PdfDocument>(store.get('doc')!);
 
     const handleDocumentChanged: StoreHandler<PdfJs.PdfDocument> = (doc: PdfJs.PdfDocument) => {
         setCurrentDocument(doc);

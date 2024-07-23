@@ -17,7 +17,7 @@ import { type Plugin } from '../types/Plugin';
 import { PdfJsApiContext } from '../vendors/PdfJsApiContext';
 
 export const TextLayer: React.FC<{
-    containerRef: React.MutableRefObject<HTMLDivElement>;
+    containerRef: React.RefObject<HTMLDivElement>;
     page: PdfJs.Page;
     pageIndex: number;
     plugins: Plugin[];
@@ -49,7 +49,7 @@ export const TextLayer: React.FC<{
         }
 
         const containerEle = containerRef.current;
-        if (!containerEle) {
+        if (!containerEle || !pdfJsApiProvider) {
             return;
         }
         containerEle.removeAttribute('data-testid');

@@ -66,7 +66,7 @@ export const Highlights: React.FC<{
     store: Store<StoreProps>;
     onHighlightKeyword?(props: OnHighlightKeyword): void;
 }> = ({ numPages, pageIndex, renderHighlights, store, onHighlightKeyword }) => {
-    const containerRef = React.useRef<HTMLDivElement>();
+    const containerRef = React.useRef<HTMLDivElement>(null);
     const defaultRenderHighlights = React.useCallback(
         (renderProps: RenderHighlightsProps) => (
             <>
@@ -81,7 +81,7 @@ export const Highlights: React.FC<{
 
     // The initial matching position is taken from the store
     // So the current highlight is kept (after zooming the document, for example)
-    const [matchPosition, setMatchPosition] = React.useState<MatchPosition>(store.get('matchPosition'));
+    const [matchPosition, setMatchPosition] = React.useState<MatchPosition>(store.get('matchPosition')!);
     const [keywordRegexp, setKeywordRegexp] = React.useState<NormalizedKeyword[]>(
         store.get('keyword') || [EMPTY_KEYWORD_REGEXP],
     );
@@ -114,7 +114,7 @@ export const Highlights: React.FC<{
             return null;
         }
 
-        const length = firstChild.textContent.length;
+        const length = firstChild.textContent!.length;
         const startOffset = charIndexSpan[0].charIndexInSpan;
         const endOffset =
             charIndexSpan.length === 1 ? startOffset : charIndexSpan[charIndexSpan.length - 1].charIndexInSpan;
@@ -258,15 +258,16 @@ export const Highlights: React.FC<{
     // The order of hooks are important. Since `charIndexes` will be used when we highlight matching items,
     // this hook is put at the top
     React.useEffect(() => {
+        const textLayerEle = renderStatus.ele;
         if (
             isEmptyKeyword() ||
             renderStatus.status !== LayerRenderStatus.DidRender ||
-            characterIndexesRef.current.length
+            characterIndexesRef.current.length ||
+            !textLayerEle
         ) {
             return;
         }
 
-        const textLayerEle = renderStatus.ele;
         const spans: HTMLElement[] = [].slice.call(textLayerEle.querySelectorAll('[data-text="true"]'));
 
         const charIndexes: CharIndex[] = spans
@@ -274,7 +275,7 @@ export const Highlights: React.FC<{
             .reduce(
                 (prev, curr, index) =>
                     prev.concat(
-                        curr.split('').map((c, i) => ({
+                        curr!.split('').map((c, i) => ({
                             char: c,
                             charIndexInSpan: i,
                             spanIndex: index,

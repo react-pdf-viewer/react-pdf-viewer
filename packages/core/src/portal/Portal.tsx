@@ -21,7 +21,7 @@ export const Portal: React.FC<{
     children: ({ position, ref }: { position: Position; ref: React.RefCallback<HTMLElement> }) => React.ReactNode;
     offset?: number;
     position: Position;
-    referenceRef: React.MutableRefObject<HTMLElement>;
+    referenceRef: React.RefObject<HTMLElement>;
 }> = ({ children, offset = 0, position, referenceRef }) => {
     const EMPTY_DOM_RECT = new DOMRect();
 

@@ -29,9 +29,7 @@ export const Highlight: React.FC<{
     const isRenderable = !!(annotation.hasPopup || title || contents);
 
     // Check if the highlight area is constructed by multiple quadrilaterals
-    const hasQuadPoints = annotation.quadPoints && annotation.quadPoints.length > 0;
-
-    if (hasQuadPoints) {
+    if (annotation.quadPoints && annotation.quadPoints.length > 0) {
         const annotations = annotation.quadPoints.map(
             (quadPoint) =>
                 Object.assign({}, annotation, {

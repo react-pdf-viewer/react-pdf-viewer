@@ -21,7 +21,7 @@ export const SvgLayer: React.FC<{
     width: number;
 }> = ({ height, page, rotation, scale, width }) => {
     const { pdfJsApiProvider } = React.useContext(PdfJsApiContext);
-    const containerRef = React.useRef<HTMLDivElement>();
+    const containerRef = React.useRef<HTMLDivElement>(null);
 
     const empty = (): void => {
         const containerEle = containerRef.current;
@@ -32,7 +32,11 @@ export const SvgLayer: React.FC<{
     };
 
     useIsomorphicLayoutEffect(() => {
-        const containerEle = containerRef.current as HTMLDivElement;
+        const containerEle = containerRef.current;
+        if (!pdfJsApiProvider || !containerEle) {
+            return;
+        }
+
         const viewport = page.getViewport({ rotation, scale });
 
         page.getOperatorList().then((operatorList) => {

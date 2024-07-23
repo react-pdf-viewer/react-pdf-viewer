@@ -45,8 +45,8 @@ export const BookmarkItem: React.FC<{
     const bookmarkExpandedMap = store.get('bookmarkExpandedMap');
     const defaultExpanded = isBookmarkExpanded
         ? isBookmarkExpanded({ bookmark, doc, depth, index })
-        : bookmarkExpandedMap.has(path)
-          ? bookmarkExpandedMap.get(path)
+        : (bookmarkExpandedMap && bookmarkExpandedMap.has(path))
+          ? bookmarkExpandedMap.get(path)!
           : !defaultIsCollapsed;
     const [expanded, setExpanded] = React.useState(defaultExpanded);
 
@@ -60,6 +60,9 @@ export const BookmarkItem: React.FC<{
 
     const jumpToDest = () => {
         const { dest } = bookmark;
+        if (!dest) {
+            return;
+        }
         const jumpToDestination = store.get('jumpToDestination');
 
         getDestination(doc, dest).then((target) => {

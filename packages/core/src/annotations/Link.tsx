@@ -18,7 +18,7 @@ import { Annotation } from './Annotation';
 
 export const Link: React.FC<{
     annotation: PdfJs.Annotation;
-    annotationContainerRef: React.MutableRefObject<HTMLElement>;
+    annotationContainerRef: React.RefObject<HTMLElement>;
     doc: PdfJs.PdfDocument;
     outlines: PdfJs.Outline[];
     page: PdfJs.Page;
@@ -41,7 +41,7 @@ export const Link: React.FC<{
     onJumpFromLinkAnnotation,
     onJumpToDest,
 }) => {
-    const elementRef = React.useRef<HTMLAnchorElement>();
+    const elementRef = React.useRef<HTMLAnchorElement>(null);
 
     // Determine the corresponding outline that has the same destination
     const title =
@@ -90,7 +90,7 @@ export const Link: React.FC<{
     // However, it is requested by our customers
     let attrs = {};
     if (annotation.url || annotation.unsafeUrl) {
-        const targetUrl = sanitizeUrl(annotation.url || annotation.unsafeUrl, '');
+        const targetUrl = sanitizeUrl(annotation.url || annotation.unsafeUrl || '', '');
         if (targetUrl) {
             attrs = {
                 'data-target': 'external',

@@ -108,7 +108,7 @@ export interface PluginOnCanvasLayerRender {
     status: LayerRenderStatus;
 }
 export interface PluginRenderPageLayer {
-    canvasLayerRef: React.MutableRefObject<HTMLCanvasElement>;
+    canvasLayerRef: React.RefObject<HTMLCanvasElement>;
     // Is the canvas layer rendered completely?
     canvasLayerRendered: boolean;
     doc: PdfJs.PdfDocument;
@@ -116,7 +116,7 @@ export interface PluginRenderPageLayer {
     pageIndex: number;
     rotation: number;
     scale: number;
-    textLayerRef: React.MutableRefObject<HTMLDivElement>;
+    textLayerRef: React.RefObject<HTMLDivElement>;
     // Is the text layer rendered completely?
     textLayerRendered: boolean;
     width: number;
@@ -636,7 +636,7 @@ export interface ViewerProps {
 export class Viewer extends React.Component<ViewerProps> {}
 
 // Hooks
-export function useDebounceCallback<T extends unknown[]>(callback: (...args: T) => void, wait: number): void;
+export function useDebounceCallback<T extends unknown[]>(callback: (...args: T) => void, wait: number): (...args: T) => void;
 
 export interface UseIntersectionObserverProps {
     once?: boolean;

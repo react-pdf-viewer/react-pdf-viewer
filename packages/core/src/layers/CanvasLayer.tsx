@@ -22,7 +22,7 @@ import { roundToDivide } from '../utils/roundToDivide';
 const MAX_CANVAS_SIZE = 4096 * 4096;
 
 export const CanvasLayer: React.FC<{
-    canvasLayerRef: React.MutableRefObject<HTMLCanvasElement>;
+    canvasLayerRef: React.RefObject<HTMLCanvasElement>;
     height: number;
     page: PdfJs.Page;
     pageIndex: number;
@@ -41,6 +41,9 @@ export const CanvasLayer: React.FC<{
         }
 
         const canvasEle = canvasLayerRef.current;
+        if (!canvasEle) {
+            return;
+        }
         canvasEle.removeAttribute('data-testid');
 
         const preRenderProps = {
@@ -90,8 +93,11 @@ export const CanvasLayer: React.FC<{
         canvasEle.hidden = true;
 
         const canvasContext = canvasEle.getContext('2d', { alpha: false });
+        if (!canvasContext) {
+            return;
+        }
 
-        const transform = shouldScaleByCSS || outputScale !== 1 ? [possibleScale, 0, 0, possibleScale, 0, 0] : null;
+        const transform = shouldScaleByCSS || outputScale !== 1 ? [possibleScale, 0, 0, possibleScale, 0, 0] : undefined;
         renderTask.current = page.render({ canvasContext, transform, viewport });
         renderTask.current.promise.then(
             (): void => {

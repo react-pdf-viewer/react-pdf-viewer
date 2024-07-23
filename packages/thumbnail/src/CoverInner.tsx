@@ -85,6 +85,9 @@ export const CoverInner: React.FC<{
 
             const canvas = document.createElement('canvas');
             const canvasContext = canvas.getContext('2d', { alpha: false });
+            if (!canvasContext) {
+                return;
+            }
 
             const containerWidth = containerEle.clientWidth;
             const containerHeight = containerEle.clientHeight;

@@ -24,23 +24,23 @@ export const getTextFromOffsets = (
     if (startDivIdx < endDivIdx) {
         const startDivText = nodes
             .slice(startDivIdx, startDivIdx + 1)
-            .map((node) => node.textContent.substring(startOffset).trim())
+            .map((node) => node.textContent!.substring(startOffset).trim())
             .join(' ');
 
         const middleDivText = nodes
             .slice(startDivIdx + 1, endDivIdx)
-            .map((node) => node.textContent.trim())
+            .map((node) => node.textContent!.trim())
             .join(' ');
 
         const endDivText = nodes
             .slice(endDivIdx, endDivIdx + 1)
-            .map((endDiv) => endDiv.textContent.substring(0, endOffset || endDiv.textContent.length))
+            .map((endDiv) => endDiv.textContent!.substring(0, endOffset || endDiv.textContent!.length))
             .join(' ');
         const wholeText = `${startDivText} ${middleDivText} ${endDivText}`;
         const divTexts = nodes.slice(startDivIdx, endDivIdx + 1).map((node, idx) => ({
             divIndex: startDivIdx + idx,
             pageIndex,
-            textContent: node.textContent,
+            textContent: node.textContent!,
         }));
         return {
             divTexts,
@@ -48,12 +48,12 @@ export const getTextFromOffsets = (
         };
     } else {
         const div = nodes[startDivIdx];
-        const wholeText = div.textContent.substring(startOffset, endOffset || div.textContent.length).trim();
+        const wholeText = div.textContent!.substring(startOffset, endOffset || div.textContent!.length).trim();
         const divTexts = [
             {
                 divIndex: startDivIdx,
                 pageIndex,
-                textContent: div.textContent,
+                textContent: div.textContent!,
             },
         ];
         return {
