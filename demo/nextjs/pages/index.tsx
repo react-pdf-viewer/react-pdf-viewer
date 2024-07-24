@@ -13,7 +13,7 @@ const Index = () => {
                 display: 'flex',
                 height: '50rem',
                 margin: '5rem auto',
-                width: '64rem',
+                maxWidth: '64rem',
             }}
         >
             <Viewer fileUrl="/pdf-open-parameters.pdf" plugins={[defaultLayoutPluginInstance, dropPluginInstance]} />

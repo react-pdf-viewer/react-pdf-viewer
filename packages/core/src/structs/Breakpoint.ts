@@ -6,4 +6,10 @@
  * @copyright 2019-2024 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-@import './utils';
+export enum Breakpoint {
+    ExtraSmall = 'ExtraSmall',
+    Small = 'Small',
+    Medium = 'Medium',
+    Large = 'Large',
+    ExtraLarge = 'ExtraLarge',
+}

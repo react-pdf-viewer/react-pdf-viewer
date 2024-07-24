@@ -9,6 +9,8 @@
 'use client';
 
 import {
+    Breakpoint,
+    BreakpointContext,
     LocalizationContext,
     Menu,
     MenuDivider,
@@ -29,6 +31,8 @@ import { type ToolbarSlot } from './types/ToolbarSlot';
 export const MoreActionsPopover: React.FC<{
     toolbarSlot: ToolbarSlot;
 }> = ({ toolbarSlot }) => {
+    const breakpoint = React.useContext(BreakpointContext);
+    const isSmallBreakpoint = breakpoint === Breakpoint.ExtraSmall || breakpoint === Breakpoint.Small;
     const { l10n } = React.useContext(LocalizationContext);
     const {
         DownloadMenuItem,
@@ -74,32 +78,23 @@ export const MoreActionsPopover: React.FC<{
         return (
             <Menu>
                 {/* These items will be hidden on the larger screens */}
-                <div className="rpv-core__display--block rpv-core__display--hidden-medium">
+                {isSmallBreakpoint && (
+                    <>
                     <SwitchThemeMenuItem onClick={toggle} />
-                </div>
-                <div className="rpv-core__display--block rpv-core__display--hidden-medium">
                     <EnterFullScreenMenuItem onClick={toggle} />
-                </div>
-                <div className="rpv-core__display--block rpv-core__display--hidden-medium">
                     <OpenMenuItem />
-                </div>
-                <div className="rpv-core__display--block rpv-core__display--hidden-medium">
                     <PrintMenuItem onClick={toggle} />
-                </div>
-                <div className="rpv-core__display--block rpv-core__display--hidden-medium">
                     <DownloadMenuItem onClick={toggle} />
-                </div>
-                <div className="rpv-core__display--block rpv-core__display--hidden-medium">
                     <MenuDivider />
-                </div>
-
+                    </>
+                )}
                 <GoToFirstPageMenuItem onClick={toggle} />
-                <div className="rpv-core__display--block rpv-core__display--hidden-medium">
+                {isSmallBreakpoint && (
+                    <>
                     <GoToPreviousPageMenuItem onClick={toggle} />
-                </div>
-                <div className="rpv-core__display--block rpv-core__display--hidden-medium">
                     <GoToNextPageMenuItem onClick={toggle} />
-                </div>
+                    </>
+                )}
                 <GoToLastPageMenuItem onClick={toggle} />
                 <MenuDivider />
                 <RotateForwardMenuItem onClick={toggle} />
@@ -113,18 +108,14 @@ export const MoreActionsPopover: React.FC<{
                 <SwitchScrollModeMenuItem mode={ScrollMode.Horizontal} onClick={toggle} />
                 <SwitchScrollModeMenuItem mode={ScrollMode.Wrapped} onClick={toggle} />
                 <MenuDivider />
-                <div className="rpv-core__display--hidden rpv-core__display--block-small">
+                {!isSmallBreakpoint && (
+                    <>
                     <SwitchViewModeMenuItem mode={ViewMode.SinglePage} onClick={toggle} />
-                </div>
-                <div className="rpv-core__display--hidden rpv-core__display--block-small">
                     <SwitchViewModeMenuItem mode={ViewMode.DualPage} onClick={toggle} />
-                </div>
-                <div className="rpv-core__display--hidden rpv-core__display--block-small">
                     <SwitchViewModeMenuItem mode={ViewMode.DualPageWithCover} onClick={toggle} />
-                </div>
-                <div className="rpv-core__display--hidden rpv-core__display--block-small">
                     <MenuDivider />
-                </div>
+                    </>
+                )}
                 <ShowPropertiesMenuItem onClick={toggle} />
             </Menu>
         );

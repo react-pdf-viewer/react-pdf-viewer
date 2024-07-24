@@ -11,8 +11,8 @@ const App = () => {
         <div
             style={{
                 height: '50rem',
-                width: '50rem',
                 margin: '1rem auto',
+                maxWidth: '50rem',
             }}
         >
             <Viewer
