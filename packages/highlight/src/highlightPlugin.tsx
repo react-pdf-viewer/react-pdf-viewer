@@ -25,6 +25,7 @@ import { HighlightAreaList } from './HighlightAreaList';
 import { Tracker } from './Tracker';
 import { HIGHLIGHT_LAYER_ATTR, HIGHLIGHT_PAGE_ATTR } from './constants';
 import { Trigger } from './structs/Trigger';
+import styles from './styles/selectedText.module.css';
 import { type HighlightArea } from './types/HighlightArea';
 import { HighlightStateType, NO_SELECTION_STATE, SELECTING_STATE } from './types/HighlightState';
 import { type RenderHighlightContentProps } from './types/RenderHighlightContentProps';
@@ -44,7 +45,7 @@ export interface HighlightPluginProps {
     trigger?: Trigger;
 }
 
-const TEXT_LAYER_END_SELECTOR = 'rpv-highlight__selected-end';
+const TEXT_LAYER_END_SELECTOR = styles.selectedEnd;
 
 export const highlightPlugin = (props?: HighlightPluginProps): HighlightPlugin => {
     const highlightPluginProps = Object.assign({}, { trigger: Trigger.TextSelection }, props);
