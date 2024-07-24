@@ -219,6 +219,14 @@ export enum AnnotationType {
     FileAttachment = 17,
 }
 
+export enum Breakpoint {
+    ExtraSmall = 'ExtraSmall',
+    Small = 'Small',
+    Medium = 'Medium',
+    Large = 'Large',
+    ExtraLarge = 'ExtraLarge',
+}
+
 export enum FullScreenMode {
     Normal = 'Normal',
     // Start entering the full screen mode
@@ -458,6 +466,8 @@ export const DARK_THEME: Theme;
 export const LIGHT_THEME: Theme;
 
 // Contexts
+export const BreakpointContext: React.Context<Breakpoint>;
+
 export interface LocalizationMap {
     [key: string]: string | LocalizationMap;
 }

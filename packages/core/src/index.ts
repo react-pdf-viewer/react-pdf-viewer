@@ -8,8 +8,6 @@
 
 'use client';
 
-export { Provider } from './Provider';
-export { Viewer } from './Viewer';
 export { AnnotationType } from './annotations/AnnotationType';
 export { Button } from './components/Button';
 export { LazyRender } from './components/LazyRender';
@@ -36,7 +34,10 @@ export { LocalizationContext } from './localization/LocalizationContext';
 export { Modal } from './portal/Modal';
 export { Popover } from './portal/Popover';
 export { Tooltip } from './portal/Tooltip';
+export { Provider } from './Provider';
+export { BreakpointContext } from './responsive/BreakpointContext';
 export { createStore } from './store/createStore';
+export { Breakpoint } from './structs/Breakpoint';
 export { FullScreenMode } from './structs/FullScreenMode';
 export { LayerRenderStatus } from './structs/LayerRenderStatus';
 export { PageMode } from './structs/PageMode';
@@ -47,9 +48,9 @@ export { ScrollMode } from './structs/ScrollMode';
 export { SpecialZoomLevel } from './structs/SpecialZoomLevel';
 export { ToggleStatus } from './structs/ToggleStatus';
 export { ViewMode } from './structs/ViewMode';
-export { TextDirection, ThemeContext } from './theme/ThemeContext';
 export { DARK_THEME } from './theme/darkTheme';
 export { LIGHT_THEME } from './theme/lightTheme';
+export { TextDirection, ThemeContext } from './theme/ThemeContext';
 export * from './types/index';
 export { chunk } from './utils/chunk';
 export { classNames } from './utils/classNames';
@@ -57,3 +58,4 @@ export { isMac } from './utils/isMac';
 export { getDestination, getPage } from './utils/managePages';
 export { mergeRefs } from './utils/mergeRefs';
 export { PdfJsApiContext } from './vendors/PdfJsApiContext';
+export { Viewer } from './Viewer';
