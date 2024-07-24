@@ -116,8 +116,7 @@ export const useFullScreen = ({ targetRef }: { targetRef: React.RefObject<HTMLEl
                 // It's not possible to add a CSS class to target
                 // We have to set an inline style to avoid the black backdrop
                 if (fullScreenElementRef.current) {
-                    fullScreenElementRef.current.style.backgroundColor =
-                        'var(--rpv-core__full-screen-target-background-color)';
+                    fullScreenElementRef.current.style.backgroundColor = 'hsl(var(--rpv-background))';
                 }
                 // Store the latest window size right after entering the full screen mode
                 windowSizeBeforeFullScreenRef.current = {
