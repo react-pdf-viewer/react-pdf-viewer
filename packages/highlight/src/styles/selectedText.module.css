@@ -6,23 +6,23 @@
  * @copyright 2019-2024 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-.rpv-highlight__selected-text {
+.selectedText {
     background-color: var(--rpv-highlight__selected-text-background-color);
 }
 
-.rpv-highlight__selected-end {
+.selectedEnd {
     display: block;
 
-    // Absolute position
+    /* Absolute position */
     bottom: 0;
     left: 0;
     position: absolute;
     right: 0;
     top: 100%;
 
-    // Make it hidden
+    /* Make it hidden */
     z-index: -1;
 
-    // And unselectable
+    /* And unselectable */
     user-select: none;
 }

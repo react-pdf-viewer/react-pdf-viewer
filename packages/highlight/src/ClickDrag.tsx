@@ -11,6 +11,7 @@
 import { type Store } from '@react-pdf-viewer/core';
 import * as React from 'react';
 import { getImageFromArea } from './getImageFromArea';
+import styles from './styles/clickDrag.module.css';
 import { HighlightState, HighlightStateType, NO_SELECTION_STATE } from './types/HighlightState';
 import { type StoreProps } from './types/StoreProps';
 
@@ -39,7 +40,7 @@ export const ClickDrag: React.FC<{
     const hideContainer = () => {
         const container = containerRef.current;
         if (container) {
-            container.classList.add('rpv-highlight__click-drag--hidden');
+            container.classList.add(styles.clickDragHidden);
         }
     };
 
@@ -93,8 +94,8 @@ export const ClickDrag: React.FC<{
         };
         const rect = textLayerEle.getBoundingClientRect();
 
-        if (container.classList.contains('rpv-highlight__click-drag--hidden')) {
-            container.classList.remove('rpv-highlight__click-drag--hidden');
+        if (container.classList.contains(styles.clickDragHidden)) {
+            container.classList.remove(styles.clickDragHidden);
         }
 
         // Prevent users from dragging out of the page
@@ -198,5 +199,5 @@ export const ClickDrag: React.FC<{
         };
     }, [textLayerRendered]);
 
-    return <div ref={containerRef} className="rpv-highlight__click-drag rpv-highlight__click-drag--hidden" />;
+    return <div ref={containerRef} className={`${styles.clickDrag} ${styles.clickDragHidden}`} />;
 };

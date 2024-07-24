@@ -6,14 +6,14 @@
  * @copyright 2019-2024 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-.rpv-highlight__click-drag {
-    background-color: var(--rpv-highlight__click-drag-background-color);
-    outline: 1px dashed var(--rpv-highlight__click-drag-border-color);
+.clickDrag {
+    background-color: hsl(var(--rpv-highlight) / .3);
+    outline: 1px dashed hsl(var(--rpv-border));
     position: absolute;
-    // Higher than text layer
+    /* Higher than text layer */
     z-index: 2;
 }
 
-.rpv-highlight__click-drag--hidden {
+.clickDragHidden {
     display: none;
 }
