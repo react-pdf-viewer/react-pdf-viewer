@@ -8,7 +8,7 @@
 
 'use client';
 
-import { classNames, TextDirection, ThemeContext } from '@react-pdf-viewer/core';
+import { Breakpoint, BreakpointContext, classNames, TextDirection, ThemeContext } from '@react-pdf-viewer/core';
 import * as React from 'react';
 import { MoreActionsPopover } from './MoreActionsPopover';
 import styles from './styles/defaultToolbar.module.css';
@@ -21,6 +21,8 @@ export const renderDefaultToolbar =
     (defaultToolbarSlot: ToolbarSlot): React.ReactElement => {
         const toolbarSlot = React.useMemo(() => transformToolbarSlot(defaultToolbarSlot), []);
         const { direction } = React.useContext(ThemeContext);
+        const breakpoint = React.useContext(BreakpointContext);
+        const isMediumBreakpoint = breakpoint !== Breakpoint.ExtraSmall && breakpoint !== Breakpoint.Small;
         const isRtl = direction === TextDirection.RightToLeft;
         const {
             CurrentPageInput,
@@ -52,62 +54,50 @@ export const renderDefaultToolbar =
                     <div className={styles.item}>
                         <ShowSearchPopover />
                     </div>
-                    <div className="rpv-core__display--hidden rpv-core__display--block-small">
-                        <div className={styles.item}>
-                            <GoToPreviousPage />
-                        </div>
-                    </div>
+                    {breakpoint !== Breakpoint.ExtraSmall && (
+                        <div className={styles.item}><GoToPreviousPage /></div>
+                    )}
                     <div className={styles.item}>
                         <CurrentPageInput />
                         <span className={styles.label}>
                             <NumberOfPages />
                         </span>
                     </div>
-                    <div className="rpv-core__display--hidden rpv-core__display--block-small">
-                        <div className={styles.item}>
-                            <GoToNextPage />
-                        </div>
-                    </div>
+                    {breakpoint !== Breakpoint.ExtraSmall && (
+                        <div className={styles.item}><GoToNextPage /></div>
+                    )}
                 </div>
                 <div className={styles.center}>
                     <div className={styles.item}>
                         <ZoomOut />
                     </div>
-                    <div className="rpv-core__display--hidden rpv-core__display--block-small">
-                        <div className={styles.item}>
-                            <Zoom />
-                        </div>
-                    </div>
+                    {breakpoint !== Breakpoint.ExtraSmall && (
+                        <div className={styles.item}><Zoom /></div>
+                    )}
                     <div className={styles.item}>
                         <ZoomIn />
                     </div>
                 </div>
                 <div className={styles.right}>
-                    <div className="rpv-core__display--hidden rpv-core__display--block-medium">
+                    {isMediumBreakpoint && (
+                        <>
                         <div className={styles.item}>
                             <SwitchTheme />
                         </div>
-                    </div>
-                    <div className="rpv-core__display--hidden rpv-core__display--block-medium">
                         <div className={styles.item}>
                             <EnterFullScreen />
                         </div>
-                    </div>
-                    <div className="rpv-core__display--hidden rpv-core__display--block-medium">
                         <div className={styles.item}>
                             <Open />
                         </div>
-                    </div>
-                    <div className="rpv-core__display--hidden rpv-core__display--block-medium">
                         <div className={styles.item}>
                             <Download />
                         </div>
-                    </div>
-                    <div className="rpv-core__display--hidden rpv-core__display--block-medium">
                         <div className={styles.item}>
                             <Print />
                         </div>
-                    </div>
+                        </>
+                    )}
                     <div className={styles.item}>
                         <MoreActionsPopover toolbarSlot={toolbarSlot} />
                     </div>
