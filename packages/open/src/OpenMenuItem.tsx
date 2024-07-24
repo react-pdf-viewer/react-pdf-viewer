@@ -11,6 +11,7 @@
 import { LocalizationContext, MenuItem, type LocalizationMap, type Store } from '@react-pdf-viewer/core';
 import * as React from 'react';
 import { OpenFileIcon } from './OpenFileIcon';
+import styles from './styles/openInput.module.css';
 import { type StoreProps } from './types/StoreProps';
 import { useTriggerOpen } from './useTriggerOpen';
 
@@ -25,12 +26,12 @@ export const OpenMenuItem: React.FC<{
 
     return (
         <MenuItem icon={<OpenFileIcon />} testId="open__menu" onClick={openFile}>
-            <div className="rpv-open__input-wrapper">
+            <div className={styles.container}>
                 <input
                     accept=".pdf"
-                    ref={inputRef}
-                    className="rpv-open__input"
+                    className={styles.input}
                     multiple={false}
+                    ref={inputRef}
                     tabIndex={-1}
                     title=""
                     type="file"

@@ -42,9 +42,9 @@ export const OpenButton: React.FC<{
                 <div className={styles.container}>
                     <input
                         accept=".pdf"
-                        ref={inputRef}
                         className={styles.input}
                         multiple={false}
+                        ref={inputRef}
                         tabIndex={-1}
                         title=""
                         type="file"
