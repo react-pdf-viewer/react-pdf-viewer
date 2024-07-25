@@ -55,7 +55,7 @@
         "jest-environment-jsdom": "^29.7.0",
         "jest-puppeteer": "^10.0.1",
         "path2d-polyfill": "^3.1.1",
-        "pdfjs-dist": "^4.3.136",
+        "pdfjs-dist": "^4.4.168",
         "postcss": "^8.4.39",
         "postcss-import": "^16.1.0",
         "prettier": "^3.3.2",
