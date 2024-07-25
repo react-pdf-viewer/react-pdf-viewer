@@ -94,11 +94,7 @@ export const AnnotationLayerBody: React.FC<{
     }, []);
 
     return (
-        <div
-            ref={containerRef}
-            className={styles.layer}
-            data-testid={`core__annotation-layer-${pageIndex}`}
-        >
+        <div ref={containerRef} className={styles.layer} data-testid={`core__annotation-layer-${pageIndex}`}>
             {filterAnnotations.map((annotation) => {
                 const childAnnotation = annotations.find((item) => item.parentId === annotation.id);
                 switch (annotation.annotationType) {

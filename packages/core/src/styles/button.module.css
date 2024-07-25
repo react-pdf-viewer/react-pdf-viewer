@@ -10,10 +10,11 @@
     background-color: hsl(var(--rpv-secondary));
     border: none;
     border-radius: calc(var(--rpv-radius) - 2px);
-    box-shadow: rgba(0, 0, 0, 0) 0px 0px 0px 0px,
-                rgba(0, 0, 0, 0) 0px 0px 0px 0px,
-                rgba(0, 0, 0, 0.1) 0px 1px 3px 0px,
-                rgba(0, 0, 0, 0.1) 0px 1px 2px -1px;
+    box-shadow:
+        rgba(0, 0, 0, 0) 0px 0px 0px 0px,
+        rgba(0, 0, 0, 0) 0px 0px 0px 0px,
+        rgba(0, 0, 0, 0.1) 0px 1px 3px 0px,
+        rgba(0, 0, 0, 0.1) 0px 1px 2px -1px;
     color: hsl(var(--rpv-secondary-foreground));
     cursor: pointer;
     height: 2rem;

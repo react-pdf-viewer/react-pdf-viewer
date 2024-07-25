@@ -39,7 +39,9 @@ export const Modal: React.FC<{
             >
                 {target(toggle, opened)}
             </div>
-        ) : <></>;
+        ) : (
+            <></>
+        );
     };
 
     const renderContent = (toggle: Toggle): React.ReactElement => (

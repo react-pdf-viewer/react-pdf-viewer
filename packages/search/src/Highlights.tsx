@@ -329,9 +329,7 @@ export const Highlights: React.FC<{
             return;
         }
 
-        const highlightEle = container.querySelector(
-            `.${styles.highlight}[data-index="${matchPosition.matchIndex}"]`,
-        );
+        const highlightEle = container.querySelector(`.${styles.highlight}[data-index="${matchPosition.matchIndex}"]`);
         if (!highlightEle) {
             return;
         }

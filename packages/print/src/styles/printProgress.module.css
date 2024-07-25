@@ -22,10 +22,11 @@
     background-color: hsl(var(--rpv-background));
     border: 1px solid hsl(var(--rpv-border));
     border-radius: var(--rpv-radius);
-    box-shadow: rgba(0, 0, 0, 0) 0px 0px 0px 0px,
-                rgba(0, 0, 0, 0) 0px 0px 0px 0px,
-                rgba(0, 0, 0, 0.1) 0px 4px 6px -1px,
-                rgba(0, 0, 0, 0.1) 0px 2px 4px -2px;
+    box-shadow:
+        rgba(0, 0, 0, 0) 0px 0px 0px 0px,
+        rgba(0, 0, 0, 0) 0px 0px 0px 0px,
+        rgba(0, 0, 0, 0.1) 0px 4px 6px -1px,
+        rgba(0, 0, 0, 0.1) 0px 2px 4px -2px;
     color: hsl(var(--rpv-foreground));
     padding: 1.5rem;
     text-align: center;

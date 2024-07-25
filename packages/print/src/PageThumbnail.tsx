@@ -80,7 +80,12 @@ export const PageThumbnail: React.FC<{
     return (
         src && (
             <div className={styles.page}>
-                <img className={styles.image} data-testid={`print__thumbnail-${pageIndex}`} src={src} onLoad={handleImageLoad} />
+                <img
+                    className={styles.image}
+                    data-testid={`print__thumbnail-${pageIndex}`}
+                    src={src}
+                    onLoad={handleImageLoad}
+                />
             </div>
         )
     );

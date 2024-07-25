@@ -62,7 +62,7 @@ const triggerIntersection = (
 
     const ratio =
         typeof trigger === 'number'
-            ? observer.thresholds.find((threshold) => trigger >= threshold) ?? 0
+            ? (observer.thresholds.find((threshold) => trigger >= threshold) ?? 0)
             : trigger
               ? 1
               : 0;

@@ -646,7 +646,10 @@ export interface ViewerProps {
 export class Viewer extends React.Component<ViewerProps> {}
 
 // Hooks
-export function useDebounceCallback<T extends unknown[]>(callback: (...args: T) => void, wait: number): (...args: T) => void;
+export function useDebounceCallback<T extends unknown[]>(
+    callback: (...args: T) => void,
+    wait: number,
+): (...args: T) => void;
 
 export interface UseIntersectionObserverProps {
     once?: boolean;

@@ -97,7 +97,8 @@ export const CanvasLayer: React.FC<{
             return;
         }
 
-        const transform = shouldScaleByCSS || outputScale !== 1 ? [possibleScale, 0, 0, possibleScale, 0, 0] : undefined;
+        const transform =
+            shouldScaleByCSS || outputScale !== 1 ? [possibleScale, 0, 0, possibleScale, 0, 0] : undefined;
         renderTask.current = page.render({ canvasContext, transform, viewport });
         renderTask.current.promise.then(
             (): void => {
