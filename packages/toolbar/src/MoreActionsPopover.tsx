@@ -80,19 +80,19 @@ export const MoreActionsPopover: React.FC<{
                 {/* These items will be hidden on the larger screens */}
                 {isSmallBreakpoint && (
                     <>
-                    <SwitchThemeMenuItem onClick={toggle} />
-                    <EnterFullScreenMenuItem onClick={toggle} />
-                    <OpenMenuItem />
-                    <PrintMenuItem onClick={toggle} />
-                    <DownloadMenuItem onClick={toggle} />
-                    <MenuDivider />
+                        <SwitchThemeMenuItem onClick={toggle} />
+                        <EnterFullScreenMenuItem onClick={toggle} />
+                        <OpenMenuItem />
+                        <PrintMenuItem onClick={toggle} />
+                        <DownloadMenuItem onClick={toggle} />
+                        <MenuDivider />
                     </>
                 )}
                 <GoToFirstPageMenuItem onClick={toggle} />
                 {isSmallBreakpoint && (
                     <>
-                    <GoToPreviousPageMenuItem onClick={toggle} />
-                    <GoToNextPageMenuItem onClick={toggle} />
+                        <GoToPreviousPageMenuItem onClick={toggle} />
+                        <GoToNextPageMenuItem onClick={toggle} />
                     </>
                 )}
                 <GoToLastPageMenuItem onClick={toggle} />
@@ -110,10 +110,10 @@ export const MoreActionsPopover: React.FC<{
                 <MenuDivider />
                 {!isSmallBreakpoint && (
                     <>
-                    <SwitchViewModeMenuItem mode={ViewMode.SinglePage} onClick={toggle} />
-                    <SwitchViewModeMenuItem mode={ViewMode.DualPage} onClick={toggle} />
-                    <SwitchViewModeMenuItem mode={ViewMode.DualPageWithCover} onClick={toggle} />
-                    <MenuDivider />
+                        <SwitchViewModeMenuItem mode={ViewMode.SinglePage} onClick={toggle} />
+                        <SwitchViewModeMenuItem mode={ViewMode.DualPage} onClick={toggle} />
+                        <SwitchViewModeMenuItem mode={ViewMode.DualPageWithCover} onClick={toggle} />
+                        <MenuDivider />
                     </>
                 )}
                 <ShowPropertiesMenuItem onClick={toggle} />

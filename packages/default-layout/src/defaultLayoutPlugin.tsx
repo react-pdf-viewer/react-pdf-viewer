@@ -108,8 +108,7 @@ export const defaultLayoutPlugin = (props?: DefaultLayoutPluginProps): DefaultLa
                         data-testid="default-layout__main"
                         className={classNames({
                             [styles.main]: true,
-                            [styles.mainRtl]:
-                                renderProps.themeContext.direction === TextDirection.RightToLeft,
+                            [styles.mainRtl]: renderProps.themeContext.direction === TextDirection.RightToLeft,
                         })}
                     >
                         <Sidebar

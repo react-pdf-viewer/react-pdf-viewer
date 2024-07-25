@@ -1,8 +1,5 @@
 {
-    "include": [
-        "src/**/*",
-        "../../@types"
-    ],
+    "include": ["src/**/*", "../../@types"],
     "exclude": ["./dist", "./lib"],
     "compilerOptions": {
         "esModuleInterop": true,

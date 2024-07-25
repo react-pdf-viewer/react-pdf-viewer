@@ -18,6 +18,6 @@
     width: 100%;
 
     &:hover {
-        background-color: hsl(var(--rpv-highlight) / .3);
+        background-color: hsl(var(--rpv-highlight) / 0.3);
     }
 }

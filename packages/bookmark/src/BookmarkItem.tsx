@@ -45,7 +45,7 @@ export const BookmarkItem: React.FC<{
     const bookmarkExpandedMap = store.get('bookmarkExpandedMap');
     const defaultExpanded = isBookmarkExpanded
         ? isBookmarkExpanded({ bookmark, doc, depth, index })
-        : (bookmarkExpandedMap && bookmarkExpandedMap.has(path))
+        : bookmarkExpandedMap && bookmarkExpandedMap.has(path)
           ? bookmarkExpandedMap.get(path)!
           : !defaultIsCollapsed;
     const [expanded, setExpanded] = React.useState(defaultExpanded);
@@ -101,11 +101,7 @@ export const BookmarkItem: React.FC<{
 
     const defaultRenderToggle = (expandIcon: React.ReactElement, collapseIcon: React.ReactElement) =>
         hasSubItems ? (
-            <span
-                className={styles.toggle}
-                data-testid={`bookmark__toggle-${depth}-${index}`}
-                onClick={toggleSubItems}
-            >
+            <span className={styles.toggle} data-testid={`bookmark__toggle-${depth}-${index}`} onClick={toggleSubItems}>
                 {expanded ? expandIcon : collapseIcon}
             </span>
         ) : (

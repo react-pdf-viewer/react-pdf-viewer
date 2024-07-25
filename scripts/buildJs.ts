@@ -2,14 +2,20 @@ type PackageJson = {
     dependencies: Record<string, string>;
     name: string;
     peerDependencies: Record<string, string>;
-}
+};
 
 import json from '@rollup/plugin-json';
 import terser from '@rollup/plugin-terser';
 import { createGenerateScopedName } from 'hash-css-selector';
 import fs from 'node:fs';
 import path from 'node:path';
-import { rollup, type OutputOptions, type RollupOptions, type RollupOutput, type WarningHandlerWithDefault } from 'rollup';
+import {
+    rollup,
+    type OutputOptions,
+    type RollupOptions,
+    type RollupOutput,
+    type WarningHandlerWithDefault,
+} from 'rollup';
 import copy from 'rollup-plugin-copy';
 import del from 'rollup-plugin-delete';
 import esbuild from 'rollup-plugin-esbuild';
@@ -29,7 +35,7 @@ const buildPackage = async (rootPackagePath: string) => {
     ];
     const handleOnWarn: WarningHandlerWithDefault = (warning, warn) => {
         // Ignore the warning shown when the `use client` directive is used at the top of files
-        if (warning.code === "MODULE_LEVEL_DIRECTIVE") {
+        if (warning.code === 'MODULE_LEVEL_DIRECTIVE') {
             return;
         }
         warn(warning);
@@ -61,14 +67,17 @@ const buildPackage = async (rootPackagePath: string) => {
                     // Copy file synchronously, so it can be removed by using the `del` plugin
                     copySync: true,
                     hook: 'writeBundle',
-                    targets: [{
-                        src: path.join(outputDir, `cjs/${packageName}.css`),
-                        dest: path.join(outputDir, 'styles'),
-                    }, {
-                        src: path.join(outputDir, `cjs/${packageName}.css`),
-                        dest: path.join(outputDir, 'styles'),
-                        rename: 'index.css',
-                    }],
+                    targets: [
+                        {
+                            src: path.join(outputDir, `cjs/${packageName}.css`),
+                            dest: path.join(outputDir, 'styles'),
+                        },
+                        {
+                            src: path.join(outputDir, `cjs/${packageName}.css`),
+                            dest: path.join(outputDir, 'styles'),
+                            rename: 'index.css',
+                        },
+                    ],
                 }),
                 del({
                     hook: 'writeBundle',
@@ -102,14 +111,17 @@ const buildPackage = async (rootPackagePath: string) => {
                 copy({
                     copySync: true,
                     hook: 'writeBundle',
-                    targets: [{
-                        src: path.join(outputDir, `cjs/${packageName}.min.css`),
-                        dest: path.join(outputDir, 'styles'),
-                    }, {
-                        src: path.join(outputDir, `cjs/${packageName}.min.css`),
-                        dest: path.join(outputDir, 'styles'),
-                        rename: 'index.min.css',
-                    }],
+                    targets: [
+                        {
+                            src: path.join(outputDir, `cjs/${packageName}.min.css`),
+                            dest: path.join(outputDir, 'styles'),
+                        },
+                        {
+                            src: path.join(outputDir, `cjs/${packageName}.min.css`),
+                            dest: path.join(outputDir, 'styles'),
+                            rename: 'index.min.css',
+                        },
+                    ],
                 }),
                 del({
                     hook: 'writeBundle',
@@ -124,14 +136,8 @@ const buildPackage = async (rootPackagePath: string) => {
     // Copy Typescript definitions
     fs.rmSync(outputDir, { recursive: true, force: true });
     fs.mkdirSync(outputDir);
-    fs.copyFileSync(
-        path.join(rootPackagePath, 'src/index.d.ts'),
-        path.join(rootPackagePath, 'lib/index.d.ts'),
-    );
-    fs.copyFileSync(
-        path.join(rootPackagePath, 'dist/index.js'),
-        path.join(rootPackagePath, 'lib/index.js'),
-    );
+    fs.copyFileSync(path.join(rootPackagePath, 'src/index.d.ts'), path.join(rootPackagePath, 'lib/index.d.ts'));
+    fs.copyFileSync(path.join(rootPackagePath, 'dist/index.js'), path.join(rootPackagePath, 'lib/index.js'));
 
     // Compile
     return Promise.all(
@@ -141,9 +147,9 @@ const buildPackage = async (rootPackagePath: string) => {
                     build.write(rollupOption.output as OutputOptions).then((out) => {
                         resolveBuild(out);
                     });
-                })
+                });
             });
-        })
+        }),
     );
 };
 

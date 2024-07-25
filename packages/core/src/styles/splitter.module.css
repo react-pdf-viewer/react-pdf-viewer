@@ -23,7 +23,7 @@
         left: 0;
         top: 0;
         height: 100%;
-        width: .25rem;
+        width: 0.25rem;
         transform: translateX(-50%);
     }
 
@@ -47,7 +47,7 @@
     background-color: hsl(var(--rpv-border));
     border-radius: calc(var(--rpv-radius) - 4px);
     height: 1rem;
-    width: .75rem;
+    width: 0.75rem;
 
     z-index: 9;
 }

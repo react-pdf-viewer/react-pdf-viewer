@@ -37,7 +37,7 @@
 
 .toolbar {
     align-items: center;
-    background-color: hsl(var(--rpv-muted) / .4);
+    background-color: hsl(var(--rpv-muted) / 0.4);
     border-bottom: 1px solid hsl(var(--rpv-border));
     color: hsl(var(--rpv-muted-foreground));
     display: flex;

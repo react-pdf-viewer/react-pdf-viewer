@@ -55,7 +55,9 @@ export const renderDefaultToolbar =
                         <ShowSearchPopover />
                     </div>
                     {breakpoint !== Breakpoint.ExtraSmall && (
-                        <div className={styles.item}><GoToPreviousPage /></div>
+                        <div className={styles.item}>
+                            <GoToPreviousPage />
+                        </div>
                     )}
                     <div className={styles.item}>
                         <CurrentPageInput />
@@ -64,7 +66,9 @@ export const renderDefaultToolbar =
                         </span>
                     </div>
                     {breakpoint !== Breakpoint.ExtraSmall && (
-                        <div className={styles.item}><GoToNextPage /></div>
+                        <div className={styles.item}>
+                            <GoToNextPage />
+                        </div>
                     )}
                 </div>
                 <div className={styles.center}>
@@ -72,7 +76,9 @@ export const renderDefaultToolbar =
                         <ZoomOut />
                     </div>
                     {breakpoint !== Breakpoint.ExtraSmall && (
-                        <div className={styles.item}><Zoom /></div>
+                        <div className={styles.item}>
+                            <Zoom />
+                        </div>
                     )}
                     <div className={styles.item}>
                         <ZoomIn />
@@ -81,21 +87,21 @@ export const renderDefaultToolbar =
                 <div className={styles.right}>
                     {isMediumBreakpoint && (
                         <>
-                        <div className={styles.item}>
-                            <SwitchTheme />
-                        </div>
-                        <div className={styles.item}>
-                            <EnterFullScreen />
-                        </div>
-                        <div className={styles.item}>
-                            <Open />
-                        </div>
-                        <div className={styles.item}>
-                            <Download />
-                        </div>
-                        <div className={styles.item}>
-                            <Print />
-                        </div>
+                            <div className={styles.item}>
+                                <SwitchTheme />
+                            </div>
+                            <div className={styles.item}>
+                                <EnterFullScreen />
+                            </div>
+                            <div className={styles.item}>
+                                <Open />
+                            </div>
+                            <div className={styles.item}>
+                                <Download />
+                            </div>
+                            <div className={styles.item}>
+                                <Print />
+                            </div>
                         </>
                     )}
                     <div className={styles.item}>

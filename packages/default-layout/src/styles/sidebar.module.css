@@ -55,7 +55,7 @@
 }
 
 .headers {
-    background-color: hsl(var(--rpv-muted) / .4);
+    background-color: hsl(var(--rpv-muted) / 0.4);
     padding: 0.25rem;
 }
 

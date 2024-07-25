@@ -193,7 +193,9 @@ export const Inner: React.FC<{
                         height: rect.height * scale,
                         width: rect.width * scale,
                     };
-                    return layoutBuilder.transformSize ? layoutBuilder.transformSize({ numPages, pageIndex, size: pageRect }) : pageRect;
+                    return layoutBuilder.transformSize
+                        ? layoutBuilder.transformSize({ numPages, pageIndex, size: pageRect })
+                        : pageRect;
                 }),
         [rotation, scale, pageSizes],
     );
@@ -861,12 +863,14 @@ export const Inner: React.FC<{
                                             style={Object.assign(
                                                 {},
                                                 virtualizer.getItemStyles(item),
-                                                layoutBuilder.buildPageStyles ? layoutBuilder.buildPageStyles({
-                                                    numPages,
-                                                    pageIndex: item.index,
-                                                    scrollMode,
-                                                    viewMode,
-                                                }) : {},
+                                                layoutBuilder.buildPageStyles
+                                                    ? layoutBuilder.buildPageStyles({
+                                                          numPages,
+                                                          pageIndex: item.index,
+                                                          scrollMode,
+                                                          viewMode,
+                                                      })
+                                                    : {},
                                             )}
                                         >
                                             <PageLayer

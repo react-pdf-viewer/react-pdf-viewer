@@ -81,9 +81,7 @@ export const Tracker: React.FC<{
             return;
         }
 
-        selectionMode === SelectionMode.Hand
-            ? ele.classList.add(styles.grab)
-            : ele.classList.remove(styles.grab);
+        selectionMode === SelectionMode.Hand ? ele.classList.add(styles.grab) : ele.classList.remove(styles.grab);
 
         ele.addEventListener('mousedown', onMouseDownHandler);
         return (): void => {

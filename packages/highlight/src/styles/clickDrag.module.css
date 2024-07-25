@@ -7,7 +7,7 @@
  */
 
 .clickDrag {
-    background-color: hsl(var(--rpv-highlight) / .3);
+    background-color: hsl(var(--rpv-highlight) / 0.3);
     outline: 1px dashed hsl(var(--rpv-border));
     position: absolute;
     /* Higher than text layer */

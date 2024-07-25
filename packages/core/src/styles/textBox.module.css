@@ -17,7 +17,10 @@
     width: 100%;
 
     &:focus-visible {
-        box-shadow: hsl(var(--rpv-background)) 0px 0px 0px 2px, hsl(var(--rpv-ring)) 0px 0px 0px 4px, rgba(0, 0, 0, 0) 0px 0px 0px 0px;
+        box-shadow:
+            hsl(var(--rpv-background)) 0px 0px 0px 2px,
+            hsl(var(--rpv-ring)) 0px 0px 0px 4px,
+            rgba(0, 0, 0, 0) 0px 0px 0px 0px;
         outline: 2px solid transparent;
         outline-offset: 2px;
     }
