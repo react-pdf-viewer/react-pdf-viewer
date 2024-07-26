@@ -598,6 +598,8 @@ export type SetRenderRange = (visiblePagesRange: VisiblePagesRange) => { endPage
 export interface ProviderProps {
     children?: React.ReactNode;
     pdfApiProvider: PdfJsApiProvider;
+    // Theme
+    theme?: string | ThemeProps;
     workerUrl: string;
 }
 export class Provider extends React.Component<ProviderProps> {}
@@ -627,8 +629,6 @@ export interface ViewerProps {
     renderProtectedView?: RenderProtectedView;
     scrollMode?: ScrollMode;
     setRenderRange?: SetRenderRange;
-    // Theme
-    theme?: string | ThemeProps;
     transformGetDocumentParams?(options: PdfJs.GetDocumentParams): PdfJs.GetDocumentParams;
     viewMode?: ViewMode;
     // Indicate the cross-site requests should be made with credentials such as cookie and authorization headers.

@@ -23,8 +23,7 @@ import { ScrollMode } from './structs/ScrollMode';
 import { SpecialZoomLevel } from './structs/SpecialZoomLevel';
 import { ViewMode } from './structs/ViewMode';
 import styles from './styles/viewer.module.css';
-import { TextDirection, ThemeContext } from './theme/ThemeContext';
-import { withTheme } from './theme/withTheme';
+import { ThemeContext } from './theme/ThemeContext';
 import { type CharacterMap } from './types/CharacterMap';
 import { type DocumentAskPasswordEvent } from './types/DocumentAskPasswordEvent';
 import { type DocumentLoadEvent } from './types/DocumentLoadEvent';
@@ -48,11 +47,6 @@ interface FileState {
     data: PdfJs.FileData;
     name: string;
     shouldLoad: boolean;
-}
-
-export interface ThemeProps {
-    direction?: TextDirection;
-    theme?: string;
 }
 
 const NUM_OVERSCAN_PAGES = 3;
@@ -88,8 +82,6 @@ export const Viewer: React.FC<{
     scrollMode?: ScrollMode;
     setRenderRange?: SetRenderRange;
     transformGetDocumentParams?(options: PdfJs.GetDocumentParams): PdfJs.GetDocumentParams;
-    // Theme
-    theme?: string | ThemeProps;
     viewMode?: ViewMode;
     // Indicate the cross-site requests should be made with credentials such as cookie and authorization headers.
     // The default value is `false`
@@ -120,10 +112,6 @@ export const Viewer: React.FC<{
     scrollMode = ScrollMode.Vertical,
     setRenderRange = DEFAULT_RENDER_RANGE,
     transformGetDocumentParams,
-    theme = {
-        direction: TextDirection.LeftToRight,
-        theme: 'light',
-    },
     viewMode = ViewMode.SinglePage,
     withCredentials = false,
     onDocumentAskPassword,
@@ -186,13 +174,12 @@ export const Viewer: React.FC<{
     });
 
     // Manage contexts
-    const themeProps = typeof theme === 'string' ? { direction: TextDirection.LeftToRight, theme } : theme;
-    const themeStr = themeProps.theme || 'light';
     const [l10n, setL10n] = React.useState(localization || DefaultLocalization);
     const localizationContext = { l10n, setL10n };
-    const themeContext = Object.assign({}, { direction: themeProps.direction }, withTheme(themeStr, onSwitchTheme));
     const [trackBreakpointRef, breakpoint] = useBreakpoint();
     const containerRef = mergeRefs([trackIntersectionRef, trackBreakpointRef]);
+    const { currentTheme } = React.useContext(ThemeContext);
+    const prevTheme = usePrevious(currentTheme);
 
     const [numStacks, setNumStacks] = React.useState(0);
     const increaseNumStacks = () => setNumStacks((v) => v + 1);
@@ -204,83 +191,87 @@ export const Viewer: React.FC<{
         }
     }, [localization]);
 
+    React.useEffect(() => {
+        if (currentTheme !== prevTheme && onSwitchTheme) {
+            onSwitchTheme(currentTheme);
+        }
+    }, [currentTheme]);
+
     return (
         <StackContext.Provider value={{ currentIndex: 0, increaseNumStacks, decreaseNumStacks, numStacks }}>
             <LocalizationContext.Provider value={localizationContext}>
-                <ThemeContext.Provider value={themeContext}>
-                    <BreakpointContext.Provider value={breakpoint}>
-                        <div
-                            ref={containerRef}
-                            className={styles.viewer}
-                            data-testid="core__viewer"
-                            style={{
-                                height: '100%',
-                                width: '100%',
-                            }}
-                        >
-                            {file.shouldLoad && (
-                                <DocumentLoader
-                                    characterMap={characterMap}
-                                    file={file.data}
-                                    httpHeaders={httpHeaders}
-                                    render={(doc: PdfJs.PdfDocument) => (
-                                        <PageSizeCalculator
-                                            defaultScale={defaultScale}
-                                            doc={doc}
-                                            render={(estimatedPageSizes: PageSize[], initialScale: number) => (
-                                                <Inner
-                                                    currentFile={{
-                                                        data: file.data,
-                                                        name: file.name,
-                                                    }}
-                                                    defaultScale={defaultScale}
-                                                    doc={doc}
-                                                    enableSmoothScroll={enableSmoothScroll}
-                                                    estimatedPageSizes={estimatedPageSizes}
-                                                    initialPage={initialPage}
-                                                    initialRotation={initialRotation}
-                                                    initialScale={initialScale}
-                                                    initialScrollMode={scrollMode}
-                                                    initialViewMode={viewMode}
-                                                    pageLayout={pageLayout}
-                                                    plugins={plugins}
-                                                    renderPage={renderPage}
-                                                    setRenderRange={setRenderRange}
-                                                    viewerState={{
-                                                        file,
-                                                        fullScreenMode: FullScreenMode.Normal,
-                                                        pageIndex: -1,
-                                                        pageHeight: estimatedPageSizes[0].pageHeight,
-                                                        pageWidth: estimatedPageSizes[0].pageWidth,
-                                                        pagesRotation: new Map(),
-                                                        rotation: initialRotation,
-                                                        scale: initialScale,
-                                                        scrollMode,
-                                                        viewMode,
-                                                    }}
-                                                    onDocumentLoad={onDocumentLoad}
-                                                    onOpenFile={openFile}
-                                                    onPageChange={onPageChange}
-                                                    onRotate={onRotate}
-                                                    onRotatePage={onRotatePage}
-                                                    onZoom={onZoom}
-                                                />
-                                            )}
-                                            scrollMode={scrollMode}
-                                            viewMode={viewMode}
-                                        />
-                                    )}
-                                    renderError={renderError}
-                                    renderLoader={renderLoader}
-                                    renderProtectedView={renderProtectedView}
-                                    transformGetDocumentParams={transformGetDocumentParams}
-                                    withCredentials={withCredentials}
-                                    onDocumentAskPassword={onDocumentAskPassword}
-                                />
-                            )}
-                        </div>
-                    </BreakpointContext.Provider>
-                </ThemeContext.Provider>
+                <BreakpointContext.Provider value={breakpoint}>
+                    <div
+                        ref={containerRef}
+                        className={styles.viewer}
+                        data-testid="core__viewer"
+                        style={{
+                            height: '100%',
+                            width: '100%',
+                        }}
+                    >
+                        {file.shouldLoad && (
+                            <DocumentLoader
+                                characterMap={characterMap}
+                                file={file.data}
+                                httpHeaders={httpHeaders}
+                                render={(doc: PdfJs.PdfDocument) => (
+                                    <PageSizeCalculator
+                                        defaultScale={defaultScale}
+                                        doc={doc}
+                                        render={(estimatedPageSizes: PageSize[], initialScale: number) => (
+                                            <Inner
+                                                currentFile={{
+                                                    data: file.data,
+                                                    name: file.name,
+                                                }}
+                                                defaultScale={defaultScale}
+                                                doc={doc}
+                                                enableSmoothScroll={enableSmoothScroll}
+                                                estimatedPageSizes={estimatedPageSizes}
+                                                initialPage={initialPage}
+                                                initialRotation={initialRotation}
+                                                initialScale={initialScale}
+                                                initialScrollMode={scrollMode}
+                                                initialViewMode={viewMode}
+                                                pageLayout={pageLayout}
+                                                plugins={plugins}
+                                                renderPage={renderPage}
+                                                setRenderRange={setRenderRange}
+                                                viewerState={{
+                                                    file,
+                                                    fullScreenMode: FullScreenMode.Normal,
+                                                    pageIndex: -1,
+                                                    pageHeight: estimatedPageSizes[0].pageHeight,
+                                                    pageWidth: estimatedPageSizes[0].pageWidth,
+                                                    pagesRotation: new Map(),
+                                                    rotation: initialRotation,
+                                                    scale: initialScale,
+                                                    scrollMode,
+                                                    viewMode,
+                                                }}
+                                                onDocumentLoad={onDocumentLoad}
+                                                onOpenFile={openFile}
+                                                onPageChange={onPageChange}
+                                                onRotate={onRotate}
+                                                onRotatePage={onRotatePage}
+                                                onZoom={onZoom}
+                                            />
+                                        )}
+                                        scrollMode={scrollMode}
+                                        viewMode={viewMode}
+                                    />
+                                )}
+                                renderError={renderError}
+                                renderLoader={renderLoader}
+                                renderProtectedView={renderProtectedView}
+                                transformGetDocumentParams={transformGetDocumentParams}
+                                withCredentials={withCredentials}
+                                onDocumentAskPassword={onDocumentAskPassword}
+                            />
+                        )}
+                    </div>
+                </BreakpointContext.Provider>
             </LocalizationContext.Provider>
         </StackContext.Provider>
     );
