@@ -9,21 +9,14 @@
 'use client';
 
 import * as React from 'react';
-import { usePrevious } from '../hooks/usePrevious';
 import { isDarkMode } from '../utils/isDarkMode';
 import { DARK_THEME } from './darkTheme';
 import { LIGHT_THEME } from './lightTheme';
 import { useTheme } from './useTheme';
 
-export interface RenderThemeChildrenProps {
-    currentTheme: string;
-    setCurrentTheme(theme: string): void;
-}
-
-export const withTheme = (theme: string, onSwitchTheme?: (theme: string) => void) => {
+export const withTheme = (theme: string): [string, (theme: string) => void] => {
     const initialTheme = React.useMemo(() => (theme === 'auto' ? (isDarkMode() ? 'dark' : 'light') : theme), []);
     const [currentTheme, setCurrentTheme] = React.useState(initialTheme);
-    const prevTheme = usePrevious(currentTheme);
 
     useTheme(currentTheme === 'light' ? LIGHT_THEME : DARK_THEME);
 
@@ -41,20 +34,5 @@ export const withTheme = (theme: string, onSwitchTheme?: (theme: string) => void
         return () => media.removeEventListener('change', handler);
     }, []);
 
-    React.useEffect(() => {
-        if (currentTheme !== prevTheme) {
-            onSwitchTheme && onSwitchTheme(currentTheme);
-        }
-    }, [currentTheme]);
-
-    React.useEffect(() => {
-        if (theme !== currentTheme) {
-            setCurrentTheme(theme);
-        }
-    }, [theme]);
-
-    return {
-        currentTheme,
-        setCurrentTheme,
-    };
+    return [currentTheme, setCurrentTheme];
 };

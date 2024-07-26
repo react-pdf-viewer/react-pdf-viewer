@@ -9,17 +9,46 @@
 'use client';
 
 import * as React from 'react';
+import { TextDirection, ThemeContext, ThemeContextProps } from './theme/ThemeContext';
+import { withTheme } from './theme/withTheme';
 import { type PdfJsApiProvider } from './types/PdfJsApiProvider';
 import { PdfJsApiContext } from './vendors/PdfJsApiContext';
+
+export interface ThemeProps {
+    direction?: TextDirection;
+    theme?: string;
+}
 
 const STYLE_ID = '___rpv-styles___';
 
 export const Provider: React.FC<{
     children?: React.ReactNode;
     pdfApiProvider: PdfJsApiProvider;
+    // Theme
+    theme?: string | ThemeProps;
     workerUrl: string;
-}> = ({ children, pdfApiProvider, workerUrl }) => {
+}> = ({
+    children,
+    pdfApiProvider,
+    theme = {
+        direction: TextDirection.LeftToRight,
+        theme: 'light',
+    },
+    workerUrl,
+}) => {
     pdfApiProvider.GlobalWorkerOptions.workerSrc = workerUrl;
+
+    const themeProps = typeof theme === 'string' ? { direction: TextDirection.LeftToRight, theme } : theme;
+    const themeStr = themeProps.theme || 'light';
+    const [currentTheme, setCurrentTheme] = withTheme(themeStr);
+    const themeContext: ThemeContextProps = Object.assign(
+        {},
+        {
+            currentTheme,
+            direction: themeProps.direction,
+            setCurrentTheme,
+        },
+    );
 
     React.useInsertionEffect(() => {
         let styleEle = document.head.querySelector(`style[id=${STYLE_ID}]`);
@@ -41,5 +70,9 @@ export const Provider: React.FC<{
         };
     }, []);
 
-    return <PdfJsApiContext.Provider value={{ pdfJsApiProvider: pdfApiProvider }}>{children}</PdfJsApiContext.Provider>;
+    return (
+        <PdfJsApiContext.Provider value={{ pdfJsApiProvider: pdfApiProvider }}>
+            <ThemeContext.Provider value={themeContext}>{children}</ThemeContext.Provider>
+        </PdfJsApiContext.Provider>
+    );
 };
