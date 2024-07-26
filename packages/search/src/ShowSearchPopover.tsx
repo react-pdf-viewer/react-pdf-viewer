@@ -8,7 +8,7 @@
 
 'use client';
 
-import { Popover, Position, TextDirection, ThemeContext, type Store, type Toggle } from '@react-pdf-viewer/core';
+import { Popover, Position, type Store, type Toggle } from '@react-pdf-viewer/core';
 import * as React from 'react';
 import { SearchPopover } from './SearchPopover';
 import { ShowSearchPopoverButton } from './ShowSearchPopoverButton';
@@ -26,7 +26,6 @@ export const ShowSearchPopover: React.FC<{
     enableShortcuts: boolean;
     store: Store<StoreProps>;
 }> = ({ children, enableShortcuts, store }) => {
-    const { direction } = React.useContext(ThemeContext);
     const defaultChildren = (props: RenderShowSearchPopoverProps) => (
         <ShowSearchPopoverButton enableShortcuts={enableShortcuts} store={store} {...props} />
     );
