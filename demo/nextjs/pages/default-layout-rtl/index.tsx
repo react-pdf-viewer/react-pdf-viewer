@@ -1,4 +1,4 @@
-import { TextDirection, Viewer } from '@react-pdf-viewer/core';
+import { Viewer } from '@react-pdf-viewer/core';
 import { defaultLayoutPlugin } from '@react-pdf-viewer/default-layout';
 import * as React from 'react';
 
@@ -14,11 +14,7 @@ const IndexPage = () => {
                 width: '64rem',
             }}
         >
-            <Viewer
-                fileUrl="/pdf-open-parameters.pdf"
-                plugins={[defaultLayoutPluginInstance]}
-                theme={{ direction: TextDirection.RightToLeft }}
-            />
+            <Viewer fileUrl="/pdf-open-parameters.pdf" plugins={[defaultLayoutPluginInstance]} />
         </div>
     );
 };

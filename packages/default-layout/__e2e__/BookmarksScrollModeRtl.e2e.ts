@@ -6,7 +6,7 @@ test('Click bookmarks when switching to the horizontal scroll mode (RTL mode)', 
         headless: false,
     });
     const page = await browser.newPage();
-    await page.goto('http://localhost:3000/default-layout-rtl');
+    await page.goto('http://localhost:3000/default-layout-rtl?direction=rtl');
     await page.setViewport({
         width: 1920,
         height: 1080,
@@ -112,7 +112,7 @@ test('Click bookmarks when switching to the wrapped scroll mode (RTL mode)', asy
         headless: false,
     });
     const page = await browser.newPage();
-    await page.goto('http://localhost:3000/default-layout-rtl');
+    await page.goto('http://localhost:3000/default-layout-rtl?direction=rtl');
     await page.setViewport({
         width: 1920,
         height: 1080,
