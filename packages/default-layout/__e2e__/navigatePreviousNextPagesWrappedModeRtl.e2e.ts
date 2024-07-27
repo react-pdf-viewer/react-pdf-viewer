@@ -6,7 +6,7 @@ test('Navigate to the previous and next pages in wrapped scroll mode (RTL enable
         headless: false,
     });
     const page = await browser.newPage();
-    await page.goto('http://localhost:3000/default-layout-rtl');
+    await page.goto('http://localhost:3000/default-layout-rtl?direction=rtl');
     await page.setViewport({
         width: 1920,
         height: 1080,
