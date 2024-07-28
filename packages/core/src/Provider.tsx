@@ -9,8 +9,10 @@
 'use client';
 
 import * as React from 'react';
+import { DefaultLocalization, LocalizationContext } from './localization/LocalizationContext';
 import { TextDirection, ThemeContext, ThemeContextProps } from './theme/ThemeContext';
 import { withTheme } from './theme/withTheme';
+import { type LocalizationMap } from './types/LocalizationMap';
 import { type PdfJsApiProvider } from './types/PdfJsApiProvider';
 import { PdfJsApiContext } from './vendors/PdfJsApiContext';
 
@@ -23,12 +25,14 @@ const STYLE_ID = '___rpv-styles___';
 
 export const Provider: React.FC<{
     children?: React.ReactNode;
+    localization?: LocalizationMap;
     pdfApiProvider: PdfJsApiProvider;
     // Theme
     theme?: string | ThemeProps;
     workerUrl: string;
 }> = ({
     children,
+    localization,
     pdfApiProvider,
     theme = {
         direction: TextDirection.LeftToRight,
@@ -38,6 +42,16 @@ export const Provider: React.FC<{
 }) => {
     pdfApiProvider.GlobalWorkerOptions.workerSrc = workerUrl;
 
+    // Locale context
+    const [l10n, setL10n] = React.useState(localization || DefaultLocalization);
+    const localizationContext = { l10n, setL10n };
+    React.useEffect(() => {
+        if (localization) {
+            setL10n(localization);
+        }
+    }, [localization]);
+
+    // Theme context
     const themeProps = typeof theme === 'string' ? { direction: TextDirection.LeftToRight, theme } : theme;
     const themeStr = themeProps.theme || 'light';
     const [currentTheme, setCurrentTheme] = withTheme(themeStr);
@@ -72,7 +86,9 @@ export const Provider: React.FC<{
 
     return (
         <PdfJsApiContext.Provider value={{ pdfJsApiProvider: pdfApiProvider }}>
-            <ThemeContext.Provider value={themeContext}>{children}</ThemeContext.Provider>
+            <LocalizationContext.Provider value={localizationContext}>
+                <ThemeContext.Provider value={themeContext}>{children}</ThemeContext.Provider>
+            </LocalizationContext.Provider>
         </PdfJsApiContext.Provider>
     );
 };

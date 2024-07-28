@@ -14,7 +14,6 @@ import { usePrevious } from './hooks/usePrevious';
 import { Inner } from './layouts/Inner';
 import { PageSizeCalculator } from './layouts/PageSizeCalculator';
 import { DocumentLoader, RenderError } from './loader/DocumentLoader';
-import { DefaultLocalization, LocalizationContext } from './localization/LocalizationContext';
 import { StackContext } from './portal/StackContext';
 import { BreakpointContext } from './responsive/BreakpointContext';
 import { useBreakpoint } from './responsive/useBreakpoint';
@@ -27,7 +26,6 @@ import { ThemeContext } from './theme/ThemeContext';
 import { type CharacterMap } from './types/CharacterMap';
 import { type DocumentAskPasswordEvent } from './types/DocumentAskPasswordEvent';
 import { type DocumentLoadEvent } from './types/DocumentLoadEvent';
-import { type LocalizationMap } from './types/LocalizationMap';
 import { type PageChangeEvent } from './types/PageChangeEvent';
 import { type PageLayout } from './types/PageLayout';
 import { type PageSize } from './types/PageSize';
@@ -74,7 +72,6 @@ export const Viewer: React.FC<{
     pageLayout?: PageLayout;
     // Plugins
     plugins?: Plugin[];
-    localization?: LocalizationMap;
     renderError?: RenderError;
     renderLoader?(percentages: number): React.ReactElement;
     renderPage?: RenderPage;
@@ -103,7 +100,6 @@ export const Viewer: React.FC<{
     initialPage = 0,
     pageLayout,
     initialRotation = 0,
-    localization,
     plugins = [],
     renderError,
     renderLoader,
@@ -174,8 +170,6 @@ export const Viewer: React.FC<{
     });
 
     // Manage contexts
-    const [l10n, setL10n] = React.useState(localization || DefaultLocalization);
-    const localizationContext = { l10n, setL10n };
     const [trackBreakpointRef, breakpoint] = useBreakpoint();
     const containerRef = mergeRefs([trackIntersectionRef, trackBreakpointRef]);
     const { currentTheme } = React.useContext(ThemeContext);
@@ -186,12 +180,6 @@ export const Viewer: React.FC<{
     const decreaseNumStacks = () => setNumStacks((v) => v - 1);
 
     React.useEffect(() => {
-        if (localization) {
-            setL10n(localization);
-        }
-    }, [localization]);
-
-    React.useEffect(() => {
         if (currentTheme !== prevTheme && onSwitchTheme) {
             onSwitchTheme(currentTheme);
         }
@@ -199,80 +187,78 @@ export const Viewer: React.FC<{
 
     return (
         <StackContext.Provider value={{ currentIndex: 0, increaseNumStacks, decreaseNumStacks, numStacks }}>
-            <LocalizationContext.Provider value={localizationContext}>
-                <BreakpointContext.Provider value={breakpoint}>
-                    <div
-                        ref={containerRef}
-                        className={styles.viewer}
-                        data-testid="core__viewer"
-                        style={{
-                            height: '100%',
-                            width: '100%',
-                        }}
-                    >
-                        {file.shouldLoad && (
-                            <DocumentLoader
-                                characterMap={characterMap}
-                                file={file.data}
-                                httpHeaders={httpHeaders}
-                                render={(doc: PdfJs.PdfDocument) => (
-                                    <PageSizeCalculator
-                                        defaultScale={defaultScale}
-                                        doc={doc}
-                                        render={(estimatedPageSizes: PageSize[], initialScale: number) => (
-                                            <Inner
-                                                currentFile={{
-                                                    data: file.data,
-                                                    name: file.name,
-                                                }}
-                                                defaultScale={defaultScale}
-                                                doc={doc}
-                                                enableSmoothScroll={enableSmoothScroll}
-                                                estimatedPageSizes={estimatedPageSizes}
-                                                initialPage={initialPage}
-                                                initialRotation={initialRotation}
-                                                initialScale={initialScale}
-                                                initialScrollMode={scrollMode}
-                                                initialViewMode={viewMode}
-                                                pageLayout={pageLayout}
-                                                plugins={plugins}
-                                                renderPage={renderPage}
-                                                setRenderRange={setRenderRange}
-                                                viewerState={{
-                                                    file,
-                                                    fullScreenMode: FullScreenMode.Normal,
-                                                    pageIndex: -1,
-                                                    pageHeight: estimatedPageSizes[0].pageHeight,
-                                                    pageWidth: estimatedPageSizes[0].pageWidth,
-                                                    pagesRotation: new Map(),
-                                                    rotation: initialRotation,
-                                                    scale: initialScale,
-                                                    scrollMode,
-                                                    viewMode,
-                                                }}
-                                                onDocumentLoad={onDocumentLoad}
-                                                onOpenFile={openFile}
-                                                onPageChange={onPageChange}
-                                                onRotate={onRotate}
-                                                onRotatePage={onRotatePage}
-                                                onZoom={onZoom}
-                                            />
-                                        )}
-                                        scrollMode={scrollMode}
-                                        viewMode={viewMode}
-                                    />
-                                )}
-                                renderError={renderError}
-                                renderLoader={renderLoader}
-                                renderProtectedView={renderProtectedView}
-                                transformGetDocumentParams={transformGetDocumentParams}
-                                withCredentials={withCredentials}
-                                onDocumentAskPassword={onDocumentAskPassword}
-                            />
-                        )}
-                    </div>
-                </BreakpointContext.Provider>
-            </LocalizationContext.Provider>
+            <BreakpointContext.Provider value={breakpoint}>
+                <div
+                    ref={containerRef}
+                    className={styles.viewer}
+                    data-testid="core__viewer"
+                    style={{
+                        height: '100%',
+                        width: '100%',
+                    }}
+                >
+                    {file.shouldLoad && (
+                        <DocumentLoader
+                            characterMap={characterMap}
+                            file={file.data}
+                            httpHeaders={httpHeaders}
+                            render={(doc: PdfJs.PdfDocument) => (
+                                <PageSizeCalculator
+                                    defaultScale={defaultScale}
+                                    doc={doc}
+                                    render={(estimatedPageSizes: PageSize[], initialScale: number) => (
+                                        <Inner
+                                            currentFile={{
+                                                data: file.data,
+                                                name: file.name,
+                                            }}
+                                            defaultScale={defaultScale}
+                                            doc={doc}
+                                            enableSmoothScroll={enableSmoothScroll}
+                                            estimatedPageSizes={estimatedPageSizes}
+                                            initialPage={initialPage}
+                                            initialRotation={initialRotation}
+                                            initialScale={initialScale}
+                                            initialScrollMode={scrollMode}
+                                            initialViewMode={viewMode}
+                                            pageLayout={pageLayout}
+                                            plugins={plugins}
+                                            renderPage={renderPage}
+                                            setRenderRange={setRenderRange}
+                                            viewerState={{
+                                                file,
+                                                fullScreenMode: FullScreenMode.Normal,
+                                                pageIndex: -1,
+                                                pageHeight: estimatedPageSizes[0].pageHeight,
+                                                pageWidth: estimatedPageSizes[0].pageWidth,
+                                                pagesRotation: new Map(),
+                                                rotation: initialRotation,
+                                                scale: initialScale,
+                                                scrollMode,
+                                                viewMode,
+                                            }}
+                                            onDocumentLoad={onDocumentLoad}
+                                            onOpenFile={openFile}
+                                            onPageChange={onPageChange}
+                                            onRotate={onRotate}
+                                            onRotatePage={onRotatePage}
+                                            onZoom={onZoom}
+                                        />
+                                    )}
+                                    scrollMode={scrollMode}
+                                    viewMode={viewMode}
+                                />
+                            )}
+                            renderError={renderError}
+                            renderLoader={renderLoader}
+                            renderProtectedView={renderProtectedView}
+                            transformGetDocumentParams={transformGetDocumentParams}
+                            withCredentials={withCredentials}
+                            onDocumentAskPassword={onDocumentAskPassword}
+                        />
+                    )}
+                </div>
+            </BreakpointContext.Provider>
         </StackContext.Provider>
     );
 };
