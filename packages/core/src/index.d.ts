@@ -597,6 +597,7 @@ export type SetRenderRange = (visiblePagesRange: VisiblePagesRange) => { endPage
 
 export interface ProviderProps {
     children?: React.ReactNode;
+    localization?: LocalizationMap;
     pdfApiProvider: PdfJsApiProvider;
     // Theme
     theme?: string | ThemeProps;
@@ -622,7 +623,6 @@ export interface ViewerProps {
     pageLayout?: PageLayout;
     // Plugins
     plugins?: Plugin[];
-    localization?: LocalizationMap;
     renderError?: RenderError;
     renderLoader?(percentages: number): React.ReactElement;
     renderPage?: RenderPage;
