@@ -1,0 +1,7 @@
+{
+    "extends": "./tsconfig.json",
+    "exclude": ["./__e2e__", "./__tests__"],
+    "compilerOptions": {
+        "declarationDir": "./lib/@types"
+    }
+}

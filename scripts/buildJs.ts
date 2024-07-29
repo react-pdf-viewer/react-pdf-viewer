@@ -7,6 +7,7 @@ type PackageJson = {
 import json from '@rollup/plugin-json';
 import terser from '@rollup/plugin-terser';
 import { createGenerateScopedName } from 'hash-css-selector';
+import { exec } from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
 import {
@@ -20,6 +21,10 @@ import copy from 'rollup-plugin-copy';
 import del from 'rollup-plugin-delete';
 import esbuild from 'rollup-plugin-esbuild';
 import postcss from 'rollup-plugin-postcss';
+
+const generateTypes = (rootPackagePath: string) => {
+    exec(`tsc --project ${path.join(rootPackagePath, 'tsconfig.build.json')}`);
+};
 
 const buildPackage = async (rootPackagePath: string) => {
     const input = path.join(rootPackagePath, 'src/index.ts');
@@ -133,11 +138,12 @@ const buildPackage = async (rootPackagePath: string) => {
         },
     ];
 
-    // Copy Typescript definitions
+    // Generate Typescript definitions
     fs.rmSync(outputDir, { recursive: true, force: true });
     fs.mkdirSync(outputDir);
-    fs.copyFileSync(path.join(rootPackagePath, 'src/index.d.ts'), path.join(rootPackagePath, 'lib/index.d.ts'));
     fs.copyFileSync(path.join(rootPackagePath, 'dist/index.js'), path.join(rootPackagePath, 'lib/index.js'));
+
+    generateTypes(rootPackagePath);
 
     // Compile
     return Promise.all(
