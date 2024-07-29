@@ -18,6 +18,7 @@ export { MinimalButton } from './components/MinimalButton';
 export { PrimaryButton } from './components/PrimaryButton';
 export { ProgressBar } from './components/ProgressBar';
 export { Separator } from './components/Separator';
+export { Skeleton } from './components/Skeleton';
 export { Spinner } from './components/Spinner';
 export { Splitter, type SplitterSize } from './components/Splitter';
 export { TextBox } from './components/TextBox';

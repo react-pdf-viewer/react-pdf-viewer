@@ -354,6 +354,18 @@ export class ProgressBar extends React.Component<ProgressBarProps> {}
 
 export class Separator extends React.Component {}
 
+export interface SkeletonProps {
+    children: ({
+        attributes,
+        ref,
+    }: {
+        attributes: React.HTMLAttributes<HTMLElement>;
+        ref: React.RefCallback<HTMLElement>;
+    }) => React.ReactElement;
+}
+
+export const Skeleton: React.Component<SkeletonProps>;
+
 export interface SpinnerProps {
     size?: string;
     testId?: string;
