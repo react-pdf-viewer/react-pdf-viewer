@@ -2,8 +2,6 @@
     "include": ["./src", "../../@types"],
     "exclude": ["./dist", "./lib"],
     "compilerOptions": {
-        "declaration": true,
-        "emitDeclarationOnly": true,
         "esModuleInterop": true,
         "jsx": "react",
         "lib": ["DOM", "ESNext"],
