@@ -1,0 +1,5 @@
+__e2e__/
+__tests__/
+dist/
+src/
+tsconfig.*
