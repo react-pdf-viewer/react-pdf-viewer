@@ -31,7 +31,7 @@ interface BookmarkState {
 }
 
 export const BookmarkLoader: React.FC<{
-    doc: PdfJs.PdfDocument;
+    doc?: PdfJs.PdfDocument;
     isBookmarkExpanded?: IsBookmarkExpanded;
     renderBookmarkItem?: RenderBookmarkItem;
     store: Store<StoreProps>;
@@ -45,6 +45,9 @@ export const BookmarkLoader: React.FC<{
     });
 
     React.useEffect(() => {
+        if (!doc) {
+            return;
+        }
         setBookmarks({
             isLoaded: false,
             items: [],
@@ -57,7 +60,7 @@ export const BookmarkLoader: React.FC<{
         });
     }, [doc]);
 
-    return !bookmarks.isLoaded ? (
+    return !doc || !bookmarks.isLoaded ? (
         <div className={styles.loader}>
             <Spinner />
         </div>
