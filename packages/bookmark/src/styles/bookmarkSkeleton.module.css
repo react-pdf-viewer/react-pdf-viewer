@@ -1,0 +1,40 @@
+/**
+ * A React component to view a PDF document
+ *
+ * @see https://react-pdf-viewer.dev
+ * @license https://react-pdf-viewer.dev/license
+ * @copyright 2019-2024 Nguyen Huu Phuoc <me@phuoc.ng>
+ */
+
+.list {
+    list-style-type: none;
+    overflow: auto;
+    margin: 0;
+    padding: 0;
+
+    height: 100%;
+    width: 100%;
+}
+
+.item {
+    align-items: center;
+    display: flex;
+    padding-bottom: 0.25rem;
+    padding-right: 0.25rem;
+    padding-top: 0.25rem;
+}
+
+.toggle {
+    /* Center the icon */
+    align-items: center;
+    display: flex;
+    height: 1rem;
+    margin-right: 0.25rem;
+    width: 1rem;
+}
+
+.title {
+    flex-grow: 1;
+    flex-shrink: 1;
+    text-decoration: none;
+}

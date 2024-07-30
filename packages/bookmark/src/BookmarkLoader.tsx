@@ -10,7 +10,6 @@
 
 import {
     LocalizationContext,
-    Spinner,
     TextDirection,
     ThemeContext,
     classNames,
@@ -20,6 +19,7 @@ import {
 } from '@react-pdf-viewer/core';
 import * as React from 'react';
 import { BookmarkListRoot } from './BookmarkListRoot';
+import { BookmarkSkeleton } from './BookmarkSkeleton';
 import styles from './styles/bookmarkListLoader.module.css';
 import { type IsBookmarkExpanded } from './types/IsBookmarkExpanded';
 import { type RenderBookmarkItem } from './types/RenderBookmarkItemProps';
@@ -61,9 +61,7 @@ export const BookmarkLoader: React.FC<{
     }, [doc]);
 
     return !doc || !bookmarks.isLoaded ? (
-        <div className={styles.loader}>
-            <Spinner />
-        </div>
+        <BookmarkSkeleton />
     ) : bookmarks.items.length === 0 ? (
         <div
             data-testid="bookmark__empty"
