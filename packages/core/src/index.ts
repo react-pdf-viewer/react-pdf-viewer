@@ -58,5 +58,6 @@ export { classNames } from './utils/classNames';
 export { isMac } from './utils/isMac';
 export { getDestination, getPage } from './utils/managePages';
 export { mergeRefs } from './utils/mergeRefs';
+export { randomNumber } from './utils/randomNumber';
 export { PdfJsApiContext } from './vendors/PdfJsApiContext';
 export { Viewer } from './Viewer';
