@@ -6,6 +6,20 @@
  * @copyright 2019-2024 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
+.overlay {
+    bottom: 0;
+    left: 0;
+    position: fixed;
+    right: 0;
+    top: 0;
+    z-index: 9999;
+
+    /* Center the content */
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}
+
 .body {
     background-color: hsl(var(--rpv-background));
     border-color: hsl(var(--rpv-border));
