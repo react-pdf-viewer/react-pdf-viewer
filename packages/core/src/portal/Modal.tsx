@@ -13,7 +13,6 @@ import { useToggle } from '../hooks/useToggle';
 import type { Toggle } from '../types/Toggle';
 import { uniqueId } from '../utils/uniqueId';
 import { ModalBody } from './ModalBody';
-import { ModalOverlay } from './ModalOverlay';
 import { Stack } from './Stack';
 
 export type RenderContent = (toggle: Toggle) => React.ReactNode;
@@ -45,16 +44,14 @@ export const Modal: React.FC<{
     };
 
     const renderContent = (toggle: Toggle): React.ReactElement => (
-        <ModalOverlay>
-            <ModalBody
-                ariaControlsSuffix={controlsSuffix}
-                closeOnClickOutside={closeOnClickOutside}
-                closeOnEscape={closeOnEscape}
-                onClose={toggle}
-            >
-                {content(toggle)}
-            </ModalBody>
-        </ModalOverlay>
+        <ModalBody
+            ariaControlsSuffix={controlsSuffix}
+            closeOnClickOutside={closeOnClickOutside}
+            closeOnEscape={closeOnEscape}
+            onClose={toggle}
+        >
+            {({ onClose }) => content(onClose)}
+        </ModalBody>
     );
 
     return (
