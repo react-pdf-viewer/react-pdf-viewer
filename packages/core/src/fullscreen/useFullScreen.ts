@@ -74,7 +74,7 @@ export const useFullScreen = ({ targetRef }: { targetRef: React.RefObject<HTMLEl
         const currentFullScreenEle = getFullScreenElement();
         if (currentFullScreenEle && currentFullScreenEle !== target) {
             setFullScreenMode(FullScreenMode.Normal);
-            return exitFullScreen(currentFullScreenEle);
+            return exitFullScreen(document);
         }
 
         return Promise.resolve();
