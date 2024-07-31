@@ -49,13 +49,68 @@ export const BookmarkItem: React.FC<{
           ? bookmarkExpandedMap.get(path)!
           : !defaultIsCollapsed;
     const [expanded, setExpanded] = React.useState(defaultExpanded);
+    const subItemsListRef = React.useRef<HTMLUListElement>(null);
 
     const hasSubItems = bookmark.items && bookmark.items.length > 0;
 
     const toggleSubItems = (): void => {
-        const newState = !expanded;
-        store.updateCurrentValue('bookmarkExpandedMap', (currentValue) => currentValue.set(path, newState));
-        setExpanded(newState);
+        store.updateCurrentValue('bookmarkExpandedMap', (currentValue) => currentValue.set(path, !expanded));
+        expanded ? collapseSubItems() : expandSubItems();
+    };
+
+    const expandSubItems = () => {
+        const subItemsListEle = subItemsListRef.current;
+        if (!subItemsListEle) {
+            return;
+        }
+        subItemsListEle.style.display = '';
+        subItemsListEle.style.overflow = 'hidden';
+        subItemsListEle.style.height = `${subItemsListEle.getBoundingClientRect().height}px`;
+        const expandingAnimation = subItemsListEle.animate(
+            [
+                {
+                    height: '0px',
+                },
+                {
+                    height: `${subItemsListEle.scrollHeight}px`,
+                },
+            ],
+            {
+                duration: 150,
+            },
+        );
+        expandingAnimation.finished.then(() => {
+            subItemsListEle.style.height = '';
+            subItemsListEle.style.overflow = '';
+            setExpanded((v) => !v);
+        });
+    };
+
+    const collapseSubItems = () => {
+        const subItemsListEle = subItemsListRef.current;
+        if (!subItemsListEle) {
+            return;
+        }
+        subItemsListEle.style.overflow = 'hidden';
+        subItemsListEle.style.height = `${subItemsListEle.getBoundingClientRect().height}px`;
+        const collapsingAnimation = subItemsListEle.animate(
+            [
+                {
+                    height: `${subItemsListEle.scrollHeight}px`,
+                },
+                {
+                    height: '0px',
+                },
+            ],
+            {
+                duration: 150,
+            },
+        );
+        collapsingAnimation.finished.then(() => {
+            subItemsListEle.style.display = 'none';
+            subItemsListEle.style.overflow = '';
+            setExpanded((v) => !v);
+        });
     };
 
     const jumpToDest = () => {
@@ -156,7 +211,7 @@ export const BookmarkItem: React.FC<{
                           {defaultRenderTitle(clickBookmark)}
                       </>,
                   )}
-            {hasSubItems && expanded && (
+            {hasSubItems && (
                 <BookmarkList
                     bookmarks={bookmark.items}
                     depth={depth + 1}
@@ -164,6 +219,7 @@ export const BookmarkItem: React.FC<{
                     isBookmarkExpanded={isBookmarkExpanded}
                     isRoot={false}
                     pathFromRoot={path}
+                    ref={subItemsListRef}
                     renderBookmarkItem={renderBookmarkItem}
                     store={store}
                 />
