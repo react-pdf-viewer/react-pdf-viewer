@@ -51,6 +51,27 @@ export const ModalBody: React.FC<{
             contentEle.style.overflow = 'auto';
             contentEle.style.maxHeight = `${maxHeight}px`;
         }
+
+        // Scale the modal content
+        const animation = contentEle.animate(
+            [
+                {
+                    opacity: 0,
+                    transform: 'scale(0.9)',
+                },
+                {
+                    opacity: 1,
+                    transform: 'scale(1)',
+                },
+            ],
+            {
+                duration: 150,
+                fill: 'forwards',
+            }
+        );
+        return () => {
+            animation.cancel();
+        };
     }, []);
 
     return (
