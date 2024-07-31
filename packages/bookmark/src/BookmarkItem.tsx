@@ -10,14 +10,15 @@
 
 import { getDestination, type PdfJs, type Store } from '@react-pdf-viewer/core';
 import * as React from 'react';
-import styles from './styles/bookmarkItem.module.css';
 import { BookmarkList } from './BookmarkList';
 import { DownArrowIcon } from './DownArrowIcon';
 import { RightArrowIcon } from './RightArrowIcon';
 import { shouldBeCollapsed } from './shouldBeCollapsed';
+import styles from './styles/bookmarkItem.module.css';
 import { type IsBookmarkExpanded } from './types/IsBookmarkExpanded';
 import { type RenderBookmarkItem } from './types/RenderBookmarkItemProps';
 import { type StoreProps } from './types/StoreProps';
+import { useCollapse } from './useCollapse';
 
 export const BookmarkItem: React.FC<{
     bookmark: PdfJs.Outline;
@@ -48,69 +49,16 @@ export const BookmarkItem: React.FC<{
         : bookmarkExpandedMap && bookmarkExpandedMap.has(path)
           ? bookmarkExpandedMap.get(path)!
           : !defaultIsCollapsed;
+
     const [expanded, setExpanded] = React.useState(defaultExpanded);
-    const subItemsListRef = React.useRef<HTMLUListElement>(null);
+    const toggle = () => setExpanded((v) => !v);
+    const [subItemsListRef, collapseSubItems, expandSubItems] = useCollapse(toggle);
 
     const hasSubItems = bookmark.items && bookmark.items.length > 0;
 
     const toggleSubItems = (): void => {
         store.updateCurrentValue('bookmarkExpandedMap', (currentValue) => currentValue.set(path, !expanded));
         expanded ? collapseSubItems() : expandSubItems();
-    };
-
-    const expandSubItems = () => {
-        const subItemsListEle = subItemsListRef.current;
-        if (!subItemsListEle) {
-            return;
-        }
-        subItemsListEle.style.display = '';
-        subItemsListEle.style.overflow = 'hidden';
-        subItemsListEle.style.height = `${subItemsListEle.getBoundingClientRect().height}px`;
-        const expandingAnimation = subItemsListEle.animate(
-            [
-                {
-                    height: '0px',
-                },
-                {
-                    height: `${subItemsListEle.scrollHeight}px`,
-                },
-            ],
-            {
-                duration: 150,
-            },
-        );
-        expandingAnimation.finished.then(() => {
-            subItemsListEle.style.height = '';
-            subItemsListEle.style.overflow = '';
-            setExpanded((v) => !v);
-        });
-    };
-
-    const collapseSubItems = () => {
-        const subItemsListEle = subItemsListRef.current;
-        if (!subItemsListEle) {
-            return;
-        }
-        subItemsListEle.style.overflow = 'hidden';
-        subItemsListEle.style.height = `${subItemsListEle.getBoundingClientRect().height}px`;
-        const collapsingAnimation = subItemsListEle.animate(
-            [
-                {
-                    height: `${subItemsListEle.scrollHeight}px`,
-                },
-                {
-                    height: '0px',
-                },
-            ],
-            {
-                duration: 150,
-            },
-        );
-        collapsingAnimation.finished.then(() => {
-            subItemsListEle.style.display = 'none';
-            subItemsListEle.style.overflow = '';
-            setExpanded((v) => !v);
-        });
     };
 
     const jumpToDest = () => {
