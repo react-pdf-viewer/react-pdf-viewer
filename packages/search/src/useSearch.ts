@@ -136,7 +136,7 @@ export const useSearch = (
                         return page.getTextContent();
                     })
                     .then((content) => {
-                        const pageContent = content.items.map((item) => item.str || '').join('');
+                        const pageContent = content.items.filter((item) => item.str !== '').map((item) => item.str || '').join(' ');
                         return Promise.resolve({
                             pageContent,
                             pageIndex,
