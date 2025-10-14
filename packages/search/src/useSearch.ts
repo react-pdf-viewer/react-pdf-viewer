@@ -219,6 +219,16 @@ export const useSearch = (
                         });
                     }
                 });
+
+                // Sort matches by page index first, then by position within the page
+                // This ensures prev/next navigation moves sequentially through the document
+                arr.sort((a, b) => {
+                    if (a.pageIndex !== b.pageIndex) {
+                        return a.pageIndex - b.pageIndex;
+                    }
+                    return a.startIndex - b.startIndex;
+                });
+
                 setFound(arr);
                 if (arr.length > 0) {
                     setCurrentMatch(1);
