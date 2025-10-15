@@ -150,10 +150,18 @@ export const useSearch = (
     };
 
     const jumpToGivenMatch = (match: Match): Match => {
+        const getViewerState = store.get('getViewerState');
         const jumpToPage = store.get('jumpToPage');
-        if (jumpToPage) {
-            jumpToPage(match.pageIndex);
+
+        // Only jump to page if we're navigating to a different page
+        // This prevents unnecessary scrolling when the next match is on the same page
+        if (jumpToPage && getViewerState) {
+            const currentPageIndex = getViewerState().pageIndex;
+            if (currentPageIndex !== match.pageIndex) {
+                jumpToPage(match.pageIndex);
+            }
         }
+
         store.update('matchPosition', {
             matchIndex: match.matchIndex,
             pageIndex: match.pageIndex,

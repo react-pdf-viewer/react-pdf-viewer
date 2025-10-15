@@ -133,6 +133,7 @@ export const searchPlugin = (props?: SearchPluginProps): SearchPlugin => {
             const keyword = props && props.keyword ? normalizeKeywords(props.keyword) : [EMPTY_KEYWORD_REGEXP];
 
             store.update('initialKeyword', initialKeyword);
+            store.update('getViewerState', pluginFunctions.getViewerState);
             store.update('jumpToDestination', pluginFunctions.jumpToDestination);
             store.update('jumpToPage', pluginFunctions.jumpToPage);
             store.update('keyword', keyword);

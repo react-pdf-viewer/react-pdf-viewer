@@ -19,6 +19,7 @@ export interface StoreProps {
     keyword?: NormalizedKeyword[];
     matchPosition: MatchPosition;
     renderStatus: Map<number, PluginOnTextLayerRender>;
+    getViewerState?(): any;
     jumpToDestination?(destination: Destination): void;
     jumpToPage?(pageIndex: number): void;
     targetPageFilter?: SearchTargetPageFilter;
