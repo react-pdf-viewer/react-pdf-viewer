@@ -334,21 +334,34 @@ export const Highlights: React.FC<{
             return;
         }
 
+        // Check if the highlight is already visible in the viewport
+        const highlightRect = highlightEle.getBoundingClientRect();
+        const containerRect = container.getBoundingClientRect();
+        const isVisible =
+            highlightRect.top >= containerRect.top &&
+            highlightRect.bottom <= containerRect.bottom &&
+            highlightRect.left >= containerRect.left &&
+            highlightRect.right <= containerRect.right;
+
+        // Only scroll if the highlight is not already visible in the viewport
+        // This prevents unnecessary scrolling when navigating between matches that are already on screen
         const { left, top } = calculateOffset(highlightEle as HTMLElement, container);
         const jump = store.get('jumpToDestination');
-        if (jump) {
+        if (jump && !isVisible) {
             jump({
                 pageIndex,
                 bottomOffset: (container.getBoundingClientRect().height - top) / renderStatus.scale,
                 leftOffset: left / renderStatus.scale,
                 scaleTo: renderStatus.scale,
             });
-            if (currentMatchRef.current) {
-                currentMatchRef.current.classList.remove(styles.highlightCurrent);
-            }
-            currentMatchRef.current = highlightEle as HTMLElement;
-            highlightEle.classList.add(styles.highlightCurrent);
         }
+
+        // Always update the current highlight styling
+        if (currentMatchRef.current) {
+            currentMatchRef.current.classList.remove(styles.highlightCurrent);
+        }
+        currentMatchRef.current = highlightEle as HTMLElement;
+        highlightEle.classList.add(styles.highlightCurrent);
     }, [highlightAreas, matchPosition]);
 
     React.useEffect(() => {
