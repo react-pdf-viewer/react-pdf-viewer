@@ -205,6 +205,7 @@ export const useSearch = (
                         keywords.forEach((keyword) => {
                             let matchIndex = 0;
                             let matches: RegExpExecArray | null;
+                            if(!keyword) return
                             while ((matches = keyword.regExp.exec(pageText)) !== null) {
                                 arr.push({
                                     keyword: keyword.regExp,
